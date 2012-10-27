@@ -1,16 +1,8 @@
-=== Sell Media ===
-Contributors: endortrails, zanematthew
-Donate link: http://graphpaperpress.com/plugins/sell-media/
-Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
-Requires at least: 3.4
-Tested up to: 3.5-beta
-Stable tag: 1.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Sell Media
+==========
 
-Sell, license and protect images, videos, audio and pdf's on your site.
-
-== Description ==
+Description
+-----------
 
 [Sell Media](http://graphpaperpress.com/plugins/sell-media/) is a WordPress plugin that allows anyone to sell, license and protect images, videos, audio and pdf's on their self-hosted WordPress site.
 
@@ -34,7 +26,8 @@ Sell Media extensions will soon include:
 * Watermark images
 * Backup media uploads to Amazon S3
 
-== Installation ==
+Installation
+------------
 
 1. Activate the plugin.
 2. Visit Sell Media -> Settings and configure the options.
@@ -42,7 +35,8 @@ Sell Media extensions will soon include:
 4. Visit Sell Media -> Licenses and add or configure your default licenses for new uploads.
 5. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
 
-== Frequently Asked Questions ==
+Frequently Asked Questions
+--------------------------
 
 = What are shortcodes and how do I use them? =
 
@@ -124,7 +118,8 @@ Please visit the Add Media -> Settings -> Payments page and double check all of 
 
 The Sell Media plugin helps you to create and assign different licenses and prices for each image, video or audio file based on the anticipated usage of the media. For example: If a large company wants to purchase one of your images for a billboard, you should charge one price for commercial usage, charge another for editorial, and so on.
 
-== Screenshots ==
+Screenshots
+-----------
 
 1. The Shopping Cart
 2. Single Item Template
@@ -132,24 +127,27 @@ The Sell Media plugin helps you to create and assign different licenses and pric
 4. Payments History
 5. Available Extensions (coming soon)
 
-== Developers ==
+Developers
+----------
 
 = Actions =
 Example for adding a message above the cart:
-`function sell_media_above_cart_function() {
 
-    print '<p>This message will show up above the cart on the cart popup. You could include a copyright message or links to your terms of service.</p>';
+    function sell_media_above_cart_function() {
 
-}
-add_action( 'sell_media_above_cart', 'sell_media_above_cart_function' );`
+        print '<p>This message will show up above the cart on the cart popup. You could include a copyright message or links to your terms of service.</p>';
+
+    }
+    add_action( 'sell_media_above_cart', 'sell_media_above_cart_function' );
 
 Example for adding a message below the cart:
-`function sell_media_below_cart_function() {
 
-    print '<p>This message will show up below the cart on the cart popup. You could include a copyright message or links to your terms of service.</p>';
+    function sell_media_below_cart_function() {
 
-}
-add_action( 'sell_media_below_cart', 'sell_media_below_cart_function' );`
+        print '<p>This message will show up below the cart on the cart popup. You could include a copyright message or links to your terms of service.</p>';
+
+    }
+    add_action( 'sell_media_below_cart', 'sell_media_below_cart_function' );
 
 Action hooks available:
 * sell_media_above_cart - Above the cart
@@ -160,10 +158,12 @@ Action hooks available:
 * sell_media_settings_above_general_section_hook - settings.php - Above tables on settings page
 * sell_media_settings_below_general_section_hook - settings.php - Below tables on settings page
 
-== Upgrade Notice ==
+Upgrade Notice
+--------------
  * None
 
-== Changelog ==
+Changelog
+---------
 
 = 1.0 =
 * Public release
