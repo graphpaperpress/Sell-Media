@@ -366,3 +366,16 @@ input[type="submit"].sell-media-buy-button:active,
 .sell-media-buy-button-success.active {
   background-color: #408140 \9;
 }
+
+
+/*= Widgets
+-------------------------------------------------------------- */
+.sell-media-cart-dialog,
+.sell-media-cart-dialog p {
+    color: #333;
+    }
+
+.sell-media-cart-dialog a:hover,
+.sell-media-cart-dialog a:focus {
+    color: #000;
+    }
