@@ -48,6 +48,7 @@ get_header(); ?>
 						<?php sell_media_item_buy_button( $post->ID, 'text', 'Purchase' ); ?>
 					</div>
 				<?php endwhile; ?>
+    			<?php sell_media_pagination_filter(); ?>
 			</div><!-- .sell-media-grid-container -->
 			<?php else : ?>
 				<p><?php _e( 'Nothing Found', 'sell_media' ); ?></p>
