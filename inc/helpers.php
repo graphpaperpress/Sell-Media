@@ -768,5 +768,5 @@ function sell_media_pagination_filter(){
 
     $links = paginate_links( $params );
 
-    print '<div class="sell-media-pagination-container">here: ' . $links . '</div>';
+    print '<div class="sell-media-pagination-container">' . $links . '</div>';
 }
