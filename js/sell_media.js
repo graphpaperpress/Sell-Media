@@ -75,7 +75,7 @@ jQuery( document ).ready(function( $ ){
 
     cart_count();
 
-    // $('.price-target').html(total_items());
+    $('.price-target').html(total_items());
 
     // getPageScroll() by quirksmode.com
     // Retrives the x, y coordinates of the viewport
