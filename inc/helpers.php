@@ -452,7 +452,7 @@ function sell_media_get_currency_symbol( $currency = '' ) {
         case 'CHF' :
         case 'TWD' :
         case 'THB' : $currency_symbol = $currency; break;
-        case 'GBP' :
+        case 'GBP' : $currency_symbol = '&pound;'; break;
         default    : $currency_symbol = '&#36;'; break;
     endswitch;
     return apply_filters( 'sell_media_currency_symbol', $currency_symbol, $currency );

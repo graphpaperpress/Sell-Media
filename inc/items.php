@@ -49,7 +49,7 @@ $sell_media_item_meta_fields = array(
     ),
     array(
         'label'=> 'Price',
-        'desc'  => 'Leave off the $. Numbers only.', // this needs validation
+        'desc'  => 'Leave off the ' . sell_media_get_currency_symbol() . '. Numbers only.', // this needs validation
         'id'    => $prefix . '_price',
         'type'  => 'text',
         'std'   => get_option( 'sell_media_original_price' )
