@@ -14,7 +14,16 @@ jQuery( document ).ready(function( $ ){
      */
     function calculate_price(){
 
-        markUp = $('#sell_media_license_select option:selected').attr('data-price');
+        /**
+         * If this item has NO license selected we default
+         * markup to 0
+         */
+        if ( $('#sell_media_license_select option:selected').length ){
+            markUp = $('#sell_media_license_select option:selected').attr('data-price');
+        } else {
+            markUp = 0;
+        }
+
         price = $('#sell_media_size_select').attr('value');
 
         if ( markUp != undefined && price != undefined ) {
@@ -66,7 +75,7 @@ jQuery( document ).ready(function( $ ){
 
     cart_count();
 
-    $('.price-target').html(total_items());
+    // $('.price-target').html(total_items());
 
     // getPageScroll() by quirksmode.com
     // Retrives the x, y coordinates of the viewport
