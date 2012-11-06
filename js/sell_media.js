@@ -73,17 +73,19 @@ jQuery( document ).ready(function( $ ){
         var current = 0;
         var total = 0;
 
-        jQuery( '.item-price-target' ).each(function( index ){
+        if ( $('.item-price-target').length ){
+            $( '.item-price-target' ).each(function( index ){
+                current = ( +current ) + ( parseFloat( $(this).html() ) );
+                total = ( +total ) + ( +current );
+                final_total = current.toFixed(2);
 
-            current = ( +current ) + ( parseFloat( jQuery(this).html() ) );
-            total = ( +total ) + ( +current );
-            final_total = current.toFixed(2);
+                $( this ).next('.item-total-target').html( final_total );
 
-            jQuery( this ).next('.item-total-target').html( final_total );
-
-            jQuery( '.price-target' ).html( final_total );
-
-        });
+                $( '.price-target' ).html( final_total );
+            });
+        } else {
+            $( '.price-target' ).html( "0.00" );
+        }
     }
 
 
@@ -205,10 +207,10 @@ jQuery( document ).ready(function( $ ){
     $('.remove-item-handle').live('click', function(){
 
         $(this).closest('tr').fadeOut("fast", function() {
-                $(this).remove();
+            $(this).remove();
         });
         $(this).closest('li').fadeOut("fast", function() {
-                $(this).remove();
+            $(this).remove();
         });
 
         count = $(".sell_media-product-list li").size();
@@ -227,10 +229,10 @@ jQuery( document ).ready(function( $ ){
             success: function( msg ){
                 // We have no items in the cart
                 if ( msg == "0" ){
-                    // location.reload();
                     $('#sell-media-checkout').fadeOut();
                 }
 
+                total_items()
             }
         });
     });

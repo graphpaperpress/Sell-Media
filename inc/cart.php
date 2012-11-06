@@ -55,11 +55,17 @@ add_action( 'wp_ajax_sell_media_count_cart', 'sell_media_count_cart' );
  * @since 0.1
  */
 function sell_media_remove_item() {
-    $item_id = $_POST['item_id'];
-    $_SESSION['cart']['totalPrice'] = $_SESSION['cart']['totalPrice'] - $_SESSION['cart']['items'][$item_id]['CalculatedPrice'];
 
-    unset( $_SESSION['cart']['items'][$item_id] );
-    if (  empty( $item_id ) ) print "0";
+    $item_index = $_POST['item_id'];
+
+    $_SESSION['cart']['totalPrice'] = $_SESSION['cart']['totalPrice'] - $_SESSION['cart']['items'][$item_index]['CalculatedPrice'];
+
+    unset( $_SESSION['cart']['items'][$item_index] );
+
+    if ( $_SESSION['cart']['totalPrice'] == 0 ) {
+        print "0";
+    }
+
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_remove_item', 'sell_media_remove_item' );
