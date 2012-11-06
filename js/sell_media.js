@@ -1,22 +1,35 @@
+/** */
 jQuery( document ).ready(function( $ ){
 
+    /**
+     * Set-up our default Ajax options.
+     * Please reference http://api.jquery.com/jQuery.ajaxSetup/
+     */
     $.ajaxSetup({
         type: "POST",
         url: ajaxurl
     });
 
+
+    /**
+     * Our global user object
+     */
     var _user = {
         "count": cart_count()
     };
 
+
     /**
-     * Calculate the price using the formular: price + (( percent * .01 ) * price ))
+     * Determine the price of an Item based on License Type. Once
+     * determined, update the needed dom elements with the new price
+     *
+     * Formula: price + (( percent * .01 ) * price ))
      */
     function calculate_price(){
 
         /**
          * If this item has NO license selected we default
-         * markup to 0
+         * markup to 0.
          */
         if ( $('#sell_media_license_select option:selected').length ){
             markUp = $('#sell_media_license_select option:selected').attr('data-price');
@@ -25,6 +38,7 @@ jQuery( document ).ready(function( $ ){
         }
 
         price = $('#sell_media_size_select').attr('value');
+        data_price = $('#sell_media_single_price').attr('data-price');
 
         if ( markUp != undefined && price != undefined ) {
             finalPrice = +price + ( ( +markUp * .01 ) * price );
@@ -32,19 +46,15 @@ jQuery( document ).ready(function( $ ){
             $('#price_target').html( finalPrice );
             $('.price-target').val( finalPrice );
         } else {
-            $('#price_target').html( $('#sell_media_single_price').attr('data-price') );
-            $('.price-target').val( $('#sell_media_single_price').attr('data-price') );
+            $('#price_target').html( data_price );
+            $('.price-target').val( data_price );
         }
     }
 
-    function _disable_buttons(){
-        $( 'input[type="submit"], input[type="button"]').animate({ opacity: 0.5 }).attr('disabled','disabled');
-    }
 
-    function _enable_buttons(){
-        $( 'input[type="submit"], input[type="button"]' ).animate({ opacity: 1 }).removeAttr('disabled');
-    }
-
+    /**
+     * Send an Ajax request to our function to update the users cart count
+     */
     function cart_count(){
         $.ajax({
             data: "action=sell_media_count_cart",
@@ -55,7 +65,10 @@ jQuery( document ).ready(function( $ ){
         });
     }
 
-    // calculate the total for each item
+
+    /**
+     * Calculate the total for each Item
+     */
     function total_items(){
         var current = 0;
         var total = 0;
@@ -73,13 +86,12 @@ jQuery( document ).ready(function( $ ){
         });
     }
 
-    cart_count();
 
-    $('.price-target').html(total_items());
-
-    // getPageScroll() by quirksmode.com
-    // Retrives the x, y coordinates of the viewport
-    function get_page_scroll() {
+    /**
+     * Retrives the x, y coordinates of the viewport
+     * getPageScroll() by quirksmode.com
+     */
+    function sell_media_get_page_scroll() {
         var xScroll, yScroll;
         if (self.pageYOffset) {
           yScroll = self.pageYOffset;
@@ -94,22 +106,38 @@ jQuery( document ).ready(function( $ ){
         return new Array(xScroll,yScroll)
     }
 
-    // the cart
+
+    /**
+     * Run the following code below the DOM is ready update the cart count
+     */
+    cart_count();
+    $('.price-target').html(total_items());
+
+
+    /**
+     * When the user clicks on our trigger we set-up the overlay,
+     * launch our dialog, and send an Ajax request to load our cart form.
+     */
     $('.sell-media-cart-trigger').click(function( event ){
 
-        coordinates = get_page_scroll();
+        event.preventDefault();
+
+        // Overlay set-up
+        coordinates = sell_media_get_page_scroll();
         y = coordinates[1] + +100;
         x = ( $(window).width() / 2 ) - ( $( '.sell-media-cart-dialog' ).outerWidth() / 2 );
-
         $('.sell-media-cart-dialog').css({
             'top': y + 'px',
             'left': x + 'px'
         });
 
-        event.preventDefault();
 
+        // Show our dialog with a loading message
         $('.sell-media-cart-dialog').toggle();
         $( ".sell-media-cart-dialog-target" ).html( "<h2>Loading...</h2>" );
+
+
+        // Send Ajax request for Shopping Cart
         $.ajax({
             data: {
                 "action": "sell_media_load_template",
@@ -124,6 +152,8 @@ jQuery( document ).ready(function( $ ){
             }
         });
 
+
+        // Add our overlay to the html if #overlay is present.
         if($('#overlay').length > 0){
             $('#overlay').remove();
         } else {
@@ -136,6 +166,7 @@ jQuery( document ).ready(function( $ ){
             });
         }
     });
+
 
     $('.close').live('click', function(){
         $('.sell-media-cart-dialog').hide();
@@ -164,14 +195,8 @@ jQuery( document ).ready(function( $ ){
 
         $.ajax({
             data: _data,
-            beforeSend: function(){
-                _disable_buttons();
-            },
             success: function( msg ) {
                 cart_count();
-            },
-            complete: function(){
-                _enable_buttons();
             }
         });
         return false;
