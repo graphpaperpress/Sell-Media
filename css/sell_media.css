@@ -164,6 +164,10 @@
   text-align: center;
   width: 20px;
 }
+.sell-media-cart-dialog a,
+.sell-media-cart-dialog a:visited {
+  color: #333;
+}
 
 /*= Checkout
 -------------------------------------------------------------- */
@@ -364,11 +368,4 @@ input[type="submit"].sell-media-buy-button:active,
 .sell-media-cart-dialog a:hover,
 .sell-media-cart-dialog a:focus {
   color: #000;
-}
-
-/*= Support for dark themes
--------------------------------------------------------------- */
-.sell-media-cart-dialog a,
-.sell-media-cart-dialog a:visited {
-  color: #333;
 }
