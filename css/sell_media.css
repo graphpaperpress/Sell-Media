@@ -85,6 +85,9 @@
 .sell-media .sell-media-grid .sell-media-buy-text {
   float: right;
 }
+.sell-media-pagination-container {
+  clear: both;
+}
 
 /*= Cart
 -------------------------------------------------------------- */
@@ -361,4 +364,11 @@ input[type="submit"].sell-media-buy-button:active,
 .sell-media-cart-dialog a:hover,
 .sell-media-cart-dialog a:focus {
   color: #000;
+}
+
+/*= Support for dark themes
+-------------------------------------------------------------- */
+.sell-media-cart-dialog a,
+.sell-media-cart-dialog a:visited {
+  color: #333;
 }

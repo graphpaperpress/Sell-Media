@@ -206,14 +206,10 @@ jQuery( document ).ready(function( $ ){
 
     $('.remove-item-handle').live('click', function(){
 
-        $(this).closest('tr').fadeOut("fast", function() {
-            $(this).remove();
-        });
-        $(this).closest('li').fadeOut("fast", function() {
-            $(this).remove();
-        });
+        $(this).closest('tr').hide();
 
         count = $(".sell_media-product-list li").size();
+
         if( count == 1 ) {
             $('.price-target').html('0');
             $('.sell-media-buy-button-checkout').fadeOut();
@@ -228,8 +224,8 @@ jQuery( document ).ready(function( $ ){
             data: data,
             success: function( msg ){
                 // We have no items in the cart
-                if ( msg == "0" ){
-                    $('#sell-media-checkout').fadeOut();
+                if ( msg ){
+                    $('#sell-media-checkout').html( msg );
                 }
 
                 total_items()

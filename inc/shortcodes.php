@@ -173,7 +173,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
     }?>
 <div id="sell-media-checkout" class="sell-media">
     <?php if ( empty( $items ) ) : ?>
-         <p><?php _e('You have no items in your cart.', 'wmpc'); ?></p>
+         <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
     <?php else : ?>
         <table id="sell-media-checkout-table">
             <thead>
