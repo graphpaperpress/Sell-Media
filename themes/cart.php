@@ -31,10 +31,10 @@ if ( empty( $tmp_price ) ) {
             </div>
             <div class="right">
                 <form action="javascript://" method="POST" id="sell_media_cart_form">
-                    <input type="text" size="1" name="AttachmentID" value="<?php print $_POST['attachment_id']; ?>" />
-                    <input type="text" size="1" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
-                    <input type="text" size="1" name="CalculatedPrice" class="price-target" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-                    <input type="text" size="1" name="Size" id="sell_media_size_select" value="<?php print $price; ?>" />
+                    <input type="hidden" name="AttachmentID" value="<?php print $_POST['attachment_id']; ?>" />
+                    <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
+                    <input type="hidden" name="CalculatedPrice" class="price-target" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+                    <input type="hidden" name="Size" id="sell_media_size_select" value="<?php print $price; ?>" />
 
                     <?php if ( count( wp_get_post_terms( $_POST['product_id'], 'licenses' ) ) > 1 ) : ?>
                         <fieldset>
