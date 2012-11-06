@@ -187,9 +187,7 @@ function sell_media_general_section(){
                 </tbody>
             </table>
             <?php do_action( 'sell_media_settings_below_general_section_hook' ); ?>
-            <p>
-                <input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" />
-            </p>
+            <?php submit_button( __('Save Changes', 'sell_media'), 'primary', 'show' ); ?>
         </form>
     </div>
 <?php }

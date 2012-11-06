@@ -187,7 +187,7 @@ function sell_media_payments_callback_fn(){
             <?php } ?>
             <label for="sell_media_show"><?php _e('Payments per page', 'sell_media'); ?></label>
             <input type="text" class="regular-text" style="width:30px;" id="sell_media_show" name="show" value="<?php echo isset($_GET['show']) ? $_GET['show'] : ''; ?>"/>
-            <input type="submit" class="button-secondary" value="<?php _e( 'Show', 'sell_media' ); ?>"/>
+            <?php submit_button( __('Show', 'sell_media'), 'secondary', 'show', $wrap=false ); ?>
         </form>
         <table class="wp-list-table widefat fixed posts">
             <thead>
