@@ -44,14 +44,14 @@ add_filter( 'attachment_fields_to_edit', 'sell_media_attachment_fields_to_edit',
  *
  * @since 0.1
  */
-function sell_media_delete_product( $post_id=null ){
+function sell_media_delete_item( $post_id=null ){
 
     $product_id = get_post_meta( $post_id, '_sell_media_for_sale_product_id', true );
 
     delete_post_meta( $post_id, '_sell_media_for_sale_product_id' );
     delete_post_meta( $post_id, '_sell_media_for_sale' );
 
-    return wp_delete_post( $product_id, true );
+    wp_trash_post( $product_id );
 }
 
 
@@ -72,7 +72,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
     // Attachment was once marked for sale, but no longer is for sale.
     if ( is_null( $attachment['sell'] ) && $for_sale ){
-        sell_media_delete_product( $post['ID'] );
+        sell_media_delete_item( $post['ID'] );
 
         return $post;
 
