@@ -179,8 +179,8 @@ function sell_media_cart_shortcode($atts, $content = null) {
             <thead>
                 <tr class="sell-media-header">
                     <th class="sell-media-header-details"><h3><?php _e('Item', 'sell_media'); ?></h3></th>
+                    <th class="sell-media-header-description"><h3><?php _e('Description', 'sell_media'); ?></h3></th>
                     <th class="sell-media-header-price"><h3><?php _e('Price', 'sell_media'); ?></h3></th>
-                    <th class="sell-media-header-remove"><h3><?php _e('Remove', 'sell_media'); ?></h3></th>
                 </tr>
             </thead>
             <tbody class="sell-media-product-list">
@@ -196,47 +196,53 @@ function sell_media_cart_shortcode($atts, $content = null) {
                             <a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print wp_get_attachment_image( $item['AttachmentID'], array(75,0) ); ?></a>
                             <h5><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></h5>
                         </td>
-                        <td class="product-price">
-                            <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span>
+                        <td class="product-description">
+                            <?php print get_post_meta( $item['ProductID'], 'sell_media_description', true); ?>
                         </td>
-                        <td class="remove-item">
-                            <span class="remove-item-handle" data-item_id="<?php print $item_id; ?>" checked="checked" name="<?php print $item['AttachmentID']; ?>" value="" ><?php _e('Remove', 'sell_media'); ?></span>
+                        <td class="product-price">
+                            <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span> <br /><span class="remove-item-handle" data-item_id="<?php print $item_id; ?>" checked="checked" name="<?php print $item['AttachmentID']; ?>" value="" ><?php _e('Remove', 'sell_media'); ?></span>
                         </td>
                     </tr>
                 <?php endforeach; ?>
+                    <tr class="product-checkout-row">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="product-checkout-row">
+                            <h4><?php _e( 'Subtotal' , 'sell_media' ) ?></h4>
+                            <strong><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></strong>
+                            <form action="" method="post" id="sell_media_checkout_form">
+                                <?php if ( ! is_user_logged_in() ) : ?>
+                                    <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a></p>
+                                    <p>
+                                    <label><?php _e( 'First Name', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
+                                    <input type="text" class="" id="sell_media_first_name_field" name="first_name" />
+                                    <span id="firstname-error" class="error" style="display:none;"><?php _e( 'First name cannot be empty', 'sell_media' ); ?></span>
+                                    </p>
+                                    <p>
+                                    <label><?php _e( 'Last Name', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
+                                    <input type="text" class="" id="sell_media_last_name_field" name="last_name" />
+                                    <span id="lastname-error" class="error" style="display:none;"><?php _e( 'Last name cannot be empty', 'sell_media' ); ?></span>
+                                    </p>
+                                    <p>
+                                    <label><?php _e( 'Email', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
+                                    <input type="email" class="" id="sell_media_email_field" name="email" />
+                                    <span id="email-error" class="error" style="display:none;"><?php _e( 'Email doesn\'t appear valid', 'sell_media' ); ?></span>
+                                    </p>
+                                <?php else : ?>
+                                    <?php $current_user = wp_get_current_user(); ?>
+                                    <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
+                                    <input type="hidden" id="sell_media_last_name_field" name="last_name" value="<?php print $current_user->user_lastname; ?>" />
+                                    <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
+                                <?php endif; ?>
+                                <div class="button-container">
+                                    <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Checkout', 'sell_media'); ?>" />
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
             </tbody>
         </table>
-        <div class="subtotal-container">
-            <strong><?php _e( 'Subtotal ' , 'sell_media' ) ?><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></strong>
-        </div>
-        <form action="" method="post" id="sell_media_checkout_form">
-            <?php if ( ! is_user_logged_in() ) : ?>
-                <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a></p>
-                <p>
-                <label><?php _e( 'First Name', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
-                <input type="text" class="" id="sell_media_first_name_field" name="first_name" />
-                <span id="firstname-error" class="error" style="display:none;"><?php _e( 'First name cannot be empty', 'sell_media' ); ?></span>
-                </p>
-                <p>
-                <label><?php _e( 'Last Name', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
-                <input type="text" class="" id="sell_media_last_name_field" name="last_name" />
-                <span id="lastname-error" class="error" style="display:none;"><?php _e( 'Last name cannot be empty', 'sell_media' ); ?></span>
-                </p>
-                <p>
-                <label><?php _e( 'Email', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
-                <input type="email" class="" id="sell_media_email_field" name="email" />
-                <span id="email-error" class="error" style="display:none;"><?php _e( 'Email doesn\'t appear valid', 'sell_media' ); ?></span>
-                </p>
-            <?php else : ?>
-                <?php $current_user = wp_get_current_user(); ?>
-                <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
-                <input type="hidden" id="sell_media_last_name_field" name="last_name" value="<?php print $current_user->user_lastname; ?>" />
-                <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
-            <?php endif; ?>
-            <div class="button-container">
-                <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Checkout', 'sell_media'); ?>" />
-            </div>
-        </form>
+
     <?php endif; ?>
 </div>
 <?php }

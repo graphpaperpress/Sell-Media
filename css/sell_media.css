@@ -87,6 +87,10 @@
 }
 .sell-media-pagination-container {
   clear: both;
+  text-align: center
+}
+.sell-media-pagination-container .page-numbers {
+  padding: 0 3px;
 }
 
 /*= Cart
@@ -164,9 +168,15 @@
   text-align: center;
   width: 20px;
 }
+.sell-media-cart-dialog,
+.sell-media-cart-dialog p,
 .sell-media-cart-dialog a,
 .sell-media-cart-dialog a:visited {
   color: #333;
+}
+.sell-media-cart-dialog a:hover,
+.sell-media-cart-dialog a:focus {
+  color: #000;
 }
 
 /*= Checkout
@@ -179,16 +189,15 @@
 }
 #sell-media-checkout-table thead th {
   background: none;
+  text-align: left;
 }
-.sell-media .sell-media-header-price, .sell-media .sell-media-header-remove, .sell-media .product-price, .sell-media .remove-item {
-  text-align: center;
-}
-.sell-media .remove-item .remove-item-handle {
-  cursor:pointer;
-  color:#FF0000;
+.sell-media .remove-item-handle {
+  cursor: pointer;
+  color: #FF0000;
+  font-size: 10px;
 }
 .sell-media-req {
-  color: red;
+  color: #FF0000;
   font-size: 12px;
   position: relative;
   top: 0;
@@ -231,7 +240,8 @@
 
 /*= Buttons
 -------------------------------------------------------------- */
-.sell-media-buy-button {
+.sell-media-buy-button,
+input[type="submit"].sell-media-buy-button {
   display: inline-block;
   *display: inline;
   padding: 4px 10px 4px;
@@ -328,8 +338,12 @@ input[type="submit"].sell-media-buy-button:active,
      -moz-box-shadow: none;
           box-shadow: none;
 }
-.sell-media-buy-button-success {
-  color:#ffffff;
+.sell-media-buy-button-success,
+input[type="submit"].sell-media-buy-button-success {
+  padding: 10px 20px;
+  margin-bottom: 2em;
+  font-size: 16px;
+  color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #5bb75b;
   *background-color: #51a351;
@@ -349,23 +363,16 @@ input[type="submit"].sell-media-buy-button:active,
 .sell-media-buy-button-success:active,
 .sell-media-buy-button-success.active,
 .sell-media-buy-button-success.disabled,
-.sell-media-buy-button-success[disabled] {
+.sell-media-buy-button-success[disabled],
+input[type="submit"].sell-media-buy-button-success:hover {
+  background: #51a351;
   background-color: #51a351;
   *background-color: #499249;
+  border-color: transparent;
   color: #fff;
 }
 .sell-media-buy-button-success:active,
-.sell-media-buy-button-success.active {
+.sell-media-buy-button-success.active,
+input[type="submit"].sell-media-buy-button-success:active {
   background-color: #408140 \9;
-}
-
-/*= Widgets
--------------------------------------------------------------- */
-.sell-media-cart-dialog,
-.sell-media-cart-dialog p {
-  color: #333;
-}
-.sell-media-cart-dialog a:hover,
-.sell-media-cart-dialog a:focus {
-  color: #000;
 }
