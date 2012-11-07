@@ -249,29 +249,22 @@ function sell_media_save_custom_meta( $post_id ) {
         // to our wp uploads directory so other plugins/themes can use it.
         do_action( 'sell_media_before_upload' );
 
-        // Would rather check if the correct function exists
-        // but the function 'image_make_intermediate_size' uses other
-        // functions that are in trunk and not in 3.4
-        if ( get_bloginfo('version') >= '3.5' ) {
-            $image_new_size = image_make_intermediate_size( $moved_file, get_option('large_size_h'), get_option('large_size_w'), $crop = false );
-            $resized_image = dirname( $destination ) . '/' . date('m') . '/' . $image_new_size['file'];
-        } else {
-            $resized_image = image_resize( $moved_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
+        $mime_type = wp_check_filetype( $moved_file );
+
+        $image_mimes = array(
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/bmp',
+            'image/tiff'
+            );
+
+        if ( in_array( $mime_type['type'], $image_mimes ) ){
+            $destination_file = sell_media_item_image_meta_fields( $moved_file, $_FILES );
         }
 
-        $destination_file = $wp_upload_dir['path'] . '/' . $_FILES['sell_media_file']['name'];
-        do_action( 'sell_media_after_upload' );
-
-        // image_resize() creates the file with the prefixed file size, we
-        // don't want this. So we copy the resized image to the same location
-        // just without the prefixed image resolution.
-
-        // We still don't have an original, so we copy the resized image to.
-        @copy( $resized_image, $destination_file );
-
-        // We delete our originally copied file and let
-        // WordPress make it from our renamed "wordpress original"
-        // unlink( $resized_image );
+        // Additional processes dependent on mime types will
+        // be here.
 
         $current_user = wp_get_current_user();
         $attachment = array(
@@ -300,18 +293,6 @@ function sell_media_save_custom_meta( $post_id ) {
         update_post_meta( $post_id, '_thumbnail_id', $attach_id );
         update_post_meta( $attach_id, '_sell_media_for_sale_product_id', $post_id );
         update_post_meta( $attach_id, '_sell_media_for_sale', 1 );
-
-        // Get iptc info
-        $city = sell_media_iptc_parser( 'city', $destination_file );
-        $state = sell_media_iptc_parser( 'state', $destination_file );
-        $creator = sell_media_iptc_parser( 'creator', $destination_file );
-        $keywords = sell_media_iptc_parser( 'keywords', $destination_file );
-
-        // If we have iptc info save it
-        if ( $city ) sell_media_iptc_save( 'city', $city, $post_id );
-        if ( $state ) sell_media_iptc_save( 'state', $state, $post_id );
-        if ( $creator ) sell_media_iptc_save( 'creator', $creator, $post_id );
-        if ( $keywords ) sell_media_iptc_save( 'keywords', $keywords, $post_id );
     }
 
     // loop through fields and save the data

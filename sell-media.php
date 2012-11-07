@@ -24,7 +24,7 @@ include( dirname(__FILE__) . '/inc/settings.php' );
 include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
-
+include( dirname(__FILE__) . '/inc/mime-types.php' );
 
 /**
  * Start our PHP session for shopping cart
