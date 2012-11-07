@@ -120,49 +120,21 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
         $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $meta['file'];
 
-        // Read the IPTC data from the original file
-        if ( file_exists( $original_file ) ){
-            $city = sell_media_iptc_parser( 'city', $original_file );
-            $state = sell_media_iptc_parser( 'state', $original_file );
-            $creator = sell_media_iptc_parser( 'creator', $original_file );
-            $keywords = sell_media_iptc_parser( 'keywords', $original_file );
+        $mime_type = wp_check_filetype( $original_file );
 
-            // Save iptc info as taxonomies
-            if ( $city )
-                sell_media_iptc_save( 'city', $city, $product_id );
+        $image_mimes = array(
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/bmp',
+            'image/tiff'
+            );
 
-            if ( $state )
-                sell_media_iptc_save( 'state', $state, $product_id );
-
-            if ( $creator )
-                sell_media_iptc_save( 'creator', $creator, $product_id );
-
-            if ( $keywords )
-                sell_media_iptc_save( 'keywords', $keywords, $product_id );
-
-            // Check if the destinatin dir is exists, i.e.
-            // sell_media/YYYY/MM if not we create it first
-            $destination_dir = dirname( $destination_file );
-            if ( ! file_exists( $destination_dir ) ){
-                wp_mkdir_p( $destination_dir );
-            }
-
-            // Would rather check if the correct function exists
-            // but the function 'image_make_intermediate_size' uses other
-            // functions that are in trunk and not in 3.4
-            if ( get_bloginfo('version') >= '3.5' ) {
-                $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), $crop = false );
-                $resized_image = dirname( $destination ) . '/' . date('m') . '/' . $image_new_size['file'];
-            } else {
-                $resized_image = image_resize( $original_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
-            }
-
-            // Copy original to our protected area
-            @copy( $original_file, $destination_file );
-
-            // Copy our resized image to the original
-            @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+        // Image mime type support
+        if ( in_array( $mime_type['type'], $image_mimes ) ){
+            $destination_file = sell_media_image_attachment( $original_file );
         }
+        // Support for different mime types here
 
         return $post;
 

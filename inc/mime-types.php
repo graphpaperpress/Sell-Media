@@ -7,7 +7,7 @@
  *
  * @param $moved_file The file we are referencing
  * @param $_FILES The Global PHP $_FILES array.
- *
+ * @since 1.0.1
  * @return $destination_file The location to the new file
  */
 function sell_media_item_image_meta_fields( $moved_file=null, $_FILES=null ){
@@ -46,4 +46,59 @@ function sell_media_item_image_meta_fields( $moved_file=null, $_FILES=null ){
     if ( $keywords ) sell_media_iptc_save( 'keywords', $keywords, $post_id );
 
     return $destination_file;
+}
+
+
+/**
+ * Parse IPTC info and move the uploaded file into the proctected area
+ *
+ * @param $original_file Full path of the file with the file.
+ * @since 1.0.1
+ */
+function sell_media_image_attachment( $original_file=null ){
+    if ( file_exists( $original_file ) ){
+
+        $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $meta['file'];
+
+        $city = sell_media_iptc_parser( 'city', $original_file );
+        $state = sell_media_iptc_parser( 'state', $original_file );
+        $creator = sell_media_iptc_parser( 'creator', $original_file );
+        $keywords = sell_media_iptc_parser( 'keywords', $original_file );
+
+        // Save iptc info as taxonomies
+        if ( $city )
+            sell_media_iptc_save( 'city', $city, $product_id );
+
+        if ( $state )
+            sell_media_iptc_save( 'state', $state, $product_id );
+
+        if ( $creator )
+            sell_media_iptc_save( 'creator', $creator, $product_id );
+
+        if ( $keywords )
+            sell_media_iptc_save( 'keywords', $keywords, $product_id );
+
+        // Check if the destinatin dir is exists, i.e.
+        // sell_media/YYYY/MM if not we create it first
+        $destination_dir = dirname( $destination_file );
+        if ( ! file_exists( $destination_dir ) ){
+            wp_mkdir_p( $destination_dir );
+        }
+
+        // Would rather check if the correct function exists
+        // but the function 'image_make_intermediate_size' uses other
+        // functions that are in trunk and not in 3.4
+        if ( get_bloginfo('version') >= '3.5' ) {
+            $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), $crop = false );
+            $resized_image = dirname( $destination ) . '/' . date('m') . '/' . $image_new_size['file'];
+        } else {
+            $resized_image = image_resize( $original_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
+        }
+
+        // Copy original to our protected area
+        @copy( $original_file, $destination_file );
+
+        // Copy our resized image to the original
+        @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+    }
 }
