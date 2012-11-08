@@ -229,17 +229,17 @@ function sell_media_save_custom_meta( $post_id ) {
     $wp_upload_dir = wp_upload_dir();
 
     // Build our destination path, note the Y/m
-    $destination = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/';
+    $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/';
 
     // This is used to check for year/month/ folder
     // If we don't have one we'll let WordPress create it.
-    if ( ! is_dir( $destination ) ){
-        wp_mkdir_p( $destination );
+    if ( ! is_dir( $destination_file ) ){
+        wp_mkdir_p( $destination_file );
     }
 
     // Move our uploaded file to our Sell Media upload folder
-    $did_move = move_uploaded_file( $_FILES['sell_media_file']['tmp_name'], $destination . $_FILES['sell_media_file']['name'] );
-    $moved_file =  $destination . $_FILES['sell_media_file']['name'];
+    $did_move = move_uploaded_file( $_FILES['sell_media_file']['tmp_name'], $destination_file . $_FILES['sell_media_file']['name'] );
+    $moved_file =  $destination_file . $_FILES['sell_media_file']['name'];
 
     // Insert our uploaded file from the Sell Media upload dir into
     // WordPress as an attachment
