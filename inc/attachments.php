@@ -118,8 +118,6 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         $dir = wp_upload_dir();
         $original_file = $dir['basedir'] . '/' . $meta['file'];
 
-        $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $meta['file'];
-
         $mime_type = wp_check_filetype( $original_file );
 
         $image_mimes = array(
@@ -132,7 +130,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
         // Image mime type support
         if ( in_array( $mime_type['type'], $image_mimes ) ){
-            $destination_file = sell_media_image_attachment( $original_file );
+            $destination_file = sell_media_move_image( $meta['file'] );
         }
         // Support for different mime types here
 
