@@ -132,6 +132,9 @@ function sell_media_move_image_from_attachment( $attached_file=null ){
  */
 function sell_media_item_icon( $attachment_id=null, $size='medium' ){
 
+    if ( empty( $attachment_id ) )
+        return;
+
     $mime_type = get_post_mime_type( $attachment_id );
 
     switch( $mime_type ){

@@ -36,7 +36,7 @@ global $sell_media_item_meta_fields;
 $prefix = 'sell_media';
 $sell_media_item_meta_fields = array(
     array(
-        'label'  => 'Image',
+        'label'  => 'Item',
         'desc'  => 'A description for the field.',
         'id'    => $prefix . '_file',
         'type'  => 'file'
