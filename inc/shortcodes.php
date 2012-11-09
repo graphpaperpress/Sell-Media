@@ -193,7 +193,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                     ?>
                     <tr>
                         <td class="product-details">
-                            <a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print wp_get_attachment_image( $item['AttachmentID'], array(75,0) ); ?></a>
+                            <a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php sell_media_item_icon( $item['AttachmentID'], array(75,0) ); ?></a>
                             <h5><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></h5>
                         </td>
                         <td class="product-description">

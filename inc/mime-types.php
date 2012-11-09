@@ -102,3 +102,36 @@ function sell_media_image_attachment( $original_file=null ){
         @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
     }
 }
+
+
+/**
+ * Determines the default icon used for an Attachment. If an
+ * image mime type is detected than the attachment image is used.
+ */
+function sell_media_item_icon( $attachment_id=null, $size='medium' ){
+
+    $mime_type = get_post_mime_type( $attachment_id );
+
+    switch( $mime_type ){
+        case 'image/jpeg':
+        case 'image/png':
+        case 'image/gif':
+                $image = wp_get_attachment_image_src( $attachment_id, $size );
+                echo  '<img src="'.$image[0].'" class="custom_preview_image" alt="" height="'.$image[2].'" width="'.$image[1].'" style="max-width:100%;height:auto;"/>';
+            return;
+        case 'video/mpeg':
+        case 'video/mp4':
+        case 'video/quicktime':
+        case 'application/octet-stream':
+            $mime_type = 'video/mpeg';
+            break;
+        case 'text/csv':
+        case 'text/plain':
+        case 'text/xml':
+        case 'text/document':
+        case 'application/pdf':
+            $mime_type = 'text/document';
+            break;
+    }
+    print '<img src="' . wp_mime_type_icon( $mime_type ) . '" />';
+}

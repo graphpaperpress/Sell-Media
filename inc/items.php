@@ -139,13 +139,10 @@ function sell_media_show_custom_meta_box() {
 
                 // File
                 case 'file':
-                    $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-                    echo '<span class="custom_default_image" style="display:none">'.$image[0].'</span>';
-                    if ($meta) { $image = wp_get_attachment_image_src($meta, 'medium'); $image = $image[0]; }
-                    echo    '<img src="'.$image[0].'" class="custom_preview_image" alt="" style="max-width:100%;height:auto;"/><br />
-                            <input type="file" name="'.$field['id'].'" />
-                            <br clear="all" /><span class="description">'.$field['desc'].'';
-                break;
+                    $attachment_id = get_post_thumbnail_id( $post->ID );
+                    sell_media_item_icon( $attachment_id );
+                    echo  '<br clear="all" /><input type="file" name="'.$field['id'].'" /><br clear="all" /><span class="description">'.$field['desc'].'';
+                    break;
 
                 // text
                 case 'html':
@@ -381,7 +378,7 @@ function sell_media_item_content( $column, $post_id ){
         case "icon":
             // $html ='<a href="'.site_url().'/wp-admin/media.php?attachment_id='.get_post_thumbnail_id( $post_id ).'&action=edit">';
             $html ='<a href="'.site_url().'/wp-admin/post.php?post=' . $post_id . '&action=edit">';
-            $html .= get_the_post_thumbnail( $post_id, array(80, 53) );
+            $html .= sell_media_item_icon( get_post_thumbnail_id( $post_id ), 'thumbnail' );
             $html .= '</a>';
             print $html;
             break;
