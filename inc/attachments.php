@@ -130,7 +130,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
         // Image mime type support
         if ( in_array( $mime_type['type'], $image_mimes ) ){
-            $destination_file = sell_media_move_image( $meta['file'] );
+            sell_media_move_image_from_attachment( $meta['file'] );
         }
         // Support for different mime types here
 

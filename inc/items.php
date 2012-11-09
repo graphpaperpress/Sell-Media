@@ -70,7 +70,7 @@ $sell_media_item_meta_fields = array(
  * @since 0.1
  */
 function sell_media_show_custom_meta_box() {
-    global $sell_media_item_meta_fields, $post;
+    global $sell_media_item_meta_fields, $post, $sell_media_affiliate_meta_fields;
     // Use nonce for verification
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
 
@@ -257,7 +257,7 @@ function sell_media_save_custom_meta( $post_id ) {
             );
 
         if ( in_array( $mime_type['type'], $image_mimes ) ){
-            $destination_file = sell_media_item_image_meta_fields( $moved_file, $_FILES );
+            $destination_file = sell_media_move_image_from_meta( $moved_file, $_FILES );
         }
 
         // Additional processes dependent on mime types will
@@ -429,7 +429,7 @@ function sell_media_item_price( $post_id=null, $currency=true ){
  *
  * @since 0.1
  */
-function sell_media_move_image_back( $postid ){
+function sell_media_move_image_from_attachment_back( $postid ){
     die('here');
     // Read our meta data from the original post
     $aid = get_post_thumbnail_id( $postid );
@@ -444,7 +444,7 @@ function sell_media_move_image_back( $postid ){
     @copy( $original_file, $destination_file );
     return;
 }
-// add_action( 'before_delete_post', 'sell_media_move_image_back' );
+// add_action( 'before_delete_post', 'sell_media_move_image_from_attachment_back' );
 
 
 /**

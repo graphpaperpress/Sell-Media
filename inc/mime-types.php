@@ -10,7 +10,7 @@
  * @since 1.0.1
  * @return $destination_file The location to the new file
  */
-function sell_media_item_image_meta_fields( $moved_file=null, $_FILES=null ){
+function sell_media_move_image_from_meta( $moved_file=null, $_FILES=null ){
 
     // Would rather check if the correct function exists
     // but the function 'image_make_intermediate_size' uses other
@@ -24,6 +24,7 @@ function sell_media_item_image_meta_fields( $moved_file=null, $_FILES=null ){
 
     $wp_upload_dir = wp_upload_dir();
     $destination_file = $wp_upload_dir['path'] . '/' . $_FILES['sell_media_file']['name'];
+
     do_action( 'sell_media_after_upload' );
 
     // image_resize() creates the file with the prefixed file size, we
@@ -32,6 +33,13 @@ function sell_media_item_image_meta_fields( $moved_file=null, $_FILES=null ){
 
     // We still don't have an original, so we copy the resized image to.
     @copy( $resized_image, $destination_file );
+
+    // Since we copied our WP generated image size to the "protected area"
+    // we need to copy it back to the WP area. Then we need to unlink it,
+    // i.e. "delete".
+    $new_resize_location = dirname( $destination_file ) . '/' . basename( $resized_image );
+    @copy( $resized_image, $new_resize_location );
+    unlink( $resized_image );
 
     // Get iptc info
     $city = sell_media_iptc_parser( 'city', $destination_file );
@@ -62,7 +70,7 @@ function sell_media_item_image_meta_fields( $moved_file=null, $_FILES=null ){
  * "_wp_attached_file", i.e., YYYY/MM/file-name.ext
  * @since 1.0.1
  */
-function sell_media_move_image( $attached_file=null ){
+function sell_media_move_image_from_attachment( $attached_file=null ){
 
     // Since our attached file does not contain the full path.
     // We build it using the wp_upload_dir function.
