@@ -61,6 +61,7 @@ $sell_media_item_meta_fields = array(
         'type'  => 'html'
     )
 );
+do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
 
 
 /**
@@ -69,14 +70,26 @@ $sell_media_item_meta_fields = array(
  * @author Thad Allender
  * @since 0.1
  */
-function sell_media_show_custom_meta_box() {
-    global $sell_media_item_meta_fields, $post, $sell_media_affiliate_meta_fields;
+function sell_media_show_custom_meta_box( $fields=null ) {
+
+    global $post;
+
+    // Since the first param coming into this functions is
+    // ALWAYS the global $post which is an OBJECT we check it.
+    // If it is an ARRAY we assume its new settings.
+    if ( is_array( $fields ) ){
+        $my_fields = $fields;
+    } else {
+        global $sell_media_item_meta_fields;
+        $my_fields = $sell_media_item_meta_fields;
+    }
+
     // Use nonce for verification
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
 
     // Begin the field table and loop
     echo '<table class="form-table">';
-    foreach ($sell_media_item_meta_fields as $field) {
+    foreach ($my_fields as $field) {
             $default = get_post_meta( $post->ID, $field['id'], true );
 
             // if ( ! isset( $default ) ) {
