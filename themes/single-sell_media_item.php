@@ -21,7 +21,14 @@ get_header(); ?>
 			<p class="entry-caption"><?php echo get_post_meta( $post->ID, 'sell_media_description', true ); ?></p>
 			<ul>
 				<li class="filename"><span class="title"><?php _e( 'Filename', 'sell_media' ); ?>:</span> <?php sell_media_image_filename( $post->ID); ?></li>
-				<li class="size"><span class="title"><?php _e( 'Size', 'sell_media' ); ?>:</span> <?php sell_media_image_size( $post->ID); ?></li>
+
+				<?php if( sell_media_item_size( $post->ID ) ) : ?>
+					<li class="size">
+						<span class="title"><?php _e( 'Size', 'sell_media' ); ?>:</span>
+						<?php print sell_media_item_size( $post->ID); ?>
+					</li>
+				<?php endif; ?>
+
 				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'collection' ) ) { ?>
 					<li class="collections"><span class="title"><?php _e( 'Collections', 'sell_media' ); ?>:</span> <?php sell_media_collections( $post->ID ); ?></li>
 				<?php } ?>
