@@ -153,7 +153,7 @@ function sell_media_the_markup_slider( $tag ){
 
         function calc_price( markUp ){
 
-            var price = <?php if ( get_option('sell_media_original_price') ) print get_option('sell_media_original_price'); else print 0; ?>;
+            var price = <?php if ( get_option('sell_media_original_price') ) print get_option('sell_media_original_price'); else print 1; ?>;
 
             if ( markUp == undefined )
                 var markUp = <?php print $initial_markup; ?>;
