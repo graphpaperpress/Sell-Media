@@ -110,13 +110,16 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         update_post_meta( $post['ID'], '_sell_media_for_sale_product_id', $product_id );
 
         // Read our meta data from the original post
-        $meta = wp_get_attachment_metadata( $post['ID'] );
 
         sell_media_set_default_terms( $product_id );
 
         // Build paths to the original file and the destination
         $dir = wp_upload_dir();
-        $original_file = $dir['basedir'] . '/' . $meta['file'];
+
+        $attached_file = get_post_meta( $post['ID'], '_wp_attached_file', true );
+        $file_name = basename( $attached_file );
+
+        $original_file = $dir['path'] . '/' . $file_name;
 
         $mime_type = wp_check_filetype( $original_file );
 
@@ -130,7 +133,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
         // Image mime type support
         if ( in_array( $mime_type['type'], $image_mimes ) ){
-            sell_media_move_image_from_attachment( $meta['file'] );
+            sell_media_move_image_from_attachment( $attached_file );
         }
         // Support for different mime types here
 

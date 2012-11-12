@@ -12,6 +12,8 @@
  */
 function sell_media_move_image_from_meta( $moved_file=null, $_FILES=null ){
 
+    $wp_upload_dir = wp_upload_dir();
+
     // Would rather check if the correct function exists
     // but the function 'image_make_intermediate_size' uses other
     // functions that are in trunk and not in 3.4
@@ -22,7 +24,6 @@ function sell_media_move_image_from_meta( $moved_file=null, $_FILES=null ){
         $resized_image = image_resize( $moved_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
     }
 
-    $wp_upload_dir = wp_upload_dir();
     $destination_file = $wp_upload_dir['path'] . '/' . $_FILES['sell_media_file']['name'];
 
     do_action( 'sell_media_after_upload' );
