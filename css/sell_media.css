@@ -42,6 +42,7 @@
   float: left;
   margin-right: 5%;
   width: 65%;
+  position: relative;
 }
 .sell-media img {
   max-width: 100%;
