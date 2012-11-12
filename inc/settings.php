@@ -124,8 +124,8 @@ function sell_media_settings_general(){?>
                 <th scope="row" class="titledesc"><?php _e( 'Test Mode', 'sell_media' ); ?></th>
                 <td class="forminp">
                     <select name="sell_media_test_mode" id="sell_media_test_mode">
-                        <option value="1" <?php selected( get_option('sell_media_test_mode'), 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
                         <option value="0" <?php selected( get_option('sell_media_test_mode'), 0 ); ?>><?php _e( 'No', 'sell_media' ); ?></option>
+                        <option value="1" <?php selected( get_option('sell_media_test_mode'), 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
                     </select>
                     <label for="sell_media_test_mode"><?php printf(__('To fully use test mode, you must have %1$s.'), '<a href="https://developer.paypal.com/" target="_blank">Paypal sandbox (test) account</a>' ); ?></label>
                 </td>
