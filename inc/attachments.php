@@ -139,7 +139,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
         // Image mime type support
         if ( in_array( $mime_type['type'], $image_mimes ) ){
-            sell_media_move_image_from_attachment( $attached_file );
+            sell_media_move_image_from_attachment( $attached_file, $product_id );
         }
         // Support for different mime types here
 
