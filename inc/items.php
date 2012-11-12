@@ -85,7 +85,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
     }
 
     // Use nonce for verification
-    echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
+    echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
     // Begin the field table and loop
     echo '<table class="form-table">';
@@ -100,7 +100,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
             // begin a table row with
             echo '<tr>
-            <th><label for="'.$field['id'].'">'.$field['label'].'</label></th>
+            <th><label for="' . $field['id'] . '">' . $field['label'] . '</label></th>
             <td>';
 
             $meta = null; // I have to find out what "meta" was used for, just setting it to null
@@ -113,20 +113,20 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     if ( $field['id'] == 'sell_media_price' && empty( $tmp_price ) ){
                         $default = get_option('sell_media_original_price');
                     }
-                    echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$default.'" size="30" />
-                        <br /><span class="description">'.$field['desc'].'</span>';
+                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" value="' . $default . '" size="30" />
+                        <br /><span class="description">' . $field['desc'] . '</span>';
                 break;
 
                 // textarea
                 case 'textarea':
-                    echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.$default.'</textarea>
-                        <br /><span class="description">'.$field['desc'].'</span>';
+                    echo '<textarea name="' . $field['id'] . '" id="' . $field['id'] . '" cols="60" rows="4">' . $default . '</textarea>
+                        <br /><span class="description">' . $field['desc'] . '</span>';
                 break;
 
                 // checkbox
                 case 'checkbox':
-                    echo '<input type="checkbox" name="'.$field['id'].'" id="'.$field['id'].'" ',$meta ? ' checked="checked"' : '','/>
-                        <label for="'.$field['id'].'">'.$field['desc'].'</label>';
+                    echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ',$meta ? ' checked="checked"' : '','/>
+                        <label for="' . $field['id'] . '">' . $field['desc'] . '</label>';
                 break;
 
                 // select
@@ -141,47 +141,47 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 // image
                 case 'image':
                     $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-                    echo '<span class="custom_default_image" style="display:none">'.$image[0].'</span>';
+                    echo '<span class="custom_default_image" style="display:none">' . $image[0] . '</span>';
                     if ($meta) { $image = wp_get_attachment_image_src($meta, 'medium'); $image = $image[0]; }
-                    echo    '<input name="'.$field['id'].'" type="hidden" class="custom_upload_image" value="'.$meta.'" />
-                    <img src="'.$image[0].'" class="custom_preview_image" alt="" /><br />
+                    echo    '<input name="' . $field['id'] . '" type="hidden" class="custom_upload_image" value="' . $meta . '" />
+                    <img src="' . $image[0] . '" class="custom_preview_image" alt="" /><br />
                     <input class="custom_upload_image_button button" type="button" value="Choose Image" />
                     <small> <a href="#" class="custom_clear_image_button">Remove Image</a></small>
-                    <br clear="all" /><span class="description">'.$field['desc'].'';
+                    <br clear="all" /><span class="description">' . $field['desc'] . '';
                 break;
 
                 // File
                 case 'file':
                     $attachment_id = get_post_thumbnail_id( $post->ID );
                     sell_media_item_icon( $attachment_id );
-                    echo  '<br clear="all" /><input type="file" name="'.$field['id'].'" /><br clear="all" /><span class="description">'.$field['desc'].'';
+                    echo  '<br clear="all" /><input type="file" name="' . $field['id'] . '" /><br clear="all" /><span class="description">' . $field['desc'] . '';
                     break;
 
                 // text
                 case 'html':
-                    echo '<p id="'.$field['id'].'"><span class="description">'.$field['desc'].'</span></p>
-                    <p><code>[sell_media_item id="'.$post->ID.'" text="Purchase" style="button" size="medium"]</code></p>';
+                    echo '<p id="' . $field['id'] . '"><span class="description">' . $field['desc'] . '</span></p>
+                    <p><code>[sell_media_item id="' . $post->ID . '" text="Purchase" style="button" size="medium"]</code></p>';
                 break;
 
                 // repeatable
                 case 'repeatable':
                     echo '<a class="repeatable-add button" href="#">+</a>
-                            <ul id="'.$field['id'].'-repeatable" class="custom_repeatable ui-sortable">';
+                            <ul id="' . $field['id'] . '-repeatable" class="custom_repeatable ui-sortable">';
                     $i = 0;
                     if ($meta) {
                         foreach($meta as $row) {
                             echo '<li><span class="sort hndle">|||</span>
-                                        <input type="text" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="'.$row.'" size="30" />
+                                        <input type="text" name="' . $field['id'] . '[' . $i . ']" id="' . $field['id'] . '" value="' . $row . '" size="30" />
                                         <a class="repeatable-remove button" href="#">-</a></li>';
                             $i++;
                         }
                     } else {
                         echo '<li><span class="sort hndle">|||</span>
-                                    <input type="text" name="'.$field['id'].'['.$i.']" id="'.$field['id'].'" value="" size="30" />
+                                    <input type="text" name="' . $field['id'] . '[' . $i . ']" id="' . $field['id'] . '" value="" size="30" />
                                     <a class="repeatable-remove button" href="#">-</a></li>';
                     }
                     echo '</ul>
-                        <span class="description">'.$field['desc'].'</span>';
+                        <span class="description">' . $field['desc'] . '</span>';
                 break;
 
             } //end switch
@@ -390,7 +390,7 @@ function sell_media_item_content( $column, $post_id ){
     switch( $column ) {
         case "icon":
             // $html ='<a href="'.site_url().'/wp-admin/media.php?attachment_id='.get_post_thumbnail_id( $post_id ).'&action=edit">';
-            $html ='<a href="'.site_url().'/wp-admin/post.php?post=' . $post_id . '&action=edit">';
+            $html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
             $html .= sell_media_item_icon( get_post_thumbnail_id( $post_id ), 'thumbnail' );
             $html .= '</a>';
             print $html;
@@ -403,7 +403,7 @@ function sell_media_item_content( $column, $post_id ){
             $count = count( $terms );
             $i = 0;
             foreach( $terms as $term ){
-                print '<a href="'.site_url().'/wp-admin/edit.php?licenses='.$term->slug.'&post_type=sell_media_item">'.$term->name.'</a>';
+                print '<a href="' . site_url() . '/wp-admin/edit.php?licenses=' . $term->slug . '&post_type=sell_media_item">' . $term->name . '</a>';
                 if ( $count - 1 > $i ) print ', ';
                 $i++;
             }
