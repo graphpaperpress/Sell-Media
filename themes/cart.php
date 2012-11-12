@@ -25,7 +25,7 @@ if ( empty( $tmp_price ) ) {
             <?php do_action( 'sell_media_above_cart' ); ?>
             <div class="left">
                 <div class="image-container clearfix">
-                    <?php sell_media_item_icon( $_POST['attachment_id'], 'large' ); ?>
+                    <?php sell_media_item_icon( $_POST['attachment_id'], 'medium' ); ?>
                     <p><strong><?php print get_the_title( $_POST['product_id'] ); ?></strong></p>
                 </div>
             </div>
