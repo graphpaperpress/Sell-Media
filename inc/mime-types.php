@@ -71,7 +71,7 @@ function sell_media_move_image_from_meta( $moved_file=null, $_FILES=null ){
  * "_wp_attached_file", i.e., YYYY/MM/file-name.ext
  * @since 1.0.1
  */
-function sell_media_move_image_from_attachment( $attached_file=null ){
+function sell_media_move_image_from_attachment( $attached_file=null, $attachment_id=null ){
 
     // Since our attached file does not contain the full path.
     // We build it using the wp_upload_dir function.
@@ -85,17 +85,19 @@ function sell_media_move_image_from_attachment( $attached_file=null ){
     $keywords = sell_media_iptc_parser( 'keywords', $original_file );
 
     // Save iptc info as taxonomies
-    if ( $city )
-        sell_media_iptc_save( 'city', $city, $product_id );
+    if ( ! empty( $attachment_id ) ) {
+        if ( $city )
+            sell_media_iptc_save( 'city', $city, $attachment_id );
 
-    if ( $state )
-        sell_media_iptc_save( 'state', $state, $product_id );
+        if ( $state )
+            sell_media_iptc_save( 'state', $state, $attachment_id );
 
-    if ( $creator )
-        sell_media_iptc_save( 'creator', $creator, $product_id );
+        if ( $creator )
+            sell_media_iptc_save( 'creator', $creator, $attachment_id );
 
-    if ( $keywords )
-        sell_media_iptc_save( 'keywords', $keywords, $product_id );
+        if ( $keywords )
+            sell_media_iptc_save( 'keywords', $keywords, $attachment_id );
+    }
 
     // Assign the FULL PATH to our destination file.
     $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
