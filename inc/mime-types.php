@@ -143,7 +143,7 @@ function sell_media_item_icon( $attachment_id=null, $size='medium' ){
         case 'image/png':
         case 'image/gif':
                 $image = wp_get_attachment_image_src( $attachment_id, $size );
-                echo  '<img src="'.$image[0].'" class="custom_preview_image" alt="" height="'.$image[2].'" width="'.$image[1].'" style="max-width:100%;height:auto;"/>';
+                echo  '<img src="'.$image[0].'" class="sell_media_image wp-post-image" alt="" height="'.$image[2].'" width="'.$image[1].'" style="max-width:100%;height:auto;"/>';
             return;
         case 'video/mpeg':
         case 'video/mp4':
