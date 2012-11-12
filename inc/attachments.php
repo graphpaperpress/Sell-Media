@@ -68,6 +68,12 @@ function sell_media_delete_item( $post_id=null ){
  * @since 0.1
  */
 function sell_media_attachment_field_sell_save( $post, $attachment ) {
+
+    // Attachment is not set, i.e., this is a "normal" media upload.
+    // Just leave and return our $post.
+    if ( empty( $attachment['sell'] ) )
+        return $post;
+
     $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', $attachment['sell'], true );
 
     // Attachment was once marked for sale, but no longer is for sale.
