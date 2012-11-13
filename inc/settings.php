@@ -42,6 +42,10 @@ function sell_media_register_settings() {
 add_action( 'admin_init', 'sell_media_register_settings' );
 
 
+/**
+ * Prints the start of the form needed for the settings page
+ * @since 1.0.1
+ */
 function sell_media_settings_before_form(){?>
     <div class="wrap">
         <form action="options.php" method="post" class="form-wrap validate" id="addtag">
@@ -49,6 +53,10 @@ function sell_media_settings_before_form(){?>
 <?php }
 
 
+/**
+ * Prints the end of the form needed for the settings page
+ * @since 1.0.1
+ */
 function sell_media_settings_after_form(){?>
             <?php submit_button( __('Save Changes', 'sell_media'), 'primary', 'show' ); ?>
         </form>
@@ -56,6 +64,140 @@ function sell_media_settings_after_form(){?>
 <?php }
 
 
+/**
+ * Build the ENTIRE settings page, form submission is also handled here.
+ * well part of the form submission.
+ */
+function sell_media_settings_callback_fn() {
+    $sell_media_settings_temp['tabs'] = apply_filters( 'sell_media_tabs_settings', array(
+        'general' => __( 'General', 'sell_media' ),
+        'payment' => __( 'Payment', 'sell_media' ),
+        'email' => __( 'Email', 'sell_media' )
+        )
+    );
+
+    $current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'general';
+    $tabs_base_url = 'edit.php?post_type=sell_media_item&page=sell_media_settings';
+
+    ?>
+    <h2 class="nav-tab-wrapper">
+        <?php foreach ( $sell_media_settings_temp[ 'tabs' ] as $tab => $label ) : ?>
+            <a href="<?php echo admin_url( $tabs_base_url . '&tab=' . $tab ); ?>" class="nav-tab <?php if ( $current_tab==$tab ) echo 'nav-tab-active'; ?>"><?php echo $label; ?></a>
+        <?php endforeach; ?>
+    </h2>
+    <?php
+        if ( $current_tab ) {
+            switch ($current_tab) {
+                case "general" :
+                    sell_media_settings_before_form();
+                    sell_media_settings_general();
+                    sell_media_settings_after_form();
+                    break;
+                case "payment" :
+                    sell_media_settings_before_form();
+                    sell_media_settings_payment();
+                    sell_media_settings_after_form();
+                    break;
+                case "email" :
+                    sell_media_settings_before_form();
+                    sell_media_settings_email();
+                    sell_media_settings_after_form();
+                    break;
+                default :
+                    print $current_tab;
+                break;
+            }
+        } else {
+            print 'no tab';
+        }
+    ?>
+<?php }
+
+
+/**
+ * Admin notice when settings are saved.
+ */
+function sell_media_save_settings_admin_notice(){
+    global $pagenow;
+    if ( $pagenow == 'edit.php' && isset($_GET['page']) && $_GET['page'] == 'sell_media_settings' && isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') {
+         echo '<div class="updated">
+             <p>Settings updated!</p>
+         </div>';
+    }
+}
+add_action( 'admin_notices', 'sell_media_save_settings_admin_notice' );
+
+
+/**
+ * Print and handle the data for the add-ons form
+ */
+function sell_media_extensions_callback_fn(){
+    if ( false === ( $extensions = get_transient( 'graphpaperpress_extensions_feed' ) ) ) {
+        $response = wp_remote_get( 'http://graphpaperpress.com/json-extensions-feed/' );
+        if ( ! is_wp_error( $response ) && isset( $response['body'] ) ) {
+            $extensions = json_decode( $response['body'] );
+            set_transient('graphpaperpress_extensions_feed', $extensions, 3600);
+        }
+    }
+
+    ?>
+<div class="wrap sell_media-extensions">
+    <h2><?php _e( 'Extensions for Sell Media', 'sell_media' ); ?></h2>
+    <p><?php _e( 'These extensions provide additonal functionality for the Sell Media plugin.', 'sell_media' ); ?></p>
+    <?php foreach( $extensions as $extension ) : ?>
+        <div class="row-container">
+            <div class="extension">
+                <h3 class="title"><a href="<?php print $extension->permalink; ?>"><?php print $extension->title; ?></a></h3>
+                <div class="image"><a href="<?php print $extension->permalink; ?>"><img src="<?php print $extension->image[0]; ?>" /></a></div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+<?php }
+
+
+/**
+ * General settings html table
+ * @since 1.0.1
+ */
+function sell_media_settings_general(){?>
+    <h3><?php _e( 'General', 'sell_media' ); ?></h3>
+    <?php do_action( 'sell_media_settings_above_general_section_hook' ); ?>
+    <table class="form-table">
+        <tbody>
+            <tr valign="top">
+                <th scope="row" class="titledesc"><?php _e( 'Test Mode', 'sell_media' ); ?></th>
+                <td class="forminp">
+                    <select name="sell_media_test_mode" id="sell_media_test_mode">
+                        <option value="0" <?php selected( get_option('sell_media_test_mode'), 0 ); ?>><?php _e( 'No', 'sell_media' ); ?></option>
+                        <option value="1" <?php selected( get_option('sell_media_test_mode'), 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
+                    </select>
+                    <label for="sell_media_test_mode"><?php printf(__('To fully use test mode, you must have %1$s.'), '<a href="https://developer.paypal.com/" target="_blank">Paypal sandbox (test) account</a>' ); ?></label>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row" class="titledesc"><?php _e( 'Checkout Page', 'sell_media' ); ?></th>
+                <td class="forminp">
+                    <?php wp_dropdown_pages( array( 'name' => 'sell_media_cart_page', 'selected' => get_option('sell_media_cart_page') ) ); ?>
+                    <label for="sell_media_cart_page"><?php _e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode will generate the checkout cart. Create a page now and add the shortcode if you have not completed this step yet.', 'sell_media' ); ?></label>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row" class="titledesc"><?php _e( 'Thanks Page', 'sell_media' ); ?></th>
+                <td class="forminp">
+                    <?php wp_dropdown_pages( array( 'name' => 'sell_media_thanks_page', 'selected' => get_option('sell_media_thanks_page') ) ); ?>
+                    <label for="sell_media_thanks_page"><?php _e( 'What page contains the <code>[sell_media_thanks]</code> shortcode? This is the page that users return to after a successful purchase.', 'sell_media' ); ?></label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<?php }
+
+
+/**
+ * Payment settings html table
+ * @since 1.0.1
+ */
 function sell_media_settings_payment(){?>
     <h3><?php _e( 'Payment Settings', 'sell_media' ); ?></h3>
     <table class="form-table">
@@ -115,39 +257,10 @@ function sell_media_settings_payment(){?>
 <?php }
 
 
-function sell_media_settings_general(){?>
-    <h3><?php _e( 'General', 'sell_media' ); ?></h3>
-    <?php do_action( 'sell_media_settings_above_general_section_hook' ); ?>
-    <table class="form-table">
-        <tbody>
-            <tr valign="top">
-                <th scope="row" class="titledesc"><?php _e( 'Test Mode', 'sell_media' ); ?></th>
-                <td class="forminp">
-                    <select name="sell_media_test_mode" id="sell_media_test_mode">
-                        <option value="0" <?php selected( get_option('sell_media_test_mode'), 0 ); ?>><?php _e( 'No', 'sell_media' ); ?></option>
-                        <option value="1" <?php selected( get_option('sell_media_test_mode'), 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
-                    </select>
-                    <label for="sell_media_test_mode"><?php printf(__('To fully use test mode, you must have %1$s.'), '<a href="https://developer.paypal.com/" target="_blank">Paypal sandbox (test) account</a>' ); ?></label>
-                </td>
-            </tr>
-            <tr valign="top">
-                <th scope="row" class="titledesc"><?php _e( 'Checkout Page', 'sell_media' ); ?></th>
-                <td class="forminp">
-                    <?php wp_dropdown_pages( array( 'name' => 'sell_media_cart_page', 'selected' => get_option('sell_media_cart_page') ) ); ?>
-                    <label for="sell_media_cart_page"><?php _e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode will generate the checkout cart. Create a page now and add the shortcode if you have not completed this step yet.', 'sell_media' ); ?></label>
-                </td>
-            </tr>
-            <tr valign="top">
-                <th scope="row" class="titledesc"><?php _e( 'Thanks Page', 'sell_media' ); ?></th>
-                <td class="forminp">
-                    <?php wp_dropdown_pages( array( 'name' => 'sell_media_thanks_page', 'selected' => get_option('sell_media_thanks_page') ) ); ?>
-                    <label for="sell_media_thanks_page"><?php _e( 'What page contains the <code>[sell_media_thanks]</code> shortcode? This is the page that users return to after a successful purchase.', 'sell_media' ); ?></label>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-<?php }
-
+/**
+ * Email settings html table
+ * @since 1.0.1
+ */
 function sell_media_settings_email(){
     if ( get_option( 'sell_media_from_email' ) ){
         $email = get_option( 'sell_media_from_email' );
@@ -198,94 +311,4 @@ function sell_media_settings_email(){
             </tr>
         </tbody>
     </table>
-<?php }
-
-/**
- * Build the ENTIRE settings page, form submission is also handled here.
- * well part of the form submission.
- */
-function sell_media_settings_callback_fn() {
-    $sell_media_settings_temp['tabs'] = apply_filters( 'sell_media_tabs_settings', array(
-        'general' => __( 'General', 'sell_media' ),
-        'payment' => __( 'Payment', 'sell_media' ),
-        'email' => __( 'Email', 'sell_media' )
-        )
-    );
-
-    $current_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'general';
-    $tabs_base_url = 'edit.php?post_type=sell_media_item&page=sell_media_settings';
-
-    ?>
-    <h2 class="nav-tab-wrapper">
-        <?php foreach ( $sell_media_settings_temp[ 'tabs' ] as $tab => $label ) : ?>
-            <a href="<?php echo admin_url( $tabs_base_url . '&tab=' . $tab ); ?>" class="nav-tab <?php if ( $current_tab==$tab ) echo 'nav-tab-active'; ?>"><?php echo $label; ?></a>
-        <?php endforeach; ?>
-    </h2>
-    <?php
-        if ( $current_tab ) {
-            switch ($current_tab) {
-                case "general" :
-                    sell_media_settings_before_form();
-                    sell_media_settings_general();
-                    sell_media_settings_after_form();
-                    break;
-                case "payment" :
-                    sell_media_settings_before_form();
-                    sell_media_settings_payment();
-                    sell_media_settings_after_form();
-                    break;
-                case "email" :
-                    sell_media_settings_before_form();
-                    sell_media_settings_email();
-                    sell_media_settings_after_form();
-                    break;
-                default :
-                    print $current_tab;
-                break;
-            }
-        } else {
-            print 'no tab';
-        }
-    ?>
-<?php }
-
-/**
- * Admin notice when settings are saved.
- */
-function sell_media_save_settings_admin_notice(){
-    global $pagenow;
-    if ( $pagenow == 'edit.php' && isset($_GET['page']) && $_GET['page'] == 'sell_media_settings' && isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') {
-         echo '<div class="updated">
-             <p>Settings updated!</p>
-         </div>';
-    }
-}
-add_action( 'admin_notices', 'sell_media_save_settings_admin_notice' );
-
-
-/**
- * Print and handle the data for the add-ons form
- */
-function sell_media_extensions_callback_fn(){
-    if ( false === ( $extensions = get_transient( 'graphpaperpress_extensions_feed' ) ) ) {
-        $response = wp_remote_get( 'http://graphpaperpress.com/json-extensions-feed/' );
-        if ( ! is_wp_error( $response ) && isset( $response['body'] ) ) {
-            $extensions = json_decode( $response['body'] );
-            set_transient('graphpaperpress_extensions_feed', $extensions, 3600);
-        }
-    }
-
-    ?>
-<div class="wrap sell_media-extensions">
-    <h2><?php _e( 'Extensions for Sell Media', 'sell_media' ); ?></h2>
-    <p><?php _e( 'These extensions provide additonal functionality for the Sell Media plugin.', 'sell_media' ); ?></p>
-    <?php foreach( $extensions as $extension ) : ?>
-        <div class="row-container">
-            <div class="extension">
-                <h3 class="title"><a href="<?php print $extension->permalink; ?>"><?php print $extension->title; ?></a></h3>
-                <div class="image"><a href="<?php print $extension->permalink; ?>"><img src="<?php print $extension->image[0]; ?>" /></a></div>
-            </div>
-        </div>
-    <?php endforeach; ?>
-</div>
 <?php }
