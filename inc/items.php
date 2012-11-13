@@ -216,6 +216,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 function sell_media_save_custom_meta( $post_id ) {
 
     global $sell_media_item_meta_fields;
+    do_action('sell_media_extra_meta_save');
 
     if ( isset( $_POST['sell_media_custom_meta_box_nonce'] ) )
         $nonce = $_POST['sell_media_custom_meta_box_nonce'];
@@ -225,7 +226,7 @@ function sell_media_save_custom_meta( $post_id ) {
     if ( ! wp_verify_nonce( $nonce, basename(__FILE__) ) )
         return $post_id;
 
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE || empty( $_FILES ) )
         return $post_id;
 
     if ( 'page' == $_POST['post_type'] ) {
