@@ -191,6 +191,7 @@ function sell_media_settings_general(){?>
             </tr>
         </tbody>
     </table>
+    <?php do_action( 'sell_media_settings_below_general_section_hook' ); ?>
 <?php }
 
 
@@ -200,6 +201,7 @@ function sell_media_settings_general(){?>
  */
 function sell_media_settings_payment(){?>
     <h3><?php _e( 'Payment Settings', 'sell_media' ); ?></h3>
+    <?php do_action( 'sell_media_settings_above_payment_section_hook' ); ?>
     <table class="form-table">
         <tbody>
             <tr valign="top">
@@ -254,6 +256,7 @@ function sell_media_settings_payment(){?>
             </tr>
         </tbody>
     </table>
+    <?php do_action( 'sell_media_settings_below_payment_section_hook' ); ?>
 <?php }
 
 
@@ -279,6 +282,7 @@ function sell_media_settings_email(){
 
     ?>
     <h3><?php _e( 'Email Settings', 'sell_media' ); ?></h3>
+    <?php do_action( 'sell_media_settings_above_email_section_hook' ); ?>
     <table class="form-table">
         <tbody>
             <tr valign="top">
@@ -311,4 +315,5 @@ function sell_media_settings_email(){
             </tr>
         </tbody>
     </table>
+    <?php do_action( 'sell_media_settings_below_email_section_hook' ); ?>
 <?php }
