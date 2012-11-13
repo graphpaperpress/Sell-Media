@@ -227,7 +227,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <p>
                                     <label><?php _e( 'Email', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
                                     <input type="email" class="" id="sell_media_email_field" name="email" />
-                                    <span id="email-error" class="error" style="display:none;"><?php _e( 'Email doesn\'t appear valid', 'sell_media' ); ?></span>
+                                    <span id="email-error" class="error" style="display:none;"><?php _e( 'Email isn\'t valid', 'sell_media' ); ?></span>
                                     </p>
                                 <?php else : ?>
                                     <?php $current_user = wp_get_current_user(); ?>
