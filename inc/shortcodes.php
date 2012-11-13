@@ -229,10 +229,12 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <span id="email-error" class="error" style="display:none;"><?php _e( 'Email doesn\'t appear valid', 'sell_media' ); ?></span>
                                     </p>
                                 <?php else : ?>
+                                    <?php do_action('sell_media_above_registration_form'); ?>
                                     <?php $current_user = wp_get_current_user(); ?>
                                     <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
                                     <input type="hidden" id="sell_media_last_name_field" name="last_name" value="<?php print $current_user->user_lastname; ?>" />
                                     <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
+                                    <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php endif; ?>
                                 <div class="button-container">
                                     <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Checkout', 'sell_media'); ?>" />
