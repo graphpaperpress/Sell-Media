@@ -37,6 +37,10 @@ function sell_media_register_settings() {
     register_setting( 'sell_media_plugin_options', 'sell_media_success_email_subject' );
     register_setting( 'sell_media_plugin_options', 'sell_media_success_email_body' );
 
+    if ( ! empty( $_POST['option_page'] ) && $_POST['option_page'] == 'sell_media_plugin_options' ){
+        do_action('sell_media_save_settings_hook');
+    }
+
     do_action( 'sell_media_register_settings_hook' );
 }
 add_action( 'admin_init', 'sell_media_register_settings' );
@@ -48,7 +52,7 @@ add_action( 'admin_init', 'sell_media_register_settings' );
  */
 function sell_media_settings_before_form(){?>
     <div class="wrap">
-        <form action="options.php" method="post" class="form-wrap validate" id="addtag">
+        <form action="options.php" method="post" class="form-wrap validate" id="addtag" enctype="multipart/form-data">
             <?php settings_fields('sell_media_plugin_options'); ?>
 <?php }
 
@@ -72,7 +76,8 @@ function sell_media_settings_callback_fn() {
     $sell_media_settings_temp['tabs'] = apply_filters( 'sell_media_tabs_settings', array(
         'general' => __( 'General', 'sell_media' ),
         'payment' => __( 'Payment', 'sell_media' ),
-        'email' => __( 'Email', 'sell_media' )
+        'email' => __( 'Email', 'sell_media' ),
+        'misc' => __( 'Misc.', 'sell_media' ) // Miscellaneous
         )
     );
 
@@ -101,6 +106,11 @@ function sell_media_settings_callback_fn() {
                 case "email" :
                     sell_media_settings_before_form();
                     sell_media_settings_email();
+                    sell_media_settings_after_form();
+                    break;
+                case "misc" :
+                    sell_media_settings_before_form();
+                    sell_media_settings_misc();
                     sell_media_settings_after_form();
                     break;
                 default :
@@ -317,3 +327,13 @@ function sell_media_settings_email(){
     </table>
     <?php do_action( 'sell_media_settings_below_email_section_hook' ); ?>
 <?php }
+
+
+/**
+ * Email settings html table
+ * @since 1.0.1
+ */
+function sell_media_settings_misc(){
+    do_action( 'sell_media_settings_above_misc_section_hook' );
+    do_action( 'sell_media_settings_below_misc_section_hook' );
+}
