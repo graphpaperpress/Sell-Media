@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,10 @@ Please visit the Add Media -> Settings -> Payments page and double check all of 
 
 The Sell Media plugin helps you to create and assign different licenses and prices for each image, video or audio file based on the anticipated usage of the media. For example: If a large company wants to purchase one of your images for a billboard, you should charge one price for commercial usage, charge another for editorial, and so on.
 
+= Does the plugin work for a WordPress Network =
+
+It only works on the primary blog. While it will work on other blogs, file uploads will not be protected. Why? Because WordPress stores uploads in a "virtual" directory of blogs.dir, server side file protection using .htaccess doesn't work on virtual directories.
+
 == Screenshots ==
 
 1. The Shopping Cart
@@ -165,6 +169,16 @@ Action hooks available:
  * None
 
 == Changelog ==
+
+= 1.0.1 =
+* Added action hooks
+* Default to Live Mode, not Test Mode
+* License calculation on Edit License works
+* Removed email testing code
+* Additional support for image, video, document mime types
+* Checkout page removing item bugfix
+* Tabs for Settings
+* Use submit_button()
 
 = 1.0 =
 * Public release
