@@ -16,6 +16,7 @@ class SellMediaSettings {
     private $email_settings_key = 'sell_media_email_settings';
     private $misc_settings_key = 'sell_media_misc_settings';
     private $plugin_options_key = 'sell_media_plugin_options';
+    private $plugin_post_type_key = 'sell_media_item';
     private $plugin_settings_tabs = array();
 
     /*
@@ -308,7 +309,7 @@ class SellMediaSettings {
         echo '<h2 class="nav-tab-wrapper">';
         foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
             $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
-            echo '<a class="nav-tab ' . $active . '" href="?page=' . $this->plugin_options_key . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';
+            echo '<a class="nav-tab ' . $active . '" href="?post_type=' . $this->plugin_post_type_key . '&page=' . $this->plugin_options_key . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';
         }
         echo '</h2>';
     }
