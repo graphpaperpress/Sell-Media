@@ -149,6 +149,7 @@ class SellMediaSettings {
     function section_email_desc() { echo ''; }
     function section_misc_desc() { echo ''; }
 
+
     /*
      * General Option field callback, renders a
      * text input, note the name and value.
