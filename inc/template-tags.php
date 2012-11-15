@@ -134,6 +134,12 @@ function sell_media_item_has_taxonomy_terms( $post_id=null, $taxonomy=null ) {
 }
 
 
+/**
+ * Returns item size
+ *
+ * @since 0.1
+ * @return string
+ */
 function sell_media_item_size( $post_id=null ){
 
     $mime_type = get_post_mime_type( get_post_thumbnail_id( $post_id ) );
@@ -159,4 +165,26 @@ function sell_media_item_size( $post_id=null ){
     }
 
     return $size;
+}
+
+
+/**
+ * Retrives and prints the price of an item
+ *
+ * @since 0.1
+ * @return string
+ */
+function sell_media_item_price( $post_id=null, $currency=true ){
+
+    if ( get_post_meta( $post_id, 'sell_media_price', true ) ){
+        $price = get_post_meta( $post_id, 'sell_media_price', true );
+    } else {
+        $price = get_option( 'sell_media_original_price' );
+    }
+
+    if ( $currency ){
+        $price = sell_media_get_currency_symbol() . $price;
+    }
+
+    print $price;
 }

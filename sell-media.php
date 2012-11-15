@@ -13,20 +13,23 @@ License: GPL
 
 define( 'SELL_MEDIA_VERSION', '1.0.1' );
 
-if ( is_admin() ) {
-    include( dirname(__FILE__) . '/inc/class-settings.php' );
-}
-include( dirname(__FILE__) . '/inc/attachments.php' );
 include( dirname(__FILE__) . '/inc/cart.php' );
 include( dirname(__FILE__) . '/inc/downloads.php' );
-include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
 include( dirname(__FILE__) . '/inc/helpers.php');
-include( dirname(__FILE__) . '/inc/items.php' );
-include( dirname(__FILE__) . '/inc/payments.php' );
-include( dirname(__FILE__) . '/inc/shortcodes.php' );
+include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
-include( dirname(__FILE__) . '/inc/term-meta.php' );
-include( dirname(__FILE__) . '/inc/mime-types.php' );
+
+if ( is_admin() ) {
+    include( dirname(__FILE__) . '/inc/admin-attachments.php' );
+    include( dirname(__FILE__) . '/inc/admin-items.php' );
+    include( dirname(__FILE__) . '/inc/admin-extensions.php' );
+    include( dirname(__FILE__) . '/inc/admin-mime-types.php' );
+    include( dirname(__FILE__) . '/inc/admin-payments.php' );
+    include( dirname(__FILE__) . '/inc/admin-settings.php' );
+    include( dirname(__FILE__) . '/inc/admin-shortcodes.php' );
+    include( dirname(__FILE__) . '/inc/admin-term-meta.php' );
+}
+
 
 /**
  * Start our PHP session for shopping cart
