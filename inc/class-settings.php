@@ -31,6 +31,8 @@ class SellMediaSettings {
         add_action( 'admin_init', array( &$this, 'register_email_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_misc_settings' ) );
         add_action( 'admin_menu', array( &$this, 'add_admin_menus' ) );
+
+        do_action( 'sell_media_extension_hook' );
     }
 
     /*
@@ -71,6 +73,8 @@ class SellMediaSettings {
         $this->misc_settings = array_merge( array(
             // no defaults set
         ), $this->misc_settings );
+
+        do_action( 'sell_media_load_settings_hook' );
     }
 
     /*
@@ -86,6 +90,8 @@ class SellMediaSettings {
         add_settings_field( 'checkout_page', 'Checkout Page', array( &$this, 'field_general_checkout_page' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'thanks_page', 'Thanks Page', array( &$this, 'field_general_thanks_page' ), $this->general_settings_key, 'section_general' );
 
+        do_action( 'sell_media_register_general_settings_hook' );
+
     }
 
     /*
@@ -100,6 +106,8 @@ class SellMediaSettings {
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->payment_settings_key, 'section_payment' );
+
+        do_action( 'sell_media_register_payment_settings_hook' );
 
     }
 
@@ -117,6 +125,8 @@ class SellMediaSettings {
         add_settings_field( 'success_email_subject', 'Email Subject', array( &$this, 'field_email_success_email_subject' ), $this->email_settings_key, 'section_email' );
         add_settings_field( 'success_email_body', 'Email Body', array( &$this, 'field_email_success_email_body' ), $this->email_settings_key, 'section_email' );
 
+        do_action( 'sell_media_register_email_settings_hook' );
+
     }
 
     /*
@@ -128,6 +138,8 @@ class SellMediaSettings {
 
         register_setting( $this->misc_settings_key, $this->misc_settings_key );
         add_settings_section( 'section_misc', 'Misc Settings', array( &$this, 'section_misc_desc' ), $this->misc_settings_key );
+
+        do_action( 'sell_media_register_misc_settings_hook' );
 
     }
 
@@ -151,6 +163,8 @@ class SellMediaSettings {
             <option value="0" <?php selected( $this->general_settings['test_mode'], 0 ); ?>><?php _e( 'No', 'sell_media' ); ?></option>
             <option value="1" <?php selected( $this->general_settings['test_mode'], 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
         </select>
+        <span class="desc"><?php printf(__('To accept real payments, select No. To fully use test mode, you must have %1$s.'), '<a href="https://developer.paypal.com/" target="_blank">Paypal sandbox (test) account</a>' ); ?></span>
+
         <?php
     }
 
