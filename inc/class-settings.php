@@ -271,7 +271,7 @@ class SellMediaSettings {
      * using the plugin_options_page method.
      */
     function add_admin_menus() {
-        add_submenu_page( 'edit.php?post_type=sell_media_item', __('Settings', 'sell_media'), __('Settings', 'sell_media'),  $permission, $this->plugin_options_key, array( &$this, 'plugin_options_page' ) );
+        add_submenu_page( 'edit.php?post_type=sell_media_item', __('Settings', 'sell_media'), __('Settings', 'sell_media'),  'manage_options', $this->plugin_options_key, array( &$this, 'plugin_options_page' ) );
     }
 
     /*
