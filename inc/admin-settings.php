@@ -285,9 +285,6 @@ class SellMediaSettings {
          <?php
     }
 
-    function field_misc(){
-        add_action();
-    }
 
     /*
      * Helper for building select options for Pages
