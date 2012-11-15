@@ -54,7 +54,7 @@ class SellMediaSettings {
 
         $this->payment_settings = array_merge( array(
             'paypal_email' => '',
-            'currency' => '',
+            'currency' => 'USD',
             'default_price' => '100'
         ), $this->payment_settings );
 
@@ -136,10 +136,10 @@ class SellMediaSettings {
      * for their respective sections, used as callbacks
      * with add_settings_section
      */
-    function section_general_desc() { echo 'General section description goes here.'; }
-    function section_payment_desc() { echo 'Payment section description goes here.'; }
-    function section_email_desc() { echo 'Email section description goes here.'; }
-    function section_misc_desc() { echo 'Misc section description goes here.'; }
+    function section_general_desc() { echo ''; }
+    function section_payment_desc() { echo ''; }
+    function section_email_desc() { echo ''; }
+    function section_misc_desc() { echo ''; }
 
     /*
      * General Option field callback, renders a
@@ -159,7 +159,9 @@ class SellMediaSettings {
      */
     function field_general_checkout_page() {
         ?>
-        <?php wp_dropdown_pages( array( 'name' => $this->general_settings_key['checkout_page'], 'selected' => $this->general_settings['checkout_page'] ) ); ?>
+        <select name="<?php echo $this->general_settings_key; ?>[checkout_page]" id="<?php echo $this->general_settings_key; ?>[checkout_page]">
+            <?php $this->build_field_pages_select( 'checkout_page' ); ?>
+        </select>
         <span class="desc"><?php _e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
         <?php
     }
@@ -169,7 +171,9 @@ class SellMediaSettings {
      */
     function field_general_thanks_page() {
         ?>
-        <?php wp_dropdown_pages( array( 'name' => $this->general_settings_key['thanks_page'], 'selected' => $this->general_settings['thanks_page'] ) ); ?>
+        <select name="<?php echo $this->general_settings_key; ?>[thanks_page]" id="<?php echo $this->general_settings_key; ?>[thanks_page]">
+            <?php $this->build_field_pages_select( 'thanks_page' ); ?>
+        </select>
         <span class="desc"><?php _e( 'What page contains the <code>[sell_media_thanks]</code> shortcode?', 'sell_media' ); ?></span>
         <?php
     }
@@ -189,31 +193,31 @@ class SellMediaSettings {
     function field_payment_currency() {
         ?>
         <select name="<?php echo $this->payment_settings_key; ?>[currency]" id="<?php echo $this->payment_settings_key; ?>[currency]">
-            <option value="USD" <?php selected( $this->general_settings['currency'], 'USD' ); ?>>US Dollars ($)</option>
-            <option value="EUR" <?php selected( $this->general_settings['currency'], 'EUR' ); ?>>Euros (€)</option>
-            <option value="GBP" <?php selected( $this->general_settings['currency'], 'GBP' ); ?>>Pounds Sterling (£)</option>
-            <option value="AUD" <?php selected( $this->general_settings['currency'], 'AUD' ); ?>>Australian Dollars ($)</option>
-            <option value="BRL" <?php selected( $this->general_settings['currency'], 'BRL' ); ?>>Brazilian Real ($)</option>
-            <option value="CAD" <?php selected( $this->general_settings['currency'], 'CAD' ); ?>>Canadian Dollars ($)</option>
-            <option value="CZK" <?php selected( $this->general_settings['currency'], 'CZK' ); ?>>Czech Koruna (Kč)</option>
-            <option value="DKK" <?php selected( $this->general_settings['currency'], 'DKK' ); ?>>Danish Krone</option>
-            <option value="HKD" <?php selected( $this->general_settings['currency'], 'HKD' ); ?>>Hong Kong Dollar ($)</option>
-            <option value="HUF" <?php selected( $this->general_settings['currency'], 'HUF' ); ?>>Hungarian Forint</option>
-            <option value="ILS" <?php selected( $this->general_settings['currency'], 'ILS' ); ?>>Israeli Shekel</option>
-            <option value="JPY" <?php selected( $this->general_settings['currency'], 'JPY' ); ?>>Japanese Yen (¥)</option>
-            <option value="MYR" <?php selected( $this->general_settings['currency'], 'MYR' ); ?>>Malaysian Ringgits</option>
-            <option value="MXN" <?php selected( $this->general_settings['currency'], 'MXN' ); ?>>Mexican Peso ($)</option>
-            <option value="NZD" <?php selected( $this->general_settings['currency'], 'NZD' ); ?>>New Zealand Dollar ($)</option>
-            <option value="NOK" <?php selected( $this->general_settings['currency'], 'NOK' ); ?>>Norwegian Krone</option>
-            <option value="PHP" <?php selected( $this->general_settings['currency'], 'PHP' ); ?>>Philippine Pesos</option>
-            <option value="PLN" <?php selected( $this->general_settings['currency'], 'PLN' ); ?>>Polish Zloty</option>
-            <option value="SGD" <?php selected( $this->general_settings['currency'], 'SGD' ); ?>>Singapore Dollar ($)</option>
-            <option value="SEK" <?php selected( $this->general_settings['currency'], 'SEK' ); ?>>Swedish Krona</option>
-            <option value="CHF" <?php selected( $this->general_settings['currency'], 'CHF' ); ?>>Swiss Franc</option>
-            <option value="TWD" <?php selected( $this->general_settings['currency'], 'TWD' ); ?>>Taiwan New Dollars</option>
-            <option value="THB" <?php selected( $this->general_settings['currency'], 'THB' ); ?>>Thai Baht</option>
-            <option value="TRY" <?php selected( $this->general_settings['currency'], 'TRY' ); ?>>Turkish Lira (TL)</option>
-            <option value="ZAR" <?php selected( $this->general_settings['currency'], 'ZAR' ); ?>>South African rand (R)</option>
+            <option value="USD" <?php selected( $this->payment_settings['currency'], 'USD' ); ?>>US Dollars ($)</option>
+            <option value="EUR" <?php selected( $this->payment_settings['currency'], 'EUR' ); ?>>Euros (€)</option>
+            <option value="GBP" <?php selected( $this->payment_settings['currency'], 'GBP' ); ?>>Pounds Sterling (£)</option>
+            <option value="AUD" <?php selected( $this->payment_settings['currency'], 'AUD' ); ?>>Australian Dollars ($)</option>
+            <option value="BRL" <?php selected( $this->payment_settings['currency'], 'BRL' ); ?>>Brazilian Real ($)</option>
+            <option value="CAD" <?php selected( $this->payment_settings['currency'], 'CAD' ); ?>>Canadian Dollars ($)</option>
+            <option value="CZK" <?php selected( $this->payment_settings['currency'], 'CZK' ); ?>>Czech Koruna (Kč)</option>
+            <option value="DKK" <?php selected( $this->payment_settings['currency'], 'DKK' ); ?>>Danish Krone</option>
+            <option value="HKD" <?php selected( $this->payment_settings['currency'], 'HKD' ); ?>>Hong Kong Dollar ($)</option>
+            <option value="HUF" <?php selected( $this->payment_settings['currency'], 'HUF' ); ?>>Hungarian Forint</option>
+            <option value="ILS" <?php selected( $this->payment_settings['currency'], 'ILS' ); ?>>Israeli Shekel</option>
+            <option value="JPY" <?php selected( $this->payment_settings['currency'], 'JPY' ); ?>>Japanese Yen (¥)</option>
+            <option value="MYR" <?php selected( $this->payment_settings['currency'], 'MYR' ); ?>>Malaysian Ringgits</option>
+            <option value="MXN" <?php selected( $this->payment_settings['currency'], 'MXN' ); ?>>Mexican Peso ($)</option>
+            <option value="NZD" <?php selected( $this->payment_settings['currency'], 'NZD' ); ?>>New Zealand Dollar ($)</option>
+            <option value="NOK" <?php selected( $this->payment_settings['currency'], 'NOK' ); ?>>Norwegian Krone</option>
+            <option value="PHP" <?php selected( $this->payment_settings['currency'], 'PHP' ); ?>>Philippine Pesos</option>
+            <option value="PLN" <?php selected( $this->payment_settings['currency'], 'PLN' ); ?>>Polish Zloty</option>
+            <option value="SGD" <?php selected( $this->payment_settings['currency'], 'SGD' ); ?>>Singapore Dollar ($)</option>
+            <option value="SEK" <?php selected( $this->payment_settings['currency'], 'SEK' ); ?>>Swedish Krona</option>
+            <option value="CHF" <?php selected( $this->payment_settings['currency'], 'CHF' ); ?>>Swiss Franc</option>
+            <option value="TWD" <?php selected( $this->payment_settings['currency'], 'TWD' ); ?>>Taiwan New Dollars</option>
+            <option value="THB" <?php selected( $this->payment_settings['currency'], 'THB' ); ?>>Thai Baht</option>
+            <option value="TRY" <?php selected( $this->payment_settings['currency'], 'TRY' ); ?>>Turkish Lira (TL)</option>
+            <option value="ZAR" <?php selected( $this->payment_settings['currency'], 'ZAR' ); ?>>South African rand (R)</option>
         </select>
         <span class="desc"><?php _e( 'The currency in which you accept payment.', 'sell_media' ); ?></span>
 
@@ -273,6 +277,16 @@ class SellMediaSettings {
         ?>
         <input type="text" name="<?php echo $this->misc_settings_key; ?>[misc_option]" value="<?php echo esc_attr( $this->misc_settings['misc_option'] ); ?>" />
         <?php
+    }
+
+    /*
+     * Helper for building select options for Pages
+     */
+    function build_field_pages_select( $option ) {
+        $pages = get_pages();
+        foreach ( $pages as $page ) { ?>
+            <option value="<?php echo $page->ID; ?>" <?php selected( $this->general_settings[''. $option .''], $page->ID ); ?>><?php echo $page->post_title; ?></option>
+        <?php }
     }
 
     /*
