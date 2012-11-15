@@ -32,7 +32,9 @@ class SellMediaSettings {
         add_action( 'admin_init', array( &$this, 'register_misc_settings' ) );
         add_action( 'admin_menu', array( &$this, 'add_admin_menus' ) );
 
-        do_action( 'sell_media_settings_init_hook' );
+        if ( ! empty( $_POST['option_page'] ) && $_POST['option_page'] == 'sell_media_misc_settings' ){
+            do_action( 'sell_media_settings_init_hook' );
+        }
     }
 
     /*
@@ -116,6 +118,7 @@ class SellMediaSettings {
 
         register_setting( $this->email_settings_key, $this->email_settings_key );
         add_settings_section( 'section_email', 'Email Settings', array( &$this, 'section_email_desc' ), $this->email_settings_key );
+
         add_settings_field( 'from_name', 'From Name', array( &$this, 'field_email_from_name' ), $this->email_settings_key, 'section_email' );
         add_settings_field( 'from_email', 'From Email', array( &$this, 'field_email_from_email' ), $this->email_settings_key, 'section_email' );
         add_settings_field( 'success_email_subject', 'Email Subject', array( &$this, 'field_email_success_email_subject' ), $this->email_settings_key, 'section_email' );
@@ -135,8 +138,6 @@ class SellMediaSettings {
         register_setting( $this->misc_settings_key, $this->misc_settings_key );
         add_settings_section( 'section_misc', 'Misc Settings', array( &$this, 'section_misc_desc' ), $this->misc_settings_key );
 
-        do_action( 'sell_media_misc_settings_hook' );
-
     }
 
     /*
@@ -147,7 +148,7 @@ class SellMediaSettings {
     function section_general_desc() { echo ''; }
     function section_payment_desc() { echo ''; }
     function section_email_desc() { echo ''; }
-    function section_misc_desc() { echo ''; }
+    function section_misc_desc() { echo ''; do_action( 'sell_media_misc_settings_hook' ); }
 
     /*
      * General Option field callback, renders a
@@ -284,6 +285,9 @@ class SellMediaSettings {
          <?php
     }
 
+    function field_misc(){
+        add_action();
+    }
 
     /*
      * Helper for building select options for Pages
@@ -342,6 +346,7 @@ class SellMediaSettings {
         }
         echo '</h2>';
     }
+
 };
 
 // Initialize the plugin
