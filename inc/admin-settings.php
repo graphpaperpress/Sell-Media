@@ -32,7 +32,7 @@ class SellMediaSettings {
         add_action( 'admin_init', array( &$this, 'register_misc_settings' ) );
         add_action( 'admin_menu', array( &$this, 'add_admin_menus' ) );
 
-        do_action( 'sell_media_extension_hook' );
+        do_action( 'sell_media_init_hook' );
     }
 
     /*
