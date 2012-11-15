@@ -414,7 +414,8 @@ function sell_media_is_license_term_page(){
  * @since 0.1
  **/
 function sell_media_get_currency() {
-    return apply_filters( 'sell_media_currency', get_option('sell_media_currency') );
+    $payment_settings = get_option( 'sell_media_payment_settings' );
+    return apply_filters( 'sell_media_currency', $payment_settings['currency'] );
 }
 
 
@@ -465,7 +466,8 @@ function sell_media_get_currency_symbol( $currency = '' ) {
  * @since 0.1
  */
 function sell_media_test_mode(){
-    return get_option('sell_media_test_mode');
+    $general_settings = get_option( 'sell_media_general_settings' );
+    return $general_settings['test_mode'];
 }
 
 

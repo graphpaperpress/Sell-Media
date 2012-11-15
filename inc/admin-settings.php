@@ -45,7 +45,6 @@ class SellMediaSettings {
         $this->general_settings = (array) get_option( $this->general_settings_key );
         $this->payment_settings = (array) get_option( $this->payment_settings_key );
         $this->email_settings = (array) get_option( $this->email_settings_key );
-        $this->misc_settings = (array) get_option( $this->misc_settings_key );
 
         // Merge with defaults
         $this->general_settings = array_merge( array(
@@ -70,9 +69,6 @@ class SellMediaSettings {
             'success_email_body' => $msg
         ), $this->email_settings );
 
-        $this->misc_settings = array_merge( array(
-            // no defaults set
-        ), $this->misc_settings );
 
         do_action( 'sell_media_load_settings_hook' );
     }

@@ -144,6 +144,8 @@ function sell_media_the_markup_slider( $tag ){
         $initial_markup = 0;
     }
 
+    $payment_settings = get_option('sell_media_payment_settings');
+
     ?>
     <script>
     jQuery(document).ready(function($){
@@ -153,7 +155,7 @@ function sell_media_the_markup_slider( $tag ){
 
         function calc_price( markUp ){
 
-            var price = <?php if ( get_option('sell_media_original_price') ) print get_option('sell_media_original_price'); else print 1; ?>;
+            var price = <?php if ( $payment_settings['default_price'] ) print $payment_settings['default_price']; else print 1; ?>;
 
             if ( markUp == undefined )
                 var markUp = <?php print $initial_markup; ?>;
@@ -196,8 +198,8 @@ function sell_media_the_markup_slider( $tag ){
                 else
                     $default_markup = '0%';
 
-            if ( get_option( 'sell_media_original_price' ) ){
-                $price = sell_media_get_currency_symbol() . get_option( 'sell_media_original_price' );
+            if ( $payment_settings['default_price'] ){
+                $price = sell_media_get_currency_symbol() . $payment_settings['default_price'];
             } else {
                 $price = __('you have not set a default price', 'sell_media');
             }
@@ -207,7 +209,7 @@ function sell_media_the_markup_slider( $tag ){
                 '<a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_settings">default item price</a>',
                 '<strong>' . $price . '</strong>',
                 '<strong><span class="markup-target">' . $default_markup . '</span></strong>',
-                '<strong>'.sell_media_get_currency_symbol().'<span class="price-target"></span></strong>'
+                '<strong>' . sell_media_get_currency_symbol() . '<span class="price-target"></span></strong>'
                 );
             ?>
         </p>

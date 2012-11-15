@@ -32,8 +32,9 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
     }
 
     if ( empty( $downloads ) ) {
+        $payment_settings = get_option( 'sell_media_payment_settings' );
         $message .= __( 'Your purchase is pending. This happens if you paid with an eCheck, if you opened a new account or if there is a problem with the checkout system. Please contact the seller if you have questions about this purchase: ') ;
-        $message .= get_option( 'sell_media_paypal_email' );
+        $message .= $payment_settings['paypal_email'];
         } else {
         foreach( $downloads as $download ){
             $image_attributes = wp_get_attachment_image_src( $download['AttachmentID'], 'medium', false );

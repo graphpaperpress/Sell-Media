@@ -17,6 +17,7 @@ include( dirname(__FILE__) . '/inc/cart.php' );
 include( dirname(__FILE__) . '/inc/downloads.php' );
 include( dirname(__FILE__) . '/inc/helpers.php');
 include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
+include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 
 if ( is_admin() ) {
@@ -26,7 +27,7 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-mime-types.php' );
     include( dirname(__FILE__) . '/inc/admin-payments.php' );
     include( dirname(__FILE__) . '/inc/admin-settings.php' );
-    include( dirname(__FILE__) . '/inc/admin-shortcodes.php' );
+
     include( dirname(__FILE__) . '/inc/admin-term-meta.php' );
 }
 

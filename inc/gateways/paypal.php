@@ -43,13 +43,16 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
  * );
  */
 function sell_media_process_paypal_purchase( $purchase_data ) {
+    $general_settings = get_option( 'sell_media_general_settings' );
+    $payment_settings = get_option( 'sell_media_payment_settings' );
     $listener_url = trailingslashit( home_url() ).'?sell_media-listener=IPN';
 
     $args = array(
         'purchase_key' => $purchase_data['purchase_key'],
         'email' => $purchase_data['email']
     );
-    $return_url = add_query_arg( $args, get_permalink( get_option( 'sell_media_thanks_page' ) ) );
+
+    $return_url = add_query_arg( $args, get_permalink( $general_settings['thanks_page'] ) );
     $paypal_redirect = trailingslashit( sell_media_get_paypal_redirect() ) . '?';
 
     $price = $_SESSION['cart']['totalPrice'];
@@ -57,17 +60,17 @@ function sell_media_process_paypal_purchase( $purchase_data ) {
     $paypal_args = array(
         'cmd'            => '_xclick',
         'amount'         => $price,
-        'business'       => get_option( 'sell_media_paypal_email' ),
+        'business'       => $payment_settings['paypal_email'],
         'email'          => $purchase_data['email'],
         'no_shipping'    => '1',
         'shipping'       => '0',
         'no_note'        => '1',
-        'currency_code'  => get_option( 'sell_media_currency' ),
+        'currency_code'  => $payment_settings['currency'],
         'charset'        => get_bloginfo( 'charset' ),
         'rm'             => '2',
         'return'         => $return_url,
         'notify_url'     => $listener_url,
-        'mc_currency'    => get_option( 'sell_media_currency' ),
+        'mc_currency'    => $payment_settings['currency'],
         'mc_gross'       => $price,
         'payment_status' => '',
         'item_number'    => $purchase_data['purchase_key'],
@@ -111,6 +114,8 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
  * This is the Pink Lilly of the whole operation.
  */
 function sell_media_process_paypal_ipn() {
+
+    $payment_settings = get_option( 'sell_media_payment_settings' );
 
     /**
      * If test mode is enabled lets start our log file
@@ -223,9 +228,10 @@ function sell_media_process_paypal_ipn() {
     }
 
     // verify details
-    if ( $currency_code != strtolower( get_option( 'sell_media_currency' ) ) ) {
+    if ( $currency_code != strtolower( $payment_settings['currency'] ) ) {
+        $currency_setting = $payment_settings['currency'];
         if ( sell_media_test_mode() ){
-            $log_data .= "Currency code does not match!\n{$currency_code}, {strtolower( get_option( 'sell_media_currency' ) )}\nExecution stopped!\n\n";
+            $log_data .= "Currency code does not match!\n{$currency_code}, {strtolower( $currency_setting )}\nExecution stopped!\n\n";
             write_log_txt( $file_handle, $log_data );
             end_log_txt( $file_handle );
         }

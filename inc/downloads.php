@@ -131,8 +131,9 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
 
     $from_name = get_bloginfo('name');
     $from_email = get_option('admin_email');
-    $subject = get_option( 'sell_media_success_email_subject' );
-    $body = get_option( 'sell_media_success_email_body' );
+    $email_settings = get_option( 'sell_media_email_settings' );
+    $subject = $email_settings['success_email_subject'];
+    $body = $email_settings['success_email_body'];
 
     $links = null;
     $count = count( $downloads );

@@ -34,6 +34,8 @@ add_action('add_meta_boxes', 'sell_media_add_price_meta_box');
  */
 global $sell_media_item_meta_fields;
 $prefix = 'sell_media';
+$payment_settings = get_option( 'sell_media_payment_settings' );
+$default_price = $payment_settings['default_price'];
 $sell_media_item_meta_fields = array(
     array(
         'label'  => 'Item',
@@ -52,7 +54,7 @@ $sell_media_item_meta_fields = array(
         'desc'  => 'Leave off the ' . sell_media_get_currency_symbol() . '. Numbers only.', // this needs validation
         'id'    => $prefix . '_price',
         'type'  => 'text',
-        'std'   => get_option( 'sell_media_original_price' )
+        'std'   => $default_price
     ),
     array(
         'label'=> 'Shortcode',
@@ -111,7 +113,8 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 case 'text':
                     $tmp_price = get_post_meta( $post->ID, 'sell_media_price', true );
                     if ( $field['id'] == 'sell_media_price' && empty( $tmp_price ) ){
-                        $default = get_option('sell_media_original_price');
+                        $payment_settings = get_option('sell_media_payment_settings');
+                        $default = $payment_settings['default_price'];
                     }
                     echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" value="' . $default . '" size="30" />
                         <br /><span class="description">' . $field['desc'] . '</span>';

@@ -9,10 +9,12 @@
  * fall back on the default price set in the
  * plugin settings
  */
+$payment_settings = get_option( 'sell_media_payment_settings' );
+$general_settings = get_option( 'sell_media_general_settings' );
 $tmp_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
 
 if ( empty( $tmp_price ) ) {
-    $price = get_option( 'sell_media_original_price' );
+    $price = $payment_settings['default_price'];
 } else {
     $price = $tmp_price;
 }
@@ -66,9 +68,9 @@ if ( empty( $tmp_price ) ) {
                             <?php if ( empty( $_SESSION['cart']['items']) ) : ?>
                                 <span class="cart empty"><?php _e( 'Cart', 'sell_media' ); ?> (0)</span>
                             <?php else: ?>
-                                <span class="cart full"><a href="<?php print get_permalink( get_option('sell_media_cart_page') ); ?>" class="cart-handle"><?php _e( 'Cart', 'sell_media' ); ?> (<span class="count-container"><span class="count-target"></span></span>)</a></span>
+                                <span class="cart full"><a href="<?php print get_permalink( $general_settings['checkout_page'] ); ?>" class="cart-handle"><?php _e( 'Cart', 'sell_media' ); ?> (<span class="count-container"><span class="count-target"></span></span>)</a></span>
                             <?php endif; ?>
-                            <a href="<?php print get_permalink( get_option('sell_media_cart_page') ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
+                            <a href="<?php print get_permalink( $general_settings['checkout_page'] ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
                         </div>
                         <div class="right">
                             <input type="submit" value="<?php _e( 'Add to Cart' ); ?>" class="sell-media-buy-button" />
