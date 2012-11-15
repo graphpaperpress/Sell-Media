@@ -47,15 +47,24 @@ class SellMediaSettings {
 
         // Merge with defaults
         $this->general_settings = array_merge( array(
-            'test_mode' => false
+            'test_mode' => false,
+            'checkout_page' => '',
+            'thanks_page' => ''
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
+            'paypal_email' => '',
+            'currency' => '',
             'default_price' => '100'
         ), $this->payment_settings );
 
+        $user = get_user_by('email', get_option('admin_email') );
         $msg = "Hi {first_name} {last_name},\nThanks for purchasing from my site. Here are your download links:\n{download_links}\nThanks!";
+
         $this->email_settings = array_merge( array(
+            'from_name' => $user->first_name . ' ' . $user->last_name,
+            'from_email' => get_option('admin_email'),
+            'success_email_subject' => 'Your Purchase',
             'success_email_body' => $msg
         ), $this->email_settings );
 
@@ -146,22 +155,22 @@ class SellMediaSettings {
     }
 
     /*
-     * Thanks Page Option field callback
-     */
-    function field_general_thanks_page() {
-        ?>
-        <?php wp_dropdown_pages( array( 'name' => $this->general_settings_key['thanks_page'], 'selected' => $this->general_settings['thanks_page'] ) ); ?>
-        <span class="desc"><?php _e( 'What page contains the <code>[sell_media_thanks]</code> shortcode?', 'sell_media' ); ?></span>
-        <?php
-    }
-
-    /*
      * Checkout Page Option field callback
      */
     function field_general_checkout_page() {
         ?>
         <?php wp_dropdown_pages( array( 'name' => $this->general_settings_key['checkout_page'], 'selected' => $this->general_settings['checkout_page'] ) ); ?>
         <span class="desc"><?php _e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
+        <?php
+    }
+
+    /*
+     * Thanks Page Option field callback
+     */
+    function field_general_thanks_page() {
+        ?>
+        <?php wp_dropdown_pages( array( 'name' => $this->general_settings_key['thanks_page'], 'selected' => $this->general_settings['thanks_page'] ) ); ?>
+        <span class="desc"><?php _e( 'What page contains the <code>[sell_media_thanks]</code> shortcode?', 'sell_media' ); ?></span>
         <?php
     }
 
