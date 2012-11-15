@@ -27,7 +27,6 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-mime-types.php' );
     include( dirname(__FILE__) . '/inc/admin-payments.php' );
     include( dirname(__FILE__) . '/inc/admin-settings.php' );
-
     include( dirname(__FILE__) . '/inc/admin-term-meta.php' );
 }
 
