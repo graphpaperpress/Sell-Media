@@ -12,6 +12,7 @@ License: GPL
 */
 
 define( 'SELL_MEDIA_VERSION', '1.0.2' );
+define( 'SELL_MEDIA_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'sell-media.php' );
 
 include( dirname(__FILE__) . '/inc/cart.php' );
 include( dirname(__FILE__) . '/inc/downloads.php' );
@@ -183,6 +184,7 @@ class SellMedia {
 
         //add_submenu_page( 'edit.php?post_type=sell_media_item', __('Settings', 'sell_media'), __('Settings', 'sell_media'),  $permission, 'sell_media_settings', array( SellMediaSettings, 'plugin_options_tabs' ) );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Payments', 'sell_media'), __('Payments', 'sell_media'),  $permission, 'sell_media_payments', 'sell_media_payments_callback_fn' );
+        add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Extensions', 'sell_media'), __('Extensions', 'sell_media'),  $permission, 'sell_media_extensions', 'sell_media_extensions_callback_fn' );
 
         do_action( 'sell_media_menu_hook' );
@@ -525,6 +527,8 @@ class SellMedia {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ) );
             wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css' );
         }
+        if ( sell_media_is_reports_page() )
+            wp_enqueue_script( 'google_charts', 'https://www.google.com/jsapi', array( 'jquery' ) );
     }
 
 } // end class

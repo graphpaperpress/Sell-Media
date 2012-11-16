@@ -251,7 +251,8 @@ function sell_media_payments_callback_fn(){
 
         <div class="tablenav">
             <div class="total-revenue">
-                <p><?php _e( 'Total Revenue:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue(); ?></strong></p>
+                <p><?php _e( 'Total Pending Purchases:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='pending' ); ?></strong></p>
+                <p><?php _e( 'Total Completed Revenue:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></p>
                 <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
             </div>
             <?php if ($total_pages > 1) : ?>
@@ -286,18 +287,18 @@ function sell_media_payments_callback_fn(){
  * @since 0.1
 */
 
-function sell_media_total_revenue() {
+function sell_media_total_revenue( $post_status=null ) {
     $total = ( float ) 0;
-    $payments = get_transient( 'sell_media_total_revenue' );
+    $payments = get_transient( 'sell_media_total_revenue_' . $post_status );
     if ( false === $payments || '' === $payments ) {
         $args = array(
             'mode' => 'live',
             'post_type' => 'sell_media_payment',
             'posts_per_page' => -1,
-            'post_status' => 'pending',
+            'post_status' => $post_status,
             'meta_key' => '_sell_media_payment_amount'
         );
-        set_transient( 'sell_media_total_revenue', $payments, 1800 );
+        set_transient( 'sell_media_total_revenue_' . $post_status, $payments, 1800 );
     }
     $payments = get_posts( $args );
     if ( $payments ) {
@@ -307,4 +308,175 @@ function sell_media_total_revenue() {
         }
     }
     return number_format( ( float ) $total, 2, '.', '' );
+}
+
+
+/**
+ * Callback function to print out the payments report page
+ *
+ * @access public
+ * @since 1.2
+ * @return html
+ */
+function sell_media_reports_callback_fn(){
+
+    $current_page = admin_url('edit.php?post_type=download&page=sell_media_reports');?>
+    <div class="wrap">
+        <h2><?php _e( 'Earnings Report', 'sell_media' ); ?></h2>
+        <div class="tool-box total-revenue">
+            <h3 class="title"><?php _e( 'Total Sales Revenue To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
+            <p><?php printf( __( 'Below is a breakdown of sales per day, month and year. Learn how to increase sales on your site with on of our <a href="%d">Extensions for Sell Media</a>.', 'sell_media' ), sell_media_plugin_data( $field='PluginURI' ) ); ?>
+            <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
+        </div>
+
+        <div class="clear"></div>
+
+        <?php ob_start(); ?>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            // Sales Chart
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', '<?php _e("Day", "sell_media"); ?>');
+                data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+                data.addRows([
+                    <?php
+                    $num_of_days = apply_filters( 'sell_media_earnings_per_day_days', 30 ); // show payments for the last 30 days
+                    $i = $num_of_days;
+                    while( $i > 1 ) :
+                        $day_time   = strtotime( '-' . $num_of_days - $i . ' days', time() );
+                        $day        = date( 'd', $day_time ) + 1;
+                        $month      = date( 'n', $day_time ) + 1;
+                        $year       = date( 'Y', $day_time );
+                        ?>
+                        ['<?php echo date( "n/d", mktime( 0, 0, 0, $month, $day, $year ) ); ?>',
+                        <?php echo sell_media_get_sales_by_date( $day, $month, $year ); ?>,
+                        ],
+                        <?php $i--;
+                    endwhile;
+                    ?>
+                ]);
+
+                var options = {
+                    title: "<?php _e('Earnings per day', 'sell_media'); ?>"
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('daily_earnings_chart_div'));
+                chart.draw(data, options);
+            }
+        </script>
+        <div id="daily_earnings_chart_div" class="earnings_chart"></div>
+        <?php echo ob_get_clean(); ?>
+
+
+        <?php ob_start(); ?>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            // Sales Chart
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', '<?php _e("Month", "sell_media"); ?>');
+                data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+                data.addRows([
+                    <?php
+                    $i = 1;
+                    while($i <= 12) : ?>
+                        ['<?php echo sell_media_month_num_to_name($i) . ' ' . date("Y"); ?>', <?php echo sell_media_get_sales_by_date(null, $i, date('Y') ); ?>,
+                        ],
+                    <?php
+                    $i++;
+                    endwhile;
+                    ?>
+                ]);
+                var options = {
+                    title: "<?php _e('Earnings per month', 'sell_media'); ?>"
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('monthly_earnings_chart_div'));
+                chart.draw(data, options);
+            }
+        </script>
+        <div id="monthly_earnings_chart_div" class="earnings_chart"></div>
+        <?php echo ob_get_clean(); ?>
+
+
+        <?php ob_start(); ?>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            // Sales Chart
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', '<?php _e("Year", "sell_media"); ?>');
+                data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+                data.addRows([
+                    <?php
+                    $current = date('Y');
+                    $i = $current - 12;
+                    while($current >= $i) : ?>
+                        ['<?php echo $i; ?>',
+                        <?php echo sell_media_get_sales_by_date(null, null, $i ); ?>,
+                        ],
+                        <?php
+                        $i++;
+                    endwhile;
+                    ?>
+                ]);
+
+                var options = {
+                    title: "<?php _e('Earnings per year', 'sell_media'); ?>"
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('annual_earnings_chart_div'));
+                chart.draw(data, options);
+            }
+        </script>
+        <div id="annual_earnings_chart_div" class="earnings_chart"></div>
+        <?php echo ob_get_clean(); ?>
+
+    </div>
+<?php }
+
+/**
+ *  Function to print out total payments by date
+ *
+ * @access public
+ * @since 1.2
+ * @return html
+ */
+function sell_media_get_sales_by_date( $day = null, $month_num, $year ) {
+    $args = array(
+        'post_type' => 'sell_media_payment',
+        'posts_per_page' => -1,
+        'year' => $year,
+        'monthnum' => $month_num,
+        'post_status' => 'publish'
+    );
+    if( ! empty( $day ) )
+        $args['day'] = $day;
+
+    $sales = get_posts( $args );
+    $total = 0;
+    if( $sales ) {
+        foreach ( $sales as $sale ) {
+            $payment_amount = get_post_meta( $sale->ID, '_sell_media_payment_amount', true );
+            $total = $total + $payment_amount;
+        }
+    }
+    return $total;
+}
+
+/**
+ *  Function to get month name by month digit number
+ *
+ * @access public
+ * @since 1.2
+ * @return html
+ */
+function sell_media_month_num_to_name( $n ) {
+    $timestamp = mktime( 0, 0, 0, $n, 1, 2005 );
+
+    return date( "M", $timestamp );
 }

@@ -772,3 +772,27 @@ function sell_media_pagination_filter(){
 
     print '<div class="sell-media-pagination-container">' . $links . '</div>';
 }
+
+
+/**
+ * Determine if the payment reports page is being displayed on the admin
+ *
+ * @since 1.2
+ */
+function sell_media_is_reports_page(){
+
+    if ( 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] )
+        return true;
+    else
+        return false;
+}
+
+/**
+ * Get Plugin data
+ *
+ * @since 1.2
+ */
+function sell_media_plugin_data( $field=null ){
+    $plugin_data = get_plugin_data( SELL_MEDIA_PLUGIN_FILE, $markup = true, $translate = true );
+    return $plugin_data[$field];
+}
