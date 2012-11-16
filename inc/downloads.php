@@ -52,7 +52,7 @@ function sell_media_process_download() {
             header("Content-Disposition: attachment; filename={$requested_file};");
 
             $sell_media_upload_dir = sell_media_get_upload_dir();
-            $full_file_path = $sell_media_upload_dir['path'] . '/' . $requested_file;
+            $full_file_path = $sell_media_upload_dir['basedir'] . '/sell_media/' . $requested_file_with_dir;
 
             print file_get_contents( $full_file_path );
 
