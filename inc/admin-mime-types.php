@@ -10,7 +10,7 @@
  * @since 1.0.1
  * @return $destination_file The location to the new file
  */
-function sell_media_move_image_from_meta( $moved_file=null, $_FILES=null ){
+function sell_media_move_image_from_meta( $moved_file=null, $files=null ){
 
     $wp_upload_dir = wp_upload_dir();
 
