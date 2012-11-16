@@ -150,6 +150,7 @@ class SellMediaSettings {
     function section_email_desc() { echo ''; }
     function section_misc_desc() { echo ''; do_action( 'sell_media_misc_settings_hook' ); }
 
+
     /*
      * General Option field callback, renders a
      * text input, note the name and value.
