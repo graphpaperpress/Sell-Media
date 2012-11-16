@@ -148,8 +148,10 @@ class SellMediaSettings {
     function section_general_desc() { echo ''; }
     function section_payment_desc() { echo ''; }
     function section_email_desc() { echo ''; }
-    function section_misc_desc() { echo ''; do_action( 'sell_media_misc_settings_hook' ); }
-
+    function section_misc_desc() {
+        printf( __( 'Settings for Extensions are shown below. <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' );
+        do_action( 'sell_media_misc_settings_hook' );
+    }
 
     /*
      * General Option field callback, renders a

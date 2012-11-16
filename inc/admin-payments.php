@@ -175,6 +175,14 @@ function sell_media_payments_callback_fn(){
         $total_pages = ceil( $current_count / $per_page );
      ?>
         <h2><?php _e( 'Payments', 'sell_media' ); ?></h2>
+        <div class="tool-box total-revenue">
+            <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
+            <p><?php _e( 'Below is a breakdown of each transaction. Payments marked as "Pending" mean the buyer checked out, but abandoned payment.', 'sell_media' ); ?></p>
+            <p><?php printf( __( 'Want to increase your sales? <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' ); ?></p>
+            <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
+        </div>
+        <div class="clear"></div>
+
         <?php if ( $payments ) : ?>
         <form id="payments-filter" action="<?php echo admin_url('edit.php'); ?>" method="get" style="float: right; margin-bottom: 5px;">
             <input type="hidden" name="page" value="sell_media_payments"/>
@@ -251,8 +259,8 @@ function sell_media_payments_callback_fn(){
 
         <div class="tablenav">
             <div class="total-revenue">
-                <p><?php _e( 'Total Pending Purchases:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='pending' ); ?></strong></p>
-                <p><?php _e( 'Total Completed Revenue:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></p>
+                <p><?php _e( 'Total Pending:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='pending' ); ?></strong></p>
+                <p><?php _e( 'Total Earnings:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></p>
                 <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
             </div>
             <?php if ($total_pages > 1) : ?>
@@ -324,8 +332,8 @@ function sell_media_reports_callback_fn(){
     <div class="wrap">
         <h2><?php _e( 'Earnings Report', 'sell_media' ); ?></h2>
         <div class="tool-box total-revenue">
-            <h3 class="title"><?php _e( 'Total Sales Revenue To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
-            <p><?php printf( __( 'Below is a breakdown of sales per day, month and year. Learn how to increase sales on your site with on of our <a href="%d">Extensions for Sell Media</a>.', 'sell_media' ), sell_media_plugin_data( $field='PluginURI' ) ); ?>
+            <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
+            <p><?php printf( __( 'Below is a breakdown of earnings per day, month and year. Want to increase your sales? <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' ); ?></p>
             <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
         </div>
 
@@ -359,7 +367,8 @@ function sell_media_reports_callback_fn(){
                 ]);
 
                 var options = {
-                    title: "<?php _e('Earnings per day', 'sell_media'); ?>"
+                    title: "<?php _e('Earnings per day', 'sell_media'); ?>",
+                    fontSize: "12"
                 };
 
                 var chart = new google.visualization.ColumnChart(document.getElementById('daily_earnings_chart_div'));
@@ -391,7 +400,8 @@ function sell_media_reports_callback_fn(){
                     ?>
                 ]);
                 var options = {
-                    title: "<?php _e('Earnings per month', 'sell_media'); ?>"
+                    title: "<?php _e('Earnings per month', 'sell_media'); ?>",
+                    fontSize: "12"
                 };
 
                 var chart = new google.visualization.ColumnChart(document.getElementById('monthly_earnings_chart_div'));
@@ -426,7 +436,8 @@ function sell_media_reports_callback_fn(){
                 ]);
 
                 var options = {
-                    title: "<?php _e('Earnings per year', 'sell_media'); ?>"
+                    title: "<?php _e('Earnings per year', 'sell_media'); ?>",
+                    fontSize: "12"
                 };
 
                 var chart = new google.visualization.ColumnChart(document.getElementById('annual_earnings_chart_div'));
