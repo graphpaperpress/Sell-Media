@@ -108,7 +108,7 @@ function sell_media_redirect(){
      * a template for EACH term in that taxonomy.
      * i.e., taxonomy-$term.php
      */
-    elseif ( is_tax() ) {
+    elseif ( is_tax() && 'sell_media_item' == $post_type ) {
         if ( ! empty( $taxonomies ) ){
             foreach( $taxonomies as $tax ){
                 if ( $queried_tax == $tax ) {
