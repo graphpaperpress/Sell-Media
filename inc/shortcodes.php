@@ -35,7 +35,8 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
         $payment_settings = get_option( 'sell_media_payment_settings' );
         $message .= __( 'Your purchase is pending. This happens if you paid with an eCheck, if you opened a new account or if there is a problem with the checkout system. Please contact the seller if you have questions about this purchase: ') ;
         $message .= $payment_settings['paypal_email'];
-        } else {
+    }
+    else {
         foreach( $downloads as $download ){
             $image_attributes = wp_get_attachment_image_src( $download['AttachmentID'], 'medium', false );
             $download = site_url() . '/?download=' . $purchase_key . '&email=' . $email . '&id=' . $download['AttachmentID'];
@@ -44,7 +45,7 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
             $message .= '<strong><a href="' . $download . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
             $message .= '</div>';
         }
-      }
+    }
 
     print '<p class="sell-media-thanks-message">' . $message . '</p>';
 }
