@@ -178,11 +178,15 @@ class SellMedia {
         }
     }
 
+    /**
+     * Add all menus under Sell Media. Settings are added on admin-settings.php
+     *
+     * @since 1.0
+     */
     public function adminMenus(){
 
         $permission = 'manage_options';
 
-        //add_submenu_page( 'edit.php?post_type=sell_media_item', __('Settings', 'sell_media'), __('Settings', 'sell_media'),  $permission, 'sell_media_settings', array( SellMediaSettings, 'plugin_options_tabs' ) );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Payments', 'sell_media'), __('Payments', 'sell_media'),  $permission, 'sell_media_payments', 'sell_media_payments_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Extensions', 'sell_media'), __('Extensions', 'sell_media'),  $permission, 'sell_media_extensions', 'sell_media_extensions_callback_fn' );

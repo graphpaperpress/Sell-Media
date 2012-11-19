@@ -181,7 +181,6 @@ function sell_media_cart_shortcode($atts, $content = null) {
             <thead>
                 <tr class="sell-media-header">
                     <th class="sell-media-header-details"><h3><?php _e('Item', 'sell_media'); ?></h3></th>
-                    <th class="sell-media-header-description"><h3><?php _e('Description', 'sell_media'); ?></h3></th>
                     <th class="sell-media-header-price"><h3><?php _e('Price', 'sell_media'); ?></h3></th>
                 </tr>
             </thead>
@@ -198,16 +197,12 @@ function sell_media_cart_shortcode($atts, $content = null) {
                             <a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php sell_media_item_icon( $item['AttachmentID'], array(75,0) ); ?></a>
                             <h5><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></h5>
                         </td>
-                        <td class="product-description">
-                            <?php print get_post_meta( $item['ProductID'], 'sell_media_description', true); ?>
-                        </td>
                         <td class="product-price">
                             <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span> <br /><span class="remove-item-handle" data-item_id="<?php print $item_id; ?>" checked="checked" name="<?php print $item['AttachmentID']; ?>" value="" ><?php _e('Remove', 'sell_media'); ?></span>
                         </td>
                     </tr>
                 <?php endforeach; ?>
                     <tr class="product-checkout-row">
-                        <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td class="product-checkout-row">
                             <h4><?php _e( 'Subtotal' , 'sell_media' ) ?></h4>

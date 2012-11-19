@@ -175,6 +175,8 @@ Action hooks available:
 * Added Google Charts on Reports page
 * Added Paypal IPN instructions on Settings
 * Max-width fix for Firefox on Sell Media archives
+* Post Type Taxonomy archives conflict fix
+* Download file fix
 
 = 1.0.2 =
 * Plugin Settings save bugfix
