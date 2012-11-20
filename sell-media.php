@@ -520,7 +520,10 @@ class SellMedia {
      * public facing site.
      */
     private function enqueueScripts() {
-
+        if ( is_admin() ) {
+            wp_register_script( 'sell_media-admin-uploader', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin-uploader.js', array( 'jquery', 'media-upload' ) );
+            wp_enqueue_script( 'sell_media-admin-uploader' );
+        }
         if ( is_admin() && sell_media_is_sell_media_post_type_page() ) {
             wp_enqueue_style( 'sell_media-admin', plugin_dir_url( __FILE__ ) . 'css/sell_media-admin.css', array( 'thickbox' ) );
             if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
