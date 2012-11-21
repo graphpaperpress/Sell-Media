@@ -523,6 +523,8 @@ class SellMedia {
         if ( is_admin() ) {
             wp_register_script( 'sell_media-admin-uploader', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin-uploader.js', array( 'jquery', 'media-upload' ) );
             wp_enqueue_script( 'sell_media-admin-uploader' );
+            wp_register_script( 'jquery-live', plugin_dir_url( __FILE__ ) . 'js/jquery.livequery.js', array( 'jquery', 'media-upload' ) );
+            wp_enqueue_script( 'jquery-live' );
         }
         if ( is_admin() && sell_media_is_sell_media_post_type_page() ) {
             wp_enqueue_style( 'sell_media-admin', plugin_dir_url( __FILE__ ) . 'css/sell_media-admin.css', array( 'thickbox' ) );
