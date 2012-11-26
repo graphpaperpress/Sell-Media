@@ -277,3 +277,36 @@ function sell_media_item_shortcode( $atts ) {
     return '<div class="sell-media-item-container sell-media-align' . $align . ' ">' . $image . $button . '</div>';
 }
 add_shortcode('sell_media_item', 'sell_media_item_shortcode');
+
+
+/**
+ * Adds template to display all items for sale.
+ *
+ * @author Zane M. Kolnik
+ * @since 1.0.4
+ */
+function sell_media_all_items_shortcode(){
+    $args = array(
+        'posts_per_page' => -1,
+        'post_type' => 'sell_media_item'
+        );
+
+    $posts = New WP_Query( $args ); ?>
+    <div id="sell-media-shortcode-all" class="sell-media">
+        <div class="sell-media-short-code-all">
+            <div class="sell-media-grid-container">
+                <?php $i = 0; ?>
+                <?php foreach( $posts->posts as $post ) : $i++; ?>
+                    <?php if ( $i %3 == 0) $end = ' end'; else $end = null; ?>
+                    <div class="sell-media-grid<?php echo $end; ?>">
+                        <a href="<?php print get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( get_post_thumbnail_id( $post->ID ) ); ?></a>
+                        <h3><a href="<?php print get_permalink( $post->ID ); ?>"><?php print get_the_title( $post->ID ); ?></a></h3>
+                        <?php sell_media_item_buy_button( $post->ID, 'text', 'Purchase' ); ?>
+                    </div>
+                <?php endforeach; ?>
+                <?php sell_media_pagination_filter(); ?>
+            </div><!-- .sell-media-grid-container -->
+        </div><!-- .sell-media-short-code-all -->
+    </div><!-- #sell-media-shortcode-all .sell_media -->
+<?php }
+add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');

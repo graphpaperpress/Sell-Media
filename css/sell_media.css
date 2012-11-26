@@ -383,3 +383,17 @@ input[type="submit"].sell-media-buy-button-success:hover {
 input[type="submit"].sell-media-buy-button-success:active {
   background-color: #408140 \9;
 }
+
+/*= Short code all
+-------------------------------------------------------------- */
+.sell-media-short-code-all h3 {
+  float: left;
+  font-size: 1.2em;
+  margin: 0;
+  padding: 0;
+  width: 70%;
+  line-height: 1em;
+}
+.sell-media .sell-media-short-code-all .sell-media-grid .sell-media-buy-text {
+  font-size: 1em;
+}
