@@ -24,7 +24,8 @@ get_header(); ?>
 				<h1 class="entry-title">
 					<?php $taxonomy = get_query_var( 'taxonomy' ); ?>
 					<?php if ( $taxonomy ) : ?>
-						<?php print $taxonomy; ?>: <?php print get_query_var( 'term' ); ?>
+						<?php global $wp_query; ?>
+						<?php print $taxonomy; ?>: <?php print $wp_query->queried_object->name; ?>
 					<?php else : ?>
 						<?php print _e( 'Archive', 'sell_media' ); ?>
 					<?php endif; ?>
