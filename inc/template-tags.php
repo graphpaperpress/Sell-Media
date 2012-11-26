@@ -222,6 +222,9 @@ function sell_media_item_icon( $attachment_id=null, $size='medium' ){
         case 'application/pdf':
             $mime_type = 'text/document';
             break;
+        case 'application/zip':
+            echo  '<img src="' . includes_url() . 'images/crystal/archive.png" class="sell_media_image wp-post-image" alt="" height="" width="" style="max-width:100%;height:auto;"/>';
+            return;
     }
     print '<img src="' . wp_mime_type_icon( $mime_type ) . '" />';
 }

@@ -307,6 +307,7 @@ function sell_media_save_custom_meta( $post_id ) {
         update_post_meta( $post_id, '_thumbnail_id', $attach_id );
         update_post_meta( $attach_id, '_sell_media_for_sale_product_id', $post_id );
         update_post_meta( $attach_id, '_sell_media_for_sale', 1 );
+        update_post_meta( $attach_id, '_sell_media_file', $moved_file );
     }
 
     // loop through fields and save the data

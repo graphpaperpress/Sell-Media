@@ -24,6 +24,10 @@ function sell_media_move_image_from_meta( $moved_file=null, $files=null ){
         $resized_image = image_resize( $moved_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
     }
 
+    if ( is_wp_error( $resized_image ) ){
+        $resized_image = $moved_file;
+    }
+
     $destination_file = $wp_upload_dir['path'] . '/' . $_FILES['sell_media_file']['name'];
 
     do_action( 'sell_media_after_upload' );
@@ -39,6 +43,7 @@ function sell_media_move_image_from_meta( $moved_file=null, $files=null ){
     // we need to copy it back to the WP area. Then we need to unlink it,
     // i.e. "delete".
     $new_resize_location = dirname( $destination_file ) . '/' . basename( $resized_image );
+
     @copy( $resized_image, $new_resize_location );
     unlink( $resized_image );
 
@@ -130,17 +135,20 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
 
 
 /**
- * Parse IPTC info and move the uploaded file into the proctected area
+ * Moves and uploaded file from the uploads dir into the "protected"
+ * Sell Media dir, note the original file is deleted.
  *
  * @param $original_file Full path of the file with the file.
  * @since 1.0.1
  */
 function sell_media_default_move( $original_file=null ){
 
-    if ( file_exists( $original_file ) ){
+    $dir = wp_upload_dir();
+    $original_file_path = $dir['basedir'] . '/' . $original_file;
+    $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $original_file;
 
-        $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $meta['file'];
 
+    if ( file_exists( $original_file_path ) ){
         // Check if the destinatin dir is exists, i.e.
         // sell_media/YYYY/MM if not we create it first
         $destination_dir = dirname( $destination_file );
@@ -150,6 +158,7 @@ function sell_media_default_move( $original_file=null ){
         }
 
         // Copy original to our protected area
-        @copy( $original_file, $destination_file );
+        @copy( $original_file_path, $destination_file );
+        @unlink( $original_file_path );
     }
 }

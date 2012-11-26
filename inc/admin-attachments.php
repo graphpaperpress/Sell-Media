@@ -14,11 +14,19 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
 
     $image_meta_a = wp_get_attachment_metadata( $post->ID );
     $upload_url_a = wp_upload_dir();
+
+    if ( empty( $image_meta_a ) ){
+        $att_arr = explode( 'uploads/', $post->guid );
+        $file = $att_arr[1];
+    } else {
+        $file = $image_meta_a['file'];
+    }
+
     ?>
     <script type="text/javascript">
     jQuery( document ).ready(function( $ ){
         if ( $('.media-item input[type="checkbox"]').attr('checked') != undefined ) {
-            $('.urlfield').val("<?php print $upload_url_a['baseurl'] . SellMedia::upload_dir . '/'.$image_meta_a['file']; ?>");
+            $('.urlfield').val("<?php print $upload_url_a['baseurl'] . SellMedia::upload_dir . '/' . $file; ?>");
         }
     });
     </script>
@@ -140,6 +148,8 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         // Image mime type support
         if ( in_array( $mime_type['type'], $image_mimes ) ){
             sell_media_move_image_from_attachment( $attached_file, $product_id );
+        } else {
+            sell_media_default_move( $attached_file );
         }
         // Support for different mime types here
 
