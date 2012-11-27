@@ -397,3 +397,14 @@ input[type="submit"].sell-media-buy-button-success:active {
 .sell-media .sell-media-short-code-all .sell-media-grid .sell-media-buy-text {
   font-size: 1em;
 }
+
+/*= sell_media_download_list shortcode
+------------------------------------------------------------------- */
+
+.download_lists {
+	clear:both;
+}
+.download_lists img {
+	float:left;
+	margin:0 20px 20px 0;
+}
