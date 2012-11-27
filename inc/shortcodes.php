@@ -285,11 +285,27 @@ add_shortcode('sell_media_item', 'sell_media_item_shortcode');
  * @author Zane M. Kolnik
  * @since 1.0.4
  */
-function sell_media_all_items_shortcode(){
+function sell_media_all_items_shortcode( $atts ){
+
+    extract( shortcode_atts( array(
+        'collection' => null
+        ), $atts )
+    );
+
     $args = array(
         'posts_per_page' => -1,
         'post_type' => 'sell_media_item'
         );
+
+    if ( $collection ){
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'collection',
+                'field' => 'slug',
+                'terms' => $collection
+                )
+            );
+    }
 
     $posts = New WP_Query( $args ); ?>
     <div id="sell-media-shortcode-all" class="sell-media">
@@ -319,32 +335,32 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
  */
 function sell_media_download_shortcode( $atts ) {
 
-	if ( is_user_logged_in() ) { 
+	if ( is_user_logged_in() ) {
 		global $current_user, $wpdb;
-		get_currentuserinfo();		
+		get_currentuserinfo();
 		$payment_lists = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_sell_media_payment_meta'", ARRAY_A );
 		//print_r($payment_lists);
 		foreach( $payment_lists as $key=>$value ) {
-			$details = unserialize($value[ 'meta_value' ]);			
+			$details = unserialize($value[ 'meta_value' ]);
 			if($current_user->user_email == $details[ 'email' ] ){
 				$product_details = unserialize( $details[ 'products' ] );
 				//print_r($product_details[0]);
-				foreach( $product_details as $product_detail ) {					
+				foreach( $product_details as $product_detail ) {
 					?>
 					<div class="download_lists">
 					<?php
 					echo wp_get_attachment_image( $product_detail[ 'AttachmentID' ] );
 					?>
 						<span class="download_details">
-							<?php 
-							echo "Product = ".get_the_title( $product_detail[ 'ProductID' ] )."<br />";							
-							echo "Price = $".$product_detail[ 'CalculatedPrice' ]."<br />";							
+							<?php
+							echo "Product = ".get_the_title( $product_detail[ 'ProductID' ] )."<br />";
+							echo "Price = $".$product_detail[ 'CalculatedPrice' ]."<br />";
 							?>
 						</span>
 					</div>
 					<?php
-				} 
-				
+				}
+
 				//
 			}
 		}
