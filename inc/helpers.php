@@ -1,161 +1,52 @@
 <?php
-
 /**
- * This file handles redirecting of our templates to our given views
- * dir and anything else.
- *
- * Check if the themer has made a theme file in their
- * theme dir, if not load our default.
- *
- * @uses template_redirect http://codex.wordpress.org/Plugin_API/Action_Reference/template_redirect
- * @since 0.1
+ * Add taxonomy template for new post type
+ * @since 1.0.4
  */
-function sell_media_redirect(){
-    global $wp_query;
+function sell_media_redirect_single(){
+    $post_type = get_query_var('post_type');
 
-    /**
-     * This checks if we are on a multi-site install and if so
-     * we just set the index to 2.
-     * Example cars/ is our network, i.e. http://site.com/cars/make/
-     * therefore make/ is our $post_type
-     */
-    $url_index = 1;
-    if ( is_multisite() ) {
-        if ( ! SUBDOMAIN_INSTALL ) {
-            $url_index = 2;
-        }
-    }
-
-    if ( isset( $wp_query->query_vars['taxonomy'] ) ) {
-        $queried_tax = $wp_query->query_vars['taxonomy'];
-    } else {
-        $queried_tax = null;
-    }
-
-    if ( get_query_var('post_type') ) {
-
-        /**
-         * Use our query var
-         */
-        $post_type = get_query_var('post_type');
-
-    } else {
-
-        /**
-         * Use the current post_type
-         *
-         * If not we explode the url on / and use the
-         * first index. Which maps to our controller
-         * (file).
-         */
-        global $post;
-
-        if ( $post ) {
-            $post_type = $post->post_type;
-        }
-    }
-
-    /**
-     * If we cant determine a post type just leave
-     */
-    if ( empty( $post_type ) )
-        return;
-
-    /**
-     * Derive the post type object, from here we derive the
-     * list of taxonoimes.
-     */
-    $cpt_obj = get_post_types( array( 'name' => $post_type ), 'objects' );
-
-    if ( $cpt_obj ){
-        $taxonomies = $cpt_obj[ $post_type ]->taxonomies;
-    }
-
-    $template = array(
-        'post_type' => $post_type,
-        'single'    => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-' . $post_type . '.php',
-        'archive'   => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-' . $post_type . '.php',
-        'search'    => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/search-' . $post_type . '.php',
-        'taxonomy'  => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/taxonomy-' . $post_type . '.php',
-        'default'   => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-' . $post_type . '.php',
-        );
-
-    $theme_dir = get_stylesheet_directory() . '/';
-    $theme_files = array(
-        'single' => $theme_dir . 'single-' . $post_type . '.php',
-        'archive' => $theme_dir . 'archive-' . $post_type . '.php',
-        'taxonomy' => $theme_dir . 'taxonomy-'
-        );
-
-    /**
-     * If this is a single template, and the post type is
-     * our custom post type.
-     */
-    if ( is_single() && get_query_var('post_type') == $post_type ) {
-        if ( file_exists( $theme_files['single'] ) ) {
-            load_template( $theme_files['single']  );
-            exit();
-        } elseif ( file_exists( $template['single'] ) ) {
-            load_template( $template['single'] );
-            exit();
-        } else {
-            return;
-        }
-    }
-
-    /**
-     * Check if this is a taxonomy, if so try loading
-     * a template for EACH term in that taxonomy.
-     * i.e., taxonomy-$term.php
-     */
-    elseif ( is_tax() && 'sell_media_item' == $post_type ) {
-        if ( ! empty( $taxonomies ) ){
-            foreach( $taxonomies as $tax ){
-                if ( $queried_tax == $tax ) {
-                    if ( file_exists( $theme_files['archive'] . $tax . '.php' ) ) {
-                        load_template( $theme_files['archive'] . $tax . '.php' );
-                        exit;
-                    } else {
-                        load_template( $template['archive'] );
-                        exit;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Check if the post type archive for our custom
-     * post type is being displayed, i.e.
-     * site.com/$post_type/
-     */
-    elseif ( is_post_type_archive( $post_type ) ) {
-        if ( file_exists( $theme_files['archive'] ) ) {
-            load_template( $theme_files['archive'] );
-            exit();
-        } elseif( file_exists( $template['archive'] )) {
-            load_template( $template['archive'] );
-            exit();
-        } else {
-            return;
-        }
-    }
-
-    elseif ( is_search() ) {
-        if ( file_exists( $template['search'] ) ) {
-            load_template( $template['search'] );
-            exit;
-        }
-    }
-
-    else {
-        if ( file_exists( $template['single'] ) ) {
-            load_template( $template['single'] );
-            exit;
-        }
+    if ( $post_type == 'sell_media_item') {
+        if ( file_exists( STYLESHEETPATH . '/single-' . $post_type . '.php' ) ) return;
+        load_template( plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-' . $post_type . '.php' );
+        exit;
     }
 }
-add_action( 'template_redirect', 'sell_media_redirect',6 );
+add_action( 'template_redirect', 'sell_media_redirect_single',6 );
+
+
+/**
+ * Add archive template for new post type
+ * @since 1.0.4
+ */
+function sell_media_redirect_archvie() {
+
+    $post_type = get_query_var('post_type');
+
+    if ($post_type == '')
+       $post_type = 'sell_media_item';
+
+    if (is_post_type_archive($post_type)) {
+        if (file_exists(STYLESHEETPATH . '/archive-' . $post_type . '.php')) return;
+        load_template( plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-' . $post_type . '.php');
+       exit;
+    }
+}
+add_action( 'template_redirect', 'sell_media_redirect_archvie',6 );
+
+
+/**
+ * Add taxonomy template for new post type
+ * @since 1.0.4
+ */
+function sell_media_redirect_taxonomy() {
+    if ( is_tax('collection') ) {
+        if (file_exists(STYLESHEETPATH . '/taxonomy-collections.php')) return;
+        load_template( plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php');
+        exit;
+    }
+}
+add_action( 'template_redirect', 'sell_media_redirect_taxonomy',6 );
 
 
 /**
