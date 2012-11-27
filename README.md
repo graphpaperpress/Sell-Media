@@ -164,6 +164,12 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.0.4 =
+* Added shortcode sell_media_all_items
+* Added shortcode sell_media_download_list
+* Zip file support
+* Added bulk "Sell This" option
+* Bug fixes
 
 = 1.0 =
 * Public release
