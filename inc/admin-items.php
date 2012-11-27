@@ -275,6 +275,8 @@ function sell_media_save_custom_meta( $post_id ) {
 
         if ( in_array( $mime_type['type'], $image_mimes ) ){
             $destination_file = sell_media_move_image_from_meta( $moved_file, $_FILES );
+        } else {
+            $destination_file = $moved_file;
         }
 
         // Additional processes dependent on mime types will
