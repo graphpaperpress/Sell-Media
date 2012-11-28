@@ -686,3 +686,26 @@ function sell_media_plugin_data( $field=null ){
     $plugin_data = get_plugin_data( SELL_MEDIA_PLUGIN_FILE, $markup = true, $translate = true );
     return $plugin_data[$field];
 }
+
+
+/**
+ * Updates the payment status
+ *
+ * @access public
+ * @since 0.1
+ * @return null
+ */
+function sell_media_update_payment_status($payment_id, $new_status = 'publish') {
+
+    if ( $new_status == 'completed' || $new_status == 'complete' ) {
+        $new_status = 'publish';
+    }
+
+    $payment = get_post($payment_id);
+
+    $old_status = $payment->post_status;
+
+    do_action( 'sell_media_before_update_payment_status', $payment_id, $new_status, $old_status );
+    wp_update_post( array( 'ID' => $payment_id, 'post_status' => $new_status ) );
+    do_action( 'sell_media_after_update_payment_status', $payment_id, $new_status, $old_status );
+}

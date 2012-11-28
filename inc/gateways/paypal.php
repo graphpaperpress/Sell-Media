@@ -212,6 +212,16 @@ function sell_media_process_paypal_ipn() {
     }
 
     $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
+
+    if ( empty( $payment_meta_array ) ){
+        $log_data .= "No payment meta found for payment_id: {$payment_id}.\n";
+
+        start_log_txt( $file_handle );
+        write_log_txt( $file_handle, $log_data );
+
+        return;
+    }
+
     $products_meta_array = unserialize( $payment_meta_array['products'] );
     $payment_amount = get_post_meta( $payment_id, '_sell_media_payment_amount', true );
 
@@ -250,7 +260,9 @@ function sell_media_process_paypal_ipn() {
 
     if ( $purchase_key != $payment_meta_array['purchase_key'] ) {
         if ( sell_media_test_mode() ){
-            $log_data .= "Purchase key does not match!\n{$purchase_key}, {$payment_meta_array['purchase_key']}\nExecution stopped!\n\n";
+            $log_data .= "Purchase key does not match!";
+            $log_data .= "You gave me: {$purchase_key} (item_number), but the Purchase key I found is: ";
+            $log_data .= "{$payment_meta_array['purchase_key']}\nExecution stopped!\n\n";
             write_log_txt( $file_handle, $log_data );
             end_log_txt( $file_handle );
         }
