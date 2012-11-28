@@ -165,12 +165,23 @@ Upgrade Notice
 Changelog
 ---------
 = 1.0.4 =
+* Better handling of template redirection
 * Item description now has a Text Editor
 * Added shortcode sell_media_all_items
 * Added shortcode sell_media_download_list
 * Zip file support
 * Added bulk "Sell This" option
 * Bug fixes
+
+= 1.0.3 =
+* Added Google Charts on Reports page
+* Added Paypal IPN instructions on Settings
+* Max-width fix for Firefox on Sell Media archives
+* Post Type Taxonomy archives conflict fix
+* Download file fix
+
+= 1.0.2 =
+* Plugin Settings save bugfix
 
 = 1.0 =
 * Public release

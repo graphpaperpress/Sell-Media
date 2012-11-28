@@ -1,52 +1,51 @@
 <?php
 /**
- * Add taxonomy template for new post type
+ * Template Redirect
  * @since 1.0.4
  */
-function sell_media_redirect_single(){
+function sell_media_template_redirect(){
     $post_type = get_query_var('post_type');
+    $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
-    if ( $post_type == 'sell_media_item') {
-        if ( file_exists( STYLESHEETPATH . '/single-' . $post_type . '.php' ) ) return;
-        load_template( plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-' . $post_type . '.php' );
-        exit;
-    }
-}
-add_action( 'template_redirect', 'sell_media_redirect_single',6 );
-
-
-/**
- * Add archive template for new post type
- * @since 1.0.4
- */
-function sell_media_redirect_archvie() {
-
-    $post_type = get_query_var('post_type');
-
-    if ($post_type == '')
+    if ( $post_type == '' )
        $post_type = 'sell_media_item';
 
-    if (is_post_type_archive($post_type)) {
-        if (file_exists(STYLESHEETPATH . '/archive-' . $post_type . '.php')) return;
-        load_template( plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-' . $post_type . '.php');
-       exit;
-    }
-}
-add_action( 'template_redirect', 'sell_media_redirect_archvie',6 );
+    $custom_templates = array(
+        'single'  => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-sell_media_item.php',
+        'archive' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php'
+        );
 
+    $default_templates = array(
+        'single'   => get_stylesheet_directory() . '/single-sell_media_item.php',
+        'archive'  => get_stylesheet_directory() . '/archive-sell_media_item.php',
+        'taxonomy' => get_stylesheet_directory() . 'taxonomy-' . get_query_var('taxonomy') . '.php'
+        );
 
-/**
- * Add taxonomy template for new post type
- * @since 1.0.4
- */
-function sell_media_redirect_taxonomy() {
-    if ( is_tax('collection') ) {
-        if (file_exists(STYLESHEETPATH . '/taxonomy-collections.php')) return;
-        load_template( plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php');
+    if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
+        /**
+         * Single
+         */
+        if ( file_exists( $default_templates['single'] ) ) return;
+        load_template( $custom_templates['single'] );
+        exit;
+    } elseif ( is_post_type_archive( $post_type ) && $post_type == 'sell_media_item' ) {
+        /**
+         * Archive
+         */
+        if ( file_exists( $default_templates['archive'] ) ) return;
+        load_template( $custom_templates['archive'] );
+        exit;
+    } elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
+        /**
+         * Taxonomies
+         */
+        if ( file_exists( $default_templates['taxonomy'] ) ) return;
+        load_template( $custom_templates['archive'] );
         exit;
     }
+
 }
-add_action( 'template_redirect', 'sell_media_redirect_taxonomy',6 );
+add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 
 
 /**
