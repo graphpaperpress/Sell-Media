@@ -171,6 +171,15 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.0.4 =
+* Better handling of template redirection
+* Item description now has a Text Editor
+* Added shortcode sell_media_all_items
+* Added shortcode sell_media_download_list
+* Zip file support
+* Added bulk "Sell This" option
+* Bug fixes
+
 = 1.0.3 =
 * Added Google Charts on Reports page
 * Added Paypal IPN instructions on Settings
