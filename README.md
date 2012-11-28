@@ -165,6 +165,7 @@ Upgrade Notice
 Changelog
 ---------
 = 1.0.4 =
+* Item description now has a Text Editor
 * Added shortcode sell_media_all_items
 * Added shortcode sell_media_download_list
 * Zip file support

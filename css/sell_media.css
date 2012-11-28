@@ -67,7 +67,9 @@
   font-weight: 700;
   border: 0;
 }
-
+#sell-media-single .gallery .gallery-item a img {
+  max-width: 95%;
+}
 /*= Archives
 -------------------------------------------------------------- */
 .sell-media .sell-media-grid {

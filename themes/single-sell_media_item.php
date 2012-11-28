@@ -14,11 +14,11 @@ get_header(); ?>
 
 		<div class="sell-media-content">
 			<?php sell_media_item_icon( get_post_thumbnail_id( $post->ID ), 'large' ); ?>
+			<div><?php the_content(); ?></div>
 		</div>
 
 		<div class="sell-media-meta">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
-			<p class="entry-caption"><?php echo get_post_meta( $post->ID, 'sell_media_description', true ); ?></p>
 			<ul>
 				<li class="filename"><span class="title"><?php _e( 'Filename', 'sell_media' ); ?>:</span> <?php sell_media_image_filename( $post->ID); ?></li>
 

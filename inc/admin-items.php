@@ -38,16 +38,10 @@ $payment_settings = get_option( 'sell_media_payment_settings' );
 $default_price = $payment_settings['default_price'];
 $sell_media_item_meta_fields = array(
     array(
-        'label'  => 'Item',
+        'label'  => 'File',
         'desc'  => 'A description for the field.',
         'id'    => $prefix . '_file',
         'type'  => 'file'
-    ),
-    array(
-        'label'=> 'Description',
-        'desc'  => 'A brief description for the item.',
-        'id'    => $prefix . '_description',
-        'type'  => 'textarea'
     ),
     array(
         'label'=> 'Price',
@@ -58,12 +52,19 @@ $sell_media_item_meta_fields = array(
     ),
     array(
         'label'=> 'Shortcode',
-        'desc'  => 'Copy and paste this shortcode to show the image and buy button anywhere on your site, including Posts, Pages and in Widgets. You can change specific parameters in the shortcode to change the button design, the button text and the image size. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"', // this needs validation
+        'desc'  => 'Copy and paste this shortcode to show the file and buy button anywhere on your site. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"', // this needs validation
         'id'    => $prefix . '_shortcode',
         'type'  => 'html'
     )
 );
 do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
+
+
+add_action( 'edit_form_advanced', 'sell_media_editor' );
+function sell_media_editor() {
+    global $post;
+    wp_editor( stripslashes_deep( get_post_field( 'post_content', $post->ID ) ), 'sell_media_editor' );
+}
 
 
 /**
@@ -157,13 +158,15 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 case 'file':
                     $attachment_id = get_post_thumbnail_id( $post->ID );
                     sell_media_item_icon( $attachment_id );
-                    echo  '<br clear="all" /><input type="file" name="' . $field['id'] . '" /><br clear="all" /><span class="description">' . $field['desc'] . '';
+                    echo  '<br clear="all" /><input type="file" name="' . $field['id'] . '" /><br clear="all" />';
+                    echo '<input type="text" name="sell_media_path_to_file" /><br />';
+                    echo '<span class="description">If needed place the path to the file here.</span>';
                     break;
 
                 // text
                 case 'html':
-                    echo '<p id="' . $field['id'] . '"><span class="description">' . $field['desc'] . '</span></p>
-                    <p><code>[sell_media_item id="' . $post->ID . '" text="Purchase" style="button" size="medium"]</code></p>';
+                    echo '<p><code>[sell_media_item id="' . $post->ID . '" text="Purchase" style="button" size="medium"]</code></p>
+                    <p id="' . $field['id'] . '"><span class="description">' . $field['desc'] . '</span></p>';
                 break;
 
                 // repeatable
@@ -331,6 +334,22 @@ function sell_media_save_custom_meta( $post_id ) {
             }
         }
     } // end foreach
+
+    // Save the post content
+    global $post_type;
+    if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
+
+        $new_content = $_POST['sell_media_editor'];
+        $old_content = get_post_field( 'post_content', $post_id );
+
+        if ( $old_content != $new_content ){
+            global $wpdb;
+            $new_content = $wpdb->escape( $_POST['sell_media_editor'] );
+            $query = "UPDATE {$wpdb->prefix}posts SET post_content = '{$new_content}' WHERE ID LIKE {$post_id};";
+            $wpdb->query( $wpdb->prepare( $query ) );
+        }
+    }
+
 }
 add_action('save_post', 'sell_media_save_custom_meta');
 

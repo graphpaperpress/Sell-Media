@@ -137,7 +137,7 @@ class SellMedia {
 
 
         // Update script to new settings
-        if ( $version <= '1.0.1' ){
+        if ( $version <= '1.0.4' ){
             include( dirname(__FILE__) . '/inc/admin-upgrade.php' );
         }
 
@@ -537,7 +537,7 @@ class SellMedia {
         add_action( 'admin_head-media-upload-popup', 'sell_media_upload_popup_scripts' );
 
 
-        if ( $pagenow == 'media-new.php' || $pagenow == 'post-new.php' ) {
+        if ( $pagenow == 'media-new.php' ) {
             wp_enqueue_script( 'sell_media-admin-uploader' );
         }
         if ( is_admin() && sell_media_is_sell_media_post_type_page() ) {
