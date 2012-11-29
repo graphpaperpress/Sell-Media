@@ -214,6 +214,8 @@ function sell_media_payments_callback_fn(){
                         if ( $payment_meta_array ){
                             $products_meta_array = unserialize( $payment_meta_array['products'] );
 
+                            if ( ! $products_meta_array ) continue;
+
                             foreach( $products_meta_array as $product ){
                                 print get_the_title( $product['ProductID'] );
                                 if ( isset( $product['License'] ) ){
