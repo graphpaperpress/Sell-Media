@@ -185,7 +185,8 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
             sell_media_process_paypal_purchase( $purchase );
         }
-    }?>
+    }
+    ?>
 <div id="sell-media-checkout" class="sell-media">
     <?php if ( empty( $items ) ) : ?>
          <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
@@ -240,15 +241,19 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <span id="email-error" class="error" style="display:none;"><?php _e( 'Email isn\'t valid', 'sell_media' ); ?></span>
                                     </p>
                                 <?php else : ?>
-                                    <?php $current_user = wp_get_current_user(); ?>
-                                    <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
-                                    <input type="hidden" id="sell_media_last_name_field" name="last_name" value="<?php print $current_user->user_lastname; ?>" />
-                                    <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
+                                    <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
+                                        <?php _e('You are logged in as an Admin and cannont purchase this item from yourself.', 'sell_media' ); ?>
+                                    <?php else : ?>
+                                        <?php $current_user = wp_get_current_user(); ?>
+                                        <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
+                                        <input type="hidden" id="sell_media_last_name_field" name="last_name" value="<?php print $current_user->user_lastname; ?>" />
+                                        <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
+                                    <?php do_action('sell_media_below_registration_form'); ?>
+                                    <div class="button-container">
+                                        <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Checkout', 'sell_media'); ?>" />
+                                    </div>
                                 <?php endif; ?>
-                                <?php do_action('sell_media_below_registration_form'); ?>
-                                <div class="button-container">
-                                    <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Checkout', 'sell_media'); ?>" />
-                                </div>
+                            <?php endif; ?>
                             </form>
                         </td>
                     </tr>
