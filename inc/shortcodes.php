@@ -289,10 +289,15 @@ function sell_media_item_shortcode( $atts ) {
     $thumb_id = get_post_thumbnail_id( $id );
     $image = wp_get_attachment_image_src( $thumb_id, $size );
 
-    $image = '<a href="' . get_permalink( $id ) . '"><img src="' . $image[0] . '" alt="' . sell_media_image_caption( $id ) . '" title=" ' . sell_media_image_caption( $id ) . ' " class="sell-media-aligncenter" /></a>';
+    if ( $image ) {
+        $image = '<img src="' . $image[0] . '" alt="' . sell_media_image_caption( $id ) . '" title=" ' . sell_media_image_caption( $id ) . ' " class="sell-media-aligncenter" />';
+    } else {
+        sell_media_item_icon( get_post_thumbnail_id( $id ), $size );
+    }
+
     $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-buy-' . esc_attr( $style ) . '">' . $text . '</a>';
 
-    return '<div class="sell-media-item-container sell-media-align' . $align . ' ">' . $image . $button . '</div>';
+    return '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a>' . $button . '</div>';
 }
 add_shortcode('sell_media_item', 'sell_media_item_shortcode');
 
