@@ -501,3 +501,30 @@ function sell_media_sales_stats(){
         _e( 'No sales so far.', 'sell_media' );
     }
 }
+
+
+/**
+ * Deletes the uploaded file in sell_media/ when the
+ * trash bin is emptied.
+ *
+ * @since 1.0.4
+ */
+function sell_media_before_delete_post( $postid ){
+
+    global $post_type;
+    if ( $post_type != 'sell_media_item' ) return;
+
+    $file = get_post_meta( $postid, '_sell_media_file', true );
+
+    // Delete the file stored in sell_media
+    if ( file_exists( $file ) ) unlink( $file );
+
+    // Delete the Attachment, if it exists
+    $attachment_id = get_post_meta( $postid, '_thumbnail_id', true );
+    if ( get_the_title( $attachment_id ) ){
+        wp_delete_post( $attachment_id, true );
+    }
+
+}
+add_action( 'before_delete_post', 'sell_media_before_delete_post' );
+add_action( 'delete_post', 'sell_media_before_delete_post' );
