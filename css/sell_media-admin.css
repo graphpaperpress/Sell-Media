@@ -2,6 +2,7 @@
 -------------------------------------------------------------- */
 #adminmenu div.wp-menu-image { overflow: hidden; }
 #adminmenu div.wp-menu-image img{ display: none; }
+#product_meta_box input[type="file"] { padding: 0px; border: 0; background: transparent; margin: 1em 0; }
 
 /* jQuery UI Slider
 -------------------------------------------------------------- */

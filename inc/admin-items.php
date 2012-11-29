@@ -45,7 +45,7 @@ $sell_media_item_meta_fields = array(
     ),
     array(
         'label'=> 'Price',
-        'desc'  => 'Leave off the ' . sell_media_get_currency_symbol() . '. Numbers only.', // this needs validation
+        'desc'  => 'Numbers only.', // this needs validation
         'id'    => $prefix . '_price',
         'type'  => 'text',
         'std'   => $default_price
@@ -160,7 +160,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     sell_media_item_icon( $attachment_id );
                     echo  '<br clear="all" /><input type="file" name="' . $field['id'] . '" /><br clear="all" />';
                     echo '<input type="text" name="sell_media_path_to_file" value="' . get_post_meta( $attachment_id, '_sell_media_file', true ) . '" size="45" /><br />';
-                    echo '<span class="description">If needed place the path to the file here.</span>';
+                    echo '<span class="description">Paste links to files too large to upload here (optional).</span>';
                     break;
 
                 // text
