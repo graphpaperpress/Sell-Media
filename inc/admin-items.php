@@ -527,4 +527,3 @@ function sell_media_before_delete_post( $postid ){
 
 }
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
-add_action( 'delete_post', 'sell_media_before_delete_post' );
