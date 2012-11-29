@@ -107,6 +107,8 @@ function sell_media_cart_shortcode($atts, $content = null) {
         $user['last_name'] = $_POST['last_name'];
         $user['email'] = $_POST['email'];
 
+        // $user['user_id'] =
+
         // construct the payment title
         if ( isset( $user['first_name'] ) || isset( $user['last_name'] ) ) {
             $payment_title = $user['first_name'] . ' ' . $user['last_name'];
@@ -169,6 +171,17 @@ function sell_media_cart_shortcode($atts, $content = null) {
                 );
 
             wp_insert_user( $data );
+
+            // Get the new post meta
+            $payment_meta = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
+
+            // Get the user by Email then assign their ID into the
+            // payments meta array
+            $user = get_user_by( 'email', $user['email'] );
+            $payment_meta['user_id'] = $user->ID;
+
+            // Upate the _sell_media_payment_meta with the User ID
+            update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_meta );
 
             sell_media_process_paypal_purchase( $purchase );
         }
