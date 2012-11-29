@@ -165,6 +165,8 @@ Upgrade Notice
 Changelog
 ---------
 = 1.0.4 =
+* Users can now manually upload a file to the sell_media folder
+  then add the path to the file on the "Add Item" page.
 * Better handling of template redirection
 * Item description now has a Text Editor
 * Added shortcode sell_media_all_items

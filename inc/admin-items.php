@@ -159,7 +159,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     $attachment_id = get_post_thumbnail_id( $post->ID );
                     sell_media_item_icon( $attachment_id );
                     echo  '<br clear="all" /><input type="file" name="' . $field['id'] . '" /><br clear="all" />';
-                    echo '<input type="text" name="sell_media_path_to_file" /><br />';
+                    echo '<input type="text" name="sell_media_path_to_file" value="' . get_post_meta( $attachment_id, '_sell_media_file', true ) . '" size="45" /><br />';
                     echo '<span class="description">If needed place the path to the file here.</span>';
                     break;
 
@@ -260,7 +260,15 @@ function sell_media_save_custom_meta( $post_id ) {
 
     // Insert our uploaded file from the Sell Media upload dir into
     // WordPress as an attachment
-    if ( $did_move ){
+    if ( $did_move || ! empty( $_POST['sell_media_path_to_file'] ) ){
+
+        // CHeck if we have a hard coded path we use that.
+        if ( ! empty( $_POST['sell_media_path_to_file'] ) ){
+            $moved_file = $_POST['sell_media_path_to_file'];
+            $file_name = basename( $moved_file );
+        } else {
+            $file_name = $_FILES['sell_media_file']['name'];
+        }
 
         // Resize our original to a lower "quality" and then copy it
         // to our wp uploads directory so other plugins/themes can use it.
@@ -277,7 +285,7 @@ function sell_media_save_custom_meta( $post_id ) {
             );
 
         if ( in_array( $mime_type['type'], $image_mimes ) ){
-            $destination_file = sell_media_move_image_from_meta( $moved_file, $_FILES );
+            $destination_file = sell_media_move_image_from_meta( $moved_file, $file_name );
         } else {
             $destination_file = $moved_file;
         }
@@ -287,9 +295,9 @@ function sell_media_save_custom_meta( $post_id ) {
 
         $current_user = wp_get_current_user();
         $attachment = array(
-            'post_mime_type' => $_FILES['sell_media_file']['type'],
+            'post_mime_type' => $mime_type['type'],
             'guid' => $wp_upload_dir['baseurl'] . '/' . _wp_relative_upload_path( $destination_file ),
-            'post_title' => $_FILES['sell_media_file']['name'],
+            'post_title' => $file_name,
             'post_content' => '',
             'post_author' => $current_user->ID,
             'post_status' => 'inherit',

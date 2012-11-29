@@ -6,11 +6,11 @@
  * data if any as taxonomies/terms.
  *
  * @param $moved_file The file we are referencing
- * @param $_FILES The Global PHP $_FILES array.
+ * @param $file_name The name of the file.
  * @since 1.0.1
  * @return $destination_file The location to the new file
  */
-function sell_media_move_image_from_meta( $moved_file=null, $files=null ){
+function sell_media_move_image_from_meta( $moved_file=null, $file_name=null ){
 
     $wp_upload_dir = wp_upload_dir();
 
@@ -28,7 +28,7 @@ function sell_media_move_image_from_meta( $moved_file=null, $files=null ){
         $resized_image = $moved_file;
     }
 
-    $destination_file = $wp_upload_dir['path'] . '/' . $_FILES['sell_media_file']['name'];
+    $destination_file = $wp_upload_dir['path'] . '/' . $file_name;
 
     do_action( 'sell_media_after_upload' );
 
