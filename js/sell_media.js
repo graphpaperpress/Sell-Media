@@ -136,7 +136,7 @@ jQuery( document ).ready(function( $ ){
 
         // Show our dialog with a loading message
         $('.sell-media-cart-dialog').toggle();
-        $( ".sell-media-cart-dialog-target" ).html( "<h2>Loading...</h2>" );
+        $( ".sell-media-cart-dialog-target" ).html( '<div class="sell-media-ajax-loader">Loading...</div>' );
 
 
         // Send Ajax request for Shopping Cart

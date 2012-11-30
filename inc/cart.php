@@ -136,7 +136,10 @@ add_action( 'wp_footer', 'sell_media_footer' );
  * @return string
  * @since 0.1
  */
-function sell_media_head(){
-    print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. plugin_dir_url( __FILE__ ) .'";</script>';
-}
+function sell_media_head(){?>
+    <script type="text/javascript">
+    var ajaxurl = "<?php print admin_url("admin-ajax.php"); ?>";
+    var pluginurl = "<?php print plugin_dir_url( dirname( __FILE__ ) ); ?>";
+    </script>
+<?php }
 add_action( 'wp_head', 'sell_media_head' );
