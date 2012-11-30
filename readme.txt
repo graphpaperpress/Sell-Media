@@ -172,6 +172,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.0.4 =
+* Added Loading gif on purchase dialog
 * Users can now manually upload a file to the sell_media folder
   then add the path to the file on the "Add Item" page.
 * Better handling of template redirection
