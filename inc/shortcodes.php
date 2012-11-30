@@ -241,8 +241,8 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <span id="email-error" class="error" style="display:none;"><?php _e( 'Email isn\'t valid', 'sell_media' ); ?></span>
                                     </p>
                                 <?php else : ?>
-                                    <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
-                                        <?php _e('You are logged in as an Admin and cannont purchase this item from yourself.', 'sell_media' ); ?>
+                                    <?php if ( current_user_can( 'manage_options' ) ) : ?>
+                                        <?php _e('You are logged in as an admin and cannot purchase this item from yourself.', 'sell_media' ); ?>
                                     <?php else : ?>
                                         <?php $current_user = wp_get_current_user(); ?>
                                         <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
