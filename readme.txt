@@ -171,6 +171,10 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.0.5 =
+* Fixed transients
+* Fixed issue where button was not showing on cart
+
 = 1.0.4 =
 * Added Loading gif on purchase dialog
 * Users can now manually upload a file to the sell_media folder
