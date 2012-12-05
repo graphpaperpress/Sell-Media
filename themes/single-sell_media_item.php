@@ -41,7 +41,7 @@ get_header(); ?>
 		</div><!-- .sell-media-meta -->
 
 	<?php endwhile; ?>
-
+	<?php do_action( 'sell_media_single_bottom_hook' ); ?>
 	</div><!-- #content -->
 </div><!-- #sell_media-single .sell_media -->
 
