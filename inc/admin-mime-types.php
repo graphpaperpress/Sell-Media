@@ -154,7 +154,7 @@ function sell_media_default_move( $original_file=null ){
         $destination_dir = dirname( $destination_file );
 
         if ( ! file_exists( $destination_dir ) ){
-            wp_mkdir_p( $destination_dir );
+            wp_mkdir_p( dirname( $destination_dir ) );
         }
 
         // Copy original to our protected area
