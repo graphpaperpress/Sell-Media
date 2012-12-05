@@ -171,6 +171,11 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.0.6 =
+* Fixed issue when Item is emptied from trash bin
+* Fixed bug where editor appeared on other Add New pages.
+* Adding hook for single theme.
+
 = 1.0.5 =
 * Fixed transients
 * Fixed issue where button was not showing on cart

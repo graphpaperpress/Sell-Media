@@ -45,7 +45,6 @@ function sell_media_move_image_from_meta( $moved_file=null, $file_name=null ){
     $new_resize_location = dirname( $destination_file ) . '/' . basename( $resized_image );
 
     @copy( $resized_image, $new_resize_location );
-    unlink( $resized_image );
 
     // Get iptc info
     $city = sell_media_iptc_parser( 'city', $destination_file );
@@ -146,7 +145,6 @@ function sell_media_default_move( $original_file=null ){
     $dir = wp_upload_dir();
     $original_file_path = $dir['basedir'] . '/' . $original_file;
     $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $original_file;
-
 
     if ( file_exists( $original_file_path ) ){
         // Check if the destinatin dir is exists, i.e.

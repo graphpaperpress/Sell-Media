@@ -323,6 +323,8 @@ function sell_media_save_custom_meta( $post_id ) {
         // Now, update the post meta to associate the new image with the post
         update_post_meta( $post_id, '_wp_attached_file', $attach_id );
         update_post_meta( $post_id, '_thumbnail_id', $attach_id );
+        update_post_meta( $post_id, '_sell_media_file', $moved_file );
+
         update_post_meta( $attach_id, '_sell_media_for_sale_product_id', $post_id );
         update_post_meta( $attach_id, '_sell_media_for_sale', 1 );
         update_post_meta( $attach_id, '_sell_media_file', $moved_file );
@@ -517,18 +519,34 @@ function sell_media_sales_stats(){
 function sell_media_before_delete_post( $postid ){
 
     global $post_type;
+
     if ( $post_type != 'sell_media_item' ) return;
 
     $file = get_post_meta( $postid, '_sell_media_file', true );
 
+    /**
+     * Get the attachment/thumbnail file so we can replace the "original", i.e.
+     * lower quality "original" with the file in the proctedted area.
+     */
+    $attached_file = get_post_meta( get_post_meta( $postid, '_thumbnail_id', true ), '_wp_attached_file', true );
+
     // Delete the file stored in sell_media
-    if ( file_exists( $file ) ) unlink( $file );
+    if ( file_exists( $file ) ) {
 
-    // Delete the Attachment, if it exists
-    $attachment_id = get_post_meta( $postid, '_thumbnail_id', true );
-    if ( get_the_title( $attachment_id ) ){
-        wp_delete_post( $attachment_id, true );
+        /**
+         * Due to how WordPress handles attachments that are NOT
+         * images we check if the "_wp_attached_file" is in fact
+         * stored in the sell_media/ directory, i.e. there's only
+         * "one" copy of the attachment.
+         */
+        $pos = strpos( $attached_file, 'sell_media/' );
+        $dir = wp_upload_dir();
+        if ( $pos !== false ){
+            $attached_file = str_replace( 'sell_media/', '', $attached_file );
+        }
+
+        @copy( $file, $dir['basedir'] . '/' . $attached_file );
+        @unlink( $file );
     }
-
 }
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
