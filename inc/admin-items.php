@@ -62,6 +62,11 @@ do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
 
 add_action( 'edit_form_advanced', 'sell_media_editor' );
 function sell_media_editor() {
+
+    global $post_type;
+
+    if ( $post_type != "sell_media_item" ) return;
+
     global $post;
     wp_editor( stripslashes_deep( get_post_field( 'post_content', $post->ID ) ), 'sell_media_editor' );
 }
