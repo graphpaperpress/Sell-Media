@@ -125,11 +125,13 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
         $resized_image = image_resize( $original_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
     }
 
-    // Copy original to our protected area
-    @copy( $original_file, $destination_file );
+    if ( ! file_exists( $destination_file ) ){
+        // Copy original to our protected area
+        @copy( $original_file, $destination_file );
 
-    // Copy (rename) our resized image to the original
-    @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+        // Copy (rename) our resized image to the original
+        @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+    }
 }
 
 

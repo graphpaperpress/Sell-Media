@@ -56,6 +56,32 @@ function sell_media_delete_item( $post_id=null ){
 
     $product_id = get_post_meta( $post_id, '_sell_media_for_sale_product_id', true );
 
+    $image_mimes = array(
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/bmp',
+        'image/tiff'
+        );
+
+    $mime_type = wp_check_filetype( get_post_meta( $product_id, '_sell_media_file', true ) );
+
+    /**
+     * For all items that are NOT "photographs" we move the
+     * original file back into "uploads/". Note we do NOT
+     * want to delete the original, that is handled when the
+     * user empties the trash bin.
+     */
+    if ( ! in_array( $mime_type, $image_mimes ) ){
+        $dir = wp_upload_dir();
+
+        $destination_file = $dir['basedir'] . '/' . get_post_meta( $post_id, '_wp_attached_file', true );
+        $original_file = get_post_meta( $product_id, '_sell_media_file', true );
+
+        @copy( $original_file, $destination_file );
+    }
+
+    delete_post_meta( $post_id, '_sell_media_file' );
     delete_post_meta( $post_id, '_sell_media_for_sale_product_id' );
     delete_post_meta( $post_id, '_sell_media_for_sale' );
 
@@ -77,21 +103,22 @@ function sell_media_delete_item( $post_id=null ){
  */
 function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
-    // Attachment is not set, i.e., this is a "normal" media upload.
-    // Just leave and return our $post.
-    if ( empty( $attachment['sell'] ) )
-        return $post;
-
-    $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', $attachment['sell'], true );
+    $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', true );
 
     // Attachment was once marked for sale, but no longer is for sale.
     if ( is_null( $attachment['sell'] ) && $for_sale ){
         sell_media_delete_item( $post['ID'] );
-
         return $post;
+    }
+
+    // Attachment is not set, i.e., this is a "normal" media upload.
+    // Just leave and return our $post.
+    else if ( empty( $attachment['sell'] ) ){
+        return $post;
+    }
 
     // Attachment is now marked for sale
-    } elseif( $attachment['sell'] ) {
+    elseif( $attachment['sell'] ) {
 
         // Create post object, we use later on
         $product = array(
