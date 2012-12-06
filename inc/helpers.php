@@ -122,6 +122,7 @@ function sell_media_build_options( $taxonomy=null ) {
                 data-name="<?php echo $term->name; ?>"
                 data-price="<?php echo $price; ?>"
                 id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
+                title="<?php echo $term->description; ?>"
                 name="<?php echo $taxonomy; ?>"
                 >
             <?php echo $term->name; ?> <?php if ( $price ) : ?>+<?php echo $price; ?>%<?php endif; ?>

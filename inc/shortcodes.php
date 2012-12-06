@@ -209,7 +209,9 @@ function sell_media_cart_shortcode($atts, $content = null) {
                     <tr>
                         <td class="product-details">
                             <a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php sell_media_item_icon( $item['AttachmentID'], array(75,0) ); ?></a>
-                            <h5><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></h5>
+                            <span class="sell-media-table-meta"><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></span><br />
+                            <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>
+                            <span class="sell-media-table-meta"><a href="#" title="<?php print $tmp_term->description; ?>"><?php print $tmp_term->name; ?></a></span>
                         </td>
                         <td class="product-price">
                             <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span> <br /><span class="remove-item-handle" data-item_id="<?php print $item_id; ?>" checked="checked" name="<?php print $item['AttachmentID']; ?>" value="" ><?php _e('Remove', 'sell_media'); ?></span>

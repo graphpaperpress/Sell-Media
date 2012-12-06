@@ -49,7 +49,7 @@ if ( empty( $tmp_price ) ) {
                     <?php endif; ?>
 
                     <?php $tmp = wp_get_post_terms( $_POST['product_id'], 'licenses' ); if ( $tmp ) { $tmp[0]->name; } else { $tmp = null; } ?>
-                    <?php if ( ! empty( $tmp ) ) : ?>
+                    <?php if ( is_null( $tmp ) ) : ?>
                         <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $tmp[0]->term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
                     <?php endif; ?>
 

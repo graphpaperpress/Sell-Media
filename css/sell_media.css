@@ -193,11 +193,27 @@
   width: 100%;
 }
 #sell-media-checkout-table td {
-  vertical-align: middle;
+  line-height: 15px;
+  padding: 10px;
+  vertical-align: top;
 }
 #sell-media-checkout-table thead th {
   background: none;
   text-align: left;
+}
+#sell-media-checkout-table .product-details {
+  width: 25%;
+}
+#sell-media-checkout-table .product-details img {
+  display: inline;
+  float: left;
+  margin: 0 5px 0 0;
+}
+#sell-media-checkout-table .sell-media-table-meta {
+  font-size: 11px;
+}
+#sell-media-checkout-table .sell-media-table-meta a {
+  text-decoration: none;
 }
 .sell-media .remove-item-handle {
   cursor: pointer;

@@ -175,6 +175,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.0.6 =
+* License descriptions now show on the checkout page and option boxes when hovered
 * Fixed bug when Attachments are no longer marked for sale.
 * Fixed issue when Item is emptied from trash bin
 * Fixed bug where editor appeared on other Add New pages.
