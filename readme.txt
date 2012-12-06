@@ -43,6 +43,9 @@ Sell Media extensions will soon include:
 4. Visit Sell Media -> Licenses and add or configure your default licenses for new uploads.
 5. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
 
+== PayPay ==
+Login to your PayPal account, mouse over the Profile menu option and then click on the Selling Tools menu option. When page loads, scroll down to the "Getting paid and managing my risk" and click the Update link beside "Instant payment notifications". That is where you put in the listener URL provided in the Sell Media setup.
+
 == Frequently Asked Questions ==
 
 = What are shortcodes and how do I use them? =
@@ -172,6 +175,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.0.6 =
+* Fixed bug when Attachments are no longer marked for sale.
 * Fixed issue when Item is emptied from trash bin
 * Fixed bug where editor appeared on other Add New pages.
 * Adding hook for single theme.
