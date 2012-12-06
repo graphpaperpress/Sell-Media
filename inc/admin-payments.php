@@ -53,6 +53,13 @@ function sell_media_payment_render_contact( $post ){
 
     $tmp = get_post_custom_values( "_sell_media_payment_user_email", $post->ID );
     print '<p>' . __( 'Email' ) . ': <input type="text" name="_sell_media_payment_user_email" value="' . $tmp[0] . '" /></p>';
+
+    print 'Purchase link(s): ';
+    $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
+
+    foreach( $links as $link ){
+        print '<p><input type="text" style="width: 100%;" value="' . $link['url'] . '" /></p>';
+    }
 }
 
 
