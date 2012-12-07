@@ -5,7 +5,7 @@ require_once plugin_dir_path( __FILE__ ) . 'log.php';
 
 
 /**
- * Retrive the approbiate Paypal Redirect based on http/s
+ * Retrieve the correct Paypal Redirect based on http/s
  * and "live" or "test" mode, i.e., sandbox.
  *
  * @return Paypal URI
@@ -13,15 +13,15 @@ require_once plugin_dir_path( __FILE__ ) . 'log.php';
 function sell_media_get_paypal_redirect( $ssl_check=false ) {
 
     if ( is_ssl() || ! $ssl_check ) {
-        $protocal = 'https://';
+        $protocol = 'https://';
     } else {
-        $protocal = 'http://';
+        $protocol = 'http://';
     }
 
     if ( sell_media_test_mode() ) {
-        $paypal_uri = $protocal . 'www.sandbox.paypal.com/cgi-bin/webscr';
+        $paypal_uri = $protocol . 'www.sandbox.paypal.com/cgi-bin/webscr';
     } else {
-        $paypal_uri = $protocal . 'www.paypal.com/cgi-bin/webscr';
+        $paypal_uri = $protocol . 'www.paypal.com/cgi-bin/webscr';
     }
 
     return $paypal_uri;
