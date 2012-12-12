@@ -17,9 +17,11 @@ function sell_media_move_image_from_meta( $moved_file=null, $file_name=null ){
     // Would rather check if the correct function exists
     // but the function 'image_make_intermediate_size' uses other
     // functions that are in trunk and not in 3.4
-    if ( get_bloginfo('version') >= '3.5' ) {
-        $image_new_size = image_make_intermediate_size( $moved_file, get_option('large_size_h'), get_option('large_size_w'), $crop=false );
-        $resized_image = dirname( $destination ) . '/' . date('m') . '/' . $image_new_size['file'];
+    global $wp_version;
+    if ( version_compare( $wp_version, '3.5', '>=' ) ){
+        $image_new_size = image_make_intermediate_size( $moved_file, get_option('large_size_w'), get_option('large_size_h'), $crop=false );
+        $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
+        $tmp_resized_image = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/' . $image_new_size['file'];
     } else {
         $resized_image = image_resize( $moved_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
     }
@@ -37,14 +39,10 @@ function sell_media_move_image_from_meta( $moved_file=null, $file_name=null ){
     // just without the prefixed image resolution.
 
     // We still don't have an original, so we copy the resized image to.
-    @copy( $resized_image, $destination_file );
+    copy( $tmp_resized_image, $destination_file );
 
-    // Since we copied our WP generated image size to the "protected area"
-    // we need to copy it back to the WP area. Then we need to unlink it,
-    // i.e. "delete".
-    $new_resize_location = dirname( $destination_file ) . '/' . basename( $resized_image );
-
-    @copy( $resized_image, $new_resize_location );
+    // Finally we delete the temporary resized image we made
+    unlink( $tmp_resized_image );
 
     // Get iptc info
     $city = sell_media_iptc_parser( 'city', $destination_file );
@@ -112,25 +110,37 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
         wp_mkdir_p( dirname( $destination_file ) );
     }
 
+
     // Resize original file down to the largest size set in the Media Settings
     //
     // Determine which version of WP we are using.
     // Would rather check if the correct function exists
     // but the function 'image_make_intermediate_size' uses other
     // functions that are in trunk and not in 3.4
-    if ( get_bloginfo('version') >= '3.5' ) {
+    global $wp_version;
+    if ( version_compare( $wp_version, '3.5', '>=' ) ){
+
         $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), $crop = false );
-        $resized_image = dirname( $destination ) . '/' . date('m') . '/' . $image_new_size['file'];
+        $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
+
+        if ( ! file_exists( $destination_file ) ){
+            // Copy original to our protected area
+            copy( $original_file, $destination_file );
+            unlink( $original_file );
+
+            // Copy (rename) our resized image to the original
+            copy( $resized_image, $wp_upload_dir['path'] . '/' . basename( $destination_file ) );
+        }
+
     } else {
         $resized_image = image_resize( $original_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
-    }
+        if ( ! file_exists( $destination_file ) ){
+            // Copy original to our protected area
+            @copy( $original_file, $destination_file );
 
-    if ( ! file_exists( $destination_file ) ){
-        // Copy original to our protected area
-        @copy( $original_file, $destination_file );
-
-        // Copy (rename) our resized image to the original
-        @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+            // Copy (rename) our resized image to the original
+            @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+        }
     }
 }
 
