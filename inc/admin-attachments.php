@@ -30,14 +30,19 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
         }
     });
     </script>
+    <style type="text/css">
+    .compat-field-sell th {
+        display: none;
+    }
+    </style>
     <?php
     $sell = (bool) get_post_meta($post->ID, '_sell_media_for_sale', true);
 
     $form_fields['sell'] = array(
-        'label' => __('Sell this?'), 'sell_media',
+        // 'label' => __('Sell this?'), 'sell_media',
         'input' => 'html',
         'html' => '<label for="attachments-'.$post->ID.'-sell"> '.
-            '<input type="checkbox" id="attachments-'.$post->ID.'-sell" name="attachments['.$post->ID.'][sell]" value="1"'.($sell ? ' checked="checked"' : '').' /> Yes</label>  ',
+            __( ' <strong>Sell This?</strong>', 'sell_media' ) . ' <input type="checkbox" id="attachments-'.$post->ID.'-sell" name="attachments['.$post->ID.'][sell]" value="1"'.($sell ? ' checked="checked"' : '').' /></label>',
         'value' => $sell,
         'helps' => __('If you select yes, this image will be added as a Product entry. You can modify the price and available licenses on the Products -> Edit Products tab. By default, the newly created Product will inherit the prices and licenses that you chose on the settings page.'), 'sell_media'
     );
