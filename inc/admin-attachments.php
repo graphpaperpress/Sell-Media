@@ -39,7 +39,7 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
     $sell = (bool) get_post_meta($post->ID, '_sell_media_for_sale', true);
 
     $form_fields['sell'] = array(
-        // 'label' => __('Sell this?'), 'sell_media',
+        'label' => '',
         'input' => 'html',
         'html' => '<label for="attachments-'.$post->ID.'-sell"> '.
             __( ' <strong>Sell This?</strong>', 'sell_media' ) . ' <input type="checkbox" id="attachments-'.$post->ID.'-sell" name="attachments['.$post->ID.'][sell]" value="1"'.($sell ? ' checked="checked"' : '').' /></label>',
