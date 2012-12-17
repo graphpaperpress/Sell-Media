@@ -39,22 +39,6 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
 add_filter( 'attachment_fields_to_edit', 'sell_media_attachment_fields_to_edit', 10, 2 );
 
 
-function ztmp( $context, $object ){
-    // global $slt_custom_fields;
-    // // Check for context based on object properties in case the are 'link' or 'comment' core custom post types
-    if ( is_object( $object ) && ! ( isset( $object->comment_ID ) || isset( $object->link_id ) ) ) {
-        $request_type = 'post';
-        $scope = $context;
-        if ( $context == 'attachment' ) {
-            $request_type = 'attachment';
-            $scope = $object->post_mime_type;
-        }
-        print "stuff\n";
-    }
-}
-// add_action( 'add_meta_boxes', 'ztmp', 10, 2 );
-
-
 /**
  * Delete a product post type based on the ID
  *
