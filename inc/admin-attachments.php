@@ -21,21 +21,8 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
     } else {
         $file = $image_meta_a['file'];
     }
+    $dir = $upload_url_a['baseurl'];
 
-    ?>
-    <script type="text/javascript">
-    jQuery( document ).ready(function( $ ){
-        if ( $('.media-item input[type="checkbox"]').attr('checked') != undefined ) {
-            $('.urlfield').val("<?php print $upload_url_a['baseurl'] . SellMedia::upload_dir . '/' . $file; ?>");
-        }
-    });
-    </script>
-    <style type="text/css">
-    .compat-field-sell th {
-        display: none;
-    }
-    </style>
-    <?php
     $sell = (bool) get_post_meta($post->ID, '_sell_media_for_sale', true);
 
     $form_fields['sell'] = array(
@@ -43,13 +30,29 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
         'input' => 'html',
         'html' => '<label for="attachments-'.$post->ID.'-sell"> '.
             __( ' <strong>Sell This?</strong>', 'sell_media' ) . ' <input type="checkbox" id="attachments-'.$post->ID.'-sell" name="attachments['.$post->ID.'][sell]" value="1"'.($sell ? ' checked="checked"' : '').' /></label>',
-        'value' => $sell,
-        'helps' => __('If you select yes, this image will be added as a Product entry. You can modify the price and available licenses on the Products -> Edit Products tab. By default, the newly created Product will inherit the prices and licenses that you chose on the settings page.'), 'sell_media'
+        'value' => $sell
+        // 'helps' => __('If you select yes, this image will be added as a Product entry. You can modify the price and available licenses on the Products -> Edit Products tab. By default, the newly created Product will inherit the prices and licenses that you chose on the settings page.'), 'sell_media'
     );
 
     return $form_fields;
 }
 add_filter( 'attachment_fields_to_edit', 'sell_media_attachment_fields_to_edit', 10, 2 );
+
+
+function ztmp( $context, $object ){
+    // global $slt_custom_fields;
+    // // Check for context based on object properties in case the are 'link' or 'comment' core custom post types
+    if ( is_object( $object ) && ! ( isset( $object->comment_ID ) || isset( $object->link_id ) ) ) {
+        $request_type = 'post';
+        $scope = $context;
+        if ( $context == 'attachment' ) {
+            $request_type = 'attachment';
+            $scope = $object->post_mime_type;
+        }
+        print "stuff\n";
+    }
+}
+// add_action( 'add_meta_boxes', 'ztmp', 10, 2 );
 
 
 /**
