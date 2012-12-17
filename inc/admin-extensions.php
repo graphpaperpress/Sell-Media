@@ -18,13 +18,13 @@ function sell_media_extensions_callback_fn(){
 <div class="wrap sell_media-extensions">
     <h2><?php _e( 'Extensions for Sell Media', 'sell_media' ); ?></h2>
     <p><?php _e( 'These extensions provide additonal functionality for the Sell Media plugin.', 'sell_media' ); ?></p>
-    <?php foreach( $extensions as $extension ) : ?>
+    <?php if ( $extensions ) : foreach( $extensions as $extension ) : ?>
         <div class="row-container">
             <div class="extension">
                 <h3 class="title"><a href="<?php print $extension->permalink; ?>"><?php print $extension->title; ?></a></h3>
                 <div class="image"><a href="<?php print $extension->permalink; ?>"><img src="<?php print $extension->image[0]; ?>" /></a></div>
             </div>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach; endif; ?>
 </div>
 <?php }
