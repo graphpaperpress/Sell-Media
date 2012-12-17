@@ -161,16 +161,23 @@ function sell_media_cart_shortcode($atts, $content = null) {
             update_post_meta( $payment_id, '_sell_media_payment_amount', $amount );
 
             // Record the user
+            $password = wp_generate_password( $length=12, $include_standard_special_chars=false );
             $data = array(
                 'user_login' => $purchase['email'],
-                'user_pass' => wp_generate_password( $length=12, $include_standard_special_chars=false ),
+                'user_pass' => $password,
                 'user_email' => $purchase['email'],
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
                 'role' => 'sell_media_customer'
                 );
 
-            wp_insert_user( $data );
+            $user_id = wp_insert_user( $data );
+
+            $general_settings = get_option( 'sell_media_general_settings' );
+            $notice = $general_settings['customer_notification'];
+            if ( ! is_wp_error( $user_id ) && $notice ){
+                wp_new_user_notification( $user_id, $password );
+            }
 
             // Get the new post meta
             $payment_meta = get_post_meta( $payment_id, '_sell_media_payment_meta', true );

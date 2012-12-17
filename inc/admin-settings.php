@@ -87,6 +87,7 @@ class SellMediaSettings {
         add_settings_field( 'test_mode', 'Test Mode', array( &$this, 'field_general_test_mode' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'checkout_page', 'Checkout Page', array( &$this, 'field_general_checkout_page' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'thanks_page', 'Thanks Page', array( &$this, 'field_general_thanks_page' ), $this->general_settings_key, 'section_general' );
+        add_settings_field( 'customer_notification', 'Customer Notification', array( &$this, 'field_general_customer_notification' ), $this->general_settings_key, 'section_general' );
 
         do_action( 'sell_media_general_settings_hook' );
 
@@ -189,6 +190,19 @@ class SellMediaSettings {
             <?php $this->build_field_pages_select( 'thanks_page' ); ?>
         </select>
         <span class="desc"><?php _e( 'What page contains the <code>[sell_media_thanks]</code> shortcode?', 'sell_media' ); ?></span>
+        <?php
+    }
+
+    /*
+     * Customer Notification field callback
+     */
+    function field_general_customer_notification(){
+        ?>
+        <select name="<?php echo $this->general_settings_key; ?>[customer_notification]" id="<?php echo $this->general_settings_key; ?>[customer_notification]">
+            <option value="0" <?php selected( $this->general_settings['customer_notification'], 0 ); ?>><?php _e( 'No', 'sell_media' ); ?></option>
+            <option value="1" <?php selected( $this->general_settings['customer_notification'], 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
+        </select>
+        <span class="desc"><?php _e( 'Notify the customer of their site registration.', 'sell_media' ); ?></span>
         <?php
     }
 
