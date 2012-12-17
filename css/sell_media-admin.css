@@ -82,4 +82,7 @@
 -------------------------------------------------------------- */
 .earnings_chart { margin-bottom: 40px; }
 
-.compat-field-sell th {display: none;}
+
+/* Media attachment edit page
+-------------------------------------------------------------- */
+.compat-field-sell th { display: none; }
