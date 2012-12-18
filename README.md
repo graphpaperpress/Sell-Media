@@ -170,6 +170,11 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.0.7 =
+* Bug fixes
+* Added option for customer notification
+* 3.5 media cart fix
+
 = 1.0.6 =
 * License descriptions now show on the checkout page and option boxes when hovered
 * Fixed bug when Attachments are no longer marked for sale.
