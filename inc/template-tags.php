@@ -195,7 +195,7 @@ function sell_media_item_price( $post_id=null, $currency=true ){
  * Determines the default icon used for an Attachment. If an
  * image mime type is detected than the attachment image is used.
  */
-function sell_media_item_icon( $attachment_id=null, $size='medium' ){
+function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true ){
 
     if ( empty( $attachment_id ) )
         return;
@@ -207,8 +207,8 @@ function sell_media_item_icon( $attachment_id=null, $size='medium' ){
         case 'image/png':
         case 'image/gif':
                 $image = wp_get_attachment_image_src( $attachment_id, $size );
-                echo  '<img src="'.$image[0].'" class="sell_media_image wp-post-image" alt="" height="'.$image[2].'" width="'.$image[1].'" style="max-width:100%;height:auto;"/>';
-            return;
+                $icon =  '<img src="'.$image[0].'" class="sell_media_image wp-post-image" alt="" height="'.$image[2].'" width="'.$image[1].'" style="max-width:100%;height:auto;"/>';
+            break;
         case 'video/mpeg':
         case 'video/mp4':
         case 'video/quicktime':
@@ -223,8 +223,14 @@ function sell_media_item_icon( $attachment_id=null, $size='medium' ){
             $mime_type = 'text/document';
             break;
         case 'application/zip':
-            echo  '<img src="' . includes_url() . 'images/crystal/archive.png" class="sell_media_image wp-post-image" alt="" height="" width="" style="max-width:100%;height:auto;"/>';
-            return;
+            $icon = '<img src="' . includes_url() . 'images/crystal/archive.png" class="sell_media_image wp-post-image" alt="" height="" width="" style="max-width:100%;height:auto;"/>';
+            break;
+        default:
+            $icon = '<img src="' . wp_mime_type_icon( $mime_type ) . '" />';
     }
-    print '<img src="' . wp_mime_type_icon( $mime_type ) . '" />';
+
+    if ( $echo )
+        print $icon;
+    else
+        return $icon;
 }
