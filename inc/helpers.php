@@ -575,10 +575,9 @@ function sell_media_collections(){
 
         ( $x == ( $count - 1 ) ) ? $last = 'sell_media-last' : $last = null;
 
-        //$html .= '<li class="sell_media-' . $term->slug . ' ' .$last.'">';
         $html .= '<a href="' . get_term_link( $term->slug, $taxonomy ) . '" title="' . $term->description . '">';
         $html .= $term->name;
-        $html .= '</a>';
+        $html .= '</a> ';
         $x++;
     }
 
