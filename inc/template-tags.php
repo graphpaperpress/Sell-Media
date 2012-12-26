@@ -201,13 +201,19 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
         return;
 
     $mime_type = get_post_mime_type( $attachment_id );
+    $image_height = null;
+    $image_width = null;
+    $sell_media_item_id = get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true );
+    $image_title = get_the_title( $sell_media_item_id );
 
     switch( $mime_type ){
         case 'image/jpeg':
         case 'image/png':
         case 'image/gif':
                 $image = wp_get_attachment_image_src( $attachment_id, $size );
-                $icon =  '<img src="'.$image[0].'" class="sell_media_image wp-post-image" alt="" height="'.$image[2].'" width="'.$image[1].'" style="max-width:100%;height:auto;"/>';
+                $image_src = $image[0];
+                $image_height = $image[2];
+                $image_width = $image[1];
             break;
         case 'video/mpeg':
         case 'video/mp4':
@@ -223,11 +229,13 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
             $mime_type = 'text/document';
             break;
         case 'application/zip':
-            $icon = '<img src="' . includes_url() . 'images/crystal/archive.png" class="sell_media_image wp-post-image" alt="" height="" width="" style="max-width:100%;height:auto;"/>';
+            $image_src = includes_url() . 'images/crystal/archive.png';
             break;
         default:
-            $icon = '<img src="' . wp_mime_type_icon( $mime_type ) . '" />';
+            $image_src = wp_mime_type_icon( $mime_type );
     }
+
+    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_item_id="' . $sell_media_item_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
 
     if ( $echo )
         print $icon;
