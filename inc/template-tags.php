@@ -235,7 +235,13 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
             $image_src = wp_mime_type_icon( $mime_type );
     }
 
-    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_item_id="' . $sell_media_item_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
+    $medium_url = wp_get_attachment_image_src( $attachment_id, 'medium' );
+    if ( $medium_url )
+        $medium_url = $medium_url[0];
+    else
+        $medium_url = null;
+
+    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $sell_media_item_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
 
     if ( $echo )
         print $icon;
