@@ -20,8 +20,21 @@ function sell_media_move_image_from_meta( $moved_file=null, $file_name=null ){
     global $wp_version;
     if ( version_compare( $wp_version, '3.5', '>=' ) ){
         $image_new_size = image_make_intermediate_size( $moved_file, get_option('large_size_w'), get_option('large_size_h'), $crop=false );
-        $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
-        $tmp_resized_image = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/' . $image_new_size['file'];
+
+        /**
+         * If for some reason the image resize fails we just fall back to the original image.
+         * Example, the image the user is trying to sell is smaller than our "max width".
+         */
+        if ( empty( $image_new_size ) ){
+            $image_new_size = basename( $moved_file );
+            $keep_original = true;
+        } else {
+            $image_new_size = $image_new_size['file'];
+            $keep_original = false;
+        }
+        $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size;
+        $tmp_resized_image = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/' . $image_new_size;
+
     } else {
         $resized_image = image_resize( $moved_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
     }
@@ -34,15 +47,11 @@ function sell_media_move_image_from_meta( $moved_file=null, $file_name=null ){
 
     do_action( 'sell_media_after_upload' );
 
-    // image_resize() creates the file with the prefixed file size, we
-    // don't want this. So we copy the resized image to the same location
-    // just without the prefixed image resolution.
-
     // We still don't have an original, so we copy the resized image to.
     copy( $tmp_resized_image, $destination_file );
 
     // Finally we delete the temporary resized image we made
-    unlink( $tmp_resized_image );
+    if ( ! $keep_original ) unlink( $tmp_resized_image );
 
     // Get iptc info
     $city = sell_media_iptc_parser( 'city', $destination_file );
@@ -110,7 +119,6 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
         wp_mkdir_p( dirname( $destination_file ) );
     }
 
-
     // Resize original file down to the largest size set in the Media Settings
     //
     // Determine which version of WP we are using.
@@ -121,12 +129,24 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
     if ( version_compare( $wp_version, '3.5', '>=' ) ){
 
         $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), $crop = false );
-        $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
+
+        /**
+         * If for some reason the image resize fails we just fall back to the original image.
+         * Example, the image the user is trying to sell is smaller than our "max width".
+         */
+        if ( empty( $image_new_size ) ){
+            $resized_image = $original_file;
+            $keep_original = true;
+        } else {
+            $keep_original = false;
+            $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
+        }
 
         if ( ! file_exists( $destination_file ) ){
+
             // Copy original to our protected area
             copy( $original_file, $destination_file );
-            unlink( $original_file );
+            if ( ! $keep_original ) unlink( $original_file );
 
             // Copy (rename) our resized image to the original
             copy( $resized_image, $wp_upload_dir['path'] . '/' . basename( $destination_file ) );

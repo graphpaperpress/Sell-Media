@@ -141,7 +141,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         update_post_meta( $product_id, 'sell_media_description', $post['post_content'] );
 
         $dir = wp_upload_dir();
-        $file_path = $dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/' . basename( $attachment['url'] );
+        $file_path = $dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/' . basename( $post['attachment_url'] );
         update_post_meta( $product_id, '_sell_media_file', $file_path );
 
         update_post_meta( $post['ID'], '_sell_media_for_sale', true );
