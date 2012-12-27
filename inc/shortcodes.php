@@ -174,7 +174,12 @@ function sell_media_cart_shortcode($atts, $content = null) {
             $user_id = wp_insert_user( $data );
 
             $general_settings = get_option( 'sell_media_general_settings' );
-            $notice = $general_settings['customer_notification'];
+            if ( empty( $general_settings['customer_notification'] ) ){
+                $notice = false;
+            } else {
+                $notice = $general_settings['customer_notification'];
+            }
+
             if ( ! is_wp_error( $user_id ) && $notice ){
                 wp_new_user_notification( $user_id, $password );
             }
