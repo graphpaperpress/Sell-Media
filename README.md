@@ -170,6 +170,10 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.0.8 =
+* Bug fixes
+* Code improvements
+
 = 1.0.7 =
 * Bug fixes
 * Added option for customer notification
