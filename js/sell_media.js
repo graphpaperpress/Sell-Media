@@ -1,6 +1,6 @@
 /** */
 jQuery( document ).ready(function( $ ){
-console.log('loaded');
+
     /**
      * Set-up our default Ajax options.
      * Please reference http://api.jquery.com/jQuery.ajaxSetup/
