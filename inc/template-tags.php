@@ -105,13 +105,12 @@ function sell_media_image_keywords( $post_id=null ) {
  * @since       0.1
  * @return      html
  */
-function sell_media_item_buy_button( $post_id=null, $button=null, $text=null ) {
+function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $echo=true ) {
 
     $thumb_id = get_post_thumbnail_id( $post_id );
     $html = '<a href="javascript:void(0)" data-sell_media-product-id="' . esc_attr( $post_id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-buy-' . $button . '">' . $text . '</a>';
 
-    print $html;
-
+    if ( $echo ) print $html; else return $html;
 }
 
 

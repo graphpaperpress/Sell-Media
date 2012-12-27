@@ -1,6 +1,6 @@
 /** */
 jQuery( document ).ready(function( $ ){
-
+console.log('loaded');
     /**
      * Set-up our default Ajax options.
      * Please reference http://api.jquery.com/jQuery.ajaxSetup/
@@ -120,8 +120,7 @@ jQuery( document ).ready(function( $ ){
      * When the user clicks on our trigger we set-up the overlay,
      * launch our dialog, and send an Ajax request to load our cart form.
      */
-    $('.sell-media-cart-trigger').click(function( event ){
-
+    $( document ).on( 'click', '.sell-media-cart-trigger', function( event ){
         event.preventDefault();
 
         // Overlay set-up
