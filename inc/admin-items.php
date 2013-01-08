@@ -360,9 +360,9 @@ function sell_media_save_custom_meta( $post_id ) {
 
         if ( $old_content != $new_content ){
             global $wpdb;
-            $new_content = $wpdb->escape( $_POST['sell_media_editor'] );
-            $query = "UPDATE {$wpdb->prefix}posts SET post_content = '{$new_content}' WHERE ID LIKE {$post_id};";
-            $wpdb->query( $wpdb->prepare( $query ) );
+            $new_content = $_POST['sell_media_editor'];
+            $query = "UPDATE {$wpdb->prefix}posts SET post_content = %s WHERE ID LIKE %d;";
+            $wpdb->query( $wpdb->prepare( $query, $new_content, $post_id ) );
         }
     }
 
