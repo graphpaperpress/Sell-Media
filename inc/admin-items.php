@@ -242,12 +242,14 @@ function sell_media_save_custom_meta( $post_id ) {
     } else {
         $wp_upload_dir = wp_upload_dir();
         $attachment_id = $_POST['sell_media_selected_file_id'];
+
         $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
         $selected_file = $wp_upload_dir['basedir'] . '/' . $attached_file;
-
+        $proteced_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
 
         // Check if this is a new upload
-        if ( ! file_exists( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $selected_file ) ){
+
+        if ( ! file_exists( $proteced_file ) ){
 
             $mime_type = wp_check_filetype( $selected_file );
             $image_mimes = array(
@@ -270,11 +272,11 @@ function sell_media_save_custom_meta( $post_id ) {
     // Now, update the post meta to associate the new image with the post
     update_post_meta( $post_id, '_wp_attached_file', $attachment_id );
     update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
-    update_post_meta( $post_id, '_sell_media_file', $selected_file );
+    update_post_meta( $post_id, '_sell_media_file', $proteced_file );
 
     update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', $post_id );
     update_post_meta( $attachment_id, '_sell_media_for_sale', 1 );
-    update_post_meta( $attachment_id, '_sell_media_file', $selected_file );
+    update_post_meta( $attachment_id, '_sell_media_file', $proteced_file );
 
     // loop through fields and save the data
     foreach ($sell_media_item_meta_fields as $field) {
@@ -478,4 +480,4 @@ function sell_media_before_delete_post( $postid ){
         @unlink( $file );
     }
 }
-// add_action( 'before_delete_post', 'sell_media_before_delete_post' );
+add_action( 'before_delete_post', 'sell_media_before_delete_post' );
