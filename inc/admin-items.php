@@ -485,7 +485,7 @@ function sell_media_before_delete_post( $postid ){
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
 
 function sell_media_uploader_multiple(){
-
+print_r( $_POST );
     $wp_upload_dir = wp_upload_dir();
     $post = array();
     foreach( $_POST['attachments'] as $attachment ){
@@ -495,7 +495,7 @@ function sell_media_uploader_multiple(){
         $proteced_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
 
         $post['ID'] = $attachment['id'];
-        $post['post_title'] = null;
+        $post['post_title'] = $attachment['title'];
         $post['post_content'] = null;
         $post['attachment_url'] = $attachment['url'];
 
