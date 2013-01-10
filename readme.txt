@@ -179,6 +179,9 @@ Action hooks available:
  * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+= 1.0.9 =
+* Bug fixes
+
 = 1.0.8 =
 * Bug fixes
 * Code improvements
