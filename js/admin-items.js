@@ -48,6 +48,7 @@ jQuery(function( $ ){
         // Create the media frame.
         file_frame = wp.media.frames.file_frame = wp.media({
             title: 'Select Images To Sell',
+            description: 'This is the description',
             button: {
               text: 'Sell All Selected Images',
             },

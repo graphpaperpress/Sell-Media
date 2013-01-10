@@ -165,17 +165,18 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 // File
                 case 'file':
                     $attachment_id = get_post_thumbnail_id( $post->ID );
+                    print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
+                    print '<input type="text" name="_sell_media_file" id="_sell_media_file" class="field-has-button" value="'.get_post_meta($post->ID,'_sell_media_file', true).'" size="30" />';
                     print '<div class="sell-media-upload-trigger">';
                     if ( empty( $attachment_id ) ){
+                        print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload or Select Image', 'sell_media').'</a><br class="clear"/>';
                         print '<img src="" class="sell_media_image" />';
-                        print '<br class="clear"/><a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload', 'sell_media').'</a>';
                     } else {
                         sell_media_item_icon( $attachment_id );
                     }
                     print '</div>';
 
-                    print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
-                    print '<input type="text" name="_sell_media_file" id="_sell_media_file" value="'.get_post_meta($post->ID,'_sell_media_file', true).'" size="45" />';
+
                     break;
 
                 // text
