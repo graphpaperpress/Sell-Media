@@ -16,6 +16,9 @@ class SellMediaSettings {
     private $email_settings_key = 'sell_media_email_settings';
     private $misc_settings_key = 'sell_media_misc_settings';
     private $plugin_options_key = 'sell_media_plugin_options';
+
+private $size_settings_key = 'sell_media_size_settings';
+
     private $plugin_post_type_key = 'sell_media_item';
     private $plugin_settings_tabs = array();
 
@@ -30,6 +33,7 @@ class SellMediaSettings {
         add_action( 'admin_init', array( &$this, 'register_payment_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_email_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_misc_settings' ) );
+add_action( 'admin_init', array( &$this, 'register_size_settings' ) );
         add_action( 'admin_menu', array( &$this, 'add_admin_menus' ) );
 
         if ( ! empty( $_POST['option_page'] ) && $_POST['option_page'] == 'sell_media_misc_settings' ){
@@ -47,6 +51,7 @@ class SellMediaSettings {
         $this->general_settings = (array) get_option( $this->general_settings_key );
         $this->payment_settings = (array) get_option( $this->payment_settings_key );
         $this->email_settings = (array) get_option( $this->email_settings_key );
+$this->size_settings = (array) get_option( $this->size_settings_key );
 
         // Merge with defaults
         $this->general_settings = array_merge( array(
@@ -71,6 +76,9 @@ class SellMediaSettings {
             'success_email_body' => $msg
         ), $this->email_settings );
 
+$this->size_settings = array_merge( array(
+    'small_size' => 'some size'
+), $this->size_settings );
 
         do_action( 'sell_media_load_settings_hook' );
     }
@@ -129,6 +137,22 @@ class SellMediaSettings {
 
     }
 
+/*
+ * Registers the email settings and appends the
+ * key to the plugin settings tabs array.
+ */
+function register_size_settings() {
+    $this->plugin_settings_tabs[$this->size_settings_key] = 'Size';
+
+    register_setting( $this->size_settings_key, $this->size_settings_key );
+    add_settings_section( 'section_size', 'Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
+
+    add_settings_field( 'small_size', 'Small Size', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );
+
+    do_action( 'sell_media_email_settings_hook' );
+
+}
+
     /*
      * Registers the misc settings and appends the
      * key to the plugin settings tabs array.
@@ -149,6 +173,7 @@ class SellMediaSettings {
     function section_general_desc() { echo ''; }
     function section_payment_desc() { echo ''; }
     function section_email_desc() { echo ''; }
+function section_size_desc() { echo ''; }
     function section_misc_desc() {
         printf( __( 'Settings for Extensions are shown below. <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' );
         do_action( 'sell_media_misc_settings_hook' );
@@ -303,6 +328,15 @@ class SellMediaSettings {
          <?php
     }
 
+/*
+ * From Name Option field callback
+ */
+function field_size_small() {
+    ?>
+    <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size]" value="<?php echo esc_attr( $this->size_settings['small_size'] ); ?>" />
+    <span class="desc"><?php _e( 'The name associated with all outgoing email.', 'sell_media' ); ?></span>
+    <?php
+}
 
     /*
      * Helper for building select options for Pages

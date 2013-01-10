@@ -50,6 +50,27 @@ $sell_media_item_meta_fields = array(
         'std'   => $default_price
     ),
     array(
+        'label'=> 'Small <span class="description">10x10</span>',
+        'desc'  => 'Numbers only.', // this needs validation
+        'id'    => $prefix . '_price',
+        'type'  => 'text',
+        'std'   => $default_price
+    ),
+    array(
+        'label'=> 'Medium <span class="description">10x10</span>',
+        'desc'  => 'Numbers only.', // this needs validation
+        'id'    => $prefix . '_price',
+        'type'  => 'text',
+        'std'   => $default_price
+    ),
+    array(
+        'label'=> 'Large <span class="description">10x10</span>',
+        'desc'  => 'Numbers only.', // this needs validation
+        'id'    => $prefix . '_price',
+        'type'  => 'text',
+        'std'   => $default_price
+    ),
+    array(
         'label'=> 'Shortcode',
         'desc'  => 'Copy and paste this shortcode to show the file and buy button anywhere on your site. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"', // this needs validation
         'id'    => $prefix . '_shortcode',
