@@ -6,7 +6,7 @@
  * @author Thad Allender
  * @since 0.1
  */
-function sell_media_add_price_meta_box() {
+function sell_media_add_price_meta_box( $post_type ) {
     add_meta_box(
                 'product_meta_box', // $id
                 'Item Details', // $title
@@ -22,9 +22,18 @@ function sell_media_add_price_meta_box() {
                 'sell_media_item', // $page
                 'side', // $context
                 'high'); // $priority
-}
-add_action('add_meta_boxes', 'sell_media_add_price_meta_box');
 
+    if ( 'sell_media_item' == $post_type )
+        add_action( 'edit_form_after_title', 'sell_media_edit_form_after_title' );
+}
+add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
+
+function sell_media_edit_form_after_title(){
+    echo '<h2 id="sell-media-bulk-tabs" class="nav-tab-wrapper">';
+    echo '<a class="nav-tab nav-tab-active" href="">Single Upload</a>';
+    echo '<a class="nav-tab" href="#">Bulk Upload</a>';
+    echo '</h2>';
+}
 
 /**
  * Field array for meta boxes

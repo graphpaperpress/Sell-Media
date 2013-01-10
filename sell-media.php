@@ -441,7 +441,7 @@ class SellMedia {
             'singular_name' => _x( 'Item', 'sell_media_item' ),
             'all_items' => _x( 'All Items', 'sell_media_item' ),
             'add_new' => _x( 'Add New', 'sell_media_item' ),
-            'add_new_item' => _x( 'Add New Item', 'sell_media_item' ),
+            'add_new_item' => _x( 'Add New', 'sell_media_item' ),
             'edit_item' => _x( 'Edit Item', 'sell_media_item' ),
             'new_item' => _x( 'New Item', 'sell_media_item' ),
             'view_item' => _x( 'View Item', 'sell_media_item' ),

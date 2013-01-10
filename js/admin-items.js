@@ -1,3 +1,7 @@
+jQuery(function() {
+    jQuery('#sell-media-bulk-tabs').insertBefore(jQuery('#post-body-content'));
+});
+
 // Uploading files
 var file_frame;
 
