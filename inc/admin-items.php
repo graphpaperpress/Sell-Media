@@ -168,7 +168,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     print '<div class="sell-media-upload-trigger">';
                     if ( empty( $attachment_id ) ){
                         print '<img src="" class="sell_media_image" />';
-                        print '<br class="clear"/><a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">Upload</a>';
+                        print '<br class="clear"/><a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload', 'sell_media').'</a>';
                     } else {
                         sell_media_item_icon( $attachment_id );
                     }
