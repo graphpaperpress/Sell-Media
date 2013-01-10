@@ -23,6 +23,7 @@ include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 
 if ( is_admin() ) {
+    include( dirname(__FILE__) . '/inc/admin-bulk.php' );
     include( dirname(__FILE__) . '/inc/admin-attachments.php' );
     include( dirname(__FILE__) . '/inc/admin-items.php' );
     include( dirname(__FILE__) . '/inc/admin-extensions.php' );
@@ -141,7 +142,6 @@ class SellMedia {
             include( dirname(__FILE__) . '/inc/admin-upgrade.php' );
         }
 
-
     } // end install();
 
 
@@ -187,6 +187,7 @@ class SellMedia {
 
         $permission = 'manage_options';
 
+        add_submenu_page( 'edit.php?post_type=sell_media_item', __('Add Bulk', 'sell_media'), __('Add Bulk', 'sell_media'),  $permission, 'sell_media_add_bulk', 'sell_media_add_bulk_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Payments', 'sell_media'), __('Payments', 'sell_media'),  $permission, 'sell_media_payments', 'sell_media_payments_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Extensions', 'sell_media'), __('Extensions', 'sell_media'),  $permission, 'sell_media_extensions', 'sell_media_extensions_callback_fn' );
@@ -441,7 +442,7 @@ class SellMedia {
             'singular_name' => _x( 'Item', 'sell_media_item' ),
             'all_items' => _x( 'All Items', 'sell_media_item' ),
             'add_new' => _x( 'Add New', 'sell_media_item' ),
-            'add_new_item' => _x( 'Add New', 'sell_media_item' ),
+            'add_new_item' => _x( 'Sell Media', 'sell_media_item' ),
             'edit_item' => _x( 'Edit Item', 'sell_media_item' ),
             'new_item' => _x( 'New Item', 'sell_media_item' ),
             'view_item' => _x( 'View Item', 'sell_media_item' ),

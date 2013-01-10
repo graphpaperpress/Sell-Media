@@ -68,6 +68,7 @@ jQuery(function( $ ){
                 url: ajaxurl,
                 data: data,
                 success: function( msg ){
+                    $('.sell_media_bulk_list').html( msg );
                 }
             });
         });
