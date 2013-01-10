@@ -11,12 +11,6 @@ jQuery(function( $ ){
 
         event.preventDefault();
 
-        // If the media frame already exists, reopen it.
-        if ( file_frame ) {
-            file_frame.open();
-            return;
-        }
-
         // Create the media frame.
         file_frame = wp.media.frames.file_frame = wp.media({
             title: 'Select Image',
