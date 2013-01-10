@@ -100,12 +100,6 @@ function sell_media_show_custom_meta_box( $fields=null ) {
     foreach ($my_fields as $field) {
             $default = get_post_meta( $post->ID, $field['id'], true );
 
-            // if ( ! isset( $default ) ) {
-            //     $default = $field['std'];
-            // } else {
-            //     $default = null;
-            // }
-
             // begin a table row with
             echo '<tr>
             <th><label for="' . $field['id'] . '">' . $field['label'] . '</label></th>
@@ -162,10 +156,15 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 // File
                 case 'file':
                     $attachment_id = get_post_thumbnail_id( $post->ID );
-                    sell_media_item_icon( $attachment_id );
-                    echo  '<br clear="all" /><input type="file" name="' . $field['id'] . '" /><br clear="all" />';
-                    echo '<input type="text" name="sell_media_path_to_file" value="' . get_post_meta( $attachment_id, '_sell_media_file', true ) . '" size="45" /><br />';
-                    echo '<span class="description">Paste links to files too large to upload here (optional).</span>';
+                    if ( empty( $attachment_id ) ){
+                        print '<img src="" class="sell_media_image" />';
+                    } else {
+                        sell_media_item_icon( $attachment_id );
+                    }
+                    print '<a class="sell-media-upload-button button"id="_sell_media_button" value="Upload">Upload</a>';
+                    print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
+                    print '<input type="text" name="_sell_media_file" id="_sell_media_file" value="'.get_post_meta($post->ID,'_sell_media_file', true).'" size="45" />';
+                    print '<span class="description">Paste links to files too large to upload here (optional).</span>';
                     break;
 
                 // text
@@ -173,28 +172,6 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     echo '<p><code>[sell_media_item id="' . $post->ID . '" text="Purchase" style="button" size="medium"]</code></p>
                     <p id="' . $field['id'] . '"><span class="description">' . $field['desc'] . '</span></p>';
                 break;
-
-                // repeatable
-                case 'repeatable':
-                    echo '<a class="repeatable-add button" href="#">+</a>
-                            <ul id="' . $field['id'] . '-repeatable" class="custom_repeatable ui-sortable">';
-                    $i = 0;
-                    if ($meta) {
-                        foreach($meta as $row) {
-                            echo '<li><span class="sort hndle">|||</span>
-                                        <input type="text" name="' . $field['id'] . '[' . $i . ']" id="' . $field['id'] . '" value="' . $row . '" size="30" />
-                                        <a class="repeatable-remove button" href="#">-</a></li>';
-                            $i++;
-                        }
-                    } else {
-                        echo '<li><span class="sort hndle">|||</span>
-                                    <input type="text" name="' . $field['id'] . '[' . $i . ']" id="' . $field['id'] . '" value="" size="30" />
-                                    <a class="repeatable-remove button" href="#">-</a></li>';
-                    }
-                    echo '</ul>
-                        <span class="description">' . $field['desc'] . '</span>';
-                break;
-
             } //end switch
             echo '</td></tr>';
     } // end foreach
@@ -237,7 +214,7 @@ function sell_media_save_custom_meta( $post_id ) {
     if ( ! wp_verify_nonce( $nonce, basename(__FILE__) ) )
         return $post_id;
 
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE || empty( $_FILES ) )
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
         return $post_id;
 
     if ( 'page' == $_POST['post_type'] ) {
@@ -248,88 +225,33 @@ function sell_media_save_custom_meta( $post_id ) {
         }
     }
 
-    $wp_upload_dir = wp_upload_dir();
-
-    // Build our destination path, note the Y/m
-    $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/';
-
-    // This is used to check for year/month/ folder
-    // If we don't have one we'll let WordPress create it.
-    if ( ! is_dir( $destination_file ) ){
-        wp_mkdir_p( $destination_file );
+    // If the selected file id was updated then we have
+    // a new attachment.
+    if ( empty( $_POST['sell_media_selected_file_id'] ) ){
+        $selected_file = get_post_meta( $post_id, '_sell_media_file', true );
+    } else {
+        $wp_upload_dir = wp_upload_dir();
+        $attachment_id = $_POST['sell_media_selected_file_id'];
+        $selected_file = $wp_upload_dir['basedir'] . '/' . get_post_meta( $attachment_id, '_wp_attached_file', true );
     }
 
-    // Move our uploaded file to our Sell Media upload folder
-    $did_move = move_uploaded_file( $_FILES['sell_media_file']['tmp_name'], $destination_file . $_FILES['sell_media_file']['name'] );
-    $moved_file =  $destination_file . $_FILES['sell_media_file']['name'];
-
-    // Insert our uploaded file from the Sell Media upload dir into
-    // WordPress as an attachment
-    if ( $did_move || ! empty( $_POST['sell_media_path_to_file'] ) ){
-
-        // CHeck if we have a hard coded path we use that.
-        if ( ! empty( $_POST['sell_media_path_to_file'] ) ){
-            $moved_file = $_POST['sell_media_path_to_file'];
-            $file_name = basename( $moved_file );
-        } else {
-            $file_name = $_FILES['sell_media_file']['name'];
-        }
-
-        // Resize our original to a lower "quality" and then copy it
-        // to our wp uploads directory so other plugins/themes can use it.
-        do_action( 'sell_media_before_upload' );
-
-        $mime_type = wp_check_filetype( $moved_file );
-
-        $image_mimes = array(
-            'image/jpeg',
-            'image/png',
-            'image/gif',
-            'image/bmp',
-            'image/tiff'
-            );
-
-        if ( in_array( $mime_type['type'], $image_mimes ) ){
-            $destination_file = sell_media_move_image_from_meta( $moved_file, $file_name );
-
-        } else {
-            $destination_file = $moved_file;
-        }
-
-        // Additional processes dependent on mime types will
-        // be here.
-
-        $current_user = wp_get_current_user();
-        $attachment = array(
-            'post_mime_type' => $mime_type['type'],
-            'guid' => $wp_upload_dir['baseurl'] . '/' . _wp_relative_upload_path( $destination_file ),
-            'post_title' => $file_name,
-            'post_content' => '',
-            'post_author' => $current_user->ID,
-            'post_status' => 'inherit',
-            'post_date' => date( 'Y-m-d H:i:s' ),
-            'post_date_gmt' => date( 'Y-m-d H:i:s' )
-        );
-
-        // Run the wp_insert_attachment function.
-        // This adds the file to the media library and generates the thumbnails.
-        // If you wanted to attch this image to a post,
-        // you could pass the post id as a third param and it'd magically happen.
-        $attach_id = wp_insert_attachment( $attachment, $destination_file );
-
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-        $attach_data = wp_generate_attachment_metadata( $attach_id, $destination_file );
-        wp_update_attachment_metadata( $attach_id, $attach_data );
-
-        // Now, update the post meta to associate the new image with the post
-        update_post_meta( $post_id, '_wp_attached_file', $attach_id );
-        update_post_meta( $post_id, '_thumbnail_id', $attach_id );
-        update_post_meta( $post_id, '_sell_media_file', $moved_file );
-
-        update_post_meta( $attach_id, '_sell_media_for_sale_product_id', $post_id );
-        update_post_meta( $attach_id, '_sell_media_for_sale', 1 );
-        update_post_meta( $attach_id, '_sell_media_file', $moved_file );
+    if ( empty( $_POST['sell_media_selected_file_id'] ) ){
+        $attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
     }
+
+// print '<pre>';
+// print "aid: " . $attachment_id . "\n";
+// print "selected file: " . $selected_file . "\n";
+// print "pid: " . $post_id;
+// die();
+    // Now, update the post meta to associate the new image with the post
+    update_post_meta( $post_id, '_wp_attached_file', $attachment_id );
+    update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
+    update_post_meta( $post_id, '_sell_media_file', $selected_file );
+
+    update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', $post_id );
+    update_post_meta( $attachment_id, '_sell_media_for_sale', 1 );
+    update_post_meta( $attachment_id, '_sell_media_file', $selected_file );
 
     // loop through fields and save the data
     foreach ($sell_media_item_meta_fields as $field) {
@@ -463,7 +385,7 @@ add_filter( 'manage_pages_custom_column', 'sell_media_item_content', 10, 2 );
  * @since 0.1
  */
 function sell_media_move_image_from_attachment_back( $postid ){
-    die('here');
+
     // Read our meta data from the original post
     $aid = get_post_thumbnail_id( $postid );
     $meta = wp_get_attachment_metadata( $aid );

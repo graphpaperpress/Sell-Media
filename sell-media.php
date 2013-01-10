@@ -542,6 +542,10 @@ class SellMedia {
         }
         if ( is_admin() && ( sell_media_is_sell_media_post_type_page() || $pagenow == 'post.php' ) ) {
             wp_enqueue_style( 'sell_media-admin', plugin_dir_url( __FILE__ ) . 'css/sell_media-admin.css', array( 'thickbox' ) );
+
+            wp_enqueue_media();
+            wp_enqueue_script( 'sell_media-admin-items', plugin_dir_url( __FILE__ ) . 'js/admin-items.js', array( 'jquery' ) );
+
             if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
                 wp_enqueue_script( 'sell_media-admin', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin.js', array( 'jquery', 'jquery-ui-sortable' ) );
                 wp_enqueue_script( 'jquery-ui-slider' );
