@@ -176,7 +176,6 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
                     print '<input type="text" name="_sell_media_file" id="_sell_media_file" value="'.get_post_meta($post->ID,'_sell_media_file', true).'" size="45" />';
-                    print '<span class="description">Paste links to files too large to upload here (optional).</span>';
                     break;
 
                 // text

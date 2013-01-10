@@ -33,6 +33,7 @@ jQuery(function( $ ){
 
             // Do something with attachment.id and/or attachment.url here
             $('#sell_media_selected_file_id').attr( 'value', attachment.id );
+            $('#_sell_media_file').attr( 'value', attachment.url );
             $('.sell_media_image').attr( 'src', attachment.url );
         });
 
@@ -46,11 +47,11 @@ jQuery(function( $ ){
 
         // Create the media frame.
         file_frame = wp.media.frames.file_frame = wp.media({
-            title: $( this ).data( 'uploader_title' ),
+            title: 'Select Images To Sell',
             button: {
-              text: $( this ).data( 'uploader_button_text' ),
+              text: 'Sell All Selected Images',
             },
-            multiple: true
+            multiple: 'add'  // Set to true to allow multiple files to be selected
         });
 
         // When an image is selected, run a callback.
