@@ -30,8 +30,8 @@ add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
 
 function sell_media_edit_form_after_title(){
     echo '<h2 id="sell-media-bulk-tabs" class="nav-tab-wrapper">';
-    echo '<a class="nav-tab nav-tab-active" href="">Single Upload</a>';
-    echo '<a class="nav-tab" href="#">Bulk Upload</a>';
+    echo '<a class="nav-tab nav-tab-active">' . __( 'Single Upload', 'sell_media' ) . '</a>';
+    echo '<a class="nav-tab sell-media-upload-button" href="">' . __( 'Bulk Upload', 'sell_media' ) . '</a>';
     echo '</h2>';
 }
 

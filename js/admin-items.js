@@ -1,3 +1,4 @@
+// Move bulk upload tabs above post title, no hook exists there in WP
 jQuery(function() {
     jQuery('#sell-media-bulk-tabs').insertBefore(jQuery('#post-body-content'));
 });
