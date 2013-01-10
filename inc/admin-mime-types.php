@@ -1,54 +1,6 @@
 <?php
 
 /**
- * Process the image that was uploaded from a meta field. Creates new image
- * sizes, moves the original image to the proctected area, and also saves IPTC
- * data if any as taxonomies/terms.
- *
- * @param $moved_file The file we are referencing
- * @param $file_name The name of the file.
- * @since 1.0.1
- * @return $destination_file The location to the new file
- */
-function sell_media_move_image_from_meta( $selected_file=null ){
-
-    $wp_upload_dir = wp_upload_dir();
-
-    // Build our destination path, note the Y/m
-    // This is used to check for year/month/ folder
-    // If we don't have one we'll let WordPress create it.
-    $destination_dir = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/';
-    if ( ! is_dir( $destination_dir ) ){
-        wp_mkdir_p( $destination_dir );
-    }
-
-    $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/' . basename( $selected_file );
-
-    // move original into protected area
-    rename( $selected_file, $destination_file );
-
-    // Resize original and move it into the uploads/ dir
-    // and also rename it to the original
-    $image_new_size = image_make_intermediate_size( $moved_file, get_option('large_size_w'), get_option('large_size_h'), $crop=false );
-    rename( $image_new_size, $wp_upload_dir['path'] . '/' . basename( $selected_file ) );
-
-    // Get iptc info
-    $city = sell_media_iptc_parser( 'city', $destination_file );
-    $state = sell_media_iptc_parser( 'state', $destination_file );
-    $creator = sell_media_iptc_parser( 'creator', $destination_file );
-    $keywords = sell_media_iptc_parser( 'keywords', $destination_file );
-
-    // If we have iptc info save it
-    if ( $city ) sell_media_iptc_save( 'city', $city, $post_id );
-    if ( $state ) sell_media_iptc_save( 'state', $state, $post_id );
-    if ( $creator ) sell_media_iptc_save( 'creator', $creator, $post_id );
-    if ( $keywords ) sell_media_iptc_save( 'keywords', $keywords, $post_id );
-
-    return $destination_file;
-}
-
-
-/**
  * Parse IPTC info and move the uploaded file into the proctected area
  *
  * In order to "protect" our uploaded file, we resize the original

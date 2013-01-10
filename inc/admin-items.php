@@ -306,22 +306,6 @@ add_action('save_post', 'sell_media_save_custom_meta');
 
 
 /**
- * Adds the enctype to our form on edit/add post page so our form
- * can upload media. This function called by the 'init_sell_media' method
- * Only used on Sell Media Add New page
- *
- * @since 0.1
- */
-function sell_media_enctype( ) {
-    global $post_type;
-        if ( is_admin() && $post_type == 'sell_media_item' ) {
-            echo ' enctype="multipart/form-data"';
-        }
-}
-add_action( 'post_edit_form_tag' , 'sell_media_enctype' );
-
-
-/**
  * Filter column headers names on the edit media table.
  *
  * @since 0.1
@@ -485,4 +469,4 @@ function sell_media_before_delete_post( $postid ){
         @unlink( $file );
     }
 }
-add_action( 'before_delete_post', 'sell_media_before_delete_post' );
+// add_action( 'before_delete_post', 'sell_media_before_delete_post' );
