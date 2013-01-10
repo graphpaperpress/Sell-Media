@@ -94,7 +94,6 @@ function sell_media_delete_item( $post_id=null ){
  * @since 0.1
  */
 function sell_media_attachment_field_sell_save( $post, $attachment ) {
-
     $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', true );
 
     // Attachment was once marked for sale, but no longer is for sale.

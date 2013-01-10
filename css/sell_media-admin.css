@@ -89,5 +89,5 @@
 #poststuff h2 .nav-tab { font-size: 14px; line-height: 18px; }
 .compat-field-sell th { display: none; }
 .compat-field-sell input[type="checkbox"] { width: auto; }
-
 .sell-media-item-table .sell-media-upload-trigger { cursor: pointer; }
+.post-new-php .media-sidebar .compat-item { display: none; }

@@ -31,7 +31,7 @@ add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
 function sell_media_edit_form_after_title(){
     echo '<h2 id="sell-media-bulk-tabs" class="nav-tab-wrapper">';
     echo '<a class="nav-tab nav-tab-active">' . __( 'Single Upload', 'sell_media' ) . '</a>';
-    echo '<a class="nav-tab sell-media-upload-trigger" href="">' . __( 'Bulk Upload', 'sell_media' ) . '</a>';
+    echo '<a class="nav-tab sell-media-upload-trigger-multiple" href="">' . __( 'Bulk Upload', 'sell_media' ) . '</a>';
     echo '</h2>';
 }
 
@@ -484,3 +484,24 @@ function sell_media_before_delete_post( $postid ){
     }
 }
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
+
+function sell_media_uploader_multiple(){
+
+    $wp_upload_dir = wp_upload_dir();
+    $post = array();
+    foreach( $_POST['attachments'] as $attachment ){
+
+        $attached_file = get_post_meta( $attachment['id'], '_wp_attached_file', true );
+        $selected_file = $wp_upload_dir['basedir'] . '/' . $attached_file;
+        $proteced_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+
+        $post['ID'] = $attachment['id'];
+        $post['post_title'] = null;
+        $post['post_content'] = null;
+        $post['attachment_url'] = $attachment['url'];
+
+        sell_media_attachment_field_sell_save( $post, $attachment['sell']="on");
+    }
+    die();
+}
+add_action( 'wp_ajax_sell_media_uploader_multiple', 'sell_media_uploader_multiple' );
