@@ -19,9 +19,9 @@ jQuery(function( $ ){
 
         // Create the media frame.
         file_frame = wp.media.frames.file_frame = wp.media({
-            title: $( this ).data( 'uploader_title' ),
+            title: 'Select Image',
             button: {
-              text: $( this ).data( 'uploader_button_text' ),
+              text: 'Use Selected Image',
             },
             multiple: false  // Set to true to allow multiple files to be selected
         });
