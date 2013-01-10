@@ -229,21 +229,35 @@ function sell_media_save_custom_meta( $post_id ) {
     // a new attachment.
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
         $selected_file = get_post_meta( $post_id, '_sell_media_file', true );
+        $attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
     } else {
         $wp_upload_dir = wp_upload_dir();
         $attachment_id = $_POST['sell_media_selected_file_id'];
-        $selected_file = $wp_upload_dir['basedir'] . '/' . get_post_meta( $attachment_id, '_wp_attached_file', true );
+        $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+        $selected_file = $wp_upload_dir['basedir'] . '/' . $attached_file;
+
+
+        // Check if this is a new upload
+        if ( ! file_exists( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $selected_file ) ){
+
+            $mime_type = wp_check_filetype( $selected_file );
+            $image_mimes = array(
+                'image/jpeg',
+                'image/png',
+                'image/gif',
+                'image/bmp',
+                'image/tiff'
+                );
+
+            // Image mime type support
+            if ( in_array( $mime_type['type'], $image_mimes ) ){
+                sell_media_move_image_from_attachment( $attached_file, $post_id );
+            } else {
+                sell_media_default_move( $attached_file );
+            }
+        }
     }
 
-    if ( empty( $_POST['sell_media_selected_file_id'] ) ){
-        $attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
-    }
-
-// print '<pre>';
-// print "aid: " . $attachment_id . "\n";
-// print "selected file: " . $selected_file . "\n";
-// print "pid: " . $post_id;
-// die();
     // Now, update the post meta to associate the new image with the post
     update_post_meta( $post_id, '_wp_attached_file', $attachment_id );
     update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
@@ -287,7 +301,6 @@ function sell_media_save_custom_meta( $post_id ) {
             $wpdb->query( $wpdb->prepare( $query, $new_content, $post_id ) );
         }
     }
-
 }
 add_action('save_post', 'sell_media_save_custom_meta');
 

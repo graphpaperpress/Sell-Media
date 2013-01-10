@@ -1,13 +1,6 @@
 // Uploading files
 var file_frame;
 
-jQuery(document).on('click', '.thumbnail', function(){
-  console.log( jQuery('.compat-item input[type="checkbox"]') );
-  // jQuery('.compat-item input[type="checkbox"]').prop('checked', true);
-  console.log( jQuery('.compat-item input[type="checkbox"]') );
-});
-
-
 jQuery(document).on('click', '.sell-media-upload-button', function( event ){
 
     event.preventDefault();
