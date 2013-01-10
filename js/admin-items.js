@@ -6,7 +6,7 @@ jQuery(function() {
 // Uploading files
 var file_frame;
 
-jQuery(document).on('click', '.sell-media-upload-button', function( event ){
+jQuery(document).on('click', '.sell-media-upload-trigger', function( event ){
 
     event.preventDefault();
 
@@ -30,7 +30,6 @@ jQuery(document).on('click', '.sell-media-upload-button', function( event ){
         // We set multiple to false so only get one image from the uploader
         var attachment = file_frame.state().get('selection').first().toJSON();
 
-        console.log( attachment );
         // Do something with attachment.id and/or attachment.url here
         jQuery('#sell_media_selected_file_id').attr( 'value', attachment.id );
         jQuery('.sell_media_image').attr( 'src', attachment.url );

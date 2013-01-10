@@ -31,7 +31,7 @@ add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
 function sell_media_edit_form_after_title(){
     echo '<h2 id="sell-media-bulk-tabs" class="nav-tab-wrapper">';
     echo '<a class="nav-tab nav-tab-active">' . __( 'Single Upload', 'sell_media' ) . '</a>';
-    echo '<a class="nav-tab sell-media-upload-button" href="">' . __( 'Bulk Upload', 'sell_media' ) . '</a>';
+    echo '<a class="nav-tab sell-media-upload-trigger" href="">' . __( 'Bulk Upload', 'sell_media' ) . '</a>';
     echo '</h2>';
 }
 
@@ -105,7 +105,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
     // Begin the field table and loop
-    echo '<table class="form-table">';
+    echo '<table class="form-table sell-media-item-table">';
     foreach ($my_fields as $field) {
             $default = get_post_meta( $post->ID, $field['id'], true );
 
@@ -165,12 +165,15 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 // File
                 case 'file':
                     $attachment_id = get_post_thumbnail_id( $post->ID );
+                    print '<div class="sell-media-upload-trigger">';
                     if ( empty( $attachment_id ) ){
                         print '<img src="" class="sell_media_image" />';
+                        print '<br class="clear"/><a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">Upload</a>';
                     } else {
                         sell_media_item_icon( $attachment_id );
                     }
-                    print '<a class="sell-media-upload-button button"id="_sell_media_button" value="Upload">Upload</a>';
+                    print '</div>';
+
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
                     print '<input type="text" name="_sell_media_file" id="_sell_media_file" value="'.get_post_meta($post->ID,'_sell_media_file', true).'" size="45" />';
                     print '<span class="description">Paste links to files too large to upload here (optional).</span>';
