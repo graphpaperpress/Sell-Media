@@ -260,7 +260,7 @@ function sell_media_save_custom_meta( $post_id ) {
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
         $selected_file = get_post_meta( $post_id, '_sell_media_file', true );
         $attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
-        $protected_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $selected_file;
+        $protected_file = $selected_file;
     } else {
         $attachment_id = $_POST['sell_media_selected_file_id'];
 
