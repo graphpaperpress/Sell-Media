@@ -38,7 +38,7 @@ if ( is_admin() ) {
  */
 function sell_media_screen_icon() {
     global $post_type;
-    if ( 'sell_media_item' == $_GET['post_type'] || 'sell_media_item' == $post_type ) :
+    if ( ! empty( $_GET['post_type'] ) && 'sell_media_item' == $_GET['post_type'] || 'sell_media_item' == $post_type ) :
         print '<style type="text/css">#icon-edit { background:transparent url("' . plugin_dir_url( __FILE__ ) . '/images/sell_media_icon.png") no-repeat; }</style>';
     endif;
 }
