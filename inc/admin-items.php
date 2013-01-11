@@ -136,29 +136,29 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                         $payment_settings = get_option('sell_media_payment_settings');
                         $default = $payment_settings['default_price'];
                     }
-                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" value="' . $default . '" size="30" />
-                        <br /><span class="description">' . $field['desc'] . '</span>';
+                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" value="' . __( $default, 'sell_media' ) . '" size="30" />
+                        <br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
                 break;
 
                 // textarea
                 case 'textarea':
-                    echo '<textarea name="' . $field['id'] . '" id="' . $field['id'] . '" cols="60" rows="4">' . $default . '</textarea>
-                        <br /><span class="description">' . $field['desc'] . '</span>';
+                    echo '<textarea name="' . $field['id'] . '" id="' . $field['id'] . '" cols="60" rows="4">' . __( $default, 'sell_media' ) . '</textarea>
+                        <br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
                 break;
 
                 // checkbox
                 case 'checkbox':
                     echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ',$meta ? ' checked="checked"' : '','/>
-                        <label for="' . $field['id'] . '">' . $field['desc'] . '</label>';
+                        <label for="' . $field['id'] . '">' . __( $field['desc'], 'sell_media' ) . '</label>';
                 break;
 
                 // select
                 case 'select':
                     echo '<select name="'.$field['id'].'" id="'.$field['id'].'">';
                     foreach ($field['options'] as $option) {
-                        echo '<option', $meta == $option['value'] ? ' selected="selected"' : '', ' value="'.$option['value'].'">'.$option['label'].'</option>';
+                        echo '<option', $meta == $option['value'] ? ' selected="selected"' : '', ' value="'.$option['value'].'">' . __( $option['label'], 'sell_media' ) . '</option>';
                     }
-                    echo '</select><br /><span class="description">'.$field['desc'].'</span>';
+                    echo '</select><br /><span class="description">'.__( $field['desc'], 'sell_media' ).'</span>';
                 break;
 
                 // image
@@ -166,11 +166,11 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
                     echo '<span class="custom_default_image" style="display:none">' . $image[0] . '</span>';
                     if ($meta) { $image = wp_get_attachment_image_src($meta, 'medium'); $image = $image[0]; }
-                    echo    '<input name="' . $field['id'] . '" type="hidden" class="custom_upload_image" value="' . $meta . '" />
+                    echo    '<input name="' . $field['id'] . '" type="hidden" class="custom_upload_image" value="' . __( $meta, 'sell_media' ) . '" />
                     <img src="' . $image[0] . '" class="custom_preview_image" alt="" /><br />
-                    <input class="custom_upload_image_button button" type="button" value="Choose Image" />
-                    <small> <a href="#" class="custom_clear_image_button">Remove Image</a></small>
-                    <br clear="all" /><span class="description">' . $field['desc'] . '';
+                    <input class="custom_upload_image_button button" type="button" value="' . __( 'Choose Image', 'sell_media' ) . '" />
+                    <small> <a href="#" class="custom_clear_image_button">'.__('Remove Image','sell_media').'</a></small>
+                    <br clear="all" /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
                 break;
 
                 // File
@@ -193,7 +193,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 // text
                 case 'html':
                     echo '<p><code>[sell_media_item id="' . $post->ID . '" text="Purchase" style="button" size="medium"]</code></p>
-                    <p id="' . $field['id'] . '"><span class="description">' . $field['desc'] . '</span></p>';
+                    <p id="' . $field['id'] . '"><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span></p>';
                 break;
             } //end switch
             echo '</td></tr>';
