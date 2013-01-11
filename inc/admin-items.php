@@ -497,10 +497,16 @@ function sell_media_before_delete_post( $postid ){
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
 
 function sell_media_uploader_multiple(){
-//print_r( $_POST );
+
     $wp_upload_dir = wp_upload_dir();
     $post = array();
     foreach( $_POST['attachments'] as $attachment ){
+
+        $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
+
+        if ( $product_id ){
+            continue;
+        }
 
         $attached_file = get_post_meta( $attachment['id'], '_wp_attached_file', true );
         $selected_file = $wp_upload_dir['basedir'] . '/' . $attached_file;
@@ -511,8 +517,9 @@ function sell_media_uploader_multiple(){
         $post['post_content'] = null;
         $post['attachment_url'] = $attachment['url'];
 
-        sell_media_attachment_field_sell_save( $post, $attachment['sell']="on");
+        sell_media_attachment_field_sell_save( $post, $attachment['sell']="on" );
     }
+
     $html = null;
     $html .= '<ul class="attachments sell-media-bulk-list">';
     foreach( $_POST['attachments'] as $attachment ){
