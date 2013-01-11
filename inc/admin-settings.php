@@ -345,12 +345,12 @@ private $size_settings_key = 'sell_media_size_settings';
     function field_size_small() {
         ?>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_height]" value="<?php echo esc_attr( $this->size_settings['small_size_height'] ); ?>" size="2"/>
-            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
             <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_width]" value="<?php echo esc_attr( $this->size_settings['small_size_width'] ); ?>" size="2" />
             <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
+        </div>
+        <div class="sell-media-settings-size-item">
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_height]" value="<?php echo esc_attr( $this->size_settings['small_size_height'] ); ?>" size="2"/>
+            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
             <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_price]" value="<?php echo esc_attr( $this->size_settings['small_size_price'] ); ?>" size="3" />
@@ -366,12 +366,12 @@ private $size_settings_key = 'sell_media_size_settings';
     function field_size_medium() {
         ?>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_height]" value="<?php echo esc_attr( $this->size_settings['medium_size_height'] ); ?>" size="2"/>
-            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
             <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_width]" value="<?php echo esc_attr( $this->size_settings['medium_size_width'] ); ?>" size="2" />
             <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
+        </div>
+        <div class="sell-media-settings-size-item">
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_height]" value="<?php echo esc_attr( $this->size_settings['medium_size_height'] ); ?>" size="2"/>
+            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
             <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_price]" value="<?php echo esc_attr( $this->size_settings['medium_size_price'] ); ?>" size="3" />
@@ -387,12 +387,12 @@ private $size_settings_key = 'sell_media_size_settings';
     function field_size_large() {
         ?>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_height]" value="<?php echo esc_attr( $this->size_settings['large_size_height'] ); ?>" size="2"/>
-            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
             <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_width]" value="<?php echo esc_attr( $this->size_settings['large_size_width'] ); ?>" size="2" />
             <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
+        </div>
+        <div class="sell-media-settings-size-item">
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_height]" value="<?php echo esc_attr( $this->size_settings['large_size_height'] ); ?>" size="2"/>
+            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
             <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_price]" value="<?php echo esc_attr( $this->size_settings['large_size_price'] ); ?>" size="3" />

@@ -43,6 +43,7 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
 
     // Assign the FULL PATH to our destination file.
     $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+    $destination_dir  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/';
 
     // Check if the destinatin directory exists, i.e.
     // wp-content/uploads/sell_media/YYYY/MM if not we create it.
@@ -60,6 +61,17 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
     if ( version_compare( $wp_version, '3.5', '>=' ) ){
 
         $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), $crop = false );
+
+        $size_settings = get_option('sell_media_size_settings');
+
+        $image_small_size = image_make_intermediate_size( $original_file, $size_settings['small_size_width'], $size_settings['small_size_height'], $crop = false );
+        $image_medium_size = image_make_intermediate_size( $original_file, $size_settings['medium_size_width'], $size_settings['medium_size_height'], $crop = false );
+        $image_large_size = image_make_intermediate_size( $original_file, $size_settings['large_size_width'], $size_settings['large_size_height'], $crop = false );
+
+        // move additional files into the protected area
+        @rename( $wp_upload_dir['path'] . '/' . $image_small_size['file'], $destination_dir . $image_small_size['file'] );
+        @rename( $wp_upload_dir['path'] . '/' . $image_medium_size['file'], $destination_dir . $image_medium_size['file'] );
+        @rename( $wp_upload_dir['path'] . '/' . $image_large_size['file'], $destination_dir . $image_large_size['file'] );
 
         /**
          * If for some reason the image resize fails we just fall back to the original image.

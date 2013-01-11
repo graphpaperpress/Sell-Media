@@ -53,21 +53,21 @@ $sell_media_item_meta_fields = array(
     //     'std'   => $default_price
     // ),
     array(
-        'label'=> 'Small <span class="description">'.$size_settings['small_size_height'].' x '.$size_settings['small_size_width'].'</span>',
+        'label'=> 'Small <span class="description">'.$size_settings['small_size_width'].' x '.$size_settings['small_size_height'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
         'id'    => $prefix . '_price',
         'type'  => 'text',
         'std'   => $size_settings['small_size_price']
     ),
     array(
-        'label'=> 'Medium <span class="description">'.$size_settings['medium_size_height'].' x '.$size_settings['medium_size_width'].'</span>',
+        'label'=> 'Medium <span class="description">'.$size_settings['medium_size_width'].' x '.$size_settings['medium_size_height'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
         'id'    => $prefix . '_price_medium',
         'type'  => 'text',
         'std'   => $size_settings['medium_size_price']
     ),
     array(
-        'label'=> 'Large <span class="description">'.$size_settings['large_size_height'].' x '.$size_settings['large_size_width'].'</span>',
+        'label'=> 'Large <span class="description">'.$size_settings['large_size_width'].' x '.$size_settings['large_size_height'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
         'id'    => $prefix . '_price_large',
         'type'  => 'text',
@@ -496,8 +496,18 @@ function sell_media_before_delete_post( $postid ){
             $attached_file = str_replace( 'sell_media/', '', $attached_file );
         }
 
+        // Copy our "original" back
         @copy( $file, $dir['basedir'] . '/' . $attached_file );
         @unlink( $file );
+
+        // delete our generated sizes
+        $file_name = explode( '.', basename( $file ) );
+        $file_name_base = $file_name[0];
+        $file_ext = $file_name[1];
+        $size_settings = get_option('sell_media_size_settings');
+        unlink( dirname( $file ) . '/' . $file_name_base . '-' . $size_settings['small_size_width'] . 'x' . $size_settings['small_size_height'] . '.' . $file_ext );
+        unlink( dirname( $file ) . '/' . $file_name_base . '-' . $size_settings['medium_size_width'] . 'x' . $size_settings['medium_size_height'] . '.' . $file_ext );
+        unlink( dirname( $file ) . '/' . $file_name_base . '-' . $size_settings['large_size_width'] . 'x' . $size_settings['large_size_height'] . '.' . $file_ext );
     }
 }
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
