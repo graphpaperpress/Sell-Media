@@ -1,4 +1,4 @@
-jQuery(function( $ ){
+jQuery( document ).ready(function( $ ){
 
     $(function() {
         // Move bulk upload tabs above post title, no hook exists there in WP
@@ -88,5 +88,18 @@ jQuery(function( $ ){
 
         // Finally, open the modal
         file_frame.open();
+    });
+
+    $( document ).on( 'mouseenter', '.sell-media-bulk-list-item', function(){
+        $this = $(this);
+
+        $this.find('img').css('opacity', '0.3');
+        $this.find('.sell-media-edit').show();
+
+    }).on( 'mouseleave', '.sell-media-bulk-list-item', function(){
+        $this = $(this);
+
+        $this.find('img').css('opacity','1');
+        $this.find('.sell-media-edit').hide();
     });
 });
