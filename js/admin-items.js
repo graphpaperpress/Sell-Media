@@ -1,7 +1,9 @@
 jQuery(function( $ ){
-    // Move bulk upload tabs above post title, no hook exists there in WP
+
     $(function() {
+        // Move bulk upload tabs above post title, no hook exists there in WP
         $('#sell-media-bulk-tabs').insertBefore($('#post-body-content'));
+
     });
 
     // Uploading files

@@ -514,13 +514,14 @@ function sell_media_uploader_multiple(){
         sell_media_attachment_field_sell_save( $post, $attachment['sell']="on");
     }
     $html = null;
-    $html .= '<ul class="attachments">';
+    $html .= '<ul class="attachments sell-media-bulk-list">';
     foreach( $_POST['attachments'] as $attachment ){
         $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
-        $html .= '<li class="attachment">';
+        $html .= '<li class="attachment sell-media-bulk-list-item">';
         $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '">';
         $html .= wp_get_attachment_image( $attachment['id'], 'thumbnail' );
         $html .= '</a>';
+        $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '" class="sell-media-edit">' . __( 'Edit', 'sell_media' ) . '</a>';
         $html .= '</li>';
     }
     $html .= '</ul>';

@@ -450,15 +450,15 @@ class SellMedia {
     public function registerItem() {
 
         $labels = array(
-            'name' => _x( 'Items', 'sell_media_item' ),
-            'singular_name' => _x( 'Item', 'sell_media_item' ),
+            'name' => _x( 'Sell Media Items', 'sell_media_item' ),
+            'singular_name' => _x( 'Sell Media Item', 'sell_media_item' ),
             'all_items' => _x( 'All Items', 'sell_media_item' ),
             'add_new' => _x( 'Add New', 'sell_media_item' ),
             'add_new_item' => _x( 'Sell Media', 'sell_media_item' ),
             'edit_item' => _x( 'Edit Item', 'sell_media_item' ),
             'new_item' => _x( 'New Item', 'sell_media_item' ),
             'view_item' => _x( 'View Item', 'sell_media_item' ),
-            'search_items' => _x( 'Search Items', 'sell_media_item' ),
+            'search_items' => _x( 'Search Sell Media Items', 'sell_media_item' ),
             'not_found' => _x( 'No items found', 'sell_media_item' ),
             'not_found_in_trash' => _x( 'No items found in Trash', 'sell_media_item' ),
             'parent_item_colon' => _x( 'Parent Item:', 'sell_media_item' ),

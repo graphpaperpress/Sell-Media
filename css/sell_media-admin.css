@@ -88,6 +88,7 @@
 #poststuff #sell-media-bulk-tabs { margin-top: 0; padding-bottom: 0; }
 .field-has-button { margin-right: 10px; float: left; }
 .sell-media-image { margin: 1em 0 0; }
+.sell-media-edit { display: none; }
 .uploader { background: #F9F9F9; padding: 4em; text-align: center; border: 1px solid #EEE; }
 .uploader .button { font-size: 14px; height: 46px; line-height: 44px; padding: 0 36px; }
 .compat-field-sell th { display: none; }

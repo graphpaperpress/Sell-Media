@@ -31,7 +31,7 @@ function sell_media_add_bulk_tabs(){
         echo '<h2>' . __( 'Sell Media', 'sell_media' ) . '</h2>';
     }
     echo '<h2 id="sell-media-bulk-tabs" class="nav-tab-wrapper">';
-    echo '<a href="' . admin_url( 'post-new.php?post_type=sell_media_item' ) . '" class="nav-tab' . $single_active . '">' . __( 'Add New', 'sell_media' ) . '</a>';
+    echo '<a href="' . admin_url( 'post-new.php?post_type=sell_media_item' ) . '" class="nav-tab' . $single_active . '">' . __( 'Add Single', 'sell_media' ) . '</a>';
     echo '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_add_bulk' ) . '" class="nav-tab' . $bulk_active . '" >' . __( 'Add Bulk', 'sell_media' ) . '</a>';
     echo '</h2>';
 }
