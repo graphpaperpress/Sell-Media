@@ -32,6 +32,18 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-settings.php' );
 }
 
+/**
+ * Screen Icon for Sell Media
+ * Better place for this?
+ */
+function sell_media_screen_icon() {
+    global $post_type;
+    if ( 'sell_media_item' == $_GET['post_type'] || 'sell_media_item' == $post_type ) :
+        print '<style type="text/css">#icon-edit { background:transparent url("' . plugin_dir_url( __FILE__ ) . '/images/sell_media_icon.png") no-repeat; }</style>';
+    endif;
+}
+add_action( 'admin_head', 'sell_media_screen_icon' );
+
 
 /**
  * Start our PHP session for shopping cart

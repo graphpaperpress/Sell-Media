@@ -27,7 +27,7 @@ function sell_media_add_bulk_tabs(){
         $single_active = " nav-tab-active";
     if ( 'sell_media_item_page_sell_media_add_bulk' == $screen->id ) {
         $bulk_active = " nav-tab-active";
-        echo '<div id="icon-edit" class="icon32 icon32-posts-sell_media_item"><br></div>';
+        screen_icon();
         echo '<h2>' . __( 'Sell Media', 'sell_media' ) . '</h2>';
     }
     echo '<h2 id="sell-media-bulk-tabs" class="nav-tab-wrapper">';
@@ -48,9 +48,9 @@ function sell_media_add_bulk_callback_fn(){ ?>
         <?php sell_media_add_bulk_tabs(); ?>
         <div class="tool-box add-bulk">
             <p><?php _e( 'All bulk uploads will inherit the default prices and licenses. You can modify the prices and licenses of each item after doing the bulk upload.', 'sell_media' ); ?></p>
-            <p><a class="sell-media-upload-trigger-multiple button"id="_sell_media_button" value="Upload"><?php _e( 'Upload or Select Images', 'sell_media'); ?></a></p>
-            <div class="sell_media_bulk_list">
-            </div>
+            <p class="uploader"><a class="sell-media-upload-trigger-multiple button"id="_sell_media_button" value="Upload"><?php _e( 'Upload or Select Images', 'sell_media'); ?></a></p>
+            <div class="sell-media-ajax-loader" style="display:none;"><?php _e('Loading items...', 'sell_media'); ?></div>
+            <div class="sell-media-bulk-list"><a href="<?php print admin_url( 'edit.php?post_type=sell_media_item' ); ?>"></div>
             <?php do_action( 'sell_media_bulk_below_uploader' ); ?>
         </div>
     </div>

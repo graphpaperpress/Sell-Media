@@ -16,6 +16,7 @@ function sell_media_extensions_callback_fn(){
     }
 ?>
 <div class="wrap sell_media-extensions">
+    <?php screen_icon(); ?>
     <h2><?php _e( 'Extensions for Sell Media', 'sell_media' ); ?></h2>
     <p><?php _e( 'These extensions provide additonal functionality for the Sell Media plugin.', 'sell_media' ); ?></p>
     <?php if ( $extensions ) : foreach( $extensions as $extension ) : ?>

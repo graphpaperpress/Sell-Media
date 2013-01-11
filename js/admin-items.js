@@ -28,7 +28,7 @@ jQuery(function( $ ){
             // Do something with attachment.id and/or attachment.url here
             $('#sell_media_selected_file_id').attr( 'value', attachment.id );
             $('#_sell_media_file').attr( 'value', attachment.url );
-            $('.sell_media_image').attr( 'src', attachment.url );
+            $('.sell-media-image').attr( 'src', attachment.url );
         });
 
         // Finally, open the modal
@@ -63,12 +63,16 @@ jQuery(function( $ ){
                 attachments: attachments
             };
 
+            $('.sell-media-bulk-list').empty();
+            $('.sell-media-ajax-loader').show();
+
             $.ajax({
                 type: "POST",
                 url: ajaxurl,
                 data: data,
                 success: function( msg ){
-                    $('.sell_media_bulk_list').html( msg );
+                    $('.sell-media-ajax-loader').hide();
+                    $('.sell-media-bulk-list').html( msg );
                 }
             });
         });

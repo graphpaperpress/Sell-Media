@@ -160,7 +160,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     print '<div class="sell-media-upload-trigger">';
                     if ( empty( $attachment_id ) ){
                         print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload or Select Image', 'sell_media').'</a><br class="clear"/>';
-                        print '<img src="" class="sell_media_image" />';
+                        print '<img src="" class="sell-media-image" />';
                     } else {
                         sell_media_item_icon( $attachment_id );
                     }
@@ -476,7 +476,7 @@ function sell_media_before_delete_post( $postid ){
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
 
 function sell_media_uploader_multiple(){
-print_r( $_POST );
+//print_r( $_POST );
     $wp_upload_dir = wp_upload_dir();
     $post = array();
     foreach( $_POST['attachments'] as $attachment ){
@@ -492,6 +492,18 @@ print_r( $_POST );
 
         sell_media_attachment_field_sell_save( $post, $attachment['sell']="on");
     }
+    $html = null;
+    $html .= '<ul class="attachments">';
+    foreach( $_POST['attachments'] as $attachment ){
+        $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
+        $html .= '<li class="attachment">';
+        $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '">';
+        $html .= wp_get_attachment_image( $attachment['id'], 'thumbnail' );
+        $html .= '</a>';
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
+    print $html;
     die();
 }
 add_action( 'wp_ajax_sell_media_uploader_multiple', 'sell_media_uploader_multiple' );

@@ -158,6 +158,7 @@ function sell_media_payments_callback_fn(){
 
         $total_pages = ceil( $current_count / $per_page );
      ?>
+        <?php screen_icon(); ?>
         <h2><?php _e( 'Payments', 'sell_media' ); ?></h2>
         <div class="tool-box total-revenue">
             <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
@@ -316,6 +317,7 @@ function sell_media_reports_callback_fn(){
 
     $current_page = admin_url('edit.php?post_type=download&page=sell_media_reports');?>
     <div class="wrap">
+        <?php screen_icon(); ?>
         <h2><?php _e( 'Earnings Report', 'sell_media' ); ?></h2>
         <div class="tool-box total-revenue">
             <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
