@@ -34,7 +34,10 @@ add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
 global $sell_media_item_meta_fields;
 $prefix = 'sell_media';
 $payment_settings = get_option( 'sell_media_payment_settings' );
-$default_price = $payment_settings['default_price'];
+// $default_price = $payment_settings['default_price'];
+
+$size_settings = get_option('sell_media_size_settings');
+
 $sell_media_item_meta_fields = array(
     array(
         'label'  => 'File',
@@ -42,33 +45,33 @@ $sell_media_item_meta_fields = array(
         'id'    => $prefix . '_file',
         'type'  => 'file'
     ),
+    // array(
+    //     'label'=> 'Price',
+    //     'desc'  => 'Numbers only.', // this needs validation
+    //     'id'    => $prefix . '_price',
+    //     'type'  => 'text',
+    //     'std'   => $default_price
+    // ),
     array(
-        'label'=> 'Price',
+        'label'=> 'Small <span class="description">'.$size_settings['small_size_height'].' x '.$size_settings['small_size_width'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
         'id'    => $prefix . '_price',
         'type'  => 'text',
-        'std'   => $default_price
+        'std'   => $size_settings['small_size_price']
     ),
     array(
-        'label'=> 'Small <span class="description">10x10</span>',
+        'label'=> 'Medium <span class="description">'.$size_settings['medium_size_height'].' x '.$size_settings['medium_size_width'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price',
+        'id'    => $prefix . '_price_medium',
         'type'  => 'text',
-        'std'   => $default_price
+        'std'   => $size_settings['medium_size_price']
     ),
     array(
-        'label'=> 'Medium <span class="description">10x10</span>',
+        'label'=> 'Large <span class="description">'.$size_settings['large_size_height'].' x '.$size_settings['large_size_width'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price',
+        'id'    => $prefix . '_price_large',
         'type'  => 'text',
-        'std'   => $default_price
-    ),
-    array(
-        'label'=> 'Large <span class="description">10x10</span>',
-        'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price',
-        'type'  => 'text',
-        'std'   => $default_price
+        'std'   => $size_settings['large_size_price']
     ),
     array(
         'label'=> 'Shortcode',
@@ -136,7 +139,10 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                         $payment_settings = get_option('sell_media_payment_settings');
                         $default = $payment_settings['default_price'];
                     }
-                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" value="' . __( $default, 'sell_media' ) . '" size="30" />
+                    if ( $field['std'] )
+                        $default = $field['std'];
+
+                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" value="' . __( $default, 'sell_media' ) . '" size="2" />
                         <br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
                 break;
 
