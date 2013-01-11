@@ -64,14 +64,29 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
 
         $size_settings = get_option('sell_media_size_settings');
 
+        // @todo these should be an array and we can just foreach over it!
+        // $size['small']['width']
+        // $size['small']['height']
+        // $size['small']['price']
+        // and so on, but settings is a pain!
         $image_small_size = image_make_intermediate_size( $original_file, $size_settings['small_size_width'], $size_settings['small_size_height'], $crop = false );
-        $image_medium_size = image_make_intermediate_size( $original_file, $size_settings['medium_size_width'], $size_settings['medium_size_height'], $crop = false );
-        $image_large_size = image_make_intermediate_size( $original_file, $size_settings['large_size_width'], $size_settings['large_size_height'], $crop = false );
+        if ( $image_small_size ){
+            @rename( $wp_upload_dir['path'] . '/' . $image_small_size['file'], $destination_dir . $image_small_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_small_file', $destination_dir . $image_small_size['file'] );
+        }
 
-        // move additional files into the protected area
-        @rename( $wp_upload_dir['path'] . '/' . $image_small_size['file'], $destination_dir . $image_small_size['file'] );
-        @rename( $wp_upload_dir['path'] . '/' . $image_medium_size['file'], $destination_dir . $image_medium_size['file'] );
-        @rename( $wp_upload_dir['path'] . '/' . $image_large_size['file'], $destination_dir . $image_large_size['file'] );
+        $image_medium_size = image_make_intermediate_size( $original_file, $size_settings['medium_size_width'], $size_settings['medium_size_height'], $crop = false );
+        if ( $image_medium_size ){
+            @rename( $wp_upload_dir['path'] . '/' . $image_medium_size['file'], $destination_dir . $image_medium_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_medium_file', $destination_dir . $image_medium_size['file'] );
+        }
+
+        $image_large_size = image_make_intermediate_size( $original_file, $size_settings['large_size_width'], $size_settings['large_size_height'], $crop = false );
+        if ( $image_large_size ){
+            @rename( $wp_upload_dir['path'] . '/' . $image_large_size['file'], $destination_dir . $image_large_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_large_file', $destination_dir . $image_large_size['file'] );
+        }
+        //
 
         /**
          * If for some reason the image resize fails we just fall back to the original image.
