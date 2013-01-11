@@ -4,12 +4,17 @@ jQuery(function( $ ){
         $('#sell-media-bulk-tabs').insertBefore($('#post-body-content'));
     });
 
+    // Uploading files
+    var file_frame;
+
     $(document).on('click', '.sell-media-upload-trigger', function( event ){
 
-        // Uploading files
-        var file_frame;
-
         event.preventDefault();
+
+        if ( file_frame ) {
+            file_frame.open();
+            return;
+        }
 
         // Create the media frame.
         file_frame = wp.media.frames.file_frame = wp.media({
@@ -37,10 +42,12 @@ jQuery(function( $ ){
 
     $(document).on('click', '.sell-media-upload-trigger-multiple', function( event ){
 
-        // Uploading files
-        var file_frame;
-
         event.preventDefault();
+
+        if ( file_frame ) {
+            file_frame.open();
+            return;
+        }
 
         // Create the media frame.
         file_frame = wp.media.frames.file_frame = wp.media({
