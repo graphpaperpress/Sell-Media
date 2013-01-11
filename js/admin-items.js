@@ -93,13 +93,13 @@ jQuery( document ).ready(function( $ ){
     $( document ).on( 'mouseenter', '.sell-media-bulk-list-item', function(){
         $this = $(this);
 
-        $this.find('img').css('opacity', '0.3');
-        $this.find('.sell-media-edit').show();
+        $this.find('img').css('opacity', '0.2');
+        $this.find('.sell-media-bulk-list-item-edit').show();
 
     }).on( 'mouseleave', '.sell-media-bulk-list-item', function(){
         $this = $(this);
 
         $this.find('img').css('opacity','1');
-        $this.find('.sell-media-edit').hide();
+        $this.find('.sell-media-bulk-list-item-edit').hide();
     });
 });
