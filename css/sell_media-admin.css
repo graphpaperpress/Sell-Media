@@ -93,5 +93,6 @@
 .compat-field-sell th { display: none; }
 .compat-field-sell input[type="checkbox"] { width: auto; }
 .sell-media-item-table .sell-media-upload-trigger { cursor: pointer; }
+.sell_media_item_page_sell_media_add_bulk .media-sidebar .compat-item,
 .post-new-php .media-sidebar .compat-item { display: none; }
 .sell-media-ajax-loader { background: url( ../images/ajax-loader.gif) no-repeat center top; height: 58px; width: 100%; text-align: center; padding-top: 20px; color: #BBB; font-size: 12px; }
