@@ -40,7 +40,7 @@ if ( empty( $tmp_price ) ) {
 
                     <?php if ( count( wp_get_post_terms( $_POST['product_id'], 'licenses' ) ) > 1 ) : ?>
                         <fieldset>
-                            <legend><?php _e( 'License' ); ?></legend>
+                            <legend><?php _e( 'License', 'sell_media' ); ?></legend>
                             <select name="License" value="License" id="sell_media_license_select">
                                 <option value="" data-price="0">-- <?php _e( 'Select a License' ); ?> --</option>
                                 <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
@@ -54,6 +54,20 @@ if ( empty( $tmp_price ) ) {
                     <?php endif; ?>
 
                     <?php do_action( 'sell_media_cart_below_licenses' ); ?>
+                    <?php
+                    $wp_upload_dir = wp_upload_dir();
+                    $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
+                    if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ): ?>
+                        <fieldset>
+                            <legend><?php _e('Size', 'sell_media'); ?></legend>
+                            <select>
+                                <option class="price"><span class="title"><?php _e( 'Original', 'sell_media' ); ?>:</span> <?php sell_media_item_price( $_POST['product_id'] ); ?></option>
+                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?><option class="price"><span class="title"><?php _e( 'Small', 'sell_media' ); ?>:</span> <?php sell_media_item_price_small( $_POST['product_id'] ); ?></option><?php endif; ?>
+                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?><option class="price"><span class="title"><?php _e( 'Medium', 'sell_media' ); ?>:</span> <?php sell_media_item_price_medium( $_POST['product_id'] ); ?></option><?php endif; ?>
+                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_large_file', true )) : ?><option class="price"><span class="title"><?php _e( 'Large', 'sell_media' ); ?>:</span> <?php sell_media_item_price_large( $_POST['product_id'] ); ?></option><?php endif; ?>
+                            </select>
+                        </fieldset>
+                    <?php endif; ?>
 
                     <div class="total-container group">
                         <div class="left">

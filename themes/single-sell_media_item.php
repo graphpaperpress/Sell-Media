@@ -40,9 +40,9 @@ get_header(); ?>
 				$wp_upload_dir = wp_upload_dir();
 				$mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $post->ID, '_sell_media_attached_file', true ) );
 				if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ): ?>
-					<li class="price"><span class="title"><?php _e( 'Small Price', 'sell_media' ); ?>:</span> <?php sell_media_item_price_small( $post->ID ); ?></li>
-					<li class="price"><span class="title"><?php _e( 'Medium Price', 'sell_media' ); ?>:</span> <?php sell_media_item_price_medium( $post->ID ); ?></li>
-					<li class="price"><span class="title"><?php _e( 'Original Price', 'sell_media' ); ?>:</span> <?php sell_media_item_price_large( $post->ID ); ?></li>
+					<?php if (get_post_meta( $post->ID, 'sell_media_small_file', true )) : ?><li class="price"><span class="title"><?php _e( 'Small Price', 'sell_media' ); ?>:</span> <?php sell_media_item_price_small( $post->ID ); ?></li><?php endif; ?>
+					<?php if (get_post_meta( $post->ID, 'sell_media_medium_file', true )) : ?><li class="price"><span class="title"><?php _e( 'Medium Price', 'sell_media' ); ?>:</span> <?php sell_media_item_price_medium( $post->ID ); ?></li><?php endif; ?>
+					<?php if (get_post_meta( $post->ID, 'sell_media_large_file', true )) : ?><li class="price"><span class="title"><?php _e( 'Large Price', 'sell_media' ); ?>:</span> <?php sell_media_item_price_large( $post->ID ); ?></li><?php endif; ?>
 				<?php endif; ?>
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>
