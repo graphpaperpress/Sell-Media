@@ -165,12 +165,8 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     if ( $field['std'] )
                         $default = $field['std'];
 
-echo '<input type="text" name="' . $field['id'].'"
-id="' . $field['id'] . '"
-placeholder="'. __( $default, 'sell_media' ) .'"
-value="'.$field['value'].'" size="2"
-/><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
-print 'value: ' . $field['value'];
+                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="'.$field['value'].'" size="2"/><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+
                 break;
 
                 // textarea
