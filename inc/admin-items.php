@@ -38,6 +38,8 @@ $payment_settings = get_option( 'sell_media_payment_settings' );
 
 $size_settings = get_option('sell_media_size_settings');
 
+( ! empty( $_GET['post'] ) ) ? $post_id = $_GET['post'] : $post_id = null;
+
 $sell_media_item_meta_fields = array(
     array(
         'label'  => 'File',
@@ -55,23 +57,26 @@ $sell_media_item_meta_fields = array(
     array(
         'label'=> 'Small <span class="description">'.$size_settings['small_size_width'].' x '.$size_settings['small_size_height'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price',
+        'id'    => $prefix . '_price_small',
         'type'  => 'text',
-        'std'   => $size_settings['small_size_price']
+        'std'   => $size_settings['small_size_price'],
+        'value' => get_post_meta( $post_id, $prefix . '_price_small', true )
     ),
     array(
         'label'=> 'Medium <span class="description">'.$size_settings['medium_size_width'].' x '.$size_settings['medium_size_height'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
         'id'    => $prefix . '_price_medium',
         'type'  => 'text',
-        'std'   => $size_settings['medium_size_price']
+        'std'   => $size_settings['medium_size_price'],
+        'value' => get_post_meta( $post_id, $prefix . '_price_medium', true )
     ),
     array(
         'label'=> 'Large <span class="description">'.$size_settings['large_size_width'].' x '.$size_settings['large_size_height'].'</span>',
         'desc'  => 'Numbers only.', // this needs validation
         'id'    => $prefix . '_price_large',
         'type'  => 'text',
-        'std'   => $size_settings['large_size_price']
+        'std'   => $size_settings['large_size_price'],
+        'value' => get_post_meta( $post_id, $prefix . '_price_large', true )
     ),
     array(
         'label'=> 'Shortcode',
@@ -142,7 +147,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     if ( $field['std'] )
                         $default = $field['std'];
 
-                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" value="' . __( $default, 'sell_media' ) . '" size="2" />
+                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="'.$field['value'].'" size="2" />
                         <br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
                 break;
 
