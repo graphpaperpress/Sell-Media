@@ -72,19 +72,19 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
         $image_small_size = image_make_intermediate_size( $original_file, $size_settings['small_size_width'], $size_settings['small_size_height'], $crop = false );
         if ( $image_small_size ){
             @rename( $wp_upload_dir['path'] . '/' . $image_small_size['file'], $destination_dir . $image_small_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_small_file', $destination_dir . $image_small_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_small_file', date('Y') . '/' . date('m') . '/' . $image_small_size['file'] );
         }
 
         $image_medium_size = image_make_intermediate_size( $original_file, $size_settings['medium_size_width'], $size_settings['medium_size_height'], $crop = false );
         if ( $image_medium_size ){
             @rename( $wp_upload_dir['path'] . '/' . $image_medium_size['file'], $destination_dir . $image_medium_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_medium_file', $destination_dir . $image_medium_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_medium_file', date('Y') . '/' . date('m') . '/' . $image_medium_size['file'] );
         }
 
         $image_large_size = image_make_intermediate_size( $original_file, $size_settings['large_size_width'], $size_settings['large_size_height'], $crop = false );
         if ( $image_large_size ){
             @rename( $wp_upload_dir['path'] . '/' . $image_large_size['file'], $destination_dir . $image_large_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_large_file', $destination_dir . $image_large_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_large_file', date('Y') . '/' . date('m') . '/' . $image_large_size['file'] );
         }
         //
 

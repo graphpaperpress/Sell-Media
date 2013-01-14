@@ -34,8 +34,12 @@ jQuery( document ).ready(function( $ ){
 
             // Do something with attachment.id and/or attachment.url here
             $('#sell_media_selected_file_id').attr( 'value', attachment.id );
-            $('#_sell_media_file').attr( 'value', attachment.url );
-            $('.sell-media-image').attr( 'src', attachment.url );
+            $('#_sell_media_attached_file').attr( 'value', attachment.url );
+            if ( $('.sell_media_image').length ){
+                $('.sell_media_image').attr( 'src', attachment.url );
+            } else {
+                $('.sell-media-image').attr( 'src', attachment.url );
+            }
         });
 
         // Finally, open the modal

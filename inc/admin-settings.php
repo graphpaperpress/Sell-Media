@@ -16,9 +16,7 @@ class SellMediaSettings {
     private $email_settings_key = 'sell_media_email_settings';
     private $misc_settings_key = 'sell_media_misc_settings';
     private $plugin_options_key = 'sell_media_plugin_options';
-
-private $size_settings_key = 'sell_media_size_settings';
-
+    private $size_settings_key = 'sell_media_size_settings';
     private $plugin_post_type_key = 'sell_media_item';
     private $plugin_settings_tabs = array();
 

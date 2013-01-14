@@ -55,7 +55,10 @@ function sell_media_delete_item( $post_id=null ){
         'image/tiff'
         );
 
-    $mime_type = wp_check_filetype( get_post_meta( $product_id, '_sell_media_file', true ) );
+    $wp_upload_dir = wp_upload_dir();
+    $attached_file_path = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $product_id, '_sell_media_attached_file', true );
+
+    $mime_type = wp_check_filetype( $attached_file_path );
 
     /**
      * For all items that are NOT "photographs" we move the
@@ -64,15 +67,11 @@ function sell_media_delete_item( $post_id=null ){
      * user empties the trash bin.
      */
     if ( ! in_array( $mime_type, $image_mimes ) ){
-        $dir = wp_upload_dir();
-
-        $destination_file = $dir['basedir'] . '/' . get_post_meta( $post_id, '_wp_attached_file', true );
-        $original_file = get_post_meta( $product_id, '_sell_media_file', true );
-
-        @copy( $original_file, $destination_file );
+        $destination_file = $wp_upload_dir['basedir'] . '/' . get_post_meta( $post_id, '_wp_attached_file', true );
+        @copy( $attached_file_path, $destination_file );
     }
 
-    delete_post_meta( $post_id, '_sell_media_file' );
+    delete_post_meta( $post_id, '_sell_media_attached_file' );
     delete_post_meta( $post_id, '_sell_media_for_sale_product_id' );
     delete_post_meta( $post_id, '_sell_media_for_sale' );
 
@@ -94,15 +93,16 @@ function sell_media_delete_item( $post_id=null ){
  */
 function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
-   $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', true );
+    $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', true );
 
-    /**
-     * Item was once marked for sale and is no longer being sold
-     */
-    if ( empty( $_POST['attachments'][ $_POST['post_ID'] ] ) && $for_sale ){
+    if ( empty( $attachment['sell'] ) && $for_sale == "1" ){
+        /**
+         * Item was once marked for sale and is no longer being sold
+         */
         sell_media_delete_item( $post['ID'] );
         return $post;
-    } elseif( ! empty( $_POST['attachments'][ $_POST['post_ID'] ] ) && ! $for_sale ) {
+
+    } elseif ( ! empty( $attachment['sell'] ) && $attachment['sell'] == "1" ) {
         /**
          * Attachment is now marked for sale
          */
@@ -121,24 +121,22 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
             return;
         }
 
-        // From here we can asusme that the image has been upload
-        // and a post type has been created. We update post meta
-        // read some meta data from the image, build paths, save
-        // iptc data, set default license and finally copy the
-        // image to our products directory.
+        /**
+         * From here we can asusme that the image has been upload
+         * and a post type has been created. We update post meta
+         * read some meta data from the image, build paths, save
+         * iptc data, set default license and finally copy the
+         * image to our products directory.
+         */
 
         update_post_meta( $product_id, '_thumbnail_id', $post['ID'] );
         update_post_meta( $product_id, 'sell_media_description', $post['post_content'] );
-
-        $dir = wp_upload_dir();
-        $file_path = $dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/' . basename( $post['attachment_url'] );
-        update_post_meta( $product_id, '_sell_media_file', $file_path );
+        update_post_meta( $product_id, '_sell_media_attached_file', date('Y') . '/' . date('m') . '/' . basename( $post['attachment_url'] ) );
 
         update_post_meta( $post['ID'], '_sell_media_for_sale', true );
         update_post_meta( $post['ID'], '_sell_media_for_sale_product_id', $product_id );
 
         // Read our meta data from the original post
-
         sell_media_set_default_terms( $product_id );
 
         // Build paths to the original file and the destination
@@ -159,21 +157,21 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
             'image/tiff'
             );
 
-        // Image mime type support
         if ( in_array( $mime_type['type'], $image_mimes ) ){
             sell_media_move_image_from_attachment( $attached_file, $product_id );
         } else {
             sell_media_default_move( $attached_file );
         }
-        // Support for different mime types here
-
         return $post;
 
-    // Attachment is not marked for sale and never was,
-    // just return what if anything fields
-    // were updated
     } else {
+
+        /**
+         * Attachment is not marked for sale and never was,
+         * treat this as a regular update and just return the $post data.
+         */
         return $post;
+
     }
 }
 add_filter( 'attachment_fields_to_save', 'sell_media_attachment_field_sell_save', 10, 2 );
