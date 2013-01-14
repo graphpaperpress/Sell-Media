@@ -45,7 +45,6 @@ add_filter( 'attachment_fields_to_edit', 'sell_media_attachment_fields_to_edit',
  * @since 0.1
  */
 function sell_media_delete_item( $post_id=null ){
-
     $product_id = get_post_meta( $post_id, '_sell_media_for_sale_product_id', true );
 
     $image_mimes = array(
@@ -94,24 +93,20 @@ function sell_media_delete_item( $post_id=null ){
  * @since 0.1
  */
 function sell_media_attachment_field_sell_save( $post, $attachment ) {
-    $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', true );
 
-    // Attachment was once marked for sale, but no longer is for sale.
-   if ( isset( $attachment['sell'] ) && $for_sale ){
+   $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', true );
+
+    /**
+     * Item was once marked for sale and is no longer being sold
+     */
+    if ( empty( $_POST['attachments'][ $_POST['post_ID'] ] ) && $for_sale ){
         sell_media_delete_item( $post['ID'] );
         return $post;
-    }
+    } elseif( ! empty( $_POST['attachments'][ $_POST['post_ID'] ] ) && ! $for_sale ) {
+        /**
+         * Attachment is now marked for sale
+         */
 
-    // Attachment is not set, i.e., this is a "normal" media upload.
-    // Just leave and return our $post.
-    if ( empty( $attachment['sell'] ) ){
-        return $post;
-    }
-
-    // Attachment is now marked for sale
-    elseif( $attachment['sell'] ) {
-
-        // Create post object, we use later on
         $product = array(
             'post_title' => $post['post_title'],
             'post_content' => $post['post_content'],
@@ -120,12 +115,8 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
             'post_date_gmt' => date('Y-m-d H:i:s')
         );
 
-        // Insert the post into the database
         $product_id = wp_insert_post( $product );
 
-        // If wp_insert_post fails, lets just leave
-        // if needed we can debug, but no need to hang
-        // around with over complicated conditionals
         if ( is_wp_error( $product_id ) ) {
             return;
         }
