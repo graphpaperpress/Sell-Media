@@ -25,7 +25,13 @@ jQuery( document ).ready(function( $ ){
      *
      * Formula: price + (( percent * .01 ) * price ))
      */
-    function calculate_license(){
+    function calculate_total(){
+
+        if ( $('#sell_media_price').length ){
+            price = $('#sell_media_price').val();
+        } else {
+            price = $('#sell_media_size_select option:selected').val();
+        }
 
         /**
          * If this item has NO license selected we default
@@ -37,18 +43,13 @@ jQuery( document ).ready(function( $ ){
             markUp = 0;
         }
 
-        price = $('#sell_media_size_select').attr('value');
-        data_price = $('#sell_media_single_price').attr('data-price');
+        finalPrice = ( +price + ( +markUp * .01 ) * price ).toFixed(2);
 
-        if ( markUp != undefined && price != undefined ) {
-            finalPrice = +price + ( ( +markUp * .01 ) * price );
-            finalPrice = finalPrice.toFixed(2);
-            $('#price_target').html( finalPrice );
-            $('.price-target').val( finalPrice );
-        } else {
-            $('#price_target').html( data_price );
-            $('.price-target').val( data_price );
-        }
+        /**
+         * Update our price that the user sees and update the price being passed onto $_POST
+         */
+        $('.price-target').html( finalPrice );
+        $('.price-target').val( finalPrice );
     }
 
 
@@ -108,7 +109,6 @@ jQuery( document ).ready(function( $ ){
         return new Array(xScroll,yScroll)
     }
 
-
     /**
      * Run the following code below the DOM is ready update the cart count
      */
@@ -149,7 +149,7 @@ jQuery( document ).ready(function( $ ){
             success: function( msg ){
                 $( ".sell-media-cart-dialog-target" ).fadeIn().html( msg ); // Give a smooth fade in effect
                 cart_count();
-                calculate_license();
+                calculate_total();
             }
         });
 
@@ -174,14 +174,23 @@ jQuery( document ).ready(function( $ ){
     });
 
     /**
-     * On change run the calculate_license() function
+     * On change run the calculate_total() function
      */
-    $( document ).on('change', '#sell_media_license_select, #sell_media_size_select, #sell_media_price_select', function(){
+    $( document ).on('change', '#sell_media_license_select', function(){
         $("option:selected", this).each(function(){
-            console.log( this );
-            calculate_license();
+            calculate_total();
         });
     });
+
+    /**
+     * On change run the calculate_total() function
+     */
+    $( document ).on('change', '#sell_media_size_select', function(){
+        $("option:selected", this).each(function(){
+            calculate_total();
+        });
+    });
+
 
     $( document ).on('submit', '#sell_media_cart_form', function(){
 
@@ -201,6 +210,7 @@ jQuery( document ).ready(function( $ ){
         });
         return false;
     });
+
 
     $( document ).on('click', '.remove-item-handle', function(){
 
