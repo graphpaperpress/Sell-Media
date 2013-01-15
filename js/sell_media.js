@@ -25,7 +25,7 @@ jQuery( document ).ready(function( $ ){
      *
      * Formula: price + (( percent * .01 ) * price ))
      */
-    function calculate_price(){
+    function calculate_license(){
 
         /**
          * If this item has NO license selected we default
@@ -149,7 +149,7 @@ jQuery( document ).ready(function( $ ){
             success: function( msg ){
                 $( ".sell-media-cart-dialog-target" ).fadeIn().html( msg ); // Give a smooth fade in effect
                 cart_count();
-                calculate_price();
+                calculate_license();
             }
         });
 
@@ -174,11 +174,12 @@ jQuery( document ).ready(function( $ ){
     });
 
     /**
-     * On change run the calculate_price() function
+     * On change run the calculate_license() function
      */
-    $( document ).on('change', '#sell_media_license_select, #sell_media_size_select', function(){
+    $( document ).on('change', '#sell_media_license_select, #sell_media_size_select, #sell_media_price_select', function(){
         $("option:selected", this).each(function(){
-            calculate_price();
+            console.log( this );
+            calculate_license();
         });
     });
 
@@ -278,10 +279,8 @@ jQuery( document ).ready(function( $ ){
         // Validation
     });
 
-    $("table tr:nth-child(odd)").addClass("odd-row");
-        /* For cell text alignment */
-    $("table td:first-child, table th:first-child").addClass("first");
-        /* For removing the last border */
-    $("table td:last-child, table th:last-child").addClass("last");
+    $("#sell-media-checkout table tr:nth-child(odd)").addClass("odd-row");
+    $("#sell-media-checkout table td:first-child, #sell-media-checkout table th:first-child").addClass("first");
+    $("#sell-media-checkout table td:last-child, #sell-media-checkout table th:last-child").addClass("last");
 
 });
