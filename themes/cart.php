@@ -60,11 +60,11 @@ if ( empty( $tmp_price ) ) {
                     if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ): ?>
                         <fieldset>
                             <legend><?php _e('Size', 'sell_media'); ?></legend>
-                            <select>
+                            <select id="sell_media_price_select">
                                 <option class="price"><span class="title"><?php _e( 'Original', 'sell_media' ); ?>:</span> <?php sell_media_item_price( $_POST['product_id'] ); ?></option>
-                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?><option class="price"><span class="title"><?php _e( 'Small', 'sell_media' ); ?>:</span> <?php sell_media_item_price_small( $_POST['product_id'] ); ?></option><?php endif; ?>
-                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?><option class="price"><span class="title"><?php _e( 'Medium', 'sell_media' ); ?>:</span> <?php sell_media_item_price_medium( $_POST['product_id'] ); ?></option><?php endif; ?>
-                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_large_file', true )) : ?><option class="price"><span class="title"><?php _e( 'Large', 'sell_media' ); ?>:</span> <?php sell_media_item_price_large( $_POST['product_id'] ); ?></option><?php endif; ?>
+                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?>"><?php _e( 'Small', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?></option><?php endif; ?>
+                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?>"><?php _e( 'Medium', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?></option><?php endif; ?>
+                                <?php if (get_post_meta( $_POST['product_id'], 'sell_media_large_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], true, 'large' ); ?>"><?php _e( 'Large', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'large' ); ?></option><?php endif; ?>
                             </select>
                         </fieldset>
                     <?php endif; ?>

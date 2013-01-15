@@ -174,79 +174,22 @@ function sell_media_item_size( $post_id=null ){
  * @since 0.1
  * @return string
  */
-function sell_media_item_price( $post_id=null, $currency=true ){
+function sell_media_item_price( $post_id=null, $currency=true, $size=null ){
 
-    if ( get_post_meta( $post_id, 'sell_media_price', true ) ){
-        $price = get_post_meta( $post_id, 'sell_media_price', true );
+    if ( empty( $size ) ){
+        if ( get_post_meta( $post_id, 'sell_media_price', true ) ){
+            $price = get_post_meta( $post_id, 'sell_media_price', true );
+        } else {
+            $payment_settings = get_option( 'sell_media_payment_settings' );
+            $price = $payment_settings['default_price'];
+        }
     } else {
-        $payment_settings = get_option( 'sell_media_payment_settings' );
-        $price = $payment_settings['default_price'];
-    }
-
-    if ( $currency ){
-        $price = sell_media_get_currency_symbol() . $price;
-    }
-
-    print $price;
-}
-
-/**
- * Retrives and prints the small price of an item
- *
- * @since 1.8
- * @return string
- */
-function sell_media_item_price_small( $post_id=null, $currency=true ){
-
-    if ( get_post_meta( $post_id, 'sell_media_price_small', true ) ){
-        $price = get_post_meta( $post_id, 'sell_media_price_small', true );
-    } else {
-        $size_settings = get_option('sell_media_size_settings');
-        $price = $size_settings['small_size_price'];
-    }
-
-    if ( $currency ){
-        $price = sell_media_get_currency_symbol() . $price;
-    }
-
-    print $price;
-}
-
-/**
- * Retrives and prints the medium price of an item
- *
- * @since 1.8
- * @return string
- */
-function sell_media_item_price_medium( $post_id=null, $currency=true ){
-
-    if ( get_post_meta( $post_id, 'sell_media_price_medium', true ) ){
-        $price = get_post_meta( $post_id, 'sell_media_price_medium', true );
-    } else {
-        $size_settings = get_option('sell_media_size_settings');
-        $price = $size_settings['medium_size_price'];
-    }
-
-    if ( $currency ){
-        $price = sell_media_get_currency_symbol() . $price;
-    }
-
-    print $price;
-}
-
-/**
- * Retrives and prints the large price of an item
- *
- * @since 1.9
- * @return string
- */
-function sell_media_item_price_large( $post_id=null, $currency=true ){
-
-    if ( get_post_meta( $post_id, 'sell_media_price_large', true ) ){
-        $price = get_post_meta( $post_id, 'sell_media_price_large', true );
-    } else {
-        $size_settings = get_option('sell_media_size_settings');
-        $price = $size_settings['large_size_price'];
+        if ( get_post_meta( $post_id, 'sell_media_price_' . $size, true ) ){
+            $price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
+        } else {
+            $size_settings = get_option('sell_media_size_settings');
+            $price = $size_settings['small_size_price'];
+        }
     }
 
     if ( $currency ){
