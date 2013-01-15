@@ -106,3 +106,7 @@
 -------------------------------------------------------------- */
 .sell-media-settings-size-item { float: left; width: 50px; line-height: 12px; }
 .sell-media-settings-size-item .desc { font-size: 10px; }
+
+/* Item meta section
+-------------------------------------------------------------- */
+.sell-media-item-table .form-table th { width: 120px; }

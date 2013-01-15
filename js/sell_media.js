@@ -168,23 +168,21 @@ jQuery( document ).ready(function( $ ){
         }
     });
 
-
-    $('.close').live('click', function(){
+    $( document ).on( 'click', '.close', function(){
         $('.sell-media-cart-dialog').hide();
         $('#overlay').remove();
     });
 
-
     /**
      * On change run the calculate_price() function
      */
-    $('#sell_media_license_select, #sell_media_size_select').live('change', function(){
+    $( document ).on('change', '#sell_media_license_select, #sell_media_size_select', function(){
         $("option:selected", this).each(function(){
             calculate_price();
         });
     });
 
-    $('#sell_media_cart_form').live('submit', function(){
+    $( document ).on('submit', '#sell_media_cart_form', function(){
 
         var _data = "action=sell_media_add_items&taxonomy=licenses&" + $( this ).serialize();
 
@@ -203,7 +201,7 @@ jQuery( document ).ready(function( $ ){
         return false;
     });
 
-    $('.remove-item-handle').live('click', function(){
+    $( document ).on('click', '.remove-item-handle', function(){
 
         $(this).closest('tr').hide();
 
@@ -232,7 +230,7 @@ jQuery( document ).ready(function( $ ){
         });
     });
 
-    $('.cart-handle').live('click', function(){
+    $( document ).on('click', '.cart-handle', function(){
         $.ajax({
             data: "action=sell_media_show_cart",
             success: function( msg ){
@@ -243,7 +241,7 @@ jQuery( document ).ready(function( $ ){
         });
     });
 
-    $('#checkout_handle').live('click', function(){
+    $( document ).on('click', '#checkout_handle', function(){
         $('.cart-container').hide();
         $('.payment-form-container').show();
     });
