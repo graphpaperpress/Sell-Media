@@ -165,7 +165,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     if ( $field['std'] )
                         $default = $field['std'];
 
-                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="'.$field['value'].'" size="2"/><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" size="2"/><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
 
                 break;
 
@@ -206,7 +206,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 case 'file':
                     $attachment_id = get_post_thumbnail_id( $post->ID );
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
-                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="field-has-button" value="'.get_post_meta($post->ID,'_sell_media_attached_file', true).'" size="30" />';
+                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="field-has-button" value="'.wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) ) . '" size="30" />';
                     print '<div class="sell-media-upload-trigger">';
                     if ( empty( $attachment_id ) ){
                         print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload or Select Image', 'sell_media').'</a><br class="clear"/>';
@@ -427,29 +427,6 @@ add_filter( 'manage_pages_custom_column', 'sell_media_item_content', 10, 2 );
 
 
 /**
- * Move attachments of deleted sell media items back to default uploads dir
- *
- * @since 0.1
- */
-function sell_media_move_image_from_attachment_back( $postid ){
-
-    // Read our meta data from the original post
-    $aid = get_post_thumbnail_id( $postid );
-    $meta = wp_get_attachment_metadata( $aid );
-
-    // Build paths to the original file and the destination
-    $dir = wp_upload_dir();
-    $destination_file = $dir['basedir'] . '/' . $meta['file'];
-
-    $original_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $meta['file'];
-
-    @copy( $original_file, $destination_file );
-    return;
-}
-// add_action( 'before_delete_post', 'sell_media_move_image_from_attachment_back' );
-
-
-/**
  * Prints transaction sales, shown in admin
  *
  * @since 0.1
@@ -500,12 +477,7 @@ function sell_media_before_delete_post( $postid ){
 
     $wp_upload_dir = wp_upload_dir();
     $attached_file_path = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
-// print '<pre>';
-// print "\n$postid";
-// print $attached_file_path;
-// print "\n";
-// print $wp_upload_dir['basedir'] . '/' . $attached_file;
-// die("\nbefore delete post");
+
     // Delete the file stored in sell_media
     if ( file_exists( $attached_file_path ) ) {
 
@@ -545,6 +517,9 @@ function sell_media_before_delete_post( $postid ){
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
 
 
+/**
+ * Handles bulk uploading via ajax
+ */
 function sell_media_uploader_multiple(){
 
     $post = array();

@@ -97,7 +97,7 @@ class SellMediaSettings {
     function register_general_settings() {
         $this->plugin_settings_tabs[$this->general_settings_key] = 'General';
 
-        register_setting( $this->general_settings_key, $this->general_settings_key );
+        register_setting( $this->general_settings_key, $this->general_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_general', 'General Settings', array( &$this, 'section_general_desc' ), $this->general_settings_key );
         add_settings_field( 'test_mode', 'Test Mode', array( &$this, 'field_general_test_mode' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'checkout_page', 'Checkout Page', array( &$this, 'field_general_checkout_page' ), $this->general_settings_key, 'section_general' );
@@ -115,7 +115,7 @@ class SellMediaSettings {
     function register_payment_settings() {
         $this->plugin_settings_tabs[$this->payment_settings_key] = 'Payment';
 
-        register_setting( $this->payment_settings_key, $this->payment_settings_key );
+        register_setting( $this->payment_settings_key, $this->payment_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_payment', 'Payment Settings', array( &$this, 'section_payment_desc' ), $this->payment_settings_key );
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
@@ -132,7 +132,7 @@ class SellMediaSettings {
     function register_email_settings() {
         $this->plugin_settings_tabs[$this->email_settings_key] = 'Email';
 
-        register_setting( $this->email_settings_key, $this->email_settings_key );
+        register_setting( $this->email_settings_key, $this->email_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_email', 'Email Settings', array( &$this, 'section_email_desc' ), $this->email_settings_key );
 
         add_settings_field( 'from_name', 'From Name', array( &$this, 'field_email_from_name' ), $this->email_settings_key, 'section_email' );
@@ -151,7 +151,7 @@ class SellMediaSettings {
     function register_size_settings() {
         $this->plugin_settings_tabs[$this->size_settings_key] = 'Size';
 
-        register_setting( $this->size_settings_key, $this->size_settings_key );
+        register_setting( $this->size_settings_key, $this->size_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_size', 'Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
 
         add_settings_field( 'small_size', 'Small Size', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );
@@ -169,9 +169,58 @@ class SellMediaSettings {
     function register_misc_settings() {
         $this->plugin_settings_tabs[$this->misc_settings_key] = 'Misc';
 
-        register_setting( $this->misc_settings_key, $this->misc_settings_key );
+        register_setting( $this->misc_settings_key, $this->misc_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_misc', 'Misc Settings', array( &$this, 'section_misc_desc' ), $this->misc_settings_key );
 
+    }
+
+    /**
+     * Validation callback
+     * @since 1.0.9
+     * @author Zane Matthew
+     */
+    function register_settings_validate( $fields ){
+
+        $valid_inputs = array();
+
+        foreach( $fields as $field => $value ){
+
+            switch( $field ){
+
+                /**
+                 * Ensure that only integers are saved.
+                 */
+                case 'small_size_width' :
+                case 'small_size_height' :
+                case 'small_size_price' :
+                case 'medium_size_width' :
+                case 'medium_size_height' :
+                case 'medium_size_price' :
+                case 'large_size_width' :
+                case 'large_size_height' :
+                case 'large_size_price' :
+                    $value = (int)$value;
+                    break;
+
+                /**
+                 * Ensure that float is saved, i.e. 10.55 vs. 10.55the
+                 */
+                case 'default_price' :
+                    $value = floatval( $value );
+                    break;
+
+                /**
+                 * Ensure that only valid email address is saved
+                 */
+                case 'paypal_email' :
+                case 'from_email' :
+                    if ( ! is_email( $value ) )
+                        $value = null;
+                    break;
+            }
+            $valid_inputs[ $field ] = wp_filter_nohtml_kses( $value );
+        }
+        return $valid_inputs;
     }
 
     /*
@@ -246,7 +295,7 @@ class SellMediaSettings {
      */
     function field_payment_paypal_email() {
         ?>
-        <input type="text" name="<?php echo $this->payment_settings_key; ?>[paypal_email]" value="<?php echo esc_attr( $this->payment_settings['paypal_email'] ); ?>" />
+        <input type="text" name="<?php echo $this->payment_settings_key; ?>[paypal_email]" value="<?php echo wp_filter_nohtml_kses( $this->payment_settings['paypal_email'] ); ?>" />
         <p class="desc"><?php printf(__('The email address used to collect Paypal payments. <strong>IMPORTANT:</strong> You must setup IPN Notifications in Paypal to process transactions. %1$s. Here is the listener URL you need to add in Paypal: %2$s'), '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read Paypal instructions</a>', '<code>' . home_url( '?sell_media-listener=IPN' ) . '</code>' ); ?></p>
         <?php
     }
@@ -293,7 +342,7 @@ class SellMediaSettings {
      */
     function field_payment_default_price() {
         ?>
-        <input type="text" name="<?php echo $this->payment_settings_key; ?>[default_price]" value="<?php echo esc_attr( $this->payment_settings['default_price'] ); ?>" />
+        <input type="text" name="<?php echo $this->payment_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( $this->payment_settings['default_price'] ); ?>" />
         <span class="desc"><?php _e( 'The default price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ); ?></span>
         <?php
     }
@@ -303,7 +352,7 @@ class SellMediaSettings {
      */
     function field_email_from_name() {
         ?>
-        <input type="text" name="<?php echo $this->email_settings_key; ?>[from_name]" value="<?php echo esc_attr( $this->email_settings['from_name'] ); ?>" />
+        <input type="text" name="<?php echo $this->email_settings_key; ?>[from_name]" value="<?php echo wp_filter_nohtml_kses( $this->email_settings['from_name'] ); ?>" />
         <span class="desc"><?php _e( 'The name associated with all outgoing email.', 'sell_media' ); ?></span>
         <?php
     }
@@ -313,7 +362,7 @@ class SellMediaSettings {
      */
     function field_email_from_email() {
         ?>
-        <input type="text" name="<?php echo $this->email_settings_key; ?>[from_email]" value="<?php echo esc_attr( $this->email_settings['from_email'] ); ?>" />
+        <input type="text" name="<?php echo $this->email_settings_key; ?>[from_email]" value="<?php echo wp_filter_nohtml_kses( $this->email_settings['from_email'] ); ?>" />
         <span class="desc"><?php _e( 'The email address used for all outgoing email.', 'sell_media' ); ?></span>
         <?php
     }
@@ -323,7 +372,7 @@ class SellMediaSettings {
      */
     function field_email_success_email_subject() {
         ?>
-        <input type="text" name="<?php echo $this->email_settings_key; ?>[success_email_subject]" value="<?php echo esc_attr( $this->email_settings['success_email_subject'] ); ?>" />
+        <input type="text" name="<?php echo $this->email_settings_key; ?>[success_email_subject]" value="<?php echo wp_filter_nohtml_kses( $this->email_settings['success_email_subject'] ); ?>" />
         <span class="desc"><?php _e( 'The email subject on successful purchase emails.', 'sell_media' ); ?></span>
         <?php
     }
@@ -333,7 +382,7 @@ class SellMediaSettings {
      */
     function field_email_success_email_body() {
         ?>
-        <textarea name="<?php echo $this->email_settings_key; ?>[success_email_body]" id="<?php echo $this->email_settings_key; ?>[success_email_body]" style="width:50%;height:150px;"><?php echo esc_attr( $this->email_settings['success_email_body'] ); ?></textarea>
+        <textarea name="<?php echo $this->email_settings_key; ?>[success_email_body]" id="<?php echo $this->email_settings_key; ?>[success_email_body]" style="width:50%;height:150px;"><?php echo wp_filter_nohtml_kses( $this->email_settings['success_email_body'] ); ?></textarea>
         <p class="desc"><?php _e( 'This e-mail message is sent to your customers in case of successful and cleared payment. You can use the following keywords: {first_name}, {last_name}, {payer_email}, {download_links}. Be sure to include the {download_links} tag, otherwise your buyers won\'t receive their download purchases.', 'sell_media' ); ?></p>
          <?php
     }
@@ -344,15 +393,15 @@ class SellMediaSettings {
     function field_size_small() {
         ?>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_width]" value="<?php echo esc_attr( $this->size_settings['small_size_width'] ); ?>" size="2" />
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_width]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['small_size_width'] ); ?>" size="2" />
             <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_height]" value="<?php echo esc_attr( $this->size_settings['small_size_height'] ); ?>" size="2"/>
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_height]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['small_size_height'] ); ?>" size="2"/>
             <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_price]" value="<?php echo esc_attr( $this->size_settings['small_size_price'] ); ?>" size="3" />
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['small_size_price'] ); ?>" size="3" />
             <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
         </div>
         <?php
@@ -365,15 +414,15 @@ class SellMediaSettings {
     function field_size_medium() {
         ?>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_width]" value="<?php echo esc_attr( $this->size_settings['medium_size_width'] ); ?>" size="2" />
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_width]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['medium_size_width'] ); ?>" size="2" />
             <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_height]" value="<?php echo esc_attr( $this->size_settings['medium_size_height'] ); ?>" size="2"/>
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_height]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['medium_size_height'] ); ?>" size="2"/>
             <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_price]" value="<?php echo esc_attr( $this->size_settings['medium_size_price'] ); ?>" size="3" />
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['medium_size_price'] ); ?>" size="3" />
             <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
         </div>
         <?php
@@ -386,15 +435,15 @@ class SellMediaSettings {
     function field_size_large() {
         ?>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_width]" value="<?php echo esc_attr( $this->size_settings['large_size_width'] ); ?>" size="2" />
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_width]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['large_size_width'] ); ?>" size="2" />
             <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_height]" value="<?php echo esc_attr( $this->size_settings['large_size_height'] ); ?>" size="2"/>
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_height]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['large_size_height'] ); ?>" size="2"/>
             <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
         </div>
         <div class="sell-media-settings-size-item">
-            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_price]" value="<?php echo esc_attr( $this->size_settings['large_size_price'] ); ?>" size="3" />
+            <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['large_size_price'] ); ?>" size="3" />
             <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
         </div>
         <?php
