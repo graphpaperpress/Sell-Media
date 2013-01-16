@@ -171,6 +171,9 @@ Upgrade Notice
 Changelog
 ---------
 = 1.0.9 =
+* Added bulk uploader
+* Added size variants
+* Code enhancments
 * Bug fixes
 
 = 1.0.8 =
