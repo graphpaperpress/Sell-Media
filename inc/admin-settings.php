@@ -55,7 +55,8 @@ class SellMediaSettings {
         $this->general_settings = array_merge( array(
             'test_mode' => false,
             'checkout_page' => '',
-            'thanks_page' => ''
+            'thanks_page' => '',
+            'customer_notification' => ''
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
