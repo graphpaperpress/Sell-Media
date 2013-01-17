@@ -213,7 +213,7 @@ jQuery( document ).ready(function( $ ){
     });
 
     $( document ).on( 'click', '.sell-media-purchased', function(){
-        window.location.replace( checkouturl );
+        location.href = checkouturl;
     });
 
     $( document ).on('click', '.remove-item-handle', function(){

@@ -76,14 +76,14 @@ class SellMediaSettings {
         ), $this->email_settings );
 
         $this->size_settings = array_merge( array(
-            'small_size_height' => '',
-            'small_size_width' => '',
+            'small_size_height' => '533',
+            'small_size_width' => '800',
             'small_size_price' => '',
-            'medium_size_height' => '',
-            'medium_size_width' => '',
+            'medium_size_height' => '1066',
+            'medium_size_width' => '1600',
             'medium_size_price' => '',
-            'large_size_height' => '',
-            'large_size_width' => '',
+            'large_size_height' => '1600',
+            'large_size_width' => '2400',
             'large_size_price' => '',
         ), $this->size_settings );
 
