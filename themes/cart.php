@@ -13,8 +13,9 @@ $payment_settings = get_option( 'sell_media_payment_settings' );
 $general_settings = get_option( 'sell_media_general_settings' );
 $tmp_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
+
 if ( $licenses ) {
-    $term_id = $licenses[0]->name;
+    $term_id = $licenses[0]->term_id;
 } else {
     $term_id = null;
 }
@@ -52,6 +53,7 @@ if ( empty( $tmp_price ) ) {
                         </fieldset>
                     <?php else : ?>
                         <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+                        <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
                     <?php endif; ?>
 
                     <?php do_action( 'sell_media_cart_below_licenses' ); ?>

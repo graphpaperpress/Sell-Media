@@ -28,10 +28,11 @@ class SellMediaSettings {
     function __construct() {
         add_action( 'init', array( &$this, 'load_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_general_settings' ) );
+        add_action( 'admin_init', array( &$this, 'register_size_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_payment_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_email_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_misc_settings' ) );
-        add_action( 'admin_init', array( &$this, 'register_size_settings' ) );
+
         add_action( 'admin_menu', array( &$this, 'add_admin_menus' ) );
 
         if ( ! empty( $_POST['option_page'] ) && $_POST['option_page'] == 'sell_media_misc_settings' ){
@@ -62,7 +63,6 @@ class SellMediaSettings {
         $this->payment_settings = array_merge( array(
             'paypal_email' => '',
             'currency' => 'USD',
-            'default_price' => '100'
         ), $this->payment_settings );
 
         $user = get_user_by('email', get_option('admin_email') );
@@ -76,15 +76,16 @@ class SellMediaSettings {
         ), $this->email_settings );
 
         $this->size_settings = array_merge( array(
-            'small_size_height' => '533',
+            'small_size_height' => '600',
             'small_size_width' => '800',
-            'small_size_price' => '',
-            'medium_size_height' => '1066',
+            'small_size_price' => '1',
+            'medium_size_height' => '1200',
             'medium_size_width' => '1600',
-            'medium_size_price' => '',
-            'large_size_height' => '1600',
+            'medium_size_price' => '2',
+            'large_size_height' => '1800',
             'large_size_width' => '2400',
-            'large_size_price' => '',
+            'large_size_price' => '3',
+            'default_price' => '10'
         ), $this->size_settings );
 
         do_action( 'sell_media_load_settings_hook' );
@@ -119,7 +120,6 @@ class SellMediaSettings {
         add_settings_section( 'section_payment', 'Payment Settings', array( &$this, 'section_payment_desc' ), $this->payment_settings_key );
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
-        add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->payment_settings_key, 'section_payment' );
 
         do_action( 'sell_media_payment_settings_hook' );
 
@@ -152,11 +152,12 @@ class SellMediaSettings {
         $this->plugin_settings_tabs[$this->size_settings_key] = 'Size';
 
         register_setting( $this->size_settings_key, $this->size_settings_key, array( &$this, 'register_settings_validate') );
-        add_settings_section( 'section_size', 'Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
+        add_settings_section( 'section_size', 'Image Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
 
-        add_settings_field( 'small_size', 'Small Size', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );
-        add_settings_field( 'medium_size', 'Medium Size', array( &$this, 'field_size_medium' ), $this->size_settings_key, 'section_size' );
-        add_settings_field( 'large_size', 'Large Size', array( &$this, 'field_size_large' ), $this->size_settings_key, 'section_size' );
+        add_settings_field( 'small_size', 'Small', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );
+        add_settings_field( 'medium_size', 'Medium', array( &$this, 'field_size_medium' ), $this->size_settings_key, 'section_size' );
+        add_settings_field( 'large_size', 'Large', array( &$this, 'field_size_large' ), $this->size_settings_key, 'section_size' );
+        add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_size' );
 
         do_action( 'sell_media_email_settings_hook' );
 
@@ -342,7 +343,7 @@ class SellMediaSettings {
      */
     function field_payment_default_price() {
         ?>
-        <input type="text" name="<?php echo $this->payment_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( $this->payment_settings['default_price'] ); ?>" />
+        <input type="text" name="<?php echo $this->size_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['default_price'] ); ?>" />
         <span class="desc"><?php _e( 'The default price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ); ?></span>
         <?php
     }
