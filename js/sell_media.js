@@ -192,7 +192,7 @@ jQuery( document ).ready(function( $ ){
     });
 
 
-    $( document ).on('submit', '#sell_media_cart_form', function(){
+    $( document ).one('submit', '#sell_media_cart_form', function(){
 
         var _data = "action=sell_media_add_items&taxonomy=licenses&" + $( this ).serialize();
 
@@ -206,11 +206,15 @@ jQuery( document ).ready(function( $ ){
             data: _data,
             success: function( msg ) {
                 cart_count();
+                $('.sell-media-buy-button').addClass('sell-media-purchased').val('Checkout');
             }
         });
         return false;
     });
 
+    $( document ).on( 'click', '.sell-media-purchased', function(){
+        window.location.replace( checkouturl );
+    });
 
     $( document ).on('click', '.remove-item-handle', function(){
 

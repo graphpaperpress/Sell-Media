@@ -140,6 +140,7 @@ function sell_media_head(){?>
     <script type="text/javascript">
     var ajaxurl = "<?php print admin_url("admin-ajax.php"); ?>";
     var pluginurl = "<?php print plugin_dir_url( dirname( __FILE__ ) ); ?>";
+    var checkouturl = "<?php $options = get_option('sell_media_general_settings'); $page_id = $options['checkout_page']; $page = get_page( $page_id ); print $page->guid; ?>";
     </script>
 <?php }
 add_action( 'wp_head', 'sell_media_head' );
