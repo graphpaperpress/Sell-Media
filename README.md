@@ -67,11 +67,10 @@ You have two options:
 
 = How do I bulk upload images for sale? =
 
-1. Click Media -> Add New
+1. Click Sell Media -> Add Bulk
+2. Click "Upload or Select Images"
 2. Simply drag and drop your files into the box that appears, or click Select Files to choose a file from your computer to upload. Please keep in mind that the drag and drop uploader only works in browsers with HTML5 upload support such as the latest versions of Chrome, Firefox, or Safari. Other browsers will still show the Select Files button or the basic browser uploader form.
-3. When a file has finished uploading, click the Show link on the right.
-3. Check the Sell This option. Repeat for each item you want to sell and click Save.
-4. This item will be added as a new entry in Sell Media. By default, the newly created Sell Media item will inherit the prices and licenses that you chose on Sell Media -> Settings. You can modify the price and available licenses on the Sell Media tab by editing each individual item.
+4. This item will be added as a new entry in Sell Media. By default, the newly created Sell Media item will inherit the sizes, prices and licenses that you chose on Sell Media -> Settings. You can modify the price and available licenses on the Sell Media tab by editing each individual item.
 
 = How do I display a gallery of images for sale? =
 
