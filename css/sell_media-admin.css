@@ -95,11 +95,11 @@
 .sell-media-bulk-list-item-edit:hover { color: #fff; }
 .uploader { background: #F9F9F9; padding: 4em; text-align: center; border: 1px solid #EEE; }
 .uploader .button { font-size: 14px; height: 46px; line-height: 44px; padding: 0 36px; }
-.compat-field-sell th { display: none; }
+.compat-field-sell th { padding: 0 5px 0 0; }
 .compat-field-sell input[type="checkbox"] { width: auto; }
 .sell-media-item-table .sell-media-upload-trigger { cursor: pointer; }
-.sell_media_item_page_sell_media_add_bulk .media-sidebar .compat-item,
-.post-new-php .media-sidebar .compat-item { display: none; }
+.sell_media_item_page_sell_media_add_bulk .media-sidebar .compat-field-sell,
+.media-sidebar .compat-field-sell { display: none; }
 .sell-media-ajax-loader { background: url( ../images/ajax-loader.gif) no-repeat center top; height: 58px; width: 100%; text-align: center; padding-top: 20px; color: #BBB; font-size: 12px; }
 
 /* Settings Page
@@ -109,4 +109,6 @@
 
 /* Item meta section
 -------------------------------------------------------------- */
-.sell-media-item-table th { width: 120px; }
+.sell-media-item-table th { width: 100%; display: block; font-weight: bold; padding: 10px 10px 0 10px; }
+.sell-media-item-table td { display: block; padding: 5px 10px 0; }
+.sell-media-item-table .sell-media-item-path { padding: 4px; margin: 0 5px 10px 0; }

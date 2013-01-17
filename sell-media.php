@@ -553,7 +553,7 @@ class SellMedia {
         if ( $pagenow == 'media-new.php' ) {
             wp_enqueue_script( 'sell_media-admin-uploader' );
         }
-        if ( is_admin() && ( sell_media_is_sell_media_post_type_page() || $pagenow == 'post.php' ) ) {
+        if ( is_admin() && ( sell_media_is_sell_media_post_type_page() || $pagenow == 'post.php' || $pagenow == 'post-new.php' ) ) {
             wp_enqueue_style( 'sell_media-admin', plugin_dir_url( __FILE__ ) . 'css/sell_media-admin.css', array( 'thickbox' ) );
 
             wp_enqueue_media();

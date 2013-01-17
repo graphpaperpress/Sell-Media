@@ -38,7 +38,7 @@ jQuery( document ).ready(function( $ ){
             if ( $('.sell_media_image').length ){
                 $('.sell_media_image').attr( 'src', attachment.url );
             } else {
-                $('.sell-media-image').attr( 'src', attachment.url );
+                $('.sell-media-temp-target').html( '<img src="'+attachment.url+'" />' );
             }
         });
 

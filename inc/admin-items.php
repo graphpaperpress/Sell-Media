@@ -206,10 +206,11 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 case 'file':
                     $attachment_id = get_post_thumbnail_id( $post->ID );
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
-                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="field-has-button" value="'.wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) ) . '" size="30" />';
+                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="'.wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) ) . '" size="30" />';
+                    print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload or Select Image', 'sell_media').'</a><br class="clear"/>';
                     print '<div class="sell-media-upload-trigger">';
                     if ( empty( $attachment_id ) ){
-                        print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload or Select Image', 'sell_media').'</a><br class="clear"/>';
+                        print '<div class="sell-media-temp-target"></div>';
                     } else {
                         sell_media_item_icon( $attachment_id );
                     }
