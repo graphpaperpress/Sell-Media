@@ -52,8 +52,10 @@ if ( empty( $tmp_price ) ) {
                             </select>
                         </fieldset>
                     <?php else : ?>
-                        <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-                        <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
+                        <?php if ( ! empty( $term_id ) ) : ?>
+                            <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+                            <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
+                        <?php endif; ?>
                     <?php endif; ?>
 
                     <?php do_action( 'sell_media_cart_below_licenses' ); ?>
