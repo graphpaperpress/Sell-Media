@@ -149,7 +149,7 @@ class SellMediaSettings {
      * key to the plugin settings tabs array.
      */
     function register_size_settings() {
-        $this->plugin_settings_tabs[$this->size_settings_key] = 'Size';
+        $this->plugin_settings_tabs[$this->size_settings_key] = 'Size & Price';
 
         register_setting( $this->size_settings_key, $this->size_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_size', 'Image Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
