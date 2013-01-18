@@ -169,6 +169,10 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.1 =
+* Instruction changes
+* Fixing settings to work better with extensions
+
 = 1.0.9 =
 * Added bulk uploader
 * Added size variants
