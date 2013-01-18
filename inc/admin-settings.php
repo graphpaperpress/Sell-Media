@@ -405,6 +405,7 @@ class SellMediaSettings {
             <input type="text" name="<?php echo $this->size_settings_key; ?>[small_size_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['small_size_price'] ); ?>" size="3" />
             <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
         </div>
+        <span class="desc"><?php _e( 'Low resolution in pixels for print or web use', 'sell_media' ); ?></span>
         <?php
 
     }
@@ -426,6 +427,7 @@ class SellMediaSettings {
             <input type="text" name="<?php echo $this->size_settings_key; ?>[medium_size_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['medium_size_price'] ); ?>" size="3" />
             <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
         </div>
+        <span class="desc"><?php _e( 'Medium resolution in pixels for print or web use', 'sell_media' ); ?></span>
         <?php
 
     }
@@ -447,6 +449,7 @@ class SellMediaSettings {
             <input type="text" name="<?php echo $this->size_settings_key; ?>[large_size_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['large_size_price'] ); ?>" size="3" />
             <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
         </div>
+        <span class="desc"><?php _e( 'High resolution in pixels for print or web use', 'sell_media' ); ?></span>
         <?php
 
     }
