@@ -184,42 +184,44 @@ class SellMediaSettings {
 
         $valid_inputs = array();
 
-        foreach( $fields as $field => $value ){
+        if ( ! empty( $fields ) ){
+            foreach( $fields as $field => $value ){
 
-            switch( $field ){
+                switch( $field ){
 
-                /**
-                 * Ensure that only integers are saved.
-                 */
-                case 'small_size_width' :
-                case 'small_size_height' :
-                case 'small_size_price' :
-                case 'medium_size_width' :
-                case 'medium_size_height' :
-                case 'medium_size_price' :
-                case 'large_size_width' :
-                case 'large_size_height' :
-                case 'large_size_price' :
-                    $value = (int)$value;
-                    break;
+                    /**
+                     * Ensure that only integers are saved.
+                     */
+                    case 'small_size_width' :
+                    case 'small_size_height' :
+                    case 'small_size_price' :
+                    case 'medium_size_width' :
+                    case 'medium_size_height' :
+                    case 'medium_size_price' :
+                    case 'large_size_width' :
+                    case 'large_size_height' :
+                    case 'large_size_price' :
+                        $value = (int)$value;
+                        break;
 
-                /**
-                 * Ensure that float is saved, i.e. 10.55 vs. 10.55the
-                 */
-                case 'default_price' :
-                    $value = floatval( $value );
-                    break;
+                    /**
+                     * Ensure that float is saved, i.e. 10.55 vs. 10.55the
+                     */
+                    case 'default_price' :
+                        $value = floatval( $value );
+                        break;
 
-                /**
-                 * Ensure that only valid email address is saved
-                 */
-                case 'paypal_email' :
-                case 'from_email' :
-                    if ( ! is_email( $value ) )
-                        $value = null;
-                    break;
+                    /**
+                     * Ensure that only valid email address is saved
+                     */
+                    case 'paypal_email' :
+                    case 'from_email' :
+                        if ( ! is_email( $value ) )
+                            $value = null;
+                        break;
+                }
+                $valid_inputs[ $field ] = wp_filter_nohtml_kses( $value );
             }
-            $valid_inputs[ $field ] = wp_filter_nohtml_kses( $value );
         }
         return $valid_inputs;
     }
