@@ -176,20 +176,26 @@ function sell_media_item_size( $post_id=null ){
  */
 function sell_media_item_price( $post_id=null, $currency=true, $size=null ){
 
-    if ( empty( $size ) ){
-        if ( get_post_meta( $post_id, 'sell_media_price', true ) ){
-            $price = get_post_meta( $post_id, 'sell_media_price', true );
-        } else {
-            $payment_settings = get_option( 'sell_media_payment_settings' );
-            $price = $payment_settings['default_price'];
-        }
+    $original_price = get_post_meta( $post_id, 'sell_media_price', true );
+
+    /**
+     * If this Item has a default price we use it, i.e., "original price".
+     * Else we fall back on the price that is set in settings.
+     */
+    if ( $original_price ){
+        $price = $original_price;
     } else {
-        if ( get_post_meta( $post_id, 'sell_media_price_' . $size, true ) ){
-            $price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
-        } else {
-            $size_settings = get_option('sell_media_size_settings');
-            $price = $size_settings['small_size_price'];
+        $size_settings = get_option('sell_media_size_settings');
+        if ( ! empty( $size_settings['default_price'] ) ){
+            $price = $size_settings['default_price'];
         }
+    }
+
+    /**
+     * If we have a size we get the size from the post meta
+     */
+    if ( ! empty( $size ) ){
+        $price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
     }
 
     if ( $currency ){
