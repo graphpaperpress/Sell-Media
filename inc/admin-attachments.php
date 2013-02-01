@@ -128,7 +128,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
          * image to our products directory.
          */
 
-        update_post_meta( $product_id, '_thumbnail_id', $post['ID'] );
+        update_post_meta( $product_id, '_sell_media_attachment_id', $post['ID'] );
         update_post_meta( $product_id, 'sell_media_description', $post['post_content'] );
         update_post_meta( $product_id, '_sell_media_attached_file', date('Y') . '/' . date('m') . '/' . basename( $post['attachment_url'] ) );
 

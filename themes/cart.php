@@ -13,6 +13,7 @@ $payment_settings = get_option( 'sell_media_payment_settings' );
 $general_settings = get_option( 'sell_media_general_settings' );
 $tmp_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
+$attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
 
 if ( $licenses ) {
     $term_id = $licenses[0]->term_id;
@@ -34,13 +35,13 @@ if ( empty( $tmp_price ) ) {
             <?php do_action( 'sell_media_above_cart' ); ?>
             <div class="left">
                 <div class="image-container clearfix">
-                    <?php sell_media_item_icon( $_POST['attachment_id'], 'medium' ); ?>
+                    <?php sell_media_item_icon( $attachment_id, 'medium' ); ?>
                     <p><strong><?php print get_the_title( $_POST['product_id'] ); ?></strong></p>
                 </div>
             </div>
             <div class="right">
                 <form action="javascript://" method="POST" id="sell_media_cart_form">
-                    <input type="hidden" name="AttachmentID" value="<?php print $_POST['attachment_id']; ?>" />
+                    <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
                     <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
                     <input type="hidden" name="CalculatedPrice" class="price-target" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
                     <?php if ( count( $licenses ) > 1 ) : ?>

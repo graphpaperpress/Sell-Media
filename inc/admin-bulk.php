@@ -43,7 +43,8 @@ function sell_media_add_bulk_tabs(){
  * @author Thad Allender
  * @since 1.0.9
  */
-function sell_media_add_bulk_callback_fn(){ ?>
+function sell_media_add_bulk_callback_fn(){
+    wp_enqueue_media(); ?>
     <div class="wrap">
         <?php sell_media_add_bulk_tabs(); ?>
         <div class="tool-box add-bulk">

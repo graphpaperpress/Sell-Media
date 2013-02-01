@@ -204,7 +204,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
                 // File
                 case 'file':
-                    $attachment_id = get_post_thumbnail_id( $post->ID );
+                    $attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
                     $wp_upload_dir = wp_upload_dir();
                     $item_url = wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) );
                     if ( $item_url ){
@@ -212,15 +212,12 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     } else {
                         $link = null;
                     }
+
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
                     print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="' . $link . '" size="30" />';
                     print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload or Select Image', 'sell_media').'</a><br class="clear"/>';
                     print '<div class="sell-media-upload-trigger">';
-                    if ( empty( $attachment_id ) ){
-                        print '<div class="sell-media-temp-target"></div>';
-                    } else {
-                        sell_media_item_icon( $attachment_id );
-                    }
+                    print '<div class="sell-media-temp-target">'.sell_media_item_icon( $attachment_id, 'medium', false ).'</div>';
                     print '</div>';
 
 
@@ -288,7 +285,7 @@ function sell_media_save_custom_meta( $post_id ) {
     // a new attachment.
     $wp_upload_dir = wp_upload_dir();
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
-        $attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
+        $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
         $attached_file = $_POST['_sell_media_attached_file'];
     } else {
 
@@ -317,9 +314,8 @@ function sell_media_save_custom_meta( $post_id ) {
     }
 
     // Now, update the post meta to associate the new image with the post
-    update_post_meta( $post_id, '_wp_attached_file', $attachment_id );
-    update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
     update_post_meta( $post_id, '_sell_media_attached_file', $attached_file );
+    update_post_meta( $post_id, '_sell_media_attachment_id', $attachment_id );
 
     update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', $post_id );
     update_post_meta( $attachment_id, '_sell_media_for_sale', 1 );
@@ -352,11 +348,21 @@ function sell_media_save_custom_meta( $post_id ) {
         $new_content = $_POST['sell_media_editor'];
         $old_content = get_post_field( 'post_content', $post_id );
 
-        if ( $old_content != $new_content ){
-            global $wpdb;
-            $new_content = $_POST['sell_media_editor'];
-            $query = "UPDATE {$wpdb->prefix}posts SET post_content = %s WHERE ID LIKE %d;";
-            $wpdb->query( $wpdb->prepare( $query, $new_content, $post_id ) );
+        if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ){
+
+            $args = array(
+                    'ID' => $post_id,
+                    'post_content' => $new_content
+                    );
+
+            // unhook this function so it doesn't loop infinitely
+            remove_action('save_post', 'sell_media_save_custom_meta');
+            // update the post, which calls save_post again
+            wp_update_post( $args );
+
+            // re-hook this function
+            add_action('save_post', 'sell_media_save_custom_meta');
+
         }
     }
 }
@@ -408,9 +414,8 @@ add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
 function sell_media_item_content( $column, $post_id ){
     switch( $column ) {
         case "icon":
-            // $html ='<a href="'.site_url().'/wp-admin/media.php?attachment_id='.get_post_thumbnail_id( $post_id ).'&action=edit">';
             $html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
-            $html .= sell_media_item_icon( get_post_thumbnail_id( $post_id ), 'thumbnail' );
+            $html .= sell_media_item_icon( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'thumbnail' );
             $html .= '</a>';
             print $html;
             break;

@@ -33,13 +33,22 @@ jQuery( document ).ready(function( $ ){
             var attachment = file_frame.state().get('selection').first().toJSON();
 
             // Do something with attachment.id and/or attachment.url here
-            $('#sell_media_selected_file_id').attr( 'value', attachment.id );
-            $('#_sell_media_attached_file').attr( 'value', attachment.url );
-            if ( $('.sell_media_image').length ){
-                $('.sell_media_image').attr( 'src', attachment.url );
-            } else {
-                $('.sell-media-temp-target').html( '<img src="'+attachment.url+'" />' );
-            }
+            $('.sell-media-item-table #sell_media_selected_file_id').attr( 'value', attachment.id );
+            $('.sell-media-item-table #_sell_media_attached_file').attr( 'value', attachment.url );
+
+            var data = {
+                action: "sell_media_item_icon",
+                attachment_id: attachment.id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: ajaxurl,
+                data: data,
+                success: function( msg ){
+                    $('.sell-media-item-table .sell-media-temp-target').html( msg );
+                }
+            });
         });
 
         // Finally, open the modal
