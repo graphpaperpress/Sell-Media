@@ -246,7 +246,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php endif; ?>
                                 <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
-                                        <?php _e('You are logged in as an Admin and cannont purchase this item from yourself.', 'sell_media' ); ?>
+                                        <?php _e('You are logged in as an Admin and cannot purchase this item from yourself.', 'sell_media' ); ?>
                                 <?php else : ?>
                                     <div class="button-container">
                                         <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Checkout', 'sell_media'); ?>" />
