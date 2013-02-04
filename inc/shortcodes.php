@@ -8,7 +8,7 @@
  * @since 0.1
  */
 function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) {
-    if ( empty( $purchas_key ) ){
+    if ( empty( $purchase_key ) ){
         $message = __( "Please provide a purchase key.", "sell_media" );
     } else {
         $purchase_key = $_GET['purchase_key'];
