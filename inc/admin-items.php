@@ -204,7 +204,12 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
                 // File
                 case 'file':
-                    $attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
+                    $sell_media_attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
+                    if ( $sell_media_attachment_id ){
+                        $attachment_id = $sell_media_attachment_id;
+                    } else {
+                        $attachment_id = get_post_thumbnail_id( $post->ID );
+                    }
                     $wp_upload_dir = wp_upload_dir();
                     $item_url = wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) );
                     if ( $item_url ){
@@ -281,11 +286,24 @@ function sell_media_save_custom_meta( $post_id ) {
         }
     }
 
+    $_thumbnail_id = get_post_thumbnail_id( $post_id );
+    $_sell_media_attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+
     // If the selected file id was updated then we have
     // a new attachment.
     $wp_upload_dir = wp_upload_dir();
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
-        $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+
+        /**
+         * Retro active: If we have no $_sell_media_attachment_id we use the
+         * old reference, $_thumbnail_id as the $attachment_id. Thus updating
+         * the _sell_media_attachment_id to be the value of the _thumbnail_id.
+         */
+        if ( empty( $_sell_media_attachment_id ) ){
+            $attachment_id = $_thumbnail_id;
+        } else {
+            $attachment_id = $_sell_media_attachment_id;
+        }
         $attached_file = $_POST['_sell_media_attached_file'];
     } else {
 
@@ -414,8 +432,14 @@ add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
 function sell_media_item_content( $column, $post_id ){
     switch( $column ) {
         case "icon":
+            $sell_media_attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+            if ( $sell_media_attachment_id ){
+                $attachment_id = $sell_media_attachment_id;
+            } else {
+                $attachment_id = get_post_thumbnail_id( $post_id );
+            }
             $html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
-            $html .= sell_media_item_icon( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'thumbnail' );
+            $html .= sell_media_item_icon( $attachment_id, 'thumbnail' );
             $html .= '</a>';
             print $html;
             break;
