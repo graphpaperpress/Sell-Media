@@ -122,7 +122,6 @@ if ( $version <= '1.1' ){
      * Build an array of IDs and Descriptions, this is the content
      * going into the post_content field
      */
-    print '<pre>';
     foreach( $post_ids as $post ){
         $_thumbnail_id = get_post_thumbnail_id( $post->ID );
         if ( $_thumbnail_id ){
