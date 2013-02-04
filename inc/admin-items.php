@@ -31,80 +31,80 @@ add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
  * @author Thad Allender
  * @since 0.1
  */
-global $sell_media_item_meta_fields;
-$prefix = 'sell_media';
-$payment_settings = get_option( 'sell_media_payment_settings' );
-$default_price = $payment_settings['default_price'];
+function sell_media_admin_items_init(){
+    global $sell_media_item_meta_fields;
+    $prefix = 'sell_media';
+    $payment_settings = get_option( 'sell_media_payment_settings' );
+    $default_price = $payment_settings['default_price'];
 
-$size_settings = get_option('sell_media_size_settings');
+    $size_settings = get_option('sell_media_size_settings');
+    if ( ! empty( $_GET['post'] ) ) {
+        $post_id = $_GET['post'];
+    } elseif( ! empty( $_POST['post_ID'] ) ) {
+        $post_id = $_POST['post_ID'];
+    }else {
+        $post_id = null;
+    }
 
-if ( ! empty( $_GET['post'] ) ) {
-    $post_id = $_GET['post'];
-} elseif( ! empty( $_POST['post_ID'] ) ) {
-    $post_id = $_POST['post_ID'];
-}else {
-    $post_id = null;
-}
 
+    $sell_media_item_meta_fields = array(
+        array(
+            'label' => 'File',
+            'desc'  => 'A description for the field.',
+            'id'    => $prefix . '_file',
+            'type'  => 'file'
+        ),
+        array(
+            'label' => 'Original File Price',
+            'desc'  => 'Numbers only.', // this needs validation
+            'id'    => $prefix . '_price',
+            'type'  => 'text',
+            'std'   => $default_price,
+            'value' => get_post_meta( $post_id, $prefix . '_price', true )
+        )
+    );
 
-$sell_media_item_meta_fields = array(
-    array(
-        'label' => 'File',
-        'desc'  => 'A description for the field.',
-        'id'    => $prefix . '_file',
-        'type'  => 'file'
-    ),
-    array(
-        'label' => 'Original File Price',
-        'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price',
-        'type'  => 'text',
-        'std'   => $default_price,
-        'value' => get_post_meta( $post_id, $prefix . '_price', true )
-    )
-);
+    if ( get_post_meta( $post_id, 'sell_media_small_file', true ) ){
+        $sell_media_item_meta_fields[] = array(
+            'label' => 'Small <span class="description">'.$size_settings['small_size_width'].' x '.$size_settings['small_size_height'].'</span>',
+            'desc'  => 'Numbers only.', // this needs validation
+            'id'    => $prefix . '_price_small',
+            'type'  => 'text',
+            'std'   => $size_settings['small_size_price'],
+            'value' => get_post_meta( $post_id, $prefix . '_price_small', true )
+        );
+    }
 
-if ( get_post_meta( $post_id, 'sell_media_small_file', true ) ){
+    if ( get_post_meta( $post_id, 'sell_media_medium_file', true ) ){
+        $sell_media_item_meta_fields[] = array(
+            'label'=> 'Medium <span class="description">'.$size_settings['medium_size_width'].' x '.$size_settings['medium_size_height'].'</span>',
+            'desc'  => 'Numbers only.', // this needs validation
+            'id'    => $prefix . '_price_medium',
+            'type'  => 'text',
+            'std'   => $size_settings['medium_size_price'],
+            'value' => get_post_meta( $post_id, $prefix . '_price_medium', true )
+        );
+    }
+
+    if ( get_post_meta( $post_id, 'sell_media_large_file', true ) ){
+        $sell_media_item_meta_fields[] = array(
+            'label'=> 'Large <span class="description">'.$size_settings['large_size_width'].' x '.$size_settings['large_size_height'].'</span>',
+            'desc'  => 'Numbers only.', // this needs validation
+            'id'    => $prefix . '_price_large',
+            'type'  => 'text',
+            'std'   => $size_settings['large_size_price'],
+            'value' => get_post_meta( $post_id, $prefix . '_price_large', true )
+        );
+    }
     $sell_media_item_meta_fields[] = array(
-        'label' => 'Small <span class="description">'.$size_settings['small_size_width'].' x '.$size_settings['small_size_height'].'</span>',
-        'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price_small',
-        'type'  => 'text',
-        'std'   => $size_settings['small_size_price'],
-        'value' => get_post_meta( $post_id, $prefix . '_price_small', true )
-    );
+            'label' => 'Shortcode',
+            'desc'  => 'The permalink for this item is displayed below the title above. The archive page showing all items for sale can be viewed <a href="'.get_post_type_archive_link('sell_media_item').'">here</a>. You can optionally use shortcode to display this specific item on other Posts or Pages. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"',
+            'id'    => $prefix . '_shortcode',
+            'type'  => 'html'
+        );
+    do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
 }
-
-if ( get_post_meta( $post_id, 'sell_media_medium_file', true ) ){
-    $sell_media_item_meta_fields[] = array(
-        'label'=> 'Medium <span class="description">'.$size_settings['medium_size_width'].' x '.$size_settings['medium_size_height'].'</span>',
-        'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price_medium',
-        'type'  => 'text',
-        'std'   => $size_settings['medium_size_price'],
-        'value' => get_post_meta( $post_id, $prefix . '_price_medium', true )
-    );
-}
-
-if ( get_post_meta( $post_id, 'sell_media_large_file', true ) ){
-    $sell_media_item_meta_fields[] = array(
-        'label'=> 'Large <span class="description">'.$size_settings['large_size_width'].' x '.$size_settings['large_size_height'].'</span>',
-        'desc'  => 'Numbers only.', // this needs validation
-        'id'    => $prefix . '_price_large',
-        'type'  => 'text',
-        'std'   => $size_settings['large_size_price'],
-        'value' => get_post_meta( $post_id, $prefix . '_price_large', true )
-    );
-}
-
-$sell_media_item_meta_fields[] = array(
-        'label' => 'Shortcode',
-        'desc'  => 'Copy and paste this shortcode to show the file and buy button anywhere on your site. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"', // this needs validation
-        'id'    => $prefix . '_shortcode',
-        'type'  => 'html'
-    );
-do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
-
+add_action('admin_init', 'sell_media_admin_items_init');
 
 add_action( 'edit_form_advanced', 'sell_media_editor' );
 function sell_media_editor() {
