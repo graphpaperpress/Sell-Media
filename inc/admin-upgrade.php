@@ -110,3 +110,25 @@ if ( $version <= '1.0.4' ){
         }
     }
 }
+
+if ( $version <= '1.1' ){
+    /**
+     * Retrive all Post IDs for our "sell_media_item" post type.
+     */
+    global $wpdb;
+    $post_ids = $wpdb->get_results( "SELECT ID FROM {$wpdb->prefix}posts WHERE post_type LIKE 'sell_media_item';" );
+
+    /**
+     * Build an array of IDs and Descriptions, this is the content
+     * going into the post_content field
+     */
+    print '<pre>';
+    foreach( $post_ids as $post ){
+        $_thumbnail_id = get_post_thumbnail_id( $post->ID );
+        if ( $_thumbnail_id ){
+            update_post_meta( $post->ID, '_sell_media_attachment_id', $_thumbnail_id );
+            // print "update_postmeta: {$post->ID}, '_sell_media_attachment_id', {$_thumbnail_id}\n";
+        }
+    }
+    update_option('sell_media_version', '1.2' );
+}
