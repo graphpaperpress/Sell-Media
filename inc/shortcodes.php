@@ -391,7 +391,7 @@ function sell_media_download_shortcode( $atts ) {
 					$html .= '<div class="download_lists">';
 					$html .= wp_get_attachment_image( $product_detail[ 'AttachmentID' ] );
 					$html .= '<span class="download_details">';
-					$html .= "Product = ".get_the_title( $product_detail[ 'ProductID' ] )."<br />";
+					$html .= 'Product = <a href="' . get_permalink( $product_detail['ProductID'] ) . '">' . get_the_title( $product_detail[ 'ProductID' ] ) . '</a><br />';
 					$html .= "Price = $".$product_detail[ 'CalculatedPrice' ]."<br />";
 					$html .= '</span>';
 					$html .= '</div>';
