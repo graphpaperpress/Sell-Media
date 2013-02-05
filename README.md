@@ -169,6 +169,10 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.2 =
+* Added full Featured Image support
+* Bug fixes
+
 = 1.1 =
 * Instruction changes
 * Fixing settings to work better with extensions
