@@ -176,26 +176,50 @@ function sell_media_item_size( $post_id=null ){
  */
 function sell_media_item_price( $post_id=null, $currency=true, $size=null ){
 
-    $original_price = get_post_meta( $post_id, 'sell_media_price', true );
+    /**
+     * Get the default price for this Item.
+     */
+    $default_price = get_post_meta( $post_id, 'sell_media_price', true );
+    $size_settings = get_option('sell_media_size_settings');
 
     /**
-     * If this Item has a default price we use it, i.e., "original price".
-     * Else we fall back on the price that is set in settings.
+     * If we have no size and no default price for this item we fall back
+     * on the defaults from the settings.
      */
-    if ( $original_price ){
-        $price = $original_price;
+    if ( empty( $size ) && ! empty( $default ) ){
+        $price = $size_settings['default_price'];
     } else {
-        $size_settings = get_option('sell_media_size_settings');
-        if ( ! empty( $size_settings['default_price'] ) ){
-            $price = $size_settings['default_price'];
-        }
-    }
 
-    /**
-     * If we have a size we get the size from the post meta
-     */
-    if ( ! empty( $size ) ){
-        $price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
+        /**
+         * Get the price based on the size and id passed in.
+         */
+        $item_price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
+
+        /**
+         * If a size was not passed in we fall back on the default
+         * price for this post.
+         */
+        if ( empty( $size ) ){
+            if ( empty( $default_price ) ){
+                $price = $size_settings['default_price'];
+            } else {
+                $price = $default_price;
+            }
+        } elseif ( empty( $item_price ) ){
+
+            /**
+             * If this single item does not have a price, we fall back on the
+             * default prices set in the settings.
+             */
+            $price = get_option('sell_media_size_settings');
+            $price = $price[ $size . '_size_price' ];
+        } else {
+
+            /**
+             * Else we assign our item price to the price.
+             */
+            $price = $item_price;
+        }
     }
 
     if ( $currency ){

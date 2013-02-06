@@ -34,7 +34,7 @@ add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
 function sell_media_admin_items_init(){
     global $sell_media_item_meta_fields;
     $prefix = 'sell_media';
-    $payment_settings = get_option( 'sell_media_payment_settings' );
+    $payment_settings = get_option( 'sell_media_size_settings' );
     $default_price = $payment_settings['default_price'];
 
     $size_settings = get_option('sell_media_size_settings');
@@ -157,11 +157,6 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
                 // text
                 case 'text':
-                    $tmp_price = get_post_meta( $post->ID, 'sell_media_price', true );
-                    if ( $field['id'] == 'sell_media_price' && empty( $tmp_price ) ){
-                        $payment_settings = get_option('sell_media_payment_settings');
-                        $default = $payment_settings['default_price'];
-                    }
                     if ( $field['std'] )
                         $default = $field['std'];
 
