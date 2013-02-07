@@ -178,6 +178,9 @@ Action hooks available:
  * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+= 1.2.1 =
+* Minor bug fix in size variants
+
 = 1.2 =
 * Added full Featured Image support
 * Bug fixes
