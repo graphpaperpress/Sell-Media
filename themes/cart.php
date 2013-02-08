@@ -9,9 +9,9 @@
  * fall back on the default price set in the
  * plugin settings
  */
-$payment_settings = get_option( 'sell_media_payment_settings' );
+
+
 $general_settings = get_option( 'sell_media_general_settings' );
-$tmp_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
 $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
 
@@ -21,11 +21,6 @@ if ( $licenses ) {
     $term_id = null;
 }
 
-if ( empty( $tmp_price ) ) {
-    $price = $payment_settings['default_price'];
-} else {
-    $price = $tmp_price;
-}
 ?>
 <div class="main-container">
     <span class="close">&times;</span>
@@ -74,7 +69,7 @@ if ( empty( $tmp_price ) ) {
                             </select>
                         </fieldset>
                     <?php else : ?>
-                        <input type="hidden" id="sell_media_price" value="<?php print $price; ?>" />
+                        <input type="hidden" id="sell_media_price" value="<?php sell_media_item_price( $_POST['product_id'] ); ?>" />
                     <?php endif; ?>
 
                     <div class="total-container group">

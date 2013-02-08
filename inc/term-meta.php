@@ -144,9 +144,7 @@ function sell_media_the_markup_slider( $tag ){
         $initial_markup = 0;
     }
 
-    $payment_settings = get_option('sell_media_payment_settings');
-
-    ?>
+    $payment_settings = get_option( 'sell_media_size_settings' ); ?>
     <script>
     jQuery(document).ready(function($){
 
