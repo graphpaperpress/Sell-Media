@@ -449,22 +449,6 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
 
 
 /**
- * Returns the file name with extension or the file name and
- * upload year/month/file.ext.
- *
- * @since 0.1
- */
-function sell_media_get_attachment_file( $attachment_id=null, $dir=true ){
-    $boo = wp_get_attachment_metadata( $attachment_id );
-
-    if ( $dir )
-        return array_pop( explode( '/', $boo['file'] ) );
-    else
-        return $boo['file'];
-}
-
-
-/**
  * Retrives the purchase title from the purchase key
  * serialized array.
  *
@@ -536,16 +520,6 @@ function sell_media_get_upload_dir() {
     $upload['path'] = $upload['basedir'] . $upload['subdir'];
     $upload['url']  = $upload['baseurl'] . $upload['subdir'];
     return $upload;
-}
-
-
-/**
- * Returns the file extension for a give file name.
- * @since 0.1
- */
-function sell_media_get_file_extension( $str ){
-   $parts = explode('.', $str);
-   return end( $parts );
 }
 
 

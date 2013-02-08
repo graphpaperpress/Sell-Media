@@ -17,29 +17,29 @@ function sell_media_process_download() {
         // defaulting this to true for now because the method below doesn't work well
         $has_access = true;
 
-
         if ( $payment && $has_access ) {
 
             // Get the file name from the attachment ID
-            $requested_file = sell_media_get_attachment_file( $_GET['id'] );
-            $requested_file_with_dir = sell_media_get_attachment_file( $_GET['id'], false );
+            $pathinfo = pathinfo( get_attached_file( $_GET['id'] ) );
+            $attached_file = get_post_meta( $_GET['id'], '_wp_attached_file', true );
 
-            $file_extension = sell_media_get_file_extension( $requested_file );
-            switch ($file_extension) {
-                case "gif": $ctype  = "image/gif"; break;
-                case "png": $ctype  = "image/png"; break;
-                case "jpe": $ctype  = "image/jpg"; break;
+            switch( $pathinfo['extension'] ) {
+                case "gif":  $ctype = "image/gif"; break;
+                case "png":  $ctype = "image/png"; break;
                 case "jpeg": $ctype = "image/jpg"; break;
-                case "jpg": $ctype  = "image/jpg"; break;
-                default: $ctype     = "application/force-download";
+                case "jpg":  $ctype = "image/jpg"; break;
+                case "pdf":  $ctype = "application/pdf"; break;
+                case "zip":  $ctype = "application/octet-stream"; break;
+                case "doc":  $ctype = "application/msword"; break;
+                case "xls":  $ctype = "application/vnd.ms-excel"; break;
+                case "ppt":  $ctype = "application/vnd.ms-powerpoint"; break;
+                default:     $ctype = "application/force-download";
             }
 
-            //
             if ( ! ini_get( 'safe_mode' ) ){
                 set_time_limit( 0 );
             }
 
-            //
             if ( function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime() ) {
                 set_magic_quotes_runtime(0);
             }
@@ -49,10 +49,10 @@ function sell_media_process_download() {
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
             header("Robots: none");
             header("Content-Type: {$ctype}");
-            header("Content-Disposition: attachment; filename={$requested_file};");
+            header("Content-Disposition: attachment; filename={$pathinfo['basename']};");
 
             $sell_media_upload_dir = sell_media_get_upload_dir();
-            $full_file_path = $sell_media_upload_dir['basedir'] . '/sell_media/' . $requested_file_with_dir;
+            $full_file_path = $sell_media_upload_dir['basedir'] . '/sell_media/' . $attached_file;
 
             print file_get_contents( $full_file_path );
 
