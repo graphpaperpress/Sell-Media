@@ -169,6 +169,11 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.2.2 =
+* Fixed intermittent issue where download files would be 0kb
+* Fixed issue where downloaded zip files would unzip as zip
+* Fixed issue in settings regarding default price
+
 = 1.2.1 =
 * Minor bug fix in size variants
 
