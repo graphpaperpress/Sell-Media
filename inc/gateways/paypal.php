@@ -79,8 +79,6 @@ function sell_media_process_paypal_purchase( $purchase_data ) {
 
     $paypal_redirect .= http_build_query( $paypal_args );
 
-    sell_media_empty_cart();
-    //wp_redirect( $paypal_redirect );
     print '<script type="text/javascript">window.location ="' . $paypal_redirect . '"</script>';
     exit;
 }
