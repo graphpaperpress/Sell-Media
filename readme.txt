@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,12 @@ You must setup your Paypal IPN URL for Sell Media to work.
 4. Paste your Paypal IPN URL onto that page in Paypal. Your Paypal IPN URL is located on the Sell Media Settings page.
 
 == Frequently Asked Questions ==
+
+= I have 5k+ photos I would like to sell, can Sell Media handle this? =
+* Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. There maybe limits based on your web hosting provider and you will need to manually manage each Item.
+
+= My file is 500MB+ in size but users cannot download the file after purchasing? =
+Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
 
 = What are shortcodes and how do I use them? =
 
@@ -178,6 +184,11 @@ Action hooks available:
  * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+= 1.2.3 =
+* Fixed issue where currency was not showing for some users
+* Fixed issue where default search would result in 404 for some results
+* Markup percentage is no longer shown on the front-end, only the adjust price is
+
 = 1.2.2 =
 * Fixed intermittent issue where download files would be 0kb
 * Fixed issue where downloaded zip files would unzip as zip

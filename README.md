@@ -44,6 +44,12 @@ Login to your PayPal account, mouse over the Profile menu option and then click 
 Frequently Asked Questions
 --------------------------
 
+= I have 5k+ photos I would like to sell, can Sell Media handle this? =
+* Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. There maybe limits based on your web hosting provider and you will need to manually manage each Item.
+
+= My file is 500MB+ in size but users cannot download the file after purchasing? =
+Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
+
 = What are shortcodes and how do I use them? =
 
 Shortcodes are small snippets of code that when added to a Post, Page or Widget add functionality to your site. You must add the following shortcodes to your preferred Pages to use Sell Media:
@@ -169,6 +175,11 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.2.3 =
+* Fixed issue where currency was not showing for some users
+* Fixed issue where default search would result in 404 for some results
+* Markup percentage is no longer shown on the front-end, only the adjust price is
+
 = 1.2.2 =
 * Fixed intermittent issue where download files would be 0kb
 * Fixed issue where downloaded zip files would unzip as zip
