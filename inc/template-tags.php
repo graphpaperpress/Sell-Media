@@ -69,8 +69,7 @@ function sell_media_get_image_size( $post_id=null ) {
  */
 function sell_media_image_filename( $post_id=null, $echo=true ) {
 
-    $thumb_id = get_post_thumbnail_id( $post_id );
-    $filename = basename( get_attached_file( $thumb_id ) );
+    $filename = basename( get_post_meta( $post_id, '_sell_media_attached_file', true ) );
 
     if ( $echo )
         print $filename;

@@ -69,7 +69,7 @@ if ( $licenses ) {
                             </select>
                         </fieldset>
                     <?php else : ?>
-                        <input type="hidden" id="sell_media_price" value="<?php sell_media_item_price( $_POST['product_id'] ); ?>" />
+                        <input type="hidden" id="sell_media_price" value="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
                     <?php endif; ?>
 
                     <div class="total-container group">
@@ -77,7 +77,7 @@ if ( $licenses ) {
                             <strong><?php _e( 'Total' ); ?></strong>
                         </div>
                         <div class="right">
-                            <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span id="price_target" class="price-target"><?php sell_media_item_price( $_POST['product_id'], $currency=false); ?></span></span>
+                            <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"><?php sell_media_item_price( $_POST['product_id'], $currency=false); ?></span></span>
                         </div>
                     </div>
                     <div class="button-container group">

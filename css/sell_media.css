@@ -117,7 +117,7 @@
   z-index: 10000;
   position: absolute;
   width: 500px;
-  height: 250px;
+  min-height: 250px;
   background: #fff;
   box-shadow: 0 0 40px #000;
   padding: 25px;
