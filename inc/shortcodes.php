@@ -62,15 +62,19 @@ function sell_media_search_shortcode( $atts, $content = null ) {
     ob_start(); ?>
     <div id="sell-media-search" class="sell-media">
         <form name="sell-media-search" action="<?php echo home_url(); ?>/" method="get">
+            <input name="post_type" type="hidden" value="sell_media_item" />
             <span class="sell-media-search-field">
-                <label for="keywords"><?php _e('Keywords', 'sell_media'); ?></label>
-                <input name="post_type" type="hidden" value="sell_media_item" />
-                <input type="text" class="sell-media-search-input" name="keywords" />
+                <label for="Search"><?php _e('Search', 'sell_media'); ?></label>
+                <input type="text" class="sell-media-search-input" name="s" />
             </span>
             <span class="sell-media-search-field">
                 <a href="javascript://" class="sell-media-advanced-search"><?php _e('+ Advanced Search', 'sell_media'); ?></a>
             </span>
             <div class="sell-media-advanced-search-fields">
+                <span class="sell-media-search-field">
+                    <label for="keywords"><?php _e('Keywords', 'sell_media'); ?></label>
+                    <input type="text" class="sell-media-search-input" name="keywords" />
+                </span>
                 <span class="sell-media-search-field">
                     <label for="city"><?php _e('City', 'sell_media'); ?></label>
                     <input type="text" class="sell-media-search-input" name="city" />

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The template for displaying Archive pages.
  *
@@ -8,9 +7,9 @@
  * @package Sell Media
  * @since 0.1
  */
-get_header(); ?>
+get_header(); global $wp_query; ?>
 
-	<?php global $wp_query; if ( get_term_meta( $wp_query->queried_object_id, 'collection_hidden', true ) == "on" ) : ?>
+	<?php if ( get_term_meta( $wp_query->queried_object_id, 'collection_hidden', true ) == "on" ) : ?>
 		<div id="sell-media-archive" class="sell-media">
 			<div id="content" role="main">
 			<?php _e( 'This collection is hidden.', 'sell_media' ); ?>
@@ -23,11 +22,13 @@ get_header(); ?>
 			<header class="entry-header">
 				<h1 class="entry-title">
 					<?php $taxonomy = get_query_var( 'taxonomy' ); ?>
-					<?php if ( $taxonomy ) : ?>
-						<?php global $wp_query; ?>
-						<?php print $taxonomy; ?>: <?php print $wp_query->queried_object->name; ?>
+					<?php if ( $taxonomy && ! empty( $wp_query->queried_object->name ) ) : ?>
+						<?php print $taxonomy; ?>:
+						<?php print $wp_query->queried_object->name; ?>
+					<?php elseif( get_query_var( 's' ) ) : ?>
+						<?php _e('Search Results', 'sell_media'); ?>
 					<?php else : ?>
-						<?php print _e( 'Archive', 'sell_media' ); ?>
+						<?php _e( 'Archive', 'sell_media' ); ?>
 					<?php endif; ?>
 				</h1>
 			</header>
