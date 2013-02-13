@@ -14,10 +14,7 @@ function sell_media_process_download() {
         $email = rawurldecode($_GET['email']);
         $payment = sell_media_verify_download_link( $download, $email );
 
-        // defaulting this to true for now because the method below doesn't work well
-        $has_access = true;
-
-        if ( $payment && $has_access ) {
+        if ( $payment ) {
 
             // Get the file name from the attachment ID
             $pathinfo = pathinfo( get_attached_file( $_GET['id'] ) );
@@ -44,15 +41,17 @@ function sell_media_process_download() {
                 set_magic_quotes_runtime(0);
             }
 
+            $sell_media_upload_dir = sell_media_get_upload_dir();
+            $full_file_path = $sell_media_upload_dir['basedir'] . '/sell_media/' . $attached_file;
+            $size = filesize( $full_file_path );
+
             header("Pragma: no-cache");
             header("Expires: 0");
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
             header("Robots: none");
             header("Content-Type: {$ctype}");
             header("Content-Disposition: attachment; filename={$pathinfo['basename']};");
-
-            $sell_media_upload_dir = sell_media_get_upload_dir();
-            $full_file_path = $sell_media_upload_dir['basedir'] . '/sell_media/' . $attached_file;
+            header("Content-Length: {$size}");
 
             print file_get_contents( $full_file_path );
 
