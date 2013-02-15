@@ -159,7 +159,7 @@ class SellMediaSettings {
         add_settings_field( 'large_size', 'Large', array( &$this, 'field_size_large' ), $this->size_settings_key, 'section_size' );
         add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_size' );
 
-        do_action( 'sell_media_email_settings_hook' );
+        do_action( 'sell_media_size_settings_hook' );
 
     }
 
