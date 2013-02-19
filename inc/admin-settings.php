@@ -202,6 +202,9 @@ class SellMediaSettings {
                     case 'large_size_height' :
                     case 'large_size_price' :
                         $value = (int)$value;
+                        if ( $value == get_option('medium_size_w') || $value == get_option('large_size_w') ){
+                            wp_die('You cannot set the image you want to sell to the same size in your WordPress Media Settings.');
+                        }
                         break;
 
                     /**
