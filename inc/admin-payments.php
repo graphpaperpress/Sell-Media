@@ -60,6 +60,8 @@ function sell_media_payment_render_contact( $post ){
     foreach( $links as $link ){
         print '<p><input type="text" style="width: 100%;" value="' . $link['url'] . '" /></p>';
     }
+
+    do_action('sell_media_additional_customer_meta', $post );
 }
 
 
