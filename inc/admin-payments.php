@@ -43,18 +43,17 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  * @return html
  */
 function sell_media_payment_render_contact( $post ){
+
     print '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
-    $tmp = get_post_custom_values( "_sell_media_payment_first_name", $post->ID );
-    print '<p>' . __( 'First Name' ) . ': <input type="text" name="_sell_media_payment_first_name" value="' . $tmp[0] . '" /></p>';
+    printf( '%s %s %s %s',
+        '<p>'.get_post_meta( $post->ID, '_sell_media_payment_first_name', true ),
+        get_post_meta( $post->ID, '_sell_media_payment_last_name', true ),
+        '<a href="mailto:'.get_post_meta( $post->ID, '_sell_media_payment_user_email', true ).'"'.get_post_meta( $post->ID, '_sell_media_payment_user_email', true ).'</a>',
+        '<a href="'.get_edit_user_link( get_post_meta( $post->ID, '_sell_media_user_id', true ) ).'">Edit</a></p>'
+        );
 
-    $tmp = get_post_custom_values( "_sell_media_payment_last_name", $post->ID );
-    print '<p>' . __( 'Last Name' ) . ': <input type="text" name="_sell_media_payment_last_name" value="' . $tmp[0] . '" /></p>';
-
-    $tmp = get_post_custom_values( "_sell_media_payment_user_email", $post->ID );
-    print '<p>' . __( 'Email' ) . ': <input type="text" name="_sell_media_payment_user_email" value="' . $tmp[0] . '" /></p>';
-
-    print 'Purchase link(s): ';
+    print '<p>' . __('Purchase link(s): ', 'sell_media') . '</p>';
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
 
     foreach( $links as $link ){

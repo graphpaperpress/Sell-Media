@@ -9,7 +9,7 @@
  */
 function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) {
     if ( empty( $purchase_key ) ){
-        $message = __( "Please provide a purchase key.", "sell_media" );
+        return;
     } else {
         $purchase_key = $_GET['purchase_key'];
         $email = $_GET['email'];
@@ -168,18 +168,27 @@ function sell_media_cart_shortcode($atts, $content = null) {
             update_post_meta( $payment_id, '_sell_media_payment_purchase_key', $purchase['purchase_key'] );
             update_post_meta( $payment_id, '_sell_media_payment_amount', $amount );
 
-            // Record the user
-            $password = wp_generate_password( $length=12, $include_standard_special_chars=false );
-            $data = array(
-                'user_login' => $purchase['email'],
-                'user_pass' => $password,
-                'user_email' => $purchase['email'],
-                'first_name' => $user['first_name'],
-                'last_name' => $user['last_name'],
-                'role' => 'sell_media_customer'
-                );
+            global $current_user;
+            do_action( 'sell_media_before_checkout', $user_id, $purchase );
 
-            $user_id = wp_insert_user( $data );
+            // Record the user
+            if ( ! $current_user->ID ){
+                print 'add new user';
+                        $password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+                        $data = array(
+                            'user_login' => $purchase['email'],
+                            'user_pass' => $password,
+                            'user_email' => $purchase['email'],
+                            'first_name' => $user['first_name'],
+                            'last_name' => $user['last_name'],
+                            'role' => 'sell_media_customer'
+                            );
+
+                        $user_id = wp_insert_user( $data );
+            } else {
+                $user_id = $current_user->ID;
+            }
+            update_post_meta( $payment_id, '_sell_media_user_id', $user_id );
 
             $general_settings = get_option( 'sell_media_general_settings' );
             if ( empty( $general_settings['customer_notification'] ) ){
@@ -221,7 +230,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                 <tfoot>
                     <tr class="product-checkout-row">
                         <td colspan="2">
-                            <h4><?php _e( 'Subtotal' , 'sell_media' ) ?></h4>
+                            <div class="sell-media-title"><?php _e( 'Subtotal' , 'sell_media' ) ?></div>
                             <strong><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></strong>
                             <form action="" method="post" id="sell_media_checkout_form">
                                 <?php do_action('sell_media_above_registration_form'); ?>
@@ -229,18 +238,15 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a></p>
                                     <p>
                                     <label><?php _e( 'First Name', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
-                                    <input type="text" class="" id="sell_media_first_name_field" name="first_name" />
-                                    <span id="firstname-error" class="error" style="display:none;"><?php _e( 'First name cannot be empty', 'sell_media' ); ?></span>
+                                    <input type="text" class="" id="sell_media_first_name_field" name="first_name" required />
                                     </p>
                                     <p>
                                     <label><?php _e( 'Last Name', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
-                                    <input type="text" class="" id="sell_media_last_name_field" name="last_name" />
-                                    <span id="lastname-error" class="error" style="display:none;"><?php _e( 'Last name cannot be empty', 'sell_media' ); ?></span>
+                                    <input type="text" class="" id="sell_media_last_name_field" name="last_name" required />
                                     </p>
                                     <p>
                                     <label><?php _e( 'Email', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
-                                    <input type="email" class="" id="sell_media_email_field" name="email" />
-                                    <span id="email-error" class="error" style="display:none;"><?php _e( 'Email isn\'t valid', 'sell_media' ); ?></span>
+                                    <input type="email" class="" id="sell_media_email_field" name="email" required />
                                     </p>
                                 <?php else : ?>
                                         <?php $current_user = wp_get_current_user(); ?>
@@ -266,11 +272,12 @@ function sell_media_cart_shortcode($atts, $content = null) {
                         <tr>
                             <td class="product-details">
                                 <a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php sell_media_item_icon( $item['AttachmentID'], array(75,0) ); ?></a>
-                                <h6 class="sell-media-table-meta"><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></h6>
+                                <div class="sell-media-table-meta"><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></div>
+                                <?php do_action('sell_media_below_product_cart_title', $item); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
                                     <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>
                                     <?php if ( $tmp_term ) : ?>
-                                        <h6 class="sell-media-table-meta"><?php _e( 'License:', 'sell_media' ); ?> <?php print $tmp_term->name; ?></h6>
+                                        <div class="sell-media-table-meta"><?php _e( 'License:', 'sell_media' ); ?> <?php print $tmp_term->name; ?></div>
                                         <p><?php print $tmp_term->description; ?></p>
                                     <?php endif; ?>
                                 <?php endif; ?>
