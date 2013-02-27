@@ -267,32 +267,6 @@ jQuery( document ).ready(function( $ ){
         $('.sell-media-advanced-search-fields').slideToggle();
     });
 
-    $('#sell_media_checkout_form').on('submit', function( event ){
-        if ($('#sell_media_first_name_field').val().length==0){
-            $('#firstname-error').show();
-            event.preventDefault();
-        }
-
-        if ($('#sell_media_last_name_field').val().length==0){
-            $('#lastname-error').show();
-            event.preventDefault();
-        }
-
-        var email = $('#sell_media_email_field').val();
-
-        if ( /(.+)@(.+){2,}\.(.+){2,}/.test(email) ){
-          // valid email
-        } else {
-          $('#email-error').show();
-          event.preventDefault();
-        }
-
-        $('.sell-media-buy-button-checkout').val( 'Loading...' );
-        //event.preventDefault();
-
-        // Validation
-    });
-
     $("#sell-media-checkout table tr:nth-child(odd)").addClass("odd-row");
     $("#sell-media-checkout table td:first-child, #sell-media-checkout table th:first-child").addClass("first");
     $("#sell-media-checkout table td:last-child, #sell-media-checkout table th:last-child").addClass("last");

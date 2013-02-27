@@ -698,6 +698,32 @@ function sell_media_update_payment_status($payment_id, $new_status = 'publish') 
     do_action( 'sell_media_after_update_payment_status', $payment_id, $new_status, $old_status );
 }
 
+function sell_media_build_select( $items=array(), $args=array() ){
+    extract( $args );
+    if ( $required ){
+        $required = " required ";
+        $required_html = '<sup class="sell-media-req">&#42;</sup>';
+    } else {
+        $required = false;
+        $required_html = false;
+    }
+
+    if ( ! $title ){
+        $title = false;
+    }
+
+    ?>
+    <fieldset class="sell-media-state-container">
+        <label class="sell-media-title"><?php _e( $title, 'sell_media' ); ?></label><?php print $required_html; ?><br />
+        <select name="" <?php print $required; ?>>
+            <option></option>
+            <?php foreach( $items as $key => $value ) : ?>
+                <option value="<?php print $key; ?>"><?php print $value; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </fieldset>
+<?php }
+
 function sell_media_state_province_list(){
     $items = array(
         "AL" => "Alabama",
@@ -779,16 +805,8 @@ function sell_media_state_province_list(){
         "WY" => "Wyoming",
         "YK" => "Yukon"
         );
-        ?>
-        <fieldset class="sell-media-state-container">
-        <label class="sell-media-title">State</label><br />
-        <select name="">
-            <?php foreach( $items as $key => $value ) : ?>
-                <option value="<?php print $key; ?>"><?php print $value; ?></option>
-            <?php endforeach; ?>
-        </select>
-        </fieldset>
-<?php }
+    sell_media_build_select( $items, array( 'required' => true, 'title' => 'State/Provience') );
+}
 
 function sell_media_country_list(){
     $items = array(
@@ -1042,13 +1060,5 @@ function sell_media_country_list(){
         "ZM" => "Zambia",
         "ZW" => "Zimbabwe"
         );
-    ?>
-    <fieldset class="sell-media-state-container">
-        <label class="sell-media-title">Country</label><br />
-        <select name="">
-            <?php foreach( $items as $key => $value ) : ?>
-                <option value="<?php print $key; ?>"><?php print $value; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </fieldset>
-<?php }
+    sell_media_build_select( $items, array( 'required' => true, 'title' => 'Country' ) );
+}
