@@ -159,7 +159,7 @@ class SellMediaSettings {
         add_settings_field( 'large_size', 'Large', array( &$this, 'field_size_large' ), $this->size_settings_key, 'section_size' );
         add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_size' );
 
-        do_action( 'sell_media_size_settings_hook' );
+        add_settings_section( 'section_size_hook', '', array( &$this, 'section_size_hook' ), $this->size_settings_key );
 
     }
 
@@ -238,6 +238,10 @@ class SellMediaSettings {
     function section_payment_desc() { echo ''; }
     function section_email_desc() { echo ''; }
     function section_size_desc() { echo ''; }
+
+    function section_size_hook() {
+        do_action( 'sell_media_size_settings_hook' );
+    }
 
     function section_misc_desc() {
         printf( __( 'Settings for Extensions are shown below. <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' );
