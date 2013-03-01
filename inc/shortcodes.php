@@ -248,11 +248,12 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <label><?php _e( 'Email', 'sell_media' ); ?></label><sup class="sell-media-req">&#42;</sup><br />
                                     <input type="email" class="" id="sell_media_email_field" name="email" required />
                                     </p>
+                                    <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php else : ?>
-                                        <?php $current_user = wp_get_current_user(); ?>
-                                        <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
-                                        <input type="hidden" id="sell_media_last_name_field" name="last_name" value="<?php print $current_user->user_lastname; ?>" />
-                                        <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
+                                    <?php $current_user = wp_get_current_user(); ?>
+                                    <input type="hidden" id="sell_media_first_name_field" name="first_name" value="<?php print $current_user->user_firstname; ?>" />
+                                    <input type="hidden" id="sell_media_last_name_field" name="last_name" value="<?php print $current_user->user_lastname; ?>" />
+                                    <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
                                     <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php endif; ?>
                                 <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
