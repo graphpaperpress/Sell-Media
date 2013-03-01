@@ -362,6 +362,7 @@ function sell_media_item_form(){
         <?php if ( count( $licenses ) > 1 ) : ?>
             <fieldset>
                 <legend><?php _e( 'License', 'sell_media' ); ?></legend>
+                    <option></option>
                 <select name="License" value="License" id="sell_media_license_select">
                     <option value="" data-price="0">-- <?php _e( 'Select a License' ); ?> --</option>
                     <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
@@ -384,6 +385,7 @@ function sell_media_item_form(){
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
                 <select id="sell_media_size_select">
+                    <option></option>
                     <option value="<?php sell_media_item_price( $_POST['product_id'], false ); ?>"><?php _e( 'Original', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'] ); ?></option>
                     <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], false, 'small' ); ?>"><?php _e( 'Small', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?></option><?php endif; ?>
                     <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], false, 'medium' ); ?>"><?php _e( 'Medium', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?></option><?php endif; ?>
