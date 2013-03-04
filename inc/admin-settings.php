@@ -24,6 +24,9 @@ class SellMediaSettings {
      * Fired during plugins_loaded (very very early),
      * so don't miss-use this, only actions and filters,
      * current ones speak for themselves.
+     *
+     * @todo remove $option_tabs array and use a dynamic
+     * array (once we dismantel this settings god glass)
      */
     function __construct() {
         add_action( 'init', array( &$this, 'load_settings' ) );
@@ -35,7 +38,16 @@ class SellMediaSettings {
 
         add_action( 'admin_menu', array( &$this, 'add_admin_menus' ) );
 
-        if ( ! empty( $_POST['option_page'] ) && $_POST['option_page'] == 'sell_media_misc_settings' ){
+
+        $option_tabs = array(
+            'sell_media_misc_settings',
+            'sell_media_size_settings',
+            'sell_media_general_settings',
+            'sell_media_payment_settings',
+            'sell_media_email_settings'
+        );
+
+        if ( ! empty( $_POST['option_page'] ) && in_array( $_POST['option_page'], $option_tabs ) ){
             do_action( 'sell_media_settings_init_hook' );
         }
     }
