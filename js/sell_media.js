@@ -218,7 +218,7 @@ jQuery( document ).ready(function( $ ){
 
     $( document ).on('click', '.remove-item-handle', function(){
 
-        $(this).closest('tr').hide();
+        $(this).closest('tr').remove();
 
         count = $(".sell_media-product-list li").size();
 
@@ -240,7 +240,7 @@ jQuery( document ).ready(function( $ ){
                     $('#sell-media-checkout').html( msg );
                 }
 
-                total_items()
+                total_items();
             }
         });
     });
