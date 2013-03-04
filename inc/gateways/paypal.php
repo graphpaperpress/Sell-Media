@@ -277,7 +277,7 @@ function sell_media_process_paypal_ipn() {
             sell_media_update_payment_status( $payment_id, 'publish' );
             sell_media_email_purchase_receipt( $purchase_key, $payment_meta_array['email'], $payment_id );
 
-            do_action( 'sell_media_after_successful_payment', $products_meta_array );
+            do_action( 'sell_media_after_successful_payment', $products_meta_array, $payment_id );
             sell_media_empty_cart();
         }
     }
