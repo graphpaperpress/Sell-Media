@@ -164,12 +164,14 @@ class SellMediaSettings {
         $this->plugin_settings_tabs[$this->size_settings_key] = 'Size & Price';
 
         register_setting( $this->size_settings_key, $this->size_settings_key, array( &$this, 'register_settings_validate') );
-        add_settings_section( 'section_size', 'Image Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
 
+        add_settings_section( 'section_default_download_price', 'Default Download Price', array( &$this, 'section_size_desc' ), $this->size_settings_key );
+        add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_default_download_price' );
+
+        add_settings_section( 'section_size', 'Image Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
         add_settings_field( 'small_size', 'Small', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );
         add_settings_field( 'medium_size', 'Medium', array( &$this, 'field_size_medium' ), $this->size_settings_key, 'section_size' );
         add_settings_field( 'large_size', 'Large', array( &$this, 'field_size_large' ), $this->size_settings_key, 'section_size' );
-        add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_size' );
 
         add_settings_section( 'section_size_hook', '', array( &$this, 'section_size_hook' ), $this->size_settings_key );
 
