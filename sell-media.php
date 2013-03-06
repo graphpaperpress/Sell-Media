@@ -32,8 +32,6 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-settings.php' );
 }
 
-// Update script to new settings
-include( dirname(__FILE__) . '/inc/admin-upgrade.php' );
 
 /**
  * Screen Icon for Sell Media
