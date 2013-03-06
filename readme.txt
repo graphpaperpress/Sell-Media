@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -181,9 +181,23 @@ Action hooks available:
 
 == Upgrade Notice ==
 
- * Double check your Sell Media Settings after upgrading
+* Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+
+= 1.2.4 =
+* Settings: Default price moved to its own section
+* Hook: Updated 'sell_media_after_successful_payment' now accepts an additional parameter
+* Hook: Updated 'sell_media_settings_init_hook' to work on all tabs
+* Hook: Moved 'sell_media_size_settings_hook' to the aprobiate location
+* Hook: Added new hook 'sell_media_below_registration_form'
+* Hook: Added 'sell_media_addtional_cusotmer_meta'
+* Hook: Added sell_media_before_session_add
+* Feature: Options in dialog now default to nothing
+* Feature: Added current state select
+* Removed validation scripts inplace of native browser validation
+* Various bug fixes and styling enhancments
+
 = 1.2.3 =
 * Fixed issue where currency was not showing for some users
 * Fixed issue where default search would result in 404 for some results
