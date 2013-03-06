@@ -86,11 +86,9 @@ Sell Media includes a new "Collections" taxonomy, which you can see on the right
 
 The Password Protection option is located in the Publish box when editing a Sell Media item. Click the Visibility - Public - Edit link, select Password Protected, type in a password and click Save.
 
-= How do I password protect a collection? =
+= How do I hide a collection? =
 
-*This feature will only be available in version 1.0*
-
-Click Sell Media -> Collections -> Add New and fill in the password protect field.
+Click Sell Media -> Collections -> Click "Edit" next to the Collection you want to hide, check the checkbox "Hide" click save.
 
 = How do I hide a collection from being listed on archive pages? =
 
