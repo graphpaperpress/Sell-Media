@@ -28,6 +28,7 @@ function sell_media_process_download() {
                 case "pdf":  $ctype = "application/pdf"; break;
                 case "zip":  $ctype = "application/octet-stream"; break;
                 case "doc":  $ctype = "application/msword"; break;
+                case "docx":  $ctype = "application/msword"; break;
                 case "xls":  $ctype = "application/vnd.ms-excel"; break;
                 case "ppt":  $ctype = "application/vnd.ms-powerpoint"; break;
                 default:     $ctype = "application/force-download";
