@@ -183,6 +183,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.2.5 =
+* Bug: Image size price can now be less than 1
+
 = 1.2.4 =
 * Settings: Default price moved to its own section
 * Hook: Updated 'sell_media_after_successful_payment' now accepts an additional parameter
