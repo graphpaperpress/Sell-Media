@@ -173,7 +173,7 @@ function sell_media_item_size( $post_id=null ){
  * @since 0.1
  * @return string
  */
-function sell_media_item_price( $post_id=null, $currency=true, $size=null ){
+function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo=true ){
 
     /**
      * Get the default price for this Item.
@@ -225,7 +225,12 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null ){
         $price = sell_media_get_currency_symbol() . $price;
     }
 
-    print $price;
+
+    if ( $echo )
+        print $price;
+    else
+        return $price;
+
 }
 
 
@@ -381,15 +386,38 @@ function sell_media_item_form(){
         <?php
         $wp_upload_dir = wp_upload_dir();
         $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
-        if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ): ?>
+        if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
+            <?php $size_settings = get_option('sell_media_size_settings'); ?>
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
                 <select id="sell_media_size_select">
                     <option></option>
-                    <option value="<?php sell_media_item_price( $_POST['product_id'], false ); ?>"><?php _e( 'Original', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'] ); ?></option>
-                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], false, 'small' ); ?>"><?php _e( 'Small', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?></option><?php endif; ?>
-                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], false, 'medium' ); ?>"><?php _e( 'Medium', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?></option><?php endif; ?>
-                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_large_file', true )) : ?><option value="<?php sell_media_item_price( $_POST['product_id'], false, 'large' ); ?>"><?php _e( 'Large', 'sell_media' ); ?>: <?php sell_media_item_price( $_POST['product_id'], true, 'large' ); ?></option><?php endif; ?>
+                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?>
+                        <option value="<?php sell_media_item_price( $_POST['product_id'], false, 'small' ); ?>">
+                            <?php _e( 'Small', 'sell_media' ); ?>
+                            (<?php print $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height']; ?>):
+                            <?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?>
+                        </option>
+                    <?php endif; ?>
+                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?>
+                        <option value="<?php sell_media_item_price( $_POST['product_id'], false, 'medium' ); ?>">
+                            <?php _e( 'Medium', 'sell_media' ); ?>
+                            (<?php print $size_settings['medium_size_width'] . ' x ' . $size_settings['medium_size_height']; ?>):
+                            <?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?>
+                        </option>
+                    <?php endif; ?>
+                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_large_file', true )) : ?>
+                        <option value="<?php sell_media_item_price( $_POST['product_id'], false, 'large' ); ?>">
+                            <?php _e( 'Large', 'sell_media' ); ?>
+                            (<?php print $size_settings['large_size_width'] . ' x ' . $size_settings['large_size_height']; ?>):
+                            <?php sell_media_item_price( $_POST['product_id'], true, 'large' ); ?>
+                        </option>
+                    <?php endif; ?>
+                    <option value="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
+                        <?php _e( 'Original', 'sell_media' ); ?>
+                        (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
+                        <?php sell_media_item_price( $_POST['product_id'] ); ?>
+                    </option>
                 </select>
             </fieldset>
         <?php else : ?>
@@ -422,3 +450,42 @@ function sell_media_item_form(){
     </form>
     <?php do_action( 'sell_media_below_item_form' ); ?>
 <?php }
+
+
+/**
+ * Prints the li's containing the image size name, resolution and price
+ *
+ * @since 1.2.4
+ * @author Zane Matthew
+ */
+function sell_media_image_sizes( $post_id=null ){
+    $size_settings = get_option('sell_media_size_settings');
+    $html = null;
+
+    if ( get_post_meta( $post_id, 'sell_media_small_file', true ) ) {
+        $html .= '<li class="price"><span class="title">' . __( 'Small Price', 'sell_media' ) . ' (' . $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height'] . '): </span>' . sell_media_item_price( $post_id, true, 'small', false ) . '</li>';
+    }
+
+    if ( get_post_meta( $post_id, 'sell_media_medium_file', true ) ){
+        $html .= '<li class="price"><span class="title">' . __( 'Medium Price', 'sell_media' ) . ' (' . $size_settings['medium_size_width'] . ' x ' . $size_settings['medium_size_height'] . '): </span>' . sell_media_item_price( $post_id, true, 'medium', false ) . '</li>';
+    }
+
+    if ( get_post_meta( $post_id, 'sell_media_large_file', true ) ){
+        $html .= '<li class="price"><span class="title">' . __( 'Large Price', 'sell_media' ) . ' (' . $size_settings['large_size_width'] . ' x ' . $size_settings['large_size_height'].'): </span>' . sell_media_item_price( $post_id, true, 'large', false ) . '</li>';
+    }
+
+    print $html;
+}
+
+
+/**
+ * Prints the original image resolution
+ *
+ * @since 1.2.4
+ * @author Zane Matthew
+ */
+function sell_media_original_image_size( $item_id=null ){
+    $wp_upload_dir = wp_upload_dir();
+    $original_size = getimagesize( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $item_id, '_sell_media_attached_file', true ) );
+    print $original_size[0] . ' x ' . $original_size[1];
+}
