@@ -366,7 +366,7 @@ class SellMediaSettings {
      */
     function field_payment_default_price() {
         ?>
-        <input type="text" name="<?php echo $this->size_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['default_price'] ); ?>" />
+        <input type="text" name="<?php echo $this->size_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['default_price'] ); ?>" size="2" />
         <span class="desc"><?php _e( 'The default price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ); ?></span>
         <?php
     }
