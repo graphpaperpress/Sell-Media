@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,7 +184,11 @@ Action hooks available:
 == Changelog ==
 
 = 1.2.5 =
-* Bug: Image size price can now be less than 1
+* Performance improvements
+* Added MS Docs support
+* Updated readme.txt
+* Bug: Price can now be saved in decimal
+* Better styling support
 
 = 1.2.4 =
 * Settings: Default price moved to its own section

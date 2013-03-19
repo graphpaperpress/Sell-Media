@@ -174,7 +174,11 @@ Upgrade Notice
 Changelog
 ---------
 = 1.2.5 =
-* Bug: Image size price can now be less than 1
+* Performance improvements
+* Added MS Docs support
+* Updated readme.txt
+* Bug: Price can now be saved in decimal
+* Better styling support
 
 = 1.2.4 =
 * Settings: Default price moved to its own section
