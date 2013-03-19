@@ -486,6 +486,6 @@ function sell_media_image_sizes( $post_id=null ){
  */
 function sell_media_original_image_size( $item_id=null ){
     $wp_upload_dir = wp_upload_dir();
-    $original_size = getimagesize( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $item_id, '_sell_media_attached_file', true ) );
+    $original_size = @getimagesize( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $item_id, '_sell_media_attached_file', true ) );
     print $original_size[0] . ' x ' . $original_size[1];
 }
