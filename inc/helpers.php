@@ -388,11 +388,11 @@ function sell_media_get_payment_id_by( $key=null, $value=null ){
     }
 
     global $wpdb;
-    $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '{$key}' AND meta_value = '{$value}'";
-    $payment_id = $wpdb->get_var( $wpdb->prepare( $query ) );
+    $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '%s' AND meta_value = '%s'";
+    $payment_id = $wpdb->get_results( $wpdb->prepare( $query, $key, $value ) );
 
     if ( is_null( $payment_id ) ){
-        wp_die("Invalid {$value} for {$key}");
+        return fasle;
     } else {
         return $payment_id;
     }

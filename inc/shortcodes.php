@@ -169,7 +169,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
             update_post_meta( $payment_id, '_sell_media_payment_amount', $amount );
 
             global $current_user;
-            do_action( 'sell_media_before_checkout', $user_id, $purchase );
+            do_action( 'sell_media_before_checkout', $purchase );
 
             // Record the user
             if ( ! $current_user->ID ){
@@ -416,3 +416,41 @@ function sell_media_download_shortcode( $atts ) {
     return $html;
 }
 add_shortcode('sell_media_download_list', 'sell_media_download_shortcode');
+
+/**
+ * Displays the users purchase history sorted by date
+ *
+ * @return string
+ * @since 1.2.5
+ */
+function sell_media_list_download_history_shortcode( $purchase_key=null, $email=null ) {
+
+    if ( is_user_logged_in() ) {
+        global $current_user;
+
+        $payment_ids = sell_media_get_payment_id_by('_sell_media_payment_user_email', $current_user->user_email );
+        if ( $payment_ids ) {
+            ob_start();
+            foreach( $payment_ids as $payment_id ) : ?>
+                <?php
+                $payment_meta_array = get_post_meta( $payment_id->post_id, '_sell_media_payment_meta', true );
+                $products_meta_array = unserialize( $payment_meta_array['products'] );
+                ?>
+                <div class="item">
+                    <?php print get_the_date(); ?><br />
+                    <?php $i = 0; ?>
+                    <?php foreach( sell_media_build_download_link( $payment_id->post_id ) as $link ) : ?>
+                        <a href="<?php print $link['url']; ?>"><?php print get_the_title( $products_meta_array[ $i ]['ProductID'] ); ?></a><br />
+                    <?php $i++; endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+            <?php $html = ob_get_clean();
+        } else {
+        }
+    } else {
+        $html = sprintf( __('Please %s to view your Download History', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
+    }
+
+    return $html;
+}
+add_shortcode( 'sell_media_list_download_history', 'sell_media_list_download_history_shortcode' );
