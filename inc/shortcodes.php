@@ -446,6 +446,7 @@ function sell_media_list_download_history_shortcode( $purchase_key=null, $email=
             <?php endforeach; ?>
             <?php $html = ob_get_clean();
         } else {
+            $html = __('You have no purchases', 'sell_media');
         }
     } else {
         $html = sprintf( __('Please %s to view your Download History', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
