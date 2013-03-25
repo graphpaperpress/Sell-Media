@@ -279,6 +279,9 @@ table#sell-media-checkout-table {
   float: none;
   margin: 0 5px 0 0;
 }
+#sell-media-checkout-table label{
+  float: left;
+}
 .sell-media .remove-item-handle {
   cursor: pointer;
   color: #FF0000;
@@ -290,6 +293,7 @@ table#sell-media-checkout-table {
   position: relative;
   top: 0;
   margin-left: 3px;
+  float: left;
 }
 
 /*= Search
