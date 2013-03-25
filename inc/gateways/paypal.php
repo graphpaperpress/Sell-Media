@@ -57,13 +57,17 @@ function sell_media_process_paypal_purchase( $purchase_data ) {
 
     $price = $_SESSION['cart']['totalPrice'];
 
+    $shipping_args['no_shipping'] = '1';
+    $shipping_args['shipping'] = '0';
+    $shipping_args = apply_filters('sell_media_before_paypal_args', $shipping_args );
+
     $paypal_args = array(
         'cmd'            => '_xclick',
         'amount'         => $price,
         'business'       => $payment_settings['paypal_email'],
         'email'          => $purchase_data['email'],
-        'no_shipping'    => '1',
-        'shipping'       => '0',
+        'no_shipping'    => $shipping_args['no_shipping'],
+        'shipping'       => $shipping_args['shipping'],
         'no_note'        => '1',
         'currency_code'  => $payment_settings['currency'],
         'charset'        => get_bloginfo( 'charset' ),

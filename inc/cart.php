@@ -8,14 +8,20 @@ function sell_media_add_items(){
 
     unset( $_POST['action'] );
 
-    $tmp_items = array();
-    foreach( $_POST as $k => $v ){
-        $tmp_items[$k] = $v;
-    }
+    // $tmp_items = array();
+    // foreach( $_POST as $k => $v ){
+    //     $tmp_items[$k] = $v;
+    // }
 
     do_action('sell_media_before_session_add');
 
-    $_SESSION['cart']['items'][] = $tmp_items;
+    if ( isset( $_SESSION['cart']['items'] ) ){
+        $items = $_SESSION['cart']['items'];
+    } else {
+        // Derive our items from the "downloads tab"
+    }
+
+    // $_SESSION['cart']['items'][] = $tmp_items;
 
     $tmp_total = 0;
     foreach( $_SESSION['cart']['items'] as $value ){
