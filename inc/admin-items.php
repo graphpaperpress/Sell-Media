@@ -64,6 +64,8 @@ function sell_media_admin_items_init(){
         )
     );
 
+    $sell_media_item_meta_fields = apply_filters( 'sell_media_additional_item_meta', $sell_media_item_meta_fields, $post_id );
+
     if ( get_post_meta( $post_id, 'sell_media_small_file', true ) ){
         $sell_media_item_meta_fields[] = array(
             'label' => 'Small <span class="description">'.$size_settings['small_size_width'].' x '.$size_settings['small_size_height'].'</span>',
@@ -172,7 +174,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
                 // checkbox
                 case 'checkbox':
-                    echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ',$meta ? ' checked="checked"' : '','/>
+                    echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ' . checked( $field['value'], "on", false ) . '/>
                         <label for="' . $field['id'] . '">' . __( $field['desc'], 'sell_media' ) . '</label>';
                 break;
 
