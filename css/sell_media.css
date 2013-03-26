@@ -36,6 +36,13 @@
 .sell-media h3 a, .sell-media-buy-text, .sell-media-buy-button {
   text-decoration: none;
 }
+.sell-media-credit {
+  font-size: 11px;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}
+
 /*= Single
 -------------------------------------------------------------- */
 .sell-media .sell-media-content {
