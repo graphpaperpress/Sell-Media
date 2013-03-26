@@ -105,6 +105,7 @@
 /* Settings Page
 -------------------------------------------------------------- */
 .sell-media-settings-size-item { float: left; width: 75px; line-height: 12px; }
+.sell-media-settings-size-item-large { float: left; width: 190px; line-height: 12px; }
 .sell_media_item_page_sell_media_plugin_options .desc { margin-left: 5px; }
 .sell-media-settings-size-item .desc { margin-left: 0; font-size: 10px; }
 
