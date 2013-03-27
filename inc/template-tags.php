@@ -485,7 +485,6 @@ function sell_media_image_sizes( $post_id=null ){
  * @author Zane Matthew
  */
 function sell_media_original_image_size( $item_id=null ){
-    $wp_upload_dir = wp_upload_dir();
-    $original_size = @getimagesize( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $item_id, '_sell_media_attached_file', true ) );
-    print $original_size[0] . ' x ' . $original_size[1];
+    $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
+    print $original_size[1] . ' x ' . $original_size[2];
 }
