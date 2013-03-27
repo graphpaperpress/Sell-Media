@@ -55,7 +55,7 @@ You must setup your Paypal IPN URL for Sell Media to work.
 == Frequently Asked Questions ==
 
 = I have 5k+ photos I would like to sell, can Sell Media handle this? =
-* Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. There maybe limits based on your web hosting provider and you will need to manually manage each Item.
+* Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. That said, the number of images that can be bulk uploaded at once is largely related to server performance. If you are using a cheap, shared web host, then you will need to contact them and ask them to change [PHP settings] (http://php.net/manual/en/function.set-time-limit.php).
 
 = My file is 500MB+ in size but users cannot download the file after purchasing? =
 Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
