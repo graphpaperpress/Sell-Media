@@ -215,6 +215,8 @@ function sell_media_cart_shortcode($atts, $content = null) {
             sell_media_process_paypal_purchase( $purchase );
         }
     }
+
+    $default_price_array = get_option('sell_media_size_settings');
     ob_start(); ?>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
@@ -269,11 +271,31 @@ function sell_media_cart_shortcode($atts, $content = null) {
                 </tfoot>
                 <tbody class="sell-media-product-list">
                     <?php $price = null; foreach( $items as $item_id => $item ) : ?>
-                        <?php if ( $item['CalculatedPrice'] > 0 ) $price = $item['CalculatedPrice']; else $price = 0; ?>
+                        <?php
+                        /**
+                         * @todo this should be derived via an universal price_id, that matches in options and post meta
+                         */
+                        switch( $item['price_id'] ){
+                            case 'sell_media_small_file':
+                                $price = $default_price_array['small_size_price'];
+                                break;
+                            case 'sell_media_medium_file':
+                                $price = $default_price_array['medium_size_price'];
+                                break;
+                            case 'sell_media_large_file':
+                                $price = $default_price_array['large_size_price'];
+                                break;
+                            default:
+                                $price = $default_price_array['default_price'];
+                                break;
+                        }
+                        ?>
                         <tr>
                             <td class="product-details">
-                                <a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php sell_media_item_icon( $item['AttachmentID'], array(75,0) ); ?></a>
-                                <div class="sell-media-table-meta"><a href="<?php print get_permalink( $item['ProductID'] ); ?>"><?php print get_the_title( $item['ProductID'] ); ?></a></div>
+                                <a href="<?php print get_permalink( $item['item_id'] ); ?>">
+                                    <?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?>
+                                </a>
+                                <div class="sell-media-table-meta"><a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a></div>
                                 <?php do_action('sell_media_below_product_cart_title', $item); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
                                     <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>

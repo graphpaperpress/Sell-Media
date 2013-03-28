@@ -7,30 +7,17 @@
 function sell_media_add_items(){
 
     check_ajax_referer('sell_media_add_items', 'sell_media_nonce');
-    unset( $_POST['action'] );
 
-    // $tmp_items = array();
-    // foreach( $_POST as $k => $v ){
-    //     $tmp_items[$k] = $v;
-    // }
+    // Get current cart if any
+    $cart = isset( $_SESSION['cart']['items'] ) ? $_SESSION['cart']['items'] : array();
 
-    do_action('sell_media_before_session_add');
+    // do_action('sell_media_before_session_add');
+    $cart[] = array(
+        'item_id' => (int)$_POST['ProductID'],
+        'price_id' => $_POST['price_id']
+        );
 
-    if ( isset( $_SESSION['cart']['items'] ) ){
-        $items = $_SESSION['cart']['items'];
-    } else {
-        // Derive our items from the "downloads tab"
-    }
-
-    // $_SESSION['cart']['items'][] = $tmp_items;
-
-    $tmp_total = 0;
-    foreach( $_SESSION['cart']['items'] as $value ){
-        $tmp_total += $value['CalculatedPrice'];
-    }
-
-    $total = $tmp_total;
-    $_SESSION['cart']['totalPrice'] = $total;
+    $_SESSION['cart']['items'] = $cart;
 
     die();
 }
