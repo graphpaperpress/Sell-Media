@@ -6,6 +6,7 @@
  */
 function sell_media_add_items(){
 
+    check_ajax_referer('sell_media_add_items', 'sell_media_nonce');
     unset( $_POST['action'] );
 
     // $tmp_items = array();
