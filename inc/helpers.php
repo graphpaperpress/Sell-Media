@@ -60,12 +60,7 @@ add_action( 'template_redirect', 'sell_media_template_redirect',6 );
  * @since 0.1
  */
 function sell_media_load_template() {
-
-    $path = dirname( plugin_dir_path( __FILE__ ) );
-
-    $template = $path . '/themes/' . $_POST['template'];
-
-    load_template( $template );
+    load_template( dirname( plugin_dir_path( __FILE__ ) ) . '/themes/cart.php' );
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_load_template', 'sell_media_load_template' );
