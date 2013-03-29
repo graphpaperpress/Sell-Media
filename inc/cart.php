@@ -65,7 +65,7 @@ function sell_media_remove_item() {
 
     unset( $_SESSION['cart']['items'][$item_index] );
 
-    if ( $_SESSION['cart']['totalPrice'] == 0 ) {
+    if ( empty( $_SESSION['cart']['items'] ) ) {
         print '<p>' . __('You have no items in your cart. ', 'sell_media') . '<a href="'. get_post_type_archive_link('sell_media_item') .'">' . __('Continue shopping', 'sell_media') .'</a>.</p>';
     }
 
