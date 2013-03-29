@@ -9,16 +9,16 @@ function sell_media_add_items(){
     check_ajax_referer('sell_media_add_items', 'sell_media_nonce');
 
     // Get current cart if any
-    $cart = isset( $_SESSION['cart']['items'] ) ? $_SESSION['cart']['items'] : array();
+    $cart = isset( $_SESSION['cart']['items'] ) ? apply_filters( 'sell_media_cart_contents', $_SESSION['cart']['items'] ) : false;
 
-    // do_action('sell_media_before_session_add');
-    $cart[] = array(
-        'item_id' => (int)$_POST['ProductID'],
-        'price_id' => $_POST['price_id']
-        );
+    if ( empty( $cart ) ){
+        $cart[] = array(
+            'item_id' => (int)$_POST['ProductID'],
+            'price_id' => $_POST['price_id']
+            );
 
+    }
     $_SESSION['cart']['items'] = $cart;
-
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_add_items', 'sell_media_add_items' );
@@ -52,8 +52,6 @@ add_action( 'wp_ajax_sell_media_count_cart', 'sell_media_count_cart' );
 function sell_media_remove_item() {
 
     $item_index = $_POST['item_id'];
-
-    $_SESSION['cart']['totalPrice'] = $_SESSION['cart']['totalPrice'] - $_SESSION['cart']['items'][$item_index]['CalculatedPrice'];
 
     unset( $_SESSION['cart']['items'][$item_index] );
 

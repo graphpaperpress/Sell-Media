@@ -296,7 +296,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?>
                                 </a>
                                 <div class="sell-media-table-meta"><a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a></div>
-                                <?php do_action('sell_media_below_product_cart_title', $item); ?>
+                                <?php do_action('sell_media_below_product_cart_title', $item, $item['item_id'], $item['price_id']); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
                                     <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>
                                     <?php if ( $tmp_term ) : ?>
@@ -306,7 +306,10 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php endif; ?>
                             </td>
                             <td class="product-price">
-                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span> <br /><span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?></span>
+                                <span class="currency-symbol">
+                                    <?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span> <br /><span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?>
+                                    price id: <?php print $item['price_id']; ?>
+                                </span>
                             </td>
                         </tr>
                     <?php endforeach; ?>
