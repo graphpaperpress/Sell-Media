@@ -101,7 +101,7 @@ add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
  * @since 0.1
  */
 function sell_media_cart_shortcode($atts, $content = null) {
-
+// unset($_SESSION['cart']);
     $i = 0;
 
     if ( isset( $_SESSION['cart']['items'] ) )
@@ -218,6 +218,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
     $default_price_array = get_option('sell_media_size_settings');
     ob_start(); ?>
+    <pre><?php print_r( $_SESSION ); ?></pre>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
@@ -272,9 +273,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                 <tbody class="sell-media-product-list">
                     <?php $price = null; foreach( $items as $item_id => $item ) : ?>
                         <?php
-                        /**
-                         * @todo this should be derived via an universal price_id, that matches in options and post meta
-                         */
+
                         switch( $item['price_id'] ){
                             case 'sell_media_small_file':
                                 $price = $default_price_array['small_size_price'];
@@ -289,6 +288,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 $price = $default_price_array['default_price'];
                                 break;
                         }
+
                         ?>
                         <tr>
                             <td class="product-details">

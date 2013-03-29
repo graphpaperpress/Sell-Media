@@ -8,17 +8,39 @@ function sell_media_add_items(){
 
     check_ajax_referer('sell_media_add_items', 'sell_media_nonce');
 
-    // Get current cart if any
-    $cart = isset( $_SESSION['cart']['items'] ) ? apply_filters( 'sell_media_cart_contents', $_SESSION['cart']['items'] ) : false;
+print "post:";
+print_r( $_POST );
 
-    if ( empty( $cart ) ){
-        $cart[] = array(
+    // Get current cart if any if not set $cart to be an empty array
+    $cart = isset( $_SESSION['cart']['items'] ) ? $_SESSION['cart']['items'] : array();
+
+    // Get any additional items
+    $to_add = array();
+    $to_add = apply_filters('sell_media_additional_items', $to_add);
+
+print "current: ";
+print_r( $cart );
+
+    // If we don't have additional items we use whats in $_POST
+    if ( empty( $to_add) ){
+        print "items to add:";
+        $items[] = array(
             'item_id' => (int)$_POST['ProductID'],
             'price_id' => $_POST['price_id']
-            );
-
+        );
+        print_r( $items );
+        $items = array_merge( $cart, $items );
+    } else {
+        // We have additional items and merge the current cart with the new items to add
+        print "adding additional items:";
+        $items = array_merge( $cart, $to_add );
     }
-    $_SESSION['cart']['items'] = $cart;
+
+print "updated: ";
+print_r( $cart );
+
+    // Update our session with the new items
+    $_SESSION['cart']['items'] = $items;
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_add_items', 'sell_media_add_items' );
