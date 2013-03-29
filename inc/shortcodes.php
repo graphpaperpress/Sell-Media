@@ -218,7 +218,6 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
     $default_price_array = get_option('sell_media_size_settings');
     ob_start(); ?>
-    <pre><?php print_r( $_SESSION ); ?></pre>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
@@ -274,19 +273,25 @@ function sell_media_cart_shortcode($atts, $content = null) {
                     <?php $price = null; foreach( $items as $item_id => $item ) : ?>
                         <?php
 
-                        switch( $item['price_id'] ){
-                            case 'sell_media_small_file':
-                                $price = $default_price_array['small_size_price'];
-                                break;
-                            case 'sell_media_medium_file':
-                                $price = $default_price_array['medium_size_price'];
-                                break;
-                            case 'sell_media_large_file':
-                                $price = $default_price_array['large_size_price'];
-                                break;
-                            default:
-                                $price = $default_price_array['default_price'];
-                                break;
+                        $filtered_price = apply_filters( 'sell_media_filtered_price', $item['price_id'] );
+
+                        if ( empty( $filtered_price ) ){
+                            switch( $item['price_id'] ){
+                                case 'sell_media_small_file':
+                                    $price = $default_price_array['small_size_price'];
+                                    break;
+                                case 'sell_media_medium_file':
+                                    $price = $default_price_array['medium_size_price'];
+                                    break;
+                                case 'sell_media_large_file':
+                                    $price = $default_price_array['large_size_price'];
+                                    break;
+                                default:
+                                    $price = $default_price_array['default_price'];
+                                    break;
+                            }
+                        } else {
+                            $price = $filtered_price;
                         }
 
                         ?>
@@ -308,7 +313,6 @@ function sell_media_cart_shortcode($atts, $content = null) {
                             <td class="product-price">
                                 <span class="currency-symbol">
                                     <?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span> <br /><span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?>
-                                    price id: <?php print $item['price_id']; ?>
                                 </span>
                             </td>
                         </tr>
