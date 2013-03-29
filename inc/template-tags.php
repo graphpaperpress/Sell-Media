@@ -347,6 +347,7 @@ function sell_media_search_warning_surpression( $wp_query ){
 }
 add_action( 'parse_query', 'sell_media_search_warning_surpression' );
 
+
 function sell_media_item_form(){
     $general_settings = get_option( 'sell_media_general_settings' );
     $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
@@ -393,27 +394,27 @@ function sell_media_item_form(){
                 <select id="sell_media_size_select" name="price_id">
                     <option></option>
                     <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?>
-                        <option value="sell_media_small_file" data-price="<?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?>">
+                        <option value="sell_media_small_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'small' ); ?>">
                             <?php _e( 'Small', 'sell_media' ); ?>
                             (<?php print $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height']; ?>):
                             <?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?>
                         </option>
                     <?php endif; ?>
                     <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?>
-                        <option value="sell_media_medium_file" data-price="<?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?>">
+                        <option value="sell_media_medium_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'medium' ); ?>">
                             <?php _e( 'Medium', 'sell_media' ); ?>
                             (<?php print $size_settings['medium_size_width'] . ' x ' . $size_settings['medium_size_height']; ?>):
                             <?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?>
                         </option>
                     <?php endif; ?>
                     <?php if (get_post_meta( $_POST['product_id'], 'sell_media_large_file', true )) : ?>
-                        <option value="sell_media_large_file" data-price="<?php sell_media_item_price( $_POST['product_id'], true, 'large' ); ?>">
+                        <option value="sell_media_large_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'large' ); ?>">
                             <?php _e( 'Large', 'sell_media' ); ?>
                             (<?php print $size_settings['large_size_width'] . ' x ' . $size_settings['large_size_height']; ?>):
                             <?php sell_media_item_price( $_POST['product_id'], true, 'large' ); ?>
                         </option>
                     <?php endif; ?>
-                    <option value="sell_meida_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'] ); ?>">
+                    <option value="sell_meida_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
                         <?php _e( 'Original', 'sell_media' ); ?>
                         (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
                         <?php sell_media_item_price( $_POST['product_id'] ); ?>
@@ -421,7 +422,7 @@ function sell_media_item_form(){
                 </select>
             </fieldset>
         <?php else : ?>
-            <input type="hidden" id="sell_media_price" value="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
+            <input type="hidden" id="sell_media_price" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
         <?php endif; ?>
         <?php do_action( 'sell_media_cart_below_size' ); ?>
 
