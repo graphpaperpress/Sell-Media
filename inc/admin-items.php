@@ -229,7 +229,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="' . $link . '" size="30" />';
                     print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload', 'sell_media').'</a><br class="clear"/>';
                     print '<div class="sell-media-upload-trigger">';
-                    print '<div class="sell-media-temp-target">'.sell_media_item_icon( $attachment_id, 'medium', false ).'</div>';
+                    print '<div class="sell-media-temp-target">'.sell_media_item_icon( $attachment_id, 'thumbnail', false ).'</div>';
                     print '</div>';
 
 
