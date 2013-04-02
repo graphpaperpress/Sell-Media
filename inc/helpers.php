@@ -622,6 +622,24 @@ add_action( 'admin_head', 'sell_media_admin_menu_icon' );
 
 
 /**
+ * Sell Media Enqueue Styles
+ *
+ * Enqueue the Sell Media style chosen on the settings page.
+ *
+ * @since 1.2.6
+ * @return void
+*/
+function sell_media_enqueue_styles(){
+    $settings = get_option( 'sell_media_general_settings' );
+    if ( isset( $settings['style'] ) && '' != $settings['style'] )
+        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-' . $settings['style'] . '.css' );
+    else
+        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-light.css' );
+}
+add_action( 'wp_enqueue_scripts', 'sell_media_enqueue_styles' );
+
+
+/**
  * Echos the pagination for Archive pages.
  *
  * @since 1.0.1

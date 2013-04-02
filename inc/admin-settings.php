@@ -70,6 +70,7 @@ class SellMediaSettings {
             'checkout_page' => '',
             'thanks_page' => '',
             'customer_notification' => '',
+            'style' => '',
             'plugin_credit' => ''
         ), $this->general_settings );
 
@@ -117,6 +118,7 @@ class SellMediaSettings {
         add_settings_field( 'checkout_page', 'Checkout Page', array( &$this, 'field_general_checkout_page' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'thanks_page', 'Thanks Page', array( &$this, 'field_general_thanks_page' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'customer_notification', 'Customer Notification', array( &$this, 'field_general_customer_notification' ), $this->general_settings_key, 'section_general' );
+        add_settings_field( 'style', 'Style', array( &$this, 'field_general_style' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'plugin_credit', 'Plugin Credit', array( &$this, 'field_general_plugin_credit' ), $this->general_settings_key, 'section_general' );
 
         do_action( 'sell_media_general_settings_hook' );
@@ -313,6 +315,19 @@ class SellMediaSettings {
             <option value="1" <?php selected( $this->general_settings['customer_notification'], 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
         </select>
         <span class="desc"><?php _e( 'Notify the customer of their site registration.', 'sell_media' ); ?></span>
+        <?php
+    }
+
+    /*
+     * Plugin Style
+     */
+    function field_general_style(){
+        ?>
+        <select name="<?php echo $this->general_settings_key; ?>[style]" id="<?php echo $this->general_settings_key; ?>[style]">
+            <option value="light" <?php selected( $this->general_settings['style'], 'light' ); ?>><?php _e( 'Light', 'sell_media' ); ?></option>
+            <option value="dark" <?php selected( $this->general_settings['style'], 'dark' ); ?>><?php _e( 'Dark', 'sell_media' ); ?></option>
+        </select>
+        <span class="desc"><?php _e( 'Choose the style of your theme. Sell Media will load styles to match your theme.', 'sell_media' ); ?></span>
         <?php
     }
 

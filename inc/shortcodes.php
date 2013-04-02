@@ -240,6 +240,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                             <form action="" method="post" id="sell_media_checkout_form">
                                 <?php do_action('sell_media_above_registration_form'); ?>
                                 <?php if ( ! is_user_logged_in() ) : ?>
+                                    <h3 class="checkout-title"><?php _e( 'Create Account', 'sell_media' ); ?></h3>
                                     <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a></p>
                                     <p>
                                     <label><?php _e( 'First Name', 'sell_media' ); ?></label>
@@ -262,10 +263,11 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php endif; ?>
                                 <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
-                                        <?php _e('You are logged in as an Admin and cannot purchase this item from yourself.', 'sell_media' ); ?>
+                                        <p class="desc"><?php _e('You are logged in as an Admin and cannot purchase this item from yourself.', 'sell_media' ); ?></p>
                                 <?php else : ?>
                                     <div class="button-container">
-                                        <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Checkout', 'sell_media'); ?>" />
+                                        <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
+                                        <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
                                     </div>
                                 <?php endif; ?>
                             </form>
