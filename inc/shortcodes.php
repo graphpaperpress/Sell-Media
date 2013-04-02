@@ -296,9 +296,6 @@ function sell_media_cart_shortcode($atts, $content = null) {
                         } else {
                             $price = $filtered_price;
                         }
-                        echo '<pre>';
-                        print_r($item);
-                        echo '</pre>';
 
                         ?>
                         <tr>
