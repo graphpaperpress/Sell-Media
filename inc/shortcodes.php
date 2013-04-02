@@ -226,12 +226,13 @@ function sell_media_cart_shortcode($atts, $content = null) {
                 <thead>
                     <tr class="sell-media-header">
                         <th class="sell-media-header-details"><h3><?php _e('Item', 'sell_media'); ?></h3></th>
+                        <th class="sell-media-header-quantity"><h3><?php _e('Quantity', 'sell_media'); ?></h3></th>
                         <th class="sell-media-header-price"><h3><?php _e('Price', 'sell_media'); ?></h3></th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr class="product-checkout-row">
-                        <td colspan="2">
+                        <td colspan="3">
                             <div class="sell-media-subtotal">
                                 <div class="sell-media-title"><?php _e( 'Subtotal' , 'sell_media' ) ?></div>
                                 <strong><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></strong>
@@ -295,6 +296,9 @@ function sell_media_cart_shortcode($atts, $content = null) {
                         } else {
                             $price = $filtered_price;
                         }
+                        echo '<pre>';
+                        print_r($item);
+                        echo '</pre>';
 
                         ?>
                         <tr>
@@ -311,6 +315,15 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                         <p><?php print $tmp_term->description; ?></p>
                                     <?php endif; ?>
                                 <?php endif; ?>
+                            </td>
+                            <td class="product-quantity">
+                                <?php
+                                    if ( ! empty( $item['price_id']['quantity'] ) )
+                                        $qty = $item['price_id']['quantity'];
+                                    else
+                                        $qty = '1';
+                                ?>
+                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="sell_media_item_qty" value="<?php echo $qty; ?>" class="small-text">
                             </td>
                             <td class="product-price">
                                 <span class="currency-symbol">
