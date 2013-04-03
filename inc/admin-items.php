@@ -226,10 +226,11 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     }
                     $wp_upload_dir = wp_upload_dir();
                     $sell_media_attached_file = wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) );
+                    $file_url = empty( $sell_media_attached_file ) ? null : $wp_upload_dir['baseurl'] . '/' . $sell_media_attached_file;
 
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
                     print '<input type="hidden" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="' . $sell_media_attached_file . '" size="30" />';
-                    print '<input type="text" value="' . $wp_upload_dir['baseurl'] . '/' . $sell_media_attached_file . '" />';
+                    print '<input type="text" value="' . $file_url . '" />';
                     print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload', 'sell_media').'</a><br class="clear"/>';
                     print '<div class="sell-media-upload-trigger">';
                     print '<div class="sell-media-temp-target">'.sell_media_item_icon( $attachment_id, 'thumbnail', false ).'</div>';
