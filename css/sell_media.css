@@ -197,7 +197,6 @@
 
 /*= Checkout
 -------------------------------------------------------------- */
-
 table#sell-media-checkout-table, #sell-media-checkout-table tbody, #sell-media-checkout-table tfoot, #sell-media-checkout-table thead, #sell-media-checkout-table tr, #sell-media-checkout-table th, #sell-media-checkout-table td {
   margin: 0;
   padding: 0;
@@ -265,9 +264,6 @@ table#sell-media-checkout-table {
 #sell-media-checkout-table input:invalid,
 #sell-media-checkout-table textarea:invalid {
   border: 1px solid #FF0000;
-}
-#sell-media-checkout-table input[type="number"].small-text {
-  width: 30px;
 }
 #sell-media-checkout-table .checkout-title {
   margin-bottom: 1em;
@@ -470,7 +466,6 @@ input[type="submit"].sell-media-buy-button-success:active {
 
 /*= sell_media_download_list shortcode
 ------------------------------------------------------------------- */
-
 .download_lists {
   clear:both;
 }
@@ -486,4 +481,10 @@ input[type="submit"].sell-media-buy-button-success:active {
   padding-top: 20px;
   color: #BBB;
   font-size: 12px;
+}
+
+/*= Form styling
+------------------------------------------------------------------- */
+.sell-media-form input[type="number"].small-text {
+  width: 30px;
 }

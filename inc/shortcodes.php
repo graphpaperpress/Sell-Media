@@ -222,6 +222,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
         <?php else : ?>
+            <form action="" method="post" id="sell_media_checkout_form" class="sell-media-form">
             <table id="sell-media-checkout-table">
                 <thead>
                     <tr class="sell-media-header">
@@ -237,7 +238,6 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <div class="sell-media-title"><?php _e( 'Subtotal' , 'sell_media' ) ?></div>
                                 <strong><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></strong>
                             </div>
-                            <form action="" method="post" id="sell_media_checkout_form">
                                 <?php do_action('sell_media_above_registration_form'); ?>
                                 <?php if ( ! is_user_logged_in() ) : ?>
                                     <h3 class="checkout-title"><?php _e( 'Create Account', 'sell_media' ); ?></h3>
@@ -270,7 +270,6 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                         <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
                                     </div>
                                 <?php endif; ?>
-                            </form>
                         </td>
                     </tr>
                 </tfoot>
@@ -299,6 +298,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                             $price = $filtered_price;
                         }
 
+                        $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
                         ?>
                         <tr>
                             <td class="product-details">
@@ -316,23 +316,19 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php endif; ?>
                             </td>
                             <td class="product-quantity">
-                                <?php
-                                    if ( ! empty( $item['price_id']['quantity'] ) )
-                                        $qty = $item['price_id']['quantity'];
-                                    else
-                                        $qty = '1';
-                                ?>
-                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="sell_media_item_qty" value="<?php echo $qty; ?>" class="small-text">
+                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $qty; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price; ?>" />
                             </td>
                             <td class="product-price">
-                                <span class="currency-symbol">
-                                    <?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target"><?php print $price; ?></span> <br /><span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?>
-                                </span>
+                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span>
+                                <span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price; ?></span>
+                                <br />
+                                <span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?></span>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </form>
         <?php endif; ?>
     </div>
     <?php return ob_get_clean();

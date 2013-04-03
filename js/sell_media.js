@@ -273,4 +273,48 @@ jQuery( document ).ready(function( $ ){
     $("#sell-media-checkout table td:first-child, #sell-media-checkout table th:first-child").addClass("first");
     $("#sell-media-checkout table td:last-child, #sell-media-checkout table th:last-child").addClass("last");
 
+
+    /**
+     * Calculate our total, round it to the nearst hundreds
+     * and update the html our price target.
+     */
+    function sell_media_update_total(){
+        var total = 0;
+        $('.item-price-target').each(function(){
+            total = +( $(this).text()) + +total;
+        });
+        console.log( total );
+        $('.price-target').html( total.toFixed(2) );
+    }
+
+
+    /**
+     * Update our sub-total, if our sub-total is less than 0 we set
+     * it to ''. Then update the html of our sub-total target.
+     */
+    function sell_media_update_sub_total(){
+        $('.sell-media-quantity').each(function(){
+            item_id = $(this).attr('data-id');
+            sub_total = +$(this).attr('data-price') * +$('#quantity-' + item_id ).val();
+
+            if ( sub_total <= 0 )
+                sub_total = 0;
+
+            $( '#sub-total-target-' + item_id ).html( sub_total.toFixed(2) );
+        });
+    }
+
+
+    sell_media_update_total();
+    sell_media_update_sub_total();
+
+    /**
+     * If the user clicks inside of our input box and manually updates the quantiy
+     * we run the sub-total and total functions.
+     */
+    $(document).on('change', '.sell-media-quantity', function(){
+        sell_media_update_sub_total();
+        sell_media_update_total();
+    });
+
 });
