@@ -39,8 +39,8 @@
 .sell-media-credit {
   font-size: 11px;
   position: absolute;
-  bottom: 5%;
-  left: 5%;
+  bottom: 25px;
+  left: 25px;
 }
 
 /*= Single
@@ -163,7 +163,7 @@
   background: url(../images/cart.png) no-repeat 0 50%;
 }
 .sell-media-cart-dialog fieldset {
-  border: 1px solid #ddd;
+  margin: 0px 0 10px;
 }
 .sell-media-cart-dialog legend {
   margin: 0 5px;

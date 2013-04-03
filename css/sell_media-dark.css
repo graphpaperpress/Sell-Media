@@ -22,3 +22,8 @@ table#sell-media-checkout-table {
 input, textarea {
 	color: #111;
 }
+
+/* Cart dialog */
+.sell-media-cart-dialog fieldset {
+    border: 1px solid #ddd;
+}

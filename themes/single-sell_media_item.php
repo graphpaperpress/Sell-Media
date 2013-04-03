@@ -20,7 +20,7 @@ get_header(); ?>
 		<div class="sell-media-meta">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<ul>
-				<li class="filename"><span class="title"><?php _e( 'Filename', 'sell_media' ); ?>:</span> <?php sell_media_image_filename( $post->ID); ?></li>
+				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
 
 				<?php if( sell_media_item_size( $post->ID ) ) : ?>
 					<li class="size">

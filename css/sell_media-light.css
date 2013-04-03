@@ -19,3 +19,8 @@ table#sell-media-checkout-table {
 #sell-media-checkout-table textarea {
     border: 1px solid #ddd;
 }
+
+/* Cart dialog */
+.sell-media-cart-dialog fieldset {
+    border: 1px solid #ddd;
+}
