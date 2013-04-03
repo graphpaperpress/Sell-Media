@@ -247,6 +247,9 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
     if ( empty( $attachment_id ) )
         return;
 
+    if ( ! empty( $_POST['attachment_size'] ) )
+        $size = $_POST['attachment_size'];
+
     $mime_type = get_post_mime_type( $attachment_id );
     $image_height = null;
     $image_width = null;

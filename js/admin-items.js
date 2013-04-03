@@ -34,11 +34,12 @@ jQuery( document ).ready(function( $ ){
 
             // Do something with attachment.id and/or attachment.url here
             $('.sell-media-item-table #sell_media_selected_file_id').attr( 'value', attachment.id );
-            $('.sell-media-item-table #_sell_media_attached_file').attr( 'value', attachment.url );
+            $('.sell-media-item-table #_sell_media_attached_file').attr( 'value', attachment.sizes.thumbnail.url );
 
             var data = {
                 action: "sell_media_item_icon",
-                attachment_id: attachment.id
+                attachment_id: attachment.id,
+                attachment_size: "thumbnail"
             };
 
             $.ajax({
