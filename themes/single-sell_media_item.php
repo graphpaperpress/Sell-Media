@@ -15,6 +15,7 @@ get_header(); ?>
 		<div class="sell-media-content">
 			<?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
 			<div><?php the_content(); ?></div>
+			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
 		</div>
 
 		<div class="sell-media-meta">

@@ -26,9 +26,7 @@ $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id
             <div class="right">
                 <?php sell_media_item_form(); ?>
             </div>
-            <?php $settings = get_option( 'sell_media_general_settings' ); if ( true == $settings['plugin_credit'] ) { ?>
-                <div class="sell-media-credit"><?php _e( 'Shopping cart by <a href="http://graphpaperpress.com/plugins/sell-media/" target="_blank" title="Sell Media WordPress plugin">Sell Media</a>', 'sell_media' ); ?></div>
-            <?php } ?>
+            <div class="sell-media-credit"><?php sell_media_plugin_credit(); ?></div>
         </div>
     </div>
 </div>

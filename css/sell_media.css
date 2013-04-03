@@ -38,6 +38,8 @@
 }
 .sell-media-credit {
   font-size: 11px;
+}
+.sell-media-cart-dialog .sell-media-credit {
   position: absolute;
   bottom: 25px;
   left: 25px;

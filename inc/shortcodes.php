@@ -270,6 +270,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                         <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
                                     </div>
                                 <?php endif; ?>
+                                <p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
                         </td>
                     </tr>
                 </tfoot>

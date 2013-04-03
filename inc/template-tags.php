@@ -488,3 +488,19 @@ function sell_media_original_image_size( $item_id=null ){
     $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
     print $original_size[1] . ' x ' . $original_size[2];
 }
+
+
+/**
+ * Optionally prints the plugin credit
+ * Off by default in compliance with WordPress best practices
+ * http://wordpress.org/extend/plugins/about/guidelines/
+ *
+ * @since 1.2.6
+ * @author Thad Allender
+ */
+function sell_media_plugin_credit() {
+    $settings = get_option( 'sell_media_general_settings' );
+    if ( true == $settings['plugin_credit'] ) {
+        printf( __( 'Shopping cart by <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', 'sell_media' ) );
+    }
+}
