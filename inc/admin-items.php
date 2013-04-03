@@ -109,7 +109,13 @@ function sell_media_admin_items_init(){
 }
 add_action('admin_init', 'sell_media_admin_items_init');
 
-add_action( 'edit_form_advanced', 'sell_media_editor' );
+
+/**
+ * Sell Media Editor
+ *
+ * @author Zane Matthew
+ * @since 0.1
+ */
 function sell_media_editor() {
 
     global $post_type;
@@ -119,6 +125,7 @@ function sell_media_editor() {
     global $post;
     wp_editor( stripslashes_deep( get_post_field( 'post_content', $post->ID ) ), 'sell_media_editor' );
 }
+add_action( 'edit_form_advanced', 'sell_media_editor' );
 
 
 /**
