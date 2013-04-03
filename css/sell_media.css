@@ -354,7 +354,7 @@ input[type="submit"].sell-media-buy-button {
 input[type="submit"].sell-media-purchased {
   color: green;
 }
-input[type="submit"].sell-media-buy-button:active
+input[type="submit"].sell-media-buy-button:active,
 input[type="submit"].sell-media-buy-button:hover,
 .sell-media-buy-button:hover,
 .sell-media-buy-button:active,
@@ -363,6 +363,8 @@ input[type="submit"].sell-media-buy-button:hover,
 .sell-media-buy-button[disabled] {
   background-color: #e6e6e6;
   *background-color: #d9d9d9;
+  border: 1px solid #cccccc;
+  *border: 0;
 }
 .sell-media-buy-button:active,
 .sell-media-buy-button.active {
