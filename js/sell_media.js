@@ -283,7 +283,6 @@ jQuery( document ).ready(function( $ ){
         $('.item-price-target').each(function(){
             total = +( $(this).text()) + +total;
         });
-        console.log( total );
         $('.price-target').html( total.toFixed(2) );
     }
 
