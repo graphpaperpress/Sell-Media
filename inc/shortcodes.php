@@ -284,15 +284,19 @@ function sell_media_cart_shortcode($atts, $content = null) {
                             switch( $item['price_id'] ){
                                 case 'sell_media_small_file':
                                     $price = $default_price_array['small_size_price'];
+                                    $size = __("Small", "sell_media");
                                     break;
                                 case 'sell_media_medium_file':
                                     $price = $default_price_array['medium_size_price'];
+                                    $size = __("Medium", "sell_media");
                                     break;
                                 case 'sell_media_large_file':
                                     $price = $default_price_array['large_size_price'];
+                                    $size = __("Large", "sell_media");
                                     break;
                                 default:
                                     $price = $default_price_array['default_price'];
+                                    $size = __("Original", "sell_media");
                                     break;
                             }
                         } else {
@@ -300,13 +304,19 @@ function sell_media_cart_shortcode($atts, $content = null) {
                         }
 
                         $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
+                        $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
+                        $license = empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name );
+                        $size_name = empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size );
+
                         ?>
                         <tr>
                             <td class="product-details">
-                                <a href="<?php print get_permalink( $item['item_id'] ); ?>">
-                                    <?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?>
-                                </a>
-                                <div class="sell-media-table-meta"><a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a></div>
+                                <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?></a>
+                                <div class="sell-media-table-meta">
+                                    <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a>
+                                    <div class="sell-media-license"><?php print $license; ?></div>
+                                    <div class="sell-media-size"><?php print $size_name; ?></div>
+                                </div>
                                 <?php do_action('sell_media_below_product_cart_title', $item, $item['item_id'], $item['price_id']); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
                                     <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>

@@ -3,6 +3,8 @@
  * Add items to $_SESSION for shopping cart via $_POST
  *
  * @since 0.1
+ * @todo Update all price_id to be size_id
+ * @todo Update all price id (array) to be part of item array
  */
 function sell_media_add_items(){
 
@@ -16,10 +18,11 @@ function sell_media_add_items(){
     $to_add = apply_filters('sell_media_additional_items', $to_add);
 
     // If we don't have additional items we use whats in $_POST
-    if ( empty( $to_add) ){
+    if ( empty( $to_add ) ){
         $items[] = array(
             'item_id' => (int)$_POST['ProductID'],
-            'price_id' => $_POST['price_id']
+            'price_id' => $_POST['price_id'],
+            'license_id' => $_POST['License']
         );
         $items = array_merge( $cart, $items );
     } else {
