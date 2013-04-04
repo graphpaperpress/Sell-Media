@@ -20,36 +20,15 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * Determine the price of an Item based on License Type. Once
-     * determined, update the needed dom elements with the new price
+     * Determine the price of an Item based on the below formula:
      *
-     * Formula: price + (( percent * .01 ) * price ))
+     * amount = price + (( license_markup * .01 ) * price ))
+     *
      */
-    function calculate_total(){
+    function calculate_total( license_markup, price ){
 
-        if ( $('#sell_media_price').length ){
-            price = $('#sell_media_price').attr('data-price');
-        } else {
-            price = $('#sell_media_size_select option:selected').attr('data-price');
-        }
+        finalPrice = ( +price + ( +license_markup * .01 ) * price ).toFixed(2);
 
-        if ( typeof( price ) == "undefined" ) return;
-
-        /**
-         * If this item has NO license selected we default
-         * markup to 0.
-         */
-        if ( $('#sell_media_license_select option:selected').length ){
-            markUp = $('#sell_media_license_select option:selected').attr('data-price');
-        } else {
-            markUp = 0;
-        }
-
-        finalPrice = ( +price + ( +markUp * .01 ) * price ).toFixed(2);
-
-        /**
-         * Update our price that the user sees and update the price being passed onto $_POST
-         */
         $('.price-target').html( finalPrice );
         $('.price-target').val( finalPrice );
     }
@@ -114,7 +93,6 @@ jQuery( document ).ready(function( $ ){
     /**
      * Run the following code below the DOM is ready update the cart count
      */
-    cart_count();
     $('.price-target').html(total_items());
 
 
@@ -151,7 +129,6 @@ jQuery( document ).ready(function( $ ){
             success: function( msg ){
                 $( ".sell-media-cart-dialog-target" ).fadeIn().html( msg ); // Give a smooth fade in effect
                 cart_count();
-                calculate_total();
             }
         });
 
@@ -180,7 +157,7 @@ jQuery( document ).ready(function( $ ){
      */
     $( document ).on('change', '#sell_media_license_select', function(){
         $("option:selected", this).each(function(){
-            calculate_total();
+            calculate_total( $(this).attr('data-price'), $('#sell_media_size_select :selected').attr('data-price') );
         });
     });
 
@@ -189,7 +166,7 @@ jQuery( document ).ready(function( $ ){
      */
     $( document ).on('change', '#sell_media_size_select', function(){
         $("option:selected", this).each(function(){
-            calculate_total();
+            calculate_total( $('#sell_media_license_select :selected').attr('data-price'), $(this).attr('data-price') );
         });
     });
 
