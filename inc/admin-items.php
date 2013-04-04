@@ -338,7 +338,7 @@ function sell_media_save_custom_meta( $post_id ) {
 
             // Image mime type support
             if ( in_array( $mime_type['type'], $image_mimes ) ){
-                sell_media_move_image_from_attachment( $attached_file, $post_id );
+                sell_media_move_image_from_attachment( $attachment_id );
             } else {
                 sell_media_default_move( $attached_file );
             }
