@@ -27,10 +27,16 @@ jQuery( document ).ready(function( $ ){
      */
     function calculate_total( license_markup, price ){
 
+        if ( typeof( license_markup ) == "undefined" ) license_markup = 0;
+
         finalPrice = ( +price + ( +license_markup * .01 ) * price ).toFixed(2);
 
-        $('.price-target').html( finalPrice );
-        $('.price-target').val( finalPrice );
+        if ( $('.price-target').length ){
+            $('.price-target').html( finalPrice );
+            $('.price-target').val( finalPrice );
+        }
+
+        return finalPrice;
     }
 
 
@@ -90,11 +96,42 @@ jQuery( document ).ready(function( $ ){
         return new Array(xScroll,yScroll)
     }
 
+
+    /**
+     * Calculate our total, round it to the nearst hundreds
+     * and update the html our price target.
+     */
+    function sell_media_update_total(){
+        var total = 0;
+        $('.item-price-target').each(function(){
+            total = +( $(this).text()) + +total;
+        });
+        $('.price-target').html( total.toFixed(2) );
+    }
+
+
+    /**
+     * Update our sub-total, if our sub-total is less than 0 we set
+     * it to ''. Then update the html of our sub-total target.
+     */
+    function sell_media_update_sub_total(){
+        $('.sell-media-quantity').each(function(){
+            item_id = $(this).attr('data-id');
+            sub_total = +$(this).attr('data-price') * +$('#quantity-' + item_id ).val();
+
+            if ( sub_total <= 0 )
+                sub_total = 0;
+
+            $( '#sub-total-target-' + item_id ).html( sub_total.toFixed(2) );
+        });
+    }
+
     /**
      * Run the following code below the DOM is ready update the cart count
      */
     $('.price-target').html(total_items());
-
+    sell_media_update_total();
+    sell_media_update_sub_total();
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
@@ -252,39 +289,6 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * Calculate our total, round it to the nearst hundreds
-     * and update the html our price target.
-     */
-    function sell_media_update_total(){
-        var total = 0;
-        $('.item-price-target').each(function(){
-            total = +( $(this).text()) + +total;
-        });
-        $('.price-target').html( total.toFixed(2) );
-    }
-
-
-    /**
-     * Update our sub-total, if our sub-total is less than 0 we set
-     * it to ''. Then update the html of our sub-total target.
-     */
-    function sell_media_update_sub_total(){
-        $('.sell-media-quantity').each(function(){
-            item_id = $(this).attr('data-id');
-            sub_total = +$(this).attr('data-price') * +$('#quantity-' + item_id ).val();
-
-            if ( sub_total <= 0 )
-                sub_total = 0;
-
-            $( '#sub-total-target-' + item_id ).html( sub_total.toFixed(2) );
-        });
-    }
-
-
-    sell_media_update_total();
-    sell_media_update_sub_total();
-
-    /**
      * If the user clicks inside of our input box and manually updates the quantiy
      * we run the sub-total and total functions.
      */
@@ -293,4 +297,16 @@ jQuery( document ).ready(function( $ ){
         sell_media_update_total();
     });
 
+
+    if ( $('#sell_media_checkout_form').length ){
+        $('.sell-media-quantity').each(function(){
+
+            markup = $(this).attr('data-markup');
+            price = $(this).attr('data-price');
+            amount = calculate_total( markup, price );
+            target_id = $(this).attr('data-id');
+
+            $('#sub-total-target-' + target_id ).html( amount );
+        });
+    }
 });

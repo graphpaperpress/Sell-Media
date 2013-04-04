@@ -306,6 +306,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                         $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
                         $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
                         $license = empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name );
+                        $markup = empty( $license_obj ) ? null : str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) );
                         $size_name = empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size );
 
                         ?>
@@ -327,7 +328,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php endif; ?>
                             </td>
                             <td class="product-quantity">
-                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $qty; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price; ?>" />
+                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $qty; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price; ?>" data-markup="<?php print $markup; ?>" />
                             </td>
                             <td class="product-price">
                                 <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span>
