@@ -227,9 +227,9 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
 
 
     if ( $echo )
-        print $price;
+        printf( '%0.2f', $price );
     else
-        return $price;
+        return sprinft( '%0.2f', $price );
 
 }
 
