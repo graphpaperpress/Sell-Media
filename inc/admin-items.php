@@ -219,24 +219,21 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 // File
                 case 'file':
                     $sell_media_attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
-                    if ( $sell_media_attachment_id ){
+                    if ( $sell_media_attachment_id )
                         $attachment_id = $sell_media_attachment_id;
-                    } else {
+                    else
                         $attachment_id = get_post_thumbnail_id( $post->ID );
-                    }
-                    $wp_upload_dir = wp_upload_dir();
-                    $item_url = wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) );
-                    if ( $item_url ){
-                        $link = $wp_upload_dir['baseurl'] . '/' . $item_url;
-                    } else {
-                        $link = null;
-                    }
+                    $image_attributes = wp_get_attachment_image_src( $attachment_id, 'original' );
+                    if ( $image_attributes[0] )
+                        $url = $image_attributes[0];
+                    else
+                        $url = null;
 
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
-                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="' . $link . '" size="30" />';
-                    print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload', 'sell_media').'</a><br class="clear"/>';
+                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="' . $url . '" size="30" />';
+                    print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
                     print '<div class="sell-media-upload-trigger">';
-                    print '<div class="sell-media-temp-target">'.sell_media_item_icon( $attachment_id, 'thumbnail', false ).'</div>';
+                    print '<div class="sell-media-temp-target">' . sell_media_item_icon( $attachment_id, 'thumbnail', false ) . '</div>';
                     print '</div>';
 
 
@@ -305,11 +302,10 @@ function sell_media_save_custom_meta( $post_id ) {
 
     // If the selected file id was updated then we have
     // a new attachment.
-    $wp_upload_dir = wp_upload_dir();
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
 
         /**
-         * Retro active: If we have no $_sell_media_attachment_id we use the
+         * Retroactive: If we have no $_sell_media_attachment_id we use the
          * old reference, $_thumbnail_id as the $attachment_id. Thus updating
          * the _sell_media_attachment_id to be the value of the _thumbnail_id.
          */
@@ -325,6 +321,7 @@ function sell_media_save_custom_meta( $post_id ) {
         $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
         // Check if this is a new upload
+        $wp_upload_dir = wp_upload_dir();
         if ( ! file_exists( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file ) ){
 
             $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file );
