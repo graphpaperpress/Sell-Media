@@ -21,6 +21,7 @@ include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
 include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
+include( dirname(__FILE__) . '/inc/widgets.php' );
 
 if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-bulk.php' );
