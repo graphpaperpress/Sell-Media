@@ -117,7 +117,14 @@ jQuery( document ).ready(function( $ ){
     function sell_media_update_sub_total(){
         $('.sell-media-quantity').each(function(){
             item_id = $(this).attr('data-id');
-            sub_total = +$(this).attr('data-price') * +$('#quantity-' + item_id ).val();
+
+            if ( typeof $(this).attr('data-markup') === "undefined" ){
+                price = +$(this).attr('data-price');
+            } else {
+                price = calculate_total( $(this).attr('data-markup'), $(this).attr('data-price') );
+            }
+
+            sub_total = price * +$('#quantity-' + item_id ).val();
 
             if ( sub_total <= 0 )
                 sub_total = 0;
@@ -303,10 +310,15 @@ jQuery( document ).ready(function( $ ){
 
             markup = $(this).attr('data-markup');
             price = $(this).attr('data-price');
-            amount = calculate_total( markup, price );
             target_id = $(this).attr('data-id');
 
-            $('#sub-total-target-' + target_id ).html( amount );
+            if ( markup == "" ){
+                amount = price * $(this).val();
+            } else {
+                amount = calculate_total( markup, price );
+            }
+
+            $('#sub-total-target-' + target_id ).html( amount.toFixed(2) );
         });
     }
 });

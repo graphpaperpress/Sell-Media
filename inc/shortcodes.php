@@ -331,8 +331,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $qty; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price; ?>" data-markup="<?php print $markup; ?>" />
                             </td>
                             <td class="product-price">
-                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span>
-                                <span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price; ?></span>
+                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price; ?></span>
                                 <br />
                                 <span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?></span>
                             </td>
