@@ -222,14 +222,14 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
     }
 
     if ( $currency ){
-        $price = sell_media_get_currency_symbol() . $price;
+        $price = sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
     }
 
 
     if ( $echo )
-        printf( '%0.2f', $price );
+        print $price;
     else
-        return sprinft( '%0.2f', $price );
+        return $price;
 
 }
 
