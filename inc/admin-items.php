@@ -223,9 +223,9 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                         $attachment_id = $sell_media_attachment_id;
                     else
                         $attachment_id = get_post_thumbnail_id( $post->ID );
-                    $image_attributes = wp_get_attachment_image_src( $attachment_id, 'original' );
-                    if ( $image_attributes[0] )
-                        $url = $image_attributes[0];
+                    $src_attribute = wp_get_attachment_url( $attachment_id );
+                    if ( $src_attribute )
+                        $url = $src_attribute;
                     else
                         $url = null;
 
