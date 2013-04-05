@@ -74,6 +74,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $my_post ) {
         'mc_currency'    => $payment_settings['currency'],
         'mc_gross'       => $price,
         'payment_status' => '',
+        'item_name'      => 'Purchase from ' . get_bloginfo( 'name' ),
         'item_number'    => $purchase_data['purchase_key'],
         'custom'         => $purchase_data['payment_id'] // post id, i.e., payment id
     );
