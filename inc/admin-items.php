@@ -575,9 +575,8 @@ function sell_media_uploader_multiple(){
 
         $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
 
-        if ( $product_id ){
+        if ( $product_id )
             continue;
-        }
 
         $post['ID'] = $attachment['id'];
         $post['post_title'] = $attachment['title'];
