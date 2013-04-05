@@ -273,6 +273,9 @@ table#sell-media-checkout-table {
 #sell-media-checkout-table .green {
   color: #336600;
 }
+#sell-media-checkout-table .sell-media-table-meta {
+  overflow:hidden;
+}
 
 /*= Search
 -------------------------------------------------------------- */
