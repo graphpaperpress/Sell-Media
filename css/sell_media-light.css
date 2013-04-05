@@ -4,8 +4,9 @@ table#sell-media-checkout-table {
     border: 1px solid #ddd;
 }
 #sell-media-checkout-table thead {
-    background: #ddd;
+    background: #ededed;
 }
+#sell-media-checkout-table thead th,
 #sell-media-checkout-table td {
     border-bottom: 1px solid #ddd;
 }
