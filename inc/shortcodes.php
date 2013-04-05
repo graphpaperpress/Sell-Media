@@ -306,9 +306,9 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     break;
                             }
                         } else {
-                            $price = sprintf("%0.2f",$filtered_price * $qty);
+                            $price = $filtered_price * $qty;
                         }
-
+                        $price = sprintf("%0.2f",$price);
                         ?>
                         <tr>
                             <td class="product-details">
