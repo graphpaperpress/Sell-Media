@@ -436,11 +436,18 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
     $payment_meta = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
     $products = maybe_unserialize( $payment_meta['products'] );
 
+    $downloads = array();
+    foreach( $products as $product ){
+        if ( ! is_array( $product['price_id'] ) ) {
+            $downloads[] = $product;
+        }
+    }
+
     $tmp_links = null;
     $links = null;
 
-    foreach( $products as $product ) {
-        $tmp_links['url'] = site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $product['AttachmentID'];
+    foreach( $downloads as $download ) {
+        $tmp_links['url'] = site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download['item_id'] . '&price_id=' . $download['price_id'];
         $links[] = $tmp_links;
     }
     return $links;

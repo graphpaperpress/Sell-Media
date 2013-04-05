@@ -226,7 +226,7 @@ function sell_media_payments_callback_fn(){
                             if ( ! $products_meta_array ) continue;
 
                             foreach( $products_meta_array as $product ){
-                                print get_the_title( $product['ProductID'] );
+                                print get_the_title( $product['item_id'] ) . " ";
                                 if ( isset( $product['License'] ) ){
                                     $license = get_term_by( 'id', $product['License'], 'licenses' );
                                     if ( $license ) print ' &ndash; <em>'.$license->name . '</em><br />';

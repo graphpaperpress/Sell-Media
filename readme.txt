@@ -1,6 +1,6 @@
 === Sell Media ===
 
-Contributors: endortrails, zanematthew
+Contributors: endortrails, ZaneMatthew
 Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
