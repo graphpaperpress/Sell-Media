@@ -507,3 +507,56 @@ function sell_media_plugin_credit() {
         printf( __( 'Shopping cart by <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', 'sell_media' ) );
     }
 }
+
+
+/**
+ * Calculates the price of an item based on qty, license id and price id
+ *
+ * @param $item array containing the following
+ * ['price_id']['id']
+ * ['price_id']['quantity']
+ * ['license_id']['quantity']
+ * @return Download size, dollar amount, markup percent, license name, quantity
+ */
+function sell_media_cart_price( $item=array() ){
+
+    $filtered_price = apply_filters( 'sell_media_filtered_price', $item['price_id'] );
+
+    $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
+
+    $default_price_array = get_option('sell_media_size_settings');
+    if ( empty( $filtered_price ) ){
+        switch( $item['price_id'] ){
+            case 'sell_media_small_file':
+                $price = $default_price_array['small_size_price'];
+                $size = __("Small", "sell_media");
+                break;
+            case 'sell_media_medium_file':
+                $price = $default_price_array['medium_size_price'];
+                $size = __("Medium", "sell_media");
+                break;
+            case 'sell_media_large_file':
+                $price = $default_price_array['large_size_price'];
+                $size = __("Large", "sell_media");
+                break;
+            default:
+                $price = $default_price_array['default_price'];
+                $size = __("Original", "sell_media");
+                break;
+        }
+    } else {
+        $price = $filtered_price * $qty;
+    }
+
+    $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
+    $price = array(
+        'size' => empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size ),
+        'amount' => sprintf("%0.2f",$price),
+        'markup' => empty( $license_obj ) ? null : str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) ),
+        'license' => empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name ),
+        'qty' => $qty
+        );
+
+    return $price;
+
+}

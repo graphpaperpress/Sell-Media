@@ -216,7 +216,6 @@ function sell_media_cart_shortcode($atts, $content = null) {
         }
     }
 
-    $default_price_array = get_option('sell_media_size_settings');
     ob_start(); ?>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
@@ -276,47 +275,14 @@ function sell_media_cart_shortcode($atts, $content = null) {
                 </tfoot>
                 <tbody class="sell-media-product-list">
                     <?php $price = null; foreach( $items as $item_id => $item ) : ?>
-                        <?php
-
-                        $filtered_price = apply_filters( 'sell_media_filtered_price', $item['price_id'] );
-
-                        $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
-                        $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
-                        $license = empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name );
-                        $markup = empty( $license_obj ) ? null : str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) );
-                        $size_name = empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size );
-
-                        if ( empty( $filtered_price ) ){
-                            switch( $item['price_id'] ){
-                                case 'sell_media_small_file':
-                                    $price = $default_price_array['small_size_price'];
-                                    $size = __("Small", "sell_media");
-                                    break;
-                                case 'sell_media_medium_file':
-                                    $price = $default_price_array['medium_size_price'];
-                                    $size = __("Medium", "sell_media");
-                                    break;
-                                case 'sell_media_large_file':
-                                    $price = $default_price_array['large_size_price'];
-                                    $size = __("Large", "sell_media");
-                                    break;
-                                default:
-                                    $price = $default_price_array['default_price'];
-                                    $size = __("Original", "sell_media");
-                                    break;
-                            }
-                        } else {
-                            $price = $filtered_price * $qty;
-                        }
-                        $price = sprintf("%0.2f",$price);
-                        ?>
+                        <?php $price = sell_media_cart_price( $item ); ?>
                         <tr>
                             <td class="product-details">
                                 <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?></a>
                                 <div class="sell-media-table-meta">
                                     <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a>
-                                    <div class="sell-media-license"><?php print $license; ?></div>
-                                    <div class="sell-media-size"><?php print $size_name; ?></div>
+                                    <div class="sell-media-license"><?php print $price['license']; ?></div>
+                                    <div class="sell-media-size"><?php print $price['size']; ?></div>
                                 </div>
                                 <?php do_action('sell_media_below_product_cart_title', $item, $item['item_id'], $item['price_id']); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
@@ -328,10 +294,10 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php endif; ?>
                             </td>
                             <td class="product-quantity">
-                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $qty; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price; ?>" data-markup="<?php print $markup; ?>" />
+                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $price['qty']; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price['amount']; ?>" data-markup="<?php print $price['markup']; ?>" />
                             </td>
                             <td class="product-price">
-                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price; ?></span>
+                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price['amount']; ?></span>
                                 <br />
                                 <span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?></span>
                             </td>
