@@ -101,7 +101,7 @@ add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
  * @since 0.1
  */
 function sell_media_cart_shortcode($atts, $content = null) {
-// unset($_SESSION['cart']);
+
     $i = 0;
 
     if ( isset( $_SESSION['cart']['items'] ) )
@@ -280,6 +280,12 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
                         $filtered_price = apply_filters( 'sell_media_filtered_price', $item['price_id'] );
 
+                        $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
+                        $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
+                        $license = empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name );
+                        $markup = empty( $license_obj ) ? null : str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) );
+                        $size_name = empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size );
+
                         if ( empty( $filtered_price ) ){
                             switch( $item['price_id'] ){
                                 case 'sell_media_small_file':
@@ -300,14 +306,8 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     break;
                             }
                         } else {
-                            $price = $filtered_price;
+                            $price = sprintf("%0.2f",$filtered_price * $qty);
                         }
-
-                        $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
-                        $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
-                        $license = empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name );
-                        $markup = empty( $license_obj ) ? null : str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) );
-                        $size_name = empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size );
 
                         ?>
                         <tr>

@@ -66,14 +66,12 @@ jQuery( document ).ready(function( $ ){
                 current = ( +current ) + ( parseFloat( $(this).html() ) );
                 total = ( +total ) + ( +current );
                 final_total = current.toFixed(2);
-
-                $( this ).next('.item-total-target').html( final_total );
-
-                $( '.price-target' ).html( final_total );
             });
         } else {
-            $( '.price-target' ).html( "0.00" );
+            final_total = "0.00";
         }
+
+        $( '.price-target' ).html( final_total );
     }
 
 
@@ -138,7 +136,6 @@ jQuery( document ).ready(function( $ ){
      */
     $('.price-target').html(total_items());
     sell_media_update_total();
-    sell_media_update_sub_total();
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
@@ -304,21 +301,4 @@ jQuery( document ).ready(function( $ ){
         sell_media_update_total();
     });
 
-
-    if ( $('#sell_media_checkout_form').length ){
-        $('.sell-media-quantity').each(function(){
-
-            markup = $(this).attr('data-markup');
-            price = $(this).attr('data-price');
-            target_id = $(this).attr('data-id');
-
-            if ( markup == "" ){
-                amount = price * $(this).val();
-            } else {
-                amount = calculate_total( markup, price );
-            }
-
-            $('#sub-total-target-' + target_id ).html( amount.toFixed(2) );
-        });
-    }
 });
