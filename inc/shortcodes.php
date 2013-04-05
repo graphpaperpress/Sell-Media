@@ -155,9 +155,18 @@ function sell_media_cart_shortcode($atts, $content = null) {
                 );
 
             $amount = 0;
+            $quantity = 0;
             foreach ( $items as $item ){
-                $amount = $amount + $item['CalculatedPrice'];
+                $price = sell_media_cart_price( $item );
+                $amount = $amount + $price['amount'];
+
+                $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
+                $quantity = $quantity + $qty;
+
             }
+
+            $_SESSION['cart']['amount'] = $amount;
+            $_SESSION['cart']['quantity'] = $quantity;
 
             // record the payment details
             update_post_meta( $payment_id, '_sell_media_payment_meta', $purchase );
@@ -167,6 +176,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
             update_post_meta( $payment_id, '_sell_media_payment_user_ip', $ip );
             update_post_meta( $payment_id, '_sell_media_payment_purchase_key', $purchase['purchase_key'] );
             update_post_meta( $payment_id, '_sell_media_payment_amount', $amount );
+            update_post_meta( $payment_id, '_sell_media_payment_quantity', $quantity );
 
             global $current_user;
             do_action( 'sell_media_before_checkout', $purchase );
@@ -212,7 +222,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
             // Upate the _sell_media_payment_meta with the User ID
             update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_meta );
 
-            sell_media_process_paypal_purchase( $purchase );
+            sell_media_process_paypal_purchase( $purchase, $_POST );
         }
     }
 
