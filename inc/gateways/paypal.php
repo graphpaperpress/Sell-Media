@@ -43,7 +43,7 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
  *     'payment_id'   => $payment_id
  * );
  */
-function sell_media_process_paypal_purchase( $purchase_data, $_POST ) {
+function sell_media_process_paypal_purchase( $purchase_data, $my_post ) {
 
     $general_settings = get_option( 'sell_media_general_settings' );
     $payment_settings = get_option( 'sell_media_payment_settings' );
