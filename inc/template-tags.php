@@ -434,7 +434,7 @@ function sell_media_item_form(){
                 <strong><?php _e( 'Total' ); ?></strong>
             </div>
             <div class="right">
-                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"><?php sell_media_item_price( $_POST['product_id'], $currency=false); ?></span></span>
+                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="price-target">0.00</span></span>
             </div>
         </div>
         <div class="button-container group">
