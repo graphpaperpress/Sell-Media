@@ -368,24 +368,6 @@ function sell_media_item_form(){
         <?php wp_nonce_field('sell_media_add_items','sell_media_nonce'); ?>
 
         <?php do_action( 'sell_media_cart_above_licenses' ); ?>
-        <?php if ( count( $licenses ) > 1 ) : ?>
-            <fieldset>
-                <legend><?php _e( 'License', 'sell_media' ); ?></legend>
-                <select name="License" value="License" id="sell_media_license_select">
-                    <option value="" data-price="0">-- <?php _e( 'Select a license' ); ?> --</option>
-                    <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
-                </select>
-            </fieldset>
-        <?php else : ?>
-            <?php if ( ! empty( $term_id ) ) : ?>
-                <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-                <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
-            <?php endif; ?>
-        <?php endif; ?>
-        <?php do_action( 'sell_media_cart_below_licenses' ); ?>
-
-
-        <?php do_action( 'sell_media_cart_above_size' ); ?>
         <?php
         $wp_upload_dir = wp_upload_dir();
         $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
@@ -425,6 +407,24 @@ function sell_media_item_form(){
             </fieldset>
         <?php else : ?>
             <input type="hidden" id="sell_media_price" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
+        <?php endif; ?>
+        <?php do_action( 'sell_media_cart_below_licenses' ); ?>
+
+
+        <?php do_action( 'sell_media_cart_above_size' ); ?>
+        <?php if ( count( $licenses ) > 1 ) : ?>
+            <fieldset>
+                <legend><?php _e( 'License', 'sell_media' ); ?></legend>
+                <select name="License" value="License" id="sell_media_license_select">
+                    <option value="" data-price="0">-- <?php _e( 'Select a license' ); ?> --</option>
+                    <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
+                </select>
+            </fieldset>
+        <?php else : ?>
+            <?php if ( ! empty( $term_id ) ) : ?>
+                <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+                <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
+            <?php endif; ?>
         <?php endif; ?>
         <?php do_action( 'sell_media_cart_below_size' ); ?>
 
