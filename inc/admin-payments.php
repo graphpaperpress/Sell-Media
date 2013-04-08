@@ -213,7 +213,8 @@ function sell_media_payments_callback_fn(){
             <?php foreach( $payments as $payment ) : ?>
                 <?php $payment_meta = get_post_meta($payment->ID, '_sell_media_payment_meta', true); ?>
                 <tr>
-                    <td><a href="<?php print site_url() . '/wp-admin/post.php?post='.$payment->ID.'&action=edit'; ?>"><?php echo $payment->ID; ?></a></td><td>
+                    <td><a href="<?php print site_url() . '/wp-admin/post.php?post='.$payment->ID.'&action=edit'; ?>"><?php echo $payment->ID; ?></a></td>
+                    <td>
                         <?php if ( ! empty( $payment_meta['first_name'] ) ) echo $payment_meta['first_name']; ?>
                         <?php if ( ! empty( $payment_meta['last_name'] ) ) echo $payment_meta['last_name']; ?>
                     </td>
@@ -224,13 +225,17 @@ function sell_media_payments_callback_fn(){
                             $products_meta_array = unserialize( $payment_meta_array['products'] );
 
                             if ( ! $products_meta_array ) continue;
+                            $count = count( $products_meta_array );
+                            $i = 0;
 
                             foreach( $products_meta_array as $product ){
-                                print get_the_title( $product['item_id'] ) . " ";
+                                $comma = ( $count - 1) == $i ? null : ", ";
+                                print '<a href="' . get_edit_post_link( $product['item_id'] ) . '">'. get_the_title( $product['item_id'] ) . "</a>" . $comma;
                                 if ( isset( $product['License'] ) ){
                                     $license = get_term_by( 'id', $product['License'], 'licenses' );
                                     if ( $license ) print ' &ndash; <em>'.$license->name . '</em><br />';
                                 }
+                                $i++;
                             }
                         }
                     ?>
