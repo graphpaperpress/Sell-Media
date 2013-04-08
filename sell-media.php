@@ -482,7 +482,7 @@ class SellMedia {
             'has_archive' => true,
             'query_var' => true,
             'can_export' => true,
-            'rewrite' => array ( 'slug' => 'items' ),
+            'rewrite' => array ( 'slug' => 'items', 'feeds' => true ),
             'capability_type' => 'post'
         );
 
