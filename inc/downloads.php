@@ -103,7 +103,7 @@ function sell_media_verify_download_link( $download ) {
      */
     global $wpdb;
     $query = $wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` LIKE 'publish' AND ID =
-    (SELECT post_id FROM gpp_postmeta
+    (SELECT post_id FROM {$wpdb->prefix}postmeta
     WHERE meta_key LIKE '_sell_media_payment_purchase_key'
     AND meta_value LIKE '%s');", $download );
 
