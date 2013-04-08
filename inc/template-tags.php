@@ -395,21 +395,21 @@ function sell_media_item_form(){
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
                 <select id="sell_media_size_select" name="price_id">
                     <option value="" data-price="0">-- <?php _e( 'Select a size' ); ?> --</option>
-                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_small_file', true )) : ?>
+                    <?php if (get_post_meta( $attachment_id, 'sell_media_small_file', true )) : ?>
                         <option value="sell_media_small_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'small' ); ?>">
                             <?php _e( 'Small', 'sell_media' ); ?>
                             (<?php print $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height']; ?>):
                             <?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?>
                         </option>
                     <?php endif; ?>
-                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_medium_file', true )) : ?>
+                    <?php if (get_post_meta( $attachment_id, 'sell_media_medium_file', true )) : ?>
                         <option value="sell_media_medium_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'medium' ); ?>">
                             <?php _e( 'Medium', 'sell_media' ); ?>
                             (<?php print $size_settings['medium_size_width'] . ' x ' . $size_settings['medium_size_height']; ?>):
                             <?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?>
                         </option>
                     <?php endif; ?>
-                    <?php if (get_post_meta( $_POST['product_id'], 'sell_media_large_file', true )) : ?>
+                    <?php if (get_post_meta( $attachment_id, 'sell_media_large_file', true )) : ?>
                         <option value="sell_media_large_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'large' ); ?>">
                             <?php _e( 'Large', 'sell_media' ); ?>
                             (<?php print $size_settings['large_size_width'] . ' x ' . $size_settings['large_size_height']; ?>):
@@ -464,16 +464,17 @@ function sell_media_item_form(){
 function sell_media_image_sizes( $post_id=null ){
     $size_settings = get_option('sell_media_size_settings');
     $html = null;
+    $aid = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
-    if ( get_post_meta( $post_id, 'sell_media_small_file', true ) ) {
+    if ( get_post_meta( $aid, 'sell_media_small_file', true ) ) {
         $html .= '<li class="price"><span class="title">' . __( 'Small Price', 'sell_media' ) . ' (' . $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height'] . '): </span>' . sell_media_item_price( $post_id, true, 'small', false ) . '</li>';
     }
 
-    if ( get_post_meta( $post_id, 'sell_media_medium_file', true ) ){
+    if ( get_post_meta( $aid, 'sell_media_medium_file', true ) ){
         $html .= '<li class="price"><span class="title">' . __( 'Medium Price', 'sell_media' ) . ' (' . $size_settings['medium_size_width'] . ' x ' . $size_settings['medium_size_height'] . '): </span>' . sell_media_item_price( $post_id, true, 'medium', false ) . '</li>';
     }
 
-    if ( get_post_meta( $post_id, 'sell_media_large_file', true ) ){
+    if ( get_post_meta( $aid, 'sell_media_large_file', true ) ){
         $html .= '<li class="price"><span class="title">' . __( 'Large Price', 'sell_media' ) . ' (' . $size_settings['large_size_width'] . ' x ' . $size_settings['large_size_height'].'): </span>' . sell_media_item_price( $post_id, true, 'large', false ) . '</li>';
     }
 

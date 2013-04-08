@@ -64,7 +64,12 @@ function sell_media_admin_items_init(){
         )
     );
 
-    if ( get_post_meta( $post_id, 'sell_media_small_file', true ) ){
+    $aid = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+    $sid = get_post_meta( $aid, 'sell_media_small_file', true );
+    $mid = get_post_meta( $aid, 'sell_media_medium_file', true );
+    $lid = get_post_meta( $aid, 'sell_media_large_file', true );
+
+    if ( $sid ){
         $sell_media_item_meta_fields[] = array(
             'label' => 'Small <span class="description">' . $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height'] . '</span>',
             'desc'  => '', // this needs validation
@@ -75,7 +80,7 @@ function sell_media_admin_items_init(){
         );
     }
 
-    if ( get_post_meta( $post_id, 'sell_media_medium_file', true ) ){
+    if ( $mid ){
         $sell_media_item_meta_fields[] = array(
             'label'=> 'Medium <span class="description">'.$size_settings['medium_size_width'].' x '.$size_settings['medium_size_height'].'</span>',
             'desc'  => '', // this needs validation
@@ -86,7 +91,7 @@ function sell_media_admin_items_init(){
         );
     }
 
-    if ( get_post_meta( $post_id, 'sell_media_large_file', true ) ){
+    if ( $lid ){
         $sell_media_item_meta_fields[] = array(
             'label'=> 'Large <span class="description">'.$size_settings['large_size_width'].' x '.$size_settings['large_size_height'].'</span>',
             'desc'  => '', // this needs validation
