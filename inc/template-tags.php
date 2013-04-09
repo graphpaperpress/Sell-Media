@@ -171,6 +171,10 @@ function sell_media_item_size( $post_id=null ){
  * Retrives and prints the price of an item
  *
  * @since 0.1
+ * @param $post_id The Item ID
+ * @param $currency (bool) Display the currency symbold or not
+ * @param $size (string) small, medium, large, null (for original)
+ * @param $echo Either print the result or return it
  * @return string
  */
 function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo=true ){
@@ -526,23 +530,33 @@ function sell_media_cart_price( $item=array() ){
     $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
 
     $default_price_array = get_option('sell_media_size_settings');
-    if ( empty( $filtered_price ) ){
+
+    /**
+     * @todo Make size array repeatable and fully db driven
+     */
+    $sizes_array = array(
+        'sell_media_small_file',
+        'sell_media_medium_file',
+        'sell_media_large_file',
+        'sell_meida_original_file',
+    );
+    if ( in_array( $filtered_price, $sizes_array ) ){
         switch( $item['price_id'] ){
             case 'sell_media_small_file':
-                $price = $default_price_array['small_size_price'];
-                $size = __("Small", "sell_media");
+                $price = sell_media_item_price( $item['item_id'], $currency=false, $size='small', $echo=false );
+                $size = "Small";
                 break;
             case 'sell_media_medium_file':
-                $price = $default_price_array['medium_size_price'];
-                $size = __("Medium", "sell_media");
+                $price = sell_media_item_price( $item['item_id'], $currency=false, $size='medium', $echo=false );
+                $size = "Medium";
                 break;
             case 'sell_media_large_file':
-                $price = $default_price_array['large_size_price'];
-                $size = __("Large", "sell_media");
+                $price = sell_media_item_price( $item['item_id'], $currency=false, $size='large', $echo=false );
+                $size = "Large";
                 break;
             default:
-                $price = $default_price_array['default_price'];
-                $size = __("Original", "sell_media");
+                $price = sell_media_item_price( $item['item_id'], $currency=false, $size=null, $echo=false );
+                $size = "Original";
                 break;
         }
     } else {
