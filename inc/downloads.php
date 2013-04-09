@@ -11,14 +11,36 @@ function sell_media_process_download() {
     if ( isset( $_GET['download'] ) && isset( $_GET['email'] ) ) {
 
         $download = urldecode($_GET['download']);
-        $email = rawurldecode($_GET['email']);
-        $payment = sell_media_verify_download_link( $download, $email );
+        $price_id = $_GET['price_id'];
+        $verified = sell_media_verify_download_link( $download );
 
-        if ( $payment ) {
+        if ( $verified ) {
 
             // Get the file name from the attachment ID
-            $pathinfo = pathinfo( get_attached_file( $_GET['id'] ) );
-            $attached_file = get_post_meta( $_GET['id'], '_wp_attached_file', true );
+            $wp_upload_dir = wp_upload_dir();
+            $attachment_id = get_post_meta( $_GET['id'], '_sell_media_attachment_id', true );
+
+            /**
+             * Due to the inconsistencies of the small/medium/large meta keys we need to add this fix
+             * @todo Resize fixes
+             */
+            if ( $price_id == 'sell_meida_original_file' ){
+                $price_id = '_sell_media_attached_file';
+            }
+
+            $attached_file = get_post_meta( $attachment_id, $price_id, true );
+            $ds = null;
+            if ( empty( $attached_file ) ){
+                $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+                $ds = '/';
+            }
+            /** End inconsistencies fix */
+
+
+            /** Build the (full) system path to the download file */
+            $file_path = $wp_upload_dir['basedir'] . $ds . $attached_file;
+
+            $pathinfo = pathinfo( $file_path );
 
             switch( $pathinfo['extension'] ) {
                 case "gif":  $ctype = "image/gif"; break;
@@ -42,8 +64,7 @@ function sell_media_process_download() {
                 set_magic_quotes_runtime(0);
             }
 
-            $sell_media_upload_dir = sell_media_get_upload_dir();
-            $full_file_path = $sell_media_upload_dir['basedir'] . '/sell_media/' . $attached_file;
+            $full_file_path = $wp_upload_dir['basedir'] . '/sell_media' . $ds . $attached_file;
             $size = filesize( $full_file_path );
 
             header("Pragma: no-cache");
@@ -67,40 +88,26 @@ add_action( 'init', 'sell_media_process_download', 100 );
 
 
 /**
- * Verifies a download purchase using a purchase key and email.
+ * Verifies a download purchase by checking if the post status is set to 'publish' for a
+ * given purchase key;
  *
  * @access public
  * @since 0.1
  * @return boolean
  */
-function sell_media_verify_download_link( $download, $email ) {
+function sell_media_verify_download_link( $download ) {
 
-    $args = array(
-        'post_type' => 'sell_media_payment',
-        'post_status' => 'publish',
-        'meta_query' => array(
-            'relation' => 'AND',
-                array(
-                    'key' => '_sell_media_payment_purchase_key',
-                    'value' => $download
-                )
-            )
-        );
+    /**
+     * @note We use a subquery since this function is ran before register_post_type, hence we
+     * cannot run WP_Query
+     */
+    global $wpdb;
+    $query = $wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` LIKE 'publish' AND ID =
+    (SELECT post_id FROM {$wpdb->prefix}postmeta
+    WHERE meta_key LIKE '_sell_media_payment_purchase_key'
+    AND meta_value LIKE '%s');", $download );
 
-    $payments = new WP_Query( $args );
-
-    if ( $payments ) {
-
-        foreach( $payments->posts as $payment ) {
-            $payment_meta = get_post_meta( $payment->ID, '_sell_media_payment_meta', true );
-            $downloads = maybe_unserialize( $payment_meta['products'] );
-        }
-
-        // return $downloads;
-        return true;
-    }
-    // payment not verified
-    return false;
+    return $wpdb->get_results( $query ) ? true : false;
 }
 
 

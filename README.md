@@ -173,6 +173,10 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.2.6 =
+* Numerous hooks and filters addd
+* Numerous bug fixes
+
 = 1.2.5 =
 * Performance improvements
 * Added MS Docs support

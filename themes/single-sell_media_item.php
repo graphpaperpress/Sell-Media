@@ -15,12 +15,13 @@ get_header(); ?>
 		<div class="sell-media-content">
 			<?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
 			<div><?php the_content(); ?></div>
+			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
 		</div>
 
 		<div class="sell-media-meta">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<ul>
-				<li class="filename"><span class="title"><?php _e( 'Filename', 'sell_media' ); ?>:</span> <?php sell_media_image_filename( $post->ID); ?></li>
+				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
 
 				<?php if( sell_media_item_size( $post->ID ) ) : ?>
 					<li class="size">
@@ -42,7 +43,7 @@ get_header(); ?>
 					<?php sell_media_image_sizes( $post->ID ); ?>
 				<?php endif; ?>
 				<li class="price">
-					<span class="title"><?php _e( 'Original Price', 'sell_media' ); ?> (<?php print sell_media_original_image_size( $post->ID ); ?>):</span> <?php sell_media_item_price( $post->ID ); ?>
+					<span class="title"><?php _e( 'Original Price', 'sell_media' ); ?> (<?php sell_media_original_image_size( $post->ID ); ?>):</span> <?php sell_media_item_price( $post->ID ); ?>
 				</li>
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>

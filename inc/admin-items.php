@@ -49,13 +49,13 @@ function sell_media_admin_items_init(){
 
     $sell_media_item_meta_fields = array(
         array(
-            'label' => 'File',
-            'desc'  => 'A description for the field.',
+            'label' => __( 'File', 'sell_media' ),
+            'desc'  => __( 'A description for the field.', 'sell_media' ),
             'id'    => $prefix . '_file',
             'type'  => 'file'
         ),
         array(
-            'label' => 'Original File Price',
+            'label' => __( 'Original File Price', 'sell_media' ),
             'desc'  => '', // this needs validation
             'id'    => $prefix . '_price',
             'type'  => 'price',
@@ -64,9 +64,14 @@ function sell_media_admin_items_init(){
         )
     );
 
-    if ( get_post_meta( $post_id, 'sell_media_small_file', true ) ){
+    $aid = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+    $sid = get_post_meta( $aid, 'sell_media_small_file', true );
+    $mid = get_post_meta( $aid, 'sell_media_medium_file', true );
+    $lid = get_post_meta( $aid, 'sell_media_large_file', true );
+
+    if ( $sid ){
         $sell_media_item_meta_fields[] = array(
-            'label' => 'Small <span class="description">'.$size_settings['small_size_width'].' x '.$size_settings['small_size_height'].'</span>',
+            'label' => 'Small <span class="description">' . $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height'] . '</span>',
             'desc'  => '', // this needs validation
             'id'    => $prefix . '_price_small',
             'type'  => 'price',
@@ -75,7 +80,7 @@ function sell_media_admin_items_init(){
         );
     }
 
-    if ( get_post_meta( $post_id, 'sell_media_medium_file', true ) ){
+    if ( $mid ){
         $sell_media_item_meta_fields[] = array(
             'label'=> 'Medium <span class="description">'.$size_settings['medium_size_width'].' x '.$size_settings['medium_size_height'].'</span>',
             'desc'  => '', // this needs validation
@@ -86,7 +91,7 @@ function sell_media_admin_items_init(){
         );
     }
 
-    if ( get_post_meta( $post_id, 'sell_media_large_file', true ) ){
+    if ( $lid ){
         $sell_media_item_meta_fields[] = array(
             'label'=> 'Large <span class="description">'.$size_settings['large_size_width'].' x '.$size_settings['large_size_height'].'</span>',
             'desc'  => '', // this needs validation
@@ -96,9 +101,12 @@ function sell_media_admin_items_init(){
             'value' => get_post_meta( $post_id, $prefix . '_price_large', true )
         );
     }
+
+    $sell_media_item_meta_fields = apply_filters( 'sell_media_additional_item_meta', $sell_media_item_meta_fields, $post_id );
+
     $sell_media_item_meta_fields[] = array(
-            'label' => 'Shortcode',
-            'desc'  => 'The permalink for this item is displayed below the title above. The archive page showing all items for sale can be viewed <a href="'.get_post_type_archive_link('sell_media_item').'">here</a>. You can optionally use shortcode to display this specific item on other Posts or Pages. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"',
+            'label' => __( 'Shortcode', 'sell_media' ),
+            'desc'  => __( 'The permalink for this item is displayed below the title above. The archive page showing all items for sale can be viewed <a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">here</a>. You can optionally use shortcode to display this specific item on other Posts or Pages. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"', 'sell_media' ),
             'id'    => $prefix . '_shortcode',
             'type'  => 'html'
         );
@@ -106,7 +114,13 @@ function sell_media_admin_items_init(){
 }
 add_action('admin_init', 'sell_media_admin_items_init');
 
-add_action( 'edit_form_advanced', 'sell_media_editor' );
+
+/**
+ * Sell Media Editor
+ *
+ * @author Zane Matthew
+ * @since 0.1
+ */
 function sell_media_editor() {
 
     global $post_type;
@@ -116,6 +130,7 @@ function sell_media_editor() {
     global $post;
     wp_editor( stripslashes_deep( get_post_field( 'post_content', $post->ID ) ), 'sell_media_editor' );
 }
+add_action( 'edit_form_advanced', 'sell_media_editor' );
 
 
 /**
@@ -181,7 +196,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
                 // checkbox
                 case 'checkbox':
-                    echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ',$meta ? ' checked="checked"' : '','/>
+                    echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ' . checked( $field['value'], "on", false ) . '/>
                         <label for="' . $field['id'] . '">' . __( $field['desc'], 'sell_media' ) . '</label>';
                 break;
 
@@ -209,24 +224,21 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                 // File
                 case 'file':
                     $sell_media_attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
-                    if ( $sell_media_attachment_id ){
+                    if ( $sell_media_attachment_id )
                         $attachment_id = $sell_media_attachment_id;
-                    } else {
+                    else
                         $attachment_id = get_post_thumbnail_id( $post->ID );
-                    }
-                    $wp_upload_dir = wp_upload_dir();
-                    $item_url = wp_filter_nohtml_kses( get_post_meta($post->ID,'_sell_media_attached_file', true) );
-                    if ( $item_url ){
-                        $link = $wp_upload_dir['baseurl'] . '/' . $item_url;
-                    } else {
-                        $link = null;
-                    }
+                    $src_attribute = wp_get_attachment_url( $attachment_id );
+                    if ( $src_attribute )
+                        $url = $src_attribute;
+                    else
+                        $url = null;
 
                     print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
-                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="' . $link . '" size="30" />';
-                    print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">'.__('Upload or Select Image', 'sell_media').'</a><br class="clear"/>';
+                    print '<input type="text" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-path field-has-button" value="' . $url . '" size="30" />';
+                    print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
                     print '<div class="sell-media-upload-trigger">';
-                    print '<div class="sell-media-temp-target">'.sell_media_item_icon( $attachment_id, 'medium', false ).'</div>';
+                    print '<div class="sell-media-temp-target">' . sell_media_item_icon( $attachment_id, 'thumbnail', false ) . '</div>';
                     print '</div>';
 
 
@@ -295,11 +307,10 @@ function sell_media_save_custom_meta( $post_id ) {
 
     // If the selected file id was updated then we have
     // a new attachment.
-    $wp_upload_dir = wp_upload_dir();
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
 
         /**
-         * Retro active: If we have no $_sell_media_attachment_id we use the
+         * Retroactive: If we have no $_sell_media_attachment_id we use the
          * old reference, $_thumbnail_id as the $attachment_id. Thus updating
          * the _sell_media_attachment_id to be the value of the _thumbnail_id.
          */
@@ -315,6 +326,7 @@ function sell_media_save_custom_meta( $post_id ) {
         $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
         // Check if this is a new upload
+        $wp_upload_dir = wp_upload_dir();
         if ( ! file_exists( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file ) ){
 
             $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file );
@@ -328,7 +340,7 @@ function sell_media_save_custom_meta( $post_id ) {
 
             // Image mime type support
             if ( in_array( $mime_type['type'], $image_mimes ) ){
-                sell_media_move_image_from_attachment( $attached_file, $post_id );
+                sell_media_move_image_from_attachment( $attachment_id );
             } else {
                 sell_media_default_move( $attached_file );
             }
@@ -568,7 +580,7 @@ function sell_media_uploader_multiple(){
 
         $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
 
-        if ( $product_id ){
+        if ( $product_id )
             continue;
         }
 

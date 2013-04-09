@@ -60,12 +60,7 @@ add_action( 'template_redirect', 'sell_media_template_redirect',6 );
  * @since 0.1
  */
 function sell_media_load_template() {
-
-    $path = dirname( plugin_dir_path( __FILE__ ) );
-
-    $template = $path . '/themes/' . $_POST['template'];
-
-    load_template( $template );
+    load_template( dirname( plugin_dir_path( __FILE__ ) ) . '/themes/cart.php' );
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_load_template', 'sell_media_load_template' );
@@ -388,11 +383,11 @@ function sell_media_get_payment_id_by( $key=null, $value=null ){
     }
 
     global $wpdb;
-    $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '{$key}' AND meta_value = '{$value}'";
-    $payment_id = $wpdb->get_var( $wpdb->prepare( $query ) );
+    $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '%s' AND meta_value = '%s'";
+    $payment_id = $wpdb->get_results( $wpdb->prepare( $query, $key, $value ) );
 
     if ( is_null( $payment_id ) ){
-        wp_die("Invalid {$value} for {$key}");
+        return fasle;
     } else {
         return $payment_id;
     }
@@ -441,11 +436,18 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
     $payment_meta = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
     $products = maybe_unserialize( $payment_meta['products'] );
 
+    $downloads = array();
+    foreach( $products as $product ){
+        if ( ! is_array( $product['price_id'] ) ) {
+            $downloads[] = $product;
+        }
+    }
+
     $tmp_links = null;
     $links = null;
 
-    foreach( $products as $product ) {
-        $tmp_links['url'] = site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $product['AttachmentID'];
+    foreach( $downloads as $download ) {
+        $tmp_links['url'] = site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download['item_id'] . '&price_id=' . $download['price_id'];
         $links[] = $tmp_links;
     }
     return $links;
@@ -624,6 +626,24 @@ function sell_media_admin_menu_icon() {
     <?php
 }
 add_action( 'admin_head', 'sell_media_admin_menu_icon' );
+
+
+/**
+ * Sell Media Enqueue Styles
+ *
+ * Enqueue the Sell Media style chosen on the settings page.
+ *
+ * @since 1.2.6
+ * @return void
+*/
+function sell_media_enqueue_styles(){
+    $settings = get_option( 'sell_media_general_settings' );
+    if ( isset( $settings['style'] ) && '' != $settings['style'] )
+        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-' . $settings['style'] . '.css' );
+    else
+        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-light.css' );
+}
+add_action( 'wp_enqueue_scripts', 'sell_media_enqueue_styles' );
 
 
 /**
@@ -809,7 +829,7 @@ function sell_media_state_province_list( $current=null ){
         "WY" => "Wyoming",
         "YK" => "Yukon"
         );
-    sell_media_build_select( $items, array( 'name' => 'sell_media_state', 'required' => true, 'title' => 'State/Provience', 'current' => $current ) );
+    sell_media_build_select( $items, array( 'name' => 'sell_media_reprints_sf_state', 'required' => true, 'title' => 'State/Provience', 'current' => $current ) );
 }
 
 function sell_media_country_list( $current=null ){

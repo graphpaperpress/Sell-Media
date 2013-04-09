@@ -48,8 +48,8 @@ function sell_media_add_bulk_callback_fn(){
     <div class="wrap">
         <?php sell_media_add_bulk_tabs(); ?>
         <div class="tool-box add-bulk">
-            <p><?php _e( 'All bulk uploads will inherit the default prices and licenses. You can modify the prices and licenses of each item after doing the bulk upload.', 'sell_media' ); ?></p>
-            <p class="uploader"><a class="sell-media-upload-trigger-multiple button"id="_sell_media_button" value="Upload"><?php _e( 'Upload or Select Images', 'sell_media'); ?></a></p>
+            <p><?php _e( 'Bulk uploading is a server-intensive process. If you are using cheap, shared web hosting, uploading items in small batches will ensure all items uploaded are published correctly. All bulk uploads will inherit the default prices and licenses. You can modify the prices and licenses of each item after doing the bulk upload. ', 'sell_media' ); ?></p>
+            <p class="uploader"><a class="sell-media-upload-trigger-multiple button" id="_sell_media_button" value="Upload"><?php _e( 'Upload', 'sell_media'); ?></a></p>
             <div class="sell-media-ajax-loader" style="display:none;"><?php _e('Loading items...', 'sell_media'); ?></div>
             <div class="sell-media-bulk-list"><a href="<?php print admin_url( 'edit.php?post_type=sell_media_item' ); ?>"></div>
             <?php do_action( 'sell_media_bulk_below_uploader' ); ?>

@@ -13,18 +13,16 @@
  * "_wp_attached_file", i.e., YYYY/MM/file-name.ext
  * @since 1.0.1
  */
-function sell_media_move_image_from_attachment( $attached_file=null, $attachment_id=null ){
+function sell_media_move_image_from_attachment( $attachment_id=null ){
 
-    // Since our attached file does not contain the full path.
-    // We build it using the wp_upload_dir function.
-    $wp_upload_dir = wp_upload_dir();
-    $original_file = $wp_upload_dir['basedir'] . '/' . $attached_file;
+    $original_file = get_attached_file( $attachment_id );
 
     // Extract IPTC meta info from the uploaded image.
     $city = sell_media_iptc_parser( 'city', $original_file );
     $state = sell_media_iptc_parser( 'state', $original_file );
     $creator = sell_media_iptc_parser( 'creator', $original_file );
     $keywords = sell_media_iptc_parser( 'keywords', $original_file );
+
 
     // Save iptc info as taxonomies
     if ( ! empty( $attachment_id ) ) {
@@ -41,9 +39,13 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
             sell_media_iptc_save( 'keywords', $keywords, $attachment_id );
     }
 
+
     // Assign the FULL PATH to our destination file.
-    $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
-    $destination_dir  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . date('Y') . '/' . date('m') . '/';
+    $wp_upload_dir = wp_upload_dir();
+
+    $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
+    $destination_dir  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . $wp_upload_dir['subdir'] . '/';
+
 
     // Check if the destinatin directory exists, i.e.
     // wp-content/uploads/sell_media/YYYY/MM if not we create it.
@@ -51,42 +53,58 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
         wp_mkdir_p( dirname( $destination_file ) );
     }
 
-    // Resize original file down to the largest size set in the Media Settings
-    //
-    // Determine which version of WP we are using.
-    // Would rather check if the correct function exists
-    // but the function 'image_make_intermediate_size' uses other
-    // functions that are in trunk and not in 3.4
+
+    /**
+     * Resize original file down to the largest size set in the Media Settings
+     *
+     * Determine which version of WP we are using.
+     * Would rather check if the correct function exists
+     * but the function 'image_make_intermediate_size' uses other
+     * functions that are in trunk and not in 3.4
+     */
     global $wp_version;
     if ( version_compare( $wp_version, '3.5', '>=' ) ){
 
-        $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), $crop = false );
 
+        /**
+         * Resize the "original" to our largest size set in the Media Settings.
+         *
+         * This creates a file named filename-[width]x[height].jpg
+         * From here the "original" file is still in our uploads dir, its needed to create
+         * the additional image sizes. Once we're done making the additional sizes, we rename
+         * the filename-[width]x[height].jpg to filename.jpg, thus having a resized "original"
+         * file.
+         */
+        $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), false );
+
+
+        /**
+         * @todo these should be an array and we can just foreach over it!
+         * $size['small']['width']
+         * $size['small']['height']
+         * $size['small']['price']
+         * and so on, but settings is a pain!
+         */
         $size_settings = get_option('sell_media_size_settings');
 
-        // @todo these should be an array and we can just foreach over it!
-        // $size['small']['width']
-        // $size['small']['height']
-        // $size['small']['price']
-        // and so on, but settings is a pain!
-        $image_small_size = image_make_intermediate_size( $original_file, $size_settings['small_size_width'], $size_settings['small_size_height'], $crop = false );
+        $image_small_size = image_make_intermediate_size( $original_file, $size_settings['small_size_width'], $size_settings['small_size_height'], false );
         if ( $image_small_size ){
-            @rename( $wp_upload_dir['path'] . '/' . $image_small_size['file'], $destination_dir . $image_small_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_small_file', date('Y') . '/' . date('m') . '/' . $image_small_size['file'] );
+            rename( dirname( $original_file ) . '/' . $image_small_size['file'], $destination_dir . $image_small_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_small_file', $wp_upload_dir['subdir'] . '/' . $image_small_size['file'] );
         }
 
-        $image_medium_size = image_make_intermediate_size( $original_file, $size_settings['medium_size_width'], $size_settings['medium_size_height'], $crop = false );
+        $image_medium_size = image_make_intermediate_size( $original_file, $size_settings['medium_size_width'], $size_settings['medium_size_height'], false );
         if ( $image_medium_size ){
-            @rename( $wp_upload_dir['path'] . '/' . $image_medium_size['file'], $destination_dir . $image_medium_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_medium_file', date('Y') . '/' . date('m') . '/' . $image_medium_size['file'] );
+            rename( dirname( $original_file ) . '/' . $image_medium_size['file'], $destination_dir . $image_medium_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_medium_file', $wp_upload_dir['subdir'] . '/' . $image_medium_size['file'] );
         }
 
-        $image_large_size = image_make_intermediate_size( $original_file, $size_settings['large_size_width'], $size_settings['large_size_height'], $crop = false );
+        $image_large_size = image_make_intermediate_size( $original_file, $size_settings['large_size_width'], $size_settings['large_size_height'], false );
         if ( $image_large_size ){
-            @rename( $wp_upload_dir['path'] . '/' . $image_large_size['file'], $destination_dir . $image_large_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_large_file', date('Y') . '/' . date('m') . '/' . $image_large_size['file'] );
+            rename( dirname( $original_file ) . '/' . $image_large_size['file'], $destination_dir . $image_large_size['file'] );
+            update_post_meta( $attachment_id, 'sell_media_large_file', $wp_upload_dir['subdir'] . '/' . $image_large_size['file'] );
         }
-        //
+
 
         /**
          * If for some reason the image resize fails we just fall back to the original image.
@@ -100,17 +118,26 @@ function sell_media_move_image_from_attachment( $attached_file=null, $attachment
             $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
         }
 
+
         if ( ! file_exists( $destination_file ) ){
 
-            // Copy original to our protected area
+            /**
+             * Move our originally upload file into the protected area
+             */
             copy( $original_file, $destination_file );
             if ( ! $keep_original ) unlink( $original_file );
 
-            // Copy (rename) our resized image to the original
-            copy( $resized_image, $wp_upload_dir['path'] . '/' . basename( $destination_file ) );
+            /**
+             * We rename our resize original file i.e., "filename-[width]x[height].jpg" located in our uploads directory
+             * to "filename.jpg"
+             */
+            $new_path_source = dirname( $original_file ) . '/' . basename( $resized_image );
+            $new_path_destination = $original_file;
+            copy( $new_path_source, $new_path_destination );
         }
 
     } else {
+
         $resized_image = image_resize( $original_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
         if ( ! file_exists( $destination_file ) ){
             // Copy original to our protected area

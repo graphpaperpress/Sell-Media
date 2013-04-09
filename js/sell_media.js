@@ -20,36 +20,28 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * Determine the price of an Item based on License Type. Once
-     * determined, update the needed dom elements with the new price
+     * Determine the price of an Item based on the below formula:
      *
-     * Formula: price + (( percent * .01 ) * price ))
+     * amount = price + (( license_markup * .01 ) * price ))
+     *
      */
-    function calculate_total(){
+    function calculate_total( license_markup, price ){
 
-        if ( $('#sell_media_price').length ){
-            price = $('#sell_media_price').val();
-        } else {
-            price = $('#sell_media_size_select option:selected').val();
+        if ( typeof( license_markup ) == "undefined" ) license_markup = 0;
+
+        finalPrice = ( +price + ( +license_markup * .01 ) * price ).toFixed(2);
+
+        if ( $('.subtotal-target').length ){
+            $('.subtotal-target').html( finalPrice );
+            $('.subtotal-target').val( finalPrice );
         }
 
-        /**
-         * If this item has NO license selected we default
-         * markup to 0.
-         */
-        if ( $('#sell_media_license_select option:selected').length ){
-            markUp = $('#sell_media_license_select option:selected').attr('data-price');
-        } else {
-            markUp = 0;
+        if ( $('.price-target').length ){
+            $('.price-target').html( finalPrice );
+            $('.price-target').val( finalPrice );
         }
 
-        finalPrice = ( +price + ( +markUp * .01 ) * price ).toFixed(2);
-
-        /**
-         * Update our price that the user sees and update the price being passed onto $_POST
-         */
-        $('.price-target').html( finalPrice );
-        $('.price-target').val( finalPrice );
+        return finalPrice;
     }
 
 
@@ -79,14 +71,12 @@ jQuery( document ).ready(function( $ ){
                 current = ( +current ) + ( parseFloat( $(this).html() ) );
                 total = ( +total ) + ( +current );
                 final_total = current.toFixed(2);
-
-                $( this ).next('.item-total-target').html( final_total );
-
-                $( '.price-target' ).html( final_total );
             });
         } else {
-            $( '.price-target' ).html( "0.00" );
+            final_total = "0.00";
         }
+
+        $( '.subtotal-target' ).html( final_total );
     }
 
 
@@ -109,12 +99,58 @@ jQuery( document ).ready(function( $ ){
         return new Array(xScroll,yScroll)
     }
 
+
+    /**
+     * Calculate our total, round it to the nearst hundreds
+     * and update the html our price target.
+     */
+    function sell_media_update_total(){
+        var total = 0;
+        $('.item-price-target').each(function(){
+            total = +( $(this).text()) + +total;
+        });
+        $('.subtotal-target').html( total.toFixed(2) );
+    }
+
+
+    /**
+     * Update our sub-total, if our sub-total is less than 0 we set
+     * it to ''. Then update the html of our sub-total target.
+     */
+    function sell_media_update_sub_total(){
+        $('.sell-media-quantity').each(function(){
+            item_id = $(this).attr('data-id');
+
+            if ( typeof $(this).attr('data-markup') === "undefined" ){
+                price = +$(this).attr('data-price');
+            } else {
+                price = calculate_total( $(this).attr('data-markup'), $(this).attr('data-price') );
+            }
+
+            sub_total = price * +$('#quantity-' + item_id ).val();
+
+            if ( sub_total <= 0 )
+                sub_total = 0;
+
+            $( '#sub-total-target-' + item_id ).html( sub_total.toFixed(2) );
+        });
+    }
+
+    /**
+     * Add subtotal and shipping together
+     */
+    function sell_media_update_final_total(){
+        total = +$('.subtotal-target').text() + +$('.shipping-target').text();
+        $('.total-target').html( total.toFixed(2) );
+    }
+
+
     /**
      * Run the following code below the DOM is ready update the cart count
      */
-    cart_count();
-    $('.price-target').html(total_items());
-
+    sell_media_update_sub_total();
+    sell_media_update_total();
+    sell_media_update_final_total();
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
@@ -149,7 +185,6 @@ jQuery( document ).ready(function( $ ){
             success: function( msg ){
                 $( ".sell-media-cart-dialog-target" ).fadeIn().html( msg ); // Give a smooth fade in effect
                 cart_count();
-                calculate_total();
             }
         });
 
@@ -178,7 +213,7 @@ jQuery( document ).ready(function( $ ){
      */
     $( document ).on('change', '#sell_media_license_select', function(){
         $("option:selected", this).each(function(){
-            calculate_total();
+            calculate_total( $(this).attr('data-price'), $('#sell_media_size_select :selected').attr('data-price') );
         });
     });
 
@@ -187,7 +222,7 @@ jQuery( document ).ready(function( $ ){
      */
     $( document ).on('change', '#sell_media_size_select', function(){
         $("option:selected", this).each(function(){
-            calculate_total();
+            calculate_total( $('#sell_media_license_select :selected').attr('data-price'), $(this).attr('data-price') );
         });
     });
 
@@ -223,7 +258,7 @@ jQuery( document ).ready(function( $ ){
         count = $(".sell_media-product-list li").size();
 
         if( count == 1 ) {
-            $('.price-target').html('0');
+            $('.subtotal-target').html('0');
             $('.sell-media-buy-button-checkout').fadeOut();
         }
 
@@ -241,6 +276,7 @@ jQuery( document ).ready(function( $ ){
                 }
 
                 total_items();
+                sell_media_update_final_total();
             }
         });
     });
@@ -270,5 +306,16 @@ jQuery( document ).ready(function( $ ){
     $("#sell-media-checkout table tr:nth-child(odd)").addClass("odd-row");
     $("#sell-media-checkout table td:first-child, #sell-media-checkout table th:first-child").addClass("first");
     $("#sell-media-checkout table td:last-child, #sell-media-checkout table th:last-child").addClass("last");
+
+
+    /**
+     * If the user clicks inside of our input box and manually updates the quantiy
+     * we run the sub-total and total functions.
+     */
+    $(document).on('change', '.sell-media-quantity', function(){
+        sell_media_update_sub_total();
+        sell_media_update_total();
+        sell_media_update_final_total();
+    });
 
 });

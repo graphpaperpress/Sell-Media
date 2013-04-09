@@ -26,6 +26,7 @@ $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id
             <div class="right">
                 <?php sell_media_item_form(); ?>
             </div>
+            <div class="sell-media-credit"><?php sell_media_plugin_credit(); ?></div>
         </div>
     </div>
 </div>

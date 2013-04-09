@@ -38,7 +38,8 @@ jQuery( document ).ready(function( $ ){
 
             var data = {
                 action: "sell_media_item_icon",
-                attachment_id: attachment.id
+                attachment_id: attachment.id,
+                attachment_size: "thumbnail"
             };
 
             $.ajax({

@@ -30,6 +30,7 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
 
 /**
  * Passes the Customers Product to Paypal via a redirect.
+ * more info here: https://cms.paypal.com/mx/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_Appx_websitestandard_htmlvariables#id08A6HH00W2J
  *
  * @param $purchase_data array containing the following:
  * array(
@@ -42,7 +43,8 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
  *     'payment_id'   => $payment_id
  * );
  */
-function sell_media_process_paypal_purchase( $purchase_data ) {
+function sell_media_process_paypal_purchase( $purchase_data, $my_post ) {
+
     $general_settings = get_option( 'sell_media_general_settings' );
     $payment_settings = get_option( 'sell_media_payment_settings' );
     $listener_url = trailingslashit( home_url() ).'?sell_media-listener=IPN';
@@ -55,15 +57,14 @@ function sell_media_process_paypal_purchase( $purchase_data ) {
     $return_url = add_query_arg( $args, get_permalink( $general_settings['thanks_page'] ) );
     $paypal_redirect = trailingslashit( sell_media_get_paypal_redirect() ) . '?';
 
-    $price = $_SESSION['cart']['totalPrice'];
+    $price = $_SESSION['cart']['amount'];
 
     $paypal_args = array(
         'cmd'            => '_xclick',
         'amount'         => $price,
         'business'       => $payment_settings['paypal_email'],
         'email'          => $purchase_data['email'],
-        'no_shipping'    => '1',
-        'shipping'       => '0',
+        'no_shipping'    => '0', // 0 (defualt) prompt for address, not required, 1 no prompt, 2 prompt & required
         'no_note'        => '1',
         'currency_code'  => $payment_settings['currency'],
         'charset'        => get_bloginfo( 'charset' ),
@@ -73,10 +74,14 @@ function sell_media_process_paypal_purchase( $purchase_data ) {
         'mc_currency'    => $payment_settings['currency'],
         'mc_gross'       => $price,
         'payment_status' => '',
+        'item_name'      => __( 'Purchase from ', 'sell_media' ) . get_bloginfo( 'name' ),
         'item_number'    => $purchase_data['purchase_key'],
         'custom'         => $purchase_data['payment_id'] // post id, i.e., payment id
     );
 
+
+    // Add additional args;
+    $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
     $paypal_redirect .= http_build_query( $paypal_args );
 
     print '<script type="text/javascript">window.location ="' . $paypal_redirect . '"</script>';

@@ -3,28 +3,35 @@
  * Add items to $_SESSION for shopping cart via $_POST
  *
  * @since 0.1
+ * @todo Update all price_id to be size_id
+ * @todo Update all price id (array) to be part of item array
  */
 function sell_media_add_items(){
 
-    unset( $_POST['action'] );
+    check_ajax_referer('sell_media_add_items', 'sell_media_nonce');
 
-    $tmp_items = array();
-    foreach( $_POST as $k => $v ){
-        $tmp_items[$k] = $v;
+    // Get current cart if any if not set $cart to be an empty array
+    $cart = isset( $_SESSION['cart']['items'] ) ? $_SESSION['cart']['items'] : array();
+
+    // Get any additional items
+    $to_add = array();
+    $to_add = apply_filters('sell_media_additional_items', $to_add);
+
+    // If we don't have additional items we use whats in $_POST
+    if ( empty( $to_add ) ){
+        $items[] = array(
+            'item_id' => (int)$_POST['ProductID'],
+            'price_id' => $_POST['price_id'],
+            'license_id' => $_POST['License']
+        );
+        $items = array_merge( $cart, $items );
+    } else {
+        // We have additional items and merge the current cart with the new items to add
+        $items = array_merge( $cart, $to_add );
     }
 
-    do_action('sell_media_before_session_add');
-
-    $_SESSION['cart']['items'][] = $tmp_items;
-
-    $tmp_total = 0;
-    foreach( $_SESSION['cart']['items'] as $value ){
-        $tmp_total += $value['CalculatedPrice'];
-    }
-
-    $total = $tmp_total;
-    $_SESSION['cart']['totalPrice'] = $total;
-
+    // Update our session with the new items
+    $_SESSION['cart']['items'] = $items;
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_add_items', 'sell_media_add_items' );
@@ -59,11 +66,9 @@ function sell_media_remove_item() {
 
     $item_index = $_POST['item_id'];
 
-    $_SESSION['cart']['totalPrice'] = $_SESSION['cart']['totalPrice'] - $_SESSION['cart']['items'][$item_index]['CalculatedPrice'];
-
     unset( $_SESSION['cart']['items'][$item_index] );
 
-    if ( $_SESSION['cart']['totalPrice'] == 0 ) {
+    if ( empty( $_SESSION['cart']['items'] ) ) {
         print '<p>' . __('You have no items in your cart. ', 'sell_media') . '<a href="'. get_post_type_archive_link('sell_media_item') .'">' . __('Continue shopping', 'sell_media') .'</a>.</p>';
     }
 
@@ -141,7 +146,7 @@ function sell_media_head(){?>
     <script type="text/javascript">
     var ajaxurl = "<?php print admin_url("admin-ajax.php"); ?>";
     var pluginurl = "<?php print plugin_dir_url( dirname( __FILE__ ) ); ?>";
-    var checkouturl = "<?php $options = get_option('sell_media_general_settings'); $page_id = $options['checkout_page']; $page = get_page( $page_id ); print $page->guid; ?>";
+    var checkouturl = "<?php $options = get_option('sell_media_general_settings'); $page_id = $options['checkout_page']; print get_permalink( $page_id ); ?>";
     </script>
 <?php }
 add_action( 'wp_head', 'sell_media_head' );

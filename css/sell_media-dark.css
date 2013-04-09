@@ -1,0 +1,29 @@
+/*= Dark
+-------------------------------------------------------------- */
+table#sell-media-checkout-table {
+	border: 1px solid #111;
+}
+#sell-media-checkout-table thead {
+	background: #111;
+}
+#sell-media-checkout-table td {
+	border-bottom: 1px solid #111;
+}
+#sell-media-checkout-table .product-details img {
+	border: 1px solid #111;
+}
+.sell-media-subtotal {
+	border-bottom: 1px solid #111;
+}
+#sell-media-checkout-table input,
+#sell-media-checkout-table textarea {
+	border: 1px solid #111;
+}
+input, textarea {
+	color: #111;
+}
+
+/* Cart dialog */
+.sell-media-cart-dialog fieldset {
+    border: 1px solid #ddd;
+}

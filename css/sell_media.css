@@ -36,6 +36,15 @@
 .sell-media h3 a, .sell-media-buy-text, .sell-media-buy-button {
   text-decoration: none;
 }
+.sell-media-credit {
+  font-size: 11px;
+}
+.sell-media-cart-dialog .sell-media-credit {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+}
+
 /*= Single
 -------------------------------------------------------------- */
 .sell-media .sell-media-content {
@@ -156,7 +165,7 @@
   background: url(../images/cart.png) no-repeat 0 50%;
 }
 .sell-media-cart-dialog fieldset {
-  border: 1px solid #ddd;
+  margin: 0px 0 10px;
 }
 .sell-media-cart-dialog legend {
   margin: 0 5px;
@@ -190,7 +199,6 @@
 
 /*= Checkout
 -------------------------------------------------------------- */
-
 table#sell-media-checkout-table, #sell-media-checkout-table tbody, #sell-media-checkout-table tfoot, #sell-media-checkout-table thead, #sell-media-checkout-table tr, #sell-media-checkout-table th, #sell-media-checkout-table td {
   margin: 0;
   padding: 0;
@@ -201,83 +209,37 @@ table#sell-media-checkout-table, #sell-media-checkout-table tbody, #sell-media-c
   background: transparent;
 }
 table#sell-media-checkout-table {
+  border-collapse: separate;
   overflow: hidden;
-  border: 1px solid #d3d3d3;
-  background: #fefefe;
-  width: 70%;
+  width: 100%;
   margin: 5% auto 0;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
 #sell-media-checkout-table th,
 #sell-media-checkout-table td {
-  padding: 18px 28px 18px;
+  padding: 20px;
   text-align: center;
+  vertical-align: middle;
 }
-#sell-media-checkout-table th {
-  padding-top: 22px;
-  text-shadow: 1px 1px 1px #fff;
-  background: #e8eaeb;
-}
-#sell-media-checkout-table td {
-  border-top: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
-}
-#sell-media-checkout-table .product-checkout-row td {
-  border-right: 0;
-}
-#sell-media-checkout-table tr.odd-row td {
-  background: #f6f6f6;
+#sell-media-checkout-table .product-checkout-row td.last {
+  border-bottom: 0;
 }
 #sell-media-checkout-table td.first,
 #sell-media-checkout-table th.first {
   text-align: left
 }
-#sell-media-checkout-table td.last {
-  border-right: none;
-}
-#sell-media-checkout-table td {
-  background: -moz-linear-gradient(100% 25% 90deg, #fefefe, #f9f9f9);
-  background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f9f9f9), to(#fefefe));
-}
-#sell-media-checkout-table tr.odd-row td {
-  background: -moz-linear-gradient(100% 25% 90deg, #f6f6f6, #f1f1f1);
-  background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f1f1f1), to(#f6f6f6));
-}
-#sell-media-checkout-table th {
-  background: -moz-linear-gradient(100% 20% 90deg, #e8eaeb, #ededed);
-  background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#ededed), to(#e8eaeb));
-}
-#sell-media-checkout-table tr:first-child th.first {
-  -moz-border-radius-topleft:5px;
-  -webkit-border-top-left-radius:5px; /* Saf3-4 */
-}
-#sell-media-checkout-table tr:first-child th.last {
-  -moz-border-radius-topright:5px;
-  -webkit-border-top-right-radius:5px; /* Saf3-4 */
-}
-#sell-media-checkout-table tr:last-child td.first {
-  -moz-border-radius-bottomleft:5px;
-  -webkit-border-bottom-left-radius:5px; /* Saf3-4 */
-}
-#sell-media-checkout-table tr:last-child td.last {
-  -moz-border-radius-bottomright:5px;
-  -webkit-border-bottom-right-radius:5px; /* Saf3-4 */
-}
 #sell-media-checkout-table .product-details {
   width: 50%;
 }
-#sell-media-checkout-table .product-details p {
-  font-size: 11px;
-}
 #sell-media-checkout-table .product-details img {
   display: inline;
-  float: none;
-  margin: 0 5px 0 0;
+  float: left;
+  margin: 0 15px 0 0;
+  padding: 5px;
+}
+#sell-media-checkout-table label {
+  float: left;
+  font-size: .9em;
+  width: 25%;
 }
 .sell-media .remove-item-handle {
   cursor: pointer;
@@ -290,8 +252,53 @@ table#sell-media-checkout-table {
   position: relative;
   top: 0;
   margin-left: 3px;
+  float: left;
 }
-
+.sell-media-subtotal {
+  margin: 0 0 1em;
+  padding: 0 0 1em;
+  font-size: 1.5em;
+}
+.sell-media-subtotal .sell-media-title {
+  text-align: left;
+}
+#sell-media-checkout-table input,
+#sell-media-checkout-table textarea {
+  padding: 3px 6px;
+}
+#sell-media-checkout-table input:invalid,
+#sell-media-checkout-table textarea:invalid {
+  border: 1px solid #FF0000;
+}
+#sell-media-checkout-table .checkout-title {
+  margin-bottom: 1em;
+}
+#sell-media-checkout-table .green {
+  color: #336600;
+}
+#sell-media-checkout-table .sell-media-table-meta {
+  overflow:hidden;
+}
+#sell-media-checkout-table table#sell-media-subtotal-table td.first,
+#sell-media-checkout-table table#sell-media-subtotal-table th.first {
+  text-align: right;
+}
+table#sell-media-subtotal-table {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+table#sell-media-subtotal-table td {
+  text-align: left;
+  border: 0;
+  padding: 0;
+}
+table#sell-media-subtotal-table th {
+  padding: 0 25px 0 0;
+  font-size: 20px;
+  line-height: 1.5em;
+  width: 80px;
+}
 /*= Search
 -------------------------------------------------------------- */
 .sell-media-search {
@@ -372,7 +379,7 @@ input[type="submit"].sell-media-buy-button {
 input[type="submit"].sell-media-purchased {
   color: green;
 }
-input[type="submit"].sell-media-buy-button:active
+input[type="submit"].sell-media-buy-button:active,
 input[type="submit"].sell-media-buy-button:hover,
 .sell-media-buy-button:hover,
 .sell-media-buy-button:active,
@@ -381,6 +388,8 @@ input[type="submit"].sell-media-buy-button:hover,
 .sell-media-buy-button[disabled] {
   background-color: #e6e6e6;
   *background-color: #d9d9d9;
+  border: 1px solid #cccccc;
+  *border: 0;
 }
 .sell-media-buy-button:active,
 .sell-media-buy-button.active {
@@ -486,13 +495,12 @@ input[type="submit"].sell-media-buy-button-success:active {
 
 /*= sell_media_download_list shortcode
 ------------------------------------------------------------------- */
-
 .download_lists {
-	clear:both;
+  clear:both;
 }
 .download_lists img {
-	float:left;
-	margin:0 20px 20px 0;
+  float:left;
+  margin:0 20px 20px 0;
 }
 .sell-media-ajax-loader {
   background: url( ../images/ajax-loader.gif) no-repeat center top;
@@ -502,4 +510,10 @@ input[type="submit"].sell-media-buy-button-success:active {
   padding-top: 20px;
   color: #BBB;
   font-size: 12px;
+}
+
+/*= Form styling
+------------------------------------------------------------------- */
+.sell-media-form input[type="number"].small-text {
+  width: 30px;
 }

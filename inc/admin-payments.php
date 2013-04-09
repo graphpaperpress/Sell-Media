@@ -26,7 +26,7 @@ function sell_media_is_payment_complete($payment_id) {
 function sell_media_add_payment_meta_boxes(){
     add_meta_box(
         'meta_field',
-        __( 'Customer Info', 'sell_media' ),
+        __( 'Purchase Details', 'sell_media' ),
         'sell_media_payment_render_contact',
         'sell_media_payment'
     );
@@ -46,21 +46,22 @@ function sell_media_payment_render_contact( $post ){
 
     print '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
+    print '<h4>' . __( 'Buyer Details', 'sell_media') . '</h4>';
     printf( '%s %s %s %s',
-        '<p>'.get_post_meta( $post->ID, '_sell_media_payment_first_name', true ),
+        '<p>Name: ' . get_post_meta( $post->ID, '_sell_media_payment_first_name', true ),
         get_post_meta( $post->ID, '_sell_media_payment_last_name', true ),
-        '<a href="mailto:'.get_post_meta( $post->ID, '_sell_media_payment_user_email', true ).'"'.get_post_meta( $post->ID, '_sell_media_payment_user_email', true ).'</a>',
-        '<a href="'.get_edit_user_link( get_post_meta( $post->ID, '_sell_media_user_id', true ) ).'">Edit</a></p>'
+        '<a href="' . get_edit_user_link( get_post_meta( $post->ID, '_sell_media_user_id', true ) ) . '">Edit</a>',
+        '<br />Email: <a href="mailto:' . get_post_meta( $post->ID, '_sell_media_payment_user_email', true ) . '">' . get_post_meta( $post->ID, '_sell_media_payment_user_email', true ) . '</a></p>'
         );
 
-    print '<p>' . __('Purchase link(s): ', 'sell_media') . '</p>';
+    print '<h4>' . __( 'Purchase link(s)', 'sell_media') . '</h4>';
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
 
     foreach( $links as $link ){
         print '<p><input type="text" style="width: 100%;" value="' . $link['url'] . '" /></p>';
     }
 
-    do_action('sell_media_additional_customer_meta', $post );
+    do_action( 'sell_media_additional_customer_meta', $post );
 }
 
 
@@ -213,7 +214,8 @@ function sell_media_payments_callback_fn(){
             <?php foreach( $payments as $payment ) : ?>
                 <?php $payment_meta = get_post_meta($payment->ID, '_sell_media_payment_meta', true); ?>
                 <tr>
-                    <td><a href="<?php print site_url() . '/wp-admin/post.php?post='.$payment->ID.'&action=edit'; ?>"><?php echo $payment->ID; ?></a></td><td>
+                    <td><a href="<?php print site_url() . '/wp-admin/post.php?post='.$payment->ID.'&action=edit'; ?>"><?php echo $payment->ID; ?></a></td>
+                    <td>
                         <?php if ( ! empty( $payment_meta['first_name'] ) ) echo $payment_meta['first_name']; ?>
                         <?php if ( ! empty( $payment_meta['last_name'] ) ) echo $payment_meta['last_name']; ?>
                     </td>
@@ -224,13 +226,17 @@ function sell_media_payments_callback_fn(){
                             $products_meta_array = unserialize( $payment_meta_array['products'] );
 
                             if ( ! $products_meta_array ) continue;
+                            $count = count( $products_meta_array );
+                            $i = 0;
 
                             foreach( $products_meta_array as $product ){
-                                print get_the_title( $product['ProductID'] );
+                                $comma = ( $count - 1) == $i ? null : ", ";
+                                print '<a href="' . get_edit_post_link( $product['item_id'] ) . '">'. get_the_title( $product['item_id'] ) . "</a>" . $comma;
                                 if ( isset( $product['License'] ) ){
                                     $license = get_term_by( 'id', $product['License'], 'licenses' );
                                     if ( $license ) print ' &ndash; <em>'.$license->name . '</em><br />';
                                 }
+                                $i++;
                             }
                         }
                     ?>
