@@ -109,7 +109,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
     if ( $_POST ) {
 
-        // Creat User
+        // Create User
         $user = array();
         $user['first_name'] = $_POST['first_name'];
         $user['last_name'] = $_POST['last_name'];
@@ -183,18 +183,17 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
             // Record the user
             if ( ! $current_user->ID ){
-                print 'add new user';
-                        $password = wp_generate_password( $length=12, $include_standard_special_chars=false );
-                        $data = array(
-                            'user_login' => $purchase['email'],
-                            'user_pass' => $password,
-                            'user_email' => $purchase['email'],
-                            'first_name' => $user['first_name'],
-                            'last_name' => $user['last_name'],
-                            'role' => 'sell_media_customer'
-                            );
+                $password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+                $data = array(
+                    'user_login' => $purchase['email'],
+                    'user_pass' => $password,
+                    'user_email' => $purchase['email'],
+                    'first_name' => $user['first_name'],
+                    'last_name' => $user['last_name'],
+                    'role' => 'sell_media_customer'
+                    );
 
-                        $user_id = wp_insert_user( $data );
+                $user_id = wp_insert_user( $data );
             } else {
                 $user_id = $current_user->ID;
             }
@@ -209,6 +208,10 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
             if ( ! is_wp_error( $user_id ) && $notice ){
                 wp_new_user_notification( $user_id, $password );
+            }
+
+            if ( ! is_wp_error( $user_id ) ){
+                do_action('sell_media_after_user_created');
             }
 
             // Get the new post meta
