@@ -256,7 +256,9 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <tr>
                                         <th scope="row">
                                             <?php print sell_media_get_currency_symbol(); ?>
-                                            <span class="shipping-target"><?php print sell_media_reprints_sf_shipping_rate(); ?></span>
+                                            <span class="shipping-target">
+                                                <?php print apply_filters('sell_media_shipping_rate', "0.00" ); ?>
+                                            </span>
                                         </th>
                                         <td><?php _e('Shipping &amp; Handling','sell_media'); ?></td>
                                     <tr>
