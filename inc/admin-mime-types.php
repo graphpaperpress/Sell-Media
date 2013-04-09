@@ -50,7 +50,6 @@ function sell_media_move_image_from_attachment( $attachment_id=null ){
     // Check if the destinatin directory exists, i.e.
     // wp-content/uploads/sell_media/YYYY/MM if not we create it.
     if ( ! file_exists( dirname( $destination_file ) ) ){
-        print "Desitination does exists.\n  Making directory: {$destination_dir}\n";
         wp_mkdir_p( dirname( $destination_file ) );
     }
 
