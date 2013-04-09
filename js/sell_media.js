@@ -36,6 +36,11 @@ jQuery( document ).ready(function( $ ){
             $('.subtotal-target').val( finalPrice );
         }
 
+        if ( $('.price-target').length ){
+            $('.price-target').html( finalPrice );
+            $('.price-target').val( finalPrice );
+        }
+
         return finalPrice;
     }
 
