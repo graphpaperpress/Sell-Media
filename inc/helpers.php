@@ -748,7 +748,7 @@ function sell_media_build_select( $items=array(), $args=array() ){
     </fieldset>
 <?php }
 
-function sell_media_reprints_sf_state_province_list( $current=null ){
+function sell_media_state_province_list( $current=null ){
     $items = array(
         "AL" => "Alabama",
         "AK" => "Alaska",
