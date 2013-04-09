@@ -247,8 +247,20 @@ function sell_media_cart_shortcode($atts, $content = null) {
                     <tr class="product-checkout-row">
                         <td colspan="3">
                             <div class="sell-media-subtotal">
-                                <div class="sell-media-title"><?php _e( 'Subtotal' , 'sell_media' ) ?></div>
-                                <strong><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></strong>
+                                <div class="sell-media-title"><?php _e( 'Total' , 'sell_media' ) ?></div>
+                                <table id="sell-media-subtotal-table">
+                                    <tr>
+                                        <th scope="row">$105.00</th>
+                                        <td>Subtotal</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">$24.00</th>
+                                        <td>Shipping &amp; Handling</td>
+                                    <tr>
+                                        <th scope="row"><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></th>
+                                        <td>Total</td>
+                                    </tr>
+                                </table>
                             </div>
                                 <?php do_action('sell_media_above_registration_form'); ?>
                                 <?php if ( ! is_user_logged_in() ) : ?>
