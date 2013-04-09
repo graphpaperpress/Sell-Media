@@ -250,14 +250,22 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <div class="sell-media-title"><?php _e( 'Total' , 'sell_media' ) ?></div>
                                 <table id="sell-media-subtotal-table">
                                     <tr>
-                                        <th scope="row">$105.00</th>
-                                        <td>Subtotal</td>
+                                        <th scope="row"><?php print sell_media_get_currency_symbol(); ?><span class="subtotal-target"></span></th>
+                                        <td><?php _e('Subtotal','sell_media'); ?></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">$24.00</th>
-                                        <td>Shipping &amp; Handling</td>
+                                        <th scope="row">
+                                            <?php print sell_media_get_currency_symbol(); ?>
+                                            <span class="shipping-target"><?php print sell_media_reprints_sf_shipping_rate(); ?></span>
+                                        </th>
+                                        <td><?php _e('Shipping &amp; Handling','sell_media'); ?></td>
                                     <tr>
-                                        <th scope="row"><span class="total green"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"></span></span></th>
+                                        <th scope="row">
+                                            <span class="green">
+                                                <?php print sell_media_get_currency_symbol(); ?>
+                                                <span class="total-target"></span>
+                                            </span>
+                                        </th>
                                         <td>Total</td>
                                     </tr>
                                 </table>

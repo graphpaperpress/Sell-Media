@@ -31,9 +31,9 @@ jQuery( document ).ready(function( $ ){
 
         finalPrice = ( +price + ( +license_markup * .01 ) * price ).toFixed(2);
 
-        if ( $('.price-target').length ){
-            $('.price-target').html( finalPrice );
-            $('.price-target').val( finalPrice );
+        if ( $('.subtotal-target').length ){
+            $('.subtotal-target').html( finalPrice );
+            $('.subtotal-target').val( finalPrice );
         }
 
         return finalPrice;
@@ -71,7 +71,7 @@ jQuery( document ).ready(function( $ ){
             final_total = "0.00";
         }
 
-        $( '.price-target' ).html( final_total );
+        $( '.subtotal-target' ).html( final_total );
     }
 
 
@@ -104,7 +104,7 @@ jQuery( document ).ready(function( $ ){
         $('.item-price-target').each(function(){
             total = +( $(this).text()) + +total;
         });
-        $('.price-target').html( total.toFixed(2) );
+        $('.subtotal-target').html( total.toFixed(2) );
     }
 
 
@@ -132,10 +132,20 @@ jQuery( document ).ready(function( $ ){
     }
 
     /**
+     * Add subtotal and shipping together
+     */
+    function sell_media_update_final_total(){
+        total = +$('.subtotal-target').text() + +$('.shipping-target').text();
+        $('.total-target').html( total.toFixed(2) );
+    }
+
+
+    /**
      * Run the following code below the DOM is ready update the cart count
      */
-    $('.price-target').html(total_items());
+    sell_media_update_sub_total();
     sell_media_update_total();
+    sell_media_update_final_total();
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
@@ -243,7 +253,7 @@ jQuery( document ).ready(function( $ ){
         count = $(".sell_media-product-list li").size();
 
         if( count == 1 ) {
-            $('.price-target').html('0');
+            $('.subtotal-target').html('0');
             $('.sell-media-buy-button-checkout').fadeOut();
         }
 
@@ -261,6 +271,7 @@ jQuery( document ).ready(function( $ ){
                 }
 
                 total_items();
+                sell_media_update_final_total();
             }
         });
     });
@@ -299,6 +310,7 @@ jQuery( document ).ready(function( $ ){
     $(document).on('change', '.sell-media-quantity', function(){
         sell_media_update_sub_total();
         sell_media_update_total();
+        sell_media_update_final_total();
     });
 
 });
