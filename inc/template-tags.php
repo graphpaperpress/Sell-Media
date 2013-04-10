@@ -560,18 +560,19 @@ function sell_media_cart_price( $item=array() ){
                 break;
         }
     } else {
-        $price = $filtered_price * $qty;
+        $total = $filtered_price * $qty;
+        $price = $filtered_price;
     }
 
     $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
     $price = array(
         'size' => empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size ),
         'amount' => sprintf("%0.2f",$price),
+        'total' => empty( $total ) ? sprintf("%0.2f",$price) : sprintf("%0.2f",$total),
         'markup' => empty( $license_obj ) ? null : str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) ),
         'license' => empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name ),
         'qty' => $qty
         );
 
     return $price;
-
 }
