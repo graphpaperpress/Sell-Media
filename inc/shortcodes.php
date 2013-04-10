@@ -247,28 +247,28 @@ function sell_media_cart_shortcode($atts, $content = null) {
                     <tr class="product-checkout-row">
                         <td colspan="3">
                             <div class="sell-media-subtotal">
-                                <div class="sell-media-title"><?php _e( 'Total' , 'sell_media' ) ?></div>
+                                <div class="sell-media-title"><h3><?php _e( 'Total' , 'sell_media' ) ?></h3></div>
                                 <table id="sell-media-subtotal-table">
                                     <tr>
-                                        <th scope="row"><?php print sell_media_get_currency_symbol(); ?><span class="subtotal-target"></span></th>
-                                        <td><?php _e('Subtotal','sell_media'); ?></td>
+                                        <th scope="row"><?php _e('Subtotal','sell_media'); ?></th>
+                                        <td><span class="currency"><?php print sell_media_get_currency_symbol(); ?></span><span class="subtotal-target"></span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">
-                                            <?php print sell_media_get_currency_symbol(); ?>
-                                            <span class="shipping-target">
-                                                <?php print apply_filters('sell_media_shipping_rate', "0.00" ); ?>
-                                            </span>
+                                            <?php _e('Shipping &amp; Handling','sell_media'); ?>
                                         </th>
-                                        <td><?php _e('Shipping &amp; Handling','sell_media'); ?></td>
+                                        <td>
+                                            <span class="currency"><?php print sell_media_get_currency_symbol(); ?></span><span class="shipping-target"><?php print apply_filters('sell_media_shipping_rate', "0.00" ); ?></span>
+                                        </td>
                                     <tr>
                                         <th scope="row">
-                                            <span class="green">
-                                                <?php print sell_media_get_currency_symbol(); ?>
-                                                <span class="total-target"></span>
-                                            </span>
+                                            <?php _e('Total','sell_media'); ?>
                                         </th>
-                                        <td>Total</td>
+                                        <td>
+                                            <span class="final-total green">
+                                                <span class="currency"><?php print sell_media_get_currency_symbol(); ?></span><span class="total-target"></span>
+                                            </span>
+                                         </td>
                                     </tr>
                                 </table>
                             </div>

@@ -257,10 +257,6 @@ table#sell-media-checkout-table {
 .sell-media-subtotal {
   margin: 0 0 1em;
   padding: 0 0 1em;
-  font-size: 1.5em;
-}
-.sell-media-subtotal .sell-media-title {
-  text-align: left;
 }
 #sell-media-checkout-table input,
 #sell-media-checkout-table textarea {
@@ -279,10 +275,7 @@ table#sell-media-checkout-table {
 #sell-media-checkout-table .sell-media-table-meta {
   overflow:hidden;
 }
-#sell-media-checkout-table table#sell-media-subtotal-table td.first,
-#sell-media-checkout-table table#sell-media-subtotal-table th.first {
-  text-align: right;
-}
+
 table#sell-media-subtotal-table {
   border: 0;
   margin: 0;
@@ -294,10 +287,11 @@ table#sell-media-subtotal-table td {
   padding: 0;
 }
 table#sell-media-subtotal-table th {
-  padding: 0 25px 0 0;
-  font-size: 20px;
-  line-height: 1.5em;
-  width: 80px;
+  padding: 0 5% 0 0;
+  font-size: .8em;
+  line-height: 1em;
+  width: 25%;
+
 }
 /*= Search
 -------------------------------------------------------------- */
