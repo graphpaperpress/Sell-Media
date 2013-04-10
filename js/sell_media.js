@@ -238,8 +238,10 @@ jQuery( document ).ready(function( $ ){
         });
         if ( price == 0 && size == 0 ){
             $('.sell-media-buy-button').attr('disabled', true);
+            $('#sell_media_license_select').attr('disabled', true);
         } else {
             $('.sell-media-buy-button').removeAttr('disabled');
+            $('#sell_media_license_select').removeAttr('disabled');
         }
     });
 

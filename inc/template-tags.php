@@ -419,7 +419,7 @@ function sell_media_item_form(){
         <?php if ( count( $licenses ) > 1 ) : ?>
             <fieldset>
                 <legend><?php _e( 'License', 'sell_media' ); ?></legend>
-                <select name="License" value="License" id="sell_media_license_select">
+                <select name="License" value="License" id="sell_media_license_select" disabled>
                     <option value="" data-price="0">-- <?php _e( 'Select a license' ); ?> --</option>
                     <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                 </select>
