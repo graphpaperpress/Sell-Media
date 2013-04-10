@@ -17,14 +17,14 @@ The Sell Media plugin allows you to:
 *   Accept payments via Paypal.
 *   Earn passive income by selling and licensing your media.
 
-Sell Media extensions will soon include:
+Take Sell Media to the next level with these powerful extensions:
 
-* Sell photo reprints via Adorama Pix or self-fulfillment
-* Newsletter integration with SendGrid, Mailchimp, AWeber, Campaign Monitor
-* Process credit card transactions using Stripe integration
-* Coupon Code system
-* Watermark images
-* Backup media uploads to Amazon S3
+* [Sell photo reprints](http://graphpaperpress.com/?download=reprints-self-fulfillment)
+* [Watermark your images](http://graphpaperpress.com/?download=watermark)
+* [Newsletter integration with Mailchimp](http://graphpaperpress.com/?download=mailchimp)
+* [Advanced Search](http://graphpaperpress.com/?download=advanced-search)
+* [Sales Commissions](http://graphpaperpress.com/?download=commissions)
+* [And many more](http://graphpaperpress.com/downloads/category/extensions/)
 
 Installation
 ------------
