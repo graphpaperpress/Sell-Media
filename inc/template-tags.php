@@ -451,7 +451,7 @@ function sell_media_item_form(){
                 <a href="<?php print get_permalink( $general_settings['checkout_page'] ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
             </div>
             <div class="right">
-                <input type="submit" value="<?php _e( 'Add to Cart' ); ?>" class="sell-media-buy-button" />
+                <input type="submit" value="<?php _e( 'Add to Cart' ); ?>" class="sell-media-buy-button" disabled />
             </div>
         </div>
     </form>

@@ -212,18 +212,34 @@ jQuery( document ).ready(function( $ ){
      * On change run the calculate_total() function
      */
     $( document ).on('change', '#sell_media_license_select', function(){
+        var price;
+        var size = $('#sell_media_size_select :selected').attr('data-price');
         $("option:selected", this).each(function(){
-            calculate_total( $(this).attr('data-price'), $('#sell_media_size_select :selected').attr('data-price') );
+            price = $(this).attr('data-price');
+            calculate_total( price, size );
         });
+        if ( price == 0 && size == 0 ){
+            $('.sell-media-buy-button').attr('disabled', true);
+        } else {
+            $('.sell-media-buy-button').removeAttr('disabled');
+        }
     });
 
     /**
      * On change run the calculate_total() function
      */
     $( document ).on('change', '#sell_media_size_select', function(){
+        var size;
+        var price = $('#sell_media_license_select :selected').attr('data-price');
         $("option:selected", this).each(function(){
-            calculate_total( $('#sell_media_license_select :selected').attr('data-price'), $(this).attr('data-price') );
+            size = $(this).attr('data-price');
+            calculate_total( price, size );
         });
+        if ( price == 0 && size == 0 ){
+            $('.sell-media-buy-button').attr('disabled', true);
+        } else {
+            $('.sell-media-buy-button').removeAttr('disabled');
+        }
     });
 
 

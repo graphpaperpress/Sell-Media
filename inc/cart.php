@@ -10,6 +10,8 @@ function sell_media_add_items(){
 
     check_ajax_referer('sell_media_add_items', 'sell_media_nonce');
 
+    if ( empty( $_POST['price_id'] ) ) die();
+
     // Get current cart if any if not set $cart to be an empty array
     $cart = isset( $_SESSION['cart']['items'] ) ? $_SESSION['cart']['items'] : array();
 
