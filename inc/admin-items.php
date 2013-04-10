@@ -582,7 +582,6 @@ function sell_media_uploader_multiple(){
 
         if ( $product_id )
             continue;
-        }
 
         $post['ID'] = $attachment['id'];
         $post['post_title'] = $attachment['title'];
