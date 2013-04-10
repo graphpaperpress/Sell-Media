@@ -173,6 +173,9 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.2.7 =
+* Fixing bug where items with 0 price can be added to the cart
+
 = 1.2.6 =
 * Numerous hooks and filters addd
 * Numerous bug fixes
