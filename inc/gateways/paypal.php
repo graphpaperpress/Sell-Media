@@ -125,7 +125,7 @@ function sell_media_process_paypal_ipn() {
      */
     if ( sell_media_test_mode() ){
         $log_file = plugin_dir_path( __FILE__ ) . 'log.txt';
-        $file_handle = fopen( $log_file, 'a') or die();
+        $file_handle = fopen( $log_file, 'a');
     }
 
     if ( isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] != 'POST' || is_admin() ) {
