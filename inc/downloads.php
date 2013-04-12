@@ -133,6 +133,7 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $payments = new WP_Query( $args );
     foreach( $payments->posts as $payment ) {
         $payment_meta = get_post_meta( $payment->ID, '_sell_media_payment_meta', true );
+        $payment_id = $payment->ID;
         $downloads = maybe_unserialize( $payment_meta['products'] );
     }
 
@@ -148,10 +149,12 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
 
     foreach( $downloads as $download ){
         $i++;
-        $link = site_url() . '/?download=' . $purchase_key . '&email=' . $email . '&id=' . $download['AttachmentID'];
-        $links .= '<a href="' . $link . '">' . get_the_title( $download['ProductID'] ) .'</a>';
-        if ( $i != $count ){
-            $links .= ', ';
+        $link = sell_media_build_download_link( $payment_id, $email );
+        foreach( $link as $l ){
+            $links .= '<a href="' . $l['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
+            if ( $i != $count ){
+                $links .= ', ';
+            }
         }
     }
 
