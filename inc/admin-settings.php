@@ -80,10 +80,15 @@ class SellMediaSettings {
         ), $this->payment_settings );
 
         $user = get_user_by('email', get_option('admin_email') );
+        if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ){
+            $from_name = $user->first_name . ' ' . $user->last_name;
+        } else {
+            $from_name = null;
+        }
         $msg = "Hi {first_name} {last_name},\nThanks for purchasing from my site. Here are your download links:\n{download_links}\nThanks!";
 
         $this->email_settings = array_merge( array(
-            'from_name' => $user->first_name . ' ' . $user->last_name,
+            'from_name' => $from_name,
             'from_email' => get_option('admin_email'),
             'success_email_subject' => 'Your Purchase',
             'success_email_body' => $msg
