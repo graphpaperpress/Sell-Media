@@ -173,6 +173,9 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.2.8 =
+* Fixing bug where users received multiple or no download email
+
 = 1.2.7 =
 * Fixing bug where items with 0 price can be added to the cart
 
