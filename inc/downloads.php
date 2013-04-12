@@ -147,22 +147,23 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $count = count( $downloads );
     $i = 0;
 
+    $download_links = sell_media_build_download_link( $payment_id, $email );
+
     foreach( $downloads as $download ){
-        $i++;
-        $link = sell_media_build_download_link( $payment_id, $email );
-        foreach( $link as $l ){
-            $links .= '<a href="' . $l['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
-            if ( $i != $count ){
-                $links .= ', ';
-            }
+
+        $link = $download_links[ $i ]['url'];
+        $links .= '<a href="' . $link . '">' . get_the_title( $download['item_id'] ) .'</a>';
+        if ( $i != $count -1){
+            $links .= ', ';
         }
+        $i++;
     }
 
     $tags = array(
         '{first_name}'  => get_post_meta( $payment->ID, '_sell_media_payment_first_name', true ),
         '{last_name}'   => get_post_meta( $payment->ID, '_sell_media_payment_last_name', true ),
         '{payer_email}' => get_post_meta( $payment->ID, '_sell_media_payment_user_email',  true ),
-        '{download_links}' => $links
+        '{download_links}' => empty( $links ) ? null : $links
     );
 
     $body = str_replace( array_keys( $tags ), $tags, nl2br( $body ) );
