@@ -108,6 +108,7 @@ function sell_media_image_keywords( $post_id=null ) {
 function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $echo=true ) {
 
     $thumb_id = get_post_thumbnail_id( $post_id );
+    $text = apply_filters('sell_media_purchase_text', __( $text,'sell_media' ), $post_id );
     $html = '<a href="javascript:void(0)" data-sell_media-product-id="' . esc_attr( $post_id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-buy-' . $button . '">' . $text . '</a>';
 
     if ( $echo ) print $html; else return $html;
@@ -451,7 +452,7 @@ function sell_media_item_form(){
                 <a href="<?php print get_permalink( $general_settings['checkout_page'] ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
             </div>
             <div class="right">
-                <input type="submit" value="<?php _e( 'Add to Cart' ); ?>" class="sell-media-buy-button" disabled />
+                <input type="submit" value="<?php print apply_filters('sell_media_add_to_cart_text', __('Add to Cart'), $_POST['product_id'] ); ?>" class="sell-media-buy-button" disabled />
             </div>
         </div>
     </form>

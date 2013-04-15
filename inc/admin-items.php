@@ -246,7 +246,8 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
                 // text
                 case 'html':
-                    echo '<p><code>[sell_media_item id="' . $post->ID . '" text="Purchase" style="button" size="medium"]</code></p>
+                    $text = apply_filters( 'sell_media_purchase_text', __('Purchase') );
+                    echo '<p><code>[sell_media_item id="' . $post->ID . '" text="' . $text . '" style="button" size="medium"]</code></p>
                     <p id="' . $field['id'] . '"><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span></p>';
                 break;
             } //end switch
