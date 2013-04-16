@@ -173,6 +173,11 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.2.9 =
+* Optimized bulk uploader! Images sizes are no created on download (after purchase) and not created during the upload process.
+* You can now bulk add images to a Collection from the bulk uploader
+* Various bug fixes
+
 = 1.2.8 =
 * Fixing bug where users received multiple or no download email
 
