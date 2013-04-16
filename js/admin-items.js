@@ -116,4 +116,35 @@ jQuery( document ).ready(function( $ ){
         $this.find('img').css('opacity','1');
         $this.find('.sell-media-bulk-list-item-edit').hide();
     });
+
+
+    $('#sell_media_bulk_upload_form').on('submit', function( event ){
+        event.preventDefault();
+
+        var _post_ids = [];
+
+        $('.sell-media-bulk-list li').each(function(){
+            _post_ids.push( $(this).attr('data-post_id') );
+        });
+
+        if ( _post_ids.length == 0 || $('#sell_media_collection_select option:selected').val() == "" ) return;
+
+        $('#sell_media_bulk_upload_save_button').attr('disabled', true).val('Saving...');
+
+        var _data = {
+            action: "sell_media_bulk_update_collection",
+            term_id: $('#sell_media_collection_select option:selected').val(),
+            post_ids: _post_ids,
+            security: $('#sell_media_bulk_upload_form #security').val()
+        };
+
+        $.ajax({
+            data: _data,
+            type: "POST",
+            url: ajaxurl,
+            success: function( msg ){
+                $('#sell_media_bulk_upload_save_button').removeAttr('disabled').val('Saved!');
+            }
+        });
+    });
 });

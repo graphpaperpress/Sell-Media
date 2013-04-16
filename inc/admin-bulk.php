@@ -51,8 +51,41 @@ function sell_media_add_bulk_callback_fn(){
             <p><?php _e( 'Bulk uploading is a server-intensive process. If you are using cheap, shared web hosting, uploading items in small batches will ensure all items uploaded are published correctly. All bulk uploads will inherit the default prices and licenses. You can modify the prices and licenses of each item after doing the bulk upload. ', 'sell_media' ); ?></p>
             <p class="uploader"><a class="sell-media-upload-trigger-multiple button" id="_sell_media_button" value="Upload"><?php _e( 'Upload', 'sell_media'); ?></a></p>
             <div class="sell-media-ajax-loader" style="display:none;"><?php _e('Loading items...', 'sell_media'); ?></div>
-            <div class="sell-media-bulk-list"><a href="<?php print admin_url( 'edit.php?post_type=sell_media_item' ); ?>"></div>
+            <div class="sell-media-bulk-list"><a href="<?php print admin_url( 'edit.php?post_type=sell_media_item' ); ?>"></a></div>
+            <div class="sell-media-bulk-controls">
+                <form action="#" method="POST" id="sell_media_bulk_upload_form">
+                    <?php wp_nonce_field('sell_media_bulk_update_collection','security'); ?>
+                    <?php _e('Choose a Collection: ','sell_media'); ?>
+                    <select name="Collection" value="collection" id="sell_media_collection_select">
+                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
+                        <?php sell_media_build_options( array( 'taxonomy' => 'collection', 'type'=>'select' ) ); ?>
+                    </select>
+                    <p><input type="submit" id="sell_media_bulk_upload_save_button" class="button-primary" value="<?php _e('Save', 'sell_media'); ?>" /></p>
+                </form>
+            </div>
             <?php do_action( 'sell_media_bulk_below_uploader' ); ?>
         </div>
     </div>
 <?php }
+
+
+/**
+ * Adds a collection to a series of posts
+ *
+ * @author Zane Matthew
+ * @param $_POST['post_ids'] array of post ids
+ * @param $_PSOT['term_id'] The term id
+ * @since 1.2.9
+ */
+function sell_media_bulk_update_collection(){
+
+    check_ajax_referer('sell_media_bulk_update_collection', 'security');
+
+    if ( empty( $_POST['term_id'] ) ) return;
+
+    foreach( $_POST['post_ids'] as $post_id ){
+        wp_set_post_terms( $post_id, $_POST['term_id'], 'collection', true );
+    }
+    die();
+}
+add_action( 'wp_ajax_sell_media_bulk_update_collection', 'sell_media_bulk_update_collection' );
