@@ -72,10 +72,10 @@ function sell_media_payment_render_contact( $post ){
     print '<table class="wp-list-table widefat" cellspacing="0">';
     print '<thead>
             <tr>
-                <th scope="col">Item</th>
-                <th>Price</th>
-                <th>License</th>
-                <th>Download Link</th>
+                <th scope="col">' . _e('Item','sell_media') . '</th>
+                <th>' . _e('Price','sell_media') . '</th>
+                <th>' . _e('License','sell_media') . '</th>
+                <th>' . _e('Download Link','sell_media') . '</th>
             </tr>
         </thead>';
     print '<tbody>';
