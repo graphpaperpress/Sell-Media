@@ -447,6 +447,10 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
     $links = null;
 
     foreach( $downloads as $download ) {
+        $tmp_links['item_id'] = $download['item_id'];
+        $tmp_links['price_id'] = $download['price_id'];
+        $tmp_links['license_id'] = $download['license_id'];
+        $tmp_links['thumbnail'] = sell_media_item_icon( get_post_meta( $download['item_id'], '_sell_media_attachment_id', true ), 'thumbnail', false );
         $tmp_links['url'] = site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download['item_id'] . '&price_id=' . $download['price_id'];
         $links[] = $tmp_links;
     }
