@@ -20,27 +20,83 @@ function sell_media_process_download() {
             $wp_upload_dir = wp_upload_dir();
             $attachment_id = get_post_meta( $_GET['id'], '_sell_media_attachment_id', true );
 
-            /**
-             * Due to the inconsistencies of the small/medium/large meta keys we need to add this fix
-             * @todo Resize fixes
-             */
-            if ( $price_id == 'sell_meida_original_file' ){
-                $price_id = '_sell_media_attached_file';
+            $path = $wp_upload_dir['basedir'] . '/sell_media/';
+            $full_file_path = $path . get_post_meta( $attachment_id, '_wp_attached_file', true );
+
+            $mime_type = wp_check_filetype( $full_file_path );
+
+            $image_mimes = array(
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                        'image/bmp',
+                        'image/tiff'
+                        );
+
+            if ( in_array( $mime_type['type'], $image_mimes ) ){
+
+                $size_settings = get_option('sell_media_size_settings');
+
+                /**
+                 * Due to the inconsistencies of the small/medium/large meta keys we need to add this fix
+                 * @todo Resize fixes
+                 */
+                if ( $price_id == 'sell_meida_original_file' ){
+                    $price_id = '_sell_media_attached_file';
+                }
+
+                $attached_file = get_post_meta( $attachment_id, $price_id, true );
+                if ( empty( $attached_file ) ){
+                    $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+                    $tmp = false;
+                } else {
+                    $tmp = true;
+                    switch( $price_id ){
+                        case 'sell_media_small_file':
+                            $new_image = array(
+                                'height' => $size_settings['small_size_height'],
+                                'width' => $size_settings['small_size_width']
+                                );
+                            break;
+                        case 'sell_media_medium_file':
+                            $new_image = array(
+                                'height' => $size_settings['medium_size_height'],
+                                'width' => $size_settings['medium_size_width']
+                                );
+                            break;
+                        case 'sell_media_large_file':
+                            $new_image = array(
+                                'height' => $size_settings['large_size_height'],
+                                'width' => $size_settings['large_size_width']
+                                );
+                            break;
+                    }
+
+                    // get current height width
+                    list( $width, $height ) = getimagesize( $full_file_path );
+
+                    if ( $new_image['height'] >= $height || $new_image['width'] >= $width ) {
+                        wp_die("This image is not available in the resolution of {$new_image['width']}x{$new_image['height']}");
+                    }
+
+                    // Resample
+                    $image_p = imagecreatetruecolor($new_image['width'], $new_image['height']);
+                    $image = imagecreatefromjpeg($full_file_path);
+                    imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_image['width'], $new_image['height'], $width, $height);
+
+                    // Output
+                    $destination_file = $path . 'tmp/' . basename( $full_file_path );
+                    if ( ! file_exists( $destination_file ) ){
+                        wp_mkdir_p( dirname( $destination_file ) );
+                    }
+
+                    $result = imagejpeg($image_p, $destination_file, 100);
+                    $full_file_path = $destination_file;
+                    // end
+                }
             }
 
-            $attached_file = get_post_meta( $attachment_id, $price_id, true );
-            $ds = null;
-            if ( empty( $attached_file ) ){
-                $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
-                $ds = '/';
-            }
-            /** End inconsistencies fix */
-
-
-            /** Build the (full) system path to the download file */
-            $file_path = $wp_upload_dir['basedir'] . $ds . $attached_file;
-
-            $pathinfo = pathinfo( $file_path );
+            $pathinfo = pathinfo( $full_file_path );
 
             switch( $pathinfo['extension'] ) {
                 case "gif":  $ctype = "image/gif"; break;
@@ -64,7 +120,6 @@ function sell_media_process_download() {
                 set_magic_quotes_runtime(0);
             }
 
-            $full_file_path = $wp_upload_dir['basedir'] . '/sell_media' . $ds . $attached_file;
             $size = filesize( $full_file_path );
 
             header("Pragma: no-cache");
@@ -75,7 +130,11 @@ function sell_media_process_download() {
             header("Content-Disposition: attachment; filename={$pathinfo['basename']};");
             header("Content-Length: {$size}");
 
-            print file_get_contents( $full_file_path );
+            $download_result = file_get_contents( $full_file_path );
+            print $download_result;
+
+            if ( $download_result !== true && $tmp === true )
+                unlink( $full_file_path );
 
             exit;
         } else {

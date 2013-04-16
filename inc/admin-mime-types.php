@@ -79,34 +79,6 @@ function sell_media_move_image_from_attachment( $attachment_id=null ){
 
 
         /**
-         * @todo these should be an array and we can just foreach over it!
-         * $size['small']['width']
-         * $size['small']['height']
-         * $size['small']['price']
-         * and so on, but settings is a pain!
-         */
-        $size_settings = get_option('sell_media_size_settings');
-
-        $image_small_size = image_make_intermediate_size( $original_file, $size_settings['small_size_width'], $size_settings['small_size_height'], false );
-        if ( $image_small_size ){
-            rename( dirname( $original_file ) . '/' . $image_small_size['file'], $destination_dir . $image_small_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_small_file', $wp_upload_dir['subdir'] . '/' . $image_small_size['file'] );
-        }
-
-        $image_medium_size = image_make_intermediate_size( $original_file, $size_settings['medium_size_width'], $size_settings['medium_size_height'], false );
-        if ( $image_medium_size ){
-            rename( dirname( $original_file ) . '/' . $image_medium_size['file'], $destination_dir . $image_medium_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_medium_file', $wp_upload_dir['subdir'] . '/' . $image_medium_size['file'] );
-        }
-
-        $image_large_size = image_make_intermediate_size( $original_file, $size_settings['large_size_width'], $size_settings['large_size_height'], false );
-        if ( $image_large_size ){
-            rename( dirname( $original_file ) . '/' . $image_large_size['file'], $destination_dir . $image_large_size['file'] );
-            update_post_meta( $attachment_id, 'sell_media_large_file', $wp_upload_dir['subdir'] . '/' . $image_large_size['file'] );
-        }
-
-
-        /**
          * If for some reason the image resize fails we just fall back to the original image.
          * Example, the image the user is trying to sell is smaller than our "max width".
          */
