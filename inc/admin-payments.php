@@ -59,7 +59,6 @@ function sell_media_payment_render_contact( $post ){
             'email' => get_post_meta( $post->ID, '_sell_media_payment_user_email', true )
         );
 
-    print '<h4>' . __( 'Buyer Details', 'sell_media') . '</h4>';
     printf( '%s %s %s %s',
         '<p>Name: ' . $contact['first_name'],
         $contact['last_name'],
@@ -72,10 +71,10 @@ function sell_media_payment_render_contact( $post ){
     print '<table class="wp-list-table widefat" cellspacing="0">';
     print '<thead>
             <tr>
-                <th scope="col">' . _e('Item','sell_media') . '</th>
-                <th>' . _e('Price','sell_media') . '</th>
-                <th>' . _e('License','sell_media') . '</th>
-                <th>' . _e('Download Link','sell_media') . '</th>
+                <th scope="col">' . __('Item','sell_media') . '</th>
+                <th>' . __('Price','sell_media') . '</th>
+                <th>' . __('License','sell_media') . '</th>
+                <th>' . __('Download Link','sell_media') . '</th>
             </tr>
         </thead>';
     print '<tbody>';
