@@ -156,13 +156,12 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
             $amount = 0;
             $quantity = 0;
+
             foreach ( $items as $item ){
                 $price = sell_media_cart_price( $item );
-                $amount = $amount + $price['amount'];
-
                 $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
+                $amount = $amount + $price['amount'] * $qty;
                 $quantity = $quantity + $qty;
-
             }
 
             $_SESSION['cart']['amount'] = $amount;
