@@ -203,7 +203,7 @@ function sell_media_process_paypal_ipn() {
         return;
     }
 
-    $payment_id     = $encoded_data_array['custom']; // This is our post id
+    $payment_id     = $encoded_data_array['custom']; // This is our post id (payment id)
     $purchase_key   = $encoded_data_array['item_number']; // This is our purchase key
     $paypal_amount  = $encoded_data_array['mc_gross'];
     $payment_status = $encoded_data_array['payment_status'];
@@ -279,18 +279,25 @@ function sell_media_process_paypal_ipn() {
             //     sell_media_update_sales_stats( $products['ProductID'], $products['License'], $products['CalculatedPrice'] );
             // }
 
-            sell_media_update_payment_status( $payment_id, 'publish' );
+            $status = sell_media_update_payment_status( $payment_id, 'publish' );
+
+            if ( sell_media_test_mode() ){
+                if ( $status != 0 ){
+                    $log_data .= "Updated  Payment ID: {$status} to publish!\n";
+                } else {
+                    $log_data .= "Did NOT update Payment ID: {$status} to publish!\n";
+                }
+                write_log_txt( $file_handle, $log_data );
+                end_log_txt( $file_handle );
+            }
+
             sell_media_email_purchase_receipt( $purchase_key, $payment_meta_array['email'], $payment_id );
 
             do_action( 'sell_media_after_successful_payment', $products_meta_array, $payment_id );
             sell_media_empty_cart();
+
         }
     }
 
-    if ( sell_media_test_mode() ){
-        $log_data .= "Made it! Payment is set to publish!\n";
-        write_log_txt( $file_handle, $log_data );
-        end_log_txt( $file_handle );
-    }
 }
 add_action( 'sell_media_verify_paypal_ipn', 'sell_media_process_paypal_ipn' );
