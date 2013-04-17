@@ -718,8 +718,9 @@ function sell_media_update_payment_status($payment_id, $new_status = 'publish') 
     $old_status = $payment->post_status;
 
     do_action( 'sell_media_before_update_payment_status', $payment_id, $new_status, $old_status );
-    wp_update_post( array( 'ID' => $payment_id, 'post_status' => $new_status ) );
+    $id = wp_update_post( array( 'ID' => $payment_id, 'post_status' => $new_status ) );
     do_action( 'sell_media_after_update_payment_status', $payment_id, $new_status, $old_status );
+    return $id;
 }
 
 function sell_media_build_select( $items=array(), $args=array() ){
