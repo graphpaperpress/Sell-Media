@@ -72,6 +72,7 @@ function sell_media_process_download() {
                             break;
                     }
 
+
                     // get current height width
                     list( $width, $height ) = getimagesize( $full_file_path );
 
@@ -203,18 +204,15 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $body = $email_settings['success_email_body'];
 
     $links = null;
-    $count = count( $downloads );
+    $count = count( $download_links );
     $i = 0;
 
     $download_links = sell_media_build_download_link( $payment_id, $email );
 
-    foreach( $downloads as $download ){
-
-        $link = $download_links[ $i ]['url'];
-        $links .= '<a href="' . $link . '">' . get_the_title( $download['item_id'] ) .'</a>';
-        if ( $i != $count -1){
-            $links .= ', ';
-        }
+    foreach( $download_links as $download ){
+        $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
+        $comma = ( $i == $count ) ? null : ', ';
+        $links .= $comma;
         $i++;
     }
 
@@ -232,5 +230,5 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
-    wp_mail( $email, $subject, $body, $headers);
+    return wp_mail( $email, $subject, $body, $headers);
 }
