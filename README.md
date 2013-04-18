@@ -173,6 +173,11 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.3 =
+* Additional error checking added for PayPal
+* Translation issue fixed
+* Email formatting and issues fixed
+
 = 1.2.9 =
 * Optimized bulk uploader! Images sizes are no created on download (after purchase) and not created during the upload process.
 * You can now bulk add images to a Collection from the bulk uploader
