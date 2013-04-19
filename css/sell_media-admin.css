@@ -144,7 +144,7 @@
 -------------------------------------------------------------- */
 .sell-media-item-table th { width: 100%; display: block; font-weight: bold; padding: 10px 10px 0 10px; }
 .sell-media-item-table td { display: block; padding: 5px 10px 0; }
-.sell-media-item-table .sell-media-item-path { padding: 4px; margin: 0 5px 10px 0; }
+.sell-media-item-table .sell-media-item-url { padding: 4px; margin: 0 5px 10px 0; }
 
 .sell-media-bulk-controls {
     clear: both;
