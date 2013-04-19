@@ -23,7 +23,7 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
     }
     $dir = $upload_url_a['baseurl'];
 
-    $sell = (bool) get_post_meta($post->ID, '_sell_media_for_sale', true);
+    $sell = get_post_meta($post->ID, '_sell_media_for_sale_product_id', true);
 
     $form_fields['sell'] = array(
         'label' => __( 'Sell This', 'sell_media' ),
@@ -37,45 +37,6 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
 }
 add_filter( 'attachment_fields_to_edit', 'sell_media_attachment_fields_to_edit', 10, 2 );
 
-
-/**
- * Delete a product post type based on the ID
- *
- * @since 0.1
- */
-function sell_media_delete_item( $post_id=null ){
-    $product_id = get_post_meta( $post_id, '_sell_media_for_sale_product_id', true );
-
-    $image_mimes = array(
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/bmp',
-        'image/tiff'
-        );
-
-    $wp_upload_dir = wp_upload_dir();
-    $attached_file_path = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $product_id, '_sell_media_attached_file', true );
-
-    $mime_type = wp_check_filetype( $attached_file_path );
-
-    /**
-     * For all items that are NOT "photographs" we move the
-     * original file back into "uploads/". Note we do NOT
-     * want to delete the original, that is handled when the
-     * user empties the trash bin.
-     */
-    if ( ! in_array( $mime_type, $image_mimes ) ){
-        $destination_file = $wp_upload_dir['basedir'] . '/' . get_post_meta( $post_id, '_wp_attached_file', true );
-        @copy( $attached_file_path, $destination_file );
-    }
-
-    delete_post_meta( $post_id, '_sell_media_attached_file' );
-    delete_post_meta( $post_id, '_sell_media_for_sale_product_id' );
-    delete_post_meta( $post_id, '_sell_media_for_sale' );
-
-    wp_trash_post( $product_id );
-}
 
 
 /**
@@ -92,20 +53,29 @@ function sell_media_delete_item( $post_id=null ){
  */
 function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
-    $for_sale = get_post_meta( $post['ID'], '_sell_media_for_sale', true );
+    $sell_media_item_id = get_post_meta( $post['ID'], '_sell_media_for_sale_product_id', true );
 
-    if ( empty( $attachment['sell'] ) && $for_sale == "1" ){
+    /**
+     * Item was once marked for sale and is no longer being sold
+     */
+    if ( empty( $attachment['sell'] ) && ! empty( $sell_media_item_id ) ){
+
         /**
-         * Item was once marked for sale and is no longer being sold
+         * Run the needed clean up
          */
-        sell_media_delete_item( $post['ID'] );
+        sell_media_before_delete_post( $sell_media_item_id, $post['ID'] );
+
+        /**
+         * Move the sell_media_item this attachment is attached to into the trash bin
+         */
+        wp_trash_post( $sell_media_item_id );
         return $post;
+    }
 
-    } elseif ( ! empty( $attachment['sell'] ) && $attachment['sell'] == "1" ) {
-        /**
-         * Attachment is now marked for sale
-         */
-
+    /**
+     * Attachment is now marked for sale
+     */
+    elseif ( $attachment['sell'] == "1" && empty( $sell_media_item_id ) ) {
         $product = array(
             'post_title' => $post['post_title'],
             'post_content' => $post['post_content'],
@@ -132,7 +102,6 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         update_post_meta( $product_id, 'sell_media_description', $post['post_content'] );
         update_post_meta( $product_id, '_sell_media_attached_file', date('Y') . '/' . date('m') . '/' . basename( $post['attachment_url'] ) );
 
-        update_post_meta( $post['ID'], '_sell_media_for_sale', true );
         update_post_meta( $post['ID'], '_sell_media_for_sale_product_id', $product_id );
 
         // Read our meta data from the original post
@@ -140,7 +109,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
         $attached_file = get_post_meta( $post['ID'], '_wp_attached_file', true );
         $file_name = basename( $attached_file );
-        
+
         // Build paths to the original file and the destination
         $dir = wp_upload_dir();
         $original_file = $dir['path'] . '/' . $file_name;
@@ -162,14 +131,14 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         }
         return $post;
 
-    } else {
+    }
 
-        /**
-         * Attachment is not marked for sale and never was,
-         * treat this as a regular update and just return the $post data.
-         */
+    /**
+     * Attachment is not marked for sale and never was,
+     * treat this as a regular update and just return the $post data.
+     */
+    else {
         return $post;
-
     }
 }
 add_filter( 'attachment_fields_to_save', 'sell_media_attachment_field_sell_save', 10, 2 );

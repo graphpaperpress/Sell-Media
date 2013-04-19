@@ -353,7 +353,6 @@ function sell_media_save_custom_meta( $post_id ) {
     update_post_meta( $post_id, '_sell_media_attachment_id', $attachment_id );
 
     update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', $post_id );
-    update_post_meta( $attachment_id, '_sell_media_for_sale', 1 );
     update_post_meta( $attachment_id, '_sell_media_attached_file', $attached_file );
 
     // loop through fields and save the data
@@ -517,9 +516,9 @@ function sell_media_sales_stats(){
  *
  * @since 1.0.4
  */
-function sell_media_before_delete_post( $postid ){
+function sell_media_before_delete_post( $postid, $attachment_id=null ){
 
-    global $post_type;
+    $post_type = get_post_type( $postid );
 
     if ( $post_type != 'sell_media_item' ) return;
 
@@ -528,6 +527,14 @@ function sell_media_before_delete_post( $postid ){
      * lower quality "original" with the file in the proctedted area.
      */
     $attached_file = get_post_meta( $postid, '_sell_media_attached_file', true );
+    if ( empty( $attachment_id ) ){
+        $attachment_id = get_post_meta( $postid, '_sell_media_attachment_id', true );
+    } else {
+        delete_post_meta( $attachment_id, '_sell_media_for_sale_product_id' );
+    }
+
+
+    delete_post_meta( $attachment_id, '_sell_media_for_sale_product_id' );
 
     $wp_upload_dir = wp_upload_dir();
     $attached_file_path = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
@@ -550,23 +557,8 @@ function sell_media_before_delete_post( $postid ){
         @copy( $attached_file_path, $wp_upload_dir['basedir'] . '/' . $attached_file );
         @unlink( $attached_file_path );
 
-        // delete our generated sizes
-        $small_file = get_post_meta( $postid, 'sell_media_small_file', true );
-
-        if ( $small_file ){
-            @unlink( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $small_file );
-        }
-
-        $medium_file = get_post_meta( $postid, 'sell_media_medium_file', true );
-        if ( $medium_file ){
-            @unlink( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $medium_file );
-        }
-
-        $large_file = get_post_meta( $postid, 'sell_media_large_file', true );
-        if ( $large_file ){
-            @unlink( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $large_file );
-        }
     }
+    return;
 }
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
 
@@ -577,12 +569,10 @@ add_action( 'before_delete_post', 'sell_media_before_delete_post' );
 function sell_media_uploader_multiple(){
 
     $post = array();
+
     foreach( $_POST['attachments'] as $attachment ){
 
         $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
-
-        if ( $product_id )
-            continue;
 
         $post['ID'] = $attachment['id'];
         $post['post_title'] = $attachment['title'];
