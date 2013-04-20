@@ -64,42 +64,20 @@ function sell_media_admin_items_init(){
         )
     );
 
-    $aid = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-    $sid = get_post_meta( $aid, 'sell_media_small_file', true );
-    $mid = get_post_meta( $aid, 'sell_media_medium_file', true );
-    $lid = get_post_meta( $aid, 'sell_media_large_file', true );
-
-    if ( $sid ){
-        $sell_media_item_meta_fields[] = array(
-            'label' => 'Small <span class="description">' . $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height'] . '</span>',
-            'desc'  => '', // this needs validation
-            'id'    => $prefix . '_price_small',
-            'type'  => 'price',
-            'std'   => $size_settings['small_size_price'],
-            'value' => get_post_meta( $post_id, $prefix . '_price_small', true )
-        );
-    }
-
-    if ( $mid ){
-        $sell_media_item_meta_fields[] = array(
-            'label'=> 'Medium <span class="description">'.$size_settings['medium_size_width'].' x '.$size_settings['medium_size_height'].'</span>',
-            'desc'  => '', // this needs validation
-            'id'    => $prefix . '_price_medium',
-            'type'  => 'price',
-            'std'   => $size_settings['medium_size_price'],
-            'value' => get_post_meta( $post_id, $prefix . '_price_medium', true )
-        );
-    }
-
-    if ( $lid ){
-        $sell_media_item_meta_fields[] = array(
-            'label'=> 'Large <span class="description">'.$size_settings['large_size_width'].' x '.$size_settings['large_size_height'].'</span>',
-            'desc'  => '', // this needs validation
-            'id'    => $prefix . '_price_large',
-            'type'  => 'price',
-            'std'   => $size_settings['large_size_price'],
-            'value' => get_post_meta( $post_id, $prefix . '_price_large', true )
-        );
+    /**
+     * @todo Quick fix to prevent this from firing on AJAX request
+     */
+    if ( ! is_null( $post_id ) ){
+        foreach( sell_media_image_sizes( $post_id, false ) as $k => $v ){
+            $sell_media_item_meta_fields[] = array(
+                'label' => __( ucfirst( $k ), 'sell_media' ) . ' <span class="description">' . $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height'] . '</span>',
+                'desc'  => '',
+                'id'    => $prefix . '_price_' . $k,
+                'type'  => 'price',
+                'std'   => $size_settings[ $k . '_size_price'],
+                'value' => get_post_meta( $post_id, $prefix . '_price_' . $k, true )
+            );
+        }
     }
 
     $sell_media_item_meta_fields = apply_filters( 'sell_media_additional_item_meta', $sell_media_item_meta_fields, $post_id );

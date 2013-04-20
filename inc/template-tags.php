@@ -380,35 +380,21 @@ function sell_media_item_form(){
             <?php $size_settings = get_option('sell_media_size_settings'); ?>
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
+
                 <select id="sell_media_size_select" name="price_id">
                     <option value="" data-price="0">-- <?php _e( 'Select a size' ); ?> --</option>
-                    <?php if (get_post_meta( $attachment_id, 'sell_media_small_file', true )) : ?>
-                        <option value="sell_media_small_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'small' ); ?>">
-                            <?php _e( 'Small', 'sell_media' ); ?>
-                            (<?php print $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height']; ?>):
-                            <?php sell_media_item_price( $_POST['product_id'], true, 'small' ); ?>
-                        </option>
-                    <?php endif; ?>
-                    <?php if (get_post_meta( $attachment_id, 'sell_media_medium_file', true )) : ?>
-                        <option value="sell_media_medium_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'medium' ); ?>">
-                            <?php _e( 'Medium', 'sell_media' ); ?>
-                            (<?php print $size_settings['medium_size_width'] . ' x ' . $size_settings['medium_size_height']; ?>):
-                            <?php sell_media_item_price( $_POST['product_id'], true, 'medium' ); ?>
-                        </option>
-                    <?php endif; ?>
-                    <?php if (get_post_meta( $attachment_id, 'sell_media_large_file', true )) : ?>
-                        <option value="sell_media_large_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, 'large' ); ?>">
-                            <?php _e( 'Large', 'sell_media' ); ?>
-                            (<?php print $size_settings['large_size_width'] . ' x ' . $size_settings['large_size_height']; ?>):
-                            <?php sell_media_item_price( $_POST['product_id'], true, 'large' ); ?>
-                        </option>
-                    <?php endif; ?>
+
+                    <?php foreach( sell_media_image_sizes( $_POST['product_id'], false ) as $k => $v ) : ?>
+                        <option value="sell_media_<?php print $k; ?>_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, $k ); ?>"><?php _e( ucfirst( $k ), 'sell_media' ); ?> (<?php print $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height']; ?>): <?php sell_media_item_price( $_POST['product_id'], true, $k ); ?></option>
+                    <?php endforeach; ?>
+
                     <option value="sell_meida_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
                         <?php _e( 'Original', 'sell_media' ); ?>
                         (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
                         <?php sell_media_item_price( $_POST['product_id'] ); ?>
                     </option>
                 </select>
+
             </fieldset>
         <?php else : ?>
             <input type="hidden" id="sell_media_price" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
@@ -461,29 +447,53 @@ function sell_media_item_form(){
 
 
 /**
- * Prints the li's containing the image size name, resolution and price
+ * Determines the available download sizes based on the current image width/height.
+ * Note not ALL images are available in ALL download sizes.
  *
  * @since 1.2.4
  * @author Zane Matthew
+ * @return Prints an li or returns an array of available download sizes
  */
-function sell_media_image_sizes( $post_id=null ){
+function sell_media_image_sizes( $post_id=null, $echo=true ){
     $size_settings = get_option('sell_media_size_settings');
     $html = null;
     $aid = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+    $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
 
-    if ( get_post_meta( $aid, 'sell_media_small_file', true ) ) {
-        $html .= '<li class="price"><span class="title">' . __( 'Small Price', 'sell_media' ) . ' (' . $size_settings['small_size_width'] . ' x ' . $size_settings['small_size_height'] . '): </span>' . sell_media_item_price( $post_id, true, 'small', false ) . '</li>';
+    $wp_upload_dir = wp_upload_dir();
+    $attached_path_file  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+
+    list( $orig_w, $orig_h, $type, $attr ) = getimagesize( $attached_path_file );
+
+    $null = null;
+    $download_sizes = array();
+
+    foreach( array( 'small', 'medium', 'large' ) as $size ){
+
+        /**
+         * This looks ugly because image_resize_dimensions() returns empty indexes
+         */
+        list( $null, $null, $null, $null, $download_sizes[ $size ]['width'], $download_sizes[ $size ]['height'] ) = image_resize_dimensions( $orig_w, $orig_h, $size_settings[$size . '_size_width'], $size_settings[$size . '_size_height'], $crop=false );
+
+        /**
+         * If no width/height can be determined we remove it from our array of available download sizes
+         */
+        if ( empty( $download_sizes[ $size ]['width'] ) ) unset( $download_sizes[ $size ] );
     }
 
-    if ( get_post_meta( $aid, 'sell_media_medium_file', true ) ){
-        $html .= '<li class="price"><span class="title">' . __( 'Medium Price', 'sell_media' ) . ' (' . $size_settings['medium_size_width'] . ' x ' . $size_settings['medium_size_height'] . '): </span>' . sell_media_item_price( $post_id, true, 'medium', false ) . '</li>';
-    }
 
-    if ( get_post_meta( $aid, 'sell_media_large_file', true ) ){
-        $html .= '<li class="price"><span class="title">' . __( 'Large Price', 'sell_media' ) . ' (' . $size_settings['large_size_width'] . ' x ' . $size_settings['large_size_height'].'): </span>' . sell_media_item_price( $post_id, true, 'large', false ) . '</li>';
+    if ( $echo ){
+        foreach( $download_sizes as $k => $v ){
+            $name = ucfirst( $k ) . ' Price';
+            $html .= '<li class="price">';
+            $html .= '<span class="title">' . __( $name, 'sell_media' ) . ' (' . $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height'] . '): </span>';
+            $html .= sell_media_item_price( $post_id, true, $k, false );
+            $html .= '</li>';
+        }
+        print $html;
+    } else {
+        return $download_sizes;
     }
-
-    print $html;
 }
 
 
