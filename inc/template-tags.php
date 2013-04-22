@@ -472,9 +472,8 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
     list( $orig_w, $orig_h, $type, $attr ) = getimagesize( $attached_path_file );
 
     $null = null;
-    $download_sizes = array();
-
-    $original_size = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
+    $original = $download_sizes = array();
+    list( $original['url'], $original['width'], $original['height'] ) = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
 
     foreach( array( 'small', 'medium', 'large' ) as $size ){
 
@@ -484,21 +483,21 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
         list( $null, $null, $null, $null, $download_sizes[ $size ]['width'], $download_sizes[ $size ]['height'] ) = image_resize_dimensions( $orig_w, $orig_h, $size_settings[$size . '_size_width'], $size_settings[$size . '_size_height'], $crop=false );
 
         /**
-         * If no width/height can be determined we remove it from our array of available download sizes
-         * We also check if the available download size is larger than the original, if so we remove it
-         * as well.
+         * If no width/height can be determined we remove it from our array of available download sizes.
          */
-        if ( empty( $download_sizes[ $size ]['width'] )
-            || $download_sizes[ $size ]['width'] <  $size_settings['small_size_width'] ) {
-            unset( $download_sizes[ $size ] );
-        }
+        if ( empty( $download_sizes[ $size ]['width'] ) ) unset( $download_sizes[ $size ] );
+
+	/** 
+	 * Check for portraits and if the available download size is larger than the original we remove it.
+	 */
+        if ( $original['height'] > $original['width'] && $download_sizes[ $size ]['width'] <  $size_settings['small_size_width'] ) unset( $download_sizes[ $size ] );
     }
 
     if ( $echo ){
         foreach( $download_sizes as $k => $v ){
-            $name = ucfirst( $k ) . ' Price';
+            $name = ucfirst( $k );
             $html .= '<li class="price">';
-            $html .= '<span class="title">' . __( $name, 'sell_media' ) . ' (' . $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height'] . '): </span>';
+            $html .= '<span class="title">' . __( $name, 'sell_media' ) . ' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
             $html .= sell_media_item_price( $post_id, true, $k, false );
             $html .= '</li>';
         }
