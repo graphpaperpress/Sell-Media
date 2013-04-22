@@ -173,6 +173,11 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.4.1 =
+* Improved support for importing EXIF/IPTC data such as; city, keywords, etc. during the creation of new items
+* Allowed prices to be lower than 0.99
+* Improved handling when an item has no size or license
+
 = 1.4 =
 * Better support for portrait images
 * Fixed issue where download sizes would not always be displayed

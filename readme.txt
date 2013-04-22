@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.4
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,11 @@ Action hooks available:
 * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+= 1.4.1 =
+* Improved support for importing EXIF/IPTC data such as; city, keywords, etc. during the creation of new items
+* Allowed prices to be lower than 0.99
+* Improved handling when an item has no size or license
+
 = 1.4 =
 * Better support for portrait images
 * Fixed issue where download sizes would not always be displayed
