@@ -468,6 +468,8 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
     $null = null;
     $download_sizes = array();
 
+    $original_size = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
+
     foreach( array( 'small', 'medium', 'large' ) as $size ){
 
         /**
@@ -477,10 +479,14 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
 
         /**
          * If no width/height can be determined we remove it from our array of available download sizes
+         * We also check if the available download size is larger than the original, if so we remove it
+         * as well.
          */
-        if ( empty( $download_sizes[ $size ]['width'] ) ) unset( $download_sizes[ $size ] );
+        if ( empty( $download_sizes[ $size ]['width'] )
+            || $download_sizes[ $size ]['width'] <  $size_settings['small_size_width'] ) {
+            unset( $download_sizes[ $size ] );
+        }
     }
-
 
     if ( $echo ){
         foreach( $download_sizes as $k => $v ){
