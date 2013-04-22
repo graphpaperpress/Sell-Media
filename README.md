@@ -173,6 +173,10 @@ Upgrade Notice
 
 Changelog
 ---------
+= 1.4 =
+* Better support for portrait images
+* Fixed issue where download sizes would not always be displayed
+
 = 1.3 =
 * Additional error checking added for PayPal
 * Translation issue fixed
