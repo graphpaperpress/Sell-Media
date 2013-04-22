@@ -41,7 +41,7 @@ function sell_media_process_download() {
                  * Due to the inconsistencies of the small/medium/large meta keys we need to add this fix
                  * @todo Resize fixes
                  */
-                if ( $price_id == 'sell_meida_original_file' ){
+                if ( $price_id == 'sell_media_original_file' ){
                     $price_id = '_sell_media_attached_file';
                 }
 

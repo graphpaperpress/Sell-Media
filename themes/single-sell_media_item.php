@@ -43,7 +43,12 @@ get_header(); ?>
 					<?php sell_media_image_sizes( $post->ID ); ?>
 				<?php endif; ?>
 				<li class="price">
-					<span class="title"><?php _e( 'Original', 'sell_media' ); ?> (<?php sell_media_original_image_size( $post->ID ); ?>):</span> <?php sell_media_item_price( $post->ID ); ?>
+					<span class="title"><?php _e( 'Original', 'sell_media' ); ?>
+						<?php if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ): ?>
+							(<?php sell_media_original_image_size( $post->ID ); ?>):
+						<?php endif ?>
+					</span>
+					<?php sell_media_item_price( $post->ID ); ?>
 				</li>
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>

@@ -360,6 +360,7 @@ function sell_media_item_form(){
     $general_settings = get_option( 'sell_media_general_settings' );
     $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
     $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
+    $disabled = null;
     if ( $licenses ) {
         $term_id = $licenses[0]->term_id;
     } else {
@@ -377,7 +378,7 @@ function sell_media_item_form(){
         $wp_upload_dir = wp_upload_dir();
         $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
         if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
-            <?php $size_settings = get_option('sell_media_size_settings'); ?>
+            <?php $size_settings = get_option('sell_media_size_settings'); $disabled = 'disabled'; ?>
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
 
@@ -388,7 +389,7 @@ function sell_media_item_form(){
                         <option value="sell_media_<?php print $k; ?>_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, $k ); ?>"><?php _e( ucfirst( $k ), 'sell_media' ); ?> (<?php print $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height']; ?>): <?php sell_media_item_price( $_POST['product_id'], true, $k ); ?></option>
                     <?php endforeach; ?>
 
-                    <option value="sell_meida_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
+                    <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
                         <?php _e( 'Original', 'sell_media' ); ?>
                         (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
                         <?php sell_media_item_price( $_POST['product_id'] ); ?>
@@ -397,8 +398,9 @@ function sell_media_item_form(){
 
             </fieldset>
         <?php else : ?>
-            <input type="hidden" id="sell_media_price" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
+            <input type="hidden" id="sell_media_price" name="price_id" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" value="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
         <?php endif; ?>
+
         <?php do_action( 'sell_media_cart_below_licenses' ); ?>
 
 
@@ -438,7 +440,7 @@ function sell_media_item_form(){
                 <a href="<?php print get_permalink( $general_settings['checkout_page'] ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
             </div>
             <div class="right">
-                <input type="submit" value="<?php print apply_filters('sell_media_add_to_cart_text', __('Add to Cart'), $_POST['product_id'] ); ?>" class="sell-media-buy-button" disabled />
+                <input type="submit" value="<?php print apply_filters('sell_media_add_to_cart_text', __('Add to Cart'), $_POST['product_id'] ); ?>" class="sell-media-buy-button" <?php print $disabled; ?> />
             </div>
         </div>
     </form>
@@ -562,7 +564,7 @@ function sell_media_cart_price( $item=array() ){
         'sell_media_small_file',
         'sell_media_medium_file',
         'sell_media_large_file',
-        'sell_meida_original_file',
+        'sell_media_original_file',
     );
     if ( in_array( $filtered_price, $sizes_array ) ){
         switch( $item['price_id'] ){
