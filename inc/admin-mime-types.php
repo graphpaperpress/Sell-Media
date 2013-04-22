@@ -23,20 +23,22 @@ function sell_media_move_image_from_attachment( $attachment_id=null ){
     $creator = sell_media_iptc_parser( 'creator', $original_file );
     $keywords = sell_media_iptc_parser( 'keywords', $original_file );
 
+    global $post;
+    $product_id = empty( $post->ID ) ? get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true ) : $post->ID;
 
     // Save iptc info as taxonomies
-    if ( ! empty( $attachment_id ) ) {
+    if ( ! empty( $product_id ) ) {
         if ( $city )
-            sell_media_iptc_save( 'city', $city, $attachment_id );
+            sell_media_iptc_save( 'city', $city, $product_id );
 
         if ( $state )
-            sell_media_iptc_save( 'state', $state, $attachment_id );
+            sell_media_iptc_save( 'state', $state, $product_id );
 
         if ( $creator )
-            sell_media_iptc_save( 'creator', $creator, $attachment_id );
+            sell_media_iptc_save( 'creator', $creator, $product_id );
 
         if ( $keywords )
-            sell_media_iptc_save( 'keywords', $keywords, $attachment_id );
+            sell_media_iptc_save( 'keywords', $keywords, $product_id );
     }
 
 

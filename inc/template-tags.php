@@ -467,7 +467,7 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
 
     $attached_file_fix = file_exists( $attached_path_file );
     if ( ! $attached_file_fix ){
-        list( $broken, $url, $attached_file ) = explode( 'uploads/', $attached_path_file );
+        @list( $broken, $url, $attached_file ) = explode( 'uploads/', $attached_path_file );
         $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
     }
 
