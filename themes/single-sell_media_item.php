@@ -43,7 +43,7 @@ get_header(); ?>
 					<?php sell_media_image_sizes( $post->ID ); ?>
 				<?php endif; ?>
 				<li class="price">
-					<span class="title"><?php _e( 'Original Price', 'sell_media' ); ?> (<?php sell_media_original_image_size( $post->ID ); ?>):</span> <?php sell_media_item_price( $post->ID ); ?>
+					<span class="title"><?php _e( 'Original', 'sell_media' ); ?> (<?php sell_media_original_image_size( $post->ID ); ?>):</span> <?php sell_media_item_price( $post->ID ); ?>
 				</li>
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>
