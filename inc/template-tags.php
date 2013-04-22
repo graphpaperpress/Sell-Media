@@ -469,7 +469,7 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
         $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
     }
 
-    list( $orig_w, $orig_h, $type, $attr ) = getimagesize( $attached_path_file );
+    list( $orig_w, $orig_h, $type, $attr ) = @getimagesize( $attached_path_file );
 
     $null = null;
     $original = $download_sizes = array();
@@ -487,10 +487,12 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
          */
         if ( empty( $download_sizes[ $size ]['width'] ) ) unset( $download_sizes[ $size ] );
 
-	/** 
-	 * Check for portraits and if the available download size is larger than the original we remove it.
-	 */
-        if ( $original['height'] > $original['width'] && $download_sizes[ $size ]['width'] <  $size_settings['small_size_width'] ) unset( $download_sizes[ $size ] );
+    	/**
+	     * Check for portraits and if the available download size is larger than the original we remove it.
+	     */
+        if ( $original['height'] > $original['width']
+            && isset( $download_sizes[ $size ] )
+            && $download_sizes[ $size ]['height'] <  $size_settings['small_size_height'] ) unset( $download_sizes[ $size ] );
     }
 
     if ( $echo ){
