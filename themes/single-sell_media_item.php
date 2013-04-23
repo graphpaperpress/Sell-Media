@@ -50,6 +50,7 @@ get_header(); ?>
 					</span>
 					<?php sell_media_item_price( $post->ID ); ?>
 				</li>
+				<?php do_action('sell_media_additional_list_items'); ?>
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>
 		</div><!-- .sell-media-meta -->
