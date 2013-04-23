@@ -60,6 +60,7 @@ function sell_media_add_bulk_callback_fn(){
                         <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
                         <?php sell_media_build_options( array( 'taxonomy' => 'collection', 'type'=>'select' ) ); ?>
                     </select>
+                    <?php do_action('sell_media_bulk_uploader_additional_fields'); ?>
                     <p><input type="submit" id="sell_media_bulk_upload_save_button" class="button-primary" value="<?php _e('Save', 'sell_media'); ?>" /></p>
                 </form>
             </div>
