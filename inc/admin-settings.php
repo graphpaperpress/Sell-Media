@@ -71,7 +71,8 @@ class SellMediaSettings {
             'thanks_page' => '',
             'customer_notification' => '',
             'style' => '',
-            'plugin_credit' => ''
+            'plugin_credit' => '',
+            'post_type_slug' => 'items',
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
@@ -125,6 +126,7 @@ class SellMediaSettings {
         add_settings_field( 'customer_notification', 'Customer Notification', array( &$this, 'field_general_customer_notification' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'style', 'Style', array( &$this, 'field_general_style' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'plugin_credit', 'Plugin Credit', array( &$this, 'field_general_plugin_credit' ), $this->general_settings_key, 'section_general' );
+        add_settings_field( 'post_type_slug', 'Post Type Slug', array( &$this, 'field_post_type_slug' ), $this->general_settings_key, 'section_general' );
 
         do_action( 'sell_media_general_settings_hook' );
 
@@ -346,6 +348,16 @@ class SellMediaSettings {
             <option value="1" <?php selected( $this->general_settings['plugin_credit'], 1 ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
         </select>
         <span class="desc"><?php _e( 'Let your site visitors know you are using the Sell Media plugin?', 'sell_media' ); ?></span>
+        <?php
+    }
+
+    /*
+     * Post Type Slug field callback
+     */
+    function field_post_type_slug(){
+        ?>
+        <input type="text" name="<?php echo $this->general_settings_key; ?>[post_type_slug]" id="<?php echo $this->general_settings_key; ?>[post_type_slug]" value="<?php echo wp_filter_nohtml_kses( $this->general_settings['post_type_slug'] ); ?>" />
+        <span class="desc"><?php _e( 'You can change the post type slug to: "photos" or "downloads". The default slug is "items"', 'sell_media' ); ?></span>
         <?php
     }
 
