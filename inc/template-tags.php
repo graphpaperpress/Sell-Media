@@ -234,7 +234,7 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
     if ( $echo )
         print $price;
     else
-        return $price;
+        return sprintf( '%0.2f', $price );
 
 }
 
@@ -361,6 +361,7 @@ function sell_media_item_form(){
     $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
     $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
     $disabled = null;
+    $price = sell_media_item_price( $_POST['product_id'], $currency=false, false, false);
     if ( $licenses ) {
         $term_id = $licenses[0]->term_id;
     } else {
@@ -378,7 +379,7 @@ function sell_media_item_form(){
         $wp_upload_dir = wp_upload_dir();
         $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
         if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
-            <?php $size_settings = get_option('sell_media_size_settings'); $disabled = 'disabled'; ?>
+            <?php $size_settings = get_option('sell_media_size_settings'); $disabled = 'disabled'; $price = "0.00"; ?>
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
 
@@ -421,13 +422,12 @@ function sell_media_item_form(){
         <?php endif; ?>
         <?php do_action( 'sell_media_cart_below_size' ); ?>
 
-
         <div class="total-container group">
             <div class="left">
                 <strong><?php _e( 'Total' ); ?></strong>
             </div>
             <div class="right">
-                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="price-target">0.00</span></span>
+                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"><?php print $price; ?></span></span>
             </div>
         </div>
         <div class="button-container group">
