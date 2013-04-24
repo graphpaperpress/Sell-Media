@@ -414,7 +414,7 @@ class SellMediaSettings {
     function field_payment_default_price() {
         ?>
         <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
-        <input type="number" step=".1" class="small-text" name="<?php echo $this->size_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( sprintf("%0.2f", $this->size_settings['default_price']) ); ?>" />
+        <input type="number" step=".1" class="small-text" min="0" name="<?php echo $this->size_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( sprintf("%0.2f", $this->size_settings['default_price']) ); ?>" />
         <span class="desc"><?php _e( 'The default price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ); ?></span>
         <?php
     }
