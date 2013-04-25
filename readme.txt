@@ -182,10 +182,19 @@ Action hooks available:
 * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+
+= 1.4.2 =
+* Users can now change the post type slug
+* Added shortcode `sell_media_additional_list_items` so users can add additional information on the single item page under the size list.
+* `sell_media_bulk_uploader_additional_fields` Allows developers to add additional form fields for bulk upload/edit
+* Fixing issue where original file is sometimes downloaded vs. the one purchased
+* Various PHP notices fixes
+
 = 1.4.1 =
 * Improved support for importing EXIF/IPTC data such as; city, keywords, etc. during the creation of new items
 * Allowed prices to be lower than 0.99
 * Improved handling when an item has no size or license
+* Improved handling for prices with non-images
 
 = 1.4 =
 * Better support for portrait images
