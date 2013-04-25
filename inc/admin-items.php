@@ -68,15 +68,18 @@ function sell_media_admin_items_init(){
      * @todo Quick fix to prevent this from firing on AJAX request
      */
     if ( ! is_null( $post_id ) ){
-        foreach( sell_media_image_sizes( $post_id, false ) as $k => $v ){
-            $sell_media_item_meta_fields[] = array(
-                'label' => __( ucfirst( $k ), 'sell_media' ) . ' <span class="description">' . $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height'] . '</span>',
-                'desc'  => '',
-                'id'    => $prefix . '_price_' . $k,
-                'type'  => 'price',
-                'std'   => $size_settings[ $k . '_size_price'],
-                'value' => get_post_meta( $post_id, $prefix . '_price_' . $k, true )
-            );
+        $sizes = sell_media_image_sizes( $post_id, false );
+        if ( $sizes ){
+            foreach( $sizes as $k => $v ){
+                $sell_media_item_meta_fields[] = array(
+                    'label' => __( ucfirst( $k ), 'sell_media' ) . ' <span class="description">' . $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height'] . '</span>',
+                    'desc'  => '',
+                    'id'    => $prefix . '_price_' . $k,
+                    'type'  => 'price',
+                    'std'   => $size_settings[ $k . '_size_price'],
+                    'value' => get_post_meta( $post_id, $prefix . '_price_' . $k, true )
+                );
+            }
         }
     }
 

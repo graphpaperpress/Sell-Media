@@ -462,6 +462,8 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
     $aid = get_post_meta( $post_id, '_sell_media_attachment_id', true );
     $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
 
+    if ( empty( $attached_file ) ) return false;
+
     $wp_upload_dir = wp_upload_dir();
     $attached_path_file  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
 
