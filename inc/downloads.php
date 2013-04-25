@@ -16,26 +16,23 @@ function sell_media_process_download() {
 
         if ( $verified ) {
 
-            // Get the file name from the attachment ID
+
+            /**
+             * Get the file name from the attachment ID
+             * and build the path to the attachment
+             */
             $wp_upload_dir = wp_upload_dir();
             $attachment_id = get_post_meta( $_GET['id'], '_sell_media_attachment_id', true );
-
             $path = $wp_upload_dir['basedir'] . '/sell_media/';
             $full_file_path = $path . get_post_meta( $attachment_id, '_wp_attached_file', true );
 
+
+            /**
+             * Check if this download is an image, if it is we generate the download size (if its not the original).
+             */
             $mime_type = wp_check_filetype( $full_file_path );
+            if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ){
 
-            $image_mimes = array(
-                        'image/jpeg',
-                        'image/png',
-                        'image/gif',
-                        'image/bmp',
-                        'image/tiff'
-                        );
-
-            if ( in_array( $mime_type['type'], $image_mimes ) ){
-
-                $size_settings = get_option('sell_media_size_settings');
 
                 /**
                  * Due to the inconsistencies of the small/medium/large meta keys we need to add this fix
@@ -45,60 +42,76 @@ function sell_media_process_download() {
                     $price_id = '_sell_media_attached_file';
                 }
 
+
+                /**
+                 * For images other than the original we need to add this fix
+                 */
                 $attached_file = get_post_meta( $attachment_id, $price_id, true );
                 if ( empty( $attached_file ) ){
                     $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
-                    $tmp = false;
-                } else {
-                    $tmp = true;
+                }
+
+
+                /**
+                 * We need to pair up keys like this "sell_media_small_file" with values like this "small"
+                 * @todo Resize fixes
+                 */
+                if ( in_array( $price_id, array('sell_media_small_file','sell_media_medium_file','sell_media_large_file') ) ) {
+                    $delete_tmp = true;
                     switch( $price_id ){
                         case 'sell_media_small_file':
-                            $new_image = array(
-                                'height' => $size_settings['small_size_height'],
-                                'width' => $size_settings['small_size_width']
-                                );
+                            $k = 'small';
                             break;
                         case 'sell_media_medium_file':
-                            $new_image = array(
-                                'height' => $size_settings['medium_size_height'],
-                                'width' => $size_settings['medium_size_width']
-                                );
+                            $k = 'medium';
                             break;
                         case 'sell_media_large_file':
-                            $new_image = array(
-                                'height' => $size_settings['large_size_height'],
-                                'width' => $size_settings['large_size_width']
-                                );
+                            $k = 'large';
                             break;
                     }
 
 
-                    // get current height width
-                    list( $width, $height ) = getimagesize( $full_file_path );
+                    /**
+                     * Determine the download height and width
+                     */
+                    $download_sizes = sell_media_image_sizes( $_GET['id'], false );
+                    $new_image = array(
+                        'height' => $download_sizes[ $k ]['height'],
+                        'width' => $download_sizes[ $k ]['width']
+                        );
 
-                    if ( $new_image['height'] >= $height || $new_image['width'] >= $width ) {
+                    list( $current_image['width'], $current_image['height'] ) = getimagesize( $full_file_path );
+
+                    if ( $new_image['height'] >= $current_image['height'] || $new_image['width'] >= $current_image['width'] ) {
                         wp_die("This image is not available in the resolution of {$new_image['width']}x{$new_image['height']}");
                     }
 
-                    // Resample
-                    $image_p = imagecreatetruecolor($new_image['width'], $new_image['height']);
-                    $image = imagecreatefromjpeg($full_file_path);
-                    imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_image['width'], $new_image['height'], $width, $height);
 
-                    // Output
+                    /**
+                     * Create the new image from our download sizes. Write the file (at 100% quality) out to disk,
+                     * creating the folder tmp/ if its not already created.
+                     */
+                    $image_p = imagecreatetruecolor( $new_image['width'], $new_image['height'] );
+                    $image = imagecreatefromjpeg( $full_file_path );
+                    imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_image['width'], $new_image['height'], $current_image['width'], $current_image['height']);
+
                     $destination_file = $path . 'tmp/' . basename( $full_file_path );
                     if ( ! file_exists( $destination_file ) ){
                         wp_mkdir_p( dirname( $destination_file ) );
                     }
 
-                    $result = imagejpeg($image_p, $destination_file, 100);
+                    imagejpeg( $image_p, $destination_file, 100 );
                     $full_file_path = $destination_file;
-                    // end
+                } else {
+                    $delete_tmp = false;
                 }
             }
 
-            $pathinfo = pathinfo( $full_file_path );
 
+            /**
+             * Determine the file extension and then force downloading of the file
+             */
+            $pathinfo = pathinfo( $full_file_path );
             switch( $pathinfo['extension'] ) {
                 case "gif":  $ctype = "image/gif"; break;
                 case "png":  $ctype = "image/png"; break;
@@ -122,7 +135,6 @@ function sell_media_process_download() {
             }
 
             $size = filesize( $full_file_path );
-
             header("Pragma: no-cache");
             header("Expires: 0");
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -134,7 +146,12 @@ function sell_media_process_download() {
             $download_result = file_get_contents( $full_file_path );
             print $download_result;
 
-            if ( $download_result !== true && $tmp === true )
+
+            /**
+             * If this is a generated download size from our tmp/ directory we delete
+             * the file after download.
+             */
+            if ( $download_result !== true && $delete_tmp === true )
                 unlink( $full_file_path );
 
             exit;
