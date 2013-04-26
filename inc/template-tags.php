@@ -368,7 +368,7 @@ function sell_media_item_form(){
         $term_id = null;
     } ?>
     <?php do_action( 'sell_media_above_item_form' ); ?>
-    <form action="javascript://" method="POST" id="sell_media_cart_form" class="sell-media-form">
+    <form action="javascript://" method="POST" class="sell-media-form">
         <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
         <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
         <input type="hidden" name="CalculatedPrice" class="price-target" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
