@@ -59,7 +59,7 @@ function sell_media_admin_items_init(){
             'desc'  => '', // this needs validation
             'id'    => $prefix . '_price',
             'type'  => 'price',
-            'std'   => $default_price,
+            'std'   => sprintf("%0.2f",$default_price),
             'value' => get_post_meta( $post_id, $prefix . '_price', true )
         )
     );
@@ -76,7 +76,7 @@ function sell_media_admin_items_init(){
                     'desc'  => '',
                     'id'    => $prefix . '_price_' . $k,
                     'type'  => 'price',
-                    'std'   => $size_settings[ $k . '_size_price'],
+                    'std'   => sprintf("%0.2f",$size_settings[ $k . '_size_price']),
                     'value' => get_post_meta( $post_id, $prefix . '_price_' . $k, true )
                 );
             }
@@ -165,7 +165,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     if ( $field['std'] )
                         $default = $field['std'];
 
-                    echo '<span class="description">' . sell_media_get_currency_symbol() . '</span> <input type="number" step=".1" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+                    echo '<span class="description">' . sell_media_get_currency_symbol() . '</span> <input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
 
                 break;
 
