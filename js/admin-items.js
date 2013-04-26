@@ -127,12 +127,12 @@ jQuery( document ).ready(function( $ ){
             _post_ids.push( $(this).attr('data-post_id') );
         });
 
-        if ( _post_ids.length == 0 || $('#sell_media_collection_select option:selected').val() == "" ) return;
+        if ( _post_ids.length == 0 ) return;
 
         $('#sell_media_bulk_upload_save_button').attr('disabled', true).val('Saving...');
 
         $.ajax({
-            data: $('#sell_media_bulk_upload_form').serialize(),
+            data: 'action=sell_media_bulk_update_collection&post_ids=' + _post_ids + '&' + $('#sell_media_bulk_upload_form').serialize(),
             type: "POST",
             url: ajaxurl,
             success: function( msg ){

@@ -56,9 +56,15 @@ function sell_media_add_bulk_callback_fn(){
                 <form action="#" method="POST" id="sell_media_bulk_upload_form">
                     <?php wp_nonce_field('sell_media_bulk_update_collection','security'); ?>
                     <?php _e('Choose a Collection: ','sell_media'); ?>
-                    <select name="Collection" value="collection" id="sell_media_collection_select">
+                    <select name="collection" value="collection" id="sell_media_collection_select">
                         <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
                         <?php sell_media_build_options( array( 'taxonomy' => 'collection', 'type'=>'select' ) ); ?>
+                    </select>
+
+                    <?php _e('Choose a License: ','sell_media'); ?>
+                    <select name="licenses" value="collection" id="sell_media_licenses_select">
+                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
+                        <?php sell_media_build_options( array( 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                     </select>
                     <?php do_action('sell_media_bulk_uploader_additional_fields'); ?>
                     <p><input type="submit" id="sell_media_bulk_upload_save_button" class="button-primary" value="<?php _e('Save', 'sell_media'); ?>" /></p>
@@ -82,10 +88,12 @@ function sell_media_bulk_update_collection(){
 
     check_ajax_referer('sell_media_bulk_update_collection', 'security');
 
-    if ( empty( $_POST['term_id'] ) ) return;
+    $post_ids = explode(',', $_POST['post_ids'] );
+    foreach( $post_ids as $post_id ){
 
-    foreach( $_POST['post_ids'] as $post_id ){
-        wp_set_post_terms( $post_id, $_POST['term_id'], 'collection', true );
+        wp_set_post_terms( $post_id, $_POST['collection'], 'collection', true );
+        wp_set_post_terms( $post_id, $_POST['licenses'], 'licenses', true );
+
         do_action( 'sell_media_bulk_uploader_additional_fields_meta', $post_id, $_POST );
     }
     die();
