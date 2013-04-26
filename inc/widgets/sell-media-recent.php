@@ -19,7 +19,7 @@
 		<div class="sell-media-recent-widget">
 
 			<?php
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'ASC', 'posts_per_page' => '5' );
+			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'ASC', 'posts_per_page' => '6' );
 			$type_posts = new WP_Query ($args);
 			?>
 
