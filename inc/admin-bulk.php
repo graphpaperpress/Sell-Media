@@ -86,6 +86,7 @@ function sell_media_bulk_update_collection(){
 
     foreach( $_POST['post_ids'] as $post_id ){
         wp_set_post_terms( $post_id, $_POST['term_id'], 'collection', true );
+        do_action( 'sell_media_bulk_uploader_additional_fields_meta', $post_id, $_POST );
     }
     die();
 }

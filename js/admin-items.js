@@ -131,15 +131,8 @@ jQuery( document ).ready(function( $ ){
 
         $('#sell_media_bulk_upload_save_button').attr('disabled', true).val('Saving...');
 
-        var _data = {
-            action: "sell_media_bulk_update_collection",
-            term_id: $('#sell_media_collection_select option:selected').val(),
-            post_ids: _post_ids,
-            security: $('#sell_media_bulk_upload_form #security').val()
-        };
-
         $.ajax({
-            data: _data,
+            data: $('#sell_media_bulk_upload_form').serialize(),
             type: "POST",
             url: ajaxurl,
             success: function( msg ){
