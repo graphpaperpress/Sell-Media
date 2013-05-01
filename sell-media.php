@@ -577,5 +577,6 @@ class SellMedia {
 
 } // end class
 
+load_plugin_textdomain( 'sell-media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 $a = new SellMedia();
