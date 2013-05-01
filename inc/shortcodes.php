@@ -364,10 +364,8 @@ function sell_media_item_shortcode( $atts ) {
         ), $atts )
     );
 
-    $thumb_id = null;
     $caption = null;
-
-    $thumb_id = get_post_thumbnail_id( $id );
+    $thumb_id = get_post_meta( $id, '_sell_media_attachment_id', true );
     $image = wp_get_attachment_image_src( $thumb_id, $size );
 
     if ( $image ) {
