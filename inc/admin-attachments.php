@@ -75,7 +75,9 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
     /**
      * Attachment is now marked for sale
      */
-    elseif ( $attachment['sell'] == "1" && empty( $sell_media_item_id ) ) {
+    elseif ( isset( $attachment['sell'] ) && $attachment['sell'] == "1"
+        || $attachment == "1"
+        && empty( $sell_media_item_id ) ) {
         $product = array(
             'post_title' => $post['post_title'],
             'post_content' => $post['post_content'],
