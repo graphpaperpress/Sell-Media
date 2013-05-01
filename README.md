@@ -44,13 +44,18 @@ Login to your PayPal account, mouse over the Profile menu option and then click 
 Frequently Asked Questions
 --------------------------
 
-= I have 5k+ photos I would like to sell, can Sell Media handle this? =
+I have 5k+ photos I would like to sell, can Sell Media handle this?
+---
+
 * Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. There maybe limits based on your web hosting provider and you will need to manually manage each Item.
 
-= My file is 500MB+ in size but users cannot download the file after purchasing? =
+My file is 500MB+ in size but users cannot download the file after purchasing?
+---
+
 Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
 
-= What are shortcodes and how do I use them? =
+What are shortcodes and how do I use them?
+---
 
 Shortcodes are small snippets of code that when added to a Post, Page or Widget add functionality to your site. You must add the following shortcodes to your preferred Pages to use Sell Media:
 
@@ -59,71 +64,94 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 * **Buy Button Shortcode** - (OPTIONAL) Used for displaying specific items for sale: [sell_media_buy_button]
 * **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: [sell_media_searchform]
 
-= How do I show my checkout cart? =
+How do I show my checkout cart?
+---
 
 1. Create a page called "Checkout" and add this shortcode to the page: [sell_media_checkout]
 2. Visit Sell Media -> Settings and select the Checkout page you created above to the "Checkout Page" option.
 
-= How do I show an item available for sale? =
+How do I show an item available for sale?
+---
 
 You have two options:
 
-1. After adding a new item for sale on the Sell Media -> Add New page, copy and paste the shortcode at the bottom of the screen into a Post, Page or Text Widget. This shortcode will embed the image and an "Add to Cart" button below the image. The shortcode looks something like this: [sell_media id="257" text="Purchase" style="button" color="blue" size="medium"]
+1. After adding a new item for sale on the Sell Media -> Add New page, copy and paste the shortcode at the bottom of the screen into a Post, Page or Text Widget. This shortcode will embed the image and an "Add to Cart" button below the image. The shortcode looks something like this: `[sell_media id="257" text="Purchase" style="button" color="blue" size="medium"]`
 2. Each item you add for sale also has a dedicated URL. Click the View Item button after saving your first Sell Media item. You could then add the link to that specific item to one of your Menus on Appearance -> Menus -> Custom Menu Item.
 
-= How do I bulk upload images for sale? =
+How do I bulk upload images for sale?
+---
 
 1. Click Sell Media -> Add Bulk
 2. Click "Upload or Select Images"
 2. Simply drag and drop your files into the box that appears, or click Select Files to choose a file from your computer to upload. Please keep in mind that the drag and drop uploader only works in browsers with HTML5 upload support such as the latest versions of Chrome, Firefox, or Safari. Other browsers will still show the Select Files button or the basic browser uploader form.
 4. This item will be added as a new entry in Sell Media. By default, the newly created Sell Media item will inherit the sizes, prices and licenses that you chose on Sell Media -> Settings. You can modify the price and available licenses on the Sell Media tab by editing each individual item.
 
-= How do I display a gallery of images for sale? =
+How do I display a gallery of images for sale?
+---
 
 Sell Media includes a new "Collections" taxonomy, which you can see on the right side of the screen when adding a new item to Sell Media. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
 
-= How do I password protect an item? =
+How do I password protect an item?
+---
 
 The Password Protection option is located in the Publish box when editing a Sell Media item. Click the Visibility - Public - Edit link, select Password Protected, type in a password and click Save.
 
-= How do I hide a collection? =
+How do I hide a collection?
+---
 
 Click Sell Media -> Collections -> Click "Edit" next to the Collection you want to hide, check the checkbox "Hide" click save.
 
-= How do I hide a collection from being listed on archive pages? =
+How do I hide a collection from being listed on archive pages?
+---
 
 Click Sell Media -> Collections -> Add New and check the "Hide" option.
 
-= How do I increase the maximum upload size in WordPress? =
+How do I increase the maximum upload size in WordPress?
+---
 
 Depending on the web hosting company you choose and the package you select, each of you will see maximum file upload limit on your Media Uploader page in WordPress. For some it is as low as 2MB which is clearly not enough for large images or videos. You can increase this by doing one of the follwing:
 
 1. Theme Functions File - There are cases where we have seen that just by adding the following code in the theme function’s file, you can increase the upload size:
 
-    `@ini_set( 'upload_max_size', '64M' );
-    @ini_set( 'post_max_size', '64M');
-    @ini_set( 'max_execution_time', '300' );`
+	`@ini_set( 'upload_max_size', '64M' );`
+
+	`@ini_set( 'post_max_size', '64M');`
+
+	`@ini_set( 'max_execution_time', '300' );`
+
+
 
 2. Create or Edit an existing PHP.INI file - In most cases if you are on a shared host, you will not see a php.ini file in your directory. If you do not see one, then create a file called php.ini and upload it in the root folder. In that file add the following code:
 
-    `upload_max_filesize = 64M
-    post_max_size = 64M
-    max_execution_time = 300`
+    `upload_max_filesize = 6`
+
+	`post_max_size = 6`
+
+    `max_execution_time = 30`
+
 
 3. htaccess Method - Some people have tried using the htaccess method where by modifying the .htaccess file in the root directory, you can increase the maximum upload size in WordPress. Open or create the .htaccess file in the root folder and add the following code:
 
-    `php_value upload_max_filesize 64M
-    php_value post_max_size 64M
-    php_value max_execution_time 300
-    php_value max_input_time 300`
+	`php_value upload_max_filesize 64M`
+
+    `php_value post_max_size 64M`
+
+    `php_value max_execution_time 300`
+
+    `php_value max_input_time 300`
+
 
 Again, it is important that we emphasize that if you are on a shared hosting package, these techniques may not work. In that case, you would have to contact your web hosting provider to increase the limit for you.
 
-= Transactions are not posting. Why? =
+Transactions are not posting. Why?
+---
+
 
 Please visit the Add Media -> Settings -> Payments page and double check all of your settings. Also, if you are using Paypal, you need to make sure you have [added your IPN Listener URL to Paypal](https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup).
 
-= What are license types? =
+What are license types?
+---
+
 
 The Sell Media plugin helps you to create and assign different licenses and prices for each image, video or audio file based on the anticipated usage of the media. For example: If a large company wants to purchase one of your images for a billboard, you should charge one price for commercial usage, charge another for editorial, and so on.
 
@@ -139,7 +167,9 @@ Screenshots
 Developers
 ----------
 
-= Actions =
+Actions
+---
+
 Example for adding a message above the cart:
 
     function sell_media_above_cart_function() {
@@ -159,6 +189,7 @@ Example for adding a message below the cart:
     add_action( 'sell_media_below_cart', 'sell_media_below_cart_function' );
 
 Action hooks available:
+
 * sell_media_above_cart - Above the cart
 * sell_media_below_cart - Below the cart
 * sell_media_cart_below_licenses - Between license and price on cart
@@ -173,50 +204,78 @@ Upgrade Notice
 
 Changelog
 ---------
-= 1.4.2 =
+
+1.4.3
+---
+
+* Adding language support
+* Creator taxonomy is now publicly viewable
+* Bug fix in `[sell_media_item]` shortcode
+* Added various filters in bulk uploader for developers
+
+1.4.2
+---
 * Users can now change the post type slug
 * Added shortcode `sell_media_additional_list_items` so users can add additional information on the single item page under the size list.
 * `sell_media_bulk_uploader_additional_fields` Allows developers to add additional form fields for bulk upload/edit
 * Fixing issue where original file is sometimes downloaded vs. the one purchased
 * Various PHP notices fixes
 
-= 1.4.1 =
+1.4.1
+---
+
 * Improved support for importing EXIF/IPTC data such as; city, keywords, etc. during the creation of new items
 * Allowed prices to be lower than 0.99
 * Improved handling when an item has no size or license
 
-= 1.4 =
+1.4
+---
+
 * Better support for portrait images
 * Fixed issue where download sizes would not always be displayed
 
-= 1.3 =
+1.3
+---
+
 * Additional error checking added for PayPal
 * Translation issue fixed
 * Email formatting and issues fixed
 
-= 1.2.9 =
+1.2.9
+---
+
 * Optimized bulk uploader! Images sizes are no created on download (after purchase) and not created during the upload process.
 * You can now bulk add images to a Collection from the bulk uploader
 * Various bug fixes
 
-= 1.2.8 =
+1.2.8
+---
+
 * Fixing bug where users received multiple or no download email
 
-= 1.2.7 =
+1.2.7
+---
+
 * Fixing bug where items with 0 price can be added to the cart
 
-= 1.2.6 =
+1.2.6
+---
+
 * Numerous hooks and filters addd
 * Numerous bug fixes
 
-= 1.2.5 =
+1.2.5
+---
+
 * Performance improvements
 * Added MS Docs support
 * Updated readme.txt
 * Bug: Price can now be saved in decimal
 * Better styling support
 
-= 1.2.4 =
+1.2.4
+---
+
 * Settings: Default price moved to its own section
 * Hook: Updated 'sell_media_after_successful_payment' now accepts an additional parameter
 * Hook: Updated 'sell_media_settings_init_hook' to work on all tabs
@@ -229,54 +288,76 @@ Changelog
 * Removed validation scripts inplace of native browser validation
 * Various bug fixes and styling enhancments
 
-= 1.2.3 =
+1.2.3
+---
+
 * Fixed issue where currency was not showing for some users
 * Fixed issue where default search would result in 404 for some results
 * Markup percentage is no longer shown on the front-end, only the adjust price is
 
-= 1.2.2 =
+1.2.2
+---
+
 * Fixed intermittent issue where download files would be 0kb
 * Fixed issue where downloaded zip files would unzip as zip
 * Fixed issue in settings regarding default price
 
-= 1.2.1 =
+1.2.1
+---
+
 * Minor bug fix in size variants
 
-= 1.2 =
+1.2
+---
+
 * Added full Featured Image support
 * Bug fixes
 
-= 1.1 =
+1.1
+---
+
 * Instruction changes
 * Fixing settings to work better with extensions
 
-= 1.0.9 =
+1.0.9
+---
+
 * Added bulk uploader
 * Added size variants
 * Code enhancments
 * Bug fixes
 
-= 1.0.8 =
+1.0.8
+---
+
 * Bug fixes
 * Code improvements
 
-= 1.0.7 =
+1.0.7
+---
+
 * Bug fixes
 * Added option for customer notification
 * 3.5 media cart fix
 
-= 1.0.6 =
+1.0.6
+---
+
 * License descriptions now show on the checkout page and option boxes when hovered
 * Fixed bug when Attachments are no longer marked for sale.
 * Fixed issue when Item is emptied from trash bin
 * Fixed bug where editor appeared on other Add New pages.
 * Adding hook for single theme.
 
-= 1.0.5 =
+1.0.5
+---
+
 * Fixed transients
 * Fixed issue where button was not showing on cart
 
-= 1.0.4 =
+1.0.4
+---
+
 * Added Loading gif on purchase dialog
 * Users can now manually upload a file to the sell_media folder
   then add the path to the file on the "Add Item" page.
@@ -288,21 +369,31 @@ Changelog
 * Added bulk "Sell This" option
 * Bug fixes
 
-= 1.0.3 =
+1.0.3
+---
+
 * Added Google Charts on Reports page
 * Added Paypal IPN instructions on Settings
 * Max-width fix for Firefox on Sell Media archives
 * Post Type Taxonomy archives conflict fix
 * Download file fix
 
-= 1.0.2 =
+1.0.2
+---
+
 * Plugin Settings save bugfix
 
-= 1.0 =
+1.0
+---
+
 * Public release
 
-= 0.1-beta2 =
+0.1-beta2
+---
+
 * Permalinks flushed on plugin activation
 
-= 0.1-beta =
+0.1-beta
+---
+
 * First public beta

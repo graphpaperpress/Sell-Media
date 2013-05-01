@@ -183,6 +183,12 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.4.3 =
+* Adding language support
+* Creator taxonomy is now publicly viewable
+* Bug fix in `[sell_media_item]` shortcode
+* Added various filters in bulk uploader for developers
+
 = 1.4.2 =
 * Users can now change the post type slug
 * Added shortcode `sell_media_additional_list_items` so users can add additional information on the single item page under the size list.
