@@ -580,3 +580,90 @@ class SellMedia {
 load_plugin_textdomain( 'sell-media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 $a = new SellMedia();
+
+
+function collection_password_check( $query ){
+
+    // Check if 'collections is present in query vars'
+    if ( ! empty( $query->query_vars['collection'] ) ){
+        $term_obj = get_term_by( 'slug', $query->query_vars['collection'], 'collection' );
+        $term_id = $term_obj->term_id;
+        $message = "This collection is password protected";
+    }
+
+
+    // Check if this is a single sell_media_item page
+    // note is_singular('sell_media_item') does not work here
+    else if ( is_single() && ! empty( $query->query['post_type'] ) && $query->query['post_type'] == 'sell_media_item' ) {
+        global $wpdb;
+        $post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_name` LIKE '{$query->query['sell_media_item']}';");
+        $terms_obj = wp_get_post_terms( $post_id, 'collection' );
+        if ( ! empty( $terms_obj ) ){
+            $term_id = $terms_obj[0]->term_id;
+            $message = "This post is an a password protected collection";
+        }
+    }
+
+
+    // Filter out posts that are in password protected collections from our archive pages
+    // We need to check additional post_type since this will pass as true for nav_menu_item
+    else if ( is_post_type_archive('sell_media_item') && $query->query['post_type'] == 'sell_media_item'
+        && ! is_admin() ){
+        print "filter out posts that are in password protected collections";
+
+        // build an array of terms that are password protected
+        foreach( get_terms('collection') as $term_obj ){
+            $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+            if ( $password ) $term_ids[] = $term_obj->term_id;
+        }
+
+        if ( ! empty( $term_ids ) ){
+            $args = array(
+                'post_type' => 'sell_media_item',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'collection',
+                        'field' => 'id',
+                        'terms' => $term_ids,
+                        'operator' => 'NOT IN'
+                        )
+                    )
+                );
+print '<pre>';
+print_r( $args );
+print '</pre>';
+        }
+    }
+
+
+    // Just set our term_id and message to null.
+    else {
+        $term_id = $message = null;
+    }
+
+    // If we have a term ID check if this term is password protected
+    if ( ! empty( $term_id ) ) {
+
+        // get the password for the collection
+        $password = get_term_meta( $term_id, 'collection_password', true );
+
+        if ( ! empty( $password ) ) {
+            if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password ) {
+                print 'correct password';
+            } else {?>
+                 <form action="<?php print site_url() . $_SERVER['REQUEST_URI']; ?>" method="POST">
+                     <p><?php print $message; ?>.
+                     <input type="text" value="" name="collection_password" />
+                     <input type="submit" value="Submit" name="submit" />
+                     </p>
+                </form>
+            <?php } ?>
+            <?php wp_die('password');
+        }
+    } else {
+        return $query;
+    }
+}
+add_action('pre_get_posts', 'collection_password_check' );
