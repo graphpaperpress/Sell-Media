@@ -360,6 +360,15 @@ function sell_media_edit_collection_hide( $tag ){
             <p class="description"><?php _e( 'Hide this collection from archive pages', 'sell_media' ); ?></p>
         </td>
     </tr>
+    <tr class="form-field">
+        <th scope="row" valign="top">
+            <label for="collection_hidden"><?php _e( 'Password', 'sell_media' ); ?></label>
+        </th>
+        <td>
+            <input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print get_term_meta( $term_id, 'collection_password', true ); ?>" />
+            <p class="description"><?php _e( 'Hide this collection from archive pages', 'sell_media' ); ?></p>
+        </td>
+    </tr>
 <?php }
 add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_hide' );
 
