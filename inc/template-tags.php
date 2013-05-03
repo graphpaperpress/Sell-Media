@@ -520,9 +520,19 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
  * @since 1.2.4
  * @author Zane Matthew
  */
-function sell_media_original_image_size( $item_id=null ){
+function sell_media_original_image_size( $item_id=null, $echo=true ){
     $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
-    print $original_size[1] . ' x ' . $original_size[2];
+
+    if ( $echo ){
+        print $original_size[1] . ' x ' . $original_size[2];
+    } else {
+        return array(
+            'original'=> array(
+                'height' => $original_size[2],
+                'width' => $original_size[1]
+                )
+            );
+    }
 }
 
 
@@ -603,4 +613,37 @@ function sell_media_cart_price( $item=array() ){
         );
 
     return $price;
+}
+
+
+/**
+ * This function determines the sizes and prices available for purchase and prints out the HTML.
+ * If no sizes are available the original price is displayed.
+ */
+function sell_media_item_prices( $post ){
+
+    $wp_upload_dir = wp_upload_dir();
+    $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $post->ID, '_sell_media_attached_file', true ) );
+    $html = null;
+
+    if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) {
+
+        $download_sizes = array_merge( sell_media_image_sizes( $post->ID, false ), sell_media_original_image_size( $post->ID, false ) );
+
+        foreach( $download_sizes as $k => $v ){
+            $name = ucfirst( $k );
+            $html .= '<li class="price">';
+            $html .= '<span class="title">' . __( $name, 'sell_media' ) . ' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
+            $k = ( $k == 'original' ) ? null : $k;
+            $html .= sell_media_item_price( $post->ID, true, $k, false );
+            $html .= '</li>';
+        }
+    } else {
+        $html .= '<li class="price">';
+        $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . '</span>';
+        $html .= sell_media_item_price( $post->ID, true, null, false );
+        $html .= '</li>';
+    }
+
+    print $html;
 }

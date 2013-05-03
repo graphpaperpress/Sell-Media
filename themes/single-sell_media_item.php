@@ -36,20 +36,7 @@ get_header(); ?>
 				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'keywords' ) ) { ?>
 					<li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span> <?php sell_media_image_keywords( $post->ID ); ?></li>
 				<?php } ?>
-				<?php
-				$wp_upload_dir = wp_upload_dir();
-				$mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $post->ID, '_sell_media_attached_file', true ) );
-				if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ): ?>
-					<?php sell_media_image_sizes( $post->ID ); ?>
-				<?php endif; ?>
-				<li class="price">
-					<span class="title"><?php _e( 'Original', 'sell_media' ); ?>
-						<?php if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ): ?>
-							(<?php sell_media_original_image_size( $post->ID ); ?>):
-						<?php endif ?>
-					</span>
-					<?php sell_media_item_price( $post->ID ); ?>
-				</li>
+				<?php sell_media_item_prices( $post ); ?>
 				<?php do_action('sell_media_additional_list_items'); ?>
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>
