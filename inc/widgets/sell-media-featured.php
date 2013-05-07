@@ -11,6 +11,7 @@
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		$categoryNumber = empty($instance['categoryNumber']) ? '' : $instance['categoryNumber'];
+		$postsNumber = empty($instance['postsNumber']) ? '' : $instance['postsNumber'];
 	    extract($args);
         echo $before_widget;
 
@@ -29,12 +30,12 @@
 						'terms' => $categoryNumber
 					)
 				),
-				'posts_per_page' => 6,
+				'posts_per_page' => $postsNumber,
 				'orderby' => 'rand'
 			);
 		 
 		} else {
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => '5' );
+			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => $postsNumber );
 		} ?>
 		
 		<div class="sell-media-featured-widget">
@@ -61,8 +62,6 @@
 							<?php sell_media_item_icon( $attachment_id, 'sell_media_item' ); ?>
 						</a>
 					</div>
-
-					<a href="<?php echo get_permalink(); ?>" class="sell-media-widget-title"><?php echo the_title() ?></a>
 				</div> <!--  .sell-media-widget-item-warp  -->
 	
 				<?php endwhile; wp_reset_postdata(); ?>
@@ -79,6 +78,7 @@
 		$instance = $old_instance;
 		$instance['title'] = stripslashes($new_instance['title']);
 		$instance['categoryNumber'] = stripslashes($new_instance['categoryNumber']);
+		$instance['postsNumber'] =  absint( $new_instance['postsNumber'] );
 		
 		return $instance;
 	}
@@ -89,6 +89,7 @@
 		$instance = wp_parse_args( (array) $instance, array('title'=>'Featured Items', 'categoryNumber'=>'') );
 		$title = htmlspecialchars($instance['title']);
 		$categoryNumber = htmlspecialchars($instance['categoryNumber']);
+		$postsNumber = isset($instance['postsNumber']) ? absint($instance['postsNumber']) : 6;
 
 
 		 # Title
@@ -97,15 +98,19 @@
 		
 		# Collection
 		$productTerms = get_terms( 'collection');   ?>
-		<p><label for="<?php echo $this->get_field_id('categoryNumber') ?>"> Select Collection : </label>
+		<p><label for="<?php echo $this->get_field_id('categoryNumber') ?>"><?php _e( ' Select Collection : ', 'sell_media'); ?></label>
 		<select id="<?php echo $this->get_field_id('categoryNumber'); ?>" name="<?php echo $this->get_field_name('categoryNumber'); ?>" value="<?php echo $categoryNumber; ?>">
-			<option value="" <?php if($categoryNumber == '') echo 'selected="selected"'; ?>>All Collections</option>
+			<option value="" <?php if($categoryNumber == '') echo 'selected="selected"'; ?>><?php _e( 'All Collections', 'sell_media'); ?></option>
 				<?php foreach ($productTerms as $term) {  ?>
 					<option value="<?php echo $term->slug; ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo $term->name; ?></option>
 					<?php } ?>
 		</select>
 		</p>
-<?php	}
+		
+		<?php
+		# Posts number
+		echo '<p><label for="' . $this->get_field_id('postsNumber') . '">' . 'Number of photos to show:' . '</label><input id="' . $this->get_field_id('postsNumber') . '" name="' . $this->get_field_name('postsNumber') . '" type="text" value="' . $postsNumber . '" size="3" /></p>';
+	}
 
 }
 
