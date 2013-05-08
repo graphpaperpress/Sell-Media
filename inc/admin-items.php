@@ -231,6 +231,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
             echo '</td></tr>';
     } // end foreach
     echo '</table>'; // end table
+    do_action('sell_media_additional_item_meta_section');
 }
 
 
