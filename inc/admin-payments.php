@@ -68,7 +68,7 @@ function sell_media_payment_render_contact( $post ){
         );
 
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
-    if ( $links ){
+    if ( ! empty( $links ) ){
         print '<table class="wp-list-table widefat" cellspacing="0">';
         print '<thead>
                 <tr>
