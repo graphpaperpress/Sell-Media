@@ -10,6 +10,7 @@
 	function widget($args, $instance){
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
+		$postsNumber = empty($instance['postsNumber']) ? '' : $instance['postsNumber'];
 		extract($args);
 		echo $before_widget;
 
@@ -30,12 +31,12 @@
 						'terms' => $terms
 					)
 				),
-				'posts_per_page' => 5,
+				'posts_per_page' => $postsNumber,
 				'orderby' => 'rand'
 			);
 		 
 		} else {
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => '5' );
+			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => $postsNumber );
 		} ?>
 		
 		<div class="sell-media-similar-widget">
@@ -61,8 +62,6 @@
 						<?php sell_media_item_icon( $attachment_id, 'sell_media_item' ); ?>
 					</a>
 				</div>
-
-				<a href="<?php echo get_permalink(); ?>" class="sell-media-widget-title"><?php echo the_title() ?></a>
 			</div> <!--  .sell-media-widget-item-warp  -->
 
 	<?php endwhile; wp_reset_postdata(); ?>
@@ -79,6 +78,7 @@
 	function update($new_instance, $old_instance){
 		$instance = $old_instance;
 		$instance['title'] = stripslashes($new_instance['title']);
+		$instance['postsNumber'] =  absint( $new_instance['postsNumber'] );
 		
 		return $instance;
 	}
@@ -88,9 +88,13 @@
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array('title'=>'Similar Items'));
 		$title = htmlspecialchars($instance['title']);
+		$postsNumber = isset($instance['postsNumber']) ? absint($instance['postsNumber']) : 6;
 
 		 # Title
 		echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
+		
+		# Posts number
+				echo '<p><label for="' . $this->get_field_id('postsNumber') . '">' . 'Number of photos to show:' . '</label><input id="' . $this->get_field_id('postsNumber') . '" name="' . $this->get_field_name('postsNumber') . '" type="text" value="' . $postsNumber . '" size="3" /></p>';
 
 	}
 
