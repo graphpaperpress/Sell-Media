@@ -43,6 +43,7 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  * @return html
  */
 function sell_media_payment_render_contact( $post ){
+
     print '<div class="sell-media-admin-payments">';
     print '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
@@ -67,7 +68,7 @@ function sell_media_payment_render_contact( $post ){
         );
 
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
-    if ( ! empty( $links ) ){
+    if ( $links ){
         print '<table class="wp-list-table widefat" cellspacing="0">';
         print '<thead>
                 <tr>
@@ -114,11 +115,10 @@ function sell_media_payment_render_contact( $post ){
         }
         print '</tbody>';
         print '</table>';
-
-        do_action( 'sell_media_additional_customer_meta', $post );
-
-        print '</div>';
     }
+    do_action( 'sell_media_additional_customer_meta', $post );
+
+    print '</div>';
 }
 
 
