@@ -246,7 +246,7 @@ jQuery( document ).ready(function( $ ){
     });
 
 
-    $( document ).on('submit', '.sell-media-form', function(){
+    $( document ).on('submit', '.sell-media-dialog-form', function(){
 
         var _data = "action=sell_media_add_items&taxonomy=licenses&" + $( this ).serialize();
 
