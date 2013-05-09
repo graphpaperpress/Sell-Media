@@ -87,7 +87,7 @@ add_action( 'wp_ajax_sell_media_remove_item', 'sell_media_remove_item' );
  * @since 0.1
  */
 function sell_media_empty_cart(){
-    unset( $_SESSION['cart'] );
+    unset( $_SESSION['cart']['items'] );
 }
 
 
