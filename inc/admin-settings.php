@@ -250,7 +250,7 @@ class SellMediaSettings {
 
                     case 'post_type_slug' :
                         $general = get_option('sell_media_general_settings');
-                        if ( $fields['post_type_slug'] != $general['post_type_slug'] ){
+                        if ( isset( $fields['post_type_slug'] ) && $fields['post_type_slug'] != $general['post_type_slug'] ){
                             flush_rewrite_rules();
                         }
                         break;
