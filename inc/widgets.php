@@ -1,15 +1,4 @@
 <?php
-/**
- * Load scripts
- */
-
-function sell_media_widgets_load_scripts() {
-
-	wp_enqueue_style( 'sell-media-widgets-style', plugin_dir_url( __FILE__ ) . '../css/sell_media_widgets.css' );
-
-}
-
-add_action( 'wp_enqueue_scripts', 'sell_media_widgets_load_scripts' );
 
 /**
  * Register Sidebar

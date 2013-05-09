@@ -570,6 +570,7 @@ class SellMedia {
         } if ( !is_admin() ) {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ) );
             wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css' );
+            wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css' );
         }
         if ( sell_media_is_reports_page() )
             wp_enqueue_script( 'google_charts', 'https://www.google.com/jsapi', array( 'jquery' ) );
