@@ -247,6 +247,13 @@ class SellMediaSettings {
                         if ( ! is_email( $value ) )
                             $value = null;
                         break;
+
+                    case 'post_type_slug' :
+                        $general = get_option('sell_media_general_settings');
+                        if ( $fields['post_type_slug'] != $general['post_type_slug'] ){
+                            flush_rewrite_rules();
+                        }
+                        break;
                 }
                 $valid_inputs[ $field ] = wp_filter_nohtml_kses( $value );
             }
