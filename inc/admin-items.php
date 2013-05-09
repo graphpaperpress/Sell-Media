@@ -554,7 +554,7 @@ function sell_media_uploader_multiple(){
 
         $post['ID'] = $attachment['id'];
         $post['post_title'] = $attachment['title'];
-        $post['post_content'] = null;
+        $post['post_content'] = $attachment['description'];
         $post['attachment_url'] = $attachment['url'];
 
         sell_media_attachment_field_sell_save( $post, $attachment['sell']="1" );
