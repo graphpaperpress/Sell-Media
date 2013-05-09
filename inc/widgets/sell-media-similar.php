@@ -59,7 +59,7 @@
 			} else {
 				$attachment_id = get_post_thumbnail_id( $post->ID );
 			} ?>
-			<div class="sell-media-widget-item-warp">
+			<div class="sell-media-widget-item-warp third">
 				<div class="sell-media-widget-thumb-wrap">
 					<a href="<?php echo get_permalink(); ?>">
 						<?php
