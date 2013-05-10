@@ -471,7 +471,7 @@ add_shortcode('sell_media_download_list', 'sell_media_download_shortcode');
  * @return string
  * @since 1.2.5
  */
-function sell_media_list_download_history_shortcode( $purchase_key=null, $email=null ) {
+function sell_media_list_download_history_shortcode( $email=null ) {
 
     if ( is_user_logged_in() ) {
         global $current_user;
@@ -485,10 +485,10 @@ function sell_media_list_download_history_shortcode( $purchase_key=null, $email=
                 $products_meta_array = unserialize( $payment_meta_array['products'] );
                 ?>
                 <div class="item">
-                    <?php print get_the_date(); ?><br />
+                    <?php echo get_the_time( 'M d, Y', $payment_id->post_id ); ?><br />
                     <?php $i = 0; ?>
                     <?php foreach( sell_media_build_download_link( $payment_id->post_id ) as $link ) : ?>
-                        <a href="<?php print $link['url']; ?>"><?php print get_the_title( $products_meta_array[ $i ]['ProductID'] ); ?></a><br />
+                        <a href="<?php print $link['url']; ?>"><?php print get_the_title( $products_meta_array[ $i ]['item_id'] ); ?></a><br />
                     <?php $i++; endforeach; ?>
                 </div>
             <?php endforeach; ?>
