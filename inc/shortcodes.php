@@ -477,24 +477,31 @@ function sell_media_list_download_history_shortcode( $email=null ) {
         global $current_user;
 
         $payment_ids = sell_media_get_payment_id_by('_sell_media_payment_user_email', $current_user->user_email );
+        $html = null;
+        $message = __('You have no purchases', 'sell_media');
+
         if ( $payment_ids ) {
-            ob_start();
-            foreach( $payment_ids as $payment_id ) : ?>
-                <?php
+            foreach( $payment_ids as $payment_id ) {
+
                 $payment_meta_array = get_post_meta( $payment_id->post_id, '_sell_media_payment_meta', true );
                 $products_meta_array = unserialize( $payment_meta_array['products'] );
-                ?>
-                <div class="item">
-                    <?php echo get_the_time( 'M d, Y', $payment_id->post_id ); ?><br />
-                    <?php $i = 0; ?>
-                    <?php foreach( sell_media_build_download_link( $payment_id->post_id ) as $link ) : ?>
-                        <a href="<?php print $link['url']; ?>"><?php print get_the_title( $products_meta_array[ $i ]['item_id'] ); ?></a><br />
-                    <?php $i++; endforeach; ?>
-                </div>
-            <?php endforeach; ?>
-            <?php $html = ob_get_clean();
+                $links = sell_media_build_download_link( $payment_id->post_id );
+
+                $html .= '<div class="item">';
+                $html .= get_the_time( 'M d, Y', $payment_id->post_id ) . '<br />';
+                if ( empty( $links ) ){
+                    $html = $message;
+                } else {
+                    $i = 0;
+                     foreach( $links as $link ) {
+                        $html .= '<a href="' . $link['url'] . '">' . get_the_title( $products_meta_array[ $i ]['item_id'] ) . '</a><br />';
+                        $i++;
+                    }
+                }
+                $html .= '</div>';
+            }
         } else {
-            $html = __('You have no purchases', 'sell_media');
+            $html = $message;
         }
     } else {
         $html = sprintf( __('Please %s to view your Download History', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
