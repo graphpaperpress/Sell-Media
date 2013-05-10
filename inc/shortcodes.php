@@ -486,9 +486,13 @@ function sell_media_list_download_history_shortcode( $email=null ) {
                 $payment_meta_array = get_post_meta( $payment_id->post_id, '_sell_media_payment_meta', true );
                 $products_meta_array = unserialize( $payment_meta_array['products'] );
                 $links = sell_media_build_download_link( $payment_id->post_id );
+                $status = get_post_status( $payment_id->post_id ) == 'publish' ? __('Paid', 'sell_media') : __('Pending', 'sell_media');
 
                 $html .= '<div class="item">';
-                $html .= get_the_time( 'M d, Y', $payment_id->post_id ) . '<br />';
+                $html .= get_the_time( 'M d, Y', $payment_id->post_id );
+                $html .= '<span class="sell-media-payment-status"> ('.$status.') </span>';
+                $html .= '<br />';
+
                 if ( empty( $links ) ){
                     $html = $message;
                 } else {
