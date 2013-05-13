@@ -222,7 +222,37 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
                  * default prices set in the settings.
                  */
                 $price = get_option('sell_media_size_settings');
-                $price = $price[ $size . '_size_price' ];
+                if ( in_array( $size, array('small','medium','large') ) ){
+                    switch( $size ){
+                        case 'small':
+                            $k = 'small_size_price';
+                            break;
+                        case 'medium':
+                            $k = 'medium_size_price';
+                            break;
+                        case 'large':
+                            $k = 'large_size_price';
+                            break;
+                        default:
+                            $k = 'default_price';
+                    }
+                } else {
+                    switch( $size ){
+                        case 'sell_media_small_file':
+                            $k = 'small_size_price';
+                            break;
+                        case 'sell_media_medium_file':
+                            $k = 'medium_size_price';
+                            break;
+                        case 'sell_media_large_file':
+                            $k = 'large_size_price';
+                            break;
+                        default:
+                            $k = 'default_price';
+                    }
+                }
+                $price = $price[ $k ];
+
             } else {
 
                 /**
@@ -653,5 +683,5 @@ function sell_media_item_prices( $post ){
         $html .= '</li>';
     }
 
-    print apply_filters( 'sell_media_item_prices_filter', $html );
+    print apply_filters( 'sell_media_item_prices_filter', $post->ID, $html );
 }

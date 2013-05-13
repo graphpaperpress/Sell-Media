@@ -433,11 +433,12 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
 
 
 /**
+ * Shows a list of everything user has downloaded.
  * Adds the 'sell_media_download_list' short code to the editor. [sell_media_download_list]
  *
  * @since 1.0.4
  */
-function sell_media_download_shortcode() {
+function sell_media_download_shortcode( $atts ) {
 	if ( is_user_logged_in() ) {
 		global $current_user, $wpdb;
 		get_currentuserinfo();
