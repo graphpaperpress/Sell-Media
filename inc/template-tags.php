@@ -187,49 +187,57 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
     $size_settings = get_option('sell_media_size_settings');
 
     /**
-     * If we have no size and no default price for this item we fall back
-     * on the defaults from the settings.
+     * If we have a filtered price we use that if not we derive our own price
      */
-    if ( empty( $size ) && ! empty( $default ) ){
-        $price = $size_settings['default_price'];
-    } else {
+    $filtered_price = apply_filters( 'sell_media_filtered_price', $size );
+    if ( $filtered_price == $size ){
 
         /**
-         * Get the price based on the size and id passed in.
+         * If we have no size and no default price for this item we fall back
+         * on the defaults from the settings.
          */
-        $item_price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
-
-        /**
-         * If a size was not passed in we fall back on the default
-         * price for this post.
-         */
-        if ( empty( $size ) ){
-            if ( empty( $default_price ) ){
-                $price = $size_settings['default_price'];
-            } else {
-                $price = $default_price;
-            }
-        } elseif ( empty( $item_price ) ){
-
-            /**
-             * If this single item does not have a price, we fall back on the
-             * default prices set in the settings.
-             */
-            $price = get_option('sell_media_size_settings');
-            $price = $price[ $size . '_size_price' ];
+        if ( empty( $size ) && ! empty( $default ) ){
+            $price = $size_settings['default_price'];
         } else {
 
             /**
-             * Else we assign our item price to the price.
+             * Get the price based on the size and id passed in.
              */
-            $price = $item_price;
+            $item_price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
+
+            /**
+             * If a size was not passed in we fall back on the default
+             * price for this post.
+             */
+            if ( empty( $size ) ){
+                if ( empty( $default_price ) ){
+                    $price = $size_settings['default_price'];
+                } else {
+                    $price = $default_price;
+                }
+            } elseif ( empty( $item_price ) ){
+
+                /**
+                 * If this single item does not have a price, we fall back on the
+                 * default prices set in the settings.
+                 */
+                $price = get_option('sell_media_size_settings');
+                $price = $price[ $size . '_size_price' ];
+            } else {
+
+                /**
+                 * Else we assign our item price to the price.
+                 */
+                $price = $item_price;
+            }
         }
+    } else {
+        $price = $filtered_price;
     }
 
     if ( $currency ){
         $price = sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
     }
-
 
     if ( $echo )
         print $price;
