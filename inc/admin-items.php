@@ -410,9 +410,6 @@ function sell_media_item_header( $columns ){
     if ( ! isset( $columns_local['sell_media_price'] ) )
         $columns_local['sell_media_price'] = "Price";
 
-    if ( ! isset( $columns_local['sell_media_license'] ) )
-        $columns_local['sell_media_license'] = "License";
-
     return array_merge( $columns_local, $columns );
 }
 add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
@@ -439,16 +436,6 @@ function sell_media_item_content( $column, $post_id ){
             break;
         case "sell_media_price":
             sell_media_item_price( $post_id );
-            break;
-        case "sell_media_license":
-            $terms = wp_get_post_terms( $post_id, 'licenses' );
-            $count = count( $terms );
-            $i = 0;
-            foreach( $terms as $term ){
-                print '<a href="' . site_url() . '/wp-admin/edit.php?licenses=' . $term->slug . '&post_type=sell_media_item">' . $term->name . '</a>';
-                if ( $count - 1 > $i ) print ', ';
-                $i++;
-            }
             break;
         default:
             break;
