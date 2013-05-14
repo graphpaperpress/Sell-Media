@@ -683,5 +683,6 @@ function sell_media_item_prices( $post ){
         $html .= '</li>';
     }
 
-    print apply_filters( 'sell_media_item_prices_filter', $post->ID, $html );
+    print apply_filters( 'sell_media_item_prices_filter', $html, $post->ID );
+
 }
