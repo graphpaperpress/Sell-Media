@@ -109,6 +109,16 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
     if ( $_POST ) {
 
+        // Check if the qty thats in the cart has changed
+        foreach( $_POST['sell_media_item_qty'] as $k => $v ){
+            if ( is_array( $_SESSION['cart']['items'][ $k ]['price_id'] ) ){
+                if ( $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] != $v ){
+                    print "new qty: {$k} {$v}\n";
+                    $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] = $v;
+                }
+            }
+        }
+
         // Create User
         $user = array();
         $user['first_name'] = $_POST['first_name'];
@@ -328,7 +338,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php endif; ?>
                             </td>
                             <td class="product-quantity">
-                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $price['qty']; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price['amount']; ?>" data-markup="<?php print $price['markup']; ?>" />
+                                <input name="sell_media_item_qty[<?php echo $item_id; ?>]" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $price['qty']; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price['amount']; ?>" data-markup="<?php print $price['markup']; ?>" />
                             </td>
                             <td class="product-price">
                                 <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price['total']; ?></span>
