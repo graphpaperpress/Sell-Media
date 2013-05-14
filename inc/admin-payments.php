@@ -60,11 +60,12 @@ function sell_media_payment_render_contact( $post ){
             'email' => get_post_meta( $post->ID, '_sell_media_payment_user_email', true )
         );
 
-    printf( '%s %s %s %s',
-        '<p>Name: ' . $contact['first_name'],
-        $contact['last_name'],
-        $contact['user_edit_link'],
-        '<br />Email: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a></p>'
+    printf( '<p>%s: '.$contact['first_name'] . ' ' . $contact['last_name'] . '<br />
+        %s: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a><br />
+        %s: '.sell_media_get_currency_symbol() . sprintf( '%0.2f', get_post_meta( $post->ID, '_sell_media_payment_amount', true ) ).'</p>',
+        __( 'Name', 'sell_media' ),
+        __( 'Email', 'sell_media' ),
+        __( 'Total', 'sell_media' )
         );
 
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
