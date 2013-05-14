@@ -211,9 +211,9 @@ Changelog
 * Adding language support
 * Creator taxonomy is now publicly viewable
 * Added various filters in bulk uploader for developers
-* Widget udpates
+* Widget updates
 * Added hook `sell_media_bulk_uploader_additional_fields_meta` to allow developers to add additional meta fields in bulk upload
-* Number formating fix, 0.1 would show in some cases, now it includes trailing zero, i.e., 0.10
+* Number formatting fix, 0.1 would show in some cases, now it includes trailing zero, i.e., 0.10
 * Bug fix in add to cart button
 * Bug fix in `[sell_media_item]` shortcode
 * Bug fix when prices of 0.1 were being rounded to 0.00 on some pages
