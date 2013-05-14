@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,9 @@ Action hooks available:
 * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+
+= 1.4.4 =
+* Correcting param in filter
 
 = 1.4.3 =
 * Image description is imported as item description during bulk upload process

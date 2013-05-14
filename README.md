@@ -205,6 +205,10 @@ Upgrade Notice
 Changelog
 ---------
 
+1.4.4
+---
+* Correcting param in filter
+
 1.4.3
 ---
 * Image description is imported as item description during bulk upload process
