@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,10 +184,16 @@ Action hooks available:
 == Changelog ==
 
 = 1.4.3 =
+* Image description is imported as item description during bulk upload process
 * Adding language support
 * Creator taxonomy is now publicly viewable
-* Bug fix in `[sell_media_item]` shortcode
 * Added various filters in bulk uploader for developers
+* Widget udpates
+* Added hook `sell_media_bulk_uploader_additional_fields_meta` to allow developers to add additional meta fields in bulk upload
+* Number formating fix, 0.1 would show in some cases, now it includes trailing zero, i.e., 0.10
+* Bug fix in add to cart button
+* Bug fix in `[sell_media_item]` shortcode
+* Bug fix when prices of 0.1 were being rounded to 0.00 on some pages
 
 = 1.4.2 =
 * Users can now change the post type slug
