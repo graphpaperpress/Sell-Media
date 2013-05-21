@@ -205,6 +205,10 @@ Upgrade Notice
 Changelog
 ---------
 
+1.4.5
+---
+* Fixing issues in download history shortcode
+
 1.4.4
 ---
 * Correcting param in filter
