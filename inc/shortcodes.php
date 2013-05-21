@@ -465,15 +465,16 @@ function sell_media_download_shortcode( $atts ) {
 
                     $thumbnail_id = get_post_meta( $product_detail['item_id'], '_thumbnail_id', true );
                     $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $product_detail['item_id'], '_sell_media_attachment_id', true ) : $thumbnail_id;
-                    $price = sell_media_item_price( $product_detail['item_id'], $currency=true, $product_detail['price_id'], $echo=false );
-
-                    $html .= '<div class="download_lists">';
-					$html .= wp_get_attachment_image( $attachment_id );
-					$html .= '<span class="download_details">';
-					$html .= __( 'Product', 'sell_media' ) .' = <a href="' . get_permalink( $product_detail['item_id'] ) . '">' . get_the_title( $product_detail[ 'item_id' ] ) . '</a><br />';
-					$html .= __( 'Price', 'sell_media' ) .' = ' . $price . '<br />';
-					$html .= '</span>';
-					$html .= '</div>';
+                    if ( ! empty( $attachment_id ) ){
+                        $price = sell_media_item_price( $product_detail['item_id'], $currency=true, $product_detail['price_id'], $echo=false );
+                        $html .= '<div class="download_lists">';
+    					$html .= wp_get_attachment_image( $attachment_id );
+    					$html .= '<span class="download_details">';
+    					$html .= __( 'Product', 'sell_media' ) .' = <a href="' . get_permalink( $product_detail['item_id'] ) . '">' . get_the_title( $product_detail[ 'item_id' ] ) . '</a><br />';
+    					$html .= __( 'Price', 'sell_media' ) .' = ' . $price . '<br />';
+    					$html .= '</span>';
+    					$html .= '</div>';
+                    }
 				}
 			}
 		}
