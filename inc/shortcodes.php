@@ -504,7 +504,7 @@ function sell_media_list_download_history_shortcode( $email=null ) {
 
                 $payment_meta_array = get_post_meta( $payment_id->post_id, '_sell_media_payment_meta', true );
                 $products_meta_array = unserialize( $payment_meta_array['products'] );
-                $links = sell_media_build_download_link( $payment_id->post_id );
+                $links = sell_media_build_download_link( $payment_id->post_id, $current_user->user_email );
                 $status = get_post_status( $payment_id->post_id ) == 'publish' ? __('Paid', 'sell_media') : __('Pending', 'sell_media');
 
                 $html .= '<div class="item">';
