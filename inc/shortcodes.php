@@ -469,7 +469,11 @@ function sell_media_download_shortcode( $atts ) {
                     $html .= wp_get_attachment_image( $attachment_id );
                     $html .= '<span class="download_details">';
                     $html .= __( 'Product', 'sell_media' ) .' = <a href="' . get_permalink( $download['item_id'] ) . '">' . get_the_title( $download[ 'item_id' ] ) . '</a> ';
-                    $html .= sprintf( '<a href="%s">%s</a>', $download['url'], __( 'Download', 'sell_media' ) );
+
+                    if (get_post_status( $download['payment_id'] ) == 'publish' ){
+                        $html .= sprintf( '<a href="%s">%s</a>', $download['url'], __( 'Download', 'sell_media' ) );
+                    }
+
                     $html .= '<br />';
                     $html .= __( 'Price', 'sell_media' ) .' = ' . $price . '<br />';
                     $html .= '</span>';
