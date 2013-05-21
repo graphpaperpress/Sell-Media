@@ -476,10 +476,12 @@ function sell_media_download_shortcode( $atts ) {
                     $html .= '</div>';
                 }
 
-			}
+			} else {
+                $html .= __('You have no purchases', 'sell_media');
+            }
 		}
 	} else {
-		$html .=  __( "You must be logged in to view the download lists!", "sell_media" );
+        $html .= sprintf( __('Please %s to view your downloads', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
 	}
     return $html;
 }
