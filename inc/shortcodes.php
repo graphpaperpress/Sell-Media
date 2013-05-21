@@ -496,32 +496,32 @@ function sell_media_list_download_history_shortcode( $email=null ) {
         global $current_user;
 
         $payment_ids = sell_media_get_payment_id_by('_sell_media_payment_user_email', $current_user->user_email );
+
         $html = null;
         $message = __('You have no purchases', 'sell_media');
 
         if ( $payment_ids ) {
             foreach( $payment_ids as $payment_id ) {
+                if ( get_post_type( $payment_id->post_id ) == 'sell_media_payment' ){
+                    $payment_meta_array = get_post_meta( $payment_id->post_id, '_sell_media_payment_meta', true );
+                    $products_meta_array = unserialize( $payment_meta_array['products'] );
+                    $links = sell_media_build_download_link( $payment_id->post_id, $current_user->user_email );
+                    $status = get_post_status( $payment_id->post_id ) == 'publish' ? __('Paid', 'sell_media') : __('Pending', 'sell_media');
 
-                $payment_meta_array = get_post_meta( $payment_id->post_id, '_sell_media_payment_meta', true );
-                $products_meta_array = unserialize( $payment_meta_array['products'] );
-                $links = sell_media_build_download_link( $payment_id->post_id, $current_user->user_email );
-                $status = get_post_status( $payment_id->post_id ) == 'publish' ? __('Paid', 'sell_media') : __('Pending', 'sell_media');
+                    $html .= '<div class="item">';
+                    $html .= get_the_time( 'M d, Y', $payment_id->post_id );
+                    $html .= '<span class="sell-media-payment-status"> ('.$status.') </span>';
+                    $html .= '<br />';
 
-                $html .= '<div class="item">';
-                $html .= get_the_time( 'M d, Y', $payment_id->post_id );
-                $html .= '<span class="sell-media-payment-status"> ('.$status.') </span>';
-                $html .= '<br />';
-
-                if ( empty( $links ) ){
-                    $html = $message;
-                } else {
-                    $i = 0;
-                     foreach( $links as $link ) {
-                        $html .= '<a href="' . $link['url'] . '">' . get_the_title( $products_meta_array[ $i ]['item_id'] ) . '</a><br />';
-                        $i++;
+                    if ( ! empty( $links ) ){
+                        $i = 0;
+                         foreach( $links as $link ) {
+                            $html .= '<a href="' . $link['url'] . '">' . get_the_title( $products_meta_array[ $i ]['item_id'] ) . '</a><br />';
+                            $i++;
+                        }
                     }
+                    $html .= '</div>';
                 }
-                $html .= '</div>';
             }
         } else {
             $html = $message;
