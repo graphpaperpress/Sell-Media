@@ -489,10 +489,15 @@ input[type="submit"].sell-media-buy-button-success:active {
 
 /*= sell_media_download_list shortcode
 ------------------------------------------------------------------- */
-.download_lists {
+.downloads {
+  margin: 1em 0;
   clear:both;
 }
-.download_lists img {
+.downloads .download {
+  display: block;
+  clear: both;
+}
+.downloads img {
   float:left;
   margin:0 20px 20px 0;
 }
