@@ -492,7 +492,7 @@ function sell_media_download_shortcode( $atts ) {
                 foreach( $v['products'] as $product ){
                     $html .= '<li class="download">' . $product['thumbnail'];
                     $html .= '<span class="download_details">';
-                    $html .= __( 'Product', 'sell_media' ) . $product['title'] . ' ' . $product['download_url']  . '<br />';
+                    $html .= __( 'Product:', 'sell_media' ) . $product['title'] . ' ' . $product['download_url']  . '<br />';
                     $html .= __( 'Price', 'sell_media' ) . ': ' . $product['price'] . '<br />';
                     $html .= '</span>';
                     $html .= '</li>';
