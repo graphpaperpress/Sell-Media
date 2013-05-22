@@ -450,39 +450,57 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
  */
 function sell_media_download_shortcode( $atts ) {
 	if ( is_user_logged_in() ) {
+
 		global $current_user, $wpdb;
 		get_currentuserinfo();
-		$payment_lists = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_sell_media_payment_meta'", ARRAY_A );
 
-		$html = null;
-        foreach ( $payment_lists as $key=>$value ) {
-			$details = unserialize( $value[ 'meta_value' ] );
+        /**
+         * Build out our array of content
+         */
+        $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
+        $purchases = array();
+        foreach( $payment_lists as $payment ){
+            $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
+            $products = unserialize( $payment_meta['products'] );
 
-			if ( ! empty( $details[ 'email' ] ) && $current_user->user_email == $details[ 'email' ] ){
-				$product_details = unserialize( $details[ 'products' ] );
+            foreach( $products as $k => $v ){
+                $products[ $k ]['title'] =  ' <a href="' . get_permalink( $v['item_id'] ) . '">' . get_the_title( $v[ 'item_id' ] ) . '</a> ';
+                $products[ $k ]['price'] = sell_media_item_price( $v['item_id'], $currency=true, $v['price_id'], $echo=false );
+                $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $v['item_id'], '_sell_media_attachment_id', true ) : null;
+                $products[ $k ]['thumbnail'] = '<a href="' . get_permalink( $v['item_id'] ) . '" title="' . get_the_title( $v[ 'item_id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
+                $products[ $k ]['download_url'] = ( get_post_status( $payment['post_id'] ) == 'publish' ) ? '<a href="'.site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $current_user->user_email . '&id=' . $v['item_id'] . '&price_id=' . $v['price_id'] . '">'.__('Download','sell_media').'</a>' : null;
+            }
 
-                $downloads = sell_media_build_download_link( $value['post_id'], $current_user->user_email );
+            $tmp = array(
+                'date' => $payment_meta['date'],
+                'payment_id' => $payment_meta['payment_id'],
+                'products' => $products
+                );
+            $purchases[] = $tmp;
+        }
+
+        if ( empty( $purchases ) ){
+            $html = __('You have no purchases', 'sell_media');
+        } else {
+
+            /**
+             * Build out html
+             */
+            $html = null;
+            foreach( $purchases as $k => $v ){
                 $html .= '<ul class="downloads">';
-                foreach ( $downloads as $download ){
-                    $price = sell_media_item_price( $download['item_id'], $currency=true, $download['price_id'], $echo=false );
-                    $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $download['item_id'], '_sell_media_attachment_id', true ) : $thumbnail_id;
-					$html .= '<li class="download">';
-                    $html .= '<a href="' . get_permalink( $download['item_id'] ) . '" title="' . get_the_title( $download[ 'item_id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
+                foreach( $v['products'] as $product ){
+                    $html .= '<li class="download">' . $product['thumbnail'];
                     $html .= '<span class="download_details">';
-
-                    if ( get_post_status( $download['payment_id'] ) == 'publish' ){
-                        $html .= sprintf( '<a href="%s">%s</a>', $download['url'], __( 'Download', 'sell_media' ) );
-                    }
-
-                    $html .= '<br />';
-                    $html .= __( 'Price', 'sell_media' ) . ': ' . $price . '<br />';
+                    $html .= __( 'Product', 'sell_media' ) . $product['title'] . ' ' . $product['download_url']  . '<br />';
+                    $html .= __( 'Price', 'sell_media' ) . ': ' . $product['price'] . '<br />';
                     $html .= '</span>';
                     $html .= '</li>';
                 }
                 $html .= '</ul>';
+            }
+        }
 
-			}
-		}
 	} else {
         $html .= sprintf( __('Please %s to view your downloads', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
 	}
