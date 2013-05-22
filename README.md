@@ -205,6 +205,13 @@ Upgrade Notice
 Changelog
 ---------
 
+1.4.6
+---
+* Editors can now use the bulk upload
+* Optimized download history shortcode
+* Various bug fixes
+
+
 1.4.5
 ---
 * Fixing issues in download history shortcode
