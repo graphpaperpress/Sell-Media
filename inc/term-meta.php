@@ -204,7 +204,8 @@ function sell_media_the_markup_slider( $tag ){
 
             printf(
                 __( ' The %1$s of %2$s with %3$s markup is %4$s' ),
-                '<a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_settings">default item price</a>',
+                '<a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_general_settings
+                ">default item price</a>',
                 '<strong>' . $price . '</strong>',
                 '<strong><span class="markup-target">' . $default_markup . '</span></strong>',
                 '<strong>' . sell_media_get_currency_symbol() . '<span class="price-target"></span></strong>'

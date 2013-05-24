@@ -109,6 +109,16 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
     if ( $_POST ) {
 
+        // Check if the qty thats in the cart has changed
+        foreach( $_POST['sell_media_item_qty'] as $k => $v ){
+            if ( is_array( $_SESSION['cart']['items'][ $k ]['price_id'] ) ){
+                if ( $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] != $v ){
+                    print "new qty: {$k} {$v}\n";
+                    $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] = $v;
+                }
+            }
+        }
+
         // Create User
         $user = array();
         $user['first_name'] = $_POST['first_name'];
@@ -299,7 +309,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                         <p class="desc"><?php _e('You are logged in as an Admin and cannot purchase this item from yourself.', 'sell_media' ); ?></p>
                                 <?php else : ?>
                                     <div class="button-container">
-                                        <input type="submit" class="sell-media-buy-button sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
+                                        <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
                                         <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
                                     </div>
                                 <?php endif; ?>
@@ -328,7 +338,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php endif; ?>
                             </td>
                             <td class="product-quantity">
-                                <input name="sell_media_item_qty" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $price['qty']; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price['amount']; ?>" data-markup="<?php print $price['markup']; ?>" />
+                                <input name="sell_media_item_qty[<?php echo $item_id; ?>]" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $price['qty']; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price['amount']; ?>" data-markup="<?php print $price['markup']; ?>" />
                             </td>
                             <td class="product-price">
                                 <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price['total']; ?></span>
@@ -347,7 +357,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
 add_shortcode('sell_media_checkout', 'sell_media_cart_shortcode');
 
 /**
- * Adds the 'sell_media' short code to the editor. [sell_media_buy_button]
+ * Adds the 'sell_media' short code to the editor. [sell_media_item]
  *
  * @author Zane M. Kolnik
  * @since 0.1
@@ -433,73 +443,67 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
 
 
 /**
+ * Shows a list of everything user has downloaded.
  * Adds the 'sell_media_download_list' short code to the editor. [sell_media_download_list]
  *
  * @since 1.0.4
  */
 function sell_media_download_shortcode( $atts ) {
 	if ( is_user_logged_in() ) {
+
 		global $current_user, $wpdb;
 		get_currentuserinfo();
-		$payment_lists = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_sell_media_payment_meta'", ARRAY_A );
-		$html = null;
-        foreach( $payment_lists as $key=>$value ) {
-			$details = unserialize($value[ 'meta_value' ]);
-			if( ! empty( $details['email'] ) && $current_user->user_email == $details[ 'email' ] ){
-				$product_details = unserialize( $details[ 'products' ] );
-				foreach( $product_details as $product_detail ) {
-					$html .= '<div class="download_lists">';
-					$html .= wp_get_attachment_image( $product_detail[ 'AttachmentID' ] );
-					$html .= '<span class="download_details">';
-					$html .= 'Product = <a href="' . get_permalink( $product_detail['ProductID'] ) . '">' . get_the_title( $product_detail[ 'ProductID' ] ) . '</a><br />';
-					$html .= "Price = $".$product_detail[ 'CalculatedPrice' ]."<br />";
-					$html .= '</span>';
-					$html .= '</div>';
-				}
-			}
-		}
+
+        /**
+         * Build out our array of content
+         */
+        $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
+        $purchases = array();
+        foreach( $payment_lists as $payment ){
+            $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
+            $products = unserialize( $payment_meta['products'] );
+
+            foreach( $products as $k => $v ){
+                $products[ $k ]['title'] =  ' <a href="' . get_permalink( $v['item_id'] ) . '">' . get_the_title( $v[ 'item_id' ] ) . '</a> ';
+                $products[ $k ]['price'] = sell_media_item_price( $v['item_id'], $currency=true, $v['price_id'], $echo=false );
+                $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $v['item_id'], '_sell_media_attachment_id', true ) : null;
+                $products[ $k ]['thumbnail'] = '<a href="' . get_permalink( $v['item_id'] ) . '" title="' . get_the_title( $v[ 'item_id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
+                $products[ $k ]['download_url'] = ( get_post_status( $payment['post_id'] ) == 'publish' ) ? '<a href="'.site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $current_user->user_email . '&id=' . $v['item_id'] . '&price_id=' . $v['price_id'] . '">'.__('Download','sell_media').'</a>' : null;
+            }
+
+            $tmp = array(
+                'date' => $payment_meta['date'],
+                'payment_id' => $payment_meta['payment_id'],
+                'products' => $products
+                );
+            $purchases[] = $tmp;
+        }
+
+        if ( empty( $purchases ) ){
+            $html = __('You have no purchases', 'sell_media');
+        } else {
+
+            /**
+             * Build out html
+             */
+            $html = null;
+            foreach( $purchases as $k => $v ){
+                $html .= '<ul class="downloads">';
+                foreach( $v['products'] as $product ){
+                    $html .= '<li class="download">' . $product['thumbnail'];
+                    $html .= '<span class="download_details">';
+                    $html .= __( 'Product:', 'sell_media' ) . $product['title'] . ' ' . $product['download_url']  . '<br />';
+                    $html .= __( 'Price', 'sell_media' ) . ': ' . $product['price'] . '<br />';
+                    $html .= '</span>';
+                    $html .= '</li>';
+                }
+                $html .= '</ul>';
+            }
+        }
+
 	} else {
-		$html .=  __( "You must be logged in to view the download lists!", "sell_media" );
+        $html = sprintf( __('Please %s to view your downloads', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
 	}
     return $html;
 }
 add_shortcode('sell_media_download_list', 'sell_media_download_shortcode');
-
-/**
- * Displays the users purchase history sorted by date
- *
- * @return string
- * @since 1.2.5
- */
-function sell_media_list_download_history_shortcode( $purchase_key=null, $email=null ) {
-
-    if ( is_user_logged_in() ) {
-        global $current_user;
-
-        $payment_ids = sell_media_get_payment_id_by('_sell_media_payment_user_email', $current_user->user_email );
-        if ( $payment_ids ) {
-            ob_start();
-            foreach( $payment_ids as $payment_id ) : ?>
-                <?php
-                $payment_meta_array = get_post_meta( $payment_id->post_id, '_sell_media_payment_meta', true );
-                $products_meta_array = unserialize( $payment_meta_array['products'] );
-                ?>
-                <div class="item">
-                    <?php print get_the_date(); ?><br />
-                    <?php $i = 0; ?>
-                    <?php foreach( sell_media_build_download_link( $payment_id->post_id ) as $link ) : ?>
-                        <a href="<?php print $link['url']; ?>"><?php print get_the_title( $products_meta_array[ $i ]['ProductID'] ); ?></a><br />
-                    <?php $i++; endforeach; ?>
-                </div>
-            <?php endforeach; ?>
-            <?php $html = ob_get_clean();
-        } else {
-            $html = __('You have no purchases', 'sell_media');
-        }
-    } else {
-        $html = sprintf( __('Please %s to view your Download History', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
-    }
-
-    return $html;
-}
-add_shortcode( 'sell_media_list_download_history', 'sell_media_list_download_history_shortcode' );

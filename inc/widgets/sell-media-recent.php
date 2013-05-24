@@ -17,9 +17,12 @@
 			echo $before_title . $title . $after_title;
 ?>
 		<div class="sell-media-recent-widget">
-
+			<?php 
+			// Get available image sizes
+			$image_sizes = get_intermediate_image_sizes(); ?>
+			
 			<?php
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'ASC', 'posts_per_page' => '5' );
+			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'ASC', 'posts_per_page' => '6' );
 			$type_posts = new WP_Query ($args);
 			?>
 
@@ -34,14 +37,18 @@
 			} else {
 				$attachment_id = get_post_thumbnail_id( $post->ID );
 			} ?>
-			<div class="sell-media-widget-item-warp">
+			<div class="sell-media-widget-item-warp third">
 				<div class="sell-media-widget-thumb-wrap">
 					<a href="<?php echo get_permalink(); ?>">
-						<?php sell_media_item_icon( $attachment_id, 'sell_media_item' ); ?>
+						<?php
+						if ( in_array( "sell_media_item", $image_sizes)) {
+						    sell_media_item_icon( $attachment_id, 'sell_media_item' );
+						} else {
+							sell_media_item_icon( $attachment_id, 'medium' );
+						}
+						?>
 					</a>
 				</div>
-
-				<a href="<?php echo get_permalink(); ?>" class="sell-media-widget-title"><?php echo the_title() ?></a>
 			</div> <!--  .sell-media-widget-item-warp  -->
 	
 			<?php endwhile; wp_reset_postdata(); ?>

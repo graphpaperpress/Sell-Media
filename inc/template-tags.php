@@ -187,49 +187,87 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
     $size_settings = get_option('sell_media_size_settings');
 
     /**
-     * If we have no size and no default price for this item we fall back
-     * on the defaults from the settings.
+     * If we have a filtered price we use that if not we derive our own price
      */
-    if ( empty( $size ) && ! empty( $default ) ){
-        $price = $size_settings['default_price'];
-    } else {
+    $filtered_price = apply_filters( 'sell_media_filtered_price', $size );
+    if ( $filtered_price == $size ){
 
         /**
-         * Get the price based on the size and id passed in.
+         * If we have no size and no default price for this item we fall back
+         * on the defaults from the settings.
          */
-        $item_price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
-
-        /**
-         * If a size was not passed in we fall back on the default
-         * price for this post.
-         */
-        if ( empty( $size ) ){
-            if ( empty( $default_price ) ){
-                $price = $size_settings['default_price'];
-            } else {
-                $price = $default_price;
-            }
-        } elseif ( empty( $item_price ) ){
-
-            /**
-             * If this single item does not have a price, we fall back on the
-             * default prices set in the settings.
-             */
-            $price = get_option('sell_media_size_settings');
-            $price = $price[ $size . '_size_price' ];
+        if ( empty( $size ) && ! empty( $default ) ){
+            $price = $size_settings['default_price'];
         } else {
 
             /**
-             * Else we assign our item price to the price.
+             * Get the price based on the size and id passed in.
              */
-            $price = $item_price;
+            $item_price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
+
+            /**
+             * If a size was not passed in we fall back on the default
+             * price for this post.
+             */
+            if ( empty( $size ) ){
+                if ( empty( $default_price ) ){
+                    $price = $size_settings['default_price'];
+                } else {
+                    $price = $default_price;
+                }
+            } elseif ( empty( $item_price ) ){
+
+                /**
+                 * If this single item does not have a price, we fall back on the
+                 * default prices set in the settings.
+                 */
+                $price = get_option('sell_media_size_settings');
+                if ( in_array( $size, array('small','medium','large') ) ){
+                    switch( $size ){
+                        case 'small':
+                            $k = 'small_size_price';
+                            break;
+                        case 'medium':
+                            $k = 'medium_size_price';
+                            break;
+                        case 'large':
+                            $k = 'large_size_price';
+                            break;
+                        default:
+                            $k = 'default_price';
+                    }
+                } else {
+                    switch( $size ){
+                        case 'sell_media_small_file':
+                            $k = 'small_size_price';
+                            break;
+                        case 'sell_media_medium_file':
+                            $k = 'medium_size_price';
+                            break;
+                        case 'sell_media_large_file':
+                            $k = 'large_size_price';
+                            break;
+                        default:
+                            $k = 'default_price';
+                    }
+                }
+                $price = $price[ $k ];
+
+            } else {
+
+                /**
+                 * Else we assign our item price to the price.
+                 */
+                $price = $item_price;
+            }
         }
+    } else {
+        $price = $filtered_price;
     }
 
     if ( $currency ){
         $price = sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
     }
-
 
     if ( $echo )
         print $price;
@@ -368,7 +406,7 @@ function sell_media_item_form(){
         $term_id = null;
     } ?>
     <?php do_action( 'sell_media_above_item_form' ); ?>
-    <form action="javascript://" method="POST" class="sell-media-form">
+    <form action="javascript://" method="POST" class="sell-media-dialog-form sell-media-form">
         <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
         <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
         <input type="hidden" name="CalculatedPrice" class="price-target" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
@@ -520,9 +558,19 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
  * @since 1.2.4
  * @author Zane Matthew
  */
-function sell_media_original_image_size( $item_id=null ){
+function sell_media_original_image_size( $item_id=null, $echo=true ){
     $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
-    print $original_size[1] . ' x ' . $original_size[2];
+
+    if ( $echo ){
+        print $original_size[1] . ' x ' . $original_size[2];
+    } else {
+        return array(
+            'original'=> array(
+                'height' => $original_size[2],
+                'width' => $original_size[1]
+                )
+            );
+    }
 }
 
 
@@ -603,4 +651,38 @@ function sell_media_cart_price( $item=array() ){
         );
 
     return $price;
+}
+
+
+/**
+ * This function determines the sizes and prices available for purchase and prints out the HTML.
+ * If no sizes are available the original price is displayed.
+ */
+function sell_media_item_prices( $post ){
+
+    $wp_upload_dir = wp_upload_dir();
+    $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $post->ID, '_sell_media_attached_file', true ) );
+    $html = null;
+
+    if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) {
+
+        $download_sizes = array_merge( sell_media_image_sizes( $post->ID, false ), sell_media_original_image_size( $post->ID, false ) );
+
+        foreach( $download_sizes as $k => $v ){
+            $name = ucfirst( $k );
+            $html .= '<li class="price">';
+            $html .= '<span class="title">' . __( $name, 'sell_media' ) . ' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
+            $k = ( $k == 'original' ) ? null : $k;
+            $html .= sell_media_item_price( $post->ID, true, $k, false );
+            $html .= '</li>';
+        }
+    } else {
+        $html .= '<li class="price">';
+        $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . '</span>';
+        $html .= sell_media_item_price( $post->ID, true, null, false );
+        $html .= '</li>';
+    }
+
+    print apply_filters( 'sell_media_item_prices_filter', $html, $post->ID );
+
 }

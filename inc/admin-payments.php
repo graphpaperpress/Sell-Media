@@ -43,6 +43,7 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  * @return html
  */
 function sell_media_payment_render_contact( $post ){
+
     print '<div class="sell-media-admin-payments">';
     print '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
@@ -59,62 +60,63 @@ function sell_media_payment_render_contact( $post ){
             'email' => get_post_meta( $post->ID, '_sell_media_payment_user_email', true )
         );
 
-    printf( '%s %s %s %s',
-        '<p>Name: ' . $contact['first_name'],
-        $contact['last_name'],
-        $contact['user_edit_link'],
-        '<br />Email: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a></p>'
+    printf( '<p>%s: '.$contact['first_name'] . ' ' . $contact['last_name'] . '<br />
+        %s: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a><br />
+        %s: '.sell_media_get_currency_symbol() . sprintf( '%0.2f', get_post_meta( $post->ID, '_sell_media_payment_amount', true ) ).'</p>',
+        __( 'Name', 'sell_media' ),
+        __( 'Email', 'sell_media' ),
+        __( 'Total', 'sell_media' )
         );
 
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
+    if ( ! empty( $links ) ){
+        print '<table class="wp-list-table widefat" cellspacing="0">';
+        print '<thead>
+                <tr>
+                    <th scope="col">' . __('Item','sell_media') . '</th>
+                    <th>' . __('Price','sell_media') . '</th>
+                    <th>' . __('License','sell_media') . '</th>
+                    <th>' . __('Download Link','sell_media') . '</th>
+                </tr>
+            </thead>';
+        print '<tbody>';
+        foreach( $links as $link ){
 
-    print '<table class="wp-list-table widefat" cellspacing="0">';
-    print '<thead>
-            <tr>
-                <th scope="col">' . __('Item','sell_media') . '</th>
-                <th>' . __('Price','sell_media') . '</th>
-                <th>' . __('License','sell_media') . '</th>
-                <th>' . __('Download Link','sell_media') . '</th>
-            </tr>
-        </thead>';
-    print '<tbody>';
-    foreach( $links as $link ){
+            switch( $link['price_id'] ){
+                case 'sell_media_small_file':
+                    $price_id = 'small';
+                    break;
+                case 'sell_media_medium_file':
+                    $price_id = 'medium';
+                    break;
+                case 'sell_media_large_file':
+                    $price_id = 'large';
+                    break;
+                case 'sell_media_original_file':
+                    $price_id = "";
+                    break;
+                default:
+                    $price_id = null;
+                    break;
+            }
 
-        switch( $link['price_id'] ){
-            case 'sell_media_small_file':
-                $price_id = 'small';
-                break;
-            case 'sell_media_medium_file':
-                $price_id = 'medium';
-                break;
-            case 'sell_media_large_file':
-                $price_id = 'large';
-                break;
-            case 'sell_media_original_file':
-                $price_id = "";
-                break;
-            default:
-                $price_id = null;
-                break;
+            if ( empty( $link['license_id'] ) ){
+                $license = null;
+            } else {
+                $license = get_term( $link['license_id'], 'licenses' );
+                $license = $license->name;
+            }
+
+            print '<tr class="" valign="top">';
+            print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
+            print '<td>' . sell_media_item_price( $link['item_id'], true, $price_id, false ) . '</td>';
+            print '<td>' . $license . '</td>';
+            print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
+            print '</tr>';
         }
-
-        if ( empty( $link['license_id'] ) ){
-            $license = null;
-        } else {
-            $license = get_term( $link['license_id'], 'licenses' );
-            $license = $license->name;
-        }
-
-        print '<tr class="" valign="top">';
-        print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
-        print '<td>' . sell_media_item_price( $link['item_id'], true, $price_id, false ) . '</td>';
-        print '<td>' . $license . '</td>';
-        print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
-        print '</tr>';
+        print '</tbody>';
+        print '</table>';
     }
-    print '</tbody>';
-    print '</table>';
-
     do_action( 'sell_media_additional_customer_meta', $post );
 
     print '</div>';

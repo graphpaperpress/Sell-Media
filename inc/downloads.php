@@ -221,14 +221,14 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $body = $email_settings['success_email_body'];
 
     $links = null;
-    $count = count( $download_links );
     $i = 0;
 
     $download_links = sell_media_build_download_link( $payment_id, $email );
+    $count = count( $download_links );
 
     foreach( $download_links as $download ){
         $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
-        $comma = ( $i == $count ) ? null : ', ';
+        $comma = ( $i == $count - 1 ) ? null : ', ';
         $links .= $comma;
         $i++;
     }
