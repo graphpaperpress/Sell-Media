@@ -81,7 +81,9 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
             return admin_url();
         else
         // Send to dashboard page
-            return get_permalink( 5344 ); // change this Zane
+            $options = get_option('sell_media_general_settings');
+            $page_id = $options['dashboard_page'];
+            return get_permalink( $page_id );
     }
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
