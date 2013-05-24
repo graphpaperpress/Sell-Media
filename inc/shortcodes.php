@@ -357,7 +357,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
 add_shortcode('sell_media_checkout', 'sell_media_cart_shortcode');
 
 /**
- * Adds the 'sell_media' short code to the editor. [sell_media_buy_button]
+ * Adds the 'sell_media' short code to the editor. [sell_media_item]
  *
  * @author Zane M. Kolnik
  * @since 0.1

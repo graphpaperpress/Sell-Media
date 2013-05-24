@@ -59,15 +59,17 @@ What are shortcodes and how do I use them?
 
 Shortcodes are small snippets of code that when added to a Post, Page or Widget add functionality to your site. You must add the following shortcodes to your preferred Pages to use Sell Media:
 
-* **Checkout Shortcode** - (REQUIRED) Create a page called "Checkout" and add this shortcode to it: [sell_media_checkout]
-* **Thanks Shortcode** - (REQUIRED) Create a page called "Thanks" and add this shortcode to it: [sell_media_thanks]
-* **Buy Button Shortcode** - (OPTIONAL) Used for displaying specific items for sale: [sell_media_buy_button]
-* **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: [sell_media_searchform]
+* **Checkout shortcode** - (REQUIRED) Create a page called "Checkout" and visit the settings page (general tab) and set "Checkout Page" to the page that contains this shortcode: `[sell_media_checkout]`
+* **Thanks shortcode** - (REQUIRED) Create a page called "Thanks" and visit the settings page (general tab) and set "Thanks Page" to the page that contains this shortcode: `[sell_media_thanks]`
+* **Buy button shortcode** - (OPTIONAL) Used for displaying specific items for sale: `[sell_media_item]`
+* **Search form shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: `[sell_media_searchform]`
+* **All items shortcode** - (OPTIONAL) Displays all (or a certain collection) items in a grid view: `[sell_media_all_items collection="type-your-collection-name-here"]`
+* **Download list shortcode** - (OPTIONAL) List logged in users downloads: `[sell_media_download_list]`
 
 How do I show my checkout cart?
 ---
 
-1. Create a page called "Checkout" and add this shortcode to the page: [sell_media_checkout]
+1. Create a page called "Checkout" and add this shortcode to the page: `[sell_media_checkout]`
 2. Visit Sell Media -> Settings and select the Checkout page you created above to the "Checkout Page" option.
 
 How do I show an item available for sale?
@@ -155,6 +157,7 @@ What are license types?
 
 The Sell Media plugin helps you to create and assign different licenses and prices for each image, video or audio file based on the anticipated usage of the media. For example: If a large company wants to purchase one of your images for a billboard, you should charge one price for commercial usage, charge another for editorial, and so on.
 
+
 Screenshots
 -----------
 
@@ -236,8 +239,8 @@ Changelog
 1.4.2
 ---
 * Users can now change the post type slug
-* Added shortcode `sell_media_additional_list_items` so users can add additional information on the single item page under the size list.
-* `sell_media_bulk_uploader_additional_fields` Allows developers to add additional form fields for bulk upload/edit
+* Added shortcode `[sell_media_additional_list_items]` so users can add additional information on the single item page under the size list.
+* `sell_media_bulk_uploader_additional_fields` allows developers to add additional form fields for bulk upload/edit
 * Fixing issue where original file is sometimes downloaded vs. the one purchased
 * Various PHP notices fixes
 
