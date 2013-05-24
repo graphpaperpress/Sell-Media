@@ -76,15 +76,16 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
  */
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
     // Is there a user?
-    if ( is_array( $user->roles ) ) {
+    if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
         // Is it an administrator?
-        if ( in_array( 'administrator', $user->roles ) )
+        if ( in_array( 'administrator', $user->roles ) ){
             return admin_url();
-        else
+        } else {
         // Send to dashboard page
             $options = get_option('sell_media_general_settings');
             $page_id = $options['dashboard_page'];
             return get_permalink( $page_id );
+        }
     }
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
