@@ -324,12 +324,12 @@ class SellMediaSettings {
     /*
      * Dashboard Page Option field callback
      */
-    function field_general_thanks_page() {
+    function field_general_dashboard_page() {
         ?>
         <select name="<?php echo $this->general_settings_key; ?>[dashboard_page]" id="<?php echo $this->general_settings_key; ?>[dashboard_page]">
             <?php $this->build_field_pages_select( 'dashboard_page' ); ?>
         </select>
-        <span class="desc"><?php _e( 'What page is your customer Dashboard? This page will contain the <code>[sell_media_download_list]</code> shortcode.', 'sell_media' ); ?></span>
+        <span class="desc"><?php _e( 'Where is your customer Dashboard page? This page will contain the <code>[sell_media_download_list]</code> shortcode.', 'sell_media' ); ?></span>
         <?php
     }
 
