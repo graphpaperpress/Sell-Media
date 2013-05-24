@@ -16,12 +16,13 @@ function sell_media_template_redirect(){
         );
 
     $default_templates = array(
-        'single'   => get_stylesheet_directory() . '/single-sell_media_item.php',
-        'archive'  => get_stylesheet_directory() . '/archive-sell_media_item.php',
-        'taxonomy' => get_stylesheet_directory() . '/taxonomy-' . get_query_var('taxonomy') . '.php'
+        'single'   => locate_template( 'single-sell_media_item.php' ),
+        'archive'  => locate_template( 'archive-sell_media_item.php' ),
+        'taxonomy' => locate_template( 'taxonomy-' . get_query_var('taxonomy') . '.php' )
         );
 
     if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
+
         /**
          * Single
          */
