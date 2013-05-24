@@ -586,34 +586,63 @@ $a = new SellMedia();
 
 function collection_password_check( $query ){
 
-    // Check if 'collections is present in query vars'
+    /**
+     * Check if 'collections is present in query vars'
+     */
     if ( ! empty( $query->query_vars['collection'] ) ){
         $term_obj = get_term_by( 'slug', $query->query_vars['collection'], 'collection' );
         $term_id = $term_obj->term_id;
-        $message = "This collection is password protected";
+        $message = __("This collection is password protected",'sell_media');
     }
 
 
-    // Check if this is a single sell_media_item page
-    // note is_singular('sell_media_item') does not work here
+    /**
+     * Check if this is a single sell_media_item page
+     * note is_singular('sell_media_item') does not work here
+     */
     else if ( is_single() && ! empty( $query->query['post_type'] ) && $query->query['post_type'] == 'sell_media_item' ) {
         global $wpdb;
-        $post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_name` LIKE '{$query->query['sell_media_item']}';");
-        $terms_obj = wp_get_post_terms( $post_id, 'collection' );
-        if ( ! empty( $terms_obj ) ){
-            $term_id = $terms_obj[0]->term_id;
-            $message = "This post is an a password protected collection";
+
+        /**
+         * build an array of terms that are password protected
+         */
+        foreach( get_terms('collection') as $term_obj ){
+            $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+            if ( $password ) $term_ids[] = $term_obj->term_id;
+        }
+
+
+        /**
+         * Apparently none of our globals are set and the post_id is not on $query
+         * so we run this query to get out post_id
+         */
+        $post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_name` LIKE '{$query->query['sell_media_item']}' AND post_type LIKE 'sell_media_item';");
+
+
+        /**
+         * Determine if this post has the given term and the term has a password
+         * if it does we set our term_id to the password protected term
+         */
+        foreach( $term_ids as $t ){
+            if ( has_term( $t, 'collection', $post_id ) && get_term_meta( $t, 'collection_password', true ) ){
+                $term_id = $t;
+                $message = __('This item is password proteced','sell_media');
+            }
         }
     }
 
 
-    // Filter out posts that are in password protected collections from our archive pages
-    // We need to check additional post_type since this will pass as true for nav_menu_item
+    /**
+     * Filter out posts that are in password protected collections from our archive pages
+     * We need to check additional post_type since this will pass as true for nav_menu_item
+     */
     else if ( is_post_type_archive('sell_media_item') && $query->query['post_type'] == 'sell_media_item'
         && ! is_admin() ){
         print "filter out posts that are in password protected collections";
 
-        // build an array of terms that are password protected
+        /**
+         * build an array of terms that are password protected
+         */
         foreach( get_terms('collection') as $term_obj ){
             $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
             if ( $password ) $term_ids[] = $term_obj->term_id;
@@ -633,27 +662,30 @@ function collection_password_check( $query ){
                         )
                     )
                 );
-print '<pre>';
-print_r( $args );
-print '</pre>';
         }
     }
 
 
-    // Just set our term_id and message to null.
+    /**
+     * Just set our term_id and message to null.
+     */
     else {
         $term_id = $message = null;
     }
 
-    // If we have a term ID check if this term is password protected
+    /**
+     * If we have a term ID check if this term is password protected
+     */
     if ( ! empty( $term_id ) ) {
 
-        // get the password for the collection
+        /**
+         * get the password for the collection
+         */
         $password = get_term_meta( $term_id, 'collection_password', true );
 
         if ( ! empty( $password ) ) {
             if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password ) {
-                print 'correct password';
+                return $query;
             } else {?>
                  <form action="<?php print site_url() . $_SERVER['REQUEST_URI']; ?>" method="POST">
                      <p><?php print $message; ?>.
@@ -662,7 +694,7 @@ print '</pre>';
                      </p>
                 </form>
             <?php } ?>
-            <?php wp_die('password');
+            <?php wp_die();
         }
     } else {
         return $query;
