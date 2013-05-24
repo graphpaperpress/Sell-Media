@@ -68,6 +68,26 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
 
 
 /**
+ * Redirect admins to the WP dashboard and other users Sell Media Dashboard
+ *
+ * @package Sell Media
+ * @since 1.4.6
+ */
+function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
+    // Is there a user?
+    if ( is_array( $user->roles ) ) {
+        // Is it an administrator?
+        if ( in_array( 'administrator', $user->roles ) )
+            return admin_url();
+        else
+        // Send to dashboard page
+            return get_permalink( 5344 ); // change this Zane
+    }
+}
+add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
+
+
+/**
  * Builds html select field
  *
  * @since 0.1
