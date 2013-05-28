@@ -639,6 +639,7 @@ class SellMedia {
             || is_home()
             || is_tax()
             || is_page()
+            || is_single()
             ){
 
 
