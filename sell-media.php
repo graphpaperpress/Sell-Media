@@ -580,8 +580,10 @@ class SellMedia {
 
     public function collection_password_check( $query ){
 
+        if ( is_admin() ) return $query;
+
         /**
-         * Check if 'collections is present in query vars'
+         * Check if "collections" is present in query vars
          */
         if ( ! empty( $query->query_vars['collection'] ) ){
             $term_obj = get_term_by( 'slug', $query->query_vars['collection'], 'collection' );
@@ -634,8 +636,10 @@ class SellMedia {
          */
         else if ( is_post_type_archive('sell_media_item')
             && $query->query['post_type'] == 'sell_media_item'
-            && ! is_admin()
-            || is_home() ){
+            || is_home()
+            || is_tax()
+            ){
+
 
             /**
              * build an array of terms that are password protected
