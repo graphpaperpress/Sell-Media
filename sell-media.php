@@ -638,6 +638,7 @@ class SellMedia {
             && $query->query['post_type'] == 'sell_media_item'
             || is_home()
             || is_tax()
+            || is_page()
             ){
 
 
