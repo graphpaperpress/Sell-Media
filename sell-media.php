@@ -686,7 +686,7 @@ class SellMedia {
                 if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password ) {
                     return $query;
                 } else {?>
-                     <form action="<?php print site_url() . $_SERVER['REQUEST_URI']; ?>" method="POST">
+                     <form action="<?php print site_url() . $_SERVER['REDIRECT_URL']; ?>" method="POST">
                          <p><?php print $message; ?>.
                          <input type="text" value="" name="collection_password" />
                          <input type="submit" value="Submit" name="submit" />
