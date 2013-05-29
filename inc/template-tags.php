@@ -325,7 +325,13 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
         case 'video/mp4':
         case 'video/quicktime':
         case 'application/octet-stream':
-            $mime_type = 'video/mpeg';
+            if ( $image ){
+                $image_src = $image[0];
+                $image_height = $image[2];
+                $image_width = $image[1];
+            } else {
+                $image_src = wp_mime_type_icon( 'video/mpeg' );
+            }
             break;
         case 'text/csv':
         case 'text/plain':
