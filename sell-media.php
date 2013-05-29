@@ -436,7 +436,7 @@ class SellMedia {
             'show_ui' => true,
             'show_tagcloud' => true,
             'hierarchical' => true,
-            'rewrite' => true,
+            'rewrite' => array('hierarchical' => true ),
             'query_var' => true
         );
 
