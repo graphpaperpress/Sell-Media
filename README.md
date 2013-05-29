@@ -208,6 +208,10 @@ Upgrade Notice
 Changelog
 ---------
 
+1.4.8
+---
+* Minor bug fix for password-less collections
+
 1.4.7
 ---
 * Collections are now password protected

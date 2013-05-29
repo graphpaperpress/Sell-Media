@@ -4,14 +4,14 @@
 Plugin Name: Sell Media
 Plugin URI: http://graphpaperpress.com/plugins/sell-media
 Description: A plugin for selling digital downloads and reprints.
-Version: 1.4.7
+Version: 1.4.8
 Author: Graph Paper Press
 Author URI: http://graphpaperpress.com
 Author Email: support@graphpaperpress.com
 License: GPL
 */
 
-define( 'SELL_MEDIA_VERSION', '1.4.7' );
+define( 'SELL_MEDIA_VERSION', '1.4.8' );
 define( 'SELL_MEDIA_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'sell-media.php' );
 
 include( dirname(__FILE__) . '/inc/cart.php' );
@@ -621,10 +621,12 @@ class SellMedia {
              * Determine if this post has the given term and the term has a password
              * if it does we set our term_id to the password protected term
              */
-            foreach( $term_ids as $t ){
-                if ( has_term( $t, 'collection', $post_id ) && get_term_meta( $t, 'collection_password', true ) ){
-                    $term_id = $t;
-                    $message = __( 'This item is password protected', 'sell_media' );
+            if ( ! empty( $term_ids ) ){
+                foreach( $term_ids as $t ){
+                    if ( has_term( $t, 'collection', $post_id ) && get_term_meta( $t, 'collection_password', true ) ){
+                        $term_id = $t;
+                        $message = __( 'This item is password protected', 'sell_media' );
+                    }
                 }
             }
         }

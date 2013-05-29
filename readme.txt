@@ -183,6 +183,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.4.8 =
+* Minor bug fix for password-less collections
+
 = 1.4.7 =
 * Collections are now password protected
 * New setting "dashboard page" allows admins to create a custom page for recurring customers
