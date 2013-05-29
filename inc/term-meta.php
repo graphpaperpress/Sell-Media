@@ -299,10 +299,6 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
         update_term_meta( $term_id, 'default', 'off');
     }
 
-    if ( ! isset( $_POST['meta_value']['collection_hidden'] ) ) {
-        update_term_meta( $term_id, 'collection_hidden', 'off');
-    }
-
     if ( isset( $_POST['meta_value'] ) ) {
         $cat_keys = array_keys( $_POST['meta_value'] );
 
@@ -334,9 +330,9 @@ function sell_media_add_collection_field( $tag ){
         $term_id = null;
     ?>
     <div class="form-field">
-        <label for="collection_hidden"><?php _e( 'Hide', 'sell_media' ); ?></label>
-        <input name="meta_value[collection_hidden]" type="checkbox" id="meta_value[]" />
-        <p class="description"><?php _e( 'Check to hide this collection from public archive pages. This colleciton will still be web-accessible, but users will have to know the url to access it. This might be useful if you want to create hidden collections for clients.', 'sell_media' ); ?></p>
+        <label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
+        <input name="meta_value[collection_password]" type="text" id="meta_value[]" />
+        <p class="description"><?php _e( 'This will password protect all items in this collection.', 'sell_media' ); ?></p>
     </div>
 <?php }
 add_action( 'collection_add_form_fields', 'sell_media_add_collection_field' );
@@ -347,31 +343,31 @@ add_action( 'collection_add_form_fields', 'sell_media_add_collection_field' );
  *
  * @since 0.1
  */
-function sell_media_edit_collection_hide( $tag ){
+function sell_media_edit_collection_password( $tag ){
     if ( is_object( $tag ) )
         $term_id = $tag->term_id;
     else
         $term_id = null;?>
     <tr class="form-field">
         <th scope="row" valign="top">
-            <label for="collection_hidden"><?php _e( 'Hide', 'sell_media' ); ?></label>
+            <label for="collection_password"><?php _e( 'Hide', 'sell_media' ); ?></label>
         </th>
         <td>
-            <input name="meta_value[collection_hidden]" id="meta_value[collection_hidden]" type="checkbox" <?php checked(get_term_meta( $term_id, 'collection_hidden', true ), "on" ); ?> />
+            <input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php get_term_meta( $term_id, 'collection_password', true ); ?>" />
             <p class="description"><?php _e( 'Hide this collection from archive pages', 'sell_media' ); ?></p>
         </td>
     </tr>
     <tr class="form-field">
         <th scope="row" valign="top">
-            <label for="collection_hidden"><?php _e( 'Password', 'sell_media' ); ?></label>
+            <label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
         </th>
         <td>
             <input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print get_term_meta( $term_id, 'collection_password', true ); ?>" />
-            <p class="description"><?php _e( 'Hide this collection from archive pages', 'sell_media' ); ?></p>
+            <p class="description"><?php _e( 'Password protect all items in this collection', 'sell_media' ); ?></p>
         </td>
     </tr>
 <?php }
-add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_hide' );
+add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_password' );
 
 
 /**
