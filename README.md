@@ -208,6 +208,13 @@ Upgrade Notice
 Changelog
 ---------
 
+1.4.7
+---
+* Collections are now password protected
+* New setting "dashboard page" allows admins to create a custom page for recurring customers
+* Better child theme support
+* Various bug fixes
+
 1.4.6
 ---
 * Editors can now use the bulk upload
