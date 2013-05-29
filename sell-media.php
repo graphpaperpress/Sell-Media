@@ -588,7 +588,7 @@ class SellMedia {
         if ( ! empty( $query->query_vars['collection'] ) ){
             $term_obj = get_term_by( 'slug', $query->query_vars['collection'], 'collection' );
             $term_id = $term_obj->term_id;
-            $message = __("This collection is password protected",'sell_media');
+            $message = __( 'This collection is password protected','sell_media');
         }
 
 
@@ -624,7 +624,7 @@ class SellMedia {
             foreach( $term_ids as $t ){
                 if ( has_term( $t, 'collection', $post_id ) && get_term_meta( $t, 'collection_password', true ) ){
                     $term_id = $t;
-                    $message = __('This item is password proteced','sell_media');
+                    $message = __( 'This item is password protected', 'sell_media' );
                 }
             }
         }
@@ -689,7 +689,7 @@ class SellMedia {
                      <form action="" method="POST">
                          <p><?php print $message; ?>.
                          <input type="text" value="" name="collection_password" />
-                         <input type="submit" value="Submit" name="submit" />
+                         <input type="submit" value="<?php _e( 'Submit', 'sell_media' ); ?>" name="submit" />
                          </p>
                     </form>
                 <?php } ?>
