@@ -8,7 +8,6 @@
  * @since 0.1
  */
 get_header(); global $wp_query; ?>
-
 	<div id="sell-media-archive" class="sell-media">
 		<div id="content" role="main">
 			<header class="entry-header">
@@ -49,5 +48,4 @@ get_header(); global $wp_query; ?>
 			<?php endif; $i = 0; ?>
 		</div><!-- #content -->
 	</div><!-- #sell_media-single .sell_media -->
-<?php endif; ?>
 <?php get_footer(); ?>
