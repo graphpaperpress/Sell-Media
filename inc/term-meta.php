@@ -347,16 +347,7 @@ function sell_media_edit_collection_password( $tag ){
     if ( is_object( $tag ) )
         $term_id = $tag->term_id;
     else
-        $term_id = null;?>
-    <tr class="form-field">
-        <th scope="row" valign="top">
-            <label for="collection_password"><?php _e( 'Hide', 'sell_media' ); ?></label>
-        </th>
-        <td>
-            <input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php get_term_meta( $term_id, 'collection_password', true ); ?>" />
-            <p class="description"><?php _e( 'Hide this collection from archive pages', 'sell_media' ); ?></p>
-        </td>
-    </tr>
+        $term_id = null; ?>
     <tr class="form-field">
         <th scope="row" valign="top">
             <label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
