@@ -299,6 +299,11 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
         update_term_meta( $term_id, 'default', 'off');
     }
 
+    if ( ! isset( $_POST['meta_value']['collection_hidden'] ) ) {
+        if ( ! empty(  $_SESSION['sell_media']['collection_password'] ) )
+            unset( $_SESSION['sell_media']['collection_password'] );
+    }
+
     if ( isset( $_POST['meta_value'] ) ) {
         $cat_keys = array_keys( $_POST['meta_value'] );
 
