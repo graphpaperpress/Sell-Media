@@ -687,7 +687,8 @@ class SellMedia {
             if ( ! empty( $password ) ) {
                 if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password
                     || ! empty( $_SESSION['sell_media']['collection_password'] )
-                    || $_SESSION['sell_media']['collection_password'] == $password ) {
+                    || ! empty( $_SESSION['sell_media']['collection_password'] )
+                    && $_SESSION['sell_media']['collection_password'] == $password ) {
 
                     if ( empty( $_SESSION['sell_media']['collection_password'] ) )
                         $_SESSION['sell_media']['collection_password'] = $_POST['collection_password'];
