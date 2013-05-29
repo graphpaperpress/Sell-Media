@@ -694,7 +694,7 @@ class SellMedia {
                         $_SESSION['sell_media']['collection_password'] = $_POST['collection_password'];
 
                     return $query;
-                } else {?>
+                } else { ?>
                      <form action="" method="POST">
                          <p><?php print $message; ?>.
                          <input type="text" value="" name="collection_password" />
