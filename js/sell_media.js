@@ -231,7 +231,13 @@ jQuery( document ).ready(function( $ ){
      */
     $( document ).on('change', '#sell_media_size_select', function(){
         var size;
-        var price = $('#sell_media_license_select :selected').attr('data-price');
+
+        if ( $('#sell_media_single_license_markup').length ){
+            price = $('#sell_media_single_license_markup').val();
+        } else {
+            price = $('#sell_media_license_select :selected').attr('data-price');
+        }
+
         $("option:selected", this).each(function(){
             size = $(this).attr('data-price');
             calculate_total( price, size );

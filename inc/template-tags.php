@@ -461,6 +461,7 @@ function sell_media_item_form(){
         <?php else : ?>
             <?php if ( ! empty( $term_id ) ) : ?>
                 <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+                <input type="hidden" value="<?php print str_replace('%', '', get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
                 <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
             <?php endif; ?>
         <?php endif; ?>

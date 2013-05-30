@@ -390,7 +390,7 @@ function sell_media_collection_icon_field( $icon_id=null ){
         $image .= '<br /><a href="javascript:void(0);" class="upload_image_remove">Remove</a>';
     }
     ?>
-    <input name="meta_value[collection_icon]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
+    <input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
     <input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
     <input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
     <div class="upload_image_preview" style="display: block;">
@@ -411,7 +411,7 @@ function sell_media_edit_collection_icon( $tag ){
             <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
         </th>
         <td>
-            <?php sell_media_collection_icon_field( get_term_meta( $term_id, 'collection_icon', true ) ); ?>
+            <?php sell_media_collection_icon_field( get_term_meta( $term_id, 'collection_icon_id', true ) ); ?>
         </td>
     </tr>
 <?php }
