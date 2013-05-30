@@ -205,7 +205,6 @@ function sell_media_process_paypal_ipn() {
 
     $payment_id     = $encoded_data_array['custom']; // This is our post id (payment id)
     $purchase_key   = $encoded_data_array['item_number']; // This is our purchase key
-    $paypal_amount  = $encoded_data_array['mc_gross'];
     $payment_status = $encoded_data_array['payment_status'];
     $currency_code  = strtolower( $encoded_data_array['mc_currency'] );
 
@@ -251,10 +250,11 @@ function sell_media_process_paypal_ipn() {
         return;
     }
 
-    if ( number_format( ( float )$paypal_amount, 2 ) != $payment_amount ) {
+    if ( $encoded_data_array['mc_gross'] != $payment_amount ) {
         if ( sell_media_test_mode() ){
-            $tmp_number_o = number_format( ( float )$paypal_amount, 2 );
-            $log_data .= "Payment does not match!\n{$payment_amount}, {$tmp_number_o}\nExecution stopped!\n\n";
+            $log_data .= "Payment does not match!\n  Amount attempted to charge: {$encoded_data_array['mc_gross']}\n  Amount customer paid: {$payment_amount}\nExecution stopped!\n\n";
+            $tmp_encoded_data_array_o = print_r( $encoded_data_array, true );
+            $log_data .= "\nPayPal Encoded Data:\n{$tmp_encoded_data_array_o}\n\n";
             write_log_txt( $file_handle, $log_data );
             end_log_txt( $file_handle );
         }
