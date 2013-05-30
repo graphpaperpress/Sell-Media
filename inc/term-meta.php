@@ -344,7 +344,7 @@ add_action( 'collection_add_form_fields', 'sell_media_add_collection_field' );
 
 
 /**
- * Hide collections from archive view
+ * Add icon field to the edit collection page
  *
  * @since 0.1
  */
@@ -364,6 +364,58 @@ function sell_media_edit_collection_password( $tag ){
     </tr>
 <?php }
 add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_password' );
+
+
+/**
+ * Add icon field to collection
+ *
+ * @since 0.1
+ */
+function sell_media_add_collection_icon( ){ ?>
+    <div class="form-field collection-icon">
+        <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
+    <?php sell_media_collection_icon_field(); ?>
+    </div>
+    <?php }
+add_action( 'collection_add_form_fields', 'sell_media_add_collection_icon' );
+
+
+function sell_media_collection_icon_field( $icon_id=null ){
+    wp_enqueue_media();
+    if ( empty( $icon_id ) ){
+        $image = $url = null;
+    } else {
+        $url = wp_get_attachment_url( $icon_id );
+        $image = wp_get_attachment_image( $icon_id, 'thumbnail' );
+        $image .= '<br /><a href="javascript:void(0);" class="upload_image_remove">Remove</a>';
+    }
+    ?>
+    <input name="meta_value[collection_icon]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
+    <input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
+    <input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
+    <div class="upload_image_preview" style="display: block;">
+        <span id="collection_icon_target"><?php print $image; ?></span>
+    </div>
+    <p class="description"><?php _e( 'The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed', 'sell_media' ); ?></p>
+<?php }
+
+/**
+ * Hide collections from archive view
+ *
+ * @since 0.1
+ */
+function sell_media_edit_collection_icon( $tag ){
+    $term_id = is_object( $tag ) ? $tag->term_id : null; ?>
+    <tr class="form-field sell-media-collection-form-field">
+        <th scope="row" valign="top">
+            <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
+        </th>
+        <td>
+            <?php sell_media_collection_icon_field( get_term_meta( $term_id, 'collection_icon', true ) ); ?>
+        </td>
+    </tr>
+<?php }
+add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_icon' );
 
 
 /**
