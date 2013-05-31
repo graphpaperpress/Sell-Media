@@ -349,4 +349,10 @@ jQuery( document ).ready(function( $ ){
         }
     });
 
+
+    if ( $('#sell_media_checkout_form').length ){
+        sell_media_update_sub_total();
+        sell_media_update_total();
+        sell_media_update_final_total();
+    }
 });
