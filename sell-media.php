@@ -582,6 +582,8 @@ class SellMedia {
 
         if ( is_admin() ) return $query;
 
+        if ( ! empty( $_GET['s'] ) ) return;
+
         /**
          * Check if "collections" is present in query vars
          */
@@ -643,7 +645,6 @@ class SellMedia {
             || is_page()
             || is_single()
             ){
-
 
             /**
              * build an array of terms that are password protected
