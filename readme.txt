@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,12 @@ Action hooks available:
 * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+
+= 1.4.9 =
+* Collections now have featured images/icons
+* Fixing issue were shipping value was not properly formatted for PayPal
+* Fixing issue where markup was not showing/displaying properly for items with one license
+* Sub-collections now supported
 
 = 1.4.8 =
 * Minor bug fix for password-less collections

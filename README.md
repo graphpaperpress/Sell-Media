@@ -208,6 +208,13 @@ Upgrade Notice
 Changelog
 ---------
 
+1.4.9
+---
+* Collections now have featured images/icons
+* Fixing issue were shipping value was not properly formatted for PayPal
+* Fixing issue where markup was not showing/displaying properly for items with one license
+* Sub-collections now supported
+
 1.4.8
 ---
 * Minor bug fix for password-less collections
