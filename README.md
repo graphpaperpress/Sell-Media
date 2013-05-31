@@ -210,6 +210,7 @@ Changelog
 
 1.4.9
 ---
+* Collections are now password protected
 * Collections now have featured images/icons
 * Fixing issue were shipping value was not properly formatted for PayPal
 * Fixing issue where markup was not showing/displaying properly for items with one license
