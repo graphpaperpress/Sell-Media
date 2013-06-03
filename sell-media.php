@@ -607,7 +607,7 @@ class SellMedia {
              * build an array of terms that are password protected
              */
             foreach( get_terms('collection') as $term_obj ){
-                $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+                $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
                 if ( $password ) $term_ids[] = $term_obj->term_id;
             }
 
@@ -625,7 +625,7 @@ class SellMedia {
              */
             if ( ! empty( $term_ids ) ){
                 foreach( $term_ids as $t ){
-                    if ( has_term( $t, 'collection', $post_id ) && get_term_meta( $t, 'collection_password', true ) ){
+                    if ( has_term( $t, 'collection', $post_id ) && sell_media_get_term_meta( $t, 'collection_password', true ) ){
                         $term_id = $t;
                         $message = __( 'This item is password protected', 'sell_media' );
                     }
@@ -650,7 +650,7 @@ class SellMedia {
              * build an array of terms that are password protected
              */
             foreach( get_terms('collection') as $term_obj ){
-                $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+                $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
                 if ( $password ) $term_ids[] = $term_obj->term_id;
             }
 
@@ -683,7 +683,7 @@ class SellMedia {
             /**
              * get the password for the collection
              */
-            $password = get_term_meta( $term_id, 'collection_password', true );
+            $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
 
             if ( ! isset( $_SESSION ) ) session_start();
 

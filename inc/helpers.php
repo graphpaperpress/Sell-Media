@@ -136,7 +136,7 @@ function sell_media_build_options( $taxonomy=null ) {
     <?php if ( $terms ) : ?>
         <?php do_action('sell_media_build_options_before'); ?>
         <?php foreach( $terms as $term ) : ?>
-            <?php $price = str_replace( '%', '', get_term_meta( $term->term_id, 'markup', true ) ); ?>
+            <?php $price = str_replace( '%', '', sell_media_get_term_meta( $term->term_id, 'markup', true ) ); ?>
             <option
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
                 class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
@@ -202,7 +202,7 @@ function sell_media_build_input( $taxonomy=null ) {
     <?php if ( $terms ) : ?>
         <?php do_action('sell_media_build_input_before'); ?>
         <?php foreach( $terms as $term ) : ?>
-            <?php $price = get_term_meta( $term->term_id, 'markup', true); ?>
+            <?php $price = sell_media_get_term_meta( $term->term_id, 'markup', true); ?>
             <input
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
                 class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
