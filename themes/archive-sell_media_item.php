@@ -8,15 +8,6 @@
  * @since 0.1
  */
 get_header(); global $wp_query; ?>
-
-	<?php if ( get_term_meta( $wp_query->queried_object_id, 'collection_hidden', true ) == "on" ) : ?>
-		<div id="sell-media-archive" class="sell-media">
-			<div id="content" role="main">
-			<?php _e( 'This collection is hidden.', 'sell_media' ); ?>
-			</div>
-		</div>
-	<?php else : ?>
-
 	<div id="sell-media-archive" class="sell-media">
 		<div id="content" role="main">
 			<header class="entry-header">
@@ -57,5 +48,4 @@ get_header(); global $wp_query; ?>
 			<?php endif; $i = 0; ?>
 		</div><!-- #content -->
 	</div><!-- #sell_media-single .sell_media -->
-<?php endif; ?>
 <?php get_footer(); ?>

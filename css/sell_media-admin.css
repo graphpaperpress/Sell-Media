@@ -150,3 +150,26 @@
     clear: both;
     float: left;
     }
+
+
+/* Term meta
+-------------------------------------------------------------- */
+.collection-icon input[type="button"] {
+    width: auto;
+    }
+
+.collection-icon input[type="text"] {
+    width: 115px;
+    }
+
+.upload_image_preview img {
+    margin-top: 10px;
+    }
+
+.sell-media-collection-form-field input[type="button"]{
+    width: auto;
+    }
+
+.sell-media-collection-form-field input[type="text"]{
+    width: 50%;
+    }

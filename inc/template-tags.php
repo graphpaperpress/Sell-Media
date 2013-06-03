@@ -327,7 +327,13 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
         case 'video/mp4':
         case 'video/quicktime':
         case 'application/octet-stream':
-            $mime_type = 'video/mpeg';
+            if ( $image ){
+                $image_src = $image[0];
+                $image_height = $image[2];
+                $image_width = $image[1];
+            } else {
+                $image_src = wp_mime_type_icon( 'video/mpeg' );
+            }
             break;
         case 'text/csv':
         case 'text/plain':
@@ -457,6 +463,7 @@ function sell_media_item_form(){
         <?php else : ?>
             <?php if ( ! empty( $term_id ) ) : ?>
                 <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+                <input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
                 <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
             <?php endif; ?>
         <?php endif; ?>
@@ -647,7 +654,7 @@ function sell_media_cart_price( $item=array() ){
         'size' => empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size ),
         'amount' => sprintf("%0.2f",$price),
         'total' => empty( $total ) ? sprintf("%0.2f",$price) : sprintf("%0.2f",$total),
-        'markup' => empty( $license_obj ) ? null : str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) ),
+        'markup' => empty( $license_obj ) ? null : str_replace( '%', '', sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) ),
         'license' => empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name ),
         'qty' => $qty
         );

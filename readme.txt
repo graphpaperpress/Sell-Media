@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.4.6
+Stable tag: 1.4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,21 +64,21 @@ Check with your hosting provide on your download limits. Sell Media does not pro
 
 Shortcodes are small snippets of code that when added to a Post, Page or Widget add functionality to your site. You must add the following shortcodes to your preferred Pages to use Sell Media:
 
-* **Checkout Shortcode** - (REQUIRED) Create a page called "Checkout" and add this shortcode to it: [sell_media_checkout]
-* **Thanks Shortcode** - (REQUIRED) Create a page called "Thanks" and add this shortcode to it: [sell_media_thanks]
-* **Buy Button Shortcode** - (OPTIONAL) Used for displaying specific items for sale: [sell_media_buy_button]
-* **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: [sell_media_searchform]
+* **Checkout Shortcode** - (REQUIRED) Create a page called "Checkout" and add this shortcode to it: `[sell_media_checkout]`
+* **Thanks Shortcode** - (REQUIRED) Create a page called "Thanks" and add this shortcode to it: `[sell_media_thanks]`
+* **Buy Button Shortcode** - (OPTIONAL) Used for displaying specific items for sale: `[sell_media_buy_button]`
+* **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: `[sell_media_searchform]`
 
 = How do I show my checkout cart? =
 
-1. Create a page called "Checkout" and add this shortcode to the page: [sell_media_checkout]
+1. Create a page called "Checkout" and add this shortcode to the page: `[sell_media_checkout]`
 2. Visit Sell Media -> Settings and select the Checkout page you created above to the "Checkout Page" option.
 
 = How do I show an item available for sale? =
 
 You have two options:
 
-1. After adding a new item for sale on the Sell Media -> Add New page, copy and paste the shortcode at the bottom of the screen into a Post, Page or Text Widget. This shortcode will embed the image and an "Add to Cart" button below the image. The shortcode looks something like this: [sell_media id="257" text="Purchase" style="button" color="blue" size="medium"]
+1. After adding a new item for sale on the Sell Media -> Add New page, copy and paste the shortcode at the bottom of the screen into a Post, Page or Text Widget. This shortcode will embed the image and an "Add to Cart" button below the image. The shortcode looks something like this: `[sell_media id="257" text="Purchase" style="button" color="blue" size="medium"]`
 2. Each item you add for sale also has a dedicated URL. Click the View Item button after saving your first Sell Media item. You could then add the link to that specific item to one of your Menus on Appearance -> Menus -> Custom Menu Item.
 
 = How do I bulk upload images for sale? =
@@ -182,6 +182,22 @@ Action hooks available:
 * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+
+= 1.4.9 =
+* Collections are now password protected
+* Collections now have featured images/icons
+* Fixing issue where shipping value was not properly formatted for PayPal
+* Fixing issue where markup was not showing/displaying properly for items with one license
+* Sub-collections now supported
+
+= 1.4.8 =
+* Minor bug fix for password-less collections
+
+= 1.4.7 =
+* Collections are now password protected
+* New setting "dashboard page" allows admins to create a custom page for recurring customers
+* Better child theme support
+* Various bug fixes
 
 = 1.4.6 =
 * Editors can now use the bulk upload

@@ -16,12 +16,13 @@ function sell_media_template_redirect(){
         );
 
     $default_templates = array(
-        'single'   => get_stylesheet_directory() . '/single-sell_media_item.php',
-        'archive'  => get_stylesheet_directory() . '/archive-sell_media_item.php',
-        'taxonomy' => get_stylesheet_directory() . '/taxonomy-' . get_query_var('taxonomy') . '.php'
+        'single'   => locate_template( 'single-sell_media_item.php' ),
+        'archive'  => locate_template( 'archive-sell_media_item.php' ),
+        'taxonomy' => locate_template( 'taxonomy-' . get_query_var('taxonomy') . '.php' )
         );
 
     if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
+
         /**
          * Single
          */
@@ -65,6 +66,29 @@ function sell_media_load_template() {
 }
 add_action( 'wp_ajax_nopriv_sell_media_load_template', 'sell_media_load_template' );
 add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
+
+
+/**
+ * Redirect admins to the WP dashboard and other users Sell Media Dashboard
+ *
+ * @package Sell Media
+ * @since 1.4.6
+ */
+function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
+    // Is there a user?
+    if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
+        // Is it an administrator?
+        if ( in_array( 'administrator', $user->roles ) ){
+            return admin_url();
+        } else {
+        // Send to dashboard page
+            $options = get_option('sell_media_general_settings');
+            $page_id = $options['dashboard_page'];
+            return get_permalink( $page_id );
+        }
+    }
+}
+add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 
 
 /**
@@ -112,7 +136,7 @@ function sell_media_build_options( $taxonomy=null ) {
     <?php if ( $terms ) : ?>
         <?php do_action('sell_media_build_options_before'); ?>
         <?php foreach( $terms as $term ) : ?>
-            <?php $price = str_replace( '%', '', get_term_meta( $term->term_id, 'markup', true ) ); ?>
+            <?php $price = str_replace( '%', '', sell_media_get_term_meta( $term->term_id, 'markup', true ) ); ?>
             <option
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
                 class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
@@ -178,7 +202,7 @@ function sell_media_build_input( $taxonomy=null ) {
     <?php if ( $terms ) : ?>
         <?php do_action('sell_media_build_input_before'); ?>
         <?php foreach( $terms as $term ) : ?>
-            <?php $price = get_term_meta( $term->term_id, 'markup', true); ?>
+            <?php $price = sell_media_get_term_meta( $term->term_id, 'markup', true); ?>
             <input
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
                 class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"

@@ -138,8 +138,8 @@ function sell_media_the_markup_slider( $tag ){
     else
         $term_id = null;
 
-    if ( get_term_meta( $term_id, 'markup', true) ) {
-        $initial_markup = str_replace( "%", "", get_term_meta( $term_id, 'markup', true ) );
+    if ( sell_media_get_term_meta( $term_id, 'markup', true) ) {
+        $initial_markup = str_replace( "%", "", sell_media_get_term_meta( $term_id, 'markup', true ) );
     } else {
         $initial_markup = 0;
     }
@@ -186,13 +186,13 @@ function sell_media_the_markup_slider( $tag ){
     <div class="sell_media-slider-container">
         <div id="markup_slider"></div>
         <div class="sell_media-price-container">
-            <input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo get_term_meta($term_id, 'markup', true); ?>" size="40" />
+            <input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo sell_media_get_term_meta($term_id, 'markup', true); ?>" size="40" />
         </div>
         <p class="description">
             <?php _e( 'Increase the price of a item if a buyer selects this license by dragging the slider above.', 'sell_media' ); ?>
             <?php
-                if ( get_term_meta( $term_id, 'markup', true ) )
-                    $default_markup = get_term_meta( $term_id, 'markup', true );
+                if ( sell_media_get_term_meta( $term_id, 'markup', true ) )
+                    $default_markup = sell_media_get_term_meta( $term_id, 'markup', true );
                 else
                     $default_markup = '0%';
 
@@ -230,7 +230,7 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
             <label for="markup"><?php _e( 'Add as default license?', 'sell_media' ); ?></label>
         </th>
         <td>
-            <input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
+            <input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( sell_media_get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
             <span class="description"><label for="meta_value[default]"><?php echo $desc; ?></label></span>
         </td>
     </tr>
@@ -278,7 +278,7 @@ add_filter( 'manage_edit-licenses_columns', 'sell_media_custom_license_columns_h
 function sell_media_custom_license_columns_content( $row_content, $column_name, $term_id ){
     switch( $column_name ) {
         case 'license_term_price':
-            return get_term_meta($term_id, 'markup', true);
+            return sell_media_get_term_meta($term_id, 'markup', true);
             break;
         default:
             break;
@@ -296,11 +296,12 @@ add_filter( 'manage_licenses_custom_column', 'sell_media_custom_license_columns_
 function sell_media_save_extra_taxonomy_fields( $term_id ) {
 
     if ( ! isset( $_POST['meta_value']['default'] ) ) {
-        update_term_meta( $term_id, 'default', 'off');
+        sell_media_update_term_meta( $term_id, 'default', 'off');
     }
 
     if ( ! isset( $_POST['meta_value']['collection_hidden'] ) ) {
-        update_term_meta( $term_id, 'collection_hidden', 'off');
+        if ( ! empty(  $_SESSION['sell_media']['collection_password'] ) )
+            unset( $_SESSION['sell_media']['collection_password'] );
     }
 
     if ( isset( $_POST['meta_value'] ) ) {
@@ -309,9 +310,9 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
         foreach ( $cat_keys as $key ) {
             if ( ! empty( $_POST['meta_value'][$key] ) ) {
                 $meta_value[$key] = $_POST['meta_value'][$key];
-                update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
+                sell_media_update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
             } else {
-                delete_term_meta( $term_id, $key );
+                sell_media_delete_term_meta( $term_id, $key );
             }
         }
     }
@@ -334,35 +335,87 @@ function sell_media_add_collection_field( $tag ){
         $term_id = null;
     ?>
     <div class="form-field">
-        <label for="collection_hidden"><?php _e( 'Hide', 'sell_media' ); ?></label>
-        <input name="meta_value[collection_hidden]" type="checkbox" id="meta_value[]" />
-        <p class="description"><?php _e( 'Check to hide this collection from public archive pages. This colleciton will still be web-accessible, but users will have to know the url to access it. This might be useful if you want to create hidden collections for clients.', 'sell_media' ); ?></p>
+        <label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
+        <input name="meta_value[collection_password]" type="text" id="meta_value[]" />
+        <p class="description"><?php _e( 'This will password protect all items in this collection.', 'sell_media' ); ?></p>
     </div>
 <?php }
 add_action( 'collection_add_form_fields', 'sell_media_add_collection_field' );
 
 
 /**
+ * Add icon field to the edit collection page
+ *
+ * @since 0.1
+ */
+function sell_media_edit_collection_password( $tag ){
+    if ( is_object( $tag ) )
+        $term_id = $tag->term_id;
+    else
+        $term_id = null; ?>
+    <tr class="form-field">
+        <th scope="row" valign="top">
+            <label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
+        </th>
+        <td>
+            <input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print sell_media_get_term_meta( $term_id, 'collection_password', true ); ?>" />
+            <p class="description"><?php _e( 'Password protect all items in this collection', 'sell_media' ); ?></p>
+        </td>
+    </tr>
+<?php }
+add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_password' );
+
+
+/**
+ * Add icon field to collection
+ *
+ * @since 0.1
+ */
+function sell_media_add_collection_icon( ){ ?>
+    <div class="form-field collection-icon">
+        <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
+    <?php sell_media_collection_icon_field(); ?>
+    </div>
+    <?php }
+add_action( 'collection_add_form_fields', 'sell_media_add_collection_icon' );
+
+
+function sell_media_collection_icon_field( $icon_id=null ){
+    wp_enqueue_media();
+    if ( empty( $icon_id ) ){
+        $image = $url = null;
+    } else {
+        $url = wp_get_attachment_url( $icon_id );
+        $image = wp_get_attachment_image( $icon_id, 'thumbnail' );
+        $image .= '<br /><a href="javascript:void(0);" class="upload_image_remove">Remove</a>';
+    }
+    ?>
+    <input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
+    <input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
+    <input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
+    <div class="upload_image_preview" style="display: block;">
+        <span id="collection_icon_target"><?php print $image; ?></span>
+    </div>
+    <p class="description"><?php _e( 'The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed', 'sell_media' ); ?></p>
+<?php }
+
+/**
  * Hide collections from archive view
  *
  * @since 0.1
  */
-function sell_media_edit_collection_hide( $tag ){
-    if ( is_object( $tag ) )
-        $term_id = $tag->term_id;
-    else
-        $term_id = null;?>
-    <tr class="form-field">
+function sell_media_edit_collection_icon( $tag ){
+    $term_id = is_object( $tag ) ? $tag->term_id : null; ?>
+    <tr class="form-field sell-media-collection-form-field">
         <th scope="row" valign="top">
-            <label for="collection_hidden"><?php _e( 'Hide', 'sell_media' ); ?></label>
+            <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
         </th>
         <td>
-            <input name="meta_value[collection_hidden]" id="meta_value[collection_hidden]" type="checkbox" <?php checked(get_term_meta( $term_id, 'collection_hidden', true ), "on" ); ?> />
-            <p class="description"><?php _e( 'Hide this collection from archive pages', 'sell_media' ); ?></p>
+            <?php sell_media_collection_icon_field( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ) ); ?>
         </td>
     </tr>
 <?php }
-add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_hide' );
+add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_icon' );
 
 
 /**
@@ -454,7 +507,7 @@ class SELL_MEDIA_Taxonomy_Metadata {
  * @param bool $unique Optional, default is false. Whether the same key should not be added.
  * @return bool False for failure. True for success.
  */
-function add_term_meta($term_id, $meta_key, $meta_value, $unique = false) {
+function sell_media_add_term_meta($term_id, $meta_key, $meta_value, $unique = false) {
     SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
     return add_metadata('taxonomy', $term_id, $meta_key, $meta_value, $unique);
 }
@@ -471,7 +524,7 @@ function add_term_meta($term_id, $meta_key, $meta_value, $unique = false) {
  * @param mixed $meta_value Optional. Metadata value.
  * @return bool False for failure. True for success.
  */
-function delete_term_meta($term_id, $meta_key, $meta_value = '') {
+function sell_media_delete_term_meta($term_id, $meta_key, $meta_value = '') {
     SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
     return delete_metadata('taxonomy', $term_id, $meta_key, $meta_value);
 }
@@ -485,7 +538,7 @@ function delete_term_meta($term_id, $meta_key, $meta_value = '') {
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single
  *  is true.
  */
-function get_term_meta($term_id, $key, $single = false) {
+function sell_media_get_term_meta($term_id, $key, $single = false) {
     SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
     return get_metadata('taxonomy', $term_id, $key, $single);
 }
@@ -504,7 +557,7 @@ function get_term_meta($term_id, $key, $single = false) {
  * @param mixed $prev_value Optional. Previous value to check before removing.
  * @return bool False on failure, true if success.
  */
-function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
+function sell_media_update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
     SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
     return update_metadata('taxonomy', $term_id, $meta_key, $meta_value, $prev_value);
 }

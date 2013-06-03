@@ -140,4 +140,45 @@ jQuery( document ).ready(function( $ ){
             }
         });
     });
+
+
+    $(document).on('click', '.sell-media-upload-trigger-collection-icon', function( event ){
+
+        event.preventDefault();
+
+        if ( file_frame ) {
+            file_frame.open();
+            return;
+        }
+
+        // Create the media frame.
+        file_frame = wp.media.frames.file_frame = wp.media({
+            title: 'Select Images To Sell',
+            description: 'This is the description',
+            button: {
+              text: 'Use selected image as icon',
+            },
+            multiple: false  // Set to true to allow multiple files to be selected
+        });
+
+        // When an image is selected, run a callback.
+        file_frame.on( 'select', function() {
+
+            // We set multiple to false so only get one image from the uploader
+            var attachment = file_frame.state().get('selection').first().toJSON();
+            $('#collection_icon_input_field').val( attachment.id );
+            $('#collection_icon_url').val( attachment.url );
+            $('#collection_icon_target').html( '<img src="'+attachment.sizes.thumbnail.url+'" /><br><a href="javascript:void(0);" class="upload_image_remove">Remove</a>' );
+
+        });
+
+        // Finally, open the modal
+        file_frame.open();
+    });
+
+    $(document).on('click', '.upload_image_remove', function(){
+        $('#collection_icon_target').html('');
+        $('#collection_icon_url').val('');
+        $('#collection_icon_input_field').val('');
+    });
 });

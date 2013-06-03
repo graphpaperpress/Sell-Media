@@ -357,7 +357,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
 add_shortcode('sell_media_checkout', 'sell_media_cart_shortcode');
 
 /**
- * Adds the 'sell_media' short code to the editor. [sell_media_buy_button]
+ * Adds the 'sell_media' short code to the editor. [sell_media_item]
  *
  * @author Zane M. Kolnik
  * @since 0.1
@@ -502,7 +502,7 @@ function sell_media_download_shortcode( $atts ) {
         }
 
 	} else {
-        $html .= sprintf( __('Please %s to view your downloads', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
+        $html = sprintf( __('Please %s to view your downloads', 'sell_media'), '<a href="'.wp_login_url( get_permalink() ) .'">Login</a>' );
 	}
     return $html;
 }
