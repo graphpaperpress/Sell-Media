@@ -13,7 +13,14 @@ get_header(); ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 
 		<div class="sell-media-content">
-			<?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
+			<?php 
+			// hide icon if password protected. Source "http://codex.wordpress.org/Using_Password_Protection"
+			if ( ! post_password_required() ) {
+			    // Code to fetch and print CFs, such as:
+			    $key_1_value_1 = get_post_meta( $post->ID, '_sell_media_attachment_id', true )
+		            sell_media_item_icon($key_1_value_1, 'large');
+		        }
+		        ?>
 			<div><?php the_content(); ?></div>
 			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
 		</div>
