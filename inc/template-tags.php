@@ -283,8 +283,6 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
  */
 function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true ){
 
-    if ( post_password_required() ) return;
-
     if ( ! empty( $_POST['attachment_id'] ) ){
         $attachment_id = $_POST['attachment_id'];
     }
