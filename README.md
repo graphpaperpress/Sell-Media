@@ -208,6 +208,10 @@ Upgrade Notice
 Changelog
 ---------
 
+1.5
+---
+* Fixing issue where a generic function needed to be prefixed
+
 1.4.9
 ---
 * Collections are now password protected
