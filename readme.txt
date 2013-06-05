@@ -141,6 +141,10 @@ The Sell Media plugin helps you to create and assign different licenses and pric
 
 It only works on the primary blog. While it will work on other blogs, file uploads will not be protected. Why? Because WordPress stores uploads in a "virtual" directory of blogs.dir, server side file protection using .htaccess doesn't work on virtual directories.
 
+= My customer is receiving their confirmation email X many times? =
+
+Please disable your plugins and see if you still have the issue. Some plugins (ones that alter access via IP) do not allow the IPN to function properly.
+
 == Screenshots ==
 
 1. The Shopping Cart
