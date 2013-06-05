@@ -861,7 +861,7 @@ function sell_media_state_province_list( $current=null ){
         "WY" => "Wyoming",
         "YK" => "Yukon"
         );
-    sell_media_build_select( $items, array( 'name' => 'sell_media_reprints_sf_state', 'required' => true, 'title' => 'State/Province', 'current' => $current ) );
+    sell_media_build_select( $items, array( 'name' => 'sell_media_reprints_sf_state', 'required' => false, 'title' => 'State/Province', 'current' => $current ) );
 }
 
 function sell_media_country_list( $current=null ){
@@ -1116,5 +1116,5 @@ function sell_media_country_list( $current=null ){
         "ZM" => "Zambia",
         "ZW" => "Zimbabwe"
         );
-    sell_media_build_select( $items, array( 'name' => 'sell_media_country', 'required' => true, 'title' => 'Country', 'current' => $current ) );
+    sell_media_build_select( $items, array( 'name' => 'sell_media_country', 'required' => false, 'title' => 'Country', 'current' => $current ) );
 }
