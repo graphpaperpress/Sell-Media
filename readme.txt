@@ -183,6 +183,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.5.1 =
+* Added POT file
+
 = 1.5 =
 * Fixing issue where a generic function needed to be prefixed
 

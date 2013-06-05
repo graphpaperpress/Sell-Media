@@ -208,6 +208,8 @@ Upgrade Notice
 Changelog
 ---------
 
+* Added POT file
+
 1.5
 ---
 * Fixing issue where a generic function needed to be prefixed
