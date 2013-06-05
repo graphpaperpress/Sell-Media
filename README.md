@@ -212,6 +212,7 @@ Changelog
 
 1.5
 ---
+* US State list is no longer required, this was causing issues for users outside of the US
 * Fixing issue where a generic function needed to be prefixed
 
 1.4.9
