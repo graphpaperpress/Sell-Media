@@ -1,0 +1,665 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sell Media\n"
+"POT-Creation-Date: 2013-06-05 14:41-0500\n"
+"PO-Revision-Date: 2013-06-05 14:41-0500\n"
+"Last-Translator: zane matthew <zanematthew@gmail.com>\n"
+"Language-Team: Graph Paper Press <info@graphpaperpress.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../sell-media.php:204 ../inc/admin-bulk.php:35
+msgid "Add Bulk"
+msgstr ""
+
+#: ../sell-media.php:205 ../inc/admin-payments.php:222
+msgid "Payments"
+msgstr ""
+
+#: ../sell-media.php:206
+msgid "Reports"
+msgstr ""
+
+#: ../sell-media.php:207
+msgid "Extensions"
+msgstr ""
+
+#: ../sell-media.php:593
+msgid "This collection is password protected"
+msgstr ""
+
+#: ../sell-media.php:630
+msgid "This item is password protected"
+msgstr ""
+
+#: ../sell-media.php:704
+msgid "Submit"
+msgstr ""
+
+#: ../inc/admin-attachments.php:29
+msgid "Sell This"
+msgstr ""
+
+#: ../inc/admin-bulk.php:31
+msgid "Sell Media"
+msgstr ""
+
+#: ../inc/admin-bulk.php:34
+msgid "Add Single"
+msgstr ""
+
+#: ../inc/admin-bulk.php:51
+msgid ""
+"Bulk uploading is a server-intensive process. If you are using cheap, shared "
+"web hosting, uploading items in small batches will ensure all items uploaded "
+"are published correctly. All bulk uploads will inherit the default prices "
+"and licenses. You can modify the prices and licenses of each item after "
+"doing the bulk upload. "
+msgstr ""
+
+#: ../inc/admin-bulk.php:52 ../inc/admin-items.php:217
+msgid "Upload"
+msgstr ""
+
+#: ../inc/admin-bulk.php:53
+msgid "Loading items..."
+msgstr ""
+
+#: ../inc/admin-bulk.php:58
+msgid "Choose a Collection"
+msgstr ""
+
+#: ../inc/admin-bulk.php:60 ../inc/admin-bulk.php:66
+msgid "None"
+msgstr ""
+
+#: ../inc/admin-bulk.php:64
+msgid "Choose a License"
+msgstr ""
+
+#: ../inc/admin-bulk.php:70
+msgid "Save"
+msgstr ""
+
+#: ../inc/admin-extensions.php:20
+msgid "Extensions for Sell Media"
+msgstr ""
+
+#: ../inc/admin-extensions.php:21
+msgid ""
+"These extensions provide additonal functionality for the Sell Media plugin."
+msgstr ""
+
+#: ../inc/admin-items.php:52
+msgid "File"
+msgstr ""
+
+#: ../inc/admin-items.php:53
+msgid "A description for the field."
+msgstr ""
+
+#: ../inc/admin-items.php:58
+msgid "Original File Price"
+msgstr ""
+
+#: ../inc/admin-items.php:89
+msgid "Shortcode"
+msgstr ""
+
+#: ../inc/admin-items.php:90
+msgid ""
+"The permalink for this item is displayed below the title above. The archive "
+"page showing all items for sale can be viewed <a href=\""
+msgstr ""
+
+#: ../inc/admin-items.php:200
+msgid "Choose Image"
+msgstr ""
+
+#: ../inc/admin-items.php:201
+msgid "Remove Image"
+msgstr ""
+
+#: ../inc/admin-items.php:226
+msgid "Purchase"
+msgstr ""
+
+#: ../inc/admin-items.php:473
+msgid "No sales so far."
+msgstr ""
+
+#: ../inc/admin-items.php:557
+msgid "Edit"
+msgstr ""
+
+#: ../inc/admin-payments.php:29
+msgid "Purchase Details"
+msgstr ""
+
+#: ../inc/admin-payments.php:66
+msgid "Name"
+msgstr ""
+
+#: ../inc/admin-payments.php:67 ../inc/shortcodes.php:297
+msgid "Email"
+msgstr ""
+
+#: ../inc/admin-payments.php:68 ../inc/shortcodes.php:259
+#: ../inc/shortcodes.php:274 ../inc/template-tags.php:472
+msgid "Total"
+msgstr ""
+
+#: ../inc/admin-payments.php:76 ../inc/shortcodes.php:250
+msgid "Item"
+msgstr ""
+
+#: ../inc/admin-payments.php:77 ../inc/admin-settings.php:504
+#: ../inc/admin-settings.php:527 ../inc/admin-settings.php:550
+#: ../inc/shortcodes.php:252 ../inc/shortcodes.php:496
+msgid "Price"
+msgstr ""
+
+#: ../inc/admin-payments.php:78 ../inc/shortcodes.php:335
+#: ../inc/template-tags.php:455 ../inc/template-tags.php:465
+#: ../inc/template-tags.php:656
+msgid "License"
+msgstr ""
+
+#: ../inc/admin-payments.php:79
+msgid "Download Link"
+msgstr ""
+
+#: ../inc/admin-payments.php:224 ../inc/admin-payments.php:388
+msgid "Total Earnings To Date:"
+msgstr ""
+
+#: ../inc/admin-payments.php:225
+msgid ""
+"Below is a breakdown of each transaction. Payments marked as &quot;"
+"Pending&quot; mean the buyer checked out, but abandoned payment."
+msgstr ""
+
+#: ../inc/admin-payments.php:226
+msgid "Want to increase your sales?"
+msgstr ""
+
+#: ../inc/admin-payments.php:226 ../inc/admin-payments.php:389
+#: ../inc/admin-settings.php:283
+msgid "Download Extensions for Sell Media"
+msgstr ""
+
+#: ../inc/admin-payments.php:241
+msgid "Payments per page"
+msgstr ""
+
+#: ../inc/admin-payments.php:243
+msgid "Show"
+msgstr ""
+
+#: ../inc/admin-payments.php:249 ../inc/admin-payments.php:264
+msgid "ID"
+msgstr ""
+
+#: ../inc/admin-payments.php:251 ../inc/admin-payments.php:265
+msgid "Customer"
+msgstr ""
+
+#: ../inc/admin-payments.php:252 ../inc/admin-payments.php:266
+msgid "Items"
+msgstr ""
+
+#: ../inc/admin-payments.php:253 ../inc/admin-payments.php:267
+msgid "Amount"
+msgstr ""
+
+#: ../inc/admin-payments.php:255 ../inc/admin-payments.php:268
+msgid "Date"
+msgstr ""
+
+#: ../inc/admin-payments.php:258 ../inc/admin-payments.php:269
+msgid "Status"
+msgstr ""
+
+#: ../inc/admin-payments.php:308
+msgid "There are currently no pending payments"
+msgstr ""
+
+#: ../inc/admin-payments.php:314
+msgid "Total Pending:"
+msgstr ""
+
+#: ../inc/admin-payments.php:315
+msgid "Total Earnings:"
+msgstr ""
+
+#: ../inc/admin-payments.php:329
+msgid "Previous"
+msgstr ""
+
+#: ../inc/admin-payments.php:330
+msgid "Next"
+msgstr ""
+
+#: ../inc/admin-payments.php:386
+msgid "Earnings Report"
+msgstr ""
+
+#: ../inc/admin-payments.php:389
+msgid ""
+"Below is a breakdown of earnings per day, month and year. Want to increase "
+"your sales?"
+msgstr ""
+
+#: ../inc/admin-payments.php:402
+msgid "Day"
+msgstr ""
+
+#: ../inc/admin-payments.php:403 ../inc/admin-payments.php:443
+#: ../inc/admin-payments.php:476
+msgid "Earnings"
+msgstr ""
+
+#: ../inc/admin-payments.php:423
+msgid "Earnings per day"
+msgstr ""
+
+#: ../inc/admin-payments.php:442
+msgid "Month"
+msgstr ""
+
+#: ../inc/admin-payments.php:456
+msgid "Earnings per month"
+msgstr ""
+
+#: ../inc/admin-payments.php:475
+msgid "Year"
+msgstr ""
+
+#: ../inc/admin-payments.php:492
+msgid "Earnings per year"
+msgstr ""
+
+#: ../inc/admin-settings.php:282
+msgid "Settings for Extensions are shown below."
+msgstr ""
+
+#: ../inc/admin-settings.php:295 ../inc/admin-settings.php:347
+#: ../inc/admin-settings.php:373
+msgid "No"
+msgstr ""
+
+#: ../inc/admin-settings.php:296 ../inc/admin-settings.php:348
+#: ../inc/admin-settings.php:374
+msgid "Yes"
+msgstr ""
+
+#: ../inc/admin-settings.php:298
+#, php-format
+msgid ""
+"To accept real payments, select No. To fully use test mode, you must have "
+"%1$s."
+msgstr ""
+
+#: ../inc/admin-settings.php:325
+msgid "What page contains the <code>[sell_media_thanks]</code> shortcode?"
+msgstr ""
+
+#: ../inc/admin-settings.php:337
+msgid ""
+"Where is your customer Dashboard page? This page will contain the <code>"
+"[sell_media_download_list]</code> shortcode."
+msgstr ""
+
+#: ../inc/admin-settings.php:350
+msgid "Notify the customer of their site registration."
+msgstr ""
+
+#: ../inc/admin-settings.php:360
+msgid "Light"
+msgstr ""
+
+#: ../inc/admin-settings.php:361
+msgid "Dark"
+msgstr ""
+
+#: ../inc/admin-settings.php:363
+msgid ""
+"Choose the style of your theme. Sell Media will load styles to match your "
+"theme."
+msgstr ""
+
+#: ../inc/admin-settings.php:376
+msgid "Let your site visitors know you are using the Sell Media plugin?"
+msgstr ""
+
+#: ../inc/admin-settings.php:386
+msgid ""
+"You can change the post type slug to: &quot;photos&quot; or &quot;"
+"downloads&quot;. The default slug is &quot;items&quot;"
+msgstr ""
+
+#: ../inc/admin-settings.php:396
+#, php-format
+msgid ""
+"The email address used to collect Paypal payments. %1$s: You must setup IPN "
+"Notifications in Paypal to process transactions. %2$s. Here is the listener "
+"URL you need to add in Paypal: %3$s"
+msgstr ""
+
+#: ../inc/admin-settings.php:396
+msgid "IMPORTANT"
+msgstr ""
+
+#: ../inc/admin-settings.php:432
+msgid "The currency in which you accept payment."
+msgstr ""
+
+#: ../inc/admin-settings.php:444
+msgid ""
+"The default price of new items and bulk uploads. You can set unique prices "
+"by editing each individual item."
+msgstr ""
+
+#: ../inc/admin-settings.php:454
+msgid "The name associated with all outgoing email."
+msgstr ""
+
+#: ../inc/admin-settings.php:464
+msgid "The email address used for all outgoing email."
+msgstr ""
+
+#: ../inc/admin-settings.php:474
+msgid "The email subject on successful purchase emails."
+msgstr ""
+
+#: ../inc/admin-settings.php:484
+msgid ""
+"This e-mail message is sent to your customers in case of successful and "
+"cleared payment. You can use the following keywords: {first_name}, "
+"{last_name}, {payer_email}, {download_links}. Be sure to include the "
+"{download_links} tag, otherwise your buyers won't receive their download "
+"purchases."
+msgstr ""
+
+#: ../inc/admin-settings.php:495 ../inc/admin-settings.php:518
+#: ../inc/admin-settings.php:541
+msgid "Width"
+msgstr ""
+
+#: ../inc/admin-settings.php:499 ../inc/admin-settings.php:522
+#: ../inc/admin-settings.php:545
+msgid "Height"
+msgstr ""
+
+#: ../inc/admin-settings.php:506
+msgid "Low resolution in pixels for print or web use"
+msgstr ""
+
+#: ../inc/admin-settings.php:529
+msgid "Medium resolution in pixels for print or web use"
+msgstr ""
+
+#: ../inc/admin-settings.php:552
+msgid "High resolution in pixels for print or web use"
+msgstr ""
+
+#: ../inc/admin-settings.php:573
+msgid "Settings"
+msgstr ""
+
+#: ../inc/cart.php:75 ../inc/shortcodes.php:244
+msgid "You have no items in your cart. "
+msgstr ""
+
+#: ../inc/cart.php:75 ../inc/shortcodes.php:244
+msgid "Continue shopping"
+msgstr ""
+
+#: ../inc/cart.php:135
+msgid "Loading"
+msgstr ""
+
+#: ../inc/downloads.php:159
+msgid "You do not have permission to download this file"
+msgstr ""
+
+#: ../inc/downloads.php:159
+msgid "Purchase Verification Failed"
+msgstr ""
+
+#: ../inc/shortcodes.php:38
+msgid ""
+"Your purchase is pending. This happens if you paid with an eCheck, if you "
+"opened a new account or if there is a problem with the checkout system. "
+"Please contact the seller if you have questions about this purchase: "
+msgstr ""
+
+#: ../inc/shortcodes.php:47
+msgid "Download File"
+msgstr ""
+
+#: ../inc/shortcodes.php:67 ../inc/shortcodes.php:91
+msgid "Search"
+msgstr ""
+
+#: ../inc/shortcodes.php:71
+msgid "Advanced Search"
+msgstr ""
+
+#: ../inc/shortcodes.php:75 ../themes/single-sell_media_item.php:37
+msgid "Keywords"
+msgstr ""
+
+#: ../inc/shortcodes.php:79
+msgid "City"
+msgstr ""
+
+#: ../inc/shortcodes.php:83
+msgid "State"
+msgstr ""
+
+#: ../inc/shortcodes.php:87
+msgid "Collection"
+msgstr ""
+
+#: ../inc/shortcodes.php:251
+msgid "Quantity"
+msgstr ""
+
+#: ../inc/shortcodes.php:262
+msgid "Subtotal"
+msgstr ""
+
+#: ../inc/shortcodes.php:267
+msgid "Shipping &amp; Handling"
+msgstr ""
+
+#: ../inc/shortcodes.php:286
+msgid "Create Account"
+msgstr ""
+
+#: ../inc/shortcodes.php:287
+msgid "Create an account to complete your purchase. Already have an account"
+msgstr ""
+
+#: ../inc/shortcodes.php:287
+msgid "Login"
+msgstr ""
+
+#: ../inc/shortcodes.php:289
+msgid "First Name"
+msgstr ""
+
+#: ../inc/shortcodes.php:293
+msgid "Last Name"
+msgstr ""
+
+#: ../inc/shortcodes.php:309
+msgid ""
+"You are logged in as an Admin and cannot purchase this item from yourself."
+msgstr ""
+
+#: ../inc/shortcodes.php:312
+msgid "Complete Purchase"
+msgstr ""
+
+#: ../inc/shortcodes.php:313
+msgid "You will be redirected to Paypal to complete your purchase."
+msgstr ""
+
+#: ../inc/shortcodes.php:346
+msgid "Remove"
+msgstr ""
+
+#: ../inc/shortcodes.php:471
+msgid "Download"
+msgstr ""
+
+#: ../inc/shortcodes.php:483
+msgid "You have no purchases"
+msgstr ""
+
+#: ../inc/shortcodes.php:495
+msgid "Product:"
+msgstr ""
+
+#: ../inc/shortcodes.php:505
+#, php-format
+msgid "Please %s to view your downloads"
+msgstr ""
+
+#: ../inc/template-tags.php:428 ../inc/template-tags.php:652
+#: ../themes/single-sell_media_item.php:28
+msgid "Size"
+msgstr ""
+
+#: ../inc/template-tags.php:431
+msgid "Select a size"
+msgstr ""
+
+#: ../inc/template-tags.php:438 ../inc/template-tags.php:688
+msgid "Original"
+msgstr ""
+
+#: ../inc/template-tags.php:457
+msgid "Select a license"
+msgstr ""
+
+#: ../inc/template-tags.php:481 ../inc/template-tags.php:483
+#: ../inc/template-tags.php:485
+msgid "Cart"
+msgstr ""
+
+#: ../inc/template-tags.php:488
+msgid "Add to Cart"
+msgstr ""
+
+#: ../inc/template-tags.php:595
+msgid "Shopping cart by "
+msgstr ""
+
+#: ../inc/term-meta.php:81
+msgid ""
+"When a buyers decides to purchase a item from your site, they must choose a "
+"license which most closely identifies their intended use of the item. We "
+"have included some default license types, grouped into two \"parent\" "
+"categories: Personal and Commercial. Each of these two categories have "
+"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
+"Commercial) and \"Website\" (a child of Personal). You can create as many "
+"parent and child licenses as you want."
+msgstr ""
+
+#: ../inc/term-meta.php:98 ../inc/term-meta.php:116
+msgid "Markup"
+msgstr ""
+
+#: ../inc/term-meta.php:192
+msgid ""
+"Increase the price of a item if a buyer selects this license by dragging the "
+"slider above."
+msgstr ""
+
+#: ../inc/term-meta.php:202
+msgid "you have not set a default price"
+msgstr ""
+
+#: ../inc/term-meta.php:206
+#, php-format
+msgid " The %1$s of %2$s with %3$s markup is %4$s"
+msgstr ""
+
+#: ../inc/term-meta.php:226
+msgid ""
+"Check to add this as a default license option for all newly created items."
+msgstr ""
+
+#: ../inc/term-meta.php:230
+msgid "Add as default license?"
+msgstr ""
+
+#: ../inc/term-meta.php:338 ../inc/term-meta.php:358
+msgid "Password"
+msgstr ""
+
+#: ../inc/term-meta.php:340
+msgid "This will password protect all items in this collection."
+msgstr ""
+
+#: ../inc/term-meta.php:362
+msgid "Password protect all items in this collection"
+msgstr ""
+
+#: ../inc/term-meta.php:376 ../inc/term-meta.php:411
+msgid "Icon"
+msgstr ""
+
+#: ../inc/term-meta.php:395
+msgid "Upload or Select Image"
+msgstr ""
+
+#: ../inc/term-meta.php:399
+msgid ""
+"The icon is not prominent by default; however, some themes may show it. If "
+"no icon is used the featured image to the most recent post will be displayed"
+msgstr ""
+
+#: ../inc/widgets.php:10
+msgid "Sell Media Below Single Item"
+msgstr ""
+
+#: ../inc/gateways/paypal.php:77
+msgid "Purchase from "
+msgstr ""
+
+#: ../inc/widgets/sell-media-featured.php:108
+msgid " Select Collection"
+msgstr ""
+
+#: ../inc/widgets/sell-media-featured.php:110
+msgid "All Collections"
+msgstr ""
+
+#: ../themes/archive-sell_media_item.php:20
+msgid "Search Results"
+msgstr ""
+
+#: ../themes/archive-sell_media_item.php:22
+msgid "Archive"
+msgstr ""
+
+#: ../themes/archive-sell_media_item.php:47
+msgid "Nothing Found"
+msgstr ""
+
+#: ../themes/single-sell_media_item.php:24
+msgid "File ID"
+msgstr ""
+
+#: ../themes/single-sell_media_item.php:34
+msgid "Collections"
+msgstr ""

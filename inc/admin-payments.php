@@ -222,8 +222,8 @@ function sell_media_payments_callback_fn(){
         <h2><?php _e( 'Payments', 'sell_media' ); ?></h2>
         <div class="tool-box total-revenue">
             <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
-            <p><?php _e( 'Below is a breakdown of each transaction. Payments marked as "Pending" mean the buyer checked out, but abandoned payment.', 'sell_media' ); ?></p>
-            <p><?php printf( __( 'Want to increase your sales? <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' ); ?></p>
+            <p><?php _e( "Below is a breakdown of each transaction. Payments marked as &quot;Pending&quot; mean the buyer checked out, but abandoned payment.", 'sell_media' ); ?></p>
+            <p><?php printf( '%s <a href="'.sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/" class="button secondary" target="_blank">%s</a>', __( 'Want to increase your sales?', 'sell_media' ), __( 'Download Extensions for Sell Media','sell_media') ); ?></p>
             <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
         </div>
         <div class="clear"></div>
@@ -386,7 +386,7 @@ function sell_media_reports_callback_fn(){
         <h2><?php _e( 'Earnings Report', 'sell_media' ); ?></h2>
         <div class="tool-box total-revenue">
             <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
-            <p><?php printf( __( 'Below is a breakdown of earnings per day, month and year. Want to increase your sales? <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' ); ?></p>
+            <p><?php printf('%s <a href="' . sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/" class="button secondary" target="_blank">%s</a>', __( 'Below is a breakdown of earnings per day, month and year. Want to increase your sales?', 'sell_media' ), __( 'Download Extensions for Sell Media', 'sell_media' ) ); ?></p>
             <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
         </div>
 

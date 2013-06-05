@@ -278,7 +278,10 @@ class SellMediaSettings {
     }
 
     function section_misc_desc() {
-        printf( __( 'Settings for Extensions are shown below. <a href="%s" class="button secondary" target="_blank">Download Extensions for Sell Media</a>', 'sell_media' ), sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/' );
+        printf( '%s <a href="' . sell_media_plugin_data( $field='AuthorURI' ) . '/downloads/category/extensions/" class="button secondary" target="_blank">%s</a>',
+            __( 'Settings for Extensions are shown below.', 'sell_media' ),
+            __( 'Download Extensions for Sell Media' )
+             );
         do_action( 'sell_media_misc_settings_hook' );
     }
 
@@ -305,7 +308,9 @@ class SellMediaSettings {
         <select name="<?php echo $this->general_settings_key; ?>[checkout_page]" id="<?php echo $this->general_settings_key; ?>[checkout_page]">
             <?php $this->build_field_pages_select( 'checkout_page' ); ?>
         </select>
-        <span class="desc"><?php _e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
+        <span class="desc"><?php
+
+esc_html_e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
         <?php
     }
 
@@ -378,7 +383,7 @@ class SellMediaSettings {
     function field_post_type_slug(){
         ?>
         <input type="text" name="<?php echo $this->general_settings_key; ?>[post_type_slug]" id="<?php echo $this->general_settings_key; ?>[post_type_slug]" value="<?php echo wp_filter_nohtml_kses( $this->general_settings['post_type_slug'] ); ?>" />
-        <span class="desc"><?php _e( 'You can change the post type slug to: "photos" or "downloads". The default slug is "items"', 'sell_media' ); ?></span>
+        <span class="desc"><?php _e( 'You can change the post type slug to: &quot;photos&quot; or &quot;downloads&quot;. The default slug is &quot;items&quot;', 'sell_media' ); ?></span>
         <?php
     }
 
@@ -388,7 +393,7 @@ class SellMediaSettings {
     function field_payment_paypal_email() {
         ?>
         <input type="text" name="<?php echo $this->payment_settings_key; ?>[paypal_email]" value="<?php echo wp_filter_nohtml_kses( $this->payment_settings['paypal_email'] ); ?>" />
-        <p class="desc"><?php printf(__('The email address used to collect Paypal payments. <strong>IMPORTANT:</strong> You must setup IPN Notifications in Paypal to process transactions. %1$s. Here is the listener URL you need to add in Paypal: %2$s'), '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read Paypal instructions</a>', '<code>' . home_url( '?sell_media-listener=IPN' ) . '</code>' ); ?></p>
+        <p class="desc"><?php printf( __('The email address used to collect Paypal payments. %1$s: You must setup IPN Notifications in Paypal to process transactions. %2$s. Here is the listener URL you need to add in Paypal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read Paypal instructions</a>', '<code>' . home_url( '?sell_media-listener=IPN' ) . '</code>'); ?></p>
         <?php
     }
 

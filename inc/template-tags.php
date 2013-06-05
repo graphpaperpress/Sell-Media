@@ -592,7 +592,7 @@ function sell_media_original_image_size( $item_id=null, $echo=true ){
 function sell_media_plugin_credit() {
     $settings = get_option( 'sell_media_general_settings' );
     if ( true == $settings['plugin_credit'] ) {
-        printf( __( 'Shopping cart by <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', 'sell_media' ) );
+        printf( '%s <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', __( 'Shopping cart by ', 'sell_media' ) );
     }
 }
 

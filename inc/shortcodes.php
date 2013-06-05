@@ -68,7 +68,7 @@ function sell_media_search_shortcode( $atts, $content = null ) {
                 <input type="text" class="sell-media-search-input" name="s" />
             </span>
             <span class="sell-media-search-field">
-                <a href="javascript://" class="sell-media-advanced-search"><?php _e('+ Advanced Search', 'sell_media'); ?></a>
+                <a href="javascript://" class="sell-media-advanced-search">+<?php _e('Advanced Search', 'sell_media'); ?></a>
             </span>
             <div class="sell-media-advanced-search-fields">
                 <span class="sell-media-search-field">
@@ -332,7 +332,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php if ( !empty( $item['License'] ) ) : ?>
                                     <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>
                                     <?php if ( $tmp_term ) : ?>
-                                        <div class="sell-media-table-meta"><?php _e( 'License:', 'sell_media' ); ?> <?php print $tmp_term->name; ?></div>
+                                        <div class="sell-media-table-meta"><?php _e( 'License', 'sell_media' ); ?>: <?php print $tmp_term->name; ?></div>
                                         <p><?php print $tmp_term->description; ?></p>
                                     <?php endif; ?>
                                 <?php endif; ?>
