@@ -72,6 +72,7 @@ class SellMedia {
         add_action( 'admin_init', array( &$this, 'initAdmin' ) );
         add_action( 'admin_menu', array( &$this, 'adminMenus' ) );
         add_action( 'pre_get_posts', array( &$this, 'collection_password_check' ) );
+        add_filter( 'posts_orderby', array( &$this, 'order_by') );
     }
 
 
@@ -712,6 +713,31 @@ class SellMedia {
         }
     }
 
+
+    public function order_by( $orderby_statement ) {
+
+        $general_settings = get_option( 'sell_media_general_settings' );
+
+        if ( ! empty( $general_settings['order_by'] ) && is_archive() || is_tax() ){
+            switch( $general_settings['order_by'] ){
+                case 'title-asc' :
+                    $order_by = "post_title ASC";
+                    break;
+                case 'title-desc' :
+                    $order_by = "post_title DESC";
+                    break;
+                case 'date-asc' :
+                    $order_by = "post_date ASC";
+                    break;
+                case 'date-desc' :
+                    $order_by = "post_date DESC";
+                    break;
+            }
+        } else {
+            $order_by = $orderby_statement;
+        }
+        return $order_by;
+    }
 } // end class
 
 load_plugin_textdomain( 'sell-media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );

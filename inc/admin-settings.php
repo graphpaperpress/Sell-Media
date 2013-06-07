@@ -74,6 +74,7 @@ class SellMediaSettings {
             'style' => '',
             'plugin_credit' => '',
             'post_type_slug' => 'items',
+            'order_by' => ''
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
@@ -129,6 +130,7 @@ class SellMediaSettings {
         add_settings_field( 'style', 'Style', array( &$this, 'field_general_style' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'plugin_credit', 'Plugin Credit', array( &$this, 'field_general_plugin_credit' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'post_type_slug', 'Post Type Slug', array( &$this, 'field_post_type_slug' ), $this->general_settings_key, 'section_general' );
+        add_settings_field( 'order_by', 'Order By', array( &$this, 'field_order_by' ), $this->general_settings_key, 'section_general' );
 
         do_action( 'sell_media_general_settings_hook' );
 
@@ -308,9 +310,7 @@ class SellMediaSettings {
         <select name="<?php echo $this->general_settings_key; ?>[checkout_page]" id="<?php echo $this->general_settings_key; ?>[checkout_page]">
             <?php $this->build_field_pages_select( 'checkout_page' ); ?>
         </select>
-        <span class="desc"><?php
-
-esc_html_e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
+        <span class="desc"><?php esc_html_e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
         <?php
     }
 
@@ -384,6 +384,18 @@ esc_html_e( 'What page contains the <code>[sell_media_checkout]</code> shortcode
         ?>
         <input type="text" name="<?php echo $this->general_settings_key; ?>[post_type_slug]" id="<?php echo $this->general_settings_key; ?>[post_type_slug]" value="<?php echo wp_filter_nohtml_kses( $this->general_settings['post_type_slug'] ); ?>" />
         <span class="desc"><?php _e( 'You can change the post type slug to: &quot;photos&quot; or &quot;downloads&quot;. The default slug is &quot;items&quot;', 'sell_media' ); ?></span>
+        <?php
+    }
+
+    function field_order_by(){
+        ?>
+        <select name="<?php echo $this->general_settings_key; ?>[order_by]" id="<?php echo $this->general_settings_key; ?>[order_by]">
+            <option value="date-desc" <?php selected( $this->general_settings['order_by'], 'date-desc' ); ?>><?php _e( 'Date (Desc)', 'sell_media' ); ?></option>
+            <option value="date-asc" <?php selected( $this->general_settings['order_by'], 'date-asc' ); ?>><?php _e( 'Date (ASC)', 'sell_media' ); ?></option>
+            <option value="title-desc" <?php selected( $this->general_settings['order_by'], 'title-desc' ); ?>><?php _e( 'Item Title (Desc)', 'sell_media' ); ?></option>
+            <option value="title-asc" <?php selected( $this->general_settings['order_by'], 'title-asc' ); ?>><?php _e( 'Item Title (ASC)', 'sell_media' ); ?></option>
+        </select>
+        <span class="desc"><?php _e( 'Choose the order of items for the archive and collection pages.', 'sell_media' ); ?></span>
         <?php
     }
 
