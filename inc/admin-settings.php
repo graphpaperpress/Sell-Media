@@ -395,7 +395,7 @@ class SellMediaSettings {
             <option value="title-desc" <?php selected( $this->general_settings['order_by'], 'title-desc' ); ?>><?php _e( 'Item Title (Desc)', 'sell_media' ); ?></option>
             <option value="title-asc" <?php selected( $this->general_settings['order_by'], 'title-asc' ); ?>><?php _e( 'Item Title (ASC)', 'sell_media' ); ?></option>
         </select>
-        <span class="desc"><?php _e( 'Choose the order of items for the archive and collection pages.', 'sell_media' ); ?></span>
+        <span class="desc"><?php _e( 'Choose the order of items for the archive pages.', 'sell_media' ); ?></span>
         <?php
     }
 
