@@ -59,10 +59,10 @@ What are shortcodes and how do I use them?
 
 Shortcodes are small snippets of code that when added to a Post, Page or Widget add functionality to your site. You must add the following shortcodes to your preferred Pages to use Sell Media:
 
-* **Checkout shortcode** - (REQUIRED) Create a page called "Checkout" and visit the settings page (general tab) and set "Checkout Page" to the page that contains this shortcode: `[sell_media_checkout]`
-* **Thanks shortcode** - (REQUIRED) Create a page called "Thanks" and visit the settings page (general tab) and set "Thanks Page" to the page that contains this shortcode: `[sell_media_thanks]`
-* **Buy button shortcode** - (OPTIONAL) Used for displaying specific items for sale: `[sell_media_item]`
-* **Search form shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: `[sell_media_searchform]`
+* **Checkout Shortcode** - (REQUIRED) Create a page called "Checkout" and add this shortcode to it: `[sell_media_checkout]`
+* **Thanks Shortcode** - (REQUIRED) Create a page called "Thanks" and add this shortcode to it: `[sell_media_thanks]`
+* **Buy Button Shortcode** - (OPTIONAL) Used for displaying specific items for sale: `[sell_media_item]`
+* **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: `[sell_media_searchform]`
 * **All items shortcode** - (OPTIONAL) Displays all (or a certain collection) items in a grid view: `[sell_media_all_items collection="type-your-collection-name-here"]`
 * **Download list shortcode** - (OPTIONAL) List logged in users downloads: `[sell_media_download_list]`
 
