@@ -210,9 +210,15 @@ Changelog
 
 * Added POT file
 
+1.5.1
+---
+* Added Paypal log.txt file to admin and additional Paypal test emails
+* Added option to change sort order on archive pages
+* Added POT file
+* US State list is no longer required, this was causing issues for users outside of the US
+
 1.5
 ---
-* US State list is no longer required, this was causing issues for users outside of the US
 * Fixing issue where a generic function needed to be prefixed
 
 1.4.9
