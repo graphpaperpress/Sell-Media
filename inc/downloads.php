@@ -247,5 +247,13 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
+    /**
+     * Check if we have additional test emails, if so we concatinate them
+     */
+    $additonal_emails = get_option( 'sell_media_payment_settings' );
+    if ( ! empty( $additonal_emails['paypal_additional_test_email'] ) ){
+        $email = ', ' . $additonal_emails['paypal_additional_test_email'];
+    }
+
     return wp_mail( $email, $subject, $body, $headers);
 }

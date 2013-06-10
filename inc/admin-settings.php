@@ -80,6 +80,7 @@ class SellMediaSettings {
         $this->payment_settings = array_merge( array(
             'paypal_email' => '',
             'currency' => 'USD',
+            'paypal_additional_test_email' => ''
         ), $this->payment_settings );
 
         $user = get_user_by('email', get_option('admin_email') );
@@ -147,6 +148,9 @@ class SellMediaSettings {
         add_settings_section( 'section_payment', 'Payment Settings', array( &$this, 'section_payment_desc' ), $this->payment_settings_key );
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
+        add_settings_field( 'paypal_log_file', 'Paypal Log File', array( &$this, 'field_payment_log_file' ), $this->payment_settings_key, 'section_payment' );
+
+add_settings_field( 'paypal_additional_test_email', 'Paypal Addtional Test Emails', array( &$this, 'field_payment_additional_email' ), $this->payment_settings_key, 'section_payment' );
 
         do_action( 'sell_media_payment_settings_hook' );
 
@@ -443,6 +447,31 @@ class SellMediaSettings {
         </select>
         <span class="desc"><?php _e( 'The currency in which you accept payment.', 'sell_media' ); ?></span>
 
+        <?php
+    }
+
+    /*
+     * Display the contents of the paypal log file in a textarea.
+     */
+    function field_payment_log_file(){
+        if ( file_exists( plugin_dir_path( __FILE__ ) . 'gateways/log.txt' ) ){
+            $log_file = file_get_contents( plugin_dir_path( __FILE__ ) . 'gateways/log.txt' );
+        } else {
+            $log_file = null;
+        }
+        ?>
+        <textarea rows="10" cols="75"><?php echo $log_file; ?></textarea>
+        <div class="desc"><?php _e( 'This is useful when debugging Paypal. Please copy/paste this when posting Paypal issues in the forum.', 'sell_media' ); ?></div>
+        <?php
+    }
+
+    /*
+     * Paypal additional test emails
+     */
+    function field_payment_additional_email(){
+        ?>
+        <input type="text" class="regular-text" name="<?php echo $this->payment_settings_key; ?>[paypal_additional_test_email]" value="<?php echo wp_filter_nohtml_kses( $this->payment_settings['paypal_additional_test_email'] ); ?>" />
+        <div class="desc"><?php _e('This is useful when debugging Paypal. Enter a comma separeted list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list.', 'sell_media' ); ?></div>
         <?php
     }
 

@@ -185,8 +185,9 @@ function sell_media_process_paypal_ipn() {
 
     if ( is_wp_error( $api_response) ){
         if ( sell_media_test_mode() ){
+            $tmp_api_repsonse_o = print_r( $api_response, true );
             start_log_txt( $file_handle );
-            write_log_txt( $file_handle, "Execution Stopped! is_wp_error" );
+            write_log_txt( $file_handle, "Execution Stopped! is_wp_error\n{$tmp_api_repsonse_o}\n\n" );
             end_log_txt( $file_handle );
         }
         return;
@@ -196,6 +197,7 @@ function sell_media_process_paypal_ipn() {
 
     if ( ! is_array( $encoded_data_array ) && ! empty( $encoded_data_array ) ){
         if ( sell_media_test_mode() ){
+
             start_log_txt( $file_handle );
             write_log_txt( $file_handle, "Execution Stopped! encoded_data_array" );
             end_log_txt( $file_handle );
