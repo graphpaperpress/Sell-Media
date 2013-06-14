@@ -149,8 +149,7 @@ class SellMediaSettings {
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'paypal_log_file', 'Paypal Log File', array( &$this, 'field_payment_log_file' ), $this->payment_settings_key, 'section_payment' );
-
-add_settings_field( 'paypal_additional_test_email', 'Paypal Addtional Test Emails', array( &$this, 'field_payment_additional_email' ), $this->payment_settings_key, 'section_payment' );
+        add_settings_field( 'paypal_additional_test_email', 'Paypal Addtional Test Emails', array( &$this, 'field_payment_additional_email' ), $this->payment_settings_key, 'section_payment' );
 
         do_action( 'sell_media_payment_settings_hook' );
 
@@ -191,10 +190,129 @@ add_settings_field( 'paypal_additional_test_email', 'Paypal Addtional Test Email
         add_settings_field( 'small_size', 'Small', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );
         add_settings_field( 'medium_size', 'Medium', array( &$this, 'field_size_medium' ), $this->size_settings_key, 'section_size' );
         add_settings_field( 'large_size', 'Large', array( &$this, 'field_size_large' ), $this->size_settings_key, 'section_size' );
+        add_settings_field( 'price_group', 'Price Groups', array( &$this, 'field_price_group' ), $this->size_settings_key, 'section_size' );
 
         add_settings_section( 'section_size_hook', '', array( &$this, 'section_size_hook' ), $this->size_settings_key );
 
     }
+
+
+    /**
+     * Print the tabs, table and form
+     *
+     * @author Zane M. Kolnik
+     * @since 1.5.1
+     */
+    function field_price_group(){ ?>
+        <div id="menu-management-liquid" class="sell-media-price-groups-container">
+            <div id="menu-management">
+                <div class="nav-tabs-nav">
+                    <div class="nav-tabs-wrapper">
+                        <div class="nav-tabs" style="padding: 0px; margin-right: -491px;">
+                            <?php foreach( get_terms('price-group', array( 'hide_empty' => false, 'parent' => 0 ) ) as $term ) : ?>
+                                <?php if ( ! empty( $_GET['term_parent'] ) && $_GET['term_parent'] == $term->term_id ) : ?>
+                                    <span class="nav-tab nav-tab-active"><?php echo $term->name; ?></span>
+                                    <?php
+                                    $current_term = $term->name;
+                                    $current_term_id = $term->term_id;
+                                    ?>
+                                <?php else : ?>
+                                    <a href="<?php echo admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term->term_id ); ?>" class="nav-tab" data-term_id="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></a>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if ( ! empty( $_GET['term_parent'] ) && $_GET['term_parent'] == 'new_term' ) : ?>
+                                <span class="nav-tab-active nav-tab menu-add-new"><abbr title="Add menu">+</abbr></span>
+                            <?php else : ?>
+                                <a href="<?php echo admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=new_term'); ?>" class="nav-tab menu-add-new"><abbr title="Add menu">+</abbr></a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-edit">
+
+                    <div id="nav-menu-header">
+                        <?php if ( empty( $current_term_id ) ) : ?>
+                            <input name="sell_media_term_name" id="sell_media_term_name" type="text" class="regular-text" placeholder="<?php _e('Enter price group name here', 'sell_media'); ?>" value="" data-term_id="">
+                            <a href="#" class="button-primary sell-media-add-term"><?php _e('Create Price Group','sell_media'); ?></a>
+                        <?php else : ?>
+                            <input name="sell_media_term_name" id="sell_media_term_name" type="text" class="regular-text" placeholder="<?php _e('Enter price group name here', 'sell_media'); ?>" value="<?php echo $current_term; ?>" data-term_id="<?php echo $current_term_id; ?>">
+                            <a href="#" class="button-primary sell-media-update-term"><?php _e('Save Price Group','sell_media'); ?></a>
+                            <a class="submitdelete sell-media-delete-term-group" href="#" data-term_id="<?php echo $current_term_id; ?>"><?php _e('Delete Group','sell_menu'); ?></a>
+                        <?php endif; ?>
+                    </div><!-- END #nav-menu-header -->
+
+                    <div id="post-body">
+                        <div id="post-body-content">
+                                <table class="form-table">
+                                    <tbody>
+                                        <?php if ( empty( $current_term_id ) ) : ?>
+                                            <tr>
+                                                <td><p class="description"><?php _e('Some info about price groups here.'); ?></p></td>
+                                            </tr>
+                                        <?php else : ?>
+                                            <?php foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $current_term_id ) ) as $term ) : ?>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="" name="terms_children[ <?php echo $term->term_id; ?> ][name]" size="24" value="<?php echo $term->name; ?>">
+                                                    <p class="description"><?php _e('Name<','sell_media'); ?>/p>
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
+                                                    <p class="description"><?php _e('Width','sell_media'); ?></p>
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
+                                                    <p class="description"><?php _e('Height','sell_media'); ?>t</p>
+                                                </td>
+                                                <td>
+                                                    <span class="description">$</span>
+                                                    <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'price', true ); ?>">
+                                                    <p class="description"><?php _e('Price','sell_media'); ?></p>
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="<?php echo $term->term_id; ?>" data-type="price">×</a>
+                                                </td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="" name="new_child[name]" size="24" value="">
+                                                    <p class="description"><?php _e('Name<','sell_media'); ?>/p>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="new_child[parent]" value="<?php echo $current_term_id; ?>" />
+                                                    <input type="number" step="1" min="0" class="small-text" name="new_child[width]" value="">
+                                                    <p class="description"><?php _e('Width','sell_media'); ?></p>
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="1" min="0" class="small-text" name="new_child[height]" value="">
+                                                    <p class="description"><?php _e('Height','sell_media'); ?></p>
+                                                </td>
+                                                <td>
+                                                    <span class="description">$</span>
+                                                    <input type="number" step="1" min="0" class="small-text" name="new_child[price]" value="">
+                                                    <p class="description"><?php _e('Price','sell_media'); ?></p>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                        </div><!-- /#post-body-content -->
+                    </div><!-- /#post-body -->
+
+                <div id="nav-menu-footer">
+                    <?php if ( ! empty( $current_term ) ) : ?>
+                        <a href="#" class="button-primary sell-media-save-term"><?php _e('Save Price','sell_media'); ?></a>
+                    <?php endif; ?>
+                </div><!-- /#nav-menu-footer -->
+
+            </div><!-- /.menu-edit -->
+        </div><!-- /#menu-management -->
+    </div>
+    <?php }
+
+
 
     /*
      * Registers the misc settings and appends the
@@ -626,7 +744,6 @@ add_settings_field( 'paypal_additional_test_email', 'Paypal Addtional Test Email
         <div class="wrap">
             <?php $this->plugin_options_tabs(); ?>
             <form method="post" action="options.php" enctype="multipart/form-data">
-                <?php wp_nonce_field( 'update-options' ); ?>
                 <?php settings_fields( $tab ); ?>
                 <?php do_settings_sections( $tab ); ?>
                 <?php submit_button(); ?>
@@ -648,7 +765,7 @@ add_settings_field( 'paypal_additional_test_email', 'Paypal Addtional Test Email
         echo '<h2 class="nav-tab-wrapper">';
         foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
             $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
-            echo '<a class="nav-tab ' . $active . '" href="?post_type=' . $this->plugin_post_type_key . '&page=' . $this->plugin_options_key . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';
+            echo '<a class="nav-tab ' . $active . '" href="?post_type=' . $this->plugin_post_type_key . '&page=' . $this->plugin_options_key . '&tab=' . $tab_key . '&term_parent=new_term">' . $tab_caption . '</a>';
         }
         echo '</h2>';
     }

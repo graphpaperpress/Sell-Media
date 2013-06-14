@@ -31,7 +31,9 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-mime-types.php' );
     include( dirname(__FILE__) . '/inc/admin-payments.php' );
     include( dirname(__FILE__) . '/inc/admin-settings.php' );
+    include( dirname(__FILE__) . '/inc/admin-price-groups.php' );
 }
+
 
 
 /**
@@ -173,6 +175,7 @@ class SellMedia {
         $this->registerCollection();
         $this->registerItem();
         $this->registerPayment();
+        $this->registerPriceGroup();
         $this->enqueueScripts();
 
     }
@@ -535,6 +538,40 @@ class SellMedia {
     }
 
 
+    public function registerPriceGroup() {
+        $labels = array(
+            'name' => _x( 'Price Group', 'sell_media' ),
+            'singular_name' => _x( 'Price Group', 'sell_media' ),
+            'search_items' => _x( 'Search Price Group', 'sell_media' ),
+            'popular_items' => _x( 'Popular Price Group', 'sell_media' ),
+            'all_items' => _x( 'All Price Group', 'sell_media' ),
+            'parent_item' => _x( 'Parent Price Group', 'sell_media' ),
+            'parent_item_colon' => _x( 'Parent Price Group:', 'sell_media' ),
+            'edit_item' => _x( 'Edit Price Group', 'sell_media' ),
+            'update_item' => _x( 'Update Price Group', 'sell_media' ),
+            'add_new_item' => _x( 'Add New Price Group', 'sell_media' ),
+            'new_item_name' => _x( 'New Price Group', 'sell_media' ),
+            'separate_items_with_commas' => _x( 'Separate Price Group with commas', 'sell_media' ),
+            'add_or_remove_items' => _x( 'Add or remove Price Group', 'sell_media' ),
+            'choose_from_most_used' => _x( 'Choose from most used Price Group', 'sell_media' ),
+            'menu_name' => _x( 'Price Group', 'sell_media' ),
+        );
+
+        $args = array(
+            'labels' => $labels,
+            'public' => true,
+            'show_in_nav_menus' => true,
+            'show_ui' => true,
+            'show_tagcloud' => true,
+            'hierarchical' => true,
+            'rewrite' => true,
+            'query_var' => true
+        );
+
+        register_taxonomy( 'price-group', array('sell_media_item'), $args );
+    }
+
+
     /**
      * Registers and enqueues stylesheets for the administration panel
      * and the public facing site.
@@ -547,6 +584,7 @@ class SellMedia {
          * For easier enqueueing
          */
         wp_register_script( 'sell_media-admin-uploader', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin-uploader.js', array( 'jquery', 'media-upload' ) );
+        wp_register_script( 'sell_media-admin-price-groups', plugin_dir_url( __FILE__ ) . 'js/admin-price-groups.js', array( 'nav-menu' ) );
 
         /**
          * For Sell All Uploads checkbox on media uploader
