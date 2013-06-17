@@ -53,7 +53,7 @@
 -------------------------------------------------------------- */
 .sell-media-markup-container .ui-slider-horizontal { width: 95%; }
 .sell-media-markup-container .markup-target { width: 20%; }
-.sell-media-markup-container .price-target { color: green; }
+.sell-media-markup-container .menu-cart-total { color: green; }
 .sell-media-slider-container .ui-slider { margin-left: 10px; width: 95%; }
 .sell_media-price-container { margin: 12px 0 10px; width: 55px; }
 #product_meta_box img { max-width: 100%; height: auto; }
