@@ -237,73 +237,89 @@ class SellMediaSettings {
                             <a href="#" class="button-primary sell-media-add-term"><?php _e('Create Price Group','sell_media'); ?></a>
                         <?php else : ?>
                             <input name="sell_media_term_name" id="sell_media_term_name" type="text" class="regular-text" placeholder="<?php _e('Enter price group name here', 'sell_media'); ?>" value="<?php echo $current_term; ?>" data-term_id="<?php echo $current_term_id; ?>">
-                            <a href="#" class="button-primary sell-media-update-term"><?php _e('Save Price Group','sell_media'); ?></a>
-                            <a class="submitdelete sell-media-delete-term-group" href="#" data-term_id="<?php echo $current_term_id; ?>"><?php _e('Delete Group','sell_menu'); ?></a>
+                            <a class="submitdelete sell-media-delete-term-group" href="#" data-term_id="<?php echo $current_term_id; ?>" data-message='<?php _e("This will delete the following price group and ALL its prices associated with it.\n\nAre you sure you want to delete this?","sell_media"); ?>'><?php _e('Delete Group','sell_menu'); ?></a>
                         <?php endif; ?>
                     </div><!-- END #nav-menu-header -->
 
                     <div id="post-body">
                         <div id="post-body-content">
-                                <table class="form-table">
-                                    <tbody>
-                                        <?php if ( empty( $current_term_id ) ) : ?>
-                                            <tr>
-                                                <td><p class="description"><?php _e('Some info about price groups here.'); ?></p></td>
-                                            </tr>
-                                        <?php else : ?>
-                                            <?php foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $current_term_id ) ) as $term ) : ?>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="" name="terms_children[ <?php echo $term->term_id; ?> ][name]" size="24" value="<?php echo $term->name; ?>">
-                                                    <p class="description"><?php _e('Name<','sell_media'); ?>/p>
-                                                </td>
-                                                <td>
-                                                    <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
-                                                    <p class="description"><?php _e('Width','sell_media'); ?></p>
-                                                </td>
-                                                <td>
-                                                    <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
-                                                    <p class="description"><?php _e('Height','sell_media'); ?>t</p>
-                                                </td>
-                                                <td>
-                                                    <span class="description">$</span>
-                                                    <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'price', true ); ?>">
-                                                    <p class="description"><?php _e('Price','sell_media'); ?></p>
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="<?php echo $term->term_id; ?>" data-type="price">×</a>
-                                                </td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="" name="new_child[name]" size="24" value="">
-                                                    <p class="description"><?php _e('Name<','sell_media'); ?>/p>
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" name="new_child[parent]" value="<?php echo $current_term_id; ?>" />
-                                                    <input type="number" step="1" min="0" class="small-text" name="new_child[width]" value="">
-                                                    <p class="description"><?php _e('Width','sell_media'); ?></p>
-                                                </td>
-                                                <td>
-                                                    <input type="number" step="1" min="0" class="small-text" name="new_child[height]" value="">
-                                                    <p class="description"><?php _e('Height','sell_media'); ?></p>
-                                                </td>
-                                                <td>
-                                                    <span class="description">$</span>
-                                                    <input type="number" step="1" min="0" class="small-text" name="new_child[price]" value="">
-                                                    <p class="description"><?php _e('Price','sell_media'); ?></p>
-                                                </td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+                            <table class="form-table sell-media-price-groups-table">
+                                <tbody>
+                                    <?php if ( empty( $current_term_id ) ) : ?>
+                                        <tr>
+                                            <td><p class="description"><?php _e('Some info about price groups here.'); ?></p></td>
+                                        </tr>
+                                    <?php else : ?>
+                                        <?php
+                                        $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $current_term_id ) );
+                                        foreach( $terms as $term ): ?>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="" name="terms_children[ <?php echo $term->term_id; ?> ][name]" size="24" value="<?php echo $term->name; ?>">
+                                                <p class="description"><?php _e('Name<','sell_media'); ?>/p>
+                                            </td>
+                                            <td>
+                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
+                                                <p class="description"><?php _e('Width','sell_media'); ?></p>
+                                            </td>
+                                            <td>
+                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
+                                                <p class="description"><?php _e('Height','sell_media'); ?>t</p>
+                                            </td>
+                                            <td>
+                                                <span class="description">$</span>
+                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'price', true ); ?>">
+                                                <p class="description"><?php _e('Price','sell_media'); ?></p>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="<?php echo $term->term_id; ?>" data-type="price" data-message="<?php _e('Are you sure you want to delete this price?'); ?>">×</a>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+
+                                        <?php $max = count( $terms ) < 1 ? 3 : 1; for( $i = 1; $i <= $max; $i++ ) : ?>
+                                        <tr class="sell-media-price-groups-row" data-index="<?php echo $i; ?>">
+                                            <td>
+                                                <input type="text" class="" name="new_child[ <?php echo $i; ?> ][name]" size="24" value="">
+                                                <p class="description"><?php _e('Name','sell_media'); ?></p>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" class="sell-media-price-group-parent-id" name="new_child[ <?php echo $i; ?> ][parent]" value="<?php echo $current_term_id; ?>" />
+                                                <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][width]" value="">
+                                                <p class="description"><?php _e('Width','sell_media'); ?></p>
+                                            </td>
+                                            <td>
+                                                <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][height]" value="">
+                                                <p class="description"><?php _e('Height','sell_media'); ?></p>
+                                            </td>
+                                            <td>
+                                                <span class="description">$</span>
+                                                <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][price]" value="">
+                                                <p class="description"><?php _e('Price','sell_media'); ?></p>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="" data-type="price">×</a>
+                                            </td>
+                                        </tr>
+                                        <?php endfor; ?>
+                                    <?php endif; ?>
+                                </tbody>
+                                <?php if ( ! empty( $current_term_id ) ) : ?>
+                                <tfoot>
+                                    <tr colspan="4">
+                                        <td>
+                                            <a href="#" class="button sell-media-price-groups-repeater-add"><?php _e('Add New Price','sell_media'); ?></a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <?php endif; ?>
+                            </table>
                         </div><!-- /#post-body-content -->
                     </div><!-- /#post-body -->
 
                 <div id="nav-menu-footer">
                     <?php if ( ! empty( $current_term ) ) : ?>
-                        <a href="#" class="button-primary sell-media-save-term"><?php _e('Save Price','sell_media'); ?></a>
+                        <a href="#" class="button-primary sell-media-save-term"><?php _e('Save Price Group','sell_media'); ?></a>
                     <?php endif; ?>
                 </div><!-- /#nav-menu-footer -->
 

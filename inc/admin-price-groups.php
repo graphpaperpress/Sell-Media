@@ -56,11 +56,15 @@ Class SellMediaPriceGroups {
             sell_media_update_term_meta( $k, 'price', $v['price'] );
         }
 
-        if ( ! empty( $form_data['new_child']['name'] ) ){
-            $term = wp_insert_term( $form_data['new_child']['name'], 'price-group', array('parent'=> $form_data['new_child']['parent'] ) );
-            sell_media_update_term_meta( $term['term_id'], 'width', $form_data['new_child']['width'] );
-            sell_media_update_term_meta( $term['term_id'], 'height', $form_data['new_child']['height'] );
-            sell_media_update_term_meta( $term['term_id'], 'price', $form_data['new_child']['price'] );
+        if ( ! empty( $form_data['new_child'] ) ){
+            foreach( $form_data['new_child'] as $child ){
+                if ( ! empty( $child['name'] ) ){
+                    $term = wp_insert_term( $child['name'], 'price-group', array('parent'=> $child['parent'] ) );
+                    sell_media_update_term_meta( $term['term_id'], 'width', $child['width'] );
+                    sell_media_update_term_meta( $term['term_id'], 'height', $child['height'] );
+                    sell_media_update_term_meta( $term['term_id'], 'price', $child['price'] );
+                }
+            }
         }
         die();
     }
