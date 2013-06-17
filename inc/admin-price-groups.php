@@ -17,7 +17,9 @@ Class SellMediaPriceGroups {
      * Enqueue the needed JS
      */
     public function admin_scripts(){
-        wp_enqueue_script( 'sell_media-admin-price-groups' );
+        global $pagenow;
+        if ( ! empty( $pagenow ) && $pagenow == 'edit.php' && ! empty( $_GET['tab'] ) && $_GET['tab'] == 'sell_media_size_settings' )
+            wp_enqueue_script( 'sell_media-admin-price-groups' );
     }
 
 

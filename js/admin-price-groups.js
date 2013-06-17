@@ -14,8 +14,7 @@ jQuery( document ).ready(function( $ ){
                 url: ajaxurl,
                 type: "post",
                 success: function( msg ){
-                    // location.reload();
-                    console.log( msg );
+                    location.reload();
                 }
             });
         },
