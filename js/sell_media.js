@@ -36,9 +36,9 @@ jQuery( document ).ready(function( $ ){
             $('.subtotal-target').val( finalPrice );
         }
 
-        if ( $('.price-target').length ){
-            $('.price-target').html( finalPrice );
-            $('.price-target').val( finalPrice );
+        if ( $('.menu-cart-total').length ){
+            $('.menu-cart-total').html( finalPrice );
+            $('.menu-cart-total').val( finalPrice );
         }
 
         return finalPrice;
@@ -110,7 +110,7 @@ jQuery( document ).ready(function( $ ){
             total = +( $(this).text() ) + +total;
         });
         $('.subtotal-target').html( total.toFixed(2) );
-        $('.price-target').html( total.toFixed(2) );
+        $('.menu-cart-total').html( total.toFixed(2) );
     }
 
 
@@ -136,6 +136,21 @@ jQuery( document ).ready(function( $ ){
 
             $( '#sub-total-target-' + item_id ).html( sub_total.toFixed(2) );
         });
+    }
+
+    /**
+     * Updates a div with the class name called 'menu-cart-items' to have
+     * the total number of items.
+     */
+    function sell_media_quantity_total(){
+        var total = 0;
+        $('.sell-media-quantity').each(function(){
+            item_id = $(this).attr('data-id');
+            qty = +$('#quantity-' + item_id ).val();
+            total = total + qty;
+        });
+        if ( $('.menu-cart-items').length )
+            $('.menu-cart-items').html( total );
     }
 
     /**
@@ -303,6 +318,7 @@ jQuery( document ).ready(function( $ ){
 
                 total_items();
                 sell_media_update_final_total();
+                sell_media_quantity_total();
             }
         });
     });
@@ -342,6 +358,7 @@ jQuery( document ).ready(function( $ ){
         sell_media_update_sub_total();
         sell_media_update_total();
         sell_media_update_final_total();
+        sell_media_quantity_total();
         if ( $(this).val() > 0 ){
             $('.sell-media-buy-button').removeAttr('disabled');
         } else {

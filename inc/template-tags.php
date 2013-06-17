@@ -415,7 +415,7 @@ function sell_media_item_form(){
     <form action="javascript://" method="POST" class="sell-media-dialog-form sell-media-form">
         <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
         <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
-        <input type="hidden" name="CalculatedPrice" class="price-target" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+        <input type="hidden" name="CalculatedPrice" class="menu-cart-total" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
         <?php wp_nonce_field('sell_media_add_items','sell_media_nonce'); ?>
 
         <?php do_action( 'sell_media_cart_above_licenses' ); ?>
@@ -472,7 +472,7 @@ function sell_media_item_form(){
                 <strong><?php _e( 'Total' ); ?></strong>
             </div>
             <div class="right">
-                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="price-target"><?php print $price; ?></span></span>
+                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="menu-cart-total"><?php print $price; ?></span></span>
             </div>
         </div>
         <div class="button-container group">

@@ -164,7 +164,7 @@ function sell_media_the_markup_slider( $tag ){
             return finalPrice;
         }
 
-        $( ".price-target" ).html( calc_price() );
+        $( ".menu-cart-total" ).html( calc_price() );
 
         $( "#markup_slider" ).slider({
             range: "min",
@@ -177,7 +177,7 @@ function sell_media_the_markup_slider( $tag ){
                 $( ".markup-target" ).val(  markUp + "%" );
                 $( ".markup-target" ).html(  markUp + "%" );
 
-                $( ".price-target" ).html( calc_price( markUp ) );
+                $( ".menu-cart-total" ).html( calc_price( markUp ) );
             }
         });
         $( ".markup-target" ).val( $( "#markup_slider" ).slider( "value" ) + "%" );
@@ -208,7 +208,7 @@ function sell_media_the_markup_slider( $tag ){
                 ">default item price</a>',
                 '<strong>' . $price . '</strong>',
                 '<strong><span class="markup-target">' . $default_markup . '</span></strong>',
-                '<strong>' . sell_media_get_currency_symbol() . '<span class="price-target"></span></strong>'
+                '<strong>' . sell_media_get_currency_symbol() . '<span class="menu-cart-total"></span></strong>'
                 );
             ?>
         </p>
