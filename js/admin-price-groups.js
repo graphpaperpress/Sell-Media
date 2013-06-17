@@ -41,7 +41,7 @@ jQuery( document ).ready(function( $ ){
             if ( confirm("Are you sure you want to delete this?") == true ) {
                 $.ajax({
                     data: {
-                        action: "sell_media_delete_term",
+                        action: "delete_term",
                         term_id: $( this ).attr('data-term_id'),
                         security: smPriceGroups.options.security
                     }
