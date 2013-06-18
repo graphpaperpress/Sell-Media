@@ -36,12 +36,13 @@ var smPriceGroups = {
             }
         });
     },
-    delete: function( message ){
-        if ( confirm( message ) == true ) {
+    delete: function( my_obj ){
+        if ( confirm( my_obj.attr('data-message') ) == true ) {
+            console.log( my_obj );
             $.ajax({
                 data: {
                     action: "delete_term",
-                    term_id: $( this ).attr('data-term_id'),
+                    term_id: my_obj.attr('data-term_id'),
                     security: smPriceGroups.options.security
                 }
             });
@@ -76,14 +77,14 @@ jQuery( document ).ready(function( $ ){
 
     $('.sell-media-delete-term').on('click', function( event ){
         event.preventDefault();
-        smPriceGroups.delete( $( this ).attr('data-message') );
+        smPriceGroups.delete( $( this ) );
     });
 
     $('.sell-media-add-term').on('click', smPriceGroups.add );
 
     $('.sell-media-delete-term-group').on('click', function( event ){
         event.preventDefault();
-        smPriceGroups.delete( $( this ).attr('data-message') );
+        smPriceGroups.delete( $( this ) );
     });
 
 
@@ -91,7 +92,7 @@ jQuery( document ).ready(function( $ ){
         var counter = +($('.sell-media-price-groups-row:last').attr('data-index')) + 1 ;
         event.preventDefault();
 
-        html = '<tr class="sell-media-price-groups-row" data-index="'+counter+'" style="background: pink;">';
+        html = '<tr class="sell-media-price-groups-row" data-index="'+counter+'">';
         html += '<td>';
             html += '<input type="text" class="" name="new_child['+counter+'][name]" size="24" value="">';
             html += '<p class="description">Name</p>';
