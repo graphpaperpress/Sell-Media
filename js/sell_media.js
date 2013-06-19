@@ -36,10 +36,10 @@ jQuery( document ).ready(function( $ ){
             $('.subtotal-target').val( finalPrice );
         }
 
-        // if ( $('.menu-cart-total').length ){
-        //     $('.menu-cart-total').html( finalPrice );
-        //     $('.menu-cart-total').val( finalPrice );
-        // }
+        if ( $('.sell-media-item-price').length ){
+            $('.sell-media-item-price').html( finalPrice );
+            $('.sell-media-item-price').val( finalPrice );
+        }
 
         return finalPrice;
     }
@@ -293,7 +293,11 @@ jQuery( document ).ready(function( $ ){
             data: _data,
             success: function( msg ) {
                 cart_count();
-                sell_media_update_total();
+                // sell_media_update_total();
+
+                total = ( +( $('.menu-cart-total').html() ) + +( $('.sell-media-item-price').html() ) );
+                $('.menu-cart-total').html( total.toFixed(2) );
+
                 $button = $('.sell-media-form').find('.sell-media-buy-button');
                 $button.addClass('sell-media-purchased').val('Checkout');
                 $( document ).on( 'click', '.sell-media-purchased', function(){
