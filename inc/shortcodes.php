@@ -239,6 +239,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
     }
 
     ob_start(); ?>
+
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
@@ -260,7 +261,8 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <table id="sell-media-subtotal-table">
                                     <tr>
                                         <th scope="row"><?php _e('Subtotal','sell_media'); ?></th>
-                                        <td><span class="currency"><?php print sell_media_get_currency_symbol(); ?></span><span class="subtotal-target"></span></td>
+                                        <td>
+                                            <div class="menu-cart-items"></div><span class="currency"><?php print sell_media_get_currency_symbol(); ?></span><span class="subtotal-target"></span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">
