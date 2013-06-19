@@ -146,12 +146,14 @@ add_action( 'wp_footer', 'sell_media_footer' );
  * @since 0.1
  */
 function sell_media_head(){
-    $amount = $quantity = null;
-    foreach ( $_SESSION['cart']['items'] as $item ){
-        $price = sell_media_cart_price( $item );
-        $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-        $amount = $amount + $price['amount'] * $qty;
-        $quantity = $quantity + $qty;
+    $amount = $quantity = 0;
+    if ( ! empty( $_SESSION['cart']['items'] ) ){
+        foreach ( $_SESSION['cart']['items'] as $item ){
+            $price = sell_media_cart_price( $item );
+            $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
+            $amount = $amount + $price['amount'] * $qty;
+            $quantity = $quantity + $qty;
+        }
     }
     ?>
     <script type="text/javascript">
