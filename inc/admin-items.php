@@ -61,27 +61,14 @@ function sell_media_admin_items_init(){
             'type'  => 'price',
             'std'   => sprintf("%0.2f",$default_price),
             'value' => get_post_meta( $post_id, $prefix . '_price', true )
+        ),
+        array(
+            'label' => __( 'Price Group', 'sell_media' ),
+            'desc'  => '', // this needs validation
+            'id'    => $prefix . '_price_group',
+            'type'  => 'price_group'
         )
     );
-
-    /**
-     * @todo Quick fix to prevent this from firing on AJAX request
-     */
-    if ( ! is_null( $post_id ) ){
-        $sizes = sell_media_image_sizes( $post_id, false );
-        if ( $sizes ){
-            foreach( $sizes as $k => $v ){
-                $sell_media_item_meta_fields[] = array(
-                    'label' => __( ucfirst( $k ), 'sell_media' ) . ' <span class="description">' . $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height'] . '</span>',
-                    'desc'  => '',
-                    'id'    => $prefix . '_price_' . $k,
-                    'type'  => 'price',
-                    'std'   => sprintf("%0.2f",$size_settings[ $k . '_size_price']),
-                    'value' => get_post_meta( $post_id, $prefix . '_price_' . $k, true )
-                );
-            }
-        }
-    }
 
     $sell_media_item_meta_fields = apply_filters( 'sell_media_additional_item_meta', $sell_media_item_meta_fields, $post_id );
 
@@ -226,6 +213,26 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     $text = apply_filters( 'sell_media_purchase_text', __('Purchase') );
                     echo '<p><code>[sell_media_item id="' . $post->ID . '" text="' . $text . '" style="button" size="medium"]</code></p>
                     <p id="' . $field['id'] . '"><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span></p>';
+                    break;
+
+                case 'price_group':
+                    /**
+                     * get our current term id for the parent only
+                     */
+                    $parent_id = false;
+                    foreach( wp_get_post_terms( $post->ID, 'price-group' ) as $terms ){
+                        if ( $terms->parent == 0 )
+                            $parent_id = $terms->term_id;
+                    }
+                    ?>
+                    <select name="_sell_media_price_group">
+                        <option><?php _e("Select a price group"); ?></option>
+                    <?php foreach( get_terms( 'price-group', array('hide_empty'=>false,'parent'=>0) ) as $term ) : ?>
+                        <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></opton>
+                    <?php endforeach; ?>
+                    </select>
+                    <?php
+                    break;
                 break;
             } //end switch
             echo '</td></tr>';
@@ -377,6 +384,13 @@ function sell_media_save_custom_meta( $post_id ) {
 
         }
     }
+
+    if ( ! empty( $_POST['_sell_media_price_group'] ) ){
+        $childs = get_term_children( $_POST['_sell_media_price_group'], 'price-group' );
+        $childs[] = $_POST['_sell_media_price_group'];
+        wp_set_post_terms( $post_id, $childs, 'price-group' );
+    }
+
 }
 add_action('save_post', 'sell_media_save_custom_meta');
 

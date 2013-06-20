@@ -426,12 +426,20 @@ function sell_media_item_form(){
             <?php $size_settings = get_option('sell_media_size_settings'); $disabled = 'disabled'; $price = "0.00"; ?>
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
-
                 <select id="sell_media_size_select" name="price_id">
                     <option value="" data-price="0">-- <?php _e( 'Select a size' ); ?> --</option>
 
-                    <?php foreach( sell_media_image_sizes( $_POST['product_id'], false ) as $k => $v ) : ?>
-                        <option value="sell_media_<?php print $k; ?>_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false, $k ); ?>"><?php _e( ucfirst( $k ), 'sell_media' ); ?> (<?php print $size_settings[ $k . '_size_width'] . ' x ' . $size_settings[ $k . '_size_height']; ?>): <?php sell_media_item_price( $_POST['product_id'], true, $k ); ?></option>
+                    <?php foreach( wp_get_post_terms( $_POST['product_id'], 'price-group' ) as $term ) : ?>
+                        <?php if ( $term->parent != 0 ) : ?>
+                            <option
+                            value="<?php echo $term->term_id; ?>"
+                            data-price="<?php echo sell_media_get_term_meta( $term->term_id, 'price', true ); ?>"
+                            >
+                            <?php echo $term->name; ?>
+                            (<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ) . ' x ' . sell_media_get_term_meta( $term->term_id, 'height', true ); ?>):
+                            <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>
+                            </option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
 
                     <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
@@ -672,16 +680,17 @@ function sell_media_item_prices( $post ){
     $html = null;
 
     if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) {
+        foreach( wp_get_post_terms( $post->ID, 'price-group' ) as $term ){
+            if ( $term->parent != 0 ){
+                $width = sell_media_get_term_meta( $term->term_id, 'width', true );
+                $height = sell_media_get_term_meta( $term->term_id, 'height', true );
+                $price = sell_media_get_term_meta( $term->term_id, 'price', true );
 
-        $download_sizes = array_merge( sell_media_image_sizes( $post->ID, false ), sell_media_original_image_size( $post->ID, false ) );
-
-        foreach( $download_sizes as $k => $v ){
-            $name = ucfirst( $k );
-            $html .= '<li class="price">';
-            $html .= '<span class="title">' . __( $name, 'sell_media' ) . ' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
-            $k = ( $k == 'original' ) ? null : $k;
-            $html .= sell_media_item_price( $post->ID, true, $k, false );
-            $html .= '</li>';
+                $html .= '<li class="price">';
+                $html .= '<span class="title">' . $term->name . ' (' . $width . ' x ' . $width . '): </span>';
+                $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
+                $html .= '</li>';
+            }
         }
     } else {
         $html .= '<li class="price">';
