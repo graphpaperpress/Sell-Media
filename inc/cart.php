@@ -163,7 +163,8 @@ function sell_media_head(){
     var sell_media = {
         cart: {
             total: "<?php echo $amount; ?>",
-            quantity: "<?php echo $quantity; ?>"
+            quantity: "<?php echo $quantity; ?>",
+            currency_symbol: "<?php echo sell_media_get_currency_symbol(); ?>"
         }
     };
     </script>
