@@ -183,8 +183,8 @@ class SellMediaSettings {
 
         register_setting( $this->size_settings_key, $this->size_settings_key, array( &$this, 'register_settings_validate') );
 
-        add_settings_section( 'section_default_download_price', 'Default Download Price', array( &$this, 'section_size_desc' ), $this->size_settings_key );
-        add_settings_field( 'default_price', 'Default Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_default_download_price' );
+        add_settings_section( 'section_default_download_price', 'Original Download Price', array( &$this, 'section_size_desc' ), $this->size_settings_key );
+        add_settings_field( 'default_price', 'Original Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_default_download_price' );
 
         add_settings_section( 'section_size', 'Image Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
         add_settings_field( 'small_size', 'Small', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );

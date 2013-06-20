@@ -756,7 +756,8 @@ class SellMedia {
 
         $general_settings = get_option( 'sell_media_general_settings' );
 
-        if ( ! empty( $general_settings['order_by'] ) && is_archive() || is_tax() ){
+        if ( ! empty( $general_settings['order_by'] ) && is_archive() ||
+             ! empty( $general_settings['order_by'] ) && is_tax() ){
             switch( $general_settings['order_by'] ){
                 case 'title-asc' :
                     $order_by = "post_title ASC";
