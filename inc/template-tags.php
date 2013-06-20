@@ -616,53 +616,43 @@ function sell_media_plugin_credit() {
  */
 function sell_media_cart_price( $item=array() ){
 
+    // Not sure how to handle this?
     $filtered_price = apply_filters( 'sell_media_filtered_price', $item['price_id'] );
 
-    $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
-
-    $default_price_array = get_option('sell_media_size_settings');
-
     /**
-     * @todo Make size array repeatable and fully db driven
+     * We do this as a check to see if this sell media item is assigned a price group
+     * if its nots we use the "original price" from the settings.
      */
-    $sizes_array = array(
-        'sell_media_small_file',
-        'sell_media_medium_file',
-        'sell_media_large_file',
-        'sell_media_original_file',
-    );
-    if ( in_array( $filtered_price, $sizes_array ) ){
-        switch( $item['price_id'] ){
-            case 'sell_media_small_file':
-                $price = sell_media_item_price( $item['item_id'], $currency=false, $size='small', $echo=false );
-                $size = "Small";
-                break;
-            case 'sell_media_medium_file':
-                $price = sell_media_item_price( $item['item_id'], $currency=false, $size='medium', $echo=false );
-                $size = "Medium";
-                break;
-            case 'sell_media_large_file':
-                $price = sell_media_item_price( $item['item_id'], $currency=false, $size='large', $echo=false );
-                $size = "Large";
-                break;
-            default:
-                $price = sell_media_item_price( $item['item_id'], $currency=false, $size=null, $echo=false );
-                $size = "Original";
-                break;
-        }
-    } else {
-        $total = $filtered_price * $qty;
-        $price = $filtered_price;
+    $price_id = false;
+    foreach( wp_get_post_terms( $item['item_id'], 'price-group' ) as $term ){
+        if ( $term->term_id == $item['price_id'] ) $price_id = $term->term_id;
     }
 
+    /**
+     * If we have no "price group" we fall back on our default in settings
+     */
+    if ( $price_id ){
+        $price = sell_media_get_term_meta( $item['price_id'], 'price', true );
+    } else {
+        $default_price_array = get_option('sell_media_size_settings');
+        $price = $default_price_array['default_price'];
+    }
+
+    $markup = str_replace( "%", "", sell_media_get_term_meta( $item['license_id'], 'markup', true ) );
+
+    $final = ( ( $markup / 100 ) * $price ) + $price;
+    $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
+    $total = $final * $qty;
+    $size = get_term_by('id', $item['price_id'], 'price-group' );
     $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
+
     $price = array(
-        'size' => empty( $size ) ? null : sprintf( "%s: %s", __("Size", "sell_media"), $size ),
-        'amount' => sprintf("%0.2f",$price),
-        'total' => empty( $total ) ? sprintf("%0.2f",$price) : sprintf("%0.2f",$total),
-        'markup' => empty( $license_obj ) ? null : str_replace( '%', '', sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) ),
-        'license' => empty( $license_obj ) ? null : sprintf( "%s: %s", __("License", "sell_media"), $license_obj->name ),
-        'qty' => $qty
+        'size'    => empty( $size ) ? null : sprintf( "%s: ", __("Size", "sell_media") ) . $size->name,
+        'amount'  => sprintf("%0.2f",$final),
+        'total'   => empty( $total ) ? sprintf("%0.2f",$final) : sprintf("%0.2f",$total),
+        'markup'  => empty( $license_obj ) ? null : str_replace( '%', '', sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) ),
+        'license' => empty( $license_obj ) ? null : sprintf( "%s: ", __("License", "sell_media") ) . $license_obj->name,
+        'qty'     => $qty
         );
 
     return $price;
