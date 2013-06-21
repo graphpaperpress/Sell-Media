@@ -187,9 +187,6 @@ class SellMediaSettings {
         add_settings_field( 'default_price', 'Original Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_default_download_price' );
 
         add_settings_section( 'section_size', 'Image Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
-        add_settings_field( 'small_size', 'Small', array( &$this, 'field_size_small' ), $this->size_settings_key, 'section_size' );
-        add_settings_field( 'medium_size', 'Medium', array( &$this, 'field_size_medium' ), $this->size_settings_key, 'section_size' );
-        add_settings_field( 'large_size', 'Large', array( &$this, 'field_size_large' ), $this->size_settings_key, 'section_size' );
         add_settings_field( 'price_group', 'Price Groups', array( &$this, 'field_price_group' ), $this->size_settings_key, 'section_size' );
 
         add_settings_section( 'section_size_hook', '', array( &$this, 'section_size_hook' ), $this->size_settings_key );
@@ -247,7 +244,7 @@ class SellMediaSettings {
                                 <tbody>
                                     <?php if ( empty( $current_term_id ) ) : ?>
                                         <tr>
-                                            <td><p class="description"><?php _e('Some info about price groups here.'); ?></p></td>
+                                            <td><p class="description"></p></td>
                                         </tr>
                                     <?php else : ?>
                                         <?php
@@ -268,7 +265,7 @@ class SellMediaSettings {
                                             </td>
                                             <td>
                                                 <span class="description">$</span>
-                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'price', true ); ?>">
+                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>">
                                                 <p class="description"><?php _e('Price','sell_media'); ?></p>
                                             </td>
                                             <td>
@@ -660,74 +657,6 @@ class SellMediaSettings {
          <?php
     }
 
-    /*
-     * Small size variants option field callback
-     */
-    function field_size_small() {
-        ?>
-        <div class="sell-media-settings-size-item">
-            <input type="number" step="1" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[small_size_width]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['small_size_width'] ); ?>" />
-            <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
-            <input type="number" step="1" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[small_size_height]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['small_size_height'] ); ?>" />
-            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
-            <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
-            <input type="number" step="0.01" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[small_size_price]" value="<?php echo wp_filter_nohtml_kses( sprintf('%0.2f', $this->size_settings['small_size_price'] ) ); ?>" />
-            <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
-        </div>
-        <span class="desc"><?php _e( 'Low resolution in pixels for print or web use', 'sell_media' ); ?></span>
-        <?php
-
-    }
-
-    /*
-     * Medium size variants option field callback
-     */
-    function field_size_medium() {
-        ?>
-        <div class="sell-media-settings-size-item">
-            <input type="number" step="1" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[medium_size_width]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['medium_size_width'] ); ?>" />
-            <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
-            <input type="number" step="1" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[medium_size_height]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['medium_size_height'] ); ?>" />
-            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
-            <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
-            <input type="number" step="0.01" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[medium_size_price]" value="<?php echo wp_filter_nohtml_kses( sprintf('%0.2f', $this->size_settings['medium_size_price'] ) ); ?>" />
-            <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
-        </div>
-        <span class="desc"><?php _e( 'Medium resolution in pixels for print or web use', 'sell_media' ); ?></span>
-        <?php
-
-    }
-
-    /*
-     * Large size variants option field callback
-     */
-    function field_size_large() {
-        ?>
-        <div class="sell-media-settings-size-item">
-            <input type="number" step="1" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[large_size_width]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['large_size_width'] ); ?>" />
-            <span class="desc"><?php _e( 'Width', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
-            <input type="number" step="1" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[large_size_height]" value="<?php echo wp_filter_nohtml_kses( $this->size_settings['large_size_height'] ); ?>" />
-            <span class="desc"><?php _e( 'Height', 'sell_media' ); ?></span>
-        </div>
-        <div class="sell-media-settings-size-item">
-            <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
-            <input type="number" step="0.01" min="0" class="small-text" name="<?php echo $this->size_settings_key; ?>[large_size_price]" value="<?php echo wp_filter_nohtml_kses( sprintf('%0.2f', $this->size_settings['large_size_price'] ) ); ?>" />
-            <span class="desc"><?php _e( 'Price', 'sell_media' ); ?></span>
-        </div>
-        <span class="desc"><?php _e( 'High resolution in pixels for print or web use', 'sell_media' ); ?></span>
-        <?php
-
-    }
 
     /*
      * Helper for building select options for Pages
