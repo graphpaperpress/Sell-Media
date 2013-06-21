@@ -121,7 +121,9 @@ class SellMedia {
         $personal = term_exists( 'Personal', $taxonomy );
         $personal_terms = array( 'Book', 'Magazine', 'Newspaper', 'Website' );
         foreach ( $personal_terms as $term ) {
-            wp_insert_term( $term, $taxonomy, array( 'slug' => strtolower(str_replace( ' ', '-', $term ) ), 'parent' => $personal['term_id'] ) );
+            if ( ! term_exists( $term, $taxonomy ) ){
+                wp_insert_term( $term, $taxonomy, array( 'slug' => strtolower(str_replace( ' ', '-', $term ) ), 'parent' => $personal['term_id'] ) );
+            }
         }
 
         /**
@@ -132,7 +134,9 @@ class SellMedia {
         $commercial = term_exists( 'Commercial', $taxonomy );
         $commercial_terms = array( 'Annual Reports', 'Billboards', 'Brochures', 'Print Advertising', 'Product Advertising', 'Product Packaging', 'Public Relations', 'Web Advertising', 'Website' );
         foreach ( $commercial_terms as $term ) {
-            wp_insert_term( $term, $taxonomy, array( 'slug' => strtolower(str_replace( ' ', '-', $term ) ), 'parent' => $commercial['term_id'] ) );
+            if ( ! term_exists( $term, $taxonomy ) ){
+                wp_insert_term( $term, $taxonomy, array( 'slug' => strtolower(str_replace( ' ', '-', $term ) ), 'parent' => $commercial['term_id'] ) );
+            }
         }
 
         wp_update_term( $commercial['term_id'], $taxonomy, array( 'description' => '' ) );
@@ -155,7 +159,7 @@ class SellMedia {
 
 
         // Update script to new settings
-        if ( $version <= '1.0.4' ){
+        if ( $version <= '1.5.1' ){
             include( dirname(__FILE__) . '/inc/admin-upgrade.php' );
         }
 
