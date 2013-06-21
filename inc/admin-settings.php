@@ -234,7 +234,7 @@ class SellMediaSettings {
                             <a href="#" class="button-primary sell-media-add-term"><?php _e('Create Price Group','sell_media'); ?></a>
                         <?php else : ?>
                             <input name="sell_media_term_name" id="sell_media_term_name" type="text" class="regular-text" placeholder="<?php _e('Enter price group name here', 'sell_media'); ?>" value="<?php echo $current_term; ?>" data-term_id="<?php echo $current_term_id; ?>">
-                            <a class="submitdelete sell-media-delete-term-group" href="#" data-term_id="<?php echo $current_term_id; ?>" data-message='<?php printf( "%s %s?\n\n%s", __("Are you sure you want to delete the price group:", "sell_media" ), $term->name, __("This will delete the price group and ALL its prices associated with it.","sell_media") ); ?>'><?php _e('Delete Group','sell_menu'); ?></a>
+                            <a class="submitdelete sell-media-delete-term-group" href="#" data-term_id="<?php echo $current_term_id; ?>" data-message='<?php printf( "%s %s?\n\n%s", __("Are you sure you want to delete the price group:", "sell_media" ), $current_term, __("This will delete the price group and ALL its prices associated with it.","sell_media") ); ?>'><?php _e('Delete Group','sell_menu'); ?></a>
                         <?php endif; ?>
                     </div><!-- END #nav-menu-header -->
 
