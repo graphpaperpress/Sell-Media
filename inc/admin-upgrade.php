@@ -134,10 +134,7 @@ if ( $version <= '1.1' ){
 
 if ( $version <= '1.5.1' ){
 
-    // die("run update stuff");
     $sizes = get_option( 'sell_media_size_settings' ) ;
-
-    // Format out data into a usable array
     $clean_sizes = array(
         'small' => array(
             'width' => $sizes['small_size_width'],
@@ -174,6 +171,18 @@ if ( $version <= '1.5.1' ){
         sell_media_update_term_meta( $term_id, 'width', $v['width'] );
         sell_media_update_term_meta( $term_id, 'height', $v['height'] );
         sell_media_update_term_meta( $term_id, 'price', $v['price'] );
+    }
+
+    /**
+     * This snippet is used to flush the cache only for 'price-group'. Without
+     * it this wp bug will exists: https://core.trac.wordpress.org/ticket/14485
+     */
+    if ( taxonomy_exists( 'price-group' ) ) {
+        wp_cache_set( 'last_changed', time( ) - 1800, 'terms' );
+        wp_cache_delete( 'all_ids', 'price-group' );
+        wp_cache_delete( 'get', 'price-group' );
+        delete_option( "price-group_children" );
+        _get_term_hierarchy( 'price-group' );
     }
 
 }
