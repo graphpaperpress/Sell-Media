@@ -428,8 +428,13 @@ function sell_media_item_form(){
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
                 <select id="sell_media_size_select" name="price_id">
                     <option value="" data-price="0">-- <?php _e( 'Select a size' ); ?> --</option>
-
-                    <?php foreach( wp_get_post_terms( $_POST['product_id'], 'price-group' ) as $term ) : ?>
+                    <?php
+                    $terms = wp_get_post_terms( $_POST['product_id'], 'price-group' );
+                    if ( empty( $terms ) ){
+                        $default = get_term_by( 'name', 'Default', 'price-group' );
+                        $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $default->term_id ) );
+                    }?>
+                    <?php foreach( $terms as $term ) : ?>
                         <?php if ( $term->parent != 0 ) : ?>
                             <option
                             value="<?php echo $term->term_id; ?>"
@@ -670,7 +675,14 @@ function sell_media_item_prices( $post ){
     $html = null;
 
     if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) {
-        foreach( wp_get_post_terms( $post->ID, 'price-group' ) as $term ){
+        $terms = wp_get_post_terms( $post->ID, 'price-group' );
+
+        if ( empty( $terms ) ){
+            $default = get_term_by( 'name', 'Default', 'price-group' );
+            $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $default->term_id ) );
+        }
+
+        foreach( $terms as $term ){
             if ( $term->parent != 0 ){
                 $width = sell_media_get_term_meta( $term->term_id, 'width', true );
                 $height = sell_media_get_term_meta( $term->term_id, 'height', true );
@@ -683,7 +695,7 @@ function sell_media_item_prices( $post ){
             }
         }
         $original_size = sell_media_original_image_size( $post->ID, false );
-        $og_size = '(' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
+        $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
     } else {
         $og_size = null;
     }
