@@ -261,7 +261,7 @@ class SellMediaSettings {
                                             </td>
                                             <td>
                                                 <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
-                                                <p class="description"><?php _e('Height','sell_media'); ?>t</p>
+                                                <p class="description"><?php _e('Height','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <span class="description">$</span>
