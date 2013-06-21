@@ -682,12 +682,16 @@ function sell_media_item_prices( $post ){
                 $html .= '</li>';
             }
         }
+        $original_size = sell_media_original_image_size( $post->ID, false );
+        $og_size = '(' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
     } else {
-        $html .= '<li class="price">';
-        $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . '</span>';
-        $html .= sell_media_item_price( $post->ID, true, null, false );
-        $html .= '</li>';
+        $og_size = null;
     }
+
+    $html .= '<li class="price">';
+    $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
+    $html .= sell_media_item_price( $post->ID, true, null, false );
+    $html .= '</li>';
 
     print apply_filters( 'sell_media_item_prices_filter', $html, $post->ID );
 
