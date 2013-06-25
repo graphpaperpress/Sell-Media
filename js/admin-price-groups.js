@@ -17,16 +17,6 @@ var smPriceGroups = {
             }
         });
     },
-    update: function(){
-        $.ajax({
-            data: {
-                action: "update_term",
-                term_name: $('#sell_media_term_name').val(),
-                term_id: $('#sell_media_term_name').attr('data-term_id'),
-                security: 'here'
-            }
-        });
-    },
     save: function(){
         $.ajax({
             data: {
@@ -69,7 +59,6 @@ jQuery( document ).ready(function( $ ){
     smPriceGroups.options.security = $('#_wpnonce').val();
 
     $('.sell-media-save-term').on('click', function( event ){
-        smPriceGroups.update();
         smPriceGroups.save();
         event.preventDefault();
     });

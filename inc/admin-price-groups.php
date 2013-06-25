@@ -25,22 +25,6 @@ Class SellMediaPriceGroups {
 
 
     /**
-     * Updates a single price group (parent only)
-     *
-     * @author Zane M. Kolnik
-     * @since 1.5.1
-     */
-    public function update_term(){
-        wp_verify_nonce( $_POST['security'], $_POST['action'] );
-
-        if ( ! empty( $_POST['term_name'] ) ) {
-            wp_update_term( $_POST['term_id'], 'price-group', array('name'=>$_POST['term_name'] ) );
-        }
-        die();
-    }
-
-
-    /**
      * Saves/Updates term children (price group children).
      *
      * @author Zane M. Kolnik
