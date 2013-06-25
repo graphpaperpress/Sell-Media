@@ -264,7 +264,7 @@ class SellMediaSettings {
                                                 <p class="description"><?php _e('Height (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
-                                                <span class="description">$</span>
+                                                <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
                                                 <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>">
                                                 <p class="description"><?php _e('Price (px)','sell_media'); ?></p>
                                             </td>
