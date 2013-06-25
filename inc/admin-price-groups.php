@@ -49,11 +49,13 @@ Class SellMediaPriceGroups {
         parse_str( $_POST['form'], $form_data );
         wp_verify_nonce( $_POST['security'], $_POST['action'] );
 
-        foreach( $form_data['terms_children'] as $k => $v ){
-            wp_update_term( $k, 'price-group', array( 'name' => $v['name'] ) );
-            sell_media_update_term_meta( $k, 'width', $v['width'] );
-            sell_media_update_term_meta( $k, 'height', $v['height'] );
-            sell_media_update_term_meta( $k, 'price', $v['price'] );
+        if ( ! empty( $form_data['terms_children'] ) ){
+            foreach( $form_data['terms_children'] as $k => $v ){
+                wp_update_term( $k, 'price-group', array( 'name' => $v['name'] ) );
+                sell_media_update_term_meta( $k, 'width', $v['width'] );
+                sell_media_update_term_meta( $k, 'height', $v['height'] );
+                sell_media_update_term_meta( $k, 'price', $v['price'] );
+            }
         }
 
         if ( ! empty( $form_data['new_child'] ) ){
@@ -66,6 +68,8 @@ Class SellMediaPriceGroups {
                 }
             }
         }
+
+        print $_SERVER['HTTP_REFERER'];
         die();
     }
 
@@ -102,7 +106,8 @@ Class SellMediaPriceGroups {
 
         if ( ! empty( $_POST['term_name'] ) ) {
             $term = wp_insert_term( $_POST['term_name'], 'price-group' );
-            print admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] );
+            $timestamp = time();
+            print admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
         }
         die();
     }

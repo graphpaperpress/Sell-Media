@@ -13,7 +13,7 @@ var smPriceGroups = {
             url: ajaxurl,
             type: "post",
             success: function( msg ){
-                location.reload();
+                window.location.replace( msg );
             }
         });
     },
@@ -38,7 +38,6 @@ var smPriceGroups = {
     },
     delete: function( my_obj ){
         if ( confirm( my_obj.attr('data-message') ) == true ) {
-            console.log( my_obj );
             $.ajax({
                 data: {
                     action: "delete_term",
