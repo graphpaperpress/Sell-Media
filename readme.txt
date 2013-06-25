@@ -191,10 +191,20 @@ Action hooks available:
 == Changelog ==
 
 = 1.5.1 =
-* Added Paypal log.txt file to admin and additional Paypal test emails
-* Added option to change sort order on archive pages
-* Added POT file
-* US State list is no longer required, this was causing issues for users outside of the US
+* New: Price groups, users are no longer limited to "small, medium, large", they can create infinite price groups and assign them to items.
+* New: Added Paypal log.txt file to admin settings
+* New: Added field for admins to add CC accounts for paypal purchases
+* New: Added Option to change sort order on archive pages
+* New: Added POT file
+* New: Useful info is now stored in global js object "sell_media"
+
+* Tweak: US State list is no longer required, this was causing issues for users outside of the US
+* Tweak: Changed order of "bulk upload" buttons
+* Tweak: "Default Price" is now changed to "Original Price"
+* Tweak: Updated menu cart class names
+
+* Fix: Duplicate licenses are no longer installed on re-activation
+* Fix: Typo
 
 = 1.5 =
 * Fixing issue where a generic function needed to be prefixed
