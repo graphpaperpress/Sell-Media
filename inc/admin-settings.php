@@ -257,16 +257,16 @@ class SellMediaSettings {
                                             </td>
                                             <td>
                                                 <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
-                                                <p class="description"><?php _e('Width','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Width (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
-                                                <p class="description"><?php _e('Height','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Height (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <span class="description">$</span>
                                                 <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>">
-                                                <p class="description"><?php _e('Price','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Price (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="<?php echo $term->term_id; ?>" data-type="price" data-message="<?php printf( '%s: %s?', __('Are you sure you want to delete the price', 'sell_media'), $term->name ); ?>">×</a>
