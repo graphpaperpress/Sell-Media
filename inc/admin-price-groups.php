@@ -13,6 +13,7 @@ Class SellMediaPriceGroups {
         add_action('admin_enqueue_scripts', array( &$this, 'admin_scripts' ) );
     }
 
+
     /**
      * Enqueue the needed JS
      */
@@ -69,13 +70,12 @@ Class SellMediaPriceGroups {
             }
         }
 
-        print $_SERVER['HTTP_REFERER'];
         die();
     }
 
 
     /**
-     * Delets a single term or a single term and ALL ITS CHILDREN!!
+     * Deletes a single term or a single term and ALL ITS CHILDREN!!
      *
      * @author Zane M. Kolnik
      * @since 1.5.1
