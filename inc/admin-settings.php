@@ -283,16 +283,16 @@ class SellMediaSettings {
                                             <td>
                                                 <input type="hidden" class="sell-media-price-group-parent-id" name="new_child[ <?php echo $i; ?> ][parent]" value="<?php echo $current_term_id; ?>" />
                                                 <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][width]" value="">
-                                                <p class="description"><?php _e('Width','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Width (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][height]" value="">
-                                                <p class="description"><?php _e('Height','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Height (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <span class="description">$</span>
                                                 <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][price]" value="">
-                                                <p class="description"><?php _e('Price','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Price (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <!-- <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="" data-type="price">×</a> -->
