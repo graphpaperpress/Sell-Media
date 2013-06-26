@@ -190,6 +190,11 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.5.2 =
+* New: Adding price groups to admin item columns
+
+* Fix: Price groups that did not have any images assigned were not showing in the price group drop down.
+
 = 1.5.1 =
 * New: Price groups, users are no longer limited to "small, medium, large", they can create infinite price groups and assign them to items.
 * New: Added Paypal log.txt file to admin settings

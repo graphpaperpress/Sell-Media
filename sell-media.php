@@ -566,6 +566,7 @@ class SellMedia {
             'public' => true,
             'show_in_nav_menus' => true,
             'show_ui' => false,
+            'show_admin_column' => true,
             'show_tagcloud' => true,
             'hierarchical' => true,
             'rewrite' => true,
