@@ -59,7 +59,7 @@ function sell_media_add_bulk_callback_fn(){
                     <?php _e('Choose a Price Group','sell_media'); ?>:
                     <select name="price_group" value="price_group" id="sell_media_price_group_select">
                         <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
-                        <?php foreach( get_terms('price-group',array('parent'=>0)) as $term ) : ?>
+                        <?php foreach( get_terms('price-group',array('hide_empty'=>false, 'parent'=>0)) as $term ) : ?>
                             <option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
                         <?php endforeach; ?>
                     </select>
