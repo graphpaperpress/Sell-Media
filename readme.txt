@@ -191,7 +191,8 @@ Action hooks available:
 == Changelog ==
 
 = 1.5.2 =
-* New: Adding price groups to admin item columns
+* New: Added price groups to admin item columns
+* New: Added collection to admin item columns
 
 * Tweak: Corrected instructions for `sell_media_all_items` shortcode
 
