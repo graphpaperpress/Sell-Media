@@ -208,7 +208,15 @@ Upgrade Notice
 Changelog
 ---------
 
-* Added POT file
+1.5.2
+---
+* New: Added price groups to admin item columns
+* New: Added collection to admin item columns
+
+* Tweak: Corrected instructions for `sell_media_all_items` shortcode
+
+* Bug: Fixed notice on checkout page when no licese id was present for markups
+* Bug: Price groups that did not have any images assigned were not showing in the price group drop down.
 
 1.5.1
 ---
