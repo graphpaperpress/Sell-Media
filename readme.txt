@@ -196,7 +196,8 @@ Action hooks available:
 
 * Tweak: Corrected instructions for `sell_media_all_items` shortcode
 
-* Fix: Price groups that did not have any images assigned were not showing in the price group drop down.
+* Bug: Fixed notice on checkout page when no licese id was present for markups
+* Bug: Price groups that did not have any images assigned were not showing in the price group drop down.
 
 = 1.5.1 =
 * New: Price groups, users are no longer limited to "small, medium, large", they can create infinite price groups and assign them to items.
@@ -211,8 +212,8 @@ Action hooks available:
 * Tweak: "Default Price" is now changed to "Original Price"
 * Tweak: Updated menu cart class names
 
-* Fix: Duplicate licenses are no longer installed on re-activation
-* Fix: Typo
+* Bug: Duplicate licenses are no longer installed on re-activation
+* Bug: Typo
 
 = 1.5 =
 * Fixing issue where a generic function needed to be prefixed

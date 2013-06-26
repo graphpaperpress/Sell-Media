@@ -643,9 +643,14 @@ function sell_media_cart_price( $item=array() ){
         $price = $default_price_array['default_price'];
     }
 
-    $markup = str_replace( "%", "", sell_media_get_term_meta( $item['license_id'], 'markup', true ) );
+    if ( ! empty( $item['license_id'] ) ){
+        $markup_amount = sell_media_get_term_meta( $item['license_id'], 'markup', true );
+        $markup = str_replace( "%", "", $markup_amount );
+    } else {
+        $markup = false;
+    }
 
-    $final = ( ( $markup / 100 ) * $price ) + $price;
+    $final = ( $markup ) ? ( ( $markup / 100 ) * $price ) + $price : $price;
     $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
     $total = $final * $qty;
     $size = get_term_by('id', $item['price_id'], 'price-group' );
