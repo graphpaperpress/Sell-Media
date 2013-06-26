@@ -757,6 +757,7 @@ class SellMedia {
 
 
     public function order_by( $orderby_statement ) {
+        global $wpdb;
 
         $general_settings = get_option( 'sell_media_general_settings' );
 
@@ -764,16 +765,16 @@ class SellMedia {
              ! empty( $general_settings['order_by'] ) && is_tax() ){
             switch( $general_settings['order_by'] ){
                 case 'title-asc' :
-                    $order_by = "post_title ASC";
+                    $order_by = "{$wpdb->prefix}posts.post_title ASC";
                     break;
                 case 'title-desc' :
-                    $order_by = "post_title DESC";
+                    $order_by = "{$wpdb->prefix}posts.post_title DESC";
                     break;
                 case 'date-asc' :
-                    $order_by = "post_date ASC";
+                    $order_by = "{$wpdb->prefix}posts.post_date ASC";
                     break;
                 case 'date-desc' :
-                    $order_by = "post_date DESC";
+                    $order_by = "{$wpdb->prefix}posts.post_date DESC";
                     break;
             }
         } else {
