@@ -682,7 +682,7 @@ class SellMedia {
          * We need to check additional post_type since this will pass as true for nav_menu_item
          */
         else if ( is_post_type_archive('sell_media_item')
-            && $query->query['post_type'] == 'sell_media_item'
+            && ! empty( $query->query['post_type'] ) && $query->query['post_type'] == 'sell_media_item'
             || is_home()
             || is_tax()
             || is_page()
