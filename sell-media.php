@@ -757,12 +757,12 @@ class SellMedia {
 
 
     public function order_by( $orderby_statement ) {
-        global $wpdb;
 
         $general_settings = get_option( 'sell_media_general_settings' );
 
         if ( ! empty( $general_settings['order_by'] ) && is_archive() ||
              ! empty( $general_settings['order_by'] ) && is_tax() ){
+            global $wpdb;
             switch( $general_settings['order_by'] ){
                 case 'title-asc' :
                     $order_by = "{$wpdb->prefix}posts.post_title ASC";
