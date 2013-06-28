@@ -190,6 +190,9 @@ Action hooks available:
 
 == Changelog ==
 
+* Bug: Fixed issue when removing items from the cart incorrect totals were displayed
+* Bug: Fixed issue in widgets
+
 = 1.5.2 =
 * New: Added price groups to admin item columns
 * New: Added collection to admin item columns

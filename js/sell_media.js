@@ -7,7 +7,7 @@ jQuery( document ).ready(function( $ ){
      */
     $.ajaxSetup({
         type: "POST",
-        url: ajaxurl
+        url: sell_media.ajaxurl
     });
 
 
@@ -76,6 +76,8 @@ jQuery( document ).ready(function( $ ){
         } else {
             final_total = "0.00";
         }
+
+        sell_media.cart.total = final_total;
 
         $( '.subtotal-target' ).html( final_total );
     }
@@ -384,10 +386,4 @@ jQuery( document ).ready(function( $ ){
         }
     });
 
-
-    // if ( $('#sell_media_checkout_form').length ){
-    //     sell_media_update_sub_total();
-    //     sell_media_update_total();
-    //     sell_media_update_final_total();
-    // }
 });
