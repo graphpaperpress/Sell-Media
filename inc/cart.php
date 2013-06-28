@@ -136,37 +136,3 @@ function sell_media_footer(){ ?>
     </div>
 <?php }
 add_action( 'wp_footer', 'sell_media_footer' );
-
-
-/**
- * Add to wp_head
- * Cart AJAX
- *
- * @return string
- * @since 0.1
- */
-function sell_media_head(){
-    $amount = $quantity = 0;
-    if ( ! empty( $_SESSION['cart']['items'] ) ){
-        foreach ( $_SESSION['cart']['items'] as $item ){
-            $price = sell_media_cart_price( $item );
-            $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-            $amount = $amount + $price['amount'] * $qty;
-            $quantity = $quantity + $qty;
-        }
-    }
-    ?>
-    <script type="text/javascript">
-    var ajaxurl = "<?php print admin_url("admin-ajax.php"); ?>";
-    var pluginurl = "<?php print plugin_dir_url( dirname( __FILE__ ) ); ?>";
-    var checkouturl = "<?php $options = get_option('sell_media_general_settings'); $page_id = $options['checkout_page']; print get_permalink( $page_id ); ?>";
-    var sell_media = {
-        cart: {
-            total: "<?php echo $amount; ?>",
-            quantity: "<?php echo $quantity; ?>",
-            currency_symbol: "<?php echo sell_media_get_currency_symbol(); ?>"
-        }
-    };
-    </script>
-<?php }
-add_action( 'wp_head', 'sell_media_head' );

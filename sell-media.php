@@ -615,6 +615,33 @@ class SellMedia {
             }
         } if ( !is_admin() ) {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ) );
+
+            $amount = $quantity = 0;
+            if ( ! empty( $_SESSION['cart']['items'] ) ){
+                foreach ( $_SESSION['cart']['items'] as $item ){
+                    $price = sell_media_cart_price( $item );
+                    $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
+                    $amount = $amount + $price['amount'] * $qty;
+                    $quantity = $quantity + $qty;
+                }
+            }
+            $options = get_option('sell_media_general_settings');
+            $page_id = $options['checkout_page'];
+
+            wp_localize_script('sell_media', 'sell_media',
+                array(
+                'ajaxurl' => admin_url("admin-ajax.php"),
+                'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
+                'checkouturl' => get_permalink( $page_id ),
+                'cart' => array(
+                    'total' => $amount,
+                    'quantity' => $quantity,
+                    'currency_symbol' => sell_media_get_currency_symbol()
+                    )
+                )
+            );
+
+
             wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css' );
             wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css' );
         }
