@@ -208,9 +208,11 @@ Upgrade Notice
 Changelog
 ---------
 
+1.5.3
+---
 * Bug: Fixed issue when removing items from the cart incorrect totals were displayed
 * Bug: Fixed issue in widgets
-
+* Bug: Price groups was not respecting newly created sizes when downloading images
 
 1.5.2
 ---

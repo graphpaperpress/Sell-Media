@@ -1,4 +1,133 @@
 <?php
+
+Class Sell_Media_Download {
+
+    private $tmp_dir;
+
+
+    public function __construct(){
+        $wp_upload_dir = wp_upload_dir();
+        $this->tmp_dir = $wp_upload_dir['basedir'] . '/sell_media/tmp/';
+    }
+
+
+    /**
+     * Create our Download image and save it to the tmp/ folder in sell media
+     *
+     * @param $image (array) containing the height and width of the image
+     * @param $location (string) The full server path to the image
+     *
+     * @return Full path to the download file in the tmp/ folder
+     */
+    public function generate_download_size( $size, $location=null ){
+
+        $image_p = imagecreatetruecolor( $size['width'], $size['height'] );
+        $image = imagecreatefromjpeg( $location );
+
+        list( $current_image['width'], $current_image['height'] ) = getimagesize( $location );
+        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $size['width'], $size['height'], $current_image['width'], $current_image['height']);
+
+        $destination_file = $this->tmp_dir . basename( $location );
+
+        if ( ! file_exists( $destination_file ) ){
+            wp_mkdir_p( dirname( $destination_file ) );
+        }
+
+        imagejpeg( $image_p, $destination_file, 100 );
+
+        return $destination_file;
+    }
+
+
+    /**
+     * Determine if we can generate a download size for this request image
+     * Compares the requeste download size against the actual size of the original image.
+     *
+     * @param $size (array) 'width' and 'height' of requested size
+     * @param $location (string) full file path on the server of the image
+     *
+     * @todo in this logic sell_media_image_sizes();
+     *
+     * @return bool True if the download image size can be generated, false if it can't
+     */
+    public function validate_download_size( $size=array(), $location=null ){
+        list( $current_image['width'], $current_image['height'] ) = getimagesize( $location );
+        return ( $size['height'] >= $current_image['height'] || $size['width'] >= $current_image['width'] ) ? false : true;
+    }
+
+
+    /**
+     * Set the file headers and force the download of a given file
+     *
+     * @param $location (string) The file path on the server
+     * @param $delete (bool) Either delete the tmp file or not
+     *
+     * @return void
+     */
+    public function force_download( $location=null, $delete_tmp=false ){
+        $pathinfo = pathinfo( $location );
+        switch( $pathinfo['extension'] ) {
+            case "gif":  $ctype = "image/gif"; break;
+            case "png":  $ctype = "image/png"; break;
+            case "jpeg": $ctype = "image/jpg"; break;
+            case "jpg":  $ctype = "image/jpg"; break;
+            case "pdf":  $ctype = "application/pdf"; break;
+            case "zip":  $ctype = "application/octet-stream"; break;
+            case "doc":  $ctype = "application/msword"; break;
+            case "docx":  $ctype = "application/msword"; break;
+            case "xls":  $ctype = "application/vnd.ms-excel"; break;
+            case "ppt":  $ctype = "application/vnd.ms-powerpoint"; break;
+            default:     $ctype = "application/force-download";
+        }
+
+        if ( ! ini_get( 'safe_mode' ) ){
+            set_time_limit( 0 );
+        }
+
+        if ( function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime() ) {
+            set_magic_quotes_runtime(0);
+        }
+
+        $size = filesize( $location );
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Robots: none");
+        header("Content-Type: {$ctype}");
+        header("Content-Disposition: attachment; filename={$pathinfo['basename']};");
+        header("Content-Length: {$size}");
+
+        $tmp_file = file_get_contents( $location );
+        echo $tmp_file;
+        if ( $tmp_file !== true && $delete_tmp === true )
+            unlink( $location );
+    }
+
+
+    /**
+     * Verifies a download purchase by checking if the post status is set to 'publish' for a
+     * given purchase key;
+     *
+     * @param $download (string) The download hash
+     * @return boolean
+     */
+    public function verify_download_link( $download=null ) {
+
+        /**
+         * @note We use a subquery since this function is ran before register_post_type, hence we
+         * cannot run WP_Query
+         */
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` LIKE 'publish' AND ID =
+        (SELECT post_id FROM {$wpdb->prefix}postmeta
+        WHERE meta_key LIKE '_sell_media_payment_purchase_key'
+        AND meta_value LIKE '%s');", $download );
+
+        return $wpdb->get_results( $query ) ? true : false;
+    }
+
+}
+
 /**
  * Handles the file download process.
  *
@@ -11,150 +140,62 @@ function sell_media_process_download() {
     if ( isset( $_GET['download'] ) && isset( $_GET['email'] ) ) {
 
         $download = urldecode($_GET['download']);
-        $price_id = $_GET['price_id'];
-        $verified = sell_media_verify_download_link( $download );
+        $term_id = $_GET['price_id'];
+
+        $d = New Sell_Media_Download;
+        $verified = $d->verify_download_link( $download );
+
 
         if ( $verified ) {
 
 
             /**
-             * Get the file name from the attachment ID
-             * and build the path to the attachment
+             * Get the full pat to the file that will be downloaded in the sell media dir
              */
             $wp_upload_dir = wp_upload_dir();
             $attachment_id = get_post_meta( $_GET['id'], '_sell_media_attachment_id', true );
-            $path = $wp_upload_dir['basedir'] . '/sell_media/';
-            $full_file_path = $path . get_post_meta( $attachment_id, '_wp_attached_file', true );
+            $location = $wp_upload_dir['basedir'] . '/sell_media/' . get_post_meta( $attachment_id, '_sell_media_attached_file', true );
 
 
             /**
-             * Check if this download is an image, if it is we generate the download size (if its not the original).
+             * Check if this download is an image, if it is we generate the download size
              */
-            $mime_type = wp_check_filetype( $full_file_path );
+            $mime_type = wp_check_filetype( $location );
             if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ){
-
-
-                /**
-                 * Due to the inconsistencies of the small/medium/large meta keys we need to add this fix
-                 * @todo Resize fixes
-                 */
-                if ( $price_id == 'sell_media_original_file' ){
-                    $price_id = '_sell_media_attached_file';
-                }
-
 
                 /**
                  * For images other than the original we need to add this fix
                  */
-                $attached_file = get_post_meta( $attachment_id, $price_id, true );
+                $attached_file = get_post_meta( $attachment_id, $term_id, true );
                 if ( empty( $attached_file ) ){
                     $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
                 }
 
 
-                /**
-                 * We need to pair up keys like this "sell_media_small_file" with values like this "small"
-                 * @todo Resize fixes
-                 */
-                if ( in_array( $price_id, array('sell_media_small_file','sell_media_medium_file','sell_media_large_file') ) ) {
-                    $delete_tmp = true;
-                    switch( $price_id ){
-                        case 'sell_media_small_file':
-                            $k = 'small';
-                            break;
-                        case 'sell_media_medium_file':
-                            $k = 'medium';
-                            break;
-                        case 'sell_media_large_file':
-                            $k = 'large';
-                            break;
-                    }
-
-
-                    /**
-                     * Determine the download height and width
-                     */
-                    $download_sizes = sell_media_image_sizes( $_GET['id'], false );
-                    $new_image = array(
-                        'height' => $download_sizes[ $k ]['height'],
-                        'width' => $download_sizes[ $k ]['width']
-                        );
-
-                    list( $current_image['width'], $current_image['height'] ) = getimagesize( $full_file_path );
-
-                    if ( $new_image['height'] >= $current_image['height'] || $new_image['width'] >= $current_image['width'] ) {
-                        wp_die("This image is not available in the resolution of {$new_image['width']}x{$new_image['height']}");
-                    }
-
-
-                    /**
-                     * Create the new image from our download sizes. Write the file (at 100% quality) out to disk,
-                     * creating the folder tmp/ if its not already created.
-                     */
-                    $image_p = imagecreatetruecolor( $new_image['width'], $new_image['height'] );
-                    $image = imagecreatefromjpeg( $full_file_path );
-                    imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_image['width'], $new_image['height'], $current_image['width'], $current_image['height']);
-
-                    $destination_file = $path . 'tmp/' . basename( $full_file_path );
-                    if ( ! file_exists( $destination_file ) ){
-                        wp_mkdir_p( dirname( $destination_file ) );
-                    }
-
-                    imagejpeg( $image_p, $destination_file, 100 );
-                    $full_file_path = $destination_file;
-                } else {
+                if ( $term_id == 'sell_media_original_file' ){
+                    $file_download = $location;
                     $delete_tmp = false;
+                } else {
+                    $new_image = array(
+                        'height' => sell_media_get_term_meta( $term_id, 'height', true ),
+                        'width' => sell_media_get_term_meta( $term_id, 'width', true )
+                    );
+
+                    // $valid = $d->validate_download_size( $new_image, $location );
+                    // var_dump($valid);
+
+                    $file_download = $d->generate_download_size( $new_image, $location, true );
+                    $delete_tmp = true;
                 }
+            } else {
+                $file_download = $location;
+                $delete_tmp = false;
             }
 
-
-            /**
-             * Determine the file extension and then force downloading of the file
-             */
-            $pathinfo = pathinfo( $full_file_path );
-            switch( $pathinfo['extension'] ) {
-                case "gif":  $ctype = "image/gif"; break;
-                case "png":  $ctype = "image/png"; break;
-                case "jpeg": $ctype = "image/jpg"; break;
-                case "jpg":  $ctype = "image/jpg"; break;
-                case "pdf":  $ctype = "application/pdf"; break;
-                case "zip":  $ctype = "application/octet-stream"; break;
-                case "doc":  $ctype = "application/msword"; break;
-                case "docx":  $ctype = "application/msword"; break;
-                case "xls":  $ctype = "application/vnd.ms-excel"; break;
-                case "ppt":  $ctype = "application/vnd.ms-powerpoint"; break;
-                default:     $ctype = "application/force-download";
-            }
-
-            if ( ! ini_get( 'safe_mode' ) ){
-                set_time_limit( 0 );
-            }
-
-            if ( function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime() ) {
-                set_magic_quotes_runtime(0);
-            }
-
-            $size = filesize( $full_file_path );
-            header("Pragma: no-cache");
-            header("Expires: 0");
-            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-            header("Robots: none");
-            header("Content-Type: {$ctype}");
-            header("Content-Disposition: attachment; filename={$pathinfo['basename']};");
-            header("Content-Length: {$size}");
-
-            $download_result = file_get_contents( $full_file_path );
-            print $download_result;
-
-
-            /**
-             * If this is a generated download size from our tmp/ directory we delete
-             * the file after download.
-             */
-            if ( $download_result !== true && $delete_tmp === true )
-                unlink( $full_file_path );
+            $d->force_download( $file_download, $delete_tmp );
 
             exit;
+
         } else {
             wp_die(__('You do not have permission to download this file', 'sell_media'), __('Purchase Verification Failed', 'sell_media'));
         }
@@ -163,29 +204,6 @@ function sell_media_process_download() {
 }
 add_action( 'init', 'sell_media_process_download', 100 );
 
-
-/**
- * Verifies a download purchase by checking if the post status is set to 'publish' for a
- * given purchase key;
- *
- * @access public
- * @since 0.1
- * @return boolean
- */
-function sell_media_verify_download_link( $download ) {
-
-    /**
-     * @note We use a subquery since this function is ran before register_post_type, hence we
-     * cannot run WP_Query
-     */
-    global $wpdb;
-    $query = $wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` LIKE 'publish' AND ID =
-    (SELECT post_id FROM {$wpdb->prefix}postmeta
-    WHERE meta_key LIKE '_sell_media_payment_purchase_key'
-    AND meta_value LIKE '%s');", $download );
-
-    return $wpdb->get_results( $query ) ? true : false;
-}
 
 
 /**
