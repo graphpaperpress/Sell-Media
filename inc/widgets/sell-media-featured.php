@@ -22,23 +22,18 @@
 		if ( ! empty( $categoryNumber ) ) {
 
 			$args = array(
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'collection',
-						'field' => 'slug',
-						'terms' => $categoryNumber
-					)
-				),
-				'posts_per_page' => '6',
-				'orderby' => 'rand'
-			);
+					'posts_per_page' => 6,
+					'taxonomy' => 'collection',
+					'field' => 'slug',
+					'term' => $categoryNumber,
+					'orderby' => 'rand'
+					);
 
 		} else {
 			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => '6' );
 		} ?>
 
 		<div class="sell-media-featured-widget">
-
 			<?php
 			// Get available image sizes
 			$image_sizes = get_intermediate_image_sizes(); ?>
