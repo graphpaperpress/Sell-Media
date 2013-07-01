@@ -195,6 +195,7 @@ Action hooks available:
 * Bug: Fixed issue when removing items from the cart incorrect totals were displayed
 * Bug: Fixed issue in widgets
 * Bug: Price groups was not respecting newly created sizes when downloading images
+* Tweak: Added version number to enqueue script and styles
 
 = 1.5.2 =
 * New: Added price groups to admin item columns
