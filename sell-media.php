@@ -565,10 +565,12 @@ class SellMedia {
         $args = array(
             'labels' => $labels,
             'public' => true,
+
+            'show_ui' => true,
             'show_in_nav_menus' => true,
-            'show_ui' => false,
-            'show_admin_column' => true,
             'show_tagcloud' => true,
+            'show_admin_column' => true,
+
             'hierarchical' => true,
             'rewrite' => true,
             'query_var' => true

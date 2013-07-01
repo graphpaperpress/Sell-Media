@@ -73,6 +73,7 @@
 #adminmenu #menu-posts-sell_media_item div.wp-menu-image { background-image: url('../images/menu_icons.png'); background-position: 0 bottom; background-repeat: no-repeat; }
 #adminmenu #menu-posts-sell_media_item:hover div.wp-menu-image, #adminmenu #menu-posts-sell_media_item.wp-has-current-submenu div.wp-menu-image { background-position: 0 -1px; }
 #adminmenu #menu-posts-sell_media_item .wp-menu-image a img { display: none; }
+#menu-posts-sell_media_item ul li:nth-child(8) { display: none; }
 
 /* Payments
 -------------------------------------------------------------- */

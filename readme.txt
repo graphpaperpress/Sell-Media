@@ -190,6 +190,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.5.4 =
+* Feature: Added price groups to the native WordPress bulk edit
+
 = 1.5.3 =
 * Bug: "Original File Price" was truncating trailing zero's from prices.
 * Bug: Fixed issue when removing items from the cart incorrect totals were displayed
