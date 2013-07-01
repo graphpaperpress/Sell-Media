@@ -313,7 +313,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php else : ?>
                                     <div class="button-container">
                                         <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
-                                        <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
+                                        <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?><a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?>.</p>
                                     </div>
                                 <?php endif; ?>
                                 <p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
