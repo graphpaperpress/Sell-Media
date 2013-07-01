@@ -208,6 +208,11 @@ Upgrade Notice
 Changelog
 ---------
 
+1.5.4
+---
+* Feature: Added price groups to the native WordPress bulk edit
+* Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
+
 1.5.3
 ---
 * Bug: "Original File Price" was truncating trailing zero's from prices.
