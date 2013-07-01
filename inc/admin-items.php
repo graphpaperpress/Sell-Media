@@ -350,7 +350,7 @@ function sell_media_save_custom_meta( $post_id ) {
             if ( $new && $new != $old ) {
 
                 if ( $field['id'] == 'sell_media_price' ){
-                    $new = (float)$new;
+                    $new = sprintf( '%0.2f', (float)$new );
                 }
 
                 update_post_meta( $post_id, $field['id'], $new );
