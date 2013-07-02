@@ -311,6 +311,10 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
                                         <p class="desc"><?php _e('You are logged in as an Admin and cannot purchase this item from yourself.', 'sell_media' ); ?></p>
                                 <?php else : ?>
+                                    <div id="termsdiv">
+                                        <input type="checkbox" name="termsandconditions" required/>
+                                        <span class="termnotice">Agree all Terms and Conditions</span>
+                                    </div>
                                     <div class="button-container">
                                         <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
                                         <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?><a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?>.</p>

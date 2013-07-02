@@ -467,15 +467,17 @@ function sell_media_item_form(){
             <fieldset>
                 <legend><?php _e( 'License', 'sell_media' ); ?></legend>
                 <select name="License" value="License" id="sell_media_license_select" disabled>
-                    <option value="" data-price="0">-- <?php _e( 'Select a license' ); ?> --</option>
+                    <option value="" data-price="0" title="Select a license">-- <?php _e( 'Select a license' ); ?> --</option>
                     <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                 </select>
+                <div class="license_desc" title="Select a license"><?php _e( 'View License Description', 'sell_media'); ?></div>
             </fieldset>
         <?php else : ?>
             <?php if ( ! empty( $term_id ) ) : ?>
                 <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
                 <input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
-                <?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?>
+                <div class="license_text"><?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?></div>
+                <div class="license_desc" title="<?php print $licenses[0]->description; ?>"><?php _e( 'View License Description', 'sell_media'); ?></div>
             <?php endif; ?>
         <?php endif; ?>
         <?php do_action( 'sell_media_cart_below_size' ); ?>
