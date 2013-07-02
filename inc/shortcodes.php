@@ -407,7 +407,8 @@ add_shortcode('sell_media_item', 'sell_media_item_shortcode');
 function sell_media_all_items_shortcode( $atts ){
 
     extract( shortcode_atts( array(
-        'collection' => null
+        'collection' => null,
+		'show' => -1
         ), $atts )
     );
 
@@ -418,6 +419,7 @@ function sell_media_all_items_shortcode( $atts ){
 
     if ( $collection ){
 		$args = array(
+				'posts_per_page' => $show,
 				'taxonomy' => 'collection',
 				'field' => 'slug',
 				'term' => $collection
