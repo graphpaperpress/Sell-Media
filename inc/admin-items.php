@@ -95,7 +95,7 @@ function sell_media_editor() {
 
     if ( $post_type != "sell_media_item" ) return;
 
-    //global $post;
+    global $post;
     //wp_editor( stripslashes_deep( get_post_field( 'post_content', $post->ID ) ), 'sell_media_editor' );
     wp_editor( $post->post_content, 'post_content', array( 'sell_media_editor' => 'post_content' ) );
 }
