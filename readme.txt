@@ -191,6 +191,8 @@ Action hooks available:
 == Changelog ==
 
 = 1.5.4 =
+* Feature: Added shortcode to display all collections 'sell_media_list_all_collections' ( available shortcode attributes: thumbs, details )
+* Tweak: Added new attribute to 'sell_media_all_items' to display items from selected collection ( attribute: collection )
 * Feature: Added price groups to the native WordPress bulk edit
 * Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
 * Tweak: Added a "Continue shopping" link on the checkout page
