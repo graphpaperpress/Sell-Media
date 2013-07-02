@@ -294,11 +294,11 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
         $size = $_POST['attachment_size'];
 
     $mime_type = get_post_mime_type( $attachment_id );
-    $image_height = null;
-    $image_width = null;
-    $sell_media_item_id = get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true );
-    $image_title = get_the_title( $sell_media_item_id );
-    $_thumbnail_id = get_post_meta( $sell_media_item_id, '_thumbnail_id', true );
+    $image_height = $image_width = null;
+    $post_id = get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true );
+    $image_title = get_the_title( $post_id );
+    $_thumbnail_id = get_post_thumbnail_id( $post_id );
+
 
     /**
      * Since we always want to return the actual image associated with this item for sale
@@ -307,7 +307,10 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
      */
     global $pagenow;
     global $post_type;
-    if ( ! empty( $_thumbnail_id ) && $post_type == 'sell_media_item' && $pagenow != 'post.php' ){
+    if ( ! empty( $_thumbnail_id )
+        && $post_type == 'sell_media_item'
+        && $pagenow != 'post.php'
+        || ! empty( $_thumbnail_id ) ){
         $attachment_id = $_thumbnail_id;
     }
 
@@ -371,7 +374,7 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
     else
         $medium_url = null;
 
-    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $sell_media_item_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
+    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $post_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
 
     if ( $echo )
         print $icon;

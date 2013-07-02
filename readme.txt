@@ -194,6 +194,7 @@ Action hooks available:
 * Feature: Added price groups to the native WordPress bulk edit
 * Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
 * Tweak: Added a "Continue shopping" link on the checkout page
+* Bug: Featured image used on archive pages if present
 
 = 1.5.3 =
 * Bug: "Original File Price" was truncating trailing zero's from prices.
