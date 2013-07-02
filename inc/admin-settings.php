@@ -292,7 +292,7 @@ class SellMediaSettings {
                                             <td>
                                                 <span class="description">$</span>
                                                 <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][price]" value="">
-                                                <p class="description"><?php _e('Price (px)','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Price','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <!-- <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="" data-type="price">×</a> -->
