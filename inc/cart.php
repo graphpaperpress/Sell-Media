@@ -25,7 +25,7 @@ function sell_media_add_items(){
         $items[] = array(
             'item_id' => (int)$_POST['ProductID'],
             'price_id' => $_POST['price_id'],
-            'license_id' => $_POST['License']
+            'license_id' => empty( $_POST['License'] ) ? null : $_POST['License']
         );
         $items = array_merge( $cart, $items );
     } else {

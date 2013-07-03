@@ -418,7 +418,7 @@ function sell_media_item_form(){
     <form action="javascript://" method="POST" class="sell-media-dialog-form sell-media-form">
         <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
         <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
-        <input type="hidden" name="CalculatedPrice" class="menu-cart-total" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
+        <input type="hidden" name="CalculatedPrice" class="" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
         <?php wp_nonce_field('sell_media_add_items','sell_media_nonce'); ?>
 
         <?php do_action( 'sell_media_cart_above_licenses' ); ?>
@@ -459,7 +459,7 @@ function sell_media_item_form(){
 
             </fieldset>
         <?php else : ?>
-            <input type="hidden" id="sell_media_price" name="price_id" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" value="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" />
+            <input type="hidden" id="sell_media_price" name="price_id" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" value="default_price" />
         <?php endif; ?>
 
         <?php do_action( 'sell_media_cart_below_licenses' ); ?>
@@ -612,65 +612,6 @@ function sell_media_plugin_credit() {
     if ( true == $settings['plugin_credit'] ) {
         printf( '%s <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', __( 'Shopping cart by ', 'sell_media' ) );
     }
-}
-
-
-/**
- * Calculates the price of an item based on qty, license id and price id
- *
- * @param $item array containing the following
- * ['price_id']['id']
- * ['price_id']['quantity']
- * ['license_id']['quantity']
- * @return Download size, dollar amount, markup percent, license name, quantity
- */
-function sell_media_cart_price( $item=array() ){
-
-    // Not sure how to handle this?
-    $filtered_price = apply_filters( 'sell_media_filtered_price', $item['price_id'] );
-
-    /**
-     * We do this as a check to see if this sell media item is assigned a price group
-     * if its nots we use the "original price" from the settings.
-     */
-    $price_id = false;
-    foreach( wp_get_post_terms( $item['item_id'], 'price-group' ) as $term ){
-        if ( $term->term_id == $item['price_id'] ) $price_id = $term->term_id;
-    }
-
-    /**
-     * If we have no "price group" we fall back on our default in settings
-     */
-    if ( $price_id ){
-        $price = sell_media_get_term_meta( $item['price_id'], 'price', true );
-    } else {
-        $default_price_array = get_option('sell_media_size_settings');
-        $price = $default_price_array['default_price'];
-    }
-
-    if ( ! empty( $item['license_id'] ) ){
-        $markup_amount = sell_media_get_term_meta( $item['license_id'], 'markup', true );
-        $markup = str_replace( "%", "", $markup_amount );
-    } else {
-        $markup = false;
-    }
-
-    $final = ( $markup ) ? ( ( $markup / 100 ) * $price ) + $price : $price;
-    $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
-    $total = $final * $qty;
-    $size = get_term_by('id', $item['price_id'], 'price-group' );
-    $license_obj = empty( $item['license_id'] ) ? null : get_term_by( 'id', $item['license_id'], 'licenses' );
-
-    $price = array(
-        'size'    => empty( $size ) ? null : sprintf( "%s: ", __("Size", "sell_media") ) . $size->name,
-        'amount'  => sprintf("%0.2f",$final),
-        'total'   => empty( $total ) ? sprintf("%0.2f",$final) : sprintf("%0.2f",$total),
-        'markup'  => empty( $license_obj ) ? null : str_replace( '%', '', sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) ),
-        'license' => empty( $license_obj ) ? null : sprintf( "%s: ", __("License", "sell_media") ) . $license_obj->name,
-        'qty'     => $qty
-        );
-
-    return $price;
 }
 
 

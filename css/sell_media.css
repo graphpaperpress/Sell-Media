@@ -514,7 +514,7 @@ input[type="submit"].sell-media-buy-button-success:active {
 /*= Form styling
 ------------------------------------------------------------------- */
 .sell-media-form input[type="number"].small-text {
-  width: 30px;
+  width: 40px;
 }
 
 .license_desc,

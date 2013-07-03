@@ -20,6 +20,7 @@ include( dirname(__FILE__) . '/inc/helpers.php');
 include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
 include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
+include( dirname(__FILE__) . '/inc/class-cart.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
 
@@ -620,10 +621,11 @@ class SellMedia {
 
             $amount = $quantity = 0;
             if ( ! empty( $_SESSION['cart']['items'] ) ){
+                $cart = New Sell_Media_Cart;
                 foreach ( $_SESSION['cart']['items'] as $item ){
-                    $price = sell_media_cart_price( $item );
+                    $price = $cart->item_price( $item['item_id'], $item['price_id'] );
                     $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-                    $amount = $amount + $price['amount'] * $qty;
+                    $amount = $cart->item_markup_total( $item['item_id'], $item['price_id'] );
                     $quantity = $quantity + $qty;
                 }
             }

@@ -166,9 +166,9 @@ function sell_media_cart_shortcode($atts, $content = null) {
 
             $amount = 0;
             $quantity = 0;
-
+            $cart = New Sell_Media_Cart;
             foreach ( $items as $item ){
-                $price = sell_media_cart_price( $item );
+                $price = $cart->item_price( $item['item_id'], $item['price_id'] );
                 $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
                 $amount = $amount + $price['amount'] * $qty;
                 $quantity = $quantity + $qty;
@@ -325,15 +325,37 @@ function sell_media_cart_shortcode($atts, $content = null) {
                     </tr>
                 </tfoot>
                 <tbody class="sell-media-product-list">
-                    <?php $price = null; foreach( $items as $item_id => $item ) : ?>
-                        <?php $price = sell_media_cart_price( $item ); ?>
+                    <?php
+                    $cart = New Sell_Media_Cart;
+                    foreach( $items as $item_id => $item ) : ?>
+                        <?php
+
+                        // Derive the license name
+                        if ( empty( $item['license_id'] ) ){
+                            $license = __('None','sell_media');
+                            $license_id = false;
+                        } else {
+                            $license_obj = get_term_by('id', $item['license_id'], 'licenses' );
+                            $license = $license_obj->name;
+                            $license_id = $item['license_id'];
+                        }
+
+                        // $price = $cart->item_price( $item['item_id'], $item['price_id'] );
+                        $size_name     = $cart->item_size( $item['price_id'] );
+                        $price         = $cart->item_markup_total( $item['item_id'], $item['price_id'], $license_id );
+                        $markup_amount = $cart->item_markup_amount( $item['item_id'], $item['price_id'], $license_id );
+                        $qty           = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
+                        $total         = $qty * $price;
+
+                        ?>
+
                         <tr>
                             <td class="product-details">
                                 <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?></a>
                                 <div class="sell-media-table-meta">
                                     <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a>
-                                    <div class="sell-media-license"><?php print $price['license']; ?></div>
-                                    <div class="sell-media-size"><?php print $price['size']; ?></div>
+                                    <div class="sell-media-license"><?php _e('License','sell_media'); ?>: <?php print $license; ?></div>
+                                    <div class="sell-media-size"><?php _e('Size','sell_media');?>: <?php print $size_name; ?></div>
                                 </div>
                                 <?php do_action('sell_media_below_product_cart_title', $item, $item['item_id'], $item['price_id']); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
@@ -345,10 +367,22 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php endif; ?>
                             </td>
                             <td class="product-quantity">
-                                <input name="sell_media_item_qty[<?php echo $item_id; ?>]" type="number" step="1" min="0" id="quantity-<?php print $item_id; ?>" value="<?php echo $price['qty']; ?>" class="small-text sell-media-quantity" data-id="<?php print $item_id; ?>" data-price="<?php print $price['amount']; ?>" data-markup="<?php print $price['markup']; ?>" />
+                                <input
+                                name="sell_media_item_qty[<?php echo $item_id; ?>]"
+                                type="number"
+                                step="1"
+                                min="0"
+                                id="quantity-<?php print $item_id; ?>"
+                                value="<?php echo $qty; ?>"
+                                class="small-text sell-media-quantity"
+                                data-id="<?php print $item_id; ?>"
+                                data-price="<?php print $price; ?>"
+                                data-markup="<?php print $markup_amount; ?>"
+                                />
                             </td>
                             <td class="product-price">
-                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span><span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $price['total']; ?></span>
+                                <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span>
+                                <span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $total; ?></span>
                                 <br />
                                 <span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?></span>
                             </td>
@@ -610,9 +644,9 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 		$html .= '</ul>';
 		$html .= '</div>';
 		return $html;
-		
+
 	} else {
-		
+
 		$html = null;
 		$html .= '<div class="sell-media-collections-shortcode">';
 
@@ -707,7 +741,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 		$html .= '</div>';
 
 		return $html;
-	
+
 	}
 
 }

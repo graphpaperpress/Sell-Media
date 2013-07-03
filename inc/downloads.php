@@ -46,7 +46,6 @@ Class Sell_Media_Download {
      * @param $size (array) 'width' and 'height' of requested size
      * @param $location (string) full file path on the server of the image
      *
-     * @todo in this logic sell_media_image_sizes();
      *
      * @return bool True if the download image size can be generated, false if it can't
      */
