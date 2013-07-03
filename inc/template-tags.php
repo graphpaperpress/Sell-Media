@@ -718,3 +718,26 @@ function sell_media_item_prices( $post ){
     print apply_filters( 'sell_media_item_prices_filter', $html, $post->ID );
 
 }
+
+
+/**
+ * Retrives the lowest price available of an item from the price groups
+ *
+ * @param $post_id (int) The post_id, must be a post type of "sell_media_item"
+ * @return Lowest price of an item
+ */
+function sell_media_item_min_price( $post_id=null, $echo=true ){
+
+    $terms = wp_get_post_terms( $post_id, 'price-group' );
+
+    if ( empty( $terms ) ) return;
+
+    foreach( $terms as $term ){
+        if ( $term->parent != 0 ){
+            $price = sell_media_get_term_meta( $term->term_id, 'price', true );
+            $prices[] = $price;
+        }
+    }
+
+    return ( $echo ) ? printf( sell_media_get_currency_symbol() .'%0.2f', min( $prices ) ) : min( $prices );
+}
