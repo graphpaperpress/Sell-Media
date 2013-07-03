@@ -87,8 +87,13 @@ Class SellMediaPriceGroups {
      */
     public function add_term(){
         wp_verify_nonce( $_POST['security'], $_POST['action'] );
+        $termarray = array();
+        $terms = get_terms( 'price-group', array( 'hide_empty' => 0, 'parent' => 0 ) );
+        foreach( $terms as $term ) {
+            $termarray[] = $term->name;
+        }
 
-        if ( ! empty( $_POST['term_name'] ) ) {
+        if ( ! empty( $_POST['term_name'] )  && !in_array( $_POST['term_name'], $termarray ) ) {
             $term = wp_insert_term( $_POST['term_name'], 'price-group' );
             $timestamp = time();
             print admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
