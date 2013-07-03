@@ -256,16 +256,16 @@ class SellMediaSettings {
                                                 <p class="description"><?php _e('Name<','sell_media'); ?>/p>
                                             </td>
                                             <td>
-                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
+                                                <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
                                                 <p class="description"><?php _e('Width (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
-                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
+                                                <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
                                                 <p class="description"><?php _e('Height (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
-                                                <input type="number" step="1" min="0" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>">
+                                                <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>">
                                                 <p class="description"><?php _e('Price','sell_media'); ?></p>
                                             </td>
                                             <td>
@@ -282,16 +282,16 @@ class SellMediaSettings {
                                             </td>
                                             <td>
                                                 <input type="hidden" class="sell-media-price-group-parent-id" name="new_child[ <?php echo $i; ?> ][parent]" value="<?php echo $current_term_id; ?>" />
-                                                <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][width]" value="">
+                                                <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][width]" value="">
                                                 <p class="description"><?php _e('Width (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
-                                                <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][height]" value="">
+                                                <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][height]" value="">
                                                 <p class="description"><?php _e('Height (px)','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <span class="description">$</span>
-                                                <input type="number" step="1" min="0" class="small-text" name="new_child[ <?php echo $i; ?> ][price]" value="">
+                                                <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][price]" value="">
                                                 <p class="description"><?php _e('Price','sell_media'); ?></p>
                                             </td>
                                             <td>
