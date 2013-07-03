@@ -244,7 +244,12 @@ jQuery( document ).ready(function( $ ){
     $( document ).on('change', '#sell_media_license_select', function(){
         var price;
         var size = $('#sell_media_size_select :selected').attr('data-price');
+
+        if ( typeof( size ) === "undefined" )
+            size = $('input[name="CalculatedPrice"]').val();
+
         var license_desc = $('#sell_media_license_select :selected').attr('title');
+
         $("option:selected", this).each(function(){
             price = $(this).attr('data-price');
             calculate_total( price, size );

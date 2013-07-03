@@ -217,6 +217,7 @@ Changelog
 * Tweak: Added a "Continue shopping" link on the checkout page
 * Bug: Cart totals were inconsistent
 * Bug: Featured image used on archive pages if present
+* Bug: Non-image items can now have multiple licenses
 
 1.5.3
 ---
