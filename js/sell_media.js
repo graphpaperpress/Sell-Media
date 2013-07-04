@@ -393,4 +393,42 @@ jQuery( document ).ready(function( $ ){
         }
     });
 
+     /**
+     * When the user clicks on our trigger we set-up the overlay,
+     * launch our dialog, and send an Ajax request to load our cart form.
+     */
+    $( document ).on( 'click', '#agree_terms_and_conditions', function( event ){
+        event.preventDefault();
+
+        // Overlay set-up
+        coordinates = sell_media_get_page_scroll();
+        y = coordinates[1] + +100;
+        x = ( $(window).width() / 2 ) - ( $( '#terms-and-conditions-dialog' ).outerWidth() );
+        $('#terms-and-conditions-dialog').css({
+            'top': y + 'px',
+            'left': x + 'px'
+        });
+
+        // Show our dialog with a loading message
+        $('#terms-and-conditions-dialog').toggle();
+
+        // Add our overlay to the html if #overlay is present.
+        if($('#overlay').length > 0){
+            $('#overlay').remove();
+        } else {
+            $('body').append('<div id="overlay"></div>');
+            var doc_height = $(document).height();
+            $('#overlay').height(doc_height);
+            $('#overlay').click(function(){
+                $('#terms-and-conditions-dialog').toggle();
+                $(this).remove();
+            });
+        }
+    });
+
+    $( document ).on( 'click', '.close', function(){
+        $('#terms-and-conditions-dialog').hide();
+        $('#overlay').remove();
+    });
+
 });

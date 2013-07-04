@@ -313,7 +313,14 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php else : ?>
                                     <div id="termsdiv">
                                         <input type="checkbox" name="termsandconditions" required/>
-                                        <span class="termnotice">Agree all Terms and Conditions</span>
+                                        <span class="termnotice"><a href="#" id="agree_terms_and_conditions"><?php _e('Terms and Conditions', 'sell_media'); ?></a></span>
+                                        <?php 
+                                            $general_settings = get_option( 'sell_media_general_settings' );
+                                        ?>
+                                        <div id="terms-and-conditions-dialog" style="display: none;">
+                                            <span class="close">&times;</span>
+                                            <?php echo nl2br($general_settings['terms_and_conditions']); ?>
+                                        </div>
                                     </div>
                                     <div class="button-container">
                                         <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />

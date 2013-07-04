@@ -132,6 +132,7 @@ class SellMediaSettings {
         add_settings_field( 'plugin_credit', 'Plugin Credit', array( &$this, 'field_general_plugin_credit' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'post_type_slug', 'Post Type Slug', array( &$this, 'field_post_type_slug' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'order_by', 'Order By', array( &$this, 'field_order_by' ), $this->general_settings_key, 'section_general' );
+        add_settings_field( 'terms_and_conditions', 'Terms and Conditions', array( &$this, 'field_terms_and_conditions' ), $this->general_settings_key, 'section_general' );
 
         do_action( 'sell_media_general_settings_hook' );
 
@@ -531,6 +532,16 @@ class SellMediaSettings {
             <option value="title-asc" <?php selected( $this->general_settings['order_by'], 'title-asc' ); ?>><?php _e( 'Item Title (ASC)', 'sell_media' ); ?></option>
         </select>
         <span class="desc"><?php _e( 'Choose the order of items for the archive pages.', 'sell_media' ); ?></span>
+        <?php
+    }
+
+    /*
+     * Post Type terms and conditions field callback
+     */
+    function field_terms_and_conditions(){
+        ?>
+         <textarea name="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" id="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" style="width:50%;height:150px;"><?php echo wp_filter_nohtml_kses( $this->general_settings['terms_and_conditions'] ); ?></textarea>
+        <p class="desc"><?php _e( 'Terms and Conditions', 'sell_media' ); ?></p>
         <?php
     }
 
