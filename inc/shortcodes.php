@@ -395,7 +395,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                             </td>
                             <td class="product-price">
                                 <span class="currency-symbol"><?php print sell_media_get_currency_symbol(); ?></span>
-                                <span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print $total; ?></span>
+                                <span class="item-price-target" id="sub-total-target-<?php print $item_id; ?>"><?php print sprintf( "%0.2f", $total ); ?></span>
                                 <br />
                                 <span class="remove-item-handle" data-item_id="<?php print $item_id; ?>"><?php _e('Remove', 'sell_media'); ?></span>
                             </td>
