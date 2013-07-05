@@ -310,7 +310,7 @@ jQuery( document ).ready(function( $ ){
                 $button = $('.sell-media-form').find('.sell-media-buy-button');
                 $button.addClass('sell-media-purchased').val('Checkout');
                 $( document ).on( 'click', '.sell-media-purchased', function(){
-                    location.href = checkouturl;
+                    location.href = sell_media.checkouturl;
                 });
             }
         });
