@@ -201,7 +201,7 @@ Action hooks available:
 * Bug: Featured image used on archive pages if present
 * Bug: Non-image items can now have multiple licenses
 * Bug: Quantity totals are immediately calculated
-
+* Bug: Intermittent bug where items were added to the cart twice
 
 
 = 1.5.3 =

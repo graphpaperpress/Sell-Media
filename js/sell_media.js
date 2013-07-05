@@ -292,30 +292,36 @@ jQuery( document ).ready(function( $ ){
 
     $( document ).on('submit', '.sell-media-dialog-form', function(){
 
-        var _data = "action=sell_media_add_items&taxonomy=licenses&" + $( this ).serialize();
+        $('.sell-media-buy-button').attr('disabled',true);
 
-        if ( _user.count < 1 ) {
-            text = '(<span class="count-container"><span class="count-target"></span></span>)';
-            $('.empty').html( text );
-            $('.cart-handle').show();
-        }
+        if ( $('.sell-media-buy-button').hasClass('sell-media-purchased') ){
+            $('.sell-media-buy-button').removeAttr('disabled');
+            location.href = sell_media.checkouturl;
+        } else {
 
-        $.ajax({
-            data: _data,
-            success: function( msg ) {
-                cart_count();
-                // sell_media_update_total();
+            var _data = "action=sell_media_add_items&taxonomy=licenses&" + $( this ).serialize();
 
-                total = ( +( $('.menu-cart-total').html() ) + +( $('.sell-media-item-price').html() ) );
-                $('.menu-cart-total').html( total.toFixed(2) );
-
-                $button = $('.sell-media-form').find('.sell-media-buy-button');
-                $button.addClass('sell-media-purchased').val('Checkout');
-                $( document ).on( 'click', '.sell-media-purchased', function(){
-                    location.href = sell_media.checkouturl;
-                });
+            if ( _user.count < 1 ) {
+                text = '(<span class="count-container"><span class="count-target"></span></span>)';
+                $('.empty').html( text );
+                $('.cart-handle').show();
             }
-        });
+
+            $.ajax({
+                data: _data,
+                success: function( msg ) {
+                    cart_count();
+                    // sell_media_update_total();
+
+                    total = ( +( $('.menu-cart-total').html() ) + +( $('.sell-media-item-price').html() ) );
+                    $('.menu-cart-total').html( total.toFixed(2) );
+
+                    $button = $('.sell-media-form').find('.sell-media-buy-button');
+                    $button.addClass('sell-media-purchased').val('Checkout');
+                    $('.sell-media-buy-button').removeAttr('disabled');
+                }
+            });
+        }
         return false;
     });
 
