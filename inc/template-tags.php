@@ -480,7 +480,9 @@ function sell_media_item_form(){
                 <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
                 <input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
                 <div class="license_text"><?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?></div>
-                <div class="license_desc" title="<?php print $licenses[0]->description; ?>"><?php _e( 'View License Description', 'sell_media'); ?></div>
+                <?php if ( ! empty( $licenses[0]->description ) ) : ?>
+                    <div class="license_desc small" title="<?php print $licenses[0]->description; ?>"><?php _e( 'View License Description', 'sell_media'); ?></div>
+                <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
         <?php do_action( 'sell_media_cart_below_size' ); ?>

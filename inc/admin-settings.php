@@ -75,7 +75,7 @@ class SellMediaSettings {
             'plugin_credit' => '',
             'post_type_slug' => 'items',
             'order_by' => '',
-            'terms_and_conditions' => 'Terms and Conditions'
+            'terms_and_conditions' => ''
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
@@ -541,8 +541,8 @@ class SellMediaSettings {
      */
     function field_terms_and_conditions(){
         ?>
-         <textarea name="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" id="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" style="width:50%;height:150px;"><?php echo wp_filter_nohtml_kses( $this->general_settings['terms_and_conditions'] ); ?></textarea>
-        <p class="desc"><?php _e( 'Terms and Conditions', 'sell_media' ); ?></p>
+         <textarea name="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" id="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" style="width:50%;height:150px;" placeholder="<?php _e( 'Terms and Conditions', 'sell_media' ); ?>"><?php echo wp_filter_nohtml_kses( $this->general_settings['terms_and_conditions'] ); ?></textarea>
+        <p class="desc"><?php _e( 'These "Terms and Conditions" will show up on the checkout page. Users must agree to these terms before completing their purchase.', 'sell_media' ); ?></p>
         <?php
     }
 

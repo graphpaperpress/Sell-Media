@@ -311,17 +311,23 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                 <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
                                         <p class="desc"><?php _e('You are logged in as an Admin and cannot purchase this item from yourself.', 'sell_media' ); ?></p>
                                 <?php else : ?>
-                                    <div id="termsdiv">
-                                        <input type="checkbox" name="termsandconditions" required/>
-                                        <span class="termnotice"><a href="#" id="agree_terms_and_conditions"><?php _e('Terms and Conditions', 'sell_media'); ?></a></span>
-                                        <?php 
-                                            $general_settings = get_option( 'sell_media_general_settings' );
-                                        ?>
-                                        <div id="terms-and-conditions-dialog" style="display: none;">
-                                            <span class="close">&times;</span>
-                                            <?php echo nl2br($general_settings['terms_and_conditions']); ?>
+                                    <?php
+                                        $general_settings = get_option( 'sell_media_general_settings' );
+                                        if ( ! empty ( $general_settings['terms_and_conditions'] ) ) :
+                                    ?>
+                                        <div id="termsdiv">
+                                            <input type="checkbox" name="termsandconditions" required/>
+                                            <span class="termnotice">
+                                                <a href="#" id="agree_terms_and_conditions">
+                                                <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>
+                                                </a>
+                                            </span>
+                                            <div id="terms-and-conditions-dialog" style="display: none;">
+                                                <span class="close">&times;</span>
+                                                <?php echo nl2br( $general_settings['terms_and_conditions'] ); ?>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
                                     <div class="button-container">
                                         <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
                                         <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?><a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?>.</p>
