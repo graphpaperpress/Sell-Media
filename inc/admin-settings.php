@@ -74,7 +74,8 @@ class SellMediaSettings {
             'style' => '',
             'plugin_credit' => '',
             'post_type_slug' => 'items',
-            'order_by' => ''
+            'order_by' => '',
+            'terms_and_conditions' => 'Terms and Conditions'
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
