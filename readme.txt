@@ -199,6 +199,8 @@ Action hooks available:
 * Bug: Cart totals were inconsistent
 * Bug: Featured image used on archive pages if present
 * Bug: Non-image items can now have multiple licenses
+* Bug: Quantity totals are immediately calculated
+
 
 = 1.5.3 =
 * Bug: "Original File Price" was truncating trailing zero's from prices.

@@ -381,7 +381,7 @@ jQuery( document ).ready(function( $ ){
      * If the user clicks inside of our input box and manually updates the quantiy
      * we run the sub-total and total functions.
      */
-    $(document).on('change', '.sell-media-quantity', function(){
+    $(document).on('keyup', '.sell-media-quantity', function(){
         sell_media_update_sub_total();
         sell_media_update_total();
         sell_media_update_final_total();
