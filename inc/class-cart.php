@@ -29,7 +29,6 @@ Class Sell_Media_Cart {
             $item_price = $default_price_array['default_price'];
         } elseif ( $price_id == 'default_price' && empty( $custom_price ) ){
             $item_price = $default_price_array['default_price'];
-            echo 'default price';
         } elseif ( $price_id == 'default_price' && ! empty( $custom_price ) ) {
             $item_price = $custom_price;
         } else {
