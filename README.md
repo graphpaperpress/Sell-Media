@@ -215,6 +215,7 @@ Changelog
 * Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
 * Tweak: Added new attributes to 'sell_media_all_items' ( attributes: collection, show )
 * Tweak: Added a "Continue shopping" link on the checkout page
+* Tweak: Adjusting currency format in settings
 * Bug: Cart totals were inconsistent
 * Bug: Featured image used on archive pages if present
 * Bug: Non-image items can now have multiple licenses

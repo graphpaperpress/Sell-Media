@@ -377,7 +377,7 @@ class SellMediaSettings {
                     case 'medium_size_price' :
                     case 'large_size_price' :
                     case 'default_price' :
-                        $value = floatval( $value );
+                        $value = sprintf( "%0.2f", floatval( $value ) );
                         break;
 
                     /**
