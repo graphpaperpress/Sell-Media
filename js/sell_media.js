@@ -119,6 +119,7 @@ jQuery( document ).ready(function( $ ){
 
         $('.subtotal-target').html( total.toFixed(2) );
         $('.menu-cart-total').html( total.toFixed(2) );
+        $('.sell-media-item-price').html( total.toFixed(2) );
     }
 
 
@@ -181,6 +182,7 @@ jQuery( document ).ready(function( $ ){
     sell_media_update_total();
     sell_media_update_final_total();
     sell_media_quantity_total();
+
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
