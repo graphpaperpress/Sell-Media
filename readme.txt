@@ -202,11 +202,13 @@ Action hooks available:
 * Tweak: Added a "Continue shopping" link on the checkout page
 * Tweak: Adjusting currency format in settings
 * Tweak: Payments should not be publicly queryable
+* Tweak: Make checkout shortcode function name semantic
 * Bug: Cart totals were inconsistent
 * Bug: Featured image used on archive pages if present
 * Bug: Non-image items can now have multiple licenses
 * Bug: Quantity totals are immediately calculated
 * Bug: Intermittent bug where items were added to the cart twice
+* Bug: Validate Safari new user registrations on checkout page
 
 
 = 1.5.3 =

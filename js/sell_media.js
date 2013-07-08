@@ -407,6 +407,13 @@ jQuery( document ).ready(function( $ ){
         }
     });
 
+    $( document ).on( 'submit', '#sell_media_checkout_form', function() {
+        var faults = $( 'input' ).filter( function() {
+            return $( this ).data( 'required' ) && $( this ).val() === '';
+        }).css( 'background-color', 'red');
+        if ( faults.length ) return false;
+    });
+
      /**
      * When the user clicks on our trigger we set-up the overlay,
      * launch our dialog, and send an Ajax request to load our cart form.

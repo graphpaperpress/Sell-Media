@@ -100,7 +100,7 @@ add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
  *
  * @since 0.1
  */
-function sell_media_cart_shortcode($atts, $content = null) {
+function sell_media_checkout_shortcode($atts, $content = null) {
 
     $i = 0;
 
@@ -290,15 +290,15 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo wp_login_url( get_permalink() ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a></p>
                                     <p>
                                     <label><?php _e( 'First Name', 'sell_media' ); ?></label>
-                                    <input type="text" class="" id="sell_media_first_name_field" name="first_name" required />
+                                    <input type="text" class="" id="sell_media_first_name_field" name="first_name" data-required="true" required />
                                     </p>
                                     <p>
                                     <label><?php _e( 'Last Name', 'sell_media' ); ?></label>
-                                    <input type="text" class="" id="sell_media_last_name_field" name="last_name" required />
+                                    <input type="text" class="" id="sell_media_last_name_field" name="last_name" data-required="true" required />
                                     </p>
                                     <p>
                                     <label><?php _e( 'Email', 'sell_media' ); ?></label>
-                                    <input type="email" class="" id="sell_media_email_field" name="email" required />
+                                    <input type="email" class="" id="sell_media_email_field" name="email" data-required="true" required />
                                     </p>
                                     <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php else : ?>
@@ -316,7 +316,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                         if ( ! empty ( $general_settings['terms_and_conditions'] ) ) :
                                     ?>
                                         <div id="termsdiv">
-                                            <input type="checkbox" name="termsandconditions" required/>
+                                            <input type="checkbox" name="termsandconditions" data-required="true" required/>
                                             <span class="termnotice">
                                                 <a href="#" id="agree_terms_and_conditions">
                                                 <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>
@@ -330,7 +330,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
                                     <?php endif; ?>
                                     <div class="button-container">
                                         <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
-                                        <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?><a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?>.</p>
+                                        <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?>.</p>
                                     </div>
                                 <?php endif; ?>
                                 <p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
@@ -408,7 +408,7 @@ function sell_media_cart_shortcode($atts, $content = null) {
     </div>
     <?php return ob_get_clean();
 }
-add_shortcode('sell_media_checkout', 'sell_media_cart_shortcode');
+add_shortcode('sell_media_checkout', 'sell_media_checkout_shortcode');
 
 /**
  * Adds the 'sell_media' short code to the editor. [sell_media_item]
