@@ -533,7 +533,7 @@ class SellMedia {
             'public' => false,
             'show_ui' => true,
             'show_in_menu' => false,
-            'publicly_queryable' => true,
+            'publicly_queryable' => false,
             'has_archive' => false,
             'query_var' => true,
             'rewrite' => false,

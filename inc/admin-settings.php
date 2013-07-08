@@ -447,7 +447,7 @@ class SellMediaSettings {
         <select name="<?php echo $this->general_settings_key; ?>[checkout_page]" id="<?php echo $this->general_settings_key; ?>[checkout_page]">
             <?php $this->build_field_pages_select( 'checkout_page' ); ?>
         </select>
-        <span class="desc"><?php esc_html_e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
+        <span class="desc"><?php _e( 'What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.', 'sell_media' ); ?></span>
         <?php
     }
 
