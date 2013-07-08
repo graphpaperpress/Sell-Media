@@ -519,13 +519,10 @@ function sell_media_item_form(){
  *
  * @since 1.2.4
  * @author Zane Matthew
+ *
  * @return Prints an li or returns an array of available download sizes
  */
 function sell_media_image_sizes( $post_id=null, $echo=true ){
-
-
-    // $size_settings = get_option('sell_media_size_settings');
-    // $html = null;
 
     $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
 
@@ -539,46 +536,53 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
         $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
     }
 
-
     list( $orig_w, $orig_h, $type, $attr ) = @getimagesize( $attached_path_file );
-
 
     $null = null;
     $original = $download_sizes = array();
     list( $original['url'], $original['width'], $original['height'] ) = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
 
 
-    $price_group = wp_get_post_terms( $post_id, 'price-group' );
-    foreach( $price_group as $price ){
+    /**
+     * Loop over price groups checking for children,
+     * compare the width and height assigned to a price group
+     * with the width and height of the current image. Remove
+     * sizes that are not downloadable.
+     */
+    foreach( wp_get_post_terms( $post_id, 'price-group' ) as $price ){
 
+        /**
+         * Check for children only
+         */
         if ( $price->parent > 0 ){
 
+            /**
+             * Retrive the height and width for our price group
+             */
             $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
             $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
 
             $download_sizes[ $price->term_id ]['name'] = $price->name;
 
             /**
-             * This looks ugly because image_resize_dimensions() returns empty indexes
+             * Calculate dimensions and coordinates for a resized image that fits
+             * within a specified width and height. If $crop is true, the largest
+             * matching central portion of the image will be cropped out and resized
+             * to the required size.
              */
-            list( $null, $null, $null, $null,
-                $download_sizes[ $price->term_id ]['width'],
-                $download_sizes[ $price->term_id ]['height'] ) = image_resize_dimensions(
-                    $orig_w,
-                    $orig_h,
-                    $pg_width,
-                    $pg_height,
-                    $crop=false );
+            list( $null, $null, $null, $null, $download_sizes[ $price->term_id ]['width'], $download_sizes[ $price->term_id ]['height'] ) = image_resize_dimensions( $orig_w, $orig_h, $pg_width, $pg_height, $crop=false );
 
             /**
-             * If no width/height can be determined we remove it from our array of available download sizes.
+             * If no width/height can be determined we remove it from our array of
+             * available download sizes.
              */
             if ( empty( $download_sizes[ $price->term_id ]['width'] ) ) {
                 unset( $download_sizes[ $price->term_id ] );
             }
 
             /**
-             * Check for portraits and if the available download size is larger than the original we remove it.
+             * Check for portraits and if the available download size is larger than
+             * the original we remove it.
              */
             $smallest_height = sell_media_item_min_price( $post_id, false, 'height' );
             if ( $original['height'] > $original['width']
@@ -586,23 +590,25 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
                 && $download_sizes[ $price->term_id ]['height'] <  $smallest_height ){
                     unset( $download_sizes[ $price->term_id ] );
             }
-
-
         }
     }
+
 
     $html = null;
     if ( $echo ){
 
         foreach( $download_sizes as $k => $v ){
-            $name = ucfirst( $k );
             $html .= '<li class="price">';
             $html .= '<span class="title"> '.$download_sizes[ $k ]['name'].' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
             $html .= sell_media_item_price( $post_id, true, $k, false );
             $html .= '</li>';
         }
         $original_size = sell_media_original_image_size( $post_id, false );
-        $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
+        if ( empty( $type ) ){
+            $og_size = null;
+        } else {
+            $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
+        }
 
         $html .= '<li class="price">';
         $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
