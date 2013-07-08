@@ -14,12 +14,12 @@ Class Sell_Media_Download {
     /**
      * Create our Download image and save it to the tmp/ folder in sell media
      *
-     * @param $image (array) containing the height and width of the image
+     * @param $size (array) containing the height and width of the image
      * @param $location (string) The full server path to the image
      *
      * @return Full path to the download file in the tmp/ folder
      */
-    public function generate_download_size( $size, $location=null ){
+    public function create_download_size( $size, $location=null ){
 
         $image_p = imagecreatetruecolor( $size['width'], $size['height'] );
         $image = imagecreatefromjpeg( $location );
@@ -158,8 +158,17 @@ function sell_media_process_download() {
              */
             $wp_upload_dir = wp_upload_dir();
             $attachment_id = get_post_meta( $item_id, '_sell_media_attachment_id', true );
-            $location = $wp_upload_dir['basedir'] . '/sell_media/' . get_post_meta( $attachment_id, '_sell_media_attached_file', true );
 
+            /**
+             * This is legacy code for older attached files
+             */
+            if ( $tmp = get_post_meta( $attachment_id, '_sell_media_attached_file', true ) ){
+                $_attached_file = $tmp;
+            } else {
+                $_attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+            }
+
+            $location = $wp_upload_dir['basedir'] . '/sell_media/' . $_attached_file;
 
             /**
              * Check if this download is an image, if it is we generate the download size
@@ -167,6 +176,7 @@ function sell_media_process_download() {
             $mime_type = wp_check_filetype( $location );
             $size = null;
             $license = null;
+
             if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ){
 
                 /**
@@ -200,33 +210,37 @@ function sell_media_process_download() {
                     }
                 }
                 $license_obj = get_term( $license_id, 'licenses' );
-                $license = '-' . $license_obj->slug;
+                if ( is_wp_error( $license_obj ) ){
+                    $license = null;
+                } else {
+                    $license = '-' . $license_obj->slug;
+                }
                 // End get license
 
 
-
                 if ( $term_id == 'sell_media_original_file' ){
+
                     $file_download = $location;
                     $delete_tmp = false;
 
                     list( $new_image['width'], $new_image['height'] ) = getimagesize( $file_download );
 
                 } else {
+
+                    $confirmed_size = sell_media_get_downloadable_size( $item_id, $term_id );
                     $new_image = array(
-                        'height' => sell_media_get_term_meta( $term_id, 'height', true ),
-                        'width' => sell_media_get_term_meta( $term_id, 'width', true )
+                        'height' => $confirmed_size['height'],
+                        'width'  => $confirmed_size['width']
                     );
 
-                    // $valid = $d->validate_download_size( $new_image, $location );
-                    // var_dump($valid);
-
-                    $file_download = $d->generate_download_size( $new_image, $location, true );
+                    $file_download = $d->create_download_size( $new_image, $location, true );
                     $delete_tmp = true;
 
                 }
 
                 $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
             } else {
+
                 $file_download = $location;
                 $delete_tmp = false;
             }
@@ -236,7 +250,6 @@ function sell_media_process_download() {
             $filename = $file_name_info['filename'] . $size . $license . '.' . $file_name_info['extension'];
 
             $d->force_download( $file_download, $delete_tmp, $filename );
-
             exit;
 
         } else {
