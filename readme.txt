@@ -198,6 +198,7 @@ Action hooks available:
 * Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
 * Feature: License descriptions now show on hover, next to the license on the dialog
 * Feature: Added tooltips to license descriptions
+* Feature: Download size is now displayed on the admin payments item page
 * Tweak: Added new attributes to 'sell_media_all_items' ( attributes: collection, show )
 * Tweak: Added a "Continue shopping" link on the checkout page
 * Tweak: Adjusting currency format in settings
@@ -209,6 +210,7 @@ Action hooks available:
 * Bug: Quantity totals are immediately calculated
 * Bug: Intermittent bug where items were added to the cart twice
 * Bug: Validate Safari new user registrations on checkout page
+* Bug: Downloads are now based on the constraints of the original image and the price group
 
 
 = 1.5.3 =

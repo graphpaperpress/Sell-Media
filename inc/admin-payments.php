@@ -75,33 +75,17 @@ function sell_media_payment_render_contact( $post ){
                 <tr>
                     <th scope="col">' . __('Item','sell_media') . '</th>
                     <th>' . __('Price','sell_media') . '</th>
+                    <th>' . __('Size','sell_media') . '</th>
                     <th>' . __('License','sell_media') . '</th>
                     <th>' . __('Download Link','sell_media') . '</th>
                 </tr>
             </thead>';
         print '<tbody>';
+        $cart = New Sell_Media_Cart;
         foreach( $links as $link ){
 
-            switch( $link['price_id'] ){
-                case 'sell_media_small_file':
-                    $price_id = 'small';
-                    break;
-                case 'sell_media_medium_file':
-                    $price_id = 'medium';
-                    break;
-                case 'sell_media_large_file':
-                    $price_id = 'large';
-                    break;
-                case 'sell_media_original_file':
-                    $price_id = "";
-                    break;
-                default:
-                    $price_id = null;
-                    break;
-            }
-
             if ( empty( $link['license_id'] ) ){
-                $license = null;
+                $license = __('None','sell_media');
             } else {
                 $license = get_term( $link['license_id'], 'licenses' );
                 $license = $license->name;
@@ -109,7 +93,8 @@ function sell_media_payment_render_contact( $post ){
 
             print '<tr class="" valign="top">';
             print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
-            print '<td>' . sell_media_item_price( $link['item_id'], true, $price_id, false ) . '</td>';
+            print '<td>' . sell_media_get_currency_symbol() . $cart->item_price( $link['item_id'], $link['price_id'] ) . '</td>';
+            print '<td>'.$cart->item_size( $link['price_id'] ).'</td>';
             print '<td>' . $license . '</td>';
             print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
             print '</tr>';

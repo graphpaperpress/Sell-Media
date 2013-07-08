@@ -50,12 +50,12 @@ Class Sell_Media_Cart {
      *
      * @param $post_id (int) Post ID of sell media item
      * @param $price_id (int) Term ID of price-group taxonomy
-     * @param $licnese_id (int) Term ID of licenses taxonomy
+     * @param $license_id (int) Term ID of licenses taxonomy
      *
      * @return price of an item including the markup amount with no currency symbol
      */
-    public function item_markup_total( $post_id=null, $price_id=null, $licnese_id=null ){
-        return sprintf('%0.2f', $this->item_markup_amount( $post_id, $price_id, $licnese_id ) + $this->item_price( $post_id, $price_id ) );
+    public function item_markup_total( $post_id=null, $price_id=null, $license_id=null ){
+        return sprintf('%0.2f', $this->item_markup_amount( $post_id, $price_id, $license_id ) + $this->item_price( $post_id, $price_id ) );
     }
 
 
