@@ -261,7 +261,13 @@ jQuery( document ).ready(function( $ ){
         } else {
             $('.sell-media-buy-button').removeAttr('disabled');
         }
-        $(this).parent().find(".license_desc").attr('title', license_desc);
+        $(this).parent().find(".license_desc").attr('data-tooltip', license_desc);
+        if ( license_desc == '' ){
+            $(this).parent().find(".license_desc").hide();
+        } else {
+            $(this).parent().find(".license_desc").show();
+        }
+
     });
 
     /**
