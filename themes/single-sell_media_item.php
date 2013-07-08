@@ -37,7 +37,6 @@ get_header(); ?>
 					<li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span> <?php sell_media_image_keywords( $post->ID ); ?></li>
 				<?php } ?>
 				<?php sell_media_image_sizes( $post->ID ); ?>
-				<?php //sell_media_item_prices( $post ); ?>
 				<?php do_action('sell_media_additional_list_items'); ?>
 
 			</ul>
