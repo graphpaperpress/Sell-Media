@@ -213,6 +213,7 @@ Changelog
 * Feature: Added shortcode to display all collections 'sell_media_list_all_collections' ( available shortcode attributes: thumbs, details )
 * Feature: Added price groups to the native WordPress bulk edit
 * Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
+* Feature: License descriptions now show on hover, next to the license on the dialog
 * Tweak: Added new attributes to 'sell_media_all_items' ( attributes: collection, show )
 * Tweak: Added a "Continue shopping" link on the checkout page
 * Tweak: Adjusting currency format in settings

@@ -473,7 +473,7 @@ function sell_media_item_form(){
                     <option value="" data-price="0" title="Select a license">-- <?php _e( 'Select a license' ); ?> --</option>
                     <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                 </select>
-                <div class="license_desc" title="Select a license"><?php _e( 'View License Description', 'sell_media'); ?></div>
+                <div class="license_desc" title="<?php _e('Select a license','sell_media'); ?>">?</div>
             </fieldset>
         <?php else : ?>
             <?php if ( ! empty( $term_id ) ) : ?>
@@ -481,7 +481,7 @@ function sell_media_item_form(){
                 <input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
                 <div class="license_text"><?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?></div>
                 <?php if ( ! empty( $licenses[0]->description ) ) : ?>
-                    <div class="license_desc small" title="<?php print $licenses[0]->description; ?>"><?php _e( 'View License Description', 'sell_media'); ?></div>
+                    <div class="license_desc small" title="<?php print $licenses[0]->description; ?>">?</div>
                 <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>

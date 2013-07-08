@@ -166,13 +166,15 @@
 }
 .sell-media-cart-dialog fieldset {
   margin: 0px 0 10px;
+  padding: 10px;
 }
 .sell-media-cart-dialog legend {
   margin: 0 5px;
   padding: 0 5px;
 }
 .sell-media-cart-dialog select {
-  margin: 10px;
+  /*margin: 10px;*/
+  float: left;
 }
 .sell-media-cart-dialog .total-container {
   margin: 1em 0 2em;
@@ -519,10 +521,12 @@ input[type="submit"].sell-media-buy-button-success:active {
 
 .license_desc,
 .license_text {
-  padding-left: 5px;
+  padding: 3px 0 0 5px;
 }
 .license_desc {
   cursor: help;
+  float: left;
+  font-size: 12px;
 }
 
 /*= Terms and Conditions
