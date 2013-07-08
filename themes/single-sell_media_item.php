@@ -36,8 +36,10 @@ get_header(); ?>
 				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'keywords' ) ) { ?>
 					<li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span> <?php sell_media_image_keywords( $post->ID ); ?></li>
 				<?php } ?>
-				<?php sell_media_item_prices( $post ); ?>
+				<?php sell_media_image_sizes( $post->ID ); ?>
+				<?php //sell_media_item_prices( $post ); ?>
 				<?php do_action('sell_media_additional_list_items'); ?>
+
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>
 		</div><!-- .sell-media-meta -->
