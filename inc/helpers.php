@@ -81,10 +81,7 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
         if ( in_array( 'administrator', $user->roles ) ){
             return admin_url();
         } else {
-        // Send to dashboard page
-            $options = get_option('sell_media_general_settings');
-            $page_id = $options['dashboard_page'];
-            return get_permalink( $page_id );
+            return $_SERVER['HTTP_REFERER'];
         }
     }
 }

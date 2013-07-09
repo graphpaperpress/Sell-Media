@@ -70,6 +70,7 @@ class SellMediaSettings {
             'checkout_page' => '',
             'thanks_page' => '',
             'dashboard_page' => '',
+            'login_page' => '',
             'customer_notification' => '',
             'style' => '',
             'plugin_credit' => '',
@@ -128,6 +129,7 @@ class SellMediaSettings {
         add_settings_field( 'checkout_page', 'Checkout Page', array( &$this, 'field_general_checkout_page' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'thanks_page', 'Thanks Page', array( &$this, 'field_general_thanks_page' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'dashboard_page', 'Dashboard Page', array( &$this, 'field_general_dashboard_page' ), $this->general_settings_key, 'section_general' );
+        add_settings_field( 'login_page', 'Login Page', array( &$this, 'field_general_login_page' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'customer_notification', 'Customer Notification', array( &$this, 'field_general_customer_notification' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'style', 'Style', array( &$this, 'field_general_style' ), $this->general_settings_key, 'section_general' );
         add_settings_field( 'plugin_credit', 'Plugin Credit', array( &$this, 'field_general_plugin_credit' ), $this->general_settings_key, 'section_general' );
@@ -472,6 +474,18 @@ class SellMediaSettings {
             <?php $this->build_field_pages_select( 'dashboard_page' ); ?>
         </select>
         <span class="desc"><?php _e( 'Where is your customer Dashboard page? This page will contain the <code>[sell_media_download_list]</code> shortcode.', 'sell_media' ); ?></span>
+        <?php
+    }
+
+    /*
+     * Login Page Option field callback
+     */
+    function field_general_login_page() {
+        ?>
+        <select name="<?php echo $this->general_settings_key; ?>[login_page]" id="<?php echo $this->general_settings_key; ?>[login_page]">
+            <?php $this->build_field_pages_select( 'login_page' ); ?>
+        </select>
+        <span class="desc"><?php _e( 'Where is your customer login page? This page will contain the <code>[sell_media_login]</code> shortcode.', 'sell_media' ); ?></span>
         <?php
     }
 
