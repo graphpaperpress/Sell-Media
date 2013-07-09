@@ -11,47 +11,75 @@ function sell_media_template_redirect(){
        $post_type = 'sell_media_item';
 
     $custom_templates = array(
+        'search' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/search-sell_media_item.php',
         'single'  => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-sell_media_item.php',
         'archive' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php'
         );
 
     $default_templates = array(
+        'search' => locate_template( 'search-sell_media_item.php' ),
         'single'   => locate_template( 'single-sell_media_item.php' ),
         'archive'  => locate_template( 'archive-sell_media_item.php' ),
         'taxonomy' => locate_template( 'taxonomy-' . get_query_var('taxonomy') . '.php' )
         );
 
-    if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
-
-        /**
-         * Single
-         */
+    /**
+     * Search - Check if is search AND post type is sell media
+     */
+    if ( is_search() && isset( $_GET['s'] ) && ! empty( $_GET['post_type[]'] ) && $_GET['post_type[]'] == 'sell_media_item' ) {
+        if ( file_exists( $default_templates['search'] ) ) return;
+        load_template( $custom_templates['search'] );
+        exit;
+    }
+    /**
+     * Single
+     */
+    elseif ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
         if ( file_exists( $default_templates['single'] ) ) return;
         load_template( $custom_templates['single'] );
         exit;
     }
-
     /**
      * Archive -- Check if this is an archive page AND post type is sell media
-     * OR is this a search request and is our post type sell media. If so we
-     * load the the archive template.
      */
-    elseif ( is_post_type_archive( $post_type ) && $post_type == 'sell_media_item' || isset( $_GET['s'] ) && ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
+    elseif ( is_post_type_archive( $post_type ) && $post_type == 'sell_media_item' ) {
         if ( file_exists( $default_templates['archive'] ) ) return;
         load_template( $custom_templates['archive'] );
         exit;
-    } elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
-        /**
-         * Taxonomies
-         */
+    }
+    /**
+     * Taxonomies
+     */
+    elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
         if ( file_exists( $default_templates['taxonomy'] ) ) return;
         load_template( $custom_templates['archive'] );
         exit;
     }
-
 }
 add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 
+function sell_media_get_search_form( $form ) {
+    $general_settings = get_option( 'sell_media_general_settings' );
+    $form = '<form role="search" method="get" id="searchform" class="sell-media-search-form" action="' . home_url( '/' ) . '" >
+    <div class="sell-media-search-form-inner">
+        <input type="text" value="' . get_search_query() . '" name="s" id="s" placeholder="' . __( 'Search', 'sell_media' ). '" />
+        <input type="hidden" value="' . get_search_query() . '" name="keyword" id="keyword" />
+        <a href="javascript://" class="sell-media-search-options-trigger"><span class="triangle"></span></a>
+        <span class="sell-media-search-options">
+            <label for="post_type">' . __( 'Search in', 'sell_media' ) . ':</label>
+            <select class="post_type_selector" name="post_type">
+                <option value="sell_media_item">' . $general_settings['post_type_slug'] . '</option>
+                <option value="post">' . __( 'Blog', 'sell_media' ) . '</option>
+            </select>
+        </span>
+        <input type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />
+    </div>
+    </form>';
+
+    return $form;
+}
+
+add_filter( 'get_search_form', 'sell_media_get_search_form' );
 
 /**
  * Loads a template from a specificed path

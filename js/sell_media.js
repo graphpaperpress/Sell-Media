@@ -380,11 +380,14 @@ jQuery( document ).ready(function( $ ){
         $('.payment-form-container').show();
     });
 
-    $('.sell-media-advanced-search-fields').toggle();
-
-    $('.sell-media-advanced-search').click(function(){
-        $('.sell-media-advanced-search-fields').slideToggle();
+    $('.sell-media-search-options-trigger').click(function(){
+        $('.sell-media-search-options').toggle();
     });
+
+    $( document ).on('change', '#s', function(){
+        var terms = $(this).val();
+        $('#keyword').val(terms);
+     });
 
     $("#sell-media-checkout table tr:nth-child(odd)").addClass("odd-row");
     $("#sell-media-checkout table td:first-child, #sell-media-checkout table th:first-child").addClass("first");

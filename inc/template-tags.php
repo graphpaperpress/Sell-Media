@@ -652,7 +652,6 @@ function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
  */
 function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
     $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
-
     $wp_upload_dir = wp_upload_dir();
     $attached_path_file  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
 
@@ -688,7 +687,6 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
              */
             $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
             $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
-
 
             /**
              * Build our array to be returned, the downloadable width and height
