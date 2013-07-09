@@ -433,7 +433,7 @@ function sell_media_item_form(){
                 <select id="sell_media_size_select" name="price_id">
                     <option value="" data-price="0">-- <?php _e( 'Select a size' ); ?> --</option>
                     <?php foreach( sell_media_image_sizes( $_POST['product_id'], false ) as $k => $v ) : ?>
-                        <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>"><?php echo $v['name']; ?>(<?php echo $v['width'] . ' x ' . $v['height']; ?>):<?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
+                        <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
                     <?php endforeach; ?>
                     <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
                         <?php _e( 'Original', 'sell_media' ); ?>
