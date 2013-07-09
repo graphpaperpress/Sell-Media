@@ -93,7 +93,7 @@ function sell_media_payment_render_contact( $post ){
 
             print '<tr class="" valign="top">';
             print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
-            print '<td>' . sell_media_get_currency_symbol() . $cart->item_price( $link['item_id'], $link['price_id'] ) . '</td>';
+            print '<td>' . sell_media_get_currency_symbol() . $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] ) . '</td>';
             print '<td>'.$cart->item_size( $link['price_id'] ).'</td>';
             print '<td>' . $license . '</td>';
             print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
