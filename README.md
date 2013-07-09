@@ -208,6 +208,13 @@ Upgrade Notice
 Changelog
 ---------
 
+1.5.5
+---
+* Feature: Add shortcode for custom login '[sell_media_login]'
+* Feature: Add setting for custom login page
+* Bug: Updated admin payment apply markup consistently
+* Bug: Updated paypal payments to no longer by 0 and have markup applied if added
+
 1.5.4
 ---
 * Feature: Added shortcode to display all collections 'sell_media_list_all_collections' ( available shortcode attributes: thumbs, details )
