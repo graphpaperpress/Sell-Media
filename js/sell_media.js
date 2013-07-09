@@ -424,7 +424,7 @@ jQuery( document ).ready(function( $ ){
         // Overlay set-up
         coordinates = sell_media_get_page_scroll();
         y = coordinates[1] + +100;
-        x = ( $(window).width() / 2 ) - ( $( '#terms-and-conditions-dialog' ).outerWidth() );
+        x = ( $(window).width() / 2 ) - ( $( '#terms-and-conditions-dialog' ).outerWidth() / 2 );
         $('#terms-and-conditions-dialog').css({
             'top': y + 'px',
             'left': x + 'px'

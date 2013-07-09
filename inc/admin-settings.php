@@ -555,7 +555,7 @@ class SellMediaSettings {
      */
     function field_terms_and_conditions(){
         ?>
-         <textarea name="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" id="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" style="width:50%;height:150px;" placeholder="<?php _e( 'Terms and Conditions', 'sell_media' ); ?>"><?php echo wp_filter_nohtml_kses( $this->general_settings['terms_and_conditions'] ); ?></textarea>
+         <textarea name="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" id="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" style="width:50%;height:150px;" placeholder="<?php _e( 'Terms and Conditions', 'sell_media' ); ?>"><?php echo stripslashes_deep( wp_filter_nohtml_kses( $this->general_settings['terms_and_conditions'] ) ); ?></textarea>
         <p class="desc"><?php _e( 'These "Terms and Conditions" will show up on the checkout page. Users must agree to these terms before completing their purchase.', 'sell_media' ); ?></p>
         <?php
     }

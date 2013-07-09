@@ -321,10 +321,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                                 <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>
                                                 </a>
                                             </span>
-                                            <div id="terms-and-conditions-dialog" style="display: none;">
-                                                <span class="close">&times;</span>
-                                                <?php echo nl2br( $general_settings['terms_and_conditions'] ); ?>
-                                            </div>
                                         </div>
                                     <?php endif; ?>
                                     <div class="button-container">
@@ -787,3 +783,21 @@ function sell_media_login_form_shortcode(){
 
 }
 add_shortcode( 'sell_media_login_form', 'sell_media_login_form_shortcode' );
+
+
+/**
+ * Add to wp_footer
+ * terms markup
+ *
+ * @return string
+ * @since 1.6
+ */
+function sell_media_terms_footer(){
+    $general_settings = get_option( 'sell_media_general_settings' );
+    if ( ! empty ( $general_settings['terms_and_conditions'] ) ) { ?>
+    <div id="terms-and-conditions-dialog" style="display: none;">
+        <span class="close">&times;</span>
+        <?php echo stripslashes_deep( nl2br( $general_settings['terms_and_conditions'] ) ); ?>
+    </div>
+<?php } }
+add_action( 'wp_footer', 'sell_media_terms_footer' );
