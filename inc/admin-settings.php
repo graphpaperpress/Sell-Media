@@ -246,6 +246,9 @@ class SellMediaSettings {
                         <div id="post-body-content">
                             <table class="form-table sell-media-price-groups-table">
                                 <tbody>
+                                    <tr>
+                                        <td colspan="4"><p><?php _e('The sizes listed below determine the maximum dimensions in pixels to use when inserting an image into the body of a post.','sell_media'); ?></p></td>
+                                    </tr>
                                     <?php if ( empty( $current_term_id ) ) : ?>
                                         <tr>
                                             <td><p class="description"></p></td>
@@ -261,11 +264,11 @@ class SellMediaSettings {
                                             </td>
                                             <td>
                                                 <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
-                                                <p class="description"><?php _e('Width (px)','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Max Width','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
-                                                <p class="description"><?php _e('Height (px)','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Max Height','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
@@ -287,11 +290,11 @@ class SellMediaSettings {
                                             <td>
                                                 <input type="hidden" class="sell-media-price-group-parent-id" name="new_child[ <?php echo $i; ?> ][parent]" value="<?php echo $current_term_id; ?>" />
                                                 <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][width]" value="">
-                                                <p class="description"><?php _e('Width (px)','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Max Width','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][height]" value="">
-                                                <p class="description"><?php _e('Height (px)','sell_media'); ?></p>
+                                                <p class="description"><?php _e('Max Height','sell_media'); ?></p>
                                             </td>
                                             <td>
                                                 <span class="description">$</span>
