@@ -192,6 +192,10 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.5.5 =
+* Feature: Add shortcode for custom login '[sell_media_login]'
+* Feature: Add setting for custom login page
+
 = 1.5.4 =
 * Feature: Added shortcode to display all collections 'sell_media_list_all_collections' ( available shortcode attributes: thumbs, details )
 * Feature: Added price groups to the native WordPress bulk edit
