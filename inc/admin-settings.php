@@ -247,7 +247,7 @@ class SellMediaSettings {
                             <table class="form-table sell-media-price-groups-table">
                                 <tbody>
                                     <tr>
-                                        <td colspan="4"><p><?php _e('The sizes listed below determine the maximum dimensions in pixels to use when inserting an image into the body of a post.','sell_media'); ?></p></td>
+                                        <td colspan="4"><p><?php _e('The sizes listed below determine the maximum dimensions in pixels.','sell_media'); ?></p></td>
                                     </tr>
                                     <?php if ( empty( $current_term_id ) ) : ?>
                                         <tr>
