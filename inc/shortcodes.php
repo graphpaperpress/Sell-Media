@@ -171,7 +171,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             foreach ( $items as $item ){
                 $price = $cart->item_price( $item['item_id'], $item['price_id'] );
                 $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-                $amount = $amount + $price['amount'] * $qty;
+                $amount = $amount + $price * $qty;
                 $quantity = $quantity + $qty;
             }
 
