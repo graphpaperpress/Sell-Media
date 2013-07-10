@@ -26,7 +26,7 @@ function sell_media_template_redirect(){
     /**
      * Search - Check if is search AND post type is sell media
      */
-    if ( is_search() && isset( $_GET['s'] ) && ! empty( $_GET['post_type[]'] ) && $_GET['post_type[]'] == 'sell_media_item' ) {
+    if ( isset( $_GET['s'] ) && ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
         if ( file_exists( $default_templates['search'] ) ) return;
         load_template( $custom_templates['search'] );
         exit;
@@ -63,13 +63,11 @@ function sell_media_get_search_form( $form ) {
     $form = '<form role="search" method="get" id="searchform" class="sell-media-search-form" action="' . home_url( '/' ) . '" >
     <div class="sell-media-search-form-inner">
         <input type="text" value="' . get_search_query() . '" name="s" id="s" placeholder="' . __( 'Search', 'sell_media' ). '" />
-        <input type="hidden" value="' . get_search_query() . '" name="keyword" id="keyword" />
-        <a href="javascript://" class="sell-media-search-options-trigger"><span class="triangle"></span></a>
         <span class="sell-media-search-options">
             <label for="post_type">' . __( 'Search in', 'sell_media' ) . ':</label>
             <select class="post_type_selector" name="post_type">
-                <option value="sell_media_item">' . $general_settings['post_type_slug'] . '</option>
                 <option value="post">' . __( 'Blog', 'sell_media' ) . '</option>
+                <option value="sell_media_item">' . $general_settings['post_type_slug'] . '</option>
             </select>
         </span>
         <input type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />

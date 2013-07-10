@@ -380,13 +380,16 @@ jQuery( document ).ready(function( $ ){
         $('.payment-form-container').show();
     });
 
-    $('.sell-media-search-options-trigger').click(function(){
-        $('.sell-media-search-options').toggle();
+    $( document ).on('focus', '#s', function(){
+        $('.sell-media-search-options').show();
     });
 
-    $( document ).on('change', '#s', function(){
-        var terms = $(this).val();
-        $('#keyword').val(terms);
+    $( document ).on('change', '.post_type_selector', function(){
+        var name = $('#s').attr('name');
+        if ( name == 's')
+            $('#s').attr('name', 'keyword');
+        else if ( name == 'keyword')
+            $('#s').attr('name', 's');
      });
 
     $("#sell-media-checkout table tr:nth-child(odd)").addClass("odd-row");
