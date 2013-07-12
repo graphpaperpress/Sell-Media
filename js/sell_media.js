@@ -381,7 +381,16 @@ jQuery( document ).ready(function( $ ){
     });
 
     $( document ).on('focus', '#s', function(){
-        $('.sell-media-search-options').show();
+        $(".sell-media-search-options").hide(); // Hide any open search boxes
+        $("~ .sell-media-search-options", this).show(); // Show the child search box for where we click
+    });
+
+
+    /**
+     * Hide our current seach option when the user clicks off the input field
+     */
+    $( document ).on('blur', '#s', function(){
+        // $("~ .sell-media-search-options", this).hide();
     });
 
     $( document ).on('change', '.post_type_selector', function(){

@@ -322,11 +322,27 @@ table#sell-media-subtotal-table th {
 }
 .sell-media-search-options {
   display: none;
-  float: left;
+  float: right;
   margin-bottom: 1em;
-  width: 100%;
+  width: 83px;
   clear: both;
+  text-align: left;
+  position: relative;
+  top: -30px;
+  left: -3px;
 }
+.sell-media-search-options ul {
+  background: #FFF;
+  top: 5px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0px 5px 5px;
+  border: solid #DDD;
+  border-width: 1px;
+  position: relative;
+  left: 1px;
+}
+.sell-media-search-options ul li {}
 .sell-media-search .sell-media-buy-button {
   float: left;
   clear: left;

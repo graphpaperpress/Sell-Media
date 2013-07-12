@@ -60,16 +60,22 @@ add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 
 function sell_media_get_search_form( $form ) {
     $general_settings = get_option( 'sell_media_general_settings' );
+
+    $current_post_type = empty( $_GET['post_type'] ) ? null : $_GET['post_type'];
+
     $form = '<form role="search" method="get" id="searchform" class="sell-media-search-form" action="' . home_url( '/' ) . '" >
     <div class="sell-media-search-form-inner">
         <input type="text" value="' . get_search_query() . '" name="s" id="s" placeholder="' . __( 'Search', 'sell_media' ). '" />
         <span class="sell-media-search-options">
-            <label for="post_type">' . __( 'Search in', 'sell_media' ) . ':</label>
-            <select class="post_type_selector" name="post_type">
-                <option value="post">' . __( 'Blog', 'sell_media' ) . '</option>
-                <option value="sell_media_item">' . $general_settings['post_type_slug'] . '</option>
-            </select>
+
+        <label for="post_type">' . __( 'Search in', 'sell_media' ) . ':</label>
+        <ul>
+            <li><input type="checkbox" class="post_type_selector" '.checked( $current_post_type, 'post', false ).' value="post" name="post_type" /><label>' . __( 'Blog', 'sell_media' ) . '</label></li>
+            <li><input type="checkbox" class="post_type_selector" '.checked( $current_post_type, 'sell_media_item', false ).' value="sell_media_item" name="post_type"><label>' . $general_settings['post_type_slug'] . '</label></li>
+        </ul>
         </span>
+
+
         <input type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />
     </div>
     </form>';

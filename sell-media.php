@@ -658,6 +658,8 @@ class SellMedia {
 
         if ( is_admin() ) return $query;
 
+        sell_media_filter_search();
+
         if ( ! empty( $_GET['s'] ) ) return;
 
         /**
