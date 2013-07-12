@@ -626,7 +626,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 	} else {
 
 		$html = null;
-		$html .= '<div class="sell-media-collections-shortcode">';
+		$html .= '<div class="sell-media-collections-shortcode sell-media">';
 
 		$sell_media_size_settings = get_option( 'sell_media_size_settings');
 
@@ -669,7 +669,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
 			if ( $post_count != 0 ) : ?>
 				<?php
-				$html .= '<div class="sell-media-grid third">';
+				$html .= '<div class="sell-media-grid sell-media-grid-collection third">';
 					$args = array(
 							'posts_per_page' => 1,
 							'taxonomy' => 'collection',
