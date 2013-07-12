@@ -192,6 +192,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.5.6 =
+* Feature: Admin shows collection icon on collection edit column
+
 = 1.5.5 =
 * Feature: Add shortcode for custom login '[sell_media_login]'
 * Feature: Add setting for custom login page
