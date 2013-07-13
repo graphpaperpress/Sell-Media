@@ -488,7 +488,7 @@ class SellMediaSettings {
         <select name="<?php echo $this->general_settings_key; ?>[login_page]" id="<?php echo $this->general_settings_key; ?>[login_page]">
             <?php $this->build_field_pages_select( 'login_page' ); ?>
         </select>
-        <span class="desc"><?php _e( 'Where is your customer login page? This page will contain the <code>[sell_media_login]</code> shortcode.', 'sell_media' ); ?></span>
+        <span class="desc"><?php _e( 'Where is your customer login page? This page will contain the <code>[sell_media_login_form]</code> shortcode.', 'sell_media' ); ?></span>
         <?php
     }
 
