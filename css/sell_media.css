@@ -45,6 +45,10 @@
   left: 25px;
 }
 
+.error {
+  color:#ff0000;
+}
+
 /*= Single
 -------------------------------------------------------------- */
 .sell-media .sell-media-content {

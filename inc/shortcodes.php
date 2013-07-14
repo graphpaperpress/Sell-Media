@@ -772,6 +772,9 @@ function sell_media_login_form_shortcode(){
         return sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . get_permalink( $general_settings['checkout_page'] ) . '">Checkout now</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">continue shopping</a>' );
 
     } else {
+        if( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
+            echo "<span class='error'>".__("Login Failed", "sell_media")."</span>";
+        }
 
         $args = array(
             'redirect' => site_url( $_SERVER['REQUEST_URI'] )
@@ -783,6 +786,28 @@ function sell_media_login_form_shortcode(){
 
 }
 add_shortcode( 'sell_media_login_form', 'sell_media_login_form_shortcode' );
+
+/**
+ * Redirect the failed login to the same page
+ * 
+ * @since 1.6
+ */
+add_action( 'wp_login_failed', 'my_front_end_login_fail' );  // hook failed login
+
+function my_front_end_login_fail( $username ) {
+   $referrer = $_SERVER['HTTP_REFERER'];  // where did the post submission come from?
+   // if there's a valid referrer, and it's not the default log-in screen
+   if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
+        if ( strpos( $referrer, '?') !== false ) {
+          $url = $referrer . '&login=failed';
+        } else {
+          $url = $referrer . '?login=failed';
+        }
+      wp_redirect( $url );  // let's append some information (login=failed) to the URL for the theme to use
+      exit;
+   }
+}
+
 
 
 /**
