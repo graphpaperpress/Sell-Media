@@ -60,27 +60,41 @@ add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 
 function sell_media_get_search_form( $form ) {
     $general_settings = get_option( 'sell_media_general_settings' );
+    $current_post_type = empty( $_GET['post_type'] ) ? 'sell_media_item' : $_GET['post_type'];
+    $current_collection = empty( $_GET['collection'] ) ? 'sell_media_item' : $_GET['collection'];
+    $current_keyword = empty( $_GET['keyword'] ) ? 'sell_media_item' : $_GET['keyword'];
 
-    $current_post_type = empty( $_GET['post_type'] ) ? null : $_GET['post_type'];
-
-    $form = '<form role="search" method="get" id="searchform" class="sell-media-search-form" action="' . home_url( '/' ) . '" >
+    ob_start(); ?>
+    <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php home_url( '/' ); ?>" >
     <div class="sell-media-search-form-inner">
-        <input type="text" value="' . get_search_query() . '" name="s" id="s" placeholder="' . __( 'Search', 'sell_media' ). '" />
-        <span class="sell-media-search-options">
+        <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php __( 'Search', 'sell_media' ); ?>" />
+        <div class="sell-media-search-options">
+            <label for="post_type"><?php _e( 'Search in', 'sell_media' ); ?>:</label>
+            <select name="post_type" class="post_type_selector">
+                <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
+                <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php echo $general_settings['post_type_slug']; ?></option>
+            </select>
 
-        <label for="post_type">' . __( 'Search in', 'sell_media' ) . ':</label>
-        <ul>
-            <li><input type="checkbox" class="post_type_selector" '.checked( $current_post_type, 'post', false ).' value="post" name="post_type" /><label>' . __( 'Blog', 'sell_media' ) . '</label></li>
-            <li><input type="checkbox" class="post_type_selector" '.checked( $current_post_type, 'sell_media_item', false ).' value="sell_media_item" name="post_type"><label>' . $general_settings['post_type_slug'] . '</label></li>
-        </ul>
-        </span>
+            <div class="sell-media-search-taxonomies">
+                <select name="keyword" id="keywords_select">
+                    <option value=""><?php _e('Keyword','sell_media'); ?>:</option>
+                    <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
+                        <option value="<?php echo $term->term_id; ?>" <?php selected( $current_keyword, $term->term_id ); ?>><?php echo $term->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-
-        <input type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />
+                <select name="collection" id="collection_select">
+                    <option value=""><?php _e('Collection','sell_media'); ?>:</option>
+                    <?php foreach( get_terms( 'collection' ) as $term ) : ?>
+                        <option value="<?php echo $term->term_id; ?>" <?php selected( $current_collection, $term->term_id ); ?>><?php echo $term->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>'" />
     </div>
-    </form>';
-
-    return $form;
+    </form>
+    <?php return ob_get_clean();
 }
 
 add_filter( 'get_search_form', 'sell_media_get_search_form' );

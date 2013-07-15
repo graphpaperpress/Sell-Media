@@ -393,12 +393,21 @@ jQuery( document ).ready(function( $ ){
         // $("~ .sell-media-search-options", this).hide();
     });
 
+
     $( document ).on('change', '.post_type_selector', function(){
         var name = $('#s').attr('name');
+
         if ( name == 's')
             $('#s').attr('name', 'keyword');
         else if ( name == 'keyword')
             $('#s').attr('name', 's');
+
+        $selected = $('option:selected',this);
+        if ( $selected.val() == 'sell_media_item' ){
+            $('.sell-media-search-taxonomies').show();
+        } else {
+            $('.sell-media-search-taxonomies').hide();
+        }
      });
 
     $("#sell-media-checkout table tr:nth-child(odd)").addClass("odd-row");

@@ -730,65 +730,11 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
 }
 
 
-function sell_media_filter_search( $query ){
-    if ( $query->is_search && ! is_admin() ){
-
-        /**
-         * Search via post title and post content for our string
-         *
-         * build a list of post IDS
-         */
-        global $wpdb;
-        $results = $wpdb->get_results( $wpdb->prepare(
-                "SELECT `ID`
-                FROM {$wpdb->prefix}posts
-                WHERE `post_title` LIKE '%s' AND `post_status` LIKE 'publish'
-                OR `post_content` LIKE '%s' AND `post_status` LIKE 'publish'
-                AND `post_type` LIKE '%s';
-                ",
-                '%' . esc_attr( $_GET['s'] ) . '%',
-                '%' . esc_attr( $_GET['s'] ) . '%',
-                esc_attr( $_GET['post_type'] ) )
-            );
-        $post_ids = array();
-        foreach( $results as $r ){
-            $post_ids[] = $r->ID;
-        }
-
-
-        /**
-         * Get post via keywords
-         * add to the list of post ids
-         */
-        $keywords = explode( '+', $_GET['s'] );
-        foreach( $keywords as $keyword ){
-            $term_obj = get_term_by( 'name', $keyword, 'keywords' );
-            $term_ids[] = $term_obj->term_id;
-        }
-
-        $args = array(
-            'post_type' => array('sell_media_item'),
-            'post_status' => 'publish',
-            'tax_query' => array(
-                    'relation' => 'OR',
-                    array(
-                        'taxonomy' => 'keywords',
-                        'field'    => 'id',
-                        'terms'    => $term_ids
-                    )
-                )
-            );
-        $q = New WP_Query( $args );
-        foreach( $q->posts as $post ){
-            $post_ids[] = $post->ID;
-        }
-
-        $final_args = array(
-                'post_type' => array('sell_media_item'),
-                'post__in' => $post_ids,
-                'post_status' => 'publish'
-                );
-
-        return query_posts( $final_args );
+function sell_media_search_where( $where='' ){
+    if ( ! empty( $_GET['s'] ) ){
+        $search = trim( esc_attr( $_GET['s'] ) );
+        $where .= "OR `post_title` LIKE '%".$search."%' AND `post_status` LIKE 'publish'
+        OR `post_content` LIKE '%".$search."%' AND `post_status` LIKE 'publish'";
     }
+    return $where;
 }

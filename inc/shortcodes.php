@@ -59,7 +59,7 @@ add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
  * @since 0.1
  */
 function sell_media_search_shortcode( $atts, $content = null ) {
-    echo get_search_form();
+    return get_search_form();
 }
 add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
 
