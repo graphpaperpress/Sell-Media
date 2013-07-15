@@ -320,16 +320,19 @@ table#sell-media-subtotal-table th {
   margin-bottom: 1em;
   float: left;
 }
+.sell-media-search-post-types {
+  position: absolute;
+  left: 35px;
+  top: 0;
+  width: 125px;
+}
 .sell-media-search-options {
-  display: none;
-  float: right;
-  margin-bottom: 1em;
-  width: 83px;
-  clear: both;
-  text-align: left;
-  position: relative;
-  top: -30px;
-  left: -3px;
+  text-align: right;
+  position: absolute;
+  top: 6px;
+  left: 139px;
+  z-index: 999;
+
 }
 .sell-media-search-options ul {
   background: #FFF;
@@ -342,7 +345,6 @@ table#sell-media-subtotal-table th {
   position: relative;
   left: 1px;
 }
-.sell-media-search-options ul li {}
 .sell-media-search .sell-media-buy-button {
   float: left;
   clear: left;
@@ -355,7 +357,27 @@ table#sell-media-subtotal-table th {
   border-color: #9e9e9e transparent transparent transparent;
   -webkit-transform:rotate(360deg)
 }
-
+.sell-media-search-form-inner input[type="text"] {
+  width: 288px;
+}
+.sell-media-search-taxonomies {
+  background: #FFF;
+  border: 1px solid #DDD;
+  margin-top: 24px;
+  padding: 10px 10px 0;
+}
+.sell-media-search-taxonomies select {
+  display: block;
+  margin: 0 0 10px;
+  min-width: 100%;
+}
+.widget-area .sell-media-search-options {
+  left: -22px;
+  top: 31px;
+}
+.widget-area .sell-media-search-post-types {
+  top: -26px;
+}
 /*= Buttons
 -------------------------------------------------------------- */
 .sell-media-buy-button,

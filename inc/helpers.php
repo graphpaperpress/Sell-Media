@@ -69,11 +69,13 @@ function sell_media_get_search_form( $form ) {
     <div class="sell-media-search-form-inner">
         <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php __( 'Search', 'sell_media' ); ?>" />
         <div class="sell-media-search-options">
-            <label for="post_type"><?php _e( 'Search in', 'sell_media' ); ?>:</label>
-            <select name="post_type" class="post_type_selector">
-                <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
-                <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php echo $general_settings['post_type_slug']; ?></option>
-            </select>
+            <div class="sell-media-search-post-types">
+                <label for="post_type"><?php _e( 'Search in', 'sell_media' ); ?>:</label>
+                <select name="post_type" class="post_type_selector">
+                    <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
+                    <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php echo $general_settings['post_type_slug']; ?></option>
+                </select>
+            </div>
 
             <div class="sell-media-search-taxonomies">
                 <select name="keyword" id="keywords_select">
@@ -91,7 +93,7 @@ function sell_media_get_search_form( $form ) {
                 </select>
             </div>
         </div>
-        <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>'" />
+        <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>" />
     </div>
     </form>
     <?php return ob_get_clean();
