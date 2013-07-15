@@ -298,6 +298,14 @@ table#sell-media-subtotal-table th {
 
 /*= Search
 -------------------------------------------------------------- */
+.sell-media-search-post-types {
+  position: absolute;
+}
+.sell-media-search-options {
+  text-align: right;
+  position: absolute;
+  z-index: 999;
+}
 .sell-media-search-form-inner {
   position: relative;
 }
@@ -319,20 +327,6 @@ table#sell-media-subtotal-table th {
   text-transform: uppercase;
   margin-bottom: 1em;
   float: left;
-}
-.sell-media-search-post-types {
-  position: absolute;
-  left: 35px;
-  top: 0;
-  width: 125px;
-}
-.sell-media-search-options {
-  text-align: right;
-  position: absolute;
-  top: 6px;
-  left: 139px;
-  z-index: 999;
-
 }
 .sell-media-search-options ul {
   background: #FFF;
@@ -363,7 +357,6 @@ table#sell-media-subtotal-table th {
 .sell-media-search-taxonomies {
   background: #FFF;
   border: 1px solid #DDD;
-  margin-top: 24px;
   padding: 10px 10px 0;
 }
 .sell-media-search-taxonomies select {
@@ -371,12 +364,32 @@ table#sell-media-subtotal-table th {
   margin: 0 0 10px;
   min-width: 100%;
 }
+
+/* Sell Media search on archive page */
+#sell-media-archive .sell-media-search-post-types {
+  left: 155px;
+  top: 5px;
+}
+#sell-media-archive .sell-media-search-options {
+  top: 30px;
+  left: 137px;
+}
+
+/* Sell Media search on widget areas in twenty tweleve */
 .widget-area .sell-media-search-options {
-  left: -22px;
-  top: 31px;
+  left: 12px;
+  top: 30px;
 }
 .widget-area .sell-media-search-post-types {
-  top: -26px;
+  top: 6px;
+  left: 60px;
+}
+.widget-area .sell-media-search-form-inner input#s{
+  width: 67.66666666666%;
+}
+.widget-area .widget_search label {
+  display: inline;
+  font-size: 11px;
 }
 /*= Buttons
 -------------------------------------------------------------- */

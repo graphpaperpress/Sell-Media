@@ -67,17 +67,18 @@ function sell_media_get_search_form( $form ) {
     ob_start(); ?>
     <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php home_url( '/' ); ?>" >
     <div class="sell-media-search-form-inner">
-        <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php __( 'Search', 'sell_media' ); ?>" />
-        <div class="sell-media-search-options">
-            <div class="sell-media-search-post-types">
-                <label for="post_type"><?php _e( 'Search in', 'sell_media' ); ?>:</label>
-                <select name="post_type" class="post_type_selector">
-                    <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
-                    <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php echo $general_settings['post_type_slug']; ?></option>
-                </select>
-            </div>
+        <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'sell_media' ); ?>" />
 
-            <div class="sell-media-search-taxonomies">
+        <div class="sell-media-search-post-types">
+            <label for="post_type"><?php _e( 'Search in', 'sell_media' ); ?>:</label>
+            <select name="post_type" class="post_type_selector">
+                <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
+                <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php echo $general_settings['post_type_slug']; ?></option>
+            </select>
+        </div>
+
+        <div class="sell-media-search-options">
+            <div class="sell-media-search-taxonomies" style="<?php if ( $current_post_type != 'sell_media_item' ) echo 'display: none'; ?>">
                 <select name="keyword" id="keywords_select">
                     <option value=""><?php _e('Keyword','sell_media'); ?>:</option>
                     <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
