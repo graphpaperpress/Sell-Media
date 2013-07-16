@@ -467,20 +467,32 @@ jQuery( document ).ready(function( $ ){
      });
 
 
-
     $( document ).on('change', '.post_type_selector', function(){
-        var name = $('#s').attr('name');
 
-        if ( name == 's')
-            $('#s').attr('name', 'keyword');
-        else if ( name == 'keyword')
-            $('#s').attr('name', 's');
+        /**
+         * Cache the objects for later use.
+         */
+        $collection = $('#collection_select');
+        $keywords = $('#keywords_select');
 
-        $selected = $('option:selected',this);
-        if ( $selected.val() == 'sell_media_item' ){
-            $('.sell-media-search-taxonomies').show();
-        } else {
+        /**
+         * We store the field name as an attribute since will toggle it later.
+         * For our purposes its easier to just remove the name attribute so it
+         * isn't sent to PHP in $_POST
+         */
+        $collection.attr('data-name', $collection.attr('name') );
+        $keywords.attr('data-name', $keywords.attr('name') );
+
+        if ( $('.sell-media-search-taxonomies').css('display') == 'block' ){
             $('.sell-media-search-taxonomies').hide();
+
+            $collection.attr('name','');
+            $keywords.attr('name','');
+        } else {
+            $('.sell-media-search-taxonomies').show();
+
+            $collection.attr('name', $collection.attr( 'data-name') );
+            $keywords.attr('name', $keywords.attr( 'data-name' ) );
         }
      });
 
