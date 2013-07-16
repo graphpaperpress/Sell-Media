@@ -86,8 +86,6 @@ if ( ! empty( $_GET['keyword'] ) || ! empty( $_GET['collection'] ) ){
 				<header class="entry-header">
 					<h1 class="entry-title">
 						<?php if ( ! empty( $search_terms['s'] ) ) : ?><?php printf( __( 'Search Results for: %s', 'sell_media' ), '<span>'.$search_terms['s'].'</span>' ); ?><?php endif; ?>
-						<?php if ( ! empty( $search_terms['keyword'] ) ) : ?><?php printf( __( 'Keyword: %s', 'sell_media' ), '<span>'.$search_terms['keyword']['name'].'</span>' ); ?><?php endif; ?>
-						<?php if ( ! empty( $search_terms['collection'] ) ) : ?><?php printf( __( 'Collection: %s', 'sell_media' ), '<span>'.$search_terms['collection']['name'].'</span>' ); ?><?php endif; ?>
 					</h1>
 				</header>
 				<div class="sell-media-grid-container">

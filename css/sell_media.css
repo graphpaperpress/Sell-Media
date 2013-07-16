@@ -298,36 +298,25 @@ table#sell-media-subtotal-table th {
 
 /*= Search
 -------------------------------------------------------------- */
-.sell-media-search-post-types {
-  position: absolute;
-}
 .sell-media-search-options {
   text-align: right;
   position: absolute;
   z-index: 999;
 }
+
 .sell-media-search-form-inner {
   position: relative;
 }
-.sell-media-search-options-trigger {
-  position: absolute;
-  top: 18px;
-  right: 10px;
-}
+
 .sell-media-search-form label {
   font-size: 11px;
   color: #999;
 }
+
 .sell-media-search-form select {
   text-transform: capitalize;
 }
-.sell-media-search-options-trigger {
-  margin-left: 70px;
-  font-size: 0.75em;
-  text-transform: uppercase;
-  margin-bottom: 1em;
-  float: left;
-}
+
 .sell-media-search-options ul {
   background: #FFF;
   top: 5px;
@@ -339,27 +328,35 @@ table#sell-media-subtotal-table th {
   position: relative;
   left: 1px;
 }
+
 .sell-media-search .sell-media-buy-button {
   float: left;
   clear: left;
 }
+
 .triangle {
   width: 0px;
   height: 0px;
   border-style: solid;
   border-width: 5px 5px 0 5px;
   border-color: #9e9e9e transparent transparent transparent;
-  -webkit-transform:rotate(360deg)
+  -webkit-transform:rotate(360deg);
+  position: absolute;
+  top: 13px;
+  left: 66%;
 }
+
 .sell-media-search-form-inner input[type="text"] {
   width: 288px;
 }
-.sell-media-search-taxonomies {
+
+.sell-media-search-options {
   background: #FFF;
   border: 1px solid #DDD;
   padding: 10px 10px 0;
 }
-.sell-media-search-taxonomies select {
+
+.sell-media-search-options select {
   display: block;
   margin: 0 0 10px;
   min-width: 100%;
@@ -374,15 +371,15 @@ table#sell-media-subtotal-table th {
   top: 30px;
   left: 137px;
 }
-
+#sell-media-archive .triangle {
+  left: 280px;
+}
 /* Sell Media search on widget areas in twenty tweleve */
 .widget-area .sell-media-search-options {
   left: 12px;
   top: 30px;
 }
 .widget-area .sell-media-search-post-types {
-  top: 6px;
-  left: 60px;
 }
 .widget-area .sell-media-search-form-inner input#s{
   width: 67.66666666666%;
@@ -391,6 +388,8 @@ table#sell-media-subtotal-table th {
   display: inline;
   font-size: 11px;
 }
+
+
 /*= Buttons
 -------------------------------------------------------------- */
 .sell-media-buy-button,

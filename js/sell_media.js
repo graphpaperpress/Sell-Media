@@ -380,35 +380,6 @@ jQuery( document ).ready(function( $ ){
         $('.payment-form-container').show();
     });
 
-    $( document ).on('focus', '#s', function(){
-        $(".sell-media-search-options").hide(); // Hide any open search boxes
-        $("~ .sell-media-search-options", this).show(); // Show the child search box for where we click
-    });
-
-
-    /**
-     * Hide our current seach option when the user clicks off the input field
-     */
-    $( document ).on('blur', '#s', function(){
-        // $("~ .sell-media-search-options", this).hide();
-    });
-
-
-    $( document ).on('change', '.post_type_selector', function(){
-        var name = $('#s').attr('name');
-
-        if ( name == 's')
-            $('#s').attr('name', 'keyword');
-        else if ( name == 'keyword')
-            $('#s').attr('name', 's');
-
-        $selected = $('option:selected',this);
-        if ( $selected.val() == 'sell_media_item' ){
-            $('.sell-media-search-taxonomies').show();
-        } else {
-            $('.sell-media-search-taxonomies').hide();
-        }
-     });
 
     $("#sell-media-checkout table tr:nth-child(odd)").addClass("odd-row");
     $("#sell-media-checkout table td:first-child, #sell-media-checkout table th:first-child").addClass("first");
@@ -475,5 +446,42 @@ jQuery( document ).ready(function( $ ){
         $('#terms-and-conditions-dialog').hide();
         $('#overlay').remove();
     });
+
+    $( document ).on('focus', '#s', function(){
+        $(".sell-media-search-options").hide(); // Hide any open search boxes
+        $("~ .sell-media-search-options", this).show(); // Show the child search box for where we click
+    });
+
+
+    /**
+     * Hide our current seach option when the user clicks off the input field
+     */
+    $( document ).on('blur', '#s', function(){
+        // $("~ .sell-media-search-options", this).hide();
+    });
+
+
+    $( document ).on('click', '.sell-media-search-options-trigger', function(e){
+        e.preventDefault();
+        $('.sell-media-search-options').toggle();
+     });
+
+
+
+    $( document ).on('change', '.post_type_selector', function(){
+        var name = $('#s').attr('name');
+
+        if ( name == 's')
+            $('#s').attr('name', 'keyword');
+        else if ( name == 'keyword')
+            $('#s').attr('name', 's');
+
+        $selected = $('option:selected',this);
+        if ( $selected.val() == 'sell_media_item' ){
+            $('.sell-media-search-taxonomies').show();
+        } else {
+            $('.sell-media-search-taxonomies').hide();
+        }
+     });
 
 });

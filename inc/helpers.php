@@ -68,33 +68,34 @@ function sell_media_get_search_form( $form ) {
     <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php home_url( '/' ); ?>" >
     <div class="sell-media-search-form-inner">
         <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'sell_media' ); ?>" />
+        <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>" />
+        <div class=""><a href="#" class="sell-media-search-options-trigger triangle"></a></div>
 
-        <div class="sell-media-search-post-types">
-            <label for="post_type"><?php _e( 'Search in', 'sell_media' ); ?>:</label>
-            <select name="post_type" class="post_type_selector">
-                <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
-                <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php echo $general_settings['post_type_slug']; ?></option>
-            </select>
-        </div>
-
-        <div class="sell-media-search-options">
-            <div class="sell-media-search-taxonomies" style="<?php if ( $current_post_type != 'sell_media_item' ) echo 'display: none'; ?>">
+        <div class="sell-media-search-options" style="display: none;">
+            <div class="sell-media-search-post-types">
+                <select name="post_type" class="post_type_selector">
+                    <option value=""><?php _e('Search in...','sell_media'); ?></option>
+                    <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
+                    <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php _e('Media','sell_media'); ?></option>
+                </select>
+            </div>
+            <div class="sell-media-search-taxonomies">
                 <select name="keyword" id="keywords_select">
-                    <option value=""><?php _e('Keyword','sell_media'); ?>:</option>
+                    <option value=""><?php _e('Select a keyword','sell_media'); ?>:</option>
                     <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
                         <option value="<?php echo $term->term_id; ?>" <?php selected( $current_keyword, $term->term_id ); ?>><?php echo $term->name; ?></option>
                     <?php endforeach; ?>
                 </select>
 
                 <select name="collection" id="collection_select">
-                    <option value=""><?php _e('Collection','sell_media'); ?>:</option>
+                    <option value=""><?php _e('Select a collection','sell_media'); ?>:</option>
                     <?php foreach( get_terms( 'collection' ) as $term ) : ?>
                         <option value="<?php echo $term->term_id; ?>" <?php selected( $current_collection, $term->term_id ); ?>><?php echo $term->name; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
-        <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>" />
+
     </div>
     </form>
     <?php return ob_get_clean();
