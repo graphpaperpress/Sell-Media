@@ -448,16 +448,15 @@ jQuery( document ).ready(function( $ ){
     });
 
     $( document ).on('focus', '#s', function(){
-        $(".sell-media-search-options").hide(); // Hide any open search boxes
-        $("~ .sell-media-search-options", this).show(); // Show the child search box for where we click
+        // $(".sell-media-search-options").hide(); // Hide any open search boxes
+        // $("~ .sell-media-search-options", this).show(); // Show the child search box for where we click
     });
-
 
     /**
      * Hide our current seach option when the user clicks off the input field
      */
     $( document ).on('blur', '#s', function(){
-        // $("~ .sell-media-search-options", this).hide();
+        $(".sell-media-search-options", this).hide();
     });
 
 
@@ -475,14 +474,12 @@ jQuery( document ).ready(function( $ ){
         $collection = $('#collection_select');
         $keywords = $('#keywords_select');
 
+
         /**
          * We store the field name as an attribute since will toggle it later.
          * For our purposes its easier to just remove the name attribute so it
          * isn't sent to PHP in $_POST
          */
-        $collection.attr('data-name', $collection.attr('name') );
-        $keywords.attr('data-name', $keywords.attr('name') );
-
         if ( $('.sell-media-search-taxonomies').css('display') == 'block' ){
             $('.sell-media-search-taxonomies').hide();
 

@@ -62,8 +62,15 @@ function sell_media_get_search_form( $form ) {
     $general_settings = get_option( 'sell_media_general_settings' );
     $current_post_type = empty( $_GET['post_type'] ) ? 'sell_media_item' : $_GET['post_type'];
     $current_collection = empty( $_GET['collection'] ) ? 'sell_media_item' : $_GET['collection'];
-    $current_keyword = empty( $_GET['keyword'] ) ? 'sell_media_item' : $_GET['keyword'];
+    $current_keyword = empty( $_GET['keywords'] ) ? 'sell_media_item' : $_GET['keywords'];
 
+    if ( $current_post_type == 'sell_media_item' ){
+        $name_collection = 'collection';
+        $name_keywords = 'keywords';
+    } else {
+        $name_collection = null;
+        $name_keywords = null;
+    }
     ob_start(); ?>
     <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php home_url( '/' ); ?>" >
     <div class="sell-media-search-form-inner">
@@ -79,15 +86,15 @@ function sell_media_get_search_form( $form ) {
                     <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php _e('Media','sell_media'); ?></option>
                 </select>
             </div>
-            <div class="sell-media-search-taxonomies">
-                <select name="keyword" id="keywords_select">
+            <div class="sell-media-search-taxonomies" style="display: <?php echo $current_post_type != 'sell_media_item' ? 'none' : 'block'; ?>">
+                <select name="<?php echo $name_collection; ?>" data-name="keywords" id="keywords_select">
                     <option value=""><?php _e('Select a keyword','sell_media'); ?>:</option>
                     <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
                         <option value="<?php echo $term->term_id; ?>" <?php selected( $current_keyword, $term->term_id ); ?>><?php echo $term->name; ?></option>
                     <?php endforeach; ?>
                 </select>
 
-                <select name="collection" id="collection_select">
+                <select name="<?php echo $name_collection; ?>" data-name="collection" id="collection_select">
                     <option value=""><?php _e('Select a collection','sell_media'); ?>:</option>
                     <?php foreach( get_terms( 'collection' ) as $term ) : ?>
                         <option value="<?php echo $term->term_id; ?>" <?php selected( $current_collection, $term->term_id ); ?>><?php echo $term->name; ?></option>
@@ -100,7 +107,6 @@ function sell_media_get_search_form( $form ) {
     </form>
     <?php return ob_get_clean();
 }
-
 add_filter( 'get_search_form', 'sell_media_get_search_form' );
 
 /**
