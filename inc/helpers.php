@@ -87,7 +87,7 @@ function sell_media_get_search_form( $form ) {
                 </select>
             </div>
             <div class="sell-media-search-taxonomies" style="display: <?php echo $current_post_type != 'sell_media_item' ? 'none' : 'block'; ?>">
-                <select name="<?php echo $name_collection; ?>" data-name="keywords" id="keywords_select">
+                <select name="<?php echo $name_keywords; ?>" data-name="keywords" id="keywords_select">
                     <option value=""><?php _e('Select a keyword','sell_media'); ?>:</option>
                     <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
                         <option value="<?php echo $term->term_id; ?>" <?php selected( $current_keyword, $term->term_id ); ?>><?php echo $term->name; ?></option>
