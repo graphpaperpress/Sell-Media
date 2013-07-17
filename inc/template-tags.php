@@ -797,7 +797,7 @@ function sell_media_search_query(){
         if ( get_query_var('paged') ) {
             $paged = get_query_var('paged');
         } else {
-            $page = 1;
+            $paged = 1;
         }
         $defaults = array(
             'post_type' => array('sell_media_item'),

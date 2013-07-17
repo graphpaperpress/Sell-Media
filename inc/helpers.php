@@ -30,7 +30,6 @@ function sell_media_template_redirect(){
         && isset( $_GET['post_type'] ) && $_GET['post_type'] != 'posts'
         || ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item'
         ) {
-
         if ( file_exists( $default_templates['search'] ) ) return;
         load_template( $custom_templates['search'] );
         exit;
@@ -76,7 +75,7 @@ function sell_media_get_search_form( $form ) {
         $name_keywords = null;
     }
     ob_start(); ?>
-    <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php home_url( '/' ); ?>" >
+    <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php echo home_url( '/' ); ?>" >
     <div class="sell-media-search-form-inner">
         <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'sell_media' ); ?>" />
         <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>" />
