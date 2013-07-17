@@ -26,7 +26,8 @@ function sell_media_template_redirect(){
     /**
      * Search - Check if is search AND post type is sell media
      */
-    if ( isset( $_GET['s'] ) && ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
+    if ( is_search() && isset( $_GET['post_type'] ) && $_GET['post_type'] != 'posts'
+        || ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
         if ( file_exists( $default_templates['search'] ) ) return;
         load_template( $custom_templates['search'] );
         exit;
