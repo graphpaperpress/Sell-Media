@@ -1,5 +1,7 @@
 <?php
 
+status_header('200 OK');
+
 /**
  * The template for displaying Search pages in Sell Media.
  *

@@ -26,8 +26,11 @@ function sell_media_template_redirect(){
     /**
      * Search - Check if is search AND post type is sell media
      */
-    if ( is_search() && isset( $_GET['post_type'] ) && $_GET['post_type'] != 'posts'
-        || ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
+    if ( is_search()
+        && isset( $_GET['post_type'] ) && $_GET['post_type'] != 'posts'
+        || ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item'
+        ) {
+
         if ( file_exists( $default_templates['search'] ) ) return;
         load_template( $custom_templates['search'] );
         exit;
@@ -746,7 +749,7 @@ function sell_media_pagination_filter(){
         'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
         'format' => '?paged=%#%',
         'current' => max( 1, get_query_var('paged') ),
-        'total' => $wp_query->max_num_pages
+        'total' => $wp_query->max_num_pages // note sometimes max_num_pages needs to be sent over
         );
 
     $params = apply_filters( 'sell_media_pagination', $params );

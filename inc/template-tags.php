@@ -735,7 +735,7 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
  */
 function sell_media_search_query(){
 
-    status_header('200 OK');
+    // status_header('200 OK');
 
     $args = array();
 
@@ -794,10 +794,15 @@ function sell_media_search_query(){
      * Set-up our basic params
      */
     if ( ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ){
+        if ( get_query_var('paged') ) {
+            $paged = get_query_var('paged');
+        } else {
+            $page = 1;
+        }
         $defaults = array(
             'post_type' => array('sell_media_item'),
             'post_status' => 'publish',
-            'posts_per_page' => -1
+            'paged' => $paged
             );
     }
 
@@ -845,4 +850,5 @@ function sell_media_search_query(){
 
 
     return $my_query;
+
 }
