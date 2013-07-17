@@ -374,6 +374,7 @@ table#sell-media-subtotal-table th {
 #sell-media-archive .triangle {
   left: 280px;
 }
+
 /* Sell Media search on widget areas in twenty tweleve */
 .widget-area .sell-media-search-options {
   left: 12px;
@@ -389,6 +390,13 @@ table#sell-media-subtotal-table th {
   font-size: 11px;
 }
 
+/* Sell Media search no results, make the input field fluid */
+.search-no-results .no-results .triangle {
+  left: 50%;
+}
+.search-no-results .no-results .sell-media-search-form-inner input[type="text"] {
+  width: 51%;
+}
 
 /*= Buttons
 -------------------------------------------------------------- */
