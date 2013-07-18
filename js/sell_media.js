@@ -462,7 +462,7 @@ jQuery( document ).ready(function( $ ){
 
     $( document ).on('click', '.sell-media-search-options-trigger', function(e){
         e.preventDefault();
-        $('.sell-media-search-options').toggle();
+        $(this).closest('.sell-media-search-form').find('.sell-media-search-options:first').show();
      });
 
 
