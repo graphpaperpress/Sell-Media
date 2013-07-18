@@ -394,7 +394,20 @@ table#sell-media-subtotal-table th {
 }
 
 .sell-media-twentytwelve .sell-media-search-form .sell-media-search-options {
+  top: 30px;
+  left: 5px;
+}
 
+#sell-media-archive .sell-media-twentytwelve .sell-media-search-form input#s {
+  width: 190px;
+}
+
+#sell-media-archive .sell-media-twentytwelve .sell-media-search-form .triangle {
+  left: 19%;
+}
+
+#sell-media-archive .sell-media-twentytwelve .sell-media-search-options {
+  left: 40px;
 }
 
 /* Twenty eleven styling */
