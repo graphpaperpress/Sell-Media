@@ -306,10 +306,12 @@ table#sell-media-subtotal-table th {
   text-align: right;
   position: absolute;
   z-index: 999;
+  top: 25px;
 }
 
 .sell-media-search-form-inner {
   position: relative;
+  width: 200px;
 }
 
 .sell-media-search-form label {
@@ -346,8 +348,8 @@ table#sell-media-subtotal-table th {
   border-color: #9e9e9e transparent transparent transparent;
   -webkit-transform:rotate(360deg);
   position: absolute;
-  top: 13px;
-  left: 66%;
+  top: 12px;
+  left: 56%;
 }
 
 .sell-media-search-form-inner input[type="text"] {
@@ -391,6 +393,7 @@ table#sell-media-subtotal-table th {
 /* Twenty tweleve styling */
 .sell-media-twentytwelve .sell-media-search-form .triangle {
   left: 52%;
+  top: 14px;
 }
 
 .sell-media-twentytwelve .sell-media-search-form .sell-media-search-options {
@@ -424,14 +427,6 @@ table#sell-media-subtotal-table th {
 .widget-area .sell-media-twentyeleven .sell-media-search-options {
   top: 31px;
   left: 13px;
-}
-
-#colophon .sell-media-twentyeleven .sell-media-search-form .triangle {
-  left: 20%;
-}
-
-#colophon .sell-media-twentyeleven .sell-media-search-form input#s {
-  width: 17.666667%;
 }
 
 #sell-media-archive .sell-media-twentyeleven .sell-media-search-form .sell-media-search-options {
