@@ -75,8 +75,9 @@ function sell_media_get_search_form( $form ) {
         $name_keywords = null;
     }
     $theme = wp_get_theme();
+    $theme_name = str_replace(' ', '', strtolower( $theme->get('Name') ) );
     ob_start(); ?>
-    <div class="sell-media-<?php echo $theme->get('TextDomain'); ?>">
+    <div class="sell-media-<?php echo $theme_name; ?>">
         <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php echo home_url( '/' ); ?>" >
             <div class="sell-media-search-form-inner">
                 <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'sell_media' ); ?>" />

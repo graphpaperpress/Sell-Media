@@ -360,6 +360,7 @@ table#sell-media-subtotal-table th {
   background: #FFF;
   border: 1px solid #DDD;
   padding: 10px 10px 0;
+  font-size: 12px;
 }
 
 .sell-media-search-options select {
@@ -406,7 +407,7 @@ table#sell-media-subtotal-table th {
 }
 
 #sell-media-archive .sell-media-twentytwelve .sell-media-search-form .triangle {
-  left: 19%;
+  left: 92%;
 }
 
 #sell-media-archive .sell-media-twentytwelve .sell-media-search-options {
@@ -438,6 +439,41 @@ table#sell-media-subtotal-table th {
   left: 15%;
 }
 
+/* Sell Photos support */
+.sell-media-sellphotos .triangle {
+  left: 80%;
+}
+.sell-media-sellphotos .sell-media-search-options {
+  left: 23px;
+  top: 29px;
+}
+.site-header .sell-media-sellphotos .sell-media-search-options {
+  left: 10px;
+}
+#sell-media-archive .sell-media-sellphotos .triangle {
+  left: 80%;
+}
+#sell-media-archive .sell-media-sellphotos .sell-media-search-options {
+  left: 12px;
+  top: 29px;
+}
+
+/* Stock Photography support */
+.sell-media-stockphotography .triangle {
+  left: 100%;
+}
+
+.sell-media-stockphotography .sell-media-search-options {
+  left: 50px;
+}
+
+#sell-media-archive .sell-media-stockphotography .triangle {
+  left: 98%;
+}
+#sell-media-archive .sell-media-stockphotography .sell-media-search-options {
+  top: 25px;
+  left: 50px;
+}
 /*= Buttons
 -------------------------------------------------------------- */
 .sell-media-buy-button,
