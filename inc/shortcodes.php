@@ -59,7 +59,7 @@ add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
  * @since 0.1
  */
 function sell_media_search_shortcode( $atts, $content = null ) {
-    echo get_search_form();
+    return get_search_form();
 }
 add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
 
@@ -626,7 +626,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 	} else {
 
 		$html = null;
-		$html .= '<div class="sell-media-collections-shortcode">';
+		$html .= '<div class="sell-media-collections-shortcode sell-media">';
 
 		$sell_media_size_settings = get_option( 'sell_media_size_settings');
 
@@ -669,7 +669,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
 			if ( $post_count != 0 ) : ?>
 				<?php
-				$html .= '<div class="sell-media-grid third">';
+				$html .= '<div class="sell-media-grid sell-media-grid-collection third">';
 					$args = array(
 							'posts_per_page' => 1,
 							'taxonomy' => 'collection',
@@ -740,6 +740,9 @@ function sell_media_login_form_shortcode(){
         return sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . get_permalink( $general_settings['checkout_page'] ) . '">Checkout now</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">continue shopping</a>' );
 
     } else {
+        if( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
+            echo "<span class='error'>".__("Login Failed", "sell_media")."</span>";
+        }
 
         $args = array(
             'redirect' => site_url( $_SERVER['REQUEST_URI'] )
@@ -751,6 +754,24 @@ function sell_media_login_form_shortcode(){
 
 }
 add_shortcode( 'sell_media_login_form', 'sell_media_login_form_shortcode' );
+
+/**
+ * Redirect the failed login to the same page
+ *
+ * @since 1.6
+ */
+add_action( 'wp_login_failed', 'my_front_end_login_fail' );  // hook failed login
+
+function my_front_end_login_fail( $username ) {
+   $referrer = $_SERVER['HTTP_REFERER'];  // where did the post submission come from?
+   // if there's a valid referrer, and it's not the default log-in screen
+   if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
+        $redirect = add_query_arg( array( 'login' => 'failed' ), $referrer );
+      wp_redirect( $redirect );
+      exit;
+   }
+}
+
 
 
 /**

@@ -577,3 +577,20 @@ function sell_media_uploader_multiple(){
     die();
 }
 add_action( 'wp_ajax_sell_media_uploader_multiple', 'sell_media_uploader_multiple' );
+
+/**
+ * Redirect to custom url after move to trash in payments
+ * 
+ * @since 1.6
+ */
+add_action( 'load-edit.php', 'sell_media_trash_payment_redirect' );
+function sell_media_trash_payment_redirect() {
+    $screen = get_current_screen();
+    if( 'edit-sell_media_payment' == $screen->id ) {
+        if( isset( $_GET['trashed'] ) &&  intval( $_GET['trashed']) > 0 ) {
+            $redirect = add_query_arg( array( 'post_type' => 'sell_media_item', 'page'=>'sell_media_payments' ), admin_url() . "edit.php" );
+            wp_redirect($redirect);
+            exit();
+        }
+    }
+}

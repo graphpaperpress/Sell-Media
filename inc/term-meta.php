@@ -418,6 +418,41 @@ function sell_media_edit_collection_icon( $tag ){
 add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_icon' );
 
 
+function sell_media_custom_collection_columns_headers( $columns ){
+
+    $columns_local = array();
+
+    if ( isset( $columns['cb'] ) ) {
+        $columns_local['cb'] = $columns['cb'];
+        unset($columns['cb']);
+    }
+
+    if (!isset($columns_local['collection_icon']))
+        $columns_local['collection_icon'] = "Icon";
+
+    // Rename the post column to Images
+    if ( isset( $columns['posts'] ) )
+        $columns['posts'] = "Media";
+
+     $columns_local = array_merge($columns_local, $columns);
+
+    return array_merge($columns_local, $columns);
+}
+add_filter( 'manage_edit-collection_columns', 'sell_media_custom_collection_columns_headers' );
+
+
+function sell_media_custom_collection_columns_content( $row_content, $column_name, $term_id ){
+    switch( $column_name ) {
+        case 'collection_icon':
+            return wp_get_attachment_image( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ), 'thumbnail' );
+            break;
+        default:
+            break;
+    }
+}
+add_filter( 'manage_collection_custom_column', 'sell_media_custom_collection_columns_content', 10, 3 );
+
+
 /**
  * This code is from the Plugin: Taxonomy Metadata with minor
  * modifications.

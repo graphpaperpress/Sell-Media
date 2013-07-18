@@ -97,7 +97,7 @@ function sell_media_add_bulk_callback_fn(){
 function sell_media_bulk_update_collection(){
 
     check_ajax_referer('sell_media_bulk_update_collection', 'security');
-
+    $size_settings = get_option('sell_media_size_settings');
     $post_ids = explode(',', $_POST['post_ids'] );
     foreach( $post_ids as $post_id ){
 
@@ -108,6 +108,8 @@ function sell_media_bulk_update_collection(){
             $childs = get_term_children( $_POST['price_group'], 'price-group' );
             $childs[] = $_POST['price_group'];
             wp_set_post_terms( $post_id, $childs, 'price-group' );
+        } else {
+            update_post_meta( $post_id, 'sell_media_price', $size_settings['default_price'] );
         }
         do_action( 'sell_media_bulk_uploader_additional_fields_meta', $post_id, $_POST );
     }
