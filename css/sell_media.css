@@ -351,7 +351,7 @@ table#sell-media-subtotal-table th {
 }
 
 .sell-media-search-form-inner input[type="text"] {
-  width: 288px;
+  /*width: 288px;*/
 }
 
 .sell-media-search-options {
@@ -375,24 +375,10 @@ table#sell-media-subtotal-table th {
   top: 30px;
   left: 137px;
 }
-#sell-media-archive .triangle {
+#sell-media-archive .sell-media-search-form .triangle {
   left: 280px;
 }
 
-/* Sell Media search on widget areas in twenty tweleve */
-.widget-area .sell-media-search-options {
-  left: 12px;
-  top: 30px;
-}
-.widget-area .sell-media-search-post-types {
-}
-.widget-area .sell-media-search-form-inner input#s{
-  width: 67.66666666666%;
-}
-.widget-area .widget_search label {
-  display: inline;
-  font-size: 11px;
-}
 
 /* Sell Media search no results, make the input field fluid */
 .search-no-results .no-results .triangle {
@@ -400,6 +386,48 @@ table#sell-media-subtotal-table th {
 }
 .search-no-results .no-results .sell-media-search-form-inner input[type="text"] {
   width: 51%;
+}
+
+/* Twenty tweleve styling */
+.sell-media-twentytwelve .sell-media-search-form .triangle {
+  left: 52%;
+}
+
+.sell-media-twentytwelve .sell-media-search-form .sell-media-search-options {
+
+}
+
+/* Twenty eleven styling */
+#branding .sell-media-twentyeleven .sell-media-search-form .sell-media-search-options {
+  left: 17px;
+  top: 31px;
+}
+
+#branding .sell-media-twentyeleven .sell-media-search-form .triangle,
+.widget-area .sell-media-twentyeleven .sell-media-search-form .triangle {
+  left: 88%;
+}
+
+.widget-area .sell-media-twentyeleven .sell-media-search-options {
+  top: 31px;
+  left: 13px;
+}
+
+#colophon .sell-media-twentyeleven .sell-media-search-form .triangle {
+  left: 20%;
+}
+
+#colophon .sell-media-twentyeleven .sell-media-search-form input#s {
+  width: 17.666667%;
+}
+
+#sell-media-archive .sell-media-twentyeleven .sell-media-search-form .sell-media-search-options {
+  left: 10px;
+  top: 31px;
+}
+
+#sell-media-archive .sell-media-twentyeleven .sell-media-search-form .triangle {
+  left: 15%;
 }
 
 /*= Buttons
