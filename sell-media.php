@@ -658,15 +658,15 @@ class SellMedia {
 
         if ( is_admin() ) return $query;
 
-        if ( ! empty( $_GET['s'] ) ) return;
-
         /**
          * Check if "collections" is present in query vars
          */
         if ( ! empty( $query->query_vars['collection'] ) ){
             $term_obj = get_term_by( 'slug', $query->query_vars['collection'], 'collection' );
-            $term_id = $term_obj->term_id;
-            $message = __( 'This collection is password protected','sell_media');
+            if ( $term_obj ){
+                $term_id = $term_obj->term_id;
+                $message = __( 'This collection is password protected','sell_media');
+            }
         }
 
 

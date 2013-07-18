@@ -11,47 +11,106 @@ function sell_media_template_redirect(){
        $post_type = 'sell_media_item';
 
     $custom_templates = array(
+        'search' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/search-sell_media_item.php',
         'single'  => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-sell_media_item.php',
         'archive' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php'
         );
 
     $default_templates = array(
+        'search' => locate_template( 'search-sell_media_item.php' ),
         'single'   => locate_template( 'single-sell_media_item.php' ),
         'archive'  => locate_template( 'archive-sell_media_item.php' ),
         'taxonomy' => locate_template( 'taxonomy-' . get_query_var('taxonomy') . '.php' )
         );
 
-    if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
-
-        /**
-         * Single
-         */
+    /**
+     * Search - Check if is search AND post type is sell media
+     */
+    if ( is_search()
+        && isset( $_GET['post_type'] ) && $_GET['post_type'] != 'posts'
+        || ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item'
+        ) {
+        if ( file_exists( $default_templates['search'] ) ) return;
+        load_template( $custom_templates['search'] );
+        exit;
+    }
+    /**
+     * Single
+     */
+    elseif ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
         if ( file_exists( $default_templates['single'] ) ) return;
         load_template( $custom_templates['single'] );
         exit;
     }
-
     /**
      * Archive -- Check if this is an archive page AND post type is sell media
-     * OR is this a search request and is our post type sell media. If so we
-     * load the the archive template.
      */
-    elseif ( is_post_type_archive( $post_type ) && $post_type == 'sell_media_item' || isset( $_GET['s'] ) && ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
+    elseif ( is_post_type_archive( $post_type ) && $post_type == 'sell_media_item' ) {
         if ( file_exists( $default_templates['archive'] ) ) return;
         load_template( $custom_templates['archive'] );
         exit;
-    } elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
-        /**
-         * Taxonomies
-         */
+    }
+    /**
+     * Taxonomies
+     */
+    elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
         if ( file_exists( $default_templates['taxonomy'] ) ) return;
         load_template( $custom_templates['archive'] );
         exit;
     }
-
 }
 add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 
+function sell_media_get_search_form( $form ) {
+    $general_settings = get_option( 'sell_media_general_settings' );
+    $current_post_type = empty( $_GET['post_type'] ) ? 'sell_media_item' : $_GET['post_type'];
+    $current_collection = empty( $_GET['collection'] ) ? 'sell_media_item' : $_GET['collection'];
+    $current_keyword = empty( $_GET['keywords'] ) ? 'sell_media_item' : $_GET['keywords'];
+
+    if ( $current_post_type == 'sell_media_item' ){
+        $name_collection = 'collection';
+        $name_keywords = 'keywords';
+    } else {
+        $name_collection = null;
+        $name_keywords = null;
+    }
+    ob_start(); ?>
+    <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php echo home_url( '/' ); ?>" >
+    <div class="sell-media-search-form-inner">
+        <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'sell_media' ); ?>" />
+        <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>" />
+        <div class=""><a href="#" class="sell-media-search-options-trigger triangle"></a></div>
+
+        <div class="sell-media-search-options" style="display: none;">
+            <div class="sell-media-search-post-types">
+                <select name="post_type" class="post_type_selector">
+                    <option value=""><?php _e('Search in...','sell_media'); ?></option>
+                    <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
+                    <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php _e('Media','sell_media'); ?></option>
+                </select>
+            </div>
+            <div class="sell-media-search-taxonomies" style="display: <?php echo $current_post_type != 'sell_media_item' ? 'none' : 'block'; ?>">
+                <select name="<?php echo $name_keywords; ?>" data-name="keywords" id="keywords_select">
+                    <option value=""><?php _e('Select a keyword','sell_media'); ?>:</option>
+                    <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
+                        <option value="<?php echo $term->term_id; ?>" <?php selected( $current_keyword, $term->term_id ); ?>><?php echo $term->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select name="<?php echo $name_collection; ?>" data-name="collection" id="collection_select">
+                    <option value=""><?php _e('Select a collection','sell_media'); ?>:</option>
+                    <?php foreach( get_terms( 'collection' ) as $term ) : ?>
+                        <option value="<?php echo $term->term_id; ?>" <?php selected( $current_collection, $term->term_id ); ?>><?php echo $term->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    </form>
+    <?php return ob_get_clean();
+}
+add_filter( 'get_search_form', 'sell_media_get_search_form' );
 
 /**
  * Loads a template from a specificed path
@@ -689,7 +748,7 @@ function sell_media_pagination_filter(){
         'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
         'format' => '?paged=%#%',
         'current' => max( 1, get_query_var('paged') ),
-        'total' => $wp_query->max_num_pages
+        'total' => $wp_query->max_num_pages // note sometimes max_num_pages needs to be sent over
         );
 
     $params = apply_filters( 'sell_media_pagination', $params );

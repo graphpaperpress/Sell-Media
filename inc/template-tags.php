@@ -652,7 +652,6 @@ function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
  */
 function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
     $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
-
     $wp_upload_dir = wp_upload_dir();
     $attached_path_file  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
 
@@ -688,7 +687,6 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
              */
             $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
             $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
-
 
             /**
              * Build our array to be returned, the downloadable width and height
@@ -729,4 +727,128 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
     }
 
     return empty( $term_id ) ? $download_sizes : $download_sizes[ $term_id ];
+}
+
+
+/**
+ *
+ */
+function sell_media_search_query(){
+
+    // status_header('200 OK');
+
+    $args = array();
+
+    /**
+     * This contains our searched terms and string
+     */
+    $search_terms = array(
+        's' => get_search_query(),
+        'post_type' => $_GET['post_type']
+        );
+
+
+    /**
+     * Only run this if we have a keyword OR collection
+     */
+    if ( ! empty( $_GET['keywords'] ) || ! empty( $_GET['collection'] ) ){
+
+        /**
+         * Filter our html, trim white space and only add it
+         * if we have a value
+         */
+        $clean_get = array();
+        foreach( $_GET as $k => $v ){
+            if ( ! empty( $v ) )
+                $clean_get[ $k ] = trim( wp_filter_nohtml_kses( $v ) );
+        }
+
+
+        /**
+         * If we have both taxonomies we add the relation
+         */
+        if ( ! empty( $clean_get['keywords'] ) || ! empty( $clean_get['collection'] ) ){
+            $args['tax_query']['relation'] = 'AND';
+        }
+
+
+        /**
+         * If we have a collection or keywords in our $clean_get we
+         * we add a new tax query containing the needed params and
+         * also update our $search_terms array
+         */
+        foreach( array( 'keywords', 'collection') as $term ){
+            if ( ! empty( $clean_get[ $term ] ) ){
+                $args['tax_query'][] = array(
+                    'taxonomy' => $term,
+                    'field'    => 'id',
+                    'terms'    => $clean_get[ $term ]
+                );
+                $search_terms[ $term ] = (array)get_term_by('id', $clean_get[ $term ], $term );
+            }
+        }
+    }
+
+
+    /**
+     * Set-up our basic params
+     */
+    if ( ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ){
+        if ( get_query_var('paged') ) {
+            $paged = get_query_var('paged');
+        } else {
+            $paged = 1;
+        }
+        $defaults = array(
+            'post_type' => array('sell_media_item'),
+            'post_status' => 'publish',
+            'paged' => $paged
+            );
+    }
+
+    /**
+     * We only have a search string
+     */
+    if( ! empty( $_GET['s'] ) ) {
+
+        /**
+         * Since WP_Query has no way to retrive posts via %% (like)
+         */
+        global $wpdb;
+        $q = $wpdb->prepare( "SELECT `ID` FROM {$wpdb->prefix}posts WHERE `post_title` LIKE '%s' AND `post_status` LIKE 'publish' AND `post_type` LIKE 'sell_media_item'",'%' . $search_terms['s'] . '%' );
+        $results = $wpdb->get_results( $q );
+        $post__in = array();
+        foreach( $results as $r ){
+            $post__in[] = $r->ID;
+        }
+        $args['post__in'] = $post__in;
+
+    }
+
+
+    /**
+     * Merge our tax arguments with our defaults
+     */
+    $args = array_merge( $defaults, $args );
+
+
+    /**
+     * We check if the tax_query is set to prevent
+     * the $defaults from running the wp_query
+     */
+    if ( ! empty( $args['tax_query'] ) || ! empty( $args['post__in'] ) ){
+
+        /**
+         * A filter is added to search for strings from $_GET['s'] matching
+         * post_title or post_content.
+         */
+        $my_query = new WP_Query( $args );
+        wp_reset_postdata();
+    } else {
+        $my_query = false;
+    }
+
+
+    return $my_query;
+
 }
