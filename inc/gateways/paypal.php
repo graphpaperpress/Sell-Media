@@ -1,9 +1,5 @@
 <?php
 
-
-require_once plugin_dir_path( __FILE__ ) . 'log.php';
-
-
 /**
  * Retrieve the correct Paypal Redirect based on http/s
  * and "live" or "test" mode, i.e., sandbox.
@@ -43,7 +39,7 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
  *     'payment_id'   => $payment_id
  * );
  */
-function sell_media_process_paypal_purchase( $purchase_data, $my_post ) {
+function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
 
     $general_settings = get_option( 'sell_media_general_settings' );
     $payment_settings = get_option( 'sell_media_payment_settings' );
@@ -80,6 +76,9 @@ function sell_media_process_paypal_purchase( $purchase_data, $my_post ) {
     );
 
 
+    // Lets save all the info being sent to Paypal at time of purchase
+    update_post_meta( $payment_id, '_paypal_args', $paypal_args );
+
     // Add additional args;
     $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
     $paypal_redirect .= http_build_query( $paypal_args );
@@ -108,198 +107,179 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
 /**
  * When a payment is made Paypal will send us a response and this funciton is
  * called. From here we will confirm arguments that we sent to Paypal which
- * the ones Paypal is sending back to us. If they match we countinue if not we
- * stop execution, logging errors to log.txt along the way.
- *
- * @todo Add an option in the wp admin to turn this off/on as aposed to using
- * sell_media_test_mode() to check.
- *
+ * the ones Paypal is sending back to us.
  * This is the Pink Lilly of the whole operation.
  */
 function sell_media_process_paypal_ipn() {
+    
+    /*
+    Since this script is executed on the back end between the PayPal server and this
+    script, you will want to log errors to a file or email. Do not try to use echo
+    or print--it will not work!
 
-    $payment_settings = get_option( 'sell_media_payment_settings' );
+    Here I am turning on PHP error logging to a file called "ipn_errors.log". Make
+    sure your web server has permissions to write to that file. In a production
+    environment it is better to have that log file outside of the web root.
+    */
+    ini_set('log_errors', true);
+    ini_set('error_log', dirname(__FILE__).'/ipn_errors.log');
 
-    /**
-     * If test mode is enabled lets start our log file
+
+    // instantiate the IpnListener class
+    include( dirname(__FILE__) . '/php-paypal-ipn/ipnlistener.php');
+    $listener = new IpnListener();
+
+
+    /*
+    When you are testing your IPN script you should be using a PayPal "Sandbox"
+    account: https://developer.paypal.com
+    When you are ready to go live change use_sandbox to false.
+    */    
+    $general_settings = get_option('sell_media_general_settings');
+    $listener->use_sandbox = ( $general_settings['test_mode'] ) ? true : false;
+
+
+    /*
+    By default the IpnListener object is going  going to post the data back to PayPal
+    using cURL over a secure SSL connection. This is the recommended way to post
+    the data back, however, some people may have connections problems using this
+    method.
+
+    To post over standard HTTP connection, use:
+    $listener->use_ssl = false;
+
+    To post using the fsockopen() function rather than cURL, use:
+    $listener->use_curl = false;
+    */
+
+    /*
+    The processIpn() method will encode the POST variables sent by PayPal and then
+    POST them back to the PayPal server. An exception will be thrown if there is
+    a fatal error (cannot connect, your server is not configured properly, etc.).
+    Use a try/catch block to catch these fatal errors and log to the ipn_errors.log
+    file we setup at the top of this file.
+
+    The processIpn() method will send the raw data on 'php://input' to PayPal. You
+    can optionally pass the data to processIpn() yourself:
+    $verified = $listener->processIpn($my_post_data);
+    */
+    try {
+        $listener->requirePostMethod();
+        $verified = $listener->processIpn();
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        exit(0);
+    }
+
+
+    /** 
+     * The processIpn() method returned true if the IPN was "VERIFIED" and false if it
+     * was "INVALID".
      */
-    if ( sell_media_test_mode() ){
-        $log_file = plugin_dir_path( __FILE__ ) . 'log.txt';
-        $file_handle = fopen( $log_file, 'a');
-    }
-
-    if ( isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] != 'POST' || is_admin() ) {
-        if ( sell_media_test_mode() ){
-            start_log_txt( $file_handle );
-            write_log_txt( $file_handle, "REQUEST_METHOD is NOT $_POST OR this IS an admin request.\nExecution stopped.\n" );
-            end_log_txt( $file_handle );
+    if ($verified) {
+        
+        $message = null;
+            
+        /**
+         * Verify the mc_gross amount
+         *          
+         * Check the purchase price from $_POST against the arguments that are saved during 
+         * time of purchase.
+         */
+        $paypal_args = get_post_meta( $_POST['custom'], '_paypal_args', true );
+        if ( ! empty( $_POST['mc_gross'] ) && $_POST['mc_gross'] != $paypal_args['mc_gross'] ){
+            $message .= "\nPayment does NOT match\n";            
         }
-        return;
-    }
 
-    // set initial post data to false
-    $post_data = false;
+        
+        /**
+         * Verify seller Paypal email with Paypal email in settings
+         *
+         * Check if the seller email that was processed by the IPN matches what is saved as 
+         * the seller email in our DB
+         */
+        $payment_settings = get_option( 'sell_media_payment_settings' );
+        if ( $_POST['receiver_email'] != $payment_settings['paypal_email'] ){
+            $message .= "\nEmail seller email does not match email in settings\n";            
+        }
 
-    if ( ini_get( 'allow_url_fopen' ) ) {
-        $post_data = file_get_contents( 'php://input' );
-    } else {
-        ini_set('post_max_size', '12M');
-    }
 
-    // start the encoded data collection with notification command
-    $encoded_data = 'cmd=_notify-validate';
-
-    // get current arg separator
-    $arg_separator = sell_media_get_php_arg_separator_output();
-
-    // verify there is a post_data
-    if ( $post_data || strlen( $post_data ) > 0 ) {
-        $encoded_data .= $arg_separator.$post_data;
-    } else {
-        if ( empty( $_POST ) ) {
-            return;
+        /**
+         * Check if this payment was already processed
+         * 
+         * Paypals transaction id (txn_id) is stored in the database, we check
+         * that against the txn_id returned.
+         */
+        $txn_id = get_post_meta( $_POST['custom'], 'txn_id', true );
+        if ( empty( $txn_id ) ){
+            update_post_meta( $_POST['custom'], 'txn_id', $_POST['txn_id'] );
         } else {
-            foreach ( $_POST as $key => $value ) {
-                $encoded_data .= $arg_separator."$key=" . urlencode( $value ); // encode the value and append the data
-            }
+            $message .= "\nThis payment was already processed\n";
         }
-    }
 
-    parse_str( $encoded_data, $encoded_data_array );
+           
+        // Check currency buyer paid with matches what seller allows
 
-    // get the PayPal redirect uri
-    $paypal_redirect = sell_media_get_paypal_redirect( true );
 
-    $remote_post_vars = array(
-        'method' => 'POST',
-        'timeout' => 45,
-        'redirection' => 5,
-        'httpversion' => '1.0',
-        'blocking' => true,
-        'headers' => array(),
-        'body' => $encoded_data_array
-    );
+        /**
+         * Verify the payment is set to "Completed".
+         *
+         * For a completed payment we update the payment status to publish, send the 
+         * download email and empty the cart.         
+         */
+        if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ){
+            
+            $payment = array(
+                'ID' => $_POST['custom'],
+                'post_status' => 'publish'
+                );
+            
+            wp_update_post( $payment );
+            
+            $message .= "\nSuccess! Updated payment status to: published\n";
+            $message .= "Payment status is set to: {$_POST['payment_status']}\n\n";
+            $message .= "Sending payment id: {$_POST['custom']}\n";
+            $message .= "To email: {$_POST['email']}\n";
+            $message .= "Purchase receipt: {$_POST['item_number']}\n";
+            
+            $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['email'], $_POST['custom'] );
+            $message .= "Email sent status: {$email_status}\n";
 
-    // get response
-    $api_response = wp_remote_post( sell_media_get_paypal_redirect(), $remote_post_vars );
+            $payment_meta_array = get_post_meta( $_POST['custom'], '_sell_media_payment_meta', true );
+            $products_meta_array = unserialize( $payment_meta_array['products'] );
+            do_action( 'sell_media_after_successful_payment', $products_meta_array, $_POST['custom'] );
+            
+            $cart = sell_media_empty_cart();
+            $message .= "Emptied cart: {$cart}\n";
 
-    if ( is_wp_error( $api_response) ){
-        if ( sell_media_test_mode() ){
-            $tmp_api_repsonse_o = print_r( $api_response, true );
-            start_log_txt( $file_handle );
-            write_log_txt( $file_handle, "Execution Stopped! is_wp_error\n{$tmp_api_repsonse_o}\n\n" );
-            end_log_txt( $file_handle );
+        } else {            
+            $message .= "\nPayment status not set to Completed\n";            
         }
-        return;
-    }
 
-    parse_str( $post_data, $post_data_array );
 
-    if ( ! is_array( $encoded_data_array ) && ! empty( $encoded_data_array ) ){
-        if ( sell_media_test_mode() ){
-
-            start_log_txt( $file_handle );
-            write_log_txt( $file_handle, "Execution Stopped! encoded_data_array" );
-            end_log_txt( $file_handle );
+        /**
+         * Check if this is the test mode
+         *
+         * If this is the test mode we email the IPN text report.
+         * note about and box http://stackoverflow.com/questions/4298117/paypal-ipn-always-return-payment-status-pending-on-sandbox
+         */
+        if ( $general_settings['test_mode'] == true ){
+            $message .= "\nTest Mode\n";
+            $email = array(
+                'to' => get_option('admin_email'),
+                'subject' => 'Verified IPN',
+                'message' =>  $message . "\n" . $listener->getTextReport()
+                );
+            wp_mail( $email['to'], $email['subject'], $email['message'] );
         }
-        return;
+
+    } else {
+        /**
+         * An Invalid IPN *may* be caused by a fraudulent transaction attempt. It's
+         * a good idea to have a developer or sys admin manually investigate any
+         * invalid IPN.
+         */
+        wp_mail( get_option('admin_email'), 'Invalid IPN', $listener->getTextReport());
     }
-
-    $payment_id     = $encoded_data_array['custom']; // This is our post id (payment id)
-    $purchase_key   = $encoded_data_array['item_number']; // This is our purchase key
-    $payment_status = $encoded_data_array['payment_status'];
-    $currency_code  = strtolower( $encoded_data_array['mc_currency'] );
-
-    if ( sell_media_test_mode() ){
-        $tmp_encoded_data_array_o = print_r( $encoded_data_array, true );
-        write_log_txt( $file_handle, "PayPal Encoded Data:\n{$tmp_encoded_data_array_o}\n\n" );
-    }
-
-    $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
-
-    if ( empty( $payment_meta_array ) ){
-        $log_data .= "No payment meta found for payment_id: {$payment_id}.\n";
-
-        start_log_txt( $file_handle );
-        write_log_txt( $file_handle, $log_data );
-
-        return;
-    }
-
-    $products_meta_array = unserialize( $payment_meta_array['products'] );
-    $payment_amount = get_post_meta( $payment_id, '_sell_media_payment_amount', true );
-
-    if ( sell_media_test_mode() ){
-        $tmp_payment_meta = print_r( $payment_meta_array, true );
-        $tmp_products_meta_array_o = print_r( $products_meta_array, true );
-
-        $log_data .= "Payment Meta:\n{$tmp_payment_meta}\n\n";
-        $log_data .= "Payment Array:\n{$tmp_products_meta_array_o}\n\n";
-        $log_data .= "Payment Amount:\n{$payment_amount}\n\n";
-
-        start_log_txt( $file_handle );
-        write_log_txt( $file_handle, $log_data );
-    }
-
-    // verify details
-    if ( $currency_code != strtolower( $payment_settings['currency'] ) ) {
-        $currency_setting = $payment_settings['currency'];
-        if ( sell_media_test_mode() ){
-            $log_data .= "Currency code does not match!\n{$currency_code}, {strtolower( $currency_setting )}\nExecution stopped!\n\n";
-            write_log_txt( $file_handle, $log_data );
-            end_log_txt( $file_handle );
-        }
-        return;
-    }
-
-    if ( $encoded_data_array['mc_gross'] != $payment_amount ) {
-        if ( sell_media_test_mode() ){
-            $log_data .= "Payment does not match!\n  Amount attempted to charge: {$encoded_data_array['mc_gross']}\n  Amount customer paid: {$payment_amount}\nExecution stopped!\n\n";
-            $tmp_encoded_data_array_o = print_r( $encoded_data_array, true );
-            $log_data .= "\nPayPal Encoded Data:\n{$tmp_encoded_data_array_o}\n\n";
-            write_log_txt( $file_handle, $log_data );
-            end_log_txt( $file_handle );
-        }
-        return;
-    }
-
-    if ( $purchase_key != $payment_meta_array['purchase_key'] ) {
-        if ( sell_media_test_mode() ){
-            $log_data .= "Purchase key does not match!";
-            $log_data .= "You gave me: {$purchase_key} (item_number), but the Purchase key I found is: ";
-            $log_data .= "{$payment_meta_array['purchase_key']}\nExecution stopped!\n\n";
-            write_log_txt( $file_handle, $log_data );
-            end_log_txt( $file_handle );
-        }
-        return;
-    }
-
-    if ( isset( $encoded_data_array['txn_type'] ) && $encoded_data_array['txn_type'] == 'web_accept' ) {
-        if ( strtolower( $payment_status ) == 'completed' ) {
-
-            // foreach( $products_meta_array as $products ){
-            //     sell_media_update_sales_stats( $products['ProductID'], $products['License'], $products['CalculatedPrice'] );
-            // }
-
-            $status = sell_media_update_payment_status( $payment_id, 'publish' );
-
-            if ( sell_media_test_mode() ){
-                if ( $status != 0 ){
-                    $log_data .= "Updated  Payment ID: {$status} to publish!\n";
-                } else {
-                    $log_data .= "Did NOT update Payment ID: {$status} to publish!\n";
-                }
-                write_log_txt( $file_handle, $log_data );
-                end_log_txt( $file_handle );
-            }
-
-            sell_media_email_purchase_receipt( $purchase_key, $payment_meta_array['email'], $payment_id );
-
-            do_action( 'sell_media_after_successful_payment', $products_meta_array, $payment_id );
-            sell_media_empty_cart();
-
-        }
-    }
-
 }
 add_action( 'sell_media_verify_paypal_ipn', 'sell_media_process_paypal_ipn' );
