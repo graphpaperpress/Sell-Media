@@ -30,6 +30,13 @@ function sell_media_add_payment_meta_boxes(){
         'sell_media_payment_render_contact',
         'sell_media_payment'
     );
+
+    add_meta_box(
+        'meta_field_paypal_details',
+        __( 'Paypal Details', 'sell_media' ),
+        'sell_media_payment_paypal_details',
+        'sell_media_payment'
+    );
 }
 add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
 
@@ -105,6 +112,23 @@ function sell_media_payment_render_contact( $post ){
     do_action( 'sell_media_additional_customer_meta', $post );
 
     print '</div>';
+}
+
+
+function sell_media_payment_paypal_details( $post ){
+    $arguments = get_post_meta( $post->ID, '_paypal_args', true ); ?>
+    <p><?php _e('This is the info that was sent to Paypal at time of purchase. For detailed explanation please visit Paypals <a href="https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/#example_req_resp">IPN guide</a>.', 'sell_media'); ?></p>
+    <p><em><?php _e('Note "custom" refers to the post id for the payment in WordPress','sell_media'); ?></em></p>
+    <table class="wp-list-table widefat" cellspacing="0">
+        <tbody>
+            <?php foreach( $arguments as $k => $v ) : ?>
+                <tr>
+                    <td><?php echo $k; ?></td><td><?php echo $v; ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php
 }
 
 

@@ -234,7 +234,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             // Upate the _sell_media_payment_meta with the User ID
             update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_meta );
 
-            sell_media_process_paypal_purchase( $purchase, $_POST );
+            sell_media_process_paypal_purchase( $purchase, $payment_id );
         }
     }
 
