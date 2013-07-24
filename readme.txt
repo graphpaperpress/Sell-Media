@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.5.5
+Stable tag: 1.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -194,6 +194,9 @@ Action hooks available:
 
 = 1.5.6 =
 * Feature: Admin shows collection icon on collection edit column
+* Feature: Added detailed Paypal log per item on the single item payments page
+* Bug: Better Paypal support
+* Tweak: Improved search results
 
 = 1.5.5 =
 * Feature: Add shortcode for custom login '[sell_media_login]'
