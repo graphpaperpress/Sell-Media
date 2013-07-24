@@ -208,6 +208,8 @@ Upgrade Notice
 Changelog
 ---------
 
+* Tweak: Updating shortcode in readme.txt
+
 1.5.6
 ---
 * Feature: Admin shows collection icon on collection edit column
@@ -391,7 +393,7 @@ Changelog
 * Hook: Updated 'sell_media_settings_init_hook' to work on all tabs
 * Hook: Moved 'sell_media_size_settings_hook' to the aprobiate location
 * Hook: Added new hook 'sell_media_below_registration_form'
-* Hook: Added 'sell_media_addtional_cusotmer_meta'
+* Hook: Added 'sell_media_additional_cusotmer_meta'
 * Hook: Added sell_media_before_session_add
 * Feature: Options in dialog now default to nothing
 * Feature: Added current state select

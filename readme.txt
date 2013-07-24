@@ -192,6 +192,8 @@ Action hooks available:
 
 == Changelog ==
 
+* Tweak: Updating shortcode in readme.txt
+
 = 1.5.6 =
 * Feature: Admin shows collection icon on collection edit column
 * Feature: Added detailed Paypal log per item on the single item payments page
@@ -199,7 +201,7 @@ Action hooks available:
 * Tweak: Improved search results
 
 = 1.5.5 =
-* Feature: Add shortcode for custom login '[sell_media_login]'
+* Feature: Add shortcode for custom login '[sell_media_login_form]'
 * Feature: Add setting for custom login page
 * Bug: Updated admin payment apply markup consistently
 * Bug: Updated paypal payments to no longer by 0 and have markup applied if added
@@ -349,7 +351,7 @@ Action hooks available:
 * Hook: Updated 'sell_media_settings_init_hook' to work on all tabs
 * Hook: Moved 'sell_media_size_settings_hook' to the aprobiate location
 * Hook: Added new hook 'sell_media_below_registration_form'
-* Hook: Added 'sell_media_addtional_cusotmer_meta'
+* Hook: Added 'sell_media_additional_cusotmer_meta'
 * Hook: Added sell_media_before_session_add
 * Feature: Options in dialog now default to nothing
 * Feature: Added current state select
