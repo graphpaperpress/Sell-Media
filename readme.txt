@@ -193,6 +193,7 @@ Action hooks available:
 == Changelog ==
 
 * Tweak: Updating shortcode in readme.txt
+* Tweak: Adding template check for other developers to change the collection password page
 
 = 1.5.6 =
 * Feature: Admin shows collection icon on collection edit column

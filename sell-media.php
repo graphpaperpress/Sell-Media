@@ -665,7 +665,6 @@ class SellMedia {
             $term_obj = get_term_by( 'slug', $query->query_vars['collection'], 'collection' );
             if ( $term_obj ){
                 $term_id = $term_obj->term_id;
-                $message = __( 'This collection is password protected','sell_media');
             }
         }
 
@@ -745,10 +744,10 @@ class SellMedia {
 
 
         /**
-         * Just set our term_id and message to null.
+         * Just set our term_id to null.
          */
         else {
-            $term_id = $message = null;
+            $term_id = null;
         }
 
         /**
@@ -773,14 +772,14 @@ class SellMedia {
                         $_SESSION['sell_media']['collection_password'] = $_POST['collection_password'];
 
                     return $query;
-                } else { ?>
-                     <form action="" method="POST">
-                         <p><?php print $message; ?>.
-                         <input type="text" value="" name="collection_password" />
-                         <input type="submit" value="<?php _e( 'Submit', 'sell_media' ); ?>" name="submit" />
-                         </p>
-                    </form>
-                <?php } ?>
+                } else {
+                    $custom = locate_template( 'collection-password.php' );
+                    if ( empty( $custom ) ){
+                        load_template( plugin_dir_path( __FILE__ ) . 'themes/collection-password.php');
+                    } else {
+                        load_template( $custom );
+                    }
+                } ?>
                 <?php wp_die();
             }
         } else {
