@@ -21,6 +21,7 @@ include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
 include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/class-cart.php' );
+include( dirname(__FILE__) . '/inc/class-search.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
 
@@ -657,6 +658,7 @@ class SellMedia {
     public function collection_password_check( $query ){
 
         if ( is_admin() ) return $query;
+        if ( ! empty( $_GET['sell_media_advanced_search_flag'] ) ) return;
 
         /**
          * Check if "collections" is present in query vars
@@ -683,7 +685,7 @@ class SellMedia {
              */
             foreach( get_terms('collection') as $term_obj ){
                 $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-                if ( $password ) $term_ids[] = $term_obj->term_id;
+                if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
             }
 
 
@@ -698,8 +700,8 @@ class SellMedia {
              * Determine if this post has the given term and the term has a password
              * if it does we set our term_id to the password protected term
              */
-            if ( ! empty( $term_ids ) ){
-                foreach( $term_ids as $t ){
+            if ( ! empty( $exclude_term_ids ) ){
+                foreach( $exclude_term_ids as $t ){
                     if ( has_term( $t, 'collection', $post_id ) && sell_media_get_term_meta( $t, 'collection_password', true ) ){
                         $term_id = $t;
                         $message = __( 'This item is password protected', 'sell_media' );
@@ -726,20 +728,45 @@ class SellMedia {
              */
             foreach( get_terms('collection') as $term_obj ){
                 $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-                if ( $password ) $term_ids[] = $term_obj->term_id;
+                if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
             }
 
-            if ( ! empty( $term_ids ) ){
-                $query->set( 'tax_query', array(
-                        array(
-                            'taxonomy' => 'collection',
-                            'field' => 'id',
-                            'terms' => $term_ids,
-                            'operator' => 'NOT IN'
-                            )
-                        )
+
+            if ( ! empty( $exclude_term_ids ) ){
+                // echo 'exclude these ids: ';
+                // $tax_query = array(
+                //         'relation' => 'AND',
+                //         array(
+                //             'taxonomy' => 'collection',
+                //             'field' => 'id',
+                //             'terms' => $exclude_term_ids,
+                //             'operator' => 'NOT IN'
+                //             )
+                //         );
+            }
+
+            $search = New Sell_Media_Search;
+            if ( $search->keyword_ids ){
+                $tax_query[] = array(
+                    'taxonomy' => 'keywords',
+                    'field' => 'id',
+                    'terms' => $search->keyword_ids,
+                    'operator' => 'IN'
                 );
             }
+
+            if ( $search->collection_ids ){
+                $tax_query[] = array(
+                    'taxonomy' => 'collection',
+                    'field' => 'id',
+                    'terms' => $search->collection_ids,
+                    'operator' => 'IN'
+                );
+            }
+
+            if ( isset( $tax_query ) )
+                $query->set( 'tax_query', $tax_query );
+
         }
 
 
