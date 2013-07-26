@@ -111,7 +111,7 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
  * This is the Pink Lilly of the whole operation.
  */
 function sell_media_process_paypal_ipn() {
-    
+
     /*
     Since this script is executed on the back end between the PayPal server and this
     script, you will want to log errors to a file or email. Do not try to use echo
@@ -134,7 +134,7 @@ function sell_media_process_paypal_ipn() {
     When you are testing your IPN script you should be using a PayPal "Sandbox"
     account: https://developer.paypal.com
     When you are ready to go live change use_sandbox to false.
-    */    
+    */
     $general_settings = get_option('sell_media_general_settings');
     $listener->use_sandbox = ( $general_settings['test_mode'] ) ? true : false;
 
@@ -172,41 +172,41 @@ function sell_media_process_paypal_ipn() {
     }
 
 
-    /** 
+    /**
      * The processIpn() method returned true if the IPN was "VERIFIED" and false if it
      * was "INVALID".
      */
     if ($verified) {
-        
+
         $message = null;
-            
+
         /**
          * Verify the mc_gross amount
-         *          
-         * Check the purchase price from $_POST against the arguments that are saved during 
+         *
+         * Check the purchase price from $_POST against the arguments that are saved during
          * time of purchase.
          */
         $paypal_args = get_post_meta( $_POST['custom'], '_paypal_args', true );
         if ( ! empty( $_POST['mc_gross'] ) && $_POST['mc_gross'] != $paypal_args['mc_gross'] ){
-            $message .= "\nPayment does NOT match\n";            
+            $message .= "\nPayment does NOT match\n";
         }
 
-        
+
         /**
          * Verify seller Paypal email with Paypal email in settings
          *
-         * Check if the seller email that was processed by the IPN matches what is saved as 
+         * Check if the seller email that was processed by the IPN matches what is saved as
          * the seller email in our DB
          */
         $payment_settings = get_option( 'sell_media_payment_settings' );
         if ( $_POST['receiver_email'] != $payment_settings['paypal_email'] ){
-            $message .= "\nEmail seller email does not match email in settings\n";            
+            $message .= "\nEmail seller email does not match email in settings\n";
         }
 
 
         /**
          * Check if this payment was already processed
-         * 
+         *
          * Paypals transaction id (txn_id) is stored in the database, we check
          * that against the txn_id returned.
          */
@@ -217,43 +217,43 @@ function sell_media_process_paypal_ipn() {
             $message .= "\nThis payment was already processed\n";
         }
 
-           
+
         // Check currency buyer paid with matches what seller allows
 
 
         /**
          * Verify the payment is set to "Completed".
          *
-         * For a completed payment we update the payment status to publish, send the 
-         * download email and empty the cart.         
+         * For a completed payment we update the payment status to publish, send the
+         * download email and empty the cart.
          */
         if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ){
-            
+
             $payment = array(
                 'ID' => $_POST['custom'],
                 'post_status' => 'publish'
                 );
-            
+
             wp_update_post( $payment );
-            
+
             $message .= "\nSuccess! Updated payment status to: published\n";
             $message .= "Payment status is set to: {$_POST['payment_status']}\n\n";
             $message .= "Sending payment id: {$_POST['custom']}\n";
             $message .= "To email: {$_POST['email']}\n";
             $message .= "Purchase receipt: {$_POST['item_number']}\n";
-            
+
             $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['email'], $_POST['custom'] );
             $message .= "Email sent status: {$email_status}\n";
 
             $payment_meta_array = get_post_meta( $_POST['custom'], '_sell_media_payment_meta', true );
             $products_meta_array = unserialize( $payment_meta_array['products'] );
             do_action( 'sell_media_after_successful_payment', $products_meta_array, $_POST['custom'] );
-            
+
             $cart = sell_media_empty_cart();
             $message .= "Emptied cart: {$cart}\n";
 
-        } else {            
-            $message .= "\nPayment status not set to Completed\n";            
+        } else {
+            $message .= "\nPayment status not set to Completed\n";
         }
 
 
