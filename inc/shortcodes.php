@@ -705,10 +705,10 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 					if ( 'true' == $details ) {
 						$html .= '<div class="sell-media-collections-shortcode-item-details">';
 						$html .= '<span class="sell-media-collections-shortcode-item-count">';
-						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_photos' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_photos');
+						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
 						$html .= '</span>';
 						$html .= '<span class="sell-media-collections-shortcode-item-price">';
-						$html .=  __( 'Starting at ', 'sell_photos' ) . '<span class="price">' . sell_media_get_currency_symbol() . $sell_media_size_settings['default_price'] . '</span>';
+						$html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $sell_media_size_settings['default_price'] . '</span>';
 						$html .= '</span>';
 						$html .= '</div>';
 					}
