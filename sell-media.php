@@ -786,6 +786,11 @@ class SellMedia {
              * get the password for the collection
              */
             $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
+            if ( empty( $password ) ){
+                $child_term = get_term( $term_id, 'collection' );
+                $parent_term = get_term( $child_term->parent, 'collection' );
+                $password = sell_media_get_term_meta( $parent_term->term_id, 'collection_password', true );
+            }
 
             if ( ! isset( $_SESSION ) ) session_start();
 
