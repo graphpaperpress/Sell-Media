@@ -41,7 +41,6 @@ Class Sell_Media_Cart {
         }
 
         return sprintf('%0.2f', $item_price);
-
     }
 
 
@@ -104,5 +103,45 @@ Class Sell_Media_Cart {
                 $size = null;
         }
         return $size;
+    }
+
+
+    /**
+     * Determine the total cost for all items in the users current shopping
+     * cart.
+     *
+     * @param $items (array) An array of items
+     *
+     * @return $amount (string) The updated amount the customer is charged
+     */
+    public function get_total( $items=array() ){
+        $amount = 0;
+        if ( ! empty( $items ) ){
+            foreach ( $items as $item ){
+                $price = $this->item_price( $item['item_id'], $item['price_id'] );
+                $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
+                $amount = $amount + $price * $qty;
+            }
+        }
+
+        return $amount;
+    }
+
+
+    /**
+     * Determines the quantity for all items in the customers cart
+     * @param $items (array) An array of items to total
+     * @return $quantity (string) The total number of items in the users cart
+     */
+    public function get_quantity( $items=array() ){
+        $quantity = 0;
+        if ( ! empty( $items ) ){
+            foreach ( $items as $item ){
+                // Silly hack for reprints
+                $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
+                $quantity = $quantity + $qty;
+            }
+        }
+        return $quantity;
     }
 }

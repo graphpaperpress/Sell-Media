@@ -35,6 +35,12 @@ function sell_media_add_items(){
 
     // Update our session with the new items
     $_SESSION['cart']['items'] = $items;
+
+    // Update the total and the quantity
+    $cart = New Sell_Media_Cart;
+    $_SESSION['cart']['total'] = $cart->get_total( $_SESSION['cart']['items'] );
+    $_SESSION['cart']['qty'] = $cart->get_quantity( $_SESSION['cart']['items'] );
+
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_add_items', 'sell_media_add_items' );
