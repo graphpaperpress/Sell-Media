@@ -185,7 +185,7 @@
 
 
 .sell-media-price-groups-container #nav-menu-header,
-.sell-media-price-groups-container #nav-menu-footer {
+.sell-media-price-groups-container .nav-menu-footer {
     padding: 10px;
     }
 
@@ -193,8 +193,15 @@
     width: 16em;
 }
 
-.sell-media-price-groups-container #nav-menu-footer {
+.sell-media-price-groups-container .nav-menu-footer {
     border-top: 1px solid #dfdfdf;
+    margin: 10px 0 0;
+    background: #F1F1F1;
+    background-image: -webkit-gradient(linear,left bottom,left top,from(#ECECEC),to(#F9F9F9));
+    background-image: -webkit-linear-gradient(bottom,#ECECEC,#F9F9F9);
+    background-image: -moz-linear-gradient(bottom,#ECECEC,#F9F9F9);
+    background-image: -o-linear-gradient(bottom,#ECECEC,#F9F9F9);
+    background-image: linear-gradient(to top,#ECECEC,#F9F9F9);
     }
 
 .sell-media-price-groups-container .sell-media-xit {
@@ -213,4 +220,11 @@
 .sell-media-price-groups-container .submitdelete:hover {
     background: #f00;
     color: #fff;
+    }
+
+.sell-media-price-groups-container .menu-management {
+    position: relative;
+    margin-right: 20px;
+    margin-top: -3px;
+    width: 100%;
     }
