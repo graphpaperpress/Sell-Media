@@ -205,9 +205,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             sell_media_process_paypal_purchase( $purchase, $payment_id );
         }
     }
-
+    $cart = New Sell_Media_Cart;
     ob_start(); ?>
-
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
@@ -308,33 +307,33 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                         <?php
 
                         // Derive the license name
-                        if ( empty( $item['license_id'] ) ){
+                        if ( empty( $item['license']['id'] ) ){
                             $license = __('None','sell_media');
                             $license_id = false;
                         } else {
-                            $license_obj = get_term_by('id', $item['license_id'], 'licenses' );
+                            $license_obj = get_term_by('id', $item['license']['id'], 'licenses' );
                             $license = $license_obj->name;
-                            $license_id = $item['license_id'];
+                            $license_id = $item['license']['id'];
                         }
 
                         // $price = $cart->item_price( $item['item_id'], $item['price_id'] );
-                        $size_name     = $cart->item_size( $item['price_id'] );
-                        $price         = $cart->item_markup_total( $item['item_id'], $item['price_id'], $license_id );
-                        $markup_amount = $cart->item_markup_amount( $item['item_id'], $item['price_id'], $license_id );
-                        $qty           = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
+                        $size_name     = $cart->item_size( $item['price']['id'] );
+                        $price         = $cart->item_markup_total( $item['id'], $item['price']['id'], $license_id );
+                        $markup_amount = $cart->item_markup_amount( $item['id'], $item['price']['id'], $license_id );
+                        $qty           = $item['qty'];
                         $total         = $qty * $price;
 
                         ?>
 
                         <tr>
                             <td class="product-details">
-                                <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?></a>
+                                <a href="<?php print get_permalink( $item['id'] ); ?>"><?php sell_media_item_icon( get_post_meta( $item['id'], '_sell_media_attachment_id', true ), array(75,0) ); ?></a>
                                 <div class="sell-media-table-meta">
-                                    <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a>
+                                    <a href="<?php print get_permalink( $item['id'] ); ?>"><?php print get_the_title( $item['id'] ); ?></a>
                                     <div class="sell-media-license"><?php _e('License','sell_media'); ?>: <?php print $license; ?></div>
                                     <div class="sell-media-size"><?php _e('Size','sell_media');?>: <?php print $size_name; ?></div>
                                 </div>
-                                <?php do_action('sell_media_below_product_cart_title', $item, $item['item_id'], $item['price_id']); ?>
+                                <?php do_action('sell_media_below_product_cart_title', $item, $item['id'], $item['price']['id']); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
                                     <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>
                                     <?php if ( $tmp_term ) : ?>
