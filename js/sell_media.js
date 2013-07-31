@@ -305,7 +305,7 @@ jQuery( document ).ready(function( $ ){
             location.href = sell_media.checkouturl;
         } else {
 
-            var _data = "action=sell_media_add_items&taxonomy=licenses&" + $( this ).serialize();
+            var _data = "action=add_items&taxonomy=licenses&" + $( this ).serialize();
 
             if ( _user.count < 1 ) {
                 text = '(<span class="count-container"><span class="count-target"></span></span>)';
@@ -344,7 +344,7 @@ jQuery( document ).ready(function( $ ){
         }
 
         data = {
-            action: "sell_media_remove_item",
+            action: "remove_item",
             item_id: $(this).attr('data-item_id')
         };
 

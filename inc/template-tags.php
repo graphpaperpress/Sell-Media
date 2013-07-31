@@ -419,7 +419,7 @@ function sell_media_item_form(){
         <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
         <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
         <input type="hidden" name="CalculatedPrice" class="" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-        <?php wp_nonce_field('sell_media_add_items','sell_media_nonce'); ?>
+        <?php wp_nonce_field('add_items','sell_media_nonce'); ?>
 
         <?php do_action( 'sell_media_cart_above_licenses' ); ?>
         <?php

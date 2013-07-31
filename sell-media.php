@@ -620,16 +620,9 @@ class SellMedia {
         } if ( !is_admin() ) {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
-            $amount = $quantity = 0;
-            if ( ! empty( $_SESSION['cart']['items'] ) ){
-                $cart = New Sell_Media_Cart;
-                foreach ( $_SESSION['cart']['items'] as $item ){
-                    $price = $cart->item_price( $item['item_id'], $item['price_id'] );
-                    $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-                    $amount = $cart->item_markup_total( $item['item_id'], $item['price_id'] );
-                    $quantity = $quantity + $qty;
-                }
-            }
+            $amount = 0;
+            $quantity = 0;
+
             $options = get_option('sell_media_general_settings');
             $page_id = $options['checkout_page'];
 
@@ -639,8 +632,8 @@ class SellMedia {
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
                 'checkouturl' => get_permalink( $page_id ),
                 'cart' => array(
-                    'total' => $amount,
-                    'quantity' => $quantity,
+                    'total' => empty( $_SESSION['cart']['total'] ) ? 0 : $_SESSION['cart']['total'],
+                    'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
                     'currency_symbol' => sell_media_get_currency_symbol()
                     )
                 )
