@@ -204,9 +204,9 @@ class SellMediaSettings {
      * @since 1.5.1
      */
     function field_price_group(){
-        $price_group = New SellMediaPriceGroups;
-        $parent_terms = get_terms('price-group', array( 'hide_empty' => false, 'parent' => 0 ) );
-        $price_group->setting_ui( $parent_terms );
+        $price_group = New SellMediaNavStyleUI();
+        $price_group->taxonomy = 'price-group';
+        $price_group->setting_ui();
     }
 
 

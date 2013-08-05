@@ -594,7 +594,6 @@ class SellMedia {
          * For easier enqueueing
          */
         wp_register_script( 'sell_media-admin-uploader', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin-uploader.js', array( 'jquery', 'media-upload' ) );
-        wp_register_script( 'sell_media-admin-price-groups', plugin_dir_url( __FILE__ ) . 'js/admin-price-groups.js', array( 'nav-menu' ) );
 
         /**
          * For Sell All Uploads checkbox on media uploader
