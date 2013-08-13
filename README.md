@@ -211,6 +211,17 @@ Changelog
 * Tweak: Updating shortcode in readme.txt
 * Tweak: Adding template check for other developers to change the collection password page
 
+1.5.7
+---
+* Tweak: Various improvements for cart in PHP session
+* Tweak: Minor text update
+* Tweak: Price groups class can now be used for any parent/child taxonomy
+* Tweak: Updating shortcode in readme.txt
+* Tweak: Adding template check for other developers to change the collection password page
+* Bug: Child collections now inherit the password of the parent collection
+* Bug: No longer enqueue `nav-menu`, it has been removed in WordPress 3.6
+* Bug: Corrected text domain issue
+
 1.5.6
 ---
 * Feature: Admin shows collection icon on collection edit column
