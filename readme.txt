@@ -192,8 +192,10 @@ Action hooks available:
 
 == Changelog ==
 
+* Tweak: Price groups class can now be used for any parent/child taxonomy
 * Tweak: Updating shortcode in readme.txt
 * Tweak: Adding template check for other developers to change the collection password page
+* Bug: No longer enqueue `nav-menu`, it has been removed in WordPress 3.6
 
 = 1.5.6 =
 * Feature: Admin shows collection icon on collection edit column
