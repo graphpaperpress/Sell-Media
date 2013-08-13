@@ -692,9 +692,10 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
              * Build our array to be returned, the downloadable width and height
              * are calculated later and added to this array
              */
+            $cart = New Sell_Media_Cart;
             $download_sizes[ $price->term_id ] = array(
                 'name' => $price->name,
-                'price' => Sell_Media_Cart::item_price( $post_id, $price->term_id )
+                'price' => $cart->item_price( $post_id, $price->term_id )
                 );
 
             /**

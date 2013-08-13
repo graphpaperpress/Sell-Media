@@ -365,7 +365,8 @@ function sell_media_edit_collection_password( $tag ){
         } else {
             $parent = get_term( $child_term->parent, 'collection' );
             $password = sell_media_get_term_meta( $parent->term_id, 'collection_password', true );
-            $description = __('Please edit the parent password set in: ', 'sell_media') . ' <a href="' . admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item') . '">' . $parent->name . '</a>';
+            $description = __('This colleciton inherits the password set in its parent collection: ', 'sell_media') . ' <a href="' . admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item') . '">' . $parent->name . '</a>. ';
+            $description .= __('To edit the password of this collection you must change the parent password.', 'sell_media');
             $html_extra = 'class="disabled" disabled ';
         }
 
