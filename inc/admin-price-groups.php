@@ -33,7 +33,6 @@ Class SellMediaNavStyleUI {
         global $pagenow;
         if ( ! empty( $pagenow ) && $pagenow == 'edit.php' && ! empty( $_GET['tab'] ) && $_GET['tab'] == 'sell_media_size_settings' ){
             wp_enqueue_script( 'sell_media-admin-price-groups', plugin_dir_url( dirname( __FILE__ ) ) . 'js/admin-price-groups.js', array( 'jquery' ) );
-            wp_enqueue_script( 'nav-menu' );
         }
     }
 
@@ -282,7 +281,7 @@ Class SellMediaNavStyleUI {
                         <tbody>
                             <tr>
                                 <td colspan="4">
-                                    <p><?php echo apply_filters('sell_media_rp_intro_copy', $this->taxonomy, __('The sizes listed below determine the maximum dimensions in pixels.', 'sell_media') ); ?></p>
+                                    <p><?php echo apply_filters('sell_media_rp_intro_copy', __('The sizes listed below determine the maximum dimensions in pixels.', 'sell_media') ); ?></p>
                                 </td>
                             </tr>
                             <?php if ( empty( $current_term_id ) ) : ?>
