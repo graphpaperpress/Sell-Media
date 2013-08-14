@@ -192,6 +192,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.5.8 =
+* Bug: Updating admin payments and needed screens to support previous versions of pricing
+
 = 1.5.7 =
 * Tweak: Various improvements for cart in PHP session
 * Tweak: Minor text update

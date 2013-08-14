@@ -208,8 +208,9 @@ Upgrade Notice
 Changelog
 ---------
 
-* Tweak: Updating shortcode in readme.txt
-* Tweak: Adding template check for other developers to change the collection password page
+1.5.8
+---
+* Bug: Updating admin payments and needed screens to support previous versions of pricing
 
 1.5.7
 ---

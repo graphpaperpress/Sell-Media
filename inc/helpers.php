@@ -505,30 +505,45 @@ function sell_media_get_cusotmer_products( $payment_id=null ){
  */
 function sell_media_build_download_link( $payment_id=null, $customer_email=null ){
     $payment_meta = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
-    $products = maybe_unserialize( $payment_meta['products'] );
+    $downloads = maybe_unserialize( $payment_meta['products'] );
 
-    $downloads = array();
-    foreach( $products as $product ){
-        if ( ! is_array( $product['price_id'] ) ) {
-            $downloads[] = $product;
-        }
-    }
-
-    $tmp_links = null;
-    $links = null;
+    // This was a hack for reprints and quantity
+    // $downloads = array();
+    // foreach( $products as $product ){
+    //     if ( ! empty( $product['price_id'] ) && ! is_array( $product['price_id'] ) ) {
+    //         $downloads[] = $product;
+    //     }
+    // }
+    $tmp_links = array();
+    $links = array();
 
     foreach( $downloads as $download ) {
-        if ( ! empty( $download['item_id'] ) ){
-            $tmp_links['item_id'] = $download['item_id'];
-            $tmp_links['price_id'] = $download['price_id'];
-            $tmp_links['license_id'] = $download['license_id'];
-            $tmp_links['thumbnail'] = sell_media_item_icon( get_post_meta( $download['item_id'], '_sell_media_attachment_id', true ), 'thumbnail', false );
-            $tmp_links['url'] = site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download['item_id'] . '&price_id=' . $download['price_id'];
-            $tmp_links['payment_id'] = $payment_id;
+
+        // Backwards combatibility for versions =< 1.5.6
+        $item_key = empty( $download['item_id'] ) ? 'id' : 'item_id';
+        $price_id = empty( $download['price_id'] ) ? $download['price']['id'] : $download['price_id'];
+
+        if ( ! empty( $download['license_id'] ) ){
+            $license_id = $download['license_id'];
+        } elseif ( ! empty( $download['license']['id'] ) ){
+            $license_id = $download['license']['id'];
+        } else {
+            $license_id = null;
         }
+
+        $tmp_links = array(
+            'item_id'    => $download[ $item_key ],
+            'price_id'   => $price_id,
+            'license_id' => $license_id,
+            'thumbnail'  => sell_media_item_icon( get_post_meta( $download[ $item_key ], '_sell_media_attachment_id', true ), 'thumbnail', false ),
+            'url'        => site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download[ $item_key ] . '&price_id=' . $price_id,
+            'payment_id' => $payment_id
+            );
+
         $links[] = $tmp_links;
     }
-    return $links;
+
+    return empty( $links ) ? false : $links;
 }
 
 
