@@ -128,7 +128,7 @@ Class Sell_Media_Cart {
         $amount = 0;
         if ( ! empty( $items ) ){
             foreach ( $items as $item ){
-                $price = $this->item_price( $item['id'], $item['price']['id'] );
+                $price = $this->item_markup_total( $item['id'], $item['price']['id'], $item['license']['id'] );
                 $qty = 1;
                 $amount = $amount + $price * $qty;
             }
@@ -231,7 +231,6 @@ Class Sell_Media_Cart {
             // We have additional items and merge the current cart with the new items to add
             $items = array_merge( $cart, $to_add );
         }
-
 
         // Update our session with the new items
         $_SESSION['cart']['items'] = $items;
