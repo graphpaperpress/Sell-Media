@@ -144,7 +144,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             }
 
             $_SESSION['cart']['amount'] = $amount;
-            $_SESSION['cart']['quantity'] = $quantity;
+            $_SESSION['cart']['qty'] = $quantity;
 
             // record the payment details
             update_post_meta( $payment_id, '_sell_media_payment_meta', $purchase );
