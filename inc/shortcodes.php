@@ -122,7 +122,10 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             } else {
                 $ip = $_SERVER['REMOTE_ADDR'];
             }
-
+// echo '<pre>';
+// print_r( $_SESSION['cart']['total'] );
+// echo '</pre>';
+// die();
             $purchase = array(
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
@@ -130,7 +133,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 'email' => $user['email'],
                 'date' => date( 'Y-m-d H:i:s' ),
                 'purchase_key' => $purchase_key,
-                'payment_id' => $payment_id
+                'payment_id' => $payment_id,
+                'CalculatedPrice' => $_SESSION['cart']['total']
                 );
 
             $amount = 0;

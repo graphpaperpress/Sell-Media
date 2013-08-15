@@ -75,6 +75,12 @@ function sell_media_payment_render_contact( $post ){
         __( 'Total', 'sell_media' )
         );
 
+// echo '<pre>';
+// $a = get_post_meta( $post->ID, '_sell_media_payment_meta', true );
+
+// print_r( $a );
+// print_r( unserialize( $a['products'] ) );
+// echo '</pre>';
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
 
     if ( ! empty( $links ) ){

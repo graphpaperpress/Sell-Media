@@ -521,7 +521,14 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
 
         // Backwards combatibility for versions =< 1.5.6
         $item_key = empty( $download['item_id'] ) ? 'id' : 'item_id';
-        $price_id = empty( $download['price_id'] ) ? $download['price']['id'] : $download['price_id'];
+
+        if ( ! empty( $download['price'] ) ){
+            $price_id = $download['price']['id'];
+        } elseif ( ! empty( $download['price_id'] ) ) {
+            $price_id = $download['price_id']['id'];
+        } else {
+            $price_id = null;
+        }
 
         if ( ! empty( $download['license_id'] ) ){
             $license_id = $download['license_id'];
@@ -530,6 +537,7 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
         } else {
             $license_id = null;
         }
+        // end
 
         $tmp_links = array(
             'item_id'    => $download[ $item_key ],
