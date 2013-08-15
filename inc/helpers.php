@@ -525,7 +525,7 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
         if ( ! empty( $download['price'] ) ){
             $price_id = $download['price']['id'];
         } elseif ( ! empty( $download['price_id'] ) ) {
-            $price_id = $download['price_id']['id'];
+            $price_id = $download['price_id'];
         } else {
             $price_id = null;
         }
