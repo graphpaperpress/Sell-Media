@@ -53,7 +53,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
     $return_url = add_query_arg( $args, get_permalink( $general_settings['thanks_page'] ) );
     $paypal_redirect = trailingslashit( sell_media_get_paypal_redirect() ) . '?';
 
-    $price = $_SESSION['cart']['amount'];
+    $price = $_SESSION['cart']['total'];
 
     $paypal_args = array(
         'cmd'            => '_xclick',
