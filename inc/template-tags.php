@@ -465,7 +465,7 @@ function sell_media_item_form(){
                 <input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
                 <div class="license_text"><?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?></div>
                 <?php if ( ! empty( $licenses[0]->description ) ) : ?>
-                    <div class="license_desc sell-media-tooltip" data-tooltip="<?php print $licenses[0]->description; ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
+                    <div class="license_desc sell-media-tooltip" data-tooltip="<?php print esc_attr( $licenses[0]->description ); ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
                 <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>

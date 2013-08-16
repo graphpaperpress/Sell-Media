@@ -208,6 +208,11 @@ Upgrade Notice
 Changelog
 ---------
 
+1.5.9
+---
+* Bug: quotes can now be used in the license description
+
+
 1.5.8
 ---
 * Bug: Updating admin payments and needed screens to support previous versions of pricing
