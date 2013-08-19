@@ -76,7 +76,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     if ( isset( $_SESSION['cart']['items'] ) )
         $items = $_SESSION['cart']['items'];
 
-    if ( $_POST ) {
+    if ( $_POST ){
+        // die();
 
         // Check if the qty thats in the cart has changed
         // foreach( $_POST['sell_media_item_qty'] as $k => $v ){
@@ -221,6 +222,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
         <?php else : ?>
             <form action="" method="post" id="sell_media_checkout_form" class="sell-media-form">
+            <?php wp_nonce_field('check_email','sell_media_cart_nonce'); ?>
             <table id="sell-media-checkout-table">
                 <thead>
                     <tr class="sell-media-header">

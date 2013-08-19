@@ -15,6 +15,9 @@ Class Sell_Media_Cart {
 
         add_action( 'wp_ajax_nopriv_remove_item', array( &$this, 'remove_item' ) );
         add_action( 'wp_ajax_remove_item', array( &$this, 'remove_item' ) );
+
+        add_action( 'wp_ajax_nopriv_sell_media_check_email', array( &$this, 'check_email' ) );
+        add_action( 'wp_ajax_sell_media_check_email', array( &$this, 'check_email' ) );
     }
 
 
@@ -320,6 +323,22 @@ Class Sell_Media_Cart {
         print_r( $full_cart );
         echo '</pre>';
 
+    }
+
+
+    /**
+     * Check if an email already exists.
+     *
+     * @param $_POST['email']
+     * @uses wp_send_json_error()
+     * @uses wp_send_json_success()
+     * @package AJAX
+     * @return JSON Object
+     */
+    public function check_email(){
+        check_ajax_referer('check_email', 'security');
+        email_exists( $_POST['email'] ) ? wp_send_json_error() : wp_send_json_success();
+        die();
     }
 }
 // Later make this a singleton or better don't use one

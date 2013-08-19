@@ -634,6 +634,9 @@ class SellMedia {
                     'total' => empty( $_SESSION['cart']['total'] ) ? 0 : $_SESSION['cart']['total'],
                     'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
                     'currency_symbol' => sell_media_get_currency_symbol()
+                    ),
+                'error' => array(
+                    'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                     )
                 )
             );
