@@ -50,6 +50,15 @@ Class SellMediaNavStyleUI {
         wp_verify_nonce( $_POST['security'], $_POST['action'] );
         $taxonomy = apply_filters( 'sell_media_pg_taxonomy', $_POST['taxonomy'] );
 
+        // Update the price group name if it has changed
+        if ( ! empty( $form_data['price_group']['term_id'] ) ){
+            $parent_obj = get_term_by( 'id', $form_data['price_group']['term_id'], $taxonomy );
+            if ( $parent_obj->name != $form_data['price_group']['term_name'] ){
+                wp_update_term( $form_data['price_group']['term_id'], $taxonomy, array( 'name' => $form_data['price_group']['term_name'] ) );
+            }
+        }
+
+
         if ( ! empty( $form_data['terms_children'] ) ){
             foreach( $form_data['terms_children'] as $k => $v ){
                 wp_update_term( $k, $taxonomy, array( 'name' => $v['name'] ) );
@@ -58,6 +67,7 @@ Class SellMediaNavStyleUI {
                 sell_media_update_term_meta( $k, 'price', $v['price'] );
             }
         }
+
 
         if ( ! empty( $form_data['new_child'] ) ){
             foreach( $form_data['new_child'] as $child ){
@@ -183,7 +193,8 @@ Class SellMediaNavStyleUI {
         }
 
         $final['header'] = array(
-            'html' => '<input name="sell_media_term_name" class="sell_media_term_name" type="text" class="regular-text" placeholder="'. __('Enter price group name here', 'sell_media') . '" value="' . $current_term . '" data-term_id="' . $data_term_id . '" data-taxonomy="' . $this->taxonomy . '" />
+            'html' => '<input name="price_group[term_name]" type="text" class="regular-text" placeholder="'. __('Enter price group name here', 'sell_media') . '" value="' . $current_term . '" data-term_id="' . $data_term_id . '" data-taxonomy="' . $this->taxonomy . '" />
+                <input type="hidden" value="'.$data_term_id.'" name="price_group[term_id]" />
                 <a href="#" class="' . $class . '" data-term_id="' . $data_term_id . '" data-message="' . $message . '" data-taxonomy="' . $this->taxonomy . '">' . $link_text . '</a>'
             );
 
@@ -224,7 +235,7 @@ Class SellMediaNavStyleUI {
 
 // $final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
 
-        // Default tems
+        // Default terms
         $max = count( $final['terms'] ) < 1 ? 3 : 1;
         $html = null;
         for( $i = 1; $i <= $max; $i++ ) {

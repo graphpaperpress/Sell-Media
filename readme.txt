@@ -193,6 +193,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.5.9 =
+* Bug: Price group parents now correctly updates the parent name when saved
 * Bug: quotes can now be used in the license description
 
 = 1.5.8 =
