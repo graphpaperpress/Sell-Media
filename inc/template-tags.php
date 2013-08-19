@@ -517,11 +517,22 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
             $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $download_sizes[ $k ]['price'] );
             $html .= '</li>';
         }
+
         $original_size = sell_media_original_image_size( $post_id, false );
-        if ( empty( $type ) ){
-            $og_size = null;
-        } else {
+        $mime_type = wp_check_filetype( wp_get_attachment_url( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) );
+        $image_mimes = array(
+            'image/jpg',
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/bmp',
+            'image/tiff'
+            );
+
+        if ( in_array( $mime_type['type'], $image_mimes ) ){
             $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
+        } else {
+            $og_size = null;
         }
 
         $html .= '<li class="price">';
