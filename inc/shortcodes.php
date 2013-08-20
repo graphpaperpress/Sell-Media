@@ -76,17 +76,18 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     if ( isset( $_SESSION['cart']['items'] ) )
         $items = $_SESSION['cart']['items'];
 
-    if ( $_POST ) {
+    if ( $_POST ){
+        // die();
 
         // Check if the qty thats in the cart has changed
-        foreach( $_POST['sell_media_item_qty'] as $k => $v ){
-            if ( is_array( $_SESSION['cart']['items'][ $k ]['price_id'] ) ){
-                if ( $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] != $v ){
-                    print "new qty: {$k} {$v}\n";
-                    $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] = $v;
-                }
-            }
-        }
+        // foreach( $_POST['sell_media_item_qty'] as $k => $v ){
+        //     if ( is_array( $_SESSION['cart']['items'][ $k ]['price_id'] ) ){
+        //         if ( $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] != $v ){
+        //             print "new qty: {$k} {$v}\n";
+        //             $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] = $v;
+        //         }
+        //     }
+        // }
 
         // Create User
         $user = array();
@@ -130,21 +131,30 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 'email' => $user['email'],
                 'date' => date( 'Y-m-d H:i:s' ),
                 'purchase_key' => $purchase_key,
-                'payment_id' => $payment_id
+                'payment_id' => $payment_id,
+                'CalculatedPrice' => $_SESSION['cart']['total']
                 );
 
-            $amount = 0;
-            $quantity = 0;
-            $cart = New Sell_Media_Cart;
-            foreach ( $items as $item ){
-                $price = $cart->item_price( $item['item_id'], $item['price_id'] );
-                $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-                $amount = $amount + $price * $qty;
-                $quantity = $quantity + $qty;
-            }
+            // $amount = 0;
+            // $quantity = 0;
+            // $cart = New Sell_Media_Cart;
+            // foreach ( $items as $item ){
+            //     $price = $cart->item_price( $item['item_id'], $item['price_id'] );
+            //     $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
+            //     $amount = $amount + $price * $qty;
+            //     $quantity = $quantity + $qty;
+            // }
+            // echo '<pre>';
+            // print_r( $_SESSION );
+            // echo '</pre>';
 
-            $_SESSION['cart']['amount'] = $amount;
-            $_SESSION['cart']['quantity'] = $quantity;
+            // $_SESSION['cart']['amount'] = $amount;
+            // $_SESSION['cart']['qty'] = $quantity;
+
+            // echo '<pre>';
+            // print_r( $_SESSION );
+            // echo '</pre>';
+            // die();
 
             // record the payment details
             update_post_meta( $payment_id, '_sell_media_payment_meta', $purchase );
@@ -153,8 +163,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             update_post_meta( $payment_id, '_sell_media_payment_last_name', $user['last_name'] );
             update_post_meta( $payment_id, '_sell_media_payment_user_ip', $ip );
             update_post_meta( $payment_id, '_sell_media_payment_purchase_key', $purchase['purchase_key'] );
-            update_post_meta( $payment_id, '_sell_media_payment_amount', $amount );
-            update_post_meta( $payment_id, '_sell_media_payment_quantity', $quantity );
+            update_post_meta( $payment_id, '_sell_media_payment_amount', $_SESSION['cart']['total'] );
+            update_post_meta( $payment_id, '_sell_media_payment_quantity', $_SESSION['cart']['qty'] );
 
             global $current_user;
             do_action( 'sell_media_before_checkout', $purchase );
@@ -202,17 +212,17 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             // Upate the _sell_media_payment_meta with the User ID
             update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_meta );
 
-            sell_media_process_paypal_purchase( $purchase, $_POST );
+            sell_media_process_paypal_purchase( $purchase, $payment_id );
         }
     }
-
+    $cart = New Sell_Media_Cart;
     ob_start(); ?>
-
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
         <?php else : ?>
             <form action="" method="post" id="sell_media_checkout_form" class="sell-media-form">
+            <?php wp_nonce_field('check_email','sell_media_cart_nonce'); ?>
             <table id="sell-media-checkout-table">
                 <thead>
                     <tr class="sell-media-header">
@@ -308,33 +318,33 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                         <?php
 
                         // Derive the license name
-                        if ( empty( $item['license_id'] ) ){
+                        if ( empty( $item['license']['id'] ) ){
                             $license = __('None','sell_media');
                             $license_id = false;
                         } else {
-                            $license_obj = get_term_by('id', $item['license_id'], 'licenses' );
+                            $license_obj = get_term_by('id', $item['license']['id'], 'licenses' );
                             $license = $license_obj->name;
-                            $license_id = $item['license_id'];
+                            $license_id = $item['license']['id'];
                         }
 
                         // $price = $cart->item_price( $item['item_id'], $item['price_id'] );
-                        $size_name     = $cart->item_size( $item['price_id'] );
-                        $price         = $cart->item_markup_total( $item['item_id'], $item['price_id'], $license_id );
-                        $markup_amount = $cart->item_markup_amount( $item['item_id'], $item['price_id'], $license_id );
-                        $qty           = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : '1';
+                        $size_name     = $cart->item_size( $item['price']['id'] );
+                        $price         = $cart->item_markup_total( $item['id'], $item['price']['id'], $license_id );
+                        $markup_amount = $cart->item_markup_amount( $item['id'], $item['price']['id'], $license_id );
+                        $qty           = $item['qty'];
                         $total         = $qty * $price;
 
                         ?>
 
                         <tr>
                             <td class="product-details">
-                                <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php sell_media_item_icon( get_post_meta( $item['item_id'], '_sell_media_attachment_id', true ), array(75,0) ); ?></a>
+                                <a href="<?php print get_permalink( $item['id'] ); ?>"><?php sell_media_item_icon( get_post_meta( $item['id'], '_sell_media_attachment_id', true ), array(75,0) ); ?></a>
                                 <div class="sell-media-table-meta">
-                                    <a href="<?php print get_permalink( $item['item_id'] ); ?>"><?php print get_the_title( $item['item_id'] ); ?></a>
+                                    <a href="<?php print get_permalink( $item['id'] ); ?>"><?php print get_the_title( $item['id'] ); ?></a>
                                     <div class="sell-media-license"><?php _e('License','sell_media'); ?>: <?php print $license; ?></div>
                                     <div class="sell-media-size"><?php _e('Size','sell_media');?>: <?php print $size_name; ?></div>
                                 </div>
-                                <?php do_action('sell_media_below_product_cart_title', $item, $item['item_id'], $item['price_id']); ?>
+                                <?php do_action('sell_media_below_product_cart_title', $item, $item['id'], $item['price']['id']); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
                                     <?php $tmp_term = get_term_by( 'id', $item['License'], $item['taxonomy'] ); ?>
                                     <?php if ( $tmp_term ) : ?>
@@ -705,10 +715,10 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 					if ( 'true' == $details ) {
 						$html .= '<div class="sell-media-collections-shortcode-item-details">';
 						$html .= '<span class="sell-media-collections-shortcode-item-count">';
-						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_photos' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_photos');
+						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
 						$html .= '</span>';
 						$html .= '<span class="sell-media-collections-shortcode-item-price">';
-						$html .=  __( 'Starting at ', 'sell_photos' ) . '<span class="price">' . sell_media_get_currency_symbol() . $sell_media_size_settings['default_price'] . '</span>';
+						$html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $sell_media_size_settings['default_price'] . '</span>';
 						$html .= '</span>';
 						$html .= '</div>';
 					}

@@ -5,10 +5,12 @@ var smPriceGroups;
  * Our JS object for manipulating price groups
  */
 var smPriceGroups = {
-    options: {
-        security: $('#_wpnonce').val()
-    },
+    options: {},
     init: function(){
+
+        smPriceGroups.options.security = $('#_wpnonce').val();
+        smPriceGroups.options.taxonomy = $('#smtaxonomy').val();
+
         $.ajaxSetup({
             url: ajaxurl,
             type: "post",
@@ -17,31 +19,34 @@ var smPriceGroups = {
             }
         });
     },
-    save: function(){
+    save: function( my_obj ){
         $.ajax({
             data: {
                 action: "save_term",
-                form: $('.wrap form').serialize(),
-                security: smPriceGroups.options.security
+                security: smPriceGroups.options.security,
+                taxonomy: smPriceGroups.options.taxonomy,
+                form: $('.wrap form').serialize()
             }
         });
     },
-    delete: function( my_obj ){
-        if ( confirm( my_obj.attr('data-message') ) == true ) {
+    delete: function( term_id, taxonomy, message ){
+        if ( confirm( message ) == true ) {
             $.ajax({
                 data: {
                     action: "delete_term",
-                    term_id: my_obj.attr('data-term_id'),
+                    term_id: term_id,
+                    taxonomy: taxonomy,
                     security: smPriceGroups.options.security
                 }
             });
         }
     },
-    add: function(){
-         $.ajax({
+    add: function( term, taxonomy ){
+        $.ajax({
             data: {
                 action: "add_term",
-                term_name: $( '#sell_media_term_name' ).val(),
+                term_name: term,
+                taxonomy: taxonomy,
                 security: smPriceGroups.options.security
             },
             global: false,
@@ -56,23 +61,39 @@ var smPriceGroups = {
 jQuery( document ).ready(function( $ ){
 
     smPriceGroups.init();
-    smPriceGroups.options.security = $('#_wpnonce').val();
 
     $('.sell-media-save-term').on('click', function( event ){
-        smPriceGroups.save();
         event.preventDefault();
+        smPriceGroups.save( $( this ) );
     });
 
     $('.sell-media-delete-term').on('click', function( event ){
         event.preventDefault();
-        smPriceGroups.delete( $( this ) );
+
+        term_id = $(this).attr('data-term_id');
+        message = $(this).attr('data-message');
+        taxonomy = $(this).attr('data-taxonomy');
+
+        smPriceGroups.delete( term_id, taxonomy, message );
     });
 
-    $('.sell-media-add-term').on('click', smPriceGroups.add );
+    $('.sell-media-add-term').on('click', function( e ){
+        e.preventDefault();
+
+        $term = $(this).parent().find('input');
+        taxonomy = $(this).attr('data-taxonomy');
+
+        smPriceGroups.add( $term.val(), taxonomy );
+    });
 
     $('.sell-media-delete-term-group').on('click', function( event ){
         event.preventDefault();
-        smPriceGroups.delete( $( this ) );
+
+        term_id = $(this).attr('data-term_id');
+        message = $(this).attr('data-message');
+        taxonomy = $(this).attr('data-taxonomy');
+
+        smPriceGroups.delete( term_id, taxonomy, message );
     });
 
 

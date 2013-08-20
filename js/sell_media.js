@@ -305,7 +305,7 @@ jQuery( document ).ready(function( $ ){
             location.href = sell_media.checkouturl;
         } else {
 
-            var _data = "action=sell_media_add_items&taxonomy=licenses&" + $( this ).serialize();
+            var _data = "action=add_items&taxonomy=licenses&" + $( this ).serialize();
 
             if ( _user.count < 1 ) {
                 text = '(<span class="count-container"><span class="count-target"></span></span>)';
@@ -344,7 +344,7 @@ jQuery( document ).ready(function( $ ){
         }
 
         data = {
-            action: "sell_media_remove_item",
+            action: "remove_item",
             item_id: $(this).attr('data-item_id')
         };
 
@@ -462,7 +462,7 @@ jQuery( document ).ready(function( $ ){
 
     $( document ).on('click', '.sell-media-search-options-trigger', function(e){
         e.preventDefault();
-        $('.sell-media-search-options').toggle();
+        $(this).closest('.sell-media-search-form').find('.sell-media-search-options:first').show();
      });
 
 
@@ -493,4 +493,27 @@ jQuery( document ).ready(function( $ ){
         }
      });
 
+
+    /**
+     * Check if the email exists, if it does we display an error message
+     * if not we submit the form
+     */
+    $('.sell-media-buy-button-checkout').on('click', function( e ){
+        e.preventDefault();
+        $.ajax({
+            url: sell_media.ajax_url,
+            data: {
+                email: $('#sell_media_email_field').val(),
+                action: 'sell_media_check_email',
+                security: $('#sell_media_cart_nonce').val()
+            },
+            success: function( msg ){
+                if ( msg.success ){
+                    $('#sell_media_checkout_form').submit();
+                } else {
+                    $('#sell_media_email_field').after( '<span class="sell-media-error">' + sell_media.error.email_exists + '</span>' );
+                }
+            }
+        });
+    });
 });

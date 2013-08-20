@@ -329,5 +329,13 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
         $email = ', ' . $additonal_emails['paypal_additional_test_email'];
     }
 
-    return wp_mail( $email, $subject, $body, $headers);
+    $r = wp_mail( $email, $subject, $body, $headers);    
+    
+    if ( $r ){
+        $status = "Sent to: {$email}";
+    } else {
+        $status = "Failed to send to: {$email}";
+    }
+    
+    return $status;
 }

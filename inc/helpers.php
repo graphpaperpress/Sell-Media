@@ -11,33 +11,21 @@ function sell_media_template_redirect(){
        $post_type = 'sell_media_item';
 
     $custom_templates = array(
-        'search' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/search-sell_media_item.php',
         'single'  => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-sell_media_item.php',
         'archive' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php'
         );
 
     $default_templates = array(
-        'search' => locate_template( 'search-sell_media_item.php' ),
         'single'   => locate_template( 'single-sell_media_item.php' ),
         'archive'  => locate_template( 'archive-sell_media_item.php' ),
         'taxonomy' => locate_template( 'taxonomy-' . get_query_var('taxonomy') . '.php' )
         );
 
-    /**
-     * Search - Check if is search AND post type is sell media
-     */
-    if ( is_search()
-        && isset( $_GET['post_type'] ) && $_GET['post_type'] != 'posts'
-        || ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item'
-        ) {
-        if ( file_exists( $default_templates['search'] ) ) return;
-        load_template( $custom_templates['search'] );
-        exit;
-    }
+
     /**
      * Single
      */
-    elseif ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
+    if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
         if ( file_exists( $default_templates['single'] ) ) return;
         load_template( $custom_templates['single'] );
         exit;
@@ -64,50 +52,53 @@ add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 function sell_media_get_search_form( $form ) {
     $general_settings = get_option( 'sell_media_general_settings' );
     $current_post_type = empty( $_GET['post_type'] ) ? 'sell_media_item' : $_GET['post_type'];
-    $current_collection = empty( $_GET['collection'] ) ? 'sell_media_item' : $_GET['collection'];
-    $current_keyword = empty( $_GET['keywords'] ) ? 'sell_media_item' : $_GET['keywords'];
+    $current_collection = empty( $_GET['sell_media_collection'] ) ? 'sell_media_item' : $_GET['sell_media_collection'];
+    $current_keyword = empty( $_GET['sell_media_keywords'] ) ? 'sell_media_item' : $_GET['sell_media_keywords'];
 
     if ( $current_post_type == 'sell_media_item' ){
-        $name_collection = 'collection';
-        $name_keywords = 'keywords';
+        $name_collection = 'sell_media_collection';
+        $name_keywords = 'sell_media_keywords';
     } else {
         $name_collection = null;
         $name_keywords = null;
     }
+    $theme = wp_get_theme();
+    $theme_name = str_replace(' ', '', strtolower( $theme->get('Name') ) );
     ob_start(); ?>
-    <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php echo home_url( '/' ); ?>" >
-    <div class="sell-media-search-form-inner">
-        <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'sell_media' ); ?>" />
-        <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>" />
-        <div class=""><a href="#" class="sell-media-search-options-trigger triangle"></a></div>
+    <div class="sell-media-<?php echo $theme_name; ?>">
+        <form role="search" method="get" id="searchform" class="sell-media-search-form" action="<?php echo home_url( '/' ); ?>" >
+            <div class="sell-media-search-form-inner">
+                <input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'sell_media' ); ?>" />
+                <input type="submit" id="searchsubmit" value="<?php echo esc_attr__( 'Search' ); ?>" />
+                <div class=""><a href="#" class="sell-media-search-options-trigger triangle"></a></div>
 
-        <div class="sell-media-search-options" style="display: none;">
-            <div class="sell-media-search-post-types">
-                <select name="post_type" class="post_type_selector">
-                    <option value=""><?php _e('Search in...','sell_media'); ?></option>
-                    <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
-                    <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php _e('Media','sell_media'); ?></option>
-                </select>
+                <div class="sell-media-search-options" style="display: none;">
+                    <div class="sell-media-search-post-types">
+                        <select name="post_type" class="post_type_selector">
+                            <option value=""><?php _e('Search in...','sell_media'); ?></option>
+                            <option <?php echo selected( $current_post_type, 'posts' ); ?> value="posts"><?php _e( 'Blog', 'sell_media' ); ?></option>
+                            <option <?php echo selected( $current_post_type, 'sell_media_item' ); ?> value="sell_media_item"><?php _e('Media','sell_media'); ?></option>
+                        </select>
+                    </div>
+                    <div class="sell-media-search-taxonomies" style="display: <?php echo $current_post_type != 'sell_media_item' ? 'none' : 'block'; ?>">
+                        <select name="<?php echo $name_keywords; ?>" data-name="sell_media_keywords" id="keywords_select">
+                            <option value=""><?php _e('Select a keyword','sell_media'); ?>:</option>
+                            <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
+                                <option value="<?php echo $term->term_id; ?>" <?php selected( $current_keyword, $term->term_id ); ?>><?php echo $term->name; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <select name="<?php echo $name_collection; ?>" data-name="sell_media_collection" id="collection_select">
+                            <option value=""><?php _e('Select a collection','sell_media'); ?>:</option>
+                            <?php foreach( get_terms( 'collection' ) as $term ) : ?>
+                                <option value="<?php echo $term->term_id; ?>" <?php selected( $current_collection, $term->term_id ); ?>><?php echo $term->name; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="sell-media-search-taxonomies" style="display: <?php echo $current_post_type != 'sell_media_item' ? 'none' : 'block'; ?>">
-                <select name="<?php echo $name_keywords; ?>" data-name="keywords" id="keywords_select">
-                    <option value=""><?php _e('Select a keyword','sell_media'); ?>:</option>
-                    <?php foreach( get_terms( 'keywords' ) as $term ) : ?>
-                        <option value="<?php echo $term->term_id; ?>" <?php selected( $current_keyword, $term->term_id ); ?>><?php echo $term->name; ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-                <select name="<?php echo $name_collection; ?>" data-name="collection" id="collection_select">
-                    <option value=""><?php _e('Select a collection','sell_media'); ?>:</option>
-                    <?php foreach( get_terms( 'collection' ) as $term ) : ?>
-                        <option value="<?php echo $term->term_id; ?>" <?php selected( $current_collection, $term->term_id ); ?>><?php echo $term->name; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
-
+        </form>
     </div>
-    </form>
     <?php return ob_get_clean();
 }
 add_filter( 'get_search_form', 'sell_media_get_search_form' );
@@ -514,30 +505,53 @@ function sell_media_get_cusotmer_products( $payment_id=null ){
  */
 function sell_media_build_download_link( $payment_id=null, $customer_email=null ){
     $payment_meta = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
-    $products = maybe_unserialize( $payment_meta['products'] );
+    $downloads = maybe_unserialize( $payment_meta['products'] );
 
-    $downloads = array();
-    foreach( $products as $product ){
-        if ( ! is_array( $product['price_id'] ) ) {
-            $downloads[] = $product;
-        }
-    }
-
-    $tmp_links = null;
-    $links = null;
+    // This was a hack for reprints and quantity
+    // $downloads = array();
+    // foreach( $products as $product ){
+    //     if ( ! empty( $product['price_id'] ) && ! is_array( $product['price_id'] ) ) {
+    //         $downloads[] = $product;
+    //     }
+    // }
+    $tmp_links = array();
+    $links = array();
 
     foreach( $downloads as $download ) {
-        if ( ! empty( $download['item_id'] ) ){
-            $tmp_links['item_id'] = $download['item_id'];
-            $tmp_links['price_id'] = $download['price_id'];
-            $tmp_links['license_id'] = $download['license_id'];
-            $tmp_links['thumbnail'] = sell_media_item_icon( get_post_meta( $download['item_id'], '_sell_media_attachment_id', true ), 'thumbnail', false );
-            $tmp_links['url'] = site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download['item_id'] . '&price_id=' . $download['price_id'];
-            $tmp_links['payment_id'] = $payment_id;
+
+        // Backwards combatibility for versions =< 1.5.6
+        $item_key = empty( $download['item_id'] ) ? 'id' : 'item_id';
+
+        if ( ! empty( $download['price'] ) ){
+            $price_id = $download['price']['id'];
+        } elseif ( ! empty( $download['price_id'] ) ) {
+            $price_id = $download['price_id'];
+        } else {
+            $price_id = null;
         }
+
+        if ( ! empty( $download['license_id'] ) ){
+            $license_id = $download['license_id'];
+        } elseif ( ! empty( $download['license']['id'] ) ){
+            $license_id = $download['license']['id'];
+        } else {
+            $license_id = null;
+        }
+        // end
+
+        $tmp_links = array(
+            'item_id'    => $download[ $item_key ],
+            'price_id'   => $price_id,
+            'license_id' => $license_id,
+            'thumbnail'  => sell_media_item_icon( get_post_meta( $download[ $item_key ], '_sell_media_attachment_id', true ), 'thumbnail', false ),
+            'url'        => site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download[ $item_key ] . '&price_id=' . $price_id,
+            'payment_id' => $payment_id
+            );
+
         $links[] = $tmp_links;
     }
-    return $links;
+
+    return empty( $links ) ? false : $links;
 }
 
 

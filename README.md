@@ -208,6 +208,26 @@ Upgrade Notice
 Changelog
 ---------
 
+1.5.9
+---
+* Bug: quotes can now be used in the license description
+
+
+1.5.8
+---
+* Bug: Updating admin payments and needed screens to support previous versions of pricing
+
+1.5.7
+---
+* Tweak: Various improvements for cart in PHP session
+* Tweak: Minor text update
+* Tweak: Price groups class can now be used for any parent/child taxonomy
+* Tweak: Updating shortcode in readme.txt
+* Tweak: Adding template check for other developers to change the collection password page
+* Bug: Child collections now inherit the password of the parent collection
+* Bug: No longer enqueue `nav-menu`, it has been removed in WordPress 3.6
+* Bug: Corrected text domain issue
+
 1.5.6
 ---
 * Feature: Admin shows collection icon on collection edit column
@@ -391,7 +411,7 @@ Changelog
 * Hook: Updated 'sell_media_settings_init_hook' to work on all tabs
 * Hook: Moved 'sell_media_size_settings_hook' to the aprobiate location
 * Hook: Added new hook 'sell_media_below_registration_form'
-* Hook: Added 'sell_media_addtional_cusotmer_meta'
+* Hook: Added 'sell_media_additional_cusotmer_meta'
 * Hook: Added sell_media_before_session_add
 * Feature: Options in dialog now default to nothing
 * Feature: Added current state select

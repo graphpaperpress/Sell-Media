@@ -152,8 +152,7 @@ class SellMediaSettings {
         add_settings_section( 'section_payment', 'Payment Settings', array( &$this, 'section_payment_desc' ), $this->payment_settings_key );
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
-        add_settings_field( 'paypal_log_file', 'Paypal Log File', array( &$this, 'field_payment_log_file' ), $this->payment_settings_key, 'section_payment' );
-        add_settings_field( 'paypal_additional_test_email', 'Paypal Addtional Test Emails', array( &$this, 'field_payment_additional_email' ), $this->payment_settings_key, 'section_payment' );
+        add_settings_field( 'paypal_additional_test_email', 'Paypal Additional Test Emails', array( &$this, 'field_payment_additional_email' ), $this->payment_settings_key, 'section_payment' );
 
         do_action( 'sell_media_payment_settings_hook' );
 
@@ -204,133 +203,11 @@ class SellMediaSettings {
      * @author Zane M. Kolnik
      * @since 1.5.1
      */
-    function field_price_group(){ ?>
-        <div id="menu-management-liquid" class="sell-media-price-groups-container">
-            <div id="menu-management">
-                <div class="nav-tabs-nav">
-                    <div class="nav-tabs-wrapper">
-                        <div class="nav-tabs" style="padding: 0px; margin-right: -491px;">
-                            <?php foreach( get_terms('price-group', array( 'hide_empty' => false, 'parent' => 0 ) ) as $term ) : ?>
-                                <?php if ( ! empty( $_GET['term_parent'] ) && $_GET['term_parent'] == $term->term_id ) : ?>
-                                    <span class="nav-tab nav-tab-active"><?php echo $term->name; ?></span>
-                                    <?php
-                                    $current_term = $term->name;
-                                    $current_term_id = $term->term_id;
-                                    ?>
-                                <?php else : ?>
-                                    <a href="<?php echo admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term->term_id ); ?>" class="nav-tab" data-term_id="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></a>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                            <?php if ( ! empty( $_GET['term_parent'] ) && $_GET['term_parent'] == 'new_term' ) : ?>
-                                <span class="nav-tab-active nav-tab menu-add-new"><abbr title="Add menu">+</abbr></span>
-                            <?php else : ?>
-                                <a href="<?php echo admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=new_term'); ?>" class="nav-tab menu-add-new"><abbr title="Add menu">+</abbr></a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-edit">
-
-                    <div id="nav-menu-header">
-                        <?php if ( empty( $current_term_id ) ) : ?>
-                            <input name="sell_media_term_name" id="sell_media_term_name" type="text" class="regular-text" placeholder="<?php _e('Enter price group name here', 'sell_media'); ?>" value="" data-term_id="">
-                            <a href="#" class="button-primary sell-media-add-term"><?php _e('Create Price Group','sell_media'); ?></a>
-                        <?php else : ?>
-                            <input name="sell_media_term_name" id="sell_media_term_name" type="text" class="regular-text" placeholder="<?php _e('Enter price group name here', 'sell_media'); ?>" value="<?php echo $current_term; ?>" data-term_id="<?php echo $current_term_id; ?>">
-                            <a class="submitdelete sell-media-delete-term-group" href="#" data-term_id="<?php echo $current_term_id; ?>" data-message='<?php printf( "%s %s?\n\n%s", __("Are you sure you want to delete the price group:", "sell_media" ), $current_term, __("This will delete the price group and ALL its prices associated with it.","sell_media") ); ?>'><?php _e('Delete Group','sell_menu'); ?></a>
-                        <?php endif; ?>
-                    </div><!-- END #nav-menu-header -->
-
-                    <div id="post-body">
-                        <div id="post-body-content">
-                            <table class="form-table sell-media-price-groups-table">
-                                <tbody>
-                                    <tr>
-                                        <td colspan="4"><p><?php _e('The sizes listed below determine the maximum dimensions in pixels.','sell_media'); ?></p></td>
-                                    </tr>
-                                    <?php if ( empty( $current_term_id ) ) : ?>
-                                        <tr>
-                                            <td><p class="description"></p></td>
-                                        </tr>
-                                    <?php else : ?>
-                                        <?php
-                                        $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $current_term_id ) );
-                                        foreach( $terms as $term ): ?>
-                                        <tr>
-                                            <td>
-                                                <input type="text" class="" name="terms_children[ <?php echo $term->term_id; ?> ][name]" size="24" value="<?php echo $term->name; ?>">
-                                                <p class="description"><?php _e('Name<','sell_media'); ?>/p>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][width]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?>">
-                                                <p class="description"><?php _e('Max Width','sell_media'); ?></p>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][height]" value="<?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?>">
-                                                <p class="description"><?php _e('Max Height','sell_media'); ?></p>
-                                            </td>
-                                            <td>
-                                                <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
-                                                <input type="text" class="small-text" name="terms_children[ <?php echo $term->term_id; ?> ][price]" value="<?php echo sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>">
-                                                <p class="description"><?php _e('Price','sell_media'); ?></p>
-                                            </td>
-                                            <td>
-                                                <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="<?php echo $term->term_id; ?>" data-type="price" data-message="<?php printf( '%s: %s?', __('Are you sure you want to delete the price', 'sell_media'), $term->name ); ?>">×</a>
-                                            </td>
-                                        </tr>
-                                        <?php endforeach; ?>
-
-                                        <?php $max = count( $terms ) < 1 ? 3 : 1; for( $i = 1; $i <= $max; $i++ ) : ?>
-                                        <tr class="sell-media-price-groups-row" data-index="<?php echo $i; ?>">
-                                            <td>
-                                                <input type="text" class="" name="new_child[ <?php echo $i; ?> ][name]" size="24" value="">
-                                                <p class="description"><?php _e('Name','sell_media'); ?></p>
-                                            </td>
-                                            <td>
-                                                <input type="hidden" class="sell-media-price-group-parent-id" name="new_child[ <?php echo $i; ?> ][parent]" value="<?php echo $current_term_id; ?>" />
-                                                <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][width]" value="">
-                                                <p class="description"><?php _e('Max Width','sell_media'); ?></p>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][height]" value="">
-                                                <p class="description"><?php _e('Max Height','sell_media'); ?></p>
-                                            </td>
-                                            <td>
-                                                <span class="description">$</span>
-                                                <input type="text" class="small-text" name="new_child[ <?php echo $i; ?> ][price]" value="">
-                                                <p class="description"><?php _e('Price','sell_media'); ?></p>
-                                            </td>
-                                            <td>
-                                                <!-- <a href="#" class="sell-media-xit sell-media-delete-term" data-term_id="" data-type="price">×</a> -->
-                                            </td>
-                                        </tr>
-                                        <?php endfor; ?>
-                                    <?php endif; ?>
-                                </tbody>
-                                <?php if ( ! empty( $current_term_id ) ) : ?>
-                                <tfoot>
-                                    <tr colspan="4">
-                                        <td>
-                                            <a href="#" class="button sell-media-price-groups-repeater-add"><?php _e('Add New Price','sell_media'); ?></a>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                                <?php endif; ?>
-                            </table>
-                        </div><!-- /#post-body-content -->
-                    </div><!-- /#post-body -->
-
-                <div id="nav-menu-footer">
-                    <?php if ( ! empty( $current_term ) ) : ?>
-                        <a href="#" class="button-primary sell-media-save-term"><?php _e('Save Price Group','sell_media'); ?></a>
-                    <?php endif; ?>
-                </div><!-- /#nav-menu-footer -->
-
-            </div><!-- /.menu-edit -->
-        </div><!-- /#menu-management -->
-    </div>
-    <?php }
+    function field_price_group(){
+        $price_group = New SellMediaNavStyleUI();
+        $price_group->taxonomy = 'price-group';
+        $price_group->setting_ui();
+    }
 
 
 
@@ -610,20 +487,6 @@ class SellMediaSettings {
         <?php
     }
 
-    /*
-     * Display the contents of the paypal log file in a textarea.
-     */
-    function field_payment_log_file(){
-        if ( file_exists( plugin_dir_path( __FILE__ ) . 'gateways/log.txt' ) ){
-            $log_file = file_get_contents( plugin_dir_path( __FILE__ ) . 'gateways/log.txt' );
-        } else {
-            $log_file = null;
-        }
-        ?>
-        <textarea rows="10" cols="75"><?php echo $log_file; ?></textarea>
-        <div class="desc"><?php _e( 'This is useful when debugging Paypal. Please copy/paste this when posting Paypal issues in the forum.', 'sell_media' ); ?></div>
-        <?php
-    }
 
     /*
      * Paypal additional test emails

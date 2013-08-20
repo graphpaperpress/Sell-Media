@@ -352,14 +352,39 @@ function sell_media_edit_collection_password( $tag ){
     if ( is_object( $tag ) )
         $term_id = $tag->term_id;
     else
-        $term_id = null; ?>
+        $term_id = null;
+
+    $child_term = get_term( $term_id, 'collection' );
+
+    if ( $child_term->parent == 0 ){
+        $description = __( 'Password protect all items in this collection', 'sell_media' );
+        $html_extra = null;
+        $password = $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
+        $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
+    } else {
+        $parent = get_term( $child_term->parent, 'collection' );
+        $password = sell_media_get_term_meta( $parent->term_id, 'collection_password', true );
+        $description = __('This colleciton inherits the password set in its parent collection: ', 'sell_media') . ' <a href="' . admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item') . '">' . $parent->name . '</a>. ';
+        $description .= __('To edit the password of this collection you must change the parent password.', 'sell_media');
+        $html_extra = 'class="disabled" disabled ';
+    }
+
+    ?>
     <tr class="form-field">
+        <?php if ( ! empty( $parent ) && ! empty( $password ) ) : ?>
+        <div class="updated">
+            <p>
+                <?php _e( 'This collection will inherit the password of the parent collection:', 'my-text-domain' ); ?>
+                <a href="<?php echo admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item'); ?>"><?php echo $parent->name; ?></a>
+            </p>
+        </div>
+        <?php endif; ?>
         <th scope="row" valign="top">
             <label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
         </th>
         <td>
-            <input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print sell_media_get_term_meta( $term_id, 'collection_password', true ); ?>" />
-            <p class="description"><?php _e( 'Password protect all items in this collection', 'sell_media' ); ?></p>
+            <input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print $password ?>" <?php echo $html_extra; ?> />
+            <p class="description"><?php  echo $description; ?></p>
         </td>
     </tr>
 <?php }

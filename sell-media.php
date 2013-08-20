@@ -4,14 +4,14 @@
 Plugin Name: Sell Media
 Plugin URI: http://graphpaperpress.com/plugins/sell-media
 Description: A plugin for selling digital downloads and reprints.
-Version: 1.5.5
+Version: 1.5.8
 Author: Graph Paper Press
 Author URI: http://graphpaperpress.com
 Author Email: support@graphpaperpress.com
 License: GPL
 */
 
-define( 'SELL_MEDIA_VERSION', '1.5.5' );
+define( 'SELL_MEDIA_VERSION', '1.5.8' );
 define( 'SELL_MEDIA_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'sell-media.php' );
 
 include( dirname(__FILE__) . '/inc/cart.php' );
@@ -21,6 +21,7 @@ include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
 include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/class-cart.php' );
+include( dirname(__FILE__) . '/inc/class-search.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
 
@@ -593,7 +594,6 @@ class SellMedia {
          * For easier enqueueing
          */
         wp_register_script( 'sell_media-admin-uploader', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin-uploader.js', array( 'jquery', 'media-upload' ) );
-        wp_register_script( 'sell_media-admin-price-groups', plugin_dir_url( __FILE__ ) . 'js/admin-price-groups.js', array( 'nav-menu' ) );
 
         /**
          * For Sell All Uploads checkbox on media uploader
@@ -619,16 +619,9 @@ class SellMedia {
         } if ( !is_admin() ) {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
-            $amount = $quantity = 0;
-            if ( ! empty( $_SESSION['cart']['items'] ) ){
-                $cart = New Sell_Media_Cart;
-                foreach ( $_SESSION['cart']['items'] as $item ){
-                    $price = $cart->item_price( $item['item_id'], $item['price_id'] );
-                    $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-                    $amount = $cart->item_markup_total( $item['item_id'], $item['price_id'] );
-                    $quantity = $quantity + $qty;
-                }
-            }
+            $amount = 0;
+            $quantity = 0;
+
             $options = get_option('sell_media_general_settings');
             $page_id = $options['checkout_page'];
 
@@ -638,9 +631,12 @@ class SellMedia {
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
                 'checkouturl' => get_permalink( $page_id ),
                 'cart' => array(
-                    'total' => $amount,
-                    'quantity' => $quantity,
+                    'total' => empty( $_SESSION['cart']['total'] ) ? 0 : $_SESSION['cart']['total'],
+                    'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
                     'currency_symbol' => sell_media_get_currency_symbol()
+                    ),
+                'error' => array(
+                    'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                     )
                 )
             );
@@ -657,6 +653,7 @@ class SellMedia {
     public function collection_password_check( $query ){
 
         if ( is_admin() ) return $query;
+        if ( ! empty( $_GET['sell_media_advanced_search_flag'] ) ) return;
 
         /**
          * Check if "collections" is present in query vars
@@ -665,7 +662,6 @@ class SellMedia {
             $term_obj = get_term_by( 'slug', $query->query_vars['collection'], 'collection' );
             if ( $term_obj ){
                 $term_id = $term_obj->term_id;
-                $message = __( 'This collection is password protected','sell_media');
             }
         }
 
@@ -684,7 +680,7 @@ class SellMedia {
              */
             foreach( get_terms('collection') as $term_obj ){
                 $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-                if ( $password ) $term_ids[] = $term_obj->term_id;
+                if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
             }
 
 
@@ -699,8 +695,8 @@ class SellMedia {
              * Determine if this post has the given term and the term has a password
              * if it does we set our term_id to the password protected term
              */
-            if ( ! empty( $term_ids ) ){
-                foreach( $term_ids as $t ){
+            if ( ! empty( $exclude_term_ids ) ){
+                foreach( $exclude_term_ids as $t ){
                     if ( has_term( $t, 'collection', $post_id ) && sell_media_get_term_meta( $t, 'collection_password', true ) ){
                         $term_id = $t;
                         $message = __( 'This item is password protected', 'sell_media' );
@@ -727,28 +723,53 @@ class SellMedia {
              */
             foreach( get_terms('collection') as $term_obj ){
                 $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-                if ( $password ) $term_ids[] = $term_obj->term_id;
+                if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
             }
 
-            if ( ! empty( $term_ids ) ){
-                $query->set( 'tax_query', array(
-                        array(
-                            'taxonomy' => 'collection',
-                            'field' => 'id',
-                            'terms' => $term_ids,
-                            'operator' => 'NOT IN'
-                            )
-                        )
+
+            if ( ! empty( $exclude_term_ids ) ){
+                // echo 'exclude these ids: ';
+                // $tax_query = array(
+                //         'relation' => 'AND',
+                //         array(
+                //             'taxonomy' => 'collection',
+                //             'field' => 'id',
+                //             'terms' => $exclude_term_ids,
+                //             'operator' => 'NOT IN'
+                //             )
+                //         );
+            }
+
+            $search = New Sell_Media_Search;
+            if ( $search->keyword_ids ){
+                $tax_query[] = array(
+                    'taxonomy' => 'keywords',
+                    'field' => 'id',
+                    'terms' => $search->keyword_ids,
+                    'operator' => 'IN'
                 );
             }
+
+            if ( $search->collection_ids ){
+                $tax_query[] = array(
+                    'taxonomy' => 'collection',
+                    'field' => 'id',
+                    'terms' => $search->collection_ids,
+                    'operator' => 'IN'
+                );
+            }
+
+            if ( isset( $tax_query ) )
+                $query->set( 'tax_query', $tax_query );
+
         }
 
 
         /**
-         * Just set our term_id and message to null.
+         * Just set our term_id to null.
          */
         else {
-            $term_id = $message = null;
+            $term_id = null;
         }
 
         /**
@@ -760,6 +781,14 @@ class SellMedia {
              * get the password for the collection
              */
             $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
+            if ( empty( $password ) ){
+                $child_term = get_term( $term_id, 'collection' );
+                $parent_term = get_term( $child_term->parent, 'collection' );
+                if ( ! empty( $parent_term->term_id ) )
+                    $password = sell_media_get_term_meta( $parent_term->term_id, 'collection_password', true );
+                else
+                    $password = null;
+            }
 
             if ( ! isset( $_SESSION ) ) session_start();
 
@@ -773,14 +802,14 @@ class SellMedia {
                         $_SESSION['sell_media']['collection_password'] = $_POST['collection_password'];
 
                     return $query;
-                } else { ?>
-                     <form action="" method="POST">
-                         <p><?php print $message; ?>.
-                         <input type="text" value="" name="collection_password" />
-                         <input type="submit" value="<?php _e( 'Submit', 'sell_media' ); ?>" name="submit" />
-                         </p>
-                    </form>
-                <?php } ?>
+                } else {
+                    $custom = locate_template( 'collection-password.php' );
+                    if ( empty( $custom ) ){
+                        load_template( plugin_dir_path( __FILE__ ) . 'themes/collection-password.php');
+                    } else {
+                        load_template( $custom );
+                    }
+                } ?>
                 <?php wp_die();
             }
         } else {

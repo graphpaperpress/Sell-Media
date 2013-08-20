@@ -1,45 +1,4 @@
 <?php
-/**
- * Add items to $_SESSION for shopping cart via $_POST
- *
- * @since 0.1
- * @todo Update all price_id to be size_id
- * @todo Update all price id (array) to be part of item array
- */
-function sell_media_add_items(){
-
-    check_ajax_referer('sell_media_add_items', 'sell_media_nonce');
-
-    // Get current cart if any if not set $cart to be an empty array
-    $cart = isset( $_SESSION['cart']['items'] ) ? $_SESSION['cart']['items'] : array();
-
-    // Get any additional items
-    $to_add = array();
-    $to_add = apply_filters('sell_media_additional_items', $to_add);
-
-    // If we don't have additional items we use whats in $_POST
-    if ( empty( $to_add ) ){
-
-        if ( empty( $_POST['price_id'] ) ) die();
-
-        $items[] = array(
-            'item_id' => (int)$_POST['ProductID'],
-            'price_id' => $_POST['price_id'],
-            'license_id' => empty( $_POST['License'] ) ? null : $_POST['License']
-        );
-        $items = array_merge( $cart, $items );
-    } else {
-        // We have additional items and merge the current cart with the new items to add
-        $items = array_merge( $cart, $to_add );
-    }
-
-    // Update our session with the new items
-    $_SESSION['cart']['items'] = $items;
-    die();
-}
-add_action( 'wp_ajax_nopriv_sell_media_add_items', 'sell_media_add_items' );
-add_action( 'wp_ajax_sell_media_add_items', 'sell_media_add_items' );
-
 
 /**
  * Retrive and print out the cart count
@@ -61,33 +20,13 @@ add_action( 'wp_ajax_sell_media_count_cart', 'sell_media_count_cart' );
 
 
 /**
- * Removes an item from the users cart
- *
- * @since 0.1
- */
-function sell_media_remove_item() {
-
-    $item_index = $_POST['item_id'];
-
-    unset( $_SESSION['cart']['items'][$item_index] );
-
-    if ( empty( $_SESSION['cart']['items'] ) ) {
-        print '<p>' . __('You have no items in your cart. ', 'sell_media') . '<a href="'. get_post_type_archive_link('sell_media_item') .'">' . __('Continue shopping', 'sell_media') .'</a>.</p>';
-    }
-
-    die();
-}
-add_action( 'wp_ajax_nopriv_sell_media_remove_item', 'sell_media_remove_item' );
-add_action( 'wp_ajax_sell_media_remove_item', 'sell_media_remove_item' );
-
-
-/**
  * Empty the user's cart.
  *
  * @since 0.1
  */
 function sell_media_empty_cart(){
     unset( $_SESSION['cart']['items'] );
+    return ( empty( $_SESSION['cart']['items'] ) ) ? 'Yes' : 'No';
 }
 
 

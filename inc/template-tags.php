@@ -419,7 +419,7 @@ function sell_media_item_form(){
         <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
         <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
         <input type="hidden" name="CalculatedPrice" class="" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-        <?php wp_nonce_field('sell_media_add_items','sell_media_nonce'); ?>
+        <?php wp_nonce_field('add_items','sell_media_nonce'); ?>
 
         <?php do_action( 'sell_media_cart_above_licenses' ); ?>
         <?php
@@ -465,7 +465,7 @@ function sell_media_item_form(){
                 <input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
                 <div class="license_text"><?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?></div>
                 <?php if ( ! empty( $licenses[0]->description ) ) : ?>
-                    <div class="license_desc sell-media-tooltip" data-tooltip="<?php print $licenses[0]->description; ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
+                    <div class="license_desc sell-media-tooltip" data-tooltip="<?php print esc_attr( $licenses[0]->description ); ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
                 <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
@@ -517,11 +517,22 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
             $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $download_sizes[ $k ]['price'] );
             $html .= '</li>';
         }
+
         $original_size = sell_media_original_image_size( $post_id, false );
-        if ( empty( $type ) ){
-            $og_size = null;
-        } else {
+        $mime_type = wp_check_filetype( wp_get_attachment_url( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) );
+        $image_mimes = array(
+            'image/jpg',
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/bmp',
+            'image/tiff'
+            );
+
+        if ( in_array( $mime_type['type'], $image_mimes ) ){
             $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
+        } else {
+            $og_size = null;
         }
 
         $html .= '<li class="price">';
@@ -692,9 +703,10 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
              * Build our array to be returned, the downloadable width and height
              * are calculated later and added to this array
              */
+            $cart = New Sell_Media_Cart;
             $download_sizes[ $price->term_id ] = array(
                 'name' => $price->name,
-                'price' => Sell_Media_Cart::item_price( $post_id, $price->term_id )
+                'price' => $cart->item_price( $post_id, $price->term_id )
                 );
 
             /**
@@ -727,128 +739,4 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
     }
 
     return empty( $term_id ) ? $download_sizes : $download_sizes[ $term_id ];
-}
-
-
-/**
- *
- */
-function sell_media_search_query(){
-
-    // status_header('200 OK');
-
-    $args = array();
-
-    /**
-     * This contains our searched terms and string
-     */
-    $search_terms = array(
-        's' => get_search_query(),
-        'post_type' => $_GET['post_type']
-        );
-
-
-    /**
-     * Only run this if we have a keyword OR collection
-     */
-    if ( ! empty( $_GET['keywords'] ) || ! empty( $_GET['collection'] ) ){
-
-        /**
-         * Filter our html, trim white space and only add it
-         * if we have a value
-         */
-        $clean_get = array();
-        foreach( $_GET as $k => $v ){
-            if ( ! empty( $v ) )
-                $clean_get[ $k ] = trim( wp_filter_nohtml_kses( $v ) );
-        }
-
-
-        /**
-         * If we have both taxonomies we add the relation
-         */
-        if ( ! empty( $clean_get['keywords'] ) || ! empty( $clean_get['collection'] ) ){
-            $args['tax_query']['relation'] = 'AND';
-        }
-
-
-        /**
-         * If we have a collection or keywords in our $clean_get we
-         * we add a new tax query containing the needed params and
-         * also update our $search_terms array
-         */
-        foreach( array( 'keywords', 'collection') as $term ){
-            if ( ! empty( $clean_get[ $term ] ) ){
-                $args['tax_query'][] = array(
-                    'taxonomy' => $term,
-                    'field'    => 'id',
-                    'terms'    => $clean_get[ $term ]
-                );
-                $search_terms[ $term ] = (array)get_term_by('id', $clean_get[ $term ], $term );
-            }
-        }
-    }
-
-
-    /**
-     * Set-up our basic params
-     */
-    if ( ! empty( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ){
-        if ( get_query_var('paged') ) {
-            $paged = get_query_var('paged');
-        } else {
-            $paged = 1;
-        }
-        $defaults = array(
-            'post_type' => array('sell_media_item'),
-            'post_status' => 'publish',
-            'paged' => $paged
-            );
-    }
-
-    /**
-     * We only have a search string
-     */
-    if( ! empty( $_GET['s'] ) ) {
-
-        /**
-         * Since WP_Query has no way to retrive posts via %% (like)
-         */
-        global $wpdb;
-        $q = $wpdb->prepare( "SELECT `ID` FROM {$wpdb->prefix}posts WHERE `post_title` LIKE '%s' AND `post_status` LIKE 'publish' AND `post_type` LIKE 'sell_media_item'",'%' . $search_terms['s'] . '%' );
-        $results = $wpdb->get_results( $q );
-        $post__in = array();
-        foreach( $results as $r ){
-            $post__in[] = $r->ID;
-        }
-        $args['post__in'] = $post__in;
-
-    }
-
-
-    /**
-     * Merge our tax arguments with our defaults
-     */
-    $args = array_merge( $defaults, $args );
-
-
-    /**
-     * We check if the tax_query is set to prevent
-     * the $defaults from running the wp_query
-     */
-    if ( ! empty( $args['tax_query'] ) || ! empty( $args['post__in'] ) ){
-
-        /**
-         * A filter is added to search for strings from $_GET['s'] matching
-         * post_title or post_content.
-         */
-        $my_query = new WP_Query( $args );
-        wp_reset_postdata();
-    } else {
-        $my_query = false;
-    }
-
-
-    return $my_query;
-
 }

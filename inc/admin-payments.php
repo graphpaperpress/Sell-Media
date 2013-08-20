@@ -30,6 +30,13 @@ function sell_media_add_payment_meta_boxes(){
         'sell_media_payment_render_contact',
         'sell_media_payment'
     );
+
+    add_meta_box(
+        'meta_field_paypal_details',
+        __( 'Paypal Details', 'sell_media' ),
+        'sell_media_payment_paypal_details',
+        'sell_media_payment'
+    );
 }
 add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
 
@@ -69,6 +76,7 @@ function sell_media_payment_render_contact( $post ){
         );
 
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
+
     if ( ! empty( $links ) ){
         print '<table class="wp-list-table widefat" cellspacing="0">';
         print '<thead>
@@ -105,6 +113,27 @@ function sell_media_payment_render_contact( $post ){
     do_action( 'sell_media_additional_customer_meta', $post );
 
     print '</div>';
+}
+
+
+function sell_media_payment_paypal_details( $post ){
+    $arguments = get_post_meta( $post->ID, '_paypal_args', true ); ?>
+    <p><?php _e('This is the info that was sent to Paypal at time of purchase. For detailed explanation please visit Paypals <a href="https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/#example_req_resp">IPN guide</a>.', 'sell_media'); ?></p>
+    <p><em><?php _e('Note "custom" refers to the post id for the payment in WordPress','sell_media'); ?></em></p>
+    <table class="wp-list-table widefat" cellspacing="0">
+        <tbody>
+            <?php if ( $arguments ) : foreach( $arguments as $k => $v ) : ?>
+                <tr>
+                    <td><?php echo $k; ?></td><td><?php echo $v; ?></td>
+                </tr>
+            <?php endforeach; else : ?>
+                <tr>
+                    <td><?php _e('This payment has no saved Paypal details','sell_media'); ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <?php
 }
 
 
@@ -274,7 +303,9 @@ function sell_media_payments_callback_fn(){
 
                             foreach( $products_meta_array as $product ){
                                 $comma = ( $count - 1) == $i ? null : ", ";
-                                print '<a href="' . get_edit_post_link( $product['item_id'] ) . '">'. get_the_title( $product['item_id'] ) . "</a>" . $comma;
+                                $item_id = empty( $product['item_id'] ) ? $product['id'] : $product['item_id'];
+
+                                print '<a href="' . get_edit_post_link( $item_id ) . '">' . get_the_title( $item_id ) . "</a>" . $comma;
                                 if ( isset( $product['License'] ) ){
                                     $license = get_term_by( 'id', $product['License'], 'licenses' );
                                     if ( $license ) print ' &ndash; <em>'.$license->name . '</em><br />';
