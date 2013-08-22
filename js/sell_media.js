@@ -447,10 +447,6 @@ jQuery( document ).ready(function( $ ){
         $('#overlay').remove();
     });
 
-    $( document ).on('focus', '#s', function(){
-        // $(".sell-media-search-options").hide(); // Hide any open search boxes
-        // $("~ .sell-media-search-options", this).show(); // Show the child search box for where we click
-    });
 
     /**
      * Hide our current seach option when the user clicks off the input field

@@ -51,6 +51,11 @@ add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 
 function sell_media_get_search_form( $form ) {
     $general_settings = get_option( 'sell_media_general_settings' );
+
+    if ( isset( $general_settings['disable_search'] ) && $general_settings['disable_search'] == 'yes' ) {
+        return $form;
+    }
+
     $current_post_type = empty( $_GET['post_type'] ) ? 'sell_media_item' : $_GET['post_type'];
     $current_collection = empty( $_GET['sell_media_collection'] ) ? 'sell_media_item' : $_GET['sell_media_collection'];
     $current_keyword = empty( $_GET['sell_media_keywords'] ) ? 'sell_media_item' : $_GET['sell_media_keywords'];

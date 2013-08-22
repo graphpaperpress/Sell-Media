@@ -76,7 +76,8 @@ class SellMediaSettings {
             'plugin_credit' => '',
             'post_type_slug' => 'items',
             'order_by' => '',
-            'terms_and_conditions' => ''
+            'terms_and_conditions' => '',
+            'disable_search' => ''
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
@@ -125,17 +126,94 @@ class SellMediaSettings {
 
         register_setting( $this->general_settings_key, $this->general_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_general', 'General Settings', array( &$this, 'section_general_desc' ), $this->general_settings_key );
-        add_settings_field( 'test_mode', 'Test Mode', array( &$this, 'field_general_test_mode' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'checkout_page', 'Checkout Page', array( &$this, 'field_general_checkout_page' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'thanks_page', 'Thanks Page', array( &$this, 'field_general_thanks_page' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'dashboard_page', 'Dashboard Page', array( &$this, 'field_general_dashboard_page' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'login_page', 'Login Page', array( &$this, 'field_general_login_page' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'customer_notification', 'Customer Notification', array( &$this, 'field_general_customer_notification' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'style', 'Style', array( &$this, 'field_general_style' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'plugin_credit', 'Plugin Credit', array( &$this, 'field_general_plugin_credit' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'post_type_slug', 'Post Type Slug', array( &$this, 'field_post_type_slug' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'order_by', 'Order By', array( &$this, 'field_order_by' ), $this->general_settings_key, 'section_general' );
-        add_settings_field( 'terms_and_conditions', 'Terms and Conditions', array( &$this, 'field_terms_and_conditions' ), $this->general_settings_key, 'section_general' );
+
+        $settings['section_general']['fields'] = array(
+            array(
+                'id' => 'test_mode',
+                'label' => 'Test Mode',
+                'function' => array( &$this, 'field_general_test_mode' ),
+                'key' => $this->general_settings_key
+            ),
+            array(
+                'id' => 'checkout_page',
+                'label' => 'Checkout Page',
+                'function' => array( &$this, 'field_general_checkout_page' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'thanks_page',
+                'label' => 'Thanks Page',
+                'function' => array( &$this, 'field_general_thanks_page' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'dashboard_page',
+                'label' => 'Dashboard Page',
+                'function' => array( &$this, 'field_general_dashboard_page' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'login_page',
+                'label' => 'Login Page',
+                'function' => array( &$this, 'field_general_login_page' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'customer_notification',
+                'label' => 'Customer Notification',
+                'function' => array( &$this, 'field_general_customer_notification' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'style',
+                'label' => 'Style',
+                'function' => array( &$this, 'field_general_style' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'plugin_credit',
+                'label' => 'Plugin Credit',
+                'function' => array( &$this, 'field_general_plugin_credit' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'post_type_slug',
+                'label' => 'Post Type Slug',
+                'function' => array( &$this, 'field_post_type_slug' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'order_by',
+                'label' => 'Order By',
+                'function' => array( &$this, 'field_order_by' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'terms_and_conditions',
+                'label' => 'Terms and Conditions',
+                'function' => array( &$this, 'field_terms_and_conditions' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'disable_search',
+                'label' => 'Disable Sell Media Search',
+                'function' => array( &$this, 'field_disable_search' ),
+                'key' => $this->general_settings_key
+                )
+            );
+
+        foreach( $settings as $k => $v ){
+            foreach( $v['fields'] as $field ){
+                add_settings_field(
+                    $field['id'],
+                    $field['label'],
+                    $field['function'],
+                    $field['key'],
+                    $k
+                );
+            }
+        }
+
 
         do_action( 'sell_media_general_settings_hook' );
 
@@ -437,6 +515,16 @@ class SellMediaSettings {
         ?>
          <textarea name="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" id="<?php echo $this->general_settings_key; ?>[terms_and_conditions]" style="width:50%;height:150px;" placeholder="<?php _e( 'Terms and Conditions', 'sell_media' ); ?>"><?php echo stripslashes_deep( wp_filter_nohtml_kses( $this->general_settings['terms_and_conditions'] ) ); ?></textarea>
         <p class="desc"><?php _e( 'These "Terms and Conditions" will show up on the checkout page. Users must agree to these terms before completing their purchase.', 'sell_media' ); ?></p>
+        <?php
+    }
+
+    function field_disable_search(){
+        ?>
+        <select name="<?php echo $this->general_settings_key; ?>[disable_search]" id="<?php echo $this->general_settings_key; ?>[disable_search]">
+            <option value="no" <?php selected( $this->general_settings['disable_search'], 'no' ); ?>><?php _e( 'No', 'sell_media' ); ?></option>
+            <option value="yes" <?php selected( $this->general_settings['disable_search'], 'yes' ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
+        </select>
+        <span class="desc"><?php _e( 'Set this to "no" if you do not want to use the built in Sell Media search.', 'sell_media' ); ?></span>
         <?php
     }
 
