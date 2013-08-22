@@ -193,6 +193,8 @@ Action hooks available:
 == Changelog ==
 
 = 1.5.9 =
+* Feature: Added option to hide original price
+* Feature: Added option to disable the built in Sell Media search and use native WordPress search
 * Tweak: Origiainl height and width is display, for images only, on the single item page
 * Tweak: Admin notice is only displayed on the child collection if the parent has a password
 * Bug: Checkout page now checks if email already exists

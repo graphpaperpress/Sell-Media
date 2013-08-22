@@ -77,7 +77,8 @@ class SellMediaSettings {
             'post_type_slug' => 'items',
             'order_by' => '',
             'terms_and_conditions' => '',
-            'disable_search' => ''
+            'disable_search' => '',
+            'hide_original_price' => ''
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
@@ -198,6 +199,12 @@ class SellMediaSettings {
                 'id' => 'disable_search',
                 'label' => 'Disable Sell Media Search',
                 'function' => array( &$this, 'field_disable_search' ),
+                'key' => $this->general_settings_key
+                ),
+            array(
+                'id' => 'hide_original_price',
+                'label' => 'Hide Original Price',
+                'function' => array( &$this, 'field_hide_original_price' ),
                 'key' => $this->general_settings_key
                 )
             );
@@ -518,6 +525,10 @@ class SellMediaSettings {
         <?php
     }
 
+
+    /*
+     * Disable search
+     */
     function field_disable_search(){
         ?>
         <select name="<?php echo $this->general_settings_key; ?>[disable_search]" id="<?php echo $this->general_settings_key; ?>[disable_search]">
@@ -525,6 +536,20 @@ class SellMediaSettings {
             <option value="yes" <?php selected( $this->general_settings['disable_search'], 'yes' ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
         </select>
         <span class="desc"><?php _e( 'Set this to "no" if you do not want to use the built in Sell Media search.', 'sell_media' ); ?></span>
+        <?php
+    }
+
+
+    /*
+     * Hide original price
+     */
+    function field_hide_original_price(){
+        ?>
+        <select name="<?php echo $this->general_settings_key; ?>[hide_original_price]" id="<?php echo $this->general_settings_key; ?>[hide_original_price]">
+            <option value="no" <?php selected( $this->general_settings['hide_original_price'], 'no' ); ?>><?php _e( 'No', 'sell_media' ); ?></option>
+            <option value="yes" <?php selected( $this->general_settings['hide_original_price'], 'yes' ); ?>><?php _e( 'Yes', 'sell_media' ); ?></option>
+        </select>
+        <span class="desc"><?php _e( 'You can also hide the original price by editing each individual item.', 'sell_media' ); ?></span>
         <?php
     }
 

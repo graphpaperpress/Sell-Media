@@ -435,11 +435,13 @@ function sell_media_item_form(){
                     <?php foreach( sell_media_image_sizes( $_POST['product_id'], false ) as $k => $v ) : ?>
                         <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
                     <?php endforeach; ?>
-                    <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
-                        <?php _e( 'Original', 'sell_media' ); ?>
-                        (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
-                        <?php sell_media_item_price( $_POST['product_id'] ); ?>
-                    </option>
+                    <?php if ( isset( $general_settings['hide_original_price'] ) && $general_settings['hide_original_price'] != 'yes' ) : ?>
+                        <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
+                            <?php _e( 'Original', 'sell_media' ); ?>
+                            (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
+                            <?php sell_media_item_price( $_POST['product_id'] ); ?>
+                        </option>
+                    <?php endif; ?>
                 </select>
             </fieldset>
         <?php else : ?>
@@ -535,10 +537,13 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
             $og_size = null;
         }
 
-        $html .= '<li class="price">';
-        $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
-        $html .= sell_media_item_price( $post_id, true, null, false );
-        $html .= '</li>';
+        $general_settings = get_option('sell_media_general_settings');
+        if ( isset( $general_settings['hide_original_price'] ) && $general_settings['hide_original_price'] != 'yes' ){
+            $html .= '<li class="price">';
+            $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
+            $html .= sell_media_item_price( $post_id, true, null, false );
+            $html .= '</li>';
+        }
 
         print $html;
     } else {
@@ -552,6 +557,8 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
  *
  * @since 1.2.4
  * @author Zane Matthew
+ * @todo This function, sell_media_item_price(), and anything related
+ * to price should be in the class-price.php file
  */
 function sell_media_original_image_size( $item_id=null, $echo=true ){
     $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
