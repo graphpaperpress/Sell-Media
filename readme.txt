@@ -99,9 +99,9 @@ Sell Media includes a new "Collections" taxonomy, which you can see on the right
 
 The Password Protection option is located in the Publish box when editing a Sell Media item. Click the Visibility - Public - Edit link, select Password Protected, type in a password and click Save.
 
-= How do I hide a collection? =
+= How do I password protect a collection? =
 
-Click Sell Media -> Collections -> Click "Edit" next to the Collection you want to hide, check the checkbox "Hide" click save.
+Click Sell Media -> Collections -> Click "Edit" next to the Collection you want to hide, fill in the "Password" click update.
 
 = How do I hide a collection from being listed on archive pages? =
 
@@ -195,6 +195,7 @@ Action hooks available:
 = 1.5.9 =
 * Feature: Added option to hide original price
 * Feature: Added option to disable the built in Sell Media search and use native WordPress search
+* Tweak: Readme no longer references hiding a collection, replaced with password instructions
 * Tweak: Origiainl height and width is display, for images only, on the single item page
 * Tweak: Admin notice is only displayed on the child collection if the parent has a password
 * Bug: Checkout page now checks if email already exists
