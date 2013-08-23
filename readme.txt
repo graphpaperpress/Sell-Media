@@ -43,7 +43,7 @@ Take Sell Media to the next level with these powerful extensions:
 4. Visit Sell Media -> Licenses and add or configure your default licenses for new uploads.
 5. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
 
-= IMPORTANT: Final Step For PayPay Setup =
+= IMPORTANT: Final Step For Paypal Setup =
 
 You must setup your Paypal IPN URL for Sell Media to work.
 
