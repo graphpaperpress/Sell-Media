@@ -9,7 +9,7 @@ var smPriceGroups = {
     init: function(){
 
         smPriceGroups.options.security = $('#_wpnonce').val();
-        smPriceGroups.options.taxonomy = $('#smtaxonomy').val();
+        smPriceGroups.options.taxonomy = $('.sell-media-save-term').attr('data-taxonomy');
 
         $.ajaxSetup({
             url: ajaxurl,
