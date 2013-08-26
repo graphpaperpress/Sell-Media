@@ -18,7 +18,7 @@
 
 		global $post;
 		//Returns Array of Term Names for "collection"
-		$terms = wp_get_post_terms($post->ID, 'collection', array("fields" => "names")); 
+		$terms = wp_get_post_terms($post->ID, 'collection', array("fields" => "slugs")); 
 	
 		if ( ! empty($terms) ) {
 		

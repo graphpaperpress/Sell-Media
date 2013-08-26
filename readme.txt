@@ -201,6 +201,7 @@ Action hooks available:
 * Bug: Checkout page now checks if email already exists
 * Bug: Price group parents now correctly updates the parent name when saved
 * Bug: quotes can now be used in the license description
+* Bug: Similar items widget now displays correct items even when collections slug are changed
 
 = 1.5.8 =
 * Bug: Updating admin payments and needed screens to support previous versions of pricing
