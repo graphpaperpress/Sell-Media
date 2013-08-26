@@ -262,7 +262,8 @@ Class SellMediaNavStyleUI {
                 </tr>';
         }
 
-        $copy = apply_filters( 'sell_media_rp_intro_copy', __('The sizes listed below determine the maximum dimensions in pixels.', 'sell_media'), $this->taxonomy );
+        $price_copy = apply_filters( 'sell_media_rp_price_copy', __('The sizes listed below determine the maximum dimensions in pixels.', 'sell_media'), $this->taxonomy );
+        $price_group_copy = apply_filters( 'sell_media_rp_price_group_copy', __('Create a price group to add prices to.', 'sell_media'), $this->taxonomy );
 
         ?>
         <div id="menu-management-liquid" class="sell-media-price-groups-container">
@@ -294,7 +295,13 @@ Class SellMediaNavStyleUI {
                         <tbody>
                             <tr>
                                 <td colspan="4">
-                                    <p><?php echo $copy; ?></p>
+                                    <p>
+                                        <?php if ( isset( $_GET['term_parent'] ) && $_GET['term_parent'] == 'new_term' ) : ?>
+                                            <?php echo $price_group_copy; ?>
+                                        <?php else : ?>
+                                            <?php echo $price_copy; ?>
+                                        <?php endif; ?>
+                                    </p>
                                 </td>
                             </tr>
                             <?php if ( empty( $current_term_id ) ) : ?>
