@@ -228,3 +228,12 @@
     margin-top: -3px;
     width: 100%;
     }
+
+.sell-media-price-groups-container .description {
+    font-size: 10px;
+    margin: 0;
+    }
+
+.sell-media-price-groups-container td:first-child {
+    width: 20%;
+    }

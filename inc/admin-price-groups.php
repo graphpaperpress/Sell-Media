@@ -233,7 +233,7 @@ Class SellMediaNavStyleUI {
         }
 
 
-// $final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
+$final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
 
         // Default terms
         $max = count( $final['terms'] ) < 1 ? 3 : 1;
@@ -241,7 +241,7 @@ Class SellMediaNavStyleUI {
         for( $i = 1; $i <= $max; $i++ ) {
             $html .=
                 '<tr class="sell-media-price-groups-row" data-index="' . $i . '">
-                    <td>
+                    <td class="name">
                         <input type="text" class="" name="new_child['.$i.'][name]" size="24" value="">
                         <p class="description">' . __('Name','sell_media') . '</p>
                     </td>
