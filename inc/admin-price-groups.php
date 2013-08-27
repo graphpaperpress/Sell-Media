@@ -233,7 +233,7 @@ Class SellMediaNavStyleUI {
         }
 
 
-$final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
+// $final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
 
         // Default terms
         $max = count( $final['terms'] ) < 1 ? 3 : 1;
