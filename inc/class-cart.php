@@ -115,7 +115,7 @@ Class Sell_Media_Cart {
             else
                 $size = null;
         }
-        return $size;
+        return apply_filters( 'sell_media_cart_size', $size, $term_id );
     }
 
 
@@ -131,13 +131,16 @@ Class Sell_Media_Cart {
         $amount = 0;
         if ( ! empty( $items ) ){
             foreach ( $items as $item ){
-                $price = $this->item_markup_total( $item['id'], $item['price']['id'], $item['license']['id'] );
+                if ( empty( $item['license'] ) ){
+                    $price = $item['price']['amount'] * $item['qty'];
+                } else {
+                    $price = $this->item_markup_total( $item['id'], $item['price']['id'], $item['license']['id'] );
+                }
                 $qty = 1;
                 $amount = $amount + $price * $qty;
             }
         }
-
-        return sprintf( "%0.2f", $amount );
+        return sprintf( "%0.2f", max( $amount, 0 ) );
     }
 
 
