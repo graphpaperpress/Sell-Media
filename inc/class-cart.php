@@ -340,7 +340,11 @@ Class Sell_Media_Cart {
      */
     public function check_email(){
         check_ajax_referer('check_email', 'security');
-        email_exists( $_POST['email'] ) ? wp_send_json_error() : wp_send_json_success();
+        if ( !is_user_logged_in() ) {
+            email_exists( $_POST['email'] ) ? wp_send_json_error() : wp_send_json_success();
+        } else {
+            wp_send_json_success();
+        }
         die();
     }
 }
