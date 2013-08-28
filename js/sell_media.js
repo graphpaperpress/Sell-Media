@@ -507,7 +507,9 @@ jQuery( document ).ready(function( $ ){
                 if ( msg.success ){
                     $('#sell_media_checkout_form').submit();
                 } else {
-                    $('#sell_media_email_field').after( '<span class="sell-media-error">' + sell_media.error.email_exists + '</span>' );
+                    if(!$(".sell-media-error").length) {
+                        $('#sell_media_email_field').after( '<span class="sell-media-error">' + sell_media.error.email_exists + '</span>' );
+                    }
                 }
             }
         });
