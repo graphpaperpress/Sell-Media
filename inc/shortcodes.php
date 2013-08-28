@@ -217,9 +217,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     }
     $cart = New Sell_Media_Cart;
     ob_start();
-    echo '<pre>';
-    print_r( $_SESSION );
-    echo '</pre>';
     ?>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
@@ -360,9 +357,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                             <td class="product-quantity">
                                 <input
                                 name="sell_media_item_qty[<?php echo $item_id; ?>]"
-                                type="number"
-                                step="1"
-                                min="0"
+                                type="text"
                                 id="quantity-<?php print $item_id; ?>"
                                 value="<?php echo $item['qty']; ?>"
                                 class="small-text sell-media-quantity"
