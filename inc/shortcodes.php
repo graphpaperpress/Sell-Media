@@ -216,7 +216,11 @@ function sell_media_checkout_shortcode($atts, $content = null) {
         }
     }
     $cart = New Sell_Media_Cart;
-    ob_start(); ?>
+    ob_start();
+    echo '<pre>';
+    print_r( $_SESSION );
+    echo '</pre>';
+    ?>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
@@ -321,19 +325,18 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                         if ( empty( $item['license']['id'] ) ){
                             $license = __('None','sell_media');
                             $license_id = false;
+                            $price = $item['price']['amount'];
+                            $markup_amount = 0;
                         } else {
                             $license_obj = get_term_by('id', $item['license']['id'], 'licenses' );
                             $license = $license_obj->name;
                             $license_id = $item['license']['id'];
+                            $price = $cart->item_markup_total( $item['id'], $item['price']['id'], $license_id );
+                            $markup_amount = $cart->item_markup_amount( $item['id'], $item['price']['id'], $license_id );
                         }
 
-                        // $price = $cart->item_price( $item['item_id'], $item['price_id'] );
-                        $size_name     = $cart->item_size( $item['price']['id'] );
-                        $price         = $cart->item_markup_total( $item['id'], $item['price']['id'], $license_id );
-                        $markup_amount = $cart->item_markup_amount( $item['id'], $item['price']['id'], $license_id );
-                        $qty           = $item['qty'];
-                        $total         = $qty * $price;
-
+                        $size_name = $cart->item_size( $item['price']['id'] );
+                        $total     = $item['qty'] * $price;
                         ?>
 
                         <tr>
@@ -343,6 +346,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                     <a href="<?php print get_permalink( $item['id'] ); ?>"><?php print get_the_title( $item['id'] ); ?></a>
                                     <div class="sell-media-license"><?php _e('License','sell_media'); ?>: <?php print $license; ?></div>
                                     <div class="sell-media-size"><?php _e('Size','sell_media');?>: <?php print $size_name; ?></div>
+                                    <?php if ( $item['price']['description'] ) : ?><div class="sell-media-size"><?php _e('Description','sell_media');?>: <?php print $item['price']['description']; ?></div><?php endif; ?>
                                 </div>
                                 <?php do_action('sell_media_below_product_cart_title', $item, $item['id'], $item['price']['id']); ?>
                                 <?php if ( !empty( $item['License'] ) ) : ?>
@@ -360,7 +364,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                 step="1"
                                 min="0"
                                 id="quantity-<?php print $item_id; ?>"
-                                value="<?php echo $qty; ?>"
+                                value="<?php echo $item['qty']; ?>"
                                 class="small-text sell-media-quantity"
                                 data-id="<?php print $item_id; ?>"
                                 data-price="<?php print $price; ?>"
