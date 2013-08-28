@@ -13,12 +13,12 @@
 	margin-right:0;
 }
 .sell-media-keywords-widget, .sell-media-similar-widget, .sell-media-recent-widget, .sell-media-featured-widget {
-	float:left;
+	/*float:left;*/
 }
 .sell-media-widget-item-warp {
 	float:left;
 	margin-right:2%;
-	width:18%;
+	width:30%;
 }
 .sell-media-widget-thumb-wrap {
 	float:left;
