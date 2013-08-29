@@ -294,7 +294,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                         if ( ! empty ( $general_settings['terms_and_conditions'] ) ) :
                                     ?>
                                         <div id="termsdiv">
-                                            <input type="checkbox" name="termsandconditions" data-required="true" required/>
+                                            <input type="checkbox" name="termsandconditions" id="sell_media_terms_cb" data-required="true" value="" required/>
                                             <span class="termnotice">
                                                 <a href="#" id="agree_terms_and_conditions">
                                                 <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>

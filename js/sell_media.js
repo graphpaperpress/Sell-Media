@@ -514,4 +514,10 @@ jQuery( document ).ready(function( $ ){
             }
         });
     });
+
+
+    $('#sell_media_terms_cb').on('click', function(){
+        $this = $(this);
+        $this.val() == 'checked' ? $this.val('') : $this.val('checked');
+    });
 });
