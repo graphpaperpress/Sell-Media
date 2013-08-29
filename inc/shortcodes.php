@@ -492,11 +492,24 @@ function sell_media_download_shortcode( $atts ) {
             $products = unserialize( $payment_meta['products'] );
 
             foreach( $products as $k => $v ){
-                $products[ $k ]['title'] =  ' <a href="' . get_permalink( $v['item_id'] ) . '">' . get_the_title( $v[ 'item_id' ] ) . '</a> ';
-                $products[ $k ]['price'] = sell_media_item_price( $v['item_id'], $currency=true, $v['price_id'], $echo=false );
-                $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $v['item_id'], '_sell_media_attachment_id', true ) : null;
-                $products[ $k ]['thumbnail'] = '<a href="' . get_permalink( $v['item_id'] ) . '" title="' . get_the_title( $v[ 'item_id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
-                $products[ $k ]['download_url'] = ( get_post_status( $payment['post_id'] ) == 'publish' ) ? '<a href="'.site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $current_user->user_email . '&id=' . $v['item_id'] . '&price_id=' . $v['price_id'] . '">'.__('Download','sell_media').'</a>' : null;
+
+                // Use new array
+                if ( empty( $v['item_id'] ) ){
+                    $products[ $k ]['title'] =  ' <a href="' . get_permalink( $v['id'] ) . '">' . get_the_title( $v[ 'id' ] ) . '</a> ';
+                    $products[ $k ]['price'] = sell_media_item_price( $v['id'], $currency=true, $v['price']['id'], $echo=false );
+                    $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $v['id'], '_sell_media_attachment_id', true ) : null;
+                    $products[ $k ]['thumbnail'] = '<a href="' . get_permalink( $v['id'] ) . '" title="' . get_the_title( $v[ 'id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
+                    $products[ $k ]['download_url'] = ( get_post_status( $payment['post_id'] ) == 'publish' ) ? '<a href="'.site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $current_user->user_email . '&id=' . $v['id'] . '&price_id=' . $v['price_id'] . '">'.__('Download','sell_media').'</a>' : null;
+                }
+
+                // Use old array
+                else {
+                    $products[ $k ]['title'] =  ' <a href="' . get_permalink( $v['item_id'] ) . '">' . get_the_title( $v[ 'item_id' ] ) . '</a> ';
+                    $products[ $k ]['price'] = sell_media_item_price( $v['item_id'], $currency=true, $v['price_id'], $echo=false );
+                    $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $v['item_id'], '_sell_media_attachment_id', true ) : null;
+                    $products[ $k ]['thumbnail'] = '<a href="' . get_permalink( $v['item_id'] ) . '" title="' . get_the_title( $v[ 'item_id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
+                    $products[ $k ]['download_url'] = ( get_post_status( $payment['post_id'] ) == 'publish' ) ? '<a href="'.site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $current_user->user_email . '&id=' . $v['item_id'] . '&price_id=' . $v['price_id'] . '">'.__('Download','sell_media').'</a>' : null;
+                }
             }
 
             $tmp = array(

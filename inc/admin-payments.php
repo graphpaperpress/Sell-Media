@@ -92,20 +92,22 @@ function sell_media_payment_render_contact( $post ){
         $cart = New Sell_Media_Cart;
         foreach( $links as $link ){
 
-            if ( empty( $link['license_id'] ) ){
-                $license = __('None','sell_media');
-            } else {
-                $license = get_term( $link['license_id'], 'licenses' );
-                $license = $license->name;
-            }
+            if ( empty( $link['qty'] ) ){
+                if ( empty( $link['license_id'] ) ){
+                    $license = __('None','sell_media');
+                } else {
+                    $license = get_term( $link['license_id'], 'licenses' );
+                    $license = $license->name;
+                }
 
-            print '<tr class="" valign="top">';
-            print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
-            print '<td>' . sell_media_get_currency_symbol() . $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] ) . '</td>';
-            print '<td>'.$cart->item_size( $link['price_id'] ).'</td>';
-            print '<td>' . $license . '</td>';
-            print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
-            print '</tr>';
+                print '<tr class="" valign="top">';
+                print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
+                print '<td>' . sell_media_get_currency_symbol() . $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] ) . '</td>';
+                print '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post->ID, $link['price_id'] ) . '</td>';
+                print '<td>' . $license . '</td>';
+                print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
+                print '</tr>';
+            }
         }
         print '</tbody>';
         print '</table>';
