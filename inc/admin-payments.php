@@ -77,7 +77,7 @@ function sell_media_payment_render_contact( $post ){
 
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
     $payment_meta = get_post_meta( $post->ID, '_sell_media_payment_meta', true );
-    $products = unserialize( $payment_meta['products'] );
+    $products = array_values( unserialize( $payment_meta['products'] ) );
 
     if ( ! empty( $links ) ){
         print '<table class="wp-list-table widefat" cellspacing="0">';
@@ -118,8 +118,9 @@ function sell_media_payment_render_contact( $post ){
                 print '<td>' . $license . '</td>';
                 print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
                 print '</tr>';
-                $i++;
+
             }
+            $i++;
         }
         print '</tbody>';
         print '</table>';
