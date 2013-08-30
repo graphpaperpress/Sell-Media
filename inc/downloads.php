@@ -359,7 +359,7 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
         $email = ', ' . $additonal_emails['paypal_additional_test_email'];
     }
 
-    $r = wp_mail( $email, $email['subject'], $email['body'], $email['headers']);
+    $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers']);
 
     if ( $r ){
         $status = "Sent to: {$email}";
