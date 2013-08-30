@@ -94,6 +94,7 @@ function sell_media_payment_render_contact( $post ){
         print '<tbody>';
         $cart = New Sell_Media_Cart;
         $i = 0;
+
         foreach( $links as $link ){
 
             if ( empty( $link['qty'] ) ){
@@ -104,17 +105,31 @@ function sell_media_payment_render_contact( $post ){
                     $license = $license->name;
                 }
 
-                // if ( empty( $price ) )
-                $price = $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] );
-                $price = apply_filters( 'sell_media_payment_filtered_price', $link['price_id'], $price );
+                /**
+                 * If we have no qty the default is 1
+                 * i.e., its a download
+                 */
+                if ( isset( $products[$i]['qty'] ) ){
+                    $qty = $products[$i]['qty'];
+                } else {
+                    $qty = 1;
+                }
 
+                /**
+                 * Derive price from the products array
+                 * or use the legacy $item_id
+                 */
+                if ( isset( $products[$i]['price'] ) ){
+                    $price = $products[$i]['price']['amount'];
+                } else {
+                    $price = $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] );
+                }
 
                 print '<tr class="" valign="top">';
                 print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
                 print '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post->ID, $link['price_id'] ) . '</td>';
-                //print '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
-                print '<td>' . $products[$i]['price']['amount'] . '</td>';
-                print '<td>' . $products[$i]['qty'] . '</td>';
+                print '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
+                print '<td>' . $qty . '</td>';
                 print '<td>' . $license . '</td>';
                 print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
                 print '</tr>';
