@@ -149,7 +149,6 @@ function sell_media_process_download() {
         $d = New Sell_Media_Download;
         $verified = $d->verify_download_link( $download );
 
-
         if ( $verified ) {
 
             /**
@@ -241,7 +240,8 @@ function sell_media_process_download() {
 
                     // We've come such a long way just to leave...
                     // Leave if this is a reprint purchase
-                    if ( empty( $confirmed_size['widith'] ) || empty( $confirmed_size['height'] ) )
+
+                    if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
                         exit;
 
                     $new_image = array(
