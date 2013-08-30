@@ -76,20 +76,24 @@ function sell_media_payment_render_contact( $post ){
         );
 
     $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
+    $payment_meta = get_post_meta( $post->ID, '_sell_media_payment_meta', true );
+    $products = unserialize( $payment_meta['products'] );
 
     if ( ! empty( $links ) ){
         print '<table class="wp-list-table widefat" cellspacing="0">';
         print '<thead>
                 <tr>
                     <th scope="col">' . __('Item','sell_media') . '</th>
-                    <th>' . __('Price','sell_media') . '</th>
                     <th>' . __('Size','sell_media') . '</th>
+                    <th>' . __('Price','sell_media') . '</th>
+                    <th>' . __('Quantity','sell_media') . '</th>
                     <th>' . __('License','sell_media') . '</th>
                     <th>' . __('Download Link','sell_media') . '</th>
                 </tr>
             </thead>';
         print '<tbody>';
         $cart = New Sell_Media_Cart;
+        $i = 0;
         foreach( $links as $link ){
 
             if ( empty( $link['qty'] ) ){
@@ -107,11 +111,14 @@ function sell_media_payment_render_contact( $post ){
 
                 print '<tr class="" valign="top">';
                 print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
-                print '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
                 print '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post->ID, $link['price_id'] ) . '</td>';
+                //print '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
+                print '<td>' . $products[$i]['price']['amount'] . '</td>';
+                print '<td>' . $products[$i]['qty'] . '</td>';
                 print '<td>' . $license . '</td>';
                 print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
                 print '</tr>';
+                $i++;
             }
         }
         print '</tbody>';
