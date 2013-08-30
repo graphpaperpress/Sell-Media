@@ -142,6 +142,11 @@ function sell_media_process_download() {
 
     if ( isset( $_GET['download'] ) && isset( $_GET['email'] ) ) {
 
+// download
+// sell_media_email_purchase_receipt( $purchase_key='f791a87dfc7186e68b0e23cac7ee2266', $email='zanematthew5@gmail.com', $payment_id=3750 );
+// Print
+// sell_media_email_purchase_receipt( $purchase_key='ad9c0facfd803fe33db6eebbf1ca7e79', $email='zanematthew2@gmail.com', $payment_id=3746 );
+
         $download = urldecode($_GET['download']);
         $term_id = $_GET['price_id'];
         $item_id = $_GET['id'];
@@ -316,23 +321,30 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $links = null;
     $i = 0;
 
+// echo '<pre>';
+// print_r( $products );
+
     $download_links = sell_media_build_download_link( $payment_id, $email );
     $count = count( $download_links );
     foreach( $download_links as $download ){
 
         // Derive price id for legacy items
         if ( empty( $products[ $i ]['price']['id'] ) ) {
-            $tmp_price_id = $products[ $i ]['price_id'];
+            $tmp_price_id = isset( $products[ $i ] ) ? $products[ $i ]['price_id'] : null;
         } else {
             $tmp_price_id = $products[ $i ]['price']['id'];
         }
 
-        // Only add download links if this item is a DOWNLOAD!
-        if ( empty( $options['size_option'][ $tmp_price_id ] ) ){
-            $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
-            $comma = ( $i == $count - 1 ) ? null : ', ';
-            $links .= $comma;
-            $i++;
+        if ( get_term_by('id', $tmp_price_id, 'price-group') ){
+            // Only add download links if this item is a DOWNLOAD!
+            if ( empty( $options['size_option'][ $tmp_price_id ] ) ){
+                $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
+                $comma = ( $i == $count - 1 ) ? null : ', ';
+                $links .= $comma;
+                $i++;
+            }
+        } else {
+            // echo 'reprint';
         }
     }
     //
@@ -358,6 +370,9 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     if ( ! empty( $additonal_emails['paypal_additional_test_email'] ) ){
         $email = ', ' . $additonal_emails['paypal_additional_test_email'];
     }
+
+// print_r( $message );
+// die();
 
     $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers']);
 
