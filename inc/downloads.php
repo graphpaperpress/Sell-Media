@@ -152,7 +152,6 @@ function sell_media_process_download() {
 
         if ( $verified ) {
 
-
             /**
              * Get the full pat to the file that will be downloaded in the sell media dir
              */
@@ -203,12 +202,24 @@ function sell_media_process_download() {
                 $products_s = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
                 $products = unserialize( $products_s['products'] );
                 $license_id = null;
+                $tmp_license_id = null;
 
                 foreach( $products as $product ){
-                    if ( $item_id == $product['item_id'] ){
-                        $license_id = $product['license_id'];
+                    $tmp_item_id = isset( $product['item_id'] ) ? $product['item_id'] : $product['id'];
+
+                    if ( isset( $product['license_id'] ) && ! empty( $product['license_id'] ) ){
+                        $tmp_license_id = $product['license_id'];
+                    }
+
+                    if ( isset( $product['license']['id'] ) && ! empty( $product['license']['id'] ) ){
+                        $tmp_license_id = $product['license']['id'];
+                    }
+
+                    if ( $item_id == $tmp_item_id ){
+                        $license_id = $tmp_license_id;
                     }
                 }
+
                 $license_obj = get_term( $license_id, 'licenses' );
                 if ( is_wp_error( $license_obj ) ){
                     $license = null;
@@ -226,8 +237,13 @@ function sell_media_process_download() {
                     list( $new_image['width'], $new_image['height'] ) = getimagesize( $file_download );
 
                 } else {
-
                     $confirmed_size = sell_media_get_downloadable_size( $item_id, $term_id );
+
+                    // We've come such a long way just to leave...
+                    // Leave if this is a reprint purchase
+                    if ( empty( $confirmed_size['widith'] ) || empty( $confirmed_size['height'] ) )
+                        exit;
+
                     $new_image = array(
                         'height' => $confirmed_size['height'],
                         'width'  => $confirmed_size['width']
@@ -237,7 +253,6 @@ function sell_media_process_download() {
                     $delete_tmp = true;
 
                 }
-
                 $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
             } else {
 
@@ -285,27 +300,42 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     foreach( $payments->posts as $payment ) {
         $payment_meta = get_post_meta( $payment->ID, '_sell_media_payment_meta', true );
         $payment_id = $payment->ID;
-        $downloads = maybe_unserialize( $payment_meta['products'] );
+        $products = maybe_unserialize( $payment_meta['products'] );
     }
 
-    $from_name = get_bloginfo('name');
-    $from_email = get_option('admin_email');
+    $message['from_name'] = get_bloginfo('name');
+    $message['from_email'] = get_option('admin_email');
+
     $email_settings = get_option( 'sell_media_email_settings' );
-    $subject = $email_settings['success_email_subject'];
-    $body = $email_settings['success_email_body'];
+    $message['subject'] = $email_settings['success_email_subject'];
+    $message['body'] = $email_settings['success_email_body'];
+
+    if ( function_exists('sell_media_reprints_sf_options'))
+        $options = sell_media_reprints_sf_options();
 
     $links = null;
     $i = 0;
 
     $download_links = sell_media_build_download_link( $payment_id, $email );
     $count = count( $download_links );
-
     foreach( $download_links as $download ){
-        $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
-        $comma = ( $i == $count - 1 ) ? null : ', ';
-        $links .= $comma;
-        $i++;
+
+        // Derive price id for legacy items
+        if ( empty( $products[ $i ]['price']['id'] ) ) {
+            $tmp_price_id = $products[ $i ]['price_id'];
+        } else {
+            $tmp_price_id = $products[ $i ]['price']['id'];
+        }
+
+        // Only add download links if this item is a DOWNLOAD!
+        if ( empty( $options['size_option'][ $tmp_price_id ] ) ){
+            $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
+            $comma = ( $i == $count - 1 ) ? null : ', ';
+            $links .= $comma;
+            $i++;
+        }
     }
+    //
 
     $tags = array(
         '{first_name}'  => get_post_meta( $payment->ID, '_sell_media_payment_first_name', true ),
@@ -314,12 +344,12 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
         '{download_links}' => empty( $links ) ? null : $links
     );
 
-    $body = str_replace( array_keys( $tags ), $tags, nl2br( $body ) );
+    $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 
-    $headers = "From: " . stripslashes_deep( html_entity_decode( $from_name, ENT_COMPAT, 'UTF-8' ) ) . " <$from_email>\r\n";
-    $headers .= "Reply-To: ". $from_email . "\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=utf-8\r\n";
+    $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
+    $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
+    $message['headers'] .= "MIME-Version: 1.0\r\n";
+    $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
 
     /**
      * Check if we have additional test emails, if so we concatinate them
@@ -329,13 +359,13 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
         $email = ', ' . $additonal_emails['paypal_additional_test_email'];
     }
 
-    $r = wp_mail( $email, $subject, $body, $headers);    
-    
+    $r = wp_mail( $email, $email['subject'], $email['body'], $email['headers']);
+
     if ( $r ){
         $status = "Sent to: {$email}";
     } else {
         $status = "Failed to send to: {$email}";
     }
-    
+
     return $status;
 }
