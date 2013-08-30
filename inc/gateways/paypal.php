@@ -75,12 +75,12 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'custom'         => $purchase_data['payment_id'] // post id, i.e., payment id
     );
 
+    // Add additional args;
+    $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
 
     // Lets save all the info being sent to Paypal at time of purchase
     update_post_meta( $payment_id, '_paypal_args', $paypal_args );
 
-    // Add additional args;
-    $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
     $paypal_redirect .= http_build_query( $paypal_args );
 
     print '<script type="text/javascript">window.location ="' . $paypal_redirect . '"</script>';

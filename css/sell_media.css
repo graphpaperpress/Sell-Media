@@ -293,7 +293,11 @@ table#sell-media-subtotal-table th {
   font-size: .8em;
   line-height: 1em;
   width: 25%;
+}
 
+#sell-media-checkout-table .sell-media-quantity {
+  width: 20px;
+  text-align: center;
 }
 
 /*= Search

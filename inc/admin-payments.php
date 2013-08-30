@@ -100,9 +100,14 @@ function sell_media_payment_render_contact( $post ){
                     $license = $license->name;
                 }
 
+                // if ( empty( $price ) )
+                $price = $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] );
+                $price = apply_filters( 'sell_media_payment_filtered_price', $link['price_id'], $price );
+
+
                 print '<tr class="" valign="top">';
                 print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
-                print '<td>' . sell_media_get_currency_symbol() . $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] ) . '</td>';
+                print '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
                 print '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post->ID, $link['price_id'] ) . '</td>';
                 print '<td>' . $license . '</td>';
                 print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
