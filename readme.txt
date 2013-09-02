@@ -203,7 +203,7 @@ Action hooks available:
 * Bug: Price group parents now correctly updates the parent name when saved
 * Bug: quotes can now be used in the license description
 * Bug: Similar items widget now displays correct items even when collections slug are changed
-* Bug: Widgets overflowing bug fix
+* Bug: Widgets overflowing bug fix.
 
 = 1.5.8 =
 * Bug: Updating admin payments and needed screens to support previous versions of pricing
