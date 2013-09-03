@@ -192,6 +192,9 @@ Action hooks available:
 
 == Changelog ==
 
+* Bug: Addressed issue when some users did not receive the download link
+* Bug: Addressed issue where cart was not emptied, due to session not being started and browser cache
+
 = 1.5.9 =
 * Feature: Added option to hide original price
 * Feature: Added option to disable the built in Sell Media search and use native WordPress search
