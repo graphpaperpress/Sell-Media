@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.5.8
+Stable tag: 1.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -198,6 +198,7 @@ Action hooks available:
 * Tweak: Readme no longer references hiding a collection, replaced with password instructions
 * Tweak: Origiainl height and width is display, for images only, on the single item page
 * Tweak: Admin notice is only displayed on the child collection if the parent has a password
+* Bug: Various updates to the cart
 * Bug: Checkout page now checks if email already exists
 * Bug: Price group parents now correctly updates the parent name when saved
 * Bug: quotes can now be used in the license description
