@@ -192,6 +192,7 @@ Action hooks available:
 
 == Changelog ==
 
+* Bug: Customers are no longer redirected to the WordPress dashboard after login
 * Bug: Addressed issue when some users did not receive the download link
 * Bug: Addressed issue where cart was not emptied, due to session not being started and browser cache
 
