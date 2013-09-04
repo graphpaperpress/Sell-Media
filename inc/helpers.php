@@ -133,10 +133,10 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
     // Is there a user?
     if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
         // Is it an administrator?
-        if ( in_array( 'administrator', $user->roles ) ){
-            return admin_url();
-        } else {
+        if ( in_array( 'sell_media_customer', $user->roles ) ){
             return $_SERVER['HTTP_REFERER'];
+        } else {
+            return admin_url();
         }
     }
 }
