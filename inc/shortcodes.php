@@ -218,8 +218,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     $cart = New Sell_Media_Cart;
 
     ob_start();
-    header("Cache-Control: no-cache"); 
-    header("Pragma: no-cache"); 
+    header("Cache-Control: no-cache");
+    header("Pragma: no-cache");
     header("Expires: 0");
     ?>
     <div id="sell-media-checkout" class="sell-media">
@@ -483,67 +483,32 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
 function sell_media_download_shortcode( $atts ) {
 	if ( is_user_logged_in() ) {
 
-		global $current_user, $wpdb;
+		global $current_user;
+        global $wpdb;
 		get_currentuserinfo();
 
-        /**
-         * Build out our array of content
-         */
-        $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
-        $purchases = array();
+// $tmp_e = $current_user->user_email; // legacy
+// $tmp_e = 'zanematthew2@gmail.com'; // reprints only new
+// $tmp_e = 'zanematthew5@gmail.com'; // download only new
+$tmp_e = 's@s.com'; // old and new with and w/o reprints
+
+        $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $tmp_e ), ARRAY_A );
+
+        $payment_obj = New SellMediaPayments;
+        $html = null;
         foreach( $payment_lists as $payment ){
+
             $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
-            $products = unserialize( $payment_meta['products'] );
 
-            foreach( $products as $k => $v ){
+// $products = unserialize( $payment_meta['products'] );
+// echo '<pre>'; print_r( $products ); echo '</pre>';
 
-                // Use new array
-                if ( empty( $v['item_id'] ) ){
-                    $products[ $k ]['title'] =  ' <a href="' . get_permalink( $v['id'] ) . '">' . get_the_title( $v[ 'id' ] ) . '</a> ';
-                    $products[ $k ]['price'] = sell_media_item_price( $v['id'], $currency=true, $v['price']['id'], $echo=false );
-                    $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $v['id'], '_sell_media_attachment_id', true ) : null;
-                    $products[ $k ]['thumbnail'] = '<a href="' . get_permalink( $v['id'] ) . '" title="' . get_the_title( $v[ 'id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
-                    $products[ $k ]['download_url'] = ( get_post_status( $payment['post_id'] ) == 'publish' ) ? '<a href="'.site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $current_user->user_email . '&id=' . $v['id'] . '&price_id=' . $v['price']['id'] . '">'.__('Download','sell_media').'</a>' : null;
-                }
-
-                // Use old array
-                else {
-                    $products[ $k ]['title'] =  ' <a href="' . get_permalink( $v['item_id'] ) . '">' . get_the_title( $v[ 'item_id' ] ) . '</a> ';
-                    $products[ $k ]['price'] = sell_media_item_price( $v['item_id'], $currency=true, $v['price_id'], $echo=false );
-                    $attachment_id = empty( $thumbnail_id ) ? get_post_meta( $v['item_id'], '_sell_media_attachment_id', true ) : null;
-                    $products[ $k ]['thumbnail'] = '<a href="' . get_permalink( $v['item_id'] ) . '" title="' . get_the_title( $v[ 'item_id' ] ) . '">' . wp_get_attachment_image( $attachment_id ) . '</a>';
-                    $products[ $k ]['download_url'] = ( get_post_status( $payment['post_id'] ) == 'publish' ) ? '<a href="'.site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $current_user->user_email . '&id=' . $v['item_id'] . '&price_id=' . $v['price_id'] . '">'.__('Download','sell_media').'</a>' : null;
-                }
-            }
-
-            $tmp = array(
-                'date' => $payment_meta['date'],
-                'payment_id' => $payment_meta['payment_id'],
-                'products' => $products
-                );
-            $purchases[] = $tmp;
-        }
-
-        if ( empty( $purchases ) ){
-            $html = __('You have no purchases', 'sell_media');
-        } else {
-
-            /**
-             * Build out html
-             */
-            $html = null;
-            foreach( $purchases as $k => $v ){
-                $html .= '<ul class="downloads">';
-                foreach( $v['products'] as $product ){
-                    $html .= '<li class="download">' . $product['thumbnail'];
-                    $html .= '<span class="download_details">';
-                    $html .= __( 'Product:', 'sell_media' ) . $product['title'] . ' ' . $product['download_url']  . '<br />';
-                    $html .= __( 'Price', 'sell_media' ) . ': ' . $product['price'] . '<br />';
-                    $html .= '</span>';
-                    $html .= '</li>';
-                }
-                $html .= '</ul>';
-            }
+            $html .= '<ul class="payment-meta">';
+            $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
+            $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
+            $html .= '<li><strong>'.__('Status', 'sell_media').'</strong> ' . $payment_obj->status( $payment['post_id'] ) . '</li>';
+            $html .= '</ul>';
+            $html .= $payment_obj->payment_table( $payment['post_id'] );
         }
 
         return $html;

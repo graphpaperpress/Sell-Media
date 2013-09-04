@@ -22,6 +22,7 @@ include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/class-cart.php' );
 include( dirname(__FILE__) . '/inc/class-search.php' );
+include( dirname(__FILE__) . '/inc/class-payments.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
 
