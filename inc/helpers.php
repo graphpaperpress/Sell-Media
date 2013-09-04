@@ -529,8 +529,10 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
 
         if ( ! empty( $download['price'] ) ){
             $price_id = $download['price']['id'];
-        } elseif ( ! empty( $download['price_id'] ) ) {
-            $price_id = $download['price_id'];
+        } elseif ( ! empty( $download['price_id']['id'] ) ){
+            $price_id = $download['price_id']['id'];
+        } elseif ( ! empty( $download['price_id'] ) ){
+            $price_id = is_array( $download['price_id'] ) ? $download['price_id']['id'] : $download['price_id'];
         } else {
             $price_id = null;
         }
@@ -549,7 +551,12 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
             'price_id'   => $price_id,
             'license_id' => $license_id,
             'thumbnail'  => sell_media_item_icon( get_post_meta( $download[ $item_key ], '_sell_media_attachment_id', true ), 'thumbnail', false ),
-            'url'        => site_url() . '?download=' . $payment_meta['purchase_key'] . '&email=' . $customer_email . '&id=' . $download[ $item_key ] . '&price_id=' . $price_id,
+            'url'        => site_url() . '?download='
+            . $payment_meta['purchase_key']
+            . '&email=' . $customer_email
+            . '&id='
+            . $download[ $item_key ]
+            . '&price_id=' . $price_id,
             'payment_id' => $payment_id
             );
 

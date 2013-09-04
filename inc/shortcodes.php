@@ -487,22 +487,12 @@ function sell_media_download_shortcode( $atts ) {
         global $wpdb;
 		get_currentuserinfo();
 
-// $tmp_e = $current_user->user_email; // legacy
-// $tmp_e = 'zanematthew2@gmail.com'; // reprints only new
-// $tmp_e = 'zanematthew5@gmail.com'; // download only new
-$tmp_e = 's@s.com'; // old and new with and w/o reprints
-
-        $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $tmp_e ), ARRAY_A );
+        $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
 
         $payment_obj = New SellMediaPayments;
         $html = null;
         foreach( $payment_lists as $payment ){
-
             $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
-
-// $products = unserialize( $payment_meta['products'] );
-// echo '<pre>'; print_r( $products ); echo '</pre>';
-
             $html .= '<ul class="payment-meta">';
             $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
             $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';

@@ -1,12 +1,26 @@
 <?php
 
-Class SellMediaPayments{
+Class SellMediaPayments {
 
-    public function total( $payment_id=null ){
+    /**
+     * Retrives the total for a payment
+     *
+     * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+     *
+     * @return (string) Total with formated currency symbol
+     */
+    public function total( $post_id=null ){
         return sell_media_get_currency_symbol() . sprintf( '%0.2f', get_post_meta( $payment_id, '_sell_media_payment_amount', true ) );
     }
 
 
+    /**
+     * Retrive the customer contact info associated with a payment
+     *
+     * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+     * @todo This should not include the total
+     * @return
+     */
     public function get_contact_info( $post_id=null ){
         if ( get_userdata( get_post_meta( $post_id, '_sell_media_user_id', true ) ) ){
             $edit_link = '<a href="' . get_edit_user_link( get_post_meta( $post_id, '_sell_media_user_id', true ) ) . '">Edit</a>';
@@ -32,7 +46,14 @@ Class SellMediaPayments{
     }
 
 
-    public function payment_table( $post_id ){
+    /**
+     * Used to build out an HTML table for a single payment containing ALL items for that payment
+     *
+     * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+     *
+     * @return $html (string) An html table containing the item, size, price, qty, and other usefulness
+     */
+    public function payment_table( $post_id=null ){
 
         $links = sell_media_build_download_link( $post_id, get_post_meta( $post_id, "_sell_media_payment_user_email", true ) );
         $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
@@ -104,7 +125,14 @@ Class SellMediaPayments{
     }
 
 
-    public function status( $post_id ){
+    /**
+     * Central location to derive the payment status
+     *
+     * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+     *
+     * @return Formated payment status
+     */
+    public function status( $post_id=null ){
 
         $status = get_post_status( $post_id );
 
