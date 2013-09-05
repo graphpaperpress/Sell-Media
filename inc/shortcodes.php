@@ -218,9 +218,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     $cart = New Sell_Media_Cart;
 
     ob_start();
-    header("Cache-Control: no-cache");
-    header("Pragma: no-cache");
-    header("Expires: 0");
     ?>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
