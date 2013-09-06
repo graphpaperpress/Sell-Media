@@ -562,6 +562,7 @@ function sell_media_uploader_multiple(){
         sell_media_attachment_field_sell_save( $post, $attachment['sell']="1" );
     }
 
+    // Display thumbnails with edit link after upload/selection
     $html = '<ul class="attachments sell-media-bulk-list">';
     foreach( $_POST['attachments'] as $attachment ){
         $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
@@ -574,13 +575,16 @@ function sell_media_uploader_multiple(){
     }
     $html .= '</ul>';
     print $html;
+
     die();
 }
 add_action( 'wp_ajax_sell_media_uploader_multiple', 'sell_media_uploader_multiple' );
 
+
+
 /**
  * Redirect to custom url after move to trash in payments
- * 
+ *
  * @since 1.6
  */
 add_action( 'load-edit.php', 'sell_media_trash_payment_redirect' );
