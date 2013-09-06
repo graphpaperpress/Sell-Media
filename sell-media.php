@@ -729,16 +729,16 @@ class SellMedia {
 
 
             if ( ! empty( $exclude_term_ids ) ){
-                // echo 'exclude these ids: ';
-                // $tax_query = array(
-                //         'relation' => 'AND',
-                //         array(
-                //             'taxonomy' => 'collection',
-                //             'field' => 'id',
-                //             'terms' => $exclude_term_ids,
-                //             'operator' => 'NOT IN'
-                //             )
-                //         );
+               // echo 'exclude these ids: ';
+                $tax_query = array(
+                        'relation' => 'AND',
+                        array(
+                            'taxonomy' => 'collection',
+                            'field' => 'id',
+                            'terms' => $exclude_term_ids,
+                            'operator' => 'NOT IN'
+                            )
+                        );
             }
 
             $search = New Sell_Media_Search;
