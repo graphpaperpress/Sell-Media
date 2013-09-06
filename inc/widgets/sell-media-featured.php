@@ -19,18 +19,17 @@
 
 		global $post;
 
+		$args = array(
+			'posts_per_page' => 6,
+			'field' => 'slug',
+			'orderby' => 'rand'
+			);
+
 		if ( ! empty( $categoryNumber ) ) {
-
-			$args = array(
-					'posts_per_page' => 6,
-					'taxonomy' => 'collection',
-					'field' => 'slug',
-					'term' => $categoryNumber,
-					'orderby' => 'rand'
-					);
-
+			$args['taxonomy'] = 'collection';
+			$args['term'] = $categoryNumber;
 		} else {
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => '6' );
+			$args['post_type'] = 'sell_media_item';
 		} ?>
 
 		<div class="sell-media-featured-widget">
@@ -99,13 +98,20 @@
 
 
 		# Collection
-		$productTerms = get_terms( 'collection');   ?>
+		$productTerms = get_terms( 'collection');
+
+		$i = 0;
+		foreach( $productTerms as $collection ){
+			$password = sell_media_get_term_meta( $collection->term_id, 'collection_password', true );
+			if ( $password ) unset( $productTerms[ $i ] );
+			$i++;
+		} ?>
 		<p><label for="<?php echo $this->get_field_id('categoryNumber') ?>"><?php _e( ' Select Collection', 'sell_media'); ?>: </label>
 		<select id="<?php echo $this->get_field_id('categoryNumber'); ?>" name="<?php echo $this->get_field_name('categoryNumber'); ?>" value="<?php echo $categoryNumber; ?>">
 			<option value="" <?php if($categoryNumber == '') echo 'selected="selected"'; ?>><?php _e( 'All Collections', 'sell_media'); ?></option>
-				<?php foreach ($productTerms as $term) {  ?>
+				<?php foreach ($productTerms as $term) : ?>
 					<option value="<?php echo $term->slug; ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo $term->name; ?></option>
-					<?php } ?>
+				<?php endforeach; ?>
 		</select>
 		</p>
 
