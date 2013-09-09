@@ -44,7 +44,9 @@ function sell_media_add_bulk_tabs(){
  * @since 1.0.9
  */
 function sell_media_add_bulk_callback_fn(){
-    wp_enqueue_media(); ?>
+    wp_enqueue_media(); 
+    $size_settings = get_option('sell_media_size_settings');
+    ?>
     <div class="wrap">
         <?php sell_media_add_bulk_tabs(); ?>
         <div class="tool-box add-bulk">
@@ -60,7 +62,7 @@ function sell_media_add_bulk_callback_fn(){
                     <select name="price_group" value="price_group" id="sell_media_price_group_select">
                         <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
                         <?php foreach( get_terms('price-group',array('hide_empty'=>false, 'parent'=>0)) as $term ) : ?>
-                            <option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
+                            <option value="<?php echo $term->term_id; ?>" <?php selected( $size_settings['default_price_group'], $term->term_id ); ?>><?php echo $term->name; ?></option>
                         <?php endforeach; ?>
                     </select>
 

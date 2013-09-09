@@ -221,9 +221,13 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                      * get our current term id for the parent only
                      */
                     $parent_id = false;
+                    $size_settings = get_option('sell_media_size_settings');
                     foreach( wp_get_post_terms( $post->ID, 'price-group' ) as $terms ){
                         if ( $terms->parent == 0 )
                             $parent_id = $terms->term_id;
+                    }
+                    if( false == $parent_id ) {
+                        $parent_id = $size_settings['default_price_group'];
                     }
                     ?>
                     <select name="_sell_media_price_group">
