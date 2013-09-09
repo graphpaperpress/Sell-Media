@@ -378,7 +378,7 @@ Action hooks available:
 * Settings: Default price moved to its own section
 * Hook: Updated 'sell_media_after_successful_payment' now accepts an additional parameter
 * Hook: Updated 'sell_media_settings_init_hook' to work on all tabs
-* Hook: Moved 'sell_media_size_settings_hook' to the aprobiate location
+* Hook: Moved 'sell_media_size_settings_hook' to the appropriate location
 * Hook: Added new hook 'sell_media_below_registration_form'
 * Hook: Added 'sell_media_additional_cusotmer_meta'
 * Hook: Added sell_media_before_session_add
