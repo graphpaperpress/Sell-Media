@@ -194,6 +194,7 @@ Action hooks available:
 
 * Feature: Added option to set a given price group as the site default
 * Tweak: Password protected collections are filtered from the widgets page and no longer show on the front end
+* Tweak: Added filter `sell_media_purchase_text`
 * Bug: Customers are no longer redirected to the WordPress dashboard after login
 * Bug: Addressed issue when some users did not receive the download link
 * Bug: Addressed issue where cart was not emptied, due to session not being started and browser cache
