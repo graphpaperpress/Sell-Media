@@ -227,7 +227,7 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                             $parent_id = $terms->term_id;
                     }
                     if( false == $parent_id ) {
-                        $parent_id = $size_settings['default_price_group'];
+                        $parent_id = empty( $size_settings['default_price_group'] ) ? null : $size_settings['default_price_group'];
                     }
                     ?>
                     <select name="_sell_media_price_group">
