@@ -567,9 +567,8 @@ class SellMedia {
 
         $args = array(
             'labels' => $labels,
-            'public' => true,
+            'public' => false, // Hide it from the admin
 
-            'show_ui' => true,
             'show_in_nav_menus' => true,
             'show_tagcloud' => true,
             'show_admin_column' => true,
