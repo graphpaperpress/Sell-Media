@@ -405,7 +405,7 @@ function sell_media_item_shortcode( $atts ) {
     $caption = null;
     $thumb_id = get_post_meta( $id, '_sell_media_attachment_id', true );
     $image = wp_get_attachment_image_src( $thumb_id, $size );
-
+    $text = apply_filters('sell_media_purchase_text', __( $text,'sell_media' ), $id );
     if ( $image ) {
         $image = '<img src="' . $image[0] . '" alt="' . sell_media_image_caption( $id ) . '" title=" ' . sell_media_image_caption( $id ) . ' " class="sell-media-aligncenter" />';
     } else {
