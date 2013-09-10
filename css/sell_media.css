@@ -657,6 +657,26 @@ input[type="submit"].sell-media-buy-button-success:active {
   color: #BBB;
   font-size: 12px;
 }
+#purchase-history td {
+  vertical-align: top;
+  border-bottom: 1px solid #DFDFDF;
+  padding: 10px 0 5px 0;
+}
+
+#purchase-history th {
+  border: solid #DFDFDF;
+  border-width: 1px 0 1px 0;
+  padding: 10px 0;
+}
+#purchase-history table {
+  font-size: 13px;
+  margin-bottom: 50px;
+}
+#purchase-history ul.payment-meta {
+  margin: 10px 0;
+  padding: 0;
+  font-size: 12px;
+}
 
 /*= Form styling
 ------------------------------------------------------------------- */
@@ -726,27 +746,4 @@ input[type="submit"].sell-media-buy-button-success:active {
   font-size: 13px;
   margin: 0 0 0 7px;
   color:#ff0000;
-}
-
-/*= Purchase History
------------------------------------------------------------------------*/
-#purchase-history td {
-  vertical-align: top;
-  border-bottom: 1px solid #DFDFDF;
-  padding: 10px 0 5px 0;
-}
-
-#purchase-history th {
-  border: solid #DFDFDF;
-  border-width: 1px 0 1px 0;
-  padding: 10px 0;
-}
-#purchase-history table {
-  font-size: 13px;
-  margin-bottom: 50px;
-}
-#purchase-history ul.payment-meta {
-  margin: 10px 0;
-  padding: 0;
-  font-size: 12px;
 }

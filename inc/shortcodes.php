@@ -479,29 +479,28 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
  */
 function sell_media_download_shortcode( $atts ) {
 	if ( is_user_logged_in() ) {
+            global $current_user;
+            global $wpdb;
+	    get_currentuserinfo();
+	    
+	    $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
+            $payment_obj = New SellMediaPayments;
+            $html = null;
+            
+            foreach( $payment_lists as $payment ){
+                $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
+                $html .= '<ul class="payment-meta">';
+                $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
+                $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
+                $html .= '<li><strong>'.__('Status', 'sell_media').'</strong> ' . $payment_obj->status( $payment['post_id'] ) . '</li>';
+                $html .= '</ul>';
+                $html .= $payment_obj->payment_table( $payment['post_id'] );
+            }
 
-		global $current_user;
-        global $wpdb;
-		get_currentuserinfo();
-
-        $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
-
-        $payment_obj = New SellMediaPayments;
-        $html = null;
-        foreach( $payment_lists as $payment ){
-            $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
-            $html .= '<ul class="payment-meta">';
-            $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
-            $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
-            $html .= '<li><strong>'.__('Status', 'sell_media').'</strong> ' . $payment_obj->status( $payment['post_id'] ) . '</li>';
-            $html .= '</ul>';
-            $html .= $payment_obj->payment_table( $payment['post_id'] );
-        }
-
-        return $html;
+            return '<div id="purchase-history">'.$html.'</div>';
 
 	} else {
-        do_shortcode( '[sell_media_login_form]' );
+            do_shortcode( '[sell_media_login_form]' );
 	}
 }
 add_shortcode('sell_media_download_list', 'sell_media_download_shortcode');
