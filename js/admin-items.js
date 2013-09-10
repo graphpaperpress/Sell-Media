@@ -121,7 +121,7 @@ jQuery( document ).ready(function( $ ){
     $( document ).on( 'mouseenter', '.sell-media-bulk-list-item', function(){
         $this = $(this);
 
-        $this.find('img').css('opacity', '0.2');
+        $this.find('img').css('opacity', '0.4');
         $this.find('.sell-media-bulk-list-item-edit').show();
 
     }).on( 'mouseleave', '.sell-media-bulk-list-item', function(){

@@ -572,7 +572,7 @@ function sell_media_uploader_multiple(){
         $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
         $html .= '<li class="attachment sell-media-bulk-list-item" data-post_id="' . $product_id . '">';
         $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '" class="sell-media-bulk-list-item-img">';
-        $html .= wp_get_attachment_image( $attachment['id'], 'thumbnail' );
+        $html .= wp_get_attachment_image( $attachment['id'], array(75,75) );
         $html .= '</a>';
         $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '" class="sell-media-bulk-list-item-edit">' . __( 'Edit', 'sell_media' ) . '</a>';
         $html .= '</li>';
