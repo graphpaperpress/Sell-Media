@@ -22,6 +22,7 @@ include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/class-cart.php' );
 include( dirname(__FILE__) . '/inc/class-search.php' );
+include( dirname(__FILE__) . '/inc/class-payments.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
 
@@ -566,9 +567,8 @@ class SellMedia {
 
         $args = array(
             'labels' => $labels,
-            'public' => true,
+            'public' => false, // Hide it from the admin
 
-            'show_ui' => true,
             'show_in_nav_menus' => true,
             'show_tagcloud' => true,
             'show_admin_column' => true,

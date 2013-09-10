@@ -221,9 +221,13 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                      * get our current term id for the parent only
                      */
                     $parent_id = false;
+                    $size_settings = get_option('sell_media_size_settings');
                     foreach( wp_get_post_terms( $post->ID, 'price-group' ) as $terms ){
                         if ( $terms->parent == 0 )
                             $parent_id = $terms->term_id;
+                    }
+                    if( false == $parent_id ) {
+                        $parent_id = empty( $size_settings['default_price_group'] ) ? null : $size_settings['default_price_group'];
                     }
                     ?>
                     <select name="_sell_media_price_group">
@@ -562,25 +566,29 @@ function sell_media_uploader_multiple(){
         sell_media_attachment_field_sell_save( $post, $attachment['sell']="1" );
     }
 
+    // Display thumbnails with edit link after upload/selection
     $html = '<ul class="attachments sell-media-bulk-list">';
     foreach( $_POST['attachments'] as $attachment ){
         $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
         $html .= '<li class="attachment sell-media-bulk-list-item" data-post_id="' . $product_id . '">';
         $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '" class="sell-media-bulk-list-item-img">';
-        $html .= wp_get_attachment_image( $attachment['id'], 'thumbnail' );
+        $html .= wp_get_attachment_image( $attachment['id'], array(75,75) );
         $html .= '</a>';
         $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '" class="sell-media-bulk-list-item-edit">' . __( 'Edit', 'sell_media' ) . '</a>';
         $html .= '</li>';
     }
     $html .= '</ul>';
     print $html;
+
     die();
 }
 add_action( 'wp_ajax_sell_media_uploader_multiple', 'sell_media_uploader_multiple' );
 
+
+
 /**
  * Redirect to custom url after move to trash in payments
- * 
+ *
  * @since 1.6
  */
 add_action( 'load-edit.php', 'sell_media_trash_payment_redirect' );

@@ -27,7 +27,7 @@ function sell_media_add_payment_meta_boxes(){
     add_meta_box(
         'meta_field',
         __( 'Purchase Details', 'sell_media' ),
-        'sell_media_payment_render_contact',
+        'sell_media_payment_purchase_details',
         'sell_media_payment'
     );
 
@@ -49,100 +49,18 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  * @since 0.1
  * @return html
  */
-function sell_media_payment_render_contact( $post ){
+function sell_media_payment_purchase_details( $post ){
 
     print '<div class="sell-media-admin-payments">';
     print '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
-    if ( get_userdata( get_post_meta( $post->ID, '_sell_media_user_id', true ) ) ){
-        $edit_link = '<a href="' . get_edit_user_link( get_post_meta( $post->ID, '_sell_media_user_id', true ) ) . '">Edit</a>';
-    } else {
-        $edit_link = null;
-    }
+    $payment_obj = New SellMediaPayments;
+    echo $payment_obj->get_contact_info( $post->ID );
+    echo $payment_obj->payment_table( $post->ID );
 
-    $contact = array(
-            'first_name' => get_post_meta( $post->ID, '_sell_media_payment_first_name', true ),
-            'last_name' => get_post_meta( $post->ID, '_sell_media_payment_last_name', true ),
-            'user_edit_link' => $edit_link,
-            'email' => get_post_meta( $post->ID, '_sell_media_payment_user_email', true )
-        );
-
-    printf( '<p>%s: '.$contact['first_name'] . ' ' . $contact['last_name'] . '<br />
-        %s: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a><br />
-        %s: '.sell_media_get_currency_symbol() . sprintf( '%0.2f', get_post_meta( $post->ID, '_sell_media_payment_amount', true ) ).'</p>',
-        __( 'Name', 'sell_media' ),
-        __( 'Email', 'sell_media' ),
-        __( 'Total', 'sell_media' )
-        );
-
-    $links = sell_media_build_download_link( $post->ID, get_post_meta( $post->ID, "_sell_media_payment_user_email", true ) );
-    $payment_meta = get_post_meta( $post->ID, '_sell_media_payment_meta', true );
-    $products = array_values( unserialize( $payment_meta['products'] ) );
-
-    if ( ! empty( $links ) ){
-        print '<table class="wp-list-table widefat" cellspacing="0">';
-        print '<thead>
-                <tr>
-                    <th scope="col">' . __('Item','sell_media') . '</th>
-                    <th>' . __('Size','sell_media') . '</th>
-                    <th>' . __('Price','sell_media') . '</th>
-                    <th>' . __('Quantity','sell_media') . '</th>
-                    <th>' . __('License','sell_media') . '</th>
-                    <th>' . __('Download Link','sell_media') . '</th>
-                </tr>
-            </thead>';
-        print '<tbody>';
-        $cart = New Sell_Media_Cart;
-        $i = 0;
-
-        foreach( $links as $link ){
-
-            if ( empty( $link['qty'] ) ){
-                if ( empty( $link['license_id'] ) ){
-                    $license = __('None','sell_media');
-                } else {
-                    $license = get_term( $link['license_id'], 'licenses' );
-                    $license = $license->name;
-                }
-
-                /**
-                 * If we have no qty the default is 1
-                 * i.e., its a download
-                 */
-                if ( isset( $products[$i]['qty'] ) ){
-                    $qty = $products[$i]['qty'];
-                } else {
-                    $qty = 1;
-                }
-
-                /**
-                 * Derive price from the products array
-                 * or use the legacy $item_id
-                 */
-                if ( isset( $products[$i]['price'] ) ){
-                    $price = $products[$i]['price']['amount'];
-                } else {
-                    $price = $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] );
-                }
-
-                print '<tr class="" valign="top">';
-                print '<td class="media-icon">' . $link['thumbnail'] . '</td>';
-                print '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post->ID, $link['price_id'] ) . '</td>';
-                print '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
-                print '<td>' . $qty . '</td>';
-                print '<td>' . $license . '</td>';
-                print '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
-                print '</tr>';
-
-            }
-            $i++;
-        }
-        print '</tbody>';
-        print '</table>';
-    }
     do_action( 'sell_media_additional_customer_meta', $post );
-
     print '</div>';
+
 }
 
 

@@ -78,12 +78,26 @@ jQuery( document ).ready(function( $ ){
         // When an image is selected, run a callback.
         file_frame.on( 'select', function() {
 
-            // We set multiple to false so only get one image from the uploader
             var attachments = file_frame.state().get('selection').toJSON();
+
+            /**
+             * Since we only want id, title, description and url, we build a new JSON object
+             * the current one (attachments) is bloated and causing the bulk updater to fail
+             * after ~23 items
+             */
+            var slim = [];
+            $.each( attachments, function( i, item ){
+                slim.push({
+                    id: item.id,
+                    title: item.title,
+                    description: item.description,
+                    url: item.url
+                });
+            });
 
             var data = {
                 action: "sell_media_uploader_multiple",
-                attachments: attachments
+                attachments: slim
             };
 
             $('.sell-media-bulk-list').empty();
@@ -107,7 +121,7 @@ jQuery( document ).ready(function( $ ){
     $( document ).on( 'mouseenter', '.sell-media-bulk-list-item', function(){
         $this = $(this);
 
-        $this.find('img').css('opacity', '0.2');
+        $this.find('img').css('opacity', '0.4');
         $this.find('.sell-media-bulk-list-item-edit').show();
 
     }).on( 'mouseleave', '.sell-media-bulk-list-item', function(){

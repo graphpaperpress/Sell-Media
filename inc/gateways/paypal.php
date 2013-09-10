@@ -239,11 +239,11 @@ function sell_media_process_paypal_ipn() {
             $message .= "\nSuccess! Updated payment status to: published\n";
             $message .= "Payment status is set to: {$_POST['payment_status']}\n\n";
             $message .= "Sending payment id: {$_POST['custom']}\n";
-            $message .= "To email: {$_POST['email']}\n";
+            $message .= "To email: {$_POST['receiver_email']}\n";
             $message .= "Purchase receipt: {$_POST['item_number']}\n";
 
-            $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['email'], $_POST['custom'] );
-            $message .= "Email sent status: {$email_status}\n";
+            $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['receiver_email'], $_POST['custom'] );
+            $message .= "{$email_status}\n";
 
             $payment_meta_array = get_post_meta( $_POST['custom'], '_sell_media_payment_meta', true );
             $products_meta_array = unserialize( $payment_meta_array['products'] );

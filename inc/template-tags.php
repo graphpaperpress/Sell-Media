@@ -413,7 +413,11 @@ function sell_media_item_form(){
         $term_id = $licenses[0]->term_id;
     } else {
         $term_id = null;
-    } ?>
+    }
+
+sell_media_image_sizes( $_POST['product_id'], false );
+
+    ?>
     <?php do_action( 'sell_media_above_item_form' ); ?>
     <form action="javascript://" method="POST" class="sell-media-dialog-form sell-media-form">
         <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
@@ -675,6 +679,7 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
 
     // Fix for legacy code?
     $attached_file_fix = file_exists( $attached_path_file );
+
     if ( ! $attached_file_fix ){
         @list( $broken, $url, $attached_file ) = explode( 'uploads/', $attached_path_file );
         $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
@@ -687,13 +692,29 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
     list( $original['url'], $original['width'], $original['height'] ) = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
 
 
+    $price_groups = wp_get_post_terms( $post_id, 'price-group' );
+    if ( empty( $price_groups ) ){
+
+        $size_settings = get_option('sell_media_size_settings');
+        $default_price_group = empty( $size_settings['default_price_group'] ) ? null : $size_settings['default_price_group'];
+
+        $default_price_group_obj = get_term( $default_price_group, 'price-group' );
+        $children = get_term_children( $default_price_group_obj->term_id, 'price-group' );
+
+        $price_groups = array();
+        foreach( $children as $child ){
+            $price_groups[] = get_term_by( 'id', $child, 'price-group' );
+        }
+    }
+
     /**
      * Loop over price groups checking for children,
      * compare the width and height assigned to a price group
      * with the width and height of the current image. Remove
      * sizes that are not downloadable.
      */
-    foreach( wp_get_post_terms( $post_id, 'price-group' ) as $price ){
+    $cart = New Sell_Media_Cart;
+    foreach( $price_groups as $price ){
 
         /**
          * Check for children only
@@ -710,7 +731,6 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
              * Build our array to be returned, the downloadable width and height
              * are calculated later and added to this array
              */
-            $cart = New Sell_Media_Cart;
             $download_sizes[ $price->term_id ] = array(
                 'name' => $price->name,
                 'price' => $cart->item_price( $post_id, $price->term_id )

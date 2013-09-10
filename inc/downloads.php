@@ -358,7 +358,7 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
      */
     $additonal_emails = get_option( 'sell_media_payment_settings' );
     if ( ! empty( $additonal_emails['paypal_additional_test_email'] ) ){
-        $email = ', ' . $additonal_emails['paypal_additional_test_email'];
+        $email = $email . ', ' . $additonal_emails['paypal_additional_test_email'];
     }
 
     $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers']);

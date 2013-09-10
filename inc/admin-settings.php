@@ -112,7 +112,8 @@ class SellMediaSettings {
             'large_size_height' => '1800',
             'large_size_width' => '2400',
             'large_size_price' => '3',
-            'default_price' => '10'
+            'default_price' => '10',
+            'default_price_group' => '',
         ), $this->size_settings );
 
         do_action( 'sell_media_load_settings_hook' );
@@ -273,6 +274,9 @@ class SellMediaSettings {
 
         add_settings_section( 'section_default_download_price', 'Original Download Price', array( &$this, 'section_size_desc' ), $this->size_settings_key );
         add_settings_field( 'default_price', 'Original Price', array( &$this, 'field_payment_default_price' ), $this->size_settings_key, 'section_default_download_price' );
+
+        add_settings_section( 'section_default_price_group', 'Default Price Group', array( &$this, 'section_size_desc' ), $this->size_settings_key );
+        add_settings_field( 'default_price_group', 'Select Default Price Group', array( &$this, 'field_payment_default_price_group' ), $this->size_settings_key, 'section_default_price_group' );
 
         add_settings_section( 'section_size', 'Image Size Settings', array( &$this, 'section_size_desc' ), $this->size_settings_key );
         add_settings_field( 'price_group', 'Price Groups', array( &$this, 'field_price_group' ), $this->size_settings_key, 'section_size' );
@@ -619,6 +623,20 @@ class SellMediaSettings {
         <span class="description"><?php echo sell_media_get_currency_symbol(); ?></span>
         <input type="number" step="0.01" class="small-text" min="0" name="<?php echo $this->size_settings_key; ?>[default_price]" value="<?php echo wp_filter_nohtml_kses( sprintf("%0.2f", $this->size_settings['default_price']) ); ?>" />
         <span class="desc"><?php _e( 'The default price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ); ?></span>
+        <?php
+    }
+
+     /*
+     * Default Price Group Option field callback
+     */
+    function field_payment_default_price_group() {
+        ?>
+        <select name="<?php echo $this->size_settings_key; ?>[default_price_group]" value="<?php echo $this->size_settings['default_price_group']; ?>" id="sell_media_price_group_select">
+            <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
+            <?php foreach( get_terms('price-group',array('hide_empty'=>false, 'parent'=>0)) as $term ) : ?>
+                <option value="<?php echo $term->term_id; ?>" <?php selected( $this->size_settings['default_price_group'], $term->term_id ); ?>><?php echo $term->name; ?></option>
+            <?php endforeach; ?>
+        </select>
         <?php
     }
 

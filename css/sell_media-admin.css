@@ -73,7 +73,6 @@
 #adminmenu #menu-posts-sell_media_item div.wp-menu-image { background-image: url('../images/menu_icons.png'); background-position: 0 bottom; background-repeat: no-repeat; }
 #adminmenu #menu-posts-sell_media_item:hover div.wp-menu-image, #adminmenu #menu-posts-sell_media_item.wp-has-current-submenu div.wp-menu-image { background-position: 0 -1px; }
 #adminmenu #menu-posts-sell_media_item .wp-menu-image a img { display: none; }
-#menu-posts-sell_media_item ul li:nth-child(8) { display: none; }
 
 /* Payments
 -------------------------------------------------------------- */
@@ -103,10 +102,31 @@
 #poststuff #sell-media-bulk-tabs { margin-top: 0; padding-bottom: 0; }
 .field-has-button { margin-right: 10px; float: left; }
 .sell-media-image { margin: 1em 0 0; }
-.sell-media-bulk-list-item { width: 150px; height: 150px; background: #000; }
-.sell-media-bulk-list-item .sell-media-bulk-list-item-img { position: absolute; top: 0; left: 0;}
+.sell-media-bulk-list-item {
+    width: 75px;
+    height: 75px;
+    background: #000;
+    }
+.sell-media-bulk-list-item .sell-media-bulk-list-item-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    }
 .sell-media-bulk-list-item .sell-media-bulk-list-item-img img { max-width: 100%; max-height: 100%; }
-.sell-media-bulk-list-item-edit { display: none; position: absolute; top: 40%; left: 40%; text-align: center; color: #fff; text-decoration: none; text-transform: uppercase; }
+.sell-media-bulk-list-item-edit {
+    color: #FFF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    height: 55px;
+    width: 75px;
+    padding: 20px 0 0 0;
+    }
+
 .sell-media-bulk-list-item-edit:hover { color: #fff; }
 .uploader { background: #F9F9F9; padding: 4em; text-align: center; border: 1px solid #EEE; }
 .uploader .button { font-size: 14px; height: 46px; line-height: 44px; padding: 0 36px; }
