@@ -192,6 +192,7 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.6 =
 * Feature: Added option to set a given price group as the site default
 * Tweak: Password protected collections are filtered from the widgets page and no longer show on the front end
 * Tweak: Added filter `sell_media_purchase_text`

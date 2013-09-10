@@ -205,13 +205,36 @@ Upgrade Notice
 --------------
  * None
 
+Contributors
+------------
+* Please use the `dev` branch on GitHub when making pull request
+
 Changelog
 ---------
 
+1.6
+---
+* Added our first contributor request!
+* Feature: Added option to set a given price group as the site default
+* Tweak: Password protected collections are filtered from the widgets page and no longer show on the front end
+* Tweak: Added filter `sell_media_purchase_text`
+* Bug: Customers are no longer redirected to the WordPress dashboard after login
+* Bug: Addressed issue when some users did not receive the download link
+* Bug: Addressed issue where cart was not emptied, due to session not being started and browser cache
+
 1.5.9
 ---
+* Feature: Added option to hide original price
+* Feature: Added option to disable the built in Sell Media search and use native WordPress search
+* Tweak: Readme no longer references hiding a collection, replaced with password instructions
+* Tweak: Origiainl height and width is display, for images only, on the single item page
+* Tweak: Admin notice is only displayed on the child collection if the parent has a password
+* Bug: Various updates to the cart
+* Bug: Checkout page now checks if email already exists
+* Bug: Price group parents now correctly updates the parent name when saved
 * Bug: quotes can now be used in the license description
-
+* Bug: Similar items widget now displays correct items even when collections slug are changed
+* Bug: Widgets overflowing bug fix.
 
 1.5.8
 ---
