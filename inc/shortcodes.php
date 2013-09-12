@@ -182,6 +182,16 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                     );
 
                 $user_id = wp_insert_user( $data );
+                $admin['name'] = get_bloginfo('name');
+                $admin['email'] = get_option('admin_email');
+                $subject = 'Welcome!';
+                $body = 'Your username is: ' . $purchase['email'] . "<br />" . 'Your password is: ' . $password;
+                $header = "From: " . stripslashes_deep( html_entity_decode( $admin['name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$admin['email']}>\r\n";
+                $header .= "Reply-To: ". $purchase['email'] . "\r\n";
+                $header .= "MIME-Version: 1.0\r\n";
+                $header .= "Content-Type: text/html; charset=utf-8\r\n";
+                wp_mail( $purchase['email'], $subject, $body, $header );
+
             } else {
                 $user_id = $current_user->ID;
             }
