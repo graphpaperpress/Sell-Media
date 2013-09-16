@@ -652,12 +652,19 @@ function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
 
     $terms = wp_get_post_terms( $post_id, 'price-group' );
 
-    if ( empty( $terms ) ) return;
+    $prices = array();
 
-    foreach( $terms as $term ){
-        if ( $term->parent != 0 ){
-            $price = sell_media_get_term_meta( $term->term_id, $key, true );
-            $prices[] = $price;
+    $original_price = get_post_meta( $post_id, 'sell_media_price', true );
+    if ( ! empty( $original_price ) ){
+        $prices[] = $original_price;
+    }
+
+    if ( ! empty( $terms ) ){
+        foreach( $terms as $term ){
+            if ( $term->parent != 0 ){
+                $price = sell_media_get_term_meta( $term->term_id, $key, true );
+                $prices[] = $price;
+            }
         }
     }
 
