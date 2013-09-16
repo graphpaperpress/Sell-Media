@@ -8,11 +8,17 @@
  * @since 0.1
  */
 function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) {
-    if ( empty( $purchase_key ) ){
-        return;
-    } else {
+    
+    if ( isset( $_GET['purchase_key'] ) && ! empty( $_GET['purchase_key'] ) ){
         $purchase_key = $_GET['purchase_key'];
-        $email = $_GET['email'];
+    } 
+    
+    if ( isset( $_GET['email'] ) && ! empty( $_GET['email'] ) ){ 
+       	$email = $_GET['email'];
+    }
+    
+    if ( ! empty( $purchase_key ) && ! empty( $email ) ){
+        
         $message = null;
 
         $args = array(
@@ -37,16 +43,22 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
             $payment_settings = get_option( 'sell_media_payment_settings' );
             $message .= __( 'Your purchase is pending. This happens if you paid with an eCheck, if you opened a new account or if there is a problem with the checkout system. Please contact the seller if you have questions about this purchase: ') ;
             $message .= $payment_settings['paypal_email'];
-        }
-        else {
-            foreach( $downloads as $download ){
-                $image_attributes = wp_get_attachment_image_src( $download['AttachmentID'], 'medium', false );
-                $download = site_url() . '/?download=' . $purchase_key . '&email=' . $email . '&id=' . $download['AttachmentID'];
+        } else {
+            
+            $payment_id = sell_media_get_payment_id_by( 'email', $email );
+            $links = sell_media_build_download_link( $payment_id, $email );
+
+            foreach( $links as $link ){
+            
+               	$image_attributes = wp_get_attachment_image_src( get_post_meta( $link['item_id'], '_sell_media_attachment_id', true ), 'medium', false );
+
                 $message .= '<div class="sell-media-aligncenter">';
-                $message .= '<a href="' . $download . '"><img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" /></a>';
-                $message .= '<strong><a href="' . $download . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
+                $message .= '<a href="' . $link['url']. '">';
+                $message .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" />';
+                $message .= '</a>';
+                $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
                 $message .= '</div>';
-            }
+            }         
         }
     }
     return '<p class="sell-media-thanks-message">' . $message . '</p>';
@@ -182,6 +194,16 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                     );
 
                 $user_id = wp_insert_user( $data );
+                $admin['name'] = get_bloginfo('name');
+                $admin['email'] = get_option('admin_email');
+                $subject = 'Welcome!';
+                $body = 'Your username is: ' . $purchase['email'] . "<br />" . 'Your password is: ' . $password;
+                $header = "From: " . stripslashes_deep( html_entity_decode( $admin['name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$admin['email']}>\r\n";
+                $header .= "Reply-To: ". $purchase['email'] . "\r\n";
+                $header .= "MIME-Version: 1.0\r\n";
+                $header .= "Content-Type: text/html; charset=utf-8\r\n";
+                wp_mail( $purchase['email'], $subject, $body, $header );
+
             } else {
                 $user_id = $current_user->ID;
             }
