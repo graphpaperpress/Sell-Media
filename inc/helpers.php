@@ -447,12 +447,14 @@ function sell_media_test_mode(){
  * @since 0.1
  */
 function sell_media_get_payment_id_by( $key=null, $value=null ){
-    switch( $value ) {
+    switch( $key ) {
         case '_sell_media_payment_purchase_key':
-            $value = '_sell_media_payment_purchase_key';
+        case 'key':
+            $key = '_sell_media_payment_purchase_key';
             break;
         case '_sell_media_payment_user_email':
-            $value = '_sell_media_payment_user_email';
+        case 'email':
+            $key = '_sell_media_payment_user_email';
             break;
         default:
             break;
@@ -465,7 +467,7 @@ function sell_media_get_payment_id_by( $key=null, $value=null ){
     if ( is_null( $payment_id ) ){
         return fasle;
     } else {
-        return $payment_id;
+        return $payment_id[0]->post_id;
     }
 }
 

@@ -65,8 +65,11 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'currency_code'  => $payment_settings['currency'],
         'charset'        => get_bloginfo( 'charset' ),
         'rm'             => '2',
-        'return'         => $return_url,
-        'notify_url'     => $listener_url,
+        // According to the docs the param is 'return_url', but that doesn't work as expected
+        // 'https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNandPDTVariables/'
+        // 'return_url'     => $return_url, 
+        'return'     => $return_url,
+        'ipn_notification_url' => $listener_url,
         'mc_currency'    => $payment_settings['currency'],
         'mc_gross'       => $price,
         'payment_status' => '',
@@ -239,10 +242,10 @@ function sell_media_process_paypal_ipn() {
             $message .= "\nSuccess! Updated payment status to: published\n";
             $message .= "Payment status is set to: {$_POST['payment_status']}\n\n";
             $message .= "Sending payment id: {$_POST['custom']}\n";
-            $message .= "To email: {$_POST['receiver_email']}\n";
+            $message .= "To email: {$_POST['payer_email']}\n";
             $message .= "Purchase receipt: {$_POST['item_number']}\n";
 
-            $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['receiver_email'], $_POST['custom'] );
+            $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['payer_email'], $_POST['custom'] );
             $message .= "{$email_status}\n";
 
             $payment_meta_array = get_post_meta( $_POST['custom'], '_sell_media_payment_meta', true );
