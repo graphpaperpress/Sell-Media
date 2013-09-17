@@ -80,6 +80,17 @@
 #sell-media-single .gallery .gallery-item a img {
   max-width: 95%;
 }
+.sell-media .sell-media-prev-next {
+  text-align: center;
+  padding: 10px 0;
+  clear: both;
+}
+.sell-media .sell-media-prev-next .next {
+  margin: 0 0 0 10px;
+}
+.sell-media .sell-media-prev-next .prev {
+  margin: 0 10px 0;
+}
 /*= Archives
 -------------------------------------------------------------- */
 .sell-media .sell-media-grid {

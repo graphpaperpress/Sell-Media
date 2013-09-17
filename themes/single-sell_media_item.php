@@ -16,6 +16,10 @@ get_header(); ?>
 		    <?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
 			<div><?php the_content(); ?></div>
 			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
+			<div class="sell-media-prev-next">
+				<?php previous_post_link('<span class="prev">&laquo; %link</span>', '%title'); ?>
+				<?php next_post_link('<span class="next">%link &raquo;</span>', '%title'); ?>
+			</div>
 		</div>
 
 		<div class="sell-media-meta">
