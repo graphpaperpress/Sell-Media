@@ -8,17 +8,17 @@
  * @since 0.1
  */
 function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) {
-    
+
     if ( isset( $_GET['purchase_key'] ) && ! empty( $_GET['purchase_key'] ) ){
         $purchase_key = $_GET['purchase_key'];
-    } 
-    
-    if ( isset( $_GET['email'] ) && ! empty( $_GET['email'] ) ){ 
+    }
+
+    if ( isset( $_GET['email'] ) && ! empty( $_GET['email'] ) ){
        	$email = $_GET['email'];
     }
-    
+
     if ( ! empty( $purchase_key ) && ! empty( $email ) ){
-        
+
         $message = null;
 
         $args = array(
@@ -44,12 +44,12 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
             $message .= __( 'Your purchase is pending. This happens if you paid with an eCheck, if you opened a new account or if there is a problem with the checkout system. Please contact the seller if you have questions about this purchase: ') ;
             $message .= $payment_settings['paypal_email'];
         } else {
-            
+
             $payment_id = sell_media_get_payment_id_by( 'email', $email );
             $links = sell_media_build_download_link( $payment_id, $email );
 
             foreach( $links as $link ){
-            
+
                	$image_attributes = wp_get_attachment_image_src( get_post_meta( $link['item_id'], '_sell_media_attachment_id', true ), 'medium', false );
 
                 $message .= '<div class="sell-media-aligncenter">';
@@ -58,7 +58,7 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
                 $message .= '</a>';
                 $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
                 $message .= '</div>';
-            }         
+            }
         }
     }
     return '<p class="sell-media-thanks-message">' . $message . '</p>';
@@ -504,11 +504,11 @@ function sell_media_download_shortcode( $atts ) {
             global $current_user;
             global $wpdb;
 	    get_currentuserinfo();
-	    
+
 	    $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
             $payment_obj = New SellMediaPayments;
             $html = null;
-            
+
             foreach( $payment_lists as $payment ){
                 $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
                 $html .= '<ul class="payment-meta">';
@@ -516,7 +516,7 @@ function sell_media_download_shortcode( $atts ) {
                 $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
                 $html .= '<li><strong>'.__('Status', 'sell_media').'</strong> ' . $payment_obj->status( $payment['post_id'] ) . '</li>';
                 $html .= '</ul>';
-                $html .= $payment_obj->payment_table( $payment['post_id'] );
+                $html .= $payment_obj->payment_table( $payment['post_id'], true );
             }
 
             return '<div id="purchase-history">'.$html.'</div>';

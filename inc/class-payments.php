@@ -50,10 +50,11 @@ Class SellMediaPayments {
      * Used to build out an HTML table for a single payment containing ALL items for that payment
      *
      * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+     * @param $link (bool) Use a html hyper link or an input field to display the link
      *
      * @return $html (string) An html table containing the item, size, price, qty, and other usefulness
      */
-    public function payment_table( $post_id=null ){
+    public function payment_table( $post_id=null, $download_link=null ){
 
         $links = sell_media_build_download_link( $post_id, get_post_meta( $post_id, "_sell_media_payment_user_email", true ) );
         $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
@@ -106,13 +107,19 @@ Class SellMediaPayments {
                         $price = $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] );
                     }
 
+                    if ( empty( $download_link ) ){
+                        $tmp_download = '<input type="text" value="' . $link['url'] . '" />';
+                    } else {
+                        $tmp_download = '<a href="'.$link['url'].'" target="_blank">' . get_post_field('post_title', $link['item_id']) . '</a>';
+                    }
+
                     $html .= '<tr class="" valign="top">';
                     $html .= '<td class="media-icon">' . $link['thumbnail'] . '</td>';
                     $html .= '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post_id, $link['price_id'] ) . '</td>';
                     $html .= '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
                     $html .= '<td>' . $qty . '</td>';
                     $html .= '<td>' . $license . '</td>';
-                    $html .= '<td class="title column-title"><input type="text" value="' . $link['url'] . '" /></td>';
+                    $html .= '<td class="title column-title">'.$tmp_download.'</td>';
                     $html .= '</tr>';
 
                 }
