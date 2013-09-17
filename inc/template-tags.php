@@ -515,6 +515,9 @@ sell_media_image_sizes( $_POST['product_id'], false );
 function sell_media_image_sizes( $post_id=null, $echo=true ){
 
     $download_sizes = sell_media_get_downloadable_size( $post_id );
+
+    if ( empty( $download_sizes ) ) return;
+
     $html = null;
     if ( $echo ){
         foreach( $download_sizes as $k => $v ){
@@ -652,7 +655,7 @@ function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
 
     $terms = wp_get_post_terms( $post_id, 'price-group' );
 
-    $prices = array();
+    $prices[] = '';
 
     $original_price = get_post_meta( $post_id, 'sell_media_price', true );
     if ( ! empty( $original_price ) ){
@@ -706,6 +709,10 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
         $default_price_group = empty( $size_settings['default_price_group'] ) ? null : $size_settings['default_price_group'];
 
         $default_price_group_obj = get_term( $default_price_group, 'price-group' );
+
+        if ( is_wp_error( $default_price_group_obj ) )
+            return;
+
         $children = get_term_children( $default_price_group_obj->term_id, 'price-group' );
 
         $price_groups = array();
