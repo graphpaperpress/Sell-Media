@@ -682,7 +682,7 @@ function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
  *
  * @return Array of downloadable sizes or single size if $term_id is present
  */
-function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
+function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_not_available=null ){
     $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
     $wp_upload_dir = wp_upload_dir();
     $attached_path_file  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
@@ -763,6 +763,14 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
              * available download sizes.
              */
             if ( empty( $download_sizes[ $price->term_id ]['width'] ) ) {
+
+                $unavailable_size[ $price->term_id ] = array(
+                    'name' => $download_sizes[ $price->term_id ]['name'],
+                    'price' => $download_sizes[ $price->term_id ]['price'],
+                    'height' => $pg_height,
+                    'width' => $pg_width
+                    );
+
                 unset( $download_sizes[ $price->term_id ] );
             }
 
@@ -774,10 +782,37 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null ){
             if ( $original['height'] > $original['width']
                 && isset( $download_sizes[ $price->term_id ] )
                 && $download_sizes[ $price->term_id ]['height'] <  $smallest_height ){
+
+                    $unavailable_size[ $price->term_id ] = array(
+                        'name' => $download_sizes[ $price->term_id ]['name'],
+                        'price' => $download_sizes[ $price->term_id ]['price'],
+                        'height' => $pg_height,
+                        'width' => $pg_width
+                        );
+
                     unset( $download_sizes[ $price->term_id ] );
             }
         }
     }
 
-    return empty( $term_id ) ? $download_sizes : $download_sizes[ $term_id ];
+    if ( ! empty( $size_not_available ) ){
+        $sizes = array(
+            'available' => $download_sizes,
+            'unavailable' => empty( $unavailable_size ) ? null : $unavailable_size
+            );
+    } elseif ( empty( $term_id ) ) {
+        $sizes = $download_sizes;
+    } else {
+        $sizes = $download_sizes[ $term_id ];
+    }
+
+    return $sizes;
 }
+
+
+
+
+
+
+
+

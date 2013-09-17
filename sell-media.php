@@ -35,6 +35,7 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-payments.php' );
     include( dirname(__FILE__) . '/inc/admin-settings.php' );
     include( dirname(__FILE__) . '/inc/admin-price-groups.php' );
+    include( dirname(__FILE__) . '/inc/admin-notices.php' );
 }
 
 
