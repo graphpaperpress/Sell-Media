@@ -17,7 +17,7 @@ function sell_media_admin_messages() {
     if ( $general['test_mode'] == 1 ){
         $notices[] = array(
             'slug' => 'test-mode',
-            'message' => 'Your site is currently in <a href="">test mode</a>.'
+            'message' => 'Your site is currently in <a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options') . '">test mode</a>.'
             );
     }
 
@@ -64,7 +64,7 @@ function sell_media_admin_messages() {
     /**
      * Available size
      */
-    if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' ){
+    if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' && isset( $_GET['post'] ) ){
         global $post_type;
 
         if ( $post_type == 'sell_media_item' ){

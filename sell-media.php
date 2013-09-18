@@ -796,9 +796,7 @@ class SellMedia {
             if ( ! isset( $_SESSION ) ) session_start();
 
             if ( ! empty( $password ) ) {
-                if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password
-                    || ! empty( $_SESSION['sell_media']['collection_password'] )
-                    || ! empty( $_SESSION['sell_media']['collection_password'] )
+                if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password || ! empty( $_SESSION['sell_media']['collection_password'] )
                     && $_SESSION['sell_media']['collection_password'] == $password ) {
 
                     if ( empty( $_SESSION['sell_media']['collection_password'] ) )
@@ -812,8 +810,7 @@ class SellMedia {
                     } else {
                         load_template( $custom );
                     }
-                } ?>
-                <?php wp_die();
+                }
             }
         } else {
             return $query;
