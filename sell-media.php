@@ -810,8 +810,7 @@ class SellMedia {
                     } else {
                         load_template( $custom );
                     }
-                } ?>
-                <?php wp_die();
+                }
             }
         } else {
             return $query;
