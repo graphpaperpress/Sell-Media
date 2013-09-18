@@ -192,6 +192,10 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.6.2 =
+* Bug: Fixing issue were size was not dependent on license
+* Tweak: Added admin notices
+
 = 1.6.1 =
 * Bug: Updated paypal arguments for buyer download email
 * Bug: Fixing issue were cart was not emptied

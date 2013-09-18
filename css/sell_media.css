@@ -543,6 +543,9 @@ input[type="submit"].sell-media-buy-button:hover,
   border: 1px solid #cccccc;
   *border: 0;
 }
+.sell-media-form input[type="submit"][disabled]:hover {
+  cursor: default;
+}
 .sell-media-buy-button:active,
 .sell-media-buy-button.active {
   background-color: #cccccc \9;

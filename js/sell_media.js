@@ -217,6 +217,8 @@ jQuery( document ).ready(function( $ ){
             success: function( msg ){
                 $( ".sell-media-cart-dialog-target" ).fadeIn().html( msg ); // Give a smooth fade in effect
                 cart_count();
+                $('.sell-media-buy-button').attr('disabled', true);
+                $('#sell_media_license_select').attr('disabled', true);
             }
         });
 
@@ -235,10 +237,12 @@ jQuery( document ).ready(function( $ ){
         }
     });
 
+
     $( document ).on( 'click', '.close', function(){
         $('.sell-media-cart-dialog').hide();
         $('#overlay').remove();
     });
+
 
     /**
      * On change run the calculate_total() function
@@ -256,11 +260,7 @@ jQuery( document ).ready(function( $ ){
             price = $(this).attr('data-price');
             calculate_total( price, size );
         });
-        if ( price == 0 && size == 0 ){
-            $('.sell-media-buy-button').attr('disabled', true);
-        } else {
-            $('.sell-media-buy-button').removeAttr('disabled');
-        }
+
         $(this).parent().find(".license_desc").attr('data-tooltip', license_desc);
         if ( license_desc == '' ){
             $(this).parent().find(".license_desc").hide();
@@ -268,31 +268,55 @@ jQuery( document ).ready(function( $ ){
             $(this).parent().find(".license_desc").show();
         }
 
+        // If we have a value enable the buy button, if we don't disable it
+        if ( $("option:selected", this).val() ){
+            $('.sell-media-buy-button').removeAttr('disabled');
+        } else {
+            $('.sell-media-buy-button').attr('disabled', true);
+        }
     });
 
+
     /**
-     * On change run the calculate_total() function
+     * On change make sure the licnese has a value
      */
     $( document ).on('change', '#sell_media_size_select', function(){
-        var size;
 
+        /**
+         * Derive the license from the select
+         * or from the single item
+         */
         if ( $('#sell_media_single_license_markup').length ){
-            price = $('#sell_media_single_license_markup').val();
+            license = $('#sell_media_single_license_markup').val();
+        } else if( $('#sell_media_license_select').length ){
+            license = $('#sell_media_license_select :selected').val();
         } else {
-            price = $('#sell_media_license_select :selected').attr('data-price');
+            license = null;
         }
 
         $("option:selected", this).each(function(){
             size = $(this).attr('data-price');
-            calculate_total( price, size );
+            calculate_total( license, size );
         });
-        if ( price == 0 && size == 0 ){
+
+        size = $('#sell_media_size_select :selected').attr('data-price');
+
+        // if no size disable the add to cart button
+        // and the license select
+        if ( size == 0 && license != null ){
             $('.sell-media-buy-button').attr('disabled', true);
             $('#sell_media_license_select').attr('disabled', true);
-        } else {
-            $('.sell-media-buy-button').removeAttr('disabled');
+        }
+
+        if ( size != 0 && license >= 0 ) {
             $('#sell_media_license_select').removeAttr('disabled');
         }
+
+        // user selected a size, but there's no license to select
+        if ( size != 0 && license == null ){
+            $('.sell-media-buy-button').removeAttr('disabled');
+        }
+
     });
 
 
