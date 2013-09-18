@@ -47,7 +47,7 @@ function sell_media_admin_messages() {
     if ( empty( $payment['paypal_email'] ) ){
         $notices[] = array(
             'slug' => 'paypal-email',
-            'message' => 'Please set a paypal email in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings').'">payment settings</a>'
+            'message' => 'Please set a Paypal email in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings').'">payment settings</a>'
             );
     }
 
