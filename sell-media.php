@@ -654,6 +654,8 @@ class SellMedia {
     public function collection_password_check( $query ){
 
         if ( is_admin() ) return $query;
+        if ( ! $query->is_main_query() ) return $query;
+
         if ( ! empty( $_GET['sell_media_advanced_search_flag'] ) ) return;
 
         /**
