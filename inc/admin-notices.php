@@ -64,7 +64,7 @@ function sell_media_admin_messages() {
     /**
      * Available size
      */
-    if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' ){
+    if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' && isset( $_GET['post'] ) ){
         global $post_type;
 
         if ( $post_type == 'sell_media_item' ){
