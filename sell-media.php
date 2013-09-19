@@ -796,11 +796,13 @@ class SellMedia {
             if ( ! isset( $_SESSION ) ) session_start();
 
             if ( ! empty( $password ) ) {
-                if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password || ! empty( $_SESSION['sell_media']['collection_password'] )
-                    && $_SESSION['sell_media']['collection_password'] == $password ) {
+                if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password
+                    || ! empty( $_SESSION['sell_media']['collection_password'][$term_id] )
+                    || ! empty( $_SESSION['sell_media']['collection_password'][$term_id] )
+                    && $_SESSION['sell_media']['collection_password'][$term_id] == $password ) {
 
-                    if ( empty( $_SESSION['sell_media']['collection_password'] ) )
-                        $_SESSION['sell_media']['collection_password'] = $_POST['collection_password'];
+                    if ( empty( $_SESSION['sell_media']['collection_password'][$term_id] ) )
+                        $_SESSION['sell_media']['collection_password'][$term_id] = $_POST['collection_password'];
 
                     return $query;
                 } else {
