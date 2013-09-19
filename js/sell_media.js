@@ -308,8 +308,17 @@ jQuery( document ).ready(function( $ ){
             $('#sell_media_license_select').attr('disabled', true);
         }
 
-        if ( size != 0 && license >= 0 ) {
-            $('#sell_media_license_select').removeAttr('disabled');
+        // Check if multiple licenses are in use, else we enable the
+        // buy button
+        if ( $('#sell_media_license_select').length ) {
+            if ( size != 0 && license >= 0 ) {
+                $('#sell_media_license_select').removeAttr('disabled');
+            }
+        } else {
+            console.log( 'enable button' );
+            if ( size != 0 && license >= 0 ) {
+                $('.sell-media-buy-button').removeAttr('disabled');
+            }
         }
 
         // user selected a size, but there's no license to select
