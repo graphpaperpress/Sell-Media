@@ -74,11 +74,11 @@ function sell_media_admin_messages() {
 
             if ( ! empty( $download_sizes['unavailable'] ) ){
                 $og_size = sell_media_original_image_size( $post->ID, $echo=false );
-                $message = null;
+
+                $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') will not be available in the following size(s): <br />';
                 foreach( $download_sizes['unavailable'] as $unavailable ){
-                    $message .= 'This image will not be available in the size ' . $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['width'] . ') ';
+                    $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['width'] . ')<br />';
                 }
-                $message .= ', your original file is ' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . '.';
 
                 $notices[] = array(
                     'slug' => 'download-sizes',
