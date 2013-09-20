@@ -75,7 +75,7 @@ function sell_media_admin_messages() {
             if ( ! empty( $download_sizes['unavailable'] ) ){
                 $og_size = sell_media_original_image_size( $post->ID, $echo=false );
 
-                $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') will not be available in the following size(s): <br />';
+                $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
                 foreach( $download_sizes['unavailable'] as $unavailable ){
                     $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['width'] . ')<br />';
                 }
@@ -93,11 +93,13 @@ function sell_media_admin_messages() {
     }
 
 
-    /**
-     * Prevents notices from being displayed twice on the core Settings page
-     */
-    global $pagenow;
-    if ( $pagenow != 'options-general.php' )
-        settings_errors( 'sell-media-notices' );
+    settings_errors( 'sell-media-notices' );
 }
-add_action( 'admin_notices', 'sell_media_admin_messages' );
+
+global $pagenow;
+
+$post_type = ( isset( $_GET['post'] ) ) ? get_post_type( $_GET['post'] ) : null;
+if ( $pagenow == 'edit.php' && isset( $_GET['page'] ) && $_GET['page'] == 'sell_media_plugin_options'
+    || $post_type == 'sell_media_item' ){
+    add_action( 'admin_notices', 'sell_media_admin_messages' );
+}
