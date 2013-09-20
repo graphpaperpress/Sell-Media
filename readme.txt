@@ -195,7 +195,10 @@ Action hooks available:
 = 1.6.2 =
 * Bug: Fixing issue where keyword archive pages with default links would 404
 * Bug: Fixing issue were size was not dependent on license
+* Bug: Fixing notice when there is no min price to be displayed
+* Tweak: Password protected collections are now more secure
 * Tweak: Added admin notices
+* Tweak: Password protected collections now use a custom template
 
 = 1.6.1 =
 * Bug: Updated paypal arguments for buyer download email
