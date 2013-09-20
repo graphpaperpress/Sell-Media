@@ -92,6 +92,12 @@ function sell_media_admin_messages() {
         add_settings_error( 'sell-media-notices', 'sell-media-notice-' . $notice['slug'], $notice['message'], 'updated' );
     }
 
-    settings_errors( 'sell-media-notices' );
+
+    /**
+     * Prevents notices from being displayed twice on the core Settings page
+     */
+    global $pagenow;
+    if ( $pagenow != 'options-general.php' )
+        settings_errors( 'sell-media-notices' );
 }
 add_action( 'admin_notices', 'sell_media_admin_messages' );
