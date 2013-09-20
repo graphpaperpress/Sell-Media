@@ -8,11 +8,11 @@ Class SellMediaNavStyleUI {
      * Hooks used
      */
     public function __construct(){
-        // add_action( 'wp_ajax_update_term', array( &$this, 'update_term' ) );
-        // add_action( 'wp_ajax_save_term', array( &$this, 'save_term' ) );
-        // add_action( 'wp_ajax_delete_term', array( &$this, 'delete_term' ) );
-        // add_action( 'wp_ajax_add_term', array( &$this, 'add_term' ) );
-        // add_action( 'admin_enqueue_scripts', array( &$this, 'admin_scripts' ) );
+        add_action( 'wp_ajax_update_term', array( &$this, 'update_term' ) );
+        add_action( 'wp_ajax_save_term', array( &$this, 'save_term' ) );
+        add_action( 'wp_ajax_delete_term', array( &$this, 'delete_term' ) );
+        add_action( 'wp_ajax_add_term', array( &$this, 'add_term' ) );
+        add_action( 'admin_enqueue_scripts', array( &$this, 'admin_scripts' ) );
     }
 
 
