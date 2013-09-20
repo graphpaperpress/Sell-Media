@@ -10,7 +10,7 @@ function sell_media_admin_messages() {
     $size = get_option('sell_media_size_settings');
 
     $notices = array();
-var_dump($general['test_mode']);
+
     /**
      * test mode
      */
