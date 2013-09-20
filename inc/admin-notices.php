@@ -10,11 +10,11 @@ function sell_media_admin_messages() {
     $size = get_option('sell_media_size_settings');
 
     $notices = array();
-
+var_dump($general['test_mode']);
     /**
      * test mode
      */
-    if ( $general['test_mode'] == 1 || empty( $general['test_mode'] ) ){
+    if ( $general['test_mode'] === 1 || empty( $general['test_mode'] ) ){
         $notices[] = array(
             'slug' => 'test-mode',
             'message' => 'Your site is currently in <a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options') . '">test mode</a>.'
