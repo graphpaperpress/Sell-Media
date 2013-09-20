@@ -193,6 +193,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.2 =
+* Bug: Fixing issue where keyword archive pages with default links would 404
 * Bug: Fixing issue were size was not dependent on license
 * Tweak: Added admin notices
 

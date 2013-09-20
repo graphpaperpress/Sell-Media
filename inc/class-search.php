@@ -39,7 +39,7 @@ Class Sell_Media_Search {
      */
     private function get_ids( $taxonomy ){
         $clean_get = $this->clean_get();
-        return isset( $clean_get[ $taxonomy ] ) ? $clean_get[ $taxonomy ] : false;
+        return isset( $clean_get[ $taxonomy ] ) ? (int)$clean_get[ $taxonomy ] : false;
     }
 
 }
