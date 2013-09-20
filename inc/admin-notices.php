@@ -27,7 +27,7 @@ function sell_media_admin_messages() {
     if ( $general['checkout_page'] == 1 || empty( $general )){
         $notices[] = array(
             'slug' => 'checkout-page',
-            'message' => 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>'
+            'message' => 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>.'
             );
     }
 
@@ -37,7 +37,7 @@ function sell_media_admin_messages() {
     if ( $general['thanks_page'] == 1 || empty( $general )){
         $notices[] = array(
             'slug' => 'thanks-page',
-            'message' => 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>'
+            'message' => 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>.'
             );
     }
 
@@ -47,7 +47,7 @@ function sell_media_admin_messages() {
     if ( empty( $payment['paypal_email'] ) ){
         $notices[] = array(
             'slug' => 'paypal-email',
-            'message' => 'Please set a Paypal email in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings').'">payment settings</a>'
+            'message' => 'Please set a Paypal email in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings').'">payment settings</a>.'
             );
     }
 
