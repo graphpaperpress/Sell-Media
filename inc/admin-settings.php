@@ -543,6 +543,12 @@ class SellMediaSettings {
      */
     function field_columns_to_show(){
         $fields = array(
+            'show_collection' => array(
+                'label' => 'Collections'
+                ),
+            'show_license' => array(
+                'label' => 'Licenses'
+                ),
             'show_keywords' => array(
                 'label' => 'Keywords'
                 ),
@@ -552,11 +558,12 @@ class SellMediaSettings {
             );
         ?>
         <?php foreach( $fields as $k => $v ) : ?>
-            <input type="checkbox" value="1" name="<?php echo $this->general_settings_key; ?>[<?php echo $k; ?>] ?>" id="<?php echo $this->general_settings_key; ?>[<?php echo $k; ?>] ?>" <?php if( isset( $this->general_settings[ $k ] )  ) checked( $this->general_settings[ $k ], 1 ); ?>>
+            <input type="checkbox" value="1" name="<?php echo $this->general_settings_key; ?>[<?php echo $k; ?>] ?>" id="<?php echo $this->general_settings_key; ?>[<?php echo $k; ?>] ?>"
+            <?php if( isset( $this->general_settings[ $k ] )  ) checked( $this->general_settings[ $k ], 1 ); ?>>
             <label for="<?php echo $this->general_settings_key; ?>[<?php echo $k; ?>] ?>" class="desc"><?php echo $v['label']; ?></label>
             <br />
         <?php endforeach; ?>
-        <p class="desc"><?php _e( 'Select the additional admin columns to show', 'sell_media' ); ?></p>
+        <p class="desc"><?php _e( 'Select the columns to show', 'sell_media' ); ?></p>
         <?php
     }
 

@@ -228,7 +228,7 @@ class SellMedia {
      * @author Thad Allender
      */
     public function registerLicenses($general_settings) {
-        if( isset( $general_settings['show_licenses'] ) && $general_settings['show_licenses'] == 1 ) {
+        if( isset( $general_settings['show_license'] ) && $general_settings['show_license'] == 1 ) {
             $showcol = true;
         } else {
             $showcol = false;
@@ -440,7 +440,7 @@ class SellMedia {
      * @author Thad Allender
      */
     public function registerCollection($general_settings) {
-         if( isset( $general_settings['show_collections']) && $general_settings['show_collections'] == 1 ) {
+         if( isset( $general_settings['show_collection']) && $general_settings['show_collection'] == 1 ) {
             $showcol = true;
         } else {
             $showcol = false;
