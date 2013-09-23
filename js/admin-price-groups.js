@@ -15,7 +15,9 @@ var smPriceGroups = {
             url: ajaxurl,
             type: "post",
             success: function( msg ){
-                window.location.replace( msg );
+                if ( msg.sell_media ){
+                    window.location.reload( true );
+                }
             }
         });
     },

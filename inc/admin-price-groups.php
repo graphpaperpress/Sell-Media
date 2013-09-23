@@ -87,7 +87,7 @@ Class SellMediaNavStyleUI {
             }
         }
 
-        die();
+        wp_send_json( array( 'sell_media' => true ) );
     }
 
 
@@ -106,7 +106,7 @@ Class SellMediaNavStyleUI {
                 wp_delete_term( $term_id, $_POST['taxonomy'] );
             }
         }
-        die();
+        wp_send_json( array( 'sell_media' => true ) );
     }
 
 
@@ -131,7 +131,7 @@ Class SellMediaNavStyleUI {
             $timestamp = time();
             print admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
         }
-        die();
+        wp_send_json( array( 'sell_media' => true ) );
     }
 
 
@@ -233,7 +233,7 @@ Class SellMediaNavStyleUI {
         }
 
 
-// $final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
+        // $final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
 
         // Default terms
         $max = count( $final['terms'] ) < 1 ? 3 : 1;
