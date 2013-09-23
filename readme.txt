@@ -196,6 +196,7 @@ Action hooks available:
 * Feature: Added option to enable/disable admin columns
 * Bug: Fixing issue were size was not dependent on license
 * Bug: Fixing notice when there is no min price to be displayed
+* Tweak: Customers now have a "remove all" option on the checkout page
 * Tweak: Keywords can now be used with default permalinks
 * Tweak: Password protected collections are now more secure
 * Tweak: Added admin notices
