@@ -75,15 +75,37 @@ function sell_media_admin_messages() {
             if ( ! empty( $download_sizes['unavailable'] ) ){
                 $og_size = sell_media_original_image_size( $post->ID, $echo=false );
 
-                $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
-                foreach( $download_sizes['unavailable'] as $unavailable ){
-                    $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['width'] . ')<br />';
+                $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
+
+                // Check if this is a new upload
+                $wp_upload_dir = wp_upload_dir();
+                if ( file_exists( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file ) ){
+
+                    $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file );
+                    $image_mimes = array(
+                        'image/jpeg',
+                        'image/jpg',
+                        'image/png',
+                        'image/gif',
+                        'image/bmp',
+                        'image/tiff'
+                        );
+
+                    // Image mime type support
+                    if ( in_array( $mime_type['type'], $image_mimes ) ){
+                        $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
+                        foreach( $download_sizes['unavailable'] as $unavailable ){
+                            $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['width'] . ')<br />';
+                        }
+
+                        $notices[] = array(
+                            'slug' => 'download-sizes',
+                            'message' => $message
+                            );
+                    }
                 }
 
-                $notices[] = array(
-                    'slug' => 'download-sizes',
-                    'message' => $message
-                    );
+
             }
         }
     }
