@@ -397,6 +397,11 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><a href="#" class="remove-all-handle"><?php _e('Remove All', 'sell_media'); ?></a></td>
+                        </tr>
                 </tbody>
             </table>
             </form>

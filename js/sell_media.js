@@ -397,6 +397,29 @@ jQuery( document ).ready(function( $ ){
         });
     });
 
+    $( document ).on('click', '.remove-all-handle', function( e ){
+        e.preventDefault();
+
+        var item_ids = [];
+        $('.remove-item-handle').each(function(){
+            console.log( $( this ).attr('data-item_id') );
+            item_ids.push( $( this ).attr('data-item_id') );
+        });
+
+        $.ajax({
+            data: {
+                action: "remove_item",
+                item_id: item_ids
+            },
+            success: function( msg ){
+                // We have no items in the cart
+                if ( msg ){
+                    $('#sell-media-checkout').html( msg );
+                }
+            }
+        });
+    });
+
     $( document ).on('click', '.cart-handle', function(){
         $.ajax({
             data: "action=sell_media_show_cart",

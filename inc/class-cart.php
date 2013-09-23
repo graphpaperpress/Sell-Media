@@ -254,17 +254,22 @@ Class Sell_Media_Cart {
      * Removes an item from the users cart, updates the quantity and total in session
      *
      * @since 0.1
-     * @param Derives the post_id from $_POST['item_id']
+     * @param Derives the post_id from $_POST['item_id'], or an array of IDs from $_POST['item_id']
      * @return null
      */
     public function remove_item() {
 
         $item_index = $_POST['item_id'];
 
-        $_SESSION['cart']['total'] = $this->get_total( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
-        $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['qty'];
-
-        unset( $_SESSION['cart']['items'][$item_index] );
+        if ( is_array( $item_index ) ){
+            foreach( $item_index as $id ){
+                unset( $_SESSION['cart']['items'][ $id ] );
+            }
+        } else {
+            $_SESSION['cart']['total'] = $this->get_total( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
+            $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['qty'];
+            unset( $_SESSION['cart']['items'][$item_index] );
+        }
 
         if ( empty( $_SESSION['cart']['items'] ) ) {
             print '<p>' . __('You have no items in your cart. ', 'sell_media') . '<a href="'. get_post_type_archive_link('sell_media_item') .'">' . __('Continue shopping', 'sell_media') .'</a>.</p>';
