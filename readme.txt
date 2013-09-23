@@ -193,9 +193,10 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.2 =
-* Bug: Fixing issue where keyword archive pages with default links would 404
+* Feature: Added option to enable/disable admin columns
 * Bug: Fixing issue were size was not dependent on license
 * Bug: Fixing notice when there is no min price to be displayed
+* Tweak: Keywords can now be used with default permalinks
 * Tweak: Password protected collections are now more secure
 * Tweak: Added admin notices
 * Tweak: Password protected collections now use a custom template
