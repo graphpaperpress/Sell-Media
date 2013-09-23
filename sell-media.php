@@ -174,13 +174,13 @@ class SellMedia {
      * Runs when the plugin is initialized
      */
     public function init() {
-
-        $this->registerLicenses();
-        $this->registerKeywords();
-        $this->registerCity();
-        $this->registerState();
-        $this->registerCreator();
-        $this->registerCollection();
+        $general_settings = get_option( 'sell_media_general_settings' );
+        $this->registerCollection($general_settings);
+        $this->registerLicenses($general_settings);
+        $this->registerKeywords($general_settings);
+        $this->registerCreator($general_settings);
+        $this->registerCity($general_settings);
+        $this->registerState($general_settings);
         $this->registerItem();
         $this->registerPayment();
         $this->registerPriceGroup();
@@ -227,7 +227,12 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerLicenses() {
+    public function registerLicenses($general_settings) {
+        if( isset( $general_settings['show_licenses'] ) && $general_settings['show_licenses'] == 1 ) {
+            $showcol = true;
+        } else {
+            $showcol = false;
+        }
         $labels = array(
             'name' => _x( 'Licenses', '', 'sell_media' ),
             'singular_name' => _x( 'License', '', 'sell_media' ),
@@ -250,7 +255,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
-            'show_admin_column' => true,
+            'show_admin_column' => $showcol,
             'show_ui' => true,
             'show_tagcloud' => true,
             'hierarchical' => true,
@@ -267,7 +272,12 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerKeywords() {
+    public function registerKeywords($general_settings) {
+        if( isset( $general_settings['show_keywords']) && $general_settings['show_keywords'] == 1 ) {
+            $showcol = true;
+        } else {
+            $showcol = false;
+        }
         $labels = array(
             'name' => _x( 'Keywords', '', 'sell_media' ),
             'singular_name' => _x( 'Keyword', '', 'sell_media' ),
@@ -290,6 +300,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
+            'show_admin_column' => $showcol,
             'show_ui' => true,
             'show_tagcloud' => true,
             'hierarchical' => false,
@@ -384,7 +395,12 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerCreator() {
+    public function registerCreator($general_settings) {
+         if( isset( $general_settings['show_creators']) && $general_settings['show_creators'] == 1 ) {
+            $showcol = true;
+        } else {
+            $showcol = false;
+        }
         $labels = array(
             'name' => _x( 'Creator', '', 'sell_media' ),
             'singular_name' => _x( 'Creator', '', 'sell_media' ),
@@ -407,6 +423,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
+            'show_admin_column' => $showcol,
             'show_tagcloud' => true,
             'hierarchical' => false,
             'rewrite' => true,
@@ -422,7 +439,12 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerCollection() {
+    public function registerCollection($general_settings) {
+         if( isset( $general_settings['show_collections']) && $general_settings['show_collections'] == 1 ) {
+            $showcol = true;
+        } else {
+            $showcol = false;
+        }
         $labels = array(
             'name' => _x( 'Collections', '', 'sell_media' ),
             'singular_name' => _x( 'Collection', '', 'sell_media' ),
@@ -445,7 +467,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
-            'show_admin_column' => true,
+            'show_admin_column' => $showcol,
             'show_ui' => true,
             'show_tagcloud' => true,
             'hierarchical' => true,
