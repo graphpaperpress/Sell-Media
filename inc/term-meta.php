@@ -453,16 +453,16 @@ function sell_media_custom_collection_columns_headers( $columns ){
     }
 
     if (!isset($columns_local['collection_icon']))
-        $columns_local['collection_icon'] = "Icon";
+        $columns_local['collection_icon'] = __("Icon", 'sell_media');
 
     // Rename the post column to Images
     if ( isset( $columns['posts'] ) )
-        $columns['posts'] = "Media";
+        $columns['posts'] = __("Media", 'sell_media');
 
      $columns_local = array_merge($columns_local, $columns);
 
     if (!isset($columns_local['collection_protected']))
-        $columns_local['collection_protected'] = "Protected";
+        $columns_local['collection_protected'] = __("Protected", 'sell_media');
 
     return array_merge($columns_local, $columns);
 }

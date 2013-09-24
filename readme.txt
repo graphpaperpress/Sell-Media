@@ -194,6 +194,8 @@ Action hooks available:
 
 = 1.6.2 =
 * Feature: Added option to enable/disable admin columns
+* Feature: Added clear cart button
+* Feature: Added additional admin column "protected" for collection page
 * Bug: Fixing issue were size was not dependent on license
 * Bug: Fixing notice when there is no min price to be displayed
 * Bug: Fixed conflict with WordPress heartbeat API
