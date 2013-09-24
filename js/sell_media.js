@@ -217,8 +217,12 @@ jQuery( document ).ready(function( $ ){
             success: function( msg ){
                 $( ".sell-media-cart-dialog-target" ).fadeIn().html( msg ); // Give a smooth fade in effect
                 cart_count();
-                $('.sell-media-buy-button').attr('disabled', true);
-                $('#sell_media_license_select').attr('disabled', true);
+                if ($('#download #sell_media_size_select').length) {
+                    $('#sell_media_license_select').attr('disabled', true);
+                };
+                if ($('#download #sell_media_size_select').length || $('#download #sell_media_license_select').length) {
+                    $('.sell-media-buy-button').attr('disabled', true);
+                };
             }
         });
 
