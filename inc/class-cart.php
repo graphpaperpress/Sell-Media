@@ -352,6 +352,29 @@ Class Sell_Media_Cart {
         }
         die();
     }
+
+
+    /**
+     * Updates a given key in the cart and updates total, sub-total as needed
+     *
+     * @param $cart_id (int) The index of the item in the cart
+     * @param $key (string) The key for the cart item
+     * @param $value (string) The new value
+     *
+     * @return
+     */
+    public function update_item( $cart_id=null, $key=null, $value=null ){
+
+        // Update the item in the cart
+        $_SESSION['cart']['items'][ $cart_id ][ $key ] = $value;
+
+        // Item the total
+        $_SESSION['cart']['total'] = $this->get_total( $_SESSION['cart']['items'] );
+
+        // Update the qty for the entire cart
+        $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
+
+    }
 }
 // Later make this a singleton or better don't use one
 New Sell_Media_Cart;

@@ -89,7 +89,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
         $items = $_SESSION['cart']['items'];
 
     if ( $_POST ){
-        // die();
 
         // Check if the qty thats in the cart has changed
         // foreach( $_POST['sell_media_item_qty'] as $k => $v ){
@@ -168,6 +167,18 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             // echo '</pre>';
             // die();
 
+
+            /**
+             * Compare count in cart with count in post
+             * update cart count as needed
+             */
+            $cart = New Sell_Media_Cart;
+            foreach( $_POST['sell_media_item_qty'] as $k => $v ){
+                if ( $_SESSION['cart']['items'][ $k ] != $v ){
+                    $cart->update_item( $k, 'qty', $v );
+                }
+            }
+
             // record the payment details
             update_post_meta( $payment_id, '_sell_media_payment_meta', $purchase );
             update_post_meta( $payment_id, '_sell_media_payment_user_email', $purchase['email'] );
@@ -237,7 +248,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             sell_media_process_paypal_purchase( $purchase, $payment_id );
         }
     }
-    $cart = New Sell_Media_Cart;
 
     ob_start();
     ?>
