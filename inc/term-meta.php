@@ -461,6 +461,9 @@ function sell_media_custom_collection_columns_headers( $columns ){
 
      $columns_local = array_merge($columns_local, $columns);
 
+    if (!isset($columns_local['collection_protected']))
+        $columns_local['collection_protected'] = "Protected";
+
     return array_merge($columns_local, $columns);
 }
 add_filter( 'manage_edit-collection_columns', 'sell_media_custom_collection_columns_headers' );
@@ -470,6 +473,14 @@ function sell_media_custom_collection_columns_content( $row_content, $column_nam
     switch( $column_name ) {
         case 'collection_icon':
             return wp_get_attachment_image( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ), 'thumbnail' );
+            break;
+            case 'collection_protected':
+                if( sell_media_get_term_meta( $term_id, 'collection_password', true ) ) {
+                    $colstatus = "Private";
+                } else {
+                    $colstatus = "Public";
+                }
+                return $colstatus;
             break;
         default:
             break;
