@@ -129,6 +129,70 @@ Class Sell_Media_Download {
         return $wpdb->get_results( $query ) ? true : false;
     }
 
+
+    /**
+     * Retrive the license(s) for a given item associated with a purchase/download
+     *
+     * @param $purchase_key (string) The purchase key to retrive the license from
+     * @todo license should be stored at time of purchase with?
+     *
+     * @return Array of license false on failure
+     */
+    public function get_license( $purchase_key=null ){
+
+        $products = $this->get_purchases( $purchase_key );
+        $licenses = array();
+        $tmp = array();
+        foreach( $products as $product ){
+            if ( ! empty( $product['license'] ) ){
+                $tmp_term = get_term_by( 'id', $product['license']['id'], 'licenses' );
+                $tmp = array(
+                    'id' => $product['license']['id'],
+                    'name' => $tmp_term->name,
+                    'description' => $tmp_term->description
+                    );
+                $licenses[] = $tmp;
+            }
+        }
+
+        return empty( $licenses ) ? false : $licenses;
+    }
+
+
+    /**
+     * Returns an array of purchases associated with a purchase key
+     */
+    public function get_purchases( $purchase_key=null ){
+
+        // Run our payments query
+        $args = array(
+            'post_type' => 'sell_media_payment',
+            'post_status' => 'publish',
+            'meta_query' => array(
+                'relation' => 'AND',
+                    array(
+                        'key' => '_sell_media_payment_purchase_key',
+                        'value' => $purchase_key
+                    )
+                )
+            );
+
+        $payments = new WP_Query( $args );
+
+        // Payment is still pending we just leave
+        if ( $payments->post_count == 0 ){
+            $products = false;
+        } else {
+            foreach( $payments->posts as $payment ) {
+                $payment_meta = get_post_meta( $payment->ID, '_sell_media_payment_meta', true );
+                $payment_id = $payment->ID;
+                $products = maybe_unserialize( $payment_meta['products'] );
+            }
+        }
+
+        return $products;
+    }
+
 }
 
 /**
@@ -272,9 +336,43 @@ function sell_media_process_download() {
         }
         exit;
     }
+
+    if ( isset( $_GET['resend_email'] ) && isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ){
+        $purchase_key = get_post_meta( $_GET['payment_id'], '_sell_media_payment_purchase_key', true );
+        $payment_email = get_post_meta( $_GET['payment_id'], '_sell_media_payment_user_email', true );
+
+        sell_media_email_purchase_receipt( $purchase_key, $payment_email, $payment_id );
+    }
 }
 add_action( 'init', 'sell_media_process_download', 100 );
 
+
+function sell_media_string_attachment( $phpmailer ){
+
+    global $_purchase_key;
+
+    $download_obj = New Sell_Media_Download;
+    $licenses = $download_obj->get_license( $_purchase_key );
+
+    $str_attachments = array();
+    $tmp = array();
+    foreach( $licenses as $licenses ){
+        $tmp = array(
+            'data' => $licenses['description'],
+            'file_name' => 'license-' . strtolower( sanitize_file_name( $licenses['name'] ) ) . '.txt',
+            'encoding' => 'base64',
+            'type' => 'application/octet-stream',
+        );
+        $str_attachments[] = $tmp;
+    }
+
+    foreach( $str_attachments as $attachment ){
+        $phpmailer->AddStringAttachment( $attachment['data'], $attachment['file_name'], $attachment['encoding'], $attachment['type'] );
+    }
+
+    $_purchase_key = null;
+
+}
 
 
 /**
@@ -284,24 +382,15 @@ add_action( 'init', 'sell_media_process_download', 100 );
  */
 function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $payment_id=null ) {
 
-    $args = array(
-        'post_type' => 'sell_media_payment',
-        'post_status' => 'publish',
-        'meta_query' => array(
-            'relation' => 'AND',
-                array(
-                    'key' => '_sell_media_payment_purchase_key',
-                    'value' => $purchase_key
-                )
-            )
-        );
+    $download_obj = New Sell_Media_Download;
+    $products = $download_obj->get_purchases( $purchase_key );
 
-    $payments = new WP_Query( $args );
-    foreach( $payments->posts as $payment ) {
-        $payment_meta = get_post_meta( $payment->ID, '_sell_media_payment_meta', true );
-        $payment_id = $payment->ID;
-        $products = maybe_unserialize( $payment_meta['products'] );
-    }
+
+    // Call the mail object to add license if we have any
+    global $_purchase_key;
+    $_purchase_key = $purchase_key;
+    add_action('phpmailer_init', 'sell_media_string_attachment');
+
 
     $message['from_name'] = get_bloginfo('name');
     $message['from_email'] = get_option('admin_email');
@@ -313,6 +402,7 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     if ( function_exists('sell_media_reprints_sf_options'))
         $options = sell_media_reprints_sf_options();
 
+    // Build the download links markup
     $links = null;
     $i = 0;
 
@@ -340,9 +430,9 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     //
 
     $tags = array(
-        '{first_name}'  => get_post_meta( $payment->ID, '_sell_media_payment_first_name', true ),
-        '{last_name}'   => get_post_meta( $payment->ID, '_sell_media_payment_last_name', true ),
-        '{payer_email}' => get_post_meta( $payment->ID, '_sell_media_payment_user_email',  true ),
+        '{first_name}'  => get_post_meta( $payment_id, '_sell_media_payment_first_name', true ),
+        '{last_name}'   => get_post_meta( $payment_id, '_sell_media_payment_last_name', true ),
+        '{payer_email}' => get_post_meta( $payment_id, '_sell_media_payment_user_email',  true ),
         '{download_links}' => empty( $links ) ? null : $links
     );
 
@@ -361,13 +451,8 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
         $email = $email . ', ' . $additonal_emails['paypal_additional_test_email'];
     }
 
-    $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers']);
+    // Send the email
+    $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );
 
-    if ( $r ){
-        $status = "Sent to: {$email}";
-    } else {
-        $status = "Failed to send to: {$email}";
-    }
-
-    return $status;
+    return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
 }
