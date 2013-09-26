@@ -199,6 +199,7 @@ Action hooks available:
 * Bug: Fixing issue were size was not dependent on license
 * Bug: Fixing notice when there is no min price to be displayed
 * Bug: Fixed conflict with WordPress heartbeat API
+* Tweak: Download list shortcode now list newest to oldest purchases
 * Tweak: Customers now have a "remove all" option on the checkout page
 * Tweak: Keywords can now be used with default permalinks
 * Tweak: Password protected collections are now more secure
