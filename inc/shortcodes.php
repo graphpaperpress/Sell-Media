@@ -520,7 +520,7 @@ function sell_media_download_shortcode( $atts ) {
             global $wpdb;
 	    get_currentuserinfo();
 
-	    $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
+	    $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s order by post_id DESC", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
             $payment_obj = New SellMediaPayments;
             $html = null;
 
