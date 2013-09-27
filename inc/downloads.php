@@ -351,6 +351,13 @@ function sell_media_string_attachment( $phpmailer ){
 
     global $_purchase_key;
 
+    /**
+     * Since this function is ran before licenses are init'd
+     * we need to manually load them
+     */
+    $t = New SellMedia;
+    $t->registerLicenses();
+
     $download_obj = New Sell_Media_Download;
     $licenses = $download_obj->get_license( $_purchase_key );
 
@@ -384,13 +391,6 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
 
     $download_obj = New Sell_Media_Download;
     $products = $download_obj->get_purchases( $purchase_key );
-
-
-    // Call the mail object to add license if we have any
-    global $_purchase_key;
-    $_purchase_key = $purchase_key;
-    add_action('phpmailer_init', 'sell_media_string_attachment');
-
 
     $message['from_name'] = get_bloginfo('name');
     $message['from_email'] = get_option('admin_email');
@@ -450,6 +450,11 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     if ( ! empty( $additonal_emails['paypal_additional_test_email'] ) ){
         $email = $email . ', ' . $additonal_emails['paypal_additional_test_email'];
     }
+
+    // Call the mail object to add license if we have any
+    global $_purchase_key;
+    $_purchase_key = $purchase_key;
+    add_action('phpmailer_init', 'sell_media_string_attachment');
 
     // Send the email
     $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );
