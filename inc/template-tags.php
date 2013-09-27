@@ -429,6 +429,7 @@ sell_media_image_sizes( $_POST['product_id'], false );
         <?php
         $wp_upload_dir = wp_upload_dir();
         $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
+        $size_array = sell_media_image_sizes( $_POST['product_id'], false );
 
         if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
             <?php $size_settings = get_option('sell_media_size_settings'); $disabled = 'disabled'; $price = "0.00"; ?>
@@ -436,9 +437,9 @@ sell_media_image_sizes( $_POST['product_id'], false );
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
                 <select id="sell_media_size_select" name="price_id">
                     <option value="" data-price="0">-- <?php _e( 'Select a size' ); ?> --</option>
-                    <?php foreach( sell_media_image_sizes( $_POST['product_id'], false ) as $k => $v ) : ?>
+                    <?php if ( ! empty( $sizes_array ) ) : foreach( $sizes_array as $k => $v ) : ?>
                         <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
                     <?php if ( isset( $general_settings['hide_original_price'] ) && $general_settings['hide_original_price'] != 'yes' ) : ?>
                         <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
                             <?php _e( 'Original', 'sell_media' ); ?>
