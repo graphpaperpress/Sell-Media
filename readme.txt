@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.5-beta
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -193,6 +193,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.2 =
+
 * Feature: License descriptions are now emailed as an attachment when a purchase is made
 * Feature: Added option to enable/disable admin columns
 * Feature: Added clear cart button
@@ -208,11 +209,13 @@ Action hooks available:
 * Tweak: Password protected collections now use a custom template
 
 = 1.6.1 =
+
 * Bug: Updated paypal arguments for buyer download email
 * Bug: Fixing issue were cart was not emptied
 * Bug: New users are sent an automated WordPress email when registering
 
 = 1.6 =
+
 * Feature: Added option to set a given price group as the site default
 * Tweak: Password protected collections are filtered from the widgets page and no longer show on the front end
 * Tweak: Added filter `sell_media_purchase_text`
@@ -221,6 +224,7 @@ Action hooks available:
 * Bug: Addressed issue where cart was not emptied, due to session not being started and browser cache
 
 = 1.5.9 =
+
 * Feature: Added option to hide original price
 * Feature: Added option to disable the built in Sell Media search and use native WordPress search
 * Tweak: Readme no longer references hiding a collection, replaced with password instructions
@@ -234,9 +238,11 @@ Action hooks available:
 * Bug: Widgets overflowing bug fix.
 
 = 1.5.8 =
+
 * Bug: Updating admin payments and needed screens to support previous versions of pricing
 
 = 1.5.7 =
+
 * Tweak: Various improvements for cart in PHP session
 * Tweak: Minor text update
 * Tweak: Price groups class can now be used for any parent/child taxonomy
@@ -247,18 +253,21 @@ Action hooks available:
 * Bug: Corrected text domain issue
 
 = 1.5.6 =
+
 * Feature: Admin shows collection icon on collection edit column
 * Feature: Added detailed Paypal log per item on the single item payments page
 * Bug: Better Paypal support
 * Tweak: Improved search results
 
 = 1.5.5 =
+
 * Feature: Add shortcode for custom login '[sell_media_login_form]'
 * Feature: Add setting for custom login page
 * Bug: Updated admin payment apply markup consistently
 * Bug: Updated paypal payments to no longer by 0 and have markup applied if added
 
 = 1.5.4 =
+
 * Feature: Added shortcode to display all collections 'sell_media_list_all_collections' ( available shortcode attributes: thumbs, details )
 * Feature: Added price groups to the native WordPress bulk edit
 * Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
@@ -280,6 +289,7 @@ Action hooks available:
 
 
 = 1.5.3 =
+
 * Bug: "Original File Price" was truncating trailing zero's from prices.
 * Bug: Fixed issue when removing items from the cart incorrect totals were displayed
 * Bug: Fixed issue in widgets
@@ -287,34 +297,34 @@ Action hooks available:
 * Tweak: Added version number to enqueue script and styles
 
 = 1.5.2 =
+
 * New: Added price groups to admin item columns
 * New: Added collection to admin item columns
-
 * Tweak: Corrected instructions for `sell_media_all_items` shortcode
-
 * Bug: Fixed notice on checkout page when no licese id was present for markups
 * Bug: Price groups that did not have any images assigned were not showing in the price group drop down.
 
 = 1.5.1 =
+
 * New: Price groups, users are no longer limited to "small, medium, large", they can create infinite price groups and assign them to items.
 * New: Added Paypal log.txt file to admin settings
 * New: Added field for admins to add CC accounts for paypal purchases
 * New: Added Option to change sort order on archive pages
 * New: Added POT file
 * New: Useful info is now stored in global js object "sell_media"
-
 * Tweak: US State list is no longer required, this was causing issues for users outside of the US
 * Tweak: Changed order of "bulk upload" buttons
 * Tweak: "Default Price" is now changed to "Original Price"
 * Tweak: Updated menu cart class names
-
 * Bug: Duplicate licenses are no longer installed on re-activation
 * Bug: Typo
 
 = 1.5 =
+
 * Fixing issue where a generic function needed to be prefixed
 
 = 1.4.9 =
+
 * Collections are now password protected
 * Collections now have featured images/icons
 * Fixing issue where shipping value was not properly formatted for PayPal
@@ -322,26 +332,32 @@ Action hooks available:
 * Sub-collections now supported
 
 = 1.4.8 =
+
 * Minor bug fix for password-less collections
 
 = 1.4.7 =
+
 * Collections are now password protected
 * New setting "dashboard page" allows admins to create a custom page for recurring customers
 * Better child theme support
 * Various bug fixes
 
 = 1.4.6 =
+
 * Editors can now use the bulk upload
 * Optimized download history shortcode
 * Various bug fixes
 
 = 1.4.5 =
+
 * Fixing issues in download history shortcode
 
 = 1.4.4 =
+
 * Correcting param in filter
 
 = 1.4.3 =
+
 * Image description is imported as item description during bulk upload process
 * Adding language support
 * Creator taxonomy is now publicly viewable
@@ -354,6 +370,7 @@ Action hooks available:
 * Bug fix when prices of 0.1 were being rounded to 0.00 on some pages
 
 = 1.4.2 =
+
 * Users can now change the post type slug
 * Added shortcode `sell_media_additional_list_items` so users can add additional information on the single item page under the size list.
 * `sell_media_bulk_uploader_additional_fields` Allows developers to add additional form fields for bulk upload/edit
@@ -361,36 +378,44 @@ Action hooks available:
 * Various PHP notices fixes
 
 = 1.4.1 =
+
 * Improved support for importing EXIF/IPTC data such as; city, keywords, etc. during the creation of new items
 * Allowed prices to be lower than 0.99
 * Improved handling when an item has no size or license
 * Improved handling for prices with non-images
 
 = 1.4 =
+
 * Better support for portrait images
 * Fixed issue where download sizes would not always be displayed
 
 = 1.3 =
+
 * Additional error checking added for PayPal
 * Translation issue fixed
 * Email formatting and issues fixed
 
 = 1.2.9 =
+
 * Optimized bulk uploader! Images sizes are no created on download (after purchase) and not created during the upload process.
 * You can now bulk add images to a Collection from the bulk uploader
 * Various bug fixes
 
 = 1.2.8 =
+
 * Fixing bug where users received multiple or no download email
 
 = 1.2.7 =
+
 * Fixing bug where items with 0 price can be added to the cart
 
 = 1.2.6 =
+
 * Numerous hooks and filters addd
 * Numerous bug fixes
 
 = 1.2.5 =
+
 * Performance improvements
 * Added MS Docs support
 * Updated readme.txt
@@ -398,6 +423,7 @@ Action hooks available:
 * Better styling support
 
 = 1.2.4 =
+
 * Settings: Default price moved to its own section
 * Hook: Updated 'sell_media_after_successful_payment' now accepts an additional parameter
 * Hook: Updated 'sell_media_settings_init_hook' to work on all tabs
@@ -411,42 +437,51 @@ Action hooks available:
 * Various bug fixes and styling enhancments
 
 = 1.2.3 =
+
 * Fixed issue where currency was not showing for some users
 * Fixed issue where default search would result in 404 for some results
 * Markup percentage is no longer shown on the front-end, only the adjust price is
 
 = 1.2.2 =
+
 * Fixed intermittent issue where download files would be 0kb
 * Fixed issue where downloaded zip files would unzip as zip
 * Fixed issue in settings regarding default price
 
 = 1.2.1 =
+
 * Minor bug fix in size variants
 
 = 1.2 =
+
 * Added full Featured Image support
 * Bug fixes
 
 = 1.1 =
+
 * Instruction changes
 * Fixing settings to work better with extensions
 
 = 1.0.9 =
+
 * Added bulk uploader
 * Added size variants
 * Code enhancments
 * Bug fixes
 
 = 1.0.8 =
+
 * Bug fixes
 * Code improvements
 
 = 1.0.7 =
+
 * Bug fixes
 * Added option for customer notification
 * 3.5 media cart fix
 
 = 1.0.6 =
+
 * License descriptions now show on the checkout page and option boxes when hovered
 * Fixed bug when Attachments are no longer marked for sale.
 * Fixed issue when Item is emptied from trash bin
@@ -454,10 +489,12 @@ Action hooks available:
 * Adding hook for single theme.
 
 = 1.0.5 =
+
 * Fixed transients
 * Fixed issue where button was not showing on cart
 
 = 1.0.4 =
+
 * Added Loading gif on purchase dialog
 * Users can now manually upload a file to the sell_media folder
   then add the path to the file on the "Add Item" page.
@@ -470,6 +507,7 @@ Action hooks available:
 * Bug fixes
 
 = 1.0.3 =
+
 * Added Google Charts on Reports page
 * Added Paypal IPN instructions on Settings
 * Max-width fix for Firefox on Sell Media archives
@@ -477,9 +515,11 @@ Action hooks available:
 * Download file fix
 
 = 1.0.2 =
+
 * Plugin Settings save bugfix
 
 = 1.0.1 =
+
 * Added action hooks
 * Default to Live Mode, not Test Mode
 * License calculation on Edit License works
@@ -490,10 +530,13 @@ Action hooks available:
 * Use submit_button()
 
 = 1.0 =
+
 * Public release
 
 = 0.1-beta2 =
+
 * Permalinks flushed on plugin activation
 
 = 0.1-beta =
+
 * First public beta
