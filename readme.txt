@@ -193,6 +193,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.2 =
+* Feature: License descriptions are now emailed as an attachment when a purchase is made
 * Feature: Added option to enable/disable admin columns
 * Feature: Added clear cart button
 * Feature: Added additional admin column "protected" for collection page
