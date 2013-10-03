@@ -655,7 +655,7 @@ class SellMedia {
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
                 'checkouturl' => get_permalink( $page_id ),
                 'cart' => array(
-                    'subtotal' => $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
+                    'subtotal' => empty( $_SESSION['cart']['items'] ) ? 0 : $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
                     'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
                     'currency_symbol' => sell_media_get_currency_symbol()
                     ),
