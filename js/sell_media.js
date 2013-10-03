@@ -77,7 +77,7 @@ jQuery( document ).ready(function( $ ){
             final_total = "0.00";
         }
 
-        sell_media.cart.total = final_total;
+        sell_media.cart.subtotal = final_total;
 
         $( '.subtotal-target' ).html( final_total );
     }
@@ -114,7 +114,7 @@ jQuery( document ).ready(function( $ ){
                 total = +( $(this).text() ) + +total;
             });
         } else {
-            total = +sell_media.cart.total;
+            total = +sell_media.cart.subtotal;
         }
 
         $('.subtotal-target').html( total.toFixed(2) );

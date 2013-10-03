@@ -647,6 +647,7 @@ class SellMedia {
 
             $options = get_option('sell_media_general_settings');
             $page_id = $options['checkout_page'];
+            $cart_obj = New Sell_Media_Cart;
 
             wp_localize_script('sell_media', 'sell_media',
                 array(
@@ -654,7 +655,7 @@ class SellMedia {
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
                 'checkouturl' => get_permalink( $page_id ),
                 'cart' => array(
-                    'total' => empty( $_SESSION['cart']['total'] ) ? 0 : $_SESSION['cart']['total'],
+                    'subtotal' => $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
                     'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
                     'currency_symbol' => sell_media_get_currency_symbol()
                     ),

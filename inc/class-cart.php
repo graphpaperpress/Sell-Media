@@ -127,7 +127,7 @@ Class Sell_Media_Cart {
      *
      * @return $amount (string) The updated amount the customer is charged
      */
-    public function get_total( $items=array() ){
+    public function get_subtotal( $items=array() ){
         $amount = 0;
         if ( ! empty( $items ) ){
             foreach ( $items as $item ){
@@ -140,7 +140,7 @@ Class Sell_Media_Cart {
                 $amount = $amount + $price * $qty;
             }
         }
-        return sprintf( "%0.2f", max( $amount, 0 ) );
+        return apply_filters( 'sell_media_subtotal', sprintf( "%0.2f", max( $amount, 0 ) ) );
     }
 
 
@@ -243,7 +243,7 @@ Class Sell_Media_Cart {
 
         // Update the total and the quantity
         $_SESSION['cart']['currency'] = sell_media_get_currency_symbol();
-        $_SESSION['cart']['total'] = $this->get_total( $_SESSION['cart']['items'] );
+        $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] );
         $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
 
         die();
@@ -266,7 +266,7 @@ Class Sell_Media_Cart {
                 unset( $_SESSION['cart']['items'][ $id ] );
             }
         } else {
-            $_SESSION['cart']['total'] = $this->get_total( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
+            $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
             $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['qty'];
             unset( $_SESSION['cart']['items'][$item_index] );
         }
@@ -369,12 +369,12 @@ Class Sell_Media_Cart {
         $_SESSION['cart']['items'][ $cart_id ][ $key ] = $value;
 
         // Item the total
-        $_SESSION['cart']['total'] = $this->get_total( $_SESSION['cart']['items'] );
+        $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] );
 
         // Update the qty for the entire cart
         $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
-
     }
+
 }
 // Later make this a singleton or better don't use one
 New Sell_Media_Cart;

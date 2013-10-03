@@ -88,6 +88,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     if ( isset( $_SESSION['cart']['items'] ) )
         $items = $_SESSION['cart']['items'];
 
+    $cart = New Sell_Media_Cart;
     if ( $_POST ){
 
         // Check if the qty thats in the cart has changed
@@ -172,7 +173,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
              * Compare count in cart with count in post
              * update cart count as needed
              */
-            $cart = New Sell_Media_Cart;
             foreach( $_POST['sell_media_item_qty'] as $k => $v ){
                 if ( $_SESSION['cart']['items'][ $k ] != $v ){
                     $cart->update_item( $k, 'qty', $v );
@@ -277,6 +277,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                             <span class="currency"><?php print sell_media_get_currency_symbol(); ?></span><span class="subtotal-target"></span>
                                         </td>
                                     </tr>
+                                    <?php do_action('sell_media_below_subtotal', $cart->get_subtotal( $_SESSION['cart']['items'] ) ); ?>
                                     <tr>
                                         <th scope="row">
                                             <?php _e('Shipping &amp; Handling','sell_media'); ?>
@@ -347,7 +348,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 </tfoot>
                 <tbody class="sell-media-product-list">
                     <?php
-                    $cart = New Sell_Media_Cart;
+
                     foreach( $items as $item_id => $item ) : ?>
                         <?php
 
