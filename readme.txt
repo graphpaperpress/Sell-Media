@@ -194,7 +194,7 @@ Action hooks available:
 
 = 1.6.3 =
 * Bug: Fixing issue where sizes from price group did not show in select box
-* Bug: Fixing issue where downloa link would show when users purchased a reprint
+* Bug: Fixing issue where download link would show when users purchased a reprint
 
 = 1.6.2 =
 
