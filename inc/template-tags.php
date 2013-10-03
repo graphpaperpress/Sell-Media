@@ -415,8 +415,6 @@ function sell_media_item_form(){
         $term_id = null;
     }
 
-sell_media_image_sizes( $_POST['product_id'], false );
-
     ?>
     <?php do_action( 'sell_media_above_item_form' ); ?>
     <form action="javascript://" method="POST" class="sell-media-dialog-form sell-media-form">
@@ -429,7 +427,7 @@ sell_media_image_sizes( $_POST['product_id'], false );
         <?php
         $wp_upload_dir = wp_upload_dir();
         $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
-        $size_array = sell_media_image_sizes( $_POST['product_id'], false );
+        $sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
 
         if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
             <?php $size_settings = get_option('sell_media_size_settings'); $disabled = 'disabled'; $price = "0.00"; ?>
