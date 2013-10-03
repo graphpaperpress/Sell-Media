@@ -78,10 +78,6 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'custom'         => $purchase_data['payment_id'] // post id, i.e., payment id
     );
 
-echo '<pre>';
-print_r( $paypal_args );
-die();
-
     // Add additional args;
     $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
 
