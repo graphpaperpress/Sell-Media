@@ -556,9 +556,8 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
             );
 
         $arguments = get_post_meta( $payment_id, '_paypal_args', true );
-        $sell_both = get_post_meta( $download[ $item_key ], '_sell_media_reprints_sell', true );
 
-        if ( ! empty( $arguments['shipping'] ) || $sell_both != 'both' ){
+        if ( ! empty( $arguments['shipping'] ) ){
             $tmp_links['url'] = null;
         }
 
