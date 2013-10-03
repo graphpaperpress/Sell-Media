@@ -107,11 +107,15 @@ Class SellMediaPayments {
                         $price = $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] );
                     }
 
-                    if ( empty( $download_link ) ){
+
+                    if ( empty( $link['url'] ) ){
+                        $tmp_download = __('N/A','sell_media');
+                    } elseif ( empty( $download_link ) ){
                         $tmp_download = '<input type="text" value="' . $link['url'] . '" />';
                     } else {
                         $tmp_download = '<a href="'.$link['url'].'" target="_blank">' . get_post_field('post_title', $link['item_id']) . '</a>';
                     }
+                    
 
                     $html .= '<tr class="" valign="top">';
                     $html .= '<td class="media-icon">' . $link['thumbnail'] . '</td>';

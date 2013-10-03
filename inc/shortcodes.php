@@ -45,7 +45,7 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
             $message .= $payment_settings['paypal_email'];
         } else {
 
-            $payment_id = sell_media_get_payment_id_by( 'email', $email );
+            $payment_id = sell_media_get_payment_id_by( 'key', $purchase_key );
             $links = sell_media_build_download_link( $payment_id, $email );
 
             foreach( $links as $link ){
@@ -53,10 +53,18 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
                	$image_attributes = wp_get_attachment_image_src( get_post_meta( $link['item_id'], '_sell_media_attachment_id', true ), 'medium', false );
 
                 $message .= '<div class="sell-media-aligncenter">';
-                $message .= '<a href="' . $link['url']. '">';
+                if ( ! empty( $link['url'] ) )
+                    $message .= '<a href="' . $link['url']. '">';
+
                 $message .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" />';
-                $message .= '</a>';
-                $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
+                
+                if ( ! empty( $link['url'] ) )
+                    $message .= '</a>';
+                
+                if ( ! empty( $link['url'] ) ){
+                    $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
+                }
+                
                 $message .= '</div>';
             }
         }
