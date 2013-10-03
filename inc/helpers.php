@@ -562,6 +562,13 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
             'payment_id' => $payment_id
             );
 
+
+        $sell_option = get_post_meta( $download[ $item_key ], '_sell_media_reprints_sell', true );
+        if ( $sell_option == 'reprint' ){
+            $tmp_links['url'] = '';
+        }
+
+
         $links[] = $tmp_links;
     }
 
