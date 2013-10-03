@@ -53,7 +53,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
     $return_url = add_query_arg( $args, get_permalink( $general_settings['thanks_page'] ) );
     $paypal_redirect = trailingslashit( sell_media_get_paypal_redirect() ) . '?';
 
-    $price = $_SESSION['cart']['total'];
+    $price = apply_filters('sell_media_update_total',$_SESSION['cart']['total']);
 
     $paypal_args = array(
         'cmd'            => '_xclick',
@@ -67,7 +67,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'rm'             => '2',
         // According to the docs the param is 'return_url', but that doesn't work as expected
         // 'https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNandPDTVariables/'
-        // 'return_url'     => $return_url, 
+        // 'return_url'     => $return_url,
         'return'     => $return_url,
         'ipn_notification_url' => $listener_url,
         'mc_currency'    => $payment_settings['currency'],
@@ -77,6 +77,10 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'item_number'    => $purchase_data['purchase_key'],
         'custom'         => $purchase_data['payment_id'] // post id, i.e., payment id
     );
+
+echo '<pre>';
+print_r( $paypal_args );
+die();
 
     // Add additional args;
     $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
