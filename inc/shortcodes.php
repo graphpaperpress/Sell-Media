@@ -57,14 +57,14 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
                     $message .= '<a href="' . $link['url']. '">';
 
                 $message .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" />';
-                
+
                 if ( ! empty( $link['url'] ) )
                     $message .= '</a>';
-                
+
                 if ( ! empty( $link['url'] ) ){
                     $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
                 }
-                
+
                 $message .= '</div>';
             }
         }
@@ -329,27 +329,23 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                     <input type="hidden" id="sell_media_email_field" name="email" value="<?php print $current_user->user_email; ?>" />
                                     <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php endif; ?>
-                                <?php if ( current_user_can( 'activate_plugins' ) ) : ?>
-                                        <p class="desc"><?php _e('You are logged in as an Admin and cannot purchase this item from yourself.', 'sell_media' ); ?></p>
-                                <?php else : ?>
-                                    <?php
-                                        if ( ! empty ( $general_settings['terms_and_conditions'] ) ) :
-                                    ?>
-                                        <div id="termsdiv">
-                                            <input type="checkbox" name="termsandconditions" id="sell_media_terms_cb" data-required="true" value="" required/>
-                                            <span class="termnotice">
-                                                <a href="#" id="agree_terms_and_conditions">
-                                                <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>
-                                                </a>
-                                            </span>
-                                        </div>
-                                    <?php endif; ?>
-                                    <div class="button-container">
-                                        <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
-                                        <span class="inline"><em><?php _e( 'or', 'sell_media' ); ?></em> <a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?></a></span>
-                                        <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
+
+                                <?php if ( ! empty ( $general_settings['terms_and_conditions'] ) ) : ?>
+                                    <div id="termsdiv">
+                                        <input type="checkbox" name="termsandconditions" id="sell_media_terms_cb" data-required="true" value="" required/>
+                                        <span class="termnotice">
+                                            <a href="#" id="agree_terms_and_conditions">
+                                            <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>
+                                            </a>
+                                        </span>
                                     </div>
                                 <?php endif; ?>
+                                <div class="button-container">
+                                    <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
+                                    <span class="inline"><em><?php _e( 'or', 'sell_media' ); ?></em> <a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?></a></span>
+                                    <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
+                                </div>
+
                                 <p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
                         </td>
                     </tr>
