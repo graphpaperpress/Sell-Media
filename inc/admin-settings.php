@@ -84,6 +84,7 @@ class SellMediaSettings {
         ), $this->general_settings );
 
         $this->payment_settings = array_merge( array(
+            'default_gateway' => 'paypal',
             'paypal_email' => '',
             'currency' => 'USD',
             'paypal_additional_test_email' => ''
@@ -244,6 +245,9 @@ class SellMediaSettings {
 
         register_setting( $this->payment_settings_key, $this->payment_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_payment', 'Payment Settings', array( &$this, 'section_payment_desc' ), $this->payment_settings_key );
+
+        add_settings_field( 'default_gateway', __('Default Gateway','sell_media'), array( &$this, 'field_payment_default_gateway' ), $this->payment_settings_key, 'section_payment' );
+
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'paypal_additional_test_email', 'Paypal Additional Test Emails', array( &$this, 'field_payment_additional_email' ), $this->payment_settings_key, 'section_payment' );
@@ -652,6 +656,27 @@ class SellMediaSettings {
         <div class="desc"><?php _e('This is useful when debugging Paypal. Enter a comma separeted list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list.', 'sell_media' ); ?></div>
         <?php
     }
+
+
+    /*
+     * Default gateway
+     */
+    function field_payment_default_gateway(){
+        $gateways = array(
+            array(
+                'id' => 'paypal',
+                'name' => __('Paypal','sell_media')
+                )
+            );
+
+        $gateways = apply_filters('sell_media_payment_gateway', $gateways); ?>
+        <select name="<?php echo $this->payment_settings_key; ?>[default_gateway]" value="<?php echo $this->payment_settings['default_gateway']; ?>" id="sell_media_price_group_select">
+            <?php foreach( $gateways as $gateway ) : ?>
+                <option value="<?php echo $gateway['id']; ?>" <?php selected( $this->payment_settings['default_gateway'], $gateway['id'] ); ?>><?php echo $gateway['name']; ?></option>
+            <?php endforeach; ?>
+        </select>
+    <?php }
+
 
     /*
      * Default Price Option field callback
