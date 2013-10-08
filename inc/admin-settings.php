@@ -246,7 +246,7 @@ class SellMediaSettings {
         register_setting( $this->payment_settings_key, $this->payment_settings_key, array( &$this, 'register_settings_validate') );
         add_settings_section( 'section_payment', 'Payment Settings', array( &$this, 'section_payment_desc' ), $this->payment_settings_key );
 
-        add_settings_field( 'default_gateway', __('Default Gateway','sell_media'), array( &$this, 'field_payment_default_gateway' ), $this->payment_settings_key, 'section_payment' );
+        add_settings_field( 'default_gateway', __('Default Payment','sell_media'), array( &$this, 'field_payment_default_gateway' ), $this->payment_settings_key, 'section_payment' );
 
         add_settings_field( 'paypal_email', 'Paypal Email Address', array( &$this, 'field_payment_paypal_email' ), $this->payment_settings_key, 'section_payment' );
         add_settings_field( 'currency', 'Currency', array( &$this, 'field_payment_currency' ), $this->payment_settings_key, 'section_payment' );
