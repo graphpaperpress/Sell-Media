@@ -254,7 +254,11 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             // Upate the _sell_media_payment_meta with the User ID
             update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_meta );
 
-            sell_media_process_paypal_purchase( $purchase, $payment_id );
+            if ( empty( $_POST['sell_media_payment_gateway'] ) || $_POST['sell_media_payment_gateway'] == 'paypal' ){
+                sell_media_process_paypal_purchase( $purchase, $payment_id );
+            } else {
+                do_action( 'sell_media_process_purchase', $purchase );
+            }
         }
     }
 
@@ -266,6 +270,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
         <?php else : ?>
             <form action="" method="post" id="sell_media_checkout_form" class="sell-media-form">
             <?php wp_nonce_field('check_email','sell_media_cart_nonce'); ?>
+            <input type="text" value="<?php echo sell_media_default_payment(); ?>" name="sell_media_payment_gateway" id="sell_media_payment_gateway" />
             <table id="sell-media-checkout-table">
                 <thead>
                     <tr class="sell-media-header">
