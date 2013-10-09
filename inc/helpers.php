@@ -1201,3 +1201,12 @@ function sell_media_country_list( $current=null ){
         );
     sell_media_build_select( $items, array( 'name' => 'sell_media_country', 'required' => false, 'title' => 'Country', 'current' => $current ) );
 }
+
+/**
+ * @return default payment gateway
+ */
+function sell_media_default_payment(){
+    $options = get_option( 'sell_media_payment_settings' );
+    return isset( $options['default_gateway'] ) ? $options['default_gateway'] : null;
+}
+

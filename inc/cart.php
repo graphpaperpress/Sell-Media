@@ -25,7 +25,7 @@ add_action( 'wp_ajax_sell_media_count_cart', 'sell_media_count_cart' );
  * @since 0.1
  */
 function sell_media_empty_cart(){
-    if ( ! session_start() ) session_start();
+    if ( ! isset( $_SESSION ) ) session_start();
     $_SESSION['cart']['items'] = null;
     unset( $_SESSION['cart']['items'] );
     unset( $_SESSION['cart'] );

@@ -58,7 +58,7 @@ add_action( 'admin_head', 'sell_media_screen_icon' );
  *
  * @since 0.1
  */
-if ( ! session_start() ) session_start();
+if ( ! isset( $_SESSION ) ) session_start();
 
 
 /**
@@ -649,9 +649,6 @@ class SellMedia {
             $page_id = $options['checkout_page'];
             $cart_obj = New Sell_Media_Cart;
 
-            $options = get_option( 'sell_media_payment_settings' );
-            $default_payment = isset( $options['default_gateway'] ) ? $options['default_gateway'] : null;
-
             wp_localize_script('sell_media', 'sell_media',
                 array(
                 'ajaxurl' => admin_url("admin-ajax.php"),
@@ -665,7 +662,7 @@ class SellMedia {
                 'error' => array(
                     'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                     ),
-                'default_payment' => $default_payment
+                'default_payment' => sell_media_default_payment()
                 )
             );
 
