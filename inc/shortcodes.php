@@ -186,7 +186,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                     $cart->update_item( $k, 'qty', $v );
                 }
             }
-
+            // filter the total session
+            $_SESSION['cart']['total'] = apply_filters( 'sell_media_update_total', $_SESSION['cart']['total'] );
             // record the payment details
             update_post_meta( $payment_id, '_sell_media_payment_meta', $purchase );
             update_post_meta( $payment_id, '_sell_media_payment_user_email', $purchase['email'] );
