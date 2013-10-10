@@ -384,6 +384,7 @@ function sell_media_string_attachment( $phpmailer ){
 
 /**
  * Build the email to be sent to the user and send the email
+ * containing download links for PUBLISHED items only
  *
  * @since 0.1
  */

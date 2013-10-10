@@ -461,7 +461,7 @@ function sell_media_get_payment_id_by( $key=null, $value=null ){
     }
 
     global $wpdb;
-    $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '%s' AND meta_value = '%s'";
+    $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '%s' AND meta_value = '%s' ORDER BY post_id DESC";
     $payment_id = $wpdb->get_results( $wpdb->prepare( $query, $key, $value ) );
 
     if ( is_null( $payment_id ) ){
