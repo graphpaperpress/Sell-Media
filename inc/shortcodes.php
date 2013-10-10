@@ -225,10 +225,11 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 sell_media_process_paypal_purchase( $purchase, $payment_id );
             } else {
                 do_action( 'sell_media_process_purchase', $purchase );
-
-                $url = get_permalink( $general_settings['thanks_page'] );
-                wp_safe_redirect( $url );
-                exit;
+                if ( isset( $general_settings['thanks_page'] ) ){
+                    $url = get_permalink( $general_settings['thanks_page'] );
+                    echo '<script type="text/javascript">window.location ="' . $url . '"</script>';
+                    exit;
+                }
             }
         }
     }
