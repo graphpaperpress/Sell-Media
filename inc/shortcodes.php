@@ -17,9 +17,8 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
        	$email = $_GET['email'];
     }
 
+    $message = null;
     if ( ! empty( $purchase_key ) && ! empty( $email ) ){
-
-        $message = null;
 
         $args = array(
             'post_type' => 'sell_media_payment',
