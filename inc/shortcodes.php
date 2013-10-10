@@ -226,7 +226,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             } else {
                 do_action( 'sell_media_process_purchase', $purchase );
 
-                $url = get_permalink( $general_settings['thanks_page'] )
+                $url = get_permalink( $general_settings['thanks_page'] );
                 wp_safe_redirect( $url );
                 exit;
             }
