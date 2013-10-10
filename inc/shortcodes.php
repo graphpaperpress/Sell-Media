@@ -98,16 +98,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     $cart = New Sell_Media_Cart;
     if ( $_POST ){
 
-        // Check if the qty thats in the cart has changed
-        // foreach( $_POST['sell_media_item_qty'] as $k => $v ){
-        //     if ( is_array( $_SESSION['cart']['items'][ $k ]['price_id'] ) ){
-        //         if ( $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] != $v ){
-        //             print "new qty: {$k} {$v}\n";
-        //             $_SESSION['cart']['items'][ $k ]['price_id']['quantity'] = $v;
-        //         }
-        //     }
-        // }
-
         // Create User
         $user = array();
         $user['first_name'] = $_POST['first_name'];
@@ -153,28 +143,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 'payment_id' => $payment_id,
                 'CalculatedPrice' => $_SESSION['cart']['total']
                 );
-
-            // $amount = 0;
-            // $quantity = 0;
-            // $cart = New Sell_Media_Cart;
-            // foreach ( $items as $item ){
-            //     $price = $cart->item_price( $item['item_id'], $item['price_id'] );
-            //     $qty = is_array( $item['price_id'] ) ? $item['price_id']['quantity'] : 1;
-            //     $amount = $amount + $price * $qty;
-            //     $quantity = $quantity + $qty;
-            // }
-            // echo '<pre>';
-            // print_r( $_SESSION );
-            // echo '</pre>';
-
-            // $_SESSION['cart']['amount'] = $amount;
-            // $_SESSION['cart']['qty'] = $quantity;
-
-            // echo '<pre>';
-            // print_r( $_SESSION );
-            // echo '</pre>';
-            // die();
-
 
             /**
              * Compare count in cart with count in post
@@ -257,6 +225,10 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 sell_media_process_paypal_purchase( $purchase, $payment_id );
             } else {
                 do_action( 'sell_media_process_purchase', $purchase );
+
+                $url = get_permalink( $general_settings['thanks_page'] )
+                wp_safe_redirect( $url );
+                exit;
             }
         }
     }
