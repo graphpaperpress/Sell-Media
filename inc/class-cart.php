@@ -129,14 +129,16 @@ Class Sell_Media_Cart {
      */
     public function get_subtotal( $items=array() ){
         $amount = 0;
+
         if ( ! empty( $items ) ){
             foreach ( $items as $item ){
+                $qty = ( empty( $item['qty'] ) ) ? 1 : $item['qty'];
                 if ( empty( $item['license'] ) ){
                     $price = $item['price']['amount'] * $item['qty'];
                 } else {
                     $price = $this->item_markup_total( $item['id'], $item['price']['id'], $item['license']['id'] );
                 }
-                $qty = 1;
+
                 $amount = $amount + $price * $qty;
             }
         }
@@ -368,7 +370,10 @@ Class Sell_Media_Cart {
         // Update the item in the cart
         $_SESSION['cart']['items'][ $cart_id ][ $key ] = $value;
 
-        // Item the total
+        // Update total for the item
+        $_SESSION['cart']['items'][ $cart_id ]['total'] = $_SESSION['cart']['items'][ $cart_id ]['qty'] * $_SESSION['cart']['items'][ $cart_id ]['price']['amount'];
+
+        // Update the total
         $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] );
 
         // Update the qty for the entire cart
