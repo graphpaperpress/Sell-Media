@@ -605,7 +605,7 @@ class SellMediaSettings {
     function field_payment_paypal_email() {
         ?>
         <input type="text" name="<?php echo $this->payment_settings_key; ?>[paypal_email]" value="<?php echo wp_filter_nohtml_kses( $this->payment_settings['paypal_email'] ); ?>" />
-        <p class="desc"><?php printf( __('The email address used to collect Paypal payments. %1$s: You must setup IPN Notifications in Paypal to process transactions. %2$s. Here is the listener URL you need to add in Paypal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read Paypal instructions</a>', '<code>' . home_url( '?sell_media-listener=IPN' ) . '</code>'); ?></p>
+        <p class="desc"><?php printf( __('The email address used to collect Paypal payments. %1$s: You must setup IPN Notifications in Paypal to process transactions. %2$s. Here is the listener URL you need to add in Paypal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read Paypal instructions</a>', '<code>' . site_url( '?sell_media-listener=IPN' ) . '</code>'); ?></p>
         <?php
     }
 
