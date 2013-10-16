@@ -242,7 +242,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
         <?php else : ?>
             <form action="" method="post" id="sell_media_checkout_form" class="sell-media-form">
             <?php wp_nonce_field('check_email','sell_media_cart_nonce'); ?>
-            <input type="text" value="<?php echo sell_media_default_payment(); ?>" name="sell_media_payment_gateway" id="sell_media_payment_gateway" />
+            <input type="hidden" value="<?php echo sell_media_default_payment(); ?>" name="sell_media_payment_gateway" id="sell_media_payment_gateway" />
             <table id="sell-media-checkout-table">
                 <thead>
                     <tr class="sell-media-header">
