@@ -51,17 +51,17 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  */
 function sell_media_payment_purchase_details( $post ){
 
-    print '<div class="sell-media-admin-payments">';
-    print '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
-
-    do_action('sell_media_below_payment_contact_details');
+    echo '<div class="sell-media-admin-payments">';
+    echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
     $payment_obj = New SellMediaPayments;
     echo $payment_obj->get_contact_info( $post->ID );
+    do_action('sell_media_below_payment_contact_details');
+
     echo $payment_obj->payment_table( $post->ID );
 
     do_action( 'sell_media_additional_customer_meta', $post );
-    print '</div>';
+    echo '</div>';
 
 }
 
