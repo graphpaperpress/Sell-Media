@@ -53,7 +53,9 @@ var smPriceGroups = {
             },
             global: false,
             success: function( msg ){
-                window.location.replace( msg );
+                if ( msg.sell_media ){
+                    window.location.replace( msg.return_url );
+                }
             }
         });
     }

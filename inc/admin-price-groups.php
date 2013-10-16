@@ -129,9 +129,11 @@ Class SellMediaNavStyleUI {
         if ( ! empty( $_POST['term_name'] )  && ! in_array( $_POST['term_name'], $termarray ) ) {
             $term = wp_insert_term( $_POST['term_name'], $_POST['taxonomy'] );
             $timestamp = time();
-            print admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
+            $return_url = admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
+        } else {
+            $return_url = null;
         }
-        wp_send_json( array( 'sell_media' => true ) );
+        wp_send_json( array( 'sell_media' => true, 'return_url' => $return_url ) );
     }
 
 
