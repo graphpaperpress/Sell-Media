@@ -1210,3 +1210,26 @@ function sell_media_default_payment(){
     return isset( $options['default_gateway'] ) ? $options['default_gateway'] : null;
 }
 
+
+/**
+ * Retrives the thank you page from the general settings and adds the needed URL params
+ * for validating the purchase.
+ *
+ * @param $purchase (array) Purcahse data from post meta
+ * @return $url (string) The url including query parameters for the "thank you" page
+ */
+function sell_media_thanks_url( $purchase=array() ){
+
+    $general_settings = get_option( 'sell_media_general_settings' );
+
+    $url = add_query_arg(
+        array(
+            'purchase_key' => $purchase['purchase_key'],
+            'email' => $purchase['email']
+        ),
+        get_permalink( $general_settings['thanks_page']
+        )
+    );
+
+    return $url;
+}
