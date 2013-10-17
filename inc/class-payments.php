@@ -115,10 +115,10 @@ Class SellMediaPayments {
                     } else {
                         $tmp_download = '<a href="'.$link['url'].'" target="_blank">' . get_post_field('post_title', $link['item_id']) . '</a>';
                     }
-                    
+
 
                     $html .= '<tr class="" valign="top">';
-                    $html .= '<td class="media-icon">' . $link['thumbnail'] . '</td>';
+                    $html .= '<td class="media-icon"><a href="'.get_edit_post_link($link['item_id']).'">' . $link['thumbnail'] . '</a></td>';
                     $html .= '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post_id, $link['price_id'] ) . '</td>';
                     $html .= '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
                     $html .= '<td>' . $qty . '</td>';

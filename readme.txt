@@ -192,6 +192,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.6.4 =
+* Tweak: Added link to purchased item from payments page
+
 = 1.6.3 =
 * Bug: Fixing issue where sizes from price group did not show in select box
 * Bug: Fixing issue where download link would show when users purchased a reprint
