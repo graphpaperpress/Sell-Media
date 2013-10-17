@@ -567,7 +567,7 @@ class SellMediaSettings {
             <label for="<?php echo $this->general_settings_key; ?>[<?php echo $k; ?>] ?>" class="desc"><?php echo $v['label']; ?></label>
             <br />
         <?php endforeach; ?>
-        <p class="desc"><?php _e( 'Select the columns to show', 'sell_media' ); ?></p>
+        <p class="desc"><?php _e( 'Select the columns to show on the admin page "All Items" page', 'sell_media' ); ?></p>
         <?php
     }
 
