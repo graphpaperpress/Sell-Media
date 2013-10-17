@@ -33,6 +33,13 @@ Class SellMediaNavStyleUI {
         global $pagenow;
         if ( ! empty( $pagenow ) && $pagenow == 'edit.php' && ! empty( $_GET['tab'] ) && $_GET['tab'] == 'sell_media_size_settings' ){
             wp_enqueue_script( 'sell_media-admin-price-groups', plugin_dir_url( dirname( __FILE__ ) ) . 'js/admin-price-groups.js', array( 'jquery' ) );
+            wp_localize_script('sell_media-admin-price-groups', 'sell_media_price_groups',
+                array(
+                    'currency_symbol' => sell_media_get_currency_symbol()
+                )
+            );
+
+
         }
     }
 
@@ -257,7 +264,7 @@ Class SellMediaNavStyleUI {
                         <p class="description">' . __('Max Height','sell_media') . '</p>
                     </td>
                     <td>
-                        <span class="description">$</span>
+                        <span class="description">' . sell_media_get_currency_symbol() . '</span>
                         <input type="text" class="small-text" name="new_child[' . $i . '][price]" value="">
                         <p class="description">' . __('Price','sell_media') . '</p>
                     </td>

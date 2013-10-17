@@ -120,7 +120,7 @@ jQuery( document ).ready(function( $ ){
             html += '<p class="description">Height</p>';
         html += '</td>';
         html += '<td>';
-            html += '<span class="description">$</span>&nbsp;';
+            html += '<span class="description">'+sell_media_price_groups.currency_symbol+'</span>&nbsp;';
             html += '<input type="number" step="1" min="0" class="small-text" name="new_child['+counter+'][price]" value="">';
             html += '<p class="description">Price</p>';
         html += '</td>';
