@@ -551,26 +551,32 @@ jQuery( document ).ready(function( $ ){
      * Check if the email exists, if it does we display an error message
      * if not we submit the form
      */
+     $('#sell_media_email_field').on('blur',function(){
+        $('.sell-media-error').remove();
+        $this = $(this);
+        $.ajax({
+            url: sell_media.ajax_url,
+            data: {
+                email: $this.val(),
+                action: 'sell_media_check_email',
+                security: $('#sell_media_cart_nonce').val()
+            },
+            success: function( msg ){
+                if ( msg.success ){
+                    if(!$(".sell-media-error").length) {
+                        $this.after( '<span class="sell-media-error">' + sell_media.error.email_exists + '</span>' );
+                        $this.val('');
+                    }
+                }
+            }
+        });
+     });
+
+
     if ( sell_media.default_payment === 'undefined' || sell_media.default_payment == 'paypal' ){
         $('.sell-media-buy-button-checkout').on('click', function( e ){
             e.preventDefault();
-            $.ajax({
-                url: sell_media.ajax_url,
-                data: {
-                    email: $('#sell_media_email_field').val(),
-                    action: 'sell_media_check_email',
-                    security: $('#sell_media_cart_nonce').val()
-                },
-                success: function( msg ){
-                    if ( msg.success ){
-                        $('#sell_media_checkout_form').submit();
-                    } else {
-                        if(!$(".sell-media-error").length) {
-                            $('#sell_media_email_field').after( '<span class="sell-media-error">' + sell_media.error.email_exists + '</span>' );
-                        }
-                    }
-                }
-            });
+            $('#sell_media_checkout_form').submit();
         });
     }
 

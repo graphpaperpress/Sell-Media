@@ -181,30 +181,36 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                     );
 
                 $user_id = wp_insert_user( $data );
-                $admin['name'] = get_bloginfo('name');
-                $admin['email'] = get_option('admin_email');
-                $subject = 'Welcome!';
-                $body = 'Your username is: ' . $purchase['email'] . "<br />" . 'Your password is: ' . $password;
-                $header = "From: " . stripslashes_deep( html_entity_decode( $admin['name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$admin['email']}>\r\n";
-                $header .= "Reply-To: ". $purchase['email'] . "\r\n";
-                $header .= "MIME-Version: 1.0\r\n";
-                $header .= "Content-Type: text/html; charset=utf-8\r\n";
-                wp_mail( $purchase['email'], $subject, $body, $header );
+
+                // Email new user password
+                if ( ! empty( $general_settings['customer_notification'] ) && $general_settings['customer_notification'] == true ){
+
+                    $message  = sprintf( __('New user registration on %s:'), get_option('blogname') ) . "\r\n\r\n";
+                    $message .= sprintf( __('Username: %s'), stripslashes( $data['user_login'] ) ) . "\r\n\r\n";
+                    $message .= sprintf( __('E-mail: %s'), stripslashes( $data['user_email'] ) ) . "\r\n";
+
+                    if ( empty( $data['user_pass'] ) )
+                        return;
+
+                    $message  = __('Hi there,') . "\r\n\r\n";
+                    $message .= sprintf( __("Welcome to %s! Here's how to log in:"), get_option('blogname')) . "\r\n\r\n";
+                    $message .= wp_login_url() . "\r\n";
+                    $message .= sprintf( __('Username: %s'), $data['user_login'] ) . "\r\n";
+                    $message .= sprintf( __('Password: %s'), $data['user_pass'] ) . "\r\n\r\n";
+                    $message .= sprintf( __('If you have any problems, please contact me at %s.'), get_option('admin_email') ) . "\r\n\r\n";
+                    $message .= __('Adios!');
+
+                    $r = wp_mail(
+                        $data['user_email'],
+                        sprintf( __('[%s] Your username and password'), get_option('blogname') ),
+                        $message
+                    );
+                }
 
             } else {
                 $user_id = $current_user->ID;
             }
             update_post_meta( $payment_id, '_sell_media_user_id', $user_id );
-
-            if ( empty( $general_settings['customer_notification'] ) ){
-                $notice = false;
-            } else {
-                $notice = $general_settings['customer_notification'];
-            }
-
-            if ( ! is_wp_error( $user_id ) && $notice ){
-                wp_new_user_notification( $user_id, $password );
-            }
 
             if ( ! is_wp_error( $user_id ) ){
                 do_action('sell_media_after_user_created');

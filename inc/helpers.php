@@ -130,11 +130,10 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
  * @since 1.4.6
  */
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
-    // Is there a user?
-    if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
-        // Is it an administrator?
-        if ( in_array( 'sell_media_customer', $user->roles ) ){
-            return $_SERVER['HTTP_REFERER'];
+    global $user;
+    if ( isset( $user->roles ) && is_array( $user->roles ) ){
+        if ( in_array( "sell_media_customer", $user->roles ) ){
+            return site_url('dashboard');
         } else {
             return admin_url();
         }
