@@ -89,14 +89,26 @@ add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
  */
 function sell_media_checkout_shortcode($atts, $content = null) {
 
+    $cart = New Sell_Media_Cart;
+
     $general_settings = get_option( 'sell_media_general_settings' );
     $i = 0;
 
     if ( isset( $_SESSION['cart']['items'] ) )
         $items = $_SESSION['cart']['items'];
 
-    $cart = New Sell_Media_Cart;
+
     if ( $_POST ){
+        /**
+         * Compare count in cart with count in post
+         * update cart count as needed
+         */
+        foreach( $_POST['sell_media_item_qty'] as $k => $v ){
+            if ( $_SESSION['cart']['items'][ $k ] != $v ){
+                $cart->update_item( $k, 'qty', $v );
+            }
+        }
+        $items = $_SESSION['cart']['items'];
 
         // Create User
         $user = array();
@@ -144,15 +156,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 'CalculatedPrice' => $_SESSION['cart']['total']
                 );
 
-            /**
-             * Compare count in cart with count in post
-             * update cart count as needed
-             */
-            foreach( $_POST['sell_media_item_qty'] as $k => $v ){
-                if ( $_SESSION['cart']['items'][ $k ] != $v ){
-                    $cart->update_item( $k, 'qty', $v );
-                }
-            }
             // filter the total session
             $_SESSION['cart']['total'] = apply_filters( 'sell_media_update_total', $_SESSION['cart']['total'] );
             // record the payment details

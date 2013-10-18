@@ -196,6 +196,7 @@ Action hooks available:
 * Tweak: Added link to purchased item from payments page
 * Tweak: Added "Lost your password?" link to the check out page
 * Tweak: Fixing issue where currency symbol on admin pages
+* Bug: Fixing issue when quantity was updated on the checkout page the subtotal was not correctly updated
 
 = 1.6.3 =
 * Bug: Fixing issue where sizes from price group did not show in select box
