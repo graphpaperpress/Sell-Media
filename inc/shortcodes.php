@@ -222,7 +222,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
             // Get the user by Email then assign their ID into the
             // payments meta array
             $user = get_user_by( 'email', $user['email'] );
-            $payment_meta['user_id'] = $user->ID;
+            $payment_meta['user_id'] = $user_id;
 
             // Upate the _sell_media_payment_meta with the User ID
             update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_meta );
