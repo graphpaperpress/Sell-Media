@@ -35,9 +35,11 @@ Class SellMediaPayments {
                 'email' => get_post_meta( $post_id, '_sell_media_payment_user_email', true )
             );
 
-        $info = sprintf( '<p>%s: '.$contact['first_name'] . ' ' . $contact['last_name'] . '<br />
-            %s: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a><br />
-            %s: '.$this->total( $post_id ).'</p>',
+        $info = sprintf(
+            '<ul>
+            <li>%s: '.$contact['first_name'] . ' ' . $contact['last_name'] . '</li>
+            <li>%s: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a></li>
+            <li>%s: '.$this->total( $post_id ).'</li></ul>',
             __( 'Name', 'sell_media' ),
             __( 'Email', 'sell_media' ),
             __( 'Total', 'sell_media' )

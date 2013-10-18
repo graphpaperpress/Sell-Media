@@ -375,8 +375,17 @@ Class Sell_Media_Cart {
         // Update the total
         $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] );
 
-        // Update the qty for the entire cart
-        $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
+        // If our key is the quantity, we update the qty for the entire cart along
+        // with updating our total for this specific item
+        if ( $key == 'qty' ){
+            $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
+            $_SESSION['cart']['items'][ $cart_id ]['total'] = $value * $this->item_markup_total(
+                $_SESSION['cart']['items'][ $cart_id ]['id'],
+                $_SESSION['cart']['items'][ $cart_id ]['price']['id'],
+                $_SESSION['cart']['items'][ $cart_id ]['license']['id']
+                );
+        }
+
     }
 
 }
