@@ -193,6 +193,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.4 =
+* Tweak: Allowed for tranlastion of "Pending" on the `sell_media_download_list` shortcode
 * Tweak: Added link to purchased item from payments page
 * Tweak: Added "Lost your password?" link to the check out page
 * Tweak: Fixing issue where currency symbol on admin pages
