@@ -347,11 +347,19 @@ Class Sell_Media_Cart {
      */
     public function check_email(){
         check_ajax_referer('check_email', 'security');
-        if ( ! is_user_logged_in() ) {
-            email_exists( $_POST['email'] ) ? wp_send_json_success() : wp_send_json_error();
+        $response = array();
+        if ( email_exists( $_POST['email'] ) ){
+            $response = array(
+                'message' => __("Email exists or is invalid", 'sell_media'),
+                'status' => 1
+                );
         } else {
-            wp_send_json_success();
+            $response = array(
+                'message' => __("Email does not exists",'sell_media'),
+                'status' => 0
+                );
         }
+        wp_send_json( $response );
     }
 
 
