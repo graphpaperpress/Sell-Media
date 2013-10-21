@@ -524,7 +524,7 @@ function sell_media_download_shortcode( $atts ) {
                 if ( $payment_obj->status( $payment['post_id'] ) == 'pending' ){
                     $status = __('Pending', 'sell_media');
                 } else {
-                    $status = $payment_obj->status( $payment['post_id'] )
+                    $status = $payment_obj->status( $payment['post_id'] );
                 }
 
                 $html .= '<ul class="payment-meta">';
