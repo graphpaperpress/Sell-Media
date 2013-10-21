@@ -77,7 +77,7 @@ jQuery( document ).ready(function( $ ){
 
         if ( typeof( license_markup ) == "undefined" ) license_markup = 0;
 
-        finalPrice = ( +price + ( +license_markup * .01 ) * price ).toFixed(2);
+        finalPrice = ( +price  ).toFixed(2);
 
         if ( $('.subtotal-target').length ){
             $('.subtotal-target').html( finalPrice );
@@ -496,6 +496,7 @@ jQuery( document ).ready(function( $ ){
      * we run the sub-total and total functions.
      */
     $(document).on('keyup', '.sell-media-quantity', function(){
+
         sell_media_update_sub_total();
         sell_media_update_total();
         sell_media_update_final_total();
@@ -508,7 +509,7 @@ jQuery( document ).ready(function( $ ){
     });
 
 
-     /**
+    /**
      * When the user clicks on our trigger we set-up the overlay,
      * launch our dialog, and send an Ajax request to load our cart form.
      */
