@@ -145,6 +145,9 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 $ip = $_SERVER['REMOTE_ADDR'];
             }
 
+            // filter the total session
+            $_SESSION['cart']['total'] = apply_filters( 'sell_media_update_total', $_SESSION['cart']['total'] );
+
             $purchase = array(
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
@@ -156,8 +159,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 'CalculatedPrice' => $_SESSION['cart']['total']
                 );
 
-            // filter the total session
-            $_SESSION['cart']['total'] = apply_filters( 'sell_media_update_total', $_SESSION['cart']['total'] );
             // record the payment details
             update_post_meta( $payment_id, '_sell_media_payment_meta', $purchase );
             update_post_meta( $payment_id, '_sell_media_payment_user_email', $purchase['email'] );
