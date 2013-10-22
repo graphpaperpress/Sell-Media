@@ -227,7 +227,7 @@ Class SellMediaNavStyleUI {
                         <td><input type="text" class="small-text" name="terms_children['. $term->term_id . '][height]" value="'. sell_media_get_term_meta( $term->term_id, 'height', true ) . '">
                         <p class="description">'. __('Max Height','sell_media') . '</p></td>
 
-                        <td><span class="description"'. sell_media_get_currency_symbol() . '</span>
+                        <td><span class="description">'. sell_media_get_currency_symbol() . '</span>
                         <input type="text" class="small-text" name="terms_children['. $term->term_id . '][price]" value="'. sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ) . '">
                         <p class="description">'. __('Price','sell_media') . '</p></td>'
                     )
