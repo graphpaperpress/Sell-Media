@@ -133,11 +133,7 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
     global $user;
     if ( isset( $user->roles ) && is_array( $user->roles ) ){
         if ( in_array( "sell_media_customer", $user->roles ) ){
-            if( "" != $redirect_to ) {
-                return $redirect_to;
-            } else {
-                return site_url('dashboard');
-            }
+            return site_url('dashboard');
         } else {
             return admin_url();
         }
@@ -558,12 +554,6 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
                 . '&price_id=' . $price_id,
                 'payment_id' => $payment_id
                 );
-
-            $arguments = get_post_meta( $payment_id, '_paypal_args', true );
-
-            if ( ! empty( $arguments['shipping'] ) ){
-                $tmp_links['url'] = null;
-            }
 
             $links[] = $tmp_links;
         }

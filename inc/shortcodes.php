@@ -51,17 +51,19 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
 
                	$image_attributes = wp_get_attachment_image_src( get_post_meta( $link['item_id'], '_sell_media_attachment_id', true ), 'medium', false );
 
+                // Currently there is no "type", i.e., download vs. physical print
+                // so we use price groups to determine if the purchase was a download
+                // and only show download links for downloads
+                $term_obj = get_term_by( 'id', $link['price_id'], 'price-group' );
+                $price_exists = term_exists( $term_obj->name, 'price-group' );
+
                 $message .= '<div class="sell-media-aligncenter">';
-                if ( ! empty( $link['url'] ) )
-                    $message .= '<a href="' . $link['url']. '">';
 
-                $message .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" />';
-
-                if ( ! empty( $link['url'] ) )
-                    $message .= '</a>';
-
-                if ( ! empty( $link['url'] ) ){
+                if ( $price_exists ){
+                    $message .= '<a href="' . $link['url']. '"><img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" /></a>';
                     $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
+                } else {
+                    $message .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" />';
                 }
 
                 $message .= '</div>';
