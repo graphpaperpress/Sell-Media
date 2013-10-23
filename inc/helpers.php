@@ -133,7 +133,11 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
     global $user;
     if ( isset( $user->roles ) && is_array( $user->roles ) ){
         if ( in_array( "sell_media_customer", $user->roles ) ){
-            return site_url('dashboard');
+            if( "" != $redirect_to ) {
+                return $redirect_to;
+            } else {
+                return site_url('dashboard');
+            }
         } else {
             return admin_url();
         }
