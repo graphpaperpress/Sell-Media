@@ -124,6 +124,19 @@ Class Sell_Media_Cart {
      * cart.
      *
      * @param $items (array) An array of items
+     *     @option integer "id" Post ID
+     *     @option string "name" Post name
+     *     @option array "price"
+     *          @option "id" Taxonomy (price group) ID
+     *          @option "name" name of item
+     *          @option "description" Description of item
+     *          @option "amount" Price of item, note including markup
+     *     @option integer "qty" The quantity
+     *     @option float "total" The total dollar amount
+     *     @option array "license"
+     *          @option "id" Taxonomy ID
+     *          @option "name" Name of the taxonomy
+     *          @option "markup" The markup as a %
      *
      * @return $amount (string) The updated amount the customer is charged
      */
@@ -134,12 +147,11 @@ Class Sell_Media_Cart {
             foreach ( $items as $item ){
                 $qty = ( empty( $item['qty'] ) ) ? 1 : $item['qty'];
                 if ( empty( $item['license'] ) ){
-                    $price = $item['price']['amount'] * $item['qty'];
+                    $price = $item['price']['amount'] * $qty;
                 } else {
-                    $price = $this->item_markup_total( $item['id'], $item['price']['id'], $item['license']['id'] );
+                    $price = $this->item_markup_total( $item['id'], $item['price']['id'], $item['license']['id'] ) * $qty;
                 }
-
-                $amount = $amount + $price * $qty;
+                $amount += $price;
             }
         }
         return apply_filters( 'sell_media_subtotal', sprintf( "%0.2f", max( $amount, 0 ) ) );
