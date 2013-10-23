@@ -763,9 +763,26 @@ input[type="submit"].sell-media-buy-button-success:active {
     top: 5px;
     width: 20px;
 }
-
+/*= Error styling
+-------------------------------------------------------------- */
 .sell-media-error {
   font-size: 13px;
   margin: 0 0 0 7px;
   color:#ff0000;
+}
+#sell_media_checkout_form p {
+  width: 100%;
+  float: left;
+}
+#sell-media-checkout-table label.error {
+  color: #F00;
+  font-size: 11px;
+  float: left;
+  width: auto;
+  clear: both;
+  margin: 0 0 0 234px;
+}
+#sell-media-checkout-table input,
+#sell-media-checkout-table textarea {
+  float: left;
 }
