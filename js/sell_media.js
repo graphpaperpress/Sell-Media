@@ -514,6 +514,14 @@ jQuery( document ).ready(function( $ ){
     });
 
 
+    $( document ).on( 'submit', '#sell_media_checkout_form', function() {
+        var faults = $( 'input' ).filter( function() {
+            return $( this ).data( 'required' ) && $( this ).val() === '';
+        }).css( 'background-color', 'red');
+        if ( faults.length ) return false;
+    });
+
+
     /**
      * When the user clicks on our trigger we set-up the overlay,
      * launch our dialog, and send an Ajax request to load our cart form.
@@ -594,13 +602,6 @@ jQuery( document ).ready(function( $ ){
         }
      });
 
-
-    if ( sell_media.default_payment === 'undefined' || sell_media.default_payment == 'paypal' ){
-        $('.sell-media-buy-button-checkout').on('click', function( e ){
-            e.preventDefault();
-            $('#sell_media_checkout_form').submit();
-        });
-    }
 
 
     $('#sell_media_terms_cb').on('click', function(){
