@@ -273,7 +273,7 @@ function sell_media_payments_callback_fn(){
                         }
                     ?>
                     </td>
-                    <td><?php if (get_post_meta( $payment->ID, '_sell_media_payment_amount', true )) print sell_media_get_currency_symbol() . get_post_meta( $payment->ID, '_sell_media_payment_amount', true ); ?></td>
+                    <td><?php echo SellMediaPayments::total( $payment->ID ); ?></td>
                     <td><?php echo date('M d, Y', strtotime($payment->post_date)); ?></td>
                     <td><?php echo SellMediaPayments::status( $payment->ID ); ?></td>
                 </tr>
