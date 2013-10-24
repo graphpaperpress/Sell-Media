@@ -152,6 +152,6 @@ Class SellMediaPayments {
         if ( $status == 'publish' )
             $status = __('Paid','sell_media');
 
-        return ucfirst( $status );
+        return apply_filters( 'sell_media_payment_status_filter', ucfirst( $status ), $post_id );
     }
 }
