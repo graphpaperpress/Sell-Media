@@ -99,8 +99,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     if ( isset( $_SESSION['cart']['items'] ) )
         $items = $_SESSION['cart']['items'];
 
-
     if ( $_POST ){
+
         /**
          * Compare count in cart with count in post
          * update cart count as needed
@@ -323,9 +323,9 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                 <?php endif; ?>
 
                                 <?php if ( ! empty ( $general_settings['terms_and_conditions'] ) ) : ?>
-                                    <div id="termsdiv">
-                                        <input type="checkbox" name="termsandconditions" id="sell_media_terms_cb" data-required="true" value="" required/>
-                                        <span class="termnotice">
+                                    <div id="sell_media_termsdiv">
+                                        <input type="checkbox" name="termsandconditions" id="sell_media_terms_cb" data-required="true" value="" required="required" />
+                                        <span class="sell-media-termnotice">
                                             <a href="#" id="agree_terms_and_conditions">
                                             <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>
                                             </a>

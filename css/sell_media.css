@@ -763,6 +763,13 @@ input[type="submit"].sell-media-buy-button-success:active {
     top: 5px;
     width: 20px;
 }
+#sell_media_termsdiv {
+  clear: both;
+}
+#sell_media_terms_cb {
+  margin: 5px 5px 0 0;
+}
+
 /*= Error styling
 -------------------------------------------------------------- */
 .sell-media-error {
