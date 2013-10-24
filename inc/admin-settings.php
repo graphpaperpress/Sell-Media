@@ -135,85 +135,85 @@ class SellMediaSettings {
         $settings['section_general']['fields'] = array(
             array(
                 'id' => 'test_mode',
-                'label' => 'Test Mode',
+                'label' => __('Test Mode','sell_media'),
                 'function' => array( &$this, 'field_general_test_mode' ),
                 'key' => $this->general_settings_key
             ),
             array(
                 'id' => 'checkout_page',
-                'label' => 'Checkout Page',
+                'label' => __('Checkout Page','sell_media'),
                 'function' => array( &$this, 'field_general_checkout_page' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'thanks_page',
-                'label' => 'Thanks Page',
+                'label' => __('Thanks Page','sell_media'),
                 'function' => array( &$this, 'field_general_thanks_page' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'dashboard_page',
-                'label' => 'Dashboard Page',
+                'label' => __('Dashboard Page','sell_media'),
                 'function' => array( &$this, 'field_general_dashboard_page' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'login_page',
-                'label' => 'Login Page',
+                'label' => __('Login Page','sell_media'),
                 'function' => array( &$this, 'field_general_login_page' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'customer_notification',
-                'label' => 'Customer Notification',
+                'label' => __('Customer Notification','sell_media'),
                 'function' => array( &$this, 'field_general_customer_notification' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'style',
-                'label' => 'Style',
+                'label' => __('Style','sell_media'),
                 'function' => array( &$this, 'field_general_style' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'plugin_credit',
-                'label' => 'Plugin Credit',
+                'label' => __('Plugin Credit','sell_media'),
                 'function' => array( &$this, 'field_general_plugin_credit' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'post_type_slug',
-                'label' => 'Post Type Slug',
+                'label' => __('Post Type Slug','sell_media'),
                 'function' => array( &$this, 'field_post_type_slug' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'order_by',
-                'label' => 'Order By',
+                'label' => __('Order By','sell_media'),
                 'function' => array( &$this, 'field_order_by' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'terms_and_conditions',
-                'label' => 'Terms and Conditions',
+                'label' => __('Terms and Conditions','sell_media'),
                 'function' => array( &$this, 'field_terms_and_conditions' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'disable_search',
-                'label' => 'Disable Sell Media Search',
+                'label' => __('Disable Sell Media Search','sell_media'),
                 'function' => array( &$this, 'field_disable_search' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'hide_original_price',
-                'label' => 'Hide Original Price',
+                'label' => __('Hide Original Price','sell_media'),
                 'function' => array( &$this, 'field_hide_original_price' ),
                 'key' => $this->general_settings_key
                 ),
             array(
                 'id' => 'columns_to_show',
-                'label' => 'Columns to Show',
+                'label' => __('Columns to Show','sell_media'),
                 'function' => array( &$this, 'field_columns_to_show' ),
                 'key' => $this->general_settings_key
                 )
