@@ -18,7 +18,7 @@ function sell_media_set_default_terms( $post_id, $post=null, $term_ids=null ){
     if ( empty( $post_status ) )
         return;
 
-    if ( is_null( $term_ids ) )
+    if ( empty( $term_ids ) )
         $term_ids = sell_media_get_default_terms();
 
     $taxonomy = 'licenses';
@@ -46,7 +46,7 @@ function sell_media_set_default_terms( $post_id, $post=null, $term_ids=null ){
         }
     }
 }
-add_action( 'save_post', 'sell_media_set_default_terms', 100, 3 );
+add_action( 'save_post_sell_media_item', 'sell_media_set_default_terms', 100, 3 );
 
 /**
  * Get Default Terms from database
