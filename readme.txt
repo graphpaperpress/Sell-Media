@@ -109,9 +109,9 @@ Click Sell Media -> Collections -> Add New and check the "Hide" option.
 
 = How do I increase the maximum upload size in WordPress? =
 
-Depending on the web hosting company you choose and the package you select, each of you will see maximum file upload limit on your Media Uploader page in WordPress. For some it is as low as 2MB which is clearly not enough for large images or videos. You can increase this by doing one of the follwing:
+Depending on the web hosting company you choose and the package you select, each of you will see maximum file upload limit on your Media Uploader page in WordPress. For some it is as low as 2MB which is clearly not enough for large images or videos. You can increase this by doing one of the following:
 
-1. Theme Functions File - There are cases where we have seen that just by adding the following code in the theme function’s file, you can increase the upload size:
+1. Theme Functions File - There are cases where we have seen that just by adding the following code in the theme function's file, you can increase the upload size:
 
     `@ini_set( 'upload_max_size', '64M' );
     @ini_set( 'post_max_size', '64M');
@@ -136,7 +136,7 @@ Again, it is important that we emphasize that if you are on a shared hosting pac
 
 Please visit the Add Media -> Settings -> Payments page and double check all of your settings. Also, if you are using Paypal, you need to make sure you have [added your IPN Listener URL to Paypal](https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup).
 
-Also, PayPal computers use IP ranges 66.211.*.* and 173.0.*.* and visit the IPN URL with NO User-Agent. Some web hosting companies have their servers set up to block incoming pings when the User-Agent is not explicityly set (as is the case with Paypal's IPN). In this case, you'll want to modify your .htaccess file to override user-agent blocking with these address ranges.
+Also, PayPal computers use IP ranges 66.211.*.* and 173.0.*.* and visit the IPN URL with NO User-Agent. Some web hosting companies have their servers set up to block incoming pings when the User-Agent is not explicitly set (as is the case with Paypal's IPN). In this case, you'll want to modify your .htaccess file to override user-agent blocking with these address ranges.
 
 = What are license types? =
 
@@ -193,10 +193,12 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.4 =
-* Tweak: Allowed for tranlastion of "Pending" on the `sell_media_download_list` shortcode
+* Feature: Added various hooks and filters
+* Tweak: Allowed for translation of "Pending" on the `sell_media_download_list` shortcode
 * Tweak: Added link to purchased item from payments page
 * Tweak: Added "Lost your password?" link to the check out page
 * Tweak: Fixing issue where currency symbol on admin pages
+* Bug: Fixing issue with 3.7 and `save_post`
 * Bug: Fixing issue when quantity was updated on the checkout page the subtotal was not correctly updated
 
 = 1.6.3 =
@@ -239,7 +241,7 @@ Action hooks available:
 * Feature: Added option to hide original price
 * Feature: Added option to disable the built in Sell Media search and use native WordPress search
 * Tweak: Readme no longer references hiding a collection, replaced with password instructions
-* Tweak: Origiainl height and width is display, for images only, on the single item page
+* Tweak: Original height and width is display, for images only, on the single item page
 * Tweak: Admin notice is only displayed on the child collection if the parent has a password
 * Bug: Various updates to the cart
 * Bug: Checkout page now checks if email already exists
@@ -281,7 +283,7 @@ Action hooks available:
 
 * Feature: Added shortcode to display all collections 'sell_media_list_all_collections' ( available shortcode attributes: thumbs, details )
 * Feature: Added price groups to the native WordPress bulk edit
-* Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commericial.jpg
+* Feature: File downloads have the size and license appended to them, i.e., my-image-1024x768-commercial.jpg
 * Feature: License descriptions now show on hover, next to the license on the dialog
 * Feature: Added tooltips to license descriptions
 * Feature: Download size is now displayed on the admin payments item page
@@ -445,7 +447,7 @@ Action hooks available:
 * Feature: Options in dialog now default to nothing
 * Feature: Added current state select
 * Removed validation scripts inplace of native browser validation
-* Various bug fixes and styling enhancments
+* Various bug fixes and styling enhancements
 
 = 1.2.3 =
 
@@ -477,7 +479,7 @@ Action hooks available:
 
 * Added bulk uploader
 * Added size variants
-* Code enhancments
+* Code enhancements
 * Bug fixes
 
 = 1.0.8 =
