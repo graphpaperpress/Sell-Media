@@ -4,8 +4,8 @@ Contributors: endortrails, ZaneMatthew
 Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
-Tested up to: 3.5-beta
-Stable tag: 1.6.3
+Tested up to: 3.7
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -194,12 +194,17 @@ Action hooks available:
 
 = 1.6.4 =
 * Feature: Added various hooks and filters
+* Feature: Using jQuery validation in place of HTML5 validation
 * Tweak: Allowed for translation of "Pending" on the `sell_media_download_list` shortcode
 * Tweak: Added link to purchased item from payments page
 * Tweak: Added "Lost your password?" link to the check out page
 * Tweak: Fixing issue where currency symbol on admin pages
+* Tweak: Administrators can now buy products while logged in
+* Tweak: Updated admin payments UI
+* Tweak: Deriving a more reliable IPN URL for some users
 * Bug: Fixing issue with 3.7 and `save_post`
 * Bug: Fixing issue when quantity was updated on the checkout page the subtotal was not correctly updated
+* Bug: Fixing issue where session was not starting for some users
 
 = 1.6.3 =
 * Bug: Fixing issue where sizes from price group did not show in select box
