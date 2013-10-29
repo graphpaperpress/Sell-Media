@@ -100,7 +100,8 @@ class SellMedia {
         // Dont forget registration hook is called
         // BEFORE! taxonomies are regsitered! therefore
         // these terms and taxonomies are NOT derived from our object!
-        $this->registerLicenses();
+        $general_settings = get_option( 'sell_media_general_settings' );
+        $this->registerLicenses($general_settings);
 
         // Install new table for term meta
         $taxonomy_metadata = new SELL_MEDIA_Taxonomy_Metadata;
