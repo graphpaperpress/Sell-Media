@@ -95,7 +95,7 @@ function sell_media_admin_messages() {
                     if ( in_array( $mime_type['type'], $image_mimes ) ){
                         $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
                         foreach( $download_sizes['unavailable'] as $unavailable ){
-                            $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['width'] . ')<br />';
+                            $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['height'] . ')<br />';
                         }
 
                         $notices[] = array(
