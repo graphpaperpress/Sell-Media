@@ -1,0 +1,47 @@
+<wpml-config>
+    <custom-types>
+        <custom-type translate="1">sell_media_item</custom-type>
+        <custom-type translate="1">sell_media_payment</custom-type>
+    </custom-types>
+    <taxonomies>
+        <taxonomy translate="1">licenses</taxonomy>
+        <taxonomy translate="1">keywords</taxonomy>
+        <taxonomy translate="1">city</taxonomy>
+        <taxonomy translate="1">state</taxonomy>
+        <taxonomy translate="1">creator</taxonomy>
+        <taxonomy translate="1">collection</taxonomy>
+        <taxonomy translate="1">price-group</taxonomy>
+    </taxonomies>
+    <admin-texts>
+        <key name="general_settings">
+            <key name="test_mode" />
+            <key name="checkout_page" />
+            <key name="thanks_page" />
+            <key name="dashboard_page" />
+            <key name="login_page" />
+            <key name="customer_notification" />
+            <key name="style" />
+            <key name="plugin_credit" />
+            <key name="post_type_slug" />
+            <key name="order_by" />
+            <key name="terms_and_conditions" />
+            <key name="disable_search" />
+            <key name="hide_original_price" />
+            <key name="show_collections" />
+            <key name="show_licenses" />
+            <key name="option_name_1" />
+        </key>
+        <key name="payment_settings">
+            <key name="default_gateway" />
+            <key name="paypal_email" />
+            <key name="currency" />
+            <key name="paypal_additional_test_email" />
+        </key>
+        <key name="email_settings">
+            <key name="from_name" />
+            <key name="from_email" />
+            <key name="success_email_subject" />
+            <key name="success_email_body" />
+        </key>
+    </admin-texts>
+</wpml-config>

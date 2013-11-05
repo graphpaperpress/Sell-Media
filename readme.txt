@@ -192,6 +192,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.6.5 =
+* Added support for WPML
+
 = 1.6.4 =
 * Feature: Added various hooks and filters
 * Feature: Using jQuery validation in place of HTML5 validation
