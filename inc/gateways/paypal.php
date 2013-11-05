@@ -69,7 +69,8 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         // 'https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNandPDTVariables/'
         // 'return_url'     => $return_url,
         'return'     => $return_url,
-        'ipn_notification_url' => $listener_url,
+        'ipn_notification_url' => $listener_url, // Is this a valid parameter??
+        'notify_url' => $listener_url, // This needs to be added in order for IPN to work
         'mc_currency'    => $payment_settings['currency'],
         'mc_gross'       => $price,
         'payment_status' => '',
