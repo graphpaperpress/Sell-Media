@@ -193,7 +193,8 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.5 =
-* Added support for WPML
+* Tweak: Added tweak from [@NETLINK](https://github.com/NETLINK) so PayPal IPN URL can be added as a param.
+* Tweak: Added support for WPML
 
 = 1.6.4 =
 * Feature: Added various hooks and filters
