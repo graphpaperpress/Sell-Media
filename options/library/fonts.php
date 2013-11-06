@@ -4,7 +4,7 @@
  */
 
 // Recommended Google Fonts
-function gpp_plugin_font_array() {
+function sell_media_plugin_font_array() {
     $fonts = array(
 		'None' => array(
             'name' => '',

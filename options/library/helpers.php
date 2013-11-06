@@ -2,7 +2,7 @@
 /**
  * Get list of taxonomies
  */
-function gpp_plugin_get_taxonomy_list( $taxonomy = 'category', $firstblank = false ) {
+function sell_media_plugin_get_taxonomy_list( $taxonomy = 'category', $firstblank = false ) {
 
 	$args = array(
 		'hide_empty' => 0
@@ -12,7 +12,7 @@ function gpp_plugin_get_taxonomy_list( $taxonomy = 'category', $firstblank = fal
 	$terms = array();
 	if( $firstblank ) {
 		$terms['']['name'] = '';
-		$terms['']['title'] = __( '-- Choose One --', 'gpp' );
+		$terms['']['title'] = __( '-- Choose One --', 'sell_media' );
 	}
 	foreach ( $terms_obj as $tt ) {
 		$terms[ $tt->slug ]['name'] = $tt->slug;
@@ -26,11 +26,11 @@ function gpp_plugin_get_taxonomy_list( $taxonomy = 'category', $firstblank = fal
 /**
  * Get current settings page tab
  */
-function gpp_plugin_get_current_tab() {
+function sell_media_plugin_get_current_tab() {
 
-	global $gpp_plugin_tabs;
+	global $sell_media_plugin_tabs;
 
-	$first_tab = $gpp_plugin_tabs[0]['name'];
+	$first_tab = $sell_media_plugin_tabs[0]['name'];
 
     if ( isset( $_GET['tab'] ) ) {
         $current = esc_attr( $_GET['tab'] );
@@ -44,41 +44,41 @@ function gpp_plugin_get_current_tab() {
 /**
  * Get current settings page tab
  */
-function gpp_plugin_get_current_tab_title( $tabval ) {
+function sell_media_plugin_get_current_tab_title( $tabval ) {
 
-	global $gpp_plugin_tabs;
+	global $sell_media_plugin_tabs;
 
-	$current = $gpp_plugin_tabs[ $tabval ]['title'];
+	$current = $sell_media_plugin_tabs[ $tabval ]['title'];
 
 	return $current;
 }
 
 /**
- * Define gpp Admin Page Tab Markup
+ * Define sell_media Admin Page Tab Markup
  *
- * @uses	gpp_plugin_get_current_tab()	defined in \functions\options.php
- * @uses	gpp_get_settings_page_tabs()	defined in \functions\options.php
+ * @uses	sell_media_plugin_get_current_tab()	defined in \functions\options.php
+ * @uses	sell_media_get_settings_page_tabs()	defined in \functions\options.php
  *
  * @link	http://www.onedesigns.com/tutorials/separate-multiple-theme-options-pages-using-tabs	Daniel Tara
  */
-function gpp_plugin_get_page_tab_markup() {
+function sell_media_plugin_get_page_tab_markup() {
 
-	global $gpp_plugin_tabs;
+	global $sell_media_plugin_tabs;
 
-	$page = 'gpp-settings';
+	$page = 'sell-media-settings';
 
-	if ( isset( $_GET['page'] ) && 'gpp-reference' == $_GET['page'] ) {
-		$page = 'gpp-reference';
+	if ( isset( $_GET['page'] ) && 'sell-media-reference' == $_GET['page'] ) {
+		$page = 'sell-media-reference';
 	} else {
 		// do nothing
 	}
 
-    $current = gpp_plugin_get_current_tab();
+    $current = sell_media_plugin_get_current_tab();
 
-	if ( 'gpp-settings' == $page ) {
-        $tabs = $gpp_plugin_tabs;
-	} else if ( 'gpp-reference' == $page ) {
-        $tabs = gpp_get_reference_page_tabs();
+	if ( 'sell-media-settings' == $page ) {
+        $tabs = $sell_media_plugin_tabs;
+	} else if ( 'sell-media-reference' == $page ) {
+        $tabs = sell_media_get_reference_page_tabs();
 	}
 
     $links = array();
@@ -95,7 +95,7 @@ function gpp_plugin_get_page_tab_markup() {
         }
         $i++;
     }
-    gpp_plugin_utility_links();
+    sell_media_plugin_utility_links();
     echo '<div id="icon-themes" class="icon32"><br /></div>';
     echo '<h2 class="nav-tab-wrapper">';
     foreach ( $links as $link )

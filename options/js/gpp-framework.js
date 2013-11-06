@@ -6,7 +6,7 @@
 		$( '.color-picker' ).wpColorPicker();
 
 		// font previews when user chooses use this font
-		$( '#gpp-font-preview .box button' ).live( 'click', function() {
+		$( '#sell-media-font-preview .box button' ).live( 'click', function() {
 			$( this ).each( function() {
 
 				var header = $( this ).attr( 'data-font-header' );

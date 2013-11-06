@@ -13,11 +13,11 @@
  */
 register_setting(
 	// $option_group
-	gpp_get_current_plugin_id() . '_options',
+	sell_media_get_current_plugin_id() . '_options',
 	// $option_name
-	gpp_get_current_plugin_id() . '_options',
+	sell_media_get_current_plugin_id() . '_options',
 	// $sanitize_callback
-	'gpp_plugin_options_validate'
+	'sell_media_plugin_options_validate'
 );
 
 /**
@@ -29,24 +29,24 @@ register_setting(
  *
  */
 
-function gpp_plugin_register_admin_js_globals(){
+function sell_media_plugin_register_admin_js_globals(){
 
-	global $gpp_plugin_tabs;
+	global $sell_media_plugin_tabs;
 
 	$tab = '';
 	$selected_tab = '';
 
-	$selected_tab = $selected_tab ? $gpp_plugin_tabs[0]['name'] : $tab;
+	$selected_tab = $selected_tab ? $sell_media_plugin_tabs[0]['name'] : $tab;
 	$themedata = wp_get_theme();
     $theme_title = $themedata->title;
 	$theme_name = strtolower( $theme_title );
 	$theme_url = get_template_directory_uri();
 
 	echo "<script type=\"text/javascript\">\n";
-	echo "var gpp = {\n";
+	echo "var sell_media = {\n";
 	echo "    'theme' : '$theme_name',\n";
 
-	if( isset( $_GET['page']) && esc_attr( $_GET['page'] ) == 'gpp-settings' && $selected_tab )
+	if( isset( $_GET['page']) && esc_attr( $_GET['page'] ) == 'sell-media-settings' && $selected_tab )
 		echo "    'current_tab' : '$selected_tab',\n";
 
 	echo "    'theme_url' : '$theme_url'\n";
@@ -55,7 +55,7 @@ function gpp_plugin_register_admin_js_globals(){
 
 }
 
-add_action( 'admin_enqueue_scripts', 'gpp_plugin_register_admin_js_globals', 1 );
+add_action( 'admin_enqueue_scripts', 'sell_media_plugin_register_admin_js_globals', 1 );
 
 /**
  * Theme register_setting() sanitize callback
@@ -73,23 +73,23 @@ add_action( 'admin_enqueue_scripts', 'gpp_plugin_register_admin_js_globals', 1 )
  * @global	array	Settings Page Tab definitions
  *
  */
-function gpp_plugin_options_validate( $input ) {
+function sell_media_plugin_options_validate( $input ) {
 
-	global $gpp_plugin_tabs;
+	global $sell_media_plugin_tabs;
 
 	// This is the "whitelist": current settings
-	$valid_input = (array) gpp_get_plugin_options();
+	$valid_input = (array) sell_media_get_plugin_options();
 	// Get the array of Theme settings, by Settings Page tab
-	$settingsbytab = gpp_get_plugin_settings_by_tab();
+	$settingsbytab = sell_media_get_plugin_settings_by_tab();
 	// Get the array of option parameters
-	$option_parameters = gpp_get_plugin_option_parameters();
+	$option_parameters = sell_media_get_plugin_option_parameters();
 	// Get the array of option defaults
-	$option_defaults = gpp_get_plugin_option_defaults();
+	$option_defaults = sell_media_get_plugin_option_defaults();
 	// Get list of tabs
 
 	// Determine what type of submit was input
 	$submittype = 'submit';
-	foreach ( $gpp_plugin_tabs as $tab ) {
+	foreach ( $sell_media_plugin_tabs as $tab ) {
 		$resetname = 'reset-' . $tab['name'];
 		if ( ! empty( $input[$resetname] ) ) {
 			$submittype = 'reset';
@@ -98,7 +98,7 @@ function gpp_plugin_options_validate( $input ) {
 
 	// Determine what tab was input
 	$submittab = '';
-	foreach ( $gpp_plugin_tabs as $tab ) {
+	foreach ( $sell_media_plugin_tabs as $tab ) {
 		$submitname = 'submit-' . $tab['name'];
 		$resetname = 'reset-' . $tab['name'];
 		if ( ! empty( $input[ $submitname ] ) || ! empty( $input[ $resetname ] ) ) {
@@ -175,7 +175,7 @@ function gpp_plugin_options_validate( $input ) {
  *
  * @global	array	Settings Page Tab definitions
  */
-global $gpp_plugin_tabs;
+global $sell_media_plugin_tabs;
 
 /**
  * Call add_settings_section() for each Settings
@@ -191,12 +191,12 @@ global $gpp_plugin_tabs;
  * @param	callback	$callback	Name of the callback function in which section text is output
  * @param	string		$pageid		Name of the Settings page to which to add the section; passed to do_settings_sections()
  */
-foreach ( $gpp_plugin_tabs as $tab ) {
+foreach ( $sell_media_plugin_tabs as $tab ) {
 	$tabname = $tab['name'];
 	$tabsections = $tab['sections'];
 	foreach ( $tabsections as $section ) {
 
-		add_settings_section( 'gpp_' . $section['name'] . '_section', $section['title'], 'gpp_plugin_sections_callback', 'gpp_' . $tabname . '_tab' );
+		add_settings_section( 'sell_media_' . $section['name'] . '_section', $section['title'], 'sell_media_plugin_sections_callback', 'sell_media_' . $tabname . '_tab' );
 
 	}
 }
@@ -209,12 +209,12 @@ foreach ( $gpp_plugin_tabs as $tab ) {
  *
  * @param	array	$section_passed	Array passed from add_settings_section()
  */
-function gpp_plugin_sections_callback( $section_passed ) {
-	global $gpp_plugin_tabs;
-	foreach ( $gpp_plugin_tabs as $tabname => $tab ) {
+function sell_media_plugin_sections_callback( $section_passed ) {
+	global $sell_media_plugin_tabs;
+	foreach ( $sell_media_plugin_tabs as $tabname => $tab ) {
 		$tabsections = $tab['sections'];
 		foreach ( $tabsections as $sectionname => $section ) {
-			if ( 'gpp_' . $sectionname . '_section' == $section_passed['id'] ) {
+			if ( 'sell_media_' . $sectionname . '_section' == $section_passed['id'] ) {
 				?>
 				<p><?php echo $section['description']; ?></p>
 				<?php
@@ -230,7 +230,7 @@ function gpp_plugin_sections_callback( $section_passed ) {
  * @global	array	Theme options parameters
  */
 global $option_parameters;
-$option_parameters = gpp_get_plugin_option_parameters();
+$option_parameters = sell_media_get_plugin_option_parameters();
 
 /**
  * Call add_settings_field() for each Setting Field
@@ -256,15 +256,15 @@ foreach ( $option_parameters as $option ) {
 	$optiontype = $option['type'];
 	add_settings_field(
 		// $settingid
-		'gpp_setting_' . $optionname,
+		'sell_media_setting_' . $optionname,
 		// $title
 		$optiontitle,
 		// $callback
-		'gpp_plugin_setting_callback',
+		'sell_media_plugin_setting_callback',
 		// $pageid
-		'gpp_' . $optiontab . '_tab',
+		'sell_media_' . $optiontab . '_tab',
 		// $sectionid
-		'gpp_' . $optionsection . '_section',
+		'sell_media_' . $optionsection . '_section',
 		// $args
 		$option
 	);
@@ -273,64 +273,64 @@ foreach ( $option_parameters as $option ) {
 /**
  * Callback for get_settings_field()
  */
-function gpp_plugin_setting_callback( $option ) {
-	$gpp_options = (array) gpp_get_plugin_options();
+function sell_media_plugin_setting_callback( $option ) {
+	$sell_media_options = (array) sell_media_get_plugin_options();
 
-	$option_parameters = gpp_get_plugin_option_parameters();
+	$option_parameters = sell_media_get_plugin_option_parameters();
 	$optionname = $option['name'];
 	$optiontitle = $option['title'];
 	$optiondescription = $option['description'];
 	$fieldtype = $option['type'];
-	$fieldname = gpp_get_current_plugin_id() . "_options[ { $optionname } ]";
+	$fieldname = sell_media_get_current_plugin_id() . "_options[ { $optionname } ]";
 
 	$attr = $option_parameters[ $option['name'] ];
-	$value = $gpp_options[ $optionname ];
+	$value = $sell_media_options[ $optionname ];
 
     //Determine the type of input field
     switch ( $fieldtype ) {
 
         //Render Text Input
-        case 'text': gpp_plugin_field_text( $value, $attr );
+        case 'text': sell_media_plugin_field_text( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
         //Render textarea options
-        case 'textarea': gpp_plugin_field_textarea( $value, $attr );
+        case 'textarea': sell_media_plugin_field_textarea( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
         //Render select dropdowns
-        case 'select': gpp_plugin_field_select( $value, $attr );
+        case 'select': sell_media_plugin_field_select( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
         //Render radio dropdowns
-        case 'radio': gpp_plugin_field_radio( $value, $attr );
+        case 'radio': sell_media_plugin_field_radio( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
         //Render radio image dropdowns
-        case 'radio_image': gpp_plugin_field_radio_image( $value, $attr );
+        case 'radio_image': sell_media_plugin_field_radio_image( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
         //Render checkboxes
-        case 'checkbox': gpp_plugin_field_checkbox( $value, $attr );
+        case 'checkbox': sell_media_plugin_field_checkbox( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
         //Render color picker
-        case 'color': gpp_plugin_field_color( $value, $attr );
+        case 'color': sell_media_plugin_field_color( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
         //Render uploaded image
-        case 'image': gpp_plugin_field_image( $value, $attr );
+        case 'image': sell_media_plugin_field_image( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
          //Render uploaded gallery
-        case 'gallery': gpp_plugin_field_gallery( $value, $attr );
+        case 'gallery': sell_media_plugin_field_gallery( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 

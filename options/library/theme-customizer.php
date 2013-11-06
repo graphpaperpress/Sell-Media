@@ -8,12 +8,12 @@
  **/
 
 
-add_action( 'customize_register', 'gpp_customize_register' );
+add_action( 'customize_register', 'sell_media_customize_register' );
 
-function gpp_plugin_customize_register( $wp_customize ) {
+function sell_media_plugin_customize_register( $wp_customize ) {
 
  	// extending the field type to textarea
-	class gpp_CSS_Control extends WP_Customize_Control {
+	class sell_media_CSS_Control extends WP_Customize_Control {
 		public $type = 'textarea';
 
 		public function render_content() {
@@ -46,7 +46,7 @@ function gpp_plugin_customize_register( $wp_customize ) {
 	 *
 	 */
 	$sectionname = "theme_options";
-	$sectiontitle = __( 'Theme Options', 'gpp' );
+	$sectiontitle = __( 'Theme Options', 'sell_media' );
 
 	$wp_customize->add_section( $sectionname, array(
 		'title' => $sectiontitle,
@@ -54,14 +54,14 @@ function gpp_plugin_customize_register( $wp_customize ) {
 	) );
 
 
-	$gpp_options = (array) gpp_get_plugin_options();
+	$sell_media_options = (array) sell_media_get_plugin_options();
 
-	$gpp_option_parameters = gpp_get_plugin_option_parameters();
+	$sell_media_option_parameters = sell_media_get_plugin_option_parameters();
 
-	foreach( $gpp_option_parameters as $option ) {
+	foreach( $sell_media_option_parameters as $option ) {
 
 		$optionname = $option['name'];
-		$optiondb = gpp_get_current_plugin_id() . "_options[$optionname]";
+		$optiondb = sell_media_get_current_plugin_id() . "_options[$optionname]";
 		$option_section_name =  $option['section'];
 
 		if( $option['name'] == 'css' ) {
@@ -74,7 +74,7 @@ function gpp_plugin_customize_register( $wp_customize ) {
 			) );
 
 			// intercept the theme option and control it
-			$wp_customize->add_control( new gpp_CSS_Control( $wp_customize, $option['name'], array(
+			$wp_customize->add_control( new sell_media_CSS_Control( $wp_customize, $option['name'], array(
 				'label'			=> $option['title'],
 				'section'		=> $sectionname,
 				'settings'		=> $optiondb,
@@ -97,7 +97,7 @@ function gpp_plugin_customize_register( $wp_customize ) {
 				'section' 	=> $sectionname,
 				'settings'	=> $optiondb,
 				'type'    	=> $option['type'],
-				'choices' 	=> gpp_extract_valid_options( $option['valid_options'] )
+				'choices' 	=> sell_media_extract_valid_options( $option['valid_options'] )
 			) );
 
 		}
@@ -121,13 +121,13 @@ function gpp_plugin_customize_register( $wp_customize ) {
 	}
 
 	if ( $wp_customize->is_preview() && ! is_admin() ) {
-		add_action( 'wp_footer', 'gpp_customize_preview_js', 21 );
+		add_action( 'wp_footer', 'sell_media_customize_preview_js', 21 );
 	}
 
 }
 
 
-function gpp_plugin_extract_valid_options( $options ) {
+function sell_media_plugin_extract_valid_options( $options ) {
 	$new_options = array();
 	foreach( $options as $option ) {
 		if( isset( $option['parameter'] ) && '' != $option['parameter'] ) {
@@ -147,7 +147,7 @@ function gpp_plugin_extract_valid_options( $options ) {
  * @since GPP Theme Options 1.0
  */
 
-function gpp_plugin_customize_preview_js() {
+function sell_media_plugin_customize_preview_js() {
 	$doc_ready_script = '
 		<script type="text/javascript">
 			(function($){
@@ -169,13 +169,13 @@ function gpp_plugin_customize_preview_js() {
 					});
 				});
 
-				wp.customize( "' . gpp_get_current_plugin_id() . '_options[logo]", function( value ) {
+				wp.customize( "' . sell_media_get_current_plugin_id() . '_options[logo]", function( value ) {
 					value.bind( function( to ) {
 						$( ".site-title a" ).html( "<img class=\"sitetitle\" alt=\"' . get_bloginfo( 'name' ) . '\" src=\"" + to + "\">" );
 					});
 				});
 
-				wp.customize("' . gpp_get_current_plugin_id() . '_options[font]",function(value) {
+				wp.customize("' . sell_media_get_current_plugin_id() . '_options[font]",function(value) {
 					value.bind(function(to) {
 						$("#fontdiv").remove();
 						var googlefont = to.split(",");
@@ -185,7 +185,7 @@ function gpp_plugin_customize_preview_js() {
 					});
 				});
 
-				wp.customize("' . gpp_get_current_plugin_id() . '_options[font_alt]",function(value) {
+				wp.customize("' . sell_media_get_current_plugin_id() . '_options[font_alt]",function(value) {
 					value.bind(function(to) {
 						$("#fontaltdiv").remove();
 						var googlefont = to.split(",");
@@ -195,13 +195,13 @@ function gpp_plugin_customize_preview_js() {
 					});
 				});
 
-				wp.customize( "' . gpp_get_current_plugin_id() . '_options[color]", function( value ) {
+				wp.customize( "' . sell_media_get_current_plugin_id() . '_options[color]", function( value ) {
 					value.bind( function( to ) {
-						$( "#gpp-alt-style-css" ).attr( "href", "' . get_template_directory_uri() . '/css/" + to + ".css" );
+						$( "#sell-media-alt-style-css" ).attr( "href", "' . get_template_directory_uri() . '/css/" + to + ".css" );
 					});
 				});
 
-				wp.customize( "' . gpp_get_current_plugin_id() . '_options[css]", function( value ) {
+				wp.customize( "' . sell_media_get_current_plugin_id() . '_options[css]", function( value ) {
 					value.bind( function( to ) {
 						$( "#tempcss" ).remove();
 						var googlefont = to.split( "," );

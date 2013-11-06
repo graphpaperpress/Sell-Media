@@ -3,9 +3,9 @@
 /**
  * Custom CSS
  */
-function gpp_plugin_custom_css() {
+function sell_media_plugin_custom_css() {
 
-    $theme_options = get_option( gpp_get_current_plugin_id() . '_options' );
+    $theme_options = get_option( sell_media_get_current_plugin_id() . '_options' );
 
     if ( isset( $theme_options['css'] ) && '' != $theme_options['css'] ) {
         echo '<!-- BeginHeader --><style type="text/css">';
@@ -14,14 +14,14 @@ function gpp_plugin_custom_css() {
     }
 }
 
-add_action( 'wp_head', 'gpp_plugin_custom_css', 11);
+add_action( 'wp_head', 'sell_media_plugin_custom_css', 11);
 
 /**
  * Google Font Integration
  */
-function gpp_plugin_include_font() {
+function sell_media_plugin_include_font() {
 
-    $theme_options = get_option( gpp_get_current_plugin_id() . '_options' );
+    $theme_options = get_option( sell_media_get_current_plugin_id() . '_options' );
     $css = null;
     $font_family = null;
     $font_alt_family = null;
@@ -46,34 +46,34 @@ function gpp_plugin_include_font() {
 	}
 }
 
-add_action( 'wp_head', 'gpp_include_font' );
+add_action( 'wp_head', 'sell_media_include_font' );
 
 /**
  * Alternative styles
  */
-function gpp_plugin_alt_styles() {
+function sell_media_plugin_alt_styles() {
 
-    $theme_options = get_option( gpp_get_current_plugin_id() . '_options' );
+    $theme_options = get_option( sell_media_get_current_plugin_id() . '_options' );
 	if ( isset ( $theme_options['color'] ) && '' != $theme_options['color'] ) {
 		$file = get_stylesheet_directory() . '/css/' . $theme_options['color'] . '.css';
 		if ( file_exists( $file ) ) {
-			wp_enqueue_style( 'gpp-alt-style', get_stylesheet_directory_uri() . '/css/' . $theme_options['color'] . '.css', array( 'style' ) );
+			wp_enqueue_style( 'sell-media-alt-style', get_stylesheet_directory_uri() . '/css/' . $theme_options['color'] . '.css', array( 'style' ) );
 		}
 	}
 }
-add_action( 'wp_enqueue_scripts', 'gpp_alt_styles' );
+add_action( 'wp_enqueue_scripts', 'sell_media_alt_styles' );
 
 /**
  * Enqueue Fonts
  */
-function gpp_plugin_enqueue_fonts() {
+function sell_media_plugin_enqueue_fonts() {
 
-    $theme_options = get_option( gpp_get_current_plugin_id() . '_options' );
+    $theme_options = get_option( sell_media_get_current_plugin_id() . '_options' );
 
     if ( ! empty( $theme_options['font'] ) || ! empty( $theme_options['font_alt'] ) ) {
         $protocol = is_ssl() ? 'https' : 'http';
 
-        $fonts = gpp_plugin_font_array();
+        $fonts = sell_media_plugin_font_array();
 
         // Font from our DB
         $header = explode( ':', $theme_options['font'] );
@@ -106,11 +106,11 @@ function gpp_plugin_enqueue_fonts() {
 		}
 
         // store these for use later if needed (photoshelter)
-        global $gpp_google_fonts;
-        $gpp_google_fonts = $protocol . '://fonts.googleapis.com/css?family=' . $final_fonts;
+        global $sell_media_google_fonts;
+        $sell_media_google_fonts = $protocol . '://fonts.googleapis.com/css?family=' . $final_fonts;
 
-        wp_enqueue_style( 'gpp-custom-fonts', "$protocol://fonts.googleapis.com/css?family={$final_fonts}" );
+        wp_enqueue_style( 'sell-media-custom-fonts', "$protocol://fonts.googleapis.com/css?family={$final_fonts}" );
     }
 }
 
-add_action( 'wp_enqueue_scripts', 'gpp_enqueue_fonts' );
+add_action( 'wp_enqueue_scripts', 'sell_media_enqueue_fonts' );

@@ -6,7 +6,7 @@ To get started using the framework:
 
     ```
     $ cd theme_name
-    $ git submodule add git://github.com/graphpaperpress/gpp-theme-options.git options
+    $ git submodule add git://github.com/graphpaperpress/sell-media-theme-options.git options
     ```
 2. Copy theme-options-example.txt to theme-options.php
 3. Bootstrap the framework by adding this to functions.php:
@@ -33,4 +33,4 @@ To get started using the framework:
     'type' => 'fonts' - Google font picker
     ```
 
-To register theme options tabs, simply use `gpp_register_plugin_options()` and `gpp_register_plugin_options_tab()` within your existing code as shown in the above example. This makes it extremely easy to attach your theme options to specific functionality. That way if you have a lite version and a pro version of a theme, you can keep the theme options separated easily.
+To register theme options tabs, simply use `sell_media_register_plugin_options()` and `sell_media_register_plugin_options_tab()` within your existing code as shown in the above example. This makes it extremely easy to attach your theme options to specific functionality. That way if you have a lite version and a pro version of a theme, you can keep the theme options separated easily.
