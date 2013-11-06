@@ -8,18 +8,18 @@ To get started using the framework:
     $ cd theme_name
     $ git submodule add git://github.com/graphpaperpress/sell-media-theme-options.git options
     ```
-2. Copy theme-options-example.txt to theme-options.php
+2. Copy theme-options-example.txt to theme-settings.php
 3. Bootstrap the framework by adding this to functions.php:
 
     ```php
-    include_once(get_template_directory().'/options/options.php');
+    include_once(get_template_directory().'/settings/settings.php');
     ```
 4. Bootstrap the theme options by adding this to functions.php below the include above:
 
     ```php
-    include_once(get_template_directory().'/theme-options.php');
+    include_once(get_template_directory().'/theme-settings.php');
     ```
-5. Customize theme-options.php. Options include:
+5. Customize theme-settings.php. Options include:
 
     ```
     'type' => 'text' - standard text box
