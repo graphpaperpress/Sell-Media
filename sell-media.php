@@ -38,6 +38,8 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-notices.php' );
 }
 
+include_once(plugin_dir_path( __FILE__ ).'options/options.php');
+include_once(plugin_dir_path( __FILE__ ).'plugin-options.php');
 
 
 /**
