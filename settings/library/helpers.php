@@ -41,6 +41,7 @@ function sell_media_plugin_get_current_tab() {
 	return $current;
 }
 
+
 /**
  * Get current settings page tab
  */
@@ -52,6 +53,7 @@ function sell_media_plugin_get_current_tab_title( $tabval ) {
 
 	return $current;
 }
+
 
 /**
  * Define sell_media Admin Page Tab Markup
@@ -101,5 +103,19 @@ function sell_media_plugin_get_page_tab_markup() {
     foreach ( $links as $link )
         echo $link;
     echo '</h2>';
+}
 
+
+function sell_media_pages_options() {
+    $final_pages['none'] = array(
+        'name' => 'none',
+        'title' => 'None'
+        );
+    foreach( get_pages() as $page ){
+        $final_pages[ $page->ID ] = array(
+            'name' => $page->ID,
+            'title' => $page->post_title
+            );
+    }
+    return $final_pages;
 }

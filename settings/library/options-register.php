@@ -329,8 +329,13 @@ function sell_media_plugin_setting_callback( $option ) {
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
-         //Render uploaded gallery
+        //Render uploaded gallery
         case 'gallery': sell_media_plugin_field_gallery( $value, $attr );
+		echo '<span class="option-description">' . $option['description'] . '</span>';
+        break;
+
+        //Render uploaded gallery
+        case 'html': sell_media_plugin_field_html( $value, $attr );
 		echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 

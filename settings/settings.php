@@ -49,7 +49,7 @@ function sell_media_register_plugin_option_tab( $args ) {
  */
 function sell_media_get_current_plugin_id() {
 
-    return 'sell-media';
+    return 'sell_media';
 
 }
 
@@ -125,9 +125,9 @@ function sell_media_add_plugin_page() {
         // parent page
         'edit.php?post_type=sell_media_item',
         // Name displayed in HTML title tag
-        __('Sell Media Options', 'sell_media'),
+        __('Settings (new)', 'sell_media'),
         // Name displayed in the Admin Menu
-        __('Sell Media Options', 'sell_media'),
+        __('Settings (new)', 'sell_media'),
         // User capability required to access page
         sell_media_get_plugin_settings_page_cap(),
         // String to append to URL after "themes.php"
@@ -583,6 +583,15 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
 
 <?php
 }
+
+
+/**
+ * Any html
+ */
+function sell_media_plugin_field_html( $value, $attr ){
+    echo $attr['valid_options'];
+}
+
 
 /**
  * Image upload ajax callback
