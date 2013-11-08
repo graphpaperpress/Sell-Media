@@ -58,20 +58,8 @@ function sell_media_get_current_plugin_id() {
  * Get Theme Options Directory URI
  */
 function sell_media_get_plugin_options_directory_uri() {
-
-  return trailingslashit( trailingslashit( get_template_directory_uri() ) . basename( dirname( __FILE__ ) ) );
-
+    return plugin_dir_url( dirname( __FILE__ ) ) . 'settings/';
 }
-
-/**
-* Perform basic setup, registration, and init actions for a theme
-*/
-function sell_media_after_setup_plugin() {
-
-    include_once( 'library/theme-customizer.php' );
-
-}
-add_action( 'after_setup_theme', 'sell_media_after_setup_plugin', 10 );
 
 /**
 * Enqueue CSS and Javascripts
@@ -80,14 +68,9 @@ function sell_media_enqueue_plugin_scripts_styles() {
 
     wp_enqueue_style( 'sell-media-framework', sell_media_get_plugin_options_directory_uri() . 'css/sell-media-framework.css' );
     wp_enqueue_script( 'sell-media-framework', sell_media_get_plugin_options_directory_uri() . 'js/sell-media-framework.js', array( 'jquery' ) );
-    wp_enqueue_script( 'wp-color-picker' );
-    wp_enqueue_style( 'wp-color-picker' );
-    wp_enqueue_media(); // for WordPress 3.5 Media Pop up
-	wp_enqueue_script( 'thickbox' ); // for Font select Pop up
-	wp_enqueue_style( 'thickbox' ); // for Font select Pop up
 
 }
-add_action( 'admin_print_scripts-appearance_page_sell-media-settings', 'sell_media_enqueue_plugin_scripts_styles', 40 );
+add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles', 40 );
 
 /**
 * Settings API options initilization and validation
@@ -112,7 +95,6 @@ add_action( 'init', 'sell_media_register_plugin_actions' );
 /**
 * Fonts need to be included outside of action
 */
-include_once( 'library/fonts.php' );
 include_once( 'library/helpers.php' );
 /**
  * Setup the Plugin Admin Settings Page
@@ -613,73 +595,20 @@ function sell_media_plugin_image_url_callback() {
 
 add_action( 'wp_ajax_sell_media_imageurl', 'sell_media_plugin_image_url_callback' );
 
-/**
- * Custom Font Previews
- */
-function sell_media_plugin_fonts_preview() {
-
-	// Flag to determine if this is for the header or body copy.
-	$font_flag = $_GET['font'];
-
-	$fonts = sell_media_plugin_font_array();
-	$protocol = is_ssl() ? 'https' : 'http';
-
-	$count = count( $fonts );
-	$i = 0;
-	$final_fonts = null;
-
-	foreach( $fonts as $font => $attributes ) {
-	    $i++;
-
-	    if ( $count != $i ){
-	        $sep = '|';
-	    } else {
-	        $sep = null;
-	    }
-	    $clean_font = str_replace(' ', '+', $font );
-	    if ( ! empty( $attributes['parameter'] ) ) {
-	    	$attr_sep = ':';
-	    } else {
-	    	$attr_sep = '';
-	    }
-
-	    $final_fonts .= "{$clean_font}{$attr_sep}{$attributes['parameter']}{$sep}";
-	}
-
-	// wp_enqueue_style( 'reportage-google-fonts', "$protocol://fonts.googleapis.com/css?family={$final_fonts}" );
-	print "<link href='$protocol://fonts.googleapis.com/css?family={$final_fonts}' rel='stylesheet' type='text/css'>";
-
-	$lorum = 'Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.';
-	$html = null;
-
-	foreach ( $fonts as $font => $attributes ) {
-		$class = strtolower( str_replace( ' ' , '-', $font ) );
-		$html .= '<div class="box">';
-		$html .= '<h2 class="' . $class . '">' . $font . '</h2>';
-		$html .= '<p class="' . $class . '">' . $lorum . '</p>';
-		$html .= '<button class="button" data-font-' . $font_flag . '="' . $font . ':' . $attributes['parameter'] . '">Use this font</button>';
-		$html .= '</div>';
-	}
-
-	print '<div id="sell-media-font-preview">' . $html . '</div>';
-	die();
-}
-
-add_action( 'wp_ajax_fonts', 'sell_media_plugin_fonts_preview' );
 
 /**
  * Theme Name, Theme Version, Readme, Support utility links on theme options
  */
 function sell_media_plugin_utility_links(){
 
-    $theme_data = wp_get_theme();
+    $plugin_data = get_plugin_data( plugin_dir_path( dirname( __FILE__ ) ) . 'sell-media.php' );
 
-    echo '<div class="theme-options">';
+    echo '<div class="plugin-options">';
     echo '<ul>';
-    echo '<li><a href="' . $theme_data->get( 'ThemeURI' ) . '" target="_blank">' . $theme_data->Name . '</a></li>';
-    echo '<li>' . __( 'Version: ', 'sell_media' ) . $theme_data->Version . '</li>';
-    echo '<li><a href="' . $theme_data->get( 'AuthorURI' ) . '" target="_blank">' . __( 'Support', 'sell_media' ) . '</a></li>';
-    echo '<li><a href="http://graphpaperpress.com/support/instructions/?theme=' . strtolower( str_replace( " ", "-", $theme_data->Name ) ) . '" title="' . __( 'Theme Instructions', 'sell_media' ) . '" target="_blank">' . __( 'Instructions', 'sell_media' ) . '</a></li>';
+    echo '<li><a href="' . $plugin_data['PluginURI'] . '" target="_blank">' . $plugin_data['Name'] . '</a></li>';
+    echo '<li>' . __( 'Version: ', 'sell_media' ) . $plugin_data['Version'] . '</li>';
+    echo '<li><a href="' . $plugin_data['AuthorURI'] . '" target="_blank">' . __( 'Support', 'sell_media' ) . '</a></li>';
+    echo '<li><a href="http://graphpaperpress.com/support/instructions/?plugin=' . strtolower( str_replace( " ", "-", $plugin_data['Name'] ) ) . '" title="' . __( 'Theme Instructions', 'sell_media' ) . '" target="_blank">' . __( 'Instructions', 'sell_media' ) . '</a></li>';
     echo '</ul>';
     echo '<br class="clear">';
     echo '</div>';

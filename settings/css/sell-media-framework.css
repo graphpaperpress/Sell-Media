@@ -1,12 +1,25 @@
 
-.wrap .theme-options {
+.wrap .plugin-options {
     font-size: 1em;
     height: 20px;
     margin: 10px 0 -10px;
+    padding-bottom: 10px;
     clear: both;
 }
-.wrap .theme-options ul {
+.wrap .plugin-options ul {
     float: right;
+    margin: 0;
+}
+.wrap .plugin-options ul li {
+    float: left;
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #DFDFDF;
+}
+.wrap .plugin-options ul li:last-child {
+    border: 0;
+    padding-right: 0;
+    margin-right: 0;
 }
 form h3 {
     margin-bottom: 0;
