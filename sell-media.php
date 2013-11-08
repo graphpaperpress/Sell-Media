@@ -38,8 +38,7 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-notices.php' );
 }
 
-include_once(plugin_dir_path( __FILE__ ).'settings/settings.php');
-include_once(plugin_dir_path( __FILE__ ).'sell-media-settings.php');
+
 
 
 /**
@@ -189,6 +188,9 @@ class SellMedia {
         $this->registerPriceGroup();
         $this->enqueueScripts();
 
+        include_once(plugin_dir_path( __FILE__ ).'settings/settings.php');
+        include_once(plugin_dir_path( __FILE__ ).'sell-media-settings.php');
+
     }
 
     /**
@@ -205,6 +207,7 @@ class SellMedia {
             global $wp_rewrite;
             $wp_rewrite->flush_rules();
         }
+
     }
 
     /**

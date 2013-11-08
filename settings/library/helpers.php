@@ -119,3 +119,128 @@ function sell_media_pages_options() {
     }
     return $final_pages;
 }
+
+
+/**
+ * Returns a formatted list of currencies to be used with the Sell Media settings
+ */
+function sell_media_currencies(){
+    $currencies = array(
+    "USD" => array(
+        'name' => 'USD',
+        'title' => __('US Dollars ($)','sell_media')
+        ),
+    "EUR" => array(
+        'name' => 'EUR',
+        'title' => __('Euros (€)','sell_media')
+        ),
+    "GBP" => array(
+        'name' => 'GBP',
+        'title' => __('Pounds Sterling (£)','sell_media')
+        ),
+    "AUD" => array(
+        'name' => 'AUD',
+        'title' => __('Australian Dollars ($)','sell_media')
+        ),
+    "BRL" => array(
+        'name' => 'BRL',
+        'title' => __('Brazilian Real ($)','sell_media')
+        ),
+    "CAD" => array(
+        'name' => 'CAD',
+        'title' => __('Canadian Dollars ($)','sell_media')
+        ),
+    "CZK" => array(
+        'name' => 'CZK',
+        'title' => __('Czech Koruna (Kč)','sell_media')
+        ),
+    "DKK" => array(
+        'name' => 'DKK',
+        'title' => __('Danish Krone','sell_media')
+        ),
+    "HKD" => array(
+        'name' => 'HKD',
+        'title' => __('Hong Kong Dollar ($)','sell_media')
+        ),
+    "HUF" => array(
+        'name' => 'HUF',
+        'title' => __('Hungarian Forint','sell_media')
+        ),
+    "ILS" => array(
+        'name' => 'ILS',
+        'title' => __('Israeli Shekel','sell_media')
+        ),
+    "JPY" => array(
+        'name' => 'JPY',
+        'title' => __('Japanese Yen (¥)','sell_media')
+        ),
+    "MYR" => array(
+        'name' => 'MYR',
+        'title' => __('Malaysian Ringgits','sell_media')
+        ),
+    "MXN" => array(
+        'name' => 'MXN',
+        'title' => __('Mexican Peso ($)','sell_media')
+        ),
+    "NZD" => array(
+        'name' => 'NZD',
+        'title' => __('New Zealand Dollar ($)','sell_media')
+        ),
+    "NOK" => array(
+        'name' => 'NOK',
+        'title' => __('Norwegian Krone','sell_media')
+        ),
+    "PHP" => array(
+        'name' => 'PHP',
+        'title' => __('Philippine Pesos','sell_media')
+        ),
+    "PLN" => array(
+        'name' => 'PLN',
+        'title' => __('Polish Zloty','sell_media')
+        ),
+    "SGD" => array(
+        'name' => 'SGD',
+        'title' => __('Singapore Dollar ($)','sell_media')
+        ),
+    "SEK" => array(
+        'name' => 'SEK',
+        'title' => __('Swedish Krona','sell_media')
+        ),
+    "CHF" => array(
+        'name' => 'CHF',
+        'title' => __('Swiss Franc','sell_media')
+        ),
+    "TWD" => array(
+        'name' => 'TWD',
+        'title' => __('Taiwan New Dollars','sell_media')
+        ),
+    "THB" => array(
+        'name' => 'THB',
+        'title' => __('Thai Baht','sell_media')
+        ),
+    "TRY" => array(
+        'name' => 'TRY',
+        'title' => __('Turkish Lira (TL)','sell_media')
+        ),
+    "ZAR" => array(
+        'name' => 'ZAR',
+        'title' => __('South African rand (R)','sell_media')
+        )
+    );
+    return $currencies;
+}
+
+
+/**
+ * Returns a formatted array of price groups for the sell media settings
+ */
+function sell_media_settings_price_group(){
+    foreach( get_terms('price-group',array('hide_empty'=>false, 'parent'=>0)) as $term ) {
+        $array[ $term->term_id ] = array(
+            'name' => $term->term_id,
+            'title' => $term->name
+            );
+    }
+
+    return $array;
+}

@@ -1,112 +1,5 @@
 <?php
 
-
-function sell_media_currencies(){
-    $currencies = array(
-    "USD" => array(
-        'name' => 'USD',
-        'title' => __('US Dollars ($)','sell_media')
-        ),
-    "EUR" => array(
-        'name' => 'EUR',
-        'title' => __('Euros (€)','sell_media')
-        ),
-    "GBP" => array(
-        'name' => 'GBP',
-        'title' => __('Pounds Sterling (£)','sell_media')
-        ),
-    "AUD" => array(
-        'name' => 'AUD',
-        'title' => __('Australian Dollars ($)','sell_media')
-        ),
-    "BRL" => array(
-        'name' => 'BRL',
-        'title' => __('Brazilian Real ($)','sell_media')
-        ),
-    "CAD" => array(
-        'name' => 'CAD',
-        'title' => __('Canadian Dollars ($)','sell_media')
-        ),
-    "CZK" => array(
-        'name' => 'CZK',
-        'title' => __('Czech Koruna (Kč)','sell_media')
-        ),
-    "DKK" => array(
-        'name' => 'DKK',
-        'title' => __('Danish Krone','sell_media')
-        ),
-    "HKD" => array(
-        'name' => 'HKD',
-        'title' => __('Hong Kong Dollar ($)','sell_media')
-        ),
-    "HUF" => array(
-        'name' => 'HUF',
-        'title' => __('Hungarian Forint','sell_media')
-        ),
-    "ILS" => array(
-        'name' => 'ILS',
-        'title' => __('Israeli Shekel','sell_media')
-        ),
-    "JPY" => array(
-        'name' => 'JPY',
-        'title' => __('Japanese Yen (¥)','sell_media')
-        ),
-    "MYR" => array(
-        'name' => 'MYR',
-        'title' => __('Malaysian Ringgits','sell_media')
-        ),
-    "MXN" => array(
-        'name' => 'MXN',
-        'title' => __('Mexican Peso ($)','sell_media')
-        ),
-    "NZD" => array(
-        'name' => 'NZD',
-        'title' => __('New Zealand Dollar ($)','sell_media')
-        ),
-    "NOK" => array(
-        'name' => 'NOK',
-        'title' => __('Norwegian Krone','sell_media')
-        ),
-    "PHP" => array(
-        'name' => 'PHP',
-        'title' => __('Philippine Pesos','sell_media')
-        ),
-    "PLN" => array(
-        'name' => 'PLN',
-        'title' => __('Polish Zloty','sell_media')
-        ),
-    "SGD" => array(
-        'name' => 'SGD',
-        'title' => __('Singapore Dollar ($)','sell_media')
-        ),
-    "SEK" => array(
-        'name' => 'SEK',
-        'title' => __('Swedish Krona','sell_media')
-        ),
-    "CHF" => array(
-        'name' => 'CHF',
-        'title' => __('Swiss Franc','sell_media')
-        ),
-    "TWD" => array(
-        'name' => 'TWD',
-        'title' => __('Taiwan New Dollars','sell_media')
-        ),
-    "THB" => array(
-        'name' => 'THB',
-        'title' => __('Thai Baht','sell_media')
-        ),
-    "TRY" => array(
-        'name' => 'TRY',
-        'title' => __('Turkish Lira (TL)','sell_media')
-        ),
-    "ZAR" => array(
-        'name' => 'ZAR',
-        'title' => __('South African rand (R)','sell_media')
-        )
-    );
-    return $currencies;
-}
-
 /**
  * Define the Tabs appearing on the Theme Options page
  * Tabs contains sections
@@ -128,7 +21,20 @@ $general_settings_tab = array(
 );
 sell_media_register_plugin_option_tab( $general_settings_tab );
 
+
 // Size & Price Tab
+$size_price_tab = array(
+    "name" => "sell_media_size_settings",
+    "title" => __( "Size &amp; Price", "sell_media" ),
+    "sections" => array(
+        "size_price_plugin_section_1" => array(
+            "name" => "size_price_plugin_section_1",
+            "title" => __( "Size &amp; Price", "sell_media" ),
+            "description" => __( "", "sell_media" )
+        )
+    )
+);
+sell_media_register_plugin_option_tab( $size_price_tab );
 
 
 // Payment Tab
@@ -174,6 +80,16 @@ $misc_tab = array(
         )
     );
 sell_media_register_plugin_option_tab( $misc_tab );
+
+
+// Since the nav style ui prints output we suppress it and
+// assign it to a variable.
+ob_start();
+$price_group = New SellMediaNavStyleUI();
+$price_group->taxonomy = 'price-group';
+$price_group->setting_ui();
+$price_group_ui = ob_get_contents();
+ob_end_clean();
 
 
 /**
@@ -439,8 +355,38 @@ $options = array(
             )
     ),
 
-    // Size & Price
 
+    // Size & Price
+    'original_price' => array(
+        "tab" => "sell_media_size_settings",
+        "name" => "original_price",
+        "title" => __("Original Price","sell_media"),
+        "description" => __( 'The default price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ),
+        "section" => "size_price_plugin_section_1",
+        "since" => "1.0",
+        "id" => "size_price_plugin_section_1",
+        "type" => "text"
+        ),
+
+    'default_price_group' => array(
+        'tab' => 'sell_media_size_settings',
+        'name' => 'default_price_group',
+        'title' => __('Select Default Price Group', 'sell_media'),
+        'id' => 'size_price_plugin_section_1',
+        'section' => 'size_price_plugin_section_1',
+        'type' => 'select',
+        'valid_options' => sell_media_settings_price_group()
+        ),
+
+    'price_group' => array(
+        'tab' => 'sell_media_size_settings',
+        'name' => 'price_group',
+        'title' => __('Price Groups','sell_media'),
+        'id' => 'size_price_plugin_section_1',
+        'section' => 'size_price_plugin_section_1',
+        'type' => 'html',
+        'valid_options' => $price_group_ui
+        ),
 
     // Payment Tab
     'default_payment' => array(

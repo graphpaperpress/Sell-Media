@@ -136,7 +136,7 @@ Class SellMediaNavStyleUI {
         if ( ! empty( $_POST['term_name'] )  && ! in_array( $_POST['term_name'], $termarray ) ) {
             $term = wp_insert_term( $_POST['term_name'], $_POST['taxonomy'] );
             $timestamp = time();
-            $return_url = admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
+            $return_url = admin_url('edit.php?post_type=sell_media_item&page=sell-media-settings&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
         } else {
             $return_url = null;
         }
@@ -163,7 +163,7 @@ Class SellMediaNavStyleUI {
                 $current_term_id = $term->term_id;
                 $link = '<span class="nav-tab nav-tab-active">' . $term->name . '</span>';
             } else {
-                $link = '<a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=' . $term->term_id ) . '" class="nav-tab" data-term_id="' . $term->term_id . '">' . $term->name . '</a>';
+                $link = '<a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell-media-settings&tab=sell_media_size_settings&term_parent=' . $term->term_id ) . '" class="nav-tab" data-term_id="' . $term->term_id . '">' . $term->name . '</a>';
             }
 
             $tmp[] = array(
@@ -177,13 +177,13 @@ Class SellMediaNavStyleUI {
             $final['menu'] = $tmp;
         }
 
-        if ( ! empty( $current_parent ) && $current_parent == 'new_term' ) {
+        if ( empty( $current_parent ) || $current_parent == 'new_term' ) {
             $final['menu'][] = array(
                 'html' => '<span class="nav-tab-active nav-tab menu-add-new"><abbr title="Add menu">+</abbr></span>'
                 );
         } else {
             $final['menu'][] = array(
-                'html' => '<a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=new_term') .'" class="nav-tab menu-add-new"><abbr title="Add menu">+</abbr></a>'
+                'html' => '<a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell-media-settings&tab=sell_media_size_settings&term_parent=new_term') .'" class="nav-tab menu-add-new"><abbr title="Add menu">+</abbr></a>'
                 );
         }
 
@@ -347,4 +347,3 @@ Class SellMediaNavStyleUI {
         </div><!-- /#menu-management -->
     <?php }
 }
-New SellMediaNavStyleUI();
