@@ -9,18 +9,6 @@ $sell_media_plugin_options = array();
 */
 define( 'GPP_THEME_OPTIONS_VER', '1.3' );
 
-/**
-* Set some default theme options when theme is switched to this theme
-*/
-function sell_media_plugin_options_activation_func() {
-
-    $defaults = (array) sell_media_get_plugin_options();
-
-    if ( ! get_option( sell_media_get_current_plugin_id() . "_options" ) )
-        update_option( sell_media_get_current_plugin_id() . "_options" , $defaults );
-
-}
-add_action( 'after_switch_theme', 'sell_media_plugin_options_activation_func', 10, 2 );
 
 /**
 * Merge existing and new option arrays
@@ -84,13 +72,6 @@ function sell_media_plugin_register_options() {
 }
 add_action( 'admin_init', 'sell_media_plugin_register_options' );
 
-/**
-* Settings API actions initilization and validation
-*/
-function sell_media_register_plugin_actions() {
-    include_once( 'library/actions.php' );
-}
-add_action( 'init', 'sell_media_register_plugin_actions' );
 
 /**
 * Fonts need to be included outside of action

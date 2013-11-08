@@ -20,42 +20,6 @@ register_setting(
 	'sell_media_plugin_options_validate'
 );
 
-/**
- * Register Global Admin Javascript Variables
- *
- * Register JS variables used by theme options admin Javascript.
- *
- * @global	array	Settings Page Tab definitions
- *
- */
-
-function sell_media_plugin_register_admin_js_globals(){
-
-	global $sell_media_plugin_tabs;
-
-	$tab = '';
-	$selected_tab = '';
-
-	$selected_tab = $selected_tab ? $sell_media_plugin_tabs[0]['name'] : $tab;
-	$themedata = wp_get_theme();
-    $theme_title = $themedata->title;
-	$theme_name = strtolower( $theme_title );
-	$theme_url = get_template_directory_uri();
-
-	echo "<script type=\"text/javascript\">\n";
-	echo "var sell_media = {\n";
-	echo "    'theme' : '$theme_name',\n";
-
-	if( isset( $_GET['page']) && esc_attr( $_GET['page'] ) == 'sell-media-settings' && $selected_tab )
-		echo "    'current_tab' : '$selected_tab',\n";
-
-	echo "    'theme_url' : '$theme_url'\n";
-	echo "}" . "\n";
-	echo "</script>" . "\n";
-
-}
-
-add_action( 'admin_enqueue_scripts', 'sell_media_plugin_register_admin_js_globals', 1 );
 
 /**
  * Theme register_setting() sanitize callback
