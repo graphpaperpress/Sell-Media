@@ -33,7 +33,6 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-extensions.php' );
     include( dirname(__FILE__) . '/inc/admin-mime-types.php' );
     include( dirname(__FILE__) . '/inc/admin-payments.php' );
-    include( dirname(__FILE__) . '/inc/admin-settings.php' );
     include( dirname(__FILE__) . '/inc/admin-price-groups.php' );
     include( dirname(__FILE__) . '/inc/admin-notices.php' );
 }
@@ -211,7 +210,7 @@ class SellMedia {
     }
 
     /**
-     * Add all menus under Sell Media. Settings are added on admin-settings.php
+     * Add all menus under Sell Media.
      *
      * @since 1.0
      */

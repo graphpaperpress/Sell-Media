@@ -490,4 +490,8 @@ $options = array(
     )
 );
 
-sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
+// If we have additional options, merge them, if not use what we have
+$additional_options = apply_filters( 'sell_media_options', $additional_options );
+$options = ( empty( $additional_options ) ) ? $options : array_merge( $options, $additional_options );
+
+sell_media_register_plugin_options( $options );
