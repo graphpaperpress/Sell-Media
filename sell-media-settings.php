@@ -140,7 +140,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => "none",
+        "default" => null,
         "valid_options" => sell_media_pages_options()
     ),
     'dashboard_page' => array(
@@ -152,7 +152,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => "none",
+        "default" => null,
         "valid_options" => sell_media_pages_options()
     ),
     'login_page' => array(
@@ -164,7 +164,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => "none",
+        "default" => null,
         "valid_options" => sell_media_pages_options()
     ),
     'customer_notification' => array(
@@ -197,7 +197,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => "none",
+        "default" => null,
         "valid_options" => array(
             'dark' => array(
                 'name' => 'dark',
