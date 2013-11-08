@@ -184,5 +184,29 @@ if ( $version <= '1.5.1' ){
         delete_option( "price-group_children" );
         _get_term_hierarchy( 'price-group' );
     }
+}
 
+if ( $version <= '1.6.5' ){
+
+    global $wpdb;
+    $current_settings = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->prefix}options WHERE option_name LIKE 'sell_media_%';" );
+
+    $new_settings = array();
+
+    foreach( $current_settings as $r ){
+        $serialized = maybe_unserialize( $r->option_value );
+        if ( is_array( $serialized ) && ! empty( $serialized ) ){
+            foreach( $serialized as $k => $v ){
+                if ( ! empty( $v ) ){
+                    $new_settings[ $k ] = $v;
+                }
+            }
+        }
+    }
+
+    // add new settings
+    $update_result = update_option( 'sell_media_options_test', $new_settings );
+    if ( $update_result === true ){
+        // remove old options
+    }
 }
