@@ -94,7 +94,7 @@ function sell_media_add_plugin_page() {
         // User capability required to access page
         sell_media_get_plugin_settings_page_cap(),
         // String to append to URL after "themes.php"
-        'sell-media-settings',
+        'sell_media_plugin_options',
         // Function to define settings page markup
         'sell_media_admin_plugin_options_page'
     );
@@ -290,7 +290,7 @@ function sell_media_get_plugin_settings_page_cap() {
     return 'edit_theme_options';
 }
 // Hook into option_page_capability_{option_page}
-add_action( 'option_page_capability_sell-media-settings', 'sell_media_get_plugin_settings_page_cap' );
+add_action( 'option_page_capability_sell_media_plugin_options', 'sell_media_get_plugin_settings_page_cap' );
 
 
 /**

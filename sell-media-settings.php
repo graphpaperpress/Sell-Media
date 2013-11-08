@@ -39,7 +39,7 @@ sell_media_register_plugin_option_tab( $size_price_tab );
 
 // Payment Tab
 $payment_tab = array(
-    'name' => 'payment_plugin_tab',
+    'name' => 'sell_media_payment_settings',
     'title' => __('Payment','sell_media'),
     'sections' => array(
         'payment_section_1' => array(
@@ -128,7 +128,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => "none",
+        "default" => null,
         "valid_options" => sell_media_pages_options()
     ),
     'thanks_page' => array(
@@ -388,7 +388,7 @@ $options = array(
 
     // Payment Tab
     'default_payment' => array(
-        'tab' => 'payment_plugin_tab',
+        'tab' => 'sell_media_payment_settings',
         'name' => 'default_payment',
         'title' => __('Default Payment','sell_media'),
         'description' => '',
@@ -399,7 +399,7 @@ $options = array(
         'valid_options' => sell_media_settings_payment_gateway()
         ),
     'paypal_email' => array(
-        'tab' => 'payment_plugin_tab',
+        'tab' => 'sell_media_payment_settings',
         'name' => 'paypal_email',
         'title' => __('PayPal Email Address', 'sell_media'),
         'description' => sprintf( __('The email address used to collect Paypal payments. %1$s: You must setup IPN Notifications in Paypal to process transactions. %2$s. Here is the listener URL you need to add in Paypal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read Paypal instructions</a>', '<code>' . site_url( '?sell_media-listener=IPN' ) . '</code>'),
@@ -409,7 +409,7 @@ $options = array(
         'type' => 'text'
         ),
     'currency' => array(
-        'tab' => 'payment_plugin_tab',
+        'tab' => 'sell_media_payment_settings',
         'name' => 'currency',
         'title' => __('Currency','sell_media'),
         'description' => __('The currency in which you accept payment.', 'sell_media'),
@@ -421,7 +421,7 @@ $options = array(
         'valid_options' => sell_media_currencies()
         ),
     'paypal_additional_test_email' => array(
-        'tab' => 'payment_plugin_tab',
+        'tab' => 'sell_media_payment_settings',
         'name' => 'paypal_additional_test_email',
         'title' => __('Paypal Additional Test Emails','sell_media'),
         'description' => __('This is useful when debugging Paypal. Enter a comma separeted list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list.','sell_media'),

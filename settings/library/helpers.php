@@ -67,7 +67,7 @@ function sell_media_plugin_get_page_tab_markup() {
 
 	global $sell_media_plugin_tabs;
 
-	$page = 'sell-media-settings';
+	$page = 'sell_media_plugin_options';
 
 	if ( isset( $_GET['page'] ) && 'sell-media-reference' == $_GET['page'] ) {
 		$page = 'sell-media-reference';
@@ -77,7 +77,7 @@ function sell_media_plugin_get_page_tab_markup() {
 
     $current = sell_media_plugin_get_current_tab();
 
-	if ( 'sell-media-settings' == $page ) {
+	if ( 'sell_media_plugin_options' == $page ) {
         $tabs = $sell_media_plugin_tabs;
 	} else if ( 'sell-media-reference' == $page ) {
         $tabs = sell_media_get_reference_page_tabs();
@@ -108,7 +108,7 @@ function sell_media_plugin_get_page_tab_markup() {
 
 function sell_media_pages_options() {
     $final_pages['none'] = array(
-        'name' => 'none',
+        'name' => 0,
         'title' => 'None'
         );
     foreach( get_pages() as $page ){
