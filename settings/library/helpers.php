@@ -244,3 +244,15 @@ function sell_media_settings_price_group(){
 
     return $array;
 }
+
+
+function sell_media_settings_payment_gateway(){
+    $gateways = array(
+        array(
+            'name' => 'paypal',
+            'title' => __('PayPal','sell_media')
+            )
+        );
+
+    return apply_filters('sell_media_payment_gateway', $gateways);
+}

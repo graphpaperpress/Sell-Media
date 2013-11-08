@@ -367,7 +367,6 @@ $options = array(
         "id" => "size_price_plugin_section_1",
         "type" => "text"
         ),
-
     'default_price_group' => array(
         'tab' => 'sell_media_size_settings',
         'name' => 'default_price_group',
@@ -377,7 +376,6 @@ $options = array(
         'type' => 'select',
         'valid_options' => sell_media_settings_price_group()
         ),
-
     'price_group' => array(
         'tab' => 'sell_media_size_settings',
         'name' => 'price_group',
@@ -398,19 +396,7 @@ $options = array(
         'since' => '1.0',
         'id' => 'payment_section_1',
         'type' => 'select',
-        'valid_options' => array(
-            array(
-                'name' => 'paypal',
-                'title' => __('PayPal','sell_media')
-                )
-            )
-        // $gateways = array(
-        //     array(
-        //         'id' => 'paypal',
-        //         'name' => __('Paypal','sell_media')
-        //         )
-        //     );
-        // $gateways = apply_filters('sell_media_payment_gateway', $gateways);
+        'valid_options' => sell_media_settings_payment_gateway()
         ),
     'paypal_email' => array(
         'tab' => 'payment_plugin_tab',
@@ -504,4 +490,4 @@ $options = array(
     )
 );
 
-sell_media_register_plugin_options( $options );
+sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
