@@ -198,7 +198,16 @@ if ( $version <= '1.6.5' ){
         if ( is_array( $serialized ) && ! empty( $serialized ) ){
             foreach( $serialized as $k => $v ){
                 if ( ! empty( $v ) ){
-                    $new_settings[ $k ] = $v;
+
+                    /**
+                     * The legacy format wasn't saved in the same format of the
+                     * new settings API, we update the format
+                     */
+                    if ( in_array( $k, array('show_collection', 'show_license', 'show_keywords', 'show_creators') ) ){
+                        $new_settings['admin_columns'][] = $k;
+                    } else {
+                        $new_settings[ $k ] = $v;
+                    }
                 }
             }
         }
