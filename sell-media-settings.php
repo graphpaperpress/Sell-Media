@@ -82,15 +82,6 @@ $misc_tab = array(
 sell_media_register_plugin_option_tab( $misc_tab );
 
 
-// Since the nav style ui prints output we suppress it and
-// assign it to a variable.
-ob_start();
-$price_group = New SellMediaNavStyleUI();
-$price_group->taxonomy = 'price-group';
-$price_group->setting_ui();
-$price_group_ui = ob_get_contents();
-ob_end_clean();
-
 
 /**
  * The following example shows you how to register theme options and assign them to tabs and sections:
@@ -383,7 +374,7 @@ $options = array(
         'id' => 'size_price_plugin_section_1',
         'section' => 'size_price_plugin_section_1',
         'type' => 'html',
-        'valid_options' => $price_group_ui
+        'valid_options' => sell_media_price_group_ui()
         ),
 
     // Payment Tab

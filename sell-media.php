@@ -25,6 +25,7 @@ include( dirname(__FILE__) . '/inc/class-search.php' );
 include( dirname(__FILE__) . '/inc/class-payments.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
+include_once(plugin_dir_path( __FILE__ ).'settings/settings.php');
 
 if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-bulk.php' );
@@ -187,7 +188,6 @@ class SellMedia {
         $this->registerPriceGroup();
         $this->enqueueScripts();
 
-        include_once(plugin_dir_path( __FILE__ ).'settings/settings.php');
         include_once(plugin_dir_path( __FILE__ ).'sell-media-settings.php');
 
     }
@@ -206,6 +206,7 @@ class SellMedia {
             global $wp_rewrite;
             $wp_rewrite->flush_rules();
         }
+
 
     }
 

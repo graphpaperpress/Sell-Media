@@ -256,3 +256,17 @@ function sell_media_settings_payment_gateway(){
 
     return apply_filters('sell_media_payment_gateway', $gateways);
 }
+
+
+function sell_media_price_group_ui(){
+    include_once(plugin_dir_path( dirname( dirname( __FILE__ ) ) ).'inc/admin-price-groups.php');
+    // Since the nav style ui prints output we suppress it and
+    // assign it to a variable.
+    ob_start();
+    $price_group = New SellMediaNavStyleUI();
+    $price_group->taxonomy = 'price-group';
+    $price_group->setting_ui();
+    $price_group_ui = ob_get_contents();
+    ob_end_clean();
+    return $price_group_ui;
+}
