@@ -477,7 +477,7 @@ $options = array(
         "since" => "1.0.",
         "id" => "misc_section_1",
         "type" => "html",
-        "valid_options" => sprintf( "<a href='http://graphpaperpress.com/plugins/sell-media/downloads/category/extensions/' class='button secondary' target='_blank'>%s</a>", __( "Download Extensions for Sell Media","sell_media" ) )
+        "valid_options" => sprintf( "<a href='http://graphpaperpress.com/downloads/category/extensions/' class='button secondary' target='_blank'>%s</a>", __( "Download Extensions for Sell Media","sell_media" ) )
     )
 );
 
