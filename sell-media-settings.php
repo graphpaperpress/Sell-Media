@@ -93,7 +93,7 @@ $options = array(
         "tab" => "general_plugin_tab",
         "name" => "test_mode",
         "title" => __("Test Mode","sell_media"),
-        "description" => sprintf( __("To accept real payments, select No. To fully use test mode, you must have %s."), "<a href='https://developer.paypal.com/' target='_blank'>Paypal sandbox (test) account</a>" ),
+        "description" => sprintf( __("To accept real payments, select No. To fully use test mode, you must have %s."), "<a href='https://developer.paypal.com/' target='_blank'>PayPal sandbox (test) account</a>" ),
         "section" => "general_plugin_section_1",
         "since" => "1.0",
         "id" => "general_plugin_section_1",
@@ -171,11 +171,11 @@ $options = array(
         "valid_options" => array(
             0 => array(
                 "name" => 0,
-                "title" => "No"
+                "title" => __("No","sell_media")
                 ),
             1 => array(
                 "name" => 1,
-                "title" => "Yes",
+                "title" => __("Yes","sell_media"),
                 )
         )
     ),
@@ -213,11 +213,11 @@ $options = array(
         "valid_options" => array(
             0 => array(
                 "name" => 0,
-                "title" => "No"
+                "title" => __("No","sell_media")
                 ),
             1 => array(
                 "name" => 1,
-                "title" => "Yes",
+                "title" => __("Yes","sell_media"),
                 )
         )
     ),
@@ -308,11 +308,11 @@ $options = array(
         "valid_options" => array(
             0 => array(
                 "name" => 0,
-                "title" => "No"
+                "title" => __("No","sell_media")
                 ),
             1 => array(
                 "name" => 1,
-                "title" => "Yes",
+                "title" => __("Yes","sell_media"),
                 )
         )
     ),
@@ -393,7 +393,7 @@ $options = array(
         "tab" => "sell_media_payment_settings",
         "name" => "paypal_email",
         "title" => __("PayPal Email Address", "sell_media"),
-        'description' => sprintf( __('The email address used to collect Paypal payments. %1$s: You must setup IPN Notifications in Paypal to process transactions. %2$s. Here is the listener URL you need to add in Paypal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read Paypal instructions</a>', '<code>' . site_url( '?sell_media-listener=IPN' ) . '</code>'),
+        'description' => sprintf( __('The email address used to collect PayPal payments. %1$s: You must setup IPN Notifications in PayPal to process transactions. %2$s. Here is the listener URL you need to add in PayPal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read PayPal instructions</a>', '<code>' . site_url( '?sell_media-listener=IPN' ) . '</code>'),
         "section" => "payment_section_1",
         "since" => "1.0",
         "id" => "payment_section_1",
@@ -414,8 +414,8 @@ $options = array(
     "paypal_additional_test_email" => array(
         "tab" => "sell_media_payment_settings",
         "name" => "paypal_additional_test_email",
-        "title" => __("Paypal Additional Test Emails","sell_media"),
-        "description" => __("This is useful when debugging Paypal. Enter a comma separeted list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list.","sell_media"),
+        "title" => __("PayPal Additional Test Emails","sell_media"),
+        "description" => __("This is useful when debugging PayPal. Enter a comma separated list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list.","sell_media"),
         "section" => "payment_section_1",
         "since" => "1.0.",
         "id" => "payment_section_1",
