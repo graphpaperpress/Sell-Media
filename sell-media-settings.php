@@ -257,8 +257,8 @@ $options = array(
                 "title" => "Title ASC",
                 ),
             "title-asc" => array(
-                "name" => "title-asc",
-                "title" => "Title ASC",
+                "name" => "title-desc",
+                "title" => "Title Desc",
                 )
         )
     ),
@@ -285,12 +285,12 @@ $options = array(
         "type" => "select",
         "default" => 0,
         "valid_options" => array(
-            0 => array(
-                'name' => 0,
+            "no" => array(
+                'name' => "no",
                 'title' => 'No'
                 ),
-            1 => array(
-                'name' => 1,
+            "yes" => array(
+                'name' => "yes",
                 'title' => 'Yes',
                 )
         )
@@ -306,12 +306,12 @@ $options = array(
         "type" => "select",
         "default" => 0,
         "valid_options" => array(
-            0 => array(
-                "name" => 0,
+            "no" => array(
+                "name" => "no",
                 "title" => __("No","sell_media")
                 ),
-            1 => array(
-                "name" => 1,
+            "yes" => array(
+                "name" => "yes",
                 "title" => __("Yes","sell_media"),
                 )
         )
@@ -348,9 +348,9 @@ $options = array(
 
 
     // Size & Price
-    "original_price" => array(
+    "default_price" => array(
         "tab" => "sell_media_size_settings",
-        "name" => "original_price",
+        "name" => "default_price",
         "title" => __("Original Price","sell_media"),
         "description" => __( "The default price of new items and bulk uploads. You can set unique prices by editing each individual item.", "sell_media" ),
         "section" => "size_price_plugin_section_1",
@@ -446,9 +446,9 @@ $options = array(
         "type" => "text",
         "default" => get_option('admin_email')
     ),
-    "email_subject" => array(
+    "success_email_subject" => array(
         "tab" => "email_plugin_tab",
-        "name" => "email_subject",
+        "name" => "success_email_subject",
         "title" => __("Email Subject","sell_media"),
         "description" => __("The email subject on successful purchase emails.","sell_media"),
         "section" => "email_section_1",
@@ -457,9 +457,9 @@ $options = array(
         "type" => "text",
         "default" => __("Your Purchase","sell_media")
     ),
-    "email_body" => array(
+    "success_email_body" => array(
         "tab" => "email_plugin_tab",
-        "name" => "email_body",
+        "name" => "success_email_body",
         "title" => __("Email Body","sell_media"),
         "description" => __("This e-mail message is sent to your customers in case of successful and cleared payment. You can use the following keywords: {first_name}, {last_name}, {payer_email}, {download_links}. Be sure to include the {download_links} tag, otherwise your buyers won't receive their download purchases.","sell_media"),
         "section" => "email_section_1",
