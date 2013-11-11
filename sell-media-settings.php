@@ -188,15 +188,15 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => null,
+        "default" => "light",
         "valid_options" => array(
             "dark" => array(
                 "name" => "dark",
-                "title" => "Dark"
+                "title" => __("Dark","sell_media")
                 ),
             "light" => array(
                 "name" => "light",
-                "title" => "Light",
+                "title" => __("Light","sell_media")
                 )
         )
     ),
@@ -242,7 +242,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => "none",
+        "default" => "date-desc",
         "valid_options" => array(
             "date-desc" => array(
                 "name" => "date-desc",
@@ -319,7 +319,7 @@ $options = array(
     "admin_columns" => array(
         "tab" => "general_plugin_tab",
         "name" => "admin_columns",
-        "title" => __("Hide Original Price","sell_media"),
+        "title" => __("Show Columns","sell_media"),
         "description" => __( "Select the columns to show on the admin page &quot;All Items&quot; page.", "sell_media" ),
         "section" => "general_plugin_section_1",
         "since" => "1.0",
@@ -432,7 +432,8 @@ $options = array(
         "section" => "email_section_1",
         "since" => "1.0.",
         "id" => "email_section_1",
-        "type" => "text"
+        "type" => "text",
+        "default" => get_option('blogname')
     ),
     "from_email" => array(
         "tab" => "email_plugin_tab",
@@ -442,7 +443,8 @@ $options = array(
         "section" => "email_section_1",
         "since" => "1.0.",
         "id" => "email_section_1",
-        "type" => "text"
+        "type" => "text",
+        "default" => get_option('admin_email')
     ),
     "email_subject" => array(
         "tab" => "email_plugin_tab",
@@ -452,7 +454,8 @@ $options = array(
         "section" => "email_section_1",
         "since" => "1.0.",
         "id" => "email_section_1",
-        "type" => "text"
+        "type" => "text",
+        "default" => __("Your Purchase","sell_media")
     ),
     "email_body" => array(
         "tab" => "email_plugin_tab",
@@ -463,7 +466,8 @@ $options = array(
         "since" => "1.0.",
         "id" => "email_section_1",
         "type" => "textarea",
-        "sanitize" => "html"
+        "sanitize" => "html",
+        "default" => "Hi {first_name} {last_name},\nThanks for purchasing from my site. Here are your download links:\n{download_links}\nThanks!"
     ),
 
 
