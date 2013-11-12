@@ -358,6 +358,7 @@ $options = array(
         "since" => "1.0",
         "id" => "size_price_plugin_section_1",
         "default" => "",
+        "sanitize" => "html",
         "type" => "text"
         ),
     "default_price_group" => array(
@@ -406,7 +407,8 @@ $options = array(
         "since" => "1.0",
         "default" => "",
         "id" => "payment_section_1",
-        "type" => "text"
+        "type" => "text",
+        "sanitize" => "html"
         ),
     "currency" => array(
         "tab" => "sell_media_payment_settings",
@@ -429,7 +431,8 @@ $options = array(
         "section" => "payment_section_1",
         "since" => "1.0.",
         "id" => "payment_section_1",
-        "type" => "text"
+        "type" => "text",
+        "sanitize" => "html"
     ),
 
 
@@ -443,6 +446,7 @@ $options = array(
         "since" => "1.0.",
         "id" => "email_section_1",
         "type" => "text",
+        "sanitize" => "html",
         "default" => get_option('blogname')
     ),
     "from_email" => array(
@@ -454,6 +458,7 @@ $options = array(
         "since" => "1.0.",
         "id" => "email_section_1",
         "type" => "text",
+        "sanitize" => "html",
         "default" => get_option('admin_email')
     ),
     "success_email_subject" => array(
@@ -465,6 +470,7 @@ $options = array(
         "since" => "1.0.",
         "id" => "email_section_1",
         "type" => "text",
+        "sanitize" => "html",
         "default" => __("Your Purchase","sell_media")
     ),
     "success_email_body" => array(
