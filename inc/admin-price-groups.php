@@ -147,7 +147,7 @@ Class SellMediaNavStyleUI {
     public function setting_ui(){
 
         $parent_terms = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'parent' => 0 ) );
-        $current_parent = $_GET['term_parent'];
+        $current_parent = empty( $_GET['term_parent'] ) ? '' : $_GET['term_parent'];
 
         $tmp = array();
         $final = array();

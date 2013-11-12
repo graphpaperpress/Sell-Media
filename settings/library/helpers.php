@@ -235,6 +235,10 @@ function sell_media_currencies(){
  * Returns a formatted array of price groups for the sell media settings
  */
 function sell_media_settings_price_group(){
+    $array[] = array(
+        'name' => 0,
+        'title' => __('None','sell_media')
+        );
     foreach( get_terms('price-group',array('hide_empty'=>false, 'parent'=>0)) as $term ) {
         $array[ $term->term_id ] = array(
             'name' => $term->term_id,

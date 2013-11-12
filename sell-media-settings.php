@@ -79,6 +79,7 @@ $misc_tab = array(
             )
         )
     );
+$misc_tab = apply_filters('sell_media_misc_tab', $misc_tab);
 sell_media_register_plugin_option_tab( $misc_tab );
 
 
@@ -119,7 +120,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => null,
+        "default" => 0,
         "valid_options" => sell_media_pages_options()
     ),
     "thanks_page" => array(
@@ -131,7 +132,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => null,
+        "default" => 0,
         "valid_options" => sell_media_pages_options()
     ),
     "dashboard_page" => array(
@@ -143,7 +144,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => null,
+        "default" => 0,
         "valid_options" => sell_media_pages_options()
     ),
     "login_page" => array(
@@ -155,7 +156,7 @@ $options = array(
         "since" => "1.0",
         "id" => "general_plugin_section_1",
         "type" => "select",
-        "default" => null,
+        "default" => 0,
         "valid_options" => sell_media_pages_options()
     ),
     "customer_notification" => array(
@@ -356,21 +357,26 @@ $options = array(
         "section" => "size_price_plugin_section_1",
         "since" => "1.0",
         "id" => "size_price_plugin_section_1",
+        "default" => "",
         "type" => "text"
         ),
     "default_price_group" => array(
         "tab" => "sell_media_size_settings",
         "name" => "default_price_group",
         "title" => __("Select Default Price Group", "sell_media"),
+        "description" => "",
         "id" => "size_price_plugin_section_1",
         "section" => "size_price_plugin_section_1",
         "type" => "select",
+        "default" => 0,
         "valid_options" => sell_media_settings_price_group()
         ),
     "price_group" => array(
         "tab" => "sell_media_size_settings",
         "name" => "price_group",
         "title" => __("Price Groups","sell_media"),
+        "default" => "",
+        "description" => "",
         "id" => "size_price_plugin_section_1",
         "section" => "size_price_plugin_section_1",
         "type" => "html",
@@ -387,6 +393,7 @@ $options = array(
         "since" => "1.0",
         "id" => "payment_section_1",
         "type" => "select",
+        "default" => 0,
         "valid_options" => sell_media_settings_payment_gateway()
         ),
     "paypal_email" => array(
@@ -394,8 +401,10 @@ $options = array(
         "name" => "paypal_email",
         "title" => __("PayPal Email Address", "sell_media"),
         'description' => sprintf( __('The email address used to collect PayPal payments. %1$s: You must setup IPN Notifications in PayPal to process transactions. %2$s. Here is the listener URL you need to add in PayPal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read PayPal instructions</a>', '<code>' . site_url( '?sell_media-listener=IPN' ) . '</code>'),
+        "default" => "",
         "section" => "payment_section_1",
         "since" => "1.0",
+        "default" => "",
         "id" => "payment_section_1",
         "type" => "text"
         ),
@@ -416,6 +425,7 @@ $options = array(
         "name" => "paypal_additional_test_email",
         "title" => __("PayPal Additional Test Emails","sell_media"),
         "description" => __("This is useful when debugging PayPal. Enter a comma separated list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list.","sell_media"),
+        "default" => "",
         "section" => "payment_section_1",
         "since" => "1.0.",
         "id" => "payment_section_1",
@@ -477,6 +487,7 @@ $options = array(
         "name" => "misc",
         "title" => __("Settings for Extensions are shown below.","sell_media"),
         "description" => "",
+        "default" => "",
         "section" => "misc_section_1",
         "since" => "1.0.",
         "id" => "misc_section_1",
@@ -486,7 +497,5 @@ $options = array(
 );
 
 // If we have additional options, merge them, if not use what we have
-$additional_options = apply_filters( 'sell_media_options', $additional_options );
-$options = ( empty( $additional_options ) ) ? $options : array_merge( $options, $additional_options );
-
+$options = apply_filters( 'sell_media_options', $options );
 sell_media_register_plugin_options( $options );

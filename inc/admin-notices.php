@@ -35,7 +35,8 @@ function sell_media_admin_messages() {
          * checkout
          */
         if ( $general['checkout_page'] == 1 || empty( $general )
-            || $settings->checkout_page == 1 || empty( $settings->checkout_page )){
+            || empty( $settings->checkout_page )
+            || isset( $settings->checkout_page ) && $settings->checkout_page == 1 ){
             $notices[] = array(
                 'slug' => 'checkout-page',
                 'message' => 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>.'
@@ -46,7 +47,8 @@ function sell_media_admin_messages() {
          * thanks
          */
         if ( $general['thanks_page'] == 1 || empty( $general )
-            || $settings->thanks_page == 1 || empty( $settings->thanks_page )){
+            || empty( $settings->thanks_page )
+            || isset( $settings->thanks_page ) && $settings->thanks_page == 1 ){
             $notices[] = array(
                 'slug' => 'thanks-page',
                 'message' => 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>.'
