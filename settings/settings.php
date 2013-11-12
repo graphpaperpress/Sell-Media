@@ -4,11 +4,6 @@ global $sell_media_plugin_options;
 
 $sell_media_plugin_options = array();
 
-/**
-* GPP Theme Options Version
-*/
-define( 'GPP_THEME_OPTIONS_VER', '1.3' );
-
 
 /**
 * Merge existing and new option arrays
