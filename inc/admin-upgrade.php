@@ -205,17 +205,27 @@ if ( $version <= '1.6.5' ){
                      */
                     if ( in_array( $k, array('show_collection', 'show_license', 'show_keywords', 'show_creators') ) ){
                         $new_settings['admin_columns'][] = $k;
-                    } else {
+                    }
+
+                    elseif ( $k == 'image_url' ) {
+                        unset( $k );
+                        $new_settings['watermark_attachment_url'] = $v;
+                    } elseif( $k == 'attachment_id' ) {
+                        unset( $k );
+                        $new_settings['watermark_attachment_id'] = $v;
+                    } elseif( $k == 'all' ){
+                        unset( $k );
+                        $new_settings['watermark_all'][] = "yes";
+                    }
+
+                    else {
                         $new_settings[ $k ] = $v;
                     }
+
                 }
             }
         }
     }
 
-    // add new settings
-    $update_result = update_option( 'sell_media_options_test', $new_settings );
-    if ( $update_result === true ){
-        // remove old options
-    }
+    // $update_option_result = update_option( 'sell_media_options', $new_settings );
 }
