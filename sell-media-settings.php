@@ -9,7 +9,7 @@
 
 // General Tab
 $general_settings_tab = array(
-    "name" => "general_plugin_tab",
+    "name" => "sell_media_general_settings",
     "title" => __( "General", "sell_media" ),
     "sections" => array(
         "general_plugin_section_1" => array(
@@ -89,7 +89,7 @@ sell_media_register_plugin_option_tab( apply_filters( 'sell_media_misc_tab', $mi
 $options = array(
     // General Tab
     "test_mode" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "test_mode",
         "title" => __("Test Mode","sell_media"),
         "description" => sprintf( __("To accept real payments, select No. To fully use test mode, you must have %s."), "<a href='https://developer.paypal.com/' target='_blank'>PayPal sandbox (test) account</a>" ),
@@ -110,7 +110,7 @@ $options = array(
         )
     ),
     "checkout_page" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "checkout_page",
         "title" => __("Checkout Page","sell_media"),
         "description" => __( "What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart.", "sell_media" ),
@@ -122,7 +122,7 @@ $options = array(
         "valid_options" => sell_media_pages_options()
     ),
     "thanks_page" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "thanks_page",
         "title" => __("Thanks Page","sell_media"),
         "description" => __( "What page contains the <code>[sell_media_thanks]</code> shortcode?", "sell_media" ),
@@ -134,7 +134,7 @@ $options = array(
         "valid_options" => sell_media_pages_options()
     ),
     "dashboard_page" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "dashboard_page",
         "title" => __("Dashboard Page","sell_media"),
         "description" => __( "Where is your customer Dashboard page? This page will contain the <code>[sell_media_download_list]</code> shortcode.", "sell_media" ),
@@ -146,7 +146,7 @@ $options = array(
         "valid_options" => sell_media_pages_options()
     ),
     "login_page" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "login_page",
         "title" => __("Login Page","sell_media"),
         "description" => __( "Where is your customer login page? This page will contain the <code>[sell_media_login_form]</code> shortcode.", "sell_media" ),
@@ -158,7 +158,7 @@ $options = array(
         "valid_options" => sell_media_pages_options()
     ),
     "customer_notification" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "customer_notification",
         "title" => __("Customer Notification","sell_media"),
         "description" => __( "Notify the customer of their site registration.", "sell_media" ),
@@ -179,7 +179,7 @@ $options = array(
         )
     ),
     "style" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "style",
         "title" => __("Style","sell_media"),
         "description" => __( "Choose the style of your theme. Sell Media will load styles to match your theme.", "sell_media" ),
@@ -200,7 +200,7 @@ $options = array(
         )
     ),
     "plugin_credit" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "plugin_credit",
         "title" => __("Plugin Credit","sell_media"),
         "description" => __( "Let your site visitors know you are using the Sell Media plugin?", "sell_media" ),
@@ -221,7 +221,7 @@ $options = array(
         )
     ),
     "post_type_slug" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "post_type_slug",
         "title" => __("Post Type Slug","sell_media"),
         "description" => __( "You can change the post type slug to: &quot;photos&quot; or &quot;downloads&quot;. The default slug is &quot;items&quot;.", "sell_media" ),
@@ -233,7 +233,7 @@ $options = array(
         "sanitize" => "html"
     ),
     "order_by" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "order_by",
         "title" => __("Order By","sell_media"),
         "description" => __( "Choose the order of items for the archive pages.", "sell_media" ),
@@ -255,14 +255,14 @@ $options = array(
                 "name" => "title-asc",
                 "title" => "Title ASC",
                 ),
-            "title-asc" => array(
+            "title-desc" => array(
                 "name" => "title-desc",
                 "title" => "Title Desc",
                 )
         )
     ),
     "terms_and_conditions" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "terms_and_conditions",
         "title" => __("Terms and Conditions","sell_media"),
         "description" => __( "These &quot;Terms and Conditions&quot; will show up on the checkout page. Users must agree to these terms before completing their purchase.", "sell_media" ),
@@ -274,7 +274,7 @@ $options = array(
         "default" => ""
     ),
     "disable_search" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "disable_search",
         "title" => __("Disable Sell Media Search","sell_media"),
         "description" => __( "Set this to &quot;no&quot; if you do not want to use the built in Sell Media search.", "sell_media" ),
@@ -295,7 +295,7 @@ $options = array(
         )
     ),
     "hide_original_price" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "hide_original_price",
         "title" => __("Hide Original Price","sell_media"),
         "description" => __( "You can also hide the original price by editing each individual item.", "sell_media" ),
@@ -316,7 +316,7 @@ $options = array(
         )
     ),
     "admin_columns" => array(
-        "tab" => "general_plugin_tab",
+        "tab" => "sell_media_general_settings",
         "name" => "admin_columns",
         "title" => __("Show Columns","sell_media"),
         "description" => __( "Select the columns to show on the admin page &quot;All Items&quot; page.", "sell_media" ),
@@ -355,7 +355,7 @@ $options = array(
         "section" => "size_price_plugin_section_1",
         "since" => "1.0",
         "id" => "size_price_plugin_section_1",
-        "default" => "",
+        "default" => "1",
         "sanitize" => "html",
         "type" => "text"
         ),
