@@ -15,9 +15,11 @@ if ( $version <= '1.6.5' ){
         if ( is_array( $serialized ) && ! empty( $serialized ) ){
             foreach( $serialized as $k => $v ){
                 if ( ! empty( $v ) ){
+
                     /**
                      * The legacy format wasn't saved in the same format of the
-                     * new settings API, we update the format
+                     * new settings API, we update the format and take some time
+                     * to prefix our options.
                      */
                     if ( in_array( $k, array('show_collection', 'show_license', 'show_keywords', 'show_creators') ) ){
                         $new_settings['admin_columns'][] = $k;
@@ -32,13 +34,21 @@ if ( $version <= '1.6.5' ){
                         unset( $k );
                         $new_settings['watermark_all'][] = "yes";
                     }
-                    else {
+
+                    // MailChimp
+                    elseif( $k == 'api_key' ){
+                        unset( $k );
+                        $new_settings['mailchimp_api_key'] = $v;
+                    }
+                    elseif( $k == 'list' ){
+                        unset( $k );
+                        $new_settings['mailchimp_list'] = $v;
+                    } else {
                         $new_settings[ $k ] = $v;
                     }
                 }
             }
         }
     }
-
     $update_option_result = update_option( 'sell_media_options', $new_settings );
 }
