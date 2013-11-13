@@ -23,8 +23,7 @@ function sell_media_admin_messages() {
         /**
          * test mode
          */
-        if ( $general['test_mode'] == 1
-            || $settings->test_mode == 1 ){
+        if ( isset( $settings->test_mode ) && $settings->test_mode == 1 ){
             $notices[] = array(
                 'slug' => 'test-mode',
                 'message' => 'Your site is currently in <a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options') . '">test mode</a>.'
@@ -34,9 +33,7 @@ function sell_media_admin_messages() {
         /**
          * checkout
          */
-        if ( $general['checkout_page'] == 1 || empty( $general )
-            || empty( $settings->checkout_page )
-            || isset( $settings->checkout_page ) && $settings->checkout_page == 1 ){
+        if ( isset( $settings->checkout_page ) && $settings->checkout_page == 1 ){
             $notices[] = array(
                 'slug' => 'checkout-page',
                 'message' => 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>.'
@@ -46,9 +43,7 @@ function sell_media_admin_messages() {
         /**
          * thanks
          */
-        if ( $general['thanks_page'] == 1 || empty( $general )
-            || empty( $settings->thanks_page )
-            || isset( $settings->thanks_page ) && $settings->thanks_page == 1 ){
+        if ( isset( $settings->thanks_page ) && $settings->thanks_page == 1 ){
             $notices[] = array(
                 'slug' => 'thanks-page',
                 'message' => 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options').'">settings</a>.'
@@ -56,10 +51,9 @@ function sell_media_admin_messages() {
         }
 
         /**
-         * paypal email
+         * PayPal email
          */
-        if ( empty( $payment['paypal_email'] )
-            || empty( $settings->paypal_email ) ){
+        if ( empty( $settings->paypal_email ) ){
             $notices[] = array(
                 'slug' => 'paypal-email',
                 'message' => 'Please set a PayPal email in your <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings').'">payment settings</a>.'
@@ -69,8 +63,7 @@ function sell_media_admin_messages() {
         /**
          * price group
          */
-        if ( empty( $size['default_price_group'] )
-            || empty( $settings->default_price_group ) ){
+        if ( empty( $settings->default_price_group ) ){
             $notices[] = array(
                 'slug' => 'price-group',
                 'message' => 'Without a <a href="'.admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=new_term').'">default price group</a> set you will need to manually set a price group per item.'
