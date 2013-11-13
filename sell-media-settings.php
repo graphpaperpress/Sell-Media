@@ -19,7 +19,7 @@ $general_settings_tab = array(
         )
     )
 );
-sell_media_register_plugin_option_tab( $general_settings_tab );
+sell_media_register_plugin_option_tab( apply_filters( 'sell_media_general_tab', $general_settings_tab ) );
 
 
 // Size & Price Tab
@@ -34,7 +34,7 @@ $size_price_tab = array(
         )
     )
 );
-sell_media_register_plugin_option_tab( $size_price_tab );
+sell_media_register_plugin_option_tab( apply_filters('sell_media_size_price_tab', $size_price_tab) );
 
 
 // Payment Tab
@@ -49,7 +49,7 @@ $payment_tab = array(
             )
         )
     );
-sell_media_register_plugin_option_tab( $payment_tab );
+sell_media_register_plugin_option_tab( apply_filters('sell_media_payment_tab', $payment_tab) );
 
 
 // Email Tab
@@ -79,8 +79,7 @@ $misc_tab = array(
             )
         )
     );
-$misc_tab = apply_filters('sell_media_misc_tab', $misc_tab);
-sell_media_register_plugin_option_tab( $misc_tab );
+sell_media_register_plugin_option_tab( apply_filters( 'sell_media_misc_tab', $misc_tab ) );
 
 
 
@@ -88,7 +87,6 @@ sell_media_register_plugin_option_tab( $misc_tab );
  * The following example shows you how to register theme options and assign them to tabs and sections:
  */
 $options = array(
-
     // General Tab
     "test_mode" => array(
         "tab" => "general_plugin_tab",
@@ -501,7 +499,4 @@ $options = array(
         "valid_options" => sprintf( "<a href='http://graphpaperpress.com/downloads/category/extensions/' class='button secondary' target='_blank'>%s</a>", __( "Download Extensions for Sell Media","sell_media" ) )
     )
 );
-
-// If we have additional options, merge them, if not use what we have
-$options = apply_filters( 'sell_media_options', $options );
-sell_media_register_plugin_options( $options );
+sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
