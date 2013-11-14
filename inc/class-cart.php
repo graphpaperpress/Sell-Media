@@ -29,19 +29,19 @@ Class Sell_Media_Cart {
      * @param $post_id (int) The post_id to a sell_media_item
      * @param $price_id (int) One of the following: 'term_id' (of price-group taxonomy), 'sell_media_original_file', 'default_price'
      *
-     * @return formated price without the currency symbolc
+     * @return formated price without the currency symbol
      */
     public function item_price( $post_id=null, $price_id=null ){
 
-        $default_price_array = get_option('sell_media_size_settings');
+        $settings = sell_media_get_plugin_options();
         $custom_price = get_post_meta( $post_id, 'sell_media_price', true );
 
         if ( $price_id == 'sell_media_original_file' && ! empty( $custom_price ) ){
             $item_price = $custom_price;
         } elseif ( $price_id == 'sell_media_original_file' && empty( $custom_price ) ){
-            $item_price = $default_price_array['default_price'];
+            $item_price = $settings->default_price;
         } elseif ( $price_id == 'default_price' && empty( $custom_price ) ){
-            $item_price = $default_price_array['default_price'];
+            $item_price = $settings->default_price;
         } elseif ( $price_id == 'default_price' && ! empty( $custom_price ) ) {
             $item_price = $custom_price;
         } else {

@@ -144,7 +144,7 @@ function sell_media_the_markup_slider( $tag ){
         $initial_markup = 0;
     }
 
-    $payment_settings = get_option( 'sell_media_size_settings' ); ?>
+    $settings = sell_media_get_plugin_options(); ?>
     <script>
     jQuery(document).ready(function($){
 
@@ -153,7 +153,7 @@ function sell_media_the_markup_slider( $tag ){
 
         function calc_price( markUp ){
 
-            var price = <?php if ( $payment_settings['default_price'] ) print $payment_settings['default_price']; else print 1; ?>;
+            var price = <?php echo $settings->default_price; ?>;
 
             if ( markUp == undefined )
                 var markUp = <?php print $initial_markup; ?>;
@@ -196,8 +196,8 @@ function sell_media_the_markup_slider( $tag ){
                 else
                     $default_markup = '0%';
 
-            if ( $payment_settings['default_price'] ){
-                $price = sell_media_get_currency_symbol() . $payment_settings['default_price'];
+            if ( $settings->default_price ){
+                $price = sell_media_get_currency_symbol() . $settings->default_price;
             } else {
                 $price = __('you have not set a default price', 'sell_media');
             }

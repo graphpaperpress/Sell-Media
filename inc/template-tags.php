@@ -169,11 +169,11 @@ function sell_media_item_size( $post_id=null ){
 
 
 /**
- * Retrives and prints the price of an item
+ * Retrieves and prints the price of an item
  *
  * @since 0.1
  * @param $post_id The Item ID
- * @param $currency (bool) Display the currency symbold or not
+ * @param $currency (bool) Display the currency symbol or not
  * @param $size (string) small, medium, large, null (for original)
  * @param $echo Either print the result or return it
  * @return string
@@ -184,7 +184,7 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
      * Get the default price for this Item.
      */
     $default_price = get_post_meta( $post_id, 'sell_media_price', true );
-    $size_settings = get_option('sell_media_size_settings');
+    $settings = sell_media_get_plugin_options();
 
     /**
      * If we have a filtered price we use that if not we derive our own price
@@ -197,7 +197,7 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
          * on the defaults from the settings.
          */
         if ( empty( $size ) && ! empty( $default ) ){
-            $price = $size_settings['default_price'];
+            $price = $settings->default_price;
         } else {
 
             /**
@@ -211,7 +211,7 @@ function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo
              */
             if ( empty( $size ) ){
                 if ( empty( $default_price ) ){
-                    $price = $size_settings['default_price'];
+                    $price = $settings->default_price;
                 } else {
                     $price = $default_price;
                 }
@@ -404,7 +404,8 @@ add_action( 'parse_query', 'sell_media_search_warning_surpression' );
 
 
 function sell_media_item_form(){
-    $general_settings = get_option( 'sell_media_general_settings' );
+    $settings = sell_media_get_plugin_options();
+
     $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
     $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
     $disabled = null;
@@ -430,7 +431,7 @@ function sell_media_item_form(){
         $sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
 
         if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
-            <?php $size_settings = get_option('sell_media_size_settings'); $disabled = 'disabled'; $price = "0.00"; ?>
+            <?php $disabled = 'disabled'; $price = "0.00"; ?>
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
                 <select id="sell_media_size_select" name="price_id">
@@ -438,7 +439,7 @@ function sell_media_item_form(){
                     <?php if ( ! empty( $sizes_array ) ) : foreach( $sizes_array as $k => $v ) : ?>
                         <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
                     <?php endforeach; endif; ?>
-                    <?php if ( isset( $general_settings['hide_original_price'] ) && $general_settings['hide_original_price'] != 'yes' ) : ?>
+                    <?php if ( $settings->hide_original_price !== 'yes' ) : ?>
                         <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
                             <?php _e( 'Original', 'sell_media' ); ?>
                             (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
@@ -489,9 +490,9 @@ function sell_media_item_form(){
                 <?php if ( empty( $_SESSION['cart']['items']) ) : ?>
                     <span class="cart empty"><?php _e( 'Cart', 'sell_media' ); ?> (0)</span>
                 <?php else: ?>
-                    <span class="cart full"><a href="<?php print get_permalink( $general_settings['checkout_page'] ); ?>" class="cart-handle"><?php _e( 'Cart', 'sell_media' ); ?> (<span class="count-container"><span class="count-target"></span></span>)</a></span>
+                    <span class="cart full"><a href="<?php print get_permalink( $settings->checkout_page ); ?>" class="cart-handle"><?php _e( 'Cart', 'sell_media' ); ?> (<span class="count-container"><span class="count-target"></span></span>)</a></span>
                 <?php endif; ?>
-                <a href="<?php print get_permalink( $general_settings['checkout_page'] ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
+                <a href="<?php print get_permalink( $settings->checkout_page ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
             </div>
             <div class="right">
                 <input type="submit" value="<?php print apply_filters('sell_media_add_to_cart_text', __('Add to Cart'), $_POST['product_id'] ); ?>" class="sell-media-buy-button" <?php print $disabled; ?> />
@@ -543,8 +544,8 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
             $og_size = null;
         }
 
-        $general_settings = get_option('sell_media_general_settings');
-        if ( isset( $general_settings['hide_original_price'] ) && $general_settings['hide_original_price'] != 'yes' ){
+        $settings = sell_media_get_plugin_options();
+        if ( $settings->hide_original_price !== 'yes' ){
             $html .= '<li class="price">';
             $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
             $html .= sell_media_item_price( $post_id, true, null, false );
@@ -591,8 +592,9 @@ function sell_media_original_image_size( $item_id=null, $echo=true ){
  * @author Thad Allender
  */
 function sell_media_plugin_credit() {
-    $settings = get_option( 'sell_media_general_settings' );
-    if ( true == $settings['plugin_credit'] ) {
+    $settings = sell_media_get_plugin_options();
+
+    if ( true == $settings->plugin_credit ) {
         printf( '%s <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', __( 'Shopping cart by ', 'sell_media' ) );
     }
 }
@@ -700,14 +702,12 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
     $original = $download_sizes = array();
     list( $original['url'], $original['width'], $original['height'] ) = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
 
-
     $price_groups = wp_get_post_terms( $post_id, 'price-group' );
+
     if ( empty( $price_groups ) ){
 
-        $size_settings = get_option('sell_media_size_settings');
-        $default_price_group = empty( $size_settings['default_price_group'] ) ? null : $size_settings['default_price_group'];
-
-        $default_price_group_obj = get_term( $default_price_group, 'price-group' );
+        $settings = sell_media_get_plugin_options();
+        $default_price_group_obj = get_term( $settings->default_price_group, 'price-group' );
 
         if ( is_wp_error( $default_price_group_obj ) )
             return;
@@ -735,7 +735,7 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
         if ( $price->parent > 0 ){
 
             /**
-             * Retrive the height and width for our price group
+             * Retrieve the height and width for our price group
              */
             $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
             $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
@@ -807,11 +807,3 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
 
     return $sizes;
 }
-
-
-
-
-
-
-
-

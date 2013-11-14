@@ -41,8 +41,7 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
  */
 function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
 
-    $general_settings = get_option( 'sell_media_general_settings' );
-    $payment_settings = get_option( 'sell_media_payment_settings' );
+    $settings = sell_media_get_plugin_options();
     $listener_url = trailingslashit( home_url() ).'?sell_media-listener=IPN';
 
     $args = array(
@@ -50,7 +49,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'email' => $purchase_data['email']
     );
 
-    $return_url = add_query_arg( $args, get_permalink( $general_settings['thanks_page'] ) );
+    $return_url = add_query_arg( $args, get_permalink( $settings->thanks_page ) );
     $paypal_redirect = trailingslashit( sell_media_get_paypal_redirect() ) . '?';
 
     $price = $_SESSION['cart']['total'];
@@ -58,11 +57,11 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
     $paypal_args = array(
         'cmd'            => '_xclick',
         'amount'         => $price,
-        'business'       => $payment_settings['paypal_email'],
+        'business'       => $settings->paypal_email,
         'email'          => $purchase_data['email'],
         'no_shipping'    => '0', // 0 (defualt) prompt for address, not required, 1 no prompt, 2 prompt & required
         'no_note'        => '1',
-        'currency_code'  => $payment_settings['currency'],
+        'currency_code'  => $settings->currency,
         'charset'        => get_bloginfo( 'charset' ),
         'rm'             => '2',
         // According to the docs the param is 'return_url', but that doesn't work as expected
@@ -71,7 +70,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'return'     => $return_url,
         'ipn_notification_url' => $listener_url, // Is this a valid parameter??
         'notify_url' => $listener_url, // This needs to be added in order for IPN to work
-        'mc_currency'    => $payment_settings['currency'],
+        'mc_currency'    => $settings->currency,
         'mc_gross'       => $price,
         'payment_status' => '',
         'item_name'      => __( 'Purchase from ', 'sell_media' ) . get_bloginfo( 'name' ),
@@ -141,8 +140,8 @@ function sell_media_process_paypal_ipn() {
     account: https://developer.paypal.com
     When you are ready to go live change use_sandbox to false.
     */
-    $general_settings = get_option('sell_media_general_settings');
-    $listener->use_sandbox = ( $general_settings['test_mode'] ) ? true : false;
+    $settings = sell_media_get_plugin_options();
+    $listener->use_sandbox = ( $settings->test_mode ) ? true : false;
 
 
     /*
@@ -199,13 +198,13 @@ function sell_media_process_paypal_ipn() {
 
 
         /**
-         * Verify seller Paypal email with Paypal email in settings
+         * Verify seller PayPal email with PayPal email in settings
          *
          * Check if the seller email that was processed by the IPN matches what is saved as
          * the seller email in our DB
          */
-        $payment_settings = get_option( 'sell_media_payment_settings' );
-        if ( $_POST['receiver_email'] != $payment_settings['paypal_email'] ){
+        $settings = sell_media_get_plugin_options();
+        if ( $_POST['receiver_email'] != $settings->paypal_email ){
             $message .= "\nEmail seller email does not match email in settings\n";
         }
 
@@ -213,7 +212,7 @@ function sell_media_process_paypal_ipn() {
         /**
          * Check if this payment was already processed
          *
-         * Paypals transaction id (txn_id) is stored in the database, we check
+         * PayPal transaction id (txn_id) is stored in the database, we check
          * that against the txn_id returned.
          */
         $txn_id = get_post_meta( $_POST['custom'], 'txn_id', true );
@@ -269,7 +268,7 @@ function sell_media_process_paypal_ipn() {
          * If this is the test mode we email the IPN text report.
          * note about and box http://stackoverflow.com/questions/4298117/paypal-ipn-always-return-payment-status-pending-on-sandbox
          */
-        if ( $general_settings['test_mode'] == true ){
+        if ( $settings->test_mode == true ){
             $message .= "\nTest Mode\n";
             $email = array(
                 'to' => get_option('admin_email'),

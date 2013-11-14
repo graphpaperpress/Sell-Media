@@ -39,9 +39,9 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
         }
 
         if ( empty( $downloads ) ) {
-            $payment_settings = get_option( 'sell_media_payment_settings' );
+            $settings = sell_media_get_plugin_options();
             $message .= __( 'Your purchase is pending. This happens if you paid with an eCheck, if you opened a new account or if there is a problem with the checkout system. Please contact the seller if you have questions about this purchase: ') ;
-            $message .= $payment_settings['paypal_email'];
+            $message .= $settings->paypal_email;
         } else {
 
             $payment_id = sell_media_get_payment_id_by( 'key', $purchase_key );
@@ -93,7 +93,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
 
     $cart = New Sell_Media_Cart;
 
-    $general_settings = get_option( 'sell_media_general_settings' );
+    $settings = sell_media_get_plugin_options();
+
     $i = 0;
 
     if ( isset( $_SESSION['cart']['items'] ) )
@@ -189,7 +190,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 $user_id = wp_insert_user( $data );
 
                 // Email new user password
-                if ( ! empty( $general_settings['customer_notification'] ) && $general_settings['customer_notification'] == true ){
+                if ( $settings->customer_notification == true ){
 
                     $message  = sprintf( __('New user registration on %s:'), get_option('blogname') ) . "\r\n\r\n";
                     $message .= sprintf( __('Username: %s'), stripslashes( $data['user_login'] ) ) . "\r\n\r\n";
@@ -237,8 +238,8 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                 sell_media_process_paypal_purchase( $purchase, $payment_id );
             } else {
                 do_action( 'sell_media_process_purchase', $purchase );
-                if ( isset( $general_settings['thanks_page'] ) ){
-                    $url = get_permalink( $general_settings['thanks_page'] );
+                if ( $settings->thanks_page ){
+                    $url = get_permalink( $settings->thanks_page );
                     echo '<script type="text/javascript">window.location ="' . $url . '"</script>';
                     exit;
                 }
@@ -246,8 +247,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
         }
     }
 
-    ob_start();
-    ?>
+    ob_start(); ?>
     <div id="sell-media-checkout" class="sell-media">
         <?php if ( empty( $items ) ) : ?>
              <p><?php _e('You have no items in your cart. ', 'sell_media'); ?><a href="<?php print get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue shopping', 'sell_media'); ?></a>.</p>
@@ -298,7 +298,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                 <?php do_action('sell_media_above_registration_form'); ?>
                                 <?php if ( ! is_user_logged_in() ) : ?>
                                     <h3 class="checkout-title"><?php _e( 'Create Account', 'sell_media' ); ?></h3>
-                                    <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo get_permalink( $general_settings['login_page'] ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a>
+                                    <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo get_permalink( $settings->login_page ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a>
                                     <a href="<?php echo wp_lostpassword_url( site_url( '/checkout/' ) ); ?>"><?php _e('Lost your password?'); ?></a>
                                     </p>
                                     <p>
@@ -322,7 +322,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                     <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php endif; ?>
 
-                                <?php if ( ! empty ( $general_settings['terms_and_conditions'] ) ) : ?>
+                                <?php if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
                                     <div id="sell_media_termsdiv">
                                         <input type="checkbox" name="termsandconditions" id="sell_media_terms_cb" data-required="true" value="" required="required" />
                                         <span class="sell-media-termnotice">
@@ -335,7 +335,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                 <div class="button-container">
                                     <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
                                     <span class="inline"><em><?php _e( 'or', 'sell_media' ); ?></em> <a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?></a></span>
-                                    <p class="desc"><?php _e('You will be redirected to Paypal to complete your purchase.', 'sell_media' ); ?></p>
+                                    <p class="desc"><?php _e('You will be redirected to PayPal to complete your purchase.', 'sell_media' ); ?></p>
                                 </div>
 
                                 <p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
@@ -639,8 +639,6 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 		$html = null;
 		$html .= '<div class="sell-media-collections-shortcode sell-media">';
 
-		$sell_media_size_settings = get_option( 'sell_media_size_settings');
-
 		$taxonomy = 'collection';
 		$term_ids = array();
 		foreach( get_terms( $taxonomy ) as $term_obj ){
@@ -714,12 +712,13 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
 					$html .= '<div class="sell-media-collections-shortcode-item-title"><a href="'. get_term_link( $term->slug, $taxonomy ) .'">' . $term->name . '</a></div>';
 					if ( 'true' == $details ) {
+                        $settings = sell_media_get_plugin_options();
 						$html .= '<div class="sell-media-collections-shortcode-item-details">';
 						$html .= '<span class="sell-media-collections-shortcode-item-count">';
 						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
 						$html .= '</span>';
 						$html .= '<span class="sell-media-collections-shortcode-item-price">';
-						$html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $sell_media_size_settings['default_price'] . '</span>';
+						$html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
 						$html .= '</span>';
 						$html .= '</div>';
 					}
@@ -744,11 +743,11 @@ add_shortcode('sell_media_list_all_collections', 'sell_media_list_all_collection
  */
 function sell_media_login_form_shortcode(){
 
-    $general_settings = get_option( 'sell_media_general_settings' );
+    $settings = sell_media_get_plugin_options();
 
     if ( is_user_logged_in() ) {
 
-        return sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . get_permalink( $general_settings['checkout_page'] ) . '">Checkout now</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">continue shopping</a>' );
+        return sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . get_permalink( $settings->checkout_page ) . '">Checkout now</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">continue shopping</a>' );
 
     } else {
         if( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
@@ -793,11 +792,11 @@ function my_front_end_login_fail( $username ) {
  * @since 1.6
  */
 function sell_media_terms_footer(){
-    $general_settings = get_option( 'sell_media_general_settings' );
-    if ( ! empty ( $general_settings['terms_and_conditions'] ) ) { ?>
+    $settings = sell_media_get_plugin_options();
+    if ( ! empty ( $settings->terms_and_conditions ) ) { ?>
     <div id="terms-and-conditions-dialog" style="display: none;">
         <span class="close">&times;</span>
-        <?php echo stripslashes_deep( nl2br( $general_settings['terms_and_conditions'] ) ); ?>
+        <?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?>
     </div>
 <?php } }
 add_action( 'wp_footer', 'sell_media_terms_footer' );

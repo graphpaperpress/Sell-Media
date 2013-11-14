@@ -34,10 +34,9 @@ add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
 function sell_media_admin_items_init(){
     global $sell_media_item_meta_fields;
     $prefix = 'sell_media';
-    $payment_settings = get_option( 'sell_media_size_settings' );
-    $default_price = $payment_settings['default_price'];
 
-    $size_settings = get_option('sell_media_size_settings');
+    $settings = sell_media_get_plugin_options();
+
     if ( ! empty( $_GET['post'] ) ) {
         $post_id = $_GET['post'];
     } elseif( ! empty( $_POST['post_ID'] ) ) {
@@ -59,7 +58,7 @@ function sell_media_admin_items_init(){
             'desc'  => '', // this needs validation
             'id'    => $prefix . '_price',
             'type'  => 'price',
-            'std'   => sprintf("%0.2f",$default_price),
+            'std'   => sprintf( "%0.2f", $settings->default_price ),
             'value' => get_post_meta( $post_id, $prefix . '_price', true )
         ),
         array(
@@ -221,13 +220,13 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                      * get our current term id for the parent only
                      */
                     $parent_id = false;
-                    $size_settings = get_option('sell_media_size_settings');
+                    $settings = sell_media_get_plugin_options();
                     foreach( wp_get_post_terms( $post->ID, 'price-group' ) as $terms ){
                         if ( $terms->parent == 0 )
                             $parent_id = $terms->term_id;
                     }
                     if( false == $parent_id ) {
-                        $parent_id = empty( $size_settings['default_price_group'] ) ? null : $size_settings['default_price_group'];
+                        $parent_id = $settings->default_price_group;
                     }
                     ?>
                     <select name="_sell_media_price_group">

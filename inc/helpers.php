@@ -50,9 +50,9 @@ function sell_media_template_redirect(){
 add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 
 function sell_media_get_search_form( $form ) {
-    $general_settings = get_option( 'sell_media_general_settings' );
+    $settings = sell_media_get_plugin_options();
 
-    if ( isset( $general_settings['disable_search'] ) && $general_settings['disable_search'] == 'yes' ) {
+    if ( $settings->disable_search === 1 ) {
         return $form;
     }
 
@@ -379,8 +379,8 @@ function sell_media_is_license_term_page(){
  * @since 0.1
  **/
 function sell_media_get_currency() {
-    $payment_settings = get_option( 'sell_media_payment_settings' );
-    return apply_filters( 'sell_media_currency', $payment_settings['currency'] );
+    $settings = sell_media_get_plugin_options();
+    return apply_filters( 'sell_media_currency', $settings->currency );
 }
 
 
@@ -431,8 +431,8 @@ function sell_media_get_currency_symbol( $currency = '' ) {
  * @since 0.1
  */
 function sell_media_test_mode(){
-    $general_settings = get_option( 'sell_media_general_settings' );
-    return $general_settings['test_mode'];
+    $settings = sell_media_get_plugin_options();
+    return $settings->test_mode;
 }
 
 
@@ -746,9 +746,9 @@ add_action( 'admin_head', 'sell_media_admin_menu_icon' );
  * @return void
 */
 function sell_media_enqueue_styles(){
-    $settings = get_option( 'sell_media_general_settings' );
-    if ( isset( $settings['style'] ) && '' != $settings['style'] )
-        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-' . $settings['style'] . '.css' );
+    $settings = sell_media_get_plugin_options();
+    if ( isset( $settings->style ) && '' != $settings->style )
+        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-' . $settings->style . '.css' );
     else
         wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-light.css' );
 }
@@ -1201,28 +1201,28 @@ function sell_media_country_list( $current=null ){
  * @return default payment gateway
  */
 function sell_media_default_payment(){
-    $options = get_option( 'sell_media_payment_settings' );
-    return isset( $options['default_gateway'] ) ? $options['default_gateway'] : null;
+    $settings = sell_media_get_plugin_options();
+    return isset( $settings->default_gateway ) ? $settings->default_gateway : null;
 }
 
 
 /**
- * Retrives the thank you page from the general settings and adds the needed URL params
+ * Retrieves the thank you page from the general settings and adds the needed URL params
  * for validating the purchase.
  *
- * @param $purchase (array) Purcahse data from post meta
- * @return $url (string) The url including query parameters for the "thank you" page
+ * @param $purchase (array) Purchase data from post meta
+ * @return $url (string) The URL including query parameters for the "thank you" page
  */
 function sell_media_thanks_url( $purchase=array() ){
 
-    $general_settings = get_option( 'sell_media_general_settings' );
+    $settings = sell_media_get_plugin_options();
 
     $url = add_query_arg(
         array(
             'purchase_key' => $purchase['purchase_key'],
             'email' => $purchase['email']
         ),
-        get_permalink( $general_settings['thanks_page']
+        get_permalink( $settings->thanks_page
         )
     );
 

@@ -98,11 +98,11 @@ class SellMedia {
 
         update_option( 'sell_media_version', SELL_MEDIA_VERSION );
 
-        // Dont forget registration hook is called
-        // BEFORE! taxonomies are regsitered! therefore
+        // Don't forget registration hook is called
+        // BEFORE! taxonomies are registered! therefore
         // these terms and taxonomies are NOT derived from our object!
-        $general_settings = get_option( 'sell_media_general_settings' );
-        $this->registerLicenses($general_settings);
+        $settings = sell_media_get_plugin_options();
+        $this->registerLicenses( $settings->admin_columns );
 
         // Install new table for term meta
         $taxonomy_metadata = new SELL_MEDIA_Taxonomy_Metadata;
@@ -177,12 +177,12 @@ class SellMedia {
 
         $settings = sell_media_get_plugin_options();
 
-        $this->registerCollection($settings->admin_columns);
-        $this->registerLicenses($settings->admin_columns);
-        $this->registerCreator($settings->admin_columns);
-        $this->registerCity($settings->admin_columns);
-        $this->registerKeywords($settings->admin_columns);
-        $this->registerState($settings->admin_columns);
+        $this->registerCollection( $settings->admin_columns );
+        $this->registerLicenses( $settings->admin_columns );
+        $this->registerCreator( $settings->admin_columns );
+        $this->registerCity( $settings->admin_columns );
+        $this->registerKeywords( $settings->admin_columns );
+        $this->registerState( $settings->admin_columns );
         $this->registerItem();
         $this->registerPayment();
         $this->registerPriceGroup();
@@ -487,7 +487,7 @@ class SellMedia {
             'menu_name' => _x( 'Sell Media', '', 'sell_media' ),
         );
 
-        $general_settings = get_option( 'sell_media_general_settings' );
+        $settings = sell_media_get_plugin_options();
 
         $args = array(
             'labels' => $labels,
@@ -505,7 +505,7 @@ class SellMedia {
             'query_var' => true,
             'can_export' => true,
             'rewrite' => array (
-                'slug' => empty( $general_settings['post_type_slug'] ) ? 'items' : $general_settings['post_type_slug'],
+                'slug' => $settings->post_type_slug,
                 'feeds' => true ),
             'capability_type' => 'post'
         );
@@ -630,15 +630,14 @@ class SellMedia {
             $amount = 0;
             $quantity = 0;
 
-            $options = get_option('sell_media_general_settings');
-            $page_id = $options['checkout_page'];
+            $settings = sell_media_get_plugin_options();
             $cart_obj = New Sell_Media_Cart;
 
             wp_localize_script('sell_media', 'sell_media',
                 array(
                 'ajaxurl' => admin_url("admin-ajax.php"),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
-                'checkouturl' => get_permalink( $page_id ),
+                'checkouturl' => get_permalink( $settings->checkout_page ),
                 'cart' => array(
                     'subtotal' => empty( $_SESSION['cart']['items'] ) ? 0 : $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
                     'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
@@ -832,12 +831,12 @@ class SellMedia {
 
     public function order_by( $orderby_statement ) {
 
-        $general_settings = get_option( 'sell_media_general_settings' );
+        $settings = sell_media_get_plugin_options();
 
-        if ( ! empty( $general_settings['order_by'] ) && is_archive() ||
-             ! empty( $general_settings['order_by'] ) && is_tax() ){
+        if ( ! empty( $settings->order_by ) && is_archive() ||
+             ! empty( $settings->order_by ) && is_tax() ){
             global $wpdb;
-            switch( $general_settings['order_by'] ){
+            switch( $settings->order_by ){
                 case 'title-asc' :
                     $order_by = "{$wpdb->prefix}posts.post_title ASC";
                     break;

@@ -10,11 +10,6 @@ function sell_media_admin_messages() {
 
     if ( $pagenow == 'edit.php' && isset( $_GET['page'] ) && $_GET['page'] == 'sell_media_plugin_options' || $post_type == 'sell_media_item' ){
 
-        // Legacy
-        $general = get_option('sell_media_general_settings');
-        $payment = get_option('sell_media_payment_settings');
-        $size = get_option('sell_media_size_settings');
-
         // New
         $settings = sell_media_get_plugin_options();
 
