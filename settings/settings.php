@@ -56,7 +56,7 @@ function sell_media_enqueue_plugin_scripts_styles() {
 add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles', 40 );
 
 /**
-* Settings API options initilization and validation
+* Settings API options initialization and validation
 */
 function sell_media_plugin_register_options() {
 	global $wp_customize;
