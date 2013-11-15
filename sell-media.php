@@ -102,7 +102,8 @@ class SellMedia {
         // BEFORE! taxonomies are registered! therefore
         // these terms and taxonomies are NOT derived from our object!
         $settings = sell_media_get_plugin_options();
-        $this->registerLicenses( $settings->admin_columns );
+        $admin_columns = empty( $settings->admin_columns ) ? null : $settings->admin_columns;
+        $this->registerLicenses( $admin_columns );
 
         // Install new table for term meta
         $taxonomy_metadata = new SELL_MEDIA_Taxonomy_Metadata;
@@ -176,13 +177,14 @@ class SellMedia {
     public function init() {
 
         $settings = sell_media_get_plugin_options();
+        $admin_columns = empty( $settings->admin_columns ) ? null : $settings->admin_columns;
 
-        $this->registerCollection( $settings->admin_columns );
-        $this->registerLicenses( $settings->admin_columns );
-        $this->registerCreator( $settings->admin_columns );
-        $this->registerCity( $settings->admin_columns );
-        $this->registerKeywords( $settings->admin_columns );
-        $this->registerState( $settings->admin_columns );
+        $this->registerCollection( $admin_columns );
+        $this->registerLicenses( $admin_columns );
+        $this->registerCreator( $admin_columns );
+        $this->registerCity( $admin_columns );
+        $this->registerKeywords( $admin_columns );
+        $this->registerState( $admin_columns );
         $this->registerItem();
         $this->registerPayment();
         $this->registerPriceGroup();
@@ -232,7 +234,7 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerLicenses($admin_columns) {
+    public function registerLicenses($admin_columns=null) {
         $labels = array(
             'name' => _x( 'Licenses', '', 'sell_media' ),
             'singular_name' => _x( 'License', '', 'sell_media' ),
@@ -255,7 +257,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
-            'show_admin_column' => ( in_array('show_license', $admin_columns) ) ? true : false,
+            'show_admin_column' => ( ! empty( $admin_columns ) && in_array('show_license', $admin_columns) ) ? true : false,
             'show_ui' => true,
             'show_tagcloud' => true,
             'hierarchical' => true,
@@ -272,7 +274,7 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerKeywords($admin_columns) {
+    public function registerKeywords($admin_columns=null) {
         $labels = array(
             'name' => _x( 'Keywords', '', 'sell_media' ),
             'singular_name' => _x( 'Keyword', '', 'sell_media' ),
@@ -295,7 +297,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
-            'show_admin_column' => ( in_array('show_keywords', $admin_columns) ) ? true : false,
+            'show_admin_column' => ( ! empty( $admin_columns ) && in_array('show_keywords', $admin_columns) ) ? true : false,
             'show_ui' => true,
             'show_tagcloud' => true,
             'hierarchical' => false,
@@ -390,7 +392,7 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerCreator($admin_columns) {
+    public function registerCreator($admin_columns=null) {
         $labels = array(
             'name' => _x( 'Creator', '', 'sell_media' ),
             'singular_name' => _x( 'Creator', '', 'sell_media' ),
@@ -413,7 +415,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
-            'show_admin_column' => ( in_array('show_creators', $admin_columns) ) ? true : false,
+            'show_admin_column' => ( ! empty( $admin_columns ) && in_array('show_creators', $admin_columns) ) ? true : false,
             'show_tagcloud' => true,
             'hierarchical' => false,
             'rewrite' => true,
@@ -429,7 +431,7 @@ class SellMedia {
      *
      * @author Thad Allender
      */
-    public function registerCollection($admin_columns) {
+    public function registerCollection($admin_columns=null) {
         $labels = array(
             'name' => _x( 'Collections', '', 'sell_media' ),
             'singular_name' => _x( 'Collection', '', 'sell_media' ),
@@ -452,7 +454,7 @@ class SellMedia {
             'labels' => $labels,
             'public' => true,
             'show_in_nav_menus' => true,
-            'show_admin_column' => ( in_array('show_collection', $admin_columns) ) ? true : false,
+            'show_admin_column' => ( ! empty( $admin_columns ) && in_array('show_collection', $admin_columns) ) ? true : false,
             'show_ui' => true,
             'show_tagcloud' => true,
             'hierarchical' => true,
@@ -505,7 +507,7 @@ class SellMedia {
             'query_var' => true,
             'can_export' => true,
             'rewrite' => array (
-                'slug' => $settings->post_type_slug,
+                'slug' => empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug,
                 'feeds' => true ),
             'capability_type' => 'post'
         );

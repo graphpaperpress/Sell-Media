@@ -326,7 +326,7 @@ Class SellMediaNavStyleUI {
                             <?php if ( empty( $current_term_id ) ) : ?>
 
                             <?php else : ?>
-                                <?php if ( $final['terms'] ) : foreach( $final['terms'] as $term ) : ?>
+                                <?php if ( $final['terms'] && is_array( $final['terms'] ) ) : foreach( $final['terms'] as $term ) : ?>
                                     <tr>
                                         <td><?php echo $term['field']['html']; ?></td>
                                         <?php echo $term['meta']['html']; ?>

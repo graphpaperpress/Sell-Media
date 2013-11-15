@@ -7,8 +7,14 @@ $version = get_option( 'sell_media_version' );
  * making them ready for the updated settings API.
  */
 if ( $version <= '1.6.5' ){
+
     global $wpdb;
     $current_settings = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->prefix}options WHERE option_name LIKE 'sell_media_%';" );
+
+    if ( empty( $current_settings ) ){
+        return;
+    }
+
     $new_settings = array();
     foreach( $current_settings as $r ){
         $serialized = maybe_unserialize( $r->option_value );

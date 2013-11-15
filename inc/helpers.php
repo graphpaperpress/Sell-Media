@@ -380,7 +380,7 @@ function sell_media_is_license_term_page(){
  **/
 function sell_media_get_currency() {
     $settings = sell_media_get_plugin_options();
-    return apply_filters( 'sell_media_currency', $settings->currency );
+    return apply_filters( 'sell_media_currency', empty( $settings->currency ) ? null : $settings->currency );
 }
 
 
