@@ -69,9 +69,16 @@ Class SellMediaNavStyleUI {
         if ( ! empty( $form_data['terms_children'] ) ){
             foreach( $form_data['terms_children'] as $k => $v ){
                 wp_update_term( $k, $taxonomy, array( 'name' => $v['name'] ) );
-                sell_media_update_term_meta( $k, 'width', $v['width'] );
-                sell_media_update_term_meta( $k, 'height', $v['height'] );
-                sell_media_update_term_meta( $k, 'price', $v['price'] );
+
+                // Dynamically save ALL fields that are NOT 'name' as
+                // term meta! It would have been nice to store all
+                // meta into an array and loop over saving that,
+                // can't wait for term meta to make it into core.
+                foreach( $v as $kk => $vv ){
+                    if ( $k != 'name' ){
+                        sell_media_update_term_meta( $k, $kk, $vv );
+                    }
+                }
             }
         }
 
@@ -149,6 +156,10 @@ Class SellMediaNavStyleUI {
         $parent_terms = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'parent' => 0 ) );
         $current_parent = empty( $_GET['term_parent'] ) ? '' : $_GET['term_parent'];
 
+        if ( is_wp_error( $parent_terms ) ){
+            wp_die('Your using SellMediaNavStyleUI for a taxonomy that doesn\'t exists');
+        }
+
         $tmp = array();
         $final = array();
         $final['terms'] = null;
@@ -208,7 +219,7 @@ Class SellMediaNavStyleUI {
             );
 
 
-        // build temrs array
+        // build terms array
         $tmp = null;
         $terms_obj = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'child_of' => $current_term_id ) );
         foreach( $terms_obj as $term ){
@@ -241,8 +252,7 @@ Class SellMediaNavStyleUI {
             $final['terms'] = $tmp;
         }
 
-
-        // $final['terms'] = apply_filters('sell_media_rp_meta', $this->taxonomy, $final['terms']);
+        $final['terms'] = apply_filters('sell_media_additional_meta_price_group', $this->taxonomy, $final['terms']);
 
         // Default terms
         $max = count( $final['terms'] ) < 1 ? 3 : 1;
@@ -271,8 +281,8 @@ Class SellMediaNavStyleUI {
                 </tr>';
         }
 
-        $price_copy = apply_filters( 'sell_media_rp_price_copy', __('The sizes listed below determine the maximum dimensions in pixels.', 'sell_media'), $this->taxonomy );
-        $price_group_copy = apply_filters( 'sell_media_rp_price_group_copy', __('Create a price group to add prices to.', 'sell_media'), $this->taxonomy );
+        $price_copy = apply_filters( 'sell_media_default_price_copy', __('The sizes listed below determine the maximum dimensions in pixels.', 'sell_media'), $this->taxonomy );
+        $price_group_copy = apply_filters( 'sell_media_default_price_group_copy', __('Create a price group to add prices to.', 'sell_media'), $this->taxonomy );
 
         ?>
         <div id="menu-management-liquid" class="sell-media-price-groups-container">
@@ -300,7 +310,7 @@ Class SellMediaNavStyleUI {
                     </div>
 
 
-                    <table class="form-table sell-media-price-groups-table">
+                    <table class="form-table sell-media-price-groups-table" id="sell-media-<?php echo $this->taxonomy; ?>">
                         <tbody>
                             <tr>
                                 <td colspan="4">
@@ -323,7 +333,7 @@ Class SellMediaNavStyleUI {
                                         <td><?php echo $term['delete']['html']; ?></td>
                                     </tr>
                                 <?php endforeach; endif ;?>
-                                <?php echo apply_filters( 'sell_media_pg_default_children', $html, $this->taxonomy, $current_term_id ); ?>
+                                <?php echo apply_filters( 'sell_media_default_price_group_children', $html, $this->taxonomy, $current_term_id ); ?>
                             <?php endif; ?>
                         </tbody>
 

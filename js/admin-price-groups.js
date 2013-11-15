@@ -101,7 +101,7 @@ jQuery( document ).ready(function( $ ){
     });
 
 
-    $( document ).on('click', '.sell-media-price-groups-repeater-add', function( event ){
+    $( document ).on('click', '#sell-media-price-group .sell-media-price-groups-repeater-add', function( event ){
         var counter = +($('.sell-media-price-groups-row:last').attr('data-index')) + 1 ;
         event.preventDefault();
 
@@ -112,16 +112,16 @@ jQuery( document ).ready(function( $ ){
         html += '</td>';
         html += '<td>';
             html += '<input type="hidden" name="new_child['+counter+'][parent]" value="'+ $('.sell-media-price-group-parent-id:last').val() + '" />';
-            html += '<input type="number" step="1" min="0" class="small-text" name="new_child['+counter+'][width]" value="">';
+            html += '<input type="text" class="small-text" name="new_child['+counter+'][width]" value="">';
             html += '<p class="description">Width</p>';
         html += '</td>';
         html += '<td>';
-            html += '<input type="number" step="1" min="0" class="small-text" name="new_child['+counter+'][height]" value="">';
+            html += '<input type="text" class="small-text" name="new_child['+counter+'][height]" value="">';
             html += '<p class="description">Height</p>';
         html += '</td>';
         html += '<td>';
             html += '<span class="description">'+sell_media_price_groups.currency_symbol+'</span>&nbsp;';
-            html += '<input type="number" step="1" min="0" class="small-text" name="new_child['+counter+'][price]" value="">';
+            html += '<input type="text" class="small-text" name="new_child['+counter+'][price]" value="">';
             html += '<p class="description">Price</p>';
         html += '</td>';
         html += '<td>';
@@ -129,7 +129,7 @@ jQuery( document ).ready(function( $ ){
         html += '</td>';
         html += '</tr>';
 
-        $('.sell-media-price-groups-table').append( html );
+        $(this).closest('.sell-media-price-groups-table').append( html );
         counter++;
     });
 
