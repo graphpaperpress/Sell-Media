@@ -291,7 +291,7 @@ Class SellMediaNavStyleUI {
 
                 <div class="nav-tabs-nav">
                     <div class="nav-tabs-wrapper">
-                        <div class="nav-tabs" style="padding: 0px; margin-right: -491px;">
+                        <div class="nav-tabs">
                             <?php foreach( $final['menu'] as $menu ) : ?>
                                 <?php echo $menu['html']; ?>
                             <?php endforeach; ?>
