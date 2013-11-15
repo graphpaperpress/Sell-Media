@@ -25,7 +25,7 @@ include( dirname(__FILE__) . '/inc/class-search.php' );
 include( dirname(__FILE__) . '/inc/class-payments.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
-include_once(plugin_dir_path( __FILE__ ).'settings/settings.php');
+include_once( dirname(__FILE__) . '/settings/settings.php');
 
 if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-bulk.php' );
@@ -96,8 +96,6 @@ class SellMedia {
         if ( $version && $version > SELL_MEDIA_VERSION )
             return;
 
-        update_option( 'sell_media_version', SELL_MEDIA_VERSION );
-
         // Don't forget registration hook is called
         // BEFORE! taxonomies are registered! therefore
         // these terms and taxonomies are NOT derived from our object!
@@ -165,8 +163,19 @@ class SellMedia {
         flush_rewrite_rules();
 
 
-        // Update script to new settings
-        include( dirname(__FILE__) . '/inc/admin-upgrade.php' );
+        // This is a new install so add the defaults to the options table
+        if ( empty( $version ) ){
+            include_once(plugin_dir_path(__FILE__).'settings/settings.php');
+            include_once(plugin_dir_path( __FILE__ ).'sell-media-settings.php');
+
+            $defaults = sell_media_get_plugin_option_defaults();
+            update_option( sell_media_get_current_plugin_id() . "_options" , $defaults );
+        } else {
+            // Update script to new settings
+            include( dirname(__FILE__) . '/inc/admin-upgrade.php' );
+        }
+
+        update_option( 'sell_media_version', SELL_MEDIA_VERSION );
 
     } // end install();
 
