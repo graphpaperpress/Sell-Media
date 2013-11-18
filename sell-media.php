@@ -648,7 +648,7 @@ class SellMedia {
                 array(
                 'ajaxurl' => admin_url("admin-ajax.php"),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
-                'checkouturl' => get_permalink( $settings->checkout_page ),
+                'checkouturl' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
                 'cart' => array(
                     'subtotal' => empty( $_SESSION['cart']['items'] ) ? 0 : $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
                     'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],

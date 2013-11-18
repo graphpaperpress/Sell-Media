@@ -368,7 +368,7 @@ $options = array(
         "section" => "size_price_plugin_section_1",
         "type" => "select",
         "default" => "",
-        "valid_options" => sell_media_settings_price_group()
+        "valid_options" => sell_media_settings_price_group('price-group')
         ),
     "price_group" => array(
         "tab" => "sell_media_size_settings",
