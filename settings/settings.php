@@ -83,9 +83,9 @@ function sell_media_add_plugin_page() {
         // parent page
         'edit.php?post_type=sell_media_item',
         // Name displayed in HTML title tag
-        __('Settings (new)', 'sell_media'),
+        __('Settings', 'sell_media'),
         // Name displayed in the Admin Menu
-        __('Settings (new)', 'sell_media'),
+        __('Settings', 'sell_media'),
         // User capability required to access page
         sell_media_get_plugin_settings_page_cap(),
         // String to append to URL after "themes.php"
