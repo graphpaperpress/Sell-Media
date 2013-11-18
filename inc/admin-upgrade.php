@@ -61,6 +61,17 @@ if ( $version <= '1.6.5' ){
                         $new_settings['mailchimp_list'] = $v;
                     }
 
+                    // Reprints
+                    elseif ( $k == 'base_region' ){
+                        unset( $k );
+                        $new_settings['reprints_base_region'] = $v;
+                    }
+
+                    elseif ( $k == 'unit_measurement' ){
+                        unset( $k );
+                        $new_settings['reprints_unit_measurement'] = $v;
+                    }
+
                     else {
                         $new_settings[ $k ] = $v;
                     }
