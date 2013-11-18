@@ -400,9 +400,6 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $message['subject'] = $settings->success_email_subject;
     $message['body'] = $settings->success_email_body;
 
-    if ( function_exists('sell_media_reprints_sf_options'))
-        $options = sell_media_reprints_sf_options();
-
     // Build the download links markup
     $links = null;
     $i = 0;
