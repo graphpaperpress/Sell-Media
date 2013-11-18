@@ -62,6 +62,11 @@ if ( $version <= '1.6.5' ){
                     }
 
                     // Reprints
+                    elseif( $k == 'hide_download_tab' ){
+                        unset( $k );
+                        $new_settings['reprints_hide_download_tabs'][] = "yes";
+                    }
+
                     elseif ( $k == 'base_region' ){
                         unset( $k );
                         $new_settings['reprints_base_region'] = $v;
