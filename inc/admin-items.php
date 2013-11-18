@@ -71,13 +71,15 @@ function sell_media_admin_items_init(){
 
     $sell_media_item_meta_fields = apply_filters( 'sell_media_additional_item_meta', $sell_media_item_meta_fields, $post_id );
 
+    do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
+
     $sell_media_item_meta_fields[] = array(
             'label' => __( 'Shortcode', 'sell_media' ),
             'desc'  => __( 'The permalink for this item is displayed below the title above. The archive page showing all items for sale can be viewed <a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">here</a>. You can optionally use shortcode to display this specific item on other Posts or Pages. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"', 'sell_media' ),
             'id'    => $prefix . '_shortcode',
             'type'  => 'html'
         );
-    do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
+
 }
 add_action('admin_init', 'sell_media_admin_items_init');
 
