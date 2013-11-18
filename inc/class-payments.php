@@ -9,7 +9,7 @@ Class SellMediaPayments {
      *
      * @return (string) Total with formated currency symbol
      */
-    public function total( $post_id=null ){
+    static public function total( $post_id=null ){
         return sell_media_get_currency_symbol() . sprintf( '%0.2f', get_post_meta( $post_id, '_sell_media_payment_amount', true ) );
     }
 
@@ -145,7 +145,7 @@ Class SellMediaPayments {
      *
      * @return Formated payment status
      */
-    public function status( $post_id=null ){
+    static public function status( $post_id=null ){
 
         $status = get_post_status( $post_id );
 
