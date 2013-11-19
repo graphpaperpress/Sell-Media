@@ -275,10 +275,14 @@ Class Sell_Media_Cart {
 
         $item_index = $_POST['item_id'];
 
+        // remove all
         if ( is_array( $item_index ) ){
             foreach( $item_index as $id ){
+                $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['total'];
+                $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['qty'];
                 unset( $_SESSION['cart']['items'][ $id ] );
             }
+        // remove single
         } else {
             $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
             $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['qty'];
