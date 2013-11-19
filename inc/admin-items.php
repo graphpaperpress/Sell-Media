@@ -9,8 +9,8 @@
 function sell_media_add_price_meta_box( $post_type ) {
     add_meta_box(
                 'product_meta_box', // $id
-                'Item Details', // $title
-                'sell_media_show_custom_meta_box', // $callback
+                'Details', // $title
+                'sell_media_details_meta_box', // $callback
                 'sell_media_item', // $page
                 'normal', // $context
                 'high'); // $priority
@@ -72,14 +72,6 @@ function sell_media_admin_items_init(){
     $sell_media_item_meta_fields = apply_filters( 'sell_media_additional_item_meta', $sell_media_item_meta_fields, $post_id );
 
     do_action('sell_media_extra_meta_fields', 'sell_media_item_meta_fields');
-
-    $sell_media_item_meta_fields[] = array(
-            'label' => __( 'Shortcode', 'sell_media' ),
-            'desc'  => __( 'The permalink for this item is displayed below the title above. The archive page showing all items for sale can be viewed <a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">here</a>. You can optionally use shortcode to display this specific item on other Posts or Pages. Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"', 'sell_media' ),
-            'id'    => $prefix . '_shortcode',
-            'type'  => 'html'
-        );
-
 }
 add_action('admin_init', 'sell_media_admin_items_init');
 
@@ -109,7 +101,7 @@ add_action( 'edit_form_advanced', 'sell_media_editor' );
  * @author Thad Allender
  * @since 0.1
  */
-function sell_media_show_custom_meta_box( $fields=null ) {
+function sell_media_details_meta_box( $fields=null ) {
 
     global $post;
 
@@ -138,24 +130,20 @@ function sell_media_show_custom_meta_box( $fields=null ) {
 
             $meta = null; // I have to find out what "meta" was used for, just setting it to null
 
-            switch($field['type']) {
+            switch( $field['type'] ) {
 
                 // text
                 case 'text':
                     if ( $field['std'] )
                         $default = $field['std'];
-
                     echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" size="2"/><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
-
                 break;
 
                 // price
                 case 'price':
                     if ( $field['std'] )
                         $default = $field['std'];
-
                     echo '<span class="description">' . sell_media_get_currency_symbol() . '</span> <input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
-
                 break;
 
                 // textarea
@@ -207,14 +195,11 @@ function sell_media_show_custom_meta_box( $fields=null ) {
                     print '<div class="sell-media-upload-trigger">';
                     print '<div class="sell-media-temp-target">' . sell_media_item_icon( $attachment_id, 'thumbnail', false ) . '</div>';
                     print '</div>';
-
                     break;
 
                 // text
                 case 'html':
-                    $text = apply_filters( 'sell_media_purchase_text', __('Purchase') );
-                    echo '<p><code>[sell_media_item id="' . $post->ID . '" text="' . $text . '" style="button" size="medium"]</code></p>
-                    <p id="' . $field['id'] . '"><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span></p>';
+                    echo '<p id="' . $field['id'] . '"><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span></p>';
                     break;
 
                 case 'price_group':
