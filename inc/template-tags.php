@@ -330,10 +330,6 @@ add_action( 'parse_query', 'sell_media_search_warning_surpression' );
 
 function sell_media_item_form(){
     $settings = sell_media_get_plugin_options();
-    print '<pre>';
-    print_r($_SESSION['cart']);
-    print '</pre>';
-
     $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
     $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
     $disabled = null;
