@@ -354,8 +354,6 @@ function sell_media_item_form(){
         $wp_upload_dir = wp_upload_dir();
         $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
         $sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
-        print_r( $mime_type );
-        print_r( $sizes_array );
 
         if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
             <?php $disabled = 'disabled'; $price = "0.00"; ?>
