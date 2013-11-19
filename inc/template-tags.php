@@ -181,99 +181,24 @@ function sell_media_item_size( $post_id=null ){
 function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo=true ){
 
     /**
-     * Get the default price for this Item.
+     * Get the unique price of the item if it exists
+     * Otherwise, use the default price from Settings
      */
-    $default_price = get_post_meta( $post_id, 'sell_media_price', true );
+
+    $price = get_post_meta( $post_id, 'sell_media_price', true );
     $settings = sell_media_get_plugin_options();
 
-    /**
-     * If we have a filtered price we use that if not we derive our own price
-     */
-    $filtered_price = apply_filters( 'sell_media_filtered_price', $size );
-    if ( $filtered_price == $size ){
-
-        /**
-         * If we have no size and no default price for this item we fall back
-         * on the defaults from the settings.
-         */
-        if ( empty( $size ) && ! empty( $default ) ){
-            $price = $settings->default_price;
-        } else {
-
-            /**
-             * Get the price based on the size and id passed in.
-             */
-            $item_price = get_post_meta( $post_id, 'sell_media_price_' . $size, true );
-
-            /**
-             * If a size was not passed in we fall back on the default
-             * price for this post.
-             */
-            if ( empty( $size ) ){
-                if ( empty( $default_price ) ){
-                    $price = $settings->default_price;
-                } else {
-                    $price = $default_price;
-                }
-            } elseif ( empty( $item_price ) ){
-
-                /**
-                 * If this single item does not have a price, we fall back on the
-                 * default prices set in the settings.
-                 */
-                $price = get_option('sell_media_size_settings');
-                if ( in_array( $size, array('small','medium','large') ) ){
-                    switch( $size ){
-                        case 'small':
-                            $k = 'small_size_price';
-                            break;
-                        case 'medium':
-                            $k = 'medium_size_price';
-                            break;
-                        case 'large':
-                            $k = 'large_size_price';
-                            break;
-                        default:
-                            $k = 'default_price';
-                    }
-                } else {
-                    switch( $size ){
-                        case 'sell_media_small_file':
-                            $k = 'small_size_price';
-                            break;
-                        case 'sell_media_medium_file':
-                            $k = 'medium_size_price';
-                            break;
-                        case 'sell_media_large_file':
-                            $k = 'large_size_price';
-                            break;
-                        default:
-                            $k = 'default_price';
-                    }
-                }
-                $price = $price[ $k ];
-
-            } else {
-
-                /**
-                 * Else we assign our item price to the price.
-                 */
-                $price = $item_price;
-            }
-        }
-    } else {
-        $price = $filtered_price;
-    }
-
-    if ( $currency ){
+    // if the item does not have specific price set, use default from settings
+    if ( empty( $price ) )
+        $price = $settings->default_price;
+    // show the currency symbol if currency is set to true
+    if ( $currency )
         $price = sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
-    }
-
+    // echo or return the price
     if ( $echo )
-        print $price;
+        echo $price;
     else
-        return $price;
-
+     return $price;
 }
 
 
