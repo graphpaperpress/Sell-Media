@@ -90,7 +90,7 @@ jQuery( document ).ready(function( $ ){
             $('.subtotal-target').html( finalPrice );
             $('.subtotal-target').val( finalPrice );
         }
-
+console.log( finalPrice );
         if ( $('.sell-media-item-price').length ){
             $('.sell-media-item-price').html( finalPrice );
             $('.sell-media-item-price').val( finalPrice );
@@ -168,12 +168,14 @@ jQuery( document ).ready(function( $ ){
             $('.item-price-target').each(function(){
                 total = +( $(this).text() ) + +total;
             });
+            total = +sell_media.cart.subtotal + +total;
         } else {
             total = +sell_media.cart.subtotal;
         }
 
         $('.subtotal-target').html( total.toFixed(2) );
         $('.menu-cart-total').html( total.toFixed(2) );
+
         $('.sell-media-item-price').html( total.toFixed(2) );
     }
 
