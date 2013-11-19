@@ -497,7 +497,7 @@ class SELL_MEDIA_Taxonomy_Metadata {
     function __construct() {
         add_action( 'init', array($this, 'wpdbfix') );
         add_action( 'switch_blog', array($this, 'wpdbfix') );
-        add_action('wpmu_new_blog', 'new_blog', 10, 6);
+        add_action( 'wpmu_new_blog', 'new_blog', 10, 6 );
     }
 
     /*
