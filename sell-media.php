@@ -651,7 +651,7 @@ class SellMedia {
                 'checkouturl' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
                 'cart' => array(
                     'subtotal' => empty( $_SESSION['cart']['items'] ) ? 0 : $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
-                    'total' => empty( $_SESSION['cart']['items'] ) ? 0 : $_SESSION['cart']['total'] + apply_filters('sell_media_shipping_rate', "0.00" ),
+                    'total' => empty( $_SESSION['cart']['total'] ) ? 0 : $_SESSION['cart']['total'] + apply_filters('sell_media_shipping_rate', "0.00" ),
                     'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
                     'currency_symbol' => sell_media_get_currency_symbol()
                     ),

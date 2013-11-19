@@ -407,7 +407,7 @@ function sell_media_item_form(){
                 <strong><?php _e( 'Total' ); ?></strong>
             </div>
             <div class="right">
-                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="sell-media-item-price"><?php print $_SESSION['cart']['total']; ?></span></span>
+                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="sell-media-item-price"><?php print $_SESSION['cart']['subtotal']; ?></span></span>
             </div>
         </div>
         <div class="button-container group">

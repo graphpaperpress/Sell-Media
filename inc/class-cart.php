@@ -257,10 +257,11 @@ Class Sell_Media_Cart {
 
         // Update the total and the quantity
         $_SESSION['cart']['currency'] = sell_media_get_currency_symbol();
-        $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] );
+        $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] );
+        $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) + apply_filters('sell_media_shipping_rate', "0.00" );
         $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
 
-        die();
+        wp_send_json_success( $_SESSION );
     }
 
 
@@ -278,12 +279,14 @@ Class Sell_Media_Cart {
         // remove all
         if ( is_array( $item_index ) ){
             foreach( $item_index as $id ){
+                $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['total'];
                 $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['total'];
                 $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['qty'];
                 unset( $_SESSION['cart']['items'][ $id ] );
             }
         // remove single
         } else {
+            $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
             $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
             $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['qty'];
             unset( $_SESSION['cart']['items'][$item_index] );
@@ -397,7 +400,7 @@ Class Sell_Media_Cart {
         $_SESSION['cart']['items'][ $cart_id ]['total'] = $_SESSION['cart']['items'][ $cart_id ]['qty'] * $_SESSION['cart']['items'][ $cart_id ]['price']['amount'];
 
         // Update the total
-        $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] );
+        $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] );
 
         // If our key is the quantity, we update the qty for the entire cart along
         // with updating our total for this specific item
