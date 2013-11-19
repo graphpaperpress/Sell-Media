@@ -255,7 +255,7 @@ Class SellMediaNavStyleUI {
         $final['terms'] = apply_filters('sell_media_additional_meta_price_group', $this->taxonomy, $final['terms']);
 
         // Default terms
-        $max = count( $final['terms'] ) < 1 ? 1 : 0;
+        $max = count( $final['terms'] ) < 1 ? 1 : 1;
         $html = null;
         for( $i = 1; $i <= $max; $i++ ) {
             $html .=
