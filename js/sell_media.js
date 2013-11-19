@@ -77,11 +77,13 @@ jQuery( document ).ready(function( $ ){
 
         if ( typeof( license_markup ) == "undefined" ) license_markup = 0;
 
+        current_total = sell_media.cart.subtotal;
+
         // Don't use the license_markup on the checkout table
         if ( $('#sell-media-checkout-table').length ){
-            finalPrice = ( +price ).toFixed(2);
+            finalPrice = ( +price + +current_total ).toFixed(2);
         } else {
-            finalPrice = ( +price + ( +license_markup * .01 ) * price ).toFixed(2);
+            finalPrice = ( +price + +current_total + ( +license_markup * .01 ) * price ).toFixed(2);
         }
 
         if ( $('.subtotal-target').length ){
