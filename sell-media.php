@@ -657,7 +657,7 @@ class SellMedia {
                 'error' => array(
                     'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                     ),
-                'default_payment' => sell_media_default_payment()
+                'default_payment' => $settings->default_payment
                 )
             );
 
