@@ -611,6 +611,7 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
     $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
     $wp_upload_dir = wp_upload_dir();
     $attached_path_file  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+    $parent_price_group = null;
 
     // Fix for legacy code?
     $attached_file_fix = file_exists( $attached_path_file );
@@ -626,23 +627,34 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
     $original = $download_sizes = array();
     list( $original['url'], $original['width'], $original['height'] ) = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
 
-    $price_groups = wp_get_post_terms( $post_id, 'price-group' );
+    $tmp_price_groups = wp_get_post_terms( $post_id, 'price-group' );
 
-    if ( empty( $price_groups ) ){
+    foreach( $tmp_price_groups as $tmp_price_groups){
+        if ( $tmp_price_groups->parent == 0 ){
+            $parent_price_group = $tmp_price_groups->term_id;
+        }
+    }
+
+    if ( empty( $tmp_price_groups ) ){
 
         $settings = sell_media_get_plugin_options();
         $default_price_group_obj = get_term( $settings->default_price_group, 'price-group' );
 
-        if ( is_wp_error( $default_price_group_obj ) )
+        if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) )
             return;
 
-        $children = get_term_children( $default_price_group_obj->term_id, 'price-group' );
-
-        $price_groups = array();
-        foreach( $children as $child ){
-            $price_groups[] = get_term_by( 'id', $child, 'price-group' );
-        }
+        $parent_price_group = $default_price_group_obj->term_id;
     }
+
+    $args = array(
+        'type' => 'sell_media_item',
+        'hide_empty' => false,
+        'parent' => $parent_price_group,
+        'taxonomy' => 'price-group'
+        );
+
+    $price_groups = get_categories( $args );
+
 
     /**
      * Loop over price groups checking for children,
@@ -651,6 +663,7 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
      * sizes that are not downloadable.
      */
     $cart = New Sell_Media_Cart;
+
     foreach( $price_groups as $price ){
 
         /**

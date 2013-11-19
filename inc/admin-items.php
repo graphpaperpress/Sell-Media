@@ -377,9 +377,7 @@ function sell_media_save_custom_meta( $post_id ) {
     }
 
     if ( ! empty( $_POST['_sell_media_price_group'] ) ){
-        $childs = get_term_children( $_POST['_sell_media_price_group'], 'price-group' );
-        $childs[] = $_POST['_sell_media_price_group'];
-        wp_set_post_terms( $post_id, $childs, 'price-group' );
+        wp_set_post_terms( $post_id, $_POST['_sell_media_price_group'], 'price-group' );
     }
 
 }
