@@ -193,9 +193,8 @@ jQuery( document ).ready(function( $ ){
         $('.sell-media-quantity').each(function(){
             item_id = $(this).attr('data-id');
 
-
-            if ( $(this).attr('data-markup') == 0 ){
-                price = +$(this).attr('data-price');
+            if ( typeof( $(this).attr('data-markup') ) == "undefined" || $(this).attr('data-markup') == 0 ){
+                price = $(this).attr('data-price');
             } else {
                 price = calculate_total( $(this).attr('data-markup'), $(this).attr('data-price') );
             }
