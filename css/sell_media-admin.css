@@ -65,7 +65,7 @@
 .sell_media-extensions .row-container .extension .title a { text-decoration: none; }
 .sell_media-extensions .row-container .extension .price { float: right; }
 .sell_media-extensions .row-container .extension .image { clear: both; background: white; padding: 3px; border: 1px solid #DDD; float: left; width: 96%; }
-.sell_media-extensions .row-container .extension .image img { max-width: 100%; float: left; }
+.sell_media-extensions .row-container .extension .image img { max-width: 100%; max-height: 120px; float: left; }
 .sell_media-extensions .row-container .extension .description { float: left; margin: 10px 0 0; }
 
 /* Admin Menu
