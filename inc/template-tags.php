@@ -637,61 +637,42 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
      */
     $cart = New Sell_Media_Cart;
     $price_groups = sell_media_get_price_groups( $post_id = $post_id, $taxonomy = 'price-group' );
-
-    foreach( $price_groups as $price ){
-
-        /**
-         * Check for children only
-         */
-        if ( $price->parent > 0 ){
+    if ( ! empty( $price_groups ) ){
+        foreach( $price_groups as $price ){
 
             /**
-             * Retrieve the height and width for our price group
+             * Check for children only
              */
-            $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
-            $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
+            if ( $price->parent > 0 ){
 
-            /**
-             * Build our array to be returned, the downloadable width and height
-             * are calculated later and added to this array
-             */
-            $download_sizes[ $price->term_id ] = array(
-                'name' => $price->name,
-                'price' => $cart->item_price( $post_id, $price->term_id )
-                );
+                /**
+                 * Retrieve the height and width for our price group
+                 */
+                $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
+                $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
 
-            /**
-             * Calculate dimensions and coordinates for a resized image that fits
-             * within a specified width and height. If $crop is true, the largest
-             * matching central portion of the image will be cropped out and resized
-             * to the required size.
-             */
-            list( $null, $null, $null, $null, $download_sizes[ $price->term_id ]['width'], $download_sizes[ $price->term_id ]['height'] ) = image_resize_dimensions( $orig_w, $orig_h, $pg_width, $pg_height, $crop=false );
-
-            /**
-             * If no width/height can be determined we remove it from our array of
-             * available download sizes.
-             */
-            if ( empty( $download_sizes[ $price->term_id ]['width'] ) ) {
-
-                $unavailable_size[ $price->term_id ] = array(
-                    'name' => $download_sizes[ $price->term_id ]['name'],
-                    'price' => $download_sizes[ $price->term_id ]['price'],
-                    'height' => $pg_height,
-                    'width' => $pg_width
+                /**
+                 * Build our array to be returned, the downloadable width and height
+                 * are calculated later and added to this array
+                 */
+                $download_sizes[ $price->term_id ] = array(
+                    'name' => $price->name,
+                    'price' => $cart->item_price( $post_id, $price->term_id )
                     );
 
-                unset( $download_sizes[ $price->term_id ] );
-            }
+                /**
+                 * Calculate dimensions and coordinates for a resized image that fits
+                 * within a specified width and height. If $crop is true, the largest
+                 * matching central portion of the image will be cropped out and resized
+                 * to the required size.
+                 */
+                list( $null, $null, $null, $null, $download_sizes[ $price->term_id ]['width'], $download_sizes[ $price->term_id ]['height'] ) = image_resize_dimensions( $orig_w, $orig_h, $pg_width, $pg_height, $crop=false );
 
-            /**
-             * Check for portraits and if the available download size is larger than
-             * the original we remove it.
-             */
-            $smallest_height = sell_media_item_min_price( $post_id, false, 'height' );
-            if ( $original['height'] > $original['width']
-                && isset( $download_sizes[ $price->term_id ] )
-                && $download_sizes[ $price->term_id ]['height'] <  $smallest_height ){
+                /**
+                 * If no width/height can be determined we remove it from our array of
+                 * available download sizes.
+                 */
+                if ( empty( $download_sizes[ $price->term_id ]['width'] ) ) {
 
                     $unavailable_size[ $price->term_id ] = array(
                         'name' => $download_sizes[ $price->term_id ]['name'],
@@ -701,6 +682,26 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
                         );
 
                     unset( $download_sizes[ $price->term_id ] );
+                }
+
+                /**
+                 * Check for portraits and if the available download size is larger than
+                 * the original we remove it.
+                 */
+                $smallest_height = sell_media_item_min_price( $post_id, false, 'height' );
+                if ( $original['height'] > $original['width']
+                    && isset( $download_sizes[ $price->term_id ] )
+                    && $download_sizes[ $price->term_id ]['height'] <  $smallest_height ){
+
+                        $unavailable_size[ $price->term_id ] = array(
+                            'name' => $download_sizes[ $price->term_id ]['name'],
+                            'price' => $download_sizes[ $price->term_id ]['price'],
+                            'height' => $pg_height,
+                            'width' => $pg_width
+                            );
+
+                        unset( $download_sizes[ $price->term_id ] );
+                }
             }
         }
     }
