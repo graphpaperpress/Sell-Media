@@ -1202,7 +1202,7 @@ function sell_media_country_list( $current=null ){
  */
 function sell_media_default_payment(){
     $settings = sell_media_get_plugin_options();
-    return isset( $settings->default_gateway ) ? $settings->default_gateway : null;
+    return isset( $settings->default_payment ) ? $settings->default_payment : null;
 }
 
 
