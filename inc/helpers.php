@@ -1254,7 +1254,7 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
         $settings = sell_media_get_plugin_options();
 
         if ( $taxonomy == 'reprints-price-group'){
-            $price_group_id = $settings->reprints_price_group;
+            $price_group_id = $settings->reprints_default_price_group;
         } else {
             $price_group_id = $settings->default_price_group;
         }
