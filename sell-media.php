@@ -54,6 +54,18 @@ add_action( 'admin_head', 'sell_media_screen_icon' );
 
 
 /**
+ * Since Price Groups are added on the settings page, remove it from the submenu
+ * This approach still allows for Bulk Editing
+ *
+* @since 1.7
+*/
+function sell_media_adjust_admin_menu(){
+    remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
+}
+add_action( 'admin_menu', 'sell_media_adjust_admin_menu', 999 );
+
+
+/**
  * Start our PHP session for shopping cart
  *
  * @since 0.1
@@ -585,7 +597,7 @@ class SellMedia {
 
         $args = array(
             'labels' => $labels,
-            'public' => false,
+            'public' => true,
 
             'show_in_nav_menus' => true,
             'show_tagcloud' => true,
@@ -598,7 +610,6 @@ class SellMedia {
 
         register_taxonomy( 'price-group', array('sell_media_item'), $args );
     }
-
 
     /**
      * Registers and enqueues stylesheets for the administration panel
