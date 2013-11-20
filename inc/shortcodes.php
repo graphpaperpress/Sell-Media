@@ -334,7 +334,6 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                 <div class="button-container">
                                     <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
                                     <span class="inline"><em><?php _e( 'or', 'sell_media' ); ?></em> <a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?></a></span>
-                                    <p class="desc"><?php _e('You will be redirected to PayPal to complete your purchase.', 'sell_media' ); ?></p>
                                 </div>
 
                                 <p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
