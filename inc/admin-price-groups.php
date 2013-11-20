@@ -252,8 +252,19 @@ Class SellMediaNavStyleUI {
             $final['terms'] = $tmp;
         }
 
-        $final['terms'] = apply_filters('sell_media_additional_meta_price_group', $this->taxonomy, $final['terms']);
+		$final_additional = apply_filters('sell_media_additional_meta_price_group', $this->taxonomy, $final['terms']);
 
+		if ( ! empty( $final_additional ) ) {
+		    $final['terms'] = $final_additional;
+		} else {
+			$final['terms'] = $tmp;
+		}
+
+		if ( has_filter( 'sell_media_additional_meta_price_group' ) ) {
+			$final['terms'] = apply_filters('sell_media_additional_meta_price_group', $this->taxonomy, $final['terms']);
+		} else {
+			$final['terms'] = $tmp;
+		}
         // Default terms
         $max = count( $final['terms'] ) < 1 ? 1 : 1;
         $html = null;
