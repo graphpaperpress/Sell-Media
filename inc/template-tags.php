@@ -629,35 +629,6 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
     $original = $download_sizes = array();
     list( $original['url'], $original['width'], $original['height'] ) = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
 
-    $tmp_price_groups = wp_get_post_terms( $post_id, 'price-group' );
-
-    foreach( $tmp_price_groups as $tmp_price_groups){
-        if ( $tmp_price_groups->parent == 0 ){
-            $parent_price_group = $tmp_price_groups->term_id;
-        }
-    }
-
-    if ( empty( $tmp_price_groups ) ){
-
-        $settings = sell_media_get_plugin_options();
-        $default_price_group_obj = get_term( $settings->default_price_group, 'price-group' );
-
-        if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) )
-            return;
-
-        $parent_price_group = $default_price_group_obj->term_id;
-    }
-
-    $args = array(
-        'type' => 'sell_media_item',
-        'hide_empty' => false,
-        'parent' => $parent_price_group,
-        'taxonomy' => 'price-group'
-        );
-
-    $price_groups = get_categories( $args );
-
-
     /**
      * Loop over price groups checking for children,
      * compare the width and height assigned to a price group
@@ -665,6 +636,7 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
      * sizes that are not downloadable.
      */
     $cart = New Sell_Media_Cart;
+    $price_groups = sell_media_get_price_groups( $post_id = $post_id, $taxonomy = 'price-group' );
 
     foreach( $price_groups as $price ){
 

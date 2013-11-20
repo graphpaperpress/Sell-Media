@@ -1228,3 +1228,47 @@ function sell_media_thanks_url( $purchase=array() ){
 
     return $url;
 }
+
+/**
+ * Return either the the custom price group or the default price group from settings
+ * Used for showing price groups on cart popup
+ *
+ * @param $post_id, $taxonomy
+ * @return $price_groups (object)
+ */
+
+function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
+
+    // first, check price group set on the item
+    $price_groups_custom = wp_get_post_terms( $post_id, $taxonomy );
+
+    foreach( $price_groups_custom as $price_group ){
+        if ( $price_group->parent == 0 ){
+            $parent_price_group = $price_group->term_id;
+        }
+    }
+
+    // if the item doesn't have a price group set, use the default from settings
+    if ( empty( $price_groups_custom ) ){
+
+        $settings = sell_media_get_plugin_options();
+        $default_price_group_obj = get_term( $settings->default_price_group, $taxonomy );
+
+        if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) )
+            return;
+
+        $parent_price_group = $default_price_group_obj->term_id;
+    }
+
+    $args = array(
+        'type' => 'sell_media_item',
+        'hide_empty' => false,
+        'parent' => $parent_price_group,
+        'taxonomy' => $taxonomy
+        );
+
+    $price_groups = get_categories( $args );
+
+    return $price_groups;
+
+}
