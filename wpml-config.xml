@@ -32,7 +32,7 @@
             <key name="option_name_1" />
         </key>
         <key name="payment_settings">
-            <key name="default_payment" />
+            <key name="default_gateway" />
             <key name="paypal_email" />
             <key name="currency" />
             <key name="paypal_additional_test_email" />

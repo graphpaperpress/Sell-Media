@@ -383,9 +383,9 @@ $options = array(
         ),
 
     // Payment Tab
-    "default_payment" => array(
+    "default_gateway" => array(
         "tab" => "sell_media_payment_settings",
-        "name" => "default_payment",
+        "name" => "default_gateway",
         "title" => __("Default Payment","sell_media"),
         "description" => "",
         "section" => "payment_section_1",

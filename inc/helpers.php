@@ -1200,9 +1200,9 @@ function sell_media_country_list( $current=null ){
 /**
  * @return default payment gateway
  */
-function sell_media_default_payment(){
+function sell_media_default_gateway(){
     $settings = sell_media_get_plugin_options();
-    return isset( $settings->default_payment ) ? $settings->default_payment : null;
+    return isset( $settings->default_gateway ) ? $settings->default_gateway : null;
 }
 
 
