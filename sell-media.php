@@ -566,26 +566,26 @@ class SellMedia {
 
     public function registerPriceGroup() {
         $labels = array(
-            'name' => _x( 'Price Group', '', 'sell_media' ),
-            'singular_name' => _x( 'Price Group', '', 'sell_media' ),
-            'search_items' => _x( 'Search Price Group', '', 'sell_media' ),
-            'popular_items' => _x( 'Popular Price Group', '', 'sell_media' ),
-            'all_items' => _x( 'All Price Group', '', 'sell_media' ),
-            'parent_item' => _x( 'Parent Price Group', '', 'sell_media' ),
-            'parent_item_colon' => _x( 'Parent Price Group:', '', 'sell_media' ),
+            'name' => _x( 'Price Groups', '', 'sell_media' ),
+            'singular_name' => _x( 'Price Groups', '', 'sell_media' ),
+            'search_items' => _x( 'Search Price Groups', '', 'sell_media' ),
+            'popular_items' => _x( 'Popular Price Groups', '', 'sell_media' ),
+            'all_items' => _x( 'All Price Groups', '', 'sell_media' ),
+            'parent_item' => _x( 'Parent Price Groups', '', 'sell_media' ),
+            'parent_item_colon' => _x( 'Parent Price Groups:', '', 'sell_media' ),
             'edit_item' => _x( 'Edit Price Group', '', 'sell_media' ),
             'update_item' => _x( 'Update Price Group', '', 'sell_media' ),
             'add_new_item' => _x( 'Add New Price Group', '', 'sell_media' ),
             'new_item_name' => _x( 'New Price Group', '', 'sell_media' ),
-            'separate_items_with_commas' => _x( 'Separate Price Group with commas', '', 'sell_media' ),
-            'add_or_remove_items' => _x( 'Add or remove Price Group', '', 'sell_media' ),
-            'choose_from_most_used' => _x( 'Choose from most used Price Group', '', 'sell_media' ),
-            'menu_name' => _x( 'Price Group', '', 'sell_media' ),
+            'separate_items_with_commas' => _x( 'Separate Price Groups with commas', '', 'sell_media' ),
+            'add_or_remove_items' => _x( 'Add or remove Price Groups', '', 'sell_media' ),
+            'choose_from_most_used' => _x( 'Choose from most used Price Groups', '', 'sell_media' ),
+            'menu_name' => _x( 'Price Groups', '', 'sell_media' ),
         );
 
         $args = array(
             'labels' => $labels,
-            'public' => false, // Hide it from the admin
+            'public' => false,
 
             'show_in_nav_menus' => true,
             'show_tagcloud' => true,
