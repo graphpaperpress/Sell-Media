@@ -1252,7 +1252,14 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
     if ( empty( $price_groups_custom ) ){
 
         $settings = sell_media_get_plugin_options();
-        $default_price_group_obj = get_term( $settings->default_price_group, $taxonomy );
+
+        if ( $taxonomy == 'reprints-price-group'){
+            $price_group_id = $settings->reprints_price_group;
+        } else {
+            $price_group_id = $settings->default_price_group;
+        }
+
+        $default_price_group_obj = get_term( $price_group_id, $taxonomy );
 
         if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) )
             return;
