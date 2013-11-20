@@ -146,12 +146,14 @@ Class Sell_Media_Download {
         foreach( $products as $product ){
             if ( ! empty( $product['license'] ) ){
                 $tmp_term = get_term_by( 'id', $product['license']['id'], 'licenses' );
-                $tmp = array(
-                    'id' => $product['license']['id'],
-                    'name' => $tmp_term->name,
-                    'description' => $tmp_term->description
-                    );
-                $licenses[] = $tmp;
+                if ( ! empty( $tmp_term ) ){
+                    $tmp = array(
+                        'id' => $product['license']['id'],
+                        'name' => $tmp_term->name,
+                        'description' => $tmp_term->description
+                        );
+                    $licenses[] = $tmp;
+                }
             }
         }
 

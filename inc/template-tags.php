@@ -334,6 +334,8 @@ function sell_media_item_form(){
     $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
     $disabled = null;
     $price = sell_media_item_price( $_POST['product_id'], $currency=false, false, false);
+    $subtotal = empty( $_SESSION['cart']['subtotal'] ) ? "0.00" : $_SESSION['cart']['subtotal'];
+
     if ( $licenses ) {
         $term_id = $licenses[0]->term_id;
     } else {
@@ -406,7 +408,7 @@ function sell_media_item_form(){
                 <strong><?php _e( 'Total' ); ?></strong>
             </div>
             <div class="right">
-                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="sell-media-item-price"><?php print $_SESSION['cart']['subtotal']; ?></span></span>
+                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="sell-media-item-price"><?php print $subtotal; ?></span></span>
             </div>
         </div>
         <div class="button-container group">

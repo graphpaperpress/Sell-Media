@@ -55,11 +55,10 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
                 // so we use price groups to determine if the purchase was a download
                 // and only show download links for downloads
                 $term_obj = get_term_by( 'id', $link['price_id'], 'price-group' );
-                $price_exists = term_exists( $term_obj->name, 'price-group' );
 
                 $message .= '<div class="sell-media-aligncenter">';
 
-                if ( $price_exists || $link['price_id'] == 'sell_media_original_file' ){
+                if ( $term_obj || $link['price_id'] == 'sell_media_original_file' ){
                     $message .= '<a href="' . $link['url']. '"><img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" /></a>';
                     $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
                 } else {
