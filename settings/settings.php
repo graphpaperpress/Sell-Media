@@ -95,7 +95,7 @@ function sell_media_add_plugin_page() {
     );
 
 }
-add_action( 'admin_menu', 'sell_media_add_plugin_page' );
+add_action( 'admin_menu', 'sell_media_add_plugin_page', 99 );
 
 /**
  * Settings Page Markup
