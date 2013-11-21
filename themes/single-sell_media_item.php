@@ -20,6 +20,7 @@ get_header(); ?>
 				<?php previous_post_link('<span class="prev">&laquo; %link</span>', '%title'); ?>
 				<?php next_post_link('<span class="next">%link &raquo;</span>', '%title'); ?>
 			</div>
+			<?php edit_post_link('edit', '<p>', '</p>'); ?>
 		</div>
 
 		<div class="sell-media-meta">
@@ -46,7 +47,7 @@ get_header(); ?>
 			</ul>
 			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>
 		</div><!-- .sell-media-meta -->
-
+	
 	<?php endwhile; ?>
 	<?php do_action( 'sell_media_single_bottom_hook' ); ?>
 	</div><!-- #content -->
