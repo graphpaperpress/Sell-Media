@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ The Sell Media plugin allows you to:
 *   License your media for specific usages, including commercial, editorial, or personal usages.
 *   Create you own stock photo or video site.
 *   Protect file uploads.
-*   Accept payments via Paypal.
+*   Accept payments via PayPal.
 *   Earn passive income by selling and licensing your media.
 
 Take Sell Media to the next level with these powerful extensions:
@@ -193,6 +193,8 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.5 =
+* Bug: Various bug fixes with Price Groups
+* Feature: Added new settings API
 * Tweak: Added tweak from [@NETLINK](https://github.com/NETLINK) so PayPal IPN URL can be added as a param.
 * Tweak: Added support for WPML
 
@@ -232,7 +234,7 @@ Action hooks available:
 
 = 1.6.1 =
 
-* Bug: Updated paypal arguments for buyer download email
+* Bug: Updated PayPal arguments for buyer download email
 * Bug: Fixing issue were cart was not emptied
 * Bug: New users are sent an automated WordPress email when registering
 
