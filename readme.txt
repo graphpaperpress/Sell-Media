@@ -195,6 +195,7 @@ Action hooks available:
 = 1.6.5 =
 * Bug: Various bug fixes with Price Groups
 * Feature: Added new settings API
+* Tweak: Add to cart button no longer changes to check out after adding 1 item
 * Tweak: Added tweak from [@NETLINK](https://github.com/NETLINK) so PayPal IPN URL can be added as a param.
 * Tweak: Added support for WPML
 
