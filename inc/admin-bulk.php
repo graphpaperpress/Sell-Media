@@ -56,27 +56,45 @@ function sell_media_add_bulk_callback_fn(){
             <div class="sell-media-bulk-controls">
                 <form action="#" method="POST" id="sell_media_bulk_upload_form">
                     <?php wp_nonce_field('sell_media_bulk_update_collection','security'); ?>
-
-                    <?php _e('Choose a Price Group','sell_media'); ?>:
-                    <select name="price_group" value="price_group" id="sell_media_price_group_select">
-                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
-                        <?php foreach( get_terms('price-group',array('hide_empty'=>false, 'parent'=>0)) as $term ) : ?>
-                            <option value="<?php echo $term->term_id; ?>" <?php selected( $settings->default_price_group, $term->term_id ); ?>><?php echo $term->name; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-
-                    <?php _e('Choose a License','sell_media'); ?>:
-                    <select name="licenses" value="collection" id="sell_media_licenses_select">
-                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
-                        <?php sell_media_build_options( array( 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
-                    </select>
-
-                    <?php _e('Choose a Collection','sell_media'); ?>:
-                    <select name="collection" value="collection" id="sell_media_collection_select">
-                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
-                        <?php sell_media_build_options( array( 'taxonomy' => 'collection', 'type'=>'select' ) ); ?>
-                    </select>
-
+                    <table class="form-table sell-media-item-table">
+                        <tbody>
+                            <tr>
+                                <th><?php _e('Choose a Price Group','sell_media'); ?>:</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="price_group" value="price_group" id="sell_media_price_group_select">
+                                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
+                                        <?php foreach( get_terms('price-group',array('hide_empty'=>false, 'parent'=>0)) as $term ) : ?>
+                                            <option value="<?php echo $term->term_id; ?>" <?php selected( $settings->default_price_group, $term->term_id ); ?>><?php echo $term->name; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><?php _e('Choose a License','sell_media'); ?>:</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="licenses" value="collection" id="sell_media_licenses_select">
+                                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
+                                        <?php sell_media_build_options( array( 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><?php _e('Choose a Collection','sell_media'); ?>:</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="collection" value="collection" id="sell_media_collection_select">
+                                        <option value="" data-price="0"><?php _e( 'None', 'sell_media' ); ?></option>
+                                        <?php sell_media_build_options( array( 'taxonomy' => 'collection', 'type'=>'select' ) ); ?>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <?php do_action('sell_media_bulk_uploader_additional_fields'); ?>
                     <p><input type="submit" id="sell_media_bulk_upload_save_button" class="button-primary" value="<?php _e('Save', 'sell_media'); ?>" /></p>
                 </form>
