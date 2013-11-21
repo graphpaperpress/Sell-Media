@@ -170,9 +170,6 @@ class SellMedia {
 
         add_role( 'sell_media_customer', 'Customer', array( 'read' => true ) );
 
-        $this->init();
-        flush_rewrite_rules();
-
 
         // This is a new install so add the defaults to the options table
         if ( empty( $version ) ){
@@ -185,6 +182,10 @@ class SellMedia {
             // Update script to new settings
             include( dirname(__FILE__) . '/inc/admin-upgrade.php' );
         }
+
+
+        $this->init();
+        flush_rewrite_rules();
 
         update_option( 'sell_media_version', SELL_MEDIA_VERSION );
 
