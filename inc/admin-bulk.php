@@ -125,9 +125,7 @@ function sell_media_bulk_update_collection(){
         wp_set_post_terms( $post_id, $_POST['licenses'], 'licenses', true );
 
         if ( ! empty( $_POST['price_group'] ) ){
-            $childs = get_term_children( $_POST['price_group'], 'price-group' );
-            $childs[] = $_POST['price_group'];
-            wp_set_post_terms( $post_id, $childs, 'price-group' );
+            wp_set_post_terms( $post_id, $_POST['price_group'], 'price-group' );
         } else {
             update_post_meta( $post_id, 'sell_media_price', $settings->default_price );
         }
