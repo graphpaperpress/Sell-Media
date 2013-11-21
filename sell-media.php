@@ -28,6 +28,7 @@ include( dirname(__FILE__) . '/inc/widgets.php' );
 include_once( dirname(__FILE__) . '/settings/settings.php');
 
 if ( is_admin() ) {
+    include( dirname(__FILE__) . '/inc/admin-attachments.php' );
     include( dirname(__FILE__) . '/inc/admin-bulk.php' );
     include( dirname(__FILE__) . '/inc/admin-items.php' );
     include( dirname(__FILE__) . '/inc/admin-extensions.php' );
