@@ -239,11 +239,16 @@ function sell_media_settings_price_group( $taxonomy=null ){
         'name' => 0,
         'title' => __('None','sell_media')
         );
-    foreach( get_terms( $taxonomy ,array('hide_empty'=>false, 'parent'=>0)) as $term ) {
-        $array[ $term->term_id ] = array(
-            'name' => $term->term_id,
-            'title' => $term->name
-            );
+
+    $terms = get_terms( $taxonomy, array('hide_empty'=>false, 'parent'=>0) );
+
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){
+        foreach( $terms as $term ) {
+            $array[ $term->term_id ] = array(
+                'name' => $term->term_id,
+                'title' => $term->name
+                );
+        }
     }
 
     return $array;

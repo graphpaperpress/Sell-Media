@@ -157,7 +157,7 @@ Class SellMediaNavStyleUI {
         $current_parent = empty( $_GET['term_parent'] ) ? '' : $_GET['term_parent'];
 
         if ( is_wp_error( $parent_terms ) ){
-            wp_die('Your using SellMediaNavStyleUI for a taxonomy that doesn\'t exists');
+            return;
         }
 
         $tmp = array();
