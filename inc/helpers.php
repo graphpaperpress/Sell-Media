@@ -52,7 +52,7 @@ add_action( 'template_redirect', 'sell_media_template_redirect',6 );
 function sell_media_get_search_form( $form ) {
     $settings = sell_media_get_plugin_options();
 
-    if ( $settings->disable_search === 1 ) {
+    if ( $settings->disable_search == "yes" ) {
         return $form;
     }
 

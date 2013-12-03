@@ -192,6 +192,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.6.5 =
+* Bug: Fixing issue where search would still show even if it was disabled
+
 = 1.6.6 =
 * Feature: Sell Media items are now support post authors
 * Bug: Fixing issue with settings and price groups on activation
