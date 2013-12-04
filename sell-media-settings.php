@@ -15,7 +15,7 @@ $general_settings_tab = array(
         "general_plugin_section_1" => array(
             "name" => "general_plugin_section_1",
             "title" => __( "General", "sell_media" ),
-            "description" => __( "", "sell_media" )
+            "description" => ""
         )
     )
 );
@@ -30,7 +30,7 @@ $size_price_tab = array(
         "size_price_plugin_section_1" => array(
             "name" => "size_price_plugin_section_1",
             "title" => __( "Size &amp; Price", "sell_media" ),
-            "description" => __( "", "sell_media" )
+            "description" => ""
         )
     )
 );
@@ -45,7 +45,7 @@ $payment_tab = array(
         "payment_section_1" => array(
             "name" => "payment_section_1",
             "title" => __("Payment","sell_media"),
-            "description" => __("", "sell_media")
+            "description" => ""
             )
         )
     );
@@ -60,7 +60,7 @@ $email_tab = array(
         "email_section_1" => array(
             "name" => "email_section_1",
             "title" => __("Email Settings","sell_media"),
-            "description" => __("", "sell_media")
+            "description" => ""
             )
         )
     );
@@ -75,7 +75,7 @@ $misc_tab = array(
         "misc_section_1" => array(
             "name" => "misc_section_1",
             "title" => __("Misc","sell_media"),
-            "description" => __("", "sell_media")
+            "description" => ""
             )
         )
     );

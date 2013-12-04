@@ -128,31 +128,31 @@ function sell_media_currencies(){
     $currencies = array(
     "USD" => array(
         'name' => 'USD',
-        'title' => __('US Dollars ($)','sell_media')
+        'title' => __('US Dollars (&#36;)','sell_media')
         ),
     "EUR" => array(
         'name' => 'EUR',
-        'title' => __('Euros (€)','sell_media')
+        'title' => __('Euros (&euro;)','sell_media')
         ),
     "GBP" => array(
         'name' => 'GBP',
-        'title' => __('Pounds Sterling (£)','sell_media')
+        'title' => __('Pounds Sterling (&pound;)','sell_media')
         ),
     "AUD" => array(
         'name' => 'AUD',
-        'title' => __('Australian Dollars ($)','sell_media')
+        'title' => __('Australian Dollars (&#36;)','sell_media')
         ),
     "BRL" => array(
         'name' => 'BRL',
-        'title' => __('Brazilian Real ($)','sell_media')
+        'title' => __('Brazilian Real (R&#36;)','sell_media')
         ),
     "CAD" => array(
         'name' => 'CAD',
-        'title' => __('Canadian Dollars ($)','sell_media')
+        'title' => __('Canadian Dollars (&#36;)','sell_media')
         ),
     "CZK" => array(
         'name' => 'CZK',
-        'title' => __('Czech Koruna (Kč)','sell_media')
+        'title' => __('Czech Koruna (&#75;&#269;)','sell_media')
         ),
     "DKK" => array(
         'name' => 'DKK',
@@ -160,7 +160,7 @@ function sell_media_currencies(){
         ),
     "HKD" => array(
         'name' => 'HKD',
-        'title' => __('Hong Kong Dollar ($)','sell_media')
+        'title' => __('Hong Kong Dollar (&#36;)','sell_media')
         ),
     "HUF" => array(
         'name' => 'HUF',
@@ -172,7 +172,7 @@ function sell_media_currencies(){
         ),
     "JPY" => array(
         'name' => 'JPY',
-        'title' => __('Japanese Yen (¥)','sell_media')
+        'title' => __('Japanese Yen (&yen;)','sell_media')
         ),
     "MYR" => array(
         'name' => 'MYR',
@@ -180,11 +180,11 @@ function sell_media_currencies(){
         ),
     "MXN" => array(
         'name' => 'MXN',
-        'title' => __('Mexican Peso ($)','sell_media')
+        'title' => __('Mexican Peso (&#36;)','sell_media')
         ),
     "NZD" => array(
         'name' => 'NZD',
-        'title' => __('New Zealand Dollar ($)','sell_media')
+        'title' => __('New Zealand Dollar (&#36;)','sell_media')
         ),
     "NOK" => array(
         'name' => 'NOK',
@@ -200,7 +200,7 @@ function sell_media_currencies(){
         ),
     "SGD" => array(
         'name' => 'SGD',
-        'title' => __('Singapore Dollar ($)','sell_media')
+        'title' => __('Singapore Dollar (&#36;)','sell_media')
         ),
     "SEK" => array(
         'name' => 'SEK',
@@ -293,7 +293,7 @@ function sell_media_countries_list(){
             ),
         "AX" => array(
             "name" => "AX",
-            "title" => __("Åland Islands","sell_media")
+            "title" => __("&Aring;land Islands","sell_media")
             ),
         "AL" => array(
             "name" => "AL",
@@ -505,7 +505,7 @@ function sell_media_countries_list(){
             ),
         "CI" => array(
             "name" => "CI",
-            "title" => __("Côte d'Ivoire","sell_media")
+            "title" => __("C&ocirc; te d'Ivoire","sell_media")
             ),
         "HR" => array(
             "name" => "HR",
@@ -517,7 +517,7 @@ function sell_media_countries_list(){
             ),
         "CW" => array(
             "name" => "CW",
-            "title" => __("Curaçao","sell_media")
+            "title" => __("Cura&ccedil;ao","sell_media")
             ),
         "CY" => array(
             "name" => "CY",
@@ -1009,7 +1009,7 @@ function sell_media_countries_list(){
         ),
         "RE" => array(
             "name" => "RE",
-            "title" => __("Réunion","sell_media")
+            "title" => __("R&eacute;union","sell_media")
         ),
         "RO" => array(
             "name" => "RO",
@@ -1025,7 +1025,7 @@ function sell_media_countries_list(){
         ),
         "BL" => array(
             "name" => "BL",
-            "title" => __("Saint Barthélemy","sell_media")
+            "title" => __("Saint Barth&eacute;lemy","sell_media")
         ),
         "SH" => array(
             "name" => "SH",
