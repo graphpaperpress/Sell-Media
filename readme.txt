@@ -81,7 +81,8 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 
 You have two options:
 
-1. After adding a new item for sale on the Sell Media -> Add New page, copy and paste the shortcode at the bottom of the screen into a Post, Page or Text Widget. This shortcode will embed the image and an "Add to Cart" button below the image. The shortcode looks something like this: `[sell_media id="257" text="Purchase" style="button" color="blue" size="medium"]` You can locate the ID of the item by looking at the URL when editing that item in WordPress. For example, http://test.com/wp-admin/post.php?post=1891&action=edit The ID is 1891, so the shortcode would be `[sell_media id="1891" text="Purchase" style="button" color="blue" size="medium"]`
+1. After adding a new item for sale on the Sell Media -> Add New page. Use the following shortcode with your ID for the item you would like to sale: `[sell_media id="257" text="Purchase" style="button" color="blue" size="medium"]` You can locate the ID of the item by looking at the URL when editing that item in WordPress. For example, http://test.com/wp-admin/post.php?post=1891&action=edit The ID is 1891, so the shortcode would be `[sell_media id="1891" text="Purchase" style="button" color="blue" size="medium"]`
+
 2. Each item you add for sale also has a dedicated URL. Click the View Item button after saving your first Sell Media item. You could then add the link to that specific item to one of your Menus on Appearance -> Menus -> Custom Menu Item.
 
 = How do I bulk upload images for sale? =
@@ -193,6 +194,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.7 =
+* Tweak: Updating shortcode instructions in `readme.txt`
 * Bug: Fixing translation issues
 * Bug: Fixing issue where search would still show even if it was disabled
 
