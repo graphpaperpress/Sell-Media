@@ -192,7 +192,8 @@ Action hooks available:
 
 == Changelog ==
 
-= 1.6.5 =
+= 1.6.7 =
+* Bug: Fixing translation issues
 * Bug: Fixing issue where search would still show even if it was disabled
 
 = 1.6.6 =
