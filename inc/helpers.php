@@ -858,7 +858,7 @@ function sell_media_build_select( $items=array(), $args=array() ){
     </fieldset>
 <?php }
 
-function sell_media_state_province_list( $current=null ){
+function sell_media_state_province_list( $current=null, $req=false ){
     $items = array(
         "AL" => "Alabama",
         "AK" => "Alaska",
@@ -939,10 +939,10 @@ function sell_media_state_province_list( $current=null ){
         "WY" => "Wyoming",
         "YK" => "Yukon"
         );
-    sell_media_build_select( $items, array( 'name' => 'sell_media_reprints_sf_state', 'required' => false, 'title' => 'State/Province', 'current' => $current ) );
+    sell_media_build_select( $items, array( 'name' => 'sell_media_reprints_sf_state', 'required' => $req, 'title' => 'State/Province', 'current' => $current ) );
 }
 
-function sell_media_country_list( $current=null ){
+function sell_media_country_list( $current=null, $req=false ){
     $items = array(
         "US" => "United States",
         "AF" => "Afghanistan",
@@ -1194,7 +1194,7 @@ function sell_media_country_list( $current=null ){
         "ZM" => "Zambia",
         "ZW" => "Zimbabwe"
         );
-    sell_media_build_select( $items, array( 'name' => 'sell_media_country', 'required' => false, 'title' => 'Country', 'current' => $current ) );
+    sell_media_build_select( $items, array( 'name' => 'sell_media_country', 'required' => $req, 'title' => 'Country', 'current' => $current ) );
 }
 
 /**
