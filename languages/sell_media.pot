@@ -1,36 +1,38 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sell Media\n"
-"POT-Creation-Date: 2013-12-04 08:44-0500\n"
-"PO-Revision-Date: 2013-12-04 08:44-0500\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Graph Paper Press <info@graphpaperpress.com>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-10 17:16+0530\n"
+"PO-Revision-Date: 2013-12-10 17:16+0530\n"
+"Last-Translator: Chandra <maharzan@gmail.com>\n"
+"Language-Team: Graph Paper Press\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-KeywordsList: _e;__;_n:1,2;_x:1,2c;_ex:1,2c\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: ..\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SearchPath-0: ..\n"
 
-#: ../sell-media-settings.php:13 ../sell-media-settings.php:17
+#: ../sell-media-settings.php:13
+#: ../sell-media-settings.php:17
 msgid "General"
 msgstr ""
 
-#: ../sell-media-settings.php:28 ../sell-media-settings.php:32
+#: ../sell-media-settings.php:28
+#: ../sell-media-settings.php:32
 msgid "Size &amp; Price"
 msgstr ""
 
-#: ../sell-media-settings.php:43 ../sell-media-settings.php:47
+#: ../sell-media-settings.php:43
+#: ../sell-media-settings.php:47
 msgid "Payment"
 msgstr ""
 
-#: ../sell-media-settings.php:58 ../inc/class-payments.php:44
-#: ../inc/shortcodes.php:312
+#: ../sell-media-settings.php:58
+#: ../inc/class-payments.php:44
 msgid "Email"
 msgstr ""
 
@@ -38,7 +40,8 @@ msgstr ""
 msgid "Email Settings"
 msgstr ""
 
-#: ../sell-media-settings.php:73 ../sell-media-settings.php:77
+#: ../sell-media-settings.php:73
+#: ../sell-media-settings.php:77
 msgid "Misc"
 msgstr ""
 
@@ -48,8 +51,7 @@ msgstr ""
 
 #: ../sell-media-settings.php:95
 #, php-format
-msgid ""
-"To accept real payments, select No. To fully use test mode, you must have %s."
+msgid "To accept real payments, select No. To fully use test mode, you must have %s."
 msgstr ""
 
 #: ../sell-media-settings.php:115
@@ -57,9 +59,7 @@ msgid "Checkout Page"
 msgstr ""
 
 #: ../sell-media-settings.php:116
-msgid ""
-"What page contains the <code>[sell_media_checkout]</code> shortcode? This "
-"shortcode generates the checkout cart."
+msgid "What page contains the <code>[sell_media_checkout]</code> shortcode? This shortcode generates the checkout cart."
 msgstr ""
 
 #: ../sell-media-settings.php:127
@@ -75,9 +75,7 @@ msgid "Dashboard Page"
 msgstr ""
 
 #: ../sell-media-settings.php:140
-msgid ""
-"Where is your customer Dashboard page? This page will contain the <code>"
-"[sell_media_download_list]</code> shortcode."
+msgid "Where is your customer Dashboard page? This page will contain the <code>[sell_media_download_list]</code> shortcode."
 msgstr ""
 
 #: ../sell-media-settings.php:151
@@ -85,9 +83,7 @@ msgid "Login Page"
 msgstr ""
 
 #: ../sell-media-settings.php:152
-msgid ""
-"Where is your customer login page? This page will contain the <code>"
-"[sell_media_login_form]</code> shortcode."
+msgid "Where is your customer login page? This page will contain the <code>[sell_media_login_form]</code> shortcode."
 msgstr ""
 
 #: ../sell-media-settings.php:163
@@ -98,12 +94,14 @@ msgstr ""
 msgid "Notify the customer of their site registration."
 msgstr ""
 
-#: ../sell-media-settings.php:173 ../sell-media-settings.php:215
+#: ../sell-media-settings.php:173
+#: ../sell-media-settings.php:215
 #: ../sell-media-settings.php:310
 msgid "No"
 msgstr ""
 
-#: ../sell-media-settings.php:177 ../sell-media-settings.php:219
+#: ../sell-media-settings.php:177
+#: ../sell-media-settings.php:219
 #: ../sell-media-settings.php:314
 msgid "Yes"
 msgstr ""
@@ -113,9 +111,7 @@ msgid "Style"
 msgstr ""
 
 #: ../sell-media-settings.php:185
-msgid ""
-"Choose the style of your theme. Sell Media will load styles to match your "
-"theme."
+msgid "Choose the style of your theme. Sell Media will load styles to match your theme."
 msgstr ""
 
 #: ../sell-media-settings.php:194
@@ -139,9 +135,7 @@ msgid "Post Type Slug"
 msgstr ""
 
 #: ../sell-media-settings.php:227
-msgid ""
-"You can change the post type slug to: &quot;photos&quot; or &quot;"
-"downloads&quot;. The default slug is &quot;items&quot;."
+msgid "You can change the post type slug to: &quot;photos&quot; or &quot;downloads&quot;. The default slug is &quot;items&quot;."
 msgstr ""
 
 #: ../sell-media-settings.php:238
@@ -157,9 +151,7 @@ msgid "Terms and Conditions"
 msgstr ""
 
 #: ../sell-media-settings.php:268
-msgid ""
-"These &quot;Terms and Conditions&quot; will show up on the checkout page. "
-"Users must agree to these terms before completing their purchase."
+msgid "These &quot;Terms and Conditions&quot; will show up on the checkout page. Users must agree to these terms before completing their purchase."
 msgstr ""
 
 #: ../sell-media-settings.php:279
@@ -167,9 +159,7 @@ msgid "Disable Sell Media Search"
 msgstr ""
 
 #: ../sell-media-settings.php:280
-msgid ""
-"Set this to &quot;no&quot; if you do not want to use the built in Sell Media "
-"search."
+msgid "Set this to &quot;no&quot; if you do not want to use the built in Sell Media search."
 msgstr ""
 
 #: ../sell-media-settings.php:300
@@ -185,8 +175,7 @@ msgid "Show Columns"
 msgstr ""
 
 #: ../sell-media-settings.php:322
-msgid ""
-"Select the columns to show on the admin page &quot;All Items&quot; page."
+msgid "Select the columns to show on the admin page &quot;All Items&quot; page."
 msgstr ""
 
 #: ../sell-media-settings.php:353
@@ -194,9 +183,7 @@ msgid "Original Price"
 msgstr ""
 
 #: ../sell-media-settings.php:354
-msgid ""
-"The default price of new items and bulk uploads. You can set unique prices "
-"by editing each individual item."
+msgid "The default price of new items and bulk uploads. You can set unique prices by editing each individual item."
 msgstr ""
 
 #: ../sell-media-settings.php:365
@@ -217,10 +204,7 @@ msgstr ""
 
 #: ../sell-media-settings.php:402
 #, php-format
-msgid ""
-"The email address used to collect PayPal payments. %1$s: You must setup IPN "
-"Notifications in PayPal to process transactions. %2$s. Here is the listener "
-"URL you need to add in PayPal: %3$s"
+msgid "The email address used to collect PayPal payments. %1$s: You must setup IPN Notifications in PayPal to process transactions. %2$s. Here is the listener URL you need to add in PayPal: %3$s"
 msgstr ""
 
 #: ../sell-media-settings.php:402
@@ -240,10 +224,7 @@ msgid "PayPal Additional Test Emails"
 msgstr ""
 
 #: ../sell-media-settings.php:427
-msgid ""
-"This is useful when debugging PayPal. Enter a comma separated list of "
-"emails, and when a purchase is made the same email that is sent to the buyer "
-"will be sent to the recipients in the above list."
+msgid "This is useful when debugging PayPal. Enter a comma separated list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list."
 msgstr ""
 
 #: ../sell-media-settings.php:441
@@ -279,28 +260,26 @@ msgid "Email Body"
 msgstr ""
 
 #: ../sell-media-settings.php:478
-msgid ""
-"This e-mail message is sent to your customers in case of successful and "
-"cleared payment. You can use the following keywords: {first_name}, "
-"{last_name}, {payer_email}, {download_links}. Be sure to include the "
-"{download_links} tag, otherwise your buyers won't receive their download "
-"purchases."
+msgid "This e-mail message is sent to your customers in case of successful and cleared payment. You can use the following keywords: {first_name}, {last_name}, {payer_email}, {download_links}. Be sure to include the {download_links} tag, otherwise your buyers won't receive their download purchases."
 msgstr ""
 
 #: ../sell-media-settings.php:492
 msgid "Settings for Extensions are shown below."
 msgstr ""
 
-#: ../sell-media-settings.php:499 ../inc/admin-payments.php:198
+#: ../sell-media-settings.php:499
+#: ../inc/admin-payments.php:198
 #: ../inc/admin-payments.php:363
 msgid "Download Extensions for Sell Media"
 msgstr ""
 
-#: ../sell-media.php:245 ../inc/admin-bulk.php:35
+#: ../sell-media.php:245
+#: ../inc/admin-bulk.php:35
 msgid "Add Bulk"
 msgstr ""
 
-#: ../sell-media.php:246 ../inc/admin-payments.php:194
+#: ../sell-media.php:246
+#: ../inc/admin-payments.php:194
 msgid "Payments"
 msgstr ""
 
@@ -312,7 +291,8 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: ../sell-media.php:261 ../sell-media.php:275
+#: ../sell-media.php:261
+#: ../sell-media.php:275
 msgctxt ""
 msgid "Licenses"
 msgstr ""
@@ -382,12 +362,15 @@ msgctxt ""
 msgid "Choose from most used Licenses"
 msgstr ""
 
-#: ../sell-media.php:301 ../sell-media.php:315
+#: ../sell-media.php:301
+#: ../sell-media.php:315
 msgctxt ""
 msgid "Keywords"
 msgstr ""
 
-#: ../sell-media.php:302 ../sell-media.php:342 ../sell-media.php:381
+#: ../sell-media.php:302
+#: ../sell-media.php:342
+#: ../sell-media.php:381
 msgctxt ""
 msgid "Keyword"
 msgstr ""
@@ -407,32 +390,44 @@ msgctxt ""
 msgid "All Keywords"
 msgstr ""
 
-#: ../sell-media.php:306 ../sell-media.php:346 ../sell-media.php:385
+#: ../sell-media.php:306
+#: ../sell-media.php:346
+#: ../sell-media.php:385
 msgctxt ""
 msgid "Parent Keyword"
 msgstr ""
 
-#: ../sell-media.php:307 ../sell-media.php:347 ../sell-media.php:386
+#: ../sell-media.php:307
+#: ../sell-media.php:347
+#: ../sell-media.php:386
 msgctxt ""
 msgid "Parent Keyword:"
 msgstr ""
 
-#: ../sell-media.php:308 ../sell-media.php:348 ../sell-media.php:387
+#: ../sell-media.php:308
+#: ../sell-media.php:348
+#: ../sell-media.php:387
 msgctxt ""
 msgid "Edit Keyword"
 msgstr ""
 
-#: ../sell-media.php:309 ../sell-media.php:349 ../sell-media.php:388
+#: ../sell-media.php:309
+#: ../sell-media.php:349
+#: ../sell-media.php:388
 msgctxt ""
 msgid "Update Keyword"
 msgstr ""
 
-#: ../sell-media.php:310 ../sell-media.php:350 ../sell-media.php:389
+#: ../sell-media.php:310
+#: ../sell-media.php:350
+#: ../sell-media.php:389
 msgctxt ""
 msgid "Add New Keyword"
 msgstr ""
 
-#: ../sell-media.php:311 ../sell-media.php:351 ../sell-media.php:390
+#: ../sell-media.php:311
+#: ../sell-media.php:351
+#: ../sell-media.php:390
 msgctxt ""
 msgid "New Keyword"
 msgstr ""
@@ -452,7 +447,8 @@ msgctxt ""
 msgid "Choose from most used Keywords"
 msgstr ""
 
-#: ../sell-media.php:341 ../sell-media.php:355
+#: ../sell-media.php:341
+#: ../sell-media.php:355
 msgctxt ""
 msgid "City"
 msgstr ""
@@ -487,7 +483,8 @@ msgctxt ""
 msgid "Choose from most used City"
 msgstr ""
 
-#: ../sell-media.php:380 ../sell-media.php:394
+#: ../sell-media.php:380
+#: ../sell-media.php:394
 msgctxt ""
 msgid "State"
 msgstr ""
@@ -522,7 +519,9 @@ msgctxt ""
 msgid "Choose from most used State"
 msgstr ""
 
-#: ../sell-media.php:419 ../sell-media.php:420 ../sell-media.php:433
+#: ../sell-media.php:419
+#: ../sell-media.php:420
+#: ../sell-media.php:433
 msgctxt ""
 msgid "Creator"
 msgstr ""
@@ -587,7 +586,8 @@ msgctxt ""
 msgid "Choose from most used Creator"
 msgstr ""
 
-#: ../sell-media.php:458 ../sell-media.php:472
+#: ../sell-media.php:458
+#: ../sell-media.php:472
 msgctxt ""
 msgid "Collections"
 msgstr ""
@@ -672,12 +672,14 @@ msgctxt ""
 msgid "All Items"
 msgstr ""
 
-#: ../sell-media.php:502 ../sell-media.php:551
+#: ../sell-media.php:502
+#: ../sell-media.php:551
 msgctxt ""
 msgid "Add New"
 msgstr ""
 
-#: ../sell-media.php:503 ../sell-media.php:511
+#: ../sell-media.php:503
+#: ../sell-media.php:511
 msgctxt ""
 msgid "Sell Media"
 msgstr ""
@@ -717,7 +719,8 @@ msgctxt ""
 msgid "Parent Item:"
 msgstr ""
 
-#: ../sell-media.php:549 ../sell-media.php:560
+#: ../sell-media.php:549
+#: ../sell-media.php:560
 msgctxt ""
 msgid "Payments"
 msgstr ""
@@ -767,7 +770,9 @@ msgctxt ""
 msgid "Parent Payment:"
 msgstr ""
 
-#: ../sell-media.php:583 ../sell-media.php:584 ../sell-media.php:597
+#: ../sell-media.php:583
+#: ../sell-media.php:584
+#: ../sell-media.php:597
 msgctxt ""
 msgid "Price Groups"
 msgstr ""
@@ -853,15 +858,11 @@ msgid "Add Single"
 msgstr ""
 
 #: ../inc/admin-bulk.php:52
-msgid ""
-"Bulk uploading is a server-intensive process. If you are using cheap, shared "
-"web hosting, uploading items in small batches will ensure all items uploaded "
-"are published correctly. All bulk uploads will inherit the default prices "
-"and licenses. You can modify the prices and licenses of each item after "
-"doing the bulk upload. "
+msgid "Bulk uploading is a server-intensive process. If you are using cheap, shared web hosting, uploading items in small batches will ensure all items uploaded are published correctly. All bulk uploads will inherit the default prices and licenses. You can modify the prices and licenses of each item after doing the bulk upload. "
 msgstr ""
 
-#: ../inc/admin-bulk.php:53 ../inc/admin-items.php:194
+#: ../inc/admin-bulk.php:53
+#: ../inc/admin-items.php:194
 msgid "Upload"
 msgstr ""
 
@@ -873,9 +874,10 @@ msgstr ""
 msgid "Choose a Price Group"
 msgstr ""
 
-#: ../inc/admin-bulk.php:67 ../inc/admin-bulk.php:80 ../inc/admin-bulk.php:91
-#: ../inc/class-payments.php:86 ../inc/shortcodes.php:351
-#: ../settings/library/helpers.php:240
+#: ../inc/admin-bulk.php:67
+#: ../inc/admin-bulk.php:80
+#: ../inc/admin-bulk.php:91
+#: ../inc/class-payments.php:86
 msgid "None"
 msgstr ""
 
@@ -896,8 +898,7 @@ msgid "Extensions for Sell Media"
 msgstr ""
 
 #: ../inc/admin-extensions.php:21
-msgid ""
-"These extensions provide additonal functionality for the Sell Media plugin."
+msgid "These extensions provide additonal functionality for the Sell Media plugin."
 msgstr ""
 
 #: ../inc/admin-items.php:51
@@ -945,11 +946,7 @@ msgid "Paypal Details"
 msgstr ""
 
 #: ../inc/admin-payments.php:79
-msgid ""
-"This is the info that was sent to Paypal at time of purchase. For detailed "
-"explanation please visit Paypal's <a href=\"https://developer.paypal.com/"
-"webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/"
-"#example_req_resp\">IPN guide</a>."
+msgid "This is the info that was sent to Paypal at time of purchase. For detailed explanation please visit Paypal's <a href=\"https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/#example_req_resp\">IPN guide</a>."
 msgstr ""
 
 #: ../inc/admin-payments.php:80
@@ -960,14 +957,13 @@ msgstr ""
 msgid "This payment has no saved Paypal details"
 msgstr ""
 
-#: ../inc/admin-payments.php:196 ../inc/admin-payments.php:362
+#: ../inc/admin-payments.php:196
+#: ../inc/admin-payments.php:362
 msgid "Total Earnings To Date:"
 msgstr ""
 
 #: ../inc/admin-payments.php:197
-msgid ""
-"Below is a breakdown of each transaction. Payments marked as &quot;"
-"Pending&quot; mean the buyer checked out, but abandoned payment."
+msgid "Below is a breakdown of each transaction. Payments marked as &quot;Pending&quot; mean the buyer checked out, but abandoned payment."
 msgstr ""
 
 #: ../inc/admin-payments.php:198
@@ -982,29 +978,33 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: ../inc/admin-payments.php:221 ../inc/admin-payments.php:236
+#: ../inc/admin-payments.php:221
+#: ../inc/admin-payments.php:236
 msgid "ID"
 msgstr ""
 
-#: ../inc/admin-payments.php:223 ../inc/admin-payments.php:237
+#: ../inc/admin-payments.php:223
+#: ../inc/admin-payments.php:237
 msgid "Customer"
 msgstr ""
 
-#: ../inc/admin-payments.php:224 ../inc/admin-payments.php:238
+#: ../inc/admin-payments.php:224
+#: ../inc/admin-payments.php:238
 msgid "Items"
 msgstr ""
 
-#: ../inc/admin-payments.php:225 ../inc/admin-payments.php:239
+#: ../inc/admin-payments.php:225
+#: ../inc/admin-payments.php:239
 msgid "Amount"
 msgstr ""
 
-#: ../inc/admin-payments.php:227 ../inc/admin-payments.php:240
-#: ../inc/shortcodes.php:525
+#: ../inc/admin-payments.php:227
+#: ../inc/admin-payments.php:240
 msgid "Date"
 msgstr ""
 
-#: ../inc/admin-payments.php:230 ../inc/admin-payments.php:241
-#: ../inc/shortcodes.php:527
+#: ../inc/admin-payments.php:230
+#: ../inc/admin-payments.php:241
 msgid "Status"
 msgstr ""
 
@@ -1033,16 +1033,15 @@ msgid "Earnings Report"
 msgstr ""
 
 #: ../inc/admin-payments.php:363
-msgid ""
-"Below is a breakdown of earnings per day, month and year. Want to increase "
-"your sales?"
+msgid "Below is a breakdown of earnings per day, month and year. Want to increase your sales?"
 msgstr ""
 
 #: ../inc/admin-payments.php:376
 msgid "Day"
 msgstr ""
 
-#: ../inc/admin-payments.php:377 ../inc/admin-payments.php:417
+#: ../inc/admin-payments.php:377
+#: ../inc/admin-payments.php:417
 #: ../inc/admin-payments.php:450
 msgid "Earnings"
 msgstr ""
@@ -1087,21 +1086,25 @@ msgstr ""
 msgid "Enter price group name here"
 msgstr ""
 
-#: ../inc/admin-price-groups.php:229 ../inc/admin-price-groups.php:276
+#: ../inc/admin-price-groups.php:229
+#: ../inc/admin-price-groups.php:276
 #: ../inc/class-payments.php:43
 msgid "Name"
 msgstr ""
 
-#: ../inc/admin-price-groups.php:236 ../inc/admin-price-groups.php:281
+#: ../inc/admin-price-groups.php:236
+#: ../inc/admin-price-groups.php:281
 msgid "Max Width"
 msgstr ""
 
-#: ../inc/admin-price-groups.php:239 ../inc/admin-price-groups.php:285
+#: ../inc/admin-price-groups.php:239
+#: ../inc/admin-price-groups.php:285
 msgid "Max Height"
 msgstr ""
 
-#: ../inc/admin-price-groups.php:243 ../inc/admin-price-groups.php:290
-#: ../inc/class-payments.php:72 ../inc/shortcodes.php:262
+#: ../inc/admin-price-groups.php:243
+#: ../inc/admin-price-groups.php:290
+#: ../inc/class-payments.php:72
 msgid "Price"
 msgstr ""
 
@@ -1129,12 +1132,12 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
-#: ../inc/class-cart.php:107 ../inc/template-tags.php:370
-#: ../inc/template-tags.php:476 ../inc/template-tags.php:566
+#: ../inc/class-cart.php:107
 msgid "Original"
 msgstr ""
 
-#: ../inc/class-cart.php:109 ../inc/class-payments.php:114
+#: ../inc/class-cart.php:109
+#: ../inc/class-payments.php:114
 msgid "N/A"
 msgstr ""
 
@@ -1142,11 +1145,11 @@ msgstr ""
 msgid "Original File"
 msgstr ""
 
-#: ../inc/class-cart.php:296 ../inc/shortcodes.php:252
+#: ../inc/class-cart.php:296
 msgid "You have no items in your cart. "
 msgstr ""
 
-#: ../inc/class-cart.php:296 ../inc/shortcodes.php:252
+#: ../inc/class-cart.php:296
 msgid "Continue shopping"
 msgstr ""
 
@@ -1158,27 +1161,23 @@ msgstr ""
 msgid "Email does not exists"
 msgstr ""
 
-#: ../inc/class-payments.php:45 ../inc/shortcodes.php:269
-#: ../inc/shortcodes.php:287 ../inc/template-tags.php:408
+#: ../inc/class-payments.php:45
 msgid "Total"
 msgstr ""
 
-#: ../inc/class-payments.php:70 ../inc/shortcodes.php:260
+#: ../inc/class-payments.php:70
 msgid "Item"
 msgstr ""
 
-#: ../inc/class-payments.php:71 ../inc/shortcodes.php:373
-#: ../inc/template-tags.php:362 ../themes/single-sell_media_item.php:33
+#: ../inc/class-payments.php:71
 msgid "Size"
 msgstr ""
 
-#: ../inc/class-payments.php:73 ../inc/shortcodes.php:261
+#: ../inc/class-payments.php:73
 msgid "Quantity"
 msgstr ""
 
-#: ../inc/class-payments.php:74 ../inc/shortcodes.php:372
-#: ../inc/shortcodes.php:380 ../inc/template-tags.php:387
-#: ../inc/template-tags.php:398
+#: ../inc/class-payments.php:74
 msgid "License"
 msgstr ""
 
@@ -1198,7 +1197,7 @@ msgstr ""
 msgid "Purchase Verification Failed"
 msgstr ""
 
-#: ../inc/helpers.php:76 ../inc/helpers.php:77
+#: ../inc/helpers.php:76
 msgid "Search"
 msgstr ""
 
@@ -1210,7 +1209,8 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
-#: ../inc/helpers.php:85 ../inc/term-meta.php:460
+#: ../inc/helpers.php:85
+#: ../inc/term-meta.php:460
 msgid "Media"
 msgstr ""
 
@@ -1223,10 +1223,7 @@ msgid "Select a collection"
 msgstr ""
 
 #: ../inc/shortcodes.php:43
-msgid ""
-"Your purchase is pending. This happens if you paid with an eCheck, if you "
-"opened a new account or if there is a problem with the checkout system. "
-"Please contact the seller if you have questions about this purchase: "
+msgid "Your purchase is pending. This happens if you paid with an eCheck, if you opened a new account or if there is a problem with the checkout system. Please contact the seller if you have questions about this purchase: "
 msgstr ""
 
 #: ../inc/shortcodes.php:63
@@ -1238,7 +1235,8 @@ msgstr ""
 msgid "New user registration on %s:"
 msgstr ""
 
-#: ../inc/shortcodes.php:195 ../inc/shortcodes.php:204
+#: ../inc/shortcodes.php:195
+#: ../inc/shortcodes.php:204
 #, php-format
 msgid "Username: %s"
 msgstr ""
@@ -1320,11 +1318,13 @@ msgstr ""
 msgid "Continue Shopping"
 msgstr ""
 
-#: ../inc/shortcodes.php:374 ../inc/shortcodes.php:555
+#: ../inc/shortcodes.php:374
+#: ../inc/shortcodes.php:555
 msgid "Description"
 msgstr ""
 
-#: ../inc/shortcodes.php:401 ../settings/settings.php:444
+#: ../inc/shortcodes.php:401
+#: ../settings/settings.php:444
 #: ../settings/settings.php:539
 msgid "Remove"
 msgstr ""
@@ -1370,6 +1370,24 @@ msgstr ""
 msgid "Login Failed"
 msgstr ""
 
+#: ../inc/shortcodes.php:757
+msgid "Username"
+msgstr ""
+
+#: ../inc/shortcodes.php:758
+#: ../inc/term-meta.php:338
+#: ../inc/term-meta.php:383
+msgid "Password"
+msgstr ""
+
+#: ../inc/shortcodes.php:759
+msgid "Remember Me"
+msgstr ""
+
+#: ../inc/shortcodes.php:760
+msgid "Log In"
+msgstr ""
+
 #: ../inc/template-tags.php:364
 msgid "Select a size"
 msgstr ""
@@ -1382,11 +1400,13 @@ msgstr ""
 msgid "Select a license to learn more about each license."
 msgstr ""
 
-#: ../inc/template-tags.php:392 ../inc/template-tags.php:400
+#: ../inc/template-tags.php:392
+#: ../inc/template-tags.php:400
 msgid "View Details"
 msgstr ""
 
-#: ../inc/template-tags.php:417 ../inc/template-tags.php:419
+#: ../inc/template-tags.php:417
+#: ../inc/template-tags.php:419
 #: ../inc/template-tags.php:421
 msgid "Cart"
 msgstr ""
@@ -1400,24 +1420,16 @@ msgid "Shopping cart by "
 msgstr ""
 
 #: ../inc/term-meta.php:81
-msgid ""
-"When a buyer decides to purchase a item from your site, they must choose a "
-"license which most closely identifies their intended use of the item. We "
-"have included some default license types, grouped into two \"parent\" "
-"categories: Personal and Commercial. Each of these two categories have "
-"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
-"Commercial) and \"Website\" (a child of Personal). You can create as many "
-"parent and child licenses as you want."
+msgid "When a buyer decides to purchase a item from your site, they must choose a license which most closely identifies their intended use of the item. We have included some default license types, grouped into two \"parent\" categories: Personal and Commercial. Each of these two categories have specific \"child\" licenses, such as \"Print Advertising\" (a child of Commercial) and \"Website\" (a child of Personal). You can create as many parent and child licenses as you want."
 msgstr ""
 
-#: ../inc/term-meta.php:98 ../inc/term-meta.php:116
+#: ../inc/term-meta.php:98
+#: ../inc/term-meta.php:116
 msgid "Markup"
 msgstr ""
 
 #: ../inc/term-meta.php:192
-msgid ""
-"Increase the price of a item if a buyer selects this license by dragging the "
-"slider above."
+msgid "Increase the price of a item if a buyer selects this license by dragging the slider above."
 msgstr ""
 
 #: ../inc/term-meta.php:202
@@ -1430,16 +1442,11 @@ msgid " The %1$s of %2$s with %3$s markup is %4$s"
 msgstr ""
 
 #: ../inc/term-meta.php:226
-msgid ""
-"Check to add this as a default license option for all newly created items."
+msgid "Check to add this as a default license option for all newly created items."
 msgstr ""
 
 #: ../inc/term-meta.php:230
 msgid "Add as default license?"
-msgstr ""
-
-#: ../inc/term-meta.php:338 ../inc/term-meta.php:383
-msgid "Password"
 msgstr ""
 
 #: ../inc/term-meta.php:340
@@ -1455,26 +1462,26 @@ msgid "This colleciton inherits the password set in its parent collection: "
 msgstr ""
 
 #: ../inc/term-meta.php:368
-msgid ""
-"To edit the password of this collection you must change the parent password."
+msgid "To edit the password of this collection you must change the parent password."
 msgstr ""
 
 #: ../inc/term-meta.php:377
 msgid "This collection will inherit the password of the parent collection:"
 msgstr ""
 
-#: ../inc/term-meta.php:401 ../inc/term-meta.php:436 ../inc/term-meta.php:456
+#: ../inc/term-meta.php:401
+#: ../inc/term-meta.php:436
+#: ../inc/term-meta.php:456
 msgid "Icon"
 msgstr ""
 
-#: ../inc/term-meta.php:420 ../settings/settings.php:443
+#: ../inc/term-meta.php:420
+#: ../settings/settings.php:443
 msgid "Upload or Select Image"
 msgstr ""
 
 #: ../inc/term-meta.php:424
-msgid ""
-"The icon is not prominent by default; however, some themes may show it. If "
-"no icon is used the featured image to the most recent post will be displayed"
+msgid "The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed"
 msgstr ""
 
 #: ../inc/term-meta.php:465
@@ -1497,7 +1504,12 @@ msgstr ""
 msgid "All Collections"
 msgstr ""
 
-#: ../settings/settings.php:86 ../settings/settings.php:88
+#: ../inc/widgets/sell-media-keywords.php:49
+msgid "Keywords"
+msgstr ""
+
+#: ../settings/settings.php:86
+#: ../settings/settings.php:88
 msgid "Settings"
 msgstr ""
 
@@ -1513,11 +1525,10 @@ msgstr ""
 msgid "Reset Defaults"
 msgstr ""
 
-#: ../settings/settings.php:321 ../settings/settings.php:341
+#: ../settings/settings.php:321
+#: ../settings/settings.php:341
 #: ../settings/settings.php:360
-msgid ""
-"This option has no valid options. Please create valid options as an array "
-"inside the GPP Framework."
+msgid "This option has no valid options. Please create valid options as an array inside the GPP Framework."
 msgstr ""
 
 #: ../settings/settings.php:538
@@ -2676,6 +2687,3 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
-#: ../themes/single-sell_media_item.php:42
-msgid "Keywords"
-msgstr ""
