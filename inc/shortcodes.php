@@ -298,7 +298,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                 <?php if ( ! is_user_logged_in() ) : ?>
                                     <h3 class="checkout-title"><?php _e( 'Create Account', 'sell_media' ); ?></h3>
                                     <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo get_permalink( $settings->login_page ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a>
-                                    <a href="<?php echo wp_lostpassword_url( site_url( '/checkout/' ) ); ?>"><?php _e('Lost your password?'); ?></a>
+                                    <a href="<?php echo wp_lostpassword_url( site_url( '/checkout/' ) ); ?>"><?php _e( 'Lost your password?', 'sell_media'); ?></a>
                                     </p>
                                     <p>
                                     <label><?php _e( 'First Name', 'sell_media' ); ?></label>
@@ -753,8 +753,11 @@ function sell_media_login_form_shortcode(){
         }
 
         $args = array(
-            'redirect' => site_url( '/checkout/' )
-        );
+            'redirect' => site_url( '/checkout/' ),
+            'label_username' => __( 'Username', 'sell_media' ),
+            'label_password' => __( 'Password', 'sell_media' ),
+            'label_remember' => __( 'Remember Me', 'sell_media' ),
+            'label_log_in' => __( 'Log In', 'sell_media' )        );
 
         wp_login_form( $args );
 

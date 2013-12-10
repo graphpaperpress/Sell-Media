@@ -46,7 +46,7 @@
     /*Creates the form for the widget in the back-end. */
     function form($instance){
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array('title'=>'Keywords') );
+		$instance = wp_parse_args( (array) $instance, array('title'=> __( 'Keywords', 'sell_media') ) );
 		$title = htmlspecialchars($instance['title']);
 
 		# Title
