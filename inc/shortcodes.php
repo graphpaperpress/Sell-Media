@@ -520,13 +520,14 @@ function sell_media_download_shortcode( $atts ) {
             $html = null;
 
             foreach( $payment_lists as $payment ){
-                $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
-                $html .= '<ul class="payment-meta">';
-                $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
-                $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
-                $html .= '<li><strong>'.__('Status', 'sell_media').'</strong> ' . $payment_obj->status( $payment['post_id'] ) . '</li>';
-                $html .= '</ul>';
-                $html .= $payment_obj->payment_table( $payment['post_id'], true );
+                if ( get_post_status( $payment['post_id'] ) != 'publish' ) {
+                    $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
+                    $html .= '<ul class="payment-meta">';
+                    $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
+                    $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
+                    $html .= '</ul>';
+                    $html .= $payment_obj->payment_table( $payment['post_id'], true );
+                }
             }
 
             return '<div id="purchase-history">'.$html.'</div>';
