@@ -405,14 +405,21 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 
 
-    // If we have license add them to the message['body']
+
+    /**
+     * Since this function is ran before licenses are init'd
+     * we need to manually load them
+     */
+    $t = New SellMedia;
+    $t->registerLicenses();
     $licenses = $download_obj->get_license( $purchase_key );
+
+    // If we have license add them to the message['body']
     if ( $licenses ){
-        $license_message = sprintf("\n\n%s\n", __("Your purchase entitles you to the following usage:", "sell_media") );
+        $license_message = sprintf("<br /><br />%s<br />", __("Your purchase entitles you to the following usage:", "sell_media") );
         foreach( $licenses as $licenses ){
-            $item_title = get_post_field('post_title', $licenses['item_id'] );
-            $license_message .= "\n{$licenses['name']}\n";
-            $license_message .= "{$licenses['description']}\n\n";
+            $license_message .= "<br />{$licenses['name']}<br />";
+            $license_message .= "{$licenses['description']}<br />";
         }
         $message['body'] .= $license_message;
     }
@@ -421,6 +428,7 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
     $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
     $message['headers'] .= "MIME-Version: 1.0\r\n";
     $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
+
 
     /**
      * Check if we have additional test emails, if so we concatenate them
