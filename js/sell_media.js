@@ -344,7 +344,7 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * On change make sure the licnese has a value
+     * On change make sure the license has a value
      */
     $( document ).on('change', '#sell_media_size_select', function(){
 
@@ -355,7 +355,7 @@ jQuery( document ).ready(function( $ ){
         if ( $('#sell_media_single_license_markup').length ){
             license = $('#sell_media_single_license_markup').val();
         } else if( $('#sell_media_license_select').length ){
-            license = $('#sell_media_license_select :selected').val();
+            license = $('#sell_media_license_select :selected').attr('data-price');
         } else {
             license = null;
         }
