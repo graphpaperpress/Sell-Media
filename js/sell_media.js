@@ -344,7 +344,7 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * On change make sure the license has a value
+     * On change make sure the licnese has a value
      */
     $( document ).on('change', '#sell_media_size_select', function(){
 
@@ -355,17 +355,17 @@ jQuery( document ).ready(function( $ ){
         if ( $('#sell_media_single_license_markup').length ){
             license = $('#sell_media_single_license_markup').val();
         } else if( $('#sell_media_license_select').length ){
-            license = $('#sell_media_license_select :selected').attr('data-price');
+            license = $('#sell_media_license_select :selected').val();
         } else {
             license = null;
         }
-
-        size = $('#sell_media_size_select :selected').attr('data-price');
 
         $("option:selected", this).each(function(){
             size = $(this).attr('data-price');
             calculate_total( license, size );
         });
+
+        size = $('#sell_media_size_select :selected').attr('data-price');
 
         // if no size disable the add to cart button
         // and the license select
@@ -587,7 +587,7 @@ jQuery( document ).ready(function( $ ){
 
     $( document ).on('click', '.sell-media-search-options-trigger', function(e){
         e.preventDefault();
-        $(this).closest('.sell-media-search-form').find('.sell-media-search-options:first').show();
+        $(this).closest('.sell-media-search-form').find('.sell-media-search-options:first').toggle();
      });
 
 
