@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.6.7
+Stable tag: 1.6.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -192,6 +192,13 @@ Action hooks available:
 * Double check your Sell Media Settings after upgrading
 
 == Changelog ==
+
+= 1.6.8 =
+* Tweak: Pending items are no longer displayed when the download history shortcode is used
+* Tweak: Improved email reliability by embedding the license description as apposed to attaching it
+* Tweak: Country and State are now required
+* Tweak: Updated `sell_media.pot` file
+* Bug: Fixing issue when license was toggled after the size was toggled, an incorrect license was applied
 
 = 1.6.7 =
 * Tweak: Updating shortcode instructions in `readme.txt`
