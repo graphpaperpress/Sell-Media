@@ -4,7 +4,7 @@
 Plugin Name: Sell Media
 Plugin URI: http://graphpaperpress.com/plugins/sell-media
 Description: A plugin for selling digital downloads and reprints.
-Version: 1.6.8
+Version: 1.6.9
 Author: Graph Paper Press
 Author URI: http://graphpaperpress.com
 Author Email: support@graphpaperpress.com
@@ -91,7 +91,9 @@ class SellMedia {
         add_action( 'admin_init', array( &$this, 'initAdmin' ) );
         add_action( 'admin_menu', array( &$this, 'adminMenus' ) );
         add_action( 'pre_get_posts', array( &$this, 'collection_password_check' ) );
-        add_filter( 'posts_orderby', array( &$this, 'order_by') );
+        if( !is_admin() ){
+            add_filter( 'posts_orderby', array( &$this, 'order_by') );
+        }
     }
 
 

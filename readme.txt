@@ -193,6 +193,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.6.9 =
+* Sorting by title, date, author, price in the admin made possible
+
 = 1.6.8 =
 * Tweak: Pending items are no longer displayed when the download history shortcode is used
 * Tweak: Improved email reliability by embedding the license description as apposed to attaching it

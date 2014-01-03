@@ -417,6 +417,31 @@ function sell_media_item_header( $columns ){
 }
 add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
 
+//Makes custom columns sortables
+add_filter( 'manage_edit-sell_media_item_sortable_columns', 'sell_media_sortable_column' );
+function sell_media_sortable_column( $columns ) {
+    $columns['sell_media_price'] = 'sell_media_price';
+    $columns['author'] = 'author';
+    return $columns;
+}
+
+//Sort the custom columns
+add_filter( 'request', 'sell_media_column_orderby' );
+function sell_media_column_orderby( $vars ) {
+    if ( isset( $vars['orderby'] ) && 'sell_media_price' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array(
+            'meta_key' => 'sell_media_price',
+            'orderby' => 'meta_value_num'
+        ) );
+    }
+    if ( isset( $vars['orderby'] ) && 'author' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array(
+            'orderby' => 'author'
+        ) );
+    }
+    return $vars;
+}
+
 
 /**
  * Filter custom column content on the edit media table.
