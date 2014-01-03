@@ -194,6 +194,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.9 =
+* Password protected collections now expire their password after a set time limit
 * Sorting by title, date, author, price in the admin made possible
 
 = 1.6.8 =

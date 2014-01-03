@@ -829,6 +829,18 @@ class SellMedia {
 
             if ( ! isset( $_SESSION ) ) session_start();
 
+            /**
+             * Since we do not have a "logout link" and can't rely on
+             * "garbage collection", we end our session after 30 minutes.
+             */
+            if ( isset( $_SESSION['sell_media']['recent_activity'] ) &&
+                ( time() - $_SESSION['sell_media']['recent_activity'] > ( 30 * 60 ) ) ) {
+                session_destroy();
+                session_unset();
+            }
+            $_SESSION['sell_media']['recent_activity'] = time(); // the start of the session.
+
+
             if ( ! empty( $password ) ) {
                 if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password
                     || ! empty( $_SESSION['sell_media']['collection_password'][$term_id] )
