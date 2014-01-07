@@ -194,6 +194,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.9 =
+* Added filter for State and Country list
 * Password protected collections now expire their password after a set time limit
 * Sorting by title, date, author, price in the admin made possible
 
