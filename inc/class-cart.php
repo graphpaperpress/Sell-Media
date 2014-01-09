@@ -194,7 +194,6 @@ Class Sell_Media_Cart {
         $to_add = array();
         $to_add = apply_filters('sell_media_additional_items', $to_add);
 
-
         // If we don't have additional items we use whats in $_POST
         if ( empty( $to_add ) ){
 
@@ -207,8 +206,13 @@ Class Sell_Media_Cart {
             } else {
                 $price_group_obj = get_term_by( 'id', $_POST['price_id'], 'price-group' );
                 $price_name = $price_group_obj->name;
-                $width = sell_media_get_term_meta( $price_group_obj->term_id, 'width', true );
-                $height = sell_media_get_term_meta( $price_group_obj->term_id, 'height', true );
+
+                $image_sizes = sell_media_image_sizes( $_POST['ProductID'], false );
+                if ( ! empty( $image_sizes[ $_POST['price_id'] ] ) ){
+                    $width = $image_sizes[ $_POST['price_id'] ]['width'];
+                    $height = $image_sizes[ $_POST['price_id'] ]['height'];
+                }
+
                 if ( ! empty( $width ) && ! empty( $height ) ){
                     $description = apply_filters( 'sell_media_cart_price_description', $width . ' x ' . $height );
                 }
