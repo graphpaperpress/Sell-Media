@@ -45,9 +45,9 @@ get_header(); ?>
 				<?php do_action('sell_media_additional_list_items'); ?>
 
 			</ul>
-			<?php sell_media_item_buy_button( $post->ID, 'button', 'Purchase' ); ?>
+			<?php sell_media_item_buy_button( $post->ID, 'button', __( 'Purchase' ) ); ?>
 		</div><!-- .sell-media-meta -->
-	
+
 	<?php endwhile; ?>
 	<?php do_action( 'sell_media_single_bottom_hook' ); ?>
 	</div><!-- #content -->

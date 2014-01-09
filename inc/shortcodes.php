@@ -491,7 +491,7 @@ function sell_media_all_items_shortcode( $atts ){
                     <div class="sell-media-grid<?php echo $end; ?>">
                         <a href="<?php print get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ); ?></a>
                         <h3 class="sell-media-shortcode-all-item-title"><a href="<?php print get_permalink( $post->ID ); ?>"><?php print get_the_title( $post->ID ); ?></a></h3>
-                        <?php sell_media_item_buy_button( $post->ID, 'text', 'Purchase' ); ?>
+                        <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
                     </div>
                 <?php endforeach; ?>
                 <?php sell_media_pagination_filter(); ?>

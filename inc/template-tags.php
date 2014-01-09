@@ -361,7 +361,7 @@ function sell_media_item_form(){
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>
                 <select id="sell_media_size_select" name="price_id">
-                    <option value="" data-price="0">-- <?php _e( 'Select a size' ); ?> --</option>
+                    <option value="" data-price="0">-- <?php _e( 'Select a size', 'sell_media' ); ?> --</option>
                     <?php if ( ! empty( $sizes_array ) ) : foreach( $sizes_array as $k => $v ) : ?>
                         <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
                     <?php endforeach; endif; ?>
@@ -386,7 +386,7 @@ function sell_media_item_form(){
             <fieldset>
                 <legend><?php _e( 'License', 'sell_media' ); ?></legend>
                 <select name="License" value="License" id="sell_media_license_select" <?php if ( ! empty( $terms ) ) : ?>disabled<?php endif; ?>>
-                    <option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license' ); ?> --</option>
+                    <option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
                     <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                 </select>
                 <div class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license to learn more about each license.', 'sell_media' ); ?>"> <?php _e( 'View Details', 'sell_media' ); ?></div>
