@@ -194,6 +194,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.9 =
+* Tweak: Next/Previous on the default single item page now cycles through collections in same category
 * Added additional name space for translation
 * Added filter for State and Country list
 * Password protected collections now expire their password after a set time limit

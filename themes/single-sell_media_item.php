@@ -17,8 +17,8 @@ get_header(); ?>
 			<div><?php the_content(); ?></div>
 			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
 			<div class="sell-media-prev-next">
-				<?php previous_post_link('<span class="prev">&laquo; %link</span>', '%title'); ?>
-				<?php next_post_link('<span class="next">%link &raquo;</span>', '%title'); ?>
+				<?php previous_post_link('<span class="prev">&laquo; %link</span>', '%title', true, '', 'collection' ); ?>
+				<?php next_post_link('<span class="next">%link &raquo;</span>', '%title', true, '', 'collection'); ?>
 			</div>
 			<?php edit_post_link('edit', '<p>', '</p>'); ?>
 		</div>
