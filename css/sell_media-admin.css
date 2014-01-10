@@ -133,7 +133,10 @@
 .compat-field-sell th { padding: 0 5px 0 0; }
 .compat-field-sell input[type="checkbox"] { width: auto; }
 
-.sell-media-item-table .sell-media-upload-trigger { cursor: pointer; }
+.sell-media-item-table .sell-media-upload-trigger {
+    cursor: pointer;
+    float: left;
+    }
 
 .sell_media_item_page_sell_media_add_bulk .media-sidebar .compat-field-sell,
 .media-sidebar .compat-field-sell {
@@ -172,6 +175,12 @@
     float: left;
     }
 
+.sell-media-temp-target {
+    background: url('../images/ajax-loader.gif') no-repeat center;
+    display: block;
+    height: 58px;
+    width: 58px;
+    }
 
 /* Term meta
 -------------------------------------------------------------- */
