@@ -15,6 +15,10 @@ function sell_media_attachment_fields_to_edit( $form_fields, $post ) {
     $image_meta_a = wp_get_attachment_metadata( $post->ID );
     $upload_url_a = wp_upload_dir();
 
+    if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+        return $form_fields;
+    }
+
     if ( empty( $image_meta_a ) ){
         $att_arr = explode( 'uploads/', $post->guid );
         $file = $att_arr[1];
