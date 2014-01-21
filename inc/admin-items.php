@@ -183,17 +183,24 @@ function sell_media_details_meta_box( $fields=null ) {
                 case 'file':
 
                     $sell_media_attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
+
                     $attachment_id = ( $sell_media_attachment_id ) ? $sell_media_attachment_id : get_post_thumbnail_id( $post->ID );
                     $src_attribute = wp_get_attachment_url( $attachment_id );
                     $url = ( $src_attribute ) ? $src_attribute : null;
                     $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
 
-                    print '<input type="hidden" name="sell_media_selected_file_id" id="sell_media_selected_file_id" />';
+                    $thumbnail = sell_media_item_icon( $attachment_id, 'thumbnail', false );
+                    $hide = empty( $thumbnail ) ? 'style="display: none";' : null;
+
+                    print '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
+                    print '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
+
                     print '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $url . '" size="30" />';
-                    print '<input type="hidden" name="_sell_media_attached_file" id="_sell_media_attached_file" class="sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
-                    print '<a class="sell-media-upload-trigger button"id="_sell_media_button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
+
+                    print '<a class="sell-media-upload-trigger button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
+
                     print '<div class="sell-media-upload-trigger">';
-                    print '<div class="sell-media-temp-target">' . sell_media_item_icon( $attachment_id, 'thumbnail', false ) . '</div>';
+                    print '<div class="sell-media-temp-target" ' . $hide . '>' . $thumbnail . '</div>';
                     print '</div>';
                     break;
 

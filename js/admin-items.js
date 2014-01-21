@@ -33,8 +33,8 @@ jQuery( document ).ready(function( $ ){
             var attachment = file_frame.state().get('selection').first().toJSON();
 
             // Do something with attachment.id and/or attachment.url here
-            $('.sell-media-item-table #sell_media_selected_file_id').attr( 'value', attachment.id );
-            $('.sell-media-item-table #_sell_media_attached_file').attr( 'value', attachment.url );
+            $('.sell_media_selected_file_id').attr( 'value', attachment.id );
+            $('.sell_media_attached_file').attr( 'value', attachment.url );
 
             var data = {
                 action: "sell_media_item_icon",
@@ -42,12 +42,15 @@ jQuery( document ).ready(function( $ ){
                 attachment_size: "thumbnail"
             };
 
+            // Show our loader
+            $('.sell-media-temp-target').show();
+
             $.ajax({
                 type: "POST",
                 url: ajaxurl,
                 data: data,
                 success: function( msg ){
-                    $('.sell-media-item-table .sell-media-temp-target').html( msg );
+                    $('.sell-media-temp-target').html( msg );
                 }
             });
         });
