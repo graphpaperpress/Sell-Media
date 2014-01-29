@@ -52,11 +52,11 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
     $return_url = add_query_arg( $args, get_permalink( $settings->thanks_page ) );
     $paypal_redirect = trailingslashit( sell_media_get_paypal_redirect() ) . '?';
 
-    $price = $_SESSION['cart']['total'];
+    $cart_obj = New Sell_Media_Cart;
 
     $paypal_args = array(
         'cmd'            => '_xclick',
-        'amount'         => $price,
+        'amount'         => $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
         'business'       => $settings->paypal_email,
         'email'          => $purchase_data['email'],
         'no_shipping'    => '0', // 0 (defualt) prompt for address, not required, 1 no prompt, 2 prompt & required
@@ -71,7 +71,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'ipn_notification_url' => $listener_url, // Is this a valid parameter??
         'notify_url' => $listener_url, // This needs to be added in order for IPN to work
         'mc_currency'    => $settings->currency,
-        'mc_gross'       => $price,
+        'mc_gross'       => $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
         'payment_status' => '',
         'item_name'      => __( 'Purchase from ', 'sell_media' ) . get_bloginfo( 'name' ),
         'item_number'    => $purchase_data['purchase_key'],
