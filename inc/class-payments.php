@@ -3,7 +3,7 @@
 Class SellMediaPayments {
 
     /**
-     * Retrives the total for a payment
+     * Retrieves the total for a payment
      *
      * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
      *
@@ -15,7 +15,7 @@ Class SellMediaPayments {
 
 
     /**
-     * Retrive the customer contact info associated with a payment
+     * Retrieve the customer contact info associated with a payment
      *
      * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
      * @todo This should not include the total
