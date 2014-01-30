@@ -413,7 +413,7 @@ Class Sell_Media_Cart {
             $_SESSION['cart']['items'][ $cart_id ]['total'] = $value * $this->item_markup_total(
                 $_SESSION['cart']['items'][ $cart_id ]['id'],
                 $_SESSION['cart']['items'][ $cart_id ]['price']['id'],
-                empty( $_SESSION['cart']['items'][ $cart_id ]['license']['id'] ) ? 0 : $_SESSION['cart']['items'][ $cart_id ]['license']['id']
+                empty( $_SESSION['cart']['items'][ $cart_id ]['license'] ) ? null : $_SESSION['cart']['items'][ $cart_id ]['license']['id']
                 );
         }
 
