@@ -54,7 +54,16 @@ jQuery( document ).ready(function( $ ){
         return response;
     }, sell_media.error.email_exists);
 
-
+	// Checkout Country Select Fields
+	$('#sell_media_country').change(function(){
+	    if($(this).val() == 'US'){
+	        $('#sell_media_reprints_sf_state_wrap').show();
+	        $('#sell_media_reprints_sf_other_provience_wrap').hide();
+	    } else {
+	        $('#sell_media_reprints_sf_state_wrap').hide();
+	        $('#sell_media_reprints_sf_other_provience_wrap').show();
+	    }
+	});
 
     // Validation
     $('#sell_media_checkout_form').validate({
