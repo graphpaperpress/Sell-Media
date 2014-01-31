@@ -109,7 +109,7 @@ function sell_media_get_search_form( $form ) {
 add_filter( 'get_search_form', 'sell_media_get_search_form' );
 
 /**
- * Loads a template from a specificed path
+ * Loads a template from a specified path
  *
  * @package Ajax
  * @uses load_template()
@@ -273,7 +273,7 @@ function sell_media_build_input( $taxonomy=null ) {
 
 
 /**
- * Parse the iptc info and retrive the given value.
+ * Parse the iptc info and retrieve the given value.
  *
  * @since 0.1
  */
@@ -492,7 +492,7 @@ function sell_media_is_payment_approved( $payment_id=null ){
 
 
 /**
- * wp query on post meta $post_id = $product_id, unserizlie and return array of sell_media_item IDs
+ * wp query on post meta $post_id = $product_id, unserialize and return array of sell_media_item IDs
  *
  * @note this does NOT determine if the payment is approved!
  * @since 0.1
@@ -519,7 +519,7 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
     if ( ! empty( $downloads ) ){
         foreach( $downloads as $download ) {
 
-            // Backwards combatibility for versions =< 1.5.6
+            // Backwards compatibility for versions =< 1.5.6
             $item_key = empty( $download['item_id'] ) ? 'id' : 'item_id';
 
             if ( ! empty( $download['price'] ) ){
@@ -564,7 +564,7 @@ function sell_media_build_download_link( $payment_id=null, $customer_email=null 
 
 
 /**
- * Retrives the purchase title from the purchase key
+ * Retrieves the purchase title from the purchase key
  * serialized array.
  *
  * @since 0.1
@@ -590,7 +590,7 @@ function sell_media_purchase_info( $product_id=null ){
 
 
 /**
- * Get PHP Arg Seaparator Ouput
+ * Get PHP Arg Separator Output
  *
  * @since 0.1
  */
@@ -602,7 +602,7 @@ function sell_media_get_php_arg_separator_output() {
 /**
  * Change Downloads Upload Dir
  *
- * Hooks the sell_media_set_upload_dir filter when appropiate.
+ * Hooks the sell_media_set_upload_dir filter when appropriate.
  *
  * @access private
  * @since 0.1
@@ -640,7 +640,7 @@ function sell_media_get_upload_dir() {
 
 /**
  * Prints a semantic list of Collections, with "Collection" as the
- * title, the term slug is used for additinonal styling of each li
+ * title, the term slug is used for additional styling of each li
  * and a sell_media-last class is used for the last item in the list.
  *
  * @since 0.1
@@ -707,7 +707,7 @@ function sell_media_item_link_by_attachment( $attachment_id=null ){
 function sell_media_is_mimetype( $attachment_id=null, $mimetypes=array( 'image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/tiff', 'image/icon' ) ){
 
     $attachment_mimetype = get_post_mime_type( $attachment_id );
-    
+
     if ( in_array( $attachment_mimetype, $mimetypes ) ) {
         return true;
     } else {
@@ -894,32 +894,32 @@ function sell_media_build_select( $items=array(), $args=array() ){
 
 function sell_media_us_states_list( $current=null, $req=false ){
     $items = array(
-        'AL'=>"Alabama",  
-        'AK'=>"Alaska",  
-        'AZ'=>"Arizona",  
-        'AR'=>"Arkansas",  
-        'CA'=>"California",  
-        'CO'=>"Colorado",  
-        'CT'=>"Connecticut",  
-        'DE'=>"Delaware",  
-        'DC'=>"District Of Columbia",  
-        'FL'=>"Florida",  
-        'GA'=>"Georgia",  
-        'HI'=>"Hawaii",  
-        'ID'=>"Idaho",  
-        'IL'=>"Illinois",  
-        'IN'=>"Indiana",  
-        'IA'=>"Iowa",  
-        'KS'=>"Kansas",  
-        'KY'=>"Kentucky",  
-        'LA'=>"Louisiana",  
-        'ME'=>"Maine",  
-        'MD'=>"Maryland",  
-        'MA'=>"Massachusetts",  
-        'MI'=>"Michigan",  
-        'MN'=>"Minnesota",  
-        'MS'=>"Mississippi",  
-        'MO'=>"Missouri",  
+        'AL'=>"Alabama",
+        'AK'=>"Alaska",
+        'AZ'=>"Arizona",
+        'AR'=>"Arkansas",
+        'CA'=>"California",
+        'CO'=>"Colorado",
+        'CT'=>"Connecticut",
+        'DE'=>"Delaware",
+        'DC'=>"District Of Columbia",
+        'FL'=>"Florida",
+        'GA'=>"Georgia",
+        'HI'=>"Hawaii",
+        'ID'=>"Idaho",
+        'IL'=>"Illinois",
+        'IN'=>"Indiana",
+        'IA'=>"Iowa",
+        'KS'=>"Kansas",
+        'KY'=>"Kentucky",
+        'LA'=>"Louisiana",
+        'ME'=>"Maine",
+        'MD'=>"Maryland",
+        'MA'=>"Massachusetts",
+        'MI'=>"Michigan",
+        'MN'=>"Minnesota",
+        'MS'=>"Mississippi",
+        'MO'=>"Missouri",
         'MT'=>"Montana",
         'NE'=>"Nebraska",
         'NV'=>"Nevada",
@@ -929,21 +929,21 @@ function sell_media_us_states_list( $current=null, $req=false ){
         'NY'=>"New York",
         'NC'=>"North Carolina",
         'ND'=>"North Dakota",
-        'OH'=>"Ohio",  
-        'OK'=>"Oklahoma",  
-        'OR'=>"Oregon",  
-        'PA'=>"Pennsylvania",  
-        'RI'=>"Rhode Island",  
-        'SC'=>"South Carolina",  
+        'OH'=>"Ohio",
+        'OK'=>"Oklahoma",
+        'OR'=>"Oregon",
+        'PA'=>"Pennsylvania",
+        'RI'=>"Rhode Island",
+        'SC'=>"South Carolina",
         'SD'=>"South Dakota",
-        'TN'=>"Tennessee",  
-        'TX'=>"Texas",  
-        'UT'=>"Utah",  
-        'VT'=>"Vermont",  
-        'VA'=>"Virginia",  
-        'WA'=>"Washington",  
-        'WV'=>"West Virginia",  
-        'WI'=>"Wisconsin",  
+        'TN'=>"Tennessee",
+        'TX'=>"Texas",
+        'UT'=>"Utah",
+        'VT'=>"Vermont",
+        'VA'=>"Virginia",
+        'WA'=>"Washington",
+        'WV'=>"West Virginia",
+        'WI'=>"Wisconsin",
         'WY'=>"Wyoming"
     );
     $items = apply_filters( 'sell_media_state_filter', $items );

@@ -41,7 +41,7 @@ Class Sell_Media_Download {
 
     /**
      * Determine if we can generate a download size for this request image
-     * Compares the requeste download size against the actual size of the original image.
+     * Compares the request download size against the actual size of the original image.
      *
      * @param $size (array) 'width' and 'height' of requested size
      * @param $location (string) full file path on the server of the image

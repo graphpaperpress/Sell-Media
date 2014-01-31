@@ -31,7 +31,7 @@ Class Sell_Media_Search {
 
 
     /**
-     * Retrive the ID from the get method
+     * Retrieve the ID from the get method
      *
      * @param $taxonomy (string) The taxonomy to search for
      *

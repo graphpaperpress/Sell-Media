@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Retrive and print out the cart count
+ * Retrieve and print out the cart count
  *
  * @since 0.1
  */
