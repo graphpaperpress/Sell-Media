@@ -194,14 +194,15 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.9 =
-* Bug: Checkout page is now using the derived image size for the description, prior the price group height/width was used
-* Bug: Sanitize slug
 * Tweak: Next/Previous on the default single item page now cycles through collections in same category
 * Added additional name space for translation
 * Added filter for State and Country list
 * Password protected collections now expire their password after a set time limit
 * Sorting by title, date, author, price in the admin made possible
 * Addressed issue where shipping was added twice on some hooks
+* Bug: Checkout page is now using the derived image size for the description, prior the price group height/width was used
+* Bug: Sanitize slug
+* Bug: Login redirect fix
 
 = 1.6.8 =
 * Tweak: Pending items are no longer displayed when the download history shortcode is used

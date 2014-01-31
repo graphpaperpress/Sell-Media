@@ -754,7 +754,7 @@ function sell_media_login_form_shortcode(){
         }
 
         $args = array(
-            'redirect' => site_url( '/checkout/' ),
+            'redirect' => get_permalink( $settings->checkout_page ),
             'label_username' => __( 'Username', 'sell_media' ),
             'label_password' => __( 'Password', 'sell_media' ),
             'label_remember' => __( 'Remember Me', 'sell_media' ),
