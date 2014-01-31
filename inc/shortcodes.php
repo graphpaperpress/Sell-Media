@@ -300,18 +300,18 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                     <p><?php _e( 'Create an account to complete your purchase. Already have an account', 'sell_media' ); ?>? <a href="<?php echo get_permalink( $settings->login_page ); ?>" title="Login"><?php _e( 'Login', 'sell_media' ); ?></a>
                                     <a href="<?php echo wp_lostpassword_url( site_url( '/checkout/' ) ); ?>"><?php _e( 'Lost your password?', 'sell_media'); ?></a>
                                     </p>
-                                    <p>
-                                    <label><?php _e( 'First Name', 'sell_media' ); ?></label>
-                                    <input type="text" class="" id="sell_media_first_name_field" name="first_name" data-required="true" required />
-                                    </p>
-                                    <p>
-                                    <label><?php _e( 'Last Name', 'sell_media' ); ?></label>
-                                    <input type="text" class="" id="sell_media_last_name_field" name="last_name" data-required="true" required />
-                                    </p>
-                                    <p>
-                                    <label><?php _e( 'Email', 'sell_media' ); ?></label>
-                                    <input type="email" class="" id="sell_media_email_field" name="email" data-required="true" required />
-                                    </p>
+                                    <fieldset id="sell_media_first_name_field_wrap" class="sell_media_fieldset">
+                                        <label for="sell_media_first_name_field"><?php _e( 'First Name', 'sell_media' ); ?></label>
+                                        <input type="text"id="sell_media_first_name_field" name="first_name" data-required="true" required />
+                                    </fieldset>
+                                    <fieldset id="sell_media_last_name_field_wrap" class="sell_media_fieldset">
+                                        <label for="sell_media_last_name_field"><?php _e( 'Last Name', 'sell_media' ); ?></label>
+                                        <input type="text" class="" id="sell_media_last_name_field" name="last_name" data-required="true" required />
+                                    </fieldset>
+                                    <fieldset id="sell_media_email_field_wrap" class="sell_media_fieldset">
+                                        <label for="sell_media_email_field"><?php _e( 'Email', 'sell_media' ); ?></label>
+                                        <input type="email" id="sell_media_email_field" name="email" data-required="true" required />
+                                    </fieldset>
                                     <?php do_action('sell_media_below_registration_form'); ?>
                                 <?php else : ?>
                                     <?php $current_user = wp_get_current_user(); ?>
@@ -322,19 +322,19 @@ function sell_media_checkout_shortcode($atts, $content = null) {
                                 <?php endif; ?>
 
                                 <?php if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
-                                    <div id="sell_media_termsdiv">
+                                    <fieldset id="sell_media_termsdiv_wrap" class="sell_media_fieldset">
                                         <input type="checkbox" name="termsandconditions" id="sell_media_terms_cb" data-required="true" value="" required="required" />
                                         <span class="sell-media-termnotice">
                                             <a href="#" id="agree_terms_and_conditions">
                                             <?php echo apply_filters( 'sell_media_filter_terms_conditions', 'I agree to the terms and conditions' ); ?>
                                             </a>
                                         </span>
-                                    </div>
+                                    </fieldset>
                                 <?php endif; ?>
-                                <div class="button-container">
+                                <fieldset class="button-container sell_media_fieldset">
                                     <input type="submit" class="sell-media-buy-button-success sell-media-buy-button-checkout" value="<?php _e('Complete Purchase', 'sell_media'); ?>" />
                                     <span class="inline"><em>&nbsp;<?php _e( 'or', 'sell_media' ); ?></em> <a href="<?php echo get_post_type_archive_link('sell_media_item'); ?>"><?php _e('Continue Shopping','sell_media'); ?></a></span>
-                                </div>
+                                </fieldset>
 
                                 <p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
                         </td>

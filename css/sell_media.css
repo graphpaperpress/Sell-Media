@@ -318,6 +318,9 @@ table#sell-media-subtotal-table th {
   width: 20px;
   text-align: center;
 }
+.sell_media_fieldset {
+  margin: 10px 0;
+}
 
 /*= Search
 -------------------------------------------------------------- */
