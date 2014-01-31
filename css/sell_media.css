@@ -321,6 +321,9 @@ table#sell-media-subtotal-table th {
 .sell_media_fieldset {
   margin: 10px 0;
 }
+.sell_media_form_control {
+  width: 185px;
+}
 
 /*= Search
 -------------------------------------------------------------- */
@@ -752,6 +755,7 @@ input[type="submit"].sell-media-buy-button-success:active {
   position: absolute;
   width: 400px;
   background: #fff;
+  color: #555;
   box-shadow: 0 0 40px #000;
   padding: 25px;
   line-height: 1.5em;
