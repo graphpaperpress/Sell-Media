@@ -13,7 +13,9 @@ get_header(); ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 
 		<div class="sell-media-content">
-		    <?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
+			<?php if ( sell_media_is_mimetype( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) : ?>
+				<?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
+			<?php endif; ?>
 			<div><?php the_content(); ?></div>
 			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
 			<div class="sell-media-prev-next">
@@ -27,12 +29,15 @@ get_header(); ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<ul>
 				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
+				<li class="filetype"><span class="title"><?php _e( 'File Type', 'sell_media' ); ?>:</span> <?php echo get_post_mime_type( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ); ?></li>
 
-				<?php if( sell_media_item_size( $post->ID ) ) : ?>
-					<li class="size">
-						<span class="title"><?php _e( 'Size', 'sell_media' ); ?>:</span>
-						<?php print sell_media_item_size( $post->ID); ?>
-					</li>
+				<?php if ( sell_media_is_mimetype( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) : ?>
+					<?php if ( sell_media_item_size( $post->ID ) ) : ?>
+						<li class="size">
+							<span class="title"><?php _e( 'Size', 'sell_media' ); ?>:</span>
+							<?php print sell_media_item_size( $post->ID); ?>
+						</li>
+					<?php endif; ?>
 				<?php endif; ?>
 
 				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'collection' ) ) { ?>

@@ -696,6 +696,42 @@ function sell_media_item_link_by_attachment( $attachment_id=null ){
     print get_permalink( $product_id );
 }
 
+/**
+ * Checks if the attachment ID is an image mime type
+ *
+ * @param $attachment_id ID of the attachment
+ * @param $mimetype an array of mimetypes
+ * @return boolean true/false
+ * @since 1.6.9
+ */
+function sell_media_is_mimetype( $attachment_id=null, $mimetypes=array( 'image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/tiff', 'image/icon' ) ){
+
+    $attachment_mimetype = get_post_mime_type( $attachment_id );
+    
+    if ( in_array( $attachment_mimetype, $mimetypes ) ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+/**
+ * Returns the attachment ID file size
+ *
+ * @param $attachment_id ID of the attachment
+ * @return string
+ * @since 1.6.9
+ */
+function sell_media_get_size( $attachment_id=null ){
+
+    $file_path = get_attached_file( $attachment_id );
+    $bytes = filesize( $file_path );
+    $s = array( 'b', 'Kb', 'Mb', 'Gb' );
+    $e = floor( log( $bytes )/log( 1024 ) );
+    return sprintf( '%.2f ' . $s[$e], ( $bytes/pow( 1024, floor( $e ) ) ) );
+}
+
 
 /**
  * Update the sales stats
