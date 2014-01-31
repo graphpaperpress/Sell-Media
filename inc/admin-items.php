@@ -524,7 +524,7 @@ function sell_media_before_delete_post( $postid, $attachment_id=null ){
 
     /**
      * Get the attachment/thumbnail file so we can replace the "original", i.e.
-     * lower quality "original" with the file in the proctedted area.
+     * lower quality "original" with the file in the protected area.
      */
     $attached_file = get_post_meta( $postid, '_sell_media_attached_file', true );
     if ( empty( $attachment_id ) ){

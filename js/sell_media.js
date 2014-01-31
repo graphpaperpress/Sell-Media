@@ -148,7 +148,7 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * Retrives the x, y coordinates of the viewport
+     * Retrieves the x, y coordinates of the viewport
      * getPageScroll() by quirksmode.com
      */
     function sell_media_get_page_scroll() {
@@ -168,7 +168,7 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * Calculate our total, round it to the nearst hundreds
+     * Calculate our total, round it to the nearest hundreds
      * and update the html our price target.
      */
     function sell_media_update_total(){
@@ -587,7 +587,7 @@ jQuery( document ).ready(function( $ ){
 
 
     /**
-     * Hide our current seach option when the user clicks off the input field
+     * Hide our current search option when the user clicks off the input field
      */
     $( document ).on('blur', '#s', function(){
         $(".sell-media-search-options", this).hide();

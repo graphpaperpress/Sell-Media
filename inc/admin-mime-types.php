@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Parse IPTC info and move the uploaded file into the proctected area
+ * Parse IPTC info and move the uploaded file into the protected area
  *
  * In order to "protect" our uploaded file, we resize the original
  * file down to the largest WordPress size set in Media Settings.
- * Then we take the uploaded file and move it to the "proteced area".
+ * Then we take the uploaded file and move it to the "protected area".
  * Last, we copy (rename) our resized uploaded file to be the original
  * file.
  *
- * @param $attached_file As WordPress see's it in *postmeta table
+ * @param $attached_file As WordPress sees it in *postmeta table
  * "_wp_attached_file", i.e., YYYY/MM/file-name.ext
  * @since 1.0.1
  */
@@ -26,7 +26,7 @@ function sell_media_move_image_from_attachment( $attachment_id=null ){
     global $post;
     $product_id = empty( $post->ID ) ? get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true ) : $post->ID;
 
-    // Save iptc info as taxonomies
+    // Save IPTC info as taxonomies
     if ( ! empty( $product_id ) ) {
         if ( $city )
             sell_media_iptc_save( 'city', $city, $product_id );
@@ -49,7 +49,7 @@ function sell_media_move_image_from_attachment( $attachment_id=null ){
     $destination_dir  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . $wp_upload_dir['subdir'] . '/';
 
 
-    // Check if the destinatin directory exists, i.e.
+    // Check if the destination directory exists, i.e.
     // wp-content/uploads/sell_media/YYYY/MM if not we create it.
     if ( ! file_exists( dirname( $destination_file ) ) ){
         wp_mkdir_p( dirname( $destination_file ) );

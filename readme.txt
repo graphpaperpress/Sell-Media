@@ -194,14 +194,13 @@ Action hooks available:
 == Changelog ==
 
 = 1.6.9 =
-* Feature: Password protected collections now expire their password after a set time limit
-* Feature: Sorting by title, date, author, price in the admin made possible
 * Bug: Checkout page is now using the derived image size for the description, prior the price group height/width was used
 * Tweak: Next/Previous on the default single item page now cycles through collections in same category
-* Tweak: Added additional name space for translation
-* Tweak: Added filter for State and Country list
-* Tweak: Show/hide state select box based on country on checkout
-* Tweak: Change checkout fieldsets
+* Added additional name space for translation
+* Added filter for State and Country list
+* Password protected collections now expire their password after a set time limit
+* Sorting by title, date, author, price in the admin made possible
+* Addressed issue where shipping was added twice on some hooks
 
 = 1.6.8 =
 * Tweak: Pending items are no longer displayed when the download history shortcode is used

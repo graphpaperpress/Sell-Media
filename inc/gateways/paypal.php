@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Retrieve the correct Paypal Redirect based on http/s
+ * Retrieve the correct PayPal Redirect based on http/s
  * and "live" or "test" mode, i.e., sandbox.
  *
- * @return Paypal URI
+ * @return PayPal URI
  */
 function sell_media_get_paypal_redirect( $ssl_check=false ) {
 
@@ -25,7 +25,7 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
 
 
 /**
- * Passes the Customers Product to Paypal via a redirect.
+ * Passes the Customers Product to PayPal via a redirect.
  * more info here: https://cms.paypal.com/mx/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_Appx_websitestandard_htmlvariables#id08A6HH00W2J
  *
  * @param $purchase_data array containing the following:
@@ -81,7 +81,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
     // Add additional args;
     $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
 
-    // Lets save all the info being sent to Paypal at time of purchase
+    // Lets save all the info being sent to PayPal at time of purchase
     update_post_meta( $payment_id, '_paypal_args', $paypal_args );
 
     $paypal_redirect .= http_build_query( $paypal_args );
@@ -110,9 +110,9 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
 
 
 /**
- * When a payment is made Paypal will send us a response and this funciton is
- * called. From here we will confirm arguments that we sent to Paypal which
- * the ones Paypal is sending back to us.
+ * When a payment is made PayPal will send us a response and this function is
+ * called. From here we will confirm arguments that we sent to PayPal which
+ * the ones PayPal is sending back to us.
  * This is the Pink Lilly of the whole operation.
  */
 function sell_media_process_paypal_ipn() {
