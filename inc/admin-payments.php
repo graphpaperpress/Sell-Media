@@ -31,9 +31,10 @@ function sell_media_add_payment_meta_boxes(){
         'sell_media_payment'
     );
 
-    global $pagenow;
-    global $post;
-    if ( $pagenow == 'post.php' && get_post_type( $post->ID ) == 'sell_media_payment' ){
+    $screen = get_current_screen();
+
+    if ( $screen->id == 'sell_media_payment' ) {
+        global $post;
         $arguments = get_post_meta( $post->ID, '_paypal_args', true );
         if ( ! empty( $arguments ) ){
             add_meta_box(
@@ -46,7 +47,6 @@ function sell_media_add_payment_meta_boxes(){
     }
 }
 add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
-
 
 
 /**

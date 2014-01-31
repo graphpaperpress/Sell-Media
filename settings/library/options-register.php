@@ -121,6 +121,10 @@ function sell_media_plugin_options_validate( $input ) {
 					// Pass input data through the wp_filter_kses filter
 					$valid_input[ $setting ] = addslashes( $input[ $setting ] );
 				}
+				// Validate Slug
+				if ( 'slug' == $optiondetails['sanitize'] ) {
+					$valid_input[ $setting ] = sanitize_title( $input[ $setting ] );
+				}
 			}
 		}
 		// If reset, reset defaults

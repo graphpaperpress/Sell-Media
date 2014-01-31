@@ -351,12 +351,8 @@ function sell_media_item_form(){
         <?php wp_nonce_field('add_items','sell_media_nonce'); ?>
 
         <?php do_action( 'sell_media_cart_above_licenses' ); ?>
-        <?php
-        $wp_upload_dir = wp_upload_dir();
-        $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $_POST['product_id'], '_sell_media_attached_file', true ) );
-        $sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
 
-        if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) : ?>
+        <?php if ( sell_media_is_mimetype( get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true ) ) ) : ?>
             <?php $disabled = 'disabled'; $price = "0.00"; ?>
             <fieldset>
                 <legend><?php _e('Size', 'sell_media'); ?></legend>

@@ -197,6 +197,7 @@ Action hooks available:
 * Feature: Password protected collections now expire their password after a set time limit
 * Feature: Sorting by title, date, author, price in the admin made possible
 * Bug: Checkout page is now using the derived image size for the description, prior the price group height/width was used
+* Bug: Sanitize slug
 * Tweak: Next/Previous on the default single item page now cycles through collections in same category
 * Tweak: Added additional name space for translation
 * Tweak: Added filter for State and Country list

@@ -5,10 +5,9 @@
  */
 function sell_media_admin_messages() {
 
-    global $pagenow;
-    $post_type = ( isset( $_GET['post'] ) ) ? get_post_type( $_GET['post'] ) : null;
+    $screen = get_current_screen();
 
-    if ( $pagenow == 'edit.php' && isset( $_GET['page'] ) && $_GET['page'] == 'sell_media_plugin_options' || $post_type == 'sell_media_item' ){
+    if ( $screen->id == 'edit-sell_media_item' || $screen->id == 'sell_media_item' ||  $screen->id == 'sell_media_item_page_sell_media_plugin_options' || $screen->id == 'sell_media_item_page_sell_media_add_bulk' ) {
 
         // New
         $settings = sell_media_get_plugin_options();

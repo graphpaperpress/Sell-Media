@@ -230,7 +230,7 @@ $options = array(
         "id" => "general_plugin_section_1",
         "type" => "text",
         "default" => "",
-        "sanitize" => "html"
+        "sanitize" => "slug"
     ),
     "order_by" => array(
         "tab" => "sell_media_general_settings",
