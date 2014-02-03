@@ -316,7 +316,7 @@ add_action( 'wp_ajax_sell_media_item_icon', 'sell_media_item_icon' );
 
 
 /**
- * Adjust wp_query for when searh is submitted error no longer shows in "general-template.php"
+ * Adjust wp_query for when search is submitted error no longer shows in "general-template.php"
  * detail here: http://wordpress.stackexchange.com/questions/71157/undefined-property-stdclasslabels-in-general-template-php-post-type-archive
  * @author Zane Matthew
  * @since 1.2.3
@@ -335,6 +335,7 @@ function sell_media_item_form(){
     $disabled = null;
     $price = sell_media_item_price( $_POST['product_id'], $currency=false, false, false);
     $subtotal = empty( $_SESSION['cart']['subtotal'] ) ? "0.00" : $_SESSION['cart']['subtotal'];
+    $sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
 
     if ( $licenses ) {
         $term_id = $licenses[0]->term_id;
