@@ -212,6 +212,91 @@ Contributors
 Changelog
 ---------
 
+1.7
+---
+* Bug: Fixed issue with price groups not appearing in the drop down
+
+1.6.9
+---
+* Tweak: Next/Previous on the default single item page now cycles through collections in same category
+* Added additional name space for translation
+* Added filter for State and Country list
+* Password protected collections now expire their password after a set time limit
+* Sorting by title, date, author, price in the admin made possible
+* Addressed issue where shipping was added twice on some hooks
+* Bug: Checkout page is now using the derived image size for the description, prior the price group height/width was used
+* Bug: Sanitize slug
+* Bug: Login redirect fix
+
+1.6.8
+---
+* Tweak: Pending items are no longer displayed when the download history shortcode is used
+* Tweak: Improved email reliability by embedding the license description as apposed to attaching it
+* Tweak: Country and State are now required
+* Tweak: Updated `sell_media.pot` file
+* Bug: Fixing issue when license was toggled after the size was toggled, an incorrect license was applied
+
+1.6.7
+---
+* Tweak: Updating shortcode instructions in `readme.txt`
+* Bug: Fixing translation issues
+* Bug: Fixing issue where search would still show even if it was disabled
+
+1.6.6
+---
+* Feature: Sell Media items are now support post authors
+* Bug: Fixing issue with settings and price groups on activation
+
+1.6.5
+---
+* Bug: Various bug fixes with Price Groups
+* Feature: Added new settings API
+* Tweak: Add to cart button no longer changes to check out after adding 1 item
+* Tweak: Added tweak from [@NETLINK](https://github.com/NETLINK) so PayPal IPN URL can be added as a param.
+* Tweak: Added support for WPML
+
+1.6.4
+---
+* Feature: Added various hooks and filters
+* Feature: Using jQuery validation in place of HTML5 validation
+* Tweak: Allowed for translation of "Pending" on the `sell_media_download_list` shortcode
+* Tweak: Added link to purchased item from payments page
+* Tweak: Added "Lost your password?" link to the check out page
+* Tweak: Fixing issue where currency symbol on admin pages
+* Tweak: Administrators can now buy products while logged in
+* Tweak: Updated admin payments UI
+* Tweak: Deriving a more reliable IPN URL for some users
+* Bug: Fixing issue with 3.7 and `save_post`
+* Bug: Fixing issue when quantity was updated on the checkout page the subtotal was not correctly updated
+* Bug: Fixing issue where session was not starting for some users
+
+1.6.3
+---
+* Bug: Fixing issue where sizes from price group did not show in select box
+* Bug: Fixing issue where download link would show when users purchased a reprint
+
+1.6.2
+---
+* Feature: License descriptions are now emailed as an attachment when a purchase is made
+* Feature: Added option to enable/disable admin columns
+* Feature: Added clear cart button
+* Feature: Added additional admin column "protected" for collection page
+* Bug: Fixing issue were size was not dependent on license
+* Bug: Fixing notice when there is no min price to be displayed
+* Bug: Fixed conflict with WordPress heartbeat API
+* Tweak: Download list shortcode now list newest to oldest purchases
+* Tweak: Customers now have a "remove all" option on the checkout page
+* Tweak: Keywords can now be used with default permalinks
+* Tweak: Password protected collections are now more secure
+* Tweak: Added admin notices
+* Tweak: Password protected collections now use a custom template
+
+1.6.1
+---
+* Bug: Updated PayPal arguments for buyer download email
+* Bug: Fixing issue were cart was not emptied
+* Bug: New users are sent an automated WordPress email when registering
+
 1.6
 ---
 * Added our first contributor request!
