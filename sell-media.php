@@ -23,6 +23,7 @@ include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/class-cart.php' );
 include( dirname(__FILE__) . '/inc/class-search.php' );
 include( dirname(__FILE__) . '/inc/class-payments.php' );
+include( dirname(__FILE__) . '/inc/simpleCart.php' );
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
 include_once( dirname(__FILE__) . '/settings/settings.php');
@@ -651,6 +652,8 @@ class SellMedia {
             }
         } if ( !is_admin() ) {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+            wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+            wp_enqueue_script( 'sell_media_cart', plugin_dir_url( __FILE__ ) . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
             $amount = 0;
             $quantity = 0;

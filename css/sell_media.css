@@ -188,7 +188,7 @@
   float: left;
 }
 .sell-media-cart-dialog .total-container {
-  margin: 1em 0 2em;
+  margin: 1em 0;
 }
 .sell-media-cart-dialog .close {
   right: 5px;
@@ -209,7 +209,9 @@
 .sell-media-cart-dialog a:focus {
   color: #000;
 }
-
+.sell-media-cart-dialog p {
+  margin-bottom: 1em;
+}
 /*= Checkout
 -------------------------------------------------------------- */
 table#sell-media-checkout-table, #sell-media-checkout-table tbody, #sell-media-checkout-table tfoot, #sell-media-checkout-table thead, #sell-media-checkout-table tr, #sell-media-checkout-table th, #sell-media-checkout-table td {

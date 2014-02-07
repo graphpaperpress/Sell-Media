@@ -12,6 +12,7 @@
 
 /** */
 jQuery( document ).ready(function( $ ){
+	
 
     /**
      * Set-up our default Ajax options.
