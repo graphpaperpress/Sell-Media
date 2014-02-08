@@ -9,6 +9,7 @@
  * fall back on the default price set in the
  * plugin settings
  */
+wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 $settings = sell_media_get_plugin_options();
 $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
 $sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
@@ -20,7 +21,8 @@ if ( $licenses ) {
 }
 ?>
 <div class="main-container simpleCart_shelfItem">
-	<?php do_action( 'sell_media_dialog_scripts' ); ?>
+	<script type='text/javascript' src='http://localhost:8888/test.com/wp-content/plugins/sell-media/js/simpleCart.min.js?ver=1.7'></script>
+	<?php do_action( 'sell_media_cart_js' ); ?>
     <span class="close">&times;</span>
     <div class="content">
         <div class="left">
@@ -34,7 +36,7 @@ if ( $licenses ) {
             <?php //do_action( 'sell_media_cart_above_size' ); ?>
             <fieldset>
             	<legend><?php _e( 'Size', 'sell_media' ); ?></legend>
-                <select id="sell_media_item_size" class="item_size">
+                <select id="sell_media_item_size" class="sum item_size">
                 	<option selected="selected" value="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
                     <?php if ( ! empty( $sizes_array ) ) : foreach( $sizes_array as $k => $v ) : ?>
                         <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>" data-qty="1"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
@@ -53,7 +55,7 @@ if ( $licenses ) {
 			<?php if ( count( $licenses ) > 1 ) : ?>
 				<fieldset>
 					<legend><?php _e( 'License', 'sell_media' ); ?></legend>
-					<select name="License" value="License" id="sell_media_license_select" <?php if ( ! empty( $terms ) ) : ?>disabled<?php endif; ?>>
+					<select id="sell_media_item_license" class="sum" disabled>
 						<option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
 						<?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
 					</select>
@@ -72,18 +74,10 @@ if ( $licenses ) {
 			<?php //do_action( 'sell_media_cart_below_licenses' ); ?>
             <input type="hidden" value="" class="item_Quantity">
             <div class="total-container group">
-				<strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container">$<span class="item_price">0</span></span>
+				<strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container">$<span id="total" class="item_price">0</span></span>
 			</div>
 			<div class="button-container group">
-				<div class="left">
-					<p><a class="item_add sell-media-buy-button" href="javascript:;"><?php _e( 'Add to cart', 'sell_media' ); ?></a></p>
-					<span class="added"></span>
-				</div>
-				<div class="right">
-					<p>Currently in your cart</p>
-					<p class="simpleCart_quantity"></span> items - <span class="simpleCart_total"></p>
-					<p><a href="<?php echo get_permalink( $settings->checkout_page ); ?>" class="cart"><?php _e( 'View cart', 'sell_media' ); ?></a></p>
-				</div>
+				<p id="sell-media-add-to-cart"><button class="item_add sell-media-buy-button" disabled><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
 			</div>
         </div>
         <div class="sell-media-credit"><?php sell_media_plugin_credit(); ?></div>
@@ -91,18 +85,30 @@ if ( $licenses ) {
 </div>
 <script>
 jQuery(document).ready(function($){
-    $('.item_size').change(function(){
-        var item_price = $(this).children(':selected').data('price');
-        var item_qty = $(this).children(':selected').data('qty');
-        $('.item_price').text(item_price);
-        $('.item_Quantity').text(item_qty);
-    });
-	simpleCart.bind('afterAdd', function(item){
-		console.log(item);
-		$('.added').text( item.name + " has been added to your cart!" );
-		alert( item.name + " has been added to the cart!");
-		exit();
+
+	simpleCart.bind( "afterAdd" , function( item ){
+		$('#sell-media-add-to-cart').after( '<p class="small">' + item.get('name') + ' was added to <a href="<?php echo get_permalink( $settings->checkout_page ); ?>" class="cart">your cart</a>!</p>' );
 	});
+
+	$(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
+		
+		// disable add to cart button unless price selected
+		if( $('#sell_media_item_size').val() )
+			$('.item_add, #sell_media_item_license').prop('disabled', false);
+		else
+			$('.item_add, #sell_media_item_license').prop('disabled', true);
+
+		// calculate the price and license markup
+		var price = $('#sell_media_item_size :selected').data('price');
+		var markup = $('#sell_media_item_license :selected').data('price');
+		if ( markup == undefined || markup == 0 )
+			sum = price;
+		else
+			sum = ( price * ( markup / 100 ) ).toFixed(2);
+
+		$('#total').text(sum);
+	});
+
 
 });
 </script>

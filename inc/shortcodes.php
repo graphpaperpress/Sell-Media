@@ -88,7 +88,7 @@ add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
  *
  * @since 0.1
  */
-function sell_media_checkout_shortcode($atts, $content = null) {
+function sell_media_checkout_shortcode_old($atts, $content = null) {
 
     $cart = New Sell_Media_Cart;
 
@@ -414,7 +414,7 @@ function sell_media_checkout_shortcode($atts, $content = null) {
     </div>
     <?php return ob_get_clean();
 }
-add_shortcode('sell_media_checkout', 'sell_media_checkout_shortcode');
+//add_shortcode('sell_media_checkout', 'sell_media_checkout_shortcode');
 
 /**
  * Adds the 'sell_media' short code to the editor. [sell_media_item]

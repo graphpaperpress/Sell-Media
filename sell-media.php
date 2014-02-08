@@ -653,7 +653,6 @@ class SellMedia {
         } if ( !is_admin() ) {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
             wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-            wp_enqueue_script( 'sell_media_cart', plugin_dir_url( __FILE__ ) . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
             $amount = 0;
             $quantity = 0;
