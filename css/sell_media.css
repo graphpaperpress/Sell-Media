@@ -212,6 +212,14 @@
 .sell-media-cart-dialog p {
   margin-bottom: 1em;
 }
+
+.simpleCart_items img {
+  max-width: 50px;
+  max-height: 50px;
+}
+.simpleCart_items td {
+  vertical-align: middle;
+}
 /*= Checkout
 -------------------------------------------------------------- */
 table#sell-media-checkout-table, #sell-media-checkout-table tbody, #sell-media-checkout-table tfoot, #sell-media-checkout-table thead, #sell-media-checkout-table tr, #sell-media-checkout-table th, #sell-media-checkout-table td {

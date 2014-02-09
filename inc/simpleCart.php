@@ -14,6 +14,16 @@ function sell_media_cart_js(){
 				type: "PayPal",
 				email: "<?php echo $settings->paypal_email; ?>"
 			},
+			cartColumns: [
+				{ view: "image", attr: "thumb", label: false },
+				{ attr: "name", label: "Name" },
+				{ attr: "price", label: "Price", view: "currency" },
+				{ view: "decrement", label: false, text: "-" },
+				{ attr: "quantity", label: "Qty" },
+				{ view: "increment", label: false, text: "+" },
+				{ attr: "total", label: "SubTotal", view: "currency" },
+				{ view: "remove", text: "Remove", label: false }
+			],
 			currency: "<?php echo $settings->currency; ?>"
 			
 		});
@@ -21,8 +31,8 @@ function sell_media_cart_js(){
 		// callback beforeCheckout
 		simpleCart.bind( 'beforeCheckout' , function( data ){
 			// create pending post
-			// console.log(data);
-			// exit();
+			console.log(data);
+			exit();
 		});
 
 	</script>
