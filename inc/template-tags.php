@@ -299,7 +299,7 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
     else
         $medium_url = null;
 
-    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image item_thumb" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $post_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
+    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image item_image" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $post_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
 
     if ( $echo )
         print $icon;
@@ -326,104 +326,6 @@ function sell_media_search_warning_surpression( $wp_query ){
         $wp_query->is_post_type_archive = false;
 }
 add_action( 'parse_query', 'sell_media_search_warning_surpression' );
-
-
-function sell_media_item_form(){
-    $settings = sell_media_get_plugin_options();
-    $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
-    $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
-    $disabled = null;
-    $price = sell_media_item_price( $_POST['product_id'], $currency=false, false, false);
-    $subtotal = empty( $_SESSION['cart']['subtotal'] ) ? "0.00" : $_SESSION['cart']['subtotal'];
-    $sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
-
-    if ( $licenses ) {
-        $term_id = $licenses[0]->term_id;
-    } else {
-        $term_id = null;
-    }
-
-    ?>
-    <?php do_action( 'sell_media_above_item_form' ); ?>
-    <form action="javascript://" method="POST" class="sell-media-dialog-form sell-media-form">
-        <input type="hidden" name="AttachmentID" value="<?php print $attachment_id; ?>" />
-        <input type="hidden" name="ProductID" value="<?php print $_POST['product_id']; ?>" />
-        <input type="hidden" name="CalculatedPrice" class="" value="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-        <?php wp_nonce_field('add_items','sell_media_nonce'); ?>
-
-        <?php do_action( 'sell_media_cart_above_licenses' ); ?>
-
-        <?php if ( sell_media_is_mimetype( get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true ) ) ) : ?>
-            <?php $disabled = 'disabled'; $price = "0.00"; ?>
-            <fieldset>
-                <legend><?php _e('Size', 'sell_media'); ?></legend>
-                <select id="sell_media_size_select" name="price_id">
-                    <option value="" data-price="0">-- <?php _e( 'Select a size', 'sell_media' ); ?> --</option>
-                    <?php if ( ! empty( $sizes_array ) ) : foreach( $sizes_array as $k => $v ) : ?>
-                        <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
-                    <?php endforeach; endif; ?>
-                    <?php if ( $settings->hide_original_price !== 'yes' ) : ?>
-                        <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>">
-                            <?php _e( 'Original', 'sell_media' ); ?>
-                            (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
-                            <?php sell_media_item_price( $_POST['product_id'] ); ?>
-                        </option>
-                    <?php endif; ?>
-                </select>
-            </fieldset>
-        <?php else : ?>
-            <input type="hidden" id="sell_media_price" name="price_id" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" value="default_price" />
-        <?php endif; ?>
-
-        <?php do_action( 'sell_media_cart_below_licenses' ); ?>
-
-
-        <?php do_action( 'sell_media_cart_above_size' ); ?>
-        <?php if ( count( $licenses ) > 1 ) : ?>
-            <fieldset>
-                <legend><?php _e( 'License', 'sell_media' ); ?></legend>
-                <select name="License" value="License" id="sell_media_license_select" <?php if ( ! empty( $terms ) ) : ?>disabled<?php endif; ?>>
-                    <option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
-                    <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
-                </select>
-                <div class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license to learn more about each license.', 'sell_media' ); ?>"> <?php _e( 'View Details', 'sell_media' ); ?></div>
-            </fieldset>
-        <?php else : ?>
-            <?php if ( ! empty( $term_id ) ) : ?>
-                <input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-                <input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
-                <div class="license_text"><?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?></div>
-                <?php if ( ! empty( $licenses[0]->description ) ) : ?>
-                    <div class="license_desc sell-media-tooltip" data-tooltip="<?php print esc_attr( $licenses[0]->description ); ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
-                <?php endif; ?>
-            <?php endif; ?>
-        <?php endif; ?>
-        <?php do_action( 'sell_media_cart_below_size' ); ?>
-
-        <div class="total-container group">
-            <div class="left">
-                <strong><?php _e( 'Total' ); ?></strong>
-            </div>
-            <div class="right">
-                <span class="price-container"><?php print sell_media_get_currency_symbol(); ?><span class="sell-media-item-price"><?php print $subtotal; ?></span></span>
-            </div>
-        </div>
-        <div class="button-container group">
-            <div class="left">
-                <?php if ( empty( $_SESSION['cart']['items']) ) : ?>
-                    <span class="cart empty"><?php _e( 'Cart', 'sell_media' ); ?> (0)</span>
-                <?php else: ?>
-                    <span class="cart full"><a href="<?php print get_permalink( $settings->checkout_page ); ?>" class="cart-handle"><?php _e( 'Cart', 'sell_media' ); ?> (<span class="count-container"><span class="count-target"></span></span>)</a></span>
-                <?php endif; ?>
-                <a href="<?php print get_permalink( $settings->checkout_page ); ?>" class="cart-handle" style="display: none;"><?php _e( 'Cart', 'sell_media' ); ?></a>
-            </div>
-            <div class="right">
-                <input type="submit" value="<?php print apply_filters('sell_media_add_to_cart_text', __('Add to Cart', 'sell_media'), $_POST['product_id'] ); ?>" class="sell-media-buy-button" <?php print $disabled; ?> />
-            </div>
-        </div>
-    </form>
-    <?php do_action( 'sell_media_below_item_form' ); ?>
-<?php }
 
 
 /**
@@ -491,17 +393,23 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
  * to price should be in the class-price.php file
  */
 function sell_media_original_image_size( $item_id=null, $echo=true ){
-    $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
+    // check if attachment is an image
+    if ( sell_media_is_mimetype( $item_id ) ) {
+        $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
 
-    if ( $echo ){
-        print $original_size[1] . ' x ' . $original_size[2];
+        if ( $echo ){
+            print $original_size[1] . ' x ' . $original_size[2];
+        } else {
+            return array(
+                'original'=> array(
+                    'height' => $original_size[2],
+                    'width' => $original_size[1]
+                    )
+                );
+        }
+    // otherwise just return, because we can't get the size
     } else {
-        return array(
-            'original'=> array(
-                'height' => $original_size[2],
-                'width' => $original_size[1]
-                )
-            );
+        return;
     }
 }
 

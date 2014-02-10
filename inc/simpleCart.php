@@ -8,6 +8,26 @@ function sell_media_cart_js(){
 	$settings = sell_media_get_plugin_options(); ?>
 
 	<script type="text/javascript">
+	jQuery(document).ready(function($){
+
+		function createPayment( data ){
+
+			$.ajax({
+				url: ajaxurl,
+				data: {
+					'action': 'sell_media_ajax_create_payment',
+					'cart_data' : data
+				},
+				success:function( data ) {
+					// This outputs the result of the ajax request
+					console.log( data );
+				},
+				error: function( errorThrown ){
+					console.log( errorThrown );
+				}
+			});
+		}
+
 		simpleCart({
 			cartStyle: "table",
 			checkout: {
@@ -15,8 +35,10 @@ function sell_media_cart_js(){
 				email: "<?php echo $settings->paypal_email; ?>"
 			},
 			cartColumns: [
-				{ view: "image", attr: "thumb", label: false },
+				{ view: "image", attr: "image", label: false },
 				{ attr: "name", label: "Name" },
+				{ attr: "size", label: "Size" },
+				{ view: "license", attr: "license", label: "License" },
 				{ attr: "price", label: "Price", view: "currency" },
 				{ view: "decrement", label: false, text: "-" },
 				{ attr: "quantity", label: "Qty" },
@@ -24,43 +46,79 @@ function sell_media_cart_js(){
 				{ attr: "total", label: "SubTotal", view: "currency" },
 				{ view: "remove", text: "Remove", label: false }
 			],
-			currency: "<?php echo $settings->currency; ?>"
+			currency: "<?php echo $settings->currency; ?>",
+			success: "<?php echo get_permalink( $settings->thanks_page ); ?>",
+			cancel: "<?php echo get_permalink( $settings->checkout_page ); ?>",
+			notify_url: "<?php echo site_url( '?sell_media-listener=IPN' ); ?>",
+			shipping: 0 // 0 prompt & optional, 1 no prompt, 2 prompt & required
 			
 		});
 
 		// callback beforeCheckout
 		simpleCart.bind( 'beforeCheckout' , function( data ){
-			// create pending post
+			// validate items and price sent to cart
+			// optionally create new draft post (getting rid of this)
+			// createPayment(data);
 			console.log(data);
-			exit();
 		});
-
+	});
 	</script>
 
 <?php }
 add_action( 'wp_head', 'sell_media_cart_js' );
-add_action( 'sell_media_cart_js', 'sell_media_cart_js' );
+
+
+/*
+ * Set Ajax URL
+ */
+function sell_media_ajaxurl() {
+?>
+	<script type="text/javascript">
+		var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+	</script>
+<?php
+}
+add_action( 'wp_head', 'sell_media_ajaxurl' );
+
+
+/*
+ * Callback to create a new pending payment
+ */
+function sell_media_ajax_create_payment(){
+
+	if ( isset($_REQUEST) ) {
+		$cart_data = $_REQUEST['cart_data'];
+
+		$data = array(
+			'post_title' => $cart_data[0],
+			'post_status' => 'pending',
+			'post_type' => 'sell_media_payment',
+			'post_date' => date('Y-m-d H:i:s')
+		);
+
+		$payment_id = wp_insert_post( $data );
+
+		die();
+	}
+}
+add_action( 'wp_ajax_sell_media_ajax_create_payment', 'sell_media_ajax_create_payment' );
 
 /*
  * Checkout Shortcode
  */
 function sell_media_checkout_shortcode( $atts ){
 
+	do_action( 'sell_media_checkout_before_cart' );
 	$html = '<div class="simpleCart_items"></div>';
-	$html .= '<div class="subtotal">' . __( 'Subtotal', 'sell_media' ) . ': <span class="simpleCart_total"></span></div>';
-	$html .= '<div class="tax">' . __( 'Tax', 'sell_media' ) . ': <span class="simpleCart_tax"></span></div>';
-	$html .= '<div class="shipping">' . __( 'Shipping', 'sell_media' ) . ': <span class="simpleCart_shipping"></span></div>';
-	$html .= '<div class="total">'  . __( 'Total', 'sell_media' ) . ': <span class="simpleCart_grandTotal"></span></div>';
-	do_action( 'sell_media_checkout_after_total' );
-	$html .= '<form action="' . site_url( 'wp-login.php?action=register', 'login_post') . '" class="user_new" id="user_new" method="post">';
-	$html .= '<input id="user_login" name="user_login" size="30" type="text" placeholder="'. __( 'Username', 'sell_media' ) . '">';
-	$html .= '<input id="user_email" name="user_email" size="30" type="text" placeholder="'. __( 'Email address', 'sell_media' ) . '">';
-	do_action('register_form');
-	$html .= '</form>';
-	$html .= '<p>' . __( 'A password will be emailed to you.', 'sell_media' ) . '</p>';
-    $html .= '<p>' . __( 'Already a user?', 'sell_media' ) . '<a href="' . site_url( 'wp-login.php', 'login_post') . '">'. __( 'Sign in', 'sell_media' ) . '</a>!</p>';
+	$html .= '<div class="sell-media-totals">';
+	$html .= '<div class="subtotal"><span class="sell-media-itemize">' . __( 'Subtotal', 'sell_media' ) . ':</span> <span class="simpleCart_total sell-media-bold"></span></div>';
+	$html .= '<div class="tax"><span class="sell-media-itemize">' . __( 'Tax', 'sell_media' ) . ':</span> <span class="simpleCart_tax sell-media-bold"></span></div>';
+	$html .= '<div class="shipping"><span class="sell-media-itemize">' . __( 'Shipping', 'sell_media' ) . ':</span> <span class="simpleCart_shipping sell-media-bold"></span></div>';
+	$html .= '<div class="total"><span class="sell-media-itemize">'  . __( 'Total', 'sell_media' ) . ':</span> <span class="simpleCart_grandTotal sell-media-bold sell-media-green"></span></div>';
+	$html .= '</div>';
+	do_action( 'sell_media_checkout_registration_fields' );
 	do_action( 'sell_media_checkout_after_registration_fields' );
-	$html .= '<a href="javascript:;" class="simpleCart_checkout">'. __( 'Checkout', 'sell_media' ) . '</a>';
+	$html .= '<a href="javascript:;" class="simpleCart_checkout sell-media-buy-button">'. __( 'Checkout', 'sell_media' ) . '</a>';
 	do_action( 'sell_media_checkout_after_checkout_button' );
 
 	return $html;

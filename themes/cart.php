@@ -21,14 +21,13 @@ if ( $licenses ) {
 }
 ?>
 <div class="main-container simpleCart_shelfItem">
-	<script type='text/javascript' src='http://localhost:8888/test.com/wp-content/plugins/sell-media/js/simpleCart.min.js?ver=1.7'></script>
-	<?php do_action( 'sell_media_cart_js' ); ?>
     <span class="close">&times;</span>
     <div class="content">
         <div class="left">
             <div class="image-container clearfix">
                 <?php sell_media_item_icon( $attachment_id, 'medium' ); ?>
                 <h3 class="item_name"><?php print get_the_title( $_POST['product_id'] ); ?></h3>
+                <p class="item_number"><?php _e( 'ID', 'sell_media' ); ?>: <?php echo $_POST['product_id']; ?></p>
             </div>
         </div>
         <div class="right">
@@ -39,12 +38,15 @@ if ( $licenses ) {
                 <select id="sell_media_item_size" class="sum item_size">
                 	<option selected="selected" value="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
                     <?php if ( ! empty( $sizes_array ) ) : foreach( $sizes_array as $k => $v ) : ?>
-                        <option value="<?php echo $k; ?>" data-price="<?php echo $v['price']; ?>" data-qty="1"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
+                        <option value="<?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>)" data-price="<?php echo $v['price']; ?>" data-qty="1" data-size="<?php echo $v['width'] . ' x ' . $v['height']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
                     <?php endforeach; endif; ?>
                     <?php if ( $settings->hide_original_price !== 'yes' ) : ?>
-                        <option value="sell_media_original_file" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" data-qty="1">
+                        <option value="<?php _e( 'Original', 'sell_media' ); ?>
+                        (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>)" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" data-qty="1" data-size="<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>">
                         <?php _e( 'Original', 'sell_media' ); ?>
-                        (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
+                        <?php if ( sell_media_is_mimetype( $_POST['product_id'] ) ) : ?>
+                        	(<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
+                        <?php endif; ?>
                         <?php sell_media_item_price( $_POST['product_id'] ); ?>
                     </option>
                 <?php endif; ?>
@@ -55,7 +57,7 @@ if ( $licenses ) {
 			<?php if ( count( $licenses ) > 1 ) : ?>
 				<fieldset>
 					<legend><?php _e( 'License', 'sell_media' ); ?></legend>
-					<select id="sell_media_item_license" class="sum" disabled>
+					<select id="sell_media_item_license" class="sum item_license" disabled>
 						<option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
 						<?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
 					</select>
@@ -91,7 +93,7 @@ jQuery(document).ready(function($){
 	});
 
 	$(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
-		
+
 		// disable add to cart button unless price selected
 		if( $('#sell_media_item_size').val() )
 			$('.item_add, #sell_media_item_license').prop('disabled', false);

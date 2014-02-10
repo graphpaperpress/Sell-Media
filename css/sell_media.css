@@ -1,5 +1,31 @@
 /*= Global
 -------------------------------------------------------------- */
+
+/* SimpleCart */
+
+.simpleCart_items img {
+  max-width: 50px;
+  max-height: 50px;
+}
+.simpleCart_items td {
+  vertical-align: middle;
+}
+.sell-media-totals {
+  margin: 1em 0;
+}
+.sell-media-itemize {
+  width: 100px;
+  margin-right: 10px;
+  display: inline-block;
+}
+.sell-media-bold {
+  font-weight: bold;
+}
+.sell-media-green {
+  color: green;
+}
+
+
 .sell-media {
   width: 100%;
 }
@@ -213,13 +239,6 @@
   margin-bottom: 1em;
 }
 
-.simpleCart_items img {
-  max-width: 50px;
-  max-height: 50px;
-}
-.simpleCart_items td {
-  vertical-align: middle;
-}
 /*= Checkout
 -------------------------------------------------------------- */
 table#sell-media-checkout-table, #sell-media-checkout-table tbody, #sell-media-checkout-table tfoot, #sell-media-checkout-table thead, #sell-media-checkout-table tr, #sell-media-checkout-table th, #sell-media-checkout-table td {

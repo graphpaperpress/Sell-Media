@@ -59,7 +59,7 @@ function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
         'amount'         => $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
         'business'       => $settings->paypal_email,
         'email'          => $purchase_data['email'],
-        'no_shipping'    => '0', // 0 (defualt) prompt for address, not required, 1 no prompt, 2 prompt & required
+        'no_shipping'    => '0', // 0 (default) prompt for address, not required, 1 no prompt, 2 prompt & required
         'no_note'        => '1',
         'currency_code'  => $settings->currency,
         'charset'        => get_bloginfo( 'charset' ),
@@ -186,18 +186,6 @@ function sell_media_process_paypal_ipn() {
         $message = null;
 
         /**
-         * Verify the mc_gross amount
-         *
-         * Check the purchase price from $_POST against the arguments that are saved during
-         * time of purchase.
-         */
-        $paypal_args = get_post_meta( $_POST['custom'], '_paypal_args', true );
-        if ( ! empty( $_POST['mc_gross'] ) && $_POST['mc_gross'] != $paypal_args['mc_gross'] ){
-            $message .= "\nPayment does NOT match\n";
-        }
-
-
-        /**
          * Verify seller PayPal email with PayPal email in settings
          *
          * Check if the seller email that was processed by the IPN matches what is saved as
@@ -206,6 +194,17 @@ function sell_media_process_paypal_ipn() {
         $settings = sell_media_get_plugin_options();
         if ( $_POST['receiver_email'] != $settings->paypal_email ){
             $message .= "\nEmail seller email does not match email in settings\n";
+        }
+
+        /**
+         * Verify seller PayPal email with PayPal email in settings
+         *
+         * Check if the seller email that was processed by the IPN matches what is saved as
+         * the seller email in our DB
+         */
+        $settings = sell_media_get_plugin_options();
+        if ( $_POST['currencyCode'] != $settings->currency ){
+            $message .= "\nCurrency does not match those assigned in settings\n";
         }
 
 
@@ -234,28 +233,56 @@ function sell_media_process_paypal_ipn() {
          */
         if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ){
 
-            $payment = array(
-                'ID' => $_POST['custom'],
-                'post_status' => 'publish'
+            $data = array(
+                'post_title' => $_POST['payer_email'],
+                'post_status' => 'publish',
+                'post_type' => 'sell_media_payment'
+            );
+
+            $payment_id = wp_insert_post( $data );
+
+            if ( $payment_id ) {
+
+                $payment = array(
+                    'first_name' => $_POST['first_name'],
+                    'last_name' => $_POST['last_name'],
+                    'email' => $_POST['payer_email'],
+                    'items' => maybe_serialize( $_POST['payer_email'] ),
+                    'id' => $_POST['txn_id'],
+                    'total' => $_POST['mc_gross']
                 );
 
-            wp_update_post( $payment );
+                // record the payment details
+                update_post_meta( $payment_id, '_sell_media_payment_meta', $payment );
+                update_post_meta( $payment_id, '_sell_media_payment_first_name', $payment['first_name'] );
+                update_post_meta( $payment_id, '_sell_media_payment_last_name', $payment['last_name'] );
+                update_post_meta( $payment_id, '_sell_media_payment_user_email', $payment['email'] );
+                update_post_meta( $payment_id, '_sell_media_payment_purchase_id', $payment['id'] );
+                update_post_meta( $payment_id, '_sell_media_payment_amount', $payment['total'] );
+                update_post_meta( $payment_id, '_sell_media_payment_quantity', $payment['num_cart_items'] );
+                
+                // this sucks. fix it.
+                for ( $i = 1; $i <= $_POST['num_cart_items']; $i++ ) {
+                    $name = $_POST['item_name' . $i];
+                    $number = $_POST['item_number' . $i];
+                    $quantity = $_POST['quantity' . $i];
+                    update_post_meta( $payment_id, '_sell_media_payment_purchase_item_' . $i, $name . ' ' . $number . ' ' . $quantity );
+                }
 
-            $message .= "\nSuccess! Updated payment status to: published\n";
-            $message .= "Payment status is set to: {$_POST['payment_status']}\n\n";
-            $message .= "Sending payment id: {$_POST['custom']}\n";
-            $message .= "To email: {$_POST['payer_email']}\n";
-            $message .= "Purchase receipt: {$_POST['item_number']}\n";
 
-            $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['payer_email'], $_POST['custom'] );
-            $message .= "{$email_status}\n";
+                $message .= "\nSuccess! Your purchase has been completed.\n";
+                $message .= "Your transaction number is: {$_POST['txn_id']}\n";
+                $message .= "To email: {$_POST['payer_email']}\n";
+                $message .= "Purchase receipt: {$_POST['item_number']}\n";
 
-            $payment_meta_array = get_post_meta( $_POST['custom'], '_sell_media_payment_meta', true );
-            $products_meta_array = unserialize( $payment_meta_array['products'] );
-            do_action( 'sell_media_after_successful_payment', $products_meta_array, $_POST['custom'] );
+                $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['payer_email'], $_POST['custom'] );
+                $message .= "{$email_status}\n";
 
-            $cart = sell_media_empty_cart();
-            $message .= "Emptied cart: {$cart}\n";
+                $payment_meta_array = get_post_meta( $_POST['custom'], '_sell_media_payment_meta', true );
+                $products_meta_array = unserialize( $payment_meta_array['products'] );
+                do_action( 'sell_media_after_successful_payment', $products_meta_array, $_POST['custom'] );
+
+            }
 
         } else {
             $message .= "\nPayment status not set to Completed\n";
