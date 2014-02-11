@@ -356,7 +356,7 @@ add_action( 'init', 'sell_media_process_download', 100 );
  *
  * @since 0.1
  */
-function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $payment_id=null ) {
+function sell_media_email_purchase_receipt_old( $purchase_key=null, $email=null, $payment_id=null ) {
 
     $download_obj = New Sell_Media_Download;
     $products = $download_obj->get_purchases( $purchase_key );
@@ -399,6 +399,86 @@ function sell_media_email_purchase_receipt( $purchase_key=null, $email=null, $pa
         '{first_name}'  => get_post_meta( $payment_id, '_sell_media_payment_first_name', true ),
         '{last_name}'   => get_post_meta( $payment_id, '_sell_media_payment_last_name', true ),
         '{payer_email}' => get_post_meta( $payment_id, '_sell_media_payment_user_email',  true ),
+        '{download_links}' => empty( $links ) ? null : $links
+    );
+
+    $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
+
+
+
+    /**
+     * Since this function is ran before licenses are init'd
+     * we need to manually load them
+     */
+    $t = New SellMedia;
+    $t->registerLicenses();
+    $licenses = $download_obj->get_license( $purchase_key );
+
+    // If we have license add them to the message['body']
+    if ( $licenses ){
+        $license_message = sprintf("<br /><br />%s<br />", __("Your purchase entitles you to the following usage:", "sell_media") );
+        foreach( $licenses as $licenses ){
+            $license_message .= "<br />{$licenses['name']}<br />";
+            $license_message .= "{$licenses['description']}<br />";
+        }
+        $message['body'] .= $license_message;
+    }
+
+    $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
+    $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
+    $message['headers'] .= "MIME-Version: 1.0\r\n";
+    $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
+
+
+    /**
+     * Check if we have additional test emails, if so we concatenate them
+     */
+    if ( ! empty( $settings->paypal_additional_test_email ) ){
+        $email = $email . ', ' . $settings->paypal_additional_test_email;
+    }
+
+    // Send the email
+    $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );
+
+    return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
+}
+
+/**
+ * Build the email to be sent to the user and send the email
+ * containing download links for PUBLISHED items only
+ *
+ * @since 0.1
+ */
+function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
+
+    $products = sell_media_get_products( $payment_id, $product_arg='item_number' );
+
+    $message['from_name'] = get_bloginfo( 'name' );
+    $message['from_email'] = get_option( 'admin_email' );
+
+    $settings = sell_media_get_plugin_options();
+    $message['subject'] = $settings->success_email_subject;
+    $message['body'] = $settings->success_email_body;
+
+    // Build the download links markup
+    $links = null;
+    $i = 0;
+
+    $download_links = sell_media_build_download_link( $payment_id );
+    $count = count( $download_links );
+    foreach( $download_links as $download ){
+
+        $tmp_price_id = isset( $products[ $i ] ) ? $products[ $i ]['price_id'] : null;
+        $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
+        $comma = ( $i == $count - 1 ) ? null : ', ';
+        $links .= $comma;
+        $i++;
+    }
+
+    $tags = array(
+        '{first_name}'  => sell_media_get_post_meta_args( $payment_id, $metakey='_paypal_args', $args=array( 'first_name' ) ),
+        '{last_name}'   => sell_media_get_post_meta_args( $payment_id, $metakey='_paypal_args', $args=array( 'last_name' ) ),
+        '{payer_email}' => sell_media_get_post_meta_args( $payment_id, $metakey='_paypal_args', $args=array( 'payer_email' ) ),
         '{download_links}' => empty( $links ) ? null : $links
     );
 

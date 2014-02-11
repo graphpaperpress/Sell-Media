@@ -137,7 +137,7 @@ add_action( 'save_post', 'sell_media_save_contact' );
  */
 function sell_media_payments_callback_fn(){
 
-    $current_page = admin_url('edit.php?post_type=download&page=sell_media_payments');?>
+    $current_page = admin_url( 'edit.php?post_type=download&page=sell_media_payments' ); ?>
     <div class="wrap">
         <?php
         if (isset($_GET['p'])) $page = $_GET['p']; else $page = 1;

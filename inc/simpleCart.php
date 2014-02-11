@@ -60,6 +60,7 @@ function sell_media_cart_js(){
 			// optionally create new draft post (getting rid of this)
 			// createPayment(data);
 			console.log(data);
+			exit();
 		});
 	});
 	</script>
@@ -125,3 +126,43 @@ function sell_media_checkout_shortcode( $atts ){
 
 }
 add_shortcode( 'sell_media_checkout', 'sell_media_checkout_shortcode' );
+
+/*
+ * Postmeta data array key value retrieval helper
+ *
+ * Example: sell_media_get_post_meta_args( $post_id=28, $metakey='_paypal_args', $args=array( 'amount', 'business', 'item_name', 'item_number' ) );
+ */
+function sell_media_get_post_meta_args( $post_id=null, $metakey=null, $args=null, $echo=true ){
+	$meta = get_post_meta( $post_id, $metakey, true );
+	$array = maybe_unserialize( $meta );
+	foreach ( $args as $arg ) {
+		if ( array_key_exists( $arg, $array ) ) {
+			if ( $echo ) {
+				echo $array[$arg];
+			} else {
+				return $array[$arg];
+			}
+		}
+	}
+}
+
+/*
+ * Get products from payment
+ *
+ * $product_arg = item_name, item_number, quantity
+ */
+function sell_media_get_products( $post_id=null, $product_arg='item_number' ){
+	$meta = get_post_meta( $post_id, $metakey='_paypal_args', true );
+	$array = maybe_unserialize( $meta );
+	// num_cart_items for _cart transactions only
+	if ( array_key_exists( 'num_cart_items', $array ) ) {
+		for ( $i = 1; $i <= $array['num_cart_items']; $i++ ) {
+			$product = $array[$product_arg . $i];
+		}
+		return $product;
+	// legacy: num_cart_items doesn't exist when using _xclick, so just return the product id from 'custom'
+	} else {
+		$product = $array['custom'];
+		return $product;
+	}
+}

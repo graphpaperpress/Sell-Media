@@ -27,7 +27,7 @@ if ( $licenses ) {
             <div class="image-container clearfix">
                 <?php sell_media_item_icon( $attachment_id, 'medium' ); ?>
                 <h3 class="item_name"><?php print get_the_title( $_POST['product_id'] ); ?></h3>
-                <p class="item_number"><?php _e( 'ID', 'sell_media' ); ?>: <?php echo $_POST['product_id']; ?></p>
+                <p><?php _e( 'ID', 'sell_media' ); ?>: <span class="item_number"><?php echo $_POST['product_id']; ?></span></p>
             </div>
         </div>
         <div class="right">

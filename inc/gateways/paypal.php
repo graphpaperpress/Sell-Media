@@ -221,15 +221,18 @@ function sell_media_process_paypal_ipn() {
             $message .= "\nThis payment was already processed\n";
         }
 
-
-        // Check currency buyer paid with matches what seller allows
+        /**
+         * Check the item name from Paypal, make sure this post title exists
+         */
+        if ( post_exists( $_POST['item_name_1'] == 0 ) ){
+            $message .= "\nThis product does not exist\n";
+        }
 
 
         /**
          * Verify the payment is set to "Completed".
          *
-         * For a completed payment we update the payment status to publish, send the
-         * download email and empty the cart.
+         * Create a new payment, send customer an email and empty the cart
          */
         if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ){
 
@@ -253,27 +256,11 @@ function sell_media_process_paypal_ipn() {
                 );
 
                 // record the payment details
-                update_post_meta( $payment_id, '_sell_media_payment_meta', $payment );
-                update_post_meta( $payment_id, '_sell_media_payment_first_name', $payment['first_name'] );
-                update_post_meta( $payment_id, '_sell_media_payment_last_name', $payment['last_name'] );
-                update_post_meta( $payment_id, '_sell_media_payment_user_email', $payment['email'] );
-                update_post_meta( $payment_id, '_sell_media_payment_purchase_id', $payment['id'] );
-                update_post_meta( $payment_id, '_sell_media_payment_amount', $payment['total'] );
-                update_post_meta( $payment_id, '_sell_media_payment_quantity', $payment['num_cart_items'] );
-                
-                // this sucks. fix it.
-                for ( $i = 1; $i <= $_POST['num_cart_items']; $i++ ) {
-                    $name = $_POST['item_name' . $i];
-                    $number = $_POST['item_number' . $i];
-                    $quantity = $_POST['quantity' . $i];
-                    update_post_meta( $payment_id, '_sell_media_payment_purchase_item_' . $i, $name . ' ' . $number . ' ' . $quantity );
-                }
-
+                update_post_meta( $payment_id, '_paypal_args', $_POST );
 
                 $message .= "\nSuccess! Your purchase has been completed.\n";
                 $message .= "Your transaction number is: {$_POST['txn_id']}\n";
                 $message .= "To email: {$_POST['payer_email']}\n";
-                $message .= "Purchase receipt: {$_POST['item_number']}\n";
 
                 $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['payer_email'], $_POST['custom'] );
                 $message .= "{$email_status}\n";

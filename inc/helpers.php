@@ -509,49 +509,27 @@ function sell_media_get_cusotmer_products( $payment_id=null ){
  *
  * @since 0.1
  */
-function sell_media_build_download_link( $payment_id=null, $customer_email=null ){
-    $payment_meta = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
-    $downloads = maybe_unserialize( $payment_meta['products'] );
+function sell_media_build_download_link( $payment_id=null ){
 
+    $payment_meta = get_post_meta( $payment_id, $metakey='_paypal_args', true );
+    $downloads = sell_media_get_products( $payment_id, $product_arg='item_number' );
     $tmp_links = array();
     $links = array();
-
+    $i = 0;
     if ( ! empty( $downloads ) ){
         foreach( $downloads as $download ) {
-
-            // Backwards compatibility for versions =< 1.5.6
-            $item_key = empty( $download['item_id'] ) ? 'id' : 'item_id';
-
-            if ( ! empty( $download['price'] ) ){
-                $price_id = $download['price']['id'];
-            } elseif ( ! empty( $download['price_id']['id'] ) ){
-                $price_id = $download['price_id']['id'];
-            } elseif ( ! empty( $download['price_id'] ) ){
-                $price_id = is_array( $download['price_id'] ) ? $download['price_id']['id'] : $download['price_id'];
-            } else {
-                $price_id = null;
-            }
-
-            if ( ! empty( $download['license_id'] ) ){
-                $license_id = $download['license_id'];
-            } elseif ( ! empty( $download['license']['id'] ) ){
-                $license_id = $download['license']['id'];
-            } else {
-                $license_id = null;
-            }
-            // end
+            $i++;
 
             $tmp_links = array(
-                'item_id'    => $download[ $item_key ],
-                'price_id'   => $price_id,
-                'license_id' => $license_id,
-                'thumbnail'  => sell_media_item_icon( get_post_meta( $download[ $item_key ], '_sell_media_attachment_id', true ), 'thumbnail', false ),
+                'item_id'    => $payment_meta['item_number_' . $i],
+                'price_id'   => $payment_meta['item_amount_' . $i],
+                'license_id' => $payment_meta['os2_' . $i],
+                'thumbnail'  => $payment_meta['os0_' . $i],
                 'url'        => site_url() . '?download='
-                . $payment_meta['purchase_key']
-                . '&email=' . $customer_email
-                . '&id='
-                . $download[ $item_key ]
-                . '&price_id=' . $price_id,
+                . $payment_meta['txn_id']
+                . '&email=' . $payment_meta['payer_email']
+                . '&id=' . $payment_meta['txn_id']
+                . '&price_id=' . $payment_meta['item_amount_' . $i],
                 'payment_id' => $payment_id
                 );
 
