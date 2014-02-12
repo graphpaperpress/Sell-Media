@@ -25,76 +25,6 @@ function sell_media_get_paypal_redirect( $ssl_check=false ) {
 
 
 /**
- * Passes the Customers Product to PayPal via a redirect.
- * more info here: https://cms.paypal.com/mx/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_Appx_websitestandard_htmlvariables#id08A6HH00W2J
- *
- * @param $purchase_data array containing the following:
- * array(
- *     'first_name'   => $user['first_name'],
- *     'last_name'    => $user['last_name'],
- *     'products'     => maybe_serialize( $items ),
- *     'email'        => $user['email'],
- *     'date'         => date( 'Y-m-d H:i:s' ),
- *     'purchase_key' => $purchase_key,
- *     'payment_id'   => $payment_id
- * );
- */
-function sell_media_process_paypal_purchase( $purchase_data, $payment_id ) {
-
-    $settings = sell_media_get_plugin_options();
-    $listener_url = trailingslashit( home_url() ).'?sell_media-listener=IPN';
-
-    $args = array(
-        'purchase_key' => $purchase_data['purchase_key'],
-        'email' => $purchase_data['email']
-    );
-
-    $return_url = add_query_arg( $args, get_permalink( $settings->thanks_page ) );
-    $paypal_redirect = trailingslashit( sell_media_get_paypal_redirect() ) . '?';
-
-    $cart_obj = New Sell_Media_Cart;
-
-    $paypal_args = array(
-        'cmd'            => '_xclick',
-        'amount'         => $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
-        'business'       => $settings->paypal_email,
-        'email'          => $purchase_data['email'],
-        'no_shipping'    => '0', // 0 (default) prompt for address, not required, 1 no prompt, 2 prompt & required
-        'no_note'        => '1',
-        'currency_code'  => $settings->currency,
-        'charset'        => get_bloginfo( 'charset' ),
-        'rm'             => '2',
-        // According to the docs the param is 'return_url', but that doesn't work as expected
-        // 'https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNandPDTVariables/'
-        // 'return_url'     => $return_url,
-        'return'     => $return_url,
-        'ipn_notification_url' => $listener_url, // Is this a valid parameter??
-        'notify_url' => $listener_url, // This needs to be added in order for IPN to work
-        'mc_currency'    => $settings->currency,
-        'mc_gross'       => $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
-        'payment_status' => '',
-        'item_name'      => __( 'Purchase from ', 'sell_media' ) . get_bloginfo( 'name' ),
-        'item_number'    => $purchase_data['purchase_key'],
-        'custom'         => $purchase_data['payment_id'] // post id, i.e., payment id
-    );
-
-    // Add additional args;
-    $paypal_args = apply_filters('sell_media_before_paypal_args', $paypal_args );
-
-    // Lets save all the info being sent to PayPal at time of purchase
-    update_post_meta( $payment_id, '_paypal_args', $paypal_args );
-
-    $paypal_redirect .= http_build_query( $paypal_args );
-
-    sell_media_empty_cart();
-
-    print '<script type="text/javascript">window.location ="' . $paypal_redirect . '"</script>';
-    exit;
-}
-add_action( 'sell_media_gateway_paypal', 'sell_media_process_paypal_purchase' );
-
-
-/**
  * Listen for a $_GET request from our PayPal IPN.
  * This would also do the "set-up" for an "alternate purchase verification"
  */
@@ -219,13 +149,6 @@ function sell_media_process_paypal_ipn() {
             update_post_meta( $_POST['custom'], 'txn_id', $_POST['txn_id'] );
         } else {
             $message .= "\nThis payment was already processed\n";
-        }
-
-        /**
-         * Check the item name from Paypal, make sure this post title exists
-         */
-        if ( post_exists( $_POST['item_name_1'] == 0 ) ){
-            $message .= "\nThis product does not exist\n";
         }
 
 
