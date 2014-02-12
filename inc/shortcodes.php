@@ -60,7 +60,7 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
 
                 if ( $term_obj || $link['price_id'] == 'sell_media_original_file' ){
                     $message .= '<a href="' . $link['url']. '"><img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" /></a>';
-                    $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-buy-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
+                    $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
                 } else {
                     $message .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" />';
                 }

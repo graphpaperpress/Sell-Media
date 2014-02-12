@@ -109,7 +109,7 @@ function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $e
 
     $thumb_id = get_post_thumbnail_id( $post_id );
     $text = apply_filters('sell_media_purchase_text', $text, $post_id );
-    $html = '<a href="javascript:void(0)" data-sell_media-product-id="' . esc_attr( $post_id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-buy-' . $button . '">' . $text . '</a>';
+    $html = '<a href="javascript:void(0)" data-sell_media-product-id="' . esc_attr( $post_id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-' . $button . '">' . $text . '</a>';
 
     if ( $echo ) print $html; else return $html;
 }

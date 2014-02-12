@@ -246,17 +246,23 @@ function sell_media_process_paypal_ipn() {
 
             if ( $payment_id ) {
 
-                $payment = array(
+                // record the Paypal payment details
+                update_post_meta( $payment_id, '_paypal_args', $_POST );
+
+                $products = sell_media_get_products( $payment_id );
+
+                // record the Paypal payment details in Sell Media payment meta
+                $payment_meta = array(
                     'first_name' => $_POST['first_name'],
                     'last_name' => $_POST['last_name'],
                     'email' => $_POST['payer_email'],
-                    'items' => maybe_serialize( $_POST['payer_email'] ),
+                    'products' => maybe_serialize( $products ),
                     'id' => $_POST['txn_id'],
                     'total' => $_POST['mc_gross']
                 );
 
-                // record the payment details
-                update_post_meta( $payment_id, '_paypal_args', $_POST );
+                // record the Paypal payment details
+                update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_meta );
 
                 $message .= "\nSuccess! Your purchase has been completed.\n";
                 $message .= "Your transaction number is: {$_POST['txn_id']}\n";

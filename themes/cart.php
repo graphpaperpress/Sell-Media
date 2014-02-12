@@ -79,7 +79,7 @@ if ( $licenses ) {
 				<strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container">$<span id="total" class="item_price">0</span></span>
 			</div>
 			<div class="button-container group">
-				<p id="sell-media-add-to-cart"><button class="item_add sell-media-buy-button" disabled><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
+				<p id="sell-media-add-to-cart"><button class="item_add sell-media-button" disabled><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
 			</div>
         </div>
         <div class="sell-media-credit"><?php sell_media_plugin_credit(); ?></div>

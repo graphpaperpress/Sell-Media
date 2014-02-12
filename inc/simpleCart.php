@@ -111,16 +111,18 @@ function sell_media_checkout_shortcode( $atts ){
 
 	do_action( 'sell_media_checkout_before_cart' );
 	$html = '<div class="simpleCart_items"></div>';
-	$html .= '<div class="sell-media-totals">';
-	$html .= '<div class="subtotal"><span class="sell-media-itemize">' . __( 'Subtotal', 'sell_media' ) . ':</span> <span class="simpleCart_total sell-media-bold"></span></div>';
-	$html .= '<div class="tax"><span class="sell-media-itemize">' . __( 'Tax', 'sell_media' ) . ':</span> <span class="simpleCart_tax sell-media-bold"></span></div>';
-	$html .= '<div class="shipping"><span class="sell-media-itemize">' . __( 'Shipping', 'sell_media' ) . ':</span> <span class="simpleCart_shipping sell-media-bold"></span></div>';
-	$html .= '<div class="total"><span class="sell-media-itemize">'  . __( 'Total', 'sell_media' ) . ':</span> <span class="simpleCart_grandTotal sell-media-bold sell-media-green"></span></div>';
+	$html .= '<div class="sell-media-totals group">';
+	$html .= '<div class="subtotal"><span class="sell-media-itemize">' . __( 'Subtotal', 'sell_media' ) . ':</span> <span class="simpleCart_total"></span></div>';
+	$html .= '<div class="tax"><span class="sell-media-itemize">' . __( 'Tax', 'sell_media' ) . ':</span> <span class="simpleCart_tax"></span></div>';
+	$html .= '<div class="shipping"><span class="sell-media-itemize">' . __( 'Shipping', 'sell_media' ) . ':</span> <span class="simpleCart_shipping"></span></div>';
+	$html .= '<div class="total sell-media-bold"><span class="sell-media-itemize">'  . __( 'Total', 'sell_media' ) . ':</span> <span class="simpleCart_grandTotal"></span></div>';
 	$html .= '</div>';
 	do_action( 'sell_media_checkout_registration_fields' );
 	do_action( 'sell_media_checkout_after_registration_fields' );
-	$html .= '<a href="javascript:;" class="simpleCart_checkout sell-media-buy-button">'. __( 'Checkout', 'sell_media' ) . '</a>';
+	$html .= '<div class="sell-media-checkout-button group">';
+	$html .= '<a href="javascript:;" class="simpleCart_checkout sell-media-button">'. __( 'Checkout', 'sell_media' ) . '</a>';
 	do_action( 'sell_media_checkout_after_checkout_button' );
+	$html .= '</div>';
 
 	return $html;
 
@@ -151,13 +153,16 @@ function sell_media_get_post_meta_args( $post_id=null, $metakey=null, $args=null
  *
  * $product_arg = item_name, item_number, quantity
  */
-function sell_media_get_products( $post_id=null, $product_arg='item_number' ){
-	$meta = get_post_meta( $post_id, $metakey='_paypal_args', true );
+function sell_media_get_products( $post_id=null, $metakey='_paypal_args', $product_arg='item_number' ){
+	$meta = get_post_meta( $post_id, $metakey, true );
 	$array = maybe_unserialize( $meta );
 	// num_cart_items for _cart transactions only
 	if ( array_key_exists( 'num_cart_items', $array ) ) {
 		for ( $i = 1; $i <= $array['num_cart_items']; $i++ ) {
 			$product = $array[$product_arg . $i];
+			if ( $i > 1 && $product_arg != 'quantity' ) {
+				$product .= ' ';
+			}
 		}
 		return $product;
 	// legacy: num_cart_items doesn't exist when using _xclick, so just return the product id from 'custom'
