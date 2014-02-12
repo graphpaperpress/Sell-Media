@@ -29,9 +29,9 @@ function sell_media_cart_js(){
 		}
 
 		simpleCart({
-			sandbox: <?php if ( $settings->test_mode == 1 ) echo 'true'; else echo 'false'; ?>,
 			cartStyle: "table",
 			checkout: {
+				sandbox: <?php if ( $settings->test_mode == 1 ) echo 'true'; else echo 'false'; ?>,
 				type: "PayPal",
 				email: "<?php echo $settings->paypal_email; ?>"
 			},
