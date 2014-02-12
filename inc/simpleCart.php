@@ -60,7 +60,6 @@ function sell_media_cart_js(){
 			// optionally create new draft post (getting rid of this)
 			// createPayment(data);
 			console.log(data);
-			exit();
 		});
 	});
 	</script>
