@@ -729,29 +729,6 @@ function sell_media_update_sales_stats( $product_id=null, $license_id=null, $pri
 
 
 /**
- * Admin Sell Media Icon
- *
- * Echo the CSS for the Sell Media Item post type icon. This is lame.
- *
- * @since 0.1
- * @return void
-*/
-
-function sell_media_admin_menu_icon() {
-    global $post_type;
-    $icon_url = plugin_dir_url( dirname( __FILE__ ) ) . 'images/menu_icons.png';
-    ?>
-    <style type="text/css" media="screen">
-        #adminmenu #menu-posts-sell_media_item div.wp-menu-image { background: transparent url( "<?php echo $icon_url; ?>" ) no-repeat 7px -26px; }
-        #adminmenu #menu-posts-sell_media_item:hover div.wp-menu-image,
-        #adminmenu #menu-posts-sell_media_item.wp-has-current-submenu div.wp-menu-image { background: transparent url( "<?php echo $icon_url; ?>" ) no-repeat 7px 5px; }
-    </style>
-    <?php
-}
-add_action( 'admin_head', 'sell_media_admin_menu_icon' );
-
-
-/**
  * Sell Media Enqueue Styles
  *
  * Enqueue the Sell Media style chosen on the settings page.
