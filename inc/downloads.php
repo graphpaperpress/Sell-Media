@@ -138,9 +138,9 @@ Class Sell_Media_Download {
      *
      * @return Array of license false on failure
      */
-    public function get_license( $purchase_key=null ){
+    public function get_license( $payment_id=null ){
 
-        $products = $this->get_purchases( $purchase_key );
+        $products = $this->get_purchases( $payment_id );
 
         $licenses = array();
         $tmp = array();
@@ -165,7 +165,7 @@ Class Sell_Media_Download {
     /**
      * Returns an array of purchases associated with a purchase key
      */
-    public function get_purchases( $purchase_key=null ){
+    public function get_purchases( $payment_id=null ){
 
         // Run our payments query
         $args = array(
@@ -175,7 +175,7 @@ Class Sell_Media_Download {
                 'relation' => 'AND',
                     array(
                         'key' => '_sell_media_payment_purchase_key',
-                        'value' => $purchase_key
+                        'value' => $payment_id
                     )
                 )
             );
@@ -399,7 +399,7 @@ function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
      */
     $t = New SellMedia;
     $t->registerLicenses();
-    $licenses = $download_obj->get_license( $purchase_key );
+    $licenses = $download_obj->get_license( $payment_id );
 
     // If we have license add them to the message['body']
     if ( $licenses ){

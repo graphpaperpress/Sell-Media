@@ -47,6 +47,9 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
  */
 function sell_media_process_paypal_ipn() {
 
+
+    var_dump( $_POST );
+
     /*
     Since this script is executed on the back end between the PayPal server and this
     script, you will want to log errors to a file or email. Do not try to use echo
@@ -133,7 +136,7 @@ function sell_media_process_paypal_ipn() {
          * the seller email in our DB
          */
         $settings = sell_media_get_plugin_options();
-        if ( $_POST['currencyCode'] != $settings->currency ){
+        if ( $_POST['mc_currency'] != $settings->currency ){
             $message .= "\nCurrency does not match those assigned in settings\n";
         }
 
@@ -191,12 +194,12 @@ function sell_media_process_paypal_ipn() {
                 $message .= "Your transaction number is: {$_POST['txn_id']}\n";
                 $message .= "To email: {$_POST['payer_email']}\n";
 
-                $email_status = sell_media_email_purchase_receipt( $_POST['item_number'], $_POST['payer_email'], $_POST['custom'] );
+                $email_status = sell_media_email_purchase_receipt( $payment_id, $_POST['payer_email'] );
                 $message .= "{$email_status}\n";
 
-                $payment_meta_array = get_post_meta( $_POST['custom'], '_sell_media_payment_meta', true );
+                $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
                 $products_meta_array = unserialize( $payment_meta_array['products'] );
-                do_action( 'sell_media_after_successful_payment', $products_meta_array, $_POST['custom'] );
+                do_action( 'sell_media_after_successful_payment', $products_meta_array, $payment_id );
 
             }
 
