@@ -29,6 +29,7 @@ function sell_media_cart_js(){
 		}
 
 		simpleCart({
+			sandbox: <?php if ( $settings->test_mode == 1 ) echo 'true'; else echo 'false'; ?>,
 			cartStyle: "table",
 			checkout: {
 				type: "PayPal",
