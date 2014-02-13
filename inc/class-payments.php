@@ -1,6 +1,6 @@
 <?php
 
-Class SellMediaPayments {
+Class Sell_Media_Payments {
 
     /**
      * Retrieves the total for a payment
@@ -146,12 +146,42 @@ Class SellMediaPayments {
      * @return Formated payment status
      */
     static public function status( $post_id=null ){
-
         $status = get_post_status( $post_id );
-
         if ( $status == 'publish' )
-            $status = __('Paid','sell_media');
+            $status = __( 'Paid','sell_media' );
 
         return apply_filters( 'sell_media_payment_status_filter', ucfirst( $status ), $post_id );
     }
+
+	/**
+	* Get products associated with a payment
+	*
+	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+	*
+	* @return Array
+	*/
+	static public function products( $post_id=null ){
+		$payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
+		$products = unserialize( $payment_meta['products'] );
+
+		return apply_filters( 'sell_media_payment_products_filter', $products, $post_id );
+	}
+
+	/**
+	* Get product key data associated with a payment
+	*
+	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+	* @param $key = id, name, price, license, qty, total
+	*
+	* @return Array
+	*/
+	public function products_by_key( $post_id=null, $key='id' ){
+		$products = $this->products( $post_id );
+		foreach ( $products as $product ){
+			$value[] = $product[$key];
+		}
+
+		return apply_filters( 'sell_media_payment_products_by_key_filter', $value, $post_id );
+	}
+
 }

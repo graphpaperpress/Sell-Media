@@ -165,7 +165,7 @@ Class Sell_Media_Download {
     /**
      * Returns an array of purchases associated with a purchase key
      */
-    public function get_purchases( $payment_id=null ){
+    public function get_purchases( $purchase_key=null ){
 
         // Run our payments query
         $args = array(
@@ -175,7 +175,7 @@ Class Sell_Media_Download {
                 'relation' => 'AND',
                     array(
                         'key' => '_sell_media_payment_purchase_key',
-                        'value' => $payment_id
+                        'value' => $purchase_key
                     )
                 )
             );
@@ -391,22 +391,15 @@ function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
 
     $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 
-
-
-    /**
-     * Since this function is ran before licenses are init'd
-     * we need to manually load them
-     */
-    $t = New SellMedia;
-    $t->registerLicenses();
-    $licenses = $download_obj->get_license( $payment_id );
-
+    $payments = new Sell_Media_Payments;
+    $licenses = $payments->products_by_key( $payment_id, $key='licenses' );
+    
     // If we have license add them to the message['body']
     if ( $licenses ){
         $license_message = sprintf("<br /><br />%s<br />", __("Your purchase entitles you to the following usage:", "sell_media") );
-        foreach( $licenses as $licenses ){
-            $license_message .= "<br />{$licenses['name']}<br />";
-            $license_message .= "{$licenses['description']}<br />";
+        foreach( $licenses as $license ){
+            $license_message .= "<br />{$license['name']}<br />";
+            $license_message .= "{$license['description']}<br />";
         }
         $message['body'] .= $license_message;
     }

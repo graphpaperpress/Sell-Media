@@ -62,7 +62,7 @@ function sell_media_payment_purchase_details( $post ){
     echo '<div class="sell-media-admin-payments">';
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
-    $payment_obj = New SellMediaPayments;
+    $payment_obj = New Sell_Media_Payments;
     echo $payment_obj->get_contact_info( $post->ID );
     do_action('sell_media_below_payment_contact_details');
 
@@ -273,9 +273,9 @@ function sell_media_payments_callback_fn(){
                         }
                     ?>
                     </td>
-                    <td><?php echo SellMediaPayments::total( $payment->ID ); ?></td>
+                    <td><?php echo Sell_Media_Payments::total( $payment->ID ); ?></td>
                     <td><?php echo date('M d, Y', strtotime($payment->post_date)); ?></td>
-                    <td><?php echo SellMediaPayments::status( $payment->ID ); ?></td>
+                    <td><?php echo Sell_Media_Payments::status( $payment->ID ); ?></td>
                 </tr>
             <?php endforeach; ?>
             <?php else : ?>

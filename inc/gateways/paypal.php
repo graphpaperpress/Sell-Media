@@ -177,12 +177,16 @@ function sell_media_process_paypal_ipn() {
 
                 $products = sell_media_get_products( $payment_id );
 
+                // triple check this variable once Paypal IPN's are correctly databased
+                $licenses = sell_media_get_products( $payment_id, $metakey='_paypal_args', $product_arg='os2_' );
+
                 // record the Paypal payment details in Sell Media payment meta
                 $payment_meta = array(
                     'first_name' => $_POST['first_name'],
                     'last_name' => $_POST['last_name'],
                     'email' => $_POST['payer_email'],
                     'products' => maybe_serialize( $products ),
+                    'licenses' => maybe_serialize( $licenses ),
                     'id' => $_POST['txn_id'],
                     'total' => $_POST['mc_gross']
                 );
