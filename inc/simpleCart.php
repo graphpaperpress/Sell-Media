@@ -50,7 +50,7 @@ function sell_media_cart_js(){
 			currency: "<?php echo $settings->currency; ?>",
 			success: "<?php echo get_permalink( $settings->thanks_page ); ?>",
 			cancel: "<?php echo get_permalink( $settings->checkout_page ); ?>",
-			notify_url: "<?php echo site_url( '?sell_media-listener=IPN' ); ?>",
+			notify: "<?php echo site_url( '?sell_media-listener=IPN' ); ?>",
 			shipping: 0 // 0 prompt & optional, 1 no prompt, 2 prompt & required
 			
 		});
