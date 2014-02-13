@@ -48,8 +48,6 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
 function sell_media_process_paypal_ipn() {
 
 
-    var_dump( $_POST );
-
     /*
     Since this script is executed on the back end between the PayPal server and this
     script, you will want to log errors to a file or email. Do not try to use echo
@@ -175,18 +173,19 @@ function sell_media_process_paypal_ipn() {
                 // record the Paypal payment details
                 update_post_meta( $payment_id, '_paypal_args', $_POST );
 
-                $products = sell_media_get_products( $payment_id );
+                $p = new Sell_Media_Payment;
+                //$products = $p->get_products( $payment_id );
 
                 // triple check this variable once Paypal IPN's are correctly databased
-                $licenses = sell_media_get_products( $payment_id, $metakey='_paypal_args', $product_arg='os2_' );
+                //$licenses = sell_media_get_products( $payment_id, $metakey='_paypal_args', $product_arg='os2_' );
 
                 // record the Paypal payment details in Sell Media payment meta
                 $payment_meta = array(
                     'first_name' => $_POST['first_name'],
                     'last_name' => $_POST['last_name'],
                     'email' => $_POST['payer_email'],
-                    'products' => maybe_serialize( $products ),
-                    'licenses' => maybe_serialize( $licenses ),
+                    'products' => 'thad awesome products',
+                    'licenses' => 'thad awesome licenses',
                     'id' => $_POST['txn_id'],
                     'total' => $_POST['mc_gross']
                 );
