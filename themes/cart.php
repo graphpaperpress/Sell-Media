@@ -27,7 +27,6 @@ if ( $licenses ) {
             <div class="image-container clearfix">
                 <?php sell_media_item_icon( $attachment_id, 'medium' ); ?>
                 <h3 class="item_name"><?php print get_the_title( $_POST['product_id'] ); ?></h3>
-                <p><?php _e( 'ID', 'sell_media' ); ?>: <span class="item_number"><?php echo $_POST['product_id']; ?></span></p>
             </div>
         </div>
         <div class="right">
@@ -42,12 +41,10 @@ if ( $licenses ) {
                     <?php endforeach; endif; ?>
                     <?php if ( $settings->hide_original_price !== 'yes' ) : ?>
                         <option value="<?php _e( 'Original', 'sell_media' ); ?>
-                        (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>)" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" data-qty="1" data-size="<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>">
-                        <?php _e( 'Original', 'sell_media' ); ?>
                         <?php if ( sell_media_is_mimetype( $_POST['product_id'] ) ) : ?>
-                        	(<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>):
-                        <?php endif; ?>
-                        <?php sell_media_item_price( $_POST['product_id'] ); ?>
+                        	(<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>)
+                        <?php endif; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" data-qty="1" data-size="<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>">
+                        <?php _e( 'Original', 'sell_media' ); ?><?php if ( sell_media_is_mimetype( $_POST['product_id'] ) ) : ?> (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>)<?php endif; ?>: <?php sell_media_item_price( $_POST['product_id'] ); ?>
                     </option>
                 <?php endif; ?>
                 </select>
@@ -61,20 +58,21 @@ if ( $licenses ) {
 						<option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
 						<?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
 					</select>
+					<span class="item_usage hide"></span>
 					<div class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license to learn more about each license.', 'sell_media' ); ?>"> <?php _e( 'View Details', 'sell_media' ); ?></div>
 				</fieldset>
 			<?php else : ?>
 				<?php if ( ! empty( $term_id ) ) : ?>
-					<input id="sell_media_single_price" type="hidden" name="License" value="<?php print $term_id; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], $currency=false); ?>" />
-					<input type="hidden" value="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>" id="sell_media_single_license_markup" />
-					<div class="license_text"><?php _e( 'License', 'sell_media'); ?>: <?php print $licenses[0]->name; ?></div>
+					<div id="sell_media_item_license" data-id="<?php print $term_id; ?>" data-value="<?php print $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php print $licenses[0]->name; ?>" data-price="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
+						<?php _e( 'License', 'sell_media'); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span>
+					</div>
 					<?php if ( ! empty( $licenses[0]->description ) ) : ?>
 						<div class="license_desc sell-media-tooltip" data-tooltip="<?php print esc_attr( $licenses[0]->description ); ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
 					<?php endif; ?>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php //do_action( 'sell_media_cart_below_licenses' ); ?>
-            <input type="hidden" value="" class="item_Quantity">
+			<span class="item_number hide"><?php echo $_POST['product_id']; ?></span>
             <div class="total-container group">
 				<strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container">$<span id="total" class="item_price">0</span></span>
 			</div>
@@ -88,8 +86,9 @@ if ( $licenses ) {
 <script>
 jQuery(document).ready(function($){
 
-	simpleCart.bind( "afterAdd" , function( item ){
-		$('#sell-media-add-to-cart').after( '<p class="small">' + item.get('name') + ' was added to <a href="<?php echo get_permalink( $settings->checkout_page ); ?>" class="cart">your cart</a>!</p>' );
+	simpleCart.bind( 'afterAdd' , function( item ){
+		$('.sell-media-added').remove();
+		$('#sell-media-add-to-cart').after( '<p class="sell-media-added small">' + item.get('name') + ' was added to <a href="<?php echo get_permalink( $settings->checkout_page ); ?>" class="cart">your cart</a>!</p>' );
 	});
 
 	$(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
@@ -103,12 +102,21 @@ jQuery(document).ready(function($){
 		// calculate the price and license markup
 		var price = $('#sell_media_item_size :selected').data('price');
 		var markup = $('#sell_media_item_license :selected').data('price');
+		var markup_single = $('#sell_media_item_license').data('price');
+		// selected license doesn't have markup
 		if ( markup == undefined || markup == 0 )
 			sum = price;
+		// selected license has markup
 		else
 			sum = ( price * ( markup / 100 ) ).toFixed(2);
 
 		$('#total').text(sum);
+
+		// set license name for display on cart
+		var license_name = $('#sell_media_item_license :selected').data('name');
+		if ( license_name != null )
+			$('.item_usage').text(license_name);
+
 	});
 
 

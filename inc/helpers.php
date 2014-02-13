@@ -521,15 +521,15 @@ function sell_media_build_download_link( $payment_id=null ){
             $i++;
 
             $tmp_links = array(
-                'item_id'    => $payment_meta['item_number_' . $i],
-                'price_id'   => $payment_meta['item_amount_' . $i],
+                'item_id'    => $payment_meta['item_number' . $i],
+                'price_id'   => $payment_meta['mc_gross1' . $i],
                 'license_id' => $payment_meta['os2_' . $i],
                 'thumbnail'  => $payment_meta['os0_' . $i],
-                'url'        => site_url() . '?download='
-                . $payment_meta['txn_id']
-                . '&email=' . $payment_meta['payer_email']
-                . '&id=' . $payment_meta['txn_id']
-                . '&price_id=' . $payment_meta['item_amount_' . $i],
+                'url'        => site_url()
+                . '?download='  . $payment_meta['txn_id']
+                . '&email='     . $payment_meta['payer_email']
+                . '&id='        . $payment_meta['item_number' . $i]
+                . '&price_id='  . $payment_meta['item_amount' . $i],
                 'payment_id' => $payment_id
                 );
 

@@ -33,6 +33,9 @@
   text-align: right;
   font-size: 10px;
 }
+.hide {
+  display: none;
+}
 
 .sell-media-button,
 #sell-media-submit {

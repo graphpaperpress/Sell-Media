@@ -39,7 +39,7 @@ function sell_media_cart_js(){
 				{ view: "image", attr: "image", label: false },
 				{ attr: "name", label: "Name" },
 				{ attr: "size", label: "Size" },
-				{ view: "license", attr: "license", label: "License" },
+				{ attr: "usage", label: "Usage License" },
 				{ attr: "price", label: "Price", view: "currency" },
 				{ view: "decrement", label: false, text: "-" },
 				{ attr: "quantity", label: "Qty" },
@@ -61,6 +61,7 @@ function sell_media_cart_js(){
 			// optionally create new draft post (getting rid of this)
 			// createPayment(data);
 			console.log(data);
+			//exit();
 		});
 	});
 	</script>
@@ -150,7 +151,6 @@ function sell_media_get_post_meta_args( $post_id=null, $metakey=null, $args=null
 
 /*
  * Get products from payment
- *
  * $product_arg = item_name, item_number, quantity
  */
 function sell_media_get_products( $post_id=null, $metakey='_paypal_args', $product_arg='item_number' ){
