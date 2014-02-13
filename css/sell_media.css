@@ -36,7 +36,6 @@
 .hide {
   display: none;
 }
-
 .sell-media-button,
 #sell-media-submit {
   border: none;
@@ -56,6 +55,23 @@
 }
 .sell-media-button:disabled {
   background: #ccc;
+}
+/* Product Purchases */
+table.sell-media-products {
+  width: 100%;
+}
+.sell-media-products th,
+.sell-media-products td.sell-media-products-grandtotal {
+  font-weight: bold;
+}
+.sell-media-products th,
+.sell-media-products td {
+  padding: 5px;
+}
+.sell-media-products td.sell-media-product-total,
+.sell-media-products th.sell-media-product-subtotal,
+.sell-media-products td.sell-media-products-grandtotal {
+  text-align: right;
 }
 
 

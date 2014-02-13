@@ -68,17 +68,42 @@ Class Sell_Media_Payments {
 	public function get_products_formatted( $post_id=null ){
 		$products = $this->get_products( $post_id );
 		$html = null;
-		$html .= '<div class="sell-media-products">';
+		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '">';
+		$html .= '<thead>';
+		$html .= '<tr>';
+		$html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
+		$html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
+		$html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
+		$html .= '<th>' . __( 'Price', 'sell_media' ) . '</th>';
+		$html .= '<th>' . __( 'Qty', 'sell_media' ) . '</th>';
+		$html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
+		$html .= '</tr>';
+		$html .= '</thead>';
+		$html .= '<tbody>';
 		foreach ( $products as $product ) {
-			$html .= '<div class="sell-media-product sell-media-product-' . $product['id'] . '">';
-			$html .= '<div class="sell-media-product-id">' . __( 'ID', 'sell_media' ) . ': ' . $product['id'] . '</div>';
-			$html .= '<div class="sell-media-product-name">' . __( 'Name', 'sell_media' ) . ': ' . $product['name'] . '</div>';
-			$html .= '<div class="sell-media-product-price-each">' . __( 'Price Each', 'sell_media' ) . ': ' . $product['price']['amount'] . '</div>';
-			$html .= '<div class="sell-media-product-qty">' . __( 'Qty', 'sell_media' ) . ': ' . $product['qty'] . '</div>';
-			$html .= '<div class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . ': ' . $product['total'] . '</div>';
-			$html .= '</div>';
+			$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
+			$items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
+			foreach ( $items as $item ){
+				$html .= '<td class="sell-media-product-' . $item . '">';
+				if ( isset ( $product[$item] ) && ! is_array( $product[$item] ) ){
+					$html .= $product[$item];
+				}
+				$html .= '</td>';
+			}
+
+			$html .= '</tr>';
 		}
-		$html .= '</div>';
+		$html .= '</tbody>';
+		$html .= '<tfoot>';
+		$html .= '<tr>';
+		$html .= '<td>&nbsp;</td>';
+		$html .= '<td>&nbsp;</td>';
+		$html .= '<td>&nbsp;</td>';
+		$html .= '<td>&nbsp;</td>';
+		$html .= '<td>&nbsp;</td>';
+		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='CalculatedPrice' ) . '</td>';
+		$html .= '</tr>';
+		$html .= '</table>';
 		return $html;
 	}
 
