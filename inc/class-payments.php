@@ -2,6 +2,86 @@
 
 Class Sell_Media_Payments {
 
+	/**
+	* Get meta associated with a payment
+	*
+	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+	*
+	* @return Array
+	*/
+	public function get_meta( $post_id=null ){
+		$meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
+		if ( ! empty ( $meta ) ){
+			return $unserilaized_meta = maybe_unserialize( $meta );
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	* Get specific key data associated with a payment
+	*
+	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+	* @param $key = first_name, last_name, email, gateway, transaction_id, products, total
+	*
+	* @return Array
+	*/
+	public function get_meta_key( $post_id=null, $key=null ){
+		$meta = $this->get_meta( $post_id );
+		if ( array_key_exists( $key, $meta ) ) {
+			return $meta[$key];
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	* Loop over products in payment meta
+	*
+	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+	* @param $key = product_id, product_name, product_price, product_license, product_qty, product_subtotal
+	*
+	* @return Array
+	*/
+	public function get_products( $post_id=null ){
+		$key = 'products';
+		$meta = $this->get_meta( $post_id );
+		if ( array_key_exists( $key, $meta ) ) {
+			$products = maybe_unserialize( $meta[$key] );
+			foreach ( $products as $product ) {
+				$products_array[] = $product;
+			}
+			return $products_array;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	* Loop over products in payment meta and format them
+	*
+	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+	* @param $key = product_id, product_name, product_price, product_license, product_qty, product_subtotal
+	*
+	* @return html
+	*/
+	public function get_products_formatted( $post_id=null ){
+		$products = $this->get_products( $post_id );
+		$html = null;
+		$html .= '<div class="sell-media-products">';
+		foreach ( $products as $product ) {
+			$html .= '<div class="sell-media-product sell-media-product-' . $product['id'] . '">';
+			$html .= '<div class="sell-media-product-id">' . __( 'ID', 'sell_media' ) . ': ' . $product['id'] . '</div>';
+			$html .= '<div class="sell-media-product-name">' . __( 'Name', 'sell_media' ) . ': ' . $product['name'] . '</div>';
+			$html .= '<div class="sell-media-product-price-each">' . __( 'Price Each', 'sell_media' ) . ': ' . $product['price']['amount'] . '</div>';
+			$html .= '<div class="sell-media-product-qty">' . __( 'Qty', 'sell_media' ) . ': ' . $product['qty'] . '</div>';
+			$html .= '<div class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . ': ' . $product['total'] . '</div>';
+			$html .= '</div>';
+		}
+		$html .= '</div>';
+		return $html;
+	}
+
     /**
      * Retrieves the total for a payment
      *
@@ -152,36 +232,5 @@ Class Sell_Media_Payments {
 
         return apply_filters( 'sell_media_payment_status_filter', ucfirst( $status ), $post_id );
     }
-
-	/**
-	* Get products associated with a payment
-	*
-	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	*
-	* @return Array
-	*/
-	static public function products( $post_id=null ){
-		$payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
-		$products = unserialize( $payment_meta['products'] );
-
-		return apply_filters( 'sell_media_payment_products_filter', $products, $post_id );
-	}
-
-	/**
-	* Get product key data associated with a payment
-	*
-	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	* @param $key = id, name, price, license, qty, total
-	*
-	* @return Array
-	*/
-	public function products_by_key( $post_id=null, $key='id' ){
-		$products = $this->products( $post_id );
-		foreach ( $products as $product ){
-			$value[] = $product[$key];
-		}
-
-		return apply_filters( 'sell_media_payment_products_by_key_filter', $value, $post_id );
-	}
 
 }
