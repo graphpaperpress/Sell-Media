@@ -135,18 +135,16 @@ add_shortcode( 'sell_media_checkout', 'sell_media_checkout_shortcode' );
  *
  * Example: sell_media_get_post_meta_args( $post_id=28, $metakey='_paypal_args', $args=array( 'amount', 'business', 'item_name', 'item_number' ) );
  */
-function sell_media_get_post_meta_args( $post_id=null, $metakey=null, $args=null, $echo=true ){
+function sell_media_get_post_meta_args( $post_id=null, $metakey=null, $args=null ){
 	$meta = get_post_meta( $post_id, $metakey, true );
 	$array = maybe_unserialize( $meta );
-	foreach ( $args as $arg ) {
-		if ( array_key_exists( $arg, $array ) ) {
-			if ( $echo ) {
-				echo $array[$arg];
-			} else {
-				return $array[$arg];
-			}
+	$payment_data = null;
+	foreach ( $args as $k => $v ) {
+		if ( array_key_exists( $v, $array ) ) {
+			$payment_data[$k] = $array[$v];
 		}
 	}
+	return $payment_data;
 }
 
 /*
@@ -154,6 +152,29 @@ function sell_media_get_post_meta_args( $post_id=null, $metakey=null, $args=null
  * $product_arg = item_name, item_number, quantity
  */
 function sell_media_get_products( $post_id=null, $metakey='_paypal_args', $product_arg='item_number' ){
+	$meta = get_post_meta( $post_id, $metakey, true );
+	$array = maybe_unserialize( $meta );
+	// num_cart_items for _cart transactions only
+	if ( array_key_exists( 'num_cart_items', $array ) ) {
+		for ( $i = 1; $i <= $array['num_cart_items']; $i++ ) {
+			$product = $array[$product_arg . $i];
+			if ( $i > 1 && $product_arg != 'quantity' ) {
+				$product .= ' ';
+			}
+		}
+		return $product;
+	// legacy: num_cart_items doesn't exist when using _xclick, so just return the product id from 'custom'
+	} else {
+		$product = $array['custom'];
+		return $product;
+	}
+}
+
+/*
+ * Get products from payment
+ * $product_arg = item_name, item_number, quantity
+ */
+function sell_media_get_paypal_args( $post_id=null, $metakey='_paypal_args', $product_arg='item_number' ){
 	$meta = get_post_meta( $post_id, $metakey, true );
 	$array = maybe_unserialize( $meta );
 	// num_cart_items for _cart transactions only

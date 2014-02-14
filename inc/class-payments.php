@@ -101,11 +101,57 @@ Class Sell_Media_Payments {
 		$html .= '<td>&nbsp;</td>';
 		$html .= '<td>&nbsp;</td>';
 		$html .= '<td>&nbsp;</td>';
-		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='CalculatedPrice' ) . '</td>';
+		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='total' ) . '</td>';
 		$html .= '</tr>';
 		$html .= '</table>';
 		return $html;
 	}
+
+	/*
+	 * Retrieve Paypal IPN $_POST, format into _sell_media_payment_data
+	 * There is a lot of useless data in Paypal's IPN
+	 * This standardizes the way we store payment data
+	 */
+	public function paypal_copy_args( $post_id=null, $metakey=null ){
+		$args = array(
+			'email' => 'payer_email',
+			'first_name' => 'first_name',
+			'last_name' => 'last_name',
+			'address_street' => 'address_street',
+			'address_city' => 'address_city',
+			'address_state' => 'address_state',
+			'address_country_code' => 'address_country_code',
+			'address_zip' => 'address_zip',
+			'total' => 'mc_gross',
+			'shipping' => 'mc_shipping',
+			'handling' => 'mc_handling',
+			'tax' => 'tax',
+			'number_products' => 'num_cart_items'
+		);
+		$meta = get_post_meta( $post_id, $metakey, true );
+		$array = maybe_unserialize( $meta );
+		$payment_data = null;
+		foreach ( $args as $k => $v ) {
+			if ( array_key_exists( $v, $array ) ) {
+				if ( $k == 'num_cart_items' ) {
+					for ( $i = 1; $i <= $v; $i++ ) {
+						$payment_data['name'] = 'item_name' . $i;
+						$payment_data['id'] = 'item_number' . $i;
+						$payment_data['size'] = 'option_selection2_' . $i;
+						$payment_data['license'] = 'option_selection4_' . $i;
+						$payment_data['qty'] = 'quantity' . $i;
+						$payment_data['price'] = 'mc_gross_' . $i;
+						$payment_data['shipping'] = 'mc_shipping' . $i;
+						$payment_data['handling'] = 'mc_handling' . $i;
+						$payment_data['tax'] = 'tax' . $i;
+					}
+				}
+				$payment_data[$k] = $array[$v];
+			}
+		}
+		return $payment_data;
+	}
+
 
     /**
      * Retrieves the total for a payment
