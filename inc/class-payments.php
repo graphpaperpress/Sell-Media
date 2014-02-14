@@ -53,7 +53,7 @@ Class Sell_Media_Payments {
 					$products_array[] = $product;
 				}
 				return $products_array;
-			}		
+			}
 		} else {
 			return false;
 		}
@@ -119,51 +119,62 @@ Class Sell_Media_Payments {
 		return $html;
 	}
 
-	/*
-	 * Retrieve Paypal IPN $_POST, format into _sell_media_payment_data
-	 * There is a lot of useless data in Paypal's IPN
+
+    /**
+	 * Retrieve PayPal IPN $_POST, format into _sell_media_payment_data
+	 * There is a lot of useless data in PayPal's IPN
 	 * This standardizes the way we store payment data
+     *
+     * @param (int)$post_id The post id to a payment
+     * @return Returns meta id on success false on failure
 	 */
-	public function paypal_copy_args( $post_id=null, $metakey=null ){
-		$args = array(
-			'email' => 'payer_email',
-			'first_name' => 'first_name',
-			'last_name' => 'last_name',
-			'address_street' => 'address_street',
-			'address_city' => 'address_city',
-			'address_state' => 'address_state',
-			'address_country_code' => 'address_country_code',
-			'address_zip' => 'address_zip',
-			'total' => 'mc_gross',
-			'shipping' => 'mc_shipping',
-			'handling' => 'mc_handling',
-			'tax' => 'tax',
-			'number_products' => 'num_cart_items',
-			'txn_id' => 'transaction_id',
-			'gateway' => 'PayPal'
-		);
-		$meta = get_post_meta( $post_id, $metakey, true );
-		$array = maybe_unserialize( $meta );
-		$payment_data = null;
-		foreach ( $args as $k => $v ) {
-			if ( array_key_exists( $v, $array ) ) {
-				if ( $k == 'num_cart_items' ) {
-					for ( $i = 1; $i <= $v; $i++ ) {
-						$payment_data['name'] = 'item_name' . $i;
-						$payment_data['id'] = 'item_number' . $i;
-						$payment_data['size'] = 'option_selection2_' . $i;
-						$payment_data['license'] = 'option_selection4_' . $i;
-						$payment_data['qty'] = 'quantity' . $i;
-						$payment_data['price'] = 'mc_gross_' . $i;
-						$payment_data['shipping'] = 'mc_shipping' . $i;
-						$payment_data['handling'] = 'mc_handling' . $i;
-						$payment_data['tax'] = 'tax' . $i;
-					}
-				}
-				$payment_data[$k] = $array[$v];
-			}
-		}
-		update_post_meta( $post_id, '_sell_media_payment_meta', $payment_data );
+	public function paypal_copy_args( $post_id=null ){
+
+        $keys = array(
+            'email' => 'payer_email',
+            'first_name' => 'first_name',
+            'last_name' => 'last_name',
+            'address_street' => 'address_street',
+            'address_city' => 'address_city',
+            'address_state' => 'address_state',
+            'address_country_code' => 'address_country_code',
+            'address_zip' => 'address_zip',
+            'total' => 'mc_gross',
+            'shipping' => 'mc_shipping',
+            'handling' => 'mc_handling',
+            'tax' => 'tax',
+            'number_products' => 'num_cart_items',
+            'transaction_id' => 'txn_id',
+            'gateway' => 'PayPal'
+        );
+
+        $paypal_args = maybe_unserialize( get_post_meta( $post_id, '_paypal_args', true ) );
+        $tmp = array();
+
+        foreach( $keys as $k => $v ){
+
+            // Assign our contact info
+            if ( array_key_exists( $v, $paypal_args ) ){
+                $tmp[ $k ] = $paypal_args[ $v ];
+            } else {
+                for ( $i=1; $i <= $paypal_args['num_cart_items']; $i++ ) {
+                    $tmp_products = array(
+                        'name' => $paypal_args[ 'item_name' . $i ],
+                        'id' => $paypal_args[ 'item_number' . $i ],
+                        'size' => $paypal_args[ 'option_selection2_' . $i ],
+                        'license' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : $paypal_args[ 'option_selection4_' . $i ],
+                        'qty' => $paypal_args[ 'quantity' . $i ],
+                        'price' => $paypal_args[ 'mc_gross_' . $i ],
+                        'shipping' => $paypal_args[ 'mc_shipping' . $i ],
+                        'handling' => $paypal_args[ 'mc_handling' . $i ],
+                        'tax' => $paypal_args[ 'tax' . $i ],
+                    );
+                    $tmp['products'][] = $tmp_products;
+                }
+            }
+        }
+
+		return update_post_meta( $post_id, '_sell_media_payment_meta', $tmp );
 	}
 
 
