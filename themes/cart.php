@@ -12,7 +12,6 @@
 wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 $settings = sell_media_get_plugin_options();
 $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
-$sizes_array = sell_media_image_sizes( $_POST['product_id'], false );
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
 if ( $licenses ) {
 	$term_id = $licenses[0]->term_id;
@@ -36,18 +35,15 @@ if ( $licenses ) {
             	<legend><?php _e( 'Size', 'sell_media' ); ?></legend>
                 <select id="sell_media_item_size" class="sum item_size">
                 	<option selected="selected" value="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
-                    <?php if ( ! empty( $sizes_array ) ) : foreach( $sizes_array as $k => $v ) : ?>
-                        <option value="<?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>)" data-price="<?php echo $v['price']; ?>" data-qty="1" data-size="<?php echo $v['width'] . ' x ' . $v['height']; ?>"><?php echo $v['name']; ?> (<?php echo $v['width'] . ' x ' . $v['height']; ?>): <?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?></option>
-                    <?php endforeach; endif; ?>
-                    <?php if ( $settings->hide_original_price !== 'yes' ) : ?>
-                        <option value="<?php _e( 'Original', 'sell_media' ); ?>
-                        <?php if ( sell_media_is_mimetype( $_POST['product_id'] ) ) : ?>
-                        	(<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>)
-                        <?php endif; ?>" data-price="<?php sell_media_item_price( $_POST['product_id'], false ); ?>" data-qty="1" data-size="<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>">
-                        <?php _e( 'Original', 'sell_media' ); ?><?php if ( sell_media_is_mimetype( $_POST['product_id'] ) ) : ?> (<?php print sell_media_original_image_size( $_POST['product_id'] ); ?>)<?php endif; ?>: <?php sell_media_item_price( $_POST['product_id'] ); ?>
-                    </option>
-                <?php endif; ?>
+                    <?php
+                        $p = new SellMediaProducts;
+                        $prices = $p->get_prices( $_POST['product_id'] );
+                        if ( $prices ) foreach ( $prices as $k => $v ) {
+                            echo '<option value="' . $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')" data-id="' . $v['id'] . '" data-price="' . $v['price'] . '" data-qty="1" data-size="' . $v['width'] . ' x ' . $v['height'] . '">' . $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . '): ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                        }
+                    ?>
                 </select>
+                <span class="item_pgroup hide"></span>
             </fieldset>
 			<?php //do_action( 'sell_media_cart_below_size' ); ?>
 			<?php //do_action( 'sell_media_cart_above_licenses' ); ?>
@@ -116,6 +112,11 @@ jQuery(document).ready(function($){
 		var license_name = $('#sell_media_item_license :selected').data('name');
 		if ( license_name != null )
 			$('.item_usage').text(license_name);
+
+        // set price_group id so it is passed to cart
+        var price_group = $('#sell_media_item_size :selected').data('id');
+        if ( price_group != null )
+            $('.item_pgroup').text(price_group);
 
 	});
 
