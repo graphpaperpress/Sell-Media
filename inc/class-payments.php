@@ -220,6 +220,8 @@ Class Sell_Media_Payments {
         $cart = New Sell_Media_Cart;
         $i = 0;
 
+        $download_obj = new Sell_Media_Download;
+
         foreach( $this->get_products( $post_id ) as $product ){
             $html .= '<tr class="" valign="top">';
             $html .= '<td class="media-icon"><a href="' . get_edit_post_link( $product['id'] ) . '">' . wp_get_attachment_image( get_post_meta( $product['id'], '_sell_media_attachment_id', true ) ) . '</a></td>';
@@ -227,7 +229,7 @@ Class Sell_Media_Payments {
             $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
             $html .= '<td>' . $product['qty'] . '</td>';
             $html .= '<td>' . $product['license']['name'] . '</td>';
-            $html .= '<td class="title column-title">download link</td>';
+            $html .= '<td class="title column-title"><input type="text" value="' . $download_obj->get_download_link( $post_id, $product['id'] ) . '" /></td>';
             $html .= '</tr>';
         }
         $html .= '</tbody>';

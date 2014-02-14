@@ -240,9 +240,9 @@ function sell_media_process_download() {
         $d = New Sell_Media_Download;
         $verified = $d->verify_download_link( $transaction_id, $payment_id );
 
-die();
-        if ( $verified ) {
 
+        if ( $verified ) {
+            wp_die('tdb');
             /**
              * Get the full pat to the file that will be downloaded in the sell media dir
              */
