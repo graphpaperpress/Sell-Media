@@ -121,14 +121,14 @@ Class Sell_Media_Payments {
 
 
     /**
-	 * Retrieve PayPal IPN $_POST, format into _sell_media_payment_data
-	 * There is a lot of useless data in PayPal's IPN
-	 * This standardizes the way we store payment data
+     * Retrieve PayPal IPN $_POST, format into _sell_media_payment_data
+     * There is a lot of useless data in PayPal's IPN
+     * This standardizes the way we store payment data
      *
      * @param (int)$post_id The post id to a payment
      * @return Returns meta id on success false on failure
-	 */
-	public function paypal_copy_args( $post_id=null ){
+     */
+    public function paypal_copy_args( $post_id=null ){
 
         $keys = array(
             'email' => 'payer_email',
@@ -174,8 +174,8 @@ Class Sell_Media_Payments {
             }
         }
 
-		return update_post_meta( $post_id, '_sell_media_payment_meta', $tmp );
-	}
+        return update_post_meta( $post_id, '_sell_media_payment_meta', $tmp );
+    }
 
 
     /**
