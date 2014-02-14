@@ -59,16 +59,27 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  */
 function sell_media_payment_purchase_details( $post ){
 
+    $payment_obj = new Sell_Media_Payments;
+
     echo '<div class="sell-media-admin-payments">';
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
-    $payment_obj = New Sell_Media_Payments;
-    echo $payment_obj->get_contact_info( $post->ID );
-    do_action('sell_media_below_payment_contact_details');
+    printf(
+        '<ul>
+        <li>%s: ' . $payment_obj->get_meta_key( $post->ID, 'first_name' ) . ' ' . $payment_obj->get_meta_key( $post->ID, 'last_name' ) . ' ' . '</li>
+        <li>%s: ' . $payment_obj->get_meta_key( $post->ID, 'email' ) . ' ' . '</li>
+        <li>%s: ' . $payment_obj->total( $post->ID ) . ' ' . '</li>
+        </ul>',
+        __( 'Name', 'sell_media' ),
+        __( 'Email', 'sell_media' ),
+        __( 'Total', 'sell_media' )
+        );
 
-    echo $payment_obj->payment_table( $post->ID );
+    // do_action('sell_media_below_payment_contact_details');
 
-    do_action( 'sell_media_additional_customer_meta', $post );
+    // echo $payment_obj->payment_table( $post->ID );
+
+    // do_action( 'sell_media_additional_customer_meta', $post );
     echo '</div>';
 
 }
