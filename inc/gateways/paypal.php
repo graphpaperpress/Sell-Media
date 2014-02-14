@@ -170,6 +170,8 @@ function sell_media_process_paypal_ipn() {
 
             if ( $payment_id ) {
 
+                update_post_meta( $payment_id, '_paypal_args', $_POST );
+
                 // record the PayPal payment details
                 $p = new Sell_Media_Payments;
                 $p->paypal_copy_args( $payment_id );
@@ -181,9 +183,9 @@ function sell_media_process_paypal_ipn() {
                 $email_status = sell_media_email_purchase_receipt( $payment_id, $_POST['payer_email'] );
                 $message .= "{$email_status}\n";
 
-                $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
-                $products_meta_array = unserialize( $payment_meta_array['products'] );
-                do_action( 'sell_media_after_successful_payment', $products_meta_array, $payment_id );
+                // $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
+                // $products_meta_array = unserialize( $payment_meta_array['products'] );
+                // do_action( 'sell_media_after_successful_payment', $products_meta_array, $payment_id );
 
             }
 
