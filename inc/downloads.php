@@ -114,19 +114,16 @@ Class Sell_Media_Download {
      * @param $download (string) The download hash
      * @return boolean
      */
-    public function verify_download_link( $download=null ) {
+    public function verify_download_link( $transaction_id=null, $payment_id=null ) {
+        $payments_obj = new Sell_Media_Payments;
 
-        /**
-         * @note We use a subquery since this function is ran before register_post_type, hence we
-         * cannot run WP_Query
-         */
-        global $wpdb;
-        $query = $wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` LIKE 'publish' AND ID =
-        (SELECT post_id FROM {$wpdb->prefix}postmeta
-        WHERE meta_key LIKE '_sell_media_payment_purchase_key'
-        AND meta_value LIKE '%s');", $download );
+        if ( $transaction_id == $payments_obj->get_meta_key( $payment_id, 'transaction_id' ) ){
+            $status = true;
+        } else {
+            $status = false;
+        }
 
-        return $wpdb->get_results( $query ) ? true : false;
+        return $status;
     }
 
 
@@ -196,6 +193,29 @@ Class Sell_Media_Download {
         return $products;
     }
 
+
+    public function get_download_link( $payment_id=null, $product_id=null ){
+
+        $payment_obj = new Sell_Media_Payments;
+        $products = $payment_obj->get_products( $payment_id );
+        $tmp_links = array();
+
+        foreach( $products as $product ){
+            $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
+                'download' => $payment_obj->get_meta_key( $payment_id, 'transaction_id' ),
+                'payment_id' => $payment_id
+            ) );
+        }
+
+        if ( ! empty( $product_id ) && ! empty( $tmp_links[ $product_id ] ) ){
+            $link = $tmp_links[ $product_id ] . '&product_id=' . $product_id;
+        } else {
+            $link = $tmp_links;
+        }
+
+        return $link;
+    }
+
 }
 
 /**
@@ -207,15 +227,20 @@ Class Sell_Media_Download {
  */
 function sell_media_process_download() {
 
-    if ( isset( $_GET['download'] ) && isset( $_GET['email'] ) ) {
+    if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) ) {
 
-        $download = urldecode($_GET['download']);
-        $term_id = $_GET['price_id'];
-        $item_id = $_GET['id'];
+        $transaction_id = urldecode( $_GET['download'] );
+        $payment_id = urldecode( $_GET['payment_id'] );
+
+        // $term_id = $_GET['price_id'];
+        // $item_id = $_GET['id'];
+        $term_id = null;
+        $item_id = null;
 
         $d = New Sell_Media_Download;
-        $verified = $d->verify_download_link( $download );
+        $verified = $d->verify_download_link( $transaction_id, $payment_id );
 
+die();
         if ( $verified ) {
 
             /**
@@ -371,12 +396,12 @@ function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
         '{email}'			=> sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'email' ) ),
         '{download_links}'	=> empty( $links ) ? null : $links
     );
-	
+
 	$message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 
     $p = new Sell_Media_Payments;
     $message['body'] = $p->get_products_formatted( $payment_id );
-    
+
 
     $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
     $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";

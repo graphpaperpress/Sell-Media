@@ -269,9 +269,9 @@ function sell_media_payments_callback_fn(){
                             }
                         ?>
                     </td>
-                    <td><?php echo Sell_Media_Payments::total( $payment->ID ); ?></td>
+                    <td><?php echo $p->total( $payment->ID ); ?></td>
                     <td><?php echo date('M d, Y', strtotime($payment->post_date)); ?></td>
-                    <td><?php echo Sell_Media_Payments::status( $payment->ID ); ?></td>
+                    <td><?php echo $p->status( $payment->ID ); ?></td>
                 </tr>
             <?php endforeach; ?>
             <?php else : ?>
