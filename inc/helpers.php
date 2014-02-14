@@ -506,13 +506,15 @@ function sell_media_get_cusotmer_products( $payment_id=null ){
 
 /**
  * Builds download link url
+ * This needs to be rewritten!!!!!!!!!!!
  *
  * @since 0.1
  */
 function sell_media_build_download_link( $payment_id=null ){
 
-    $payment_meta = get_post_meta( $payment_id, $metakey='_paypal_args', true );
-    $downloads = sell_media_get_products( $payment_id, $product_arg='item_number' );
+    $p = new Sell_Media_Payments;
+    $downloads = $p->get_products( $payment_id );
+
     $tmp_links = array();
     $links = array();
     $i = 0;
@@ -521,17 +523,16 @@ function sell_media_build_download_link( $payment_id=null ){
             $i++;
 
             $tmp_links = array(
-                'item_id'    => $payment_meta['item_number' . $i],
-                'price_id'   => $payment_meta['mc_gross1' . $i],
-                'license_id' => $payment_meta['os2_' . $i],
-                'thumbnail'  => $payment_meta['os0_' . $i],
-                'url'        => site_url()
-                . '?download='  . $payment_meta['txn_id']
-                . '&email='     . $payment_meta['payer_email']
-                . '&id='        . $payment_meta['item_number' . $i]
-                . '&price_id='  . $payment_meta['item_amount' . $i],
-                'payment_id' => $payment_id
-                );
+                'id'            => $download['id'],
+                'license'       => $download['license'],
+                'thumbnail'     => sell_media_item_icon( $download['id'], 'medium' ),
+                'url'           => site_url()
+                . '?download='  . $download['transaction_id']
+                . '&email='     . $download['email']
+                . '&id='        . $download['id']
+                . '&price='     . $download['price'],
+                'payment_id'    => $payment_id
+            );
 
             $links[] = $tmp_links;
         }

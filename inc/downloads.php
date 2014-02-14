@@ -358,8 +358,6 @@ add_action( 'init', 'sell_media_process_download', 100 );
  */
 function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
 
-    $products = sell_media_get_products( $payment_id );
-
     $message['from_name'] = get_bloginfo( 'name' );
     $message['from_email'] = get_option( 'admin_email' );
 
@@ -367,48 +365,23 @@ function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
     $message['subject'] = $settings->success_email_subject;
     $message['body'] = $settings->success_email_body;
 
-    // Build the download links markup
-    $links = null;
-    $i = 0;
-
-    $download_links = sell_media_build_download_link( $payment_id );
-    $count = count( $download_links );
-    foreach( $download_links as $download ){
-
-        $tmp_price_id = isset( $products[ $i ] ) ? $products[ $i ]['price_id'] : null;
-        $links .= '<a href="' . $download['url'] . '">' . get_the_title( $download['item_id'] ) .'</a>';
-        $comma = ( $i == $count - 1 ) ? null : ', ';
-        $links .= $comma;
-        $i++;
-    }
-
     $tags = array(
-        '{first_name}'  => sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'first_name' ) ),
-        '{last_name}'   => sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'last_name' ) ),
-        '{email}' => sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'email' ) ),
-        '{download_links}' => empty( $links ) ? null : $links
+        '{first_name}'		=> sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'first_name' ) ),
+        '{last_name}'		=> sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'last_name' ) ),
+        '{email}'			=> sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'email' ) ),
+        '{download_links}'	=> empty( $links ) ? null : $links
     );
+	
+	$message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 
-    $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
-
-    $payments = new Sell_Media_Payments;
-    $licenses = $payments->products_by_key( $payment_id, $key='licenses' );
+    $p = new Sell_Media_Payments;
+    $message['body'] = $p->get_products_formatted( $payment_id );
     
-    // If we have license add them to the message['body']
-    if ( $licenses ){
-        $license_message = sprintf("<br /><br />%s<br />", __("Your purchase entitles you to the following usage:", "sell_media") );
-        foreach( $licenses as $license ){
-            $license_message .= "<br />{$license['name']}<br />";
-            $license_message .= "{$license['description']}<br />";
-        }
-        $message['body'] .= $license_message;
-    }
 
     $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
     $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
     $message['headers'] .= "MIME-Version: 1.0\r\n";
     $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
-
 
     /**
      * Check if we have additional test emails, if so we concatenate them

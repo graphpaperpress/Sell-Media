@@ -250,28 +250,13 @@ function sell_media_payments_callback_fn(){
                         <?php if ( ! empty( $payment_meta['last_name'] ) ) echo $payment_meta['last_name']; ?>
                     </td>
                     <td>
-                    <?php
-                        $payment_meta_array = get_post_meta( $payment->ID, '_sell_media_payment_meta', true );
-                        if ( $payment_meta_array ){
-                            $products_meta_array = unserialize( $payment_meta_array['products'] );
-
-                            if ( ! $products_meta_array ) continue;
-                            $count = count( $products_meta_array );
-                            $i = 0;
-
-                            foreach( $products_meta_array as $product ){
-                                $comma = ( $count - 1) == $i ? null : ", ";
-                                $item_id = empty( $product['item_id'] ) ? $product['id'] : $product['item_id'];
-
-                                print '<a href="' . get_edit_post_link( $item_id ) . '">' . get_the_title( $item_id ) . "</a>" . $comma;
-                                if ( isset( $product['License'] ) ){
-                                    $license = get_term_by( 'id', $product['License'], 'licenses' );
-                                    if ( $license ) print ' &ndash; <em>'.$license->name . '</em><br />';
-                                }
-                                $i++;
+                        <?php
+                            $p = new Sell_Media_Payments;
+                            $products = $p->get_products( $payment->ID );
+                            if ( $products ) foreach ( $products as $product ) {
+                                print $product['name'];
                             }
-                        }
-                    ?>
+                        ?>
                     </td>
                     <td><?php echo Sell_Media_Payments::total( $payment->ID ); ?></td>
                     <td><?php echo date('M d, Y', strtotime($payment->post_date)); ?></td>

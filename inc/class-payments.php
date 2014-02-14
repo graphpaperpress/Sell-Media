@@ -46,12 +46,14 @@ Class Sell_Media_Payments {
 	public function get_products( $post_id=null ){
 		$key = 'products';
 		$meta = $this->get_meta( $post_id );
-		if ( array_key_exists( $key, $meta ) ) {
-			$products = maybe_unserialize( $meta[$key] );
-			foreach ( $products as $product ) {
-				$products_array[] = $product;
-			}
-			return $products_array;
+		if ( $meta) {
+			if ( array_key_exists( $key, $meta ) ) {
+				$products = maybe_unserialize( $meta[$key] );
+				foreach ( $products as $product ) {
+					$products_array[] = $product;
+				}
+				return $products_array;
+			}		
 		} else {
 			return false;
 		}
@@ -83,14 +85,24 @@ Class Sell_Media_Payments {
 		foreach ( $products as $product ) {
 			$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
 			$items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
-			foreach ( $items as $item ){
-				$html .= '<td class="sell-media-product-' . $item . '">';
-				if ( isset ( $product[$item] ) && ! is_array( $product[$item] ) ){
-					$html .= $product[$item];
-				}
-				$html .= '</td>';
-			}
-
+			$html .= '<td class="sell-media-product-id">';
+			if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) $html .= $product['id'];
+			$html .= '</td>';
+			$html .= '<td class="sell-media-product-name">';
+			if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) ) $html .= $product['name'];
+			$html .= '</td>';
+			$html .= '<td class="sell-media-product-license">';
+			if ( isset ( $product['license'] ) && ! is_array( $product['license'] ) ) $html .= $product['license'];
+			$html .= '</td>';
+			$html .= '<td class="sell-media-product-price">';
+			if ( isset ( $product['price'] ) && ! is_array( $product['price'] ) ) $html .= $product['price'];
+			$html .= '</td>';
+			$html .= '<td class="sell-media-product-qty">';
+			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
+			$html .= '</td>';
+			$html .= '<td class="sell-media-product-total">';
+			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) ) $html .= $product['total'];
+			$html .= '</td>';
 			$html .= '</tr>';
 		}
 		$html .= '</tbody>';
@@ -126,7 +138,8 @@ Class Sell_Media_Payments {
 			'shipping' => 'mc_shipping',
 			'handling' => 'mc_handling',
 			'tax' => 'tax',
-			'number_products' => 'num_cart_items'
+			'number_products' => 'num_cart_items',
+			'txn_id' => 'transaction_id'
 		);
 		$meta = get_post_meta( $post_id, $metakey, true );
 		$array = maybe_unserialize( $meta );
