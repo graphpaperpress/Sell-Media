@@ -170,12 +170,9 @@ function sell_media_process_paypal_ipn() {
 
             if ( $payment_id ) {
 
-                // record the Paypal payment details
-                update_post_meta( $payment_id, '_paypal_args', $_POST );
-
+                // record the PayPal payment details
                 $p = new Sell_Media_Payments;
-                // copy and format Paypal args into structured data
-                $p->paypal_copy_args( $payment_id=null, $metakey='_paypal_args' );
+                $p->paypal_copy_args( $payment_id );
 
                 $message .= "\nSuccess! Your purchase has been completed.\n";
                 $message .= "Your transaction number is: {$_POST['txn_id']}\n";

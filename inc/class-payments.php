@@ -185,42 +185,8 @@ Class Sell_Media_Payments {
      *
      * @return (string) Total with formated currency symbol
      */
-    static public function total( $post_id=null ){
-        return sell_media_get_currency_symbol() . sprintf( '%0.2f', get_post_meta( $post_id, '_sell_media_payment_amount', true ) );
-    }
-
-
-    /**
-     * Retrieve the customer contact info associated with a payment
-     *
-     * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-     * @todo This should not include the total
-     * @return
-     */
-    public function get_contact_info( $post_id=null ){
-        if ( get_userdata( get_post_meta( $post_id, '_sell_media_user_id', true ) ) ){
-            $edit_link = '<a href="' . get_edit_user_link( get_post_meta( $post_id, '_sell_media_user_id', true ) ) . '">Edit</a>';
-        } else {
-            $edit_link = null;
-        }
-
-        $contact = array(
-                'first_name' => get_post_meta( $post_id, '_sell_media_payment_first_name', true ),
-                'last_name' => get_post_meta( $post_id, '_sell_media_payment_last_name', true ),
-                'user_edit_link' => $edit_link,
-                'email' => get_post_meta( $post_id, '_sell_media_payment_user_email', true )
-            );
-
-        $info = sprintf(
-            '<ul>
-            <li>%s: '.$contact['first_name'] . ' ' . $contact['last_name'] . '</li>
-            <li>%s: <a href="mailto:' . $contact['email'] . '">' . $contact['email'] . '</a></li>
-            <li>%s: '.$this->total( $post_id ).'</li></ul>',
-            __( 'Name', 'sell_media' ),
-            __( 'Email', 'sell_media' ),
-            __( 'Total', 'sell_media' )
-            );
-        return $info;
+    public function total( $post_id=null ){
+        return sell_media_get_currency_symbol() . sprintf( '%0.2f', $this->get_meta_key( $post_id, 'total' ) );
     }
 
 
