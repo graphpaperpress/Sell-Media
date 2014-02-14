@@ -139,7 +139,8 @@ Class Sell_Media_Payments {
 			'handling' => 'mc_handling',
 			'tax' => 'tax',
 			'number_products' => 'num_cart_items',
-			'txn_id' => 'transaction_id'
+			'txn_id' => 'transaction_id',
+			'gateway' => 'PayPal'
 		);
 		$meta = get_post_meta( $post_id, $metakey, true );
 		$array = maybe_unserialize( $meta );
@@ -162,7 +163,7 @@ Class Sell_Media_Payments {
 				$payment_data[$k] = $array[$v];
 			}
 		}
-		return $payment_data;
+		update_post_meta( $post_id, '_sell_media_payment_meta', $payment_data );
 	}
 
 
