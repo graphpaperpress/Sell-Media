@@ -217,19 +217,15 @@ Class Sell_Media_Payments {
                 </tr>
             </thead>';
         $html .= '<tbody>';
-        $cart = New Sell_Media_Cart;
-        $i = 0;
-
-        $download_obj = new Sell_Media_Download;
 
         foreach( $this->get_products( $post_id ) as $product ){
             $html .= '<tr class="" valign="top">';
             $html .= '<td class="media-icon"><a href="' . get_edit_post_link( $product['id'] ) . '">' . wp_get_attachment_image( get_post_meta( $product['id'], '_sell_media_attachment_id', true ) ) . '</a></td>';
-            $html .= '<td>' . $cart->item_size( $product['size']['id'] ) . apply_filters('sell_media_payment_meta', $post_id, $product['size']['id'] ) . '</td>';
+            $html .= '<td>' . $product['size']['name'] . '</td>';
             $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
             $html .= '<td>' . $product['qty'] . '</td>';
             $html .= '<td>' . $product['license']['name'] . '</td>';
-            $html .= '<td class="title column-title"><input type="text" value="' . $download_obj->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+            $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
             $html .= '</tr>';
         }
         $html .= '</tbody>';
@@ -252,5 +248,27 @@ Class Sell_Media_Payments {
             $status = __( 'Paid','sell_media' );
 
         return apply_filters( 'sell_media_payment_status_filter', ucfirst( $status ), $post_id );
+    }
+
+
+    public function get_download_link( $payment_id=null, $product_id=null ){
+
+        $products = $this->get_products( $payment_id );
+        $tmp_links = array();
+
+        foreach( $products as $product ){
+            $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
+                'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
+                'payment_id' => $payment_id
+            ) );
+        }
+
+        if ( ! empty( $product_id ) && ! empty( $tmp_links[ $product_id ] ) ){
+            $link = $tmp_links[ $product_id ] . '&product_id=' . $product_id;
+        } else {
+            $link = $tmp_links;
+        }
+
+        return $link;
     }
 }
