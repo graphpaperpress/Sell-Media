@@ -193,29 +193,6 @@ Class Sell_Media_Download {
         return $products;
     }
 
-
-    public function get_download_link( $payment_id=null, $product_id=null ){
-
-        $payment_obj = new Sell_Media_Payments;
-        $products = $payment_obj->get_products( $payment_id );
-        $tmp_links = array();
-
-        foreach( $products as $product ){
-            $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
-                'download' => $payment_obj->get_meta_key( $payment_id, 'transaction_id' ),
-                'payment_id' => $payment_id
-            ) );
-        }
-
-        if ( ! empty( $product_id ) && ! empty( $tmp_links[ $product_id ] ) ){
-            $link = $tmp_links[ $product_id ] . '&product_id=' . $product_id;
-        } else {
-            $link = $tmp_links;
-        }
-
-        return $link;
-    }
-
 }
 
 /**
