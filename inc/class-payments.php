@@ -44,15 +44,10 @@ Class Sell_Media_Payments {
 	* @return Array
 	*/
 	public function get_products( $post_id=null ){
-		$key = 'products';
 		$meta = $this->get_meta( $post_id );
 		if ( $meta) {
-			if ( array_key_exists( $key, $meta ) ) {
-				$products = maybe_unserialize( $meta[$key] );
-				foreach ( $products as $product ) {
-					$products_array[] = $product;
-				}
-				return $products_array;
+			if ( array_key_exists( 'products', $meta ) ) {
+				return maybe_unserialize( $meta['products'] );
 			}
 		} else {
 			return false;
@@ -161,10 +156,20 @@ Class Sell_Media_Payments {
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
-                        'size' => $paypal_args[ 'option_selection2_' . $i ],
-                        'license' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : $paypal_args[ 'option_selection4_' . $i ],
+                        'size' => array(
+                            'name' => $paypal_args[ 'option_selection2_' . $i ],
+                            'id' => null,
+                            'amount' => $paypal_args[ 'mc_gross_' . $i ],
+                            'description' => null
+                            ),
+                        'license' => array(
+                            'name' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : $paypal_args[ 'option_selection4_' . $i ],
+                            'id' => null,
+                            'description' => null,
+                            'markup' => null
+                            ),
                         'qty' => $paypal_args[ 'quantity' . $i ],
-                        'price' => $paypal_args[ 'mc_gross_' . $i ],
+                        'total' => null,
                         'shipping' => $paypal_args[ 'mc_shipping' . $i ],
                         'handling' => $paypal_args[ 'mc_handling' . $i ],
                         'tax' => $paypal_args[ 'tax' . $i ],
@@ -173,7 +178,6 @@ Class Sell_Media_Payments {
                 }
             }
         }
-
         return update_post_meta( $post_id, '_sell_media_payment_meta', $tmp );
     }
 
@@ -200,82 +204,35 @@ Class Sell_Media_Payments {
      */
     public function payment_table( $post_id=null, $download_link=null ){
 
-        $links = sell_media_build_download_link( $post_id, get_post_meta( $post_id, "_sell_media_payment_user_email", true ) );
-        $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
-        $products = array_values( unserialize( $payment_meta['products'] ) );
-
         $html = null;
-        if ( ! empty( $links ) ){
-            $html .= '<table class="wp-list-table widefat" cellspacing="0">';
-            $html .= '<thead>
-                    <tr>
-                        <th scope="col">' . __('Item','sell_media') . '</th>
-                        <th>' . __('Size','sell_media') . '</th>
-                        <th>' . __('Price','sell_media') . '</th>
-                        <th>' . __('Quantity','sell_media') . '</th>
-                        <th>' . __('License','sell_media') . '</th>
-                        <th>' . __('Download Link','sell_media') . '</th>
-                    </tr>
-                </thead>';
-            $html .= '<tbody>';
-            $cart = New Sell_Media_Cart;
-            $i = 0;
+        $html .= '<table class="wp-list-table widefat" cellspacing="0">';
+        $html .= '<thead>
+                <tr>
+                    <th scope="col">' . __('Item','sell_media') . '</th>
+                    <th>' . __('Size','sell_media') . '</th>
+                    <th>' . __('Price','sell_media') . '</th>
+                    <th>' . __('Quantity','sell_media') . '</th>
+                    <th>' . __('License','sell_media') . '</th>
+                    <th>' . __('Download Link','sell_media') . '</th>
+                </tr>
+            </thead>';
+        $html .= '<tbody>';
+        $cart = New Sell_Media_Cart;
+        $i = 0;
 
-            foreach( $links as $link ){
-
-                if ( empty( $link['qty'] ) ){
-                    if ( empty( $link['license_id'] ) ){
-                        $license = __('None','sell_media');
-                    } else {
-                        $license = get_term( $link['license_id'], 'licenses' );
-                        $license = $license->name;
-                    }
-
-                    /**
-                     * If we have no qty the default is 1
-                     * i.e., its a download
-                     */
-                    if ( isset( $products[$i]['qty'] ) ){
-                        $qty = $products[$i]['qty'];
-                    } else {
-                        $qty = 1;
-                    }
-
-                    /**
-                     * Derive price from the products array
-                     * or use the legacy $item_id
-                     */
-                    if ( isset( $products[$i]['price'] ) ){
-                        $price = $products[$i]['price']['amount'];
-                    } else {
-                        $price = $cart->item_markup_total( $link['item_id'], $link['price_id'], $link['license_id'] );
-                    }
-
-
-                    if ( empty( $link['url'] ) ){
-                        $tmp_download = __('N/A','sell_media');
-                    } elseif ( empty( $download_link ) ){
-                        $tmp_download = '<input type="text" value="' . $link['url'] . '" />';
-                    } else {
-                        $tmp_download = '<a href="'.$link['url'].'" target="_blank">' . get_post_field('post_title', $link['item_id']) . '</a>';
-                    }
-
-
-                    $html .= '<tr class="" valign="top">';
-                    $html .= '<td class="media-icon"><a href="'.get_edit_post_link($link['item_id']).'">' . $link['thumbnail'] . '</a></td>';
-                    $html .= '<td>'.$cart->item_size( $link['price_id'] ) . apply_filters('sell_media_payment_meta', $post_id, $link['price_id'] ) . '</td>';
-                    $html .= '<td>' . sell_media_get_currency_symbol() . $price . '</td>';
-                    $html .= '<td>' . $qty . '</td>';
-                    $html .= '<td>' . $license . '</td>';
-                    $html .= '<td class="title column-title">'.$tmp_download.'</td>';
-                    $html .= '</tr>';
-
-                }
-                $i++;
-            }
-            $html .= '</tbody>';
-            $html .= '</table>';
+        foreach( $this->get_products( $post_id ) as $product ){
+            $html .= '<tr class="" valign="top">';
+            $html .= '<td class="media-icon"><a href="' . get_edit_post_link( $product['id'] ) . '">' . wp_get_attachment_image( get_post_meta( $product['id'], '_sell_media_attachment_id', true ) ) . '</a></td>';
+            $html .= '<td>' . $cart->item_size( $product['size']['id'] ) . apply_filters('sell_media_payment_meta', $post_id, $product['size']['id'] ) . '</td>';
+            $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
+            $html .= '<td>' . $product['qty'] . '</td>';
+            $html .= '<td>' . $product['license']['name'] . '</td>';
+            $html .= '<td class="title column-title">download link</td>';
+            $html .= '</tr>';
         }
+        $html .= '</tbody>';
+        $html .= '</table>';
+
         return $html;
     }
 
@@ -294,5 +251,4 @@ Class Sell_Media_Payments {
 
         return apply_filters( 'sell_media_payment_status_filter', ucfirst( $status ), $post_id );
     }
-
 }

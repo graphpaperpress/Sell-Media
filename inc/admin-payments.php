@@ -77,7 +77,7 @@ function sell_media_payment_purchase_details( $post ){
 
     // do_action('sell_media_below_payment_contact_details');
 
-    // echo $payment_obj->payment_table( $post->ID );
+    echo $payment_obj->payment_table( $post->ID );
 
     // do_action( 'sell_media_additional_customer_meta', $post );
     echo '</div>';
