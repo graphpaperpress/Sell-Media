@@ -198,11 +198,10 @@ Class Sell_Media_Payments {
      * Used to build out an HTML table for a single payment containing ALL items for that payment
      *
      * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-     * @param $link (bool) Use a html hyper link or an input field to display the link
      *
      * @return $html (string) An html table containing the item, size, price, qty, and other usefulness
      */
-    public function payment_table( $post_id=null, $download_link=null ){
+    public function payment_table( $post_id=null ){
 
         $html = null;
         $html .= '<table class="wp-list-table widefat" cellspacing="0">';
@@ -260,8 +259,7 @@ Class Sell_Media_Payments {
         foreach( $products as $product ){
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
-                'payment_id' => $payment_id,
-                'price_id' => empty( $product['price']['id'] ) ? 'file' : (int)$product['price']['id']
+                'payment_id' => $payment_id
             ) );
         }
 

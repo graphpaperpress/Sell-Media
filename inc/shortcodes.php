@@ -193,7 +193,7 @@ function sell_media_download_shortcode( $atts ) {
                     $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
                     $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
                     $html .= '</ul>';
-                    $html .= $payment_obj->payment_table( $payment['post_id'], true );
+                    $html .= $payment_obj->payment_table( $payment['post_id'] );
                 }
             }
 
