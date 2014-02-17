@@ -254,12 +254,14 @@ Class Sell_Media_Payments {
     public function get_download_link( $payment_id=null, $product_id=null ){
 
         $products = $this->get_products( $payment_id );
+
         $tmp_links = array();
 
         foreach( $products as $product ){
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
-                'payment_id' => $payment_id
+                'payment_id' => $payment_id,
+                'price_id' => empty( $product['price']['id'] ) ? 'file' : (int)$product['price']['id']
             ) );
         }
 
