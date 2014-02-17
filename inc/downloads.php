@@ -64,7 +64,7 @@ Class Sell_Media_Download {
      *
      * @return void
      */
-    public function force_download( $location=null, $delete_tmp=false, $filename=null ){
+    public function force_download( $location=null, $delete_tmp=true, $filename=null ){
         $pathinfo = pathinfo( $location );
         switch( $pathinfo['extension'] ) {
             case "gif":  $ctype = "image/gif"; break;
@@ -135,7 +135,7 @@ Class Sell_Media_Download {
      *
      * @return Array of license false on failure
      */
-    public function get_license( $payment_id=null ){
+    public function get_license( $purchase_key=null ){
 
         $products = $this->get_purchases( $payment_id );
 
@@ -193,6 +193,117 @@ Class Sell_Media_Download {
         return $products;
     }
 
+
+    /**
+     * Retrieve the full path to the protected file
+     *
+     * @param (int)$product_id The id of the Sell Media item
+     * @return (mixed) Full file path to the original item in the protected directory, false if the file does not exists
+     */
+    public function protected_file_path( $product_id=null ){
+
+        $wp_upload_dir = wp_upload_dir();
+        $file_attached_path = get_post_meta( get_post_meta( $product_id, '_sell_media_attachment_id', true ), '_sell_media_attached_file', true );
+        $file_path = $wp_upload_dir['basedir'] . '/sell_media/' . $file_attached_path;
+
+        return file_exists( $file_path ) ? $file_path : false;
+    }
+
+
+    /**
+     * Used to download a generic file
+     */
+    public function download_file( $download_file=null ){
+        $this->force_download( $download_file );
+        exit;
+    }
+
+
+    public function download_image( $payment_id=null, $product_id=null ){
+
+        $attachment_id = get_post_meta( $product_id, '_sell_media_attachment_id', true );
+
+        /**
+         * For images other than the original we need to add this fix
+         */
+        // $attached_file = get_post_meta( $attachment_id, $term_id, true );
+        // if ( empty( $attached_file ) ){
+        //     $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+        // }
+
+
+        /**
+         * Get license ID by $item_id and $download
+         */
+        // global $wpdb;
+        // $query = $wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` LIKE 'publish' AND ID =
+        // (SELECT post_id FROM {$wpdb->prefix}postmeta
+        // WHERE meta_key LIKE '_sell_media_payment_purchase_key'
+        // AND meta_value LIKE '%s');", $download );
+
+        // $r = $wpdb->get_results( $query );
+        // $payment_id = $r[0]->ID;
+
+        // $products_s = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
+        // $products = unserialize( $products_s['products'] );
+        // $license_id = null;
+        // $tmp_license_id = null;
+
+        // foreach( $products as $product ){
+        //     $tmp_item_id = isset( $product['item_id'] ) ? $product['item_id'] : $product['id'];
+
+        //     if ( isset( $product['license_id'] ) && ! empty( $product['license_id'] ) ){
+        //         $tmp_license_id = $product['license_id'];
+        //     }
+
+        //     if ( isset( $product['license']['id'] ) && ! empty( $product['license']['id'] ) ){
+        //         $tmp_license_id = $product['license']['id'];
+        //     }
+
+        //     if ( $item_id == $tmp_item_id ){
+        //         $license_id = $tmp_license_id;
+        //     }
+        // }
+
+        // $license_obj = get_term( $license_id, 'licenses' );
+        // if ( is_wp_error( $license_obj ) ){
+        //     $license = null;
+        // } else {
+        //     $license = '-' . $license_obj->slug;
+        // }
+        // End get license
+
+
+        $price_id = $_GET['price_id'];
+
+        if ( $price_id == 'file' ){
+
+            $this->download_file( $this->protected_file_path( $product_id ) );
+
+        } else {
+            wp_die('custom download size');
+            $confirmed_size = sell_media_get_downloadable_size( $item_id, $term_id );
+
+            // We've come such a long way just to leave...
+            // Leave if this is a reprint purchase
+
+            if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
+                exit;
+
+            $new_image = array(
+                'height' => $confirmed_size['height'],
+                'width'  => $confirmed_size['width']
+            );
+
+            $file_download = $d->create_download_size( $new_image, $location, true );
+            $delete_tmp = true;
+        }
+        $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
+
+
+        $d->force_download( $file_download, $delete_tmp, $filename );
+        exit;
+    }
 }
 
 /**
@@ -208,133 +319,21 @@ function sell_media_process_download() {
 
         $transaction_id = urldecode( $_GET['download'] );
         $payment_id = urldecode( $_GET['payment_id'] );
-
-        // $term_id = $_GET['price_id'];
-        // $item_id = $_GET['id'];
-        $term_id = null;
-        $item_id = null;
+        $product_id = urldecode( $_GET['product_id'] );
 
         $d = New Sell_Media_Download;
         $verified = $d->verify_download_link( $transaction_id, $payment_id );
 
-
         if ( $verified ) {
-            wp_die('tdb');
-            /**
-             * Get the full pat to the file that will be downloaded in the sell media dir
-             */
-            $wp_upload_dir = wp_upload_dir();
-            $attachment_id = get_post_meta( $item_id, '_sell_media_attachment_id', true );
 
-            /**
-             * This is legacy code for older attached files
-             */
-            if ( $tmp = get_post_meta( $attachment_id, '_sell_media_attached_file', true ) ){
-                $_attached_file = $tmp;
-            } else {
-                $_attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
-            }
-
-            $location = $wp_upload_dir['basedir'] . '/sell_media/' . $_attached_file;
-
-            /**
-             * Check if this download is an image, if it is we generate the download size
-             */
-            $mime_type = wp_check_filetype( $location );
-            $size = null;
-            $license = null;
+            $download_file = $d->protected_file_path( $product_id );
+            $mime_type = wp_check_filetype( $download_file );
 
             if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ){
-
-                /**
-                 * For images other than the original we need to add this fix
-                 */
-                $attached_file = get_post_meta( $attachment_id, $term_id, true );
-                if ( empty( $attached_file ) ){
-                    $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
-                }
-
-
-                /**
-                 * Get license ID by $item_id and $download
-                 */
-                global $wpdb;
-                $query = $wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_status` LIKE 'publish' AND ID =
-                (SELECT post_id FROM {$wpdb->prefix}postmeta
-                WHERE meta_key LIKE '_sell_media_payment_purchase_key'
-                AND meta_value LIKE '%s');", $download );
-
-                $r = $wpdb->get_results( $query );
-                $payment_id = $r[0]->ID;
-
-                $products_s = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
-                $products = unserialize( $products_s['products'] );
-                $license_id = null;
-                $tmp_license_id = null;
-
-                foreach( $products as $product ){
-                    $tmp_item_id = isset( $product['item_id'] ) ? $product['item_id'] : $product['id'];
-
-                    if ( isset( $product['license_id'] ) && ! empty( $product['license_id'] ) ){
-                        $tmp_license_id = $product['license_id'];
-                    }
-
-                    if ( isset( $product['license']['id'] ) && ! empty( $product['license']['id'] ) ){
-                        $tmp_license_id = $product['license']['id'];
-                    }
-
-                    if ( $item_id == $tmp_item_id ){
-                        $license_id = $tmp_license_id;
-                    }
-                }
-
-                $license_obj = get_term( $license_id, 'licenses' );
-                if ( is_wp_error( $license_obj ) ){
-                    $license = null;
-                } else {
-                    $license = '-' . $license_obj->slug;
-                }
-                // End get license
-
-
-                if ( $term_id == 'sell_media_original_file' ){
-
-                    $file_download = $location;
-                    $delete_tmp = false;
-
-                    list( $new_image['width'], $new_image['height'] ) = getimagesize( $file_download );
-
-                } else {
-                    $confirmed_size = sell_media_get_downloadable_size( $item_id, $term_id );
-
-                    // We've come such a long way just to leave...
-                    // Leave if this is a reprint purchase
-
-                    if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
-                        exit;
-
-                    $new_image = array(
-                        'height' => $confirmed_size['height'],
-                        'width'  => $confirmed_size['width']
-                    );
-
-                    $file_download = $d->create_download_size( $new_image, $location, true );
-                    $delete_tmp = true;
-
-                }
-                $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
+                $d->download_image( $payment_id, $product_id );
             } else {
-
-                $file_download = $location;
-                $delete_tmp = false;
+                $d->download_file( $download_file );
             }
-
-            // Create unique name based on the file width, height and license
-            $file_name_info = pathinfo( basename( $file_download ) );
-            $filename = $file_name_info['filename'] . $size . $license . '.' . $file_name_info['extension'];
-
-            $d->force_download( $file_download, $delete_tmp, $filename );
-            exit;
 
         } else {
             wp_die(__('You do not have permission to download this file', 'sell_media'), __('Purchase Verification Failed', 'sell_media'));
