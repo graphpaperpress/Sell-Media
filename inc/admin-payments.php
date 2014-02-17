@@ -61,8 +61,6 @@ function sell_media_payment_purchase_details( $post ){
 
     $payment_obj = new Sell_Media_Payments;
 
-var_dump( $payment_obj->paypal_copy_args( $post->ID ) );
-
     echo '<div class="sell-media-admin-payments">';
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
