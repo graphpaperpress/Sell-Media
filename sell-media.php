@@ -640,31 +640,38 @@ class SellMedia {
         } if ( !is_admin() ) {
             wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
             wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+            wp_enqueue_script( 'simple-cart', plugin_dir_url( __FILE__ ) . 'js/simple-cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
             $amount = 0;
             $quantity = 0;
 
             $settings = sell_media_get_plugin_options();
+
             $cart_obj = New Sell_Media_Cart;
 
-            wp_localize_script('sell_media', 'sell_media',
-                array(
+            wp_localize_script('sell_media', 'sell_media', array(
                 'ajaxurl' => admin_url("admin-ajax.php"),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
-                'checkouturl' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
+                'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
                 'cart' => array(
                     'subtotal' => empty( $_SESSION['cart']['items'] ) ? 0 : $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
                     'total' => empty( $_SESSION['cart']['total'] ) ? 0 : $_SESSION['cart']['total'] + apply_filters('sell_media_shipping_rate', "0.00" ),
                     'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
-                    'currency_symbol' => sell_media_get_currency_symbol()
+                    'currency_symbol' => $settings->currency
                     ),
                 'error' => array(
                     'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                     ),
-                'default_gateway' => $settings->default_gateway
-                )
-            );
-
+                'default_gateway' => $settings->default_gateway,
+                'sandbox' => ( $settings->test_mode == 1 ) ? 'true' : 'false',
+                'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
+                'thanks_page' => get_permalink( $settings->thanks_page ),
+                'listener_url' => site_url( '?sell_media-listener=IPN' ),
+                'added_to_cart' => sprintf(
+                    "%s <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
+                    __( 'was added to', 'sell_media' ),
+                    __( 'your cart','sell_media' ) )
+                ) );
 
             wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
             wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
