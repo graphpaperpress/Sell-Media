@@ -13,7 +13,7 @@ function sell_media_cart_js(){
 		function createPayment( data ){
 
 			$.ajax({
-				url: ajaxurl,
+				url: sell_media.ajaxurl,
 				data: {
 					'action': 'sell_media_ajax_create_payment',
 					'cart_data' : data
@@ -52,7 +52,7 @@ function sell_media_cart_js(){
 			cancel: "<?php echo get_permalink( $settings->checkout_page ); ?>",
 			notify: "<?php echo site_url( '?sell_media-listener=IPN' ); ?>",
 			shipping: 0 // 0 prompt & optional, 1 no prompt, 2 prompt & required
-			
+
 		});
 
 		// callback beforeCheckout
@@ -68,19 +68,6 @@ function sell_media_cart_js(){
 
 <?php }
 add_action( 'wp_head', 'sell_media_cart_js' );
-
-
-/*
- * Set Ajax URL
- */
-function sell_media_ajaxurl() {
-?>
-	<script type="text/javascript">
-		var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-	</script>
-<?php
-}
-add_action( 'wp_head', 'sell_media_ajaxurl' );
 
 
 /*
