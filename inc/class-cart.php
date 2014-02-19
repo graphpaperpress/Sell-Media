@@ -8,13 +8,7 @@
  */
 Class SellMediaCart {
 
-
     public function __construct(){
-        add_action( 'wp_ajax_nopriv_add_items', array( &$this, 'add_items' ) );
-        add_action( 'wp_ajax_add_items', array( &$this, 'add_items' ) );
-
-        add_action( 'wp_ajax_nopriv_remove_item', array( &$this, 'remove_item' ) );
-        add_action( 'wp_ajax_remove_item', array( &$this, 'remove_item' ) );
 
         add_action( 'wp_ajax_nopriv_sell_media_check_email', array( &$this, 'check_email' ) );
         add_action( 'wp_ajax_sell_media_check_email', array( &$this, 'check_email' ) );
@@ -176,136 +170,6 @@ Class SellMediaCart {
         return $quantity;
     }
 
-
-    /**
-     * Add items to $_SESSION for shopping cart via $_POST
-     *
-     * @since 0.1
-     * @todo Update all price_id to be size_id
-     * @todo Update all price id (array) to be part of item array
-     * @todo move this into the cart class
-     */
-    public function add_items(){
-
-        check_ajax_referer('add_items', 'sell_media_nonce');
-
-        // Get current cart if any if not set $cart to be an empty array
-        $cart = isset( $_SESSION['cart']['items'] ) ? $_SESSION['cart']['items'] : array();
-
-        // Get any additional items
-        $to_add = array();
-        $to_add = apply_filters('sell_media_additional_items', $to_add);
-
-        // If we don't have additional items we use whats in $_POST
-        if ( empty( $to_add ) ){
-
-            if ( empty( $_POST['price_id'] ) ) die();
-
-            // Determine price group, id, name, description
-            if ( $_POST['price_id'] == 'sell_media_original_file' ){
-                $price_name = __('Original File');
-                $description = null;
-            } else {
-                $price_group_obj = get_term_by( 'id', $_POST['price_id'], 'price-group' );
-                $price_name = $price_group_obj->name;
-
-                $image_sizes = sell_media_image_sizes( $_POST['ProductID'], false );
-                if ( ! empty( $image_sizes[ $_POST['price_id'] ] ) ){
-                    $width = $image_sizes[ $_POST['price_id'] ]['width'];
-                    $height = $image_sizes[ $_POST['price_id'] ]['height'];
-                }
-
-                if ( ! empty( $width ) && ! empty( $height ) ){
-                    $description = apply_filters( 'sell_media_cart_price_description', $width . ' x ' . $height );
-                }
-            }
-
-
-            // Determine license id, name, description
-            if ( empty( $_POST['License'] ) ){
-                $markup = null;
-                $license_name = null;
-                $license_id = null;
-            } else {
-                $license_obj = get_term_by( 'id', $_POST['License'], 'licenses' );
-                $license_id = $license_obj->term_id;
-                $license_name = $license_obj->name;
-                $markup = sell_media_get_term_meta( $license_obj->term_id, 'markup', true );
-            }
-
-
-            $items[] = array(
-                'id' => (int)$_POST['ProductID'],
-                'name' => get_post_field('post_title', (int)$_POST['ProductID'] ),
-                'price' => array(
-                    'id' => $_POST['price_id'],
-                    'name' => $price_name,
-                    'description' => $description,
-                    'amount' => $this->item_price( $_POST['ProductID'], $_POST['price_id'] )
-                ),
-                'license' => array(
-                    'id' => $license_id,
-                    'name' => $license_name,
-                    'markup' => $markup
-                    ),
-                'qty' => 1,
-                'total' => $this->item_markup_total( $_POST['ProductID'], $_POST['price_id'], $license_id )
-                );
-
-            $items = array_merge( $cart, $items );
-        } else {
-            // We have additional items and merge the current cart with the new items to add
-            $items = array_merge( $cart, $to_add );
-        }
-
-        // Update our session with the new items
-        $_SESSION['cart']['items'] = $items;
-
-        // Update the total and the quantity
-        $_SESSION['cart']['currency'] = sell_media_get_currency_symbol();
-        $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] );
-        $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) + apply_filters('sell_media_shipping_rate', "0.00" );
-        $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
-
-        wp_send_json_success( $_SESSION );
-    }
-
-
-    /**
-     * Removes an item from the users cart, updates the quantity and total in session
-     *
-     * @since 0.1
-     * @param Derives the post_id from $_POST['item_id'], or an array of IDs from $_POST['item_id']
-     * @return null
-     */
-    public function remove_item() {
-
-        $item_index = $_POST['item_id'];
-
-        // remove all
-        if ( is_array( $item_index ) ){
-            foreach( $item_index as $id ){
-                $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['total'];
-                $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['total'];
-                $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $id ]['qty'];
-                unset( $_SESSION['cart']['items'][ $id ] );
-            }
-        // remove single
-        } else {
-            $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
-            $_SESSION['cart']['total'] = $this->get_subtotal( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['total'];
-            $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] ) - $_SESSION['cart']['items'][ $item_index ]['qty'];
-            unset( $_SESSION['cart']['items'][$item_index] );
-        }
-
-        if ( empty( $_SESSION['cart']['items'] ) ) {
-            print '<p>' . __('You have no items in your cart. ', 'sell_media') . '<a href="'. get_post_type_archive_link('sell_media_item') .'">' . __('Continue shopping', 'sell_media') .'</a>.</p>';
-        }
-
-        die();
-    }
-
-
     /**
      * Takes the current shopping cart and stores it in the database
      * at time of purchase
@@ -357,7 +221,6 @@ Class SellMediaCart {
         echo '<hr />';
         print_r( $full_cart );
         echo '</pre>';
-
     }
 
 
@@ -388,40 +251,6 @@ Class SellMediaCart {
     }
 
 
-    /**
-     * Updates a given key in the cart and updates total, sub-total as needed
-     *
-     * @param $cart_id (int) The index of the item in the cart
-     * @param $key (string) The key for the cart item
-     * @param $value (string) The new value
-     *
-     * @return
-     */
-    public function update_item( $cart_id=null, $key=null, $value=null ){
-
-        // Update the item in the cart
-        $_SESSION['cart']['items'][ $cart_id ][ $key ] = $value;
-
-        // Update total for the item
-        $_SESSION['cart']['items'][ $cart_id ]['total'] = $_SESSION['cart']['items'][ $cart_id ]['qty'] * $_SESSION['cart']['items'][ $cart_id ]['price']['amount'];
-
-        // Update the total
-        $_SESSION['cart']['subtotal'] = $this->get_subtotal( $_SESSION['cart']['items'] );
-
-        // If our key is the quantity, we update the qty for the entire cart along
-        // with updating our total for this specific item
-        if ( $key == 'qty' ){
-            $_SESSION['cart']['qty'] = $this->get_quantity( $_SESSION['cart']['items'] );
-            $_SESSION['cart']['items'][ $cart_id ]['total'] = $value * $this->item_markup_total(
-                $_SESSION['cart']['items'][ $cart_id ]['id'],
-                $_SESSION['cart']['items'][ $cart_id ]['price']['id'],
-                empty( $_SESSION['cart']['items'][ $cart_id ]['license'] ) ? null : $_SESSION['cart']['items'][ $cart_id ]['license']['id']
-                );
-        }
-
-    }
-
-
     public function checkout_shortcode(){
 
         do_action( 'sell_media_checkout_before_cart' );
@@ -440,10 +269,7 @@ Class SellMediaCart {
         $html .= '</div>';
 
         return $html;
-
     }
-
-
 
 }
 // Later make this a singleton or better don't use one
