@@ -260,7 +260,8 @@ Class SellMediaPayments {
         foreach( $products as $product ){
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
-                'payment_id' => $payment_id
+                'payment_id' => $payment_id,
+                'product_id' => $product['id']
             ) );
         }
 
@@ -289,6 +290,18 @@ Class SellMediaPayments {
         $message['subject'] = $settings->success_email_subject;
         $message['body'] = $settings->success_email_body;
 
+        $i = 0;
+        $download_urls = $this->get_download_link( $payment_id );
+        $count = count( $download_urls );
+
+        $links = null;
+        foreach( $download_urls as $k => $v ){
+            $links .= '<a href="'.$v.'">' . get_the_title( $k ) .'</a>';
+            $comma = ( $i == $count - 1 ) ? null : ', ';
+            $links .= $comma;
+            $i++;
+        }
+
         $tags = array(
             '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
             '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
@@ -297,8 +310,23 @@ Class SellMediaPayments {
         );
 
         $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
-        $message['body'] = $this->get_products_formatted( $payment_id );
 
+        /**
+         * Since this function is ran before licenses are init'd
+         * we need to manually load them
+         */
+        $products = $this->get_products( $payment_id );
+        $license_message = null;
+        foreach( $products as $product ){
+            if ( ! empty( $product['license']['id'] ) ){
+                $license_message .= "{$product['license']['name']}<br />";
+                $license_message .= "{$product['license']['description']}<br />";
+            }
+        }
+        if ( ! empty( $license_message ) ){
+            $license_title = sprintf( "%s<br />", __("Your purchase entitles you to the following usage:", "sell_media") );
+            $message['body'] .= $license_title . $license_message;
+        }
 
         $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
         $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
@@ -311,9 +339,6 @@ Class SellMediaPayments {
         if ( ! empty( $settings->paypal_additional_test_email ) ){
             $email = $email . ', ' . $settings->paypal_additional_test_email;
         }
-
-        // echo '<pre>';
-        // print_r( $message );
 
         // Send the email
         $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );

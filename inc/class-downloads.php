@@ -139,7 +139,7 @@ Class SellMediaDownload {
      */
     public function get_license( $purchase_key=null ){
 
-        $products = $this->get_purchases( $payment_id );
+        $products = $this->get_purchases( $purchase_key );
 
         $licenses = array();
         $tmp = array();
