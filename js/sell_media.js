@@ -264,7 +264,7 @@ jQuery( document ).ready(function( $ ){
             { attr: "total", label: "SubTotal", view: "currency" },
             { view: "remove", text: "Remove", label: false }
         ],
-        currency: sell_media.cart.currency_symbol,
+        currency: sell_media.currency_symbol,
         success: sell_media.thanks_page,
         cancel: sell_media.checkout_page,
         notify: sell_media.listener_url,

@@ -645,18 +645,13 @@ class SellMedia {
 
             $settings = sell_media_get_plugin_options();
 
-            $cart_obj = new SellMediaCart;
+
 
             wp_localize_script('sell_media', 'sell_media', array(
                 'ajaxurl' => admin_url("admin-ajax.php"),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
                 'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
-                'cart' => array(
-                    'subtotal' => empty( $_SESSION['cart']['items'] ) ? 0 : $cart_obj->get_subtotal( $_SESSION['cart']['items'] ),
-                    'total' => empty( $_SESSION['cart']['total'] ) ? 0 : $_SESSION['cart']['total'] + apply_filters('sell_media_shipping_rate', "0.00" ),
-                    'quantity' => empty( $_SESSION['cart']['qty'] ) ? 0 : $_SESSION['cart']['qty'],
-                    'currency_symbol' => $settings->currency
-                    ),
+                'currency_symbol' => $settings->currency,
                 'error' => array(
                     'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                     ),
