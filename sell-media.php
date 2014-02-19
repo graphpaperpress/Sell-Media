@@ -14,7 +14,7 @@ License: GPL
 define( 'SELL_MEDIA_VERSION', '1.7' );
 define( 'SELL_MEDIA_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'sell-media.php' );
 
-include( dirname(__FILE__) . '/inc/downloads.php' );
+include( dirname(__FILE__) . '/inc/class-downloads.php' );
 include( dirname(__FILE__) . '/inc/helpers.php');
 include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
 include( dirname(__FILE__) . '/inc/shortcodes.php' );

@@ -272,4 +272,53 @@ Class SellMediaPayments {
 
         return $link;
     }
+
+
+    /**
+     * Build the email to be sent to the user and send the email
+     * containing download links for PUBLISHED items only
+     *
+     * @since 0.1
+     */
+    public function email_receipt( $payment_id=null, $email=null ) {
+
+        $message['from_name'] = get_bloginfo( 'name' );
+        $message['from_email'] = get_option( 'admin_email' );
+
+        $settings = sell_media_get_plugin_options();
+        $message['subject'] = $settings->success_email_subject;
+        $message['body'] = $settings->success_email_body;
+
+        $tags = array(
+            '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
+            '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
+            '{email}'           => $this->get_meta_key( $payment_id, 'email' ),
+            '{download_links}'  => empty( $links ) ? null : $links
+        );
+
+        $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
+        $message['body'] = $this->get_products_formatted( $payment_id );
+
+
+        $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
+        $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
+        $message['headers'] .= "MIME-Version: 1.0\r\n";
+        $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
+
+        /**
+         * Check if we have additional test emails, if so we concatenate them
+         */
+        if ( ! empty( $settings->paypal_additional_test_email ) ){
+            $email = $email . ', ' . $settings->paypal_additional_test_email;
+        }
+
+        // echo '<pre>';
+        // print_r( $message );
+
+        // Send the email
+        $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );
+
+        return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
+    }
+
 }
