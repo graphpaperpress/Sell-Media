@@ -1,6 +1,6 @@
 <?php
 
-Class Sell_Media_Search {
+Class SellMediaSearch {
 
     public $keyword_ids;
 

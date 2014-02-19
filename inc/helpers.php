@@ -512,7 +512,7 @@ function sell_media_get_cusotmer_products( $payment_id=null ){
  */
 function sell_media_build_download_link( $payment_id=null ){
 
-    $p = new Sell_Media_Payments;
+    $p = new SellMediaPayments;
     $downloads = $p->get_products( $payment_id );
 
     $tmp_links = array();

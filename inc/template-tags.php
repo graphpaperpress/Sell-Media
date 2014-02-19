@@ -540,7 +540,7 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
      * with the width and height of the current image. Remove
      * sizes that are not downloadable.
      */
-    $cart = New Sell_Media_Cart;
+    $cart = new SellMediaCart;
     $price_groups = sell_media_get_price_groups( $post_id = $post_id, $taxonomy = 'price-group' );
     if ( ! empty( $price_groups ) ){
         foreach( $price_groups as $price ){

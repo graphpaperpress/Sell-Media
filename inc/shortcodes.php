@@ -183,7 +183,7 @@ function sell_media_download_shortcode( $atts ) {
         get_currentuserinfo();
 
 	    $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s order by post_id DESC", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
-            $payment_obj = New Sell_Media_Payments;
+            $payment_obj = new SellMediaPayments;
             $html = null;
 
             foreach( $payment_lists as $payment ){

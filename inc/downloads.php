@@ -1,6 +1,6 @@
 <?php
 
-Class Sell_Media_Download {
+Class SellMediaDownload {
 
     private $tmp_dir;
 
@@ -115,7 +115,7 @@ Class Sell_Media_Download {
      * @return boolean
      */
     public function verify_download_link( $transaction_id=null, $payment_id=null ) {
-        $payments_obj = new Sell_Media_Payments;
+        $payments_obj = new SellMediaPayments;
 
         if ( $transaction_id == $payments_obj->get_meta_key( $payment_id, 'transaction_id' ) ){
             $status = true;
@@ -230,7 +230,7 @@ Class Sell_Media_Download {
 
         $attachment_id = get_post_meta( $product_id, '_sell_media_attachment_id', true );
 
-        $payments_obj = new Sell_Media_Payments;
+        $payments_obj = new SellMediaPayments;
         $products = $payments_obj->get_products( $payment_id );
 
         // test value
@@ -288,7 +288,7 @@ function sell_media_process_download() {
         $payment_id = urldecode( $_GET['payment_id'] );
         $product_id = urldecode( $_GET['product_id'] );
 
-        $d = New Sell_Media_Download;
+        $d = New SellMediaDownload;
         $verified = $d->verify_download_link( $transaction_id, $payment_id );
 
         if ( $verified ) {
@@ -327,7 +327,7 @@ add_action( 'init', 'sell_media_process_download', 100 );
  */
 function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
 
-    $p = new Sell_Media_Payments;
+    $p = new SellMediaPayments;
 
     $message['from_name'] = get_bloginfo( 'name' );
     $message['from_email'] = get_option( 'admin_email' );

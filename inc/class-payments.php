@@ -1,6 +1,6 @@
 <?php
 
-Class Sell_Media_Payments {
+Class SellMediaPayments {
 
 	/**
 	* Get meta associated with a payment

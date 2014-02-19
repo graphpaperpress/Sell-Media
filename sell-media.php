@@ -645,7 +645,7 @@ class SellMedia {
 
             $settings = sell_media_get_plugin_options();
 
-            $cart_obj = New Sell_Media_Cart;
+            $cart_obj = new SellMediaCart;
 
             wp_localize_script('sell_media', 'sell_media', array(
                 'ajaxurl' => admin_url("admin-ajax.php"),
@@ -771,7 +771,7 @@ class SellMedia {
                          );
             }
 
-            $search = New Sell_Media_Search;
+            $search = New SellMediaSearch;
             if ( $search->keyword_ids ){
                 $tax_query[] = array(
                     'taxonomy' => 'keywords',

@@ -6,7 +6,7 @@
  *
  * @author Zane M. Kolnik
  */
-Class Sell_Media_Cart {
+Class SellMediaCart {
 
 
     public function __construct(){
@@ -447,4 +447,4 @@ Class Sell_Media_Cart {
 
 }
 // Later make this a singleton or better don't use one
-New Sell_Media_Cart;
+new SellMediaCart;

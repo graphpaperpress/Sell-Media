@@ -59,7 +59,7 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  */
 function sell_media_payment_purchase_details( $post ){
 
-    $payment_obj = new Sell_Media_Payments;
+    $payment_obj = new SellMediaPayments;
 
     echo '<div class="sell-media-admin-payments">';
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
@@ -262,7 +262,7 @@ function sell_media_payments_callback_fn(){
                     </td>
                     <td>
                         <?php
-                            $p = new Sell_Media_Payments;
+                            $p = new SellMediaPayments;
                             $products = $p->get_products( $payment->ID );
                             if ( $products ) foreach ( $products as $product ) {
                                 print $product['name'];

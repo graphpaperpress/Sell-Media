@@ -1,6 +1,6 @@
 <?php
 
-Class Sell_Media_Customer {
+Class SellMediaCustomer {
 
 	/**
 	* Insert a new customer
@@ -45,7 +45,7 @@ Class Sell_Media_Customer {
 			}
 			return $purchases;
 		}
-		
+
 	}
 
 	/**
@@ -57,7 +57,7 @@ Class Sell_Media_Customer {
 	public function get_purchase( $user_id=null, $post_id=null ){
 
 		$user_meta = get_user_meta( $user_id, '_sell_media_user_purchases' );
-		
+
 	}
 
 	/**
@@ -69,7 +69,7 @@ Class Sell_Media_Customer {
 	public function update_purchases( $user_id=null, $post_id=null ){
 
 		$user_meta = get_user_meta( $user_id, '_sell_media_user_purchases' );
-		
+
 	}
 
 
@@ -82,7 +82,7 @@ Class Sell_Media_Customer {
 	*/
 	public function customer_payment( $post_id=null ){
 		$meta = get_post_meta( $post_id, '_sell_media_payment_meta', true ) );
-		
+
 		$user = get_user_by( 'email',  );
 		if ( get_userdata( get_post_meta( $post_id, '_sell_media_user_id', true ) ) ){
 			$edit_link = '<a href="' . get_edit_user_link( get_post_meta( $post_id, '_sell_media_user_id', true ) ) . '">Edit</a>';

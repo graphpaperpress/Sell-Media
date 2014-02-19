@@ -173,7 +173,7 @@ function sell_media_process_paypal_ipn() {
                 update_post_meta( $payment_id, '_paypal_args', $_POST );
 
                 // record the PayPal payment details
-                $p = new Sell_Media_Payments;
+                $p = new SellMediaPayments;
                 $p->paypal_copy_args( $payment_id );
 
                 $message .= "\nSuccess! Your purchase has been completed.\n";
