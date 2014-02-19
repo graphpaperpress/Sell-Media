@@ -327,6 +327,8 @@ add_action( 'init', 'sell_media_process_download', 100 );
  */
 function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
 
+    $p = new Sell_Media_Payments;
+
     $message['from_name'] = get_bloginfo( 'name' );
     $message['from_email'] = get_option( 'admin_email' );
 
@@ -335,15 +337,13 @@ function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
     $message['body'] = $settings->success_email_body;
 
     $tags = array(
-        '{first_name}'		=> sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'first_name' ) ),
-        '{last_name}'		=> sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'last_name' ) ),
-        '{email}'			=> sell_media_get_post_meta_args( $payment_id, $metakey='_sell_media_payment_meta', $args=array( 'email' ) ),
+        '{first_name}'		=> $p->get_meta_key( $payment_id, 'first_name' ),
+        '{last_name}'		=> $p->get_meta_key( $payment_id, 'last_name' ),
+        '{email}'			=> $p->get_meta_key( $payment_id, 'email' ),
         '{download_links}'	=> empty( $links ) ? null : $links
     );
 
 	$message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
-
-    $p = new Sell_Media_Payments;
     $message['body'] = $p->get_products_formatted( $payment_id );
 
 
@@ -358,6 +358,9 @@ function sell_media_email_purchase_receipt( $payment_id=null, $email=null ) {
     if ( ! empty( $settings->paypal_additional_test_email ) ){
         $email = $email . ', ' . $settings->paypal_additional_test_email;
     }
+
+echo '<pre>';
+print_r( $message );
 
     // Send the email
     $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );

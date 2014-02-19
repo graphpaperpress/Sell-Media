@@ -18,6 +18,8 @@ Class Sell_Media_Cart {
 
         add_action( 'wp_ajax_nopriv_sell_media_check_email', array( &$this, 'check_email' ) );
         add_action( 'wp_ajax_sell_media_check_email', array( &$this, 'check_email' ) );
+
+        add_shortcode( 'sell_media_checkout', array( &$this, 'checkout_shortcode' ) );
     }
 
 
@@ -418,6 +420,30 @@ Class Sell_Media_Cart {
         }
 
     }
+
+
+    public function checkout_shortcode(){
+
+        do_action( 'sell_media_checkout_before_cart' );
+        $html = '<div class="simpleCart_items"></div>';
+        $html .= '<div class="sell-media-totals group">';
+        $html .= '<div class="subtotal"><span class="sell-media-itemize">' . __( 'Subtotal', 'sell_media' ) . ':</span> <span class="simpleCart_total"></span></div>';
+        $html .= '<div class="tax"><span class="sell-media-itemize">' . __( 'Tax', 'sell_media' ) . ':</span> <span class="simpleCart_tax"></span></div>';
+        $html .= '<div class="shipping"><span class="sell-media-itemize">' . __( 'Shipping', 'sell_media' ) . ':</span> <span class="simpleCart_shipping"></span></div>';
+        $html .= '<div class="total sell-media-bold"><span class="sell-media-itemize">'  . __( 'Total', 'sell_media' ) . ':</span> <span class="simpleCart_grandTotal"></span></div>';
+        $html .= '</div>';
+        do_action( 'sell_media_checkout_registration_fields' );
+        do_action( 'sell_media_checkout_after_registration_fields' );
+        $html .= '<div class="sell-media-checkout-button group">';
+        $html .= '<a href="javascript:;" class="simpleCart_checkout sell-media-button">'. __( 'Checkout', 'sell_media' ) . '</a>';
+        do_action( 'sell_media_checkout_after_checkout_button' );
+        $html .= '</div>';
+
+        return $html;
+
+    }
+
+
 
 }
 // Later make this a singleton or better don't use one
