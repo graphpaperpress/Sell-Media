@@ -1244,3 +1244,53 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
     return $price_groups;
 
 }
+
+
+/**
+ * Check if an email already exists.
+ *
+ * @param $_POST['email']
+ * @uses wp_send_json_error()
+ * @uses wp_send_json_success()
+ * @package AJAX
+ * @return JSON Object
+ */
+function sell_media_check_email(){
+    check_ajax_referer('sell_media_check_email', 'security');
+    $response = array();
+    if ( email_exists( $_POST['email'] ) ){
+        $response = array(
+            'message' => __("Email exists or is invalid", 'sell_media'),
+            'status' => 1
+            );
+    } else {
+        $response = array(
+            'message' => __("Email does not exists",'sell_media'),
+            'status' => 0
+            );
+    }
+    wp_send_json( $response );
+}
+add_action( 'wp_ajax_nopriv_sell_media_check_email', 'sell_media_check_email' );
+add_action( 'wp_ajax_sell_media_check_email', 'sell_media_check_email' );
+
+
+function checkout_shortcode(){
+    do_action( 'sell_media_checkout_before_cart' );
+    $html = '<div class="simpleCart_items"></div>';
+    $html .= '<div class="sell-media-totals group">';
+    $html .= '<div class="subtotal"><span class="sell-media-itemize">' . __( 'Subtotal', 'sell_media' ) . ':</span> <span class="simpleCart_total"></span></div>';
+    $html .= '<div class="tax"><span class="sell-media-itemize">' . __( 'Tax', 'sell_media' ) . ':</span> <span class="simpleCart_tax"></span></div>';
+    $html .= '<div class="shipping"><span class="sell-media-itemize">' . __( 'Shipping', 'sell_media' ) . ':</span> <span class="simpleCart_shipping"></span></div>';
+    $html .= '<div class="total sell-media-bold"><span class="sell-media-itemize">'  . __( 'Total', 'sell_media' ) . ':</span> <span class="simpleCart_grandTotal"></span></div>';
+    $html .= '</div>';
+    do_action( 'sell_media_checkout_registration_fields' );
+    do_action( 'sell_media_checkout_after_registration_fields' );
+    $html .= '<div class="sell-media-checkout-button group">';
+    $html .= '<a href="javascript:;" class="simpleCart_checkout sell-media-button">'. __( 'Checkout', 'sell_media' ) . '</a>';
+    do_action( 'sell_media_checkout_after_checkout_button' );
+    $html .= '</div>';
+
+    return $html;
+}
+add_shortcode( 'sell_media_checkout', 'checkout_shortcode' );

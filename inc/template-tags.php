@@ -540,7 +540,6 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
      * with the width and height of the current image. Remove
      * sizes that are not downloadable.
      */
-    $cart = new SellMediaCart;
     $price_groups = sell_media_get_price_groups( $post_id = $post_id, $taxonomy = 'price-group' );
     if ( ! empty( $price_groups ) ){
         foreach( $price_groups as $price ){
@@ -556,13 +555,37 @@ function sell_media_get_downloadable_size( $post_id=null, $term_id=null, $size_n
                 $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
                 $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
 
+                $settings = sell_media_get_plugin_options();
+                $custom_price = get_post_meta( $post_id, 'sell_media_price', true );
+
+                /**
+                 * Determine the price
+                 */
+                if ( $price->term_id == 'sell_media_original_file' && ! empty( $custom_price ) ){
+                    $item_price = $custom_price;
+                } elseif ( $price->term_id == 'sell_media_original_file' && empty( $custom_price ) ){
+                    $item_price = $settings->default_price;
+                } elseif ( $price->term_id == 'default_price' && empty( $custom_price ) ){
+                    $item_price = $settings->default_price;
+                } elseif ( $price->term_id == 'default_price' && ! empty( $custom_price ) ) {
+                    $item_price = $custom_price;
+                } else {
+                    $item_price = sell_media_get_term_meta( $price->term_id, 'price', true );
+                }
+
+                $filtered_price = apply_filters( 'sell_media_filtered_price', $price->term_id );
+                if ( $filtered_price != $price->term_id ){
+                    $item_price = $filtered_price;
+                }
+
+
                 /**
                  * Build our array to be returned, the downloadable width and height
                  * are calculated later and added to this array
                  */
                 $download_sizes[ $price->term_id ] = array(
                     'name' => $price->name,
-                    'price' => $cart->item_price( $post_id, $price->term_id )
+                    'price' => sprintf('%0.2f', $item_price)
                     );
 
                 /**
