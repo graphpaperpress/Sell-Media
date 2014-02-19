@@ -14,7 +14,6 @@ License: GPL
 define( 'SELL_MEDIA_VERSION', '1.7' );
 define( 'SELL_MEDIA_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'sell-media.php' );
 
-include( dirname(__FILE__) . '/inc/cart.php' );
 include( dirname(__FILE__) . '/inc/downloads.php' );
 include( dirname(__FILE__) . '/inc/helpers.php');
 include( dirname(__FILE__) . '/inc/gateways/paypal.php' );
@@ -78,6 +77,7 @@ class SellMedia {
         add_action( 'admin_init', array( &$this, 'initAdmin' ) );
         add_action( 'admin_menu', array( &$this, 'adminMenus' ) );
         add_action( 'pre_get_posts', array( &$this, 'collection_password_check' ) );
+        add_action( 'wp_footer', array( &$this, 'footer' ) );
         if( !is_admin() ){
             add_filter( 'posts_orderby', array( &$this, 'order_by') );
         }
@@ -888,6 +888,19 @@ class SellMedia {
         }
         return $order_by;
     }
+
+    public function footer(){
+        $settings = sell_media_get_plugin_options();
+        if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
+        <div id="terms-and-conditions-dialog" style="display: none;">
+            <span class="close">&times;</span>
+            <?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?>
+        </div>
+        <?php endif; ?>
+        <div class="sell-media-cart-dialog" style="display:none">
+            <div class="sell-media-cart-dialog-target"><h2><?php _e( 'Loading', 'sell_media' ); ?>...</h2></div>
+        </div>
+    <?php }
 } // end class
 
 load_plugin_textdomain( 'sell_media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
