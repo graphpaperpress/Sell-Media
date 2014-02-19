@@ -153,20 +153,21 @@ Class Sell_Media_Payments {
                 $tmp[ $k ] = $paypal_args[ $v ];
             } else {
                 for ( $i=1; $i <= $paypal_args['num_cart_items']; $i++ ) {
+                    echo sell_media_get_term_meta( $paypal_args[ 'option_selection4_' . $i ], 'markup', true );
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
                         'size' => array(
                             'name' => $paypal_args[ 'option_selection2_' . $i ],
-                            'id' => null,
+                            'id' => $paypal_args[ 'option_selection3_' . $i ],
                             'amount' => $paypal_args[ 'mc_gross_' . $i ],
                             'description' => null
                             ),
                         'license' => array(
-                            'name' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : $paypal_args[ 'option_selection4_' . $i ],
-                            'id' => null,
+                            'name' => $paypal_args[ 'option_selection5_' . $i ],
+                            'id' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : $paypal_args[ 'option_selection4_' . $i ],
                             'description' => null,
-                            'markup' => null
+                            'markup' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : str_replace( '%', '', sell_media_get_term_meta( $paypal_args[ 'option_selection4_' . $i ], 'markup', true ) )
                             ),
                         'qty' => $paypal_args[ 'quantity' . $i ],
                         'total' => null,
