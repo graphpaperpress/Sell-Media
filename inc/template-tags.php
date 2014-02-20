@@ -1,27 +1,6 @@
 <?php
 
 /**
- * Print attached image
- *
- * @access      public
- * @since       0.1
- * @return      html
- */
-function sell_media_image( $post_id=null ) {
-
-    $thumb_id = get_post_thumbnail_id( $post_id );
-    $attachment = get_post( $thumb_id );
-    $title = $attachment->post_title;
-    $size = 'large';
-    $image = wp_get_attachment_image_src( $thumb_id, $size );
-    $image = '<img src="' . $image[0] . '" alt="' .  $title . '" title="' .  $title . '" class="wp-post-image" />';
-
-    print $image;
-
-}
-
-
-/**
  * Print attached image caption
  *
  * @access      public
@@ -57,24 +36,6 @@ function sell_media_get_image_size( $post_id=null ) {
         $size = false;
 
     return $size;
-}
-
-
-/**
- * Print attached image filename
- *
- * @access      public
- * @since       0.1
- * @return      html
- */
-function sell_media_image_filename( $post_id=null, $echo=true ) {
-
-    $filename = basename( get_post_meta( $post_id, '_sell_media_attached_file', true ) );
-
-    if ( $echo )
-        print $filename;
-    else
-        return $filename;
 }
 
 
