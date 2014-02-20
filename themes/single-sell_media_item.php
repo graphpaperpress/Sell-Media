@@ -31,10 +31,10 @@ get_header(); ?>
 				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
 				<li class="filetype"><span class="title"><?php _e( 'File Type', 'sell_media' ); ?>:</span> <?php echo get_post_mime_type( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ); ?></li>
 
-				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'collection' ) ) { ?>
+				<?php if ( true == wp_get_post_terms( $post->ID, 'collection' ) ) { ?>
 					<li class="collections"><span class="title"><?php _e( 'Collections', 'sell_media' ); ?>:</span> <?php sell_media_collections( $post->ID ); ?></li>
 				<?php } ?>
-				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'keywords' ) ) {?>
+				<?php if ( true == wp_get_post_terms( $post->ID, 'keywords' ) ) {?>
 					<li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span>
 					<?php $product_terms = wp_get_object_terms( $post->ID, 'keywords' );
 			        if ( !empty( $product_terms ) ) {

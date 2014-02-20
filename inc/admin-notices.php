@@ -73,10 +73,11 @@ function sell_media_admin_messages() {
             if ( $post_type == 'sell_media_item' ){
 
                 global $post;
-                $download_sizes = sell_media_get_downloadable_size( $post->ID, null, true );
+                $images_obj = new SellMediaImages;
+                $download_sizes = $this->get_downloadable_size( $post->ID, null, true );
 
                 if ( ! empty( $download_sizes['unavailable'] ) ){
-                    $images_obj = new SellMediaImages;
+
                     $og_size = $images_obj->get_original_image_size( $post_id );
 
                     $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
