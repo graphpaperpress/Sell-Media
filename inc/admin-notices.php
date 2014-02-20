@@ -76,7 +76,8 @@ function sell_media_admin_messages() {
                 $download_sizes = sell_media_get_downloadable_size( $post->ID, null, true );
 
                 if ( ! empty( $download_sizes['unavailable'] ) ){
-                    $og_size = sell_media_original_image_size( $post->ID, $echo=false );
+                    $p = new SellMediaProducts;
+                    $og_size = $p->get_original_image_size( $post_id );
 
                     $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
 

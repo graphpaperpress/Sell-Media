@@ -352,7 +352,6 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
             $html .= '</li>';
         }
 
-        $original_size = sell_media_original_image_size( $post_id, false );
         $mime_type = wp_check_filetype( wp_get_attachment_url( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) );
         $image_mimes = array(
             'image/jpg',
@@ -363,14 +362,12 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
             'image/tiff'
             );
 
-        if ( in_array( $mime_type['type'], $image_mimes ) ){
-            $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
-        } else {
-            $og_size = null;
-        }
-
         $settings = sell_media_get_plugin_options();
         if ( $settings->hide_original_price !== 'yes' ){
+            $p = new SellMediaProducts;
+            $original_size = $p->get_original_image_size( $post_id );
+            $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
+
             $html .= '<li class="price">';
             $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
             $html .= sell_media_item_price( $post_id, true, null, false );
@@ -380,36 +377,6 @@ function sell_media_image_sizes( $post_id=null, $echo=true ){
         print $html;
     } else {
         return $download_sizes;
-    }
-}
-
-
-/**
- * Prints the original image resolution
- *
- * @since 1.2.4
- * @author Zane Matthew
- * @todo This function, sell_media_item_price(), and anything related
- * to price should be in the class-price.php file
- */
-function sell_media_original_image_size( $item_id=null, $echo=true ){
-    // check if attachment is an image
-    if ( sell_media_is_mimetype( $item_id ) ) {
-        $original_size = wp_get_attachment_image_src( get_post_meta( $item_id, '_sell_media_attachment_id', true ), 'full' );
-
-        if ( $echo ){
-            print $original_size[1] . ' x ' . $original_size[2];
-        } else {
-            return array(
-                'original'=> array(
-                    'height' => $original_size[2],
-                    'width' => $original_size[1]
-                    )
-                );
-        }
-    // otherwise just return, because we can't get the size
-    } else {
-        return;
     }
 }
 
@@ -428,52 +395,6 @@ function sell_media_plugin_credit() {
     if ( true == $settings->plugin_credit ) {
         printf( '%s <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', __( 'Shopping cart by ', 'sell_media' ) );
     }
-}
-
-
-/**
- * This function determines the sizes and prices available for purchase and prints out the HTML.
- * If no sizes are available the original price is displayed.
- */
-function sell_media_item_prices( $post ){
-
-    $wp_upload_dir = wp_upload_dir();
-    $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . get_post_meta( $post->ID, '_sell_media_attached_file', true ) );
-    $html = null;
-
-    if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ) {
-        $terms = wp_get_post_terms( $post->ID, 'price-group' );
-
-        if ( empty( $terms ) ){
-            $default = get_term_by( 'name', 'Default', 'price-group' );
-            $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $default->term_id ) );
-        }
-
-        foreach( $terms as $term ){
-            if ( $term->parent != 0 ){
-                $width = sell_media_get_term_meta( $term->term_id, 'width', true );
-                $height = sell_media_get_term_meta( $term->term_id, 'height', true );
-                $price = sell_media_get_term_meta( $term->term_id, 'price', true );
-
-                $html .= '<li class="price">';
-                $html .= '<span class="title">' . $term->name . ' (' . $width . ' x ' . $width . '): </span>';
-                $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
-                $html .= '</li>';
-            }
-        }
-        $original_size = sell_media_original_image_size( $post->ID, false );
-        $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
-    } else {
-        $og_size = null;
-    }
-
-    $html .= '<li class="price">';
-    $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
-    $html .= sell_media_item_price( $post->ID, true, null, false );
-    $html .= '</li>';
-
-    print apply_filters( 'sell_media_item_prices_filter', $html, $post->ID );
-
 }
 
 

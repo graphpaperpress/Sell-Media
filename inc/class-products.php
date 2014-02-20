@@ -21,7 +21,7 @@ Class SellMediaProducts {
         // if the item does not have specific price set, use default from settings
         if ( empty( $price ) )
             $price = $this->settings->default_price;
-            
+
          return $price;
     }
 
@@ -105,13 +105,15 @@ Class SellMediaProducts {
     /**
     * Prints the original image resolution
     *
+    * @param (int)$post_id The post_id to the sell media item
     * @since 1.2.4
     * @author Zane Matthew
     */
     public function get_original_image_size( $post_id=null ){
         // check if attachment is an image
-        if ( $this->mimetype_is_image( $post_id ) ) {
-            $original_size = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
+        $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+        if ( $this->mimetype_is_image( $attachment_id ) ) {
+            $original_size = wp_get_attachment_image_src( $attachment_id, 'full' );
             return array(
                 'original'=> array(
                     'height' => $original_size[2],
