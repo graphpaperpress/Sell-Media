@@ -339,44 +339,38 @@ add_action( 'parse_query', 'sell_media_search_warning_surpression' );
  */
 function sell_media_image_sizes( $post_id=null, $echo=true ){
 
-    $download_sizes = sell_media_get_downloadable_size( $post_id );
+    $products_obj = new SellMediaProducts;
+    $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
-    if ( empty( $download_sizes ) ) return;
+    if ( $products_obj->mimetype_is_image( $attachment_id ) ){
+        $download_sizes = sell_media_get_downloadable_size( $post_id );
 
-    $html = null;
-    if ( $echo ){
-        foreach( $download_sizes as $k => $v ){
-            $html .= '<li class="price">';
-            $html .= '<span class="title"> '.$download_sizes[ $k ]['name'].' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
-            $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $download_sizes[ $k ]['price'] );
-            $html .= '</li>';
+        if ( $echo ){
+            $html = null;
+            foreach( $download_sizes as $k => $v ){
+                $html .= '<li class="price">';
+                $html .= '<span class="title"> '.$download_sizes[ $k ]['name'].' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
+                $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $download_sizes[ $k ]['price'] );
+                $html .= '</li>';
+            }
+
+            $settings = sell_media_get_plugin_options();
+            if ( $settings->hide_original_price !== 'yes' ){
+
+                $original_size = $products_obj->get_original_image_size( $post_id );
+
+                $html .= '<li class="price">';
+                $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')' . '</span>: ';
+                $html .= sell_media_item_price( $post_id, true, null, false );
+                $html .= '</li>';
+            }
+
+            print $html;
+        } else {
+            return $download_sizes;
         }
-
-        $mime_type = wp_check_filetype( wp_get_attachment_url( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) );
-        $image_mimes = array(
-            'image/jpg',
-            'image/jpeg',
-            'image/png',
-            'image/gif',
-            'image/bmp',
-            'image/tiff'
-            );
-
-        $settings = sell_media_get_plugin_options();
-        if ( $settings->hide_original_price !== 'yes' ){
-            $p = new SellMediaProducts;
-            $original_size = $p->get_original_image_size( $post_id );
-            $og_size = ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')';
-
-            $html .= '<li class="price">';
-            $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . $og_size . '</span>: ';
-            $html .= sell_media_item_price( $post_id, true, null, false );
-            $html .= '</li>';
-        }
-
-        print $html;
     } else {
-        return $download_sizes;
+        echo sell_media_item_price( $post_id, true, null, false );
     }
 }
 
