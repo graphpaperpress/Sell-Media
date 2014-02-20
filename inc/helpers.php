@@ -3,51 +3,54 @@
  * Template Redirect
  * @since 1.0.4
  */
-function sell_media_template_redirect(){
+function sell_media_template_redirect( $original_template ){
+
     $post_type = get_query_var('post_type');
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
     if ( $post_type == '' )
        $post_type = 'sell_media_item';
 
-    $custom_templates = array(
+    $default_templates = array(
         'single'  => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-sell_media_item.php',
         'archive' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php'
         );
 
-    $default_templates = array(
+    $custom_templates = array(
         'single'   => locate_template( 'single-sell_media_item.php' ),
         'archive'  => locate_template( 'archive-sell_media_item.php' ),
         'taxonomy' => locate_template( 'taxonomy-' . get_query_var('taxonomy') . '.php' )
         );
 
-
     /**
      * Single
      */
     if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
-        if ( file_exists( $default_templates['single'] ) ) return;
-        load_template( $custom_templates['single'] );
-        exit;
+        $template = ( file_exists( $custom_templates['single'] ) ) ? $custom_templates['single'] : $default_templates['single'];
     }
+
     /**
      * Archive -- Check if this is an archive page AND post type is sell media
      */
     elseif ( is_post_type_archive( $post_type ) && $post_type == 'sell_media_item' ) {
-        if ( file_exists( $default_templates['archive'] ) ) return;
-        load_template( $custom_templates['archive'] );
-        exit;
+        $template = ( file_exists( $custom_templates['archive'] ) ) ? $custom_templates['archive'] : $default_templates['archive'];
     }
+
     /**
      * Taxonomies
      */
     elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
-        if ( file_exists( $default_templates['taxonomy'] ) ) return;
-        load_template( $custom_templates['archive'] );
-        exit;
+        $template = ( file_exists( $custom_templates['taxonomy'] ) ) ? $custom_templates['archive'] : $custom_templates['archive'];
     }
+
+    else {
+        $template = $original_template;
+    }
+
+    return $template;
 }
-add_action( 'template_redirect', 'sell_media_template_redirect',6 );
+add_action( 'template_include', 'sell_media_template_redirect',6 );
+
 
 function sell_media_get_search_form( $form ) {
     $settings = sell_media_get_plugin_options();
