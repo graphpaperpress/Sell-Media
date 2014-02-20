@@ -23,7 +23,7 @@ include( dirname(__FILE__) . '/inc/class-search.php' );
 include( dirname(__FILE__) . '/inc/class-payments.php' );
 
 include( dirname(__FILE__) . '/inc/class-products.php' );
-include( dirname(__FILE__) . '/inc/class-images.php' );
+include( dirname(__FILE__) . '/inc/class-products-images.php' );
 
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
