@@ -31,6 +31,8 @@ Class SellMediaCustomer {
             );
 
             $user_id = wp_insert_user( $userdata );
+            
+            return false;
         }
 
     }
@@ -51,7 +53,7 @@ Class SellMediaCustomer {
             wp_set_auth_cookie( $user_id );
             do_action( 'wp_login', $user->user_login );
 
-            return true;
+            return false;
         }
     }
 
@@ -75,7 +77,7 @@ Class SellMediaCustomer {
             $message .= __( 'Login to your account here', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page );
             wp_mail( $user->user_email, $subject, $message );
 
-            return true;
+            return false;
         }
     }
 
@@ -131,7 +133,7 @@ Class SellMediaCustomer {
     * @return
     */
     public function customer_payment( $post_id=null ){
-        
+
         $meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
 
         // $user = get_user_by( 'email', $user_id );
