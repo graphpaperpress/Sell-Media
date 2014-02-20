@@ -164,12 +164,12 @@ class SellMediaImages extends SellMediaProducts {
         $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
         if ( $this->mimetype_is_image( $attachment_id ) ){
-            $download_sizes = sell_media_get_downloadable_size( $post_id );
+            $download_sizes = $this->get_downloadable_size( $post_id );
 
             if ( $echo ){
                 $html = null;
                 foreach( $download_sizes as $k => $v ){
-                    $html .= '<li class="price">';
+                    $html .= '<li class="price">here';
                     $html .= '<span class="title"> '.$download_sizes[ $k ]['name'].' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
                     $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $download_sizes[ $k ]['price'] );
                     $html .= '</li>';
@@ -195,4 +195,157 @@ class SellMediaImages extends SellMediaProducts {
         }
     }
 
+
+    /**
+     * @param $post_id (int) The post to a sell media item post type
+     * @param $term_id (int) The term id for a term from the price-group taxonomy
+     *
+     * @return Array of downloadable sizes or single size if $term_id is present
+     */
+    public function get_downloadable_size( $post_id=null, $term_id=null, $size_not_available=null ){
+        $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
+        $wp_upload_dir = wp_upload_dir();
+        $attached_path_file  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+        $parent_price_group = null;
+
+        // Fix for legacy code?
+        $attached_file_fix = file_exists( $attached_path_file );
+
+        if ( ! $attached_file_fix ){
+            @list( $broken, $url, $attached_file ) = explode( 'uploads/', $attached_path_file );
+            $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+        }
+
+        list( $orig_w, $orig_h, $type, $attr ) = @getimagesize( $attached_path_file );
+
+        $null = null;
+        $original = $download_sizes = array();
+        list( $original['url'], $original['width'], $original['height'] ) = wp_get_attachment_image_src( get_post_meta( $post_id, '_sell_media_attachment_id', true ), 'full' );
+
+        /**
+         * Loop over price groups checking for children,
+         * compare the width and height assigned to a price group
+         * with the width and height of the current image. Remove
+         * sizes that are not downloadable.
+         */
+        $price_groups = sell_media_get_price_groups( $post_id = $post_id, $taxonomy = 'price-group' );
+        if ( ! empty( $price_groups ) ){
+            foreach( $price_groups as $price ){
+
+                /**
+                 * Check for children only
+                 */
+                if ( $price->parent > 0 ){
+
+                    /**
+                     * Retrieve the height and width for our price group
+                     */
+                    $pg_width = sell_media_get_term_meta( $price->term_id, 'width', true );
+                    $pg_height = sell_media_get_term_meta( $price->term_id, 'height', true );
+
+                    $settings = sell_media_get_plugin_options();
+                    $custom_price = get_post_meta( $post_id, 'sell_media_price', true );
+
+                    /**
+                     * Determine the price
+                     */
+                    if ( $price->term_id == 'sell_media_original_file' && ! empty( $custom_price ) ){
+                        $item_price = $custom_price;
+                    } elseif ( $price->term_id == 'sell_media_original_file' && empty( $custom_price ) ){
+                        $item_price = $settings->default_price;
+                    } elseif ( $price->term_id == 'default_price' && empty( $custom_price ) ){
+                        $item_price = $settings->default_price;
+                    } elseif ( $price->term_id == 'default_price' && ! empty( $custom_price ) ) {
+                        $item_price = $custom_price;
+                    } else {
+                        $item_price = sell_media_get_term_meta( $price->term_id, 'price', true );
+                    }
+
+                    $filtered_price = apply_filters( 'sell_media_filtered_price', $price->term_id );
+                    if ( $filtered_price != $price->term_id ){
+                        $item_price = $filtered_price;
+                    }
+
+
+                    /**
+                     * Build our array to be returned, the downloadable width and height
+                     * are calculated later and added to this array
+                     */
+                    $download_sizes[ $price->term_id ] = array(
+                        'name' => $price->name,
+                        'price' => sprintf('%0.2f', $item_price)
+                        );
+
+                    /**
+                     * Calculate dimensions and coordinates for a resized image that fits
+                     * within a specified width and height. If $crop is true, the largest
+                     * matching central portion of the image will be cropped out and resized
+                     * to the required size.
+                     */
+                    list( $null, $null, $null, $null, $download_sizes[ $price->term_id ]['width'], $download_sizes[ $price->term_id ]['height'] ) = image_resize_dimensions( $orig_w, $orig_h, $pg_width, $pg_height, $crop=false );
+
+                    /**
+                     * If no width/height can be determined we remove it from our array of
+                     * available download sizes.
+                     */
+                    if ( empty( $download_sizes[ $price->term_id ]['width'] ) ) {
+
+                        $unavailable_size[ $price->term_id ] = array(
+                            'name' => $download_sizes[ $price->term_id ]['name'],
+                            'price' => $download_sizes[ $price->term_id ]['price'],
+                            'height' => $pg_height,
+                            'width' => $pg_width
+                            );
+
+                        unset( $download_sizes[ $price->term_id ] );
+                    }
+
+                    /**
+                     * Check for portraits and if the available download size is larger than
+                     * the original we remove it.
+                     */
+                    //////////
+                    $terms = wp_get_post_terms( $post_id, 'price-group' );
+                    $heights[] = '';
+                    if ( ! empty( $terms ) ){
+                        foreach( $terms as $term ){
+                            if ( $term->parent != 0 ){
+                                $height = sell_media_get_term_meta( $term->term_id, 'height', true );
+                                $heights[] = $height;
+                            }
+                        }
+                    }
+                    $smallest_height = min( $heights );
+                    //////////
+
+                    if ( $original['height'] > $original['width']
+                        && isset( $download_sizes[ $price->term_id ] )
+                        && $download_sizes[ $price->term_id ]['height'] <  $smallest_height ){
+
+                            $unavailable_size[ $price->term_id ] = array(
+                                'name' => $download_sizes[ $price->term_id ]['name'],
+                                'price' => $download_sizes[ $price->term_id ]['price'],
+                                'height' => $pg_height,
+                                'width' => $pg_width
+                                );
+
+                            unset( $download_sizes[ $price->term_id ] );
+                    }
+                }
+            }
+        }
+
+        if ( ! empty( $size_not_available ) ){
+            $sizes = array(
+                'available' => $download_sizes,
+                'unavailable' => empty( $unavailable_size ) ? null : $unavailable_size
+                );
+        } elseif ( empty( $term_id ) ) {
+            $sizes = $download_sizes;
+        } else {
+            $sizes = $download_sizes[ $term_id ];
+        }
+
+        return $sizes;
+    }
 }

@@ -78,6 +78,8 @@ class SellMedia {
         add_action( 'admin_menu', array( &$this, 'adminMenus' ) );
         add_action( 'pre_get_posts', array( &$this, 'collection_password_check' ) );
         add_action( 'wp_footer', array( &$this, 'footer' ) );
+        add_action( 'parse_query', array( &$this, 'search_warning_surpression' ) );
+
         if( !is_admin() ){
             add_filter( 'posts_orderby', array( &$this, 'order_by') );
         }
@@ -899,6 +901,17 @@ class SellMedia {
             <div class="sell-media-cart-dialog-target"><h2><?php _e( 'Loading', 'sell_media' ); ?>...</h2></div>
         </div>
     <?php }
+
+    /**
+     * Adjust wp_query for when search is submitted error no longer shows in "general-template.php"
+     * detail here: http://wordpress.stackexchange.com/questions/71157/undefined-property-stdclasslabels-in-general-template-php-post-type-archive
+     * @author Zane Matthew
+     * @since 1.2.3
+     */
+    public function search_warning_surpression( $wp_query ){
+        if ( $wp_query->is_post_type_archive && $wp_query->is_tax )
+            $wp_query->is_post_type_archive = false;
+    }
 } // end class
 
 load_plugin_textdomain( 'sell_media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );

@@ -72,7 +72,7 @@ Class SellMediaProducts {
 
 
     /**
-     * Retrives the lowest price available of an item from the price groups
+     * Retrieves the lowest price available of an item from the price groups
      *
      * @param $post_id (int) The post_id, must be a post type of "sell_media_item"
      * @return string
@@ -103,4 +103,38 @@ Class SellMediaProducts {
             return false;
         }
     }
+}
+
+
+/**
+ * Retrieves and prints the price of an item
+ *
+ * @since 0.1
+ * @param $post_id The Item ID
+ * @param $currency (bool) Display the currency symbol or not
+ * @param $size (string) small, medium, large, null (for original)
+ * @param $echo Either print the result or return it
+ * @return string
+ */
+function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo=true ){
+
+    /**
+     * Get the unique price of the item if it exists
+     * Otherwise, use the default price from Settings
+     */
+
+    $price = get_post_meta( $post_id, 'sell_media_price', true );
+    $settings = sell_media_get_plugin_options();
+
+    // if the item does not have specific price set, use default from settings
+    if ( empty( $price ) )
+        $price = $settings->default_price;
+    // show the currency symbol if currency is set to true
+    if ( $currency )
+        $price = sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
+    // echo or return the price
+    if ( $echo )
+        echo $price;
+    else
+     return $price;
 }
