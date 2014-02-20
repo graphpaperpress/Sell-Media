@@ -1,63 +1,5 @@
 <?php
 
-/**
- * Print attached image caption
- *
- * @access      public
- * @since       0.1
- * @return      string
- */
-function sell_media_image_caption( $post_id=null ) {
-
-    $thumb_id = get_post_thumbnail_id( $post_id );
-    $attachment = get_post( $thumb_id );
-    $title = $attachment->post_title;
-
-    return $title;
-
-}
-
-
-/**
- * Print attached image size
- *
- * @access      public
- * @since       0.1
- * @return      html
- */
-function sell_media_get_image_size( $post_id=null ) {
-
-    $thumb_id = get_post_thumbnail_id( $post_id );
-    $meta = get_post_meta( intval( $thumb_id ), '_wp_attachment_metadata' , true );
-
-    if ( $meta['width'] && $meta['height'] )
-        $size = $meta['width'] . 'x' . $meta['height'] . ' pixels';
-    else
-        $size = false;
-
-    return $size;
-}
-
-
-/**
- * Print attached image keywords
- *
- * @access      public
- * @since       0.1
- * @return      html
- */
-function sell_media_image_keywords( $post_id=null ) {
-
-    $product_terms = wp_get_object_terms( $post_id, 'keywords' );
-    if ( !empty( $product_terms ) ) {
-        if ( !is_wp_error( $product_terms ) ) {
-            foreach ( $product_terms as $term ) {
-                echo '<a href="' . get_term_link( $term->slug, 'keywords' ) . '">' . $term->name . '</a> ';
-            }
-        }
-    }
-}
-
 
 /**
  * Print the buy button
@@ -92,40 +34,6 @@ function sell_media_item_has_taxonomy_terms( $post_id=null, $taxonomy=null ) {
     else
         return true;
 
-}
-
-
-/**
- * Returns item size
- *
- * @since 0.1
- * @return string
- */
-function sell_media_item_size( $post_id=null ){
-
-    $mime_type = get_post_mime_type( get_post_thumbnail_id( $post_id ) );
-    $size = false;
-
-    switch( $mime_type ){
-        case 'image/jpeg':
-        case 'image/png':
-        case 'image/gif':
-            $size = sell_media_get_image_size( $post_id );
-            break;
-        case 'video/mpeg':
-        case 'video/mp4':
-        case 'video/quicktime':
-        case 'application/octet-stream':
-            return;
-        case 'text/csv':
-        case 'text/plain':
-        case 'text/xml':
-        case 'text/document':
-        case 'application/pdf':
-            return;
-    }
-
-    return $size;
 }
 
 
@@ -290,53 +198,6 @@ add_action( 'parse_query', 'sell_media_search_warning_surpression' );
 
 
 /**
- * Determines the available download sizes based on the current image width/height.
- * Note not ALL images are available in ALL download sizes.
- *
- * @since 1.2.4
- * @author Zane Matthew
- *
- * @return Prints an li or returns an array of available download sizes
- */
-function sell_media_image_sizes( $post_id=null, $echo=true ){
-
-    $products_obj = new SellMediaProducts;
-    $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-
-    if ( $products_obj->mimetype_is_image( $attachment_id ) ){
-        $download_sizes = sell_media_get_downloadable_size( $post_id );
-
-        if ( $echo ){
-            $html = null;
-            foreach( $download_sizes as $k => $v ){
-                $html .= '<li class="price">';
-                $html .= '<span class="title"> '.$download_sizes[ $k ]['name'].' (' . $download_sizes[ $k ]['width'] . ' x ' . $download_sizes[ $k ]['height'] . '): </span>';
-                $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $download_sizes[ $k ]['price'] );
-                $html .= '</li>';
-            }
-
-            $settings = sell_media_get_plugin_options();
-            if ( $settings->hide_original_price !== 'yes' ){
-
-                $original_size = $products_obj->get_original_image_size( $post_id );
-
-                $html .= '<li class="price">';
-                $html .= '<span class="title">'.__( 'Original', 'sell_media' ) . ' (' . $original_size['original']['width'] . ' x ' . $original_size['original']['height'] . ')' . '</span>: ';
-                $html .= sell_media_item_price( $post_id, true, null, false );
-                $html .= '</li>';
-            }
-
-            print $html;
-        } else {
-            return $download_sizes;
-        }
-    } else {
-        echo sell_media_item_price( $post_id, true, null, false );
-    }
-}
-
-
-/**
  * Optionally prints the plugin credit
  * Off by default in compliance with WordPress best practices
  * http://wordpress.org/extend/plugins/about/guidelines/
@@ -381,7 +242,6 @@ function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
 
     return ( $echo ) ? printf( sell_media_get_currency_symbol() .'%0.2f', min( $prices ) ) : min( $prices );
 }
-
 
 
 /**

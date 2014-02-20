@@ -324,7 +324,8 @@ function sell_media_save_custom_meta( $post_id ) {
 
             // Image mime type support
             if ( in_array( $mime_type['type'], $image_mimes ) ){
-                sell_media_move_image_from_attachment( $attachment_id );
+                $images_obj = new SellMediaImages;
+                $images_obj->move_image_from_attachment( $attachment_id );
             } else {
                 sell_media_default_move( $attached_file );
             }
@@ -616,5 +617,33 @@ function sell_media_trash_payment_redirect() {
             wp_redirect($redirect);
             exit();
         }
+    }
+}
+
+/**
+ * Moves and uploaded file from the uploads dir into the "protected"
+ * Sell Media dir, note the original file is deleted.
+ *
+ * @param $original_file Full path of the file with the file.
+ * @since 1.0.1
+ */
+function sell_media_default_move( $original_file=null ){
+
+    $dir = wp_upload_dir();
+    $original_file_path = $dir['basedir'] . '/' . $original_file;
+    $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $original_file;
+
+    if ( file_exists( $original_file_path ) ){
+        // Check if the destinatin dir is exists, i.e.
+        // sell_media/YYYY/MM if not we create it first
+        $destination_dir = dirname( $destination_file );
+
+        if ( ! file_exists( $destination_dir ) ){
+            wp_mkdir_p( dirname( $destination_dir ) );
+        }
+
+        // Copy original to our protected area
+        @copy( $original_file_path, $destination_file );
+        @unlink( $original_file_path );
     }
 }

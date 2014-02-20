@@ -31,22 +31,22 @@ get_header(); ?>
 				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
 				<li class="filetype"><span class="title"><?php _e( 'File Type', 'sell_media' ); ?>:</span> <?php echo get_post_mime_type( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ); ?></li>
 
-				<?php if ( sell_media_is_mimetype( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) : ?>
-					<?php if ( sell_media_item_size( $post->ID ) ) : ?>
-						<li class="size">
-							<span class="title"><?php _e( 'Size', 'sell_media' ); ?>:</span>
-							<?php print sell_media_item_size( $post->ID); ?>
-						</li>
-					<?php endif; ?>
-				<?php endif; ?>
-
 				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'collection' ) ) { ?>
 					<li class="collections"><span class="title"><?php _e( 'Collections', 'sell_media' ); ?>:</span> <?php sell_media_collections( $post->ID ); ?></li>
 				<?php } ?>
-				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'keywords' ) ) { ?>
-					<li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span> <?php sell_media_image_keywords( $post->ID ); ?></li>
+				<?php if ( true == sell_media_item_has_taxonomy_terms( $post->ID, 'keywords' ) ) {?>
+					<li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span>
+					<?php $product_terms = wp_get_object_terms( $post->ID, 'keywords' );
+			        if ( !empty( $product_terms ) ) {
+			            if ( !is_wp_error( $product_terms ) ) {
+			                foreach ( $product_terms as $term ) {
+			                    echo '<a href="' . get_term_link( $term->slug, 'keywords' ) . '">' . $term->name . '</a> ';
+			                }
+			            }
+			        }?>
+					</li>
 				<?php } ?>
-				<?php sell_media_image_sizes( $post->ID ); ?>
+				<?php $s = new SellMediaImages; $s->image_sizes( $post->ID ); ?>
 				<?php do_action('sell_media_additional_list_items'); ?>
 
 			</ul>

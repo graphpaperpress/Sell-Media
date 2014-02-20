@@ -21,7 +21,10 @@ include( dirname(__FILE__) . '/inc/shortcodes.php' );
 include( dirname(__FILE__) . '/inc/template-tags.php' );
 include( dirname(__FILE__) . '/inc/class-search.php' );
 include( dirname(__FILE__) . '/inc/class-payments.php' );
+
 include( dirname(__FILE__) . '/inc/class-products.php' );
+include( dirname(__FILE__) . '/inc/class-images.php' );
+
 include( dirname(__FILE__) . '/inc/term-meta.php' );
 include( dirname(__FILE__) . '/inc/widgets.php' );
 include_once( dirname(__FILE__) . '/settings/settings.php');
@@ -31,7 +34,6 @@ if ( is_admin() ) {
     include( dirname(__FILE__) . '/inc/admin-bulk.php' );
     include( dirname(__FILE__) . '/inc/admin-items.php' );
     include( dirname(__FILE__) . '/inc/admin-extensions.php' );
-    include( dirname(__FILE__) . '/inc/admin-mime-types.php' );
     include( dirname(__FILE__) . '/inc/admin-payments.php' );
     include( dirname(__FILE__) . '/inc/admin-price-groups.php' );
     include( dirname(__FILE__) . '/inc/admin-notices.php' );
@@ -644,8 +646,6 @@ class SellMedia {
 
             $settings = sell_media_get_plugin_options();
 
-
-
             wp_localize_script('sell_media', 'sell_media', array(
                 'ajaxurl' => admin_url("admin-ajax.php"),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
@@ -664,6 +664,11 @@ class SellMedia {
                     __( 'was added to', 'sell_media' ),
                     __( 'your cart','sell_media' ) )
                 ) );
+
+            if ( isset( $settings->style ) && '' != $settings->style )
+                wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-' . $settings->style . '.css' );
+            else
+                wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-light.css' );
 
             wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
             wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );

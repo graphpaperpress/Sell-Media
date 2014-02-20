@@ -602,23 +602,6 @@ function sell_media_change_downloads_upload_dir() {
 add_action('admin_init', 'sell_media_change_downloads_upload_dir', 999);
 
 
-/**
- * Prints Upload Dir for use in moving attachments into products dir
- *
- * Sets the upload dir to /sell_media.
- *
- * @access private
- * @since 0.1
- * @return path
- */
-function sell_media_get_upload_dir() {
-    $upload = wp_upload_dir();
-    $upload['subdir'] = SellMedia::upload_dir . $upload['subdir'];
-    $upload['path'] = $upload['basedir'] . $upload['subdir'];
-    $upload['url']  = $upload['baseurl'] . $upload['subdir'];
-    return $upload;
-}
-
 
 /**
  * Prints a semantic list of Collections, with "Collection" as the
@@ -658,25 +641,6 @@ function sell_media_collections(){
 }
 
 
-/**
- * Given an attachment ID prints the URI to the image.
- *
- * @since 0.1
- */
-function sell_media_attachment_link( $attachment_id=null ){
-    print get_attachment_link( $attachment_id );
-}
-
-
-/**
- * Print the link to a product based on the attachment ID
- *
- * @since 0.1
- */
-function sell_media_item_link_by_attachment( $attachment_id=null ){
-    $product_id = get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true );
-    print get_permalink( $product_id );
-}
 
 /**
  * Checks if the attachment ID is an image mime type
@@ -730,24 +694,6 @@ function sell_media_update_sales_stats( $product_id=null, $license_id=null, $pri
 
     return update_post_meta( $product_id, 'sell_media_sales_stats', $sales_stats_s );
 }
-
-
-/**
- * Sell Media Enqueue Styles
- *
- * Enqueue the Sell Media style chosen on the settings page.
- *
- * @since 1.2.6
- * @return void
-*/
-function sell_media_enqueue_styles(){
-    $settings = sell_media_get_plugin_options();
-    if ( isset( $settings->style ) && '' != $settings->style )
-        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-' . $settings->style . '.css' );
-    else
-        wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-light.css' );
-}
-add_action( 'wp_enqueue_scripts', 'sell_media_enqueue_styles' );
 
 
 /**

@@ -25,6 +25,7 @@ Class SellMediaProducts {
          return $price;
     }
 
+
     /**
      * Get all prices assigned to a product
      *
@@ -33,7 +34,8 @@ Class SellMediaProducts {
     public function get_prices( $post_id=null ){
         $i = 0;
         if ( $this->settings->hide_original_price !== 'yes' ){
-            $original_size = $this->get_original_image_size( $post_id, false );
+            $images_obj = new SellMediaImages;
+            $original_size = $images_obj->get_original_image_size( $post_id, false );
             $prices[$i]['id'] = 'original';
             $prices[$i]['name'] = __( 'Original', 'sell_media' );
             $prices[$i]['description'] = __( 'The original high resolution source file', 'sell_media' );
@@ -101,28 +103,4 @@ Class SellMediaProducts {
             return false;
         }
     }
-
-    /**
-    * Prints the original image resolution
-    *
-    * @param (int)$post_id The post_id to the sell media item
-    * @since 1.2.4
-    * @author Zane Matthew
-    */
-    public function get_original_image_size( $post_id=null ){
-        // check if attachment is an image
-        $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-        if ( $this->mimetype_is_image( $attachment_id ) ) {
-            $original_size = wp_get_attachment_image_src( $attachment_id, 'full' );
-            return array(
-                'original'=> array(
-                    'height' => $original_size[2],
-                    'width' => $original_size[1]
-                )
-            );
-        } else {
-            return false;
-        }
-    }
-
 }

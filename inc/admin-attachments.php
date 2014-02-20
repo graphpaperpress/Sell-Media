@@ -131,7 +131,8 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
             );
 
         if ( in_array( $mime_type['type'], $image_mimes ) ){
-            sell_media_move_image_from_attachment( $post['ID'] );
+            $images_obj = new SellMediaImages;
+            $images_obj->move_image_from_attachment( $post['ID'] );
         } else {
             sell_media_default_move( $attached_file );
         }

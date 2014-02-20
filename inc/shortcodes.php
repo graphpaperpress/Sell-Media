@@ -105,8 +105,13 @@ function sell_media_item_shortcode( $atts ) {
     $thumb_id = get_post_meta( $id, '_sell_media_attachment_id', true );
     $image = wp_get_attachment_image_src( $thumb_id, $size );
     $text = apply_filters('sell_media_purchase_text', __( $text,'sell_media' ), $id );
+
+    $thumb_id = get_post_thumbnail_id( $post_id );
+    $attachment = get_post( $thumb_id );
+    $caption = $attachment->post_title;
+
     if ( $image ) {
-        $image = '<img src="' . $image[0] . '" alt="' . sell_media_image_caption( $id ) . '" title=" ' . sell_media_image_caption( $id ) . ' " class="sell-media-aligncenter" />';
+        $image = '<img src="' . $image[0] . '" alt="' . $caption . '" title=" ' . sell_media_image_caption( $id ) . ' " class="sell-media-aligncenter" />';
     } else {
         sell_media_item_icon( get_post_thumbnail_id( $id ), $size );
     }
