@@ -250,7 +250,12 @@ jQuery( document ).ready(function( $ ){
         checkout: {
             sandbox: sell_media.sandbox,
             type: "PayPal",
-            email: sell_media.paypal_email
+            email: sell_media.paypal_email,
+            currency: sell_media.currency_symbol,
+            success: sell_media.thanks_page,
+            cancel: sell_media.checkout_page,
+            notify: sell_media.listener_url,
+            shipping: 0 // 0 prompt & optional, 1 no prompt, 2 prompt & required
         },
         cartColumns: [
             { view: "image", attr: "image", label: false },
@@ -263,12 +268,7 @@ jQuery( document ).ready(function( $ ){
             { view: "increment", label: false, text: "+" },
             { attr: "total", label: "SubTotal", view: "currency" },
             { view: "remove", text: "Remove", label: false }
-        ],
-        currency: sell_media.currency_symbol,
-        success: sell_media.thanks_page,
-        cancel: sell_media.checkout_page,
-        notify: sell_media.listener_url,
-        shipping: 0 // 0 prompt & optional, 1 no prompt, 2 prompt & required
+        ]
     });
 
     simpleCart.bind( 'afterAdd' , function( item ){

@@ -668,9 +668,9 @@ class SellMedia {
                 ) );
 
             if ( isset( $settings->style ) && '' != $settings->style )
-                wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-' . $settings->style . '.css' );
+                wp_enqueue_style( 'sell-media-style', plugin_dir_url( __FILE__ ) . 'css/sell_media-' . $settings->style . '.css' );
             else
-                wp_enqueue_style( 'sell-media-style', plugin_dir_url( dirname( __FILE__ ) ) . 'css/sell_media-light.css' );
+                wp_enqueue_style( 'sell-media-style', plugin_dir_url( __FILE__ ) . 'css/sell_media-light.css' );
 
             wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
             wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
