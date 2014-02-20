@@ -40,7 +40,7 @@ function sell_media_template_redirect( $original_template ){
      * Taxonomies
      */
     elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
-        $template = ( file_exists( $custom_templates['taxonomy'] ) ) ? $custom_templates['archive'] : $custom_templates['archive'];
+        $template = ( file_exists( $custom_templates['taxonomy'] ) ) ? $custom_templates['archive'] : $default_templates['archive'];
     }
 
     else {
