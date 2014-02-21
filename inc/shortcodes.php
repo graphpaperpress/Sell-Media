@@ -22,14 +22,15 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
             'meta_query' => array(
                 'relation' => 'AND',
                     array(
-                        'key' => '_paypal_args',
-                        'value' => $purchase_key
+                        'key' => '_sell_media_purchase_key',
+                        'value' => $tx
                     )
                 )
             );
 
         $payment = new WP_Query( $args );
-        $html = get_products_formatted( $payment->ID );
+        $p = new SellMediaPayments;
+        $html = $p->get_products_formatted( $payment->ID );
 
     }
     return '<p class="sell-media-thanks-message">' . $html . '</p>';
