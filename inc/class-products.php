@@ -103,6 +103,14 @@ Class SellMediaProducts {
             return false;
         }
     }
+
+
+    public function protected_file( $post_id=null ){
+        $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
+        $wp_upload_dir = wp_upload_dir();
+        $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+        return ( file_exists( $attached_file ) ) ? $attached_file : false;
+    }
 }
 
 

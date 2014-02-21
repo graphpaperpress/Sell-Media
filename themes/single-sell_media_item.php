@@ -46,7 +46,16 @@ get_header(); ?>
 			        }?>
 					</li>
 				<?php } ?>
-				<?php $s = new SellMediaImages; $s->image_sizes( $post->ID ); ?>
+					<?php
+					$p = new SellMediaProducts;
+					$prices = $p->get_prices( $post->ID );
+                    if ( $prices ) : foreach ( $prices as $k => $v ) : ?>
+                        <li class="price">
+                        	<span class="title"><?php echo $v['name']; ?> (<?php echo $v['width']; ?> x <?php echo $v['height']; ?>): </span>
+                        	<?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?>
+                        </li>
+                    <?php endforeach; endif; ?>
+
 				<?php do_action('sell_media_additional_list_items'); ?>
 
 			</ul>

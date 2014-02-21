@@ -74,7 +74,7 @@ function sell_media_admin_messages() {
 
                 global $post;
                 $images_obj = new SellMediaImages;
-                $download_sizes = $this->get_downloadable_size( $post->ID, null, true );
+                $download_sizes = $images_obj->get_downloadable_size( $post->ID, null, true );
 
                 if ( ! empty( $download_sizes['unavailable'] ) ){
 
