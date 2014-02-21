@@ -103,7 +103,7 @@ Class SellMediaPayments {
         $payment_query = new WP_Query( $args );
         if ( $payment_query->have_posts() ) {
             while ( $payment_query->have_posts() ) : $payment_query->the_post();
-                if ( $transaction_id == get_meta_key( get_the_ID(), 'transaction_id' ) ) {
+                if ( $transaction_id == $this->get_meta_key( get_the_ID(), 'transaction_id' ) ) {
                     return get_the_ID();
                 }
             endwhile;
