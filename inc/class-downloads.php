@@ -241,37 +241,38 @@ Class SellMediaDownload {
 
         // determine size customer purchased for this item from this payment
         foreach( $products as $product ){
+
             $size_id = $product['size']['id'];
-        }
 
-        if ( $size_id == 'original' ){
+            if ( $size_id == 'original' ){
 
-            $this->download_file( $this->protected_file_path( $product_id ) );
+                $this->download_file( $this->protected_file_path( $product_id ) );
 
-        } else {
-            $image_obj = new SellMediaImages;
-            $confirmed_size = $image_obj->get_downloadable_size( $product_id, $size_id );
+            } else {
+                $image_obj = new SellMediaImages;
+                $confirmed_size = $image_obj->get_downloadable_size( $product_id, $size_id );
 
 
-            if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
-                exit;
+                if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
+                    exit;
 
-            $new_image = array(
-                'height' => $confirmed_size['height'],
-                'width'  => $confirmed_size['width']
-            );
+                $new_image = array(
+                    'height' => $confirmed_size['height'],
+                    'width'  => $confirmed_size['width']
+                );
 
-            $file_download = $this->create_download_size( $new_image, $this->protected_file_path( $product_id ) , true );
+                $file_download = $this->create_download_size( $new_image, $this->protected_file_path( $product_id ) , true );
 
-            // Create unique name based on the file width, height and license
-            $file_name_info = pathinfo( basename( $file_download ) );
-            $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
+                // Create unique name based on the file width, height and license
+                $file_name_info = pathinfo( basename( $file_download ) );
+                $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
 
-            // @todo derive license
-            $license = null;
-            $filename = $file_name_info['filename'] . $size . $license . '.' . $file_name_info['extension'];
+                // @todo derive license
+                $license = null;
+                $filename = $file_name_info['filename'] . $size . $license . '.' . $file_name_info['extension'];
 
-            $this->force_download( $file_download, $filename );
+                $this->force_download( $file_download, $filename );
+            }
         }
     }
 
