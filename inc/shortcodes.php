@@ -7,18 +7,14 @@
  * @return string
  * @since 0.1
  */
-function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) {
+function sell_media_list_downloads_shortcode( $tx=null ) {
 
-    if ( isset( $_GET['purchase_key'] ) && ! empty( $_GET['purchase_key'] ) ){
-        $purchase_key = $_GET['purchase_key'];
-    }
-
-    if ( isset( $_GET['email'] ) && ! empty( $_GET['email'] ) ){
-       	$email = $_GET['email'];
+    if ( isset( $_GET['tx'] ) && ! empty( $_GET['tx'] ) ){
+        $tx = $_GET['tx'];
     }
 
     $message = null;
-    if ( ! empty( $purchase_key ) && ! empty( $email ) ){
+    if ( ! empty( $tx ) ){
 
         $args = array(
             'post_type' => 'sell_media_payment',
@@ -26,50 +22,17 @@ function sell_media_list_downloads_shortcode( $purchase_key=null, $email=null ) 
             'meta_query' => array(
                 'relation' => 'AND',
                     array(
-                        'key' => '_sell_media_payment_purchase_key',
+                        'key' => '_paypal_args',
                         'value' => $purchase_key
                     )
                 )
             );
 
-        $payments = new WP_Query( $args );
-        foreach( $payments->posts as $payment ) {
-            $payment_meta = get_post_meta( $payment->ID, '_sell_media_payment_meta', true );
-            $downloads = maybe_unserialize( $payment_meta['products'] );
-        }
+        $payment = new WP_Query( $args );
+        $html = get_products_formatted( $payment->ID );
 
-        if ( empty( $downloads ) ) {
-            $settings = sell_media_get_plugin_options();
-            $message .= __( 'Your purchase is pending. This happens if you paid with an eCheck, if you opened a new account or if there is a problem with the checkout system. Please contact the seller if you have questions about this purchase: ') ;
-            $message .= $settings->paypal_email;
-        } else {
-
-            $payment_id = sell_media_get_payment_id_by( 'key', $purchase_key );
-            $links = sell_media_build_download_link( $payment_id, $email );
-
-            foreach( $links as $link ){
-
-               	$image_attributes = wp_get_attachment_image_src( get_post_meta( $link['item_id'], '_sell_media_attachment_id', true ), 'medium', false );
-
-                // Currently there is no "type", i.e., download vs. physical print
-                // so we use price groups to determine if the purchase was a download
-                // and only show download links for downloads
-                $term_obj = get_term_by( 'id', $link['price_id'], 'price-group' );
-
-                $message .= '<div class="sell-media-aligncenter">';
-
-                if ( $term_obj || $link['price_id'] == 'sell_media_original_file' ){
-                    $message .= '<a href="' . $link['url']. '"><img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" /></a>';
-                    $message .= '<strong><a href="' . $link['url'] . '" class="sell-media-button">' . __( 'Download File', 'sell_media' ) . '</a></strong>';
-                } else {
-                    $message .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" class="sell-media-aligncenter" />';
-                }
-
-                $message .= '</div>';
-            }
-        }
     }
-    return '<p class="sell-media-thanks-message">' . $message . '</p>';
+    return '<p class="sell-media-thanks-message">' . $html . '</p>';
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
 
