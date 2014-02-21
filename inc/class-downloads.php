@@ -249,8 +249,9 @@ Class SellMediaDownload {
             $this->download_file( $this->protected_file_path( $product_id ) );
 
         } else {
+            $image_obj = new SellMediaImages;
+            $confirmed_size = $image_obj->get_downloadable_size( $product_id, $size_id );
 
-            $confirmed_size = sell_media_get_downloadable_size( $product_id, $size_id );
 
             if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
                 exit;
