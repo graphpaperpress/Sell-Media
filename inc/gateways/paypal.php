@@ -182,7 +182,6 @@ function sell_media_process_paypal_ipn() {
                 $c->insert( $_POST['payer_email'], $_POST['first_name'], $_POST['last_name'] );
                 $user = get_user_by( 'email', $_POST['payer_email'] );
                 if ( $user ) {
-                    $c->signon( $user->ID );
                     $c->email_registration( $user->ID );
                 }
 
