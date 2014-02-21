@@ -170,7 +170,7 @@ Class SellMediaPayments {
                             'markup' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : str_replace( '%', '', sell_media_get_term_meta( $paypal_args[ 'option_selection4_' . $i ], 'markup', true ) )
                             ),
                         'qty' => $paypal_args[ 'quantity' . $i ],
-                        'total' => 'mc_gross_' . $i,
+                        'total' => $paypal_args[ 'mc_gross_' . $i ],
                         'shipping' => $paypal_args[ 'mc_shipping' . $i ],
                         'handling' => $paypal_args[ 'mc_handling' . $i ],
                         'tax' => $paypal_args[ 'tax' . $i ],
