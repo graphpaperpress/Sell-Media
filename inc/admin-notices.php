@@ -64,57 +64,6 @@ function sell_media_admin_messages() {
                 );
         }
 
-        /**
-         * Available size
-         */
-        if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' && isset( $_GET['post'] ) ){
-            global $post_type;
-
-            if ( $post_type == 'sell_media_item' ){
-
-                global $post;
-                $images_obj = new SellMediaImages;
-                $download_sizes = $this->get_downloadable_size( $post->ID, null, true );
-
-                if ( ! empty( $download_sizes['unavailable'] ) ){
-
-                    $og_size = $images_obj->get_original_image_size( $post_id );
-
-                    $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
-
-                    // Check if this is a new upload
-                    $wp_upload_dir = wp_upload_dir();
-                    if ( file_exists( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file ) ){
-
-                        $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file );
-                        $image_mimes = array(
-                            'image/jpeg',
-                            'image/jpg',
-                            'image/png',
-                            'image/gif',
-                            'image/bmp',
-                            'image/tiff'
-                            );
-
-                        // Image mime type support
-                        if ( in_array( $mime_type['type'], $image_mimes ) ){
-                            $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
-                            foreach( $download_sizes['unavailable'] as $unavailable ){
-                                $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['height'] . ')<br />';
-                            }
-
-                            $notices[] = array(
-                                'slug' => 'download-sizes',
-                                'message' => $message
-                                );
-                        }
-                    }
-
-
-                }
-            }
-        }
-
         foreach( $notices as $notice ){
             add_settings_error( 'sell-media-notices', 'sell-media-notice-' . $notice['slug'], $notice['message'], 'updated' );
         }
