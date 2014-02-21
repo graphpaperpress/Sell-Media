@@ -73,6 +73,9 @@ table.sell-media-products {
 .sell-media-products td.sell-media-products-grandtotal {
   text-align: right;
 }
+.sell-media-products .text-center {
+  text-align: center;
+}
 
 
 .sell-media {

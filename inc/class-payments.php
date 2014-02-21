@@ -72,8 +72,8 @@ Class SellMediaPayments {
 		$html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
         $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
 		$html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
-		$html .= '<th>' . __( 'Qty', 'sell_media' ) . '</th>';
-        $html .= '<th>' . __( 'Download Link', 'sell_media' ) . '</td>';
+		$html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
+        $html .= '<th class="text-center">' . __( 'Download Link', 'sell_media' ) . '</td>';
 		$html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
 		$html .= '</tr>';
 		$html .= '</thead>';
@@ -93,10 +93,10 @@ Class SellMediaPayments {
 			$html .= '<td class="sell-media-product-license">';
 			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'];
 			$html .= '</td>';
-			$html .= '<td class="sell-media-product-qty">';
+			$html .= '<td class="sell-media-product-qty text-center">';
 			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
 			$html .= '</td>';
-            $html .= '<td class="sell-media-product-download">';
+            $html .= '<td class="sell-media-product-download text-center">';
             $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
 			$html .= '</td>';
             $html .= '<td class="sell-media-product-total">';
