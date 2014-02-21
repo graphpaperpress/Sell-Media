@@ -43,9 +43,8 @@ Class SellMediaCustomer {
     * @return (bool)
     *
     */
-    public function auto_login( $user_id ){
+    public function signon( $user_id ){
 
-        ob_start();
         if ( ! is_user_logged_in() ) {
 
             $user = get_user_by( 'id', $user_id ); 
@@ -58,11 +57,13 @@ Class SellMediaCustomer {
                 $creds['remember'] = true;
                 $user = wp_signon( $creds, false );
                 wp_set_current_user( $user );
-
-                return false;
+                if ( is_wp_error($user) ) {
+                    return $user->get_error_message();
+                } else {
+                    return false;
+                }
             }
         }
-        ob_end_clean();
     }
 
     /**
@@ -78,7 +79,7 @@ Class SellMediaCustomer {
 
         if ( $user ) {
 
-            if ( ! email_exists( $user->user_email ) )
+            if ( ! email_exists( $user->user_email ) ) {
 
                 $subject = __( 'Account Registration at', 'sell_media' ) . ' ' . get_bloginfo( 'name' );
                 $message = __( 'Hello', 'sell_media' ) . ' ' . $user->first_name . '!' . "\n\n";
