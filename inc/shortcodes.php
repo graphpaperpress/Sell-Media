@@ -129,6 +129,31 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
 
 
 /**
+ * The checkout page
+ *
+ * @since 2.0
+ */
+function checkout_shortcode(){
+    do_action( 'sell_media_checkout_before_cart' );
+    $html = '<div class="simpleCart_items"></div>';
+    $html .= '<div class="sell-media-totals group">';
+    $html .= '<div class="subtotal"><span class="sell-media-itemize">' . __( 'Subtotal', 'sell_media' ) . ':</span> <span class="simpleCart_total"></span></div>';
+    $html .= '<div class="tax"><span class="sell-media-itemize">' . __( 'Tax', 'sell_media' ) . ':</span> <span class="simpleCart_tax"></span></div>';
+    $html .= '<div class="shipping"><span class="sell-media-itemize">' . __( 'Shipping', 'sell_media' ) . ':</span> <span class="simpleCart_shipping"></span></div>';
+    $html .= '<div class="total sell-media-bold"><span class="sell-media-itemize">'  . __( 'Total', 'sell_media' ) . ':</span> <span class="simpleCart_grandTotal"></span></div>';
+    $html .= '</div>';
+    do_action( 'sell_media_checkout_registration_fields' );
+    do_action( 'sell_media_checkout_after_registration_fields' );
+    $html .= '<div class="sell-media-checkout-button group">';
+    $html .= '<a href="javascript:;" class="simpleCart_checkout sell-media-button">'. __( 'Checkout', 'sell_media' ) . '</a>';
+    do_action( 'sell_media_checkout_after_checkout_button' );
+    $html .= '</div>';
+
+    return $html;
+}
+add_shortcode( 'sell_media_checkout', 'checkout_shortcode' );
+
+/**
  * Shows a list of everything user has downloaded.
  * Adds the 'sell_media_download_list' short code to the editor. [sell_media_download_list]
  *

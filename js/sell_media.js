@@ -262,7 +262,7 @@ jQuery( document ).ready(function( $ ){
             { view: "image", attr: "image", label: false },
             { attr: "name", label: "Name" },
             { attr: "size", label: "Size" },
-            { attr: "usage", label: "Usage License" },
+            { attr: "usage", label: "License" },
             { attr: "price", label: "Price", view: "currency" },
             { view: "decrement", label: false, text: "-" },
             { attr: "quantity", label: "Qty" },
