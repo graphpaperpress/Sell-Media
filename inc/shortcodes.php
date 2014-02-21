@@ -32,6 +32,7 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
         if ( $payment ) {
             $p = new SellMediaPayments;
             $html = $p->get_products_formatted( $payment->ID );
+            $html .= '<script>simpleCart.empty();</script>';
         } else {
             $html = __( 'Sorry, but your purchase is incomplete. Please contact us if you think this is in error.', 'sell_media' );
         }
