@@ -70,8 +70,8 @@ Class SellMediaPayments {
 		$html .= '<tr>';
 		$html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
 		$html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
+        $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
 		$html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
-		$html .= '<th>' . __( 'Price', 'sell_media' ) . '</th>';
 		$html .= '<th>' . __( 'Qty', 'sell_media' ) . '</th>';
 		$html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
 		$html .= '</tr>';
@@ -86,11 +86,11 @@ Class SellMediaPayments {
 			$html .= '<td class="sell-media-product-name">';
 			if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) ) $html .= $product['name'];
 			$html .= '</td>';
+            $html .= '<td class="sell-media-product-size">';
+            if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) $html .= $product['size']['name'];
+            $html .= '</td>';
 			$html .= '<td class="sell-media-product-license">';
-			if ( isset ( $product['license'] ) && ! is_array( $product['license'] ) ) $html .= $product['license'];
-			$html .= '</td>';
-			$html .= '<td class="sell-media-product-price">';
-			if ( isset ( $product['price'] ) && ! is_array( $product['price'] ) ) $html .= $product['price'];
+			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'];
 			$html .= '</td>';
 			$html .= '<td class="sell-media-product-qty">';
 			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
@@ -170,7 +170,7 @@ Class SellMediaPayments {
                             'markup' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : str_replace( '%', '', sell_media_get_term_meta( $paypal_args[ 'option_selection4_' . $i ], 'markup', true ) )
                             ),
                         'qty' => $paypal_args[ 'quantity' . $i ],
-                        'total' => null,
+                        'total' => 'mc_gross_' . $i,
                         'shipping' => $paypal_args[ 'mc_shipping' . $i ],
                         'handling' => $paypal_args[ 'mc_handling' . $i ],
                         'tax' => $paypal_args[ 'tax' . $i ],
