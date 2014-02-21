@@ -105,6 +105,12 @@ Class SellMediaProducts {
     }
 
 
+    /**
+     * Get the protected image from the server
+     *
+     * @param (int) $post_id The post id to a sell media item
+     * @return Returns the path to a protected image
+     */
     public function protected_file( $post_id=null ){
         $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
         $wp_upload_dir = wp_upload_dir();
