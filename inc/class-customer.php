@@ -34,7 +34,6 @@ Class SellMediaCustomer {
             
             return false;
         }
-
     }
 
     /**
@@ -46,14 +45,17 @@ Class SellMediaCustomer {
     */
     public function auto_login( $user_id ){
 
-        $user = get_user_by( 'id', $user_id ); 
+        if ( ! is_user_logged_in() ) {
 
-        if ( $user ) {
-            wp_set_current_user( $user_id, $user->user_login );
-            wp_set_auth_cookie( $user_id );
-            do_action( 'wp_login', $user->user_login );
+            $user = get_user_by( 'id', $user_id ); 
 
-            return false;
+            if ( $user ) {
+                wp_set_current_user( $user_id, $user->user_login );
+                wp_set_auth_cookie( $user_id );
+                do_action( 'wp_login', $user->user_login );
+
+                return false;
+            }
         }
     }
 
@@ -70,11 +72,11 @@ Class SellMediaCustomer {
 
         if ( $user ) {
             $subject = __( 'Account Registration at', 'sell_media' ) . ' ' . get_bloginfo( 'name' );
-            $message = __( 'Welcome', 'sell_media' ) . ' ' . $user->first_name . '!';
-            $message .= __( 'Here are your login credentials', 'sell_media' ) . ':';
-            $message .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login;
-            $message .= __( 'Password', 'sell_media' ) . ': ' . $user->password;
-            $message .= __( 'Login to your account here', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page );
+            $message = __( 'Welcome', 'sell_media' ) . ' ' . $user->first_name . '!' . "\n\n";
+            $message .= __( 'Here are your login credentials', 'sell_media' ) . ':' . "\n";
+            $message .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login . "\n";
+            $message .= __( 'Password', 'sell_media' ) . ': ' . $user->password . "\n\n";
+            $message .= __( 'Your purchases are available on your account dashboard', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page );
             wp_mail( $user->user_email, $subject, $message );
 
             return false;

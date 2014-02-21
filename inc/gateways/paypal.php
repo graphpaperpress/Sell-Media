@@ -190,6 +190,7 @@ function sell_media_process_paypal_ipn() {
                 $message .= "Your transaction number is: {$_POST['txn_id']}\n";
                 $message .= "To email: {$_POST['payer_email']}\n";
 
+                // I don't think this function is working
                 $email_status = sell_media_email_purchase_receipt( $payment_id, $_POST['payer_email'] );
                 $message .= "{$email_status}\n";
 
