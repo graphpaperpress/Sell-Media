@@ -78,7 +78,6 @@ Class SellMediaPayments {
 		$html .= '</tr>';
 		$html .= '</thead>';
 		$html .= '<tbody>';
-        $download = new SellMediaDownload;
 		foreach ( $products as $product ) {
 			$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
 			$items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
@@ -98,7 +97,7 @@ Class SellMediaPayments {
 			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
 			$html .= '</td>';
             $html .= '<td class="sell-media-product-download">';
-            $html .= '<a href="' . $download->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
+            $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
 			$html .= '</td>';
             $html .= '<td class="sell-media-product-total">';
 			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) ) $html .= $product['total'];
