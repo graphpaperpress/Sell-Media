@@ -13,7 +13,7 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
         $tx = $_GET['tx'];
     }
 
-    $message = null;
+    $html = null;
     if ( ! empty( $tx ) ){
 
         $args = array(
@@ -28,11 +28,13 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
                 )
             );
 
-        $payment = new WP_Query( $args );
-        if ( $payment ) {
-            $p = new SellMediaPayments;
-            $html = $p->get_products_formatted( $payment->ID );
-            $html .= '<script>simpleCart.empty();</script>';
+        $payment_query = new WP_Query( $args );
+        if ( $payment_query->have_posts() ) {
+            while ( $payment_query->have_posts() ) : $payment_query->the_post();
+                $p = new SellMediaPayments;
+                $html = $p->get_products_formatted( get_the_ID() );
+                $html .= '<script>simpleCart.empty();</script>';
+            endwhile;
         } else {
             $html = __( 'Sorry, but your purchase is incomplete. Please contact us if you think this is in error.', 'sell_media' );
         }
