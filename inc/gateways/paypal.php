@@ -176,13 +176,7 @@ function sell_media_process_paypal_ipn() {
                 $p = new SellMediaPayments;
                 $p->paypal_copy_args( $payment_id );
 
-                $message .= "\nSuccess! Your purchase has been completed.\n";
-                $message .= "Your transaction number is: {$_POST['txn_id']}\n";
-                $message .= "To email: {$_POST['payer_email']}\n";
-
-                $email_status = sell_media_email_purchase_receipt( $payment_id, $_POST['payer_email'] );
-                $message .= "{$email_status}\n";
-
+                // create new user, auto log them in, email them registration
                 $c = new SellMediaCustomer;
                 $c->insert( $_POST['payer_email'], $_POST['first_name'], $_POST['last_name'] );
                 $user = get_user_by( 'email', $_POST['payer_email'] );
@@ -190,6 +184,13 @@ function sell_media_process_paypal_ipn() {
                     $c->auto_login( $user->ID );
                     $c->email_registration( $user->ID );
                 }
+
+                $message .= "\nSuccess! Your purchase has been completed.\n";
+                $message .= "Your transaction number is: {$_POST['txn_id']}\n";
+                $message .= "To email: {$_POST['payer_email']}\n";
+
+                $email_status = sell_media_email_purchase_receipt( $payment_id, $_POST['payer_email'] );
+                $message .= "{$email_status}\n";
 
                 // $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
                 // $products_meta_array = unserialize( $payment_meta_array['products'] );
