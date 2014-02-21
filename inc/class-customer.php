@@ -45,18 +45,24 @@ Class SellMediaCustomer {
     */
     public function auto_login( $user_id ){
 
+        ob_start();
         if ( ! is_user_logged_in() ) {
 
             $user = get_user_by( 'id', $user_id ); 
 
             if ( $user ) {
-                wp_set_current_user( $user_id, $user->user_login );
-                wp_set_auth_cookie( $user_id );
-                do_action( 'wp_login', $user->user_login );
+
+                $creds = array();
+                $creds['user_login'] = $user->user_login;
+                $creds['user_password'] = $user->user_pass;
+                $creds['remember'] = true;
+                $user = wp_signon( $creds, false );
+                wp_set_current_user( $user );
 
                 return false;
             }
         }
+        ob_end_clean();
     }
 
     /**
@@ -72,20 +78,20 @@ Class SellMediaCustomer {
 
         if ( $user ) {
 
-            //if ( ! email_exists( $user->user_email ) )
+            if ( ! email_exists( $user->user_email ) )
 
                 $subject = __( 'Account Registration at', 'sell_media' ) . ' ' . get_bloginfo( 'name' );
                 $message = __( 'Hello', 'sell_media' ) . ' ' . $user->first_name . '!' . "\n\n";
-                $message .= __( 'Here are your login credentials', 'sell_media' ) . ':' . "\n";
+                $message .= __( 'Here are your login credentials', 'sell_media' ) . ':' . "\n\n";
                 $message .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login . "\n";
                 $message .= __( 'Password', 'sell_media' ) . ': ' . $user->user_pass . "\n\n";
-                $message .= __( 'Your purchases are available on your account dashboard', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page ) . "\n\n";
+                $message .= __( 'Any purchases your make will be available on your account dashboard', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page ) . "\n\n";
                 $message .= __( 'Thanks', 'sell_media' ) . ',' . "\n";
                 $message .= get_bloginfo( 'name' );
                 wp_mail( $user->user_email, $subject, $message );
 
                 return false;
-            //}
+            }
         }
     }
 
