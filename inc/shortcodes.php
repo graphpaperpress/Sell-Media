@@ -16,29 +16,10 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     $html = null;
     if ( ! empty( $tx ) ){
 
-        $args = array(
-            'post_type' => 'sell_media_payment',
-            'post_status' => 'publish',
-            'meta_query' => array(
-                'relation' => 'AND',
-                    array(
-                        'key' => '_sell_media_purchase_key',
-                        'value' => $tx
-                    )
-                )
-            );
-
-        $payment_query = new WP_Query( $args );
-        if ( $payment_query->have_posts() ) {
-            while ( $payment_query->have_posts() ) : $payment_query->the_post();
-                $p = new SellMediaPayments;
-                $html = $p->get_products_formatted( get_the_ID() );
-                $html .= '<script>simpleCart.empty();</script>';
-            endwhile;
-        } else {
-            $html = __( 'Sorry, but your purchase is incomplete. Please contact us if you think this is in error.', 'sell_media' );
-        }
-        
+        $post_id = get_payment_id( $key='_sell_media_purchase_key', $value=$tx );
+        $p = new SellMediaPayments;
+        $html = $p->get_products_formatted( $post_id );
+        $html .= '<script>simpleCart.empty();</script>';
 
     }
     return '<p class="sell-media-thanks-message">' . $html . '</p>';

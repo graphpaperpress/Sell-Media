@@ -255,7 +255,8 @@ jQuery( document ).ready(function( $ ){
             success: sell_media.thanks_page,
             cancel: sell_media.checkout_page,
             notify: sell_media.listener_url,
-            shipping: 0 // 0 prompt & optional, 1 no prompt, 2 prompt & required
+            shipping: 0, // 0 prompt & optional, 1 no prompt, 2 prompt & required
+            method: "POST"
         },
         cartColumns: [
             { view: "image", attr: "image", label: false },
