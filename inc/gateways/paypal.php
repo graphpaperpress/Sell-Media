@@ -171,7 +171,6 @@ function sell_media_process_paypal_ipn() {
             if ( $payment_id ) {
 
                 update_post_meta( $payment_id, '_paypal_args', $_POST );
-                update_post_meta( $payment_id, '_sell_media_purchase_key', $_POST['txn_id'] );
 
                 // record the PayPal payment details
                 $p = new SellMediaPayments;
