@@ -62,9 +62,9 @@ Class SellMediaPayments {
     *
     * @return (int) $post_id
     */
-    public function get_payment_id( $key=null, $value=null ){
+    public function get_id( $post_type=null, $key=null, $value=null ){
         $args = array(
-        'post_type' => 'sell_media_payment',
+        'post_type' => $post_type,
         'post_status' => 'publish',
         'meta_query' => array(
             'relation' => 'AND',
@@ -92,7 +92,7 @@ Class SellMediaPayments {
 	*
 	* @return html
 	*/
-	public function get_products_formatted( $post_id=null ){
+	public function get_payment_products_formatted( $post_id=null ){
 		$products = $this->get_products( $post_id );
 		$html = null;
 		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '">';

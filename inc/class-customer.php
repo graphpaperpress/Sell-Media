@@ -68,18 +68,24 @@ Class SellMediaCustomer {
     */
     public function email_registration( $user_id ){
 
-        $user = get_user_by( 'id', $user_id ); 
+        $user = get_user_by( 'id', $user_id );
 
         if ( $user ) {
-            $subject = __( 'Account Registration at', 'sell_media' ) . ' ' . get_bloginfo( 'name' );
-            $message = __( 'Welcome', 'sell_media' ) . ' ' . $user->first_name . '!' . "\n\n";
-            $message .= __( 'Here are your login credentials', 'sell_media' ) . ':' . "\n";
-            $message .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login . "\n";
-            $message .= __( 'Password', 'sell_media' ) . ': ' . $user->password . "\n\n";
-            $message .= __( 'Your purchases are available on your account dashboard', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page );
-            wp_mail( $user->user_email, $subject, $message );
 
-            return false;
+            //if ( ! email_exists( $user->user_email ) )
+
+                $subject = __( 'Account Registration at', 'sell_media' ) . ' ' . get_bloginfo( 'name' );
+                $message = __( 'Hello', 'sell_media' ) . ' ' . $user->first_name . '!' . "\n\n";
+                $message .= __( 'Here are your login credentials', 'sell_media' ) . ':' . "\n";
+                $message .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login . "\n";
+                $message .= __( 'Password', 'sell_media' ) . ': ' . $user->user_pass . "\n\n";
+                $message .= __( 'Your purchases are available on your account dashboard', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page ) . "\n\n";
+                $message .= __( 'Thanks', 'sell_media' ) . ',' . "\n";
+                $message .= get_bloginfo( 'name' );
+                wp_mail( $user->user_email, $subject, $message );
+
+                return false;
+            //}
         }
     }
 

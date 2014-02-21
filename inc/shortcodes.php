@@ -16,8 +16,8 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     $html = null;
     if ( ! empty( $tx ) ){
         $p = new SellMediaPayments;
-        $post_id = $p->get_payment_id( $key='_sell_media_purchase_key', $value=$tx );
-        $html = $p->get_products_formatted( $post_id );
+        $post_id = $p->get_id( $post_type='sell_media_payments', $key='_sell_media_purchase_key', $value=$tx );
+        $html = $p->get_payment_products_formatted( $post_id );
         $html .= '<script>simpleCart.empty();</script>';
 
     }
