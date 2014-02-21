@@ -12,7 +12,7 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     if ( isset( $_GET['tx'] ) && ! empty( $_GET['tx'] ) ){
 
         $p = new SellMediaPayments;
-        $post_id = $p->get_id( $post_type='sell_media_payment', $key='_sell_media_purchase_key', $value=$_GET['tx'] );
+        $post_id = $p->get_id_from_tx( $transaction_id=$_GET['tx'] );
         $html = null;
         $html = $p->get_payment_products_formatted( $post_id );
         $html .= '<script>simpleCart.empty();</script>';

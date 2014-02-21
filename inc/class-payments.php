@@ -84,6 +84,32 @@ Class SellMediaPayments {
         }
     }
 
+    /**
+    * Get $post_id by matching transaction meta key value from serialized post meta
+    *
+    * @param $key (string) The key to check
+    * @param $value = (string) The value to check for
+    *
+    * @return (int) $post_id
+    */
+    public function get_id_from_tx( $transaction_id ){
+        $args = array(
+            'post_type' => 'sell_media_payment',
+            'post_status' => 'publish',
+            'meta_key' => '_sell_media_payment_meta',
+            'posts_per_page' => -1
+        );
+
+        $payment_query = new WP_Query( $args );
+        if ( $payment_query->have_posts() ) {
+            while ( $payment_query->have_posts() ) : $payment_query->the_post();
+                if ( $transaction_id == get_meta_key( get_the_ID(), 'transaction_id' ) ) {
+                    return get_the_ID();
+                }
+            endwhile;
+        }
+    }
+
 	/**
 	* Loop over products in payment meta and format them
 	*
