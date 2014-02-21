@@ -94,59 +94,61 @@ Class SellMediaPayments {
 	*/
 	public function get_payment_products_formatted( $post_id=null ){
 		$products = $this->get_products( $post_id );
-		$html = null;
-		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '">';
-		$html .= '<thead>';
-		$html .= '<tr>';
-		$html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
-		$html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
-        $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
-		$html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
-		$html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
-        $html .= '<th class="text-center">' . __( 'Download Link', 'sell_media' ) . '</td>';
-		$html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
-		$html .= '</tr>';
-		$html .= '</thead>';
-		$html .= '<tbody>';
-		foreach ( $products as $product ) {
-			$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
-			$items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
-			$html .= '<td class="sell-media-product-id">';
-			if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) $html .= $product['id'];
-			$html .= '</td>';
-			$html .= '<td class="sell-media-product-name">';
-			if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) ) $html .= $product['name'];
-			$html .= '</td>';
-            $html .= '<td class="sell-media-product-size">';
-            if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) $html .= $product['size']['name'];
-            $html .= '</td>';
-			$html .= '<td class="sell-media-product-license">';
-			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'];
-			$html .= '</td>';
-			$html .= '<td class="sell-media-product-qty text-center">';
-			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
-			$html .= '</td>';
-            $html .= '<td class="sell-media-product-download text-center">';
-            $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
-			$html .= '</td>';
-            $html .= '<td class="sell-media-product-total">';
-			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) ) $html .= $product['total'];
-			$html .= '</td>';
-			$html .= '</tr>';
-		}
-		$html .= '</tbody>';
-		$html .= '<tfoot>';
-		$html .= '<tr>';
-		$html .= '<td>&nbsp;</td>';
-		$html .= '<td>&nbsp;</td>';
-		$html .= '<td>&nbsp;</td>';
-		$html .= '<td>&nbsp;</td>';
-		$html .= '<td>&nbsp;</td>';
-        $html .= '<td>&nbsp;</td>';
-		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='total' ) . '</td>';
-		$html .= '</tr>';
-		$html .= '</table>';
-		return $html;
+        if ( $products ) {
+    		$html = null;
+    		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '">';
+    		$html .= '<thead>';
+    		$html .= '<tr>';
+    		$html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
+    		$html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
+            $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
+    		$html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
+    		$html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
+            $html .= '<th class="text-center">' . __( 'Download Link', 'sell_media' ) . '</td>';
+    		$html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
+    		$html .= '</tr>';
+    		$html .= '</thead>';
+    		$html .= '<tbody>';
+    		foreach ( $products as $product ) {
+    			$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
+    			$items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
+    			$html .= '<td class="sell-media-product-id">';
+    			if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) $html .= $product['id'];
+    			$html .= '</td>';
+    			$html .= '<td class="sell-media-product-name">';
+    			if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) ) $html .= $product['name'];
+    			$html .= '</td>';
+                $html .= '<td class="sell-media-product-size">';
+                if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) $html .= $product['size']['name'];
+                $html .= '</td>';
+    			$html .= '<td class="sell-media-product-license">';
+    			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'];
+    			$html .= '</td>';
+    			$html .= '<td class="sell-media-product-qty text-center">';
+    			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
+    			$html .= '</td>';
+                $html .= '<td class="sell-media-product-download text-center">';
+                $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
+    			$html .= '</td>';
+                $html .= '<td class="sell-media-product-total">';
+    			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) ) $html .= $product['total'];
+    			$html .= '</td>';
+    			$html .= '</tr>';
+    		}
+    		$html .= '</tbody>';
+    		$html .= '<tfoot>';
+    		$html .= '<tr>';
+    		$html .= '<td>&nbsp;</td>';
+    		$html .= '<td>&nbsp;</td>';
+    		$html .= '<td>&nbsp;</td>';
+    		$html .= '<td>&nbsp;</td>';
+    		$html .= '<td>&nbsp;</td>';
+            $html .= '<td>&nbsp;</td>';
+    		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='total' ) . '</td>';
+    		$html .= '</tr>';
+    		$html .= '</table>';
+    		return $html;
+        }
 	}
 
 

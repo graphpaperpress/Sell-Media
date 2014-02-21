@@ -10,18 +10,17 @@
 function sell_media_list_downloads_shortcode( $tx=null ) {
 
     if ( isset( $_GET['tx'] ) && ! empty( $_GET['tx'] ) ){
-        $tx = $_GET['tx'];
-    }
 
-    $html = null;
-    if ( ! empty( $tx ) ){
         $p = new SellMediaPayments;
-        $post_id = $p->get_id( $post_type='sell_media_payments', $key='_sell_media_purchase_key', $value=$tx );
+        $post_id = $p->get_id( $post_type='sell_media_payment', $key='_sell_media_purchase_key', $value=$_GET['tx'] );
+        $html = null;
         $html = $p->get_payment_products_formatted( $post_id );
         $html .= '<script>simpleCart.empty();</script>';
-
+        
+        return '<p class="sell-media-thanks-message">' . $html . '</p>';
+    } else {
+        return false;
     }
-    return '<p class="sell-media-thanks-message">' . $html . '</p>';
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
 
