@@ -30,8 +30,12 @@ Class SellMediaCustomer {
                 'password'      => $password
             );
 
+            // add the user
             $user_id = wp_insert_user( $userdata );
-            
+
+            // log the user in
+            $this->signon( $email, $password );
+
             return false;
         }
     }
@@ -43,28 +47,33 @@ Class SellMediaCustomer {
     * @return (bool)
     *
     */
-    public function signon( $user_id ){
+    public function signon( $email, $password ){
 
-        if ( ! is_user_logged_in() ) {
+        if ( ! is_user_logged_in() && email_exists( $email ) ) {
 
-            $user = get_user_by( 'id', $user_id ); 
-
-            if ( $user ) {
+            // seems that there are problems with logging user in on same pageload as wp_insert_user()
+            // this check might not be needed
+            $nonce = wp_create_nonce( 'user-nonce' );
+            wp_safe_redirect( $this->settings->thanks_page . '?nonce=' . $nonce );
+            if ( wp_verify_nonce( $_REQUEST['nonce'], 'user-nonce' ) ) {
 
                 $creds = array();
-                $creds['user_login'] = $user->user_login;
-                $creds['user_password'] = $user->user_pass;
+                $creds['user_login'] = $email;
+                $creds['user_password'] = $password;
                 $creds['remember'] = true;
                 $user = wp_signon( $creds, false );
-                wp_set_current_user( $user );
-                if ( is_wp_error($user) ) {
-                    return $user->get_error_message();
+
+                if ( is_wp_error( $user  ) ) {
+                    return;
                 } else {
-                    return false;
+                    wp_set_current_user( $user->ID, $user->user_login );
+                    wp_set_auth_cookie( $user->ID, true, false );
+                    do_action( 'wp_login', $user->user_login );
                 }
             }
         }
     }
+
 
     /**
     * Email user registration
