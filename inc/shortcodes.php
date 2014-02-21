@@ -29,8 +29,13 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
             );
 
         $payment = new WP_Query( $args );
-        $p = new SellMediaPayments;
-        $html = $p->get_products_formatted( $payment->ID );
+        if ( $payment ) {
+            $p = new SellMediaPayments;
+            $html = $p->get_products_formatted( $payment->ID );
+        } else {
+            $html = __( 'Sorry, but your purchase is incomplete. Please contact us if you think this is in error.', 'sell_media' );
+        }
+        
 
     }
     return '<p class="sell-media-thanks-message">' . $html . '</p>';
