@@ -110,36 +110,6 @@ Class SellMediaPayments {
         }
     }
 
-    /**
-    * Get all payments of a user
-    *
-    * @param $email (string) The email to check
-    *
-    * @return (array) $purchases
-    */
-    public function get_user_payments( $email ){
-
-        $purchases = array();
-        
-        $args = array(
-            'post_type' => 'sell_media_payment',
-            'post_status' => 'publish',
-            'meta_key' => '_sell_media_payment_meta',
-            'posts_per_page' => -1
-        );
-
-        $payment_query = new WP_Query( $args );
-        if ( $payment_query->have_posts() ) {
-            while ( $payment_query->have_posts() ) : $payment_query->the_post();
-                if ( $email == $this->get_meta_key( get_the_ID(), 'user_email' ) ) {
-                    $purchases[] = get_the_ID();
-                }
-            endwhile;
-        }
-
-        return $purchases;
-    }
-
 	/**
 	* Loop over products in payment meta and format them
 	*
@@ -359,7 +329,7 @@ Class SellMediaPayments {
         }
 
         if ( ! empty( $product_id ) && ! empty( $tmp_links[ $product_id ] ) ){
-            $link = $tmp_links[ $product_id ] . '&product_id=' . $product_id;
+            $link = $tmp_links[ $product_id ];
         } else {
             $link = $tmp_links;
         }
