@@ -137,21 +137,11 @@ Class SellMediaDownload {
      */
     public function protected_file_path( $product_id=null ){
 
-        $attachment_id = get_post_meta( $product_id, '_sell_media_attachment_id', true );
         $wp_upload_dir = wp_upload_dir();
-        $file_attached_path = get_post_meta( $attachment_id, '_sell_media_attached_file', true );
+        $file_attached_path = get_post_meta( $product_id, '_sell_media_attached_file', true );
         $file_path = $wp_upload_dir['basedir'] . '/sell_media/' . $file_attached_path;
 
         return file_exists( $file_path ) ? $file_path : false;
-    }
-
-
-    /**
-     * Used to download a generic file
-     */
-    public function download_file( $download_file=null ){
-        $this->force_download( $download_file );
-        exit;
     }
 
 
@@ -168,45 +158,47 @@ Class SellMediaDownload {
         $payments_obj = new SellMediaPayments;
         $products = $payments_obj->get_products( $payment_id );
 
-        // test value
-        // @todo size id needs to be passed in
-        // $products[0]['size']['id'] = 704;
+        $image_obj = new SellMediaImages;
 
         // determine size customer purchased for this item from this payment
         foreach( $products as $product ){
 
-            $size_id = $product['size']['id'];
+            if ( $product_id == $product['id'] ){
 
-            if ( $size_id == 'original' ){
+                // If this the customer purchased the original size, just download it and
+                // set the filename to null
+                if ( $product['size']['id'] === 'original' ){
+                    $filename = null;
+                    $file_download = $this->protected_file_path( $product_id );
+                }
 
-                $this->download_file( $this->protected_file_path( $product_id ) );
+                // If this is not an original size we generated the file download
+                // along with adding the download size to the file name
+                else {
+                    $confirmed_size = $image_obj->get_downloadable_size( $product_id, $product['size']['id'] );
+                    if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
+                        exit;
 
-            } else {
-                $image_obj = new SellMediaImages;
-                $confirmed_size = $image_obj->get_downloadable_size( $product_id, $size_id );
+                    $new_image = array(
+                        'height' => $confirmed_size['height'],
+                        'width'  => $confirmed_size['width']
+                    );
 
+                    $file_download = $this->create_download_size( $new_image, $this->protected_file_path( $product_id ) , true );
 
-                if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
-                    exit;
+                    // Create unique name based on the file width, height and license
+                    $file_name_info = pathinfo( basename( $file_download ) );
+                    $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
 
-                $new_image = array(
-                    'height' => $confirmed_size['height'],
-                    'width'  => $confirmed_size['width']
-                );
-
-                $file_download = $this->create_download_size( $new_image, $this->protected_file_path( $product_id ) , true );
-
-                // Create unique name based on the file width, height and license
-                $file_name_info = pathinfo( basename( $file_download ) );
-                $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
-
-                // @todo derive license
-                $license = null;
-                $filename = $file_name_info['filename'] . $size . $license . '.' . $file_name_info['extension'];
-
-                $this->force_download( $file_download, $filename );
+                    // @todo derive license
+                    $license = null;
+                    $filename = $file_name_info['filename'] . $size . $license . '.' . $file_name_info['extension'];
+                }
             }
         }
+
+        $this->force_download( $file_download, $filename );
+
     }
 
 
@@ -232,11 +224,10 @@ Class SellMediaDownload {
                 $download_file = $this->protected_file_path( $product_id );
                 $mime_type = wp_check_filetype( $download_file );
 
-
                 if ( in_array( $mime_type['type'], array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff' ) ) ){
                     $this->download_image( $payment_id, $product_id );
                 } else {
-                    $this->download_file( $download_file );
+                    $this->force_download( $download_file );
                 }
 
             } else {
