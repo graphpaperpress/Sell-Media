@@ -160,25 +160,28 @@ add_shortcode( 'sell_media_checkout', 'checkout_shortcode' );
 function sell_media_download_shortcode( $atts ) {
 	if ( is_user_logged_in() ) {
         global $current_user;
-        global $wpdb;
         get_currentuserinfo();
 
-	    $payment_lists = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value LIKE %s order by post_id DESC", '_sell_media_payment_user_email', $current_user->user_email ), ARRAY_A );
-            $payment_obj = new SellMediaPayments;
+        $c = new SellMediaCustomer;
+        $purchases = $c->purchases( $current_user->user_email );
+
+        $p = new SellMediaPayments;
+
+        if ( $purchases ) {
             $html = null;
-
-            foreach( $payment_lists as $payment ){
-                if ( get_post_status( $payment['post_id'] ) != 'publish' ) {
-                    $payment_meta = get_post_meta( $payment['post_id'], '_sell_media_payment_meta', true );
-                    $html .= '<ul class="payment-meta">';
-                    $html .= '<li><strong>'.__('Date', 'sell_media').'</strong> ' . $payment_meta['date'] . '</li>';
-                    $html .= '<li><strong>'.__('Payment ID', 'sell_media').'</strong> ' . $payment_meta['payment_id'] . '</li>';
-                    $html .= '</ul>';
-                    $html .= $payment_obj->payment_table( $payment['post_id'] );
-                }
+            foreach ( $purchases as $purchase ) {
+                $html = '<div class="sell-media-purchase">';
+                $html .= '<h2>';
+                $html .= __( 'Purchase ID', 'sell_media' ) . ': ' . get_the_ID();
+                $html .= '</h2>';
+                $html .= '<p class="date">';
+                $html .= the_date();
+                $html .= '</p>';
+                $html .= $p->get_payment_products_formatted( $purchase );
+                $html .= '</div>';
             }
-
-            return '<div id="purchase-history">'.$html.'</div>';
+            return '<div id="purchase-history">' . $html . '</div>';
+        }
 
 	} else {
             do_shortcode( '[sell_media_login_form]' );
