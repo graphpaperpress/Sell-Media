@@ -46,12 +46,13 @@ Class SellMediaProducts {
 
         // check assigned price group. We're assuming there is just one.
         $term_parent = wp_get_post_terms( $post_id, 'price-group' );
-        $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id ) );
 
         // if no assigned price group, get default from settings
         if ( empty( $term_parent ) ){
             $default = $this->settings->default_price_group;
             $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $default ) );
+        } else {
+            $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id ) );
         }
 
         // loop over child terms
