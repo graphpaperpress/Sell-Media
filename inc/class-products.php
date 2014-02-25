@@ -72,6 +72,27 @@ Class SellMediaProducts {
     }
 
 
+
+    /**
+     * Determine the price for a single item based on the product_id and size_id
+     *
+     * @param (int)$product_id
+     * @param (int)$price_id
+     *
+     * @return price on success false on failure
+     */
+    public function get_price( $product_id=null, $price_id=null ){
+        $final_price = false;
+        foreach( $this->get_prices( $product_id ) as $price ){
+            if ( $price_id == $price['id'] ){
+                $final_price = $price['price'];
+            }
+        }
+        return $final_price;
+    }
+
+
+
     /**
      * Retrieves the lowest price available of an item from the price groups
      *

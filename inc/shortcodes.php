@@ -16,7 +16,7 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
         $html = null;
         $html = $p->get_payment_products_formatted( $post_id );
         $html .= '<script>simpleCart.empty();</script>';
-        
+
         return '<p class="sell-media-thanks-message">' . $html . '</p>';
     } else {
         return false;
@@ -147,6 +147,8 @@ function checkout_shortcode(){
     do_action( 'sell_media_checkout_after_checkout_button' );
     $html .= '</div>';
 
+    $html .= wp_nonce_field( 'validate_cart', 'cart_nonce_security', null, false );
+
     return $html;
 }
 add_shortcode( 'sell_media_checkout', 'checkout_shortcode' );
@@ -169,7 +171,7 @@ function sell_media_download_shortcode( $atts ) {
         $html = '<h2>';
         $html .= __( 'Your Purchase History', 'sell_media' );
         $html .= '</h2>';
-        
+
         if ( $purchases ) foreach ( $purchases as $purchase ) {
             $html .= '<div class="sell-media-purchase">';
             $html .= '<p>';

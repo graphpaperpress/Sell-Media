@@ -2,6 +2,13 @@
 
 Class SellMediaPayments {
 
+
+    public function __construct(){
+        add_action('wp_ajax_nopriv_sell_media_simple_cart', array( &$this, 'sell_media_simple_cart') );
+        add_action('wp_ajax_sell_media_simple_cart', array( &$this, 'sell_media_simple_cart') );
+    }
+
+
 	/**
 	* Get meta associated with a payment
 	*
@@ -442,4 +449,40 @@ Class SellMediaPayments {
         return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
     }
 
+
+    /**
+     * Determine the price of all items in the cart that is being sent during checkout and set it.
+     */
+    public function sell_media_simple_cart(){
+
+        check_ajax_referer( 'validate_cart', 'security' );
+
+        $settings = sell_media_get_plugin_options();
+
+        // Our PayPal settings
+        $args = array(
+            'currency_code' => $settings->currency . '____zmk',
+            'business'      => $settings->paypal_email,
+            'return'        => get_permalink( $settings->thanks_page ),
+            'notify_url'    => site_url( '?sell_media-listener=IPN' )
+            // 'tax_cart' => 0.00,
+            // 'handling_cart' => 0.00
+        );
+
+        $cart = $_POST['cart'];
+
+        // Count the number of keys that match the pattern "item_number_"
+        $cart_count = count( preg_grep( '/^item_number_/', array_keys( $cart ) ) );
+
+        $p = new SellMediaProducts;
+        $verified = array();
+        for( $i=1; $i <= $cart_count; $i++ ) {
+            $cart['amount_' . $i ] = $p->get_price( $cart[ 'item_number_' . $i ], $cart[ 'os2_' . $i ] );
+        }
+
+        $verified_cart = array_merge( $cart, $verified, $args );
+
+        wp_send_json( array( 'cart' => $verified_cart ) );
+    }
 }
+new SellMediaPayments;

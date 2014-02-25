@@ -245,7 +245,7 @@ jQuery( document ).ready(function( $ ){
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
 
-        simpleCart({
+    simpleCart({
         cartStyle: "table",
         checkout: {
             sandbox: sell_media.sandbox,
@@ -276,6 +276,30 @@ jQuery( document ).ready(function( $ ){
         $('.sell-media-added').remove();
         $('#sell-media-add-to-cart').after( '<p class="sell-media-added small">' + item.get('name') + sell_media.added_to_cart + '</p>' );
     });
+
+
+    // Validate cart contents on the server
+    simpleCart.bind( 'beforeCheckout', function( data ){
+        var verified_cart;
+        $.ajax({
+            async: false,
+            data: {
+                security: $('#cart_nonce_security').val(),
+                action: 'sell_media_simple_cart',
+                cart: data
+            },
+            success: function( msg ){
+                verified_cart = msg.cart;
+            }
+        });
+
+        data = verified_cart;
+        // console.log( data );
+        // console.log( verified_cart );
+        // return false;
+    });
+
+
 
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 
@@ -308,5 +332,7 @@ jQuery( document ).ready(function( $ ){
         if ( price_group != null )
             $('.item_pgroup').text(price_group);
     });
+
+
 
 });
