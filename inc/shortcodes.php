@@ -164,25 +164,22 @@ function sell_media_download_shortcode( $atts ) {
 
         $p = new SellMediaPayments;
         $purchases = $p->get_user_payments( $current_user->user_email );
-        echo '<pre>';
-        print_r( $purchases );
-        echo '</pre>';
+
+        $html = null;
         
-        if ( $purchases ) {
-            $html = null;
-            foreach ( $purchases as $purchase ) {
-                $html = '<div class="sell-media-purchase">';
-                $html .= '<h2>';
-                $html .= __( 'Purchase ID', 'sell_media' ) . ': ' . get_the_ID();
-                $html .= '</h2>';
-                $html .= '<p class="date">';
-                $html .= the_date();
-                $html .= '</p>';
-                $html .= $p->get_payment_products_formatted( $purchase );
-                $html .= '</div>';
-            }
-            return '<div id="purchase-history">' . $html . '</div>';
+        if ( $purchases ) foreach ( $purchases as $purchase ) {
+            $html = '<div class="sell-media-purchase">';
+            $html .= '<h2>';
+            $html .= __( 'Purchase ID', 'sell_media' ) . ': ' . get_the_ID();
+            $html .= '</h2>';
+            $html .= '<p class="date">';
+            $html .= get_the_date();
+            $html .= '</p>';
+            $html .= $p->get_payment_products_formatted( $purchase );
+            $html .= '</div>';
         }
+
+        return '<div id="purchase-history">' . $html . '</div>';
 
 	} else {
             do_shortcode( '[sell_media_login_form]' );
