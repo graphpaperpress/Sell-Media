@@ -28,7 +28,7 @@ Class SellMediaPayments {
 	*/
 	public function get_meta_key( $post_id=null, $key=null ){
 		$meta = $this->get_meta( $post_id );
-		if ( array_key_exists( $key, $meta ) ) {
+		if ( is_array( $meta ) && array_key_exists( $key, $meta ) ) {
 			return $meta[$key];
 		} else {
 			return false;
@@ -45,10 +45,8 @@ Class SellMediaPayments {
 	*/
 	public function get_products( $post_id=null ){
 		$meta = $this->get_meta( $post_id );
-		if ( $meta) {
-			if ( array_key_exists( 'products', $meta ) ) {
-				return maybe_unserialize( $meta['products'] );
-			}
+		if ( is_array( $meta ) && array_key_exists( 'products', $meta ) ) {
+			return maybe_unserialize( $meta['products'] );
 		} else {
 			return false;
 		}
