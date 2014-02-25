@@ -166,14 +166,15 @@ function sell_media_download_shortcode( $atts ) {
         $purchases = $p->get_user_payments( $current_user->user_email );
 
         $html = null;
+        $html = '<h2>';
+        $html .= __( 'Your Purchase History', 'sell_media' );
+        $html .= '</h2>';
         
         if ( $purchases ) foreach ( $purchases as $purchase ) {
-            $html = '<div class="sell-media-purchase">';
-            $html .= '<h2>';
-            $html .= __( 'Purchase ID', 'sell_media' ) . ': ' . get_the_ID();
-            $html .= '</h2>';
-            $html .= '<p class="date">';
-            $html .= get_the_date();
+            $html .= '<div class="sell-media-purchase">';
+            $html .= '<p>';
+            $html .= '<strong>' . __( 'Purchase ID', 'sell_media' ) . ': ' . $purchase . '</strong>&nsbp;';
+            $html .= '<span class="date">' . get_the_date() . '</span>';
             $html .= '</p>';
             $html .= $p->get_payment_products_formatted( $purchase );
             $html .= '</div>';
