@@ -163,8 +163,12 @@ function sell_media_download_shortcode( $atts ) {
         get_currentuserinfo();
 
         $p = new SellMediaPayments;
+        print_r( $current_user->user_email );
+        print_r($current_user);
         $purchases = $p->get_user_payments( $current_user->user_email );
-
+        echo '<pre>';
+        print_r( $purchases );
+        echo '</pre>';
         if ( $purchases ) {
             $html = null;
             foreach ( $purchases as $purchase ) {
