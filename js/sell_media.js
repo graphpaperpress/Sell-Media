@@ -294,7 +294,7 @@ jQuery( document ).ready(function( $ ){
             sum = price;
         // selected license has markup
         else
-            sum = ( price * ( markup / 100 ) ).toFixed(2);
+            sum = ( + price + ( markup / 100 ) * price ).toFixed(2);
 
         $('#total').text(sum);
 
