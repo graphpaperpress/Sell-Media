@@ -150,6 +150,7 @@ Class SellMediaPayments {
 	*/
 	public function get_payment_products_formatted( $post_id=null ){
 		$products = $this->get_products( $post_id );
+
         if ( $products ) {
     		$html = null;
     		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '">';
@@ -166,6 +167,7 @@ Class SellMediaPayments {
     		$html .= '</thead>';
     		$html .= '<tbody>';
     		foreach ( $products as $product ) {
+                if ( ! empty( $product['id'] ) ){
     			$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
     			$items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
     			$html .= '<td class="sell-media-product-id">';
@@ -190,6 +192,7 @@ Class SellMediaPayments {
     			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) ) $html .= $product['total'];
     			$html .= '</td>';
     			$html .= '</tr>';
+                }
     		}
     		$html .= '</tbody>';
     		$html .= '<tfoot>';
