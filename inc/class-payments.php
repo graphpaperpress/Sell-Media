@@ -130,7 +130,7 @@ Class SellMediaPayments {
         $payment_query = new WP_Query( $args );
         if ( $payment_query->have_posts() ) {
             while ( $payment_query->have_posts() ) : $payment_query->the_post();
-                if ( $email == $this->get_meta_key( get_the_ID(), 'user_email' ) ) {
+                if ( $email == $this->get_meta_key( get_the_ID(), 'email' ) ) {
                     $purchases[] = get_the_ID();
                 }
             endwhile;
