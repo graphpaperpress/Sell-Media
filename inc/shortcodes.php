@@ -173,8 +173,8 @@ function sell_media_download_shortcode( $atts ) {
         if ( $purchases ) foreach ( $purchases as $purchase ) {
             $html .= '<div class="sell-media-purchase">';
             $html .= '<p>';
-            $html .= '<strong>' . __( 'Purchase ID', 'sell_media' ) . ': ' . $purchase . '</strong>&nsbp;';
-            $html .= '<span class="date">' . get_the_date() . '</span>';
+            $html .= '<strong>' . __( 'Purchase ID', 'sell_media' ) . ': ' . $purchase . '</strong>';
+            $html .= ' <span class="date">' . get_the_date() . '</span>';
             $html .= '</p>';
             $html .= $p->get_payment_products_formatted( $purchase );
             $html .= '</div>';
