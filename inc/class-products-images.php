@@ -225,7 +225,6 @@ class SellMediaImages extends SellMediaProducts {
                     if ( empty( $download_sizes[ $size->term_id ]['width'] ) ) {
                         $unavailable_size[ $size->term_id ] = array(
                             'name' => $download_sizes[ $size->term_id ]['name'],
-                            'price' => $download_sizes[ $size->term_id ]['price'],
                             'height' => $pg_height,
                             'width' => $pg_width
                             );

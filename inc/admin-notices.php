@@ -82,7 +82,7 @@ function sell_media_admin_messages() {
 
                     if ( ! empty( $download_sizes['unavailable'] ) ){
 
-                        $og_size = $images_obj->get_original_image_size( $post_id );
+                        $og_size = $images_obj->get_original_image_size( $post->ID );
 
                         $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
                         foreach( $download_sizes['unavailable'] as $unavailable ){
