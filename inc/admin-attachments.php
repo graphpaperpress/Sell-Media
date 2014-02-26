@@ -118,7 +118,7 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
 
 
         $product_obj = new SellMediaProducts;
-        if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
+        if ( $product_obj->mimetype_is_image( $post['ID'] ) ){
             $images_obj = new SellMediaImages;
             $images_obj->move_image_from_attachment( $post['ID'] );
         } else {

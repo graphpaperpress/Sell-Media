@@ -224,7 +224,7 @@ Class SellMediaDownload {
                 $download_file = $this->protected_file_path( $product_id );
 
                 $product_obj = new SellMediaProducts;
-                if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
+                if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
                     $this->download_image( $payment_id, $product_id );
                 } else {
                     $this->force_download( $download_file );
