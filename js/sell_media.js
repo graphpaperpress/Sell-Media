@@ -280,7 +280,6 @@ jQuery( document ).ready(function( $ ){
 
     // Validate cart contents on the server
     simpleCart.bind( 'beforeCheckout', function( data ){
-        var verified_cart;
         $.ajax({
             async: false,
             data: {
@@ -289,16 +288,12 @@ jQuery( document ).ready(function( $ ){
                 cart: data
             },
             success: function( msg ){
-                verified_cart = msg.cart;
+                $.each( msg.cart, function( k, v ){
+                    data[k] = v;
+                });
             }
         });
-
-        data = verified_cart;
-        // console.log( data );
-        // console.log( verified_cart );
-        // return false;
     });
-
 
 
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
@@ -332,7 +327,5 @@ jQuery( document ).ready(function( $ ){
         if ( price_group != null )
             $('.item_pgroup').text(price_group);
     });
-
-
 
 });
