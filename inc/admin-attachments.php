@@ -97,10 +97,10 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         }
 
         /**
-         * From here we can asusme that the image has been upload
+         * From here we can assume that the image has been upload
          * and a post type has been created. We update post meta
          * read some meta data from the image, build paths, save
-         * iptc data, set default license and finally copy the
+         * IPTC data, set default license and finally copy the
          * image to our products directory.
          */
 
@@ -116,21 +116,9 @@ function sell_media_attachment_field_sell_save( $post, $attachment ) {
         $attached_file = get_post_meta( $post['ID'], '_wp_attached_file', true );
         $file_name = basename( $attached_file );
 
-        // Build paths to the original file and the destination
-        $dir = wp_upload_dir();
-        $original_file = $dir['path'] . '/' . $file_name;
 
-        $mime_type = wp_check_filetype( $original_file );
-
-        $image_mimes = array(
-            'image/jpeg',
-            'image/png',
-            'image/gif',
-            'image/bmp',
-            'image/tiff'
-            );
-
-        if ( in_array( $mime_type['type'], $image_mimes ) ){
+        $product_obj = new SellMediaProducts;
+        if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
             $images_obj = new SellMediaImages;
             $images_obj->move_image_from_attachment( $post['ID'] );
         } else {

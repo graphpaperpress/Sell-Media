@@ -641,27 +641,6 @@ function sell_media_collections(){
 }
 
 
-
-/**
- * Checks if the attachment ID is an image mime type
- *
- * @param $attachment_id ID of the attachment
- * @param $mimetype an array of mimetypes
- * @return boolean true/false
- * @since 1.6.9
- */
-function sell_media_is_mimetype( $attachment_id=null, $mimetypes=array( 'image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/tiff', 'image/icon' ) ){
-
-    $attachment_mimetype = get_post_mime_type( $attachment_id );
-
-    if ( in_array( $attachment_mimetype, $mimetypes ) ) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
 /**
  * Returns the attachment ID file size
  *

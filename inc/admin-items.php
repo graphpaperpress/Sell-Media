@@ -313,17 +313,9 @@ function sell_media_save_custom_meta( $post_id ) {
         $wp_upload_dir = wp_upload_dir();
         if ( ! file_exists( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file ) ){
 
-            $mime_type = wp_check_filetype( $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file );
-            $image_mimes = array(
-                'image/jpeg',
-                'image/png',
-                'image/gif',
-                'image/bmp',
-                'image/tiff'
-                );
-
             // Image mime type support
-            if ( in_array( $mime_type['type'], $image_mimes ) ){
+            $product_obj = new SellMediaProducts;
+            if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
                 $images_obj = new SellMediaImages;
                 $images_obj->move_image_from_attachment( $attachment_id );
             } else {

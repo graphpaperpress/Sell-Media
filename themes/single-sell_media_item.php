@@ -13,7 +13,7 @@ get_header(); ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 
 		<div class="sell-media-content">
-			<?php if ( sell_media_is_mimetype( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) : ?>
+			<?php $product_obj = new SellMediaProducts; if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) : ?>
 				<?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
 			<?php endif; ?>
 			<div><?php the_content(); ?></div>
