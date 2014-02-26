@@ -461,7 +461,7 @@ Class SellMediaPayments {
 
         // Our PayPal settings
         $args = array(
-            'currency_code' => $settings->currency . '____zmk',
+            'currency_code' => $settings->currency,
             'business'      => $settings->paypal_email,
             'return'        => get_permalink( $settings->thanks_page ),
             'notify_url'    => site_url( '?sell_media-listener=IPN' )
