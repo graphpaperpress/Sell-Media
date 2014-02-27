@@ -39,7 +39,12 @@ if ( $licenses ) {
                         $p = new SellMediaProducts;
                         $prices = $p->get_prices( $_POST['product_id'] );
                         if ( $prices ) foreach ( $prices as $k => $v ) {
-                            echo '<option value="' . $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')" data-id="' . $v['id'] . '" data-price="' . $v['price'] . '" data-qty="1" data-size="' . $v['width'] . ' x ' . $v['height'] . '">' . $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . '): ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                            if ( $p->mimetype_is_image( get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true ) ) ){
+                                $name = $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')';
+                            } else {
+                                $name = $v['name'];
+                            }
+                            echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . $v['price'] . '" data-qty="1" data-size="' . $v['width'] . ' x ' . $v['height'] . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
                         }
                     ?>
                 </select>
