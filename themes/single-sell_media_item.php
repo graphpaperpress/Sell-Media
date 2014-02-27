@@ -51,7 +51,7 @@ get_header(); ?>
 					$prices = $p->get_prices( $post->ID );
                     if ( $prices ) : foreach ( $prices as $k => $v ) : ?>
                         <li class="price">
-                        	<span class="title"><?php echo $v['name']; ?> (<?php echo $v['width']; ?> x <?php echo $v['height']; ?>): </span>
+                        	<span class="title"><?php echo $v['name']; ?><?php if ( $p->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) : ?> (<?php echo $v['width']; ?> x <?php echo $v['height']; ?>)<?php endif; ?>: </span>
                         	<?php echo sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ); ?>
                         </li>
                     <?php endforeach; endif; ?>
