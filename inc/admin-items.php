@@ -463,7 +463,8 @@ function sell_media_item_content( $column, $post_id ){
             print $html;
             break;
         case "sell_media_price":
-            sell_media_item_price( $post_id );
+            $p = new SellMediaProducts;
+            echo $p->get_price( $post_id );
             break;
         default:
             break;

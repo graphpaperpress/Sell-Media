@@ -10,23 +10,6 @@ Class SellMediaProducts {
 
 
     /**
-     * Retrieves and prints the price of an item
-     *
-     * @since 0.1
-     * @param $post_id The Item ID
-     * @return string
-     */
-    function get_original_price( $post_id=null ){
-        $price = get_post_meta( $post_id, 'sell_media_price', true );
-        // if the item does not have specific price set, use default from settings
-        if ( empty( $price ) )
-            $price = $this->settings->default_price;
-
-         return $price;
-    }
-
-
-    /**
      * Get all prices assigned to a product
      *
      * @return $prices (array)
@@ -40,7 +23,7 @@ Class SellMediaProducts {
             $prices[$i]['id'] = 'original';
             $prices[$i]['name'] = __( 'Original', 'sell_media' );
             $prices[$i]['description'] = __( 'The original high resolution source file', 'sell_media' );
-            $prices[$i]['price'] = $this->get_original_price( $post_id );
+            $prices[$i]['price'] = $this->get_price( $post_id, 'original' );
             $prices[$i]['width'] = $original_size['original']['width'];
             $prices[$i]['height'] = $original_size['original']['height'];
         }
@@ -85,12 +68,28 @@ Class SellMediaProducts {
      * @return price on success false on failure
      */
     public function get_price( $product_id=null, $price_id=null ){
+
         $final_price = false;
-        foreach( $this->get_prices( $product_id ) as $price ){
-            if ( $price_id == $price['id'] ){
-                $final_price = $price['price'];
+
+        // If this item has a price set use that
+        $original_price = get_post_meta( $product_id, 'sell_media_price', true );
+        if ( ! empty( $original_price ) || $price_id == 'original' ){
+            $final_price = $original_price;
+        }
+
+        elseif ( ! empty( $price_id ) && $this->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
+            foreach( $this->get_prices( $product_id ) as $price ){
+                if ( $price_id == $price['id'] ){
+                    $final_price = $price['price'];
+                }
             }
         }
+
+        // Use default from setting
+        else {
+            $final_price = $this->settings->default_price;
+        }
+
         return $final_price;
     }
 
@@ -142,38 +141,4 @@ Class SellMediaProducts {
         $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
         return ( file_exists( $attached_file ) ) ? $attached_file : false;
     }
-}
-
-
-/**
- * Retrieves and prints the price of an item
- *
- * @since 0.1
- * @param $post_id The Item ID
- * @param $currency (bool) Display the currency symbol or not
- * @param $size (string) small, medium, large, null (for original)
- * @param $echo Either print the result or return it
- * @return string
- */
-function sell_media_item_price( $post_id=null, $currency=true, $size=null, $echo=true ){
-
-    /**
-     * Get the unique price of the item if it exists
-     * Otherwise, use the default price from Settings
-     */
-
-    $price = get_post_meta( $post_id, 'sell_media_price', true );
-    $settings = sell_media_get_plugin_options();
-
-    // if the item does not have specific price set, use default from settings
-    if ( empty( $price ) )
-        $price = $settings->default_price;
-    // show the currency symbol if currency is set to true
-    if ( $currency )
-        $price = sell_media_get_currency_symbol() . sprintf( '%0.2f', $price );
-    // echo or return the price
-    if ( $echo )
-        echo $price;
-    else
-     return $price;
 }
