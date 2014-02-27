@@ -189,7 +189,7 @@ function sell_media_process_paypal_ipn() {
                 $message .= "To email: {$_POST['payer_email']}\n";
 
                 // I don't think this function is working
-                $email_status = sell_media_email_purchase_receipt( $payment_id, $_POST['payer_email'] );
+                $email_status = $p->email_receipt( $payment_id, $_POST['payer_email'] );
                 $message .= "{$email_status}\n";
 
                 // $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
