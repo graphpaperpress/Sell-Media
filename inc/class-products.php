@@ -33,6 +33,7 @@ Class SellMediaProducts {
      */
     public function get_prices( $post_id=null ){
         $i = 0;
+
         if ( $this->settings->hide_original_price !== 'yes' ){
             $images_obj = new SellMediaImages;
             $original_size = $images_obj->get_original_image_size( $post_id, false );
@@ -44,27 +45,29 @@ Class SellMediaProducts {
             $prices[$i]['height'] = $original_size['original']['height'];
         }
 
-        // check assigned price group. We're assuming there is just one.
-        $term_parent = wp_get_post_terms( $post_id, 'price-group' );
+        if ( $this->mimetype_is_image( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) ){
+            // check assigned price group. We're assuming there is just one.
+            $term_parent = wp_get_post_terms( $post_id, 'price-group' );
 
-        // if no assigned price group, get default from settings
-        if ( empty( $term_parent ) ){
-            $default = $this->settings->default_price_group;
-            $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $default ) );
-        } else {
-            $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id ) );
-        }
+            // if no assigned price group, get default from settings
+            if ( empty( $term_parent ) ){
+                $default = $this->settings->default_price_group;
+                $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $default ) );
+            } else {
+                $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id ) );
+            }
 
-        // loop over child terms
-        foreach( $terms as $term ){
-            if ( $term->parent != 0 ){
-                $i++;
-                $prices[$i]['id'] = $term->term_id;
-                $prices[$i]['name'] = $term->name;
-                $prices[$i]['description'] = $term->description;
-                $prices[$i]['price'] = sell_media_get_term_meta( $term->term_id, 'price', true );
-                $prices[$i]['width'] = sell_media_get_term_meta( $term->term_id, 'width', true );
-                $prices[$i]['height'] = sell_media_get_term_meta( $term->term_id, 'height', true );
+            // loop over child terms
+            foreach( $terms as $term ){
+                if ( $term->parent != 0 ){
+                    $i++;
+                    $prices[$i]['id'] = $term->term_id;
+                    $prices[$i]['name'] = $term->name;
+                    $prices[$i]['description'] = $term->description;
+                    $prices[$i]['price'] = sell_media_get_term_meta( $term->term_id, 'price', true );
+                    $prices[$i]['width'] = sell_media_get_term_meta( $term->term_id, 'width', true );
+                    $prices[$i]['height'] = sell_media_get_term_meta( $term->term_id, 'height', true );
+                }
             }
         }
 
