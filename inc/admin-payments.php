@@ -264,8 +264,11 @@ function sell_media_payments_callback_fn(){
                         <?php
                             $p = new SellMediaPayments;
                             $products = $p->get_products( $payment->ID );
+                            $i = 0;
+                            $count = count( $products );
                             if ( $products ) foreach ( $products as $product ) {
-                                print $product['name'];
+                                echo '<a href="' . get_edit_post_link( $product['id'] ) . '">' . $product['name'] . '</a>';
+                                echo $i++ != $count - 1 ? ', ' : null;
                             }
                         ?>
                     </td>
