@@ -323,7 +323,8 @@ Class SellMediaPayments {
 
         foreach( $this->get_products( $post_id ) as $product ){
             $html .= '<tr class="" valign="top">';
-            $html .= '<td class="media-icon"><a href="' . get_edit_post_link( $product['id'] ) . '">' . wp_get_attachment_image( get_post_meta( $product['id'], '_sell_media_attachment_id', true ) ) . '</a></td>';
+            $html .= '<td class="media-icon">';
+            $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( get_post_meta( $product['id'], '_sell_media_attachment_id', true ), 'medium', false) . '</a></td>';
             $html .= '<td>' . $product['size']['name'] . '</td>';
             $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
             $html .= '<td>' . $product['qty'] . '</td>';

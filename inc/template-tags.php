@@ -40,11 +40,10 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
     $image_title = get_the_title( $post_id );
     $_thumbnail_id = get_post_thumbnail_id( $post_id );
 
-
     /**
      * Since we always want to return the actual image associated with this item for sale
      * on the edit/add new item page. We check the global $pagenow variable, vs. adding
-     * coniditionals through out the code.
+     * conditionals through out the code.
      */
     global $pagenow;
     global $post_type;
