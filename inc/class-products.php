@@ -58,7 +58,6 @@ Class SellMediaProducts {
     }
 
 
-
     /**
      * Determine the price for a single item based on the product_id and size_id
      *
@@ -97,7 +96,6 @@ Class SellMediaProducts {
 
         return $final_price;
     }
-
 
 
     /**
@@ -146,4 +144,30 @@ Class SellMediaProducts {
         $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
         return ( file_exists( $attached_file ) ) ? $attached_file : false;
     }
+
+
+
+    /**
+     * Determine the markup amount.
+     *
+     * @param $post_id (int) Post ID for a sell media item
+     * @param $price_id (int) The term_id for a price of the price-group taxonomy
+     * @param $license_id (int) The term_id for a price of the licenses taxonomy
+     *
+     * @return (float) returns the full markup amount without currency symbol
+     */
+    public function markup_amount( $post_id=null, $price_id=null, $license_id=null ){
+
+        $price = $this->get_price( $post_id, $price_id );
+
+        if ( empty( $license_id ) ){
+            $markup_amount = 0;
+        } else {
+            $markup_percent = str_replace( "%", "", sell_media_get_term_meta( $license_id, 'markup', true ) );
+            $markup_amount = ( $markup_percent / 100 ) * $price;
+        }
+
+        return $markup_amount;
+    }
+
 }

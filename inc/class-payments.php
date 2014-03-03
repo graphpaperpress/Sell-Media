@@ -478,7 +478,21 @@ Class SellMediaPayments {
         $p = new SellMediaProducts;
         $verified = array();
         for( $i=1; $i <= $cart_count; $i++ ) {
-            $cart['amount_' . $i ] = $p->get_price( $cart[ 'item_number_' . $i ], $cart[ 'os2_' . $i ] );
+
+            // Sanity
+            $product_id = $cart[ 'item_number_' . $i ];
+            $license_id = $cart[ 'os3_' . $i ];
+            $price_id = $cart[ 'os2_' . $i ];
+
+            if ( $license_id != 0 ) {
+                $cart['amount_' . $i ] = $p->markup_amount(
+                    $product_id,
+                    $price_id,
+                    $license_id
+                    ) + $p->get_price( $product_id, $price_id );
+            } else {
+                $cart['amount_' . $i ] = $p->get_price( $product_id, $price_id );
+            }
         }
 
         $verified_cart = array_merge( $cart, $verified, $args );
