@@ -67,17 +67,20 @@ Class SellMediaProducts {
      *
      * @return price on success false on failure
      */
-    public function get_price( $product_id=null, $price_id=null ){
+    public function get_price( $product_id=null, $price_id=null, $formatted=false ){
 
         $final_price = false;
 
         // If this item has a price set use that
         $original_price = get_post_meta( $product_id, 'sell_media_price', true );
-        if ( ! empty( $original_price ) || $price_id == 'original' ){
+
+        if ( ! empty( $original_price )  ){
+            echo "product id: {$product_id} price id: {$price_id}";
             $final_price = $original_price;
         }
 
-        elseif ( ! empty( $price_id ) && $this->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
+        elseif ( ! empty( $price_id ) && $this->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) )
+            && $price_id != 'original' ){
             foreach( $this->get_prices( $product_id ) as $price ){
                 if ( $price_id == $price['id'] ){
                     $final_price = $price['price'];
@@ -89,6 +92,8 @@ Class SellMediaProducts {
         else {
             $final_price = $this->settings->default_price;
         }
+
+        $final_price = ( $formatted ) ? sell_media_get_currency_symbol() . sprintf( '%0.2f', $final_price ) : $final_price;
 
         return $final_price;
     }

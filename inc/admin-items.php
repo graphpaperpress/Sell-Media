@@ -464,7 +464,7 @@ function sell_media_item_content( $column, $post_id ){
             break;
         case "sell_media_price":
             $p = new SellMediaProducts;
-            echo $p->get_price( $post_id );
+            echo $p->get_price( $post_id, null, true );
             break;
         default:
             break;
