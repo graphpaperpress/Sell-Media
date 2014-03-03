@@ -52,7 +52,7 @@ First, you must setup your PayPal IPN URL for Sell Media to work:
 3. Scroll down to "Getting paid and managing my risk" and click the Update link beside "Instant payment notifications".
 4. Paste your PayPal IPN URL onto that page in PayPal. Your PayPal IPN URL is located on the Sell Media Settings page.
 
-Fianlly, in order for buyers to be returned to your site where they can instantly begin to download their purchases, you must turn on the "Auto Return" feature in PayPal. Auto Return is turned off by default. To turn on Auto Return:
+Finally, in order for buyers to be returned to your site where they can instantly begin to download their purchases, you must turn on the "Auto Return" feature in PayPal. Auto Return is turned off by default. To turn on Auto Return:
 
 1. Log in to your PayPal account at https://www.paypal.com. The My Account Overview page appears.
 2. Click the Profile subtab. The Profile Summary page appears.
@@ -60,7 +60,8 @@ Fianlly, in order for buyers to be returned to your site where they can instantl
 4. Under the Selling Online section, click the Update link in the row for Website Preferences. The Website Payment Preferences page appears
 5. Under Auto Return for Website Payments, click the On radio button to enable Auto Return.
 6. In the Return URL field, enter the URL to your Thanks Page. NOTE: PayPal checks the Return URL that you enter. If the URL is not properly formatted or cannot be validated, PayPal will not activate Auto Return.
-7. Scroll to the bottom of the page, and click the Save button.
+7. Under Payment Data Transfer (optional), click the On radio button to enable Payment Data Transfer.
+8. Scroll to the bottom of the page, and click the Save button.
 
 == Frequently Asked Questions ==
 
