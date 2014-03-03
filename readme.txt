@@ -43,16 +43,16 @@ Take Sell Media to the next level with these powerful extensions:
 4. Visit Sell Media -> Licenses and add or configure your default licenses for new uploads.
 5. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
 
-= IMPORTANT: 2 Final Steps For Paypal Setup =
+= IMPORTANT: 2 Final Steps For PayPal Setup =
 
-First, you must setup your Paypal IPN URL for Sell Media to work:
+First, you must setup your PayPal IPN URL for Sell Media to work:
 
 1. Login to your PayPal account.
 2. Mouse over the Profile menu option and then click on the Selling Tools menu option.
 3. Scroll down to "Getting paid and managing my risk" and click the Update link beside "Instant payment notifications".
-4. Paste your Paypal IPN URL onto that page in Paypal. Your Paypal IPN URL is located on the Sell Media Settings page.
+4. Paste your PayPal IPN URL onto that page in PayPal. Your PayPal IPN URL is located on the Sell Media Settings page.
 
-Fianlly, in order for buyers to be returned to your site where they can instantly begin to download their purchases, you must turn on the "Auto Return" feature in Paypal. Auto Return is turned off by default. To turn on Auto Return:
+Fianlly, in order for buyers to be returned to your site where they can instantly begin to download their purchases, you must turn on the "Auto Return" feature in PayPal. Auto Return is turned off by default. To turn on Auto Return:
 
 1. Log in to your PayPal account at https://www.paypal.com. The My Account Overview page appears.
 2. Click the Profile subtab. The Profile Summary page appears.
@@ -145,9 +145,9 @@ Again, it is important that we emphasize that if you are on a shared hosting pac
 
 = Transactions are not posting. Why? =
 
-Please visit the Add Media -> Settings -> Payments page and double check all of your settings. Also, if you are using Paypal, you need to make sure you have [added your IPN Listener URL to Paypal](https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup).
+Please visit the Add Media -> Settings -> Payments page and double check all of your settings. Also, if you are using PayPal, you need to make sure you have [added your IPN Listener URL to PayPal](https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup).
 
-Also, PayPal computers use IP ranges 66.211.*.* and 173.0.*.* and visit the IPN URL with NO User-Agent. Some web hosting companies have their servers set up to block incoming pings when the User-Agent is not explicitly set (as is the case with Paypal's IPN). In this case, you'll want to modify your .htaccess file to override user-agent blocking with these address ranges.
+Also, PayPal computers use IP ranges 66.211.*.* and 173.0.*.* and visit the IPN URL with NO User-Agent. Some web hosting companies have their servers set up to block incoming pings when the User-Agent is not explicitly set (as is the case with PayPal's IPN). In this case, you'll want to modify your .htaccess file to override user-agent blocking with these address ranges.
 
 = What are license types? =
 
@@ -321,8 +321,8 @@ Action hooks available:
 = 1.5.6 =
 
 * Feature: Admin shows collection icon on collection edit column
-* Feature: Added detailed Paypal log per item on the single item payments page
-* Bug: Better Paypal support
+* Feature: Added detailed PayPal log per item on the single item payments page
+* Bug: Better PayPal support
 * Tweak: Improved search results
 
 = 1.5.5 =
@@ -373,7 +373,7 @@ Action hooks available:
 = 1.5.1 =
 
 * New: Price groups, users are no longer limited to "small, medium, large", they can create infinite price groups and assign them to items.
-* New: Added Paypal log.txt file to admin settings
+* New: Added PayPal log.txt file to admin settings
 * New: Added field for admins to add CC accounts for paypal purchases
 * New: Added Option to change sort order on archive pages
 * New: Added POT file
@@ -575,7 +575,7 @@ Action hooks available:
 = 1.0.3 =
 
 * Added Google Charts on Reports page
-* Added Paypal IPN instructions on Settings
+* Added PayPal IPN instructions on Settings
 * Max-width fix for Firefox on Sell Media archives
 * Post Type Taxonomy archives conflict fix
 * Download file fix
