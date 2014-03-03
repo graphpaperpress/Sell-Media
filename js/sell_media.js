@@ -299,10 +299,17 @@ jQuery( document ).ready(function( $ ){
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 
         // disable add to cart button unless price selected
-        if( $('#sell_media_item_size').val() )
-            $('.item_add, #sell_media_item_license').prop('disabled', false);
-        else
-            $('.item_add, #sell_media_item_license').prop('disabled', true);
+        if( $('#sell_media_item_size').val() ){
+            $('#sell_media_item_license').prop('disabled', false);
+        } else {
+            $('.item_add').prop('disabled', true);
+        }
+
+        if( $('#sell_media_item_license').val() && $('#sell_media_item_size').val() ) {
+            $('.item_add').prop('disabled', false);
+        } else {
+            $('.item_add').prop('disabled', true);
+        }
 
         // calculate the price and license markup
         var price = $('#sell_media_item_size :selected').data('price');
