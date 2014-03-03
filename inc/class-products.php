@@ -74,7 +74,6 @@ Class SellMediaProducts {
         $original_price = get_post_meta( $product_id, 'sell_media_price', true );
 
         if ( ! empty( $original_price )  ){
-            echo "product id: {$product_id} price id: {$price_id}";
             $final_price = $original_price;
         }
 
