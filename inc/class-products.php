@@ -91,7 +91,8 @@ Class SellMediaProducts {
             $final_price = $this->settings->default_price;
         }
 
-        $final_price = ( $formatted ) ? sell_media_get_currency_symbol() . sprintf( '%0.2f', $final_price ) : $final_price;
+        $final_price = sprintf( '%0.2f', $final_price );
+        $final_price = ( $formatted ) ? sell_media_get_currency_symbol() . $final_price : $final_price;
 
         return $final_price;
     }
