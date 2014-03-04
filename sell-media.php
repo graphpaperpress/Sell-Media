@@ -664,7 +664,7 @@ class SellMedia {
                 'listener_url' => site_url( '?sell_media-listener=IPN' ),
                 'added_to_cart' => sprintf(
                     "%s <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
-                    __( 'was added to', 'sell_media' ),
+                    __( ' was added to', 'sell_media' ),
                     __( 'your cart','sell_media' ) )
                 ) );
 
