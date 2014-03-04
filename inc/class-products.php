@@ -73,7 +73,7 @@ Class SellMediaProducts {
         // If this item has a price set use that
         $original_price = get_post_meta( $product_id, 'sell_media_price', true );
 
-        if ( ! empty( $original_price )  ){
+        if ( ! empty( $original_price ) && ! empty( $price_id ) && $price_id == 'original' ){
             $final_price = $original_price;
         }
 

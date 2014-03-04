@@ -291,7 +291,6 @@ jQuery( document ).ready(function( $ ){
                 $.each( msg.cart, function( k, v ){
                     data[k] = v;
                 });
-                simpleCart.empty();
             }
         });
     });
