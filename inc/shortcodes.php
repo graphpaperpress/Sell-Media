@@ -132,24 +132,31 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
  * @since 2.0
  */
 function checkout_shortcode(){
-    do_action( 'sell_media_checkout_before_cart' );
-    $html = '<div class="simpleCart_items"></div>';
-    $html .= '<div class="sell-media-totals group">';
-    $html .= '<div class="subtotal"><span class="sell-media-itemize">' . __( 'Subtotal', 'sell_media' ) . ':</span> <span class="simpleCart_total"></span></div>';
-    $html .= '<div class="tax"><span class="sell-media-itemize">' . __( 'Tax', 'sell_media' ) . ':</span> <span class="simpleCart_tax"></span></div>';
-    $html .= '<div class="shipping"><span class="sell-media-itemize">' . __( 'Shipping', 'sell_media' ) . ':</span> <span class="simpleCart_shipping"></span></div>';
-    $html .= '<div class="total sell-media-bold"><span class="sell-media-itemize">'  . __( 'Total', 'sell_media' ) . ':</span> <span class="simpleCart_grandTotal"></span></div>';
-    $html .= '</div>';
-    do_action( 'sell_media_checkout_registration_fields' );
-    do_action( 'sell_media_checkout_after_registration_fields' );
-    $html .= '<div class="sell-media-checkout-button group">';
-    $html .= '<a href="javascript:;" class="simpleCart_checkout sell-media-button">'. __( 'Checkout', 'sell_media' ) . '</a>';
-    do_action( 'sell_media_checkout_after_checkout_button' );
-    $html .= '</div>';
-
-    $html .= wp_nonce_field( 'validate_cart', 'cart_nonce_security', null, false );
-
-    return $html;
+    ob_start(); ?>
+    <?php do_action( 'sell_media_checkout_before_cart' ); ?>
+    <div class="simpleCart_items"></div>
+    <div class="sell-media-totals group">
+        <div class="subtotal">
+            <span class="sell-media-itemize"><?php _e( 'Subtotal', 'sell_media' ); ?>:</span> <span class="simpleCart_total"></span>
+        </div>
+        <div class="tax">
+            <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>:</span> <span class="simpleCart_tax"></span>
+        </div>
+        <div class="shipping">
+            <span class="sell-media-itemize"><?php _e( 'Shipping', 'sell_media' ); ?>:</span> <span class="simpleCart_shipping"></span>
+        </div>
+        <div class="total sell-media-bold">
+            <span class="sell-media-itemize"><?php _e( 'Total', 'sell_media' ); ?>:</span> <span class="simpleCart_grandTotal"></span>
+        </div>
+    </div>
+    <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
+    <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
+    <div class="sell-media-checkout-button group">
+        <a href="javascript:;" class="simpleCart_checkout sell-media-button"><?php _e( 'Checkout', 'sell_media' ); ?></a>
+        <?php do_action( 'sell_media_below_registration_form' ); ?>
+    </div>
+    <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security', null, false ); ?>
+    <?php return ob_get_clean();
 }
 add_shortcode( 'sell_media_checkout', 'checkout_shortcode' );
 
