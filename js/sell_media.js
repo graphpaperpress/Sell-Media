@@ -319,9 +319,11 @@ jQuery( document ).ready(function( $ ){
         var price = $('#sell_media_item_size :selected').data('price');
 
         if ( $('#sell_media_item_license :selected').data('price') ){
-            var markup = $('#sell_media_item_license :selected').data('price')
+            var markup = $('#sell_media_item_license :selected').data('price');
+            var license_name = $('#sell_media_item_license :selected').data('name');
         } else {
             var markup = $('#sell_media_item_license').data('price');
+            var license_name = $('#sell_media_item_license').data('name');
         }
 
         // selected license doesn't have markup
@@ -334,7 +336,6 @@ jQuery( document ).ready(function( $ ){
         $('#total').text(sum);
 
         // set license name for display on cart
-        var license_name = $('#sell_media_item_license :selected').data('name');
         if ( license_name != null )
             $('.item_usage').text(license_name);
 

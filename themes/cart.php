@@ -59,12 +59,11 @@ if ( $licenses ) {
 						<option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
 						<?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
 					</select>
-					<span class="item_usage hide"></span>
 					<div class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license to learn more about each license.', 'sell_media' ); ?>"> <?php _e( 'View Details', 'sell_media' ); ?></div>
-				</fieldset>
+			     	<span class="item_usage hide"></span>
+            </fieldset>
 			<?php else : ?>
                 <input type="text" value="0" class="item_license hide" />
-                <input type="text" value="0" class="item_usage hide" />
 				<?php if ( ! empty( $term_id ) ) : ?>
 					<div id="sell_media_item_license" data-id="<?php print $term_id; ?>" data-value="<?php print $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php print $licenses[0]->name; ?>" data-price="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
 						<?php _e( 'License', 'sell_media'); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span>
