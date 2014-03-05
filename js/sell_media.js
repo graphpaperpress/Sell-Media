@@ -244,7 +244,7 @@ jQuery( document ).ready(function( $ ){
         $this = $(this);
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
-
+console.log( sell_media.cart_labels.name );
     simpleCart({
         cartStyle: "table",
         checkout: {
@@ -258,18 +258,52 @@ jQuery( document ).ready(function( $ ){
             shipping: 0, // 0 prompt & optional, 1 no prompt, 2 prompt & required
             method: "POST"
         },
-        cartColumns: [
-            { view: "image", attr: "image", label: false },
-            { attr: "name", label: "Name" },
-            { attr: "size", label: "Size" },
-            { attr: "usage", label: "License" },
-            { attr: "price", label: "Price", view: "currency" },
-            { view: "decrement", label: false, text: "-" },
-            { attr: "quantity", label: "Qty" },
-            { view: "increment", label: false, text: "+" },
-            { attr: "total", label: "SubTotal", view: "currency" },
-            { view: "remove", text: "Remove", label: false }
-        ]
+        cartColumns: [{
+                view: "image",
+                attr: "image",
+                label: false
+            },
+            {
+                attr: "name",
+                label: sell_media.cart_labels.name
+            },
+            {
+                attr: "size",
+                label: sell_media.cart_labels.size
+            },
+            {
+                attr: "usage",
+                label: sell_media.cart_labels.license
+            },
+            {
+                attr: "price",
+                label: sell_media.cart_labels.price,
+                view: "currency"
+            },
+            {
+                view: "decrement",
+                label: false,
+                text: "-"
+            },
+            {
+                attr: "quantity",
+                label: sell_media.cart_labels.qty
+            },
+            {
+                view: "increment",
+                label: false,
+                text: "+"
+            },
+            {
+                attr: "total",
+                label: sell_media.cart_labels.sub_total,
+                view: "currency"
+            },
+            {
+                view: "remove",
+                label: false,
+                text: "Remove"
+            }]
     });
 
     simpleCart.bind( 'afterAdd' , function( item ){

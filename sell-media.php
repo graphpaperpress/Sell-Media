@@ -665,7 +665,15 @@ class SellMedia {
                 'added_to_cart' => sprintf(
                     "%s <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
                     __( ' was added to', 'sell_media' ),
-                    __( 'your cart','sell_media' ) )
+                    __( 'your cart','sell_media' ) ),
+                'cart_labels' => array(
+                    'name' => __( 'Name', 'sell_media' ),
+                    'size' => __( 'Size', 'sell_media' ),
+                    'license' => __( 'License', 'sell_media' ),
+                    'price' => __( 'Price', 'sell_media' ),
+                    'qty' => __( 'Qty', 'sell_media' ),
+                    'sub_total' => __( 'Sub Total', 'sell_media' )
+                    )
                 ) );
 
             if ( isset( $settings->style ) && '' != $settings->style )
