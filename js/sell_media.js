@@ -317,8 +317,13 @@ jQuery( document ).ready(function( $ ){
 
         // calculate the price and license markup
         var price = $('#sell_media_item_size :selected').data('price');
-        var markup = $('#sell_media_item_license :selected').data('price');
-        var markup_single = $('#sell_media_item_license').data('price');
+
+        if ( $('#sell_media_item_license :selected').data('price') ){
+            var markup = $('#sell_media_item_license :selected').data('price')
+        } else {
+            var markup = $('#sell_media_item_license').data('price');
+        }
+
         // selected license doesn't have markup
         if ( markup == undefined || markup == 0 )
             sum = price;
