@@ -244,7 +244,7 @@ jQuery( document ).ready(function( $ ){
         $this = $(this);
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
-console.log( sell_media.cart_labels.name );
+
     simpleCart({
         cartStyle: "table",
         checkout: {
