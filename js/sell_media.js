@@ -311,6 +311,10 @@ jQuery( document ).ready(function( $ ){
             $('.item_add').prop('disabled', true);
         }
 
+        if ( $('#sell_media_item_license').length == 0 || $('div#sell_media_item_license').length == 1){
+            $('.item_add').prop('disabled', false);
+        }
+
         // calculate the price and license markup
         var price = $('#sell_media_item_size :selected').data('price');
         var markup = $('#sell_media_item_license :selected').data('price');
