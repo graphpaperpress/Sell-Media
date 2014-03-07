@@ -61,15 +61,17 @@ if ( $licenses ) {
 			     	<span class="item_usage hide"></span>
             </fieldset>
 			<?php else : ?>
-                <input type="text" value="0" class="item_license hide" />
-				<?php if ( ! empty( $term_id ) ) : ?>
-					<div id="sell_media_item_license" data-id="<?php print $term_id; ?>" data-value="<?php print $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php print $licenses[0]->name; ?>" data-price="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
-						<?php _e( 'License', 'sell_media'); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span>
-					</div>
-					<?php if ( ! empty( $licenses[0]->description ) ) : ?>
-						<div class="license_desc sell-media-tooltip" data-tooltip="<?php print esc_attr( $licenses[0]->description ); ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
-					<?php endif; ?>
-                <?php endif; ?>
+                <fieldset>
+                    <input type="text" value="<?php print $term_id; ?>" class="item_license hide" />
+    				<?php if ( ! empty( $term_id ) ) : ?>
+    					<div id="sell_media_item_license" data-id="<?php print $term_id; ?>" data-value="<?php print $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php print $licenses[0]->name; ?>" data-price="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
+    						<?php _e( 'License', 'sell_media'); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span> (<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>% markup)
+    					</div>
+    					<?php if ( ! empty( $licenses[0]->description ) ) : ?>
+    						<div class="license_desc sell-media-tooltip" data-tooltip="<?php print esc_attr( $licenses[0]->description ); ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
+    					<?php endif; ?>
+                    <?php endif; ?>
+                </fieldset>
 			<?php endif; ?>
 			<?php //do_action( 'sell_media_cart_below_licenses' ); ?>
 			<span class="item_number hide"><?php echo $_POST['product_id']; ?></span>

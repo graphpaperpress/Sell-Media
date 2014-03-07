@@ -22,9 +22,6 @@ jQuery(document).ready(function($){
         // assign values to the overlay and dialog box
         $('#sell-media-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
         $('#sell-media-dialog-box').css({left:dialogLeft}).show();
-
-        // display the message
-        $('#sell-media-dialog-message').html(message);
             
     }
 
@@ -80,12 +77,10 @@ jQuery(document).ready(function($){
         $('.sell-media-search-options', this).hide();
     });
 
-
     $(document).on('click', '.sell-media-search-options-trigger', function(e){
         e.preventDefault();
         $(this).closest('.sell-media-search-form').find('.sell-media-search-options:first').toggle();
      });
-
 
     $(document).on('change', '.post_type_selector', function(){
 
@@ -94,7 +89,6 @@ jQuery(document).ready(function($){
          */
         $collection = $('#collection_select');
         $keywords = $('#keywords_select');
-
 
         /**
          * We store the field name as an attribute since will toggle it later.
