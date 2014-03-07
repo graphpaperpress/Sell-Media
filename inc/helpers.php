@@ -1164,32 +1164,3 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
     return $price_groups;
 
 }
-
-
-/**
- * Check if an email already exists.
- *
- * @param $_POST['email']
- * @uses wp_send_json_error()
- * @uses wp_send_json_success()
- * @package AJAX
- * @return JSON Object
- */
-function sell_media_check_email(){
-    check_ajax_referer('sell_media_check_email', 'security');
-    $response = array();
-    if ( email_exists( $_POST['email'] ) ){
-        $response = array(
-            'message' => __("Email exists or is invalid", 'sell_media'),
-            'status' => 1
-            );
-    } else {
-        $response = array(
-            'message' => __("Email does not exists",'sell_media'),
-            'status' => 0
-            );
-    }
-    wp_send_json( $response );
-}
-add_action( 'wp_ajax_nopriv_sell_media_check_email', 'sell_media_check_email' );
-add_action( 'wp_ajax_sell_media_check_email', 'sell_media_check_email' );

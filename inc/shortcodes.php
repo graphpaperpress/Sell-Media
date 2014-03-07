@@ -159,7 +159,7 @@ function checkout_shortcode(){
         <a href="javascript:;" class="simpleCart_checkout stripe-button-el"><span><?php _e( 'Pay with PayPal', 'sell_media' ); ?></span></a>
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div>
-    <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security', null, false ); ?>
+    <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
     <?php return ob_get_clean();
 }
 add_shortcode( 'sell_media_checkout', 'checkout_shortcode' );
