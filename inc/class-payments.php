@@ -256,7 +256,6 @@ Class SellMediaPayments {
                 $tmp[ $k ] = $paypal_args[ $v ];
             } else {
                 for ( $i=1; $i <= $paypal_args['num_cart_items']; $i++ ) {
-                    echo sell_media_get_term_meta( $paypal_args[ 'option_selection4_' . $i ], 'markup', true );
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
