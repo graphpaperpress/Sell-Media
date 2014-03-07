@@ -683,3 +683,12 @@ table.sell-media-products {
   margin: 0 0 0 7px;
   color:#ff0000;
 }
+
+/*= Media queries
+-------------------------------------------------------------- */
+@media only screen and (max-width : 768px) {
+  .sell-media-totals, .sell-media-checkout-button {
+    float: none;
+    width: 100%;
+  }
+}

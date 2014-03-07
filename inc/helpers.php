@@ -1090,14 +1090,6 @@ function sell_media_country_list( $current=null, $req=false ){
     sell_media_build_select( $items, array( 'name' => 'sell_media_country', 'required' => $req, 'title' => 'Country', 'current' => $current ) );
 }
 
-/**
- * @return default payment gateway
- */
-function sell_media_default_gateway(){
-    $settings = sell_media_get_plugin_options();
-    return isset( $settings->default_gateway ) ? $settings->default_gateway : null;
-}
-
 
 /**
  * Retrieves the thank you page from the general settings and adds the needed URL params
