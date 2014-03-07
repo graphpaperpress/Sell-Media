@@ -56,6 +56,18 @@
 .hide {
   display: none;
 }
+.sell-media-totals,
+.sell-media-checkout-button {
+  margin: 1em 0;
+  float: right;
+  clear: both;
+  width: 175px;
+}
+.sell-media-checkout-button .sell-media-button,
+.sell-media-checkout-button .stripe-button-el {
+  width: 100%;
+  text-align: center;
+}
 input[type="submit"].sell-media-button,
 .sell-media-button,
 #sell-media-submit {
@@ -78,6 +90,7 @@ input[type="submit"].sell-media-button:hover,
 .sell-media-button:disabled {
   background: #ccc;
 }
+
 /* Product Purchases */
 table.sell-media-products {
   width: 100%;
@@ -352,6 +365,12 @@ table.sell-media-products {
 }
 .sell_media_form_control {
   width: 185px;
+}
+.simpleCart_items .size-license {
+  display: block;
+  font-size: 10px;
+  color: #aaa;
+  font-style: italic;
 }
 
 /*= Search

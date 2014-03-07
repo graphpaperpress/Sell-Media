@@ -132,16 +132,18 @@ jQuery(document).ready(function($){
                 label: false
             },
             {
-                attr: "name",
+                view: function(item, column){
+
+                    var name = item.get( "name" );
+                    var license = item.get( "usage" );
+                    if ( license == undefined )
+                        license = '';
+                    var size = item.get( "size" );
+
+                    return name + "<span class='size-license'>" + size + ", " + license + "</span>";
+                },
+                attr: "custom",
                 label: sell_media.cart_labels.name
-            },
-            {
-                attr: "size",
-                label: sell_media.cart_labels.size
-            },
-            {
-                attr: "usage",
-                label: sell_media.cart_labels.license
             },
             {
                 attr: "price",

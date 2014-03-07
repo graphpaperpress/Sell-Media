@@ -155,7 +155,8 @@ function checkout_shortcode(){
     <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
     <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
     <div class="sell-media-checkout-button group">
-        <a href="javascript:;" class="simpleCart_checkout sell-media-button"><?php _e( 'Checkout with PayPal', 'sell_media' ); ?></a>
+        <?php do_action( 'sell_media_above_checkout_button' ); ?>
+        <a href="javascript:;" class="simpleCart_checkout stripe-button-el"><span><?php _e( 'Pay with PayPal', 'sell_media' ); ?></span></a>
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div>
     <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security', null, false ); ?>
