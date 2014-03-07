@@ -24,7 +24,7 @@ if ( $licenses ) {
     <div class="content">
         <header>
             <figure><?php sell_media_item_icon( $attachment_id, 'medium' ); ?></figure>
-            <figcaption><?php print get_the_title( $_POST['product_id'] ); ?></figcaption>
+            <figcaption class="item_name"><?php print get_the_title( $_POST['product_id'] ); ?></figcaption>
         </header>
         <section>
         	<?php //do_action( 'sell_media_above_item_form' ); ?>

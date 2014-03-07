@@ -664,8 +664,8 @@ class SellMedia {
                 'listener_url' => site_url( '?sell_media-listener=IPN' ),
                 'added_to_cart' => sprintf(
                     "%s <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
-                    __( ' was added to', 'sell_media' ),
-                    __( 'your cart','sell_media' ) ),
+                    __( 'Added!', 'sell_media' ),
+                    __( 'Checkout now!','sell_media' ) ),
                 'cart_labels' => array(
                     'name' => __( 'Name', 'sell_media' ),
                     'size' => __( 'Size', 'sell_media' ),
@@ -906,9 +906,10 @@ class SellMedia {
             <?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?>
         </div>
         <?php endif; ?>
-        <div class="sell-media-cart-dialog" style="display:none">
+        <div id="sell-media-dialog-box" class="sell-media-cart-dialog" style="display:none">
             <div class="sell-media-cart-dialog-target"><h2><?php _e( 'Loading', 'sell_media' ); ?>...</h2></div>
         </div>
+        <div id="sell-media-dialog-overlay" style="display:none"></div>
     <?php }
 
     /**
