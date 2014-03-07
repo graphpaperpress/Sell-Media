@@ -9,6 +9,8 @@
  */
 function sell_media_list_downloads_shortcode( $tx=null ) {
 
+    do_action( 'sell_media_thanks_hook' );
+
     if ( isset( $_GET['tx'] ) && ! empty( $_GET['tx'] ) ){
 
         $p = new SellMediaPayments;
@@ -21,6 +23,7 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     } else {
         return false;
     }
+   
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
 
@@ -152,7 +155,7 @@ function checkout_shortcode(){
     <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
     <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
     <div class="sell-media-checkout-button group">
-        <a href="javascript:;" class="simpleCart_checkout sell-media-button"><?php _e( 'Checkout', 'sell_media' ); ?></a>
+        <a href="javascript:;" class="simpleCart_checkout sell-media-button"><?php _e( 'Checkout with PayPal', 'sell_media' ); ?></a>
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div>
     <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security', null, false ); ?>

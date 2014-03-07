@@ -361,7 +361,7 @@ Class SellMediaPayments {
 
         $tmp_links = array();
 
-        foreach( $products as $product ){
+        if ( $products ) foreach( $products as $product ){
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
                 'payment_id' => $payment_id,
@@ -421,7 +421,7 @@ Class SellMediaPayments {
          */
         $products = $this->get_products( $payment_id );
         $license_message = null;
-        foreach( $products as $product ){
+        if ( $products ) foreach( $products as $product ){
             if ( ! empty( $product['license']['id'] ) ){
                 $license_message .= "{$product['license']['name']}<br />";
                 $license_message .= "{$product['license']['description']}<br />";
