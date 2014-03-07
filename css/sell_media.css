@@ -236,11 +236,25 @@ table.sell-media-products {
 .sell-media-cart-dialog {
   z-index: 10000;
   position: absolute;
-  width: 500px;
   min-height: 250px;
-  background: #fff;
-  box-shadow: 0 0 40px #000;
-  padding: 25px;
+  padding: 25px 25px;
+  background: #f5f5f7;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  border: 1px solid rgba(0,0,0,0.9);
+  padding-bottom: 45px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  width: 302px;
+  box-sizing: border-box;
+}
+.sell-media-cart-dialog figcaption,
+.sell-media-cart-dialog footer {
+  font-size: 10px;
+  margin: 5px 0;
+  text-align: center;
 }
 .sell-media-cart-dialog img {
   max-width: 100%;
@@ -248,14 +262,10 @@ table.sell-media-products {
   max-height: 250px;
   height: auto;
 }
-.sell-media-cart-dialog .left {
-  float: left;
-  margin-right: 5%;
-  width: 40%;
+.sell-media-cart-dialog header {
 }
-.sell-media-cart-dialog .right {
-  float: right;
-  width: 55%;
+.sell-media-cart-dialog section {
+  margin: 25px 0;
 }
 .total-container, .button-container {
   clear: both;
@@ -263,9 +273,6 @@ table.sell-media-products {
 }
 .price-container {
   color: green;
-}
-.total-container .right, .button-container .right {
-  text-align: right;
 }
 .sell-media-cart-dialog .subtotal {
   font-weight: bold;
@@ -276,7 +283,7 @@ table.sell-media-products {
   background: url(../images/cart.png) no-repeat 0 50%;
 }
 .sell-media-cart-dialog fieldset {
-  margin: 0px 0 10px;
+  margin: 15px 0;
   padding: 10px;
 }
 .sell-media-cart-dialog legend {
@@ -288,7 +295,8 @@ table.sell-media-products {
   float: left;
 }
 .sell-media-cart-dialog .total-container {
-  margin: 1em 0;
+  margin: 15px 0;
+  padding: 10px;
 }
 .sell-media-cart-dialog .close {
   right: 5px;
@@ -298,6 +306,10 @@ table.sell-media-products {
   font-size: 20px;
   text-align: center;
   width: 20px;
+}
+.sell-media-cart-dialog .sell-media-button {
+  display: block;
+  width: 100%;
 }
 .sell-media-cart-dialog,
 .sell-media-cart-dialog p,

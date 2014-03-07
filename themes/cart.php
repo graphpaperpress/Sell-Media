@@ -22,13 +22,11 @@ if ( $licenses ) {
 <div class="main-container simpleCart_shelfItem">
     <span class="close">&times;</span>
     <div class="content">
-        <div class="left">
-            <div class="image-container clearfix">
-                <?php sell_media_item_icon( $attachment_id, 'medium' ); ?>
-                <h3 class="item_name"><?php print get_the_title( $_POST['product_id'] ); ?></h3>
-            </div>
-        </div>
-        <div class="right">
+        <header>
+            <figure><?php sell_media_item_icon( $attachment_id, 'medium' ); ?></figure>
+            <figcaption><?php print get_the_title( $_POST['product_id'] ); ?></figcaption>
+        </header>
+        <section>
         	<?php //do_action( 'sell_media_above_item_form' ); ?>
             <?php //do_action( 'sell_media_cart_above_size' ); ?>
             <fieldset>
@@ -81,7 +79,7 @@ if ( $licenses ) {
 			<div class="button-container group">
 				<p id="sell-media-add-to-cart"><button class="item_add sell-media-button" disabled><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
 			</div>
-        </div>
-        <div class="sell-media-credit"><?php sell_media_plugin_credit(); ?></div>
+            <footer><?php sell_media_plugin_credit(); ?></footer>
+        </section>
     </div>
 </div>
