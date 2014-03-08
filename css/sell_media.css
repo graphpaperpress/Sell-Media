@@ -594,11 +594,11 @@ table.sell-media-products {
   margin:0 20px 20px 0;
 }
 .sell-media-ajax-loader {
-  background: url( ../images/ajax-loader.gif) no-repeat center top;
+  background: url( ../images/ajax-loader.gif) no-repeat center 70px;
   height: 58px;
   width: 100%;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 100px;
   color: #BBB;
   font-size: 12px;
 }
@@ -628,13 +628,10 @@ table.sell-media-products {
 .sell-media-form input[type="number"].small-text {
   width: 40px;
 }
-.license_desc,
-.license_text {
-  padding: 3px 0 0 5px;
-}
-.license_desc {
+.sell-media-tooltip {
   cursor: help;
   font-size: 10px;
+  padding: 3px 0 0 5px;
 }
 .sell-media-tooltip {
   display: inline;
