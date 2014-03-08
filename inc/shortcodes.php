@@ -11,14 +11,22 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
 
     do_action( 'sell_media_thanks_hook' );
 
-    if ( isset( $_GET['tx'] ) && ! empty( $_GET['tx'] ) ){
+    $tx = null;
 
+    if ( isset( $_GET['tx'] ) && ! empty( $_GET['tx'] ) ) {
+        $tx = $_GET['tx'];
+    } elseif ( isset( $_POST['stripeToken'] ) && ! empty( $_POST['stripeToken'] ) ) {
+        $tx = $_POST['stripeToken'];
+    } else {
+        $tx = null;
+    }
+
+    if ( $tx ) {
         $p = new SellMediaPayments;
-        $post_id = $p->get_id_from_tx( $transaction_id=$_GET['tx'] );
+        $post_id = $p->get_id_from_tx( $transaction_id=$tx );
         $html = null;
         $html = $p->get_payment_products_formatted( $post_id );
         $html .= '<script>simpleCart.empty();</script>';
-
         return '<p class="sell-media-thanks-message">' . $html . '</p>';
     } else {
         return false;

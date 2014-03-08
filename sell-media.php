@@ -662,9 +662,9 @@ class SellMedia {
                 'thanks_page' => get_permalink( $settings->thanks_page ),
                 'listener_url' => site_url( '?sell_media-listener=IPN' ),
                 'added_to_cart' => sprintf(
-                    "%s <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
-                    __( 'Added!', 'sell_media' ),
-                    __( 'Checkout now!','sell_media' ) ),
+                    "%s! <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
+                    __( 'Added', 'sell_media' ),
+                    __( 'Checkout now','sell_media' ) ),
                 'cart_labels' => array(
                     'name' => __( 'Name', 'sell_media' ),
                     'size' => __( 'Size', 'sell_media' ),

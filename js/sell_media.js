@@ -199,6 +199,16 @@ jQuery(document).ready(function($){
         });
     });
 
+    // set license description in tooltip to selected license
+    $(document).on('change', '#sell_media_item_license', function(){
+        var license_desc = $('#sell_media_item_license :selected').attr('title');
+        // must use .attr since .data types are cached by jQuery
+        if(license_desc){
+            $('#license_desc').attr('data-tooltip', license_desc).show();
+        } else {
+            $('#license_desc').hide();
+        }
+    });
 
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 

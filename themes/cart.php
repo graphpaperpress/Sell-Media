@@ -52,12 +52,11 @@ if ( $licenses ) {
 			<?php //do_action( 'sell_media_cart_above_licenses' ); ?>
 			<?php if ( count( $licenses ) > 1 ) : ?>
 				<fieldset>
-					<legend><?php _e( 'License', 'sell_media' ); ?></legend>
+					<legend><?php _e( 'License', 'sell_media' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
 					<select id="sell_media_item_license" class="sum item_license" disabled>
-						<option value="" data-price="0" title="Select a license to learn more about each license.">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
+						<option value="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
 						<?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
 					</select>
-					<div class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license to learn more about each license.', 'sell_media' ); ?>"> <?php _e( 'View Details', 'sell_media' ); ?></div>
 			     	<span class="item_usage hide"></span>
             </fieldset>
 			<?php elseif ( ! empty( $term_id ) ) : ?>
@@ -66,9 +65,6 @@ if ( $licenses ) {
     					<div id="sell_media_item_license" data-id="<?php print $term_id; ?>" data-value="<?php print $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php print $licenses[0]->name; ?>" data-price="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
     						<?php _e( 'License', 'sell_media'); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span> (<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>% markup)
     					</div>
-    					<?php if ( ! empty( $licenses[0]->description ) ) : ?>
-    						<div class="license_desc sell-media-tooltip" data-tooltip="<?php print esc_attr( $licenses[0]->description ); ?>"><?php _e( 'View Details', 'sell_media' ); ?></div>
-    					<?php endif; ?>
                 </fieldset>
 			<?php else : ?>
                 <input type="text" value="0" class="item_license hide" />
