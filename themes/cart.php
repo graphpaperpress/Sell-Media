@@ -63,7 +63,8 @@ if ( $licenses ) {
                 <fieldset>
                     <input type="text" value="<?php print $term_id; ?>" class="item_license hide" />
     					<div id="sell_media_item_license" data-id="<?php print $term_id; ?>" data-value="<?php print $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php print $licenses[0]->name; ?>" data-price="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
-    						<?php _e( 'License', 'sell_media'); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span> (<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>% markup)
+    						<?php $markup = sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ); ?>
+                            <?php _e( 'License', 'sell_media'); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span><?php if ( $markup ) : ?> (<?php $markup =print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>% markup) <?php endif; ?>
     					</div>
                 </fieldset>
 			<?php else : ?>

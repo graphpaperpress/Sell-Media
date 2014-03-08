@@ -42,26 +42,6 @@ if ( is_admin() ) {
 
 
 /**
- * Since Price Groups are added on the settings page, remove it from the submenu
- * This approach still allows for Bulk Editing
- *
-* @since 1.7
-*/
-function sell_media_adjust_admin_menu(){
-    remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
-}
-add_action( 'admin_menu', 'sell_media_adjust_admin_menu', 999 );
-
-
-/**
- * Start our PHP session for shopping cart
- *
- * @since 0.1
- */
-if ( ! isset( $_SESSION ) ) session_start();
-
-
-/**
  * Sell Media class for activation, init, install, deactivation
  *
  * @since 0.1
@@ -76,7 +56,7 @@ class SellMedia {
         register_activation_hook( __FILE__, array( &$this, 'install' ) );
         add_action( 'init', array( &$this, 'init' ) );
         add_action( 'admin_init', array( &$this, 'initAdmin' ) );
-        add_action( 'admin_menu', array( &$this, 'adminMenus' ) );
+        add_action( 'admin_menu', array( &$this, 'adminMenus' ), 999 );
         add_action( 'pre_get_posts', array( &$this, 'collection_password_check' ) );
         add_action( 'wp_footer', array( &$this, 'footer' ) );
         add_action( 'parse_query', array( &$this, 'search_warning_surpression' ) );
@@ -238,6 +218,7 @@ class SellMedia {
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Payments', 'sell_media'), __('Payments', 'sell_media'),  $permission, 'sell_media_payments', 'sell_media_payments_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
         add_submenu_page( 'edit.php?post_type=sell_media_item', __('Extensions', 'sell_media'), __('Extensions', 'sell_media'),  $permission, 'sell_media_extensions', 'sell_media_extensions_callback_fn' );
+        remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
 
         do_action( 'sell_media_menu_hook' );
     }
