@@ -67,6 +67,8 @@
 .sell-media-checkout-button .stripe-button-el {
   width: 100%;
   text-align: center;
+  text-decoration: none;
+  text-transform: none;
 }
 input[type="submit"].sell-media-button,
 .sell-media-button,
@@ -381,6 +383,12 @@ table.sell-media-products {
   color: #aaa;
   font-style: italic;
 }
+.text-center {
+  text-align: center;
+}
+.quiet {
+  color: #999;
+}
 
 /*= Search
 -------------------------------------------------------------- */
@@ -559,7 +567,7 @@ table.sell-media-products {
 
 /*= Short code all
 -------------------------------------------------------------- */
-.sell-media-short-code-all h3 {
+.sell-media-shortcode-all h3 {
   float: left;
   font-size: 1.2em;
   margin: 0;
@@ -567,7 +575,7 @@ table.sell-media-products {
   width: 70%;
   line-height: 1em;
 }
-.sell-media .sell-media-short-code-all .sell-media-grid .sell-media-text {
+.sell-media .sell-media-shortcode-all .sell-media-grid .sell-media-text {
   font-size: 1em;
 }
 

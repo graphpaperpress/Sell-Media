@@ -117,7 +117,7 @@ function sell_media_all_items_shortcode( $atts ){
     $posts = New WP_Query( $args );
     ob_start(); ?>
     <div id="sell-media-shortcode-all" class="sell-media">
-        <div class="sell-media-short-code-all">
+        <div class="sell-media-shortcode-all">
             <div class="sell-media-grid-container">
                 <?php $i = 0; ?>
                 <?php foreach( $posts->posts as $post ) : $i++; ?>
@@ -130,7 +130,7 @@ function sell_media_all_items_shortcode( $atts ){
                 <?php endforeach; ?>
                 <?php sell_media_pagination_filter(); ?>
             </div><!-- .sell-media-grid-container -->
-        </div><!-- .sell-media-short-code-all -->
+        </div><!-- .sell-media-shortcode-all -->
     </div><!-- #sell-media-shortcode-all .sell_media -->
     <?php return ob_get_clean();
 }
@@ -145,28 +145,33 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
 function checkout_shortcode(){
     ob_start(); ?>
     <?php do_action( 'sell_media_checkout_before_cart' ); ?>
-    <div class="simpleCart_items"></div>
-    <div class="sell-media-totals group">
-        <div class="subtotal">
-            <span class="sell-media-itemize"><?php _e( 'Subtotal', 'sell_media' ); ?>:</span> <span class="simpleCart_total"></span>
+    <div id="sell-media-checkout-cart" style="display:none;">
+        <div class="simpleCart_items"></div>
+        <div class="sell-media-totals group">
+            <div class="subtotal">
+                <span class="sell-media-itemize"><?php _e( 'Subtotal', 'sell_media' ); ?>:</span> <span class="simpleCart_total"></span>
+            </div>
+            <div class="tax">
+                <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>:</span> <span class="simpleCart_tax"></span>
+            </div>
+            <div class="shipping">
+                <span class="sell-media-itemize"><?php _e( 'Shipping', 'sell_media' ); ?>:</span> <span class="simpleCart_shipping"></span>
+            </div>
+            <div class="total sell-media-bold">
+                <span class="sell-media-itemize"><?php _e( 'Total', 'sell_media' ); ?>:</span> <span class="simpleCart_grandTotal"></span>
+            </div>
         </div>
-        <div class="tax">
-            <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>:</span> <span class="simpleCart_tax"></span>
+        <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
+        <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
+        <div class="sell-media-checkout-button group">
+            <?php do_action( 'sell_media_above_checkout_button' ); ?>
+            <a href="javascript:void(0)" class="simpleCart_checkout stripe-button-el"><span><?php _e( 'Pay with PayPal', 'sell_media' ); ?></span></a>
         </div>
-        <div class="shipping">
-            <span class="sell-media-itemize"><?php _e( 'Shipping', 'sell_media' ); ?>:</span> <span class="simpleCart_shipping"></span>
-        </div>
-        <div class="total sell-media-bold">
-            <span class="sell-media-itemize"><?php _e( 'Total', 'sell_media' ); ?>:</span> <span class="simpleCart_grandTotal"></span>
-        </div>
-    </div>
-    <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
-    <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
-    <div class="sell-media-checkout-button group">
-        <?php do_action( 'sell_media_above_checkout_button' ); ?>
-        <a href="javascript:;" class="simpleCart_checkout stripe-button-el"><span><?php _e( 'Pay with PayPal', 'sell_media' ); ?></span></a>
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div>
+    <p id="sell-media-empty-cart-message" style="display:none;">
+        <?php echo sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">Continue shopping &raquo;</a>' ); ?>
+    </p>
     <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
     <?php return ob_get_clean();
 }

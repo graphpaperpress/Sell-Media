@@ -113,6 +113,7 @@ jQuery(document).ready(function($){
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
 
+    // Cart config
     simpleCart({
         cartStyle: "table",
         checkout: {
@@ -136,11 +137,14 @@ jQuery(document).ready(function($){
 
                     var name = item.get( "name" );
                     var license = item.get( "usage" );
-                    if ( license == undefined )
+                    var sep = ', ';
+                    if ( license == undefined ) {
                         license = '';
+                        sep = '';
+                    }
                     var size = item.get( "size" );
 
-                    return name + "<span class='size-license'>" + size + ", " + license + "</span>";
+                    return name + "<span class='size-license'>" + size + sep + license + "</span>";
                 },
                 attr: "custom",
                 label: sell_media.cart_labels.name
@@ -175,7 +179,17 @@ jQuery(document).ready(function($){
                 text: "Remove"
             }]
     });
+    
+    // Show cart if qty exists, otherwise, show empty message
+    simpleCart.bind('load', function(){
+        if ( simpleCart.quantity() ) {
+            $('#sell-media-checkout-cart').show();
+        } else {
+            $('#sell-media-empty-cart-message').show();
+        }
+    });
 
+    // Show added to cart message on dialog
     simpleCart.bind( 'afterAdd' , function( item ){
         $('.sell-media-added').remove();
         $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
