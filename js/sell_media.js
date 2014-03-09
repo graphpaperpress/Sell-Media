@@ -270,12 +270,12 @@ jQuery(document).ready(function($){
 
         // set license name for display on cart
         if ( license_name != null )
-            $('.item_usage').text(license_name);
+            $('.item_usage').attr('value', license_name);
 
         // set price_group id so it is passed to cart
         var price_group = $('#sell_media_item_size :selected').data('id');
         if ( price_group != null )
-            $('.item_pgroup').text(price_group);
+            $('.item_pgroup').attr('value', price_group);
     });
 
 });

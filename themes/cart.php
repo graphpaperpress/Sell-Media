@@ -20,11 +20,33 @@ if ( $licenses ) {
 }
 ?>
 <div class="main-container simpleCart_shelfItem">
+    <?php
+        /*
+         * Set required cart items to be passed to gateway
+         * Any element tagged with item_* inside .simpleCart_shelfItem will be passed as an option/value key pair to PayPal
+         * If you want to show these items on the checkout page, edit cartColumns[] in sell_media.js
+         * We use input type="text" because using type="hidden" is unreliable
+         * The order in which these appear control the option names passed to PayPal
+         * So we must set all required tags high
+         * Otherwise, our server-side price validation fails
+         * The item_pgroup class is shared between downloads and reprints, which use different price group taxonomies
+         * Check if terms exist in these price group taxonomies to determine verified prices
+         * Some values below are set via javascript (select options on change event)
+         * .item_usage (license name to be shown on cartColumns) and .item_license are set inline with their select boxes
+         */
+     ?>
+    <div id="sell-media-cart-items" class="hide">
+        <input class="item_number" type="text" value="<?php echo $_POST['product_id']; ?>" />
+        <input class="item_name" type="text" value="<?php print get_the_title( $_POST['product_id'] ); ?>" />
+        <input class="item_type" type="text" value="<?php echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
+        <input class="item_pgroup" type="text" value="" />
+        <input class="item_usage" type="text" value="0" />
+    </div>
     <span class="close">&times;</span>
     <div class="content">
         <header>
             <figure><?php sell_media_item_icon( $attachment_id, 'medium' ); ?></figure>
-            <figcaption class="item_name"><?php print get_the_title( $_POST['product_id'] ); ?></figcaption>
+            <figcaption><?php print get_the_title( $_POST['product_id'] ); ?></figcaption>
         </header>
         <section>
         	<?php do_action( 'sell_media_above_item_form' ); ?>
@@ -33,7 +55,7 @@ if ( $licenses ) {
                 <fieldset id="sell_media_download_size_fieldset">
                 	<legend><?php echo apply_filters( 'sell_media_download_size_text', 'Size' ); ?></legend>
                     <select id="sell_media_item_size" class="sum item_size">
-                    	<option selected="selected" value="0" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
+                    	<option selected="selected" value="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
                         <?php
                             $p = new SellMediaProducts;
                             $prices = $p->get_prices( $_POST['product_id'] );
@@ -47,7 +69,6 @@ if ( $licenses ) {
                             }
                         ?>
                     </select>
-                    <span class="item_pgroup hide"></span>
                 </fieldset>
     			<?php do_action( 'sell_media_cart_below_size' ); ?>
     			<?php do_action( 'sell_media_cart_above_licenses' ); ?>
@@ -55,10 +76,9 @@ if ( $licenses ) {
     				<fieldset id="sell_media_download_license_fieldset">
     					<legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
     					<select id="sell_media_item_license" class="sum item_license" disabled>
-    						<option value="0" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
+    						<option value="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
     						<?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
     					</select>
-    			     	<span class="item_usage hide"></span>
                     </fieldset>
     			<?php elseif ( ! empty( $term_id ) ) : ?>
                     <fieldset id="sell_media_download_license_fieldset">
@@ -73,8 +93,6 @@ if ( $licenses ) {
                 <?php endif; ?>
             </div>
 			<?php do_action( 'sell_media_cart_below_licenses' ); ?>
-			<span class="item_number hide"><?php echo $_POST['product_id']; ?></span>
-            <span class="item_type hide"><?php echo apply_filters( 'sell_media_set_product_type', 'download' ); ?></span>
             <div class="total-container group">
 				<strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container">$<span id="total" class="item_price">0</span></span>
 			</div>

@@ -274,6 +274,9 @@ table.sell-media-products {
   font-size: 11px;
   padding: 25px;
 }
+#sell-media-dialog-box figure {
+  text-align: center;
+}
 #sell-media-dialog-box figcaption,
 #sell-media-dialog-box footer {
   font-size: 10px;
