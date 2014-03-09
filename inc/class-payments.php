@@ -453,7 +453,7 @@ Class SellMediaPayments {
     /**
      * Determine the price of all items in the cart that is being sent during checkout and set it.
      */
-    public function sell_media_simple_cart(){
+    public function sell_media_verify_callback(){
 
         check_ajax_referer( 'validate_cart', 'security' );
 
@@ -478,19 +478,41 @@ Class SellMediaPayments {
         $verified = array();
         for( $i=1; $i <= $cart_count; $i++ ) {
 
-            // Sanity
-            $product_id = $cart[ 'item_number_' . $i ];
-            $license_id = $cart[ 'os3_' . $i ];
-            $price_id = $cart[ 'os2_' . $i ];
+            // check for downloads, which have license markup
+            // need to verify discount codes too
+            if ( $cart[ 'os2_' . $i ] && $cart[ 'os3_' . $i ] ) {
+                $product_id     = $cart[ 'item_number_' . $i ];
+                $price_id       = $cart[ 'os2_' . $i ];
+                $license_id     = $cart[ 'os3_' . $i ];
 
-            if ( $license_id != 0 ) {
-                $cart['amount_' . $i ] = $p->markup_amount(
-                    $product_id,
-                    $price_id,
-                    $license_id
-                    ) + $p->get_price( $product_id, $price_id );
-            } else {
-                $cart['amount_' . $i ] = $p->get_price( $product_id, $price_id );
+                $license = term_exists( $license_id, 'licenses' );
+
+                if ( ! empty( $license ) ){
+                    $cart['amount_' . $i ] = $p->markup_amount(
+                        $product_id,
+                        $price_id,
+                        $license_id
+                        ) + $p->get_price( $product_id, $price_id );
+                } else {
+                    $cart['amount_' . $i ] = $p->get_price( $product_id, $price_id );
+                }
+            }
+
+            // check for prints
+            // need to verify discount codes too
+            elseif ( $cart[ 'os2_' . $i ] ) {
+                $product_id = $cart[ 'item_number_' . $i ];
+                $price_id   = $cart[ 'os2_' . $i ];
+
+                $valid_price = sell_media_get_term_meta( $price_id, 'price', true );
+
+                $cart['amount_' . $i ] = $valid_price;
+
+            }
+
+            // can't verify prices, assume cart submission is accurate
+            else {
+                $cart['amount_' . $i ] = $cart['amount_' . $i ];
             }
         }
 

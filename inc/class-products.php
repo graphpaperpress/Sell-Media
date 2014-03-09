@@ -160,7 +160,9 @@ Class SellMediaProducts {
 
         $price = $this->get_price( $post_id, $price_id );
 
-        if ( empty( $license_id ) ){
+        $license = term_exists( $license_id, 'licenses' );
+
+        if ( empty( $license ) ) {
             $markup_amount = 0;
         } else {
             $markup_percent = str_replace( "%", "", sell_media_get_term_meta( $license_id, 'markup', true ) );
