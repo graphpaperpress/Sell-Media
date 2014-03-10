@@ -40,7 +40,7 @@ if ( $licenses ) {
         <input class="item_name" type="text" value="<?php print get_the_title( $_POST['product_id'] ); ?>" />
         <input class="item_type" type="text" value="<?php echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
         <input class="item_pgroup" type="text" value="" />
-        <input class="item_usage" type="text" value="0" />
+        <input class="item_usage" type="text" value="" />
     </div>
     <span class="close">&times;</span>
     <div class="content">
@@ -85,7 +85,7 @@ if ( $licenses ) {
                         <input type="text" value="<?php print $term_id; ?>" class="item_license hide" />
     					<div id="sell_media_item_license" data-id="<?php print $term_id; ?>" data-value="<?php print $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php print $licenses[0]->name; ?>" data-price="<?php print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
     						<?php $markup = sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ); ?>
-                            <?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?>: <span class="item_usage"><?php print $licenses[0]->name; ?></span><?php if ( $markup ) : ?> (<?php $markup =print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>% markup) <?php endif; ?>
+                            <?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?>: <?php print $licenses[0]->name; ?><?php if ( $markup ) : ?> (<?php $markup =print str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>% markup) <?php endif; ?>
     					</div>
                     </fieldset>
     			<?php else : ?>
