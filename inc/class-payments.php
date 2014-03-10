@@ -227,7 +227,7 @@ Class SellMediaPayments {
                 if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) $html .= $product['size']['name'];
                 $html .= '</td>';
     			$html .= '<td class="sell-media-product-license">';
-    			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'] . '<span class="license_desc">' . category_description( $product['license']['id'] ) . '</span>';
+    			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'] . '<span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>';
     			$html .= '</td>';
     			$html .= '<td class="sell-media-product-qty text-center">';
     			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
