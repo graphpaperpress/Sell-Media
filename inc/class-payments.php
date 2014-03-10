@@ -174,9 +174,13 @@ Class SellMediaPayments {
 
         $keys = array( 'address_street', 'address_city', 'address_state', 'address_country_code', 'address_zip' );
         $values = null;
+        $items = count( $keys );
+        $i = 0;
 
         foreach ( $keys as $key ) {
-            $values .= $this->get_meta_key( $post_id, $key ) . "\n";
+            $sep = null;
+            if ( ++$i != $items ) $sep = ', ';
+                $values .= $this->get_meta_key( $post_id, $key ) . $sep;
         }
         
         return $values;
