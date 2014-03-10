@@ -31,7 +31,7 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     } else {
         return false;
     }
-   
+
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
 
@@ -201,7 +201,7 @@ function sell_media_download_shortcode( $atts ) {
             $html .= '<div class="sell-media-purchase">';
             $html .= '<p>';
             $html .= '<strong>' . __( 'Purchase ID', 'sell_media' ) . ': ' . $purchase . '</strong>';
-            $html .= '<br /><span class="date">' . get_the_date() . '</span>';
+            $html .= '<br /><span class="date">' . get_the_time( 'M N, Y', $purchase ) . '</span>';
             $html .= '</p>';
             $html .= $p->get_payment_products_formatted( $purchase );
             $html .= '</div>';
