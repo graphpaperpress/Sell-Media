@@ -495,6 +495,7 @@ Class SellMediaPayments {
         for( $i=0; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
+            // $qty = $cart[ 'quantity_' . $i ];
             $type = $cart[ 'os0_' . $i ];
             $price_id = $cart[ 'os2_' . $i ];
             $license_id = $cart[ 'os5_' . $i ];
