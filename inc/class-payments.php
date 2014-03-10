@@ -147,6 +147,42 @@ Class SellMediaPayments {
     }
 
 
+    /**
+    * Get buyer first and last name for payment
+    *
+    * @param $post_id (string) The payment to check
+    *
+    * @return (string) $name
+    */
+    public function get_buyer_name( $post_id=null ){
+
+        $first_name = get_meta_key( $post_id, 'first_name' );
+        $last_name = get_meta_key( $post_id, 'last_name' );
+        
+        return $first_name . ' ' . $last_name;
+    }
+
+
+    /**
+    * Get shipping address for payment
+    *
+    * @param $post_id (string) The payment to check
+    *
+    * @return (string) $address
+    */
+    public function get_buyer_address( $post_id=null ){
+
+        $keys = array( 'address_street', 'address_city', 'address_state', 'address_country_code', 'address_zip' );
+        $values = '';
+
+        foreach ( $keys as $key ) {
+            $values[] = get_meta_key( $post_id, $key ) . "\n";
+        }
+        
+        return $values;
+    }
+
+
  	/**
 	* Loop over products in payment meta and format them
 	*
@@ -193,7 +229,7 @@ Class SellMediaPayments {
     			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
     			$html .= '</td>';
                 $html .= '<td class="sell-media-product-download text-center">';
-                $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
+                if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
     			$html .= '</td>';
                 $html .= '<td class="sell-media-product-total">';
     			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) ) $html .= $product['total'];
@@ -213,6 +249,9 @@ Class SellMediaPayments {
     		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='total' ) . '</td>';
     		$html .= '</tr>';
     		$html .= '</table>';
+            $html .= __( 'If you purchased prints, they will be shipped to the address you supplied during checkout. This address is shown below.', 'sell_media' );
+            $html .= $this->get_buyer_name( $post_id ) . "\n";
+            $html .= $this->get_buyer_address( $post_id );
     		return $html;
         }
 	}

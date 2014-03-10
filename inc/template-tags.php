@@ -22,7 +22,7 @@ function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $e
  * Determines the image source for a product
  * @return (string) url to product image or feature image
  */
-function sell_media_item_image_src( $post_id ) {
+function sell_media_item_image_src( $post_id=null ) {
 
     $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
     $image = wp_get_attachment_image_src( $attachment_id, 'medium' );
