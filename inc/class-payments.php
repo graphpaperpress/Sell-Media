@@ -173,10 +173,10 @@ Class SellMediaPayments {
     public function get_buyer_address( $post_id=null ){
 
         $keys = array( 'address_street', 'address_city', 'address_state', 'address_country_code', 'address_zip' );
-        $values = '';
+        $values = null;
 
         foreach ( $keys as $key ) {
-            $values[] = $this->get_meta_key( $post_id, $key ) . "\n";
+            $values .= $this->get_meta_key( $post_id, $key ) . "\n";
         }
         
         return $values;
@@ -249,9 +249,9 @@ Class SellMediaPayments {
     		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='total' ) . '</td>';
     		$html .= '</tr>';
     		$html .= '</table>';
-            $html .= __( 'If you purchased prints, they will be shipped to the address you supplied during checkout. This address is shown below.', 'sell_media' );
-            $html .= $this->get_buyer_name( $post_id ) . "\n";
-            $html .= $this->get_buyer_address( $post_id );
+            $html .= '<p>' . __( 'If you purchased prints, they will be shipped to the address you supplied during checkout. This address is shown below.', 'sell_media' ) . '</p>';
+            $html .= '<p>' . $this->get_buyer_name( $post_id ) . '</p>';
+            $html .= '<p>' . $this->get_buyer_address( $post_id ) . '</p>';
     		return $html;
         }
 	}
