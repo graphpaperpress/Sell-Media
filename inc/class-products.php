@@ -158,14 +158,13 @@ Class SellMediaProducts {
      */
     public function markup_amount( $post_id=null, $price_id=null, $license_id=null ){
 
-        $price = $this->get_price( $post_id, $price_id );
+        $license_obj = get_term_by('id', $license_id, 'licenses');
 
-        $license = term_exists( $license_id, 'licenses' );
-
-        if ( empty( $license ) ) {
+        if ( empty( $license_obj ) ) {
             $markup_amount = 0;
         } else {
-            $markup_percent = str_replace( "%", "", sell_media_get_term_meta( $license_id, 'markup', true ) );
+            $price = $this->get_price( $post_id, $price_id );
+            $markup_percent = str_replace( "%", "", sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) );
             $markup_amount = ( $markup_percent / 100 ) * $price;
         }
 
