@@ -218,11 +218,13 @@ jQuery(document).ready(function($){
                         data[k] = v;
                     });
                 }
+                console.log(data);
             },
             error: function () {
               alert('There was an error loading the cart data. Please contact the site owner.');
             }
         });
+        return false;
     });
 
     // set license description in tooltip to selected license

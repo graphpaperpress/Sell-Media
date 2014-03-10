@@ -495,16 +495,18 @@ Class SellMediaPayments {
         for( $i=0; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
+            $type = $cart[ 'os0_' . $i ];
             $price_id = $cart[ 'os2_' . $i ];
+            $license_id = $cart[ 'os5_' . $i ];
 
-            // check if item has a license assigned
-            if ( ! empty( $cart[ 'os5_' . $i ] ) )
-                $license_id     = $cart[ 'os5_' . $i ];
-
-            $license = term_exists( $license_id, 'licenses' );
+            // set price taxonomy if product is download or reprint
+            if ( 'download' == $type )
+                $taxonomy = 'price-group';
+            else
+                $taxonomy = 'reprints-price-group';
 
             // download with assigned license
-            if ( ! empty( $license ) ){
+            if ( ! empty( $license_id ) || $license_id != "undefined" ) {
                 $cart['amount_' . $i ] = $p->markup_amount(
                     $product_id,
                     $price_id,
@@ -512,7 +514,7 @@ Class SellMediaPayments {
                     ) + $p->get_price( $product_id, $price_id );
             } else {
                 // download or print without assigned license
-                $cart['amount_' . $i ] = sell_media_get_term_meta( $price_id, 'price', true );
+                $cart['amount_' . $i ] = $p->get_price( $product_id, $price_id, false, $taxonomy );
             }
 
         }
