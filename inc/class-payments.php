@@ -302,6 +302,7 @@ Class SellMediaPayments {
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
+                        'type' => $paypal_args[ 'option_selection1_' . $i ],
                         'size' => array(
                             'name' => $paypal_args[ 'option_selection4_' . $i ],
                             'id' => $paypal_args[ 'option_selection3_' . $i ],
@@ -371,7 +372,11 @@ Class SellMediaPayments {
             $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
             $html .= '<td>' . $product['qty'] . '</td>';
             $html .= '<td>' . $product['license']['name'] . '</td>';
-            $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+            if ( 'download' == $product['type'] ){
+                $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+            } else {
+                $html .= '<td class="title column-title">Sold a print</td>';
+            }
             $html .= '</tr>';
         }
         $html .= '</tbody>';
