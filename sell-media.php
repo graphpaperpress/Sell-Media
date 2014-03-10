@@ -653,7 +653,9 @@ class SellMedia {
                     'price' => __( 'Price', 'sell_media' ),
                     'qty' => __( 'Qty', 'sell_media' ),
                     'sub_total' => __( 'Sub Total', 'sell_media' )
-                    )
+                    ),
+                'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
+                'shipping' => apply_filters( 'sell_media_shipping', 0 )
                 ) );
 
             if ( isset( $settings->style ) && '' != $settings->style )

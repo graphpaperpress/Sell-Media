@@ -22,7 +22,7 @@ jQuery(document).ready(function($){
         // assign values to the overlay and dialog box
         $('#sell-media-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
         $('#sell-media-dialog-box').css({left:dialogLeft}).show();
-            
+
     }
 
     /**
@@ -115,7 +115,7 @@ jQuery(document).ready(function($){
 
     // Cart config
     simpleCart({
-        cartStyle: "table",
+        cartStyle: sell_media.cart_style,
         checkout: {
             sandbox: sell_media.sandbox,
             type: "PayPal",
@@ -124,7 +124,7 @@ jQuery(document).ready(function($){
             success: sell_media.thanks_page,
             cancel: sell_media.checkout_page,
             notify: sell_media.listener_url,
-            shipping: 0, // 0 prompt & optional, 1 no prompt, 2 prompt & required
+            shipping: sell_media.shipping, // 0 prompt & optional, 1 no prompt, 2 prompt & required
             method: "POST"
         },
         cartColumns: [{
@@ -179,7 +179,7 @@ jQuery(document).ready(function($){
                 text: "Remove"
             }]
     });
-    
+
     // Show cart if qty exists, otherwise, show empty message
     simpleCart.bind('ready', function(){
 
