@@ -251,7 +251,7 @@ jQuery(document).ready(function($){
         // calculate the price and license markup
         var price = $('#sell_media_item_size :selected').data('price');
 
-        if ( $('#sell_media_item_license :selected').data('price') ){
+        if ( $('#sell_media_item_license :selected').data('name') ){
             var markup = $('#sell_media_item_license :selected').data('price');
             var license_name = $('#sell_media_item_license :selected').data('name');
         } else {
