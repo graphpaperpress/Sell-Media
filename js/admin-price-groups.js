@@ -22,11 +22,12 @@ var smPriceGroups = {
         });
     },
     save: function( my_obj ){
+        var taxonomy = my_obj.attr('data-taxonomy');
         $.ajax({
             data: {
                 action: "save_term",
                 security: smPriceGroups.options.security,
-                taxonomy: smPriceGroups.options.taxonomy,
+                taxonomy: taxonomy,
                 form: $('.wrap form').serialize()
             }
         });
@@ -68,6 +69,7 @@ jQuery( document ).ready(function( $ ){
 
     $('.sell-media-save-term').on('click', function( event ){
         event.preventDefault();
+        taxonomy = $(this).attr('data-taxonomy');
         smPriceGroups.save( $( this ) );
     });
 
