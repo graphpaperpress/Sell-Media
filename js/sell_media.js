@@ -181,12 +181,17 @@ jQuery(document).ready(function($){
     });
     
     // Show cart if qty exists, otherwise, show empty message
-    simpleCart.bind('load', function(){
+    simpleCart.bind('ready', function(){
+
+        $('#sell-media-checkout-cart').after('<div class="sell-media-load-checkout">Loading...</div>').fadeIn('fast');
+
         if ( simpleCart.quantity() ) {
-            $('#sell-media-checkout-cart').show();
+            $('#sell-media-checkout-cart').fadeIn('slow');
         } else {
-            $('#sell-media-empty-cart-message').show();
+            $('#sell-media-empty-cart-message').fadeIn('slow');
         }
+
+        $('.sell-media-load-checkout').delay(500).fadeOut('slow');
     });
 
     // Show added to cart message on dialog
@@ -196,27 +201,28 @@ jQuery(document).ready(function($){
     });
 
 
-    // Validate cart contents on the server
-    // simpleCart.bind( 'beforeCheckout', function( data ){
-    //     $.ajax({
-    //         async: false,
-    //         data: {
-    //             security: $('#cart_nonce_security').val(),
-    //             action: 'sell_media_verify_callback',
-    //             cart: data
-    //         },
-    //         success: function( msg ){
-    //             //if ( msg != undefined && msg.post != undefined ){
-    //                 $.each( msg.cart, function( k, v ){
-    //                     data[k] = v;
-    //                 });
-    //             //}
-    //         },
-    //         error: function () {
-    //           alert('There was an error loading the cart data. Please contact the site owner.');
-    //         }
-    //     });
-    // });
+    // Validate cart prices (price group, license markup, discount codes) on the server
+    simpleCart.bind( 'beforeCheckout', function( data ){
+
+        $.ajax({
+            async: false,
+            data: {
+                security: $('#cart_nonce_security').val(),
+                action: 'sell_media_verify_callback',
+                cart: data
+            },
+            success: function( msg ){
+                if ( msg != undefined && msg.post != undefined ){
+                    $.each( msg.cart, function( k, v ){
+                        data[k] = v;
+                    });
+                }
+            },
+            error: function () {
+              alert('There was an error loading the cart data. Please contact the site owner.');
+            }
+        });
+    });
 
     // set license description in tooltip to selected license
     $(document).on('change', '#sell_media_item_license', function(){
