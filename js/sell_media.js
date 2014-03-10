@@ -207,7 +207,7 @@ jQuery(document).ready(function($){
                 cart: data
             },
             success: function( msg ){
-                if ( data != undefined && data.post != undefined ){
+                if ( msg != undefined && msg.post != undefined ){
                     $.each( msg.cart, function( k, v ){
                         data[k] = v;
                     });
