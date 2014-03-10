@@ -63,7 +63,6 @@
   clear: both;
   width: 175px;
 }
-.sell-media-checkout-button .sell-media-button,
 .sell-media-checkout-button .stripe-button-el {
   width: 100%;
   text-align: center;
@@ -75,9 +74,12 @@ input[type="submit"].sell-media-button,
 #sell-media-submit {
   border: none;
   background: #555;
-  padding: 7px 14px;
+  padding: 7px 5%;
+  display: block;
+  width: 90%;
   color: #FFF;
-  text-transform: uppercase;
+  text-align: center;
+  text-transform: none;
   text-decoration: none;
   font-size: 14px;
   border-radius: 3px;

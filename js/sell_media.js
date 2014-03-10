@@ -276,6 +276,11 @@ jQuery(document).ready(function($){
         var price_group = $('#sell_media_item_size :selected').data('id');
         if ( price_group != null )
             $('.item_pgroup').attr('value', price_group);
+
+        // set price_group id so it is passed to cart
+        var size = $('#sell_media_item_size :selected').data('size');
+        if ( size != null )
+            $('.item_size').attr('value', size);
     });
 
 });
