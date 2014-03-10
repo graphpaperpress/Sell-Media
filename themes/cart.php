@@ -12,7 +12,7 @@
 wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 $settings = sell_media_get_plugin_options();
 $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
-$image = wp_get_attachment_image_src( $attachment_id, 'medium' );
+$image = sell_media_item_image_src( $_POST['product_id'] );
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
 if ( $licenses ) {
 	$term_id = $licenses[0]->term_id;
@@ -40,7 +40,7 @@ if ( $licenses ) {
         <input class="item_number" type="text" value="<?php echo $_POST['product_id']; ?>" />
         <input class="item_name" type="text" value="<?php print get_the_title( $_POST['product_id'] ); ?>" />
         <input class="item_type" type="text" value="<?php echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
-        <input class="item_image" type="text" value="<?php echo $image[0]; ?>" />
+        <input class="item_image" type="text" value="<?php echo $image; ?>" />
         <input class="item_pgroup" type="text" value="" />
         <input class="item_size" type="text" value="" />
         <input class="item_usage" type="text" value="" />

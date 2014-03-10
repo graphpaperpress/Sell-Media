@@ -186,12 +186,13 @@ jQuery(document).ready(function($){
         $('#sell-media-checkout-cart').after('<div class="sell-media-load-checkout">Loading...</div>').fadeIn('fast');
 
         if ( simpleCart.quantity() ) {
-            $('#sell-media-checkout-cart').fadeIn('slow');
+            $('#sell-media-checkout-cart').show();
         } else {
-            $('#sell-media-empty-cart-message').fadeIn('slow');
+            $('#sell-media-checkout-cart').hide();
+            $('#sell-media-empty-cart-message').show();
         }
 
-        $('.sell-media-load-checkout').delay(500).fadeOut('slow');
+        $('.sell-media-load-checkout').delay(200).fadeOut('slow');
     });
 
     // Show added to cart message on dialog
