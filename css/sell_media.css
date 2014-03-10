@@ -278,6 +278,9 @@ table.sell-media-products {
 }
 #sell-media-dialog-box figure {
   text-align: center;
+  float: left;
+  padding: 0;
+  width: 100%;
 }
 #sell-media-dialog-box figcaption,
 #sell-media-dialog-box footer {
@@ -288,7 +291,6 @@ table.sell-media-products {
 #sell-media-dialog-box img {
   max-width: 100%;
   width: auto;
-  max-height: 250px;
   height: auto;
 }
 #sell-media-dialog-box section {
