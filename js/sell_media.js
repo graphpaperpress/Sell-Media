@@ -181,12 +181,18 @@ jQuery(document).ready(function($){
     });
     
     // Show cart if qty exists, otherwise, show empty message
-    simpleCart.bind('load', function(){
+    simpleCart.bind('ready', function(){
+
+        $('#sell-media-checkout-cart').after('<div class="sell-media-ajax-loader">Loading...</div>').fadeIn('fast');
+        exit();
+
         if ( simpleCart.quantity() ) {
-            $('#sell-media-checkout-cart').show();
+            $('#sell-media-checkout-cart').fadeIn('slow');
         } else {
-            $('#sell-media-empty-cart-message').show();
+            $('#sell-media-empty-cart-message').fadeIn('slow');
         }
+
+        $('.sell-media-ajax-loader').delay(500).fadeOut('slow');
     });
 
     // Show added to cart message on dialog
