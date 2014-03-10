@@ -156,8 +156,8 @@ Class SellMediaPayments {
     */
     public function get_buyer_name( $post_id=null ){
 
-        $first_name = get_meta_key( $post_id, 'first_name' );
-        $last_name = get_meta_key( $post_id, 'last_name' );
+        $first_name = $this->get_meta_key( $post_id, 'first_name' );
+        $last_name = $this->get_meta_key( $post_id, 'last_name' );
         
         return $first_name . ' ' . $last_name;
     }
@@ -176,7 +176,7 @@ Class SellMediaPayments {
         $values = '';
 
         foreach ( $keys as $key ) {
-            $values[] = get_meta_key( $post_id, $key ) . "\n";
+            $values[] = $this->get_meta_key( $post_id, $key ) . "\n";
         }
         
         return $values;
