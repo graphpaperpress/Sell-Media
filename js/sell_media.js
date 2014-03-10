@@ -198,7 +198,7 @@ jQuery(document).ready(function($){
 
     // Validate cart prices (price group, license markup, discount codes) on the server
     simpleCart.bind( 'beforeCheckout', function( data ){
-        console.log(data);
+
         $.ajax({
             async: false,
             data: {
