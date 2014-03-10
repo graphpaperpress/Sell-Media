@@ -396,6 +396,17 @@ table.sell-media-products {
   color: #999;
 }
 
+.sell-media-load-checkout {
+  background: url( ../images/ajax-loader.gif) no-repeat center top;
+  position: absolute;
+  height: 32px;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  color: #BBB;
+  font-size: 12px;
+}
+
 /*= Search
 -------------------------------------------------------------- */
 .sell-media-search-options {
