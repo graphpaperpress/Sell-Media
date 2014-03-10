@@ -176,7 +176,7 @@ Class SellMediaPayments {
         $values = null;
 
         foreach ( $keys as $key ) {
-            $values .= $this->get_meta_key( $post_id, $key ) . "\r\n";
+            $values .= $this->get_meta_key( $post_id, $key ) . '<br />';
         }
         
         return $values;
