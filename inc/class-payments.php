@@ -302,6 +302,7 @@ Class SellMediaPayments {
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
+                        'type' => $paypal_args[ 'option_selection1_' . $i ],
                         'size' => array(
                             'name' => $paypal_args[ 'option_selection4_' . $i ],
                             'id' => $paypal_args[ 'option_selection3_' . $i ],
@@ -371,7 +372,11 @@ Class SellMediaPayments {
             $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
             $html .= '<td>' . $product['qty'] . '</td>';
             $html .= '<td>' . $product['license']['name'] . '</td>';
-            $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+            if ( 'print' == $product['type'] ){
+                $html .= '<td class="title column-title">Sold a print</td>';
+            } else {
+                $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+            }
             $html .= '</tr>';
         }
         $html .= '</tbody>';
@@ -495,16 +500,19 @@ Class SellMediaPayments {
         for( $i=0; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
+            // $qty = $cart[ 'quantity_' . $i ];
+            $type = $cart[ 'os0_' . $i ];
             $price_id = $cart[ 'os2_' . $i ];
+            $license_id = $cart[ 'os5_' . $i ];
 
-            // check if item has a license assigned
-            if ( ! empty( $cart[ 'os5_' . $i ] ) )
-                $license_id     = $cart[ 'os5_' . $i ];
-
-            $license = term_exists( $license_id, 'licenses' );
+            // set price taxonomy if product is download or reprint
+            if ( 'download' == $type )
+                $taxonomy = 'price-group';
+            else
+                $taxonomy = 'reprints-price-group';
 
             // download with assigned license
-            if ( ! empty( $license ) ){
+            if ( ! empty( $license_id ) || $license_id != "undefined" ) {
                 $cart['amount_' . $i ] = $p->markup_amount(
                     $product_id,
                     $price_id,
@@ -512,7 +520,7 @@ Class SellMediaPayments {
                     ) + $p->get_price( $product_id, $price_id );
             } else {
                 // download or print without assigned license
-                $cart['amount_' . $i ] = sell_media_get_term_meta( $price_id, 'price', true );
+                $cart['amount_' . $i ] = $p->get_price( $product_id, $price_id, false, $taxonomy );
             }
 
         }
