@@ -255,21 +255,22 @@ Class SellMediaPayments {
             if ( array_key_exists( $v, $paypal_args ) ){
                 $tmp[ $k ] = $paypal_args[ $v ];
             } else {
+                option_name4
                 for ( $i=1; $i <= $paypal_args['num_cart_items']; $i++ ) {
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
                         'size' => array(
-                            'name' => $paypal_args[ 'option_selection2_' . $i ],
+                            'name' => $paypal_args[ 'option_selection4_' . $i ],
                             'id' => $paypal_args[ 'option_selection3_' . $i ],
                             'amount' => $paypal_args[ 'mc_gross_' . $i ],
                             'description' => null
                             ),
                         'license' => array(
                             'name' => $paypal_args[ 'option_selection5_' . $i ],
-                            'id' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : $paypal_args[ 'option_selection4_' . $i ],
+                            'id' => empty( $paypal_args[ 'option_selection6_' . $i ] ) ? null : $paypal_args[ 'option_selection6_' . $i ],
                             'description' => null,
-                            'markup' => empty( $paypal_args[ 'option_selection4_' . $i ] ) ? null : str_replace( '%', '', sell_media_get_term_meta( $paypal_args[ 'option_selection4_' . $i ], 'markup', true ) )
+                            'markup' => empty( $paypal_args[ 'option_selection6_' . $i ] ) ? null : str_replace( '%', '', sell_media_get_term_meta( $paypal_args[ 'option_selection6_' . $i ], 'markup', true ) )
                             ),
                         'qty' => $paypal_args[ 'quantity' . $i ],
                         'total' => $paypal_args[ 'mc_gross_' . $i ],
