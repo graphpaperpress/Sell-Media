@@ -220,13 +220,7 @@ jQuery(document).ready(function($){
 
     // set license description in tooltip to selected license
     $(document).on('change', '#sell_media_item_license', function(){
-        var license_desc = $('#sell_media_item_license :selected').attr('title');
-        // must use .attr since .data types are cached by jQuery
-        if(license_desc){
-            $('#license_desc').attr('data-tooltip', license_desc).show();
-        } else {
-            $('#license_desc').hide();
-        }
+
     });
 
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
@@ -251,12 +245,15 @@ jQuery(document).ready(function($){
         // calculate the price and license markup
         var price = $('#sell_media_item_size :selected').data('price');
 
+        // check for selected license or single license
         if ( $('#sell_media_item_license :selected').data('name') ){
             var markup = $('#sell_media_item_license :selected').data('price');
             var license_name = $('#sell_media_item_license :selected').data('name');
+            var license_id = $('#sell_media_item_license :selected').val();
         } else {
             var markup = $('#sell_media_item_license').data('price');
             var license_name = $('#sell_media_item_license').data('name');
+            var license_id = $('#sell_media_item_license').data('id');
         }
 
         // selected license doesn't have markup
@@ -268,10 +265,6 @@ jQuery(document).ready(function($){
 
         $('#total').text(sum);
 
-        // set license name for display on cart
-        if ( license_name != null )
-            $('.item_usage').attr('value', license_name);
-
         // set price_group id so it is passed to cart
         var price_group = $('#sell_media_item_size :selected').data('id');
         if ( price_group != null )
@@ -281,6 +274,24 @@ jQuery(document).ready(function($){
         var size = $('#sell_media_item_size :selected').data('size');
         if ( size != null )
             $('.item_size').attr('value', size);
+
+        // set license name for display on cart
+        if ( license_name != null )
+            $('.item_usage').attr('value', license_name);
+
+        // set license id
+        if ( license_id != null )
+            $('.item_license').attr('value', license_id);
+
+        // set the license description
+        var license_desc = $('#sell_media_item_license :selected').attr('title');
+        // must use .attr since .data types are cached by jQuery
+        if(license_desc){
+            $('#license_desc').attr('data-tooltip', license_desc).show();
+        } else {
+            $('#license_desc').hide();
+        }
+
     });
 
 });
