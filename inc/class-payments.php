@@ -200,7 +200,7 @@ Class SellMediaPayments {
 
         if ( $products ) {
     		$html = null;
-    		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '">';
+    		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%">';
     		$html .= '<thead>';
     		$html .= '<tr>';
     		$html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
@@ -227,7 +227,7 @@ Class SellMediaPayments {
                 if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) $html .= $product['size']['name'];
                 $html .= '</td>';
     			$html .= '<td class="sell-media-product-license">';
-    			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'];
+    			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'] . '<span class="license_desc">' . category_description( $product['license']['id'] ) . '</span>';
     			$html .= '</td>';
     			$html .= '<td class="sell-media-product-qty text-center">';
     			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
