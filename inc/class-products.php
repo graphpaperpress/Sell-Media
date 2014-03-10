@@ -14,7 +14,7 @@ Class SellMediaProducts {
      *
      * @return $prices (array)
      */
-    public function get_prices( $post_id=null ){
+    public function get_prices( $post_id=null, $taxonomy='price-group' ){
         $i = 0;
 
         if ( $this->settings->hide_original_price !== 'yes' ){
@@ -30,14 +30,15 @@ Class SellMediaProducts {
 
         if ( $this->mimetype_is_image( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) ){
             // check assigned price group. We're assuming there is just one.
-            $term_parent = wp_get_post_terms( $post_id, 'price-group' );
+
+            $term_parent = wp_get_post_terms( $post_id, $taxonomy );
 
             // if no assigned price group, get default from settings
             if ( empty( $term_parent ) ){
                 $default = $this->settings->default_price_group;
-                $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $default ) );
+                $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $default ) );
             } else {
-                $terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id ) );
+                $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id ) );
             }
 
             // loop over child terms
@@ -66,7 +67,7 @@ Class SellMediaProducts {
      *
      * @return price on success false on failure
      */
-    public function get_price( $product_id=null, $price_id=null, $formatted=false ){
+    public function get_price( $product_id=null, $price_id=null, $formatted=false, $taxonomy='price-group' ){
 
         $final_price = false;
 
@@ -79,7 +80,7 @@ Class SellMediaProducts {
 
         elseif ( ! empty( $price_id ) && $this->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) )
             && $price_id != 'original' ){
-            foreach( $this->get_prices( $product_id ) as $price ){
+            foreach( $this->get_prices( $product_id, $taxonomy ) as $price ){
                 if ( $price_id == $price['id'] ){
                     $final_price = $price['price'];
                 }
