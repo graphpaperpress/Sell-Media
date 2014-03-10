@@ -255,7 +255,6 @@ Class SellMediaPayments {
             if ( array_key_exists( $v, $paypal_args ) ){
                 $tmp[ $k ] = $paypal_args[ $v ];
             } else {
-                option_name4
                 for ( $i=1; $i <= $paypal_args['num_cart_items']; $i++ ) {
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
