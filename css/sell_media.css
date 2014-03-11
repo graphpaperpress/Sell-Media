@@ -32,7 +32,7 @@
 
 .sell-media-totals,
 .sell-media-checkout-button {
-  margin: 1em 0;
+  margin: 10px 0;
   float: right;
   clear: both;
 }
@@ -58,7 +58,7 @@
 }
 .sell-media-totals,
 .sell-media-checkout-button {
-  margin: 1em 0;
+  margin: 10px 0;
   float: right;
   clear: both;
   width: 200px;
@@ -120,7 +120,7 @@ table.sell-media-products {
   width: 100%;
 }
 .has-sidebar .sell-media #content, .sell-media #content {
-  margin: 1em 0;
+  margin: 10px 0;
   padding: 0;
   max-width: 100%;
   width: 100%;
@@ -175,6 +175,9 @@ table.sell-media-products {
   height: auto;
   margin-bottom: 4px;
 }
+.sell-media .sell-media-content-text {
+  margin: 10px 0;
+}
 .sell-media .sell-media-meta {
   clear: none;
   float: right;
@@ -182,12 +185,12 @@ table.sell-media-products {
   width: 30%;
 }
 .sell-media ul {
-  margin: 0 0 2em;
+  margin: 0 0 20px;
   padding: 0;
   list-style: none;
 }
 .sell-media li {
-  margin: .5em 0;
+  margin: 6px 0;
 }
 .sell-media li .title {
   font-weight: 700;
@@ -218,7 +221,7 @@ table.sell-media-products {
   width: 32%;
 }
 .sell-media .sell-media-grid-container {
-  margin: 1em 0;
+  margin: 10px 0;
 }
 .sell-media .sell-media-grid:nth-child(3n), .sell-media .end {
   margin-right: 0;
@@ -587,7 +590,7 @@ table.sell-media-products {
   left: 50px;
 }
 
-/*= Short code all
+/*= Shortcode all
 -------------------------------------------------------------- */
 .sell-media-shortcode-all h3 {
   float: left;
