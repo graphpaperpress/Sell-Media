@@ -167,7 +167,7 @@ function checkout_shortcode(){
         <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
         <div class="sell-media-checkout-button group">
             <?php do_action( 'sell_media_above_checkout_button' ); ?>
-            <p><a href="javascript:void(0)" class="simpleCart_checkout sell-media-button"><?php _e( 'Pay with PayPal', 'sell_media' ); ?></a></p>
+            <p><a href="javascript:void(0)" class="simpleCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
             <p class="text-center"><?php echo __( 'or', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link( 'sell_media_item' ); ?>"><?php echo __( 'continue shopping', 'sell_media' ); ?> &raquo;</a></p>
         </div>
         <?php do_action( 'sell_media_below_registration_form' ); ?>

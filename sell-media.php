@@ -633,6 +633,7 @@ class SellMedia {
             wp_localize_script( 'sell_media', 'sell_media', array(
                 'ajaxurl' => admin_url( 'admin-ajax.php' ),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
+                'site_name' => get_bloginfo( 'name' ),
                 'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
                 'currency_symbol' => $settings->currency,
                 'error' => array(
@@ -640,6 +641,8 @@ class SellMedia {
                     ),
                 'sandbox' => ( $settings->test_mode == 1 ) ? 'true' : 'false',
                 'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
+                // set this in stripe extension? and make use testing or live key
+                'stripe_public_key' => ( empty( $settings->stripe_test_publishable_key ) ) ? null : $settings->stripe_test_publishable_key,
                 'thanks_page' => get_permalink( $settings->thanks_page ),
                 'listener_url' => site_url( '?sell_media-listener=IPN' ),
                 'added_to_cart' => sprintf(
