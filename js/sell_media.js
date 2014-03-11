@@ -1,14 +1,5 @@
 jQuery(document).ready(function($){
 
-    /**
-     * Set-up our default Ajax options.
-     * Please reference http://api.jquery.com/jQuery.ajaxSetup/
-     */
-    $.ajaxSetup({
-        type: "POST",
-        url: sell_media.ajaxurl
-    });
-
     // Sell Media popup dialog
     function popup(message){
 
@@ -42,6 +33,8 @@ jQuery(document).ready(function($){
         $('.sell-media-cart-dialog-target').html('<div class="sell-media-ajax-loader">Loading...</div>');
         // send ajax request for product in shopping cart
         $.ajax({
+            type: "POST",
+            url: sell_media.ajaxurl,
             data: {
                 "action": "sell_media_load_template",
                 "template": "cart.php",
@@ -209,8 +202,9 @@ jQuery(document).ready(function($){
 
     // Validate cart prices (price group, license markup, discount codes) on the server
     simpleCart.bind( 'beforeCheckout', function( data ){
-
         $.ajax({
+            type: "POST",
+            url: sell_media.ajaxurl,
             async: false,
             data: {
                 security: $('#cart_nonce_security').val(),
