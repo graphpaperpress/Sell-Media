@@ -28,11 +28,10 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
         $html = $p->get_payment_products_formatted( $post_id );
         $html .= '<script>simpleCart.empty();</script>';
         return '<p class="sell-media-thanks-message">' . $html . '</p>';
+        do_action( 'sell_media_thanks_hook_below' );
     } else {
         return false;
     }
-
-    do_action( 'sell_media_thanks_hook_below' );
 
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
