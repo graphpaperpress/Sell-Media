@@ -207,6 +207,9 @@ table.sell-media-products {
 .sell-media .sell-media-prev-next .prev {
   margin: 0 10px 0;
 }
+.sell-media-single-button {
+  margin-bottom: 20px;
+}
 /*= Archives
 -------------------------------------------------------------- */
 .sell-media .sell-media-grid {
@@ -722,7 +725,10 @@ table.sell-media-products {
 /*= Media queries
 -------------------------------------------------------------- */
 @media only screen and (max-width : 768px) {
-  .sell-media-totals, .sell-media-checkout-button {
+  .sell-media-totals,
+  .sell-media-checkout-button,
+  .sell-media .sell-media-content,
+  .sell-media .sell-media-meta {
     float: none;
     width: 100%;
   }

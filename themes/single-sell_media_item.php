@@ -17,16 +17,10 @@ get_header(); ?>
 				<?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
 			<?php endif; ?>
 			<div><?php the_content(); ?></div>
-			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
-			<div class="sell-media-prev-next">
-				<?php previous_post_link('<span class="prev">&laquo; %link</span>', '%title', true, '', 'collection' ); ?>
-				<?php next_post_link('<span class="next">%link &raquo;</span>', '%title', true, '', 'collection'); ?>
-			</div>
-			<?php edit_post_link('edit', '<p>', '</p>'); ?>
 		</div>
 
 		<div class="sell-media-meta">
-			<?php sell_media_item_buy_button( $post->ID, 'button', __( 'Purchase' ) ); ?>
+			<p class="sell-media-single-button"><?php sell_media_item_buy_button( $post->ID, 'button', __( 'Purchase' ) ); ?></p>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<ul>
 				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
@@ -52,6 +46,15 @@ get_header(); ?>
 
 			</ul>
 		</div><!-- .sell-media-meta -->
+
+		<div class="sell-media-postmeta">
+			<p class="sell-media-credit"><?php sell_media_plugin_credit(); ?></p>
+			<div class="sell-media-prev-next">
+				<?php previous_post_link('<span class="prev">&laquo; %link</span>', '%title', true, '', 'collection' ); ?>
+				<?php next_post_link('<span class="next">%link &raquo;</span>', '%title', true, '', 'collection'); ?>
+			</div>
+			<?php edit_post_link('edit', '<p>', '</p>'); ?>
+		</div><!-- .sell-media-postmeta -->
 
 	<?php endwhile; ?>
 	<?php do_action( 'sell_media_single_bottom_hook' ); ?>
