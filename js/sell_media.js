@@ -113,25 +113,31 @@ jQuery(document).ready(function($){
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
 
+    // have to set this as a variable because
+    // the . causes issues below when used as a key
+    var shipping_mode = sell_media.shipping_mode;
+
     // Cart config
     simpleCart({
-        cartStyle: sell_media.cart_style,
         checkout: {
             sandbox: sell_media.sandbox,
             type: "PayPal",
             email: sell_media.paypal_email,
-            currency: sell_media.currency_symbol,
             success: sell_media.thanks_page,
             cancel: sell_media.checkout_page,
             notify: sell_media.listener_url,
             shipping: sell_media.shipping, // 0 prompt & optional, 1 no prompt, 2 prompt & required
             method: "POST"
         },
+        cartStyle: sell_media.cart_style,
+        taxRate: parseFloat(sell_media.tax),
+        shippingFlatRate: parseInt(sell_media.shipping_rate),
+        currency: sell_media.currency_symbol,
         cartColumns: [{
-                view: "image",
-                attr: "image",
-                label: false
-            },
+            view: "image",
+            attr: "image",
+            label: false
+        },
             {
                 view: function(item, column){
 

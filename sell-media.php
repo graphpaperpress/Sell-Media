@@ -630,8 +630,19 @@ class SellMedia {
 
             $settings = sell_media_get_plugin_options();
 
-            wp_localize_script('sell_media', 'sell_media', array(
-                'ajaxurl' => admin_url("admin-ajax.php"),
+            // get shipping rate based on selected shipping mode
+            $shipping_rate = 0;
+            if ( 'shippingFlatRate' == $settings->reprints_shipping )
+                $shipping_rate = 'reprints_shipping_flat_rate';
+            elseif ( 'shippingQuantityRate' == $settings->reprints_shipping )
+                $shipping_rate = 'reprints_shipping_quantity_rate';
+            elseif ( 'shippingTotalRate' == $settings->reprints_shipping )
+                $shipping_rate = 'reprints_shipping_total_rate';
+            else
+                $shipping_rate = 0;
+
+            wp_localize_script( 'sell_media', 'sell_media', array(
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
                 'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
                 'currency_symbol' => $settings->currency,
@@ -655,7 +666,10 @@ class SellMedia {
                     'sub_total' => __( 'Sub Total', 'sell_media' )
                     ),
                 'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
-                'shipping' => apply_filters( 'sell_media_shipping', 0 )
+                'tax' => ( empty( $settings->tax ) ) ? 0 : $settings->tax_rate,
+                'shipping' => apply_filters( 'sell_media_shipping', 0 ), // should paypal force buyers add address
+                'shipping_mode' => apply_filters( 'sell_media_shipping_mode', ( empty( $settings->reprints_shipping ) ) ? 'shippingFlatRate' : $settings->reprints_shipping ),
+                'shipping_rate' => apply_filters( 'sell_media_shipping_rate', ( empty( $settings->$shipping_rate ) ) ? 0 : $settings->$shipping_rate )
                 ) );
 
             if ( isset( $settings->style ) && '' != $settings->style )

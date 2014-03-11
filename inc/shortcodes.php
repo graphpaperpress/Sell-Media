@@ -143,6 +143,7 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
  * @since 2.0
  */
 function checkout_shortcode(){
+    $settings = sell_media_get_plugin_options();
     ob_start(); ?>
     <?php do_action( 'sell_media_checkout_before_cart' ); ?>
     <div id="sell-media-checkout-cart" style="display:none;">
@@ -152,7 +153,7 @@ function checkout_shortcode(){
                 <span class="sell-media-itemize"><?php _e( 'Subtotal', 'sell_media' ); ?>:</span> <span class="simpleCart_total"></span>
             </div>
             <div class="tax">
-                <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>:</span> <span class="simpleCart_tax"></span>
+                <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>: <?php if ( ! empty( $settings->tax ) ) echo '(' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span> <span class="simpleCart_tax"></span>
             </div>
             <div class="shipping">
                 <span class="sell-media-itemize"><?php _e( 'Shipping', 'sell_media' ); ?>:</span> <span class="simpleCart_shipping"></span>
