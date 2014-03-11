@@ -630,16 +630,6 @@ class SellMedia {
 
             $settings = sell_media_get_plugin_options();
 
-            // get shipping rate based on selected shipping mode
-            if ( ! isset ( $settings->reprints_shipping ) || empty( $settings->reprints_shipping ) )
-                $shipping_rate = 0;
-            elseif ( 'shippingFlatRate' == $settings->reprints_shipping )
-                $shipping_rate = 'reprints_shipping_flat_rate';
-            elseif ( 'shippingQuantityRate' == $settings->reprints_shipping )
-                $shipping_rate = 'reprints_shipping_quantity_rate';
-            else
-                $shipping_rate = 'reprints_shipping_total_rate';
-
             wp_localize_script( 'sell_media', 'sell_media', array(
                 'ajaxurl' => admin_url( 'admin-ajax.php' ),
                 'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
@@ -666,10 +656,8 @@ class SellMedia {
                     ),
                 'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
                 'tax' => ( empty( $settings->tax ) ) ? 0 : $settings->tax_rate,
-                'shipping' => apply_filters( 'sell_media_shipping', 0 ), // should paypal force buyers add address
-                'shipping_mode' => apply_filters( 'sell_media_shipping_mode', ( empty( $settings->reprints_shipping ) ) ? 'shippingFlatRate' : $settings->reprints_shipping ),
-                'shipping_rate' => apply_filters( 'sell_media_shipping_rate', ( empty( $settings->$shipping_rate ) ) ? 0 : $settings->$shipping_rate )
-                ) );
+                'shipping' => apply_filters( 'sell_media_shipping', 0 ) // should paypal force buyers add address
+            ) );
 
             if ( isset( $settings->style ) && '' != $settings->style )
                 wp_enqueue_style( 'sell-media-style', plugin_dir_url( __FILE__ ) . 'css/sell_media-' . $settings->style . '.css' );

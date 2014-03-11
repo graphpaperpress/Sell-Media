@@ -117,10 +117,6 @@ jQuery(document).ready(function($){
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
 
-    // have to set this as a variable because
-    // the . causes issues below when used as a key
-    var shipping_mode = sell_media.shipping_mode;
-
     // Cart config
     simpleCart({
         checkout: {
@@ -135,7 +131,6 @@ jQuery(document).ready(function($){
         },
         cartStyle: sell_media.cart_style,
         taxRate: parseFloat(sell_media.tax),
-        shippingFlatRate: parseInt(sell_media.shipping_rate),
         currency: sell_media.currency_symbol,
         cartColumns: [{
             view: "image",
