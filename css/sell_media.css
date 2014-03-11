@@ -64,6 +64,7 @@
   width: 200px;
 }
 .sell-media-checkout-button .stripe-button-el {
+  margin-bottom: 10px;
   width: 100%;
   text-align: center;
   text-decoration: none;
