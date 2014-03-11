@@ -184,6 +184,9 @@ table.sell-media-products {
   line-height: 1.5;
   width: 30%;
 }
+.sell-media .sell-media-postmeta {
+  clear: both;
+}
 .sell-media ul {
   margin: 0 0 20px;
   padding: 0;
