@@ -631,15 +631,14 @@ class SellMedia {
             $settings = sell_media_get_plugin_options();
 
             // get shipping rate based on selected shipping mode
-            $shipping_rate = 0;
-            if ( 'shippingFlatRate' == $settings->reprints_shipping )
+            if ( ! isset ( $settings->reprints_shipping ) || empty( $settings->reprints_shipping ) )
+                $shipping_rate = 0;
+            elseif ( 'shippingFlatRate' == $settings->reprints_shipping )
                 $shipping_rate = 'reprints_shipping_flat_rate';
             elseif ( 'shippingQuantityRate' == $settings->reprints_shipping )
                 $shipping_rate = 'reprints_shipping_quantity_rate';
-            elseif ( 'shippingTotalRate' == $settings->reprints_shipping )
-                $shipping_rate = 'reprints_shipping_total_rate';
             else
-                $shipping_rate = 0;
+                $shipping_rate = 'reprints_shipping_total_rate';
 
             wp_localize_script( 'sell_media', 'sell_media', array(
                 'ajaxurl' => admin_url( 'admin-ajax.php' ),
