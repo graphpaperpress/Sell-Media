@@ -30,6 +30,10 @@ jQuery(document).ready(function($){
      * launch our dialog, and send an Ajax request to load our cart form.
      */
     $(document).on('click','.sell-media-cart-trigger',function(){
+
+        // calculate distance to screen top
+        var top = $(document).scrollTop() + 50;
+        $('#sell-media-dialog-box').css('top', top);
         // calculate document size to center cart
         popup();
         // show the overlay and cart dialog

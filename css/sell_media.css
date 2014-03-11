@@ -264,8 +264,8 @@ table.sell-media-products {
   display: none;
 }
 #sell-media-dialog-box {
-  position: fixed;
-  top: 10%;
+  position: absolute;
+  top: 50px;
   min-height: 250px;
   background: #f5f5f7;
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
@@ -288,8 +288,6 @@ table.sell-media-products {
 }
 #sell-media-dialog-box figure {
   text-align: center;
-  float: left;
-  padding: 0;
   width: 100%;
 }
 #sell-media-dialog-box figcaption,
@@ -302,7 +300,7 @@ table.sell-media-products {
   max-width: 100%;
   width: auto;
   height: auto;
-  max-height: 150px;
+  max-height: 167px;
 }
 #sell-media-dialog-box section {
   margin: 20px 0 0;
