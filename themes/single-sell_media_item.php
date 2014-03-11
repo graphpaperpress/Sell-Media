@@ -26,6 +26,7 @@ get_header(); ?>
 		</div>
 
 		<div class="sell-media-meta">
+			<?php sell_media_item_buy_button( $post->ID, 'button', __( 'Purchase' ) ); ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<ul>
 				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
@@ -50,7 +51,6 @@ get_header(); ?>
 				<?php do_action('sell_media_additional_list_items'); ?>
 
 			</ul>
-			<?php sell_media_item_buy_button( $post->ID, 'button', __( 'Purchase' ) ); ?>
 		</div><!-- .sell-media-meta -->
 
 	<?php endwhile; ?>
