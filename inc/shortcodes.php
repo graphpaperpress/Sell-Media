@@ -32,6 +32,8 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
         return false;
     }
 
+    do_action( 'sell_media_thanks_hook_below' );
+
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
 
