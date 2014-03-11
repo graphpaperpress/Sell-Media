@@ -115,13 +115,8 @@ jQuery(document).ready(function($){
     // Cart config
     simpleCart({
         checkout: {
+            type: sell_media.default_gateway,
             sandbox: sell_media.sandbox,
-            type: "Stripe",
-            // stripe!
-            key: sell_media.stripe_public_key,
-            image: "http://graphpaperpress.com/wp-content/themes/gpp_v9/images/slideshows.jpg",
-            url: sell_media.thanks_page,
-            name: sell_media.site_name,
             email: sell_media.paypal_email,
             success: sell_media.thanks_page,
             cancel: sell_media.checkout_page,

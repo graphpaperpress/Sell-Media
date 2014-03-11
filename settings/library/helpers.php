@@ -262,7 +262,7 @@ function sell_media_settings_price_group( $taxonomy=null ){
 function sell_media_settings_payment_gateway(){
     $gateways = array(
         array(
-            'name' => 'paypal',
+            'name' => 'PayPal',
             'title' => __('PayPal','sell_media')
             )
         );

@@ -639,6 +639,7 @@ class SellMedia {
                 'error' => array(
                     'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                     ),
+                'default_gateway' => ( empty( $settings->default_gateway ) ) ? 'PayPal' : $settings->default_gateway,
                 'sandbox' => ( $settings->test_mode == 1 ) ? 'true' : 'false',
                 'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
                 // set this in stripe extension? and make use testing or live key
