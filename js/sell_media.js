@@ -110,6 +110,8 @@ jQuery(document).ready(function($){
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
 
+    // console.log(sell_media);
+
     // Cart config
     simpleCart({
         checkout: {
