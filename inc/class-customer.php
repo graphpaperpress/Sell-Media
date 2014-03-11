@@ -33,11 +33,14 @@ Class SellMediaCustomer {
             // add the user
             $user_id = wp_insert_user( $userdata );
 
-            // hook for when new users are created
-            do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
+            // email the user their account registration
+            $this->email_registration( $user_id );
 
             // log the user in
             $this->signon( $email, $password );
+
+            // hook for when new users are created
+            do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
 
             return false;
         }

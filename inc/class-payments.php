@@ -467,6 +467,9 @@ Class SellMediaPayments {
         // Send the email to buyer
         $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );
 
+        // Send the email to admin
+        wp_mail( get_option( 'admin_email' ), apply_filters( 'sell_media_sale_notify_admin_subject', 'New sale notification' ), $message['body'] );
+
         return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
     }
 

@@ -179,10 +179,6 @@ function sell_media_process_paypal_ipn() {
                 // create new user, auto log them in, email them registration
                 $c = new SellMediaCustomer;
                 $c->insert( $_POST['payer_email'], $_POST['first_name'], $_POST['last_name'] );
-                $user = get_user_by( 'email', $_POST['payer_email'] );
-                if ( $user ) {
-                    $c->email_registration( $user->ID );
-                }
 
                 $message .= "\nSuccess! Your purchase has been completed.\n";
                 $message .= "Your transaction number is: {$_POST['txn_id']}\n";
@@ -192,9 +188,7 @@ function sell_media_process_paypal_ipn() {
                 $email_status = $p->email_receipt( $payment_id, $_POST['payer_email'] );
                 $message .= "{$email_status}\n";
 
-                // $payment_meta_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
-                // $products_meta_array = unserialize( $payment_meta_array['products'] );
-                // do_action( 'sell_media_after_successful_payment', $products_meta_array, $payment_id );
+                do_action( 'sell_media_after_successful_payment', $payment_id );
 
             }
 
