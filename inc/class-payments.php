@@ -434,15 +434,19 @@ Class SellMediaPayments {
      */
     public function email_receipt( $payment_id=null, $email=null ) {
 
-        // email the site admin of sale
-        $this->email_admin_receipt( $payment_id );
-
         $message['from_name'] = get_bloginfo( 'name' );
         $message['from_email'] = get_option( 'admin_email' );
 
         $settings = sell_media_get_plugin_options();
-        $message['subject'] = $settings->success_email_subject;
-        $message['body'] = $settings->success_email_body;
+
+        // send admins and buyers different email subject and body
+        if ( get_option( 'admin_email' ) == $email ) {
+            $message['subject'] = __( 'New sale notification', 'sell_media' );
+            $message['body'] = apply_filters( 'sell_media_email_admin_receipt_message', 'Congrats! You just made a sale. An email containing download links has just been sent to your customer, so no further action is required. Here are the details:' );
+        } else {
+            $message['subject'] = $settings->success_email_subject;
+            $message['body'] = $settings->success_email_body;
+        }
 
         $payments_table = $this->get_payment_products_formatted( $payment_id );
 
@@ -469,27 +473,6 @@ Class SellMediaPayments {
 
         // Send the email to buyer
         $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );
-
-        return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
-    }
-
-
-    /**
-     * Build the email to be sent to the site admin
-     *
-     * @since 0.1
-     */
-    public function email_admin_receipt( $payment_id=null ){
-
-        $email = get_option( 'admin_email' );
-
-        $message = apply_filters( 'sell_media_email_admin_receipt_message', 'Congrats! You just made a sale. An email containing download links has just been sent to your customer, so no further action is required. Here are the details:' );
-        $message .= $this->get_payment_products_formatted( $payment_id ) . "\n";
-        $message .= __( 'Here is a link to the payment details', 'sell_media' ) . ':' . "\n";
-        $message .= admin_url( 'post.php?post=' . $payment_id . '&action=edit' );
-
-        // Send the email to admin
-        $r = wp_mail( $email, apply_filters( 'sell_media_email_admin_receipt_subject', 'New sale notification' ), $message['body'] );
 
         return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
     }

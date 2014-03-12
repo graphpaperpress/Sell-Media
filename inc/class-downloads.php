@@ -231,17 +231,17 @@ Class SellMediaDownload {
                 }
 
             } else {
-                wp_die(__('You do not have permission to download this file', 'sell_media'), __('Purchase Verification Failed', 'sell_media'));
+                wp_die( __( 'You do not have permission to download this file', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
             }
             exit;
         }
 
-        if ( isset( $_GET['resend_email'] ) && isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ){
-            $purchase_key = get_post_meta( $_GET['payment_id'], '_sell_media_payment_purchase_key', true );
-            $payment_email = get_post_meta( $_GET['payment_id'], '_sell_media_payment_user_email', true );
-
+        if ( isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ){
             $payment_obj = new SellMediaPayments;
-            $payment_obj->email_receipt( $purchase_key, $payment_email, $payment_id );
+            $payment_id = $_GET['payment_id'];
+            $payment_email = get_meta_key( $payment_id, 'email' );
+
+            $payment_obj->email_receipt( $payment_id, $payment_email );
         }
     }
 }
