@@ -30,11 +30,10 @@ Class SellMediaProducts {
 
         if ( $this->mimetype_is_image( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) ){
             // check assigned price group. We're assuming there is just one.
-
             $term_parent = wp_get_post_terms( $post_id, $taxonomy );
 
             // if no assigned price group, get default from settings
-            if ( empty( $term_parent ) ){
+            if ( empty( $term_parent ) || is_wp_error( $term_parent ) ){
                 $default = $this->settings->default_price_group;
                 $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $default ) );
             } else {
@@ -43,7 +42,7 @@ Class SellMediaProducts {
 
             // loop over child terms
             foreach( $terms as $term ){
-                if ( $term->parent != 0 ){
+                if ( ! empty( $term->term_id ) ){
                     $i++;
                     $prices[$i]['id'] = $term->term_id;
                     $prices[$i]['name'] = $term->name;
