@@ -383,18 +383,6 @@ $options = array(
         ),
 
     // Payment Tab
-    "default_gateway" => array(
-        "tab" => "sell_media_payment_settings",
-        "name" => "default_gateway",
-        "title" => __("Default Payment Gateway", "sell_media"),
-        "description" => "",
-        "section" => "payment_section_1",
-        "since" => "1.0",
-        "id" => "payment_section_1",
-        "type" => "select",
-        "default" => "PayPal",
-        "valid_options" => sell_media_settings_payment_gateway()
-        ),
     "paypal_email" => array(
         "tab" => "sell_media_payment_settings",
         "name" => "paypal_email",

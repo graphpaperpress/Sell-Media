@@ -115,7 +115,7 @@ jQuery(document).ready(function($){
     // Cart config
     simpleCart({
         checkout: {
-            type: sell_media.default_gateway,
+            type: "PayPal",
             sandbox: sell_media.sandbox,
             email: sell_media.paypal_email,
             success: sell_media.thanks_page,
