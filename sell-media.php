@@ -390,7 +390,7 @@ class SellMedia {
      */
     public function registerCreator($admin_columns=null) {
         $labels = array(
-            'name' => __( 'Creator', '', 'sell_media' ),
+            'name' => __( 'Creators', '', 'sell_media' ),
             'singular_name' => __( 'Creator', '', 'sell_media' ),
             'search_items' => __( 'Search Creator', '', 'sell_media' ),
             'popular_items' => __( 'Popular Creator', '', 'sell_media' ),
@@ -404,7 +404,7 @@ class SellMedia {
             'separate_items_with_commas' => __( 'Separate creator with commas', '', 'sell_media' ),
             'add_or_remove_items' => __( 'Add or remove Creator', '', 'sell_media' ),
             'choose_from_most_used' => __( 'Choose from most used Creator', '', 'sell_media' ),
-            'menu_name' => __( 'Creator', '', 'sell_media' ),
+            'menu_name' => __( 'Creators', '', 'sell_media' ),
         );
 
         $args = array(
@@ -443,7 +443,7 @@ class SellMedia {
             'separate_items_with_commas' => __( 'Separate collection with commas', '', 'sell_media' ),
             'add_or_remove_items' => __( 'Add or remove Collection', '', 'sell_media' ),
             'choose_from_most_used' => __( 'Choose from most used Collection', '', 'sell_media' ),
-            'menu_name' => __( 'Product Collections', '', 'sell_media' ),
+            'menu_name' => __( 'Collections', '', 'sell_media' ),
         );
 
         $args = array(

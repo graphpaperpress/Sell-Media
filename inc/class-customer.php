@@ -65,7 +65,7 @@ Class SellMediaCustomer {
         $message['body'] .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login . "\n\n";
         $message['body'] .= __( 'Create a password if you want to login to our dashboard to download any of your purchases in the future.', 'sell_media' ) . ':' . "\n\n";
         $message['body'] .= esc_url( site_url( 'wp-login.php?action=lostpassword' ) ) . "\n\n";
-        $message['body'] .= __( 'Any purchases your make will be available on your account dashboard', 'sell_media' ) . ':' . "\n\n";
+        $message['body'] .= __( 'Any purchases your make will be available on your account dashboard.', 'sell_media' ) . "\n\n";
         $message['body'] .= esc_url( get_permalink( $settings->dashboard_page ) );
         $message['body'] .= __( 'Thanks', 'sell_media' ) . ',' . "\n";
         $message['body'] .= $site_name;

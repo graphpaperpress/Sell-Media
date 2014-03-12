@@ -60,20 +60,20 @@ Class SellMediaPayments {
 	}
 
     /**
-    * Loop over products in payment meta and see if products contain a print type
+    * Loop over products in payment meta and see if products contain a specific types
     *
     * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-    * @param $key = product_id, product_name, product_price, product_license, product_qty, product_subtotal
+    * @param $type = download, print (reprints extension)
     *
     * @return (bool) true/false
     */
-    public function is_print( $post_id=null ){
+    public function products_include_type( $post_id=null, $type=null ){
         $products = $this->get_products( $post_id );
-        $type = array();
+        $types = array();
         foreach ( $products as $product ) {
-            $type[] = get_meta_key( $post_id, 'type' );
+            $types[] = $this->get_meta_key( $post_id, 'type' );
         }
-        if ( in_array( 'print', $type ) ) {
+        if ( in_array( $type, $types ) ) {
             return true;
         } else {
             return false;
