@@ -20,24 +20,22 @@ Class SellMediaCustomer {
     public function insert( $email=null, $first_name=null, $last_name=null ){
 
         if ( $email && email_exists( $email ) == false ) {
-            $password = wp_generate_password( $length=12, $include_standard_special_chars=false );
             $userdata = array(
                 'user_login'    => $email,
                 'user_email'    => $email,
                 'first_name'    => $first_name,
                 'last_name'     => $last_name,
-                'role'          => 'sell_media_customer',
-                'password'      => $password
+                'role'          => 'sell_media_customer'
             );
 
             // add the user
             $user_id = wp_insert_user( $userdata );
 
-            // email the user their account registration
-            $this->email_registration( $user_id );
+            // email the user their account registration details
+            $this->email_details( $user_id );
 
-            // log the user in
-            $this->signon( $email, $password );
+            // log the user in automatically
+            // $this->signon( $email, $password );
 
             // hook for when new users are created
             do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
@@ -46,14 +44,52 @@ Class SellMediaCustomer {
         }
     }
 
+
     /**
-    * Auto login user
+    * Email the user after registration to request a new password
     *
     * @param $user_id
     * @return (bool)
     *
     */
-    public function signon( $email, $password ){
+    public function email_details( $user_id=null ){
+
+        $settings = sell_media_get_plugin_options();
+        $user = get_user_by( 'id', $user_id );
+        $email = $user->user_email;
+        $site_name = esc_attr( get_bloginfo( 'name' ) );
+
+        $message['subject'] = __( 'Account registration at', 'sell_media' ) . ' ' . get_bloginfo( 'name' );
+        $message['body'] = __( 'Welcome', 'sell_media' ) . ' ' . $user->first_name . '!' . "\n\n";
+        $message['body'] .= __( 'Here are your login credentials', 'sell_media' ) . ':' . "\n\n";
+        $message['body'] .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login . "\n\n";
+        $message['body'] .= __( 'Create a password if you want to login to our dashboard to download any of your purchases in the future.', 'sell_media' ) . ':' . "\n\n";
+        $message['body'] .= esc_url( site_url( 'wp-login.php?action=lostpassword' ) ) . "\n\n";
+        $message['body'] .= __( 'Any purchases your make will be available on your account dashboard', 'sell_media' ) . ':' . "\n\n";
+        $message['body'] .= esc_url( get_permalink( $settings->dashboard_page ) );
+        $message['body'] .= __( 'Thanks', 'sell_media' ) . ',' . "\n";
+        $message['body'] .= $site_name;
+
+        $message['headers'] = "From: " . $site_name . "\r\n";
+        $message['headers'] .= "Reply-To: ". get_option( 'admin_email' ) . "\r\n";
+        $message['headers'] .= "MIME-Version: 1.0\r\n";
+        $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
+
+        // Send the email to buyer
+        $r = wp_mail( $email, $message['subject'], nl2br( $message['body'] ), $message['headers'] );
+
+        return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
+    }
+
+    /**
+    * Auto login user
+    *
+    * @param $user_id
+    * @return (bool)
+    * @todo get password, automatically log user in
+    *
+    */
+    public function signon( $email=null, $password=null ){
 
         if ( ! is_user_logged_in() && email_exists( $email ) ) {
 
@@ -69,36 +105,6 @@ Class SellMediaCustomer {
                 wp_set_current_user( $user->ID, $user->user_login );
                 wp_set_auth_cookie( $user->ID, true, false );
                 do_action( 'wp_login', $user->user_login );
-            }
-        }
-    }
-
-    /**
-    * Email user registration
-    *
-    * @param $user_id
-    * @return (bool)
-    *
-    */
-    public function email_registration( $user_id ){
-
-        $user = get_user_by( 'id', $user_id );
-
-        if ( $user ) {
-
-            if ( ! email_exists( $user->user_email ) ) {
-
-                $subject = __( 'Account Registration at', 'sell_media' ) . ' ' . get_bloginfo( 'name' );
-                $message = __( 'Hello', 'sell_media' ) . ' ' . $user->first_name . '!' . "\n\n";
-                $message .= __( 'Here are your login credentials', 'sell_media' ) . ':' . "\n\n";
-                $message .= __( 'Username', 'sell_media' ) . ': ' . $user->user_login . "\n";
-                $message .= __( 'Password', 'sell_media' ) . ': ' . $user->user_pass . "\n\n";
-                $message .= __( 'Any purchases your make will be available on your account dashboard', 'sell_media' ) . ': ' . get_permalink( $this->settings->dashboard_page ) . "\n\n";
-                $message .= __( 'Thanks', 'sell_media' ) . ',' . "\n";
-                $message .= get_bloginfo( 'name' );
-                wp_mail( $user->user_email, $subject, $message );
-
-                return false;
             }
         }
     }

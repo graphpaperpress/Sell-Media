@@ -187,6 +187,7 @@ function sell_media_process_paypal_ipn() {
                 // Send email to buyer and admin
                 $email_status = $p->email_receipt( $payment_id, $_POST['payer_email'] );
                 $admin_email_status = $p->email_receipt( $payment_id, get_option( 'admin_email' ) );
+                
                 $message .= "{$email_status}\n";
                 $message .= "{$admin_email_status}\n";
 
