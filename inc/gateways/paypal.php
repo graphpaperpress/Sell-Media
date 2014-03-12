@@ -184,9 +184,11 @@ function sell_media_process_paypal_ipn() {
                 $message .= "Your transaction number is: {$_POST['txn_id']}\n";
                 $message .= "To email: {$_POST['payer_email']}\n";
 
-                // I don't think this function is working
+                // Send email to buyer and admin
                 $email_status = $p->email_receipt( $payment_id, $_POST['payer_email'] );
+                $admin_email_status = $p->email_receipt( $payment_id, get_option( 'admin_email' ) );
                 $message .= "{$email_status}\n";
+                $message .= "{$admin_email_status}\n";
 
                 do_action( 'sell_media_after_successful_payment', $payment_id );
 
