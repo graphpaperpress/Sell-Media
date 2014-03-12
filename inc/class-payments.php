@@ -60,6 +60,27 @@ Class SellMediaPayments {
 	}
 
     /**
+    * Loop over products in payment meta and see if products contain a print type
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    * @param $key = product_id, product_name, product_price, product_license, product_qty, product_subtotal
+    *
+    * @return (bool) true/false
+    */
+    public function is_print( $post_id=null ){
+        $products = $this->get_products( $post_id );
+        $type = array();
+        foreach ( $products as $product ) {
+            $type[] = get_meta_key( $post_id, 'type' );
+        }
+        if ( in_array( 'print', $type ) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
     * Get $post_id by querying a specific meta key value
     *
     * @param $key (string) The key to check
@@ -253,9 +274,7 @@ Class SellMediaPayments {
     		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='total' ) . '</td>';
     		$html .= '</tr>';
     		$html .= '</table>';
-            $html .= '<p>' . __( 'If you purchased prints, they will be shipped to the address you supplied during checkout. This address is shown below.', 'sell_media' ) . '</p>';
-            $html .= '<p>' . $this->get_buyer_name( $post_id ) . '</p>';
-            $html .= '<p>' . $this->get_buyer_address( $post_id ) . '</p>';
+            do_action( 'sell_media_below_products_formatted_table', $post_id );
     		return $html;
         }
 	}
@@ -359,7 +378,7 @@ Class SellMediaPayments {
                     <th>' . __('Price','sell_media') . '</th>
                     <th>' . __('Quantity','sell_media') . '</th>
                     <th>' . __('License','sell_media') . '</th>
-                    <th>' . __('Download Link','sell_media') . '</th>
+                    <th>' . apply_filters( 'sell_media_download_link_label', 'Download Link' ) . '</th>
                 </tr>
             </thead>';
         $html .= '<tbody>';
@@ -372,7 +391,7 @@ Class SellMediaPayments {
             $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
             $html .= '<td>' . $product['qty'] . '</td>';
             $html .= '<td>' . $product['license']['name'] . '</td>';
-            if ( 'print' == $product['type'] ){
+            if ( ! empty( $product['type'] ) && 'print' == $product['type'] ){
                 $html .= '<td class="title column-title">Sold a print</td>';
             } else {
                 $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';

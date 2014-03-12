@@ -75,11 +75,12 @@ function sell_media_payment_purchase_details( $post ){
         __( 'Total', 'sell_media' )
         );
 
-    // do_action('sell_media_below_payment_contact_details');
+    do_action( 'sell_media_below_payment_contact_details', $post->ID );
 
     echo $payment_obj->payment_table( $post->ID );
 
-    // do_action( 'sell_media_additional_customer_meta', $post );
+    do_action( 'sell_media_additional_customer_meta', $post );
+    
     echo '</div>';
 
 }
@@ -88,7 +89,6 @@ function sell_media_payment_purchase_details( $post ){
 function sell_media_payment_paypal_details( $post ){
     $arguments = get_post_meta( $post->ID, '_paypal_args', true ); ?>
     <p><?php _e('This is the info that was sent to Paypal at time of purchase. For detailed explanation please visit Paypal\'s <a href="https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/#example_req_resp">IPN guide</a>.', 'sell_media'); ?></p>
-    <p><em><?php _e('Note "custom" refers to the post id for the payment in WordPress','sell_media'); ?></em></p>
     <table class="wp-list-table widefat" cellspacing="0">
         <tbody>
             <?php if ( $arguments ) : foreach( $arguments as $k => $v ) : ?>
