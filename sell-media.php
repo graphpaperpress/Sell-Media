@@ -57,11 +57,13 @@ class SellMedia {
         add_action( 'init', array( &$this, 'init' ) );
         add_action( 'admin_init', array( &$this, 'initAdmin' ) );
         add_action( 'admin_menu', array( &$this, 'adminMenus' ), 999 );
+        add_action( 'admin_enqueue_scripts', array( &$this, 'adminScripts' ) );
+        add_action( 'wp_enqueue_scripts', array( &$this, 'publicScripts' ) );
         add_action( 'pre_get_posts', array( &$this, 'collection_password_check' ) );
         add_action( 'wp_footer', array( &$this, 'footer' ) );
         add_action( 'parse_query', array( &$this, 'search_warning_surpression' ) );
 
-        if( !is_admin() ){
+        if ( ! is_admin() ){
             add_filter( 'posts_orderby', array( &$this, 'order_by') );
         }
     }
@@ -182,9 +184,8 @@ class SellMedia {
         $this->registerItem();
         $this->registerPayment();
         $this->registerPriceGroup();
-        $this->enqueueScripts();
 
-        include_once(plugin_dir_path( __FILE__ ).'sell-media-settings.php');
+        include_once( plugin_dir_path( __FILE__ ) . 'sell-media-settings.php' );
     }
 
 
@@ -588,90 +589,74 @@ class SellMedia {
     }
 
     /**
-     * Registers and enqueues stylesheets for the administration panel
-     * and the public facing site.
+     * Admin scripts
      */
-    private function enqueueScripts() {
+    public function adminScripts( $hook ) {
 
-        global $pagenow;
-
-        /**
-         * For easier enqueueing
-         */
-        wp_register_script( 'sell_media-admin-uploader', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin-uploader.js', array( 'jquery', 'media-upload' ) );
-
-        /**
-         * For Sell All Uploads checkbox on media uploader
-         */
-        function sell_media_upload_popup_scripts() {
-            wp_enqueue_script( 'sell_media-admin-uploader' );
-        }
-        add_action( 'admin_head-media-upload-popup', 'sell_media_upload_popup_scripts' );
-
-
-        if ( $pagenow == 'media-new.php' ) {
-            wp_enqueue_script( 'sell_media-admin-uploader' );
-        }
-        if ( is_admin() && ( sell_media_is_sell_media_post_type_page() || $pagenow == 'post.php' || $pagenow == 'post-new.php' ) ) {
+        if ( sell_media_is_sell_media_post_type_page() || 'post.php' == $hook || 'post-new.php' == $hook ) {
             wp_enqueue_style( 'sell_media-admin', plugin_dir_url( __FILE__ ) . 'css/sell_media-admin.css', array( 'thickbox' ), SELL_MEDIA_VERSION );
-
             wp_enqueue_script( 'sell_media-admin-items', plugin_dir_url( __FILE__ ) . 'js/admin-items.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
             if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
                 wp_enqueue_script( 'sell_media-admin', plugin_dir_url( __FILE__ ) . 'js/sell_media-admin.js', array( 'jquery', 'jquery-ui-sortable' ), SELL_MEDIA_VERSION );
                 wp_enqueue_script( 'jquery-ui-slider' );
             }
-        } if ( !is_admin() ) {
-            wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-            wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-
-            $amount = 0;
-            $quantity = 0;
-
-            $settings = sell_media_get_plugin_options();
-
-            wp_localize_script( 'sell_media', 'sell_media', array(
-                'ajaxurl' => admin_url( 'admin-ajax.php' ),
-                'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
-                'site_name' => get_bloginfo( 'name' ),
-                'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
-                'currency_symbol' => $settings->currency,
-                'error' => array(
-                    'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
-                    ),
-                'sandbox' => ( $settings->test_mode == 1 ) ? 'true' : 'false',
-                'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
-                // set this in stripe extension? and make use testing or live key
-                'stripe_public_key' => ( empty( $settings->stripe_test_publishable_key ) ) ? null : $settings->stripe_test_publishable_key,
-                'thanks_page' => get_permalink( $settings->thanks_page ),
-                'listener_url' => site_url( '?sell_media-listener=IPN' ),
-                'added_to_cart' => sprintf(
-                    "%s! <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
-                    __( 'Added', 'sell_media' ),
-                    __( 'Checkout now','sell_media' ) ),
-                'cart_labels' => array(
-                    'name' => __( 'Name', 'sell_media' ),
-                    'size' => __( 'Size', 'sell_media' ),
-                    'license' => __( 'License', 'sell_media' ),
-                    'price' => __( 'Price', 'sell_media' ),
-                    'qty' => __( 'Qty', 'sell_media' ),
-                    'sub_total' => __( 'Sub Total', 'sell_media' )
-                    ),
-                'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
-                'tax' => ( empty( $settings->tax ) ) ? 0 : $settings->tax_rate,
-                'shipping' => apply_filters( 'sell_media_shipping', 0 ) // should paypal force buyers add address
-            ) );
-
-            if ( isset( $settings->style ) && '' != $settings->style )
-                wp_enqueue_style( 'sell-media-style', plugin_dir_url( __FILE__ ) . 'css/sell_media-' . $settings->style . '.css' );
-            else
-                wp_enqueue_style( 'sell-media-style', plugin_dir_url( __FILE__ ) . 'css/sell_media-light.css' );
-
-            wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
-            wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
         }
-        if ( sell_media_is_reports_page() )
+
+        if ( sell_media_is_reports_page() ) {
             wp_enqueue_script( 'google_charts', 'https://www.google.com/jsapi', array( 'jquery' ), SELL_MEDIA_VERSION );
+        }
+    }
+
+    /**
+     * Public scripts
+     */
+    public function publicScripts( $hook ) {
+
+        wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+        wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+        wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
+        wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
+
+        if ( isset( $settings->style ) && '' != $settings->style ) {
+            wp_enqueue_style( 'sell-media-style', plugin_dir_url( __FILE__ ) . 'css/sell_media-' . $settings->style . '.css' );
+        } else {
+            wp_enqueue_style( 'sell-media-style', plugin_dir_url( __FILE__ ) . 'css/sell_media-light.css' );
+        }
+
+        $settings = sell_media_get_plugin_options();
+
+        wp_localize_script( 'sell_media', 'sell_media', array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'pluginurl' => plugin_dir_url( dirname( __FILE__ ) ),
+            'site_name' => get_bloginfo( 'name' ),
+            'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
+            'currency_symbol' => $settings->currency,
+            'error' => array(
+                'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
+                ),
+            'sandbox' => ( $settings->test_mode == 1 ) ? 'true' : 'false',
+            'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
+            // set this in stripe extension? and make use testing or live key
+            'stripe_public_key' => ( empty( $settings->stripe_test_publishable_key ) ) ? null : $settings->stripe_test_publishable_key,
+            'thanks_page' => get_permalink( $settings->thanks_page ),
+            'listener_url' => site_url( '?sell_media-listener=IPN' ),
+            'added_to_cart' => sprintf(
+                "%s! <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
+                __( 'Added', 'sell_media' ),
+                __( 'Checkout now','sell_media' ) ),
+            'cart_labels' => array(
+                'name' => __( 'Name', 'sell_media' ),
+                'size' => __( 'Size', 'sell_media' ),
+                'license' => __( 'License', 'sell_media' ),
+                'price' => __( 'Price', 'sell_media' ),
+                'qty' => __( 'Qty', 'sell_media' ),
+                'sub_total' => __( 'Sub Total', 'sell_media' )
+                ),
+            'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
+            'tax' => ( empty( $settings->tax ) ) ? 0 : $settings->tax_rate,
+            'shipping' => apply_filters( 'sell_media_shipping', 0 ) // should paypal force buyers add address
+        ) );
     }
 
 
