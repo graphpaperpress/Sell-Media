@@ -489,7 +489,7 @@ Class SellMediaPayments {
         $message .= admin_url( 'post.php?post=' . $payment_id . '&action=edit' );
 
         // Send the email to admin
-        $r = wp_mail( $email, apply_filters( 'sell_media_email_admin_receipt_subject', 'New sale notification' ), $message['body'] );
+        $r = wp_mail( $email, apply_filters( 'sell_media_email_admin_receipt_subject', 'New sale notification' ), $message );
 
         return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
     }
