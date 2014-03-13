@@ -230,14 +230,12 @@ jQuery(document).ready(function($){
                 cart: data
             },
             success: function( msg ){
-                if ( msg != undefined && msg.post != undefined ){
-                    $.each( msg.cart, function( k, v ){
-                        data[k] = v;
-                    });
-                }
+                $.each( msg.cart, function( k, v ){
+                    data[k] = v;
+                });
             },
             error: function () {
-              alert('There was an error loading the cart data. Please contact the site owner.');
+                alert( sell_media.cart_error );
             }
         });
     });

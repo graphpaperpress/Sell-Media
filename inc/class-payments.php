@@ -4,8 +4,8 @@ Class SellMediaPayments {
 
 
     public function __construct(){
-        add_action('wp_ajax_nopriv_sell_media_simple_cart', array( &$this, 'sell_media_simple_cart') );
-        add_action('wp_ajax_sell_media_simple_cart', array( &$this, 'sell_media_simple_cart') );
+        add_action('wp_ajax_nopriv_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback') );
+        add_action('wp_ajax_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback') );
     }
 
 
@@ -219,7 +219,7 @@ Class SellMediaPayments {
 
         $total = ( float ) 0;
         $payments = get_transient( 'sell_media_total_revenue_' . $post_status );
-        
+
         if ( false === $payments || '' === $payments ) {
 
             $args = array(
@@ -233,7 +233,7 @@ Class SellMediaPayments {
         }
 
         $payments = get_posts( $args );
-        
+
         if ( $payments ) foreach ( $payments as $payment ) {
             $subtotal = $this->get_meta_key( $payment->ID, 'total' );
             $total += $subtotal;
@@ -251,7 +251,7 @@ Class SellMediaPayments {
      * @return html
      */
     public function get_payments_by_date( $day = null, $month_num, $year ) {
-        
+
         $args = array(
             'post_type' => 'sell_media_payment',
             'posts_per_page' => -1,
@@ -595,8 +595,6 @@ Class SellMediaPayments {
             'business'      => $settings->paypal_email,
             'return'        => get_permalink( $settings->thanks_page ),
             'notify_url'    => site_url( '?sell_media-listener=IPN' )
-            // 'tax_cart' => 0.00,
-            // 'handling_cart' => 0.00
         );
 
         $cart = $_POST['cart'];
@@ -606,7 +604,9 @@ Class SellMediaPayments {
 
         $p = new SellMediaProducts;
         $verified = array();
-        for( $i=0; $i <= $cart_count; $i++ ) {
+        $sub_total = 0;
+        $shipping_flag = false;
+        for( $i=1; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
             // $qty = $cart[ 'quantity_' . $i ];
@@ -615,24 +615,54 @@ Class SellMediaPayments {
             $license_id = $cart[ 'os5_' . $i ];
 
             // set price taxonomy if product is download or reprint
-            if ( 'download' == $type )
+            if ( 'download' == $type ){
                 $taxonomy = 'price-group';
-            else
+            } else {
                 $taxonomy = 'reprints-price-group';
+                $shipping_flag = true;
+            }
 
             // download with assigned license
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
-                $cart['amount_' . $i ] = $p->markup_amount(
+                $amount = $p->markup_amount(
                     $product_id,
                     $price_id,
                     $license_id
                     ) + $p->get_price( $product_id, $price_id );
             } else {
                 // download or print without assigned license
-                $cart['amount_' . $i ] = $p->get_price( $product_id, $price_id, false, $taxonomy );
+                $amount = $p->get_price( $product_id, $price_id, false, $taxonomy );
             }
-
+            $cart[ 'amount_' . $i ] = $amount;
+            $sub_total += $amount;
         }
+
+
+        // Add shipping
+        if ( $shipping_flag ){
+            switch( $settings->reprints_shipping ){
+                case 'shippingFlatRate':
+                    $shipping_amount = $settings->reprints_shipping_flat_rate;
+                    break;
+                case 'shippingQuantityRate':
+                    $shipping_amount = $settings->reprints_shipping_quantity_rate;
+                    break;
+                case 'shippingTotalRate':
+                    $shipping_amount = $settings->reprints_shipping_total_rate;
+                    break;
+                default:
+                    $shipping_amount = 0;
+                    break;
+            }
+        } else {
+            $shipping_amount = 0;
+        }
+        $args['handling_cart'] = $shipping_amount;
+
+
+        // Get our tax rate
+        $tax_amount = ( $settings->tax_rate * $sub_total );
+        $args['tax_cart'] = $tax_amount;
 
         $verified_cart = array_merge( $cart, $verified, $args );
 
