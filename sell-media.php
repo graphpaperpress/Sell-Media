@@ -664,6 +664,10 @@ class SellMedia {
 
         if ( is_admin() ) return $query;
         if ( ! $query->is_main_query() ) return $query;
+        
+        // JetPack Infinite Scroll fix
+        if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'infinite-scroll' ) )
+            return $query;
 
         if ( ! empty( $_GET['sell_media_advanced_search_flag'] ) ) return;
 
