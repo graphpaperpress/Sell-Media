@@ -2,6 +2,32 @@
 
 $version = get_option( 'sell_media_version' );
 
+
+/**
+ * Copy postmeta for existing PayPal and Stripe Payments into new _sell_media_payment_meta
+ */
+if ( $version <= '1.8' ){
+
+    $p = new SellMediaPayments;
+    $s = new SellMediaStripe;
+
+    $args = array(
+        'post_type' => 'sell_media_payments',
+        'posts_per_page' => -1,
+        'post_status' => 'any'
+    );
+
+    $payments = get_posts( $args );
+
+    if ( $payments ) foreach ( $payments as $payment ) {
+
+        $p->paypal_copy_args( $payment->ID );
+        $s->stripe_copy_args( $payment->ID );
+
+    }
+}
+
+
 /**
  * This script pulls the current settings for Sell Media and extensions, then grooms them as needed
  * making them ready for the updated settings API.

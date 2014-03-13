@@ -871,7 +871,7 @@ class SellMedia {
 
     public function footer(){
         $settings = sell_media_get_plugin_options();
-        if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
+        if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) : ?>
         <div id="terms-and-conditions-dialog" style="display: none;">
             <span class="close">&times;</span>
             <?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?>
