@@ -46,7 +46,6 @@ Class SellMediaPayments {
 	* Loop over products in payment meta
 	*
 	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	* @param $key = product_id, product_name, product_price, product_license, product_qty, product_subtotal
 	*
 	* @return Array
 	*/
@@ -58,6 +57,7 @@ Class SellMediaPayments {
 			return false;
 		}
 	}
+
 
     /**
     * Loop over products in payment meta and see if products contain a specific types
@@ -358,6 +358,9 @@ Class SellMediaPayments {
      */
     public function paypal_copy_args( $post_id=null ){
 
+        $paypal_args = maybe_unserialize( get_post_meta( $post_id, '_paypal_args', true ) );
+        $tmp = array();
+
         $keys = array(
             'email' => 'payer_email',
             'first_name' => 'first_name',
@@ -375,9 +378,7 @@ Class SellMediaPayments {
             'transaction_id' => 'txn_id',
             'gateway' => 'PayPal'
         );
-
-        $paypal_args = maybe_unserialize( get_post_meta( $post_id, '_paypal_args', true ) );
-        $tmp = array();
+    
 
         foreach( $keys as $k => $v ){
 
@@ -451,36 +452,60 @@ Class SellMediaPayments {
             </thead>';
         $html .= '<tbody>';
 
-        foreach( $this->get_products( $post_id ) as $product ){
-            $html .= '<tr class="" valign="top">';
-            $html .= '<td class="media-icon">';
-            $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( get_post_meta( $product['id'], '_sell_media_attachment_id', true ), 'medium', false) . '</a></td>';
-            if ( empty( $product['size']['name'] ) ) {
-                $size_name = null;
-            } else {
-                $size_name = $product['size']['name'];
+        $products = $this->get_products( $post_id );
+
+        if ( $products ) { 
+            foreach ( $this->get_products( $post_id ) as $product ){
+                $html .= '<tr class="" valign="top">';
+                $html .= '<td class="media-icon">';
+                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( get_post_meta( $product['id'], '_sell_media_attachment_id', true ), 'medium', false) . '</a></td>';
+                if ( empty( $product['size']['name'] ) ) {
+                    $size_name = null;
+                } else {
+                    $size_name = $product['size']['name'];
+                }
+                $html .= '<td>' . $size_name . '</td>';
+                if ( empty( $product['size']['amount'] ) ){
+                    $size_amount = null;
+                } else {
+                    $size_amount = $product['size']['amount'];
+                }
+                $html .= '<td>' . sell_media_get_currency_symbol() . $size_amount . '</td>';
+                $html .= '<td>' . $product['qty'] . '</td>';
+                if ( empty( $product['license']['name'] ) ){
+                    $license_name = null;
+                } else {
+                    $license_name = $product['license']['name'];
+                }
+                $html .= '<td>' . $license_name . '</td>';
+                if ( ! empty( $product['type'] ) && 'print' == $product['type'] ){
+                    $html .= '<td class="title column-title">Sold a print</td>';
+                } else {
+                    $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+                }
+                $html .= '</tr>';
             }
-            $html .= '<td>' . $size_name . '</td>';
-            if ( empty( $product['size']['amount'] ) ){
-                $size_amount = null;
-            } else {
-                $size_amount = $product['size']['amount'];
-            }
-            $html .= '<td>' . sell_media_get_currency_symbol() . $size_amount . '</td>';
-            $html .= '<td>' . $product['qty'] . '</td>';
-            if ( empty( $product['license']['name'] ) ){
-                $license_name = null;
-            } else {
-                $license_name = $product['license']['name'];
-            }
-            $html .= '<td>' . $license_name . '</td>';
-            if ( ! empty( $product['type'] ) && 'print' == $product['type'] ){
-                $html .= '<td class="title column-title">Sold a print</td>';
-            } else {
+
+        // get legacy (pre 1.8) purchase data
+        } else {
+
+            $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta' );
+            $products_legacy = maybe_unserialize( $payment_meta['products'] );
+
+            if ( $products_legacy ) foreach ( $products as $product ) {
+
+                $html .= '<tr class="" valign="top">';
+                $html .= '<td class="media-icon">';
+                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( get_post_meta( $product['id'], '_sell_media_attachment_id', true ), 'medium', false) . '</a></td>';
+                $html .= '<td>' . $product['price']['name'] . '</td>';
+                $html .= '<td>' . sell_media_get_currency_symbol() . $product['price']['amount'] . '</td>';
+                $html .= '<td>' . $product['qty'] . '</td>';
+                $html .= '<td>' . $product['license']['name'] . '</td>';
                 $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
-            }
-            $html .= '</tr>';
-        }
+                $html .= '</tr>';
+            } // foreach
+        } // if legacy
+        
         $html .= '</tbody>';
         $html .= '</table>';
 

@@ -24,12 +24,20 @@ function sell_media_is_payment_complete($payment_id) {
  * @return null
  */
 function sell_media_add_payment_meta_boxes(){
+
     add_meta_box(
         'meta_field',
         __( 'Purchase Details', 'sell_media' ),
         'sell_media_payment_purchase_details',
         'sell_media_payment'
     );
+
+    // add_meta_box(
+    //     'meta_field_additional',
+    //     __( 'Additional Purchase Details', 'sell_media' ),
+    //     'sell_media_payment_additional_purchase_details',
+    //     'sell_media_payment'
+    // );
 
     $screen = get_current_screen();
 
@@ -87,7 +95,55 @@ function sell_media_payment_purchase_details( $post ){
 
 }
 
+/**
+ * Our callback for the additional payment meta fields, this prints out
+ * all of the _sell_media_payment_meta info
+ *
+ * @access public
+ * @since 0.1
+ * @return html
+ */
+function sell_media_payment_additional_purchase_details( $post ){
 
+    $p = new SellMediaPayments;
+    $args = $p->get_meta( $post->ID );
+    echo '<pre style="overflow:hidden">';
+    print_r( $args );
+    echo '</pre>'; ?>
+    <p><?php _e( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
+    <table class="wp-list-table widefat" cellspacing="0">
+        <tbody>
+            <?php if ( $args ) : foreach( $args as $k => $v ) : ?>
+                <?php if ( is_array( $k ) ) : ?>
+                    <?php foreach( $k['products'] as $product ) : ?>
+                        <tr>
+                            <td><?php _e( 'Product', 'sell_media' ); ?></td><td><?php echo $product['name']; ?>, <?php echo $product['type']; ?>, <?php echo $product['size']['name']; ?>, <?php echo $product['license']['name']; ?>, <?php _e( 'Qty:', 'sell_media' ); ?> <?php echo $product['quantity']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td><?php echo $k; ?></td><td><?php echo $v; ?></td>
+                    </tr>
+                <?php endif; ?>
+            <?php endforeach; else : ?>
+                <tr>
+                    <td><?php _e( 'This payment has no additional payment details', 'sell_media' ); ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <?php
+}
+
+
+/**
+ * Our callback for the additional payment meta fields, this prints out
+ * all of the _paypal_args or _stripe_args metadata info
+ *
+ * @access public
+ * @since 0.1
+ * @return html
+ */
 function sell_media_payment_gateway_details( $post ){
 
     $paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
