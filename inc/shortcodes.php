@@ -26,7 +26,7 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
         $post_id = $p->get_id_from_tx( $transaction_id=$tx );
         $html = null;
         $html = $p->get_payment_products_formatted( $post_id );
-        $html .= '<script>simpleCart.empty();</script>';
+        $html .= '<script>sellMediaCart.empty();</script>';
         return '<p class="sell-media-thanks-message">' . $html . '</p>';
         do_action( 'sell_media_thanks_hook_below' );
     } else {
@@ -148,26 +148,26 @@ function sell_media_checkout_shortcode(){
     ob_start(); ?>
     <?php do_action( 'sell_media_checkout_before_cart' ); ?>
     <div id="sell-media-checkout-cart" style="display:none;">
-        <div class="simpleCart_items"></div>
+        <div class="sellMediaCart_items"></div>
         <div class="sell-media-totals group">
             <div class="subtotal">
-                <span class="sell-media-itemize"><?php _e( 'Subtotal', 'sell_media' ); ?>:</span> <span class="simpleCart_total"></span>
+                <span class="sell-media-itemize"><?php _e( 'Subtotal', 'sell_media' ); ?>:</span> <span class="sellMediaCart_total"></span>
             </div>
             <div class="tax">
-                <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>: <?php if ( ! empty( $settings->tax ) ) echo '(' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span> <span class="simpleCart_tax"></span>
+                <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>: <?php if ( ! empty( $settings->tax ) ) echo '(' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span> <span class="sellMediaCart_tax"></span>
             </div>
             <div class="shipping">
-                <span class="sell-media-itemize"><?php _e( 'Shipping', 'sell_media' ); ?>:</span> <span class="simpleCart_shipping"></span>
+                <span class="sell-media-itemize"><?php _e( 'Shipping', 'sell_media' ); ?>:</span> <span class="sellMediaCart_shipping"></span>
             </div>
             <div class="total sell-media-bold">
-                <span class="sell-media-itemize"><?php _e( 'Total', 'sell_media' ); ?>:</span> <span class="simpleCart_grandTotal"></span>
+                <span class="sell-media-itemize"><?php _e( 'Total', 'sell_media' ); ?>:</span> <span class="sellMediaCart_grandTotal"></span>
             </div>
         </div>
         <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
         <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
         <div class="sell-media-checkout-button group">
             <?php do_action( 'sell_media_above_checkout_button' ); ?>
-            <p><a href="javascript:void(0)" class="simpleCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
+            <p><a href="javascript:void(0)" class="sellMediaCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
             <p id="sell-media-continue-shopping" class="text-center"><?php echo __( 'or', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link( 'sell_media_item' ); ?>"><?php echo __( 'continue shopping', 'sell_media' ); ?> &raquo;</a></p>
             <?php
             $settings = sell_media_get_plugin_options();

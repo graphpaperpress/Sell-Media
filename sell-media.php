@@ -614,7 +614,7 @@ class SellMedia {
     public function publicScripts( $hook ) {
 
         wp_enqueue_script( 'sell_media', plugin_dir_url( __FILE__ ) . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-        wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+        wp_enqueue_script( 'sellMediaCart', plugin_dir_url( __FILE__ ) . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
         wp_enqueue_style( 'sell_media', plugin_dir_url( __FILE__ ) . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
         wp_enqueue_style( 'sell_media-widgets-style', plugin_dir_url( __FILE__ ) . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
 

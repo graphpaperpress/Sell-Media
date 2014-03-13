@@ -9,7 +9,6 @@
  * fall back on the default price set in the
  * plugin settings
  */
-wp_enqueue_script( 'simpleCart', plugin_dir_url( __FILE__ ) . 'js/simpleCart.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 $settings = sell_media_get_plugin_options();
 $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
 $image = sell_media_item_image_src( $_POST['product_id'] );
@@ -20,11 +19,11 @@ if ( $licenses ) {
 	$term_id = null;
 }
 ?>
-<div class="main-container simpleCart_shelfItem">
+<div class="main-container sellMediaCart_shelfItem">
     <?php
         /*
          * Set required cart items to be passed to gateway
-         * Any element tagged with item_* inside .simpleCart_shelfItem will be passed as an option/value key pair to PayPal
+         * Any element tagged with item_* inside .sellMediaCart_shelfItem will be passed as an option/value key pair to PayPal
          * If you want to show these items on the checkout page, edit cartColumns[] in sell_media.js
          * We use input type="text" because using type="hidden" is unreliable
          * The order in which these appear control the option names passed to PayPal

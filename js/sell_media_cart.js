@@ -1,16 +1,3 @@
-/*~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-	Copyright (c) 2012 Brett Wejrowski
-
-	wojodesign.com
-	simplecartjs.org
-	http://github.com/wojodesign/simplecart-js
-
-	VERSION 3.0.5
-
-	Dual licensed under the MIT or GPL licenses.
-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~*/
-/*jslint browser: true, unparam: true, white: true, nomen: true, regexp: true, maxerr: 50, indent: 4 */
-
 (function (window, document) {
 	/*global HTMLElement */
 
@@ -31,7 +18,7 @@
 
 
 
-		generateSimpleCart = function (space) {
+		generatesellMediaCart = function (space) {
 
 			// stealing this from selectivizr
 			var selectorEngines = {
@@ -45,7 +32,7 @@
 				item_id					= 0,
 				item_id_namespace		= "SCI-",
 				sc_items				= {},
-				namespace				= space || "simpleCart",
+				namespace				= space || "sellMediaCart",
 				selectorFunctions		= {},
 				eventFunctions			= {},
 				baseEvents				= {},
@@ -118,16 +105,16 @@
 				},
 
 
-				// main simpleCart object, function call is used for setting options
-				simpleCart = function (options) {
-					// shortcut for simpleCart.ready
+				// main sellMediaCart object, function call is used for setting options
+				sellMediaCart = function (options) {
+					// shortcut for sellMediaCart.ready
 					if (isFunction(options)) {
-						return simpleCart.ready(options);
+						return sellMediaCart.ready(options);
 					}
 
 					// set options
 					if (isObject(options)) {
-						return simpleCart.extend(settings, options);
+						return sellMediaCart.extend(settings, options);
 					}
 				},
 
@@ -138,12 +125,12 @@
 				cartColumnViews;
 
 			// function for extending objects
-			simpleCart.extend = function (target, opts) {
+			sellMediaCart.extend = function (target, opts) {
 				var next;
 
 				if (isUndefined(opts)) {
 					opts = target;
-					target = simpleCart;
+					target = sellMediaCart;
 				}
 
 				for (next in opts) {
@@ -155,23 +142,23 @@
 			};
 
 			// create copy function
-			simpleCart.extend({
+			sellMediaCart.extend({
 				copy: function (n) {
-					var cp = generateSimpleCart(n);
+					var cp = generatesellMediaCart(n);
 					cp.init();
 					return cp;
 				}
 			});
 
 			// add in the core functionality
-			simpleCart.extend({
+			sellMediaCart.extend({
 
 				isReady: false,
 
 				// this is where the magic happens, the add function
 				add: function (values, opt_quiet) {
 					var info		= values || {},
-						newItem		= new simpleCart.Item(info),
+						newItem		= new sellMediaCart.Item(info),
 						addItem 	= true,
 						// optionally supress event triggers
 						quiet 		= opt_quiet === true ? opt_quiet : false,
@@ -179,7 +166,7 @@
 
 					// trigger before add event
 					if (!quiet) {
-					  	addItem = simpleCart.trigger('beforeAdd', [newItem]);
+					  	addItem = sellMediaCart.trigger('beforeAdd', [newItem]);
 					
 						if (addItem === false) {
 							return false;
@@ -187,7 +174,7 @@
 					}
 					
 					// if the new item already exists, increment the value
-					oldItem = simpleCart.has(newItem);
+					oldItem = sellMediaCart.has(newItem);
 					if (oldItem) {
 						oldItem.increment(newItem.quantity());
 						newItem = oldItem;
@@ -198,11 +185,11 @@
 					}
 
 					// update the cart
-					simpleCart.update();
+					sellMediaCart.update();
 
 					if (!quiet) {
 						// trigger after add event
-						simpleCart.trigger('afterAdd', [newItem, isUndefined(oldItem)]);
+						sellMediaCart.trigger('afterAdd', [newItem, isUndefined(oldItem)]);
 					}
 
 					// return a reference to the added item
@@ -230,7 +217,7 @@
 
 					for (next in items) {
 						if (Object.prototype.hasOwnProperty.call(items, next)) {
-							result = cb.call(simpleCart, items[next], x, next);
+							result = cb.call(sellMediaCart, items[next], x, next);
 							if (result === false) {
 								return;
 							}
@@ -248,9 +235,9 @@
 					}
 					// search through items with the given criteria
 					if (isObject(id)) {
-						simpleCart.each(function (item) {
+						sellMediaCart.each(function (item) {
 							var match = true;
-							simpleCart.each(id, function (val, x, attr) {
+							sellMediaCart.each(id, function (val, x, attr) {
 
 								if (isString(val)) {
 									// less than or equal to
@@ -307,7 +294,7 @@
 
 						// use a new array so we don't give a reference to the
 						// cart's item array
-						simpleCart.each(function (item) {
+						sellMediaCart.each(function (item) {
 							items.push(item);
 						});
 						return items;
@@ -326,7 +313,7 @@
 				has: function (item) {
 					var match = false;
 
-					simpleCart.each(function (testItem) {
+					sellMediaCart.each(function (testItem) {
 						if (testItem.equals(item)) {
 							match = testItem;
 						}
@@ -338,7 +325,7 @@
 				empty: function () {
 					// remove each item individually so we see the remove events
 					var newItems = {};
-					simpleCart.each(function (item) {
+					sellMediaCart.each(function (item) {
 						// send a param of true to make sure it doesn't
 						// update after every removal
 						// keep the item if the function returns false,
@@ -349,14 +336,14 @@
 						}
 					});
 					sc_items = newItems;
-					simpleCart.update();
+					sellMediaCart.update();
 				},
 
 
 				// functions for accessing cart info
 				quantity: function () {
 					var quantity = 0;
-					simpleCart.each(function (item) {
+					sellMediaCart.each(function (item) {
 						quantity += item.quantity();
 					});
 					return quantity;
@@ -364,36 +351,36 @@
 
 				total: function () {
 					var total = 0;
-					simpleCart.each(function (item) {
+					sellMediaCart.each(function (item) {
 						total += item.total();
 					});
 					return total;
 				},
 
 				grandTotal: function () {
-					return simpleCart.total() + simpleCart.tax() + simpleCart.shipping();
+					return sellMediaCart.total() + sellMediaCart.tax() + sellMediaCart.shipping();
 				},
 
 
 				// updating functions
 				update: function () {
-					simpleCart.save();
-					simpleCart.trigger("update");
+					sellMediaCart.save();
+					sellMediaCart.trigger("update");
 				},
 
 				init: function () {
-					simpleCart.load();
-					simpleCart.update();
-					simpleCart.ready();
+					sellMediaCart.load();
+					sellMediaCart.update();
+					sellMediaCart.ready();
 				},
 
 				// view management
 				$: function (selector) {
-					return new simpleCart.ELEMENT(selector);
+					return new sellMediaCart.ELEMENT(selector);
 				},
 
 				$create: function (tag) {
-					return simpleCart.$(document.createElement(tag));
+					return sellMediaCart.$(document.createElement(tag));
 				},
 
 				setupViewTool: function () {
@@ -411,7 +398,7 @@
 								// set the selector engine and extend the prototype of our
 								// element wrapper class
 								$engine = context;
-								simpleCart.extend(simpleCart.ELEMENT._, selectorFunctions[engine]);
+								sellMediaCart.extend(sellMediaCart.ELEMENT._, selectorFunctions[engine]);
 								return;
 							}
 						}
@@ -421,7 +408,7 @@
 				// return a list of id's in the cart
 				ids: function () {
 					var ids = [];
-					simpleCart.each(function (item) {
+					sellMediaCart.each(function (item) {
 						ids.push(item.id());
 					});
 					return ids;
@@ -431,18 +418,18 @@
 
 				// storage
 				save: function () {
-					simpleCart.trigger('beforeSave');
+					sellMediaCart.trigger('beforeSave');
 
 					var items = {};
 
 					// save all the items
-					simpleCart.each(function (item) {
-						items[item.id()] = simpleCart.extend(item.fields(), item.options());
+					sellMediaCart.each(function (item) {
+						items[item.id()] = sellMediaCart.extend(item.fields(), item.options());
 					});
 
 					localStorage.setItem(namespace + "_items", JSON.stringify(items));
 
-					simpleCart.trigger('afterSave');
+					sellMediaCart.trigger('afterSave');
 				},
 
 				load: function () {
@@ -461,15 +448,15 @@
 					// have a playing card pluckin the spokes now...
 					// soundin like a harley.
 					try {
-						simpleCart.each(JSON.parse(items), function (item) {
-							simpleCart.add(item, true);
+						sellMediaCart.each(JSON.parse(items), function (item) {
+							sellMediaCart.add(item, true);
 						});
 					} catch (e){
-						simpleCart.error( "Error Loading data: " + e );
+						sellMediaCart.error( "Error Loading data: " + e );
 					}
 
 
-					simpleCart.trigger('load');
+					sellMediaCart.trigger('load');
 				},
 
 				// ready function used as a shortcut for bind('ready',fn)
@@ -477,18 +464,18 @@
 
 					if (isFunction(fn)) {
 						// call function if already ready already
-						if (simpleCart.isReady) {
-							fn.call(simpleCart);
+						if (sellMediaCart.isReady) {
+							fn.call(sellMediaCart);
 
 						// bind if not ready
 						} else {
-							simpleCart.bind('ready', fn);
+							sellMediaCart.bind('ready', fn);
 						}
 
 					// trigger ready event
-					} else if (isUndefined(fn) && !simpleCart.isReady) {
-						simpleCart.trigger('ready');
-						simpleCart.isReady = true;
+					} else if (isUndefined(fn) && !sellMediaCart.isReady) {
+						sellMediaCart.trigger('ready');
+						sellMediaCart.isReady = true;
 					}
 
 				},
@@ -501,8 +488,8 @@
 					} else if (isObject(message) && isString(message.message)) {
 						msg = message.message;
 					}
-					try { console.log("simpleCart(js) Error: " + msg); } catch (e) {}
-					simpleCart.trigger('error', [message]);
+					try { console.log("sellMediaCart(js) Error: " + msg); } catch (e) {}
+					sellMediaCart.trigger('error', [message]);
 				}
 			});
 
@@ -510,14 +497,14 @@
 			/*******************************************************************
 			 *	TAX AND SHIPPING
 			 *******************************************************************/
-			simpleCart.extend({
+			sellMediaCart.extend({
 
 				// TODO: tax and shipping
 				tax: function () {
-					var totalToTax = settings.taxShipping ? simpleCart.total() + simpleCart.shipping() : simpleCart.total(),
-						cost = simpleCart.taxRate() * totalToTax;
+					var totalToTax = settings.taxShipping ? sellMediaCart.total() + sellMediaCart.shipping() : sellMediaCart.total(),
+						cost = sellMediaCart.taxRate() * totalToTax;
 					
-					simpleCart.each(function (item) {
+					sellMediaCart.each(function (item) {
 						if (item.get('tax')) {
 							cost += item.get('tax');
 						} else if (item.get('taxRate')) {
@@ -535,21 +522,21 @@
 
 					// shortcut to extend options with custom shipping
 					if (isFunction(opt_custom_function)) {
-						simpleCart({
+						sellMediaCart({
 							shippingCustom: opt_custom_function
 						});
 						return;
 					}
 
-					var cost = settings.shippingQuantityRate * simpleCart.quantity() +
-							settings.shippingTotalRate * simpleCart.total() +
+					var cost = settings.shippingQuantityRate * sellMediaCart.quantity() +
+							settings.shippingTotalRate * sellMediaCart.total() +
 							settings.shippingFlatRate;
 
 					if (isFunction(settings.shippingCustom)) {
-						cost += settings.shippingCustom.call(simpleCart);
+						cost += settings.shippingCustom.call(sellMediaCart);
 					}
 
-					simpleCart.each(function (item) {
+					sellMediaCart.each(function (item) {
 						cost += parseFloat(item.get('shipping') || 0);
 					});
 					return parseFloat(cost);
@@ -568,7 +555,7 @@
 				},
 
 				currency: function (item, column) {
-					return simpleCart.toCurrency(item.get(column.attr) || 0);
+					return sellMediaCart.toCurrency(item.get(column.attr) || 0);
 				},
 
 				link: function (item, column) {
@@ -599,7 +586,7 @@
 			// cart column wrapper class and functions
 			function cartColumn(opts) {
 				var options = opts || {};
-				return simpleCart.extend({
+				return sellMediaCart.extend({
 					attr			: "",
 					label			: "",
 					view			: "attr",
@@ -612,11 +599,11 @@
 			function cartCellView(item, column) {
 				var viewFunc = isFunction(column.view) ? column.view : isString(column.view) && isFunction(cartColumnViews[column.view]) ? cartColumnViews[column.view] : cartColumnViews.attr;
 
-				return viewFunc.call(simpleCart, item, column);
+				return viewFunc.call(sellMediaCart, item, column);
 			}
 
 
-			simpleCart.extend({
+			sellMediaCart.extend({
 
 				// write out cart
 				writeCart: function (selector) {
@@ -626,10 +613,10 @@
 						TH = isTable ? 'th' : 'div',
 						TD = isTable ? 'td' : 'div',
 						THEAD = isTable ? 'thead' : 'div',
-						cart_container = simpleCart.$create(TABLE),
-						thead_container = simpleCart.$create(THEAD),
-						header_container = simpleCart.$create(TR).addClass('headerRow'),
-						container = simpleCart.$(selector),
+						cart_container = sellMediaCart.$create(TABLE),
+						thead_container = sellMediaCart.$create(THEAD),
+						header_container = sellMediaCart.$create(TR).addClass('headerRow'),
+						container = sellMediaCart.$(selector),
 						column,
 						klass,
 						label,
@@ -651,13 +638,13 @@
 
 						// append the header cell
 						header_container.append(
-							simpleCart.$create(TH).addClass(klass).html(label)
+							sellMediaCart.$create(TH).addClass(klass).html(label)
 						);
 					}
 
 					// cycle through the items
-					simpleCart.each(function (item, y) {
-						simpleCart.createCartRow(item, y, TR, TD, cart_container);
+					sellMediaCart.each(function (item, y) {
+						sellMediaCart.createCartRow(item, y, TR, TD, cart_container);
 					});
 
 					return cart_container;
@@ -665,7 +652,7 @@
 
 				// generate a cart row from an item
 				createCartRow: function (item, y, TR, TD, container) {
-					var row = simpleCart.$create(TR)
+					var row = sellMediaCart.$create(TR)
 										.addClass('itemRow row-' + y + " " + (y % 2 ? "even" : "odd"))
 										.attr('id', "cartItem_" + item.id()),
 						j,
@@ -682,7 +669,7 @@
 						column	= cartColumn(settings.cartColumns[j]);
 						klass	= "item-" + (column.attr || (isString(column.view) ? column.view : column.label || column.text || "cell")) + " " + column.className;
 						content = cartCellView(item, column);
-						cell	= simpleCart.$create(TD).addClass(klass).html(content);
+						cell	= sellMediaCart.$create(TD).addClass(klass).html(content);
 
 						row.append(cell);
 					}
@@ -695,7 +682,7 @@
 			 *	CART ITEM CLASS MANAGEMENT
 			 *******************************************************************/
 
-			simpleCart.Item = function (info) {
+			sellMediaCart.Item = function (info) {
 
 				// we use the data object to track values for the item
 				var _data = {},
@@ -703,7 +690,7 @@
 
 				// cycle through given attributes and set them to the data object
 				if (isObject(info)) {
-					simpleCart.extend(_data, info);
+					sellMediaCart.extend(_data, info);
 				}
 
 				// set the item id
@@ -719,7 +706,7 @@
 					// check to make sure price is valid
 					if (isString(_data.price)) {
 					   // trying to remove all chars that aren't numbers or '.'
-						_data.price = parseFloat(_data.price.replace(simpleCart.currency().decimal, ".").replace(/[^0-9\.]+/ig, ""));
+						_data.price = parseFloat(_data.price.replace(sellMediaCart.currency().decimal, ".").replace(/[^0-9\.]+/ig, ""));
 
 					}
 					if (isNaN(_data.price)) {
@@ -731,7 +718,7 @@
 
 					// check to make sure quantity is valid
 					if (isString(_data.quantity)) {
-						_data.quantity = parseInt(_data.quantity.replace(simpleCart.currency().delimiter, ""), 10);
+						_data.quantity = parseInt(_data.quantity.replace(sellMediaCart.currency().delimiter, ""), 10);
 					}
 					if (isNaN(_data.quantity)) {
 						_data.quantity = 1;
@@ -782,9 +769,9 @@
 				};
 				me.options = function () {
 					var data = {};
-					simpleCart.each(_data,function (val, x, label) {
+					sellMediaCart.each(_data,function (val, x, label) {
 						var add = true;
-						simpleCart.each(me.reservedFields(), function (field) {
+						sellMediaCart.each(me.reservedFields(), function (field) {
 							if (field === label) {
 								add = false;
 							}
@@ -802,7 +789,7 @@
 				checkQuantityAndPrice();
 			};
 
-			simpleCart.Item._ = simpleCart.Item.prototype = {
+			sellMediaCart.Item._ = sellMediaCart.Item.prototype = {
 
 				// editing the item quantity
 				increment: function (amount) {
@@ -822,13 +809,13 @@
 					return this.increment(-parseInt(diff, 10));
 				},
 				remove: function (skipUpdate) {
-					var removeItemBool = simpleCart.trigger("beforeRemove", [sc_items[this.id()]]);
+					var removeItemBool = sellMediaCart.trigger("beforeRemove", [sc_items[this.id()]]);
 					if (removeItemBool === false ) {
 						return false;
 					}
 					delete sc_items[this.id()];
 					if (!skipUpdate) { 
-						simpleCart.update();
+						sellMediaCart.update();
 					}
 					return null;
 				},
@@ -842,7 +829,7 @@
 				fields: function () {
 					var data = {},
 						me = this;
-					simpleCart.each(me.reservedFields(), function (field) {
+					sellMediaCart.each(me.reservedFields(), function (field) {
 						if (me.get(field)) {
 							data[field] = me.get(field);
 						}
@@ -862,8 +849,8 @@
 				},
 				price: function (val) {
 					return isUndefined(val) ?
-							parseFloat((this.get("price",true).toString()).replace(simpleCart.currency().symbol,"").replace(simpleCart.currency().delimiter,"") || 1) :
-							this.set("price", parseFloat((val).toString().replace(simpleCart.currency().symbol,"").replace(simpleCart.currency().delimiter,"")));
+							parseFloat((this.get("price",true).toString()).replace(sellMediaCart.currency().symbol,"").replace(sellMediaCart.currency().delimiter,"") || 1) :
+							this.set("price", parseFloat((val).toString().replace(sellMediaCart.currency().symbol,"").replace(sellMediaCart.currency().delimiter,"")));
 				},
 				id: function () {
 					return this.get('id',false);
@@ -881,60 +868,60 @@
 			 *	CHECKOUT MANAGEMENT
 			 *******************************************************************/
 
-			simpleCart.extend({
+			sellMediaCart.extend({
 				checkout: function () {
 					if (settings.checkout.type.toLowerCase() === 'custom' && isFunction(settings.checkout.fn)) {
-						settings.checkout.fn.call(simpleCart,settings.checkout);
-					} else if (isFunction(simpleCart.checkout[settings.checkout.type])) {
-						var checkoutData = simpleCart.checkout[settings.checkout.type].call(simpleCart,settings.checkout);
+						settings.checkout.fn.call(sellMediaCart,settings.checkout);
+					} else if (isFunction(sellMediaCart.checkout[settings.checkout.type])) {
+						var checkoutData = sellMediaCart.checkout[settings.checkout.type].call(sellMediaCart,settings.checkout);
 						
 						// if the checkout method returns data, try to send the form
 						if( checkoutData.data && checkoutData.action && checkoutData.method ){
 							// if no one has any objections, send the checkout form
-							if( false !== simpleCart.trigger('beforeCheckout', [checkoutData.data]) ){
-								simpleCart.generateAndSendForm( checkoutData );
+							if( false !== sellMediaCart.trigger('beforeCheckout', [checkoutData.data]) ){
+								sellMediaCart.generateAndSendForm( checkoutData );
 							}
 						}
 						
 					} else {
-						simpleCart.error("No Valid Checkout Method Specified");
+						sellMediaCart.error("No Valid Checkout Method Specified");
 					}
 				},
 				extendCheckout: function (methods) {
-					return simpleCart.extend(simpleCart.checkout, methods);
+					return sellMediaCart.extend(sellMediaCart.checkout, methods);
 				},
 				generateAndSendForm: function (opts) {
-					var form = simpleCart.$create("form");
+					var form = sellMediaCart.$create("form");
 					form.attr('style', 'display:none;');
 					form.attr('action', opts.action);
 					form.attr('method', opts.method);
-					simpleCart.each(opts.data, function (val, x, name) {
+					sellMediaCart.each(opts.data, function (val, x, name) {
 						form.append(
-							simpleCart.$create("input").attr("type","hidden").attr("name",name).val(val)
+							sellMediaCart.$create("input").attr("type","hidden").attr("name",name).val(val)
 						);
 					});
-					simpleCart.$("body").append(form);
+					sellMediaCart.$("body").append(form);
 					form.el.submit();
 					form.remove();
 				}
 			});
 
-			simpleCart.extendCheckout({
+			sellMediaCart.extendCheckout({
 				PayPal: function (opts) {
 					// account email is required
 					if (!opts.email) {
-						return simpleCart.error("No email provided for PayPal checkout");
+						return sellMediaCart.error("No email provided for PayPal checkout");
 					}
 
 					// build basic form options
 					var data = {
 							  cmd			: "_cart"
 							, upload		: "1"
-							, currency_code : simpleCart.currency().code
+							, currency_code : sellMediaCart.currency().code
 							, business		: opts.email
 							, rm			: opts.method === "GET" ? "0" : "2"
-							, tax_cart		: (simpleCart.tax()*1).toFixed(2)
-							, handling_cart : (simpleCart.shipping()*1).toFixed(2)
+							, tax_cart		: (sellMediaCart.tax()*1).toFixed(2)
+							, handling_cart : (sellMediaCart.shipping()*1).toFixed(2)
 							, charset		: "utf-8"
 						},
 						action = opts.sandbox ? "https://www.sandbox.paypal.com/cgi-bin/webscr" : "https://www.paypal.com/cgi-bin/webscr",
@@ -957,7 +944,7 @@
 
 
 					// add all the items to the form data
-					simpleCart.each(function (item,x) {
+					sellMediaCart.each(function (item,x) {
 						var counter = x+1,
 							item_options = item.options(),
 							optionCount = 0,
@@ -971,13 +958,13 @@
 
 
 						// add the options
-						simpleCart.each(item_options, function (val,k,attr) {
+						sellMediaCart.each(item_options, function (val,k,attr) {
 							// paypal limits us to 10 options
 							if (k < 10) {
 		
 								// check to see if we need to exclude this from checkout
 								send = true;
-								simpleCart.each(settings.excludeFromCheckout, function (field_name) {
+								sellMediaCart.each(settings.excludeFromCheckout, function (field_name) {
 									if (field_name === attr) { send = false; }
 								});
 								if (send) {
@@ -1007,20 +994,20 @@
 				GoogleCheckout: function (opts) {
 					// account id is required
 					if (!opts.merchantID) {
-						return simpleCart.error("No merchant id provided for GoogleCheckout");
+						return sellMediaCart.error("No merchant id provided for GoogleCheckout");
 					}
 
 					// google only accepts USD and GBP
-					if (simpleCart.currency().code !== "USD" && simpleCart.currency().code !== "GBP") {
-						return simpleCart.error("Google Checkout only accepts USD and GBP");
+					if (sellMediaCart.currency().code !== "USD" && sellMediaCart.currency().code !== "GBP") {
+						return sellMediaCart.error("Google Checkout only accepts USD and GBP");
 					}
 
 					// build basic form options
 					var data = {
 							// TODO: better shipping support for this google
 							  ship_method_name_1	: "Shipping"
-							, ship_method_price_1	: simpleCart.shipping()
-							, ship_method_currency_1: simpleCart.currency().code
+							, ship_method_price_1	: sellMediaCart.shipping()
+							, ship_method_currency_1: sellMediaCart.currency().code
 							, _charset_				: ''
 						},
 						action = "https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/" + opts.merchantID,
@@ -1028,21 +1015,21 @@
 
 
 					// add items to data
-					simpleCart.each(function (item,x) {
+					sellMediaCart.each(function (item,x) {
 						var counter = x+1,
 							options_list = [],
 							send;
 						data['item_name_' + counter]		= item.get('name');
 						data['item_quantity_' + counter]	= item.quantity();
 						data['item_price_' + counter]		= item.price();
-						data['item_currency_ ' + counter]	= simpleCart.currency().code;
-						data['item_tax_rate' + counter]		= item.get('taxRate') || simpleCart.taxRate();
+						data['item_currency_ ' + counter]	= sellMediaCart.currency().code;
+						data['item_tax_rate' + counter]		= item.get('taxRate') || sellMediaCart.taxRate();
 
 						// create array of extra options
-						simpleCart.each(item.options(), function (val,x,attr) {
+						sellMediaCart.each(item.options(), function (val,x,attr) {
 							// check to see if we need to exclude this from checkout
 							send = true;
-							simpleCart.each(settings.excludeFromCheckout, function (field_name) {
+							sellMediaCart.each(settings.excludeFromCheckout, function (field_name) {
 								if (field_name === attr) { send = false; }
 							});
 							if (send) {
@@ -1068,13 +1055,13 @@
 				AmazonPayments: function (opts) {
 					// required options
 					if (!opts.merchant_signature) {
-						return simpleCart.error("No merchant signature provided for Amazon Payments");
+						return sellMediaCart.error("No merchant signature provided for Amazon Payments");
 					}
 					if (!opts.merchant_id) {
-						return simpleCart.error("No merchant id provided for Amazon Payments");
+						return sellMediaCart.error("No merchant id provided for Amazon Payments");
 					}
 					if (!opts.aws_access_key_id) {
-						return simpleCart.error("No AWS access key id provided for Amazon Payments");
+						return sellMediaCart.error("No AWS access key id provided for Amazon Payments");
 					}
 
 
@@ -1082,8 +1069,8 @@
 					var data = {
 							  aws_access_key_id:	opts.aws_access_key_id
 							, merchant_signature:	opts.merchant_signature
-							, currency_code:		simpleCart.currency().code
-							, tax_rate:				simpleCart.taxRate()
+							, currency_code:		sellMediaCart.currency().code
+							, tax_rate:				sellMediaCart.taxRate()
 							, weight_unit:			opts.weight_unit || 'lb'
 						},
 						action = "https://payments" + (opts.sandbox ? "-sandbox" : "") + ".amazon.com/checkout/" + opts.merchant_id,
@@ -1091,7 +1078,7 @@
 
 
 					// add items to data
-					simpleCart.each(function (item,x) {
+					sellMediaCart.each(function (item,x) {
 						var counter = x+1,
 							options_list = [];
 						data['item_title_' + counter]			= item.get('name');
@@ -1108,10 +1095,10 @@
 
 
 						// create array of extra options
-						simpleCart.each(item.options(), function (val,x,attr) {
+						sellMediaCart.each(item.options(), function (val,x,attr) {
 							// check to see if we need to exclude this from checkout
 							var send = true;
-							simpleCart.each(settings.excludeFromCheckout, function (field_name) {
+							sellMediaCart.each(settings.excludeFromCheckout, function (field_name) {
 								if (field_name === attr) { send = false; }
 							});
 							if (send && attr !== 'weight' && attr !== 'tax') {
@@ -1136,23 +1123,23 @@
 				SendForm: function (opts) {
 					// url required
 					if (!opts.url) {
-						return simpleCart.error('URL required for SendForm Checkout');
+						return sellMediaCart.error('URL required for SendForm Checkout');
 					}
 
 					// build basic form options
 					var data = {
-							  currency	: simpleCart.currency().code
-							, shipping	: simpleCart.shipping()
-							, tax		: simpleCart.tax()
-							, taxRate	: simpleCart.taxRate()
-							, itemCount : simpleCart.find({}).length
+							  currency	: sellMediaCart.currency().code
+							, shipping	: sellMediaCart.shipping()
+							, tax		: sellMediaCart.tax()
+							, taxRate	: sellMediaCart.taxRate()
+							, itemCount : sellMediaCart.find({}).length
 						},
 						action = opts.url,
 						method = opts.method === "GET" ? "GET" : "POST";
 
 
 					// add items to data
-					simpleCart.each(function (item,x) {
+					sellMediaCart.each(function (item,x) {
 						var counter = x+1,
 							options_list = [],
 							send;
@@ -1161,10 +1148,10 @@
 						data['item_price_' + counter]		= item.price();
 
 						// create array of extra options
-						simpleCart.each(item.options(), function (val,x,attr) {
+						sellMediaCart.each(item.options(), function (val,x,attr) {
 							// check to see if we need to exclude this from checkout
 							send = true;
-							simpleCart.each(settings.excludeFromCheckout, function (field_name) {
+							sellMediaCart.each(settings.excludeFromCheckout, function (field_name) {
 								if (field_name === attr) { send = false; }
 							});
 							if (send) {
@@ -1186,7 +1173,7 @@
 					}
 
 					if (opts.extra_data) {
-						data = simpleCart.extend(data,opts.extra_data);
+						data = sellMediaCart.extend(data,opts.extra_data);
 					}
 
 					// return the data for the checkout form
@@ -1220,7 +1207,7 @@
 					var eventNameList = name.split(/ +/);
 					
 					// iterate through and bind each event
-					simpleCart.each( eventNameList , function( eventName ){
+					sellMediaCart.each( eventNameList , function( eventName ){
 						if (this._events[eventName] === true) {
 							callback.apply(this);
 						} else if (!isUndefined(this._events[eventName])) {
@@ -1257,11 +1244,11 @@
 			};
 			// alias for bind
 			eventFunctions.on = eventFunctions.bind;
-			simpleCart.extend(eventFunctions);
-			simpleCart.extend(simpleCart.Item._, eventFunctions);
+			sellMediaCart.extend(eventFunctions);
+			sellMediaCart.extend(sellMediaCart.Item._, eventFunctions);
 
 
-			// base simpleCart events in options
+			// base sellMediaCart events in options
 			baseEvents = {
 				  beforeAdd				: null
 				, afterAdd				: null
@@ -1277,11 +1264,11 @@
 			};
 			
 			// extend with base events
-			simpleCart(baseEvents);
+			sellMediaCart(baseEvents);
 
 			// bind settings to events
-			simpleCart.each(baseEvents, function (val, x, name) {
-				simpleCart.bind(name, function () {
+			sellMediaCart.each(baseEvents, function (val, x, name) {
+				sellMediaCart.bind(name, function () {
 					if (isFunction(settings[name])) {
 						settings[name].apply(this, arguments);
 					}
@@ -1291,23 +1278,23 @@
 			/*******************************************************************
 			 *	FORMATTING FUNCTIONS
 			 *******************************************************************/
-			simpleCart.extend({
+			sellMediaCart.extend({
 				toCurrency: function (number,opts) {
 					var num = parseFloat(number),
 						opt_input = opts || {},
-						_opts = simpleCart.extend(simpleCart.extend({
+						_opts = sellMediaCart.extend(sellMediaCart.extend({
 							  symbol:		"$"
 							, decimal:		"."
 							, delimiter:	","
 							, accuracy:		2
 							, after: false
-						}, simpleCart.currency()), opt_input),
+						}, sellMediaCart.currency()), opt_input),
 
 						numParts = num.toFixed(_opts.accuracy).split("."),
 						dec = numParts[1],
 						ints = numParts[0];
 			
-					ints = simpleCart.chunk(ints.reverse(), 3).join(_opts.delimiter.reverse()).reverse();
+					ints = sellMediaCart.chunk(ints.reverse(), 3).join(_opts.delimiter.reverse()).reverse();
 
 					return	(!_opts.after ? _opts.symbol : "") +
 							ints +
@@ -1336,7 +1323,7 @@
 
 
 			// currency functions
-			simpleCart.extend({
+			sellMediaCart.extend({
 				currency: function (currency) {
 					if (isString(currency) && !isUndefined(currencies[currency])) {
 						settings.currency = currency;
@@ -1354,49 +1341,49 @@
 			 *	VIEW MANAGEMENT
 			 *******************************************************************/
 
-			simpleCart.extend({
+			sellMediaCart.extend({
 				// bind outlets to function
 				bindOutlets: function (outlets) {
-					simpleCart.each(outlets, function (callback, x, selector) {
+					sellMediaCart.each(outlets, function (callback, x, selector) {
 						
-						simpleCart.bind('update', function () {
-							simpleCart.setOutlet("." + namespace + "_" + selector, callback);
+						sellMediaCart.bind('update', function () {
+							sellMediaCart.setOutlet("." + namespace + "_" + selector, callback);
 						});
 					});
 				},
 
 				// set function return to outlet
 				setOutlet: function (selector, func) {
-					var val = func.call(simpleCart, selector);
+					var val = func.call(sellMediaCart, selector);
 					if (isObject(val) && val.el) {
-						simpleCart.$(selector).html(' ').append(val);
+						sellMediaCart.$(selector).html(' ').append(val);
 					} else if (!isUndefined(val)) {
-						simpleCart.$(selector).html(val);
+						sellMediaCart.$(selector).html(val);
 					}
 				},
 
 				// bind click events on inputs
 				bindInputs: function (inputs) {
-					simpleCart.each(inputs, function (info) {
-						simpleCart.setInput("." + namespace + "_" + info.selector, info.event, info.callback);
+					sellMediaCart.each(inputs, function (info) {
+						sellMediaCart.setInput("." + namespace + "_" + info.selector, info.event, info.callback);
 					});
 				},
 
 				// attach events to inputs	
 				setInput: function (selector, event, func) {
-					simpleCart.$(selector).live(event, func);
+					sellMediaCart.$(selector).live(event, func);
 				}
 			});		
 
 
 			// class for wrapping DOM selector shit
-			simpleCart.ELEMENT = function (selector) {
+			sellMediaCart.ELEMENT = function (selector) {
 
 				this.create(selector);
 				this.selector = selector || null; // "#" + this.attr('id'); TODO: test length?
 			};
 
-			simpleCart.extend(selectorFunctions, {
+			sellMediaCart.extend(selectorFunctions, {
 
 				"MooTools"		: {
 					text: function (text) {
@@ -1434,7 +1421,7 @@
 					},
 					each: function (callback) {
 						if (isFunction(callback)) {
-							simpleCart.each(this.el, function( e, i, c) {
+							sellMediaCart.each(this.el, function( e, i, c) {
 								callback.call( i, i, e, c );
 							});
 						}
@@ -1456,7 +1443,7 @@
 					live: function (	event,callback) {
 						var selector = this.selector;
 						if (isFunction(callback)) {
-							simpleCart.$("body").el.addEvent(event + ":relay(" + selector + ")", function (e, el) {
+							sellMediaCart.$("body").el.addEvent(event + ":relay(" + selector + ")", function (e, el) {
 								callback.call(el, e);
 							});
 						}
@@ -1465,13 +1452,13 @@
 						return this.el.match(selector);
 					},
 					parent: function () {
-						return simpleCart.$(this.el.getParent());
+						return sellMediaCart.$(this.el.getParent());
 					},
 					find: function (selector) {
-						return simpleCart.$(this.el.getElements(selector));
+						return sellMediaCart.$(this.el.getElements(selector));
 					},
 					closest: function (selector) {
-						return simpleCart.$(this.el.getParent(selector));
+						return sellMediaCart.$(this.el.getParent(selector));
 					},
 					descendants: function () {
 						return this.find("*");
@@ -1547,7 +1534,7 @@
 					},
 					each: function (callback) {
 						if (isFunction(callback)) {
-							simpleCart.each(this.el, function( e, i, c) {
+							sellMediaCart.each(this.el, function( e, i, c) {
 								callback.call( i, i, e, c );
 							});
 						}
@@ -1578,16 +1565,16 @@
 						}
 					},
 					parent: function () {
-						return simpleCart.$(this.el.up());
+						return sellMediaCart.$(this.el.up());
 					},
 					find: function (selector) {
-						return simpleCart.$(this.el.getElementsBySelector(selector));
+						return sellMediaCart.$(this.el.getElementsBySelector(selector));
 					},
 					closest: function (selector) {
-						return simpleCart.$(this.el.up(selector));
+						return sellMediaCart.$(this.el.up(selector));
 					},
 					descendants: function () {
-						return simpleCart.$(this.el.descendants());
+						return sellMediaCart.$(this.el.descendants());
 					},
 					tag: function () {
 						return this.el.tagName;
@@ -1661,19 +1648,19 @@
 						return this;
 					},
 					parent: function () {
-						return simpleCart.$(this.el.parent());
+						return sellMediaCart.$(this.el.parent());
 					},
 					find: function (selector) {
-						return simpleCart.$(this.el.find(selector));
+						return sellMediaCart.$(this.el.find(selector));
 					},
 					closest: function (selector) {
-						return simpleCart.$(this.el.closest(selector));
+						return sellMediaCart.$(this.el.closest(selector));
 					},
 					tag: function () {
 						return this.el[0].tagName;
 					},
 					descendants: function () {
-						return simpleCart.$(this.el.find("*"));
+						return sellMediaCart.$(this.el.find("*"));
 					},
 					submit: function() {
 						return this.el.submit();
@@ -1684,68 +1671,68 @@
 					}
 				}
 			});
-			simpleCart.ELEMENT._ = simpleCart.ELEMENT.prototype;
+			sellMediaCart.ELEMENT._ = sellMediaCart.ELEMENT.prototype;
 
 			// bind the DOM setup to the ready event
-			simpleCart.ready(simpleCart.setupViewTool);
+			sellMediaCart.ready(sellMediaCart.setupViewTool);
 
 			// bind the input and output events
-			simpleCart.ready(function () {
-				simpleCart.bindOutlets({
+			sellMediaCart.ready(function () {
+				sellMediaCart.bindOutlets({
 					total: function () {
-						return simpleCart.toCurrency(simpleCart.total());
+						return sellMediaCart.toCurrency(sellMediaCart.total());
 					}
 					, quantity: function () {
-						return simpleCart.quantity();
+						return sellMediaCart.quantity();
 					}
 					, items: function (selector) {
-						simpleCart.writeCart(selector);
+						sellMediaCart.writeCart(selector);
 					}
 					, tax: function () {
-						return simpleCart.toCurrency(simpleCart.tax());
+						return sellMediaCart.toCurrency(sellMediaCart.tax());
 					}
 					, taxRate: function () {
-						return simpleCart.taxRate().toFixed();
+						return sellMediaCart.taxRate().toFixed();
 					}
 					, shipping: function () {
-						return simpleCart.toCurrency(simpleCart.shipping());
+						return sellMediaCart.toCurrency(sellMediaCart.shipping());
 					}
 					, grandTotal: function () {
-						return simpleCart.toCurrency(simpleCart.grandTotal());
+						return sellMediaCart.toCurrency(sellMediaCart.grandTotal());
 					}
 				});
-				simpleCart.bindInputs([
+				sellMediaCart.bindInputs([
 					{	  selector: 'checkout'
 						, event: 'click'
 						, callback: function () {
-							simpleCart.checkout();
+							sellMediaCart.checkout();
 						}
 					}
 					, {	  selector: 'empty'
 						, event: 'click'
 						, callback: function () {
-							simpleCart.empty();
+							sellMediaCart.empty();
 						}
 					}
 					, {	  selector: 'increment'
 						, event: 'click'
 						, callback: function () {
-							simpleCart.find(simpleCart.$(this).closest('.itemRow').attr('id').split("_")[1]).increment();
-							simpleCart.update();
+							sellMediaCart.find(sellMediaCart.$(this).closest('.itemRow').attr('id').split("_")[1]).increment();
+							sellMediaCart.update();
 						}
 					}
 					, {	  selector: 'decrement'
 						, event: 'click'
 						, callback: function () {
-							simpleCart.find(simpleCart.$(this).closest('.itemRow').attr('id').split("_")[1]).decrement();
-							simpleCart.update();
+							sellMediaCart.find(sellMediaCart.$(this).closest('.itemRow').attr('id').split("_")[1]).decrement();
+							sellMediaCart.update();
 						}
 					}
 					/* remove from cart */
 					, {	  selector: 'remove'
 						, event: 'click'
 						, callback: function () {
-							simpleCart.find(simpleCart.$(this).closest('.itemRow').attr('id').split("_")[1]).remove();
+							sellMediaCart.find(sellMediaCart.$(this).closest('.itemRow').attr('id').split("_")[1]).remove();
 						}
 					}
 
@@ -1753,14 +1740,14 @@
 					, {	  selector: 'input'
 						, event: 'change'
 						, callback: function () {
-							var $input = simpleCart.$(this),
+							var $input = sellMediaCart.$(this),
 								$parent = $input.parent(),
 								classList = $parent.attr('class').split(" ");
-							simpleCart.each(classList, function (klass) {
+							sellMediaCart.each(classList, function (klass) {
 								if (klass.match(/item-.+/i)) {
 									var field = klass.split("-")[1];
-									simpleCart.find($parent.closest('.itemRow').attr('id').split("_")[1]).set(field,$input.val());
-									simpleCart.update();
+									sellMediaCart.find($parent.closest('.itemRow').attr('id').split("_")[1]).set(field,$input.val());
+									sellMediaCart.update();
 									return;
 								}
 							});
@@ -1771,11 +1758,11 @@
 					, { selector: 'shelfItem .item_add'
 						, event: 'click'
 						, callback: function () {
-							var $button = simpleCart.$(this),
+							var $button = sellMediaCart.$(this),
 								fields = {};
 
 							$button.closest("." + namespace + "_shelfItem").descendants().each(function (x,item) {
-								var $item = simpleCart.$(item);
+								var $item = sellMediaCart.$(item);
 
 								// check to see if the class matches the item_[fieldname] pattern
 								if ($item.attr("class") &&
@@ -1783,7 +1770,7 @@
 									!$item.attr('class').match(/item_add/)) {
 
 									// find the class name
-									simpleCart.each($item.attr('class').split(' '), function (klass) {
+									sellMediaCart.each($item.attr('class').split(' '), function (klass) {
 										var attr,
 											val,
 											type;
@@ -1818,7 +1805,7 @@
 							});
 
 							// add the item
-							simpleCart.add(fields);
+							sellMediaCart.add(fields);
 						}
 					}
 				]);
@@ -1834,7 +1821,7 @@
 			if (document.addEventListener) {
 				window.DOMContentLoaded = function () {
 					document.removeEventListener("DOMContentLoaded", DOMContentLoaded, false);
-					simpleCart.init();
+					sellMediaCart.init();
 				};
 
 			} else if (document.attachEvent) {
@@ -1842,14 +1829,14 @@
 					// Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
 					if (document.readyState === "complete") {
 						document.detachEvent("onreadystatechange", DOMContentLoaded);
-						simpleCart.init();
+						sellMediaCart.init();
 					}
 				};
 			}
 			// The DOM ready check for Internet Explorer
 			// used from jQuery
 			function doScrollCheck() {
-				if (simpleCart.isReady) {
+				if (sellMediaCart.isReady) {
 					return;
 				}
 
@@ -1863,7 +1850,7 @@
 				}
 
 				// and execute any waiting functions
-				simpleCart.init();
+				sellMediaCart.init();
 			}
 			
 			// bind ready event used from jquery
@@ -1873,7 +1860,7 @@
 				// browser event has already occurred.
 				if (document.readyState === "complete") {
 					// Handle it asynchronously to allow scripts the opportunity to delay ready
-					return setTimeout(simpleCart.init, 1);
+					return setTimeout(sellMediaCart.init, 1);
 				}
 
 				// Mozilla, Opera and webkit nightlies currently support this event
@@ -1882,7 +1869,7 @@
 					document.addEventListener("DOMContentLoaded", DOMContentLoaded, false);
 
 					// A fallback to window.onload, that will always work
-					window.addEventListener("load", simpleCart.init, false);
+					window.addEventListener("load", sellMediaCart.init, false);
 
 				// If IE event model is used
 				} else if (document.attachEvent) {
@@ -1891,7 +1878,7 @@
 					document.attachEvent("onreadystatechange", DOMContentLoaded);
 
 					// A fallback to window.onload, that will always work
-					window.attachEvent("onload", simpleCart.init);
+					window.attachEvent("onload", sellMediaCart.init);
 
 					// If IE and not a frame
 					// continually check to see if the document is ready
@@ -1910,11 +1897,11 @@
 			// bind the ready event
 			sc_BindReady();
 
-			return simpleCart;
+			return sellMediaCart;
 		};
 
 
-	window.simpleCart = generateSimpleCart();
+	window.sellMediaCart = generatesellMediaCart();
 
 }(window, document));
 

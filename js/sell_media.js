@@ -129,7 +129,7 @@ jQuery(document).ready(function($){
     // console.log(sell_media);
 
     // Cart config
-    simpleCart({
+    sellMediaCart({
         checkout: {
             type: "PayPal",
             sandbox: sell_media.sandbox,
@@ -197,11 +197,11 @@ jQuery(document).ready(function($){
     });
 
     // Show cart if qty exists, otherwise, show empty message
-    simpleCart.bind('ready', function(){
+    sellMediaCart.bind('ready', function(){
 
         $('#sell-media-checkout-cart').after('<div class="sell-media-load-checkout">Loading...</div>').fadeIn('fast');
 
-        if ( simpleCart.quantity() ) {
+        if ( sellMediaCart.quantity() ) {
             $('#sell-media-checkout-cart').show();
         } else {
             $('#sell-media-checkout-cart').hide();
@@ -212,14 +212,14 @@ jQuery(document).ready(function($){
     });
 
     // Show added to cart message on dialog
-    simpleCart.bind( 'afterAdd' , function( item ){
+    sellMediaCart.bind( 'afterAdd' , function( item ){
         $('.sell-media-added').remove();
         $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
     });
 
 
     // Validate cart prices (price group, license markup, discount codes) on the server
-    simpleCart.bind( 'beforeCheckout', function( data ){
+    sellMediaCart.bind( 'beforeCheckout', function( data ){
         $.ajax({
             type: "POST",
             url: sell_media.ajaxurl,
