@@ -378,7 +378,7 @@ Class SellMediaPayments {
             'transaction_id' => 'txn_id',
             'gateway' => 'PayPal'
         );
-    
+
 
         foreach( $keys as $k => $v ){
 
@@ -454,7 +454,7 @@ Class SellMediaPayments {
 
         $products = $this->get_products( $post_id );
 
-        if ( $products ) { 
+        if ( $products ) {
             foreach ( $this->get_products( $post_id ) as $product ){
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
@@ -505,7 +505,7 @@ Class SellMediaPayments {
                 $html .= '</tr>';
             } // foreach
         } // if legacy
-        
+
         $html .= '</tbody>';
         $html .= '</table>';
 
@@ -635,6 +635,10 @@ Class SellMediaPayments {
 
             $product_id = $cart[ 'item_number_' . $i ];
             // $qty = $cart[ 'quantity_' . $i ];
+            $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
+            $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
+            $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
+
             $type = $cart[ 'os0_' . $i ];
             $price_id = $cart[ 'os2_' . $i ];
             $license_id = $cart[ 'os5_' . $i ];
