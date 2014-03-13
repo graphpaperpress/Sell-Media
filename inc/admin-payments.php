@@ -35,15 +35,17 @@ function sell_media_add_payment_meta_boxes(){
 
     if ( $screen->id == 'sell_media_payment' ) {
         global $post;
-        $arguments = get_post_meta( $post->ID, '_paypal_args', true );
-        if ( ! empty( $arguments ) ){
+        $paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
+        $stripe_args = get_post_meta( $post->ID, '_stripe_args', true );
+        if ( ! empty( $paypal_args ) || ! empty( $stripe_args ) ){
             add_meta_box(
-                'meta_field_paypal_details',
-                __( 'Paypal Details', 'sell_media' ),
-                'sell_media_payment_paypal_details',
+                'meta_field_details',
+                __( 'Payment Gateway Details', 'sell_media' ),
+                'sell_media_payment_gateway_details',
                 'sell_media_payment'
             );
         }
+        add_action( 'sell_media_payment_gatway_metabox', $post->id );
     }
 }
 add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
@@ -86,23 +88,21 @@ function sell_media_payment_purchase_details( $post ){
 }
 
 
-function sell_media_payment_paypal_details( $post ){
-    $arguments = get_post_meta( $post->ID, '_paypal_args', true ); ?>
-    <p><?php _e('This is the info that was sent to Paypal at time of purchase. For detailed explanation please visit Paypal\'s <a href="https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/#example_req_resp">IPN guide</a>.', 'sell_media'); ?></p>
-    <table class="wp-list-table widefat" cellspacing="0">
-        <tbody>
-            <?php if ( $arguments ) : foreach( $arguments as $k => $v ) : ?>
-                <tr>
-                    <td><?php echo $k; ?></td><td><?php echo $v; ?></td>
-                </tr>
-            <?php endforeach; else : ?>
-                <tr>
-                    <td><?php _e('This payment has no saved Paypal details','sell_media'); ?></td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-    <?php
+function sell_media_payment_gateway_details( $post ){
+
+    $paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
+    $stripe_args = get_post_meta( $post->ID, '_stripe_args', true );
+    if ( $paypal_args ) {
+        $arguments = $paypal_args;
+        $gateway = __( 'PayPal', 'sell_media' );
+    } else {
+        $arguments = $stripe_args;
+        $gateway = __( 'Stripe', 'sell_media' );
+    }
+    echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase. Use this for debugging, if needed.', 'sell_media' ) . '</p>';
+    echo '<pre style="overflow:hidden">';
+    print_r( $arguments );
+    echo '</pre>';
 }
 
 
