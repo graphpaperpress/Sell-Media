@@ -179,7 +179,7 @@ Class SellMediaPayments {
 
         $first_name = $this->get_meta_key( $post_id, 'first_name' );
         $last_name = $this->get_meta_key( $post_id, 'last_name' );
-        
+
         return $first_name . ' ' . $last_name;
     }
 
@@ -203,7 +203,7 @@ Class SellMediaPayments {
             if ( ++$i != $items ) $sep = ', ';
                 $values .= $this->get_meta_key( $post_id, $key ) . $sep;
         }
-        
+
         return $values;
     }
 
@@ -257,7 +257,8 @@ Class SellMediaPayments {
                 if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a></td>';
     			$html .= '</td>';
                 $html .= '<td class="sell-media-product-total">';
-    			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) ) $html .= $product['total'];
+    			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
+                    $html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
     			$html .= '</td>';
     			$html .= '</tr>';
                 }
