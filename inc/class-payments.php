@@ -639,10 +639,6 @@ Class SellMediaPayments {
             $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
             $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
 
-            $type = $cart[ 'os0_' . $i ];
-            $price_id = $cart[ 'os2_' . $i ];
-            $license_id = $cart[ 'os5_' . $i ];
-
             // set price taxonomy if product is download or reprint
             if ( 'download' == $type ){
                 $taxonomy = 'price-group';
