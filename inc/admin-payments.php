@@ -90,7 +90,7 @@ function sell_media_payment_purchase_details( $post ){
     echo $payment_obj->payment_table( $post->ID );
 
     do_action( 'sell_media_additional_customer_meta', $post );
-    
+
     echo '</div>';
 
 }
@@ -311,7 +311,7 @@ function sell_media_payments_callback_fn(){
             <?php foreach( $payments as $payment ) : ?>
                 <?php $payment_meta = get_post_meta($payment->ID, '_sell_media_payment_meta', true); ?>
                 <tr>
-                    <td><a href="<?php print admin_url() . '/post.php?post=' . $payment->ID . '&action=edit'; ?>"><?php echo $payment->ID; ?></a></td>
+                    <td><a href="<?php print admin_url() . 'post.php?post=' . $payment->ID . '&action=edit'; ?>"><?php echo $payment->ID; ?></a></td>
                     <td>
                         <?php if ( ! empty( $payment_meta['first_name'] ) ) echo $payment_meta['first_name']; ?>
                         <?php if ( ! empty( $payment_meta['last_name'] ) ) echo $payment_meta['last_name']; ?>
