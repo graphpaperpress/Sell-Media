@@ -490,23 +490,18 @@ Class SellMediaPayments {
         } else {
 
             $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta' );
-            
-            $products = maybe_unserialize( $payment_meta );
+            $products = maybe_unserialize( $payment_meta['products'] );
 
             foreach ( $products as $product ) {
 
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
                 $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( get_post_meta( $product['id'], '_sell_media_attachment_id', true ), 'medium', false) . '</a></td>';
-                $html .= '<td>' . $product['size']['name'] . '</td>';
-                $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
-                $html .= '<td>' . get_post_meta( '$pro', '' ) . '</td>';
+                $html .= '<td>' . $product['price']['name'] . '</td>';
+                $html .= '<td>' . sell_media_get_currency_symbol() . $product['price']['amount'] . '</td>';
+                $html .= '<td>' . $product['qty'] . '</td>';
                 $html .= '<td>' . $product['license']['name'] . '</td>';
-                if ( ! empty( $product['type'] ) && 'print' == $product['type'] ){
-                    $html .= '<td class="title column-title">Sold a print</td>';
-                } else {
-                    $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
-                }
+                $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
                 $html .= '</tr>';
             } // foreach
         } // if legacy
