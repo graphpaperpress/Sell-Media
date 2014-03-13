@@ -388,10 +388,25 @@ Class SellMediaPayments {
             $html .= '<tr class="" valign="top">';
             $html .= '<td class="media-icon">';
             $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( get_post_meta( $product['id'], '_sell_media_attachment_id', true ), 'medium', false) . '</a></td>';
-            $html .= '<td>' . $product['size']['name'] . '</td>';
-            $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
+            if ( empty( $product['size']['name'] ) ) {
+                $size_name = null;
+            } else {
+                $size_name = $product['size']['name'];
+            }
+            $html .= '<td>' . $size_name . '</td>';
+            if ( empty( $product['size']['amount'] ) ){
+                $size_amount = null;
+            } else {
+                $size_amount = $product['size']['amount'];
+            }
+            $html .= '<td>' . sell_media_get_currency_symbol() . $size_amount . '</td>';
             $html .= '<td>' . $product['qty'] . '</td>';
-            $html .= '<td>' . $product['license']['name'] . '</td>';
+            if ( empty( $product['license']['name'] ) ){
+                $license_name = null;
+            } else {
+                $license_name = $product['license']['name'];
+            }
+            $html .= '<td>' . $license_name . '</td>';
             if ( ! empty( $product['type'] ) && 'print' == $product['type'] ){
                 $html .= '<td class="title column-title">Sold a print</td>';
             } else {
