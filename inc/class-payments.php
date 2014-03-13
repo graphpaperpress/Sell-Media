@@ -658,7 +658,7 @@ Class SellMediaPayments {
                 // download or print without assigned license
                 $amount = $p->get_price( $product_id, $price_id, false, $taxonomy );
             }
-            $cart[ 'amount_' . $i ] = $amount;
+            $cart[ 'amount_' . $i ] = number_format( $amount, 2, '.', '' );
             $sub_total += $amount;
         }
 
@@ -682,12 +682,12 @@ Class SellMediaPayments {
         } else {
             $shipping_amount = 0;
         }
-        $args['handling_cart'] = $shipping_amount;
+        $args['handling_cart'] = number_format( $shipping_amount, 2, '.', '' );
 
 
         // Get our tax rate
         $tax_amount = ( $settings->tax_rate * $sub_total );
-        $args['tax_cart'] = $tax_amount;
+        $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
 
         $verified_cart = array_merge( $cart, $verified, $args );
 

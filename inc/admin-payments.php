@@ -83,13 +83,13 @@ function sell_media_payment_purchase_details( $post ){
         __( 'Name', 'sell_media' ),
         __( 'Email', 'sell_media' ),
         __( 'Total', 'sell_media' )
-        );
+    );
 
     do_action( 'sell_media_below_payment_contact_details', $post->ID );
 
     echo $payment_obj->payment_table( $post->ID );
 
-    do_action( 'sell_media_additional_customer_meta', $post );
+    do_action( 'sell_media_additional_customer_meta', $post->ID );
 
     echo '</div>';
 
