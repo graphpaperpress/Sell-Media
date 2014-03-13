@@ -873,19 +873,20 @@ class SellMedia {
         return $order_by;
     }
 
+    /*
+     * Put the cart in the footer
+     */
     public function footer(){
-        $settings = sell_media_get_plugin_options();
-        if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) : ?>
-        <div id="terms-and-conditions-dialog" style="display: none;">
-            <span class="close">&times;</span>
-            <?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?>
-        </div>
-        <?php endif; ?>
-        <div id="sell-media-dialog-box" class="sell-media-cart-dialog" style="display:none">
-            <div class="sell-media-cart-dialog-target"><h2><?php _e( 'Loading', 'sell_media' ); ?>...</h2></div>
-        </div>
-        <div id="sell-media-dialog-overlay" style="display:none"></div>
-    <?php }
+
+        if ( is_home() || is_single() || is_archive() ) : ?>
+
+            <div id="sell-media-dialog-box" class="sell-media-dialog-box" style="display:none">
+                <div id="sell-media-dialog-box-target"></div>
+            </div>
+            <div id="sell-media-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
+
+        <?php endif;
+    }
 
     /**
      * Adjust wp_query for when search is submitted error no longer shows in "general-template.php"

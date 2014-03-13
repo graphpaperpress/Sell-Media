@@ -143,7 +143,7 @@ add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
  *
  * @since 2.0
  */
-function checkout_shortcode(){
+function sell_media_checkout_shortcode(){
     $settings = sell_media_get_plugin_options();
     ob_start(); ?>
     <?php do_action( 'sell_media_checkout_before_cart' ); ?>
@@ -168,7 +168,19 @@ function checkout_shortcode(){
         <div class="sell-media-checkout-button group">
             <?php do_action( 'sell_media_above_checkout_button' ); ?>
             <p><a href="javascript:void(0)" class="simpleCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
-            <p class="text-center"><?php echo __( 'or', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link( 'sell_media_item' ); ?>"><?php echo __( 'continue shopping', 'sell_media' ); ?> &raquo;</a></p>
+            <p id="sell-media-continue-shopping" class="text-center"><?php echo __( 'or', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link( 'sell_media_item' ); ?>"><?php echo __( 'continue shopping', 'sell_media' ); ?> &raquo;</a></p>
+            <?php
+            $settings = sell_media_get_plugin_options();
+            if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
+                <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.' ); ?></p>
+                <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box" style="display:none">
+                    <span class="close">&times;</span>
+                    <div class="content">
+                        <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
+                    </div>
+                </div>
+                <div id="sell-media-empty-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
+            <?php endif; ?>
         </div>
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div>
@@ -178,7 +190,7 @@ function checkout_shortcode(){
     <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
     <?php return ob_get_clean();
 }
-add_shortcode( 'sell_media_checkout', 'checkout_shortcode' );
+add_shortcode( 'sell_media_checkout', 'sell_media_checkout_shortcode' );
 
 /**
  * Shows a list of everything user has downloaded.
