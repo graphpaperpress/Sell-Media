@@ -274,12 +274,49 @@ Class SellMediaPayments {
     }
 
 
+    /**
+    * Loop over products in payment meta and format them for plaintext email
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    *
+    * @return string
+    */
+    public function get_payment_products_unformatted( $post_id=null ){
+
+        $products = $this->get_products( $post_id );
+        $total = $this->get_meta_key( $post_id, $key='total' );
+        $text = null;
+
+        if ( $products ) foreach ( $products as $k => $v ) {
+            if ( $v['name'] )
+                $text .= '* ' . __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . "\n";
+            if ( $v['qty'] )
+                $text .= '* ' . __( 'QTY', 'sell_media' ) . ': ' . $v['qty'] . "\n";
+            if ( $v['type'] )
+                $text .= '* ' . __( 'TYPE', 'sell_media' ) . ': ' . $v['type'] . "\n";
+            if ( $v['size']['name'] )
+                $text .= '* ' . __( 'SIZE', 'sell_media' ) . ': ' . $v['size']['name'] . "\n";
+            if ( $v['license']['name'] )
+                $text .= '* ' . __( 'LICENSE', 'sell_media' ) . ': ' . $v['license']['name'] . "\n";
+            if ( $v['license']['description'] )
+                $text .= '* ' . __( 'LICENSE DESCRIPTION', 'sell_media' ) . ': ' . $v['license']['description'] . "\n";
+            if ( $v['total'] )
+                $text .= '* ' . __( 'SUBTOTAL', 'sell_media' ) . ': ' . $v['total'] . "\n";
+            if ( 'download' == $v['type'] )
+                $text .= '* ' . __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' .$this->get_download_link( $post_id, $v['id'] );
+            $text .= "\n\n";
+        }
+        if ( $total )
+            $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $total;
+
+        return $text;
+    }
+
 
  	/**
 	* Loop over products in payment meta and format them
 	*
 	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	* @param $key = product_id, product_name, product_price, product_license, product_qty, product_subtotal
 	*
 	* @return html
 	*/
@@ -575,7 +612,7 @@ Class SellMediaPayments {
             $message['body'] = $settings->success_email_body;
         }
 
-        $payments_table = $this->get_payment_products_formatted( $payment_id );
+        $payments_table = $this->get_payment_products_unformatted( $payment_id );
 
         $tags = array(
             '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
