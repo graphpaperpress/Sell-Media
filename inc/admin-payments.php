@@ -315,36 +315,6 @@ function sell_media_payments_callback_fn(){
 
 
 /**
- * Total Earnings
- *
- * @since 0.1
-*/
-
-function sell_media_total_revenue( $post_status=null ) {
-    $total = ( float ) 0;
-    $payments = get_transient( 'sell_media_total_revenue_' . $post_status );
-    if ( false === $payments || '' === $payments ) {
-        $args = array(
-            'mode' => 'live',
-            'post_type' => 'sell_media_payment',
-            'posts_per_page' => -1,
-            'post_status' => $post_status,
-            'meta_key' => '_sell_media_payment_amount'
-        );
-        set_transient( 'sell_media_total_revenue_' . $post_status, $payments, 1800 );
-    }
-    $payments = get_posts( $args );
-    if ( $payments ) {
-        foreach( $payments as $payment ) {
-            $subtotal = get_post_meta( $payment->ID, '_sell_media_payment_amount', true );
-            $total += $subtotal;
-        }
-    }
-    return number_format( ( float ) $total, 2, '.', '' );
-}
-
-
-/**
  * Callback function to print out the payments report page
  *
  * @access public
@@ -476,6 +446,19 @@ function sell_media_reports_callback_fn(){
     </div>
 <?php }
 
+
+/**
+ * Total Earnings
+ *
+ * @since 0.1
+*/
+
+function sell_media_total_revenue( $post_status=null ) {
+    $p = new SellMediaPayments;
+    return $p->get_total_payments( $post_status );
+}
+
+
 /**
  *  Function to print out total payments by date
  *
@@ -484,25 +467,8 @@ function sell_media_reports_callback_fn(){
  * @return html
  */
 function sell_media_get_sales_by_date( $day = null, $month_num, $year ) {
-    $args = array(
-        'post_type' => 'sell_media_payment',
-        'posts_per_page' => -1,
-        'year' => $year,
-        'monthnum' => $month_num,
-        'post_status' => 'publish'
-    );
-    if( ! empty( $day ) )
-        $args['day'] = $day;
-
-    $sales = get_posts( $args );
-    $total = 0;
-    if( $sales ) {
-        foreach ( $sales as $sale ) {
-            $payment_amount = get_post_meta( $sale->ID, '_sell_media_payment_amount', true );
-            $total = $total + $payment_amount;
-        }
-    }
-    return $total;
+    $p = new SellMediaPayments;
+    return $p->get_payments_by_date( $day, $month_num, $year );
 }
 
 /**

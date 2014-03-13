@@ -208,6 +208,73 @@ Class SellMediaPayments {
     }
 
 
+    /**
+    * Get all payments made at store, ever
+    *
+    * @param $email (string) The email to check
+    *
+    * @return (array) $purchases
+    */
+    public function get_total_payments( $post_status=null ){
+
+        $total = ( float ) 0;
+        $payments = get_transient( 'sell_media_total_revenue_' . $post_status );
+        
+        if ( false === $payments || '' === $payments ) {
+
+            $args = array(
+                'mode' => 'live',
+                'post_type' => 'sell_media_payment',
+                'post_status' => $post_status,
+                'meta_key' => '_sell_media_payment_meta',
+                'posts_per_page' => -1
+            );
+            set_transient( 'sell_media_total_revenue_' . $post_status, $payments, 1800 );
+        }
+
+        $payments = get_posts( $args );
+        
+        if ( $payments ) foreach ( $payments as $payment ) {
+            $subtotal = $this->get_meta_key( $payment->ID, 'total' );
+            $total += $subtotal;
+        }
+
+        return number_format( ( float ) $total, 2, '.', '' );
+    }
+
+
+    /**
+     *  Function to print out total payments by date
+     *
+     * @access public
+     * @since 1.2
+     * @return html
+     */
+    public function get_payments_by_date( $day = null, $month_num, $year ) {
+        
+        $args = array(
+            'post_type' => 'sell_media_payment',
+            'posts_per_page' => -1,
+            'year' => $year,
+            'monthnum' => $month_num,
+            'post_status' => 'publish'
+        );
+        if ( ! empty( $day ) )
+            $args['day'] = $day;
+
+        $payments = get_posts( $args );
+
+        $total = 0;
+        if ( $payments ) foreach ( $payments as $payment ) {
+            $subtotal = $this->get_meta_key( $payment->ID, 'total' );
+            $total += $subtotal;
+        }
+
+        return $total;
+    }
+
+
+
  	/**
 	* Loop over products in payment meta and format them
 	*

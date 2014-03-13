@@ -12,7 +12,7 @@ if ( $version <= '1.8' ){
     $s = new SellMediaStripe;
 
     $args = array(
-        'post_type' => 'sell_media_payments',
+        'post_type' => 'sell_media_payment',
         'posts_per_page' => -1,
         'post_status' => 'any'
     );
