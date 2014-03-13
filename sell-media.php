@@ -655,7 +655,7 @@ class SellMedia {
                 ),
             'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
             'tax' => ( empty( $settings->tax ) ) ? 0 : $settings->tax_rate,
-            'shipping' => apply_filters( 'sell_media_shipping', 0 ) // should paypal force buyers add address
+            'shipping' => apply_filters( 'sell_media_shipping', 0 ) // should PayPal force buyers add address
         ) );
     }
 
