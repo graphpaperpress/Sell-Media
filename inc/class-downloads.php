@@ -165,9 +165,18 @@ Class SellMediaDownload {
 
             if ( $product_id == $product['id'] ){
 
+                // Since we no longer check if the image sold is available in the download sizes
+                // we allow the buyer to download the original image if the size they purchased
+                // is larger than the original image i.e., they can purchase a size they can never
+                // download.
+                //
+                // Hence if they paid for the original, OR they paid for a larger image than
+                // available they get the original image.
+                $confirmed_size = $image_obj->get_downloadable_size( $product_id, $product['size']['id'] );
+
                 // If this the customer purchased the original size, just download it and
                 // set the filename to null
-                if ( $product['size']['id'] === 'original' ){
+                if ( $confirmed_size == 'original' || $product['size']['id'] === 'original' ){
                     $filename = null;
                     $file_download = $this->protected_file_path( $product_id );
                 }
@@ -175,7 +184,7 @@ Class SellMediaDownload {
                 // If this is not an original size we generated the file download
                 // along with adding the download size to the file name
                 else {
-                    $confirmed_size = $image_obj->get_downloadable_size( $product_id, $product['size']['id'] );
+
                     if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
                         exit;
 

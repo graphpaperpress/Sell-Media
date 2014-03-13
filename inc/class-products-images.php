@@ -283,7 +283,14 @@ class SellMediaImages extends SellMediaProducts {
 
         // return available size for a given product
         else {
-            $sizes = $download_sizes[ $term_id ];
+            // Since we no longer check if the image sold is available in the download sizes
+            // we allow the buyer to download the original image if the size they purchased
+            // is larger than the original image i.e., they can purchase a size they can never
+            // download.
+            //
+            // Hence if they paid for the original, OR they paid for a larger image than
+            // available they get the original image.
+            $sizes = empty( $download_sizes[ $term_id ] ) ? 'original' : $download_sizes[ $term_id ];
         }
 
         return $sizes;
