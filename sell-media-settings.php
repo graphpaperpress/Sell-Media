@@ -405,7 +405,7 @@ $options = array(
         "since" => "1.0.",
         "id" => "payment_section_1",
         "type" => "select",
-        "default" => "USA",
+        "default" => "USD",
         "valid_options" => sell_media_currencies()
         ),
     "paypal_additional_test_email" => array(
