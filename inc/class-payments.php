@@ -608,7 +608,7 @@ Class SellMediaPayments {
         $message['from_email'] = get_option( 'admin_email' );
 
         // send admins and buyers different email subject and body
-        if ( $email = $message['from_email'] ) {
+        if ( $email == $message['from_email'] ) {
 
             $message['subject'] = __( 'New sale notification', 'sell_media' );
             $message['body'] = apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
