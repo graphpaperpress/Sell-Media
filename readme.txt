@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.7
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -211,9 +211,28 @@ Action hooks available:
 
 == Upgrade Notice ==
 
-* Double check your Sell Media Settings after upgrading
+* You must enable Auto Return Payment Data Transfer in PayPal for purchases to be recorded. See readme.txt for instructions.
 
 == Changelog ==
+
+= 1.8 =
+* Feature: UI changes for responsive/mobile support
+* Feature: Tax suport
+* Feature: Added 3 shipping methods for prints
+* Tweak: sellMediaCart js now powers cart
+* Tweak: Removed $_SESSION cart
+* Tweak: Validate prices before sending to payment gateway
+* Tweak: Standardize data storage for payment meta _sell_media_payment_meta
+* Tweak: Responsive grids
+* Tweak: Checkout page reworked
+* Tweak: Improved emails
+* Tweak: New classes for all major parts of plugin
+* Tweak: Derive buyer data from payment gateway
+* Tweak: Publish paid purchases only
+* Tweak: Translations updates
+* Bug: Ajax setup
+* Bug: Pending payments
+* Bug: Conflict with JetPack infinite scroll
 
 = 1.7 =
 * Bug: Fixed issue with price groups not appearing in the drop down

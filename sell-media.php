@@ -62,6 +62,7 @@ class SellMedia {
         add_action( 'pre_get_posts', array( &$this, 'collection_password_check' ) );
         add_action( 'wp_footer', array( &$this, 'footer' ) );
         add_action( 'parse_query', array( &$this, 'search_warning_surpression' ) );
+        add_action( 'plugins_loaded', array( &$this, 'textdomain' ) );
 
         if ( ! is_admin() ){
             add_filter( 'posts_orderby', array( &$this, 'order_by') );
@@ -899,8 +900,15 @@ class SellMedia {
         if ( $wp_query->is_post_type_archive && $wp_query->is_tax )
             $wp_query->is_post_type_archive = false;
     }
-} // end class
 
-load_plugin_textdomain( 'sell_media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    /**
+     * Make plugin translatable
+     * @since 1.8
+     */
+    public function textdomain(){
+        load_plugin_textdomain( 'sell_media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    }
+
+} // end class
 
 $a = new SellMedia();

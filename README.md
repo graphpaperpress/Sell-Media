@@ -240,6 +240,25 @@ Contributors
 Changelog
 ---------
 
+1.8
+---
+* Feature: UI changes for responsive/mobile support
+* Feature: Tax suport
+* Feature: Added 3 shipping methods for prints
+* Tweak: sellMediaCart js now powers cart
+* Tweak: Removed $_SESSION cart
+* Tweak: Validate prices before sending to payment gateway
+* Tweak: Standardize data storage for payment meta _sell_media_payment_meta
+* Tweak: Responsive grids
+* Tweak: Checkout page reworked
+* Tweak: Improved emails
+* Tweak: New classes for all major parts of plugin
+* Tweak: Derive buyer data from payment gateway
+* Tweak: Publish paid purchases only
+* Bug: Ajax setup
+* Bug: Pending payments
+* Bug: Conflict with JetPack infinite scroll
+
 1.7
 ---
 * Bug: Fixed issue with price groups not appearing in the drop down

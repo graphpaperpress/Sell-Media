@@ -3,6 +3,15 @@
 /**
  * Deprecated functions
  */
+function sell_media_item_has_taxonomy_terms( $post_id=null, $taxonomy=null ) {
+    return false;
+}
+function sell_media_country_list( $current=null, $req=false ){
+    return false;
+}
+function sell_media_us_states_list( $current=null, $req=false ){
+    return false;
+}
 function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
 
     $p = new SellMediaProducts;
@@ -13,11 +22,4 @@ function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
     } else {
         return $price;
     }
-}
-
-/**
- * Deprecated functions
- */
-function sell_media_item_has_taxonomy_terms( $post_id=null, $taxonomy=null ) {
-    return false;
 }
