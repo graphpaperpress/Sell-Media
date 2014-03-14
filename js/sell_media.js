@@ -83,6 +83,10 @@ jQuery(document).ready(function($){
         if (!$('.sell-media-dialog-box').is(':hidden')) popup();
     });
 
+    $(document).on('click', '.sellMediaCart_checkout', function(){
+        $(this).prop('disabled', true).text(sell_media.checkout_wait_text);
+    });
+
     /**
      * Hide our current search option when the user clicks off the input field
      */
