@@ -15,13 +15,13 @@ function sell_media_add_price_meta_box( $post_type ) {
                 'normal', // $context
                 'high'); // $priority
 
-    add_meta_box(
-                'sales_stats_meta_box', // $id
-                'Sales Stats', // $title
-                'sell_media_sales_stats', // $callback
-                'sell_media_item', // $page
-                'side', // $context
-                'high'); // $priority
+    // add_meta_box(
+    //             'sales_stats_meta_box', // $id
+    //             'Sales Stats', // $title
+    //             'sell_media_sales_stats', // $callback
+    //             'sell_media_item', // $page
+    //             'side', // $context
+    //             'high'); // $priority
 }
 add_action( 'add_meta_boxes', 'sell_media_add_price_meta_box' );
 
@@ -417,16 +417,15 @@ function sell_media_item_header( $columns ){
 }
 add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
 
-//Makes custom columns sortables
-add_filter( 'manage_edit-sell_media_item_sortable_columns', 'sell_media_sortable_column' );
+// Makes custom columns sortables
 function sell_media_sortable_column( $columns ) {
     $columns['sell_media_price'] = 'sell_media_price';
     $columns['author'] = 'author';
     return $columns;
 }
+add_filter( 'manage_edit-sell_media_item_sortable_columns', 'sell_media_sortable_column' );
 
-//Sort the custom columns
-add_filter( 'request', 'sell_media_column_orderby' );
+// Sort the custom columns
 function sell_media_column_orderby( $vars ) {
     if ( isset( $vars['orderby'] ) && 'sell_media_price' == $vars['orderby'] ) {
         $vars = array_merge( $vars, array(
@@ -441,6 +440,7 @@ function sell_media_column_orderby( $vars ) {
     }
     return $vars;
 }
+add_filter( 'request', 'sell_media_column_orderby' );
 
 
 /**

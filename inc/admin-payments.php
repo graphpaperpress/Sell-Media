@@ -32,12 +32,12 @@ function sell_media_add_payment_meta_boxes(){
         'sell_media_payment'
     );
 
-    // add_meta_box(
-    //     'meta_field_additional',
-    //     __( 'Additional Purchase Details', 'sell_media' ),
-    //     'sell_media_payment_additional_purchase_details',
-    //     'sell_media_payment'
-    // );
+    add_meta_box(
+        'meta_field_additional',
+        __( 'Additional Purchase Details', 'sell_media' ),
+        'sell_media_payment_additional_purchase_details',
+        'sell_media_payment'
+    );
 
     $screen = get_current_screen();
 
@@ -107,23 +107,51 @@ function sell_media_payment_additional_purchase_details( $post ){
 
     $p = new SellMediaPayments;
     $args = $p->get_meta( $post->ID );
-    echo '<pre style="overflow:hidden">';
-    print_r( $args );
-    echo '</pre>'; ?>
+
+    ?>
+    
     <p><?php _e( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
     <table class="wp-list-table widefat" cellspacing="0">
         <tbody>
             <?php if ( $args ) : foreach( $args as $k => $v ) : ?>
-                <?php if ( is_array( $k ) ) : ?>
-                    <?php foreach( $k['products'] as $product ) : ?>
-                        <tr>
-                            <td><?php _e( 'Product', 'sell_media' ); ?></td><td><?php echo $product['name']; ?>, <?php echo $product['type']; ?>, <?php echo $product['size']['name']; ?>, <?php echo $product['license']['name']; ?>, <?php _e( 'Qty:', 'sell_media' ); ?> <?php echo $product['quantity']; ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else : ?>
+                <?php if ( ! is_array( $v ) ) : ?>
                     <tr>
-                        <td><?php echo $k; ?></td><td><?php echo $v; ?></td>
+                        <td><?php echo ucwords( str_replace('_', ' ', $k ) ); ?></td><td><?php echo $v; ?></td>
                     </tr>
+                <?php else : ?>
+                    <?php $i = 0; ?>
+                    <?php foreach( $v as $name => $value ) : $i++ ?>
+                        <?php if ( ! is_array( $name ) ) : ?>
+                            <tr>
+                                <td><?php _e( 'Product', 'sell_media' ); ?> <?php echo $i; ?></td>
+                                <td>
+                                    <ul>
+                                        <?php if ( $value['name'] ) : ?>
+                                            <li><?php _e( 'Name', 'sell_media' ); ?>: <?php echo $value['name']; ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $value['id'] ) : ?>
+                                            <li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php echo admin_url(); ?>post.php?post=<?php echo $value['id']; ?>&amp;action=edit"><?php echo $value['id']; ?></a></li>
+                                        <?php endif; ?>
+                                        <?php if ( $value['type'] ) : ?>
+                                            <li><?php _e( 'Type', 'sell_media' ); ?>: <?php echo $value['type']; ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $value['size']['name'] ) : ?>
+                                            <li><?php _e( 'Size', 'sell_media' ); ?>: <?php echo $value['size']['name']; ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $value['license']['name'] ) : ?>
+                                            <li><?php _e( 'License', 'sell_media' ); ?>: <?php echo $value['license']['name']; ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $value['qty'] ) : ?>
+                                            <li><?php _e( 'Qty', 'sell_media' ); ?>: <?php echo $value['qty']; ?></li>
+                                        <?php endif; ?>
+                                        <?php if ( $value['total'] ) : ?>
+                                            <li><?php _e( 'Subtotal', 'sell_media' ); ?>: <?php echo sell_media_get_currency_symbol(); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 <?php endif; ?>
             <?php endforeach; else : ?>
                 <tr>

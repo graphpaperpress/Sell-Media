@@ -424,6 +424,7 @@ Class SellMediaPayments {
             // Assign our contact info
             if ( array_key_exists( $v, $paypal_args ) ){
                 $tmp[ $k ] = $paypal_args[ $v ];
+            // Assign the products
             } else {
                 for ( $i=1; $i <= $paypal_args['num_cart_items']; $i++ ) {
                     $tmp_products = array(
@@ -607,7 +608,7 @@ Class SellMediaPayments {
         $message['from_email'] = get_option( 'admin_email' );
 
         // send admins and buyers different email subject and body
-        if ( get_option( 'admin_email' ) == $email ) {
+        if ( $email = $message['from_email'] ) {
 
             $message['subject'] = __( 'New sale notification', 'sell_media' );
             $message['body'] = apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
