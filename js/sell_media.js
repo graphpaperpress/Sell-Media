@@ -23,7 +23,7 @@ jQuery(document).ready(function($){
     $(document).on('click','.sell-media-cart-trigger',function(){
 
         // calculate distance to screen top
-        var top = $(document).scrollTop() + 50;
+        var top = $(document).scrollTop() + 100;
         $('.sell-media-dialog-box').css('top', top);
         // calculate document size to center cart
         popup();
@@ -81,6 +81,10 @@ jQuery(document).ready(function($){
     $(window).resize(function(){
         //only do it if the dialog box is not hidden
         if (!$('.sell-media-dialog-box').is(':hidden')) popup();
+    });
+
+    $(document).on('click', '.sellMediaCart_checkout', function(){
+        $(this).prop('disabled', true).text(sell_media.checkout_wait_text);
     });
 
     /**
@@ -188,11 +192,6 @@ jQuery(document).ready(function($){
                 attr: "total",
                 label: sell_media.cart_labels.sub_total,
                 view: "currency"
-            },
-            {
-                view: "remove",
-                label: false,
-                text: "Remove"
             }]
     });
 

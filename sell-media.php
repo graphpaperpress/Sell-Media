@@ -652,12 +652,14 @@ class SellMedia {
                 'license' => __( 'License', 'sell_media' ),
                 'price' => __( 'Price', 'sell_media' ),
                 'qty' => __( 'Qty', 'sell_media' ),
-                'sub_total' => __( 'Sub Total', 'sell_media' )
+                'sub_total' => __( 'Subtotal', 'sell_media' )
                 ),
             'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
             'tax' => ( empty( $settings->tax ) ) ? 0 : $settings->tax_rate,
             'shipping' => apply_filters( 'sell_media_shipping', 0 ), // should PayPal force buyers add address
-            'cart_error' => __('There was an error loading the cart data. Please contact the site owner.','sell_media')
+            'cart_error' => __( 'There was an error loading the cart data. Please contact the site owner.', 'sell_media' ),
+            'checkout_text' => __( 'Checkout Now', 'sell_media' ),
+            'checkout_wait_text' => __( 'Please wait...', 'sell_media' )
         ) );
     }
 
@@ -878,14 +880,17 @@ class SellMedia {
     /*
      * Put the cart in the footer
      */
-    public function footer(){ ?>
+    public function footer(){
+        $settings = sell_media_get_plugin_options();
+        if ( ! is_page( $settings->checkout_page ) || ! is_page( $settings->login_page ) || ! is_page( $settings->dashboard_page ) ) : ?>
 
             <div id="sell-media-dialog-box" class="sell-media-dialog-box" style="display:none">
                 <div id="sell-media-dialog-box-target"></div>
             </div>
             <div id="sell-media-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
 
-    <?php }
+        <?php endif;
+    }
 
     /**
      * Adjust wp_query for when search is submitted error no longer shows in "general-template.php"

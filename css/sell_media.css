@@ -7,39 +7,54 @@
   max-width: 50px;
   max-height: 50px;
 }
+.sellMediaCart_items th {
+  font-weight: bold;
+}
 .sellMediaCart_items td {
   vertical-align: middle;
 }
-
 .sellMediaCart_items td.item-decrement {
   text-align: right;
   padding: 6px 0 6px 10px;
-  }
-
+}
 .sellMediaCart_items td.item-increment {
   text-align: left;
-  }
-
+  margin-left: 0;
+}
 .sellMediaCart_items td.item-quantity {
   text-align: center;
   padding: 6px 0;
-  }
-
+  width: 20px;
+}
 .sellMediaCart_items td.item-decrement a,
 .sellMediaCart_items td.item-increment a {
+  background: #eee;
+  border: 1px solid #ddd;
+  padding: 3px 8px;
+  border-radius: 50%;
+  font-size: 10px;
   text-decoration: none;
-  }
-
-.sell-media-totals,
-.sell-media-checkout-button {
+}
+.sellMediaCart_items td.item-decrement a:hover,
+.sellMediaCart_items td.item-increment a:hover {
+  background: #ddd;
+  border-color: #ccc;
+}
+.sell-media-totals {
   margin: 10px 0;
   float: right;
   clear: both;
+  width: 200px;
 }
-.sell-media-itemize {
-  width: 100px;
-  margin-right: 10px;
-  display: inline-block;
+.sell-media-totals-table {
+  border-top: 5px solid #eee;
+  border-bottom: 5px solid #eee;
+  padding: 20px 0;
+}
+.sell-media-value,
+.sellMediaCart_items th.item-total,
+.sellMediaCart_items td.item-total {
+  text-align: right;
 }
 .sell-media-bold {
   font-weight: bold;
@@ -56,12 +71,8 @@
 .hide {
   display: none;
 }
-.sell-media-totals,
-.sell-media-checkout-button {
-  margin: 10px 0;
-  float: right;
-  clear: both;
-  width: 200px;
+#sell_media_payment_gateway input {
+  margin-right: 10px;
 }
 .sell-media-checkout-button .stripe-button-el {
   margin-bottom: 10px;
@@ -72,6 +83,7 @@
 }
 input[type="submit"].sell-media-button,
 .sell-media-button,
+a.sell-media-button:link,
 #sell-media-submit {
   border: none;
   background: #555;
@@ -81,7 +93,7 @@ input[type="submit"].sell-media-button,
   color: #FFF;
   text-align: center;
   text-transform: none;
-  text-decoration: none;
+  text-decoration: none !important;
   font-size: 14px;
   border-radius: 3px;
 }
