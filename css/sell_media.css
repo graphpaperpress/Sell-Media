@@ -30,10 +30,12 @@
 .sellMediaCart_items td.item-increment a {
   background: #eee;
   border: 1px solid #ddd;
-  padding: 3px 8px;
-  border-radius: 50%;
+  padding: 0 1px;
   font-size: 10px;
   text-decoration: none;
+  width: 14px;
+  display: inline-block;
+  text-align: center;
 }
 .sellMediaCart_items td.item-decrement a:hover,
 .sellMediaCart_items td.item-increment a:hover {
