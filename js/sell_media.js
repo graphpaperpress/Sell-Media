@@ -23,7 +23,7 @@ jQuery(document).ready(function($){
     $(document).on('click','.sell-media-cart-trigger',function(){
 
         // calculate distance to screen top
-        var top = $(document).scrollTop() + 50;
+        var top = $(document).scrollTop() + 100;
         $('.sell-media-dialog-box').css('top', top);
         // calculate document size to center cart
         popup();
