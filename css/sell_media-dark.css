@@ -3,6 +3,20 @@
 .sell-media-subtotal {
 	border-bottom: 1px solid #111;
 }
+.sellMediaCart_items td.item-decrement a,
+.sellMediaCart_items td.item-increment a {
+  background: #333;
+  border: 1px solid #444;
+}
+.sellMediaCart_items td.item-decrement a:hover,
+.sellMediaCart_items td.item-increment a:hover {
+  background: #555;
+  border: 1px solid #666;
+}
+.sell-media-totals-table {
+  border-top: 5px solid #333;
+  border-bottom: 5px solid #333;
+}
 input, textarea {
 	color: #111;
 }

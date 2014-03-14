@@ -150,40 +150,46 @@ function sell_media_checkout_shortcode(){
     <div id="sell-media-checkout-cart" style="display:none;">
         <div class="sellMediaCart_items"></div>
         <div class="sell-media-totals group">
-            <div class="subtotal">
-                <span class="sell-media-itemize"><?php _e( 'Subtotal', 'sell_media' ); ?>:</span> <span class="sellMediaCart_total"></span>
-            </div>
-            <div class="tax">
-                <span class="sell-media-itemize"><?php _e( 'Tax', 'sell_media' ); ?>: <?php if ( ! empty( $settings->tax ) ) echo '(' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span> <span class="sellMediaCart_tax"></span>
-            </div>
-            <div class="shipping">
-                <span class="sell-media-itemize"><?php _e( 'Shipping', 'sell_media' ); ?>:</span> <span class="sellMediaCart_shipping"></span>
-            </div>
-            <div class="total sell-media-bold">
-                <span class="sell-media-itemize"><?php _e( 'Total', 'sell_media' ); ?>:</span> <span class="sellMediaCart_grandTotal"></span>
-            </div>
-        </div>
-        <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
-        <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
-        <div class="sell-media-checkout-button group">
-            <?php do_action( 'sell_media_above_checkout_button' ); ?>
-            <p><a href="javascript:void(0)" class="sellMediaCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
-            <p id="sell-media-continue-shopping" class="text-center"><?php echo __( 'or', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link( 'sell_media_item' ); ?>"><?php echo __( 'continue shopping', 'sell_media' ); ?> &raquo;</a></p>
-            <?php
-            $settings = sell_media_get_plugin_options();
-            if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
-                <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.' ); ?></p>
-                <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box" style="display:none">
-                    <span class="close">&times;</span>
-                    <div class="content">
-                        <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
+            <table id="sell-media-totals-table" class="sell-media-totals-table">
+                <tr class="subtotal">
+                    <td class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</td>
+                    <td class="sell-media-value"><span class="sellMediaCart_total"></span></td>
+                </tr>
+                <tr class="shipping">
+                    <td class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</td>
+                    <td class="sell-media-value"><span class="sellMediaCart_tax"></span></td>
+                </tr>
+                <tr class="shipping">
+                    <td class="sell-media-key"><?php _e( 'Shipping', 'sell_media' ); ?>:</td>
+                    <td class="sell-media-value"><span class="sellMediaCart_shipping"></span></td>
+                </tr>
+                <tr class="total sell-media-bold">
+                    <td class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</td>
+                    <td class="sell-media-value"><span class="sellMediaCart_grandTotal"></span></td>
+                </tr>
+            </table>
+            <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
+            <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
+            <div class="sell-media-checkout-button group">
+                <?php do_action( 'sell_media_above_checkout_button' ); ?>
+                <p><a href="javascript:void(0)" class="sellMediaCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
+                <p id="sell-media-continue-shopping" class="text-center"><?php echo __( 'or', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link( 'sell_media_item' ); ?>"><?php echo __( 'continue shopping', 'sell_media' ); ?> &raquo;</a></p>
+                <?php
+                $settings = sell_media_get_plugin_options();
+                if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
+                    <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.' ); ?></p>
+                    <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box" style="display:none">
+                        <span class="close">&times;</span>
+                        <div class="content">
+                            <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
+                        </div>
                     </div>
-                </div>
-                <div id="sell-media-empty-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
-            <?php endif; ?>
-        </div>
+                    <div id="sell-media-empty-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
+                <?php endif; ?>
+            </div>
+        </div><!-- .sell-media-totals -->
         <?php do_action( 'sell_media_below_registration_form' ); ?>
-    </div>
+    </div><!-- #sell-media-checkout-cart -->
     <p id="sell-media-empty-cart-message" style="display:none;">
         <?php echo sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">Continue shopping &raquo;</a>' ); ?>
     </p>

@@ -188,11 +188,6 @@ jQuery(document).ready(function($){
                 attr: "total",
                 label: sell_media.cart_labels.sub_total,
                 view: "currency"
-            },
-            {
-                view: "remove",
-                label: false,
-                text: "Remove"
             }]
     });
 
