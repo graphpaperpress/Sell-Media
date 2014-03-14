@@ -287,8 +287,11 @@ table.sell-media-products {
   padding: 25px;
 }
 .sell-media-dialog-box figure {
+  margin: 0;
+  padding: 0;
   text-align: center;
   width: 100%;
+  background: transparent;
 }
 .sell-media-dialog-box figcaption,
 .sell-media-dialog-box footer {
@@ -297,11 +300,17 @@ table.sell-media-products {
   text-align: center;
 }
 .sell-media-dialog-box img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 100%;
   width: auto;
   height: auto;
   max-height: 167px;
 }
+.sell-media-dialog-box img.wp-post-image {
+  float: none;
+} 
 .sell-media-dialog-box section {
   margin: 20px 0 0;
 }

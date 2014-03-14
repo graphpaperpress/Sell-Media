@@ -878,17 +878,14 @@ class SellMedia {
     /*
      * Put the cart in the footer
      */
-    public function footer(){
-
-        if ( is_home() || is_single() || is_archive() ) : ?>
+    public function footer(){ ?>
 
             <div id="sell-media-dialog-box" class="sell-media-dialog-box" style="display:none">
                 <div id="sell-media-dialog-box-target"></div>
             </div>
             <div id="sell-media-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
 
-        <?php endif;
-    }
+    <?php }
 
     /**
      * Adjust wp_query for when search is submitted error no longer shows in "general-template.php"
