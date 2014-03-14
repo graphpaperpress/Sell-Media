@@ -288,26 +288,28 @@ Class SellMediaPayments {
         $text = null;
 
         if ( $products ) foreach ( $products as $k => $v ) {
+            $text .= '<ul style="margin: 20px 0 20px 0; padding: 20px 0 0 0; border-top: 1px solid #cccccc; list-style-type: disc; list-style-position: inside;">';
             if ( $v['name'] )
-                $text .= '* ' . __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . "\n";
-            if ( $v['qty'] )
-                $text .= '* ' . __( 'QTY', 'sell_media' ) . ': ' . $v['qty'] . "\n";
-            if ( $v['type'] )
-                $text .= '* ' . __( 'TYPE', 'sell_media' ) . ': ' . $v['type'] . "\n";
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . '</li>';
             if ( $v['size']['name'] )
-                $text .= '* ' . __( 'SIZE', 'sell_media' ) . ': ' . $v['size']['name'] . "\n";
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'SIZE', 'sell_media' ) . ': ' . $v['size']['name'] . '</li>';
             if ( $v['license']['name'] )
-                $text .= '* ' . __( 'LICENSE', 'sell_media' ) . ': ' . $v['license']['name'] . "\n";
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'LICENSE', 'sell_media' ) . ': ' . $v['license']['name'] . '</li>';
             if ( $v['license']['description'] )
-                $text .= '* ' . __( 'LICENSE DESCRIPTION', 'sell_media' ) . ': ' . $v['license']['description'] . "\n";
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'LICENSE DESCRIPTION', 'sell_media' ) . ': ' . $v['license']['description'] . '</li>';
+            if ( $v['qty'] )
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'QTY', 'sell_media' ) . ': ' . $v['qty'] . '</li>';
+            if ( $v['type'] )
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'TYPE', 'sell_media' ) . ': ' . $v['type'] . '</li>';
             if ( $v['total'] )
-                $text .= '* ' . __( 'SUBTOTAL', 'sell_media' ) . ': ' . $v['total'] . "\n";
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'SUBTOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $v['total'], 2, '.', ',' ) . '</li>';
             if ( 'download' == $v['type'] )
-                $text .= '* ' . __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' .$this->get_download_link( $post_id, $v['id'] );
-            $text .= "\n\n";
+                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'] ) . '</li>';
+            do_action( 'sell_media_after_products_unformatted_list', $post_id );
+            $text .= '</ul>';
         }
-        if ( $total )
-            $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $total;
+        //if ( $total )
+            $text .= '<p style="border: 1px solid #cccccc; margin: 20px 0; padding: 20px"><strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '</strong></p>';
 
         return $text;
     }
@@ -598,30 +600,36 @@ Class SellMediaPayments {
      */
     public function email_receipt( $payment_id=null, $email=null ) {
 
+        $settings = sell_media_get_plugin_options();
+        $products = $this->get_payment_products_unformatted( $payment_id );
+
         $message['from_name'] = get_bloginfo( 'name' );
         $message['from_email'] = get_option( 'admin_email' );
 
-        $settings = sell_media_get_plugin_options();
-
         // send admins and buyers different email subject and body
         if ( get_option( 'admin_email' ) == $email ) {
+
             $message['subject'] = __( 'New sale notification', 'sell_media' );
-            $message['body'] = apply_filters( 'sell_media_email_admin_receipt_message', 'Congrats! You just made a sale. An email containing download links has just been sent to your customer, so no further action is required. Here are the details:' );
+            $message['body'] = apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
+            $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Customer', 'sell_media' ) . ': ' . $this->get_buyer_name( $payment_id ) . '</p>';
+            $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Address', 'sell_media' ) . ': ' . $this->get_buyer_address( $payment_id ) . '</p>';
+            $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Email', 'sell_media' ) . ': ' . $this->get_meta_key( $payment_id, 'email' ) . '</p>';
+            $message['body'] .= apply_filters( 'sell_media_email_admin_receipt_message', '<p style="margin: 10px 0;">An email containing download links has just been sent to your customer, so no further action is required. Here are the details that the customer received:</p>' );
+            $message['body'] .= $products;
+
         } else {
+
             $message['subject'] = $settings->success_email_subject;
             $message['body'] = $settings->success_email_body;
+            $tags = array(
+                '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
+                '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
+                '{email}'           => $this->get_meta_key( $payment_id, 'email' ),
+                '{download_links}'  => empty( $products ) ? null : $products
+            );
+            $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
+
         }
-
-        $payments_table = $this->get_payment_products_unformatted( $payment_id );
-
-        $tags = array(
-            '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
-            '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
-            '{email}'           => $this->get_meta_key( $payment_id, 'email' ),
-            '{download_links}'  => empty( $payments_table ) ? null : $payments_table
-        );
-
-        $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 
         $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
         $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
