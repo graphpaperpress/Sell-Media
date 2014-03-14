@@ -240,6 +240,14 @@ Contributors
 Changelog
 ---------
 
+= 1.8.1 =
+* Tweak: Checkout page styling
+* Tweak: Cart overlay top position
+* Bug: Set default currency to USD
+* Bug: Emails to buyers not always sending
+* Bug: Show cart markup on all pages, except checkout
+* Bug: Fatal error for countries list for reprints extension
+
 1.8
 ---
 * Feature: UI changes for responsive/mobile support

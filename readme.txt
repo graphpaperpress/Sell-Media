@@ -5,11 +5,11 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.8
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Sell, license and protect images, videos, audio and pdf's on your site.
+Sell photos, prints, videos and pdf's online through WordPress in seconds. Built by creatives, for creatives.
 
 == Description ==
 
@@ -214,6 +214,14 @@ Action hooks available:
 * You must enable Auto Return Payment Data Transfer in PayPal for purchases to be recorded. See readme.txt for instructions.
 
 == Changelog ==
+
+= 1.8.1 =
+* Tweak: Checkout page styling
+* Tweak: Cart overlay top position
+* Bug: Set default currency to USD
+* Bug: Emails to buyers not always sending
+* Bug: Show cart markup on all pages, except checkout
+* Bug: Fatal error for countries list for reprints extension
 
 = 1.8 =
 * Feature: UI changes for responsive/mobile support
