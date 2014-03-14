@@ -345,7 +345,6 @@ $options = array(
             )
     ),
 
-
     // Size & Price
     "default_price" => array(
         "tab" => "sell_media_size_settings",
@@ -387,7 +386,7 @@ $options = array(
         "tab" => "sell_media_payment_settings",
         "name" => "paypal_email",
         "title" => __("PayPal Email Address", "sell_media"),
-        'description' => sprintf( __('The email address used to collect PayPal payments. %1$s: You must setup IPN Notifications in PayPal to process transactions. %2$s. Here is the listener URL you need to add in PayPal: %3$s'), '<strong>'.__('IMPORTANT', 'sell_media').'</strong>', '<a href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup#id089EG030E5Z" target="_blank">Read PayPal instructions</a>', '<code>' . site_url( '?sell_media-listener=IPN' ) . '</code>'),
+        'description' => sprintf( __( 'Add the email address associated with your PayPal account above. %1$s You must complete the steps listed here to complete integration with PayPal: %2$s Here is the listener URL you need to add in PayPal: %3$s'), '<br /><br /><strong>'.__('IMPORTANT', 'sell_media').'</strong><br />', '<a href="https://github.com/graphpaperpress/sell-media#paypal-setup" target="_blank">Read PayPal setup instructions</a><br />', '<br />' . site_url( '?sell_media-listener=IPN' ) ),
         "default" => "",
         "section" => "payment_section_1",
         "since" => "1.0",
