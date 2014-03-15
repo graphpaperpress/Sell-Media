@@ -96,6 +96,7 @@ a.sell-media-button:link,
   text-align: center;
   text-transform: none;
   text-decoration: none !important;
+  text-shadow: none;
   font-size: 14px;
   border-radius: 3px;
 }
@@ -368,6 +369,7 @@ table.sell-media-products {
   position: absolute;
   cursor: pointer;
   font-size: 20px;
+  line-height: 1;
   text-align: center;
   width: 20px;
 }

@@ -7,12 +7,14 @@ jQuery(document).ready(function($){
         var maskHeight = $(document).height();
         var maskWidth = $(window).width();
 
-        // calculate the values for center alignment
+        // calculate the values for center alignment and position from top
         var dialogLeft = (maskWidth/2) - ($('.sell-media-dialog-box').width()/2);
+        var dialogTop = $(document).scrollTop() + 100;
 
-        // assign values to the overlay and dialog box
+        // assign values to the overlay and dialog box and show overlay and dialog
         $('.sell-media-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
-        $('.sell-media-dialog-box').css({left:dialogLeft}).show();
+        $('.sell-media-dialog-box').css({left:dialogLeft, top:dialogTop}).show();
+        $('.sell-media-dialog-overlay, .sell-media-dialog-box').show();
 
     }
 
@@ -21,14 +23,7 @@ jQuery(document).ready(function($){
      * launch our dialog, and send an Ajax request to load our cart form.
      */
     $(document).on('click','.sell-media-cart-trigger',function(){
-
-        // calculate distance to screen top
-        var top = $(document).scrollTop() + 100;
-        $('.sell-media-dialog-box').css('top', top);
-        // calculate document size to center cart
         popup();
-        // show the overlay and cart dialog
-        $('.sell-media-dialog-overlay, .sell-media-dialog-box').show();
         // show a loading message while doing ajax request
         $('#sell-media-dialog-box-target').html('<div class="sell-media-ajax-loader">Loading...</div>');
         // send ajax request for product in shopping cart
@@ -45,10 +40,10 @@ jQuery(document).ready(function($){
                 $('#sell-media-dialog-box-target').fadeIn().html(msg);
                 if ($('#download #sell_media_size_select').length) {
                     $('#sell_media_license_select').attr('disabled', true);
-                };
+                }
                 if ($('#download #sell_media_size_select').length || $('#download #sell_media_license_select').length) {
                     $('.sell-media-button').attr('disabled', true);
-                };
+                }
             }
         });
 
@@ -59,15 +54,7 @@ jQuery(document).ready(function($){
      * launch our dialogto load the terms of service.
      */
     $(document).on('click','.sell-media-empty-dialog-trigger',function(){
-
-        // calculate distance to screen top
-        var top = $(document).scrollTop() + 50;
-        $('.sell-media-dialog-box').css('top', top);
-        // calculate document size to center cart
         popup();
-        // show the overlay and cart dialog
-        $('.sell-media-dialog-overlay, .sell-media-dialog-box').show();
-
     });
 
     $(document).on('click','.sell-media-dialog-overlay, .sell-media-dialog-box .close',function(){

@@ -178,13 +178,6 @@ function sell_media_checkout_shortcode(){
                 $settings = sell_media_get_plugin_options();
                 if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
                     <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.' ); ?></p>
-                    <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box" style="display:none">
-                        <span class="close">&times;</span>
-                        <div class="content">
-                            <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
-                        </div>
-                    </div>
-                    <div id="sell-media-empty-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
                 <?php endif; ?>
             </div>
         </div><!-- .sell-media-totals -->
