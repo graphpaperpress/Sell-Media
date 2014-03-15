@@ -240,6 +240,13 @@ Contributors
 Changelog
 ---------
 
+= 1.8.3 =
+* Bug: PayPal live mode or test mode
+
+= 1.8.2 =
+* Bug: Fix price verification for PayPal
+* Bug: Only add tax if enabled
+
 = 1.8.1 =
 * Tweak: Checkout page styling
 * Tweak: Cart overlay top position

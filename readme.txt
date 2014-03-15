@@ -215,6 +215,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.8.3 =
+* Bug: PayPal live mode or test mode
+
 = 1.8.2 =
 * Bug: Fix price verification for PayPal
 * Bug: Only add tax if enabled

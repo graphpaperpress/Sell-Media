@@ -4,14 +4,14 @@
 Plugin Name: Sell Media
 Plugin URI: http://graphpaperpress.com/plugins/sell-media/
 Description: A plugin for selling digital downloads and reprints.
-Version: 1.8.2
+Version: 1.8.3
 Author: Graph Paper Press
 Author URI: http://graphpaperpress.com
 Author Email: support@graphpaperpress.com
 License: GPL
 */
 
-define( 'SELL_MEDIA_VERSION', '1.8.2' );
+define( 'SELL_MEDIA_VERSION', '1.8.3' );
 define( 'SELL_MEDIA_PLUGIN_FILE', plugin_dir_path(__FILE__) . 'sell-media.php' );
 
 include( dirname(__FILE__) . '/inc/class-customer.php' );
@@ -636,7 +636,7 @@ class SellMedia {
             'error' => array(
                 'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
                 ),
-            'sandbox' => ( $settings->test_mode == 1 ) ? 'true' : 'false',
+            'sandbox' => ( $settings->test_mode == 1 ) ? true : false,
             'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
             // set this in stripe extension? and make use testing or live key
             'stripe_public_key' => ( empty( $settings->stripe_test_publishable_key ) ) ? null : $settings->stripe_test_publishable_key,

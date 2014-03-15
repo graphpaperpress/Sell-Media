@@ -91,8 +91,8 @@ $options = array(
     "test_mode" => array(
         "tab" => "sell_media_general_settings",
         "name" => "test_mode",
-        "title" => __("Test Mode","sell_media"),
-        "description" => sprintf( __("To accept real payments, select No. To fully use test mode, you must have %s."), "<a href='https://developer.paypal.com/' target='_blank'>PayPal sandbox (test) account</a>" ),
+        "title" => __("Mode","sell_media"),
+        "description" => sprintf( __("To accept real payments, select Live Mode. If you want to do test payments, select Test Mode. In order to fully use Test Mode, you must have %s."), "<a href='https://developer.paypal.com/' target='_blank'>PayPal sandbox (test) account</a>" ),
         "section" => "general_plugin_section_1",
         "since" => "1.0",
         "id" => "general_plugin_section_1",
@@ -101,11 +101,11 @@ $options = array(
         "valid_options" => array(
             1 => array(
                 'name' => 1,
-                'title' => 'Yes',
+                'title' => 'Test Mode',
                 ),
             0 => array(
                 'name' => 0,
-                'title' => 'No'
+                'title' => 'Live Mode'
                 )
         )
     ),
