@@ -81,6 +81,26 @@ Class SellMediaPayments {
     }
 
     /**
+    * Get an array of products in the cart and determine if specific types exist
+    *
+    * @param $products (array) and array of products to test
+    * @param $type = download, print (reprints extension)
+    *
+    * @return (bool) true/false
+    */
+    public function has_type( $products=null, $type=null ){
+        $types = array();
+        foreach ( $products as $product ) {
+            $types[] = $this->get_meta_key( $post_id, 'type' );
+        }
+        if ( in_array( $type, $types ) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
     * Get $post_id by querying a specific meta key value
     *
     * @param $key (string) The key to check
@@ -680,10 +700,13 @@ Class SellMediaPayments {
         for( $i=1; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
-            // $qty = $cart[ 'quantity_' . $i ];
+            //$qty = $cart[ 'quantity_' . $i ];
             $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
             $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
-            $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
+            if ( ! isset( $cart[ 'os5_' . $i ] ) || empty( $cart[ 'os5_' . $i ] ) )
+                $license_id = null;
+            else
+                $license_id = $cart[ 'os5_' . $i ];
 
             // set price taxonomy if product is download or reprint
             if ( 'download' == $type ){
@@ -693,16 +716,12 @@ Class SellMediaPayments {
                 $shipping_flag = true;
             }
 
-            // download with assigned license
+            // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
-                $amount = $p->markup_amount(
-                    $product_id,
-                    $price_id,
-                    $license_id
-                    ) + $p->get_price( $product_id, $price_id );
+                $amount = $p->verify_the_price( $product_id, $taxonomy, $price_id ) + $p->markup_amount( $product_id, $price_id, $license_id );
             } else {
-                // download or print without assigned license
-                $amount = $p->get_price( $product_id, $price_id, false, $taxonomy );
+                // this is either a download without a license or a print, so just verify the price
+                $amount = $p->verify_the_price( $product_id, $taxonomy, $price_id );
             }
             $cart[ 'amount_' . $i ] = number_format( $amount, 2, '.', '' );
             $sub_total += $amount;
@@ -731,9 +750,11 @@ Class SellMediaPayments {
         $args['handling_cart'] = number_format( $shipping_amount, 2, '.', '' );
 
 
-        // Get our tax rate
-        $tax_amount = ( $settings->tax_rate * $sub_total );
-        $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
+        // If tax is enabled, tax the order
+        if ( $settings->tax ) {
+            $tax_amount = ( $settings->tax_rate * $sub_total );
+            $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
+        }
 
         $verified_cart = array_merge( $cart, $verified, $args );
 

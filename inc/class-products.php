@@ -8,6 +8,31 @@ Class SellMediaProducts {
         $this->settings = sell_media_get_plugin_options();
     }
 
+    /**
+     * Verify prices of products
+     *
+     * @return $prices (array)
+     */
+    public function verify_the_price( $product_id=null, $taxonomy=null, $price_id=null ){
+
+        $price_group_price = sell_media_get_term_meta( $price_id, 'price', true );
+        $custom_price = get_post_meta( $product_id, 'sell_media_price', true );
+        $settings = sell_media_get_plugin_options();
+
+        // get the default price from settings
+        $price = $settings->default_price;
+
+        // check if price id is set, get the price if so
+        if ( $price_group_price !== 0 && $price_group_price !== null ) {
+            $price = $price_group_price;
+        }
+        // check if a custom price is set on single item
+        else {
+            $price = get_post_meta( $product_id, 'sell_media_price', true );
+        }
+        return $price;
+    }
+
 
     /**
      * Get all prices assigned to a product
