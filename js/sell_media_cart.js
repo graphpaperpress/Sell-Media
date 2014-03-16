@@ -990,68 +990,6 @@
 
 				},
 
-
-				GoogleCheckout: function (opts) {
-					// account id is required
-					if (!opts.merchantID) {
-						return sellMediaCart.error("No merchant id provided for GoogleCheckout");
-					}
-
-					// google only accepts USD and GBP
-					if (sellMediaCart.currency().code !== "USD" && sellMediaCart.currency().code !== "GBP") {
-						return sellMediaCart.error("Google Checkout only accepts USD and GBP");
-					}
-
-					// build basic form options
-					var data = {
-							// TODO: better shipping support for this google
-							  ship_method_name_1	: "Shipping"
-							, ship_method_price_1	: sellMediaCart.shipping()
-							, ship_method_currency_1: sellMediaCart.currency().code
-							, _charset_				: ''
-						},
-						action = "https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/" + opts.merchantID,
-						method = opts.method === "GET" ? "GET" : "POST";
-
-
-					// add items to data
-					sellMediaCart.each(function (item,x) {
-						var counter = x+1,
-							options_list = [],
-							send;
-						data['item_name_' + counter]		= item.get('name');
-						data['item_quantity_' + counter]	= item.quantity();
-						data['item_price_' + counter]		= item.price();
-						data['item_currency_ ' + counter]	= sellMediaCart.currency().code;
-						data['item_tax_rate' + counter]		= item.get('taxRate') || sellMediaCart.taxRate();
-
-						// create array of extra options
-						sellMediaCart.each(item.options(), function (val,x,attr) {
-							// check to see if we need to exclude this from checkout
-							send = true;
-							sellMediaCart.each(settings.excludeFromCheckout, function (field_name) {
-								if (field_name === attr) { send = false; }
-							});
-							if (send) {
-								options_list.push(attr + ": " + val);
-							}
-						});
-
-						// add the options to the description
-						data['item_description_' + counter] = options_list.join(", ");
-					});
-
-					// return the data for the checkout form
-					return {
-						  action	: action
-						, method	: method
-						, data		: data
-					};
-
-
-				},
-
-
 				AmazonPayments: function (opts) {
 					// required options
 					if (!opts.merchant_signature) {

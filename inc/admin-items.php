@@ -54,8 +54,8 @@ function sell_media_admin_items_init(){
             'type'  => 'file'
         ),
         array(
-            'label' => __( 'Original File Price', 'sell_media' ),
-            'desc'  => '', // this needs validation
+            'label' => __( 'Price', 'sell_media' ) . ' (' . sell_media_get_currency_symbol() . ')',
+            'desc'  => __( 'The price of the original, high resolution file uploaded above.', 'sell_media' ),
             'id'    => $prefix . '_price',
             'type'  => 'price',
             'std'   => sprintf( "%0.2f", $settings->default_price ),
@@ -63,7 +63,7 @@ function sell_media_admin_items_init(){
         ),
         array(
             'label' => __( 'Price Group', 'sell_media' ),
-            'desc'  => '', // this needs validation
+            'desc'  => __( 'If you want to sell additional image sizes, select a Price Group from above or <a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings">create a new Price Group</a>.', 'sell_media' ),
             'id'    => $prefix . '_price_group',
             'type'  => 'price_group'
         )
@@ -143,7 +143,7 @@ function sell_media_details_meta_box( $fields=null ) {
                 case 'price':
                     if ( $field['std'] )
                         $default = $field['std'];
-                    echo '<span class="description">' . sell_media_get_currency_symbol() . '</span> <input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+                    echo '<input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
                 break;
 
                 // textarea
@@ -229,6 +229,7 @@ function sell_media_details_meta_box( $fields=null ) {
                         <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></opton>
                     <?php endforeach; ?>
                     </select>
+                    <br /><span class="description"><?php _e( $field['desc'], 'sell_media' ); ?></span>
                     <?php
                     break;
                 break;

@@ -228,21 +228,28 @@ Class SellMediaNavStyleUI {
             $tmp[] = array_merge( (array)$term,
                 array(
                     'field' => array(
-                        'html' => '<input type="text" class="" name="terms_children[' . $term->term_id . '][name]" size="24" value="' . $term->name . '" /><p class="description">'. __('Name','sell_media') . '</p>'
+                        'html' => '
+                                <input type="text" class="" name="terms_children[' . $term->term_id . '][name]" size="24" value="' . $term->name . '" />
+                                <p class="description">'. __('Name (shown to buyer, so be descriptive)','sell_media') . '</p>'
                         )
                     ),
                 array(
                     'meta'=> array(
                         'html' => '
-                        <td><input type="text" class="small-text" name="terms_children[' . $term->term_id . '][width]" value="'. sell_media_get_term_meta( $term->term_id, 'width', true ) . '">
-                        <p class="description">'. __('Max Width','sell_media') . '</p></td>
+                        <td>
+                            <input type="text" class="small-text" name="terms_children[' . $term->term_id . '][width]" value="'. sell_media_get_term_meta( $term->term_id, 'width', true ) . '">
+                            <p class="description">'. __('Max width (pixels)','sell_media') . '</p>
+                        </td>
 
-                        <td><input type="text" class="small-text" name="terms_children['. $term->term_id . '][height]" value="'. sell_media_get_term_meta( $term->term_id, 'height', true ) . '">
-                        <p class="description">'. __('Max Height','sell_media') . '</p></td>
+                        <td>
+                            <input type="text" class="small-text" name="terms_children['. $term->term_id . '][height]" value="'. sell_media_get_term_meta( $term->term_id, 'height', true ) . '">
+                            <p class="description">'. __('Max Height (pixels)','sell_media') . '</p>
+                        </td>
 
-                        <td><span class="description">'. sell_media_get_currency_symbol() . '</span>
-                        <input type="text" class="small-text" name="terms_children['. $term->term_id . '][price]" value="'. sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ) . '">
-                        <p class="description">'. __('Price','sell_media') . '</p></td>'
+                        <td>
+                            <input type="text" class="small-text" name="terms_children['. $term->term_id . '][price]" value="'. sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ) . '">
+                            <p class="description">' . __('Price','sell_media') . ' (' . sell_media_get_currency_symbol() . ')</p>
+                        </td>'
                     )
                 ),
                 array(
@@ -275,26 +282,25 @@ Class SellMediaNavStyleUI {
                 '<tr class="sell-media-price-groups-row" data-index="' . $i . '">
                     <td class="name">
                         <input type="text" class="" name="new_child['.$i.'][name]" size="24" value="">
-                        <p class="description">' . __('Name','sell_media') . '</p>
+                        <p class="description">' . __('Name (shown to buyer, so be descriptive)','sell_media') . '</p>
                     </td>
                     <td>
                         <input type="hidden" class="sell-media-price-group-parent-id" name="new_child[' . $i . '][parent]" value="' . $current_term_id . '" />
                         <input type="text" class="small-text" name="new_child[' . $i . '][width]" value="">
-                        <p class="description">' . __('Max Width','sell_media') . '</p>
+                        <p class="description">' . __('Max width (pixels)','sell_media') . '</p>
                     </td>
                     <td>
                         <input type="text" class="small-text" name="new_child[' . $i . '][height]" value="">
-                        <p class="description">' . __('Max Height','sell_media') . '</p>
+                        <p class="description">' . __('Max height (pixels)','sell_media') . '</p>
                     </td>
                     <td>
-                        <span class="description">' . sell_media_get_currency_symbol() . '</span>
                         <input type="text" class="small-text" name="new_child[' . $i . '][price]" value="">
-                        <p class="description">' . __('Price','sell_media') . '</p>
+                        <p class="description">' . __('Price','sell_media') . ' (' . sell_media_get_currency_symbol() . ')</p>
                     </td>
                 </tr>';
         }
 
-        $price_copy = apply_filters( 'sell_media_default_price_copy', __('The sizes listed below determine the maximum dimensions in pixels.', 'sell_media'), $this->taxonomy );
+        $price_copy = apply_filters( 'sell_media_default_price_copy', __('The sizes listed below determine the maximum dimensions in pixels. Price Groups only apply to images.', 'sell_media'), $this->taxonomy );
         $price_group_copy = apply_filters( 'sell_media_default_price_group_copy', __('Create a price group to add prices to.', 'sell_media'), $this->taxonomy );
 
         ?>
