@@ -310,32 +310,31 @@ Class SellMediaPayments {
         $text = null;
 
         if ( $products ) foreach ( $products as $k => $v ) {
-            $text .= '<ul style="margin: 20px 0 20px 0; padding: 20px 0 0 0; border-top: 1px solid #cccccc; list-style-type: disc; list-style-position: inside;">';
             if ( $v['name'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . '</li>';
+                $text .= __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . '<br />';
             if ( $v['size']['name'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'SIZE', 'sell_media' ) . ': ' . $v['size']['name'] . '</li>';
+                $text .= __( 'SIZE', 'sell_media' ) . ': ' . $v['size']['name'] . '<br />';
             if ( $v['license']['name'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'LICENSE', 'sell_media' ) . ': ' . $v['license']['name'] . '</li>';
+                $text .= __( 'LICENSE', 'sell_media' ) . ': ' . $v['license']['name'] . '<br />';
             if ( $v['license']['description'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'LICENSE DESCRIPTION', 'sell_media' ) . ': ' . $v['license']['description'] . '</li>';
+                $text .= __( 'LICENSE DESCRIPTION', 'sell_media' ) . ': ' . $v['license']['description'] . '<br /';
             if ( $v['qty'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'QTY', 'sell_media' ) . ': ' . $v['qty'] . '</li>';
+                $text .= __( 'QTY', 'sell_media' ) . ': ' . $v['qty'] . '<br />';
             if ( $v['type'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'TYPE', 'sell_media' ) . ': ' . $v['type'] . '</li>';
+                $text .= __( 'TYPE', 'sell_media' ) . ': ' . $v['type'] . '<br />';
             if ( $v['total'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'SUBTOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $v['total'], 2, '.', ',' ) . '</li>';
+                $text .= __( 'SUBTOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $v['total'], 2, '.', ',' ) . '<br />';
             if ( 'download' == $v['type'] )
-                $text .= '<li style="margin: 0 0 5px 10px;">' . __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'] ) . '</li>';
+                $text .= __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'] ) . '<br />';
+            $text .= '<br />';
             do_action( 'sell_media_after_products_unformatted_list', $post_id );
-            $text .= '</ul>';
         }
         $text .= '<p style="border: 1px solid #cccccc; margin: 20px 0; padding: 20px">';
         if ( $tax ) {
-            $text .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong>';
+            $text .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong><br />';
         }
         if ( $shipping ) {
-            $text .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong>';
+            $text .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong><br />';
         }
         $text .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '</strong>';
         $text .= '</p>';
