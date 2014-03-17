@@ -304,6 +304,8 @@ Class SellMediaPayments {
     public function get_payment_products_unformatted( $post_id=null ){
 
         $products = $this->get_products( $post_id );
+        $tax = $this->get_meta_key( $post_id, $key='tax' );
+        $shipping = $this->get_meta_key( $post_id, $key='shipping' );
         $total = $this->get_meta_key( $post_id, $key='total' );
         $text = null;
 
@@ -328,8 +330,15 @@ Class SellMediaPayments {
             do_action( 'sell_media_after_products_unformatted_list', $post_id );
             $text .= '</ul>';
         }
-        //if ( $total )
-            $text .= '<p style="border: 1px solid #cccccc; margin: 20px 0; padding: 20px"><strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '</strong></p>';
+        $text .= '<p style="border: 1px solid #cccccc; margin: 20px 0; padding: 20px">';
+        if ( $tax ) {
+            $text .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong>';
+        }
+        if ( $shipping ) {
+            $text .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong>';
+        }
+        $text .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '</strong>';
+        $text .= '</p>';
 
         return $text;
     }
@@ -398,7 +407,15 @@ Class SellMediaPayments {
     		$html .= '<td>&nbsp;</td>';
     		$html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
-    		$html .= '<td class="sell-media-products-grandtotal">' . __( 'Total', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . $this->get_meta_key( $post_id, $key='total' ) . '</td>';
+    		$html .= '<td class="sell-media-products-grandtotal">';
+            if ( $tax ) {
+                $html .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong>';
+            }
+            if ( $shipping ) {
+                $html .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong>';
+            }
+            $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key='total' ), 2, '.', ',' ) . '</strong>';
+            $html .= '</td>';
     		$html .= '</tr>';
     		$html .= '</table>';
             do_action( 'sell_media_below_products_formatted_table', $post_id );
@@ -609,7 +626,7 @@ Class SellMediaPayments {
             $link = $tmp_links;
         }
 
-        return urlencode( $link );
+        return $link;
     }
 
 
@@ -665,7 +682,7 @@ Class SellMediaPayments {
         }
 
         // Send the email to buyer
-        $r = wp_mail( $email, $message['subject'], $message['body'], $message['headers'] );
+        $r = wp_mail( $email, $message['subject'], html_entity_decode( $message['body'] ), $message['headers'] );
 
         return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
     }
