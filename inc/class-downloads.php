@@ -141,7 +141,13 @@ Class SellMediaDownload {
         $file_attached_path = get_post_meta( $product_id, '_sell_media_attached_file', true );
         $file_path = $wp_upload_dir['basedir'] . '/sell_media/' . $file_attached_path;
 
-        return file_exists( $file_path ) ? $file_path : false;
+        if ( file_exists( $file_path ) ) {
+            $file = $file_path;
+        } else {
+            $file = $file_attached_path;
+        }
+
+        return $file;
     }
 
 
