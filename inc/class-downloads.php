@@ -236,16 +236,12 @@ Class SellMediaDownload {
 
             if ( $verified ) {
 
-                $this->deliver_download( $download_file );
-                
-                // $download_file = $this->protected_file_path( $product_id );
-
-                // $product_obj = new SellMediaProducts;
-                // if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
-                //     $this->download_image( $payment_id, $product_id );
-                // } else {
-                //     $this->deliver_download( $download_file );
-                // }
+                $product_obj = new SellMediaProducts;
+                if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
+                    $this->download_image( $payment_id, $product_id );
+                } else {
+                    $this->deliver_download( get_post_meta( $product_id, '_sell_media_attached_file', true ) );
+                }
 
             } else {
                 wp_die( __( 'You do not have permission to download this file', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
@@ -298,12 +294,12 @@ Class SellMediaDownload {
                 wp_schedule_single_event( current_time( 'timestamp' )+60, 'sell_media_cleanup_file_symlinks' );
 
             // Make sure the symlink doesn't already exist before we create it
-            if( ! file_exists( $path ) )
+            if ( ! file_exists( $path ) )
                 $link = symlink( $file, $path );
             else
                 $link = true;
 
-            if( $link ) {
+            if ( $link ) {
                 // Send the browser to the file
                 header( 'Location: ' . $url );
             } else {
