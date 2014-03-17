@@ -307,7 +307,8 @@ Class SellMediaPayments {
         $tax = $this->get_meta_key( $post_id, $key='tax' );
         $shipping = $this->get_meta_key( $post_id, $key='shipping' );
         $total = $this->get_meta_key( $post_id, $key='total' );
-        $text = null;
+        $text = '<br /><br />';
+        $text .= '=================================================';
 
         if ( $products ) foreach ( $products as $k => $v ) {
             if ( $v['name'] )
@@ -337,6 +338,7 @@ Class SellMediaPayments {
             $text .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
         }
         $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '<br /><br />';
+        $text .= '=================================================';
 
         return $text;
     }
