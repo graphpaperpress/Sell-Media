@@ -353,6 +353,7 @@ Class SellMediaPayments {
 	*/
 	public function get_payment_products_formatted( $post_id=null ){
 		$products = $this->get_products( $post_id );
+        $tax = $this->get_meta_key( $post_id, $key='tax' );
         $shipping = $this->get_meta_key( $post_id, $key='shipping' );
         $total = $this->get_meta_key( $post_id, $key='total' );
 
