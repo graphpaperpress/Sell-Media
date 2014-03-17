@@ -236,14 +236,16 @@ Class SellMediaDownload {
 
             if ( $verified ) {
 
-                $download_file = $this->protected_file_path( $product_id );
+                $this->deliver_download( $download_file );
+                
+                // $download_file = $this->protected_file_path( $product_id );
 
-                $product_obj = new SellMediaProducts;
-                if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
-                    $this->download_image( $payment_id, $product_id );
-                } else {
-                    $this->deliver_download( $download_file );
-                }
+                // $product_obj = new SellMediaProducts;
+                // if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
+                //     $this->download_image( $payment_id, $product_id );
+                // } else {
+                //     $this->deliver_download( $download_file );
+                // }
 
             } else {
                 wp_die( __( 'You do not have permission to download this file', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
