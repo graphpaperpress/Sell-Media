@@ -329,15 +329,14 @@ Class SellMediaPayments {
             $text .= '<br />';
             do_action( 'sell_media_after_products_unformatted_list', $post_id );
         }
-        $text .= '<p style="border: 1px solid #cccccc; margin: 20px 0; padding: 20px">';
+        $text .= '<br /><br />';
         if ( $tax ) {
-            $text .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong><br />';
+            $text .= __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '<br />';
         }
         if ( $shipping ) {
-            $text .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong><br />';
+            $text .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
         }
-        $text .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '</strong>';
-        $text .= '</p>';
+        $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '<br /><br />';
 
         return $text;
     }
