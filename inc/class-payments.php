@@ -353,6 +353,8 @@ Class SellMediaPayments {
 	*/
 	public function get_payment_products_formatted( $post_id=null ){
 		$products = $this->get_products( $post_id );
+        $shipping = $this->get_meta_key( $post_id, $key='shipping' );
+        $total = $this->get_meta_key( $post_id, $key='total' );
 
         if ( $products ) {
     		$html = null;
@@ -409,10 +411,10 @@ Class SellMediaPayments {
             $html .= '<td>&nbsp;</td>';
     		$html .= '<td class="sell-media-products-grandtotal">';
             if ( $tax ) {
-                $html .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong>';
+                $html .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong><br />';
             }
             if ( $shipping ) {
-                $html .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong>';
+                $html .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong><br />';
             }
             $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key='total' ), 2, '.', ',' ) . '</strong>';
             $html .= '</td>';
