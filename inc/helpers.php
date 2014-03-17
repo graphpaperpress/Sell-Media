@@ -40,7 +40,16 @@ function sell_media_template_redirect( $original_template ){
      * Taxonomies
      */
     elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
-        $template = ( file_exists( $custom_templates['taxonomy'] ) ) ? $custom_templates['archive'] : $default_templates['archive'];
+        // check if taxonomy template file exists in active theme
+        if ( file_exists( $custom_templates['taxonomy'] ) ) {
+            $template = $custom_templates['taxonomy'];
+        // cehck if archive template file exists in active theme
+        } elseif ( file_exists( $custom_templates['archive'] ) ) {
+            $template = $custom_templates['archive'];
+        // otherwise, use the archive-sell_media_item.php template in plugin
+        } else {
+            $template = $default_templates['archive'];
+        }
     }
 
     else {

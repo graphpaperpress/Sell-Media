@@ -134,8 +134,11 @@ Class SellMediaProducts {
         if ( $prices ) foreach ( $prices as $price ){
             $lowest_price[] = $price['price'];
         }
-
-        return min( $lowest_price );
+        if ( is_array( $lowest_price ) ) {
+            return min( $lowest_price );
+        } else {
+            return $lowest_price;
+        }
     }
 
 
