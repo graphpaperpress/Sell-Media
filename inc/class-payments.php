@@ -309,6 +309,7 @@ Class SellMediaPayments {
         $total = $this->get_meta_key( $post_id, $key='total' );
         $text = '<br /><br />';
         $text .= '=================================================';
+        $text = '<br /><br />';
 
         if ( $products ) foreach ( $products as $k => $v ) {
             if ( $v['name'] )
