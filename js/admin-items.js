@@ -2,7 +2,7 @@ jQuery( document ).ready(function( $ ){
 
     $(function() {
         // Move bulk upload tabs above post title, no hook exists there in WP
-        $('#sell-media-bulk-tabs').insertBefore($('#post-body-content'));
+        $('#sell-media-tabs').insertBefore($('#post-body-content'));
 
     });
 
@@ -197,5 +197,25 @@ jQuery( document ).ready(function( $ ){
         $('#collection_icon_target').html('');
         $('#collection_icon_url').val('');
         $('#collection_icon_input_field').val('');
+    });
+
+
+    // Save Package
+    $('#sell_media_package_upload_form').on('submit', function( event ){
+        event.preventDefault();
+
+        $('#sell_media_package_upload_save_button').attr('disabled', true).val('Saving...');
+
+        $.ajax({
+            data: 'action=sell_media_package_update&' + $('#sell_media_package_upload_form').serialize(),
+            type: "POST",
+            url: ajaxurl,
+            success: function(msg){
+                $('#sell_media_package_upload_save_button').removeAttr('disabled').val('Saved');
+                $('#sell_media_package_edit_link a').attr('href', "post.php?post=" + msg + "&action=edit" );
+                $('#sell_media_package_edit_link').show();
+                
+            }
+        });
     });
 });

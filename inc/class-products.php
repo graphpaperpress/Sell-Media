@@ -15,18 +15,18 @@ Class SellMediaProducts {
      */
     public function verify_the_price( $product_id=null, $taxonomy=null, $price_id=null ){
 
-        $price_group_price = sell_media_get_term_meta( $price_id, 'price', true );
-        $custom_price = get_post_meta( $product_id, 'sell_media_price', true );
+        // set the default price from settings
         $settings = sell_media_get_plugin_options();
-
-        // get the default price from settings
         $price = $settings->default_price;
 
-        // check if price id is set, get the price if so
-        if ( $price_group_price !== 0 && $price_group_price !== null ) {
-            $price = $price_group_price;
+        // price group price
+        $price_group_price = sell_media_get_term_meta( $price_id, 'price', true );
+
+        // set the price to the assigned price group price of the purchased item
+        if ( $price_group_price != 0 && $price_group_price != null ) {
+            $price = sell_media_get_term_meta( $price_id, 'price', true );
         }
-        // check if a custom price is set on single item
+        // finally, set the price to the custom price
         else {
             $price = get_post_meta( $product_id, 'sell_media_price', true );
         }

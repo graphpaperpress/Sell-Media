@@ -7,7 +7,7 @@ function sell_media_admin_messages() {
 
     $screen = get_current_screen();
 
-    if ( $screen->id == 'edit-sell_media_item' || $screen->id == 'sell_media_item' ||  $screen->id == 'sell_media_item_page_sell_media_plugin_options' || $screen->id == 'sell_media_item_page_sell_media_add_bulk' ) {
+    if ( $screen->id == 'edit-sell_media_item' || $screen->id == 'sell_media_item' ||  $screen->id == 'sell_media_item_page_sell_media_plugin_options' || $screen->id == 'sell_media_item_page_sell_media_add_bulk' || $screen->id == 'sell_media_item_page_sell_media_add_package' ) {
 
         // New
         $settings = sell_media_get_plugin_options();
@@ -74,25 +74,30 @@ function sell_media_admin_messages() {
 
                 global $post;
 
-                $product_obj = new SellMediaProducts;
-                if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
+                // don't show notice on packages
+                $is_package = get_post_meta( $post->ID, '_sell_media_is_package', true );
+                if ( ! $is_package ) {
 
-                    $images_obj = new SellMediaImages;
-                    $download_sizes = $images_obj->get_downloadable_size( $post->ID, null, true );
+                    $product_obj = new SellMediaProducts;
+                    if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
 
-                    if ( ! empty( $download_sizes['unavailable'] ) ){
+                        $images_obj = new SellMediaImages;
+                        $download_sizes = $images_obj->get_downloadable_size( $post->ID, null, true );
 
-                        $og_size = $images_obj->get_original_image_size( $post->ID );
+                        if ( ! empty( $download_sizes['unavailable'] ) ){
 
-                        $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
-                        foreach( $download_sizes['unavailable'] as $unavailable ){
-                            $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['height'] . ')<br />';
+                            $og_size = $images_obj->get_original_image_size( $post->ID );
+
+                            $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
+                            foreach( $download_sizes['unavailable'] as $unavailable ){
+                                $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['height'] . ')<br />';
+                            }
+
+                            $notices[] = array(
+                                'slug' => 'download-sizes',
+                                'message' => $message
+                                );
                         }
-
-                        $notices[] = array(
-                            'slug' => 'download-sizes',
-                            'message' => $message
-                            );
                     }
                 }
             }

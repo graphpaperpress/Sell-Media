@@ -1,6 +1,54 @@
 <?php
 
 /**
+ * Add a meta box for bulk & package tabs
+ *
+ * @author Thad Allender
+ * @since 1.0.9
+ */
+function sell_media_add_tabs_meta_box( $post_type ){
+    if ( 'sell_media_item' == $post_type )
+        add_action( 'edit_form_after_title', 'sell_media_add_tabs' );
+}
+add_action( 'add_meta_boxes', 'sell_media_add_tabs_meta_box' );
+
+
+/**
+ * Build bulk tabs
+ *
+ * @author Thad Allender
+ * @since 1.0.9
+ */
+function sell_media_add_tabs(){
+    $screen = get_current_screen();
+    $single_active = null;
+    $bulk_active = null;
+    $package_active = null;
+    if ( 'sell_media_item' == $screen->id ) {
+        $single_active = " nav-tab-active";
+    }
+    if ( 'sell_media_item_page_sell_media_add_bulk' == $screen->id ) {
+        $bulk_active = " nav-tab-active";
+        screen_icon();
+        echo '<h2>' . __( 'Sell Media', 'sell_media' ) . '</h2>';
+    }
+    if ( 'sell_media_item_page_sell_media_add_package' == $screen->id ) {
+        $package_active = " nav-tab-active";
+        screen_icon();
+        echo '<h2>' . __( 'Sell Media', 'sell_media' ) . '</h2>';
+    }
+
+    
+
+    echo '<h2 id="sell-media-tabs" class="nav-tab-wrapper">';
+    echo '<a href="' . admin_url( 'post-new.php?post_type=sell_media_item' ) . '" class="nav-tab' . $single_active . '">' . __( 'Add Single', 'sell_media' ) . '</a>';
+    echo '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_add_bulk' ) . '" class="nav-tab' . $bulk_active . '" >' . __( 'Add Bulk', 'sell_media' ) . '</a>';
+    echo '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_add_package' ) . '" class="nav-tab' . $package_active . '" >' . __( 'Add Package', 'sell_media' ) . '</a>';
+    echo '</h2>';
+}
+
+
+/**
  * Add a meta box for item pricing
  *
  * @author Thad Allender
@@ -45,29 +93,54 @@ function sell_media_admin_items_init(){
         $post_id = null;
     }
 
+    // Don't show price groups if item is a package
+    $is_package = get_post_meta( $post_id, '_sell_media_is_package', true );
+    if ( $is_package ) {
 
-    $sell_media_item_meta_fields = array(
-        array(
-            'label' => __( 'File', 'sell_media' ),
-            'desc'  => __( 'A description for the field.', 'sell_media' ),
-            'id'    => $prefix . '_file',
-            'type'  => 'file'
-        ),
-        array(
-            'label' => __( 'Price', 'sell_media' ) . ' (' . sell_media_get_currency_symbol() . ')',
-            'desc'  => __( 'The price of the original, high resolution file uploaded above.', 'sell_media' ),
-            'id'    => $prefix . '_price',
-            'type'  => 'price',
-            'std'   => sprintf( "%0.2f", $settings->default_price ),
-            'value' => get_post_meta( $post_id, $prefix . '_price', true )
-        ),
-        array(
-            'label' => __( 'Price Group', 'sell_media' ),
-            'desc'  => __( 'If you want to sell additional image sizes, select a Price Group from above or <a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings">create a new Price Group</a>.', 'sell_media' ),
-            'id'    => $prefix . '_price_group',
-            'type'  => 'price_group'
-        )
-    );
+        $sell_media_item_meta_fields = array(
+            array(
+                'label' => __( 'Package File', 'sell_media' ),
+                'desc'  => '',
+                'id'    => $prefix . '_file',
+                'type'  => 'package'
+            ),
+            array(
+                'label' => __( 'Price', 'sell_media' ) . ' (' . sell_media_get_currency_symbol() . ')',
+                'desc'  => '',
+                'id'    => $prefix . '_price',
+                'type'  => 'price',
+                'std'   => sprintf( "%0.2f", $settings->default_price ),
+                'value' => get_post_meta( $post_id, $prefix . '_price', true )
+            )
+        );
+
+    } else {
+
+        $sell_media_item_meta_fields = array(
+            array(
+                'label' => __( 'File', 'sell_media' ),
+                'desc'  => __( 'A description for the field.', 'sell_media' ),
+                'id'    => $prefix . '_file',
+                'type'  => 'file'
+            ),
+            array(
+                'label' => __( 'Price', 'sell_media' ) . ' (' . sell_media_get_currency_symbol() . ')',
+                'desc'  => '',
+                'id'    => $prefix . '_price',
+                'type'  => 'price',
+                'std'   => sprintf( "%0.2f", $settings->default_price ),
+                'value' => get_post_meta( $post_id, $prefix . '_price', true )
+            ),
+            array(
+                'label' => __( 'Price Group', 'sell_media' ),
+                'desc'  => __( 'If you want to sell additional image sizes, select a Price Group or <a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings">create a new one</a>.', 'sell_media' ),
+                'id'    => $prefix . '_price_group',
+                'type'  => 'price_group'
+            )
+        );
+
+    }
+
 
     $sell_media_item_meta_fields = apply_filters( 'sell_media_additional_item_meta', $sell_media_item_meta_fields, $post_id );
 
@@ -105,6 +178,7 @@ function sell_media_details_meta_box( $fields=null ) {
 
     global $post;
 
+
     // Since the first param coming into this functions is
     // ALWAYS the global $post which is an OBJECT we check it.
     // If it is an ARRAY we assume its new settings.
@@ -112,15 +186,20 @@ function sell_media_details_meta_box( $fields=null ) {
         $my_fields = $fields;
     } else {
         global $sell_media_item_meta_fields;
-        $my_fields = $sell_media_item_meta_fields;
+        $my_fields 
+        = $sell_media_item_meta_fields;
     }
 
     // Use nonce for verification
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
+    $is_package = get_post_meta( $post->ID, '_sell_media_is_package', true );
+    if ( $is_package )
+        echo '<p>' . __( 'This product is a package. Show customers what is included in this package by adding some images to the Post Editor below. The Featured Image will be shown on archive pages.', 'sell_media' );
+
     // Begin the field table and loop
     echo '<table class="form-table sell-media-item-table">';
-    foreach ($my_fields as $field) {
+    foreach ( $my_fields as $field ) {
             $default = get_post_meta( $post->ID, $field['id'], true );
 
             // begin a table row with
@@ -192,16 +271,16 @@ function sell_media_details_meta_box( $fields=null ) {
                     $thumbnail = sell_media_item_icon( $attachment_id, 'thumbnail', false );
                     $hide = empty( $thumbnail ) ? 'style="display: none";' : null;
 
-                    print '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
-                    print '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
+                    echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
+                    echo '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
 
-                    print '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $url . '" size="30" />';
+                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
 
-                    print '<a class="sell-media-upload-trigger button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
+                    echo '<a class="sell-media-upload-trigger button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
 
-                    print '<div class="sell-media-upload-trigger">';
-                    print '<div class="sell-media-temp-target" ' . $hide . '>' . $thumbnail . '</div>';
-                    print '</div>';
+                    echo '<div class="sell-media-upload-trigger">';
+                    echo '<div class="sell-media-temp-target" ' . $hide . '>' . $thumbnail . '</div>';
+                    echo '</div>';
                     break;
 
                 // text
@@ -225,11 +304,30 @@ function sell_media_details_meta_box( $fields=null ) {
                     ?>
                     <select name="_sell_media_price_group">
                         <option><?php _e("Select a price group"); ?></option>
-                    <?php foreach( get_terms( 'price-group', array('hide_empty'=>false,'parent'=>0) ) as $term ) : ?>
-                        <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></opton>
-                    <?php endforeach; ?>
+                        <?php foreach( get_terms( 'price-group', array('hide_empty'=>false,'parent'=>0) ) as $term ) : ?>
+                            <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></opton>
+                        <?php endforeach; ?>
                     </select>
                     <br /><span class="description"><?php _e( $field['desc'], 'sell_media' ); ?></span>
+                    <?php
+                    break;
+
+                case 'package':
+
+                    $folder_name = 'packages';
+                    $wp_upload_dir = wp_upload_dir();
+                    $package_dir = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $folder_name . '/';
+                    $package_folder = $wp_upload_dir['baseurl'] . SellMedia::upload_dir . '/' . $folder_name . '/';
+                    $files = glob( $package_dir . '*.{zip,gz}', GLOB_BRACE );
+                    $saved = get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?>
+
+                    <select name="_sell_media_attached_file" id="_sell_media_attached_file" value="">
+                        <option value=""><?php _e( 'Select a package', 'sell_media' ); ?></option>
+                        <?php if ( $files ) foreach( $files as $file ) : ?>
+                            <option <?php selected( $saved, $package_folder . basename( $file ) ); ?> value="<?php echo $package_folder . basename( $file ); ?>"><?php echo basename( $file ); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+
                     <?php
                     break;
                 break;
@@ -464,8 +562,13 @@ function sell_media_item_content( $column, $post_id ){
             print $html;
             break;
         case "sell_media_price":
-            $p = new SellMediaProducts;
-            echo $p->get_price( $post_id, null, true );
+            $price = get_post_meta( $post_id, 'sell_media_price', true );
+            $settings = sell_media_get_plugin_options();
+            if ( $price ) {
+                echo sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' );
+            } else {
+                echo sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' );
+            }
             break;
         default:
             break;

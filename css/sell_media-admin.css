@@ -93,7 +93,7 @@
 
 /* Media attachment edit page
 -------------------------------------------------------------- */
-#poststuff #sell-media-bulk-tabs { margin-top: 0; padding-bottom: 0; }
+#poststuff #sell-media-tabs { margin-top: 0; padding-bottom: 0; }
 .field-has-button { margin-right: 10px; float: left; }
 .sell-media-image { margin: 1em 0 0; }
 .sell-media-bulk-list-item {

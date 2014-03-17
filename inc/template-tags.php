@@ -165,3 +165,26 @@ function sell_media_plugin_credit() {
         printf( '%s <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', __( 'Shopping cart by ', 'sell_media' ) );
     }
 }
+
+
+/**
+ * Gets the except of a post by post id
+ *
+ * @since 1.8.5
+ * @author Thad Allender
+ */
+function sell_media_get_excerpt( $post_id, $excerpt_length = 140, $trailing_character = '&nbsp;&hellip;' ) {
+    $the_post = get_post( $post_id );
+    $the_excerpt = strip_tags( strip_shortcodes( $the_post->post_excerpt ) );
+
+    if ( empty( $the_excerpt ) )
+      $the_excerpt = strip_tags( strip_shortcodes( $the_post->post_content ) );
+
+    $words = explode( ' ', $the_excerpt, $excerpt_length + 1 );
+
+    if( count( $words ) > $excerpt_length )
+      $words = array_slice( $words, 0, $excerpt_length );
+
+    $the_excerpt = implode( ' ', $words ) . $trailing_character;
+    return $the_excerpt;
+}
