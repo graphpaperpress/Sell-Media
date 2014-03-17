@@ -677,3 +677,81 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
     return $price_groups;
 
 }
+
+/**
+ * Retrieve the URL of the symlink directory
+ *
+ * @since 1.8.5
+ * @return string $url URL of the symlink directory
+ */
+function sell_media_get_symlink_url() {
+    $wp_upload_dir = wp_upload_dir();
+    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/symlinks' );
+    $url = $wp_upload_dir['baseurl'] . '/sell_media/symlinks';
+
+    return apply_filters( 'sell_media_get_symlink_url', $url );
+}
+
+/**
+ * Retrieve the absolute path to the symlink directory
+ *
+ * @since  1.8.5
+ * @return string $path Absolute path to the symlink directory
+ */
+function sell_media_get_symlink_dir() {
+    $wp_upload_dir = wp_upload_dir();
+    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/symlinks' );
+    $path = $wp_upload_dir['basedir'] . '/sell_media/symlinks';
+
+    return apply_filters( 'sell_media_get_symlink_dir', $path );
+}
+
+/**
+ * Retrieve the absolute path to the file upload directory without the trailing slash
+ *
+ * @since  1.8.5
+ * @return string $path Absolute path to the sell_media upload directory
+ */
+function sell_media_get_upload_dir() {
+    $wp_upload_dir = wp_upload_dir();
+    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media' );
+    $path = $wp_upload_dir['basedir'] . '/sell_media';
+
+    return apply_filters( 'sell_media_get_upload_dir', $path );
+}
+
+/**
+ * Delete symbolic links after they have been used
+ *
+ * @access public
+ * @since  1.8.5
+ * @return void
+ */
+function sell_media_cleanup_file_symlinks() {
+    $path = sell_media_get_symlink_dir();
+    $dir = opendir( $path );
+
+    while ( ( $file = readdir( $dir ) ) !== false ) {
+        if ( $file == '.' || $file == '..' )
+            continue;
+
+        $transient = get_transient( md5( $file ) );
+        if ( $transient === false )
+            @unlink( $path . '/' . $file );
+    }
+}
+add_action( 'sell_media_cleanup_file_symlinks', 'sell_media_cleanup_file_symlinks' );
+
+/**
+ * Get File Extension
+ *
+ * Returns the file extension of a filename.
+ *
+ * @since 1.8.5
+ * @param unknown $str File name
+ * @return mixed File extension
+ */
+function sell_media_get_file_extension( $str ) {
+    $parts = explode( '.', $str );
+    return end( $parts );
+}

@@ -61,8 +61,8 @@ Class SellMediaDownload {
      * Set the file headers and force the download of a given file
      *
      * @param $location (string) The file path on the server
-     * @param $delete (bool) Either delete the tmp file or not
      * @param $filename (string) Override the downloaded file name, default is derived from $location
+     * @param $delete (bool) Either delete the tmp file or not
      *
      * @return void
      */
@@ -76,7 +76,7 @@ Class SellMediaDownload {
             case "pdf":  $ctype = "application/pdf"; break;
             case "zip":  $ctype = "application/octet-stream"; break;
             case "doc":  $ctype = "application/msword"; break;
-            case "docx":  $ctype = "application/msword"; break;
+            case "docx": $ctype = "application/msword"; break;
             case "xls":  $ctype = "application/vnd.ms-excel"; break;
             case "ppt":  $ctype = "application/vnd.ms-powerpoint"; break;
             default:     $ctype = "application/force-download";
@@ -242,7 +242,7 @@ Class SellMediaDownload {
                 if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
                     $this->download_image( $payment_id, $product_id );
                 } else {
-                    $this->force_download( $download_file );
+                    $this->deliver_download( $download_file );
                 }
 
             } else {
@@ -258,6 +258,105 @@ Class SellMediaDownload {
 
             $payment_obj->email_receipt( $payment_id, $payment_email );
         }
+    }
+
+    /**
+     * Deliver the download file
+     *
+     * If enabled, the file is symlinked to better support large file downloads
+     *
+     * @access   public
+     * @param    string    file
+     * @return   void
+     */
+    function deliver_download( $file = '' ) {
+
+        /*
+         * If symlinks are enabled, a link to the file will be created
+         * This symlink is used to hide the true location of the file, even when the file URL is revealed
+         * The symlink is deleted after it is used
+         */
+
+        if ( function_exists( 'symlink' ) ) {
+
+            // Generate a symbolic link
+            $ext       = sell_media_get_file_extension( $file );
+            $parts     = explode( '.', $file );
+            $name      = basename( $parts[0] );
+            $md5       = md5( $file );
+            $file_name = $name . '_' . substr( $md5, 0, -15 ) . '.' . $ext;
+            $path      = sell_media_get_symlink_dir() . '/' . $file_name;
+            $url       = sell_media_get_symlink_url() . '/' . $file_name;
+
+            // Set a transient to ensure this symlink is not deleted before it can be used
+            set_transient( md5( $file_name ), '1', 30 );
+
+            // Schedule deletion of the symlink
+            if ( ! wp_next_scheduled( 'sell_media_cleanup_file_symlinks' ) )
+                wp_schedule_single_event( current_time( 'timestamp' )+60, 'sell_media_cleanup_file_symlinks' );
+
+            // Make sure the symlink doesn't already exist before we create it
+            if( ! file_exists( $path ) )
+                $link = symlink( $file, $path );
+            else
+                $link = true;
+
+            if( $link ) {
+                // Send the browser to the file
+                header( 'Location: ' . $url );
+            } else {
+                $this->chunked( $file );
+            }
+
+        } else {
+
+            // Read the file and deliver it in chunks
+            $this->chunked( $file );
+
+        }
+
+    }
+
+    /**
+     * Reads file in chunks so big downloads are possible without changing PHP.INI
+     * See http://codeigniter.com/wiki/Download_helper_for_large_files/
+     *
+     * @access   public
+     * @param    string  $file      The file
+     * @param    boolean $retbytes  Return the bytes of file
+     * @return   bool|string        If string, $status || $cnt
+     */
+    function chunked( $file, $retbytes = true ) {
+
+        $chunksize = 1024 * 1024;
+        $buffer    = '';
+        $cnt       = 0;
+        $handle    = @fopen( $file, 'r' );
+
+        if ( $size = @filesize( $file ) ) {
+            header("Content-Length: " . $size );
+        }
+
+        if ( false === $handle ) {
+            return false; 
+        }
+
+        while ( ! @feof( $handle ) ) {
+            $buffer = @fread( $handle, $chunksize );
+            echo $buffer;
+
+            if ( $retbytes ) {
+                $cnt += strlen( $buffer ); 
+            }
+        }
+        
+        $status = @fclose( $handle );
+
+        if ( $retbytes && $status ) {
+            return $cnt;
+        }
+
+        return $status;
     }
 }
 new SellMediaDownload;
