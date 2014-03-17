@@ -13,9 +13,14 @@ get_header(); ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 
 		<div class="sell-media-content">
-			<?php $product_obj = new SellMediaProducts; if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) : ?>
-				<?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' ); ?>
-			<?php endif; ?>
+			<?php // Don't show if is a package
+    			$is_package = get_post_meta( $post_id, '_sell_media_is_package', true );
+    			if ( ! $is_package ) {
+					$product_obj = new SellMediaProducts; if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ) {
+						sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ), 'large' );
+					}
+				}
+			?>
 			<div class="sell-media-content-text">
 				<?php the_content(); ?>
 			</div>
