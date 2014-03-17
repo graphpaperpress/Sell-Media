@@ -609,7 +609,7 @@ Class SellMediaPayments {
             $link = $tmp_links;
         }
 
-        return $link;
+        return urlencode( $link );
     }
 
 
