@@ -700,8 +700,8 @@ function sell_media_get_symlink_url() {
  */
 function sell_media_get_symlink_dir() {
     $wp_upload_dir = wp_upload_dir();
-    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media_symlinks' );
-    $path = $wp_upload_dir['basedir'] . '/sell_media_symlinks';
+    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/symlinks' );
+    $path = $wp_upload_dir['basedir'] . '/sell_media/symlinks';
 
     return apply_filters( 'sell_media_get_symlink_dir', $path );
 }
