@@ -317,7 +317,7 @@ Class SellMediaDownload {
 
     /**
      * Reads file in chunks so big downloads are possible without changing PHP.INI
-     * See http://codeigniter.com/wiki/Download_helper_for_large_files/
+     * See https://github.com/EllisLab/CodeIgniter/wiki/Download-helper-for-large-files
      *
      * @access   public
      * @param    string  $file      The file
