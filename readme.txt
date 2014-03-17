@@ -216,7 +216,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.8.4 =
-* Feature: Packages!
+* Feature: Add Packages!
 * Tweak: Cart for Packages
 * Bug: Terms dialog
 
