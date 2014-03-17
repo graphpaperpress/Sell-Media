@@ -195,7 +195,7 @@ function sell_media_details_meta_box( $fields=null ) {
 
     $is_package = get_post_meta( $post->ID, '_sell_media_is_package', true );
     if ( $is_package )
-        echo '<p>' . __( 'This product is a package. Show customers what is included in this package by adding some images to the Post Editor below. The Featured Image will be shown on archive pages.', 'sell_media' );
+        echo '<p>' . __( 'This product is a package. Show customers what is included in this package by adding some images (preferably a gallery of images) to the Post Editor below. The Featured Image will be used to represent this package on archive pages.', 'sell_media' );
 
     // Begin the field table and loop
     echo '<table class="form-table sell-media-item-table">';
