@@ -102,9 +102,7 @@ Class SellMediaDownload {
         $width = sell_media_get_term_meta( $price_group_id, 'width', true );
         $height = sell_media_get_term_meta( $price_group_id, 'height', true );
         $file_download = sell_media_resize_original_image( $product_id, $width, $height );
-
         return $file_download;
-
     }
 
 

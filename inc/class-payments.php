@@ -76,6 +76,26 @@ Class SellMediaPayments {
         }
     }
 
+    /**
+    * Get specific product type from a purchase
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    * @param $product_id The product_id contained in the purchase
+    * @param $type The type of product to check for (download, print)
+    *
+    * @return Array
+    */
+    public function get_product_type( $post_id=null, $product_id=null, $type=null ){
+        $products = $this->get_products( $post_id );
+        if ( $products ) foreach ( $products as $product ) {
+            if ( $product_id == $product['id'] ) {
+                if ( array_key_exists( 'type', $product ) && $type == $product['type'] ) {
+                    return true;
+                }
+            }
+        }
+    }
+
 
     /**
     * Loop over products in payment meta and see if products contain a specific types

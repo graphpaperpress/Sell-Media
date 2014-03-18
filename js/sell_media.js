@@ -150,6 +150,9 @@ jQuery(document).ready(function($){
                         sep = '';
                     }
                     var size = item.get( "size" );
+                    if ( size == undefined ) {
+                        size = '';
+                    }
 
                     return name + "<span class='size-license'>" + size + sep + license + "</span>";
                 },
