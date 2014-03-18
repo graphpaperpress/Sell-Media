@@ -23,7 +23,7 @@ Class SellMediaProducts {
         $price_group_price = sell_media_get_term_meta( $price_id, 'price', true );
 
         // set the price to the assigned price group price of the purchased item
-        if ( $price_group_price != 0 && $price_group_price != null ) {
+        if ( ! empty( $price_group_price ) || $price_group_price != 0 || $price_group_price != null ) {
             $price = sell_media_get_term_meta( $price_id, 'price', true );
         }
         // finally, set the price to the custom price
