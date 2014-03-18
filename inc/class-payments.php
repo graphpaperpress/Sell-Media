@@ -746,7 +746,6 @@ Class SellMediaPayments {
             $taxonomy = ( 'download' == $type ) ? 'price-group' : 'reprints-price-group';
             $shipping_flag = ( 'reprints-price-group' == $taxonomy ) ? true : false;
 
-
             // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
                 $markup = $p->markup_amount( $product_id, $price_id, $license_id );
