@@ -58,6 +58,24 @@ Class SellMediaPayments {
 		}
 	}
 
+    /**
+    * Get specific product from a purchase
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    *
+    * @return Array
+    */
+    public function get_product_size( $post_id=null, $product_id=null ){
+        $products = $this->get_products( $post_id );
+        if ( $products ) foreach ( $products as $product ) {
+            if ( $product_id == $product['id'] ) {
+                if ( array_key_exists( 'size', $product ) ) {
+                    return $product['size']['id'];
+                }
+            }
+        }
+    }
+
 
     /**
     * Loop over products in payment meta and see if products contain a specific types
@@ -717,29 +735,23 @@ Class SellMediaPayments {
         $p = new SellMediaProducts;
         $verified = array();
         $sub_total = 0;
+        $taxonomy = 0;
         $shipping_flag = false;
         for( $i=1; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
-            //$qty = $cart[ 'quantity_' . $i ];
             $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
             $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
-            if ( ! isset( $cart[ 'os5_' . $i ] ) || empty( $cart[ 'os5_' . $i ] ) )
-                $license_id = null;
-            else
-                $license_id = $cart[ 'os5_' . $i ];
+            $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
+            $taxonomy = ( 'download' == $type ) ? 'price-group' : 'reprints-price-group';
+            $shipping_flag = ( 'reprints-price-group' == $taxonomy ) ? true : false;
 
-            // set price taxonomy if product is download or reprint
-            if ( 'download' == $type ){
-                $taxonomy = 'price-group';
-            } else {
-                $taxonomy = 'reprints-price-group';
-                $shipping_flag = true;
-            }
 
             // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
-                $amount = $p->verify_the_price( $product_id, $taxonomy, $price_id ) + $p->markup_amount( $product_id, $price_id, $license_id );
+                $markup = $p->markup_amount( $product_id, $price_id, $license_id );
+                $price = $p->verify_the_price( $product_id, $taxonomy, $price_id );
+                $amount =  $price + $markup;
             } else {
                 // this is either a download without a license or a print, so just verify the price
                 $amount = $p->verify_the_price( $product_id, $taxonomy, $price_id );

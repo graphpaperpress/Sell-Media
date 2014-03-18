@@ -755,3 +755,87 @@ function sell_media_get_file_extension( $str ) {
     $parts = explode( '.', $str );
     return end( $parts );
 }
+
+
+/**
+ * Get full system path to the originally uploaded file
+ *
+ * Returns the full system path to the file
+ *
+ * @since 1.8.5
+ * @param product id ( post_id )
+ * @return file path
+ */
+function sell_media_get_original_protected_file( $product_id=null ){
+    $attached_file = get_post_meta( $product_id, '_sell_media_attached_file', true );
+    $file = sell_media_get_upload_dir() . '/' . $attached_file;
+    if ( file_exists( $file ) )
+        return $file;
+    else
+        return false;
+}
+
+
+/**
+ * Resize an image to the specified dimensions
+ * http://codex.wordpress.org/Class_Reference/WP_Image_Editor
+ *
+ * Returns the new image file path
+ *
+ * @since 1.8.5
+ * @param file path
+ * @param width
+ * @param width
+ * @return resized image file path
+ */
+function sell_media_resize_original_image( $product_id=null, $width=null, $height=null ){
+    $file_path = sell_media_get_original_protected_file( $product_id );
+    $img = wp_get_image_editor( $file_path );
+    if ( ! is_wp_error( $img ) ) {
+        // resize if height and width supplied
+        if ( $width || $height ) {
+            if ( $width >= $height ) {
+                $max = $width;
+            } else {
+                $max = $height;
+            }
+            $img->resize( $max, $max, false );
+            $img->set_quality( 100 );
+        }
+        $img->stream();
+    }
+}
+
+/**
+ * Is this an image?
+ *
+ * @since 1.0
+ * @param string $file
+ * @return bool (true/false)
+ */
+function sell_media_is_image( $file ) {
+    $ext = sell_media_get_file_extension( $file );
+
+    switch ( strtolower( $ext ) ) {
+        case 'jpg';
+            $return = true;
+            break;
+        case 'png';
+            $return = true;
+            break;
+        case 'gif';
+            $return = true;
+            break;
+        case 'tif';
+            $return = true;
+        case 'tiff';
+            $return = true;
+        case 'psd';
+            $return = true;
+        default:
+            $return = false;
+            break;
+    }
+
+    return (bool) apply_filters( 'sell_media_is_image_filter', $return, $file );
+}

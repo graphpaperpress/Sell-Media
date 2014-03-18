@@ -2,14 +2,8 @@
 
 Class SellMediaDownload {
 
-    private $tmp_dir;
-
     public function __construct(){
-        $wp_upload_dir = wp_upload_dir();
-        $this->tmp_dir = $wp_upload_dir['basedir'] . '/sell_media/tmp/';
-
         add_action( 'init', array( &$this, 'download') , 100 );
-
     }
 
 
@@ -51,8 +45,7 @@ Class SellMediaDownload {
                 header("Content-Transfer-Encoding: binary");
 
                 // If this download is an image, generate the image sizes purchased and create a download
-                $product_obj = new SellMediaProducts;
-                if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
+                if ( sell_media_is_image( $requested_file ) ){
                     $this->download_image( $payment_id, $product_id );
                 // Otherwise, just deliver the download
                 } else {
@@ -103,127 +96,15 @@ Class SellMediaDownload {
      * @param (int) $product_id The product ID from a given payment
      */
     public function download_image( $payment_id=null, $product_id=null ){
+        // get height and width associated with the price group
+        $p = new SellMediaPayments;
+        $price_group_id = $p->get_product_size( $payment_id, $product_id );
+        $width = sell_media_get_term_meta( $price_group_id, 'width', true );
+        $height = sell_media_get_term_meta( $price_group_id, 'height', true );
+        $file_download = sell_media_resize_original_image( $product_id, $width, $height );
 
-        $attachment_id = get_post_meta( $product_id, '_sell_media_attachment_id', true );
+        return $file_download;
 
-        $payments_obj = new SellMediaPayments;
-        $products = $payments_obj->get_products( $payment_id );
-
-        $image_obj = new SellMediaImages;
-
-        // determine size customer purchased for this item from this payment
-        foreach( $products as $product ){
-
-            if ( $product_id == $product['id'] ){
-
-                // Since we no longer check if the image sold is available in the download sizes
-                // we allow the buyer to download the original image if the size they purchased
-                // is larger than the original image i.e., they can purchase a size they can never
-                // download.
-                //
-                // Hence if they paid for the original, OR they paid for a larger image than
-                // available they get the original image.
-                $confirmed_size = $image_obj->get_downloadable_size( $product_id, $product['size']['id'] );
-
-                // If this the customer purchased the original size, just download it and
-                // set the filename to null
-                if ( $confirmed_size == 'original' || $product['size']['id'] === 'original' ){
-                    $filename = null;
-                    $file_download = $this->protected_file_path( $product_id );
-                }
-
-                // If this is not an original size we generated the file download
-                // along with adding the download size to the file name
-                else {
-
-                    if ( empty( $confirmed_size['width'] ) || empty( $confirmed_size['height'] ) )
-                        exit;
-
-                    $new_image = array(
-                        'height' => $confirmed_size['height'],
-                        'width'  => $confirmed_size['width']
-                    );
-
-                    $file_download = $this->create_download_size( $new_image, $this->protected_file_path( $product_id ) , true );
-
-                    // Create unique name based on the file width, height and license
-                    $file_name_info = pathinfo( basename( $file_download ) );
-                    $size = '-' . $new_image['width'] . 'x' . $new_image['height'];
-
-                    // @todo derive license
-                    $license = null;
-                    $filename = $file_name_info['filename'] . $size . $license . '.' . $file_name_info['extension'];
-                }
-            }
-        }
-
-        $this->force_download( $file_download, $filename );
-
-    }
-
-    /**
-     * Create our Download image and save it to the tmp/ folder in sell media
-     *
-     * @param $size (array) containing the height and width of the image
-     * @param $location (string) The full server path to the image
-     *
-     * @return Full path to the download file in the tmp/ folder
-     */
-    public function create_download_size( $size, $location=null ){
-
-        $image_p = imagecreatetruecolor( $size['width'], $size['height'] );
-        $image = imagecreatefromjpeg( $location );
-
-        list( $current_image['width'], $current_image['height'] ) = getimagesize( $location );
-        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $size['width'], $size['height'], $current_image['width'], $current_image['height']);
-
-        $destination_file = $this->tmp_dir . basename( $location );
-
-        if ( ! file_exists( $destination_file ) ){
-            wp_mkdir_p( dirname( $destination_file ) );
-        }
-
-        imagejpeg( $image_p, $destination_file, 100 );
-
-        return $destination_file;
-    }
-
-
-    /**
-     * Determine if we can generate a download size for this request image
-     * Compares the request download size against the actual size of the original image.
-     *
-     * @param $size (array) 'width' and 'height' of requested size
-     * @param $location (string) full file path on the server of the image
-     *
-     *
-     * @return bool True if the download image size can be generated, false if it can't
-     */
-    public function validate_download_size( $size=array(), $location=null ){
-        list( $current_image['width'], $current_image['height'] ) = getimagesize( $location );
-        return ( $size['height'] >= $current_image['height'] || $size['width'] >= $current_image['width'] ) ? false : true;
-    }
-
-
-    /**
-     * Retrieve the full path to the protected file
-     *
-     * @param (int)$product_id The id of the Sell Media item
-     * @return (mixed) Full file path to the original item in the protected directory, false if the file does not exists
-     */
-    public function protected_file_path( $product_id=null ){
-
-        $wp_upload_dir = wp_upload_dir();
-        $file_attached_path = get_post_meta( $product_id, '_sell_media_attached_file', true );
-        $file_path = $wp_upload_dir['basedir'] . '/sell_media/' . $file_attached_path;
-
-        if ( file_exists( $file_path ) ) {
-            $file = $file_path;
-        } else {
-            $file = $file_attached_path;
-        }
-
-        return $file;
     }
 
 

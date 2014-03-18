@@ -142,23 +142,14 @@ jQuery(document).ready(function($){
             {
                 view: function(item, column){
 
-                    // set item name
                     var name = item.get( "name" );
-                    // set item size if one exists
-                    var size = item.get( "size" );
-                    if ( size == undefined || size == null ) {
-                        size = '';
-                    }
-                    // set seperator, if one exists                    
+                    var license = item.get( "usage" );
                     var sep = ', ';
-                    if ( size == '' ) {
+                    if ( license == undefined ) {
+                        license = '';
                         sep = '';
                     }
-                    // set license, if one exists
-                    var license = item.get( "usage" );
-                    if ( license == undefined || license == null ) {
-                        license = '';
-                    }
+                    var size = item.get( "size" );
 
                     return name + "<span class='size-license'>" + size + sep + license + "</span>";
                 },
