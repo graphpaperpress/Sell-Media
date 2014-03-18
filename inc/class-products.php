@@ -18,9 +18,8 @@ Class SellMediaProducts {
         // price group price
         $price_group_price = sell_media_get_term_meta( $price_id, 'price', true );
         $custom_price = get_post_meta( $product_id, 'sell_media_price', true );
-
         // check that the price_id exists and that the price meta is set
-        if ( term_exists( $price_id ) && ! empty( $price_group_price ) ) {
+        if ( ! empty( $price_group_price ) ) {
             $price = $price_group_price;
         }
         // finally, set the price to the custom price
