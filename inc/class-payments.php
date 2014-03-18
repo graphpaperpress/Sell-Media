@@ -746,9 +746,9 @@ Class SellMediaPayments {
 
             // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
-                $markup = $p->markup_amount( $product_id, $price_id, $license_id );
                 $price = $p->verify_the_price( $product_id, $price_id );
-                $amount =  $price + $markup;
+                $markup = $p->markup_amount( $product_id, $price_id, $license_id );
+                $amount = $price + $markup;
             } else {
                 // this is either a download without a license or a print, so just verify the price
                 $amount = $p->verify_the_price( $product_id, $price_id );
