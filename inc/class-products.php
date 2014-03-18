@@ -13,7 +13,7 @@ Class SellMediaProducts {
      *
      * @return $prices (array)
      */
-    public function verify_the_price( $product_id=null, $taxonomy=null, $price_id=null ){
+    public function verify_the_price( $product_id=null, $price_id=null ){
 
         // set the default price from settings
         $settings = sell_media_get_plugin_options();
@@ -191,7 +191,7 @@ Class SellMediaProducts {
         if ( empty( $license_obj ) ) {
             $markup_amount = 0;
         } else {
-            $price = $this->get_price( $post_id, $price_id );
+            $price = $this->verify_the_price( $post_id, $price_id );
             $markup_percent = str_replace( "%", "", sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) );
             $markup_amount = ( $markup_percent / 100 ) * $price;
         }

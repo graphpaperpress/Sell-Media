@@ -735,7 +735,6 @@ Class SellMediaPayments {
         $p = new SellMediaProducts;
         $verified = array();
         $sub_total = 0;
-        $taxonomy = 0;
         $shipping_flag = false;
         for( $i=1; $i <= $cart_count; $i++ ) {
 
@@ -743,17 +742,16 @@ Class SellMediaPayments {
             $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
             $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
             $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
-            $taxonomy = ( 'download' == $type ) ? 'price-group' : 'reprints-price-group';
-            $shipping_flag = ( 'reprints-price-group' == $taxonomy ) ? true : false;
+            $shipping_flag = ( 'print' == $type ) ? true : false;
 
             // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
                 $markup = $p->markup_amount( $product_id, $price_id, $license_id );
-                $price = $p->verify_the_price( $product_id, $taxonomy, $price_id );
+                $price = $p->verify_the_price( $product_id, $price_id );
                 $amount =  $price + $markup;
             } else {
                 // this is either a download without a license or a print, so just verify the price
-                $amount = $p->verify_the_price( $product_id, $taxonomy, $price_id );
+                $amount = $p->verify_the_price( $product_id, $price_id );
             }
             $cart[ 'amount_' . $i ] = number_format( $amount, 2, '.', '' );
             $sub_total += $amount;
