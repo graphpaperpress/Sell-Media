@@ -71,7 +71,7 @@ jQuery(document).ready(function($){
     });
 
     $(document).on('click', '.sellMediaCart_checkout', function(){
-        $(this).prop('disabled', true).text(sell_media.checkout_wait_text);
+        $(this).prop('disabled', true).css({"cursor": "progress"}).text(sell_media.checkout_wait_text);
     });
 
     /**

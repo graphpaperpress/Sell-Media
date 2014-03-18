@@ -50,7 +50,7 @@ Class SellMediaDownload {
                 header("Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"");
                 header("Content-Transfer-Encoding: binary");
 
-                // Generate image sizes based on the height/width of the price group purchased
+                // If this download is an image, generate the image sizes purchased and create a download
                 $product_obj = new SellMediaProducts;
                 if ( $product_obj->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) ) ){
                     $this->download_image( $payment_id, $product_id );
