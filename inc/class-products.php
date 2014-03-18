@@ -30,6 +30,7 @@ Class SellMediaProducts {
             $settings = sell_media_get_plugin_options();
             $price = $settings->default_price;
         }
+        return $price;
     }
 
 
