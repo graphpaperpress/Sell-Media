@@ -65,11 +65,11 @@ Class SellMediaPayments {
     *
     * @return Array
     */
-    public function get_product_size( $post_id=null, $product_id=null ){
+    public function get_product_size( $post_id=null, $product_id=null, $type=null ){
         $products = $this->get_products( $post_id );
         if ( $products ) foreach ( $products as $product ) {
             if ( $product_id == $product['id'] ) {
-                if ( array_key_exists( 'size', $product ) ) {
+                if ( array_key_exists( 'size', $product ) && $type == $product['type'] ) {
                     return $product['size']['id'];
                 }
             }
@@ -85,7 +85,7 @@ Class SellMediaPayments {
     *
     * @return Array
     */
-    public function get_product_type( $post_id=null, $product_id=null, $type=null ){
+    public function is_product_type( $post_id=null, $product_id=null, $type=null ){
         $products = $this->get_products( $post_id );
         if ( $products ) foreach ( $products as $product ) {
             if ( $product_id == $product['id'] ) {
