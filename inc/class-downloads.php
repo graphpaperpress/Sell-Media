@@ -28,30 +28,58 @@ Class SellMediaDownload {
                 $file_extension = sell_media_get_file_extension( $requested_file );
                 $ctype = $this->ctype( $file_extension );
 
-
                 if ( ! ini_get( 'safe_mode' ) ){
                     set_time_limit( 0 );
                 }
 
-                if ( function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime() ) {
+                if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
                     set_magic_quotes_runtime(0);
                 }
 
+                if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
+                @ini_set( 'zlib.output_compression', 'Off' );
+
                 nocache_headers();
-                header("Robots: none");
-                header("Content-Type: " . $ctype . "");
-                header("Content-Description: File Transfer");
-                header("Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"");
-                header("Content-Transfer-Encoding: binary");
+                header( "Robots: none" );
+                header( "Content-Type: " . $ctype . "" );
+                header( "Content-Description: File Transfer" );
+                header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
+                header( "Content-Transfer-Encoding: binary" );
+
+                $file_details = parse_url( $requested_file );
+                $schemes      = array( 'http', 'https' ); // Direct URL schemes
+
+                if ( ( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemes ) ) && isset( $file_details['path'] ) && file_exists( $requested_file ) ) {
+
+                    /** This is an absolute path */
+                    $file_path = $requested_file;
+
+                } else if ( defined( 'UPLOADS' ) && strpos( $requested_file, UPLOADS ) !== false ) {
+
+                    /** 
+                     * This is a local file given by URL so we need to figure out the path
+                     * UPLOADS is always relative to ABSPATH
+                     * site_url() is the URL to where WordPress is installed
+                     */
+                    $file_path  = str_replace( site_url(), '', $requested_file );
+                    $file_path  = realpath( ABSPATH . $file_path );
+                    
+                } else if ( strpos( $requested_file, WP_CONTENT_URL ) !== false ) {
+
+                    /** This is a local file given by URL so we need to figure out the path */
+                    $file_path  = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $requested_file );
+                    $file_path  = realpath( $file_path );
+
+                }
 
                 // If this download is an image, generate the image sizes purchased and create a download
                 if ( sell_media_is_image( $requested_file ) ){
                     $this->download_image( $payment_id, $product_id );
                 // Otherwise, just deliver the download
                 } else {
-                    $this->deliver_download( $requested_file );
+                    $this->download_package( $file_path );
                 }
-
+                wp_die();
             } else {
                 wp_die( __( 'You do not have permission to download this file', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
             }
@@ -114,7 +142,7 @@ Class SellMediaDownload {
      * @param $file (url to download)
      * @return void
      */
-    public function deliver_download( $file = '' ) {
+    public function download_package( $file = '' ) {
 
         /*
          * If symlinks are enabled, a link to the file will be created
