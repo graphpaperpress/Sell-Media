@@ -796,7 +796,7 @@ Class SellMediaPayments {
         } else {
             $shipping_amount = 0;
         }
-        $args['handling_cart'] = number_format( $shipping_amount, 2, '.', '' );
+        $args['handling'] = number_format( $shipping_amount, 2, '.', '' );
 
 
         // If tax is enabled, tax the order
