@@ -212,9 +212,9 @@ Action hooks available:
 == Changelog ==
 
 = 1.8.4 =
-* Feature: Add Packages
-* Tweak: Changes to the cart to support Packages
+* Tweak: Template redirects for taxonomies
 * Bug: Terms dialog
+
 
 = 1.8.3 =
 * Bug: PayPal live mode or test mode
