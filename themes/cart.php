@@ -83,10 +83,9 @@ if ( $licenses ) {
                         <select id="sell_media_item_size" class="sum">
                         	<option selected="selected" value="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
                             <?php
-                                $p = new SellMediaProducts;
-                                $prices = $p->get_prices( $_POST['product_id'] );
+                                $prices = Sell_Media()->$products->get_prices( $_POST['product_id'] );
                                 if ( $prices ) foreach ( $prices as $k => $v ) {
-                                    if ( $p->mimetype_is_image( get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true ) ) ){
+                                    if ( Sell_Media()->$products->mimetype_is_image( get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true ) ) ){
                                         $name = $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')';
                                     } else {
                                         $name = $v['name'];

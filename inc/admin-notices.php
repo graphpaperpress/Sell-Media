@@ -78,11 +78,9 @@ function sell_media_admin_messages() {
                 $is_package = get_post_meta( $post->ID, '_sell_media_is_package', true );
                 if ( ! $is_package ) {
 
-                    $product_obj = new SellMediaProducts;
-                    if ( $product_obj->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
+                    if ( Sell_Media()->products->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
 
-                        $images_obj = new SellMediaImages;
-                        $download_sizes = $images_obj->get_downloadable_size( $post->ID, null, true );
+                        $download_sizes = Sell_Media()->images->get_downloadable_size( $post->ID, null, true );
 
                         if ( ! empty( $download_sizes['unavailable'] ) ){
 

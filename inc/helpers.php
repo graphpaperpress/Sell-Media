@@ -467,8 +467,55 @@ function sell_media_change_downloads_upload_dir() {
         }
     }
 }
-add_action('admin_init', 'sell_media_change_downloads_upload_dir', 999);
+add_action( 'admin_init', 'sell_media_change_downloads_upload_dir', 999 );
 
+
+/**
+ * Change order by on frontend
+ *
+ * @since 0.1
+ * @return void
+ */
+function sell_media_order_by( $orderby_statement ) {
+
+    $settings = sell_media_get_plugin_options();
+
+    if ( ! empty( $settings->order_by ) && is_archive() ||
+         ! empty( $settings->order_by ) && is_tax() ){
+        global $wpdb;
+        switch( $settings->order_by ){
+            case 'title-asc' :
+                $order_by = "{$wpdb->prefix}posts.post_title ASC";
+                break;
+            case 'title-desc' :
+                $order_by = "{$wpdb->prefix}posts.post_title DESC";
+                break;
+            case 'date-asc' :
+                $order_by = "{$wpdb->prefix}posts.post_date ASC";
+                break;
+            case 'date-desc' :
+                $order_by = "{$wpdb->prefix}posts.post_date DESC";
+                break;
+        }
+    } else {
+        $order_by = $orderby_statement;
+    }
+    return $order_by;
+}
+if ( ! is_admin() )
+    add_filter( 'posts_orderby', 'sell_media_order_by' );
+
+
+/**
+ * Adjust wp_query for when search is submitted error no longer shows in "general-template.php"
+ * detail here: http://wordpress.stackexchange.com/questions/71157/undefined-property-stdclasslabels-in-general-template-php-post-type-archive
+ * @since 1.2.3
+ */
+function sell_media_search_warning_surpression( $wp_query ){
+    if ( $wp_query->is_post_type_archive && $wp_query->is_tax )
+        $wp_query->is_post_type_archive = false;
+}
+add_action( 'parse_query', 'sell_media_search_warning_surpression' );
 
 
 /**

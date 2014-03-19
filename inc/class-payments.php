@@ -328,7 +328,7 @@ Class SellMediaPayments {
             $total += $subtotal;
         }
 
-        return $total;
+        return number_format( ( float ) $total, 2, '.', '' );
     }
 
 
@@ -752,7 +752,6 @@ Class SellMediaPayments {
         // Count the number of keys that match the pattern "item_number_"
         $cart_count = count( preg_grep( '/^item_number_/', array_keys( $cart ) ) );
 
-        $p = new SellMediaProducts;
         $verified = array();
         $sub_total = 0;
         $shipping_flag = false;
@@ -765,12 +764,12 @@ Class SellMediaPayments {
 
             // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
-                $price = $p->verify_the_price( $product_id, $price_id );
-                $markup = $p->markup_amount( $product_id, $price_id, $license_id );
+                $price = Sell_Media()->products->verify_the_price( $product_id, $price_id );
+                $markup = Sell_Media()->products->markup_amount( $product_id, $price_id, $license_id );
                 $amount = $price + $markup;
             } else {
                 // this is either a download without a license or a print, so just verify the price
-                $amount = $p->verify_the_price( $product_id, $price_id );
+                $amount = Sell_Media()->products->verify_the_price( $product_id, $price_id );
             }
             $cart[ 'amount_' . $i ] = number_format( $amount, 2, '.', '' );
             $sub_total += $amount;

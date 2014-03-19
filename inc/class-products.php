@@ -43,8 +43,7 @@ Class SellMediaProducts {
         $i = 0;
 
         if ( $this->settings->hide_original_price !== 'yes' ){
-            $images_obj = new SellMediaImages;
-            $original_size = $images_obj->get_original_image_size( $post_id, false );
+            $original_size = Sell_Media()->images->get_original_image_size( $post_id, false );
             $prices[$i]['id'] = 'original';
             $prices[$i]['name'] = __( 'Original', 'sell_media' );
             $prices[$i]['description'] = __( 'The original high resolution source file', 'sell_media' );
@@ -168,8 +167,7 @@ Class SellMediaProducts {
      */
     public function protected_file( $post_id=null ){
         $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
-        $wp_upload_dir = wp_upload_dir();
-        $attached_path_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+        $attached_path_file = sell_media_get_upload_dir() . '/' . $attached_file;
         return ( file_exists( $attached_file ) ) ? $attached_file : false;
     }
 

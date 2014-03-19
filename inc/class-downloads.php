@@ -88,11 +88,10 @@ Class SellMediaDownload {
 
         // Rend purchase receipt?
         if ( isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ){
-            $payment_obj = new SellMediaPayments;
             $payment_id = $_GET['payment_id'];
             $payment_email = get_meta_key( $payment_id, 'email' );
 
-            $payment_obj->email_receipt( $payment_id, $payment_email );
+            Sell_Media()->payments->email_receipt( $payment_id, $payment_email );
         }
     }
 
@@ -105,9 +104,8 @@ Class SellMediaDownload {
      * @return boolean
      */
     public function verify_download_link( $transaction_id=null, $payment_id=null ) {
-        $payments_obj = new SellMediaPayments;
 
-        if ( $transaction_id == $payments_obj->get_meta_key( $payment_id, 'transaction_id' ) ){
+        if ( $transaction_id == Sell_Media()->payments->get_meta_key( $payment_id, 'transaction_id' ) ){
             $status = true;
         } else {
             $status = false;
@@ -125,8 +123,7 @@ Class SellMediaDownload {
      */
     public function download_image( $payment_id=null, $product_id=null ){
         // get height and width associated with the price group
-        $p = new SellMediaPayments;
-        $price_group_id = $p->get_product_size( $payment_id, $product_id, 'download' );
+        $price_group_id = Sell_Media()->payments->get_product_size( $payment_id, $product_id, 'download' );
         $width = sell_media_get_term_meta( $price_group_id, 'width', true );
         $height = sell_media_get_term_meta( $price_group_id, 'height', true );
         $file_download = sell_media_resize_original_image( $product_id, $width, $height );

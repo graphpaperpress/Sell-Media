@@ -493,7 +493,7 @@ add_filter( 'manage_collection_custom_column', 'sell_media_custom_collection_col
  * This code is from the Plugin: Taxonomy Metadata with minor
  * modifications.
  */
-class SELL_MEDIA_Taxonomy_Metadata {
+class SellMediaTaxonomyMetadata {
     function __construct() {
         add_action( 'init', array($this, 'wpdbfix') );
         add_action( 'switch_blog', array($this, 'wpdbfix') );
@@ -579,7 +579,7 @@ class SELL_MEDIA_Taxonomy_Metadata {
  * @return bool False for failure. True for success.
  */
 function sell_media_add_term_meta($term_id, $meta_key, $meta_value, $unique = false) {
-    SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
+    SellMediaTaxonomyMetadata::wpdbfix();
     return add_metadata('taxonomy', $term_id, $meta_key, $meta_value, $unique);
 }
 
@@ -596,7 +596,7 @@ function sell_media_add_term_meta($term_id, $meta_key, $meta_value, $unique = fa
  * @return bool False for failure. True for success.
  */
 function sell_media_delete_term_meta($term_id, $meta_key, $meta_value = '') {
-    SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
+    SellMediaTaxonomyMetadata::wpdbfix();
     return delete_metadata('taxonomy', $term_id, $meta_key, $meta_value);
 }
 
@@ -610,7 +610,7 @@ function sell_media_delete_term_meta($term_id, $meta_key, $meta_value = '') {
  *  is true.
  */
 function sell_media_get_term_meta($term_id, $key, $single = false) {
-    SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
+    SellMediaTaxonomyMetadata::wpdbfix();
     return get_metadata('taxonomy', $term_id, $key, $single);
 }
 
@@ -629,7 +629,7 @@ function sell_media_get_term_meta($term_id, $key, $single = false) {
  * @return bool False on failure, true if success.
  */
 function sell_media_update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
-    SELL_MEDIA_Taxonomy_Metadata::wpdbfix();
+    SellMediaTaxonomyMetadata::wpdbfix();
     return update_metadata('taxonomy', $term_id, $meta_key, $meta_value, $prev_value);
 }
 // End 'taxonomy meta plugin code'

@@ -22,10 +22,9 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     }
 
     if ( $tx ) {
-        $p = new SellMediaPayments;
-        $post_id = $p->get_id_from_tx( $transaction_id=$tx );
+        $post_id = Sell_Media()->$payments->get_id_from_tx( $transaction_id=$tx );
         $html = null;
-        $html = $p->get_payment_products_formatted( $post_id );
+        $html = Sell_Media()->$payments->get_payment_products_formatted( $post_id );
         $html .= '<script>sellMediaCart.empty();</script>';
         return '<p class="sell-media-thanks-message">' . $html . '</p>';
         do_action( 'sell_media_thanks_hook_below' );
@@ -74,7 +73,7 @@ function sell_media_item_shortcode( $atts ) {
     $caption = $attachment->post_title;
 
     if ( $image ) {
-        $image = '<img src="' . $image[0] . '" alt="' . $caption . '" title=" ' . sell_media_image_caption( $id ) . ' " class="sell-media-aligncenter" />';
+        $image = '<img src="' . $image[0] . '" alt="' . $caption . '" title=" ' . $caption . ' " class="sell-media-aligncenter" />';
     } else {
         sell_media_item_icon( get_post_thumbnail_id( $id ), $size );
     }
@@ -202,8 +201,7 @@ function sell_media_download_shortcode( $atts ) {
         global $current_user;
         get_currentuserinfo();
 
-        $p = new SellMediaPayments;
-        $purchases = $p->get_user_payments( $current_user->user_email );
+        $purchases = Sell_Media()->$payments->get_user_payments( $current_user->user_email );
 
         $html = null;
         $html = '<h2>';
@@ -216,7 +214,7 @@ function sell_media_download_shortcode( $atts ) {
             $html .= '<strong>' . __( 'Purchase ID', 'sell_media' ) . ': ' . $purchase . '</strong>';
             $html .= '<br /><span class="date">' . get_the_time( 'M N, Y', $purchase ) . '</span>';
             $html .= '</p>';
-            $html .= $p->get_payment_products_formatted( $purchase );
+            $html .= Sell_Media()->$payments->get_payment_products_formatted( $purchase );
             $html .= '</div>';
         }
 

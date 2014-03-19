@@ -69,16 +69,14 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  */
 function sell_media_payment_purchase_details( $post ){
 
-    $payment_obj = new SellMediaPayments;
-
     echo '<div class="sell-media-admin-payments">';
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
     printf(
         '<ul>
-        <li>%s: ' . $payment_obj->get_meta_key( $post->ID, 'first_name' ) . ' ' . $payment_obj->get_meta_key( $post->ID, 'last_name' ) . ' ' . '</li>
-        <li>%s: ' . $payment_obj->get_meta_key( $post->ID, 'email' ) . ' ' . '</li>
-        <li>%s: ' . $payment_obj->total( $post->ID ) . ' ' . '</li>
+        <li>%s: ' . Sell_Media()->payments->get_meta_key( $post->ID, 'first_name' ) . ' ' . $payment_obj->get_meta_key( $post->ID, 'last_name' ) . ' ' . '</li>
+        <li>%s: ' . Sell_Media()->payments->get_meta_key( $post->ID, 'email' ) . ' ' . '</li>
+        <li>%s: ' . Sell_Media()->payments->total( $post->ID ) . ' ' . '</li>
         </ul>',
         __( 'Name', 'sell_media' ),
         __( 'Email', 'sell_media' ),
@@ -87,7 +85,7 @@ function sell_media_payment_purchase_details( $post ){
 
     do_action( 'sell_media_below_payment_contact_details', $post->ID );
 
-    echo $payment_obj->payment_table( $post->ID );
+    echo Sell_Media()->payments->payment_table( $post->ID );
 
     do_action( 'sell_media_additional_customer_meta', $post->ID );
 
@@ -105,8 +103,7 @@ function sell_media_payment_purchase_details( $post ){
  */
 function sell_media_payment_additional_purchase_details( $post ){
 
-    $p = new SellMediaPayments;
-    $args = $p->get_meta( $post->ID );
+    $args = Sell_Media()->payments->get_meta( $post->ID );
 
     ?>
     
@@ -346,8 +343,7 @@ function sell_media_payments_callback_fn(){
                     </td>
                     <td>
                         <?php
-                            $p = new SellMediaPayments;
-                            $products = $p->get_products( $payment->ID );
+                            $products = Sell_Media()->payments->get_products( $payment->ID );
                             $i = 0;
                             $count = count( $products );
                             if ( $products ) foreach ( $products as $product ) {
@@ -538,8 +534,7 @@ function sell_media_reports_callback_fn(){
 */
 
 function sell_media_total_revenue( $post_status=null ) {
-    $p = new SellMediaPayments;
-    return $p->get_total_payments( $post_status );
+    return Sell_Media()->payments->get_total_payments( $post_status );
 }
 
 
@@ -551,8 +546,7 @@ function sell_media_total_revenue( $post_status=null ) {
  * @return html
  */
 function sell_media_get_sales_by_date( $day = null, $month_num, $year ) {
-    $p = new SellMediaPayments;
-    return $p->get_payments_by_date( $day, $month_num, $year );
+    return Sell_Media()->payments->get_payments_by_date( $day, $month_num, $year );
 }
 
 /**

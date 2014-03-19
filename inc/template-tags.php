@@ -188,3 +188,28 @@ function sell_media_get_excerpt( $post_id, $excerpt_length = 140, $trailing_char
     $the_excerpt = implode( ' ', $words ) . $trailing_character;
     return $the_excerpt;
 }
+
+/**
+ * Put the cart dialog markup in the footer
+ *
+ * @since 1.8.5
+ */
+function sell_media_cart_dialog(){
+    $settings = sell_media_get_plugin_options();
+    if ( ! is_page( $settings->checkout_page ) || ! is_page( $settings->login_page ) || ! is_page( $settings->dashboard_page ) ) : ?>
+        <div id="sell-media-dialog-box" class="sell-media-dialog-box" style="display:none">
+            <div id="sell-media-dialog-box-target"></div>
+        </div>
+        <div id="sell-media-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
+    <?php endif; ?>
+    <?php if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) : ?>
+        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box" style="display:none">
+            <span class="close">&times;</span>
+            <div class="content">
+                <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
+            </div>
+        </div>
+        <div id="sell-media-empty-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
+    <?php endif;
+}
+add_action( 'wp_footer', 'sell_media_cart_dialog' );
