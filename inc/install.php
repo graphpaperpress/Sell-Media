@@ -53,45 +53,11 @@ function sell_media_install() {
     $taxonomy_metadata->activate();
     $taxonomy = 'licenses';
 
-    /**
-     * Add our Parent terms
-     *
-     * Parent -- book, magazine, newspaper, website
-     * Commercial -- annual reports, billboards, brochures, print advertising, product packaging, public
-     * relations, web advertising, websites
-     */
+    // Add Personal and Commerical default license terms
     $r_personal = wp_insert_term( 'Personal', $taxonomy, array( 'slug' => 'personal' ) );
     $r_commercial = wp_insert_term( 'Commercial', $taxonomy, array( 'slug' => 'commercial' ) );
 
-    /**
-     * Personal
-     *
-     * Get our Parent term and add child terms
-     */
-    $personal = term_exists( 'Personal', $taxonomy );
-    $personal_terms = array( 'Book', 'Magazine', 'Newspaper', 'Website' );
-    foreach ( $personal_terms as $term ) {
-        if ( ! term_exists( $term, $taxonomy ) ){
-            wp_insert_term( $term, $taxonomy, array( 'slug' => strtolower(str_replace( ' ', '-', $term ) ), 'parent' => $personal['term_id'] ) );
-        }
-    }
-
-    /**
-     * Commercial
-     *
-     * Get our Parent term and add child terms
-     */
-    $commercial = term_exists( 'Commercial', $taxonomy );
-    $commercial_terms = array( 'Annual Reports', 'Billboards', 'Brochures', 'Print Advertising', 'Product Advertising', 'Product Packaging', 'Public Relations', 'Web Advertising', 'Website' );
-    foreach ( $commercial_terms as $term ) {
-        if ( ! term_exists( $term, $taxonomy ) ){
-            wp_insert_term( $term, $taxonomy, array( 'slug' => strtolower(str_replace( ' ', '-', $term ) ), 'parent' => $commercial['term_id'] ) );
-        }
-    }
-
-    wp_update_term( $commercial['term_id'], $taxonomy, array( 'description' => '' ) );
-
-    // Install folder for uploading files and prevent hotlinking
+    // Install protected folder for uploading files and prevent hotlinking
     $downloads_url = sell_media_get_upload_dir();
 
     if ( wp_mkdir_p( $downloads_url ) && ! file_exists( $downloads_url.'/.htaccess' ) ) {
@@ -101,18 +67,19 @@ function sell_media_install() {
       }
     }
 
+    // Add a new Customer role
     add_role( 'sell_media_customer', 'Customer', array( 'read' => true ) );
-
 
     // This is a new install so add the defaults to the options table
     if ( empty( $version ) ){
         $defaults = sell_media_get_plugin_option_defaults();
         update_option( sell_media_get_current_plugin_id() . "_options" , $defaults );
+    // A version number exists, so run upgrades
     } else {
-        // Update script to new settings
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-upgrade.php';
     }
 
+    // Update the version number
     update_option( 'sell_media_version', SELL_MEDIA_VERSION );
 
 }

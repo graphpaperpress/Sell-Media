@@ -274,7 +274,7 @@ function sell_media_details_meta_box( $fields=null ) {
                     echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
                     echo '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
 
-                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
+                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $url . '" size="30" />';
 
                     echo '<a class="sell-media-upload-trigger button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
 
@@ -314,16 +314,14 @@ function sell_media_details_meta_box( $fields=null ) {
 
                 case 'package':
 
-                    $folder_name = 'packages';
-                    $package_dir = sell_media_get_upload_dir()  . '/' . $folder_name . '/';
-                    $package_folder = sell_media_get_upload_dir_url() . '/' . $folder_name . '/';
-                    $files = glob( $package_dir . '*.{zip,gz}', GLOB_BRACE );
+                    $packages_dir = sell_media_get_packages_upload_dir();
+                    $files = glob( $packages_dir . '/' . '*.{zip,gz}', GLOB_BRACE );
                     $saved = get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?>
 
                     <select name="_sell_media_attached_file" id="_sell_media_attached_file" value="">
                         <option value=""><?php _e( 'Select a package', 'sell_media' ); ?></option>
                         <?php if ( $files ) foreach( $files as $file ) : ?>
-                            <option <?php selected( $saved, $package_folder . basename( $file ) ); ?> value="<?php echo $package_folder . basename( $file ); ?>"><?php echo basename( $file ); ?></option>
+                            <option <?php selected( $saved, basename( $file ) ); ?> value="<?php echo basename( $file ); ?>"><?php echo basename( $file ); ?></option>
                         <?php endforeach; ?>
                     </select>
 

@@ -10,13 +10,10 @@
 function sell_media_add_package_callback_fn(){
     wp_enqueue_media();
     $settings = sell_media_get_plugin_options();
-    $folder_name = 'packages';
-    $wp_upload_dir = wp_upload_dir();
-    $package_dir = sell_media_get_upload_dir() . '/' . $folder_name . '/';
-    $package_folder = sell_media_get_upload_dir_url() . '/' . $folder_name . '/';
+    $packages_dir = sell_media_get_packages_upload_dir();
     // make the package directory if it doesn't already exist
-    if ( ! is_dir( $package_dir ) ) {
-        mkdir( $package_dir );
+    if ( ! is_dir( $packages_dir ) ) {
+        mkdir( $packages_dir );
     }
     ?>
     <div class="wrap">
@@ -26,7 +23,7 @@ function sell_media_add_package_callback_fn(){
             <p>
                 <ol>
                     <li><?php _e( 'ZIP up the folder full of files on your computer.', 'sell_media' ); ?></li>
-                    <li><?php printf( __( 'Using FTP, upload the ZIP file to your website into the %1$s folder.','sell_media' ), $package_folder ); ?></li>
+                    <li><?php printf( __( 'Using FTP, upload the ZIP file to your website into the %1$s folder.','sell_media' ), $packages_dir ); ?></li>
                     <li><?php _e( 'Select the package filename from the list below.', 'sell_media' ); ?></li>
                 </ol>
             </ul>
@@ -42,11 +39,11 @@ function sell_media_add_package_callback_fn(){
                             <tr>
                                 <td>
                                     <?php
-                                        $files = glob( $package_dir . '*.{zip,gz}', GLOB_BRACE );
+                                        $files = glob( $packages_dir . '/' . '*.{zip,gz}', GLOB_BRACE );
                                         $html = '<select name="file" value="" id="sell_media_package_select">';
                                         $html .= '<option value="">' . __( 'Select a package', 'sell_media' ) . '</option>';
                                         if ( $files ) foreach( $files as $file ) {
-                                            $html .= '<option value="' . $package_folder . basename( $file ) . '">' . basename( $file ) . '</option>';
+                                            $html .= '<option value="' . basename( $file ) . '">' . basename( $file ) . '</option>';
                                         }
                                         $html .= '</select>';
                                         echo $html;

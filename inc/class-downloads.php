@@ -46,6 +46,7 @@ Class SellMediaDownload {
                 header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
                 header( "Content-Transfer-Encoding: binary" );
 
+                // Get the original uploaded file in the sell_media dir
                 $file_path = sell_media_get_original_protected_file( $product_id );
 
                 // If this download is an image, generate the image sizes purchased and create a download
