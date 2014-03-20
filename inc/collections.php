@@ -116,20 +116,20 @@ function sell_media_collection_password_check( $query ){
                      );
         }
 
-        if ( Sell_Media()->$search->keyword_ids ){
+        if ( Sell_Media()->search->keyword_ids ){
             $tax_query[] = array(
                 'taxonomy' => 'keywords',
                 'field' => 'id',
-                'terms' => Sell_Media()->$search->keyword_ids,
+                'terms' => Sell_Media()->search->keyword_ids,
                 'operator' => 'IN'
             );
         }
 
-        if ( Sell_Media()->$search->collection_ids ){
+        if ( Sell_Media()->search->collection_ids ){
             $tax_query[] = array(
                 'taxonomy' => 'collection',
                 'field' => 'id',
-                'terms' => Sell_Media()->$search->collection_ids,
+                'terms' => Sell_Media()->search->collection_ids,
                 'operator' => 'IN'
             );
         }

@@ -37,7 +37,7 @@ function sell_media_add_package_callback_fn(){
                     <table class="form-table sell-media-item-table">
                         <tbody>
                             <tr>
-                                <th><?php _e( 'Choose a package','sell_media' ); ?>:</th>
+                                <th><?php _e( 'Choose a package', 'sell_media' ); ?>:</th>
                             </tr>
                             <tr>
                                 <td>
