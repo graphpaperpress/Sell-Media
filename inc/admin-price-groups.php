@@ -34,7 +34,7 @@ Class SellMediaNavStyleUI {
         $screen = get_current_screen();
 
         if ( $screen->id == 'sell_media_item_page_sell_media_plugin_options' && ! empty( $_GET['tab'] ) && $_GET['tab'] == 'sell_media_size_settings' ){
-            wp_enqueue_script( 'sell_media-admin-price-groups', plugin_dir_url( dirname( __FILE__ ) ) . 'js/admin-price-groups.js', array( 'jquery' ) );
+            wp_enqueue_script( 'sell_media-admin-price-groups', SELL_MEDIA_PLUGIN_URL . '/js/admin-price-groups.js', array( 'jquery' ) );
             wp_localize_script('sell_media-admin-price-groups', 'sell_media_price_groups',
                 array(
                     'currency_symbol' => sell_media_get_currency_symbol()

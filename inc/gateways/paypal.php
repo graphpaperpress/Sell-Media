@@ -167,13 +167,14 @@ function sell_media_process_paypal_ipn() {
             );
 
             $payment_id = wp_insert_post( $data );
+            $payments = Sell_Media()->payments;
 
             if ( $payment_id ) {
 
                 update_post_meta( $payment_id, '_paypal_args', $_POST );
 
                 // record the PayPal payment details
-                Sell_Media()->payments->paypal_copy_args( $payment_id );
+                $payments->paypal_copy_args( $payment_id );
 
                 // create new user, auto log them in, email them registration
                 Sell_Media()->customer->insert( $_POST['payer_email'], $_POST['first_name'], $_POST['last_name'] );
@@ -183,8 +184,8 @@ function sell_media_process_paypal_ipn() {
                 $message .= "To email: {$_POST['payer_email']}\n";
 
                 // Send email to buyer and admin
-                $email_status = Sell_Media()->payments->email_receipt( $payment_id, $_POST['payer_email'] );
-                $admin_email_status = Sell_Media()->payments->email_receipt( $payment_id, get_option( 'admin_email' ) );
+                $email_status = $payments->email_receipt( $payment_id, $_POST['payer_email'] );
+                $admin_email_status = $payments->email_receipt( $payment_id, get_option( 'admin_email' ) );
                 
                 $message .= "{$email_status}\n";
                 $message .= "{$admin_email_status}\n";

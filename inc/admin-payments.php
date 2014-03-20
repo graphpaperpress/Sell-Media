@@ -69,14 +69,16 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
  */
 function sell_media_payment_purchase_details( $post ){
 
+    $payments = Sell_Media()->payments;
+    
     echo '<div class="sell-media-admin-payments">';
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
     printf(
         '<ul>
-        <li>%s: ' . Sell_Media()->payments->get_meta_key( $post->ID, 'first_name' ) . ' ' . $payment_obj->get_meta_key( $post->ID, 'last_name' ) . ' ' . '</li>
-        <li>%s: ' . Sell_Media()->payments->get_meta_key( $post->ID, 'email' ) . ' ' . '</li>
-        <li>%s: ' . Sell_Media()->payments->total( $post->ID ) . ' ' . '</li>
+        <li>%s: ' . $payments->get_meta_key( $post->ID, 'first_name' ) . ' ' . $payments->get_meta_key( $post->ID, 'last_name' ) . ' ' . '</li>
+        <li>%s: ' . $payments->get_meta_key( $post->ID, 'email' ) . ' ' . '</li>
+        <li>%s: ' . $payments->total( $post->ID ) . ' ' . '</li>
         </ul>',
         __( 'Name', 'sell_media' ),
         __( 'Email', 'sell_media' ),
@@ -85,7 +87,7 @@ function sell_media_payment_purchase_details( $post ){
 
     do_action( 'sell_media_below_payment_contact_details', $post->ID );
 
-    echo Sell_Media()->payments->payment_table( $post->ID );
+    echo $payments->payment_table( $post->ID );
 
     do_action( 'sell_media_additional_customer_meta', $post->ID );
 
@@ -352,9 +354,9 @@ function sell_media_payments_callback_fn(){
                             }
                         ?>
                     </td>
-                    <td><?php echo $p->total( $payment->ID ); ?></td>
-                    <td><?php echo date('M d, Y', strtotime($payment->post_date)); ?></td>
-                    <td><?php echo $p->status( $payment->ID ); ?></td>
+                    <td><?php echo Sell_Media()->payments->total( $payment->ID ); ?></td>
+                    <td><?php echo date( 'M d, Y', strtotime( $payment->post_date ) ); ?></td>
+                    <td><?php echo Sell_Media()->payments->status( $payment->ID ); ?></td>
                 </tr>
             <?php endforeach; ?>
             <?php else : ?>
@@ -368,7 +370,7 @@ function sell_media_payments_callback_fn(){
                 <p><?php _e( 'Total Earnings:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></p>
                 <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
             </div>
-            <?php if ($total_pages > 1) : ?>
+            <?php if ( $total_pages > 1 ) : ?>
                 <div class="tablenav-pages alignright">
                     <?php
 

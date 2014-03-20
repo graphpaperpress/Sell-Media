@@ -258,7 +258,9 @@ function sell_media_settings_price_group( $taxonomy=null ){
     return $array;
 }
 
-
+/**
+ * Returns the payment gateways for the sell media settings
+ */
 function sell_media_settings_payment_gateway(){
     $gateways = array(
         array(
@@ -270,9 +272,11 @@ function sell_media_settings_payment_gateway(){
     return apply_filters('sell_media_payment_gateway', $gateways);
 }
 
-
+/**
+ * Price Groups
+ */
 function sell_media_price_group_ui(){
-    include_once(plugin_dir_path( dirname( dirname( __FILE__ ) ) ).'inc/admin-price-groups.php');
+    include_once( SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php' );
     // Since the nav style ui prints output we suppress it and
     // assign it to a variable.
     ob_start();

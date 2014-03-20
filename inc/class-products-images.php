@@ -19,7 +19,7 @@ class SellMediaImages extends SellMediaProducts {
 
         $original_file = get_attached_file( $attachment_id );
 
-        $this->parse_iptc_info( $original_file );
+        $this->parse_iptc_info( $original_file, $attachment_id );
 
         // Assign the FULL PATH to our destination file.
         $wp_upload_dir = wp_upload_dir();
@@ -278,7 +278,7 @@ class SellMediaImages extends SellMediaProducts {
      * Extract IPTC info from original source image
      * Save IPTC data as custom taxonomy terms
      */
-    public function parse_iptc_info( $original_file=null ){
+    public function parse_iptc_info( $original_file=null, $attachment_id=null ){
 
         // Extract IPTC meta info from the uploaded image.
         $city = sell_media_iptc_parser( 'city', $original_file );

@@ -36,21 +36,13 @@ function sell_media_get_current_plugin_id() {
 
 }
 
-
-/**
- * Get Theme Options Directory URI
- */
-function sell_media_get_plugin_options_directory_uri() {
-    return plugin_dir_url( dirname( __FILE__ ) ) . 'settings/';
-}
-
 /**
 * Enqueue CSS and Javascripts
 */
 function sell_media_enqueue_plugin_scripts_styles() {
 
-    wp_enqueue_style( 'sell-media-framework', sell_media_get_plugin_options_directory_uri() . 'css/sell-media-framework.css' );
-    wp_enqueue_script( 'sell-media-framework', sell_media_get_plugin_options_directory_uri() . 'js/sell-media-framework.js', array( 'jquery' ) );
+    wp_enqueue_style( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/settings/css/sell-media-framework.css' );
+    wp_enqueue_script( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/settings/js/sell-media-framework.js', array( 'jquery' ) );
 
 }
 add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles', 40 );
@@ -61,7 +53,7 @@ add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles',
 function sell_media_plugin_register_options() {
 	global $wp_customize;
 	if ( ! isset( $wp_customize ) ) {
-		include_once( 'library/options-register.php' );
+		require_once SELL_MEDIA_PLUGIN_DIR . '/settings/library/options-register.php';
     }
 
 }
@@ -71,7 +63,7 @@ add_action( 'admin_init', 'sell_media_plugin_register_options' );
 /**
 * Fonts need to be included outside of action
 */
-include_once( 'library/helpers.php' );
+require_once SELL_MEDIA_PLUGIN_DIR . '/settings/library/helpers.php';
 /**
  * Setup the Plugin Admin Settings Page
  */
@@ -297,6 +289,11 @@ function sell_media_plugin_field_text( $value, $attr ) { ?>
 <?php
 }
 
+function sell_media_plugin_field_password( $value, $attr ) { ?>
+    <input type="password" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" value="<?php echo esc_attr( $value ); ?>">
+<?php
+}
+
 function sell_media_plugin_field_textarea( $value, $attr ) { ?>
     <textarea name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" cols="48" rows="8"><?php echo stripslashes_deep( $value ); ?></textarea>
 <?php
@@ -318,7 +315,7 @@ function sell_media_plugin_field_select( $value, $attr ) { ?>
             <?php
         endforeach;
     else:
-        _e( "This option has no valid options. Please create valid options as an array inside the GPP Framework.", "sell_media" );
+        _e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
     endif;
     ?>
 </select>
@@ -338,7 +335,7 @@ function sell_media_plugin_field_radio_image( $value, $attr ) { ?>
             <?php
         endforeach;
     else:
-        _e( "This option has no valid options. Please create valid options as an array inside the GPP Framework.", "sell_media" );
+        _e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
     endif;
     ?>
 </select>
@@ -357,7 +354,7 @@ function sell_media_plugin_field_radio( $value, $attr ) { ?>
             <?php
         endforeach;
     else:
-        _e( "This option has no valid options. Please create valid options as an array inside the GPP Framework.", "sell_media" );
+        _e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
     endif;
     ?>
 </select>
@@ -588,24 +585,4 @@ function sell_media_plugin_utility_links(){
     echo '</ul>';
     echo '<br class="clear">';
     echo '</div>';
-}
-
-/**
-* Add custom url field to media uploader
-*/
-
-add_filter( "attachment_fields_to_edit", "sell_media_plugin_image_attachment_fields_to_edit", null, 2 );
-function sell_media_plugin_image_attachment_fields_to_edit( $form_fields, $post ) {
-	$form_fields["sell_media_custom_url"]["label"] = __( "URL", "sell_media" );
-	$form_fields["sell_media_custom_url"]["input"] = "text";
-	$form_fields["sell_media_custom_url"]["value"] = get_post_meta( $post->ID, "_sell_media_custom_url", true );
-	$form_fields["sell_media_custom_url"]["helps"] = "URL to link this image.";
-	return $form_fields;
-}
-add_filter("attachment_fields_to_save", "sell_media_plugin_image_attachment_fields_to_save", null, 2);
-function sell_media_plugin_image_attachment_fields_to_save( $post, $attachment ) {
-	if( isset( $attachment['sell_media_custom_url'] ) ) {
-		update_post_meta( $post['ID'], '_sell_media_custom_url', $attachment['sell_media_custom_url'] );
-	}
-	return $post;
 }

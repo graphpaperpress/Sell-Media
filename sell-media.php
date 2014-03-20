@@ -190,8 +190,8 @@ final class SellMedia {
      */
     private function includes() {
 
-        require_once SELL_MEDIA_PLUGIN_DIR . '/settings/settings.php';
-        require_once SELL_MEDIA_PLUGIN_DIR . 'sell-media-settings.php';
+        
+
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-customer.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-downloads.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-payments.php';
@@ -207,9 +207,12 @@ final class SellMedia {
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/template-tags.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/term-meta.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/widgets.php';
+        require_once SELL_MEDIA_PLUGIN_DIR . '/settings/settings.php';
+        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
 
         if ( is_admin() ) {
-            
+
+            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-attachments.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-bulk.php';
             //require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-package.php';
