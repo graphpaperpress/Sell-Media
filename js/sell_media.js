@@ -152,6 +152,7 @@ jQuery(document).ready(function($){
                     var size = item.get( "size" );
                     if ( size == undefined ) {
                         size = '';
+                        sep = '';
                     }
 
                     return name + "<span class='size-license'>" + size + sep + license + "</span>";
