@@ -39,15 +39,18 @@ Class SellMediaDownload {
                 if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
                 @ini_set( 'zlib.output_compression', 'Off' );
 
-                nocache_headers();
-                header( "Robots: none" );
-                header( "Content-Type: " . $ctype . "" );
-                header( "Content-Description: File Transfer" );
-                header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
-                header( "Content-Transfer-Encoding: binary" );
+                // nocache_headers();
+                // header( "Robots: none" );
+                // header( "Content-Type: " . $ctype . "" );
+                // header( "Content-Description: File Transfer" );
+                // header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
+                // header( "Content-Transfer-Encoding: binary" );
 
                 // Get the original uploaded file in the sell_media dir
                 $file_path = sell_media_get_original_protected_file( $product_id );
+
+                print_r($file_path);
+                wp_die();
 
                 // If this download is an image, generate the image sizes purchased and create a download
                 if ( sell_media_is_image( $requested_file ) ){
