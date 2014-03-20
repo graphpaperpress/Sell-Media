@@ -459,3 +459,13 @@ function sell_media_register_taxonomies(){
 
 }
 add_action( 'init', 'sell_media_register_taxonomies', 1 );
+
+
+/**
+ * Init our settings
+ * @since 1.8.5
+ */
+function sell_media_init_settings(){
+    require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
+}
+add_action( 'init', 'sell_media_init_settings' );
