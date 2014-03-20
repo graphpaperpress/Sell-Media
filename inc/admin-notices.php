@@ -80,7 +80,9 @@ function sell_media_admin_messages() {
 
                     if ( Sell_Media()->products->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
 
-                        $download_sizes = Sell_Media()->images->get_downloadable_size( $post->ID, null, true );
+                        $images_obj = Sell_Media()->images;
+
+                        $download_sizes = $images_obj->get_downloadable_size( $post->ID, null, true );
 
                         if ( ! empty( $download_sizes['unavailable'] ) ){
 
