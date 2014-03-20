@@ -212,6 +212,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.8.5 =
+* Feature: Packages feature added
 * Tweak: Make Sell_Media a singleton
 * Tweak: Remove redundant calls to self::upload_dir, use 1 function now
 * Tweak: Hide file dimensions on cart if not image

@@ -46,31 +46,7 @@ Class SellMediaDownload {
                 header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
                 header( "Content-Transfer-Encoding: binary" );
 
-                $file_details = parse_url( $requested_file );
-                $schemes      = array( 'http', 'https' ); // Direct URL schemes
-
-                if ( ( ! isset( $file_details['scheme'] ) || ! in_array( $file_details['scheme'], $schemes ) ) && isset( $file_details['path'] ) && file_exists( $requested_file ) ) {
-
-                    /** This is an absolute path */
-                    $file_path = $requested_file;
-
-                } else if ( defined( 'UPLOADS' ) && strpos( $requested_file, UPLOADS ) !== false ) {
-
-                    /** 
-                     * This is a local file given by URL so we need to figure out the path
-                     * UPLOADS is always relative to ABSPATH
-                     * site_url() is the URL to where WordPress is installed
-                     */
-                    $file_path  = str_replace( site_url(), '', $requested_file );
-                    $file_path  = realpath( ABSPATH . $file_path );
-                    
-                } else if ( strpos( $requested_file, WP_CONTENT_URL ) !== false ) {
-
-                    /** This is a local file given by URL so we need to figure out the path */
-                    $file_path  = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $requested_file );
-                    $file_path  = realpath( $file_path );
-
-                }
+                $file_path = sell_media_get_original_protected_file( $product_id );
 
                 // If this download is an image, generate the image sizes purchased and create a download
                 if ( sell_media_is_image( $requested_file ) ){
@@ -132,62 +108,6 @@ Class SellMediaDownload {
 
 
     /**
-     * Deliver the download file
-     *
-     * If enabled, the file is symlinked to better support large file downloads
-     *
-     * @param $file (url to download)
-     * @return void
-     */
-    public function download_package( $file = '' ) {
-
-        /*
-         * If symlinks are enabled, a link to the file will be created
-         * This symlink is used to hide the true location of the file, even when the file URL is revealed
-         * The symlink is deleted after it is used
-         */
-
-        if ( function_exists( 'symlink' ) ) {
-
-            // Generate a symbolic link
-            $ext       = sell_media_get_file_extension( $file );
-            $parts     = explode( '.', $file );
-            $name      = basename( $parts[0] );
-            $md5       = md5( $file );
-            $file_name = $name . '_' . substr( $md5, 0, -15 ) . '.' . $ext;
-            $path      = sell_media_get_symlink_dir() . '/' . $file_name;
-            $url       = sell_media_get_symlink_url() . '/' . $file_name;
-
-            // Set a transient to ensure this symlink is not deleted before it can be used
-            set_transient( md5( $file_name ), '1', 30 );
-
-            // Schedule deletion of the symlink
-            if ( ! wp_next_scheduled( 'sell_media_cleanup_file_symlinks' ) )
-                wp_schedule_single_event( current_time( 'timestamp' )+60, 'sell_media_cleanup_file_symlinks' );
-
-            // Make sure the symlink doesn't already exist before we create it
-            if ( ! file_exists( $path ) )
-                $link = symlink( $file, $path );
-            else
-                $link = true;
-
-            if ( $link ) {
-                // Send the browser to the file
-                header( 'Location: ' . $url );
-            } else {
-                $this->chunked( $file );
-            }
-
-        } else {
-
-            // Read the file and deliver it in chunks
-            $this->chunked( $file );
-
-        }
-
-    }
-
-    /**
      * Download helper for large files without changing PHP.INI
      * See https://github.com/EllisLab/CodeIgniter/wiki/Download-helper-for-large-files
      *
@@ -196,7 +116,7 @@ Class SellMediaDownload {
      * @param    boolean $retbytes  Return the bytes of file
      * @return   bool|string        If string, $status || $cnt
      */
-    public function chunked( $file, $retbytes = true ) {
+    public function download_package( $file=null, $retbytes=true ) {
 
         $chunksize = 1024 * 1024;
         $buffer    = '';

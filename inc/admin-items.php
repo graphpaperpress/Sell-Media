@@ -43,7 +43,7 @@ function sell_media_add_tabs(){
     echo '<h2 id="sell-media-tabs" class="nav-tab-wrapper">';
     echo '<a href="' . admin_url( 'post-new.php?post_type=sell_media_item' ) . '" class="nav-tab' . $single_active . '">' . __( 'Add Single', 'sell_media' ) . '</a>';
     echo '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_add_bulk' ) . '" class="nav-tab' . $bulk_active . '" >' . __( 'Add Bulk', 'sell_media' ) . '</a>';
-    //echo '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_add_package' ) . '" class="nav-tab' . $package_active . '" >' . __( 'Add Package', 'sell_media' ) . '</a>';
+    echo '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_add_package' ) . '" class="nav-tab' . $package_active . '" >' . __( 'Add Package', 'sell_media' ) . '</a>';
     echo '</h2>';
 }
 
@@ -274,7 +274,7 @@ function sell_media_details_meta_box( $fields=null ) {
                     echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
                     echo '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
 
-                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $url . '" size="30" />';
+                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
 
                     echo '<a class="sell-media-upload-trigger button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
 
@@ -408,7 +408,6 @@ function sell_media_save_custom_meta( $post_id ) {
         $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
         // Check if this is a new upload
-        $wp_upload_dir = wp_upload_dir();
         if ( ! file_exists( sell_media_get_upload_dir() . '/' . $attached_file ) ){
 
             // Image mime type support
