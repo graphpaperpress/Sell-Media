@@ -797,16 +797,23 @@ function sell_media_get_original_protected_file( $product_id=null ){
     // Single uploads are saved like /2014/14/file.zip
     // Packages are saved like /packages/file.zip
     $attached_file = get_post_meta( $product_id, '_sell_media_attached_file', true );
+    $attachment_id = get_post_meta( $product_id, '_sell_media_attachment_id', true );
+    $single_attached_file = get_attached_file( $attachment_id );
+
     // Check if this item is a package and change the file location
     $is_package = get_post_meta( $product_id, '_sell_media_is_package', true );
     if ( $is_package ) {
         $file = sell_media_get_packages_upload_dir() . '/' . $attached_file;
+        $single_file = sell_media_get_packages_upload_dir() . '/' . $single_attached_file;
     } else {
         $file = sell_media_get_upload_dir() . '/' . $attached_file;
+        $single_file = sell_media_get_upload_dir() . '/' . $single_attached_file;
     }
 
     if ( file_exists( $file ) )
         return $file;
+    elseif ( file_exists( $single_file ) )
+        return $single_file;
     else
         return false;
 }
