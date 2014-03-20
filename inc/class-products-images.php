@@ -19,36 +19,13 @@ class SellMediaImages extends SellMediaProducts {
 
         $original_file = get_attached_file( $attachment_id );
 
-        // Extract IPTC meta info from the uploaded image.
-        $city = sell_media_iptc_parser( 'city', $original_file );
-        $state = sell_media_iptc_parser( 'state', $original_file );
-        $creator = sell_media_iptc_parser( 'creator', $original_file );
-        $keywords = sell_media_iptc_parser( 'keywords', $original_file );
-
-        global $post;
-        $product_id = empty( $post->ID ) ? get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true ) : $post->ID;
-
-        // Save IPTC info as taxonomies
-        if ( ! empty( $product_id ) ) {
-            if ( $city )
-                sell_media_iptc_save( 'city', $city, $product_id );
-
-            if ( $state )
-                sell_media_iptc_save( 'state', $state, $product_id );
-
-            if ( $creator )
-                sell_media_iptc_save( 'creator', $creator, $product_id );
-
-            if ( $keywords )
-                sell_media_iptc_save( 'keywords', $keywords, $product_id );
-        }
-
+        $this->parse_iptc_info( $original_file );
 
         // Assign the FULL PATH to our destination file.
         $wp_upload_dir = wp_upload_dir();
 
-        $destination_file = $wp_upload_dir['basedir'] . SellMedia::upload_dir . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
-        $destination_dir  = $wp_upload_dir['basedir'] . SellMedia::upload_dir . $wp_upload_dir['subdir'] . '/';
+        $destination_file = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
+        $destination_dir  = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/';
 
 
         // Check if the destination directory exists, i.e.
@@ -79,7 +56,7 @@ class SellMediaImages extends SellMediaProducts {
              * the filename-[width]x[height].jpg to filename.jpg, thus having a resized "original"
              * file.
              */
-            $image_new_size = image_make_intermediate_size( $original_file, get_option('large_size_w'), get_option('large_size_h'), false );
+            $image_new_size = image_make_intermediate_size( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false );
 
 
             /**
@@ -114,7 +91,7 @@ class SellMediaImages extends SellMediaProducts {
 
         } else {
 
-            $resized_image = image_resize( $original_file, get_option('large_size_w'), get_option('large_size_h'), false, null, $wp_upload_dir['path'], 90 );
+            $resized_image = image_resize( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false, null, $wp_upload_dir['path'], 90 );
             if ( ! file_exists( $destination_file ) ){
                 // Copy original to our protected area
                 @copy( $original_file, $destination_file );
@@ -295,4 +272,37 @@ class SellMediaImages extends SellMediaProducts {
 
         return $sizes;
     }
+
+
+    /**
+     * Extract IPTC info from original source image
+     * Save IPTC data as custom taxonomy terms
+     */
+    public function parse_iptc_info( $original_file=null ){
+
+        // Extract IPTC meta info from the uploaded image.
+        $city = sell_media_iptc_parser( 'city', $original_file );
+        $state = sell_media_iptc_parser( 'state', $original_file );
+        $creator = sell_media_iptc_parser( 'creator', $original_file );
+        $keywords = sell_media_iptc_parser( 'keywords', $original_file );
+
+        global $post;
+        $product_id = empty( $post->ID ) ? get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true ) : $post->ID;
+
+        // Save IPTC info as taxonomies
+        if ( ! empty( $product_id ) ) {
+            if ( $city )
+                sell_media_iptc_save( 'city', $city, $product_id );
+
+            if ( $state )
+                sell_media_iptc_save( 'state', $state, $product_id );
+
+            if ( $creator )
+                sell_media_iptc_save( 'creator', $creator, $product_id );
+
+            if ( $keywords )
+                sell_media_iptc_save( 'keywords', $keywords, $product_id );
+        }
+    }
+
 }

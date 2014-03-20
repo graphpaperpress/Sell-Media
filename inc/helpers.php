@@ -768,6 +768,19 @@ function sell_media_get_upload_dir() {
 }
 
 /**
+ * Retrieve the url to the file upload directory without the trailing slash
+ *
+ * @since  1.8.5
+ * @return string $url url to the sell_media upload directory
+ */
+function sell_media_get_upload_dir_url() {
+    $wp_upload_dir = wp_upload_dir();
+    $url = $wp_upload_dir['baseurl'] . '/sell_media';
+
+    return apply_filters( 'sell_media_get_upload_dir_url', $url );
+}
+
+/**
  * Delete symbolic links after they have been used
  *
  * @access public

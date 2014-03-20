@@ -12,8 +12,8 @@ function sell_media_add_package_callback_fn(){
     $settings = sell_media_get_plugin_options();
     $folder_name = 'packages';
     $wp_upload_dir = wp_upload_dir();
-    $package_dir = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $folder_name . '/';
-    $package_folder = $wp_upload_dir['baseurl'] . SellMedia::upload_dir . '/' . $folder_name . '/';
+    $package_dir = sell_media_get_upload_dir() . '/' . $folder_name . '/';
+    $package_folder = sell_media_get_upload_dir_url() . '/' . $folder_name . '/';
     // make the package directory if it doesn't already exist
     if ( ! is_dir( $package_dir ) ) {
         mkdir( $package_dir );

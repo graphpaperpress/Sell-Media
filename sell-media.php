@@ -10,19 +10,17 @@
  * Author Email: support@graphpaperpress.com
  * Text Domain: sell_media
  * Domain Path: languages
+ * License: GPL2
  *
- * Sell Media is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * any later version.
- *
- * Sell Media is distributed in the hope that it will be useful,
+ * Copyright 2014 GRAPH PAPER PRESS (email: support@graphpaperpress.com)
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2, as 
+ * published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Sell Media. If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License or license.txt for more details.
  *
  * @package SellMedia
  * @category Core
@@ -49,7 +47,7 @@ final class SellMedia {
     private static $instance;
 
     /**
-     * sell_media Customer Object
+     * Sell_Media Customer Object
      *
      * @var object
      * @since 1.8.5
@@ -57,7 +55,7 @@ final class SellMedia {
     public $customer;
 
     /**
-     * sell_media Download Object
+     * Sell_Media Download Object
      *
      * @var object
      * @since 1.8.5
@@ -65,7 +63,7 @@ final class SellMedia {
     public $download;
 
     /**
-     * sell_media Images Object
+     * Sell_Media Images Object
      *
      * @var object
      * @since 1.8.5
@@ -73,7 +71,7 @@ final class SellMedia {
     public $images;
 
     /**
-     * sell_media Payments Object
+     * Sell_Media Payments Object
      *
      * @var object
      * @since 1.8.5
@@ -81,7 +79,7 @@ final class SellMedia {
     public $payments;
 
     /**
-     * sell_media Products Object
+     * Sell_Media Products Object
      *
      * @var object
      * @since 1.8.5
@@ -89,7 +87,7 @@ final class SellMedia {
     public $products;
 
     /**
-     * sell_media Search Object
+     * Sell_Media Search Object
      *
      * @var object
      * @since 1.8.5
@@ -107,6 +105,7 @@ final class SellMedia {
      * @staticvar array $instance
      * @uses SellMedia::constants() Setup the constants needed
      * @uses SellMedia::includes() Include the required files
+     * @uses SellMedia::textdomain() Load textdomain for translation
      * @see SellMedia()
      * @return The one, the only SellMedia
      */
@@ -116,7 +115,6 @@ final class SellMedia {
             self::$instance = new SellMedia;
             self::$instance->constants();
             self::$instance->includes();
-            //self::$instance->flush();
             self::$instance->textdomain();
             self::$instance->customer       = new SellMediaCustomer();
             self::$instance->download       = new SellMediaDownload();
@@ -130,9 +128,6 @@ final class SellMedia {
 
     /**
      * Throw error on object clone
-     *
-     * The whole idea of the singleton design pattern is that there is a single
-     * object therefore, we don't want the object to be cloned.
      *
      * @since 1.8.5
      * @access protected
@@ -232,22 +227,6 @@ final class SellMedia {
     }
 
     /**
-     * Flush permalinks every time plugin version number is updated
-     * Do not generate any output here!
-     *
-     * @since 1.8.5
-     */
-    public function flush(){
-
-        $version = get_option( 'sell_media_version' );
-
-        if ( $version < SELL_MEDIA_VERSION ) {
-            global $wp_rewrite;
-            $wp_rewrite->flush_rules();
-        }
-    }
-
-    /**
      * Loads the plugin language files
      *
      * @access public
@@ -264,10 +243,7 @@ endif; // End if class_exists check
 
 /**
  * The main function that returns the one and only SellMedia instance
- *
- * Use this function like you would a global variable, except without needing
- * to declare the global.
- *
+ * Use this function to access classes and methods
  * Example: <?php $sell_media = Sell_Media(); ?>
  *
  * @since 1.8.5

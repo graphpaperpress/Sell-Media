@@ -315,9 +315,8 @@ function sell_media_details_meta_box( $fields=null ) {
                 case 'package':
 
                     $folder_name = 'packages';
-                    $wp_upload_dir = wp_upload_dir();
-                    $package_dir = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $folder_name . '/';
-                    $package_folder = $wp_upload_dir['baseurl'] . SellMedia::upload_dir . '/' . $folder_name . '/';
+                    $package_dir = sell_media_get_upload_dir()  . '/' . $folder_name . '/';
+                    $package_folder = sell_media_get_upload_dir_url() . '/' . $folder_name . '/';
                     $files = glob( $package_dir . '*.{zip,gz}', GLOB_BRACE );
                     $saved = get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?>
 
@@ -632,8 +631,7 @@ function sell_media_before_delete_post( $postid, $attachment_id=null ){
 
     delete_post_meta( $attachment_id, '_sell_media_for_sale_product_id' );
 
-    $wp_upload_dir = wp_upload_dir();
-    $attached_file_path = $wp_upload_dir['basedir'] . SellMedia::upload_dir . '/' . $attached_file;
+    $attached_file_path = sell_media_get_upload_dir() . '/' . $attached_file;
 
     // Delete the file stored in sell_media
     if ( file_exists( $attached_file_path ) ) {
@@ -726,7 +724,7 @@ function sell_media_default_move( $original_file=null ){
 
     $dir = wp_upload_dir();
     $original_file_path = $dir['basedir'] . '/' . $original_file;
-    $destination_file = $dir['basedir'] . SellMedia::upload_dir . '/' . $original_file;
+    $destination_file = sell_media_get_upload_dir() . '/' . $original_file;
 
     if ( file_exists( $original_file_path ) ){
         // Check if the destinatin dir is exists, i.e.

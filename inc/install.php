@@ -38,7 +38,7 @@ function sell_media_install() {
     // Register Taxonomies
     sell_media_register_taxonomies();
 
-    // Clear the permalinks
+    // Flush the permalinks
     flush_rewrite_rules();
 
     // Don't forget registration hook is called
