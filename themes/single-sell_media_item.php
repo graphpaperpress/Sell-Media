@@ -26,7 +26,7 @@ get_header(); ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<ul>
 				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
-				<li class="filetype"><span class="title"><?php _e( 'File Type', 'sell_media' ); ?>:</span> <?php echo get_post_mime_type( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ); ?></li>
+				<li class="filetype"><span class="title"><?php _e( 'File Type', 'sell_media' ); ?>:</span> <?php echo sell_media_get_filetype( $post->ID ); ?></li>
 
 				<?php if ( true == wp_get_post_terms( $post->ID, 'collection' ) ) { ?>
 					<li class="collections"><span class="title"><?php _e( 'Collections', 'sell_media' ); ?>:</span> <?php sell_media_collections( $post->ID ); ?></li>
@@ -35,7 +35,7 @@ get_header(); ?>
 					<li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span>
 					<?php $product_terms = wp_get_object_terms( $post->ID, 'keywords' );
 			        if ( !empty( $product_terms ) ) {
-			            if ( !is_wp_error( $product_terms ) ) {
+			            if ( ! is_wp_error( $product_terms ) ) {
 			                foreach ( $product_terms as $term ) {
 			                    echo '<a href="' . get_term_link( $term->slug, 'keywords' ) . '">' . $term->name . '</a> ';
 			                }

@@ -37,6 +37,11 @@ function sell_media_item_image_src( $post_id=null ) {
     return $image;
 }
 
+function sell_media_get_filetype( $post_id=null ){
+    $filetype = wp_check_filetype( get_post_meta( $post_id, '_sell_media_attached_file', true ) );
+    return $filetype['ext'];
+}
+
 
 /**
  * Determines the default icon used for an Attachment. If an
