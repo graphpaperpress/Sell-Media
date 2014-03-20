@@ -87,10 +87,12 @@ if ( $licenses ) {
                                 if ( $prices ) foreach ( $prices as $k => $v ) {
                                     if ( Sell_Media()->products->mimetype_is_image( get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true ) ) ){
                                         $name = $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')';
+                                        $dimensions = $v['width'] . ' x ' . $v['height'];
                                     } else {
                                         $name = $v['name'];
+                                        $dimensions = '';
                                     }
-                                    echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . $v['price'] . '" data-qty="1" data-size="' . $v['width'] . ' x ' . $v['height'] . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                                    echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . $v['price'] . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
                                 }
                             ?>
                         </select>

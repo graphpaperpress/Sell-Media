@@ -211,6 +211,15 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.8.5 =
+* Tweak: Make Sell_Media a singleton
+* Tweak: Remove redundant calls to self::upload_dir, use 1 function now
+* Tweak: Hide file dimensions on cart if not image
+* Tweak: New file download method
+* Bug: Bulk uploads fix
+* Bug: PayPal tax
+* Bug: Deprecated functions missing for image caption
+
 = 1.8.4 =
 * Tweak: Template redirects for taxonomies
 * Bug: Terms dialog

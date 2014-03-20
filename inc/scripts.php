@@ -42,7 +42,7 @@ function sell_media_scripts( $hook ) {
 
     wp_localize_script( 'sell_media', 'sell_media', array(
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'pluginurl' => SELL_MEDIA_PLUGIN_FILE,
+        'pluginurl' => SELL_MEDIA_PLUGIN_URL . 'sell-media.php',
         'site_name' => get_bloginfo( 'name' ),
         'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
         'currency_symbol' => $settings->currency,
