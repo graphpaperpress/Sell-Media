@@ -450,27 +450,6 @@ function sell_media_test_mode(){
 
 
 /**
- * Change Downloads Upload Dir
- *
- * Hooks the sell_media_set_upload_dir filter when appropriate.
- *
- * @access private
- * @since 0.1
- * @return void
- */
-function sell_media_change_downloads_upload_dir() {
-    global $pagenow;
-
-    if ( ! empty( $_POST['post_id'] ) && ( 'async-upload.php' == $pagenow || 'media-upload.php' == $pagenow ) ) {
-        if ( 'sell_mediaproduct' == get_post_type( $_REQUEST['post_id'] ) ) {
-            add_filter( 'upload_dir', 'sell_media_set_upload_dir' );
-        }
-    }
-}
-add_action( 'admin_init', 'sell_media_change_downloads_upload_dir', 999 );
-
-
-/**
  * Change order by on frontend
  *
  * @since 0.1

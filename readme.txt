@@ -214,7 +214,8 @@ Action hooks available:
 = 1.8.5 =
 * Feature: Packages feature added
 * Tweak: Make Sell_Media a singleton
-* Tweak: Remove redundant calls to self::upload_dir, use 1 function now
+* Tweak: Add support for additional mime types
+* Tweak: Remove redundant calls to self::upload_dir, use one function now
 * Tweak: Hide file dimensions on cart if not image
 * Tweak: New file download method
 * Bug: Bulk uploads fix

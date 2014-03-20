@@ -271,10 +271,10 @@ function sell_media_details_meta_box( $fields=null ) {
                     $thumbnail = sell_media_item_icon( $attachment_id, 'thumbnail', false );
                     $hide = empty( $thumbnail ) ? 'style="display: none";' : null;
 
-                    echo '<input type="hidden" name="sell_media_selected_file_id" />';
-                    echo '<input type="hidden" name="_sell_media_attached_file" value="' . $attached_file . '" />';
+                    echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
+                    echo '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
 
-                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $url . '" size="30" />';
+                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
 
                     echo '<a class="sell-media-upload-trigger button" value="Upload">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
 
@@ -692,13 +692,11 @@ function sell_media_uploader_multiple(){
 add_action( 'wp_ajax_sell_media_uploader_multiple', 'sell_media_uploader_multiple' );
 
 
-
 /**
  * Redirect to custom url after move to trash in payments
  *
  * @since 1.6
  */
-add_action( 'load-edit.php', 'sell_media_trash_payment_redirect' );
 function sell_media_trash_payment_redirect() {
     $screen = get_current_screen();
     if( 'edit-sell_media_payment' == $screen->id ) {
@@ -709,31 +707,4 @@ function sell_media_trash_payment_redirect() {
         }
     }
 }
-
-/**
- * Moves and uploaded file from the uploads dir into the "protected"
- * Sell Media dir, note the original file is deleted.
- *
- * @param $original_file Full path of the file with the file.
- * @since 1.0.1
- */
-function sell_media_default_move( $original_file=null ){
-
-    $dir = wp_upload_dir();
-    $original_file_path = $dir['basedir'] . '/' . $original_file;
-    $destination_file = sell_media_get_upload_dir() . '/' . $original_file;
-
-    if ( file_exists( $original_file_path ) ){
-        // Check if the destinatin dir is exists, i.e.
-        // sell_media/YYYY/MM if not we create it first
-        $destination_dir = dirname( $destination_file );
-
-        if ( ! file_exists( $destination_dir ) ){
-            wp_mkdir_p( dirname( $destination_dir ) );
-        }
-
-        // Copy original to our protected area
-        @copy( $original_file_path, $destination_file );
-        @unlink( $original_file_path );
-    }
-}
+add_action( 'load-edit.php', 'sell_media_trash_payment_redirect' );
