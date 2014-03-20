@@ -271,12 +271,12 @@ function sell_media_details_meta_box( $fields=null ) {
                     $thumbnail = sell_media_item_icon( $attachment_id, 'thumbnail', false );
                     $hide = empty( $thumbnail ) ? 'style="display: none";' : null;
 
-                    echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
-                    echo '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
+                    echo '<input type="hidden" name="sell_media_selected_file_id" />';
+                    echo '<input type="hidden" name="_sell_media_attached_file" value="' . $attached_file . '" />';
 
                     echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $url . '" size="30" />';
 
-                    echo '<a class="sell-media-upload-trigger button" value="Upload">' . __('Upload', 'sell_media') . '</a><br class="clear"/>';
+                    echo '<a class="sell-media-upload-trigger button" value="Upload">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
 
                     echo '<div class="sell-media-upload-trigger">';
                     echo '<div class="sell-media-temp-target" ' . $hide . '>' . $thumbnail . '</div>';
