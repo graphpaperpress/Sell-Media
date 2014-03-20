@@ -41,8 +41,8 @@ function sell_media_get_current_plugin_id() {
 */
 function sell_media_enqueue_plugin_scripts_styles() {
 
-    wp_enqueue_style( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/settings/css/sell-media-framework.css' );
-    wp_enqueue_script( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/settings/js/sell-media-framework.js', array( 'jquery' ) );
+    wp_enqueue_style( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/inc/settings/css/sell-media-framework.css' );
+    wp_enqueue_script( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/inc/settings/js/sell-media-framework.js', array( 'jquery' ) );
 
 }
 add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles', 40 );
@@ -53,7 +53,7 @@ add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles',
 function sell_media_plugin_register_options() {
 	global $wp_customize;
 	if ( ! isset( $wp_customize ) ) {
-		require_once SELL_MEDIA_PLUGIN_DIR . '/settings/library/options-register.php';
+		require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/library/options-register.php';
     }
 
 }
@@ -63,7 +63,7 @@ add_action( 'admin_init', 'sell_media_plugin_register_options' );
 /**
 * Fonts need to be included outside of action
 */
-require_once SELL_MEDIA_PLUGIN_DIR . '/settings/library/helpers.php';
+require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/library/helpers.php';
 /**
  * Setup the Plugin Admin Settings Page
  */
@@ -574,7 +574,7 @@ add_action( 'wp_ajax_sell_media_imageurl', 'sell_media_plugin_image_url_callback
  */
 function sell_media_plugin_utility_links(){
 
-    $plugin_data = get_plugin_data( plugin_dir_path( dirname( __FILE__ ) ) . 'sell-media.php' );
+    $plugin_data = get_plugin_data( SELL_MEDIA_PLUGIN_FILE );
 
     echo '<div class="plugin-options">';
     echo '<ul>';

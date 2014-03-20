@@ -207,7 +207,7 @@ final class SellMedia {
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/template-tags.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/term-meta.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/widgets.php';
-        require_once SELL_MEDIA_PLUGIN_DIR . '/settings/settings.php';
+        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/settings.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
 
         if ( is_admin() ) {

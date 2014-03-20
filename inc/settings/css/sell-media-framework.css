@@ -4,10 +4,12 @@
     height: 20px;
     margin: 10px 0 -10px;
     padding-bottom: 10px;
+    position: relative;
     clear: both;
 }
 .wrap .plugin-options ul {
-    float: right;
+    position: absolute;
+    right: 0;
     margin: 0;
 }
 .wrap .plugin-options ul li {
