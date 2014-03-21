@@ -261,21 +261,15 @@ function sell_media_details_meta_box( $fields=null ) {
                 // File
                 case 'file':
 
-                    $sell_media_attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
-
-                    $attachment_id = ( $sell_media_attachment_id ) ? $sell_media_attachment_id : get_post_thumbnail_id( $post->ID );
-                    $src_attribute = wp_get_attachment_url( $attachment_id );
-                    $url = ( $src_attribute ) ? $src_attribute : null;
+                    $attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
                     $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
 
-                    $thumbnail = sell_media_item_icon( $attachment_id, 'thumbnail', false );
+                    $thumbnail_id = ( $attachment_id ) ? $attachment_id : get_post_thumbnail_id( $post->ID );
+                    $thumbnail = sell_media_item_icon( $thumbnail_id, 'thumbnail', false );
                     $hide = empty( $thumbnail ) ? 'style="display: none";' : null;
 
                     echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
-                    echo '<input type="hidden" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
-
-                    echo '<input type="text" name="_sell_media_attached_file_url" id="_sell_media_attached_file_url" class="sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
-
+                    echo '<input type="text" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
                     echo '<a class="sell-media-upload-trigger button" value="Upload">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
 
                     echo '<div class="sell-media-upload-trigger">';
@@ -382,36 +376,28 @@ function sell_media_save_custom_meta( $post_id ) {
         }
     }
 
-    $_thumbnail_id = get_post_thumbnail_id( $post_id );
-    $_sell_media_attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-
-    // If the selected file id was updated then we have
-    // a new attachment.
+    $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+    
+    // If the selected file id exists, then this is a new upload
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
 
-        /**
-         * Retroactive: If we have no $_sell_media_attachment_id we use the
-         * old reference, $_thumbnail_id as the $attachment_id. Thus updating
-         * the _sell_media_attachment_id to be the value of the _thumbnail_id.
-         */
-        if ( empty( $_sell_media_attachment_id ) ){
-            $attachment_id = $_thumbnail_id;
-        } else {
-            $attachment_id = $_sell_media_attachment_id;
-        }
         $attached_file = $_POST['_sell_media_attached_file'];
 
     } else {
 
         $attachment_id = $_POST['sell_media_selected_file_id'];
+        $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
-        // Image mime type support
-        if ( Sell_Media()->products->mimetype_is_image( $_sell_media_attachment_id ) ){
-            Sell_Media()->images->move_image_from_attachment( $attachment_id );
-        } else {
-            sell_media_default_move( $attachment_id );
+        // Check if this is a new upload
+        if ( ! file_exists( sell_media_get_upload_dir() . '/' . $attached_file ) ){
+
+            // Image mime type support
+            if ( Sell_Media()->products->mimetype_is_image( $attachment_id ) ){
+                Sell_Media()->images->move_image_from_attachment( $attachment_id );
+            } else {
+                sell_media_default_move( $attached_file );
+            }
         }
-
     }
 
     // Now, update the post meta to associate the new image with the post
