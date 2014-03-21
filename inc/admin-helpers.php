@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Moves and uploaded file from the uploads dir into the "protected"
- * Sell Media dir, note the original file is deleted.
+ * sell_media dir. Note the original file is deleted.
  *
  * @param $original_file Full path of the file with the file.
  * @since 1.0.1
@@ -20,24 +20,11 @@ function sell_media_default_move( $original_file=null ){
     $dir = wp_upload_dir();
     $original_file_path = $dir['basedir'] . '/' . $original_file;
     $destination_file_path = sell_media_get_upload_dir() . '/' . $original_file;
-    // echo '<pre>Original file: ';
-    // print_r($original_file);
-    // echo '<pre><br />';
-    // echo '<pre>Original file path: ';
-    // print_r($original_file_path);
-    // echo '<pre><br />';
-    // echo '<pre>Destination file path: ';
-    // print_r($destination_file_path);
-    // echo '<pre><br />';
-    // wp_die();
 
     if ( file_exists( $original_file_path ) ){
-        // Check if the destinatin dir is exists, i.e.
-        // sell_media/YYYY/MM if not we create it first
-        $destination_dir = dirname( $destination_file_path );
 
-        if ( ! file_exists( $destination_dir ) ){
-            wp_mkdir_p( dirname( $destination_dir ) );
+        if ( ! file_exists( dirname( $destination_file_path ) ) ){
+            wp_mkdir_p( dirname( $destination_file_path ) );
         }
 
         // Copy original to our protected area
