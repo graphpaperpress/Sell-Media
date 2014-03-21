@@ -37,6 +37,11 @@ function sell_media_item_image_src( $post_id=null ) {
     return $image;
 }
 
+
+/**
+ * Returns the file extension of the product file
+ * @return (string) file extension
+ */
 function sell_media_get_filetype( $post_id=null ){
     $filetype = wp_check_filetype( get_post_meta( $post_id, '_sell_media_attached_file', true ) );
     return $filetype['ext'];
@@ -46,8 +51,58 @@ function sell_media_get_filetype( $post_id=null ){
 /**
  * Determines the default icon used for an Attachment. If an
  * image mime type is detected than the attachment image is used.
+ *
+ * @return (string) an image tag
  */
-function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true ){
+function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
+
+    $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+    $mime_type = get_post_mime_type( $attachment_id );
+
+    // check if featured image is set
+    if ( '' != get_the_post_thumbnail( $post_id ) ) {
+        $image = get_the_post_thumbnail( $post_id, $size );
+    } else {
+        // check if protected file is an image
+        if ( wp_attachment_is_image( $attachment_id ) ) {
+            $image_attr = wp_get_attachment_image_src( $attachment_id, $size );
+            $image = $image_attr[0]; // url
+        // check the mime type of the file and return a default icon from core WP
+        } else {
+            switch ( $mime_type ) {
+                case 'image/jpeg':
+                case 'image/png':
+                case 'image/gif':
+                    $image = wp_mime_type_icon( 'image/jpeg' ); break;
+                case 'video/mpeg':
+                case 'video/mp4':
+                case 'video/quicktime':
+                    $image = wp_mime_type_icon( 'video/mpeg' ); break;
+                case 'text/csv':
+                case 'text/pdf':
+                case 'text/plain':
+                case 'text/xml':
+                    $image = wp_mime_type_icon( 'application/pdf' ); break;
+                default:
+                    $image = wp_mime_type_icon( 'application/zip' ); break;
+            }
+        }
+        $image =  '<img src="' . $image . '" class="sell_media_image wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+    }
+
+
+    if ( $echo )
+        print $image;
+    else
+        return $image;
+}
+add_action( 'wp_ajax_sell_media_item_icon', 'sell_media_item_icon' );
+
+/**
+ * Determines the default icon used for an Attachment. If an
+ * image mime type is detected than the attachment image is used.
+ */
+function sell_media_item_icon_old( $attachment_id=null, $size='medium', $echo=true ){
 
     if ( ! empty( $_POST['attachment_id'] ) ){
         $attachment_id = $_POST['attachment_id'];
@@ -152,7 +207,6 @@ function sell_media_item_icon( $attachment_id=null, $size='medium', $echo=true )
      */
     if ( ! empty( $_POST['action'] ) && $_POST['action'] == 'sell_media_item_icon' ) die();
 }
-add_action( 'wp_ajax_sell_media_item_icon', 'sell_media_item_icon' );
 
 
 /**

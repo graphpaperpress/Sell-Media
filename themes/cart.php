@@ -10,12 +10,6 @@
  * plugin settings
  */
 $settings = sell_media_get_plugin_options();
-$attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
-$image = sell_media_item_image_src( $_POST['product_id'] );
-if ( empty( $image ) ) {
-    $mime_type = get_post_mime_type( $attachment_id );
-    $image = wp_mime_type_icon( $mime_type );
-}
 $is_package = get_post_meta( $_POST['product_id'], '_sell_media_is_package', true );
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
 if ( $licenses ) {
@@ -28,7 +22,7 @@ if ( $licenses ) {
     <span class="close">&times;</span>
     <div class="content">
         <header>
-            <figure><?php sell_media_item_icon( $attachment_id, 'medium' ); ?></figure>
+            <figure><?php sell_media_item_icon( $_POST['product_id'] ); ?></figure>
             <figcaption><?php print get_the_title( $_POST['product_id'] ); ?></figcaption>
         </header>
         <section>

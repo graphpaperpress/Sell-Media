@@ -63,22 +63,9 @@ function sell_media_item_shortcode( $atts ) {
         ), $atts )
     );
 
-    $caption = null;
-    $thumb_id = get_post_meta( $id, '_sell_media_attachment_id', true );
-    $image = wp_get_attachment_image_src( $thumb_id, $size );
-    $text = apply_filters('sell_media_purchase_text', __( $text,'sell_media' ), $id );
+    $image = sell_media_item_icon( $id, 'medium', false );
 
-    $thumb_id = get_post_thumbnail_id( $post_id );
-    $attachment = get_post( $thumb_id );
-    $caption = $attachment->post_title;
-
-    if ( $image ) {
-        $image = '<img src="' . $image[0] . '" alt="' . $caption . '" title=" ' . $caption . ' " class="sell-media-aligncenter" />';
-    } else {
-        sell_media_item_icon( get_post_thumbnail_id( $id ), $size );
-    }
-
-    $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-buy-' . esc_attr( $style ) . '">' . $text . '</a>';
+    $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $id ) . '" class="sell-media-cart-trigger sell-media-buy-' . esc_attr( $style ) . '">' . $text . '</a>';
 
     return '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a>' . $button . '</div>';
 }
@@ -123,7 +110,7 @@ function sell_media_all_items_shortcode( $atts ){
                 <?php foreach( $posts->posts as $post ) : $i++; ?>
                     <?php if ( $i %3 == 0) $end = ' end'; else $end = null; ?>
                     <div class="sell-media-grid<?php echo $end; ?>">
-                        <a href="<?php print get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ); ?></a>
+                        <a href="<?php print get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
                         <h3 class="sell-media-shortcode-all-item-title"><a href="<?php print get_permalink( $post->ID ); ?>"><?php print get_the_title( $post->ID ); ?></a></h3>
                         <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
                     </div>
@@ -364,8 +351,8 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 			$posts = New WP_Query( $args );
 			$post_count = $posts->found_posts;
 
-			if ( $post_count != 0 ) : ?>
-				<?php
+			if ( $post_count != 0 ) :
+                
 				$html .= '<div class="sell-media-grid sell-media-grid-collection third">';
 					$args = array(
 							'posts_per_page' => 1,
@@ -375,27 +362,14 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 							);
 
 					$posts = New WP_Query( $args );
-					?>
-
-					<?php foreach( $posts->posts as $post ) : ?>
-
-						<?php
-						//Get Post Attachment ID
-						$sell_media_attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
-						if ( $sell_media_attachment_id ){
-							$attachment_id = $sell_media_attachment_id;
-						} else {
-							$attachment_id = get_post_thumbnail_id( $post->ID );
-						}
+					
+                    foreach( $posts->posts as $post ) :
 
 						$html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="sell-media-collections-shortcode-item-link">';
 						$collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
-							if ( ! empty ( $collection_attachment_id ) ) {
-								$html .= wp_get_attachment_image( $collection_attachment_id, 'sell_media_item' );
-							} else {
-								$html .= sell_media_item_icon( $attachment_id, 'sell_media_item', false );
-							}
+						$html .= sell_media_item_icon( $post->ID, 'thumbnail', false );
 						$html .= '</a>';
+
 					endforeach;
 
 					$html .= '<div class="sell-media-collections-shortcode-item-title"><a href="'. get_term_link( $term->slug, $taxonomy ) .'">' . $term->name . '</a></div>';

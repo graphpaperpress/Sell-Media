@@ -263,9 +263,6 @@ function sell_media_details_meta_box( $fields=null ) {
 
                     $attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
                     $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
-
-                    $thumbnail_id = ( $attachment_id ) ? $attachment_id : get_post_thumbnail_id( $post->ID );
-                    $thumbnail = sell_media_item_icon( $thumbnail_id, 'thumbnail', false );
                     $hide = empty( $thumbnail ) ? 'style="display: none";' : null;
 
                     echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
@@ -273,7 +270,7 @@ function sell_media_details_meta_box( $fields=null ) {
                     echo '<a class="sell-media-upload-trigger button" value="Upload">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
 
                     echo '<div class="sell-media-upload-trigger">';
-                    echo '<div class="sell-media-temp-target" ' . $hide . '>' . $thumbnail . '</div>';
+                    echo '<div class="sell-media-temp-target" ' . $hide . '>' . sell_media_item_icon( $post->ID, 'thumbnail' ) . '</div>';
                     echo '</div>';
                     break;
 
@@ -527,14 +524,8 @@ add_filter( 'request', 'sell_media_column_orderby' );
 function sell_media_item_content( $column, $post_id ){
     switch( $column ) {
         case "icon":
-            $sell_media_attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-            if ( $sell_media_attachment_id ){
-                $attachment_id = $sell_media_attachment_id;
-            } else {
-                $attachment_id = get_post_thumbnail_id( $post_id );
-            }
             $html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
-            $html .= sell_media_item_icon( $attachment_id, 'thumbnail' );
+            $html .= sell_media_item_icon( $post_id, 'thumbnail' );
             $html .= '</a>';
             print $html;
             break;

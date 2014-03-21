@@ -29,24 +29,10 @@
 			<?php while ( $type_posts->have_posts() ) : $type_posts->the_post();
 			global $post;
 			?>
-
-			<?php 	
-			$sell_media_attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
-			if ( $sell_media_attachment_id ){
-				$attachment_id = $sell_media_attachment_id;
-			} else {
-				$attachment_id = get_post_thumbnail_id( $post->ID );
-			} ?>
 			<div class="sell-media-widget-item-warp third">
 				<div class="sell-media-widget-thumb-wrap">
 					<a href="<?php echo get_permalink(); ?>">
-						<?php
-						if ( in_array( "sell_media_item", $image_sizes)) {
-						    sell_media_item_icon( $attachment_id, 'sell_media_item' );
-						} else {
-							sell_media_item_icon( $attachment_id, 'medium' );
-						}
-						?>
+						<?php sell_media_item_icon( $post->ID ); ?>
 					</a>
 				</div>
 			</div> <!--  .sell-media-widget-item-warp  -->
