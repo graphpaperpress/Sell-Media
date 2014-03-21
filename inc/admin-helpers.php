@@ -15,7 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @param $original_file Full path of the file with the file.
  * @since 1.0.1
  */
-function sell_media_default_move( $original_file=null ){
+function sell_media_default_move( $attachment_id=null ){
+
+    $original_file = get_post_meta( $attachment_id, '_sell_media_attached_file' );
 
     $dir = wp_upload_dir();
     $original_file_path = $dir['basedir'] . '/' . $original_file;

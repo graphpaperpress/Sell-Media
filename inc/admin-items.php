@@ -400,21 +400,18 @@ function sell_media_save_custom_meta( $post_id ) {
             $attachment_id = $_sell_media_attachment_id;
         }
         $attached_file = $_POST['_sell_media_attached_file'];
+
     } else {
 
         $attachment_id = $_POST['sell_media_selected_file_id'];
-        $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
-        // Check if this is a new upload
-        if ( ! file_exists( sell_media_get_upload_dir() . '/' . $attached_file ) ){
-
-            // Image mime type support
-            if ( Sell_Media()->products->mimetype_is_image( $_sell_media_attachment_id ) ){
-                Sell_Media()->images->move_image_from_attachment( $attachment_id );
-            } else {
-                sell_media_default_move( $attached_file );
-            }
+        // Image mime type support
+        if ( Sell_Media()->products->mimetype_is_image( $_sell_media_attachment_id ) ){
+            Sell_Media()->images->move_image_from_attachment( $attachment_id );
+        } else {
+            sell_media_default_move( $attachment_id );
         }
+
     }
 
     // Now, update the post meta to associate the new image with the post
