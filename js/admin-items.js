@@ -37,7 +37,7 @@ jQuery( document ).ready(function( $ ){
             $('.sell_media_attached_file').attr( 'value', attachment.url );
 
             var data = {
-                action: "sell_media_item_icon",
+                action: "sell_media_image",
                 attachment_id: attachment.id,
                 attachment_size: "thumbnail"
             };

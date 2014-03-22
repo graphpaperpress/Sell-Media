@@ -37,7 +37,7 @@ get_header(); global $wp_query; ?>
 								$end = null;
 						?>
 						<div class="sell-media-grid<?php echo $end; ?>">
-							<a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+							<a href="<?php the_permalink(); ?>"><?php echo sell_media_item_icon( $post->ID ); ?></a>
 							<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 							<?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
 						</div>

@@ -49,14 +49,20 @@ function sell_media_get_filetype( $post_id=null ){
 
 
 /**
- * Determines the default icon used for an Attachment. If an
+ * Determines the image used to represent an item for sale. If an
  * image mime type is detected than the attachment image is used.
  *
  * @return (string) an image tag
  */
-function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
+function sell_media_item_icon( $post_id=null, $size='medium' ){
 
     $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+    // legacy function passed the $attachment_id into sell_media_item_icon
+    // that means the above get_post_meta would be empty
+    // if that's the case, than we assume the $post_id is actually the $attachment_id
+    if ( empty( $attachment_id ) ){
+        $attachment_id = $post_id;
+    }
     $mime_type = get_post_mime_type( $attachment_id );
 
     // check if featured image is set
@@ -84,129 +90,15 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
                 case 'text/xml':
                     $image = wp_mime_type_icon( 'application/pdf' ); break;
                 default:
-                    $image = wp_mime_type_icon( 'application/zip' ); break;
+                    $image = wp_mime_type_icon(); break;
             }
         }
         $image =  '<img src="' . $image . '" class="sell_media_image wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
     }
 
-
-    if ( $echo )
-        print $image;
-    else
-        return $image;
+    return $image;
 }
-add_action( 'wp_ajax_sell_media_item_icon', 'sell_media_item_icon' );
-
-/**
- * Determines the default icon used for an Attachment. If an
- * image mime type is detected than the attachment image is used.
- */
-function sell_media_item_icon_old( $attachment_id=null, $size='medium', $echo=true ){
-
-    if ( ! empty( $_POST['attachment_id'] ) ){
-        $attachment_id = $_POST['attachment_id'];
-    }
-
-    if ( empty( $attachment_id ) )
-        return;
-
-    if ( ! empty( $_POST['attachment_size'] ) )
-        $size = $_POST['attachment_size'];
-
-    $mime_type = get_post_mime_type( $attachment_id );
-    $image_height = $image_width = null;
-    $post_id = get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true );
-    $image_title = get_the_title( $post_id );
-    $_thumbnail_id = get_post_thumbnail_id( $post_id );
-
-    /**
-     * Since we always want to return the actual image associated with this item for sale
-     * on the edit/add new item page. We check the global $pagenow variable, vs. adding
-     * conditionals through out the code.
-     */
-    global $pagenow;
-    global $post_type;
-    if ( ! empty( $_thumbnail_id )
-        && $post_type == 'sell_media_item'
-        && $pagenow != 'post.php'
-        || ! empty( $_thumbnail_id ) ){
-        $attachment_id = $_thumbnail_id;
-    }
-
-    $image = wp_get_attachment_image_src( $attachment_id, $size );
-
-    switch( $mime_type ){
-        case 'image/jpeg':
-        case 'image/png':
-        case 'image/gif':
-            $image_src = $image[0];
-            $image_height = $image[2];
-            $image_width = $image[1];
-            break;
-        case 'video/mpeg':
-        case 'video/mp4':
-        case 'video/quicktime':
-        case 'application/octet-stream':
-            if ( $image ){
-                $image_src = $image[0];
-                $image_height = $image[2];
-                $image_width = $image[1];
-            } else {
-                $image_src = wp_mime_type_icon( 'video/mpeg' );
-            }
-            break;
-        case 'text/csv':
-        case 'text/plain':
-        case 'text/xml':
-        case 'text/document':
-        case 'application/pdf':
-            if ( $image ){
-                $image_src = $image[0];
-                $image_height = $image[2];
-                $image_width = $image[1];
-            } else {
-                $image_src = wp_mime_type_icon( 'text/document' );
-            }
-            break;
-        case 'application/zip':
-            if ( $image ){
-                $image_src = $image[0];
-                $image_height = $image[2];
-                $image_width = $image[1];
-            } else {
-                $image_src = includes_url() . 'images/crystal/archive.png';
-            }
-            break;
-        default:
-            if ( $image ){
-                $image_src = $image[0];
-                $image_height = $image[2];
-                $image_width = $image[1];
-            } else {
-                $image_src = wp_mime_type_icon( $mime_type );
-            }
-    }
-
-    $medium_url = wp_get_attachment_image_src( $attachment_id, 'medium' );
-    if ( $medium_url )
-        $medium_url = $medium_url[0];
-    else
-        $medium_url = null;
-
-    $icon =  '<img src="' . $image_src . '" class="sell_media_image wp-post-image" title="' . $image_title . '" alt="' . $image_title . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $post_id . '" height="' . $image_height . '" width="' . $image_width . '" style="max-width:100%;height:auto;"/>';
-
-    if ( $echo )
-        print $icon;
-    else
-        return $icon;
-
-    /**
-     * If attachment ID is set via $_POST we are doing ajax. So we
-     * must die.
-     */
-    if ( ! empty( $_POST['action'] ) && $_POST['action'] == 'sell_media_item_icon' ) die();
-}
+add_action( 'wp_ajax_sell_media_image', 'sell_media_item_icon' );
 
 
 /**

@@ -13,7 +13,7 @@ get_header(); ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 
 		<div class="sell-media-content">
-			<?php sell_media_item_icon( $post->ID, 'large' ); ?>
+			<?php echo sell_media_item_icon( $post->ID, 'large' ); ?>
 			<div class="sell-media-content-text">
 				<?php the_content(); ?>
 			</div>
