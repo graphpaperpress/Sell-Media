@@ -34,3 +34,36 @@ function sell_media_admin_menu() {
     do_action( 'sell_media_menu_hook' );
 }
 add_action( 'admin_menu', 'sell_media_admin_menu' );
+
+/**
+ * Admin menu order
+ *
+ * Sort our menus to WP Admin to access Sell Media
+ *
+ * @since 1.8.5
+ * @return void
+ */
+function sell_media_submenu_order( $menu_ord ) {
+    global $submenu;
+
+    // Enable the next line to see all menu orders
+    //echo '<pre>' . print_r( $submenu, true ) . '</pre>';
+
+    $arr = array();
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][5];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][10];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][21];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][22];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][16];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][17];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][18];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][19];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][23];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][24];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][25];
+    $arr[] = $submenu['edit.php?post_type=sell_media_item'][26];
+    $submenu['edit.php?post_type=sell_media_item'] = $arr;
+
+    return $menu_ord;
+}
+add_filter( 'custom_menu_order', 'sell_media_submenu_order' );
