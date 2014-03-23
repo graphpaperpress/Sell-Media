@@ -37,20 +37,19 @@ jQuery( document ).ready(function( $ ){
             $('.sell_media_attached_file').attr( 'value', attachment.url );
 
             var data = {
-                action: "sell_media_image",
-                attachment_id: attachment.id,
-                attachment_size: "thumbnail"
+                action: 'sell_media_item_get_thumbnail',
+                attachment_id: attachment.id
             };
 
             // Show our loader
-            $('.sell-media-temp-target').show();
+            $('.sell-media-item-thumbnail').show();
 
             $.ajax({
                 type: "POST",
                 url: ajaxurl,
                 data: data,
                 success: function( msg ){
-                    $('.sell-media-temp-target').html( msg );
+                    $('.sell-media-item-thumbnail').html( msg );
                 }
             });
         });
@@ -121,7 +120,7 @@ jQuery( document ).ready(function( $ ){
         file_frame.open();
     });
 
-    $( document ).on( 'mouseenter', '.sell-media-bulk-list-item', function(){
+    $(document).on('mouseenter', '.sell-media-bulk-list-item', function(){
         $this = $(this);
 
         $this.find('img').css('opacity', '0.4');

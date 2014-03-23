@@ -39,6 +39,25 @@ function sell_media_item_image_src( $post_id=null ) {
 
 
 /**
+ * Echo the attachment thumbnail image. Used in ajax calls in admin.
+ * @param $attachment_id
+ * @return (html) image
+ */
+function sell_media_item_get_thumbnail( $attachment_id=null ){
+    // ajax on single item addition page
+    if ( ! empty( $_POST['attachment_id'] ) )
+        $attachment_id = $_POST['attachment_id'];
+    $image_attributes = wp_get_attachment_image_src( $attachment_id );
+    $image = '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" />';
+    echo $image;
+    // we're going ajax, so we must die
+    if ( ! empty( $_POST['action'] ) && $_POST['action'] == 'sell_media_item_get_thumbnail' )
+        die();
+}
+add_action( 'wp_ajax_sell_media_item_get_thumbnail', 'sell_media_item_get_thumbnail' );
+
+
+/**
  * Returns the file extension of the product file
  * @return (string) file extension
  */
@@ -58,11 +77,12 @@ function sell_media_item_icon( $post_id=null, $size='medium' ){
 
     $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
     // legacy function passed the $attachment_id into sell_media_item_icon
-    // that means the above get_post_meta would be empty
+    // that means the above get_post_meta wouldn't exist
     // if that's the case, than we assume the $post_id is actually the $attachment_id
     if ( empty( $attachment_id ) ){
         $attachment_id = $post_id;
     }
+
     $mime_type = get_post_mime_type( $attachment_id );
 
     // check if featured image is set
@@ -95,10 +115,8 @@ function sell_media_item_icon( $post_id=null, $size='medium' ){
         }
         $image =  '<img src="' . $image . '" class="sell_media_image wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
     }
-
     return $image;
 }
-add_action( 'wp_ajax_sell_media_image', 'sell_media_item_icon' );
 
 
 /**

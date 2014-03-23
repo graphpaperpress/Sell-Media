@@ -190,8 +190,6 @@ final class SellMedia {
      */
     private function includes() {
 
-        
-
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-customer.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-downloads.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-payments.php';
@@ -213,7 +211,6 @@ final class SellMedia {
 
         if ( is_admin() ) {
 
-            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-attachments.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-helpers.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-bulk.php';

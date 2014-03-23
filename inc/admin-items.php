@@ -263,14 +263,14 @@ function sell_media_details_meta_box( $fields=null ) {
 
                     $attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
                     $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
-                    $hide = empty( $thumbnail ) ? 'style="display: none";' : null;
+                    $hide = empty( $attachment_id ) ? 'style="display: none";' : null;
 
                     echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
                     echo '<input type="text" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
-                    echo '<a class="sell-media-upload-trigger button" value="Upload">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
+                    echo '<a class="sell-media-upload-trigger button">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
 
                     echo '<div class="sell-media-upload-trigger">';
-                    echo '<div class="sell-media-temp-target" ' . $hide . '>' . sell_media_item_icon( $post->ID, 'thumbnail' ) . '</div>';
+                    echo '<div class="sell-media-item-thumbnail" ' . $hide . '>' . sell_media_item_icon( $post->ID, 'thumbnail' ) . '</div>';
                     echo '</div>';
                     break;
 
@@ -626,44 +626,6 @@ function sell_media_before_delete_post( $postid, $attachment_id=null ){
     return;
 }
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
-
-
-/**
- * Handles bulk uploading via ajax
- */
-function sell_media_uploader_multiple(){
-
-    $post = array();
-
-    foreach( $_POST['attachments'] as $attachment ){
-
-        $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
-
-        $post['ID'] = $attachment['id'];
-        $post['post_title'] = $attachment['title'];
-        $post['post_content'] = $attachment['description'];
-        $post['attachment_url'] = $attachment['url'];
-
-        sell_media_attachment_field_sell_save( $post, $attachment['sell']="1" );
-    }
-
-    // Display thumbnails with edit link after upload/selection
-    $html = '<ul class="attachments sell-media-bulk-list">';
-    foreach( $_POST['attachments'] as $attachment ){
-        $product_id = get_post_meta( $attachment['id'], '_sell_media_for_sale_product_id', true );
-        $html .= '<li class="attachment sell-media-bulk-list-item" data-post_id="' . $product_id . '">';
-        $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '" class="sell-media-bulk-list-item-img">';
-        $html .= wp_get_attachment_image( $attachment['id'], array(75,75) );
-        $html .= '</a>';
-        $html .= '<a href="' . admin_url('post.php?post=' . $product_id . '&action=edit') . '" class="sell-media-bulk-list-item-edit">' . __( 'Edit', 'sell_media' ) . '</a>';
-        $html .= '</li>';
-    }
-    $html .= '</ul>';
-    print $html;
-
-    die();
-}
-add_action( 'wp_ajax_sell_media_uploader_multiple', 'sell_media_uploader_multiple' );
 
 
 /**
