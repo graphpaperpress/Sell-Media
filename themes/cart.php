@@ -46,7 +46,7 @@ if ( $licenses ) {
                     <input class="item_number" type="text" value="<?php echo $_POST['product_id']; ?>" />
                     <input class="item_name" type="text" value="<?php echo get_the_title( $_POST['product_id'] ); ?>" />
                     <input class="item_type" type="text" value="download" />
-                    <input class="item_image" type="text" value="<?php echo $image; ?>" />
+                    <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $_POST['product_id'] ); ?>" />
                     <input class="item_pgroup" type="text" value="original" />
                     <input class="item_size" type="text" value="" />
                     <input class="item_usage" type="text" value="" />
@@ -67,7 +67,7 @@ if ( $licenses ) {
                     <input class="item_number" type="text" value="<?php echo $_POST['product_id']; ?>" />
                     <input class="item_name" type="text" value="<?php echo get_the_title( $_POST['product_id'] ); ?>" />
                     <input class="item_type" type="text" value="<?php echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
-                    <input class="item_image" type="text" value="<?php echo $image; ?>" />
+                    <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $_POST['product_id'] ); ?>" />
                     <input class="item_pgroup" type="text" value="" />
                     <input class="item_size" type="text" value="" />
                     <input class="item_usage" type="text" value="" />
