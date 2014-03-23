@@ -7,7 +7,6 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
 /**
  * Moves and uploaded file from the uploads dir into the "protected"
  * sell_media dir. Note the original file is deleted.
@@ -32,3 +31,24 @@ function sell_media_default_move( $original_file=null ){
         @unlink( $original_file_path );
     }
 }
+
+
+/**
+ * Order the post type by date and descending order in admin
+ *
+ * @param $wp_query
+ * @since 1.8.5
+ */
+function sell_media_post_type_admin_order( $wp_query ) {
+    if ( is_admin() ) {
+
+        $post_type = $wp_query->query['post_type'];
+
+        if ( $post_type == 'sell_media_item' && empty( $_GET['orderby'] ) ) {
+            $wp_query->set( 'orderby', 'date' );
+            $wp_query->set( 'order', 'DESC' );
+        }
+
+        }
+}
+add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );

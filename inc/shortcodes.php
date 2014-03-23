@@ -1,5 +1,8 @@
 <?php
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Lists all downloads using sell_media_thanks shortcode.
  * Added to Thanks page so buyers can download directly from Page after successful purchase.

@@ -46,7 +46,6 @@ function sell_media_install() {
     // these terms and taxonomies are NOT derived from our object!
     $settings = sell_media_get_plugin_options();
     $admin_columns = empty( $settings->admin_columns ) ? null : $settings->admin_columns;
-    //$this->registerLicenses( $admin_columns );
 
     // Install new table for term meta
     $taxonomy_metadata = new SellMediaTaxonomyMetadata;

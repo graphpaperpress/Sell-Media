@@ -15,8 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Collections
  *
- * Enqueues all necessary scripts in the WP Admin to run Sell Media
- *
  * @since 1.8.5
  * @return void
  */

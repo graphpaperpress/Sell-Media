@@ -454,7 +454,7 @@ function sell_media_save_custom_meta( $post_id ) {
     }
 
 }
-add_action('save_post', 'sell_media_save_custom_meta');
+add_action( 'save_post', 'sell_media_save_custom_meta' );
 
 
 /**
@@ -490,7 +490,12 @@ function sell_media_item_header( $columns ){
 }
 add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
 
-// Makes custom columns sortables
+
+/**
+ * Make column headers sortable
+ *
+ * @since 0.1
+ */
 function sell_media_sortable_column( $columns ) {
     $columns['sell_media_price'] = 'sell_media_price';
     $columns['author'] = 'author';
@@ -498,7 +503,12 @@ function sell_media_sortable_column( $columns ) {
 }
 add_filter( 'manage_edit-sell_media_item_sortable_columns', 'sell_media_sortable_column' );
 
-// Sort the custom columns
+
+/**
+ * Sort the column headers
+ *
+ * @since 0.1
+ */
 function sell_media_column_orderby( $vars ) {
     if ( isset( $vars['orderby'] ) && 'sell_media_price' == $vars['orderby'] ) {
         $vars = array_merge( $vars, array(
