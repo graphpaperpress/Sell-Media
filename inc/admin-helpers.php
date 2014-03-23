@@ -40,6 +40,7 @@ function sell_media_default_move( $original_file=null ){
  * @since 1.8.5
  */
 function sell_media_post_type_admin_order( $wp_query ) {
+    
     if ( is_admin() ) {
 
         $post_type = $wp_query->query['post_type'];
@@ -49,6 +50,6 @@ function sell_media_post_type_admin_order( $wp_query ) {
             $wp_query->set( 'order', 'DESC' );
         }
 
-        }
+    }
 }
 add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );
