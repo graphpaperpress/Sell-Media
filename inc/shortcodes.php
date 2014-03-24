@@ -66,7 +66,7 @@ function sell_media_item_shortcode( $atts ) {
         ), $atts )
     );
 
-    $image = sell_media_item_icon( $id, 'medium' );
+    $image = sell_media_item_icon( $id, 'medium', false );
 
     $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $id ) . '" class="sell-media-cart-trigger sell-media-buy-' . esc_attr( $style ) . '">' . $text . '</a>';
 
@@ -113,8 +113,8 @@ function sell_media_all_items_shortcode( $atts ){
                 <?php foreach( $posts->posts as $post ) : $i++; ?>
                     <?php if ( $i %3 == 0) $end = ' end'; else $end = null; ?>
                     <div class="sell-media-grid<?php echo $end; ?>">
-                        <a href="<?php print get_permalink( $post->ID ); ?>"><?php echo sell_media_item_icon( $post->ID ); ?></a>
-                        <h3 class="sell-media-shortcode-all-item-title"><a href="<?php print get_permalink( $post->ID ); ?>"><?php print get_the_title( $post->ID ); ?></a></h3>
+                        <a href="<?php echo get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+                        <h3 class="sell-media-shortcode-all-item-title"><a href="<?php echo get_permalink( $post->ID ); ?>"><?php echo get_the_title( $post->ID ); ?></a></h3>
                         <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
                     </div>
                 <?php endforeach; ?>
@@ -370,7 +370,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
 						$html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="sell-media-collections-shortcode-item-link">';
 						$collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
-						$html .= sell_media_item_icon( $post->ID, 'medium' );
+						$html .= sell_media_item_icon( $post->ID, 'medium', false );
 						$html .= '</a>';
 
 					endforeach;

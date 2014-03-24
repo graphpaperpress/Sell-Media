@@ -580,7 +580,7 @@ Class SellMediaPayments {
             foreach ( $this->get_products( $post_id ) as $product ){
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
-                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['id'], 'medium' ) . '</a></td>';
+                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['id'], 'medium', false ) . '</a></td>';
                 if ( empty( $product['size']['name'] ) ) {
                     $size_name = null;
                 } else {
@@ -620,7 +620,7 @@ Class SellMediaPayments {
 
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
-                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['id'], 'medium' ) . '</a></td>';
+                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['id'], 'medium', false ) . '</a></td>';
                 $html .= '<td>' . $product['price']['name'] . '</td>';
                 $html .= '<td>' . sell_media_get_currency_symbol() . $product['price']['amount'] . '</td>';
                 $html .= '<td>' . $product['qty'] . '</td>';

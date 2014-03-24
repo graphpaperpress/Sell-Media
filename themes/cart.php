@@ -22,7 +22,7 @@ if ( $licenses ) {
     <span class="close">&times;</span>
     <div class="content">
         <header>
-            <figure><?php echo sell_media_item_icon( $_POST['product_id'] ); ?></figure>
+            <figure><?php sell_media_item_icon( $_POST['product_id'] ); ?></figure>
             <figcaption><?php echo get_the_title( $_POST['product_id'] ); ?></figcaption>
         </header>
         <section>

@@ -270,7 +270,7 @@ function sell_media_details_meta_box( $fields=null ) {
                     echo '<a class="sell-media-upload-trigger button">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
 
                     echo '<div class="sell-media-upload-trigger">';
-                    echo '<div class="sell-media-item-thumbnail" ' . $hide . '>' . sell_media_item_icon( $post->ID, 'thumbnail' ) . '</div>';
+                    echo '<div class="sell-media-item-thumbnail" ' . $hide . '>' . sell_media_item_icon( $post->ID, 'thumbnail', false ) . '</div>';
                     echo '</div>';
                     break;
 
@@ -535,7 +535,7 @@ function sell_media_item_content( $column, $post_id ){
     switch( $column ) {
         case "icon":
             $html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
-            $html .= sell_media_item_icon( $post_id, 'thumbnail' );
+            $html .= sell_media_item_icon( $post_id, 'thumbnail', false );
             $html .= '</a>';
             print $html;
             break;
