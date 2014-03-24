@@ -23,12 +23,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function sell_media_admin_menu() {
 
     $permission = 'manage_options';
-
-    add_submenu_page( 'edit.php?post_type=sell_media_item', __('Add Bulk', 'sell_media'), __('Add Bulk', 'sell_media'),  'upload_files', 'sell_media_add_bulk', 'sell_media_add_bulk_callback_fn' );
-    add_submenu_page( 'edit.php?post_type=sell_media_item', __('Add Package', 'sell_media'), __('Add Package', 'sell_media'),  'upload_files', 'sell_media_add_package', 'sell_media_add_package_callback_fn' );
+    add_submenu_page( null, __('Add Bulk', 'sell_media'), __('Add Bulk', 'sell_media'),  'upload_files', 'sell_media_add_bulk', 'sell_media_add_bulk_callback_fn' );
+    add_submenu_page( null, __('Add Package', 'sell_media'), __('Add Package', 'sell_media'),  'upload_files', 'sell_media_add_package', 'sell_media_add_package_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Extensions', 'sell_media'), __('Extensions', 'sell_media'),  $permission, 'sell_media_extensions', 'sell_media_extensions_callback_fn' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
+    remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=keywords&amp;post_type=sell_media_item' );
+    remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=creator&amp;post_type=sell_media_item' );
+    // remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit.php?post_type=sell_media_item&page=sell_media_add_bulk' );
+    // remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit.php?post_type=sell_media_item&page=sell_media_add_package' );
 
     do_action( 'sell_media_menu_hook' );
 }
@@ -52,15 +55,11 @@ function sell_media_submenu_order( $menu_ord ) {
     $required_order = array(
         '1'     => 'All Products',
         '2'     => 'Add New',
-        '3'     => 'Add Bulk',
-        '4'     => 'Add Package',
-        '5'     => 'Collections',
-        '6'     => 'Licenses',
-        '7'     => 'Keywords',
-        '8'     => 'Creators',
-        '9'     => 'Payments',
-        '10'    => 'Reports',
-        '11'    => 'Extensions',
+        '3'     => 'Collections',
+        '4'     => 'Licenses',
+        '5'     => 'Payments',
+        '6'     => 'Reports',
+        '7'     => 'Extensions',
         '99'    => 'Settings'
     );
 
