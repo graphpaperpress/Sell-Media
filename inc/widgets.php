@@ -24,10 +24,10 @@ add_action( 'widgets_init', 'sell_media_widgets_register_sidebar' );
 /**
 * Register Widgets
 */
-require_once( dirname(__FILE__) . '/widgets/sell-media-recent.php' );
-require_once( dirname(__FILE__) . '/widgets/sell-media-similar.php' );
-require_once( dirname(__FILE__) . '/widgets/sell-media-featured.php' );
-require_once( dirname(__FILE__) . '/widgets/sell-media-keywords.php' );
+require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-recent.php' );
+require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-similar.php' );
+require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-featured.php' );
+require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-keywords.php' );
 
 /**
  * Display Sidebar
