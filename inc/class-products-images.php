@@ -22,85 +22,88 @@ class SellMediaImages extends SellMediaProducts {
 
         $original_file = get_attached_file( $attachment_id );
 
-        $this->parse_iptc_info( $original_file, $attachment_id );
+        if ( file_exists( $original_file ) ) {
 
-        // Assign the FULL PATH to our destination file.
-        $wp_upload_dir = wp_upload_dir();
+            $this->parse_iptc_info( $original_file, $attachment_id );
 
-        $destination_file = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
-        $destination_dir  = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/';
+            // Assign the FULL PATH to our destination file.
+            $wp_upload_dir = wp_upload_dir();
 
-
-        // Check if the destination directory exists, i.e.
-        // wp-content/uploads/sell_media/YYYY/MM if not we create it.
-        if ( ! file_exists( dirname( $destination_file ) ) ){
-            wp_mkdir_p( dirname( $destination_file ) );
-        }
+            $destination_file = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
+            $destination_dir  = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/';
 
 
-        /**
-         * Resize original file down to the largest size set in the Media Settings
-         *
-         * Determine which version of WP we are using.
-         * Would rather check if the correct function exists
-         * but the function 'image_make_intermediate_size' uses other
-         * functions that are in trunk and not in 3.4
-         */
-        global $wp_version;
-        if ( version_compare( $wp_version, '3.5', '>=' ) ){
+            // Check if the destination directory exists, i.e.
+            // wp-content/uploads/sell_media/YYYY/MM if not we create it.
+            if ( ! file_exists( dirname( $destination_file ) ) ){
+                wp_mkdir_p( dirname( $destination_file ) );
+            }
 
 
             /**
-             * Resize the "original" to our largest size set in the Media Settings.
+             * Resize original file down to the largest size set in the Media Settings
              *
-             * This creates a file named filename-[width]x[height].jpg
-             * From here the "original" file is still in our uploads dir, its needed to create
-             * the additional image sizes. Once we're done making the additional sizes, we rename
-             * the filename-[width]x[height].jpg to filename.jpg, thus having a resized "original"
-             * file.
+             * Determine which version of WP we are using.
+             * Would rather check if the correct function exists
+             * but the function 'image_make_intermediate_size' uses other
+             * functions that are in trunk and not in 3.4
              */
-            $image_new_size = image_make_intermediate_size( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false );
+            global $wp_version;
+            if ( version_compare( $wp_version, '3.5', '>=' ) ){
 
 
-            /**
-             * If for some reason the image resize fails we just fall back to the original image.
-             * Example, the image the user is trying to sell is smaller than our "max width".
-             */
-            if ( empty( $image_new_size ) ){
-                $resized_image = $original_file;
-                $keep_original = true;
+                /**
+                 * Resize the "original" to our largest size set in the Media Settings.
+                 *
+                 * This creates a file named filename-[width]x[height].jpg
+                 * From here the "original" file is still in our uploads dir, its needed to create
+                 * the additional image sizes. Once we're done making the additional sizes, we rename
+                 * the filename-[width]x[height].jpg to filename.jpg, thus having a resized "original"
+                 * file.
+                 */
+                $image_new_size = image_make_intermediate_size( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false );
+
+
+                /**
+                 * If for some reason the image resize fails we just fall back to the original image.
+                 * Example, the image the user is trying to sell is smaller than our "max width".
+                 */
+                if ( empty( $image_new_size ) ){
+                    $resized_image = $original_file;
+                    $keep_original = true;
+                } else {
+                    $keep_original = false;
+                    $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
+                }
+
+
+                if ( ! file_exists( $destination_file ) ){
+
+                    /**
+                     * Move our originally upload file into the protected area
+                     */
+                    copy( $original_file, $destination_file );
+                    if ( ! $keep_original ) unlink( $original_file );
+
+                    /**
+                     * We rename our resize original file i.e., "filename-[width]x[height].jpg" located in our uploads directory
+                     * to "filename.jpg"
+                     */
+                    $new_path_source = dirname( $original_file ) . '/' . basename( $resized_image );
+                    $new_path_destination = $original_file;
+                    copy( $new_path_source, $new_path_destination );
+                }
+
             } else {
-                $keep_original = false;
-                $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
-            }
 
+                $resized_image = image_resize( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false, null, $wp_upload_dir['path'], 90 );
+                if ( ! file_exists( $destination_file ) ){
+                    // Copy original to our protected area
+                    @copy( $original_file, $destination_file );
 
-            if ( ! file_exists( $destination_file ) ){
-
-                /**
-                 * Move our originally upload file into the protected area
-                 */
-                copy( $original_file, $destination_file );
-                if ( ! $keep_original ) unlink( $original_file );
-
-                /**
-                 * We rename our resize original file i.e., "filename-[width]x[height].jpg" located in our uploads directory
-                 * to "filename.jpg"
-                 */
-                $new_path_source = dirname( $original_file ) . '/' . basename( $resized_image );
-                $new_path_destination = $original_file;
-                copy( $new_path_source, $new_path_destination );
-            }
-
-        } else {
-
-            $resized_image = image_resize( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false, null, $wp_upload_dir['path'], 90 );
-            if ( ! file_exists( $destination_file ) ){
-                // Copy original to our protected area
-                @copy( $original_file, $destination_file );
-
-                // Copy (rename) our resized image to the original
-                @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+                    // Copy (rename) our resized image to the original
+                    @copy( $resized_image, dirname( $resized_image ) . '/' . basename( $original_file ) );
+                }
             }
         }
     }
