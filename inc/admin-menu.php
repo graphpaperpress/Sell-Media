@@ -46,16 +46,30 @@ function sell_media_submenu_order( $menu_ord ) {
     global $submenu;
 
     // Enable the next line to see all menu orders
-    //echo '<pre>' . print_r( $submenu, true ) . '</pre>';
+    // echo '<pre>' . print_r( $submenu, true ) . '</pre>';
 
     $arr = array();
-    $required_order = array( '1'=>'All Products', '2'=>'Add New', '3'=>'Add Bulk', '4'=>'Add Package', '5'=>'Collections', '6'=>'Licenses', '7'=>'Keywords', '8'=>'Creators', '9'=>'Payments',  '10'=>'Reports', '11'=>'Extensions', '99'=>'Settings' );
+    $required_order = array(
+        '1'     => 'All Products',
+        '2'     => 'Add New',
+        '3'     => 'Add Bulk',
+        '4'     => 'Add Package',
+        '5'     => 'Collections',
+        '6'     => 'Licenses',
+        '7'     => 'Keywords',
+        '8'     => 'Creators',
+        '9'     => 'Payments',
+        '10'    => 'Reports',
+        '11'    => 'Extensions',
+        '99'    => 'Settings'
+    );
+
     $j = 1;
     foreach ( $submenu['edit.php?post_type=sell_media_item'] as $key => $value ) {
-        if( array_search( $value[0], $required_order ) ) {
+        if ( array_search( $value[0], $required_order ) ) {
             $i = array_search( $value[0], $required_order );
         } else {
-            $i = array_search ('Settings', $required_order) - $j;
+            $i = array_search ( 'Settings', $required_order ) - $j;
             $j++;
         }
         $arr[$i] = $submenu['edit.php?post_type=sell_media_item'][$key];
