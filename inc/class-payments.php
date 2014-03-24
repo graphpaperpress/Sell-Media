@@ -111,7 +111,7 @@ Class SellMediaPayments {
     public function products_include_type( $post_id=null, $type=null ){
         $products = $this->get_products( $post_id );
         $types = array();
-        foreach ( $products as $product ) {
+        if ( $products ) foreach ( $products as $product ) {
             $types[] = $this->get_meta_key( $post_id, 'type' );
         }
         if ( in_array( $type, $types ) ) {
@@ -612,6 +612,8 @@ Class SellMediaPayments {
         } else {
 
             $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta' );
+            if ( ! $payment_meta ) return;
+            
             $products_legacy = maybe_unserialize( $payment_meta['products'] );
 
             if ( $products_legacy ) foreach ( $products as $product ) {

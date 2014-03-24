@@ -33,8 +33,10 @@ function sell_media_item_image_src( $post_id=null ) {
 
     if ( $image[0] )
         $image = $image[0];
-    else
+    elseif ( $featured_image[0] )
         $image = $featured_image[0];
+    else
+        $image = wp_mime_type_icon();
 
     return $image;
 }
