@@ -46,21 +46,22 @@ function sell_media_submenu_order( $menu_ord ) {
     global $submenu;
 
     // Enable the next line to see all menu orders
-    // echo '<pre>' . print_r( $submenu, true ) . '</pre>';
+    //echo '<pre>' . print_r( $submenu, true ) . '</pre>';
 
     $arr = array();
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][5];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][10];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][22];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][23];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][16];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][17];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][18];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][19];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][21];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][24];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][25];
-    $arr[] = $submenu['edit.php?post_type=sell_media_item'][26];
+    $required_order = array( '1'=>'All Products', '2'=>'Add New', '3'=>'Add Bulk', '4'=>'Add Package', '5'=>'Collections', '6'=>'Licenses', '7'=>'Keywords', '8'=>'Creators', '9'=>'Payments',  '10'=>'Reports', '11'=>'Extensions', '99'=>'Settings' );
+    $j = 1;
+    foreach ( $submenu['edit.php?post_type=sell_media_item'] as $key => $value ) {
+        if( array_search( $value[0], $required_order ) ) {
+            $i = array_search( $value[0], $required_order );
+        } else {
+            $i = array_search ('Settings', $required_order) - $j;
+            $j++;
+        }
+        $arr[$i] = $submenu['edit.php?post_type=sell_media_item'][$key];
+
+    }
+    ksort($arr);
     $submenu['edit.php?post_type=sell_media_item'] = $arr;
 
     return $menu_ord;
