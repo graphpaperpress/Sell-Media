@@ -55,7 +55,7 @@
 			<div class="sell-media-widget-item-warp third">
 				<div class="sell-media-widget-thumb-wrap">
 					<a href="<?php echo get_permalink(); ?>">
-						<?php sell_media_item_icon( $post->ID, 'thumbnail' ); ?>
+						<?php sell_media_item_icon( $post->ID ); ?>
 					</a>
 				</div>
 			</div> <!--  .sell-media-widget-item-warp  -->
