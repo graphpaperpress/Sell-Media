@@ -296,6 +296,9 @@ function sell_media_build_input( $taxonomy=null ) {
  */
 function sell_media_iptc_parser( $value=null, $image=null ){
 
+    if ( ! $image )
+        return;
+    
     $size = getimagesize( $image, $info );
 
     if ( ! isset( $info['APP13'] ) )
