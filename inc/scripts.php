@@ -20,13 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since 1.8.5
  * @return void
  */
-
-if ( ! defined( 'ABSPATH' ) ) exit;
-
 function sell_media_scripts( $hook ) {
 
     $settings = sell_media_get_plugin_options();
 
+    // enqueue 
     wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
     wp_enqueue_script( 'sellMediaCart', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
     wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', null, SELL_MEDIA_VERSION );

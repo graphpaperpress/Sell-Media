@@ -446,177 +446,35 @@ table.sell-media-products {
 
 /*= Search
 -------------------------------------------------------------- */
-.sell-media-search-options {
-  text-align: right;
+.wp-advanced-search {
+  border: 1px solid transparent;
+  background-color: transparent;
+  margin: 0 0 40px;
+  padding: 20px;
+}
+.wp-advanced-search.active {
+  border-color: #ccc;
+  background-color: #ededed;
   position: absolute;
-  z-index: 999;
-  top: 25px;
+  z-index: 100;
 }
-
-.sell-media-search-form-inner {
-  position: relative;
-  width: 200px;
+.wpas-field {
+  margin: 0 0 15px 0;
 }
-
-.sell-media-search-form label {
-  font-size: 11px;
-  color: #999;
-}
-
-.sell-media-search-form select {
-  text-transform: capitalize;
-}
-
-.sell-media-search-options ul {
-  background: #FFF;
-  top: 5px;
-  list-style-type: none;
-  margin: 0;
-  padding: 0px 5px 5px;
-  border: solid #DDD;
-  border-width: 1px;
-  position: relative;
-  left: 1px;
-}
-
-.sell-media-search .sell-media-button {
+#wpas-search_query {
   float: left;
-  clear: left;
+  margin-right: 20px;
 }
-
-.triangle {
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  border-width: 5px 5px 0 5px;
-  border-color: #9e9e9e transparent transparent transparent;
-  -webkit-transform:rotate(360deg);
-  position: absolute;
-  top: 12px;
-  left: 56%;
+.wp-advanced-search.active #wpas-search_query {
+  float: none;
+  margin-right: 0;
 }
-
-.sell-media-search-form-inner input[type="text"] {
-  /*width: 288px;*/
-}
-
-.sell-media-search-options {
-  background: #FFF;
-  border: 1px solid #DDD;
-  padding: 10px 10px 0;
-  font-size: 12px;
-}
-
-.sell-media-search-options select {
-  display: block;
-  margin: 0 0 10px;
-  min-width: 100%;
-}
-
-/* Sell Media search on archive page */
-#sell-media-archive .sell-media-search-post-types {
-  left: 155px;
-  top: 5px;
-}
-#sell-media-archive .sell-media-search-options {
-  top: 30px;
-  left: 137px;
-}
-#sell-media-archive .sell-media-search-form .triangle {
-  left: 280px;
-}
-
-
-/* Sell Media search no results, make the input field fluid */
-.search-no-results .no-results .triangle {
-  left: 50%;
-}
-.search-no-results .no-results .sell-media-search-form-inner input[type="text"] {
-  width: 51%;
-}
-
-/* Twenty tweleve styling */
-.sell-media-twentytwelve .sell-media-search-form .triangle {
-  left: 52%;
-  top: 14px;
-}
-
-.sell-media-twentytwelve .sell-media-search-form .sell-media-search-options {
-  top: 30px;
-  left: 5px;
-}
-
-#sell-media-archive .sell-media-twentytwelve .sell-media-search-form input#s {
-  width: 190px;
-}
-
-#sell-media-archive .sell-media-twentytwelve .sell-media-search-form .triangle {
-  left: 92%;
-}
-
-#sell-media-archive .sell-media-twentytwelve .sell-media-search-options {
-  left: 40px;
-}
-
-/* Twenty eleven styling */
-#branding .sell-media-twentyeleven .sell-media-search-form .sell-media-search-options {
-  left: 17px;
-  top: 31px;
-}
-
-#branding .sell-media-twentyeleven .sell-media-search-form .triangle,
-.widget-area .sell-media-twentyeleven .sell-media-search-form .triangle {
-  left: 88%;
-}
-
-.widget-area .sell-media-twentyeleven .sell-media-search-options {
-  top: 31px;
-  left: 13px;
-}
-
-#sell-media-archive .sell-media-twentyeleven .sell-media-search-form .sell-media-search-options {
-  left: 10px;
-  top: 31px;
-}
-
-#sell-media-archive .sell-media-twentyeleven .sell-media-search-form .triangle {
-  left: 15%;
-}
-
-/* Sell Photos support */
-.sell-media-sellphotos .triangle {
-  left: 80%;
-}
-.sell-media-sellphotos .sell-media-search-options {
-  left: 23px;
-  top: 29px;
-}
-.site-header .sell-media-sellphotos .sell-media-search-options {
-  left: 10px;
-}
-#sell-media-archive .sell-media-sellphotos .triangle {
-  left: 80%;
-}
-#sell-media-archive .sell-media-sellphotos .sell-media-search-options {
-  left: 12px;
-  top: 29px;
-}
-
-/* Stock Photography support */
-.sell-media-stockphotography .triangle {
-  left: 100%;
-}
-
-.sell-media-stockphotography .sell-media-search-options {
-  left: 50px;
-}
-
-#sell-media-archive .sell-media-stockphotography .triangle {
-  left: 98%;
-}
-#sell-media-archive .sell-media-stockphotography .sell-media-search-options {
-  top: 25px;
-  left: 50px;
+#wpas-tax_collection,
+#wpas-tax_keywords,
+#wpas-orderby,
+#wpas-order,
+.advanced-search {
+  display: none;
 }
 
 /*= Shortcode all
@@ -752,6 +610,20 @@ table.sell-media-products {
   font-size: 13px;
   margin: 0 0 0 7px;
   color:#ff0000;
+}
+
+/*= Clearing Floats
+-------------------------------------------------------------- */
+.clear:before,
+.clear:after,
+.wp-advanced-search:before,
+.wp-advanced-search:after {
+    content: " ";
+    display: table;
+}
+.clear:after,
+.wp-advanced-search:after {
+    clear: both;
 }
 
 /*= Media queries

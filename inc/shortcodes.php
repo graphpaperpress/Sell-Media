@@ -38,15 +38,100 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
 
+
 /**
  * Search form shortcode [sell_media_searchform]
  *
  * @since 0.1
  */
 function sell_media_search_shortcode( $atts, $content = null ) {
-    return get_search_form();
+
+    define( 'WPAS_DEBUG', false );
+    global $wp_query, $post;
+    $posts_per_page = get_option( 'posts_per_page' );
+        
+    $args = array();
+    $args['wp_query'] = array(
+        'post_type' => 'sell_media_item',
+        'posts_per_page' => $posts_per_page,
+        'order' => 'DESC',
+        'orderby' => 'date'
+    );
+    $args['fields'][] = array(
+        'type' => 'search',
+        'value' => '',
+        'placeholder' => 'enter search terms'
+    );
+    $args['fields'][] = array(
+        'type' => 'taxonomy',
+        'label' => 'Collections',
+        'taxonomy' => 'collection',
+        'format' => 'multi-select',
+        'operator' => 'AND'
+    );
+    $args['fields'][] = array(
+        'type' => 'taxonomy',
+        'label' => 'Keywords',
+        'taxonomy' => 'keywords',
+        'format' => 'multi-select',
+        'operator' => 'AND'
+    );
+    $args['fields'][] = array(
+        'type' => 'orderby',
+        'label' => 'Order By',
+        'values' => array('date' => 'Date', 'title' => 'Title'),
+        'format' => 'select'
+    );
+    $args['fields'][] = array(
+        'type' => 'order',
+        'label' => 'Order',
+        'values' => array('DESC' => 'DESC', 'ASC' => 'ASC'),
+        'format' => 'select'
+    );
+    $args['fields'][] = array(
+        'type' => 'submit',
+        'value' => 'Search'
+    );
+
+    $sell_media_search_object = new WP_Advanced_Search( $args );
+    $sell_media_search_object->the_form();
+    $temp_query = $wp_query;
+    $wp_query = $sell_media_search_object->query();
+
+    echo '<div id="sell-media-archive" class="sell-media">';
+
+    if ( have_posts() ) :
+
+        echo __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts;
+        
+        echo '<div class="sell-media-grid-container">';
+        $i = 0;
+        while ( have_posts() ): the_post(); $i++;
+        $end = ( $i %3 == 0 ) ? ' end' : null;
+        ?>
+            <div class="sell-media-grid<?php echo $end; ?>">
+                <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
+            </div>
+        <?php
+        endwhile;
+        echo '</div>';
+        $i = 0;
+        $sell_media_search_object->pagination();
+
+    else :
+
+        _e( 'Sorry, no results. Try broadening your search.', 'sell_media' );
+
+    endif;
+
+    echo '</div>';
+    $wp_query = $temp_query;
+    wp_reset_query();
 }
 add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
+
 
 /**
  * Adds the 'sell_media' short code to the editor. [sell_media_item]
