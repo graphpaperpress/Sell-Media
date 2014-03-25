@@ -537,15 +537,17 @@ function sell_media_item_content( $column, $post_id ){
             $html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
             $html .= sell_media_item_icon( $post_id, 'thumbnail', false );
             $html .= '</a>';
-            print $html;
+            echo $html;
             break;
         case "sell_media_price":
             $price = get_post_meta( $post_id, 'sell_media_price', true );
             $settings = sell_media_get_plugin_options();
             if ( $price ) {
                 echo sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' );
-            } else {
+            } elseif ( $settings->default_price ) {
                 echo sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' );
+            } else {
+                echo __( 'No price set', 'sell_media' );
             }
             break;
         default:
@@ -556,7 +558,7 @@ add_filter( 'manage_pages_custom_column', 'sell_media_item_content', 10, 2 );
 
 
 /**
- * Prints transaction sales, shown in admin
+ * Echoes transaction sales, shown in admin
  *
  * @since 0.1
  * @return string
@@ -578,7 +580,7 @@ function sell_media_sales_stats(){
                 $last_class = null;
             }
             ?>
-            <div class="misc-pub-section <?php print $last_class; ?>"><?php print $term_obj->name; ?> <?php print $stats['count']; ?> <strong><?php print sell_media_get_currency_symbol() . $stats['total']; ?></strong></div>
+            <div class="misc-pub-section <?php echo $last_class; ?>"><?php echo $term_obj->name; ?> <?php echo $stats['count']; ?> <strong><?php echo sell_media_get_currency_symbol() . $stats['total']; ?></strong></div>
         <?php }
     } else {
         _e( 'No sales so far.', 'sell_media' );
