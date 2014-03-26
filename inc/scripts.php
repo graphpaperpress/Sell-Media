@@ -30,6 +30,10 @@ function sell_media_scripts( $hook ) {
     wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
     wp_enqueue_style( 'sell_media-widgets-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
 
+    // register
+    wp_register_script( 'sell_media-chosen', SELL_MEDIA_PLUGIN_URL . 'js/chosen.jquery.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+    wp_register_style( 'sell_media-chosen', SELL_MEDIA_PLUGIN_URL . 'css/chosen.css', null, SELL_MEDIA_VERSION );
+
     if ( isset( $settings->style ) && '' != $settings->style ) {
         wp_enqueue_style( 'sell-media-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-' . $settings->style . '.css' );
     } else {

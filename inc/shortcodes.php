@@ -49,6 +49,9 @@ function sell_media_search_shortcode( $atts, $content = null ) {
     define( 'WPAS_DEBUG', false );
     global $wp_query, $post;
     $posts_per_page = get_option( 'posts_per_page' );
+    wp_enqueue_script( 'sell_media-chosen' );
+    wp_enqueue_style( 'sell_media-chosen' );
+    echo '<script>jQuery(document).ready(function($) { $(".chosen-select").chosen({disable_search_threshold: 10}); });</script>';
         
     $args = array();
     $args['wp_query'] = array(
@@ -60,33 +63,40 @@ function sell_media_search_shortcode( $atts, $content = null ) {
     $args['fields'][] = array(
         'type' => 'search',
         'value' => '',
-        'placeholder' => 'enter search terms'
+        'label' => 'Search'
     );
     $args['fields'][] = array(
         'type' => 'taxonomy',
         'label' => 'Collections',
         'taxonomy' => 'collection',
-        'format' => 'multi-select',
-        'operator' => 'AND'
+        'format' => 'select',
+        'operator' => 'AND',
+        'class' => 'chosen-select'
     );
     $args['fields'][] = array(
         'type' => 'taxonomy',
         'label' => 'Keywords',
         'taxonomy' => 'keywords',
         'format' => 'multi-select',
-        'operator' => 'AND'
+        'operator' => 'AND',
+        'class' => 'chosen-select'
     );
     $args['fields'][] = array(
-        'type' => 'orderby',
-        'label' => 'Order By',
-        'values' => array('date' => 'Date', 'title' => 'Title'),
-        'format' => 'select'
+        'type' => 'meta_key',
+        'label' => 'Price',
+        'meta_key' => 'sell_media_price',
+        'values' => array('' => 'All', '10' => sell_media_get_currency_symbol() . '10 or less', '25' => sell_media_get_currency_symbol() . '25 or less', '50' => sell_media_get_currency_symbol() . '50 or less', '75' => sell_media_get_currency_symbol() . '75 or less', '100' => sell_media_get_currency_symbol() . '100 or less', '250' => sell_media_get_currency_symbol() . '250 or less', '500' => sell_media_get_currency_symbol() . '500 or less', '1000' => sell_media_get_currency_symbol() . '1000 or less', '1000' => sell_media_get_currency_symbol() . '1000 or more'),
+        'data_type' => 'NUMERIC',
+        'compare' => '<=',
+        'format' => 'select',
+        'class' => 'chosen-select'
     );
     $args['fields'][] = array(
         'type' => 'order',
         'label' => 'Order',
-        'values' => array('DESC' => 'DESC', 'ASC' => 'ASC'),
-        'format' => 'select'
+        'values' => array('DESC' => 'Newest', 'ASC' => 'Oldest'),
+        'format' => 'select',
+        'class' => 'chosen-select'
     );
     $args['fields'][] = array(
         'type' => 'submit',
@@ -94,7 +104,11 @@ function sell_media_search_shortcode( $atts, $content = null ) {
     );
 
     $sell_media_search_object = new WP_Advanced_Search( $args );
+
+    echo '<div class="sell-media-search clear">';
     $sell_media_search_object->the_form();
+    echo '</div>';
+
     $temp_query = $wp_query;
     $wp_query = $sell_media_search_object->query();
 
@@ -102,7 +116,7 @@ function sell_media_search_shortcode( $atts, $content = null ) {
 
     if ( have_posts() ) :
 
-        echo __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts;
+        echo '<p class="sell-media-search-results-total">' . __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts . '</p>';
         
         echo '<div class="sell-media-grid-container">';
         $i = 0;

@@ -77,10 +77,10 @@ jQuery(document).ready(function($){
     /**
      * Hide our current search option when the user clicks off the input field
      */
-    $('#search_query').focus(function() {
-        $('.advanced-search, #wpas-tax_collection, #wpas-tax_keywords, #wpas-orderby, #wpas-order').show();
-        $('#wp-advanced-search').addClass('active');
-    });
+    // $('#search_query').focus(function() {
+    //     $('.advanced-search, #wpas-tax_collection, #wpas-tax_keywords, #wpas-orderby, #wpas-order').show();
+    //     $('#wp-advanced-search').addClass('active');
+    // });
 
     $('#sell_media_terms_cb').on('click', function(){
         $this = $(this);

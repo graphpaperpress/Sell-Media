@@ -447,34 +447,15 @@ table.sell-media-products {
 /*= Search
 -------------------------------------------------------------- */
 .wp-advanced-search {
-  border: 1px solid transparent;
-  background-color: transparent;
+  border: 1px solid #ccc;
+  background-color: #ededed;
+  color: #333;
   margin: 0 0 40px;
   padding: 20px;
 }
-.wp-advanced-search.active {
-  border-color: #ccc;
-  background-color: #ededed;
-  position: absolute;
-  z-index: 100;
-}
 .wpas-field {
-  margin: 0 0 15px 0;
-}
-#wpas-search_query {
   float: left;
-  margin-right: 20px;
-}
-.wp-advanced-search.active #wpas-search_query {
-  float: none;
-  margin-right: 0;
-}
-#wpas-tax_collection,
-#wpas-tax_keywords,
-#wpas-orderby,
-#wpas-order,
-.advanced-search {
-  display: none;
+  margin: 0 20px 20px 0;
 }
 
 /*= Shortcode all
