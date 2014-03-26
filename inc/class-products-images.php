@@ -311,4 +311,33 @@ class SellMediaImages extends SellMediaProducts {
         }
     }
 
+    /**
+     * Determines orientation of an image
+     *
+     * @param $post_id (int)
+     * @param $orientation (string) any|landscape|portrait
+     *
+     * @return (bool) true/false
+     */
+    public function get_orientation( $post_id=null, $orientation=null ){
+
+        $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+        $meta = wp_get_attachment_metadata( $attachment_id, true );
+
+        if ( ! empty( $meta ) ){
+
+            if ( empty( $orientation ) || $orientation == 'any' ){
+                return true;
+            }
+
+            if ( $orientation == 'landscape' && $meta['height'] < $meta['width'] ){
+                return true;
+            }
+
+            if ( $orientation == 'portrait' && $meta['height'] > $meta['width'] ){
+                return true;
+            }
+        }
+    }
+
 }

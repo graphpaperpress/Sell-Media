@@ -51,7 +51,7 @@ function sell_media_search_shortcode( $atts, $content = null ) {
     $posts_per_page = get_option( 'posts_per_page' );
     wp_enqueue_script( 'sell_media-chosen' );
     wp_enqueue_style( 'sell_media-chosen' );
-    echo '<script>jQuery(document).ready(function($) { $(".chosen-select").chosen({disable_search_threshold: 10}); });</script>';
+    echo '';
         
     $args = array();
     $args['wp_query'] = array(
@@ -63,13 +63,17 @@ function sell_media_search_shortcode( $atts, $content = null ) {
     $args['fields'][] = array(
         'type' => 'search',
         'value' => '',
-        'label' => 'Search'
+        'placeholder' => __( 'Search for something...', 'sell_media' )
+    );
+    $args['fields'][] = array(
+        'type' => 'submit',
+        'value' => 'Search'
     );
     $args['fields'][] = array(
         'type' => 'taxonomy',
         'label' => 'Collections',
         'taxonomy' => 'collection',
-        'format' => 'select',
+        'format' => 'multi-select',
         'operator' => 'AND',
         'class' => 'chosen-select'
     );
@@ -83,29 +87,22 @@ function sell_media_search_shortcode( $atts, $content = null ) {
     );
     $args['fields'][] = array(
         'type' => 'meta_key',
-        'label' => 'Price',
+        'label' => 'Max Price',
         'meta_key' => 'sell_media_price',
-        'values' => array('' => 'All', '10' => sell_media_get_currency_symbol() . '10 or less', '25' => sell_media_get_currency_symbol() . '25 or less', '50' => sell_media_get_currency_symbol() . '50 or less', '75' => sell_media_get_currency_symbol() . '75 or less', '100' => sell_media_get_currency_symbol() . '100 or less', '250' => sell_media_get_currency_symbol() . '250 or less', '500' => sell_media_get_currency_symbol() . '500 or less', '1000' => sell_media_get_currency_symbol() . '1000 or less', '1000' => sell_media_get_currency_symbol() . '1000 or more'),
+        'values' => '',
         'data_type' => 'NUMERIC',
         'compare' => '<=',
-        'format' => 'select',
-        'class' => 'chosen-select'
+        'format' => 'text',
+        'placeholder' => __( 'Example: 100', 'sell_media' )
     );
     $args['fields'][] = array(
-        'type' => 'order',
-        'label' => 'Order',
-        'values' => array('DESC' => 'Newest', 'ASC' => 'Oldest'),
-        'format' => 'select',
-        'class' => 'chosen-select'
-    );
-    $args['fields'][] = array(
-        'type' => 'submit',
-        'value' => 'Search'
+        'type' => 'html',
+        'value' => '<div id="sell-media-toggle-search-options"><a href="javascript:void(0);">' . __( 'Close', 'sell_media' ) . '</a></div>'
     );
 
     $sell_media_search_object = new WP_Advanced_Search( $args );
 
-    echo '<div class="sell-media-search clear">';
+    echo '<div class="sell-media-search cf">';
     $sell_media_search_object->the_form();
     echo '</div>';
 
@@ -120,15 +117,19 @@ function sell_media_search_shortcode( $atts, $content = null ) {
         
         echo '<div class="sell-media-grid-container">';
         $i = 0;
-        while ( have_posts() ): the_post(); $i++;
-        $end = ( $i %3 == 0 ) ? ' end' : null;
+        while ( have_posts() ) : the_post(); $i++;
         ?>
-            <div class="sell-media-grid<?php echo $end; ?>">
-                <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
-                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
+            <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
+                <div class="sell-media-item-details-inner">
+                    <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+                    <span class="view-overlay">
+                        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
+                    </span>
+                </div>
             </div>
         <?php
+
         endwhile;
         echo '</div>';
         $i = 0;

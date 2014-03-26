@@ -5,44 +5,40 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 Class SellMediaSearch {
 
-    public $keyword_ids;
-
-
+    /**
+     * Init
+     */
     public function __construct(){
-        $this->keyword_ids = $this->get_ids('keywords');
-        $this->collection_ids = $this->get_ids('collection');
+        //add_action( 'pre_get_posts', array( &$this, 'get_orientation' ) );
+        $this->includes();
+    }
+
+    /**
+     * Include WP Advanced Search class files
+     */
+    private function includes(){
+        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/search/wpas.php';
     }
 
 
     /**
-     * Filter the $_GET parameters trim white space, remove empty values,
-     * remove html and replace un-wanted text
+     * Filters search results based on aspect ratio
      *
-     * @return An array of variables that are safe to use from $_GET
+     * @param $posts (int)
+     * @param $orientation (string) any|landscape|portrait
+     *
+     * @return Array of post IDs that are either landscape or portrait
      */
-    public function clean_get(){
+    public function get_orientation( $query ){
 
-        $clean_get = array();
-        foreach( $_GET as $k => $v ){
-            if ( ! empty( $v ) ){
-                $clean_get[ str_replace('sell_media_', '', $k) ] = trim( wp_filter_nohtml_kses( $v ) );
-            }
+        if ( ! is_admin() && ! empty( $_GET['wpas'] ) && ( $_GET['orientation'] == 'landscape' || $_GET['orientation'] == 'portrait' ) ) {
+
+            $orientation = get_query_var( 'orientation' );
+            $post_ids = Sell_Media()->images->get_posts_by_orientation( $orientation );
+            $query->set( 'post__in', $post_ids );
+            
         }
-
-        return $clean_get;
     }
 
-
-    /**
-     * Retrieve the ID from the get method
-     *
-     * @param $taxonomy (string) The taxonomy to search for
-     *
-     * @return If we have the given key the value will be returned if not return false
-     */
-    private function get_ids( $taxonomy ){
-        $clean_get = $this->clean_get();
-        return isset( $clean_get[ $taxonomy ] ) ? (int)$clean_get[ $taxonomy ] : false;
-    }
 
 }

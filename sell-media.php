@@ -86,6 +86,14 @@ final class SellMedia {
      */
     public $products;
 
+    /**
+     * Sell_Media Search Object
+     *
+     * @var object
+     * @since 1.8.5
+     */
+    public $search;
+
 
     /**
      * Main SellMedia Instance
@@ -113,6 +121,7 @@ final class SellMedia {
             self::$instance->images         = new SellMediaImages();
             self::$instance->payments       = new SellMediaPayments();
             self::$instance->products       = new SellMediaProducts();
+            self::$instance->search         = new SellMediaSearch();
         }
         return self::$instance;
     }
@@ -186,7 +195,7 @@ final class SellMedia {
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-payments.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-images.php';
-        //require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search.php';
+        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/collections.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/deprecated.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/helpers.php';
@@ -197,7 +206,6 @@ final class SellMedia {
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/template-tags.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/term-meta.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/widgets.php';
-        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/search/wpas.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/settings.php';
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
 
