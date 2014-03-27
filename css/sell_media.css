@@ -452,7 +452,7 @@ table.sell-media-products {
   margin: 20px 0;
 }
 .wp-advanced-search {
-  border: 3px solid #ccc;
+  border: 1px solid #ccc;
   background-color: #ededed;
   color: #333;
   margin: 0 0 40px;
@@ -477,7 +477,7 @@ table.sell-media-products {
 }
 .wpas-search_query input[type=text],
 .wpas-submit input[type=submit] {
-  border: 3px solid #ccc;
+  border: 1px solid #ccc;
   height: 50px;
   padding: 10px;
   -webkit-box-sizing: border-box;
@@ -499,6 +499,8 @@ table.sell-media-products {
   margin-bottom: 0 !important;
 }
 .wpas-submit input[type=submit] {
+  background: #555;
+  color: #eee;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   letter-spacing: 2px;
   font-size: 12px;

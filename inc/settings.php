@@ -162,6 +162,18 @@ function sell_media_init_settings(){
             "default" => '',
             "valid_options" => sell_media_pages_options()
         ),
+        "search_page" => array(
+            "tab" => "sell_media_general_settings",
+            "name" => "search_page",
+            "title" => __("Search Page","sell_media"),
+            "description" => __( "Where is your search page? This page will contain the <code>[sell_media_searchform]</code> shortcode.", "sell_media" ),
+            "section" => "general_plugin_section_1",
+            "since" => "1.0",
+            "id" => "general_plugin_section_1",
+            "type" => "select",
+            "default" => '',
+            "valid_options" => sell_media_pages_options()
+        ),
         "customer_notification" => array(
             "tab" => "sell_media_general_settings",
             "name" => "customer_notification",

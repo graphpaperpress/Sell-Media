@@ -46,106 +46,16 @@ add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
  */
 function sell_media_search_shortcode( $atts, $content = null ) {
 
-    define( 'WPAS_DEBUG', false );
-    global $wp_query, $post;
-    $posts_per_page = get_option( 'posts_per_page' );
-    wp_enqueue_script( 'sell_media-chosen' );
-    wp_enqueue_style( 'sell_media-chosen' );
-    echo '';
-        
-    $args = array();
-    $args['wp_query'] = array(
-        'post_type' => 'sell_media_item',
-        'posts_per_page' => $posts_per_page,
-        'order' => 'DESC',
-        'orderby' => 'date'
-    );
-    $args['fields'][] = array(
-        'type' => 'search',
-        'value' => '',
-        'placeholder' => __( 'Search for something...', 'sell_media' )
-    );
-    $args['fields'][] = array(
-        'type' => 'submit',
-        'value' => 'Search'
-    );
-    $args['fields'][] = array(
-        'type' => 'taxonomy',
-        'label' => 'Collections',
-        'taxonomy' => 'collection',
-        'format' => 'multi-select',
-        'operator' => 'AND',
-        'class' => 'chosen-select'
-    );
-    $args['fields'][] = array(
-        'type' => 'taxonomy',
-        'label' => 'Keywords',
-        'taxonomy' => 'keywords',
-        'format' => 'multi-select',
-        'operator' => 'AND',
-        'class' => 'chosen-select'
-    );
-    $args['fields'][] = array(
-        'type' => 'meta_key',
-        'label' => 'Max Price',
-        'meta_key' => 'sell_media_price',
-        'values' => '',
-        'data_type' => 'NUMERIC',
-        'compare' => '<=',
-        'format' => 'text',
-        'placeholder' => __( 'Example: 100', 'sell_media' )
-    );
-    $args['fields'][] = array(
-        'type' => 'html',
-        'value' => '<div id="sell-media-toggle-search-options"><a href="javascript:void(0);">' . __( 'Close', 'sell_media' ) . '</a></div>'
-    );
+    $html = null;
+    $html .= Sell_Media()->search->form();
+    $html .= Sell_Media()->search->results();
 
-    $sell_media_search_object = new WP_Advanced_Search( $args );
+    return $html;
 
-    echo '<div class="sell-media-search cf">';
-    $sell_media_search_object->the_form();
-    echo '</div>';
-
-    $temp_query = $wp_query;
-    $wp_query = $sell_media_search_object->query();
-
-    echo '<div id="sell-media-archive" class="sell-media">';
-
-    if ( have_posts() ) :
-
-        echo '<p class="sell-media-search-results-total">' . __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts . '</p>';
-        
-        echo '<div class="sell-media-grid-container">';
-        $i = 0;
-        while ( have_posts() ) : the_post(); $i++;
-        ?>
-            <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
-                <div class="sell-media-item-details-inner">
-                    <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
-                    <span class="view-overlay">
-                        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                        <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
-                    </span>
-                </div>
-            </div>
-        <?php
-
-        endwhile;
-        echo '</div>';
-        $i = 0;
-        $sell_media_search_object->pagination();
-
-    else :
-
-        _e( 'Sorry, no results. Try broadening your search.', 'sell_media' );
-
-    endif;
-
-    echo '</div>';
-    $wp_query = $temp_query;
-    wp_reset_query();
 }
-add_shortcode('sell_media_searchform', 'sell_media_search_shortcode');
+add_shortcode( 'sell_media_searchform', 'sell_media_search_shortcode' );
+
+
 
 
 /**
