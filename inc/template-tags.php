@@ -159,6 +159,45 @@ function sell_media_get_excerpt( $post_id, $excerpt_length = 140, $trailing_char
     return $the_excerpt;
 }
 
+
+/**
+ * Prints a semantic list of Collections, with "Collection" as the
+ * title, the term slug is used for additional styling of each li
+ * and a sell_media-last class is used for the last item in the list.
+ *
+ * @since 0.1
+ */
+function sell_media_collections(){
+
+    global $post;
+
+    $taxonomy = 'collection';
+
+    $terms = wp_get_post_terms( $post->ID, $taxonomy );
+
+    if ( empty( $terms ) )
+        return;
+
+    $html = null;
+    $count = count( $terms );
+    $x = 0;
+
+    foreach( $terms as $term ) {
+
+        ( $x == ( $count - 1 ) ) ? $last = 'sell_media-last' : $last = null;
+
+        $html .= '<a href="' . get_term_link( $term->slug, $taxonomy ) . '" title="' . $term->description . '">';
+        $html .= $term->name;
+        $html .= '</a> ';
+        $x++;
+    }
+
+    do_action( 'sell_media_collections_before' );
+    print $html;
+    do_action( 'sell_media_collections_after' );
+}
+
+
 /**
  * Put the cart dialog markup in the footer
  *

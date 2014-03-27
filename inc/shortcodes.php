@@ -82,7 +82,7 @@ function sell_media_item_shortcode( $atts ) {
 
     return '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a>' . $button . '</div>';
 }
-add_shortcode('sell_media_item', 'sell_media_item_shortcode');
+add_shortcode( 'sell_media_item', 'sell_media_item_shortcode' );
 
 
 /**
@@ -116,25 +116,27 @@ function sell_media_all_items_shortcode( $atts ){
 
     $posts = New WP_Query( $args );
     ob_start(); ?>
-    <div id="sell-media-shortcode-all" class="sell-media">
-        <div class="sell-media-shortcode-all">
-            <div class="sell-media-grid-container">
-                <?php $i = 0; ?>
-                <?php foreach( $posts->posts as $post ) : $i++; ?>
-                    <?php if ( $i %3 == 0) $end = ' end'; else $end = null; ?>
-                    <div class="sell-media-grid<?php echo $end; ?>">
-                        <a href="<?php echo get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
-                        <h3 class="sell-media-shortcode-all-item-title"><a href="<?php echo get_permalink( $post->ID ); ?>"><?php echo get_the_title( $post->ID ); ?></a></h3>
-                        <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
+    <div class="sell-media">
+        <div class="sell-media-grid-container">
+            <?php $i = 0; ?>
+            <?php foreach( $posts->posts as $post ) : $i++; ?>
+                <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
+                    <div class="item-inner">
+                        <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+                        <span class="item-overlay">
+                            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
+                            <?php do_action( 'sell_media_item_overlay' ); ?>
+                        </span>
                     </div>
-                <?php endforeach; ?>
-                <?php sell_media_pagination_filter(); ?>
-            </div><!-- .sell-media-grid-container -->
-        </div><!-- .sell-media-shortcode-all -->
+                </div>
+            <?php endforeach; ?>
+            <?php sell_media_pagination_filter(); ?>
+        </div><!-- .sell-media-grid-container -->
     </div><!-- #sell-media-shortcode-all .sell_media -->
     <?php return ob_get_clean();
 }
-add_shortcode('sell_media_all_items', 'sell_media_all_items_shortcode');
+add_shortcode( 'sell_media_all_items', 'sell_media_all_items_shortcode' );
 
 
 /**
@@ -225,7 +227,7 @@ function sell_media_download_shortcode( $atts ) {
             do_shortcode( '[sell_media_login_form]' );
 	}
 }
-add_shortcode('sell_media_download_list', 'sell_media_download_shortcode');
+add_shortcode( 'sell_media_download_list', 'sell_media_download_shortcode' );
 
 
 /**
@@ -271,7 +273,7 @@ function sell_media_price_group_shortcode(){
     </table>
     <?php return ob_get_clean();
 }
-add_shortcode('sell_media_price_group', 'sell_media_price_group_shortcode');
+add_shortcode( 'sell_media_price_group', 'sell_media_price_group_shortcode' );
 
 
 /**
@@ -326,6 +328,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
 		$html = null;
 		$html .= '<div class="sell-media-collections-shortcode sell-media">';
+        $html .= '<div class="sell-media-grid-container">';
 
 		$taxonomy = 'collection';
 		$term_ids = array();
@@ -366,7 +369,8 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
 			if ( $post_count != 0 ) :
 
-				$html .= '<div class="sell-media-grid sell-media-grid-collection third">';
+				$html .= '<div class="sell-media-grid third">';
+                $html .= '<div class="item-inner sell-media-collection">';
 					$args = array(
 							'posts_per_page' => 1,
 							'taxonomy' => 'collection',
@@ -378,29 +382,31 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 					
                     foreach( $posts->posts as $post ) :
 
-						$html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="sell-media-collections-shortcode-item-link">';
+						$html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
 						$collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
 						$html .= sell_media_item_icon( $post->ID, 'medium', false );
-						$html .= '</a>';
-
-					endforeach;
-
-					$html .= '<div class="sell-media-collections-shortcode-item-title"><a href="'. get_term_link( $term->slug, $taxonomy ) .'">' . $term->name . '</a></div>';
-					if ( 'true' == $details ) {
-                        $settings = sell_media_get_plugin_options();
-						$html .= '<div class="sell-media-collections-shortcode-item-details">';
-						$html .= '<span class="sell-media-collections-shortcode-item-count">';
-						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
-						$html .= '</span>';
-						$html .= '<span class="sell-media-collections-shortcode-item-price">';
-						$html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
-						$html .= '</span>';
-						$html .= '</div>';
-					}
+    					if ( 'true' == $details ) {
+                            $settings = sell_media_get_plugin_options();
+    						$html .= '<div class="item-overlay">';
+                            $html .= '<div class="collection-details">';
+    						$html .= '<span class="collection-count">';
+    						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
+    						$html .= '</span>';
+    						$html .= '<span class="collection-price">';
+    						$html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
+    						$html .= '</span>';
+                            $html .= '</div>';
+    						$html .= '</div>';
+                            $html .= '<h3>' . $term->name . '</h3>';
+    					}
+                        $html .= '</a>';
+                        endforeach;
+                    $html .= '</div>';
 					$html .= '</div>';
 
 			endif;
 		endforeach;
+        $html .= '</div>';
 		$html .= '</div>';
 
 		return $html;
@@ -408,7 +414,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 	}
 
 }
-add_shortcode('sell_media_list_all_collections', 'sell_media_list_all_collections_shortcode');
+add_shortcode( 'sell_media_list_all_collections', 'sell_media_list_all_collections_shortcode' );
 
 
 /**

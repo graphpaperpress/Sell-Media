@@ -447,9 +447,10 @@ table.sell-media-products {
 /*= Search
 -------------------------------------------------------------- */
 .sell-media-search {
-  position: relative;
+  clear: both;
   height: 125px;
   margin: 20px 0;
+  position: relative;
 }
 .wp-advanced-search {
   border: 1px solid #ccc;
@@ -477,7 +478,6 @@ table.sell-media-products {
 }
 .wpas-search_query input[type=text],
 .wpas-submit input[type=submit] {
-  border: 1px solid #ccc;
   height: 50px;
   padding: 10px;
   -webkit-box-sizing: border-box;
@@ -485,6 +485,7 @@ table.sell-media-products {
   box-sizing: border-box;
 }
 .wpas-search_query input[type=text] {
+  border: 1px solid #ccc;
   border-right: 0;
 }
 .wpas-search_query input[type=text],
@@ -500,11 +501,18 @@ table.sell-media-products {
 }
 .wpas-submit input[type=submit] {
   background: #555;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   color: #eee;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   letter-spacing: 2px;
   font-size: 12px;
+  text-shadow: none;
   text-transform: uppercase;
+}
+.wpas-submit input[type=submit]:hover {
+  background: #000;
 }
 .wpas-field {
   border-radius: 0;

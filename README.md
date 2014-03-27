@@ -108,6 +108,14 @@ You have two options:
 1. After adding a new item for sale on the Sell Media -> Add New page, copy and paste the shortcode at the bottom of the screen into a Post, Page or Text Widget. This shortcode will embed the image and an "Add to Cart" button below the image. The shortcode looks something like this: `[sell_media id="257" text="Purchase" style="button" color="blue" size="medium"]`
 2. Each item you add for sale also has a dedicated URL. Click the View Item button after saving your first Sell Media item. You could then add the link to that specific item to one of your Menus on Appearance -> Menus -> Custom Menu Item.
 
+How do I show a search form for Sell Media items?
+---
+
+You have two options:
+
+1. Using Shortcode: Create a Page called "Search Media" and add this shortcode to it: `[sell_media_searchform]`. Now visit Sell Media -> Settings and assign the Page you created to the Search Page option.
+2. Using a Template Tag: This function will call the custom Sell Media searchform: `<?php if ( class_exists( 'SellMediaSearch' ) ) echo Sell_Media()->search->form( $url ); ?>`. You must pass the URL to your Search Media page into the $url parameter, like this: `<?php if ( class_exists( 'SellMediaSearch' ) ) echo Sell_Media()->search->form( 'http://test.com/search-media' ); ?>`
+
 How do I bulk upload images for sale?
 ---
 

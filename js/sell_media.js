@@ -77,7 +77,7 @@ jQuery(document).ready(function($){
     /**
      * Show search options when user clicks inside the search field
      */
-    $('#search_query').focus(function() {
+    $('#search_query').on('click', function(){
         $('.advanced-search, #wpas-tax_collection, #wpas-tax_keywords, #wpas-meta_sell_media_price, #wpas-1').show();
         $('#wp-advanced-search').addClass('active');
     });

@@ -103,9 +103,16 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 
 Visit the Sell Media -> Add Product page and configure the page options. Click Save. Then click the View Product link.
 
+= How do I show a search form for Sell Media items? =
+
+You have two options:
+
+1. Using Shortcode: Create a Page called "Search Media" and add this shortcode to it: `[sell_media_searchform]`
+2. Using a Template Tag: This function will call the custom Sell Media searchform: `<?php if ( class_exists( 'SellMediaSearch' ) ) echo Sell_Media()->search->form( $url ); ?>`. You must pass the URL to your Search Media page into the $url parameter, like this: `<?php if ( class_exists( 'SellMediaSearch' ) ) echo Sell_Media()->search->form( 'http://test.com/search-media' ); ?>`
+
 = How do I bulk upload images for sale? =
 
-1. Click Sell Media -> Add Bulk
+1. Click Sell Media -> Add New -> Add Bulk
 2. Click "Upload or Select Images"
 2. Simply drag and drop your files into the box that appears, or click Select Files to choose a file from your computer to upload. Please keep in mind that the drag and drop uploader only works in browsers with HTML5 upload support such as the latest versions of Chrome, Firefox, or Safari. Other browsers will still show the Select Files button or the basic browser uploader form.
 4. This item will be added as a new entry in Sell Media. By default, the newly created Sell Media item will inherit the sizes, prices and licenses that you chose on Sell Media -> Settings. You can modify the price and available licenses on the Sell Media tab by editing each individual item.

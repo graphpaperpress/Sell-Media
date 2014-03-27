@@ -129,11 +129,13 @@ if (!class_exists('WP_Advanced_Search')) {
             global $post;
             global $wp_query;
 
-            $defaults = array('action' => get_permalink($post->ID),
-                                'method' => 'GET',
-                                'id' => 'wp-advanced-search',
-                                'name' => 'wp-advanced-search',
-                                'class' => 'wp-advanced-search');
+            $defaults = array(
+                'action' => get_permalink( $post->ID ),
+                'method' => 'GET',
+                'id' => 'wp-advanced-search',
+                'name' => 'wp-advanced-search',
+                'class' => 'wp-advanced-search'
+            );
 
             $args = wp_parse_args($this->form_args, $defaults);
             $fields = $this->fields;

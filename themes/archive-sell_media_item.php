@@ -15,10 +15,8 @@ get_header(); global $wp_query; ?>
 					<?php $taxonomy = get_query_var( 'taxonomy' ); ?>
 					<?php if ( $taxonomy && ! empty( $wp_query->queried_object->name ) ) : ?>
 						<?php echo ucfirst( $taxonomy ); ?>: <?php echo ucfirst( $wp_query->queried_object->name ); ?>
-					<?php elseif( is_post_type_archive( 'sell_media_item' ) ) : ?>
+					<?php elseif ( is_post_type_archive( 'sell_media_item' ) ) : ?>
 						<?php $obj = get_post_type_object( 'sell_media_item' ); echo $obj->rewrite['slug']; ?>
-					<?php elseif( get_query_var( 's' ) ) : ?>
-						<?php _e( 'Search Results', 'sell_media' ); ?>
 					<?php else : ?>
 						<?php _e( 'Archive', 'sell_media' ); ?>
 					<?php endif; ?>
@@ -30,18 +28,13 @@ get_header(); global $wp_query; ?>
 					<?php rewind_posts(); ?>
 					<?php $i = 0; ?>
 					<?php while ( have_posts() ) : the_post(); $i++; ?>
-						<?php
-							if ( $i %3 == 0)
-								$end = ' end';
-							else
-								$end = null;
-						?>
-						<div class="sell-media-grid<?php echo $end; ?>">
-							<div class="sell-media-item-details-inner">
+						<div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
+							<div class="item-inner">
 								<a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
-								<span class="view-overlay">
+								<span class="item-overlay">
 									<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 									<?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
+									<?php do_action( 'sell_media_item_overlay' ); ?>
 								</span>
 							</div>
 						</div>
@@ -53,4 +46,5 @@ get_header(); global $wp_query; ?>
 			</div><!-- .sell-media-grid-container -->
 		</div><!-- #content -->
 	</div><!-- #sell_media-single .sell_media -->
+<?php do_action( 'sell_media_before_footer' ); ?>
 <?php get_footer(); ?>

@@ -22,7 +22,7 @@ function sell_media_widgets_register_sidebar() {
 add_action( 'widgets_init', 'sell_media_widgets_register_sidebar' );
 
 /**
-* Register Widgets
+* Include Widgets
 */
 require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-recent.php' );
 require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-similar.php' );
@@ -44,4 +44,3 @@ function sell_media_widgets_single_sidebar() { ?>
 
 }
 add_action( 'sell_media_single_bottom_hook', 'sell_media_widgets_single_sidebar' );
-?>

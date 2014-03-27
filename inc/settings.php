@@ -290,27 +290,6 @@ function sell_media_init_settings(){
             "type" => "textarea",
             "default" => ""
         ),
-        "disable_search" => array(
-            "tab" => "sell_media_general_settings",
-            "name" => "disable_search",
-            "title" => __("Disable Sell Media Search","sell_media"),
-            "description" => __( "Set this to &quot;no&quot; if you do not want to use the built in Sell Media search.", "sell_media" ),
-            "section" => "general_plugin_section_1",
-            "since" => "1.0",
-            "id" => "general_plugin_section_1",
-            "type" => "select",
-            "default" => "no",
-            "valid_options" => array(
-                "no" => array(
-                    'name' => "no",
-                    'title' => 'No'
-                    ),
-                "yes" => array(
-                    'name' => "yes",
-                    'title' => 'Yes',
-                    )
-            )
-        ),
         "hide_original_price" => array(
             "tab" => "sell_media_general_settings",
             "name" => "hide_original_price",

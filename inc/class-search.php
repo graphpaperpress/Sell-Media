@@ -37,8 +37,7 @@ Class SellMediaSearch {
         );
         $args['fields'][] = array(
             'type' => 'search',
-            'value' => '',
-            'placeholder' => __( 'Search for something...', 'sell_media' )
+            'value' => ''
         );
         $args['fields'][] = array(
             'type' => 'submit',
@@ -72,7 +71,7 @@ Class SellMediaSearch {
         );
         $args['fields'][] = array(
             'type' => 'html',
-            'value' => '<div id="sell-media-toggle-search-options"><a href="javascript:void(0);">' . __( 'Close', 'sell_media' ) . '</a></div>'
+            'value' => '<div id="sell-media-toggle-search-options"><a href="javascript:void(0);">' . __( 'X', 'sell_media' ) . '</a></div>'
         );
 
         return $args;
@@ -83,32 +82,38 @@ Class SellMediaSearch {
      *
      * @since 1.8.7
      */
-    public function form( $url=null ){
+    public function form( $url=null, $used=null ){
 
-        // enqueue chosen scripts
-        wp_enqueue_script( 'sell_media-chosen' );
-        wp_enqueue_style( 'sell_media-chosen' );
+        // only use this method if it hasn't already been used on the page
+        static $used;
+        if ( ! isset( $used ) ) {
+            $used = true;
+        
+            // enqueue chosen scripts
+            wp_enqueue_script( 'sell_media-chosen' );
+            wp_enqueue_style( 'sell_media-chosen' );
 
-        $args = $this->args();
+            $args = $this->args();
 
-        // allow form to post to a custom url
-        if ( ! empty ( $url ) ) {
-            $new_args['form'] = array(
-                'action' => esc_url( $url ),
-                'method' => 'GET',
-                'id' => 'wp-advanced-search',
-                'name' => 'wp-advanced-search',
-                'class' => 'wp-advanced-search'
-            );
+            // allow form to post to a custom url
+            if ( ! empty ( $url ) ) {
+                $new_args['form'] = array(
+                    'action' => esc_url( $url ),
+                    'method' => 'GET',
+                    'id' => 'wp-advanced-search',
+                    'name' => 'wp-advanced-search',
+                    'class' => 'wp-advanced-search'
+                );
 
-            $args = array_merge( $args, $new_args );
+                $args = array_merge( $args, $new_args );
+            }
+
+            $sell_media_search_object = new WP_Advanced_Search( $args );
+
+            echo '<div class="sell-media-search cf">';
+            $sell_media_search_object->the_form();
+            echo '</div>';
         }
-
-        $sell_media_search_object = new WP_Advanced_Search( $args );
-
-        echo '<div class="sell-media-search cf">';
-        $sell_media_search_object->the_form();
-        echo '</div>';
     }
 
     /**
@@ -116,52 +121,58 @@ Class SellMediaSearch {
      *
      * @since 1.8.7
      */
-    public function results(){
+    public function results( $used=null ){
 
-        global $wp_query, $post;
+        // only use this method if it hasn't already been used on the page
+        static $used;
+        if ( ! isset( $used ) ) {
+            $used = true;
 
-        $args = $this->args();
-        $sell_media_search_object = new WP_Advanced_Search( $args );
+            global $wp_query, $post;
 
-        $temp_query = $wp_query;
-        $wp_query = $sell_media_search_object->query();
+            $args = $this->args();
+            $sell_media_search_object = new WP_Advanced_Search( $args );
 
-        echo '<div id="sell-media-archive" class="sell-media">';
+            $temp_query = $wp_query;
+            $wp_query = $sell_media_search_object->query();
 
-        if ( have_posts() ) :
+            echo '<div id="sell-media-archive" class="sell-media">';
 
-            echo '<p class="sell-media-search-results-total">' . __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts . '</p>';
-            
-            echo '<div class="sell-media-grid-container">';
-            $i = 0;
-            while ( have_posts() ) : the_post(); $i++;
-            ?>
-                <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
-                    <div class="sell-media-item-details-inner">
-                        <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
-                        <span class="view-overlay">
-                            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                            <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
-                        </span>
+            if ( have_posts() ) :
+
+                echo '<p class="sell-media-search-results-total">' . __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts . '</p>';
+                
+                echo '<div class="sell-media-grid-container">';
+                $i = 0;
+                while ( have_posts() ) : the_post(); $i++;
+                ?>
+                    <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
+                        <div class="item-inner">
+                            <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+                            <span class="item-overlay">
+                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
+                                <?php do_action( 'sell_media_item_overlay' ); ?>
+                            </span>
+                        </div>
                     </div>
-                </div>
-            <?php
+                <?php
 
-            endwhile;
+                endwhile;
+                echo '</div>';
+                $i = 0;
+                $sell_media_search_object->pagination();
+
+            else :
+
+                _e( 'Sorry, no results. Try broadening your search.', 'sell_media' );
+
+            endif;
+
             echo '</div>';
-            $i = 0;
-            $sell_media_search_object->pagination();
-
-        else :
-
-            _e( 'Sorry, no results. Try broadening your search.', 'sell_media' );
-
-        endif;
-
-        echo '</div>';
-        $wp_query = $temp_query;
-        wp_reset_query();
-
+            $wp_query = $temp_query;
+            wp_reset_query();
+        }
     }
 
 
