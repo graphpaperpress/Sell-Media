@@ -95,7 +95,7 @@ function sell_media_all_items_shortcode( $atts ){
 
     extract( shortcode_atts( array(
         'collection' => null,
-		'show' => -1
+        'show' => -1
         ), $atts )
     );
 
@@ -105,12 +105,12 @@ function sell_media_all_items_shortcode( $atts ){
         );
 
     if ( $collection ){
-		$args = array(
-				'posts_per_page' => $show,
-				'taxonomy' => 'collection',
-				'field' => 'slug',
-				'term' => $collection
-				);
+        $args = array(
+                'posts_per_page' => $show,
+                'taxonomy' => 'collection',
+                'field' => 'slug',
+                'term' => $collection
+                );
 
     }
 
@@ -200,7 +200,7 @@ add_shortcode( 'sell_media_checkout', 'sell_media_checkout_shortcode' );
  * @since 1.0.4
  */
 function sell_media_download_shortcode( $atts ) {
-	if ( is_user_logged_in() ) {
+    if ( is_user_logged_in() ) {
         global $current_user;
         get_currentuserinfo();
 
@@ -223,9 +223,9 @@ function sell_media_download_shortcode( $atts ) {
 
         return '<div id="purchase-history">' . $html . '</div>';
 
-	} else {
+    } else {
             do_shortcode( '[sell_media_login_form]' );
-	}
+    }
 }
 add_shortcode( 'sell_media_download_list', 'sell_media_download_shortcode' );
 
@@ -284,134 +284,134 @@ add_shortcode( 'sell_media_price_group', 'sell_media_price_group_shortcode' );
  */
 function sell_media_list_all_collections_shortcode( $atts ) {
 
-	extract( shortcode_atts( array(
-		'details' => 'false',
+    extract( shortcode_atts( array(
+        'details' => 'false',
         'thumbs' => 'true'
         ), $atts )
     );
 
-	if ( 'false' == $thumbs ) {
+    if ( 'false' == $thumbs ) {
 
-		$html = null;
-		$html .= '<div class="sell-media-collections-shortcode">';
+        $html = null;
+        $html .= '<div class="sell-media-collections-shortcode">';
 
-		$taxonomy = 'collection';
-		$term_ids = array();
-		foreach( get_terms( $taxonomy ) as $term_obj ){
-		    $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-		    if ( $password ) $term_ids[] = $term_obj->term_id;
-		}
+        $taxonomy = 'collection';
+        $term_ids = array();
+        foreach( get_terms( $taxonomy ) as $term_obj ){
+            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+            if ( $password ) $term_ids[] = $term_obj->term_id;
+        }
 
-		$args = array(
-		    'orderby' => 'name',
-			'hide_empty' => true,
-			'parent' => 0,
-			'exclude' => $term_ids
-		);
+        $args = array(
+            'orderby' => 'name',
+            'hide_empty' => true,
+            'parent' => 0,
+            'exclude' => $term_ids
+        );
 
-		$terms = get_terms( $taxonomy, $args );
+        $terms = get_terms( $taxonomy, $args );
 
-		if ( empty( $terms ) )
-			return;
+        if ( empty( $terms ) )
+            return;
 
-		$html .= '<ul class="sell-media-collections-shortcode-list">';
-		foreach( $terms as $term ) :
-			$html .= '<li class="sell-media-collections-shortcode-list-item">';
-			$html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="sell-media-collections-shortcode-list-item-link">' . $term->name . '</a>';
-			$html .= '</li>';
-		endforeach;
-		$html .= '</ul>';
-		$html .= '</div>';
-		return $html;
+        $html .= '<ul class="sell-media-collections-shortcode-list">';
+        foreach( $terms as $term ) :
+            $html .= '<li class="sell-media-collections-shortcode-list-item">';
+            $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="sell-media-collections-shortcode-list-item-link">' . $term->name . '</a>';
+            $html .= '</li>';
+        endforeach;
+        $html .= '</ul>';
+        $html .= '</div>';
+        return $html;
 
-	} else {
+    } else {
 
-		$html = null;
-		$html .= '<div class="sell-media-collections-shortcode sell-media">';
+        $html = null;
+        $html .= '<div class="sell-media-collections-shortcode sell-media">';
         $html .= '<div class="sell-media-grid-container">';
 
-		$taxonomy = 'collection';
-		$term_ids = array();
-		foreach( get_terms( $taxonomy ) as $term_obj ){
-		    $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-		    if ( $password ) $term_ids[] = $term_obj->term_id;
-		}
+        $taxonomy = 'collection';
+        $term_ids = array();
+        foreach( get_terms( $taxonomy ) as $term_obj ){
+            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+            if ( $password ) $term_ids[] = $term_obj->term_id;
+        }
 
-		$args = array(
-		    'orderby' => 'name',
-			'hide_empty' => true,
-			'parent' => 0,
-			'exclude' => $term_ids
-		);
+        $args = array(
+            'orderby' => 'name',
+            'hide_empty' => true,
+            'parent' => 0,
+            'exclude' => $term_ids
+        );
 
-		$terms = get_terms( $taxonomy, $args );
+        $terms = get_terms( $taxonomy, $args );
 
-		if ( empty( $terms ) )
-			return;
+        if ( empty( $terms ) )
+            return;
 
-		foreach( $terms as $term ) :
-			$args = array(
-					'post_status' => 'publish',
-					'taxonomy' => 'collection',
-					'field' => 'slug',
-					'term' => $term->slug,
-					'tax_query' => array(
-						array(
-							'taxonomy' => 'collection',
-							'field' => 'id',
-							'terms' => $term_ids,
-							'operator' => 'NOT IN'
-							)
-						)
-					);
-			$posts = New WP_Query( $args );
-			$post_count = $posts->found_posts;
+        foreach( $terms as $term ) :
+            $args = array(
+                    'post_status' => 'publish',
+                    'taxonomy' => 'collection',
+                    'field' => 'slug',
+                    'term' => $term->slug,
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => 'collection',
+                            'field' => 'id',
+                            'terms' => $term_ids,
+                            'operator' => 'NOT IN'
+                            )
+                        )
+                    );
+            $posts = New WP_Query( $args );
+            $post_count = $posts->found_posts;
 
-			if ( $post_count != 0 ) :
+            if ( $post_count != 0 ) :
 
-				$html .= '<div class="sell-media-grid third">';
+                $html .= '<div class="sell-media-grid third">';
                 $html .= '<div class="item-inner sell-media-collection">';
-					$args = array(
-							'posts_per_page' => 1,
-							'taxonomy' => 'collection',
-							'field' => 'slug',
-							'term' => $term->slug
-							);
+                    $args = array(
+                            'posts_per_page' => 1,
+                            'taxonomy' => 'collection',
+                            'field' => 'slug',
+                            'term' => $term->slug
+                            );
 
-					$posts = New WP_Query( $args );
-					
+                    $posts = New WP_Query( $args );
+                    
                     foreach( $posts->posts as $post ) :
 
-						$html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
-						$collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
-						$html .= sell_media_item_icon( $post->ID, 'medium', false );
-    					if ( 'true' == $details ) {
+                        $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
+                        $collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
+                        $html .= sell_media_item_icon( $post->ID, 'medium', false );
+                        if ( 'true' == $details ) {
                             $settings = sell_media_get_plugin_options();
-    						$html .= '<div class="item-overlay">';
+                            $html .= '<div class="item-overlay">';
                             $html .= '<div class="collection-details">';
-    						$html .= '<span class="collection-count">';
-    						$html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
-    						$html .= '</span>';
-    						$html .= '<span class="collection-price">';
-    						$html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
-    						$html .= '</span>';
+                            $html .= '<span class="collection-count">';
+                            $html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
+                            $html .= '</span>';
+                            $html .= '<span class="collection-price">';
+                            $html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
+                            $html .= '</span>';
                             $html .= '</div>';
-    						$html .= '</div>';
+                            $html .= '</div>';
                             $html .= '<h3>' . $term->name . '</h3>';
-    					}
+                        }
                         $html .= '</a>';
                         endforeach;
                     $html .= '</div>';
-					$html .= '</div>';
+                    $html .= '</div>';
 
-			endif;
-		endforeach;
+            endif;
+        endforeach;
         $html .= '</div>';
-		$html .= '</div>';
+        $html .= '</div>';
 
-		return $html;
+        return $html;
 
-	}
+    }
 
 }
 add_shortcode( 'sell_media_list_all_collections', 'sell_media_list_all_collections_shortcode' );
