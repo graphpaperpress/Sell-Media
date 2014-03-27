@@ -33,9 +33,6 @@
 		} ?>
 
 		<div class="sell-media-featured-widget">
-			<?php
-			// Get available image sizes
-			$image_sizes = get_intermediate_image_sizes(); ?>
 
 			<?php
 			$type_posts = new WP_Query ( $args );
@@ -49,7 +46,7 @@
 				<div class="sell-media-widget-item-warp third">
 					<div class="sell-media-widget-thumb-wrap">
 						<a href="<?php echo get_permalink(); ?>">
-							<?php sell_media_item_icon( $post->ID, 'thumbnail' ); ?>
+							<?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'thumbnail' ) ); ?>
 						</a>
 					</div>
 				</div> <!--  .sell-media-widget-item-warp  -->
