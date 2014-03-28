@@ -57,7 +57,7 @@ if ( $licenses ) {
                     <p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo get_permalink( $_POST['product_id'] ); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
                 <?php endif; ?>
                 <div class="total-container group">
-                    <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container">$<span id="total" class="item_price"><?php echo get_post_meta( $_POST['product_id'], 'sell_media_price', true ); ?></span></span>
+                    <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency(); ?><span id="total" class="item_price"><?php echo get_post_meta( $_POST['product_id'], 'sell_media_price', true ); ?></span></span>
                 </div>
                 <div class="button-container group">
                     <p id="sell-media-add-to-cart"><button class="item_add sell-media-button"><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
@@ -118,7 +118,7 @@ if ( $licenses ) {
                 </div>
     			<?php do_action( 'sell_media_cart_below_licenses' ); ?>
                 <div class="total-container group">
-    				<strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container">$<span id="total" class="item_price">0</span></span>
+    				<strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price">0</span></span>
     			</div>
                 <div class="button-container group">
                     <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" disabled><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
