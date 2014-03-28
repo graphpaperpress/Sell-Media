@@ -222,7 +222,13 @@ function sell_media_details_meta_box( $fields=null ) {
                 case 'price':
                     if ( $field['std'] )
                         $default = $field['std'];
-                    echo '<input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+
+                    if ( "" != $field['value'] ) {
+                        $price_value = wp_filter_nohtml_kses( $field['value'] );
+                    } else {
+                        $price_value = $default;
+                    }
+                    echo '<input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . $price_value . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
                 break;
 
                 // textarea

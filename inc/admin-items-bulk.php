@@ -90,9 +90,8 @@ function sell_media_bulk_update_collection(){
 
         if ( ! empty( $_POST['price_group'] ) ){
             wp_set_post_terms( $post_id, $_POST['price_group'], 'price-group' );
-        } else {
-            update_post_meta( $post_id, 'sell_media_price', $settings->default_price );
         }
+        update_post_meta( $post_id, 'sell_media_price', $settings->default_price );
         do_action( 'sell_media_bulk_uploader_additional_fields_meta', $post_id, $_POST );
     }
     die();
