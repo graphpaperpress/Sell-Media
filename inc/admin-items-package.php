@@ -63,7 +63,7 @@ function sell_media_add_package_callback_fn(){
                             </tr>
                             <tr>
                                 <td>
-                                    <input name="price" value="" type="number" step="0.01" min="0" class="small-text" id="sell_media_package_price" placeholder="10.00" />
+                                    <input name="price" value="" type="number" step="0.01" min="0" class="small-text" id="sell_media_package_price" placeholder="<?php echo number_format( $settings->default_price, 2, '.', '' ); ?>" />
                                 </td>
                             </tr>
                             <tr>
