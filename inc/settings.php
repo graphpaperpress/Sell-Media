@@ -290,27 +290,6 @@ function sell_media_init_settings(){
             "type" => "textarea",
             "default" => ""
         ),
-        "hide_original_price" => array(
-            "tab" => "sell_media_general_settings",
-            "name" => "hide_original_price",
-            "title" => __("Hide Original Price","sell_media"),
-            "description" => __( "You can also hide the original price by editing each individual item.", "sell_media" ),
-            "section" => "general_plugin_section_1",
-            "since" => "1.0",
-            "id" => "general_plugin_section_1",
-            "type" => "select",
-            "default" => "no",
-            "valid_options" => array(
-                "no" => array(
-                    "name" => "no",
-                    "title" => __("No","sell_media")
-                    ),
-                "yes" => array(
-                    "name" => "yes",
-                    "title" => __("Yes","sell_media"),
-                    )
-            )
-        ),
         "admin_columns" => array(
             "tab" => "sell_media_general_settings",
             "name" => "admin_columns",
@@ -346,7 +325,7 @@ function sell_media_init_settings(){
             "tab" => "sell_media_size_settings",
             "name" => "default_price",
             "title" => __("Original Price","sell_media"),
-            "description" => __( "The default price of new items and bulk uploads. You can set unique prices by editing each individual item.", "sell_media" ),
+            "description" => __( "The original price of new items and bulk uploads. You can set unique prices by editing each individual item.", "sell_media" ),
             "section" => "size_price_plugin_section_1",
             "since" => "1.0",
             "id" => "size_price_plugin_section_1",
@@ -354,6 +333,27 @@ function sell_media_init_settings(){
             "sanitize" => "html",
             "type" => "text"
             ),
+        "hide_original_price" => array(
+            "tab" => "sell_media_size_settings",
+            "name" => "hide_original_price",
+            "title" => __("Hide Original Price","sell_media"),
+            "description" => __( "Hide the original price above and rely solely on the Price Groups below? You can override this setting on a per-item basis.", "sell_media" ),
+            "section" => "size_price_plugin_section_1",
+            "since" => "1.0",
+            "id" => "size_price_plugin_section_1",
+            "type" => "select",
+            "default" => "no",
+            "valid_options" => array(
+                "no" => array(
+                    "name" => "no",
+                    "title" => __("No","sell_media")
+                    ),
+                "yes" => array(
+                    "name" => "yes",
+                    "title" => __("Yes","sell_media"),
+                    )
+            )
+        ),
         "default_price_group" => array(
             "tab" => "sell_media_size_settings",
             "name" => "default_price_group",

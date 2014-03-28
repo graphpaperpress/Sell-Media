@@ -218,6 +218,10 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.8.8 =
+* Tweak: Set default price on all new uploads
+* Bug: Show correct currency on cart
+
 = 1.8.7 =
 * Feature: Advanced Search integrated into core
 * Tweak: Remove filtering core WP search, just rely on Advanced Search now

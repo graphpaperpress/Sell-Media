@@ -215,7 +215,7 @@ function sell_media_details_meta_box( $fields=null ) {
                 case 'text':
                     if ( $field['std'] )
                         $default = $field['std'];
-                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" size="2"/><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+                    echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. $default .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" size="2"/><br /><span class="description">' . $field['desc'] . '</span>';
                 break;
 
                 // price
@@ -223,45 +223,45 @@ function sell_media_details_meta_box( $fields=null ) {
                     if ( $field['std'] )
                         $default = $field['std'];
 
-                    if ( "" != $field['value'] ) {
+                    if ( '' != $field['value'] ) {
                         $price_value = wp_filter_nohtml_kses( $field['value'] );
                     } else {
                         $price_value = $default;
                     }
-                    echo '<input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. __( $default, 'sell_media' ) .'" value="' . $price_value . '" /><br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+                    echo '<input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. $default .'" value="' . $price_value . '" /><br /><span class="description">' . $field['desc'] . '</span>';
                 break;
 
                 // textarea
                 case 'textarea':
-                    echo '<textarea name="' . $field['id'] . '" id="' . $field['id'] . '" cols="60" rows="4">' . __( $default, 'sell_media' ) . '</textarea>
-                        <br /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+                    echo '<textarea name="' . $field['id'] . '" id="' . $field['id'] . '" cols="60" rows="4">' . $default . '</textarea>
+                        <br /><span class="description">' . $field['desc'] . '</span>';
                 break;
 
                 // checkbox
                 case 'checkbox':
                     echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ' . checked( $field['value'], "on", false ) . '/>
-                        <label for="' . $field['id'] . '">' . __( $field['desc'], 'sell_media' ) . '</label>';
+                        <label for="' . $field['id'] . '">' . $field['desc'] . '</label>';
                 break;
 
                 // select
                 case 'select':
                     echo '<select name="'.$field['id'].'" id="'.$field['id'].'">';
                     foreach ($field['options'] as $option) {
-                        echo '<option', $meta == $option['value'] ? ' selected="selected"' : '', ' value="'.$option['value'].'">' . __( $option['label'], 'sell_media' ) . '</option>';
+                        echo '<option', $meta == $option['value'] ? ' selected="selected"' : '', ' value="'. $option['value'] .'">' . $option['label'] . '</option>';
                     }
-                    echo '</select><br /><span class="description">'.__( $field['desc'], 'sell_media' ).'</span>';
+                    echo '</select><br /><span class="description">' . $field['desc'] .'</span>';
                 break;
 
                 // image
                 case 'image':
                     $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
                     echo '<span class="custom_default_image" style="display:none">' . $image[0] . '</span>';
-                    if ($meta) { $image = wp_get_attachment_image_src($meta, 'medium'); $image = $image[0]; }
-                    echo    '<input name="' . $field['id'] . '" type="hidden" class="custom_upload_image" value="' . __( $meta, 'sell_media' ) . '" />
+                    if ($meta) { $image = wp_get_attachment_image_src( $meta, 'medium' ); $image = $image[0]; }
+                    echo    '<input name="' . $field['id'] . '" type="hidden" class="custom_upload_image" value="' . $meta . '" />
                     <img src="' . $image[0] . '" class="custom_preview_image" alt="" /><br />
                     <input class="custom_upload_image_button button" type="button" value="' . __( 'Choose Image', 'sell_media' ) . '" />
-                    <small> <a href="#" class="custom_clear_image_button">'.__('Remove Image','sell_media').'</a></small>
-                    <br clear="all" /><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span>';
+                    <small> <a href="#" class="custom_clear_image_button">' . __(' Remove Image', 'sell_media' ) . '</a></small>
+                    <br clear="all" /><span class="description">' . $field['desc'] . '</span>';
                 break;
 
                 // File
@@ -282,7 +282,7 @@ function sell_media_details_meta_box( $fields=null ) {
 
                 // text
                 case 'html':
-                    echo '<p id="' . $field['id'] . '"><span class="description">' . __( $field['desc'], 'sell_media' ) . '</span></p>';
+                    echo '<p id="' . $field['id'] . '"><span class="description">' . $field['desc'] . '</span></p>';
                     break;
 
                 case 'price_group':
