@@ -148,7 +148,7 @@ Class SellMediaSearch {
                 ?>
                     <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
                         <div class="item-inner">
-                            <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+                            <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                             <span class="item-overlay">
                                 <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                                 <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
