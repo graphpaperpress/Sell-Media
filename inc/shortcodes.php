@@ -122,7 +122,7 @@ function sell_media_all_items_shortcode( $atts ){
             <?php foreach( $posts->posts as $post ) : $i++; ?>
                 <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
                     <div class="item-inner">
-                        <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID ); ?></a>
+                        <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                         <span class="item-overlay">
                             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                             <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
@@ -384,7 +384,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
                         $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
                         $collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
-                        $html .= sell_media_item_icon( $post->ID, 'medium', false );
+                        $html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ) );
                         if ( 'true' == $details ) {
                             $settings = sell_media_get_plugin_options();
                             $html .= '<div class="item-overlay">';
