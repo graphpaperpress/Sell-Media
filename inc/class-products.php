@@ -97,13 +97,14 @@ Class SellMediaProducts {
 
         $final_price = false;
 
-        // If this item has a price set use that
+        // Use custom price of item
         $original_price = get_post_meta( $product_id, 'sell_media_price', true );
 
         if ( ! empty( $original_price ) && ! empty( $price_id ) && $price_id == 'original' ){
             $final_price = $original_price;
         }
 
+        // Use price group price
         elseif ( ! empty( $price_id ) && $this->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) )
             && $price_id != 'original' ){
             foreach( $this->get_prices( $product_id, $taxonomy ) as $price ){
@@ -113,7 +114,7 @@ Class SellMediaProducts {
             }
         }
 
-        // Use default from setting
+        // Use original price from settings
         else {
             $final_price = $this->settings->default_price;
         }
@@ -141,6 +142,27 @@ Class SellMediaProducts {
         } else {
             return $lowest_price;
         }
+    }
+
+    /**
+     * Check if item has an assigned price group
+     *
+     * @param $post_id (int) product id of post type "sell_media_item"
+     * @return (bool) true/false
+     */
+    
+    public function has_price_group( $post_id=null ){
+
+        $term = null; // check all
+
+        if ( has_term( $term, 'price-group', $post_id ) ) {
+            return true;
+        } elseif ( has_term( $term, 'reprint-price-group', $post_id ) ) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 

@@ -210,28 +210,27 @@ jQuery(document).ready(function($){
         });
     });
 
-    // set license description in tooltip to selected license
-    $(document).on('change', '#sell_media_item_license', function(){
-
-    });
-
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 
-        // disable add to cart button unless price selected
+        // enable the add to cart button when price selected
         if( $('#sell_media_item_size').val() ){
             $('#sell_media_item_license').prop('disabled', false);
         } else {
             $('.item_add').prop('disabled', true);
         }
-
+        // enable the add to cart button when license and price selected
         if( $('#sell_media_item_license').val() && $('#sell_media_item_size').val() ) {
             $('.item_add').prop('disabled', false);
         } else {
             $('.item_add').prop('disabled', true);
         }
-
+        // enable the add to cart button if license options don't exist
         if ( $('#sell_media_item_license').length == 0 || $('div#sell_media_item_license').length == 1){
             $('.item_add').prop('disabled', false);
+        }
+        // disable the add to cart button if the size select value is 0
+        if( $('#sell_media_item_size').val() == 0){
+            $('.item_add').prop('disabled', true);
         }
 
         // calculate the price and license markup
