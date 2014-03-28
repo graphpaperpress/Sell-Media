@@ -805,8 +805,12 @@ Class SellMediaPayments {
 
         // If tax is enabled, tax the order
         if ( $settings->tax ) {
-            $tax_amount = ( $settings->tax_rate * $sub_total );
-            $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
+            // Cannot validate taxes because of qty
+            // So just get the tax rate from local storage
+            $args['tax_cart'] = $cart['tax_cart'];
+            // If we could validate taxes, we could start here:
+            // $tax_amount = ( $settings->tax_rate * $sub_total );
+            // $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
         }
 
         $verified_cart = array_merge( $cart, $verified, $args );
