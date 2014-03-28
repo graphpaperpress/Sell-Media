@@ -294,7 +294,7 @@ function sell_media_init_settings(){
             "tab" => "sell_media_general_settings",
             "name" => "admin_columns",
             "title" => __("Show Columns","sell_media"),
-            "description" => __( "Select the columns to show on the admin page &quot;All Items&quot; page.", "sell_media" ),
+            "description" => __( "Select the columns to show on the admin page &quot;All Products&quot; page.", "sell_media" ),
             "section" => "general_plugin_section_1",
             "since" => "1.0",
             "id" => "general_plugin_section_1",

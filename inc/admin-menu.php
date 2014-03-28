@@ -30,8 +30,6 @@ function sell_media_admin_menu() {
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=keywords&amp;post_type=sell_media_item' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=creator&amp;post_type=sell_media_item' );
-    // remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit.php?post_type=sell_media_item&page=sell_media_add_bulk' );
-    // remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit.php?post_type=sell_media_item&page=sell_media_add_package' );
 
     do_action( 'sell_media_menu_hook' );
 }
