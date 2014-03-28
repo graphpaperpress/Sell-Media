@@ -42,7 +42,7 @@ get_header(); ?>
 					</li>
 				<?php } ?>
 
-				<?php do_action('sell_media_additional_list_items'); ?>
+				<?php do_action( 'sell_media_additional_list_items' ); ?>
 
 			</ul>
 		</div><!-- .sell-media-meta -->
