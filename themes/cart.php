@@ -74,7 +74,7 @@ if ( $licenses ) {
                                         $name = $v['name'];
                                         $dimensions = '';
                                     }
-                                    echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . $v['price'] . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                                    echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
                                 }
                             ?>
                         </select>
@@ -85,7 +85,7 @@ if ( $licenses ) {
                 <?php if ( count( $licenses ) > 1 ) : ?>
                     <fieldset id="sell_media_download_license_fieldset">
                         <legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
-                        <select id="sell_media_item_license" class="sum" disabled>
+                        <select id="sell_media_item_license" class="sum" <?php if ( $has_price_group ) echo 'disabled'; ?>>
                             <option value="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
                             <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                         </select>
@@ -103,10 +103,10 @@ if ( $licenses ) {
             </div>
             <?php do_action( 'sell_media_cart_below_licenses' ); ?>
             <div class="total-container group">
-                <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price"><?php $custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true ); if ( ! empty( $custom_price ) ) echo $custom_price; else echo $settings->default_price; ?></span></span>
+                <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price"><?php $custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true ); if ( ! empty( $custom_price ) ) echo number_format( $custom_price, 2, '.', ''); else echo number_format( $settings->default_price, 2, '.', ''); ?></span></span>
             </div>
             <div class="button-container group">
-                <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
+                <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && ( $has_price_group || $licenses > 1 ) ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
             </div>
             <footer><?php sell_media_plugin_credit(); ?></footer>
         </section>

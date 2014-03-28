@@ -212,29 +212,35 @@ jQuery(document).ready(function($){
 
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 
-        // enable the add to cart button when price selected
-        if( $('#sell_media_item_size').val() ){
+        // if size has been selected, enable the license selector
+        if ( $('#sell_media_item_size').val() ){
             $('#sell_media_item_license').prop('disabled', false);
-        } else {
-            $('.item_add').prop('disabled', true);
         }
-        // enable the add to cart button when license and price selected
-        if( $('#sell_media_item_license').val() && $('#sell_media_item_size').val() ) {
-            $('.item_add').prop('disabled', false);
-        } else {
-            $('.item_add').prop('disabled', true);
+        // if price selector doesn't exist, enable the license selector
+        if ( $('#sell_media_item_size').length == 0 ){
+            $('#sell_media_item_license').prop('disabled', false);
         }
-        // enable the add to cart button if license options don't exist
-        if ( $('#sell_media_item_license').length == 0 || $('div#sell_media_item_license').length == 1){
+        // if both size and license have values, enable the add to cart button
+        if ( $('#sell_media_item_license').val() ) {
             $('.item_add').prop('disabled', false);
         }
-        // disable the add to cart button if the size select value is 0
-        if( $('#sell_media_item_size').val() == 0){
+        // if license options don't exist or only 1 license is assigned, enable the add to cart button 
+        if ( $('#sell_media_item_license').length == 0 || $('div#sell_media_item_license').length == 1 ){
+            $('.item_add').prop('disabled', false);
+        }
+        // and finally...
+        // if the size or license select values are 0, disable the add to cart button again
+        // this happens when the user changes the size back to "select a size"
+        if ( $('#sell_media_item_size').val() == 0 || $('#sell_media_item_license').val() == 0){
             $('.item_add').prop('disabled', true);
         }
 
-        // calculate the price and license markup
+        // get the price from the selected option
         var price = $('#sell_media_item_size :selected').data('price');
+        // if the price doesn't exist, set the price to the total shown
+        // either the custom price of the item or the default price from settings
+        if ( price == undefined || price == 0 )
+            price = $('#total').text();
 
         // check for selected license or single license
         if ( $('#sell_media_item_license :selected').data('name') ){
