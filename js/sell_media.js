@@ -48,7 +48,6 @@ jQuery(document).ready(function($){
     /**
      * Check the required fields and change state of add to cart button
      */
-
     function required_fields(){
         var required = $('[required]');
         // bind change for all your just click and keyup for all text fields

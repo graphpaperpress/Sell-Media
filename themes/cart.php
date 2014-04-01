@@ -106,7 +106,7 @@ if ( $licenses ) {
                 <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price"><?php $custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true ); if ( ! empty( $custom_price ) ) echo number_format( $custom_price, 2, '.', ''); else echo number_format( $settings->default_price, 2, '.', ''); ?></span></span>
             </div>
             <div class="button-container group">
-                <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" disabled="disabled"><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
+                <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
             </div>
             <footer><?php sell_media_plugin_credit(); ?></footer>
         </section>

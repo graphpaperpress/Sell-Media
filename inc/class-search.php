@@ -165,7 +165,15 @@ Class SellMediaSearch {
 
             else :
 
-                _e( 'Sorry, no results. Try broadening your search.', 'sell_media' );
+                echo apply_filters( 'sell_media_search_no_results_text',
+                    '<p>Sorry, no results. Here are some search tips:</p>
+                    <ol>
+                        <li>Use the top search field to search product titles</li>
+                        <li>Use the "Collections" search field to limit your search to specific categories</li>
+                        <li>Use the "Keywords" search field to search specific tags and keywords</li>
+                        <li>Use the "Max Price" search field to find products that fit your budget</li>
+                        <li>And finally, broaden your search if you are unable to find results</li>
+                    </ol>' );
 
             endif;
 
