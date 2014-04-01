@@ -219,7 +219,6 @@ Action hooks available:
 == Changelog ==
 
 = 1.9.0 =
-* Tweak: Add fiter to cart total default price
 * Bug: Correct prices for items without Price Groups, but with license markup
 
 = 1.8.9 =
