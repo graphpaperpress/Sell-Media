@@ -233,7 +233,7 @@ jQuery(document).ready(function($){
         // if the price doesn't exist, set the price to the total shown
         // either the custom price of the item or the default price from settings
         if ( price == undefined || price == 0 )
-            price = $('#total').text();
+            price = $('#sell_media_item_base_price').val();
 
         // check for selected license or single license
         if ( $('#sell_media_item_license :selected').data('name') ){

@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.8.9
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -218,6 +218,8 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.0 =
+* Bug: Correct prices for items without Price Groups, but with license markup
 
 = 1.8.9 =
 * Tweak: Streamline disabled button checks on cart

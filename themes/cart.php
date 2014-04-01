@@ -10,8 +10,18 @@
  * plugin settings
  */
 $settings = sell_media_get_plugin_options();
+// check price
+$custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
+if ( ! empty( $custom_price ) ) {
+    $price = number_format( $custom_price, 2, '.', '');
+} else {
+    $price = number_format( $settings->default_price, 2, '.', '');
+}
+// check if is package
 $is_package = get_post_meta( $_POST['product_id'], '_sell_media_is_package', true );
+// check if has assigned price group
 $has_price_group = Sell_Media()->products->has_price_group( $_POST['product_id'] );
+// check if has licenses
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
 if ( $licenses ) {
     $term_id = $licenses[0]->term_id;
@@ -48,7 +58,7 @@ if ( $licenses ) {
                 <input class="item_type" type="text" value="<?php if ( $is_package ) echo 'download'; else echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
                 <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $_POST['product_id'] ); ?>" />
                 <input class="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
-                <input class="item_size" type="text" value="" />
+                <input class="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
                 <input class="item_usage" type="text" value="" />
                 <input class="item_license" type="text" value="" />
             </form>
@@ -79,6 +89,8 @@ if ( $licenses ) {
                             ?>
                         </select>
                     </fieldset>
+                <?php else : ?>
+                    <input id="sell_media_item_base_price" type="hidden" value="<?php echo $price; ?>" data-price="<?php echo $price; ?>" data-id="original" data-size="original" />
                 <?php endif; ?>
                 <?php do_action( 'sell_media_cart_below_size' ); ?>
                 <?php do_action( 'sell_media_cart_above_licenses' ); ?>
@@ -103,7 +115,7 @@ if ( $licenses ) {
             </div>
             <?php do_action( 'sell_media_cart_below_licenses' ); ?>
             <div class="total-container group">
-                <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price"><?php $custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true ); if ( ! empty( $custom_price ) ) echo number_format( $custom_price, 2, '.', ''); else echo number_format( $settings->default_price, 2, '.', ''); ?></span></span>
+                <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price"><?php echo $price; ?></span></span>
             </div>
             <div class="button-container group">
                 <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
