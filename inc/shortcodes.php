@@ -175,7 +175,9 @@ function sell_media_checkout_shortcode(){
             <div class="sell-media-checkout-button group">
                 <?php do_action( 'sell_media_above_checkout_button' ); ?>
                 <p><a href="javascript:void(0)" class="sellMediaCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
-                <p id="sell-media-continue-shopping" class="text-center"><?php echo __( 'or', 'sell_media' ); ?> <a href="<?php echo get_post_type_archive_link( 'sell_media_item' ); ?>"><?php echo __( 'continue shopping', 'sell_media' ); ?> &raquo;</a></p>
+                <p id="sell-media-continue-shopping" class="text-center">
+                    <?php echo apply_filters( 'sell_media_or_continue_shopping', sprintf( __( 'or %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">continue shopping &raquo;</a>' ) ); ?>
+                </p>
                 <?php
                 $settings = sell_media_get_plugin_options();
                 if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
@@ -186,7 +188,7 @@ function sell_media_checkout_shortcode(){
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div><!-- #sell-media-checkout-cart -->
     <p id="sell-media-empty-cart-message" style="display:none;">
-        <?php echo sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">Continue shopping &raquo;</a>' ); ?>
+        <?php echo apply_filters( 'sell_media_continue_shopping', sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">Continue shopping &raquo;</a>' ) ); ?>
     </p>
     <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
     <?php return ob_get_clean();
