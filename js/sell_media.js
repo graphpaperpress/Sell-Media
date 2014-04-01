@@ -38,16 +38,33 @@ jQuery(document).ready(function($){
             },
             success: function(msg){
                 $('#sell-media-dialog-box-target').fadeIn().html(msg);
-                if ($('#download #sell_media_size_select').length) {
-                    $('#sell_media_license_select').attr('disabled', true);
-                }
-                if ($('#download #sell_media_size_select').length || $('#download #sell_media_license_select').length) {
-                    $('.sell-media-button').attr('disabled', true);
-                }
+                required_fields();
+                
             }
         });
 
     });
+
+    /**
+     * Check the required fields and change state of add to cart button
+     */
+
+    function required_fields(){
+        var required = $('[required]');
+        // bind change for all your just click and keyup for all text fields
+        required.bind('change keyup', function() {
+            var flag = 0;
+            // check every el in collection
+            required.each(function() {
+                if ( $(this).val() != '' ) flag++;
+            });
+            // number of nonempty (nonchecked) fields == nubmer of required fields
+            if ( flag == required.length )
+                $('.item_add').prop('disabled',false);
+            else
+                $('.item_add').prop('disabled', true);
+        });
+    }
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
@@ -212,29 +229,6 @@ jQuery(document).ready(function($){
 
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 
-        // if size has been selected, enable the license selector
-        if ( $('#sell_media_item_size').val() ){
-            $('#sell_media_item_license').prop('disabled', false);
-        }
-        // if price selector doesn't exist, enable the license selector
-        if ( $('#sell_media_item_size').length == 0 ){
-            $('#sell_media_item_license').prop('disabled', false);
-        }
-        // if both size and license have values, enable the add to cart button
-        if ( $('#sell_media_item_license').val() ) {
-            $('.item_add').prop('disabled', false);
-        }
-        // if license options don't exist or only 1 license is assigned, enable the add to cart button 
-        if ( $('#sell_media_item_license').length == 0 || $('div#sell_media_item_license').length == 1 ){
-            $('.item_add').prop('disabled', false);
-        }
-        // and finally...
-        // if the size or license select values are 0, disable the add to cart button again
-        // this happens when the user changes the size back to "select a size"
-        if ( $('#sell_media_item_size').val() == 0 || $('#sell_media_item_license').val() == 0){
-            $('.item_add').prop('disabled', true);
-        }
-
         // get the price from the selected option
         var price = $('#sell_media_item_size :selected').data('price');
         // if the price doesn't exist, set the price to the total shown
@@ -267,7 +261,7 @@ jQuery(document).ready(function($){
         if ( price_group != null )
             $('.item_pgroup').attr('value', price_group);
 
-        // set price_group id so it is passed to cart
+        // set item_size so it is passed to cart
         var size = $('#sell_media_item_size :selected').data('size');
         if ( size != null )
             $('.item_size').attr('value', size);
