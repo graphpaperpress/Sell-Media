@@ -106,7 +106,8 @@ if ( $licenses ) {
                     <fieldset id="sell_media_download_license_fieldset">
                         <div id="sell_media_item_license" data-id="<?php echo $term_id; ?>" data-value="<?php echo $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php echo $licenses[0]->name; ?>" data-price="<?php echo str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
                             <?php $markup = sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ); ?>
-                            <?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?>: <?php echo $licenses[0]->name; ?><?php if ( $markup ) : ?> (<?php echo $markup; ?>% markup) <?php endif; ?>
+                            <?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?>: <?php echo $licenses[0]->name; ?><?php if ( $markup ) : ?> (<?php echo $markup; ?> markup) <?php endif; ?>
+                            <?php $price = ( $markup / 100 ) * $price; ?>
                         </div>
                     </fieldset>
                 <?php else : ?>
