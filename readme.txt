@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,25 +13,29 @@ Sell photos, prints, videos and pdf's online through WordPress in seconds. Built
 
 == Description ==
 
-[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is a WordPress plugin that allows anyone to sell, license and protect images, videos, audio and pdf's on their self-hosted WordPress site.
+[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is a WordPress plugin that allows you to sell, license and protect images, videos, audio and pdf's on your self-hosted WordPress site.
 
-[Learn more](http://graphpaperpress.com/plugins/sell-media/) or track the progress of [Sell Media on Github](https://github.com/graphpaperpress/sell-media).
+* [Documentation](http://graphpaperpress.com/docs/sell-media/)
+* [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
+* [Github Code Repository](https://github.com/graphpaperpress/sell-media)
 
-The Sell Media plugin allows you to:
+Using Sell Media, you can:
 
-*   Sell any kind of media file that you upload into WordPress, including images, videos, audio files and pdf's.
-*   License your media for specific usages, including commercial, editorial, or personal usages.
+*   Sell photos, videos, pdf's and other digital files.
 *   Create you own stock photo or video site.
+*   Charge licensing fees for commercial, editorial, or personal usages.
 *   Protect file uploads.
-*   Accept payments via PayPal.
-*   Earn passive income by selling and licensing your media.
+*   Accept payments via PayPal. Additional payment gateways are also available.
+
+= Theme Integration =
+
+These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/) were designed to enhance the functionality of Sell Media. Sell Media also works with any properly coded WordPress theme, however, some tweaks might be required.
 
 Take Sell Media to the next level with these powerful extensions:
 
-* [Sell photo reprints](http://graphpaperpress.com/?download=reprints-self-fulfillment)
+* [Sell photo prints](http://graphpaperpress.com/?download=reprints-self-fulfillment)
 * [Watermark your images](http://graphpaperpress.com/?download=watermark)
 * [Newsletter integration with Mailchimp](http://graphpaperpress.com/?download=mailchimp)
-* [Advanced Search](http://graphpaperpress.com/?download=advanced-search)
 * [Sales Commissions](http://graphpaperpress.com/?download=commissions)
 * [And many more](http://graphpaperpress.com/downloads/category/extensions/)
 
@@ -42,6 +46,10 @@ Take Sell Media to the next level with these powerful extensions:
 3. Insert the **required Sell Media shortcodes** onto your preferred Pages (see FAQ section).
 4. Visit Sell Media -> Licenses and add or configure your default licenses for new uploads.
 5. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
+
+= Configuration =
+
+Visit the official plugin [Documentation](http://graphpaperpress.com/docs/sell-media/) to learn how to setup and customize Sell Media
 
 = IMPORTANT: PayPal Setup =
 
