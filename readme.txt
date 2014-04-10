@@ -226,6 +226,13 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.1 =
+
+* Feature: apply_filters to sell_media_item post type registration
+* Tweak: Live quantity checks on checkout to toggle cart visibility
+* Tweak: Uppercase post slug on archive template
+* Tweak: Widget CSS improvements
+
 = 1.9.0 =
 * Tweak: Filter checkout texts
 * Bug: Correct prices for items without Price Groups, but with license markup
