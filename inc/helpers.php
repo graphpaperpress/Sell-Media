@@ -98,17 +98,6 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 
-/**
- * Adjust wp_query for when search is submitted error no longer shows in "general-template.php"
- * detail here: http://wordpress.stackexchange.com/questions/71157/undefined-property-stdclasslabels-in-general-template-php-post-type-archive
- * @since 1.2.3
- */
-function sell_media_search_warning_surpression( $wp_query ){
-    if ( $wp_query->is_post_type_archive && $wp_query->is_tax )
-        $wp_query->is_post_type_archive = false;
-}
-add_action( 'parse_query', 'sell_media_search_warning_surpression' );
-
 
 /**
  * Builds html select field

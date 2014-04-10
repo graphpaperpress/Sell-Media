@@ -16,7 +16,7 @@ get_header(); global $wp_query; ?>
                     <?php if ( $taxonomy && ! empty( $wp_query->queried_object->name ) ) : ?>
                         <?php echo ucfirst( $taxonomy ); ?>: <?php echo ucfirst( $wp_query->queried_object->name ); ?>
                     <?php elseif ( is_post_type_archive( 'sell_media_item' ) ) : ?>
-                        <?php $obj = get_post_type_object( 'sell_media_item' ); echo $obj->rewrite['slug']; ?>
+                        <?php $obj = get_post_type_object( 'sell_media_item' ); echo ucfirst( $obj->rewrite['slug'] ); ?>
                     <?php else : ?>
                         <?php _e( 'Archive', 'sell_media' ); ?>
                     <?php endif; ?>

@@ -44,7 +44,7 @@ add_action( 'widgets_init', 'sell_media_widgets_init' );
 function sell_media_widgets_below_single_item() { ?>
 
 	<?php if ( is_active_sidebar( 'sell-media-single-sidebar' ) ) : ?>
-		<section id="sell-media-single-sidebar" class="widget-area" role="complementary">
+		<section id="sell-media-single-sidebar" class="sell-media-widget-area" role="complementary">
 			<?php dynamic_sidebar( 'sell-media-single-sidebar' ); ?>
 		</section>
 	<?php endif; ?>
@@ -60,7 +60,7 @@ add_action( 'sell_media_single_bottom_hook', 'sell_media_widgets_below_single_it
 function sell_media_widgets_below_single_item_sidebar() { ?>
 
 	<?php if ( is_active_sidebar( 'sell-media-below-single-sidebar' ) ) : ?>
-		<section id="sell-media-below-single-sidebar" class="widget-area" role="complementary">
+		<section id="sell-media-below-single-sidebar" class="sell-media-widget-area" role="complementary">
 			<?php dynamic_sidebar( 'sell-media-below-single-sidebar' ); ?>
 		</section>
 	<?php endif; ?>

@@ -122,7 +122,7 @@ function sell_media_all_items_shortcode( $atts ){
             <?php foreach( $posts->posts as $post ) : $i++; ?>
                 <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
                     <div class="item-inner">
-                        <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
+                        <a href="<?php echo get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                         <span class="item-overlay">
                             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                             <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
@@ -157,7 +157,7 @@ function sell_media_checkout_shortcode(){
                     <td class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</td>
                     <td class="sell-media-value"><span class="sellMediaCart_total"></span></td>
                 </tr>
-                <tr class="shipping">
+                <tr class="tax">
                     <td class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</td>
                     <td class="sell-media-value"><span class="sellMediaCart_tax"></span></td>
                 </tr>
@@ -165,12 +165,13 @@ function sell_media_checkout_shortcode(){
                     <td class="sell-media-key"><?php _e( 'Shipping', 'sell_media' ); ?>:</td>
                     <td class="sell-media-value"><span class="sellMediaCart_shipping"></span></td>
                 </tr>
+                <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
                 <tr class="total sell-media-bold">
                     <td class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</td>
                     <td class="sell-media-value"><span class="sellMediaCart_grandTotal"></span></td>
                 </tr>
             </table>
-            <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
+            <?php //do_action( 'sell_media_checkout_registration_fields' ); ?>
             <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
             <div class="sell-media-checkout-button group">
                 <?php do_action( 'sell_media_above_checkout_button' ); ?>
