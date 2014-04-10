@@ -182,19 +182,18 @@ jQuery(document).ready(function($){
             }]
     });
 
-    // Show cart if qty exists, otherwise, show empty message
-    sellMediaCart.bind('ready', function(){
-
-        $('#sell-media-checkout-cart').after('<div class="sell-media-load-checkout">Loading...</div>').fadeIn('fast');
-
-        if ( sellMediaCart.quantity() ) {
-            $('#sell-media-checkout-cart').show();
-        } else {
+    // Hide cart if no items, otherwise, show the cart
+    sellMediaCart.bind('update', function(){
+        
+        if ( sellMediaCart.quantity() === 0 ){
+            // hide the cart
             $('#sell-media-checkout-cart').hide();
             $('#sell-media-empty-cart-message').show();
+        } else {
+            // show the cart
+            $('#sell-media-checkout-cart').show();
         }
 
-        $('.sell-media-load-checkout').delay(200).fadeOut('slow');
     });
 
     // Show added to cart message on dialog
