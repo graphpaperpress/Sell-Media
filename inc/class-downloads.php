@@ -59,8 +59,10 @@ Class SellMediaDownload {
                 } else {
                     $this->download_package( $file_path );
                 }
+                do_action( 'sell_media_after_successful_download', $product_id );
                 wp_die();
             } else {
+                do_action( 'sell_media_before_failed_download', $product_id );
                 wp_die( __( 'You do not have permission to download this file', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
             }
             exit;
