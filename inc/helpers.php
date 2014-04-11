@@ -72,8 +72,14 @@ add_action( 'template_include', 'sell_media_template_redirect', 6 );
  * @uses load_template()
  * @since 0.1
  */
+
 function sell_media_load_template() {
-    load_template( dirname( plugin_dir_path( __FILE__ ) ) . '/themes/cart.php' );
+
+    if ( $overridden_template = locate_template( 'cart.php' ) ) {
+        load_template( $overridden_template );
+    } else {
+        load_template( SELL_MEDIA_PLUGIN_DIR . '/themes/cart.php' );
+    }
     die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_load_template', 'sell_media_load_template' );
