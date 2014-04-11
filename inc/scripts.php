@@ -48,6 +48,7 @@ function sell_media_scripts( $hook ) {
         'site_name' => get_bloginfo( 'name' ),
         'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
         'currency_symbol' => $settings->currency,
+        'dashboard_page' => get_permalink( $settings->dashboard_page ),
         'error' => array(
             'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
             ),
