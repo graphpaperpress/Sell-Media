@@ -46,6 +46,7 @@ function sell_media_scripts( $hook ) {
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
         'pluginurl' => SELL_MEDIA_PLUGIN_URL . 'sell-media.php',
         'site_name' => get_bloginfo( 'name' ),
+        'site_url' => site_url(),
         'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
         'currency_symbol' => $settings->currency,
         'dashboard_page' => get_permalink( $settings->dashboard_page ),

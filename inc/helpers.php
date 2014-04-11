@@ -76,9 +76,9 @@ add_action( 'template_include', 'sell_media_template_redirect', 6 );
 function sell_media_load_template() {
 
     if ( $overridden_template = locate_template( 'cart.php' ) ) {
-        load_template( $overridden_template );
+        load_template( apply_filters( 'sell_media_cart_template', $overridden_template ) );
     } else {
-        load_template( SELL_MEDIA_PLUGIN_DIR . '/themes/cart.php' );
+        load_template( apply_filters( 'sell_media_cart_template', SELL_MEDIA_PLUGIN_DIR . '/themes/cart.php' ) );
     }
     die();
 }
