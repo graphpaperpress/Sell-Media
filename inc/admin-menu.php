@@ -62,19 +62,20 @@ function sell_media_submenu_order( $menu_ord ) {
     );
 
     $j = 1;
-    foreach ( $submenu['edit.php?post_type=sell_media_item'] as $key => $value ) {
-        if ( array_search( $value[0], $required_order ) ) {
-            $i = array_search( $value[0], $required_order );
-        } else {
-            $i = array_search ( 'Settings', $required_order ) - $j;
-            $j++;
+    if( ! empty ( $submenu['edit.php?post_type=sell_media_item'] ) ) {
+        foreach ( $submenu['edit.php?post_type=sell_media_item'] as $key => $value ) {
+            if ( array_search( $value[0], $required_order ) ) {
+                $i = array_search( $value[0], $required_order );
+            } else {
+                $i = array_search ( 'Settings', $required_order ) - $j;
+                $j++;
+            }
+            $arr[$i] = $submenu['edit.php?post_type=sell_media_item'][$key];
+
         }
-        $arr[$i] = $submenu['edit.php?post_type=sell_media_item'][$key];
-
+        ksort($arr);
+        $submenu['edit.php?post_type=sell_media_item'] = $arr;
     }
-    ksort($arr);
-    $submenu['edit.php?post_type=sell_media_item'] = $arr;
-
     return $menu_ord;
 }
 add_filter( 'custom_menu_order', 'sell_media_submenu_order' );
