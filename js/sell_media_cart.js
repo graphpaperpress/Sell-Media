@@ -79,7 +79,7 @@
 					language				: "english-us",
 
 					cartStyle				: "div",
-					cartColumns			: [
+					cartColumns				: [
 						{ attr: "name", label: "Name" },
 						{ attr: "price", label: "Price", view: 'currency' },
 						{ view: "decrement", label: false },
@@ -89,18 +89,18 @@
 						{ view: "remove", text: "Remove", label: false }
 					],
 
-					excludeFromCheckout	: ['thumb'],
+					excludeFromCheckout		: ['thumb'],
 
 					shippingFlatRate		: 0,
 					shippingQuantityRate	: 0,
 					shippingTotalRate		: 0,
-					shippingCustom		: null,
+					shippingCustom			: null,
 
-					taxRate				: 0,
+					taxRate					: 0,
 					
-					taxShipping			: false,
+					taxShipping				: false,
 
-					data				: {}
+					data					: {}
 
 				},
 

@@ -202,9 +202,15 @@ jQuery(document).ready(function($){
         $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
     });
 
-
     // Validate cart prices (price group, license markup, discount codes) on the server
     sellMediaCart.bind( 'beforeCheckout', function( data ){
+        
+        // pass discount codes into cart data
+        if ( $('#discount-id').length ) {
+            data.discount = $('#discount-id').val();
+        }
+
+        // ajax callback to vertify prices
         $.ajax({
             type: "POST",
             url: sell_media.ajaxurl,
