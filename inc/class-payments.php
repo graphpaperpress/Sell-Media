@@ -775,7 +775,7 @@ Class SellMediaPayments {
                 // this is either a download without a license or a print, so just verify the price
                 $amount = Sell_Media()->products->verify_the_price( $product_id, $price_id );
             }
-            $cart[ 'amount_' . $i ] = apply_filters( 'sell_media_each_product_amount_filter', number_format( $amount, 2, '.', '' ), $cart['discount'], $amount );
+            $cart[ 'amount_' . $i ] = number_format( apply_filters( 'sell_media_each_product_amount_filter', $amount, $cart['discount'], $cart_count ), 2, '.', '' );
             $sub_total += $amount;
         }
 
@@ -811,8 +811,8 @@ Class SellMediaPayments {
             // $tax_amount = ( $settings->tax_rate * $sub_total );
             // $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
         }
-        print_r($cart);
-        die();
+        /*print_r($cart);
+        die();*/
 
         wp_send_json( array( 'cart' => $cart ) );
     }
