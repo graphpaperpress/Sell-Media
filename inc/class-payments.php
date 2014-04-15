@@ -757,7 +757,6 @@ Class SellMediaPayments {
         // Count the number of keys that match the pattern "item_number_"
         $cart_count = count( preg_grep( '/^item_number_/', array_keys( $cart ) ) );
 
-        $verified = array();
         $sub_total = 0;
         $shipping_flag = false;
         for( $i=1; $i <= $cart_count; $i++ ) {
@@ -776,7 +775,7 @@ Class SellMediaPayments {
                 // this is either a download without a license or a print, so just verify the price
                 $amount = Sell_Media()->products->verify_the_price( $product_id, $price_id );
             }
-            $cart[ 'amount_' . $i ] = number_format( $amount, 2, '.', '' );
+            $cart[ 'amount_' . $i ] = apply_filters( 'sell_media_each_product_amount_filter', number_format( $amount, 2, '.', '' ), $cart['discount'], $amount );
             $sub_total += $amount;
         }
 
@@ -800,22 +799,22 @@ Class SellMediaPayments {
         } else {
             $shipping_amount = 0;
         }
-        $args['handling'] = number_format( $shipping_amount, 2, '.', '' );
+        $cart['handling'] = number_format( $shipping_amount, 2, '.', '' );
 
 
         // If tax is enabled, tax the order
         if ( $settings->tax ) {
             // Cannot validate taxes because of qty
             // So just get the tax rate from local storage
-            $args['tax_cart'] = $cart['tax_cart'];
+            $cart['tax_cart'] = $cart['tax_cart'];
             // If we could validate taxes, we could start here:
             // $tax_amount = ( $settings->tax_rate * $sub_total );
             // $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
         }
+        print_r($cart);
+        die();
 
-        $verified_cart = array_merge( $cart, $verified, $args );
-
-        wp_send_json( array( 'cart' => $verified_cart ) );
+        wp_send_json( array( 'cart' => $cart ) );
     }
 }
 new SellMediaPayments;
