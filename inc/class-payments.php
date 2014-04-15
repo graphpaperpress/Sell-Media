@@ -756,7 +756,10 @@ Class SellMediaPayments {
 
         // Count the number of keys that match the pattern "item_number_"
         $cart_count = count( preg_grep( '/^item_number_/', array_keys( $cart ) ) );
-
+        $cnt = 0;
+        for( $i=1; $i <= $cart_count; $i++ ) {
+            $cnt += $cart['quantity_'.$i];
+        }
         $sub_total = 0;
         $shipping_flag = false;
         for( $i=1; $i <= $cart_count; $i++ ) {
@@ -775,7 +778,7 @@ Class SellMediaPayments {
                 // this is either a download without a license or a print, so just verify the price
                 $amount = Sell_Media()->products->verify_the_price( $product_id, $price_id );
             }
-            $cart[ 'amount_' . $i ] = number_format( apply_filters( 'sell_media_each_product_amount_filter', $amount, $cart['discount'], $cart_count ), 2, '.', '' );
+            $cart[ 'amount_' . $i ] = number_format( apply_filters( 'sell_media_each_product_amount_filter', $amount, $cart['discount'], $cnt ), 2, '.', '' );
             $sub_total += $amount;
         }
 
