@@ -207,7 +207,7 @@ jQuery(document).ready(function($){
         
         // pass discount codes into cart data
         if ( $('#discount-id').length ) {
-            data.discount = $('#discount-id').val();
+            data.custom = $('#discount-id').val();
         }
 
         // ajax callback to vertify prices
