@@ -12,54 +12,54 @@ Class SellMediaPayments {
     }
 
 
-	/**
-	* Get meta associated with a payment
-	*
-	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	*
-	* @return Array
-	*/
-	public function get_meta( $post_id=null ){
-		$meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
-		if ( ! empty ( $meta ) ){
-			return $unserilaized_meta = maybe_unserialize( $meta );
-		} else {
-			return false;
-		}
-	}
+    /**
+    * Get meta associated with a payment
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    *
+    * @return Array
+    */
+    public function get_meta( $post_id=null ){
+        $meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
+        if ( ! empty ( $meta ) ){
+            return $unserilaized_meta = maybe_unserialize( $meta );
+        } else {
+            return false;
+        }
+    }
 
-	/**
-	* Get specific key data associated with a payment
-	*
-	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	* @param $key = first_name, last_name, email, gateway, transaction_id, products, total
-	*
-	* @return Array
-	*/
-	public function get_meta_key( $post_id=null, $key=null ){
-		$meta = $this->get_meta( $post_id );
-		if ( is_array( $meta ) && array_key_exists( $key, $meta ) ) {
-			return $meta[$key];
-		} else {
-			return false;
-		}
-	}
+    /**
+    * Get specific key data associated with a payment
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    * @param $key = first_name, last_name, email, gateway, transaction_id, products, total
+    *
+    * @return Array
+    */
+    public function get_meta_key( $post_id=null, $key=null ){
+        $meta = $this->get_meta( $post_id );
+        if ( is_array( $meta ) && array_key_exists( $key, $meta ) ) {
+            return $meta[$key];
+        } else {
+            return false;
+        }
+    }
 
-	/**
-	* Loop over products in payment meta
-	*
-	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	*
-	* @return Array
-	*/
-	public function get_products( $post_id=null ){
-		$meta = $this->get_meta( $post_id );
-		if ( is_array( $meta ) && array_key_exists( 'products', $meta ) ) {
-			return maybe_unserialize( $meta['products'] );
-		} else {
-			return false;
-		}
-	}
+    /**
+    * Loop over products in payment meta
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    *
+    * @return Array
+    */
+    public function get_products( $post_id=null ){
+        $meta = $this->get_meta( $post_id );
+        if ( is_array( $meta ) && array_key_exists( 'products', $meta ) ) {
+            return maybe_unserialize( $meta['products'] );
+        } else {
+            return false;
+        }
+    }
 
     /**
     * Get specific product from a purchase
@@ -386,73 +386,73 @@ Class SellMediaPayments {
     }
 
 
- 	/**
-	* Loop over products in payment meta and format them
-	*
-	* @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-	*
-	* @return html
-	*/
-	public function get_payment_products_formatted( $post_id=null ){
-		$products = $this->get_products( $post_id );
+    /**
+    * Loop over products in payment meta and format them
+    *
+    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
+    *
+    * @return html
+    */
+    public function get_payment_products_formatted( $post_id=null ){
+        $products = $this->get_products( $post_id );
         $tax = $this->get_meta_key( $post_id, $key='tax' );
         $shipping = $this->get_meta_key( $post_id, $key='shipping' );
         $total = $this->get_meta_key( $post_id, $key='total' );
 
         if ( $products ) {
-    		$html = null;
-    		$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%">';
-    		$html .= '<thead>';
-    		$html .= '<tr>';
-    		$html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
-    		$html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
+            $html = null;
+            $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%">';
+            $html .= '<thead>';
+            $html .= '<tr>';
+            $html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
+            $html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
             $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
-    		$html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
-    		$html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
+            $html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
+            $html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
             $html .= '<th class="text-center">' . __( 'Download Link', 'sell_media' ) . '</td>';
-    		$html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
-    		$html .= '</tr>';
-    		$html .= '</thead>';
-    		$html .= '<tbody>';
-    		foreach ( $products as $product ) {
+            $html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
+            $html .= '</tr>';
+            $html .= '</thead>';
+            $html .= '<tbody>';
+            foreach ( $products as $product ) {
                 if ( ! empty( $product['id'] ) ){
-    			$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
-    			$items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
-    			$html .= '<td class="sell-media-product-id">';
-    			if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) $html .= $product['id'];
-    			$html .= '</td>';
-    			$html .= '<td class="sell-media-product-name">';
-    			if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) ) $html .= $product['name'];
-    			$html .= '</td>';
+                $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
+                $items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
+                $html .= '<td class="sell-media-product-id">';
+                if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) $html .= $product['id'];
+                $html .= '</td>';
+                $html .= '<td class="sell-media-product-name">';
+                if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) ) $html .= $product['name'];
+                $html .= '</td>';
                 $html .= '<td class="sell-media-product-size">';
                 if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) $html .= $product['size']['name'];
                 $html .= '</td>';
-    			$html .= '<td class="sell-media-product-license">';
-    			if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'] . '<span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>';
-    			$html .= '</td>';
-    			$html .= '<td class="sell-media-product-qty text-center">';
-    			if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
-    			$html .= '</td>';
+                $html .= '<td class="sell-media-product-license">';
+                if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'] . '<span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>';
+                $html .= '</td>';
+                $html .= '<td class="sell-media-product-qty text-center">';
+                if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
+                $html .= '</td>';
                 $html .= '<td class="sell-media-product-download text-center">';
                 if ( 'download' == $product['type'] ) $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
-    			$html .= '</td>';
+                $html .= '</td>';
                 $html .= '<td class="sell-media-product-total">';
-    			if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
+                if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
                     $html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
-    			$html .= '</td>';
-    			$html .= '</tr>';
+                $html .= '</td>';
+                $html .= '</tr>';
                 }
-    		}
-    		$html .= '</tbody>';
-    		$html .= '<tfoot>';
-    		$html .= '<tr>';
-    		$html .= '<td>&nbsp;</td>';
-    		$html .= '<td>&nbsp;</td>';
-    		$html .= '<td>&nbsp;</td>';
-    		$html .= '<td>&nbsp;</td>';
-    		$html .= '<td>&nbsp;</td>';
+            }
+            $html .= '</tbody>';
+            $html .= '<tfoot>';
+            $html .= '<tr>';
             $html .= '<td>&nbsp;</td>';
-    		$html .= '<td class="sell-media-products-grandtotal">';
+            $html .= '<td>&nbsp;</td>';
+            $html .= '<td>&nbsp;</td>';
+            $html .= '<td>&nbsp;</td>';
+            $html .= '<td>&nbsp;</td>';
+            $html .= '<td>&nbsp;</td>';
+            $html .= '<td class="sell-media-products-grandtotal">';
             if ( $tax ) {
                 $html .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong><br />';
             }
@@ -461,12 +461,12 @@ Class SellMediaPayments {
             }
             $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key='total' ), 2, '.', ',' ) . '</strong>';
             $html .= '</td>';
-    		$html .= '</tr>';
-    		$html .= '</table>';
+            $html .= '</tr>';
+            $html .= '</table>';
             do_action( 'sell_media_below_products_formatted_table', $post_id );
-    		return $html;
+            return $html;
         }
-	}
+    }
 
 
     /**
