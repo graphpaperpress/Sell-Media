@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.9.1
+Stable tag: 1.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -226,8 +226,12 @@ Action hooks available:
 
 == Changelog ==
 
-= 1.9.1 =
+= 1.9.2 =
+* Tweak: Updates to Discount Codes
+* Tweak: apply_filters on delivery text
+* Tweak: Update translation files
 
+= 1.9.1 =
 * Feature: apply_filters to sell_media_item post type registration
 * Tweak: Live quantity checks on checkout to toggle cart visibility
 * Tweak: Uppercase post slug on archive template

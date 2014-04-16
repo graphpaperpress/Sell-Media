@@ -4,7 +4,7 @@
  * Plugin Name: Sell Media
  * Plugin URI: http://graphpaperpress.com/plugins/sell-media/
  * Description: A plugin for selling digital downloads and reprints.
- * Version: 1.9.1
+ * Version: 1.9.2
  * Author: Graph Paper Press
  * Author URI: http://graphpaperpress.com
  * Author Email: support@graphpaperpress.com
@@ -14,9 +14,9 @@
  *
  * Copyright 2014 GRAPH PAPER PRESS (email: support@graphpaperpress.com)
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 2, as 
+ * it under the terms of the GNU General Public License, version 2, as
  * published by the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 1.9.1
+ * @version 1.9.2
  */
 
 // Exit if accessed directly
@@ -109,7 +109,7 @@ final class SellMedia {
      * @see SellMedia()
      * @return The one, the only SellMedia
      */
-    
+
     public static function instance() {
         if ( ! isset( self::$instance ) && ! ( self::$instance instanceof SellMedia ) ) {
             self::$instance = new SellMedia;
@@ -158,10 +158,10 @@ final class SellMedia {
      * @return void
      */
     private function constants() {
-        
+
         // Plugin version
         if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-            define( 'SELL_MEDIA_VERSION', '1.9.1' );
+            define( 'SELL_MEDIA_VERSION', '1.9.2' );
         }
 
         // Plugin Folder Path
@@ -221,7 +221,7 @@ final class SellMedia {
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-scripts.php';
-            
+
         }
 
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/install.php';
