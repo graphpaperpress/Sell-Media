@@ -61,7 +61,6 @@ add_shortcode( 'sell_media_searchform', 'sell_media_search_shortcode' );
 /**
  * Adds the 'sell_media' short code to the editor. [sell_media_item]
  *
- * @author Zane M. Kolnik
  * @since 0.1
  */
 function sell_media_item_shortcode( $atts ) {
@@ -88,7 +87,6 @@ add_shortcode( 'sell_media_item', 'sell_media_item_shortcode' );
 /**
  * Adds template to display all items for sale.
  *
- * @author Zane M. Kolnik
  * @since 1.0.4
  */
 function sell_media_all_items_shortcode( $atts ){
