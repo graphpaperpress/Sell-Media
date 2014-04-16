@@ -580,8 +580,7 @@ function sell_media_plugin_utility_links(){
     echo '<ul>';
     echo '<li><a href="' . $plugin_data['PluginURI'] . '" target="_blank">' . $plugin_data['Name'] . '</a></li>';
     echo '<li>' . __( 'Version: ', 'sell_media' ) . $plugin_data['Version'] . '</li>';
-    echo '<li><a href="' . $plugin_data['AuthorURI'] . '" target="_blank">' . __( 'Support', 'sell_media' ) . '</a></li>';
-    echo '<li><a href="http://graphpaperpress.com/support/instructions/?plugin=' . strtolower( str_replace( " ", "-", $plugin_data['Name'] ) ) . '" title="' . __( 'Theme Instructions', 'sell_media' ) . '" target="_blank">' . __( 'Instructions', 'sell_media' ) . '</a></li>';
+    echo '<li><a href="http://graphpaperpress.com/docs/sell-media/" target="_blank">' . __( 'Documentation', 'sell_media' ) . '</a></li>';
     echo '</ul>';
     echo '<br class="clear">';
     echo '</div>';

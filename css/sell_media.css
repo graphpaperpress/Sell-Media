@@ -115,8 +115,7 @@ input[type="submit"].sell-media-button:hover,
 table.sell-media-products {
   width: 100%;
 }
-.sell-media-products th,
-.sell-media-products td.sell-media-products-grandtotal {
+.sell-media-products th {
   font-weight: bold;
 }
 .sell-media-products th,
@@ -265,17 +264,17 @@ table.sell-media-products {
 /*= Cart
 -------------------------------------------------------------- */
 .sell-media-dialog-overlay {
-  width: 100%; 
+  width: 100%;
   height: 100%;
-  filter:alpha(opacity=50); 
-  -moz-opacity: 0.5; 
-  -khtml-opacity: 0.5; 
-  opacity: 0.5; 
-  background: #000; 
-  position: absolute; 
+  filter:alpha(opacity=50);
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+  background: #000;
+  position: absolute;
     top:0;
-    left:0; 
-  z-index: 3000; 
+    left:0;
+  z-index: 3000;
   display: none;
 }
 .sell-media-dialog-box {
@@ -325,7 +324,7 @@ table.sell-media-products {
 }
 .sell-media-dialog-box img.wp-post-image {
   float: none;
-} 
+}
 .sell-media-dialog-box section {
   margin: 20px 0 0;
 }

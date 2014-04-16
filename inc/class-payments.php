@@ -268,6 +268,33 @@ Class SellMediaPayments {
         return $values;
     }
 
+    /**
+     * Get the total discount
+     * @return $total
+     */
+    public function get_discount_total( $post_id=null ){
+
+        $discount_id = $this->get_meta_key( $post_id, 'discount' );
+        $discount_code_meta = unserialize( get_post_meta( $discount_id, 'sell_media_discount_code_details', true ) );
+        $subtotal = 0;
+
+        $products = $this->get_products( $post_id );
+        if ( $products ) foreach ( $products as $k => $v ) {
+            $product_total = $v['total'];
+            $subtotal += $product_total;
+        }
+
+        // apply the discount based on type (percent or flat)
+        if ( 'percent' == $discount_code_meta['type'] ) {
+            $percentage = $discount_code_meta['amount'] / 100;
+            $total = $subtotal * $percentage;
+        } else {
+            $total = $subtotal - $discount_code_meta['amount'];
+        }
+
+        return number_format( $total, 2, '.', '' );
+    }
+
 
     /**
     * Get all payments made at store, ever
@@ -345,6 +372,7 @@ Class SellMediaPayments {
     public function get_payment_products_unformatted( $post_id=null ){
 
         $products = $this->get_products( $post_id );
+        $discount = $this->get_meta_key( $post_id, $key='discount' );
         $tax = $this->get_meta_key( $post_id, $key='tax' );
         $shipping = $this->get_meta_key( $post_id, $key='shipping' );
         $total = $this->get_meta_key( $post_id, $key='total' );
@@ -369,17 +397,24 @@ Class SellMediaPayments {
                 $text .= __( 'SUBTOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $v['total'], 2, '.', ',' ) . '<br />';
             if ( 'download' == $v['type'] )
                 $text .= __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'] ) . '<br />';
+            elseif ( 'print' == $v['type'] )
+                $text .= __( 'DELIVERY', 'sell_media' ) . ': ' . apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' ) . '<br />';
             $text .= '<br />';
             do_action( 'sell_media_after_products_unformatted_list', $post_id );
         }
         $text .= '<br /><br />';
+        $text .= '---';
+        $text .= '<br />';
+        if ( $discount ) {
+            $text .= __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '<br />';
+        }
         if ( $tax ) {
             $text .= __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '<br />';
         }
         if ( $shipping ) {
             $text .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
         }
-        $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '<br /><br />';
+        $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '<br />';
         $text .= '---';
 
         return $text;
@@ -410,7 +445,7 @@ Class SellMediaPayments {
             $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
             $html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
             $html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
-            $html .= '<th class="text-center">' . __( 'Download Link', 'sell_media' ) . '</td>';
+            $html .= '<th class="text-center">' . __( 'Delivery', 'sell_media' ) . '</td>';
             $html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
             $html .= '</tr>';
             $html .= '</thead>';
@@ -435,7 +470,11 @@ Class SellMediaPayments {
                 if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
                 $html .= '</td>';
                 $html .= '<td class="sell-media-product-download text-center">';
-                if ( 'download' == $product['type'] ) $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
+                if ( 'download' == $product['type'] ) {
+                    $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
+                } elseif ( 'print' == $product['type'] ) {
+                    $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
+                }
                 $html .= '</td>';
                 $html .= '<td class="sell-media-product-total">';
                 if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
@@ -454,11 +493,14 @@ Class SellMediaPayments {
             $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
             $html .= '<td class="sell-media-products-grandtotal">';
+            if ( $discount ) {
+                $html .= __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '<br />';
+            }
             if ( $tax ) {
-                $html .= '<strong>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</strong><br />';
+                $html .= __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '<br />';
             }
             if ( $shipping ) {
-                $html .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong><br />';
+                $html .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
             }
             do_action( 'sell_media_above_products_formatted_table_total', $post_id );
             $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key='total' ), 2, '.', ',' ) . '</strong>';
@@ -615,7 +657,7 @@ Class SellMediaPayments {
 
             $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta' );
             if ( ! $payment_meta ) return;
-            
+
             $products_legacy = maybe_unserialize( $payment_meta['products'] );
 
             if ( $products_legacy ) foreach ( $products as $product ) {
