@@ -169,7 +169,6 @@ function sell_media_checkout_shortcode(){
                     <td class="sell-media-value"><span class="sellMediaCart_grandTotal"></span></td>
                 </tr>
             </table>
-            <?php //do_action( 'sell_media_checkout_registration_fields' ); ?>
             <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
             <div class="sell-media-checkout-button group">
                 <?php do_action( 'sell_media_above_checkout_button' ); ?>

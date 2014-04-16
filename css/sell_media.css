@@ -530,6 +530,12 @@ input.wpas-text[type=text] {
   clear: both;
   display: none;
 }
+#wpas-tax_collection input,
+#wpas-tax_keywords input,
+#wpas-meta_sell_media_price input {
+  padding: 6px;
+  height: 15px;
+}
 #wpas-1 {
   float: right;
 }
