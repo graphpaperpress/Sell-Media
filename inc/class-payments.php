@@ -397,6 +397,7 @@ Class SellMediaPayments {
         $products = $this->get_products( $post_id );
         $tax = $this->get_meta_key( $post_id, $key='tax' );
         $shipping = $this->get_meta_key( $post_id, $key='shipping' );
+        $discount = $this->get_meta_key( $post_id, $key='discount' );
         $total = $this->get_meta_key( $post_id, $key='total' );
 
         if ( $products ) {
@@ -459,6 +460,7 @@ Class SellMediaPayments {
             if ( $shipping ) {
                 $html .= '<strong>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</strong><br />';
             }
+            do_action( 'sell_media_above_products_formatted_table_total', $post_id );
             $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key='total' ), 2, '.', ',' ) . '</strong>';
             $html .= '</td>';
             $html .= '</tr>';
