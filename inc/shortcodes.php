@@ -77,7 +77,7 @@ function sell_media_item_shortcode( $atts ) {
 
     $image = sell_media_item_icon( $id, 'medium', false );
 
-    $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $id ) . '" class="sell-media-cart-trigger sell-media-buy-' . esc_attr( $style ) . '">' . $text . '</a>';
+    $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $id ) . '" class="sell-media-cart-trigger sell-media-' . esc_attr( $style ) . '">' . $text . '</a>';
 
     return '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a>' . $button . '</div>';
 }
@@ -379,7 +379,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
                             );
 
                     $posts = New WP_Query( $args );
-                    
+
                     foreach( $posts->posts as $post ) :
 
                         $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
