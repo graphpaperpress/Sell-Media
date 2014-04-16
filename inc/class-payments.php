@@ -742,6 +742,8 @@ Class SellMediaPayments {
      */
     public function sell_media_verify_callback(){
 
+        ini_set( 'display_errors', 0 );
+
         check_ajax_referer( 'validate_cart', 'security' );
 
         $settings = sell_media_get_plugin_options();
@@ -755,6 +757,10 @@ Class SellMediaPayments {
         );
 
         $cart = $_POST['cart'];
+
+        // Set discount code id to 0 if it isn't in cart array
+        if ( empty( $cart['custom'] ) )
+            $cart['custom'] = 0;
 
         // Count the number of keys that match the pattern "item_number_"
         $cart_count = count( preg_grep( '/^item_number_/', array_keys( $cart ) ) );
