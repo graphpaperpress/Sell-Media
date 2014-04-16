@@ -787,7 +787,7 @@ Class SellMediaPayments {
                 $amount = Sell_Media()->products->verify_the_price( $product_id, $price_id );
             }
             $cart[ 'amount_' . $i ] = number_format( apply_filters( 'sell_media_price_filter', $amount, $cart['custom'], $cnt ), 2, '.', '' );
-            $sub_total += $amount;
+            $sub_total += $cart[ 'amount_' . $i ] * $cart['quantity_' . $i];
         }
 
 
@@ -817,10 +817,10 @@ Class SellMediaPayments {
         if ( $settings->tax ) {
             // Cannot validate taxes because of qty
             // So just get the tax rate from local storage
-            $cart['tax_cart'] = $cart['tax_cart'];
+            //$cart['tax_cart'] = $cart['tax_cart'];
             // If we could validate taxes, we could start here:
-            // $tax_amount = ( $settings->tax_rate * $sub_total );
-            // $args['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
+            $tax_amount = ( $settings->tax_rate * $sub_total );
+            $cart['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
         }
 
         wp_send_json( array( 'cart' => $cart ) );
