@@ -226,6 +226,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.3 =
+* Tweak: Add Forgot Password link to login shortcode
+
 = 1.9.2 =
 * Tweak: Updates to Discount Codes
 * Tweak: apply_filters on delivery text

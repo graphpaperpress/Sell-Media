@@ -431,8 +431,8 @@ function sell_media_login_form_shortcode(){
         return sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . get_permalink( $settings->checkout_page ) . '">Checkout now</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">continue shopping</a>' );
 
     } else {
-        if( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
-            echo "<span class='error'>".__("Login Failed", "sell_media")."</span>";
+        if ( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
+            echo '<span class="error">' . __( 'Login failed', 'sell_media' ) . '</span>';
         }
 
         $args = array(
@@ -443,6 +443,8 @@ function sell_media_login_form_shortcode(){
             'label_log_in' => __( 'Log In', 'sell_media' )        );
 
         wp_login_form( $args );
+
+        echo '<a href="' . wp_lostpassword_url( get_permalink() ) . '" title="' . __( 'Forgot Password', 'sell_media' ) . '">' . __( 'Forgot Password', 'sell_media' ) . '</a>';
 
     }
 
