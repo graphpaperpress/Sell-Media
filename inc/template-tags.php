@@ -89,7 +89,7 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 
     // check if featured image is set
     if ( '' != get_the_post_thumbnail( $post_id ) ) {
-        $image = get_the_post_thumbnail( $post_id, $size );
+        $image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ) ) );
     } else {
         $mime_type = get_post_mime_type( $attachment_id );
         switch ( $mime_type ) {
@@ -117,7 +117,7 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
         else
             $medium_url = null;
 
-        $image =  '<img src="' . $image . '" class="sell_media_image wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+        $image =  '<img src="' . $image . '" class="'. apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' sell_media_image wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
     }
 
     if ( $echo )
