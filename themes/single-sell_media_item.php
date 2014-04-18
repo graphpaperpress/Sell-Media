@@ -21,6 +21,7 @@ get_header(); ?>
 
 		<div class="sell-media-meta">
 			<p class="sell-media-single-button"><?php sell_media_item_buy_button( $post->ID, 'button', __( 'Purchase' ) ); ?></p>
+			<p class="lightbox"><span aria-hidden="true" class="<?php if( sell_media_in_lightbox() ) echo 'lightbox-active'; ?>"></span><div class="genericon genericon-medium genericon-category"></div><a href="" title="<?php _e( 'Save to lightbox', 'sell_media' ); ?>" class="add-to-lightbox<?php if( sell_media_in_lightbox() ) echo ' saved-to-lightbox'; ?>" id="lightbox-<?php echo $post->ID; ?>"><?php if( sell_media_in_lightbox() ) { _e( 'Saved to lightbox', 'sell_media' ); } else { _e( 'Save to lightbox', 'sell_media' ); } ?></a></p>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<ul>
 				<li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>

@@ -39,7 +39,7 @@ jQuery(document).ready(function($){
             success: function(msg){
                 $('#sell-media-dialog-box-target').fadeIn().html(msg);
                 required_fields();
-                
+
             }
         });
 
@@ -144,7 +144,7 @@ jQuery(document).ready(function($){
                         license = '';
                         sep = '';
                     }
-                    
+
                     var size = item.get( "size" );
                     if ( size == undefined ) {
                         size = '';
@@ -184,7 +184,7 @@ jQuery(document).ready(function($){
 
     // Hide cart if no items, otherwise, show the cart
     sellMediaCart.bind('update', function(){
-        
+
         if ( sellMediaCart.quantity() === 0 ){
             // hide the cart
             $('#sell-media-checkout-cart').hide();
@@ -204,7 +204,7 @@ jQuery(document).ready(function($){
 
     // Validate cart prices (price group, license markup, discount codes) on the server
     sellMediaCart.bind( 'beforeCheckout', function( data ){
-        
+
         // pass discount codes into cart data
         if ( $('#discount-id').length ) {
             data.custom = $('#discount-id').val();
@@ -288,5 +288,80 @@ jQuery(document).ready(function($){
         }
 
     });
+
+// Add to Lightbox
+    if($('.add-to-lightbox').length) {
+        $('.add-to-lightbox').live('click',function() {
+            if ($(this).hasClass('saved-to-lightbox')) {
+                return false;
+            } else {
+                //localStorage.removeItem( 'sell_media_lightbox_data' );
+                if( localStorage && localStorage.getItem( 'sell_media_lightbox_data' ) ) {
+                    var lightbox_data = localStorage.getItem( 'sell_media_lightbox_data' );
+                    var sep = ",";
+                } else {
+                    var lightbox_data = "";
+                    var sep = "";
+                }
+                var id = $(this).attr('id');
+                id = id.split('lightbox-');
+
+                $(this).attr('disabled', true);
+                //$(this).text('Saving...');
+                var lightbox_data = lightbox_data + sep + id[1];
+                localStorage.setItem( 'sell_media_lightbox_data', lightbox_data );
+                var dta = localStorage.getItem( 'sell_media_lightbox_data' );
+                //alert(dta);
+                $(this).text("Saved to lightbox");
+                $(this).prev().addClass('lightbox-active');
+                var count = $('.lightbox-menu .lightbox-counter').html();
+                count = parseInt(count) + 1;
+                $('.lightbox-menu .lightbox-counter').html(count);
+                //$(this).removeAttr("disabled");
+                $(this).addClass("saved-to-lightbox");
+                /*$.ajax({
+                    url: sell_media.ajaxurl,
+                    type: "POST",
+                    dataType: 'json',
+                    data: { action : 'sell_media_lightbox_ajax', id : id[1] },
+                    success:function(data) {
+                        if(true==data.success) {
+                            $('#lightbox-'+data.postID).text("Saved to lightbox");
+                            $('#lightbox-'+data.postID).prev().addClass('lightbox-active');
+                            var count = $('.lightbox-menu .lightbox-counter').html();
+                            count = parseInt(count) + 1;
+                            $('.lightbox-menu .lightbox-counter').html(count);
+                            $('#lightbox-'+data.postID).removeAttr("disabled");
+                            $('#lightbox-'+data.postID).addClass("saved-to-lightbox");
+                        }
+                    }
+                });*/
+                return false;
+            }
+        });
+    }
+
+    // Remove from Lightbox
+    if($('.remove-lightbox').length) {
+        $('.remove-lightbox').live('click',function() {
+            var id = $(this).attr('id');
+            id = id.split('lightbox-');
+            $.ajax({
+                url: sell_media.ajaxurl,
+                type: "POST",
+                dataType: 'json',
+                data: { action : 'sell_media_lightbox_remove_ajax', id : id[1] },
+                success:function(data) {
+                    if(true==data.success) {
+                        $('#lightbox-'+data.postID).parents('.item-inner').remove();
+                        var count = $('.lightbox-menu .lightbox-counter').html();
+                        count = parseInt(count) - 1;
+                        $('.lightbox-menu .lightbox-counter').html(count);
+                    }
+                }
+            });
+            return false;
+        });
+    }
 
 });
