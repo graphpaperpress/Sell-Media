@@ -119,14 +119,6 @@ function sell_media_lightbox_shortcode() { ?>
 		});
 	</script>
 <?php
-        $args = array(
-            'posts_per_page' => -1,
-            'post_type' => 'sell_media_item',
-            'meta_key' => 'sell_media_free_downloads',
-            'meta_value' => 'on'
-        );
-
-        $posts = New WP_Query( $args );
         ob_start(); ?>
 
         <?php return ob_get_clean();
