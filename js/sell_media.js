@@ -295,9 +295,10 @@ jQuery(document).ready(function($){
             if ($(this).hasClass('saved-to-lightbox')) {
                 return false;
             } else {
+                //alert(document.domain);
                 //localStorage.removeItem( 'sell_media_lightbox_data' );
-                if( localStorage && localStorage.getItem( 'sell_media_lightbox_data' ) ) {
-                    var lightbox_data = localStorage.getItem( 'sell_media_lightbox_data' );
+                if( localStorage && localStorage.getItem( document.domain + '_sell_media_lightbox_data' ) ) {
+                    var lightbox_data = localStorage.getItem( document.domain + '_sell_media_lightbox_data' );
                     var sep = ",";
                 } else {
                     var lightbox_data = "";
@@ -309,8 +310,8 @@ jQuery(document).ready(function($){
                 $(this).attr('disabled', true);
                 //$(this).text('Saving...');
                 var lightbox_data = lightbox_data + sep + id[1];
-                localStorage.setItem( 'sell_media_lightbox_data', lightbox_data );
-                var dta = localStorage.getItem( 'sell_media_lightbox_data' );
+                localStorage.setItem( document.domain + '_sell_media_lightbox_data', lightbox_data );
+                var dta = localStorage.getItem( document.domain + '_sell_media_lightbox_data' );
                 //alert(dta);
                 $(this).text("Saved to lightbox");
                 $(this).prev().addClass('lightbox-active');

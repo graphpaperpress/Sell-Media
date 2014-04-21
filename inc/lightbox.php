@@ -112,15 +112,28 @@ function sell_media_in_lightbox() {
  */
 function sell_media_lightbox_shortcode() { ?>
 
-	<script type="text/javascript">
-		jQuery(document).ready(function() {
-			var lightbox_data = localStorage.getItem( 'sell_media_lightbox_data' );
-			//alert(lightbox_data);
-		});
-	</script>
+	<?php wp_enqueue_script( 'sellMediaLightbox', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_lightbox.js', array( 'jquery' ), SELL_MEDIA_VERSION ); ?>
 <?php
         ob_start(); ?>
 
         <?php return ob_get_clean();
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
+
+/**
+ * Global $discount_code_id;
+ * ajax calculation of total
+ */
+function sell_media_lightbox_generator() {
+    $lightbox_ids = explode( ",", $_POST['lightbox_ids'] );
+
+print_r($lightbox_ids);
+
+
+
+    die;
+
+
+}
+add_action( 'wp_ajax_sell_media_lightbox', 'sell_media_lightbox_generator' );
+add_action( 'wp_ajax_nopriv_sell_media_lightbox', 'sell_media_lightbox_generator' );
