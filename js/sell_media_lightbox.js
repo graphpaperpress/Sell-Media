@@ -12,7 +12,7 @@ jQuery(function($) {
             url: sell_media.ajaxurl,
             data: data,
             success: function(msg){
-                alert(msg);
+                $("#lightbox_content").html(msg);
             }
         });
     });

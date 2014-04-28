@@ -113,10 +113,8 @@ function sell_media_in_lightbox() {
 function sell_media_lightbox_shortcode() { ?>
 
 	<?php wp_enqueue_script( 'sellMediaLightbox', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_lightbox.js', array( 'jquery' ), SELL_MEDIA_VERSION ); ?>
+	<div id="lightbox_content"></div>
 <?php
-        ob_start(); ?>
-
-        <?php return ob_get_clean();
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
 
@@ -125,11 +123,32 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  * ajax calculation of total
  */
 function sell_media_lightbox_generator() {
-    $lightbox_ids = explode( ",", $_POST['lightbox_ids'] );
+    $posts = explode( ",", $_POST['lightbox_ids'] );
 
-print_r($lightbox_ids);
+	$lightbox_content = '<div id="lightbox">';
 
+		// Query posts
+		$args = array(
+				'posts_per_page' => -1,
+				'post_type' => 'sell_media_item',
+				'post__in' => $posts
+		        );
+		$posts = New WP_Query( $args );
+		if ( $posts->posts ) {
 
+			$lightbox_content .= '<div class="sell-media-grid-container">';
+
+			foreach( $posts->posts as $post ) {
+				$lightbox_content .= '<div class="sell-media-grid">
+				                        <div class="item-inner">
+				                            <a href="'. the_permalink().'">'.sell_media_item_icon( $post->ID ).'</a>
+				                        </div>
+				                    </div>';
+								 }
+				$lightbox_content .= '</div>';
+			}
+		$lightbox_content .= '</div>';
+		echo $lightbox_content;
 
     die;
 
