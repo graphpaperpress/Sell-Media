@@ -816,6 +816,7 @@ Class SellMediaPayments {
 
             $product_id = $cart[ 'item_number_' . $i ];
             $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
+            $cart[ 'os1_' . $i ] = null; // Remove image url from the paypal checkout page
             $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
             $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
 

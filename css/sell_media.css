@@ -563,6 +563,15 @@ input.wpas-text[type=text] {
   font-size: 1em;
 }
 
+/*= sell_media_item
+------------------------------------------------------------------- */
+.sell-media-item-container {
+  display: inline-block;
+}
+.sell-media-item-container a.sell-media-cart-trigger {
+  display: block;
+}
+
 /*= sell_media_download_list shortcode
 ------------------------------------------------------------------- */
 .downloads {

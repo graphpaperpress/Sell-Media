@@ -168,6 +168,13 @@ function sell_media_register_post_types(){
         'capability_type' => 'post',
         'capabilities' => array(
             'create_posts' => false, // Removes support for the "Add New" function
+            'edit_post' => 'update_core',
+            'read_post' => 'update_core',
+            'delete_post' => 'update_core',
+            'edit_posts' => 'update_core',
+            'edit_others_posts' => 'update_core',
+            'publish_posts' => 'update_core',
+            'read_private_posts' => 'update_core'
         ),
         'map_meta_cap' => true // Allow users to edit/remove existing payments
     );

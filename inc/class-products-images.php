@@ -236,9 +236,9 @@ class SellMediaImages extends SellMediaProducts {
                      * Compare the original image size with our array of images sizes from
                      * Price Groups array, removing items that are not available.
                      */
-                    if ( $image['original']['height'] > $image['original']['width']
+                    if ( $image['original']['height'] >= $image['original']['width']
                         && isset( $download_sizes[ $size->term_id ] )
-                        && $download_sizes[ $size->term_id ]['height'] < $smallest_height ){
+                        && $download_sizes[ $size->term_id ]['height'] <= $smallest_height ){
                             $unavailable_size[ $size->term_id ] = array(
                                 'name' => $download_sizes[ $size->term_id ]['name'],
                                 'price' => $download_sizes[ $size->term_id ]['price'],

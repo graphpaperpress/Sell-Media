@@ -289,7 +289,7 @@ jQuery(document).ready(function($){
 
     });
 
-// Add to Lightbox
+    // Add to Lightbox
     if($('.add-to-lightbox').length) {
         $('.add-to-lightbox').live('click',function() {
             if ($(this).hasClass('saved-to-lightbox')) {
@@ -364,5 +364,18 @@ jQuery(document).ready(function($){
             return false;
         });
     }
+
+    sellMediaCart({
+        shippingCustom: function(){
+            var items = JSON.parse(localStorage.getItem("sellMediaCart_items"));
+            var shipping_cost = false;
+            sellMediaCart.each( items, function (item) {
+                if( "print" == item.type ) {
+                    shipping_cost = true;
+                }
+            });
+            return shipping_cost;
+        }
+    });
 
 });
