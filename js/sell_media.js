@@ -39,7 +39,7 @@ jQuery(document).ready(function($){
             success: function(msg){
                 $('#sell-media-dialog-box-target').fadeIn().html(msg);
                 required_fields();
-                
+
             }
         });
 
@@ -144,7 +144,7 @@ jQuery(document).ready(function($){
                         license = '';
                         sep = '';
                     }
-                    
+
                     var size = item.get( "size" );
                     if ( size == undefined ) {
                         size = '';
@@ -184,7 +184,7 @@ jQuery(document).ready(function($){
 
     // Hide cart if no items, otherwise, show the cart
     sellMediaCart.bind('update', function(){
-        
+
         if ( sellMediaCart.quantity() === 0 ){
             // hide the cart
             $('#sell-media-checkout-cart').hide();
@@ -204,7 +204,7 @@ jQuery(document).ready(function($){
 
     // Validate cart prices (price group, license markup, discount codes) on the server
     sellMediaCart.bind( 'beforeCheckout', function( data ){
-        
+
         // pass discount codes into cart data
         if ( $('#discount-id').length ) {
             data.custom = $('#discount-id').val();
@@ -287,6 +287,19 @@ jQuery(document).ready(function($){
             $('#license_desc').hide();
         }
 
+    });
+
+    sellMediaCart({
+        shippingCustom: function(){
+            var items = JSON.parse(localStorage.getItem("sellMediaCart_items"));
+            var shipping_cost = false;
+            sellMediaCart.each( items, function (item) {
+                if( "print" == item.type ) {
+                    shipping_cost = true;
+                }
+            });
+            return shipping_cost;
+        }
     });
 
 });
