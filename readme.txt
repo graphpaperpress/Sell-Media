@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.7
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,11 @@ Action hooks available:
 
 = 1.9.3 =
 * Tweak: Add Forgot Password link to login shortcode
+* Tweak: South African rand currency support added
+* Tweak: Limit access to Payments submenu to admins only
+* Tweak: Charge shipping only if prints in cart
+* Tweak: Remove image link from the PayPal shopping cart
+* Tweak: sell_media_item shortcode styling
 
 = 1.9.2 =
 * Tweak: Updates to Discount Codes
