@@ -29,8 +29,8 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
         $html = null;
         $html = Sell_Media()->payments->get_payment_products_formatted( $post_id );
         $html .= '<script>sellMediaCart.empty();</script>';
-        return '<p class="sell-media-thanks-message">' . $html . '</p>';
         do_action( 'sell_media_thanks_hook_below' );
+        return '<p class="sell-media-thanks-message">' . $html . '</p>';
     } else {
         return false;
     }
