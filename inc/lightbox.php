@@ -6,7 +6,6 @@
  * @since Sell Media 1.9.3
  */
 
-
 /**
  * Adds the 'sell_media_lightbox' short code to the editor. [sell_media_lightbox]
  *

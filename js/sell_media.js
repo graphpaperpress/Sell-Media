@@ -291,19 +291,32 @@ jQuery(document).ready(function($){
 
     // Add to Lightbox
     if($('.add-to-lightbox').length) {
-        $('.add-to-lightbox').on('click',function() {
 
-            var key = 'sellMediaLightbox';
-            var value = $(this).data('id');
+        // set variables for use below
+        var key = 'sellMediaLightbox';
+        var value = $(this).data('id');
+        var controller = '.add-to-lightbox';
 
-            if (localStorage && localStorage.getItem(key)) {
-              var lightbox_data = JSON.parse(localStorage.getItem(key));
-            } else {
-              var lightbox_data = new Array();
+        // get localStorage object, otherwise set to empty array
+        if (localStorage && localStorage.getItem(key)) {
+          var lightbox_data = JSON.parse(localStorage.getItem(key));
+        } else {
+          var lightbox_data = new Array();
+        }
+
+        // check if item exits in lightbox already, add class
+        $.each(lightbox_data, function(i, item) {
+            if (item == value) {
+                $(controller).addClass('saved-to-lightbox');
+                $(controller).text('Remove from lightbox');
             }
+        });
 
+        // add or remove items from lightbox on click
+        $(controller).on('click',function() {
             if ($(this).hasClass('saved-to-lightbox')) {
                 $(this).text('Add to lightbox');
+                // delete the item
                 $.each(lightbox_data, function(i, item) {
                     if (item == value) {
                         delete lightbox_data[i];
@@ -315,6 +328,8 @@ jQuery(document).ready(function($){
                 lightbox_data.push(value);
                 $(this).addClass('saved-to-lightbox');
             }
+
+            // set the lightbox
             localStorage.setItem(key, JSON.stringify(lightbox_data));
             return false;
         });
