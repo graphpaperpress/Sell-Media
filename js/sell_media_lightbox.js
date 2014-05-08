@@ -1,12 +1,13 @@
 jQuery(function($) {
     $(window).load(function(){
-        var lightbox_data = localStorage.getItem( document.domain + '_sell_media_lightbox_data' );
-            var data = {
-                action: 'sell_media_lightbox',
-                lightbox_ids: lightbox_data,
-                lightbox_domain: document.domain + '_sell_media_lightbox_data'
-            };
-            $.ajax({
+        var key = 'sellMediaLightbox';
+        var lightbox_data = localStorage.getItem(key);
+        var data = {
+            action: 'sell_media_lightbox',
+            lightbox_ids: lightbox_data,
+            lightbox_domain: key
+        };
+        $.ajax({
             type: 'POST',
             url: sell_media.ajaxurl,
             data: data,

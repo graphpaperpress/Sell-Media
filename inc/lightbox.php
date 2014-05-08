@@ -13,7 +13,7 @@
  * @since 1.9.3
  */
 function sell_media_lightbox_shortcode() {
-    wp_enqueue_script( 'sellMediaLightbox', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_lightbox.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+    wp_enqueue_script( 'sell_media_lightbox', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_lightbox.js', array( 'jquery' ), SELL_MEDIA_VERSION );
     $html = '<div id="sell-media-lightbox-content" class="sell-media"></div>';
     return $html;
 }
@@ -24,17 +24,16 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  * Ajax callback to list items in lightbox
  */
 function sell_media_lightbox_generator() {
-
-    $posts = explode( ",", $_POST['lightbox_ids'] );
+    $html = null;
+    $lightbox_ids = json_decode( $_POST['lightbox_ids'] );
 		$args = array(
 				'posts_per_page' => -1,
 				'post_type' => 'sell_media_item',
-				'post__in' => $posts
+				'post__in' => $lightbox_ids
     );
 		$posts = New WP_Query( $args );
 		if ( $posts->posts ) {
-
-        $html = '<div class="sell-media-grid-container">';
+        $html .= '<div class="sell-media-grid-container">';
         foreach( $posts->posts as $post ) {
             $html .= '<div class="sell-media-grid">';
 				    $html .= '<div class="item-inner">';

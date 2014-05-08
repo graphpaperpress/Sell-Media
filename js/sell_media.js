@@ -291,60 +291,33 @@ jQuery(document).ready(function($){
 
     // Add to Lightbox
     if($('.add-to-lightbox').length) {
-        $('.add-to-lightbox').live('click',function() {
-            if ($(this).hasClass('saved-to-lightbox')) {
-                return false;
-            } else {
-                //alert(document.domain);
-                //localStorage.removeItem( 'sell_media_lightbox_data' );
-                if( localStorage && localStorage.getItem( document.domain + '_sell_media_lightbox_data' ) ) {
-                    var lightbox_data = localStorage.getItem( document.domain + '_sell_media_lightbox_data' );
-                    var sep = ",";
-                } else {
-                    var lightbox_data = "";
-                    var sep = "";
-                }
-                var id = $(this).attr('id');
-                id = id.split('lightbox-');
+        $('.add-to-lightbox').on('click',function() {
 
-                $(this).attr('disabled', true);
-                //$(this).text('Saving...');
-                var lightbox_data = lightbox_data + sep + id[1];
-                localStorage.setItem( document.domain + '_sell_media_lightbox_data', lightbox_data );
-                var dta = localStorage.getItem( document.domain + '_sell_media_lightbox_data' );
-                //alert(dta);
-                $(this).text("Saved to lightbox");
-                $(this).prev().addClass('lightbox-active');
-                var count = $('.lightbox-menu .lightbox-counter').html();
-                count = parseInt(count) + 1;
-                $('.lightbox-menu .lightbox-counter').html(count);
-                //$(this).removeAttr("disabled");
-                $(this).addClass("saved-to-lightbox");
-                /*$.ajax({
-                    url: sell_media.ajaxurl,
-                    type: "POST",
-                    dataType: 'json',
-                    data: { action : 'sell_media_lightbox_ajax', id : id[1] },
-                    success:function(data) {
-                        if(true==data.success) {
-                            $('#lightbox-'+data.postID).text("Saved to lightbox");
-                            $('#lightbox-'+data.postID).prev().addClass('lightbox-active');
-                            var count = $('.lightbox-menu .lightbox-counter').html();
-                            count = parseInt(count) + 1;
-                            $('.lightbox-menu .lightbox-counter').html(count);
-                            $('#lightbox-'+data.postID).removeAttr("disabled");
-                            $('#lightbox-'+data.postID).addClass("saved-to-lightbox");
-                        }
-                    }
-                });*/
-                return false;
+            var key = 'sellMediaLightbox';
+            var value = $(this).data('id');
+
+            if (localStorage && localStorage.getItem(key)) {
+              var lightbox_data = JSON.parse(localStorage.getItem(key));
+            } else {
+              var lightbox_data = new Array();
             }
+
+            if ($(this).hasClass('saved-to-lightbox')) {
+                $(this).text('Add to lightbox');
+                $(this).removeClass('saved-to-lightbox');
+            } else {
+                $(this).text('Remove from lightbox');
+                lightbox_data.push(value);
+                $(this).addClass('saved-to-lightbox');
+            }
+            localStorage.setItem(key, JSON.stringify(lightbox_data));
+            return false;
         });
     }
 
     // Remove from Lightbox
     if($('.remove-lightbox').length) {
-        $('.remove-lightbox').live('click',function() {
+        $('.remove-lightbox').on('click',function() {
             var id = $(this).attr('id');
             id = id.split('lightbox-');
             $.ajax({
