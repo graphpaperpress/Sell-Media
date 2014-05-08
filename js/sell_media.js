@@ -304,6 +304,11 @@ jQuery(document).ready(function($){
 
             if ($(this).hasClass('saved-to-lightbox')) {
                 $(this).text('Add to lightbox');
+                $.each(lightbox_data, function(i, item) {
+                    if (item == value) {
+                        delete lightbox_data[i];
+                    }
+                });
                 $(this).removeClass('saved-to-lightbox');
             } else {
                 $(this).text('Remove from lightbox');
