@@ -13,7 +13,7 @@
  */
 function sell_media_lightbox_shortcode() {
     wp_enqueue_script( 'sell_media_lightbox', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_lightbox.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-    $html = '<div id="sell-media-lightbox-content" class="sell-media"></div>';
+    $html = '<div id="sell-media-lightbox-content" class="sell-media">' . __( "Loading...", "sell_media" ) . '</div>';
     return $html;
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
@@ -25,29 +25,34 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
 function sell_media_lightbox_generator() {
     $html = null;
     $lightbox_ids = json_decode( $_POST['lightbox_ids'] );
-		$args = array(
-				'posts_per_page' => -1,
-				'post_type' => 'sell_media_item',
-				'post__in' => $lightbox_ids
-    );
+    if( ! empty( $lightbox_ids ) ) {
+    	$args = array(
+    			'posts_per_page' => -1,
+    			'post_type' => 'sell_media_item',
+    			'post__in' => $lightbox_ids
+        );
 		$posts = New WP_Query( $args );
 		if ( $posts->posts ) {
-        $html .= '<div class="sell-media-grid-container">';
-        foreach( $posts->posts as $post ) {
-            $html .= '<div class="sell-media-grid">';
-				    $html .= '<div class="item-inner">';
-				    $html .= '<a href="'. get_permalink( $post->ID ) . '" class="lightbox-id" data-id="' . $post->ID . '">' . sell_media_item_icon( $post->ID, 'medium', false ) . '</a>';
-				    $html .= '<span class="item-overlay">';
-            $html .= '<h3><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h3>';
-            $html .= sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ), false );
-            $html .= do_action( 'sell_media_item_overlay' );
-            $html .= '</span>';
-            $html .= '</div>';
-				    $html .= '</div>';
-				}
-				$html .= '</div>';
-    }
+            $html .= '<div class="sell-media-grid-container">';
+            foreach( $posts->posts as $post ) {
+                $html .= '<div class="sell-media-grid">';
+    				    $html .= '<div class="item-inner">';
+                        $html .= '<div  data-id="' . $post->ID . '" class="remove-lightbox genericon genericon-close">' . __( "Remove", "sell_media" ) . '</div>';
+    				    $html .= '<a href="'. get_permalink( $post->ID ) . '" class="lightbox-id" data-id="' . $post->ID . '">' . sell_media_item_icon( $post->ID, 'medium', false ) . '</a>';
+    				    $html .= '<span class="item-overlay">';
+                $html .= '<h3><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h3>';
+                $html .= sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ), false );
+                $html .= do_action( 'sell_media_item_overlay' );
+                $html .= '</span>';
+                $html .= '</div>';
+    				    $html .= '</div>';
+    				}
+    				$html .= '</div>';
+        }
 		echo $html;
+    } else {
+        _e( "No items", "sell_media" );
+    }
     die;
 }
 add_action( 'wp_ajax_sell_media_lightbox', 'sell_media_lightbox_generator' );

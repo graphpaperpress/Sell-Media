@@ -319,13 +319,19 @@ jQuery(document).ready(function($){
                 // delete the item
                 $.each(lightbox_data, function(i, item) {
                     if (item == value) {
-                        delete lightbox_data[i];
+                        lightbox_data.splice($.inArray(value, lightbox_data),1);
+                        var count = $('.lightbox-menu .lightbox-counter').html();
+                        count = parseInt(count) - 1;
+                        $('.lightbox-menu .lightbox-counter').html(count);
                     }
                 });
                 $(this).removeClass('saved-to-lightbox');
             } else {
                 $(this).text('Remove from lightbox');
                 lightbox_data.push(value);
+                var count = $('.lightbox-menu .lightbox-counter').html();
+                count = parseInt(count) + 1;
+                $('.lightbox-menu .lightbox-counter').html(count);
                 $(this).addClass('saved-to-lightbox');
             }
 
@@ -336,11 +342,10 @@ jQuery(document).ready(function($){
     }
 
     // Remove from Lightbox
-    if($('.remove-lightbox').length) {
-        $('.remove-lightbox').on('click',function() {
+        $('#sell-media-lightbox-content').on('click', '.remove-lightbox', function() {
+            _this = $(this);
             var key = 'sellMediaLightbox';
-            var value = $('.lightbox-id').data('id');
-
+            var value = $(this).data('id');
             // get localStorage object, otherwise set to empty array
             if (localStorage && localStorage.getItem(key)) {
                 var lightbox_data = JSON.parse(localStorage.getItem(key));
@@ -349,12 +354,24 @@ jQuery(document).ready(function($){
             }
             $.each(lightbox_data, function(i, item) {
                 if (item == value) {
-                    delete lightbox_data[i];
+                    _this.parents('.sell-media-grid').remove();
+                    lightbox_data.splice($.inArray(value, lightbox_data),1);
+                    var count = $('.lightbox-menu .lightbox-counter').html();
+                    count = parseInt(count) - 1;
+                    $('.lightbox-menu .lightbox-counter').html(count);
                 }
             });
+            console.log(lightbox_data);
+            // update the lightbox
+            localStorage.setItem(key, JSON.stringify(lightbox_data));
             return false;
         });
-    }
+
+    // Update the count in the menu
+    var key = 'sellMediaLightbox';
+    var lightbox_data = JSON.parse(localStorage.getItem(key));
+    var lightbox_count = lightbox_data.length;
+    $('<span class="lightbox-counter">' + lightbox_count + '</span>').appendTo('.lightbox-menu a');
 
     sellMediaCart({
         shippingCustom: function(){
