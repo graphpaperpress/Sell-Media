@@ -716,16 +716,24 @@ input.wpas-text[type=text] {
   position: relative;
 }
 .remove-lightbox {
+  background: rgba(255, 0, 0, 0.5);
+  color: #fff;
+  display: none;
   position: absolute;
   left: 0;
-  padding: 2px 6px 0;
+  padding: 3px 5px;
   text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 9px;
   z-index: 10;
   cursor: pointer;
 }
+.sell-media-grid:hover .remove-lightbox {
+  display: inline;
+}
 .remove-lightbox:hover {
-  background: #880000;
-  color: #fff;
+  background: rgba(255, 0, 0, 0.9);
 }
 .lightbox-counter {
   margin-left: 5px;

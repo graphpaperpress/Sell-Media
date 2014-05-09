@@ -289,20 +289,23 @@ jQuery(document).ready(function($){
 
     });
 
-    // Add to Lightbox
+    // Lightbox
+
+    // Lightbox variables
+    var key = 'sellMediaLightbox';
+    // get localStorage object, otherwise set to empty array
+    if (localStorage && localStorage.getItem(key)) {
+      var lightbox_data = JSON.parse(localStorage.getItem(key));
+    } else {
+      var lightbox_data = new Array();
+    }
+
+    // Lightbox add
     if($('.add-to-lightbox').length) {
 
         // set variables for use below
         var controller = '.add-to-lightbox';
-        var key = 'sellMediaLightbox';
         var value = $(controller).data('id');
-
-        // get localStorage object, otherwise set to empty array
-        if (localStorage && localStorage.getItem(key)) {
-          var lightbox_data = JSON.parse(localStorage.getItem(key));
-        } else {
-          var lightbox_data = new Array();
-        }
 
         // check if item exits in lightbox already, add class
         $.each(lightbox_data, function(i, item) {
@@ -341,37 +344,27 @@ jQuery(document).ready(function($){
         });
     }
 
-    // Remove from Lightbox
-        $('#sell-media-lightbox-content').on('click', '.remove-lightbox', function() {
-            _this = $(this);
-            var key = 'sellMediaLightbox';
-            var value = $(this).data('id');
-            // get localStorage object, otherwise set to empty array
-            if (localStorage && localStorage.getItem(key)) {
-                var lightbox_data = JSON.parse(localStorage.getItem(key));
-            } else {
-                var lightbox_data = new Array();
+    // Lightbox remove
+    $('#sell-media-lightbox-content').on('click', '.remove-lightbox', function() {
+        _this = $(this);
+        var value = $(this).data('id');
+        $.each(lightbox_data, function(i, item) {
+            if (item == value) {
+                _this.parents('.sell-media-grid').remove();
+                lightbox_data.splice($.inArray(value, lightbox_data),1);
+                var count = $('.lightbox-menu .lightbox-counter').html();
+                count = parseInt(count) - 1;
+                $('.lightbox-menu .lightbox-counter').html(count);
             }
-            $.each(lightbox_data, function(i, item) {
-                if (item == value) {
-                    _this.parents('.sell-media-grid').remove();
-                    lightbox_data.splice($.inArray(value, lightbox_data),1);
-                    var count = $('.lightbox-menu .lightbox-counter').html();
-                    count = parseInt(count) - 1;
-                    $('.lightbox-menu .lightbox-counter').html(count);
-                }
-            });
-            console.log(lightbox_data);
-            // update the lightbox
-            localStorage.setItem(key, JSON.stringify(lightbox_data));
-            return false;
         });
+        console.log(lightbox_data);
+        // update the lightbox
+        localStorage.setItem(key, JSON.stringify(lightbox_data));
+        return false;
+    });
 
-    // Update the count in the menu
-    var key = 'sellMediaLightbox';
-    var lightbox_data = JSON.parse(localStorage.getItem(key));
-    var lightbox_count = lightbox_data.length;
-    $('<span class="lightbox-counter">' + lightbox_count + '</span>').appendTo('.lightbox-menu a');
+    // Lightbox menu
+    $('<span class="lightbox-counter">' + lightbox_data.length + '</span>').appendTo('.lightbox-menu a');
 
     sellMediaCart({
         shippingCustom: function(){

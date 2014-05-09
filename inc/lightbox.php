@@ -37,7 +37,7 @@ function sell_media_lightbox_generator() {
             foreach( $posts->posts as $post ) {
                 $html .= '<div class="sell-media-grid">';
     				    $html .= '<div class="item-inner">';
-                        $html .= '<div  data-id="' . $post->ID . '" class="remove-lightbox genericon genericon-close">' . __( "Remove", "sell_media" ) . '</div>';
+                $html .= '<span data-id="' . $post->ID . '" class="remove-lightbox genericon genericon-close">' . __( 'Remove', 'sell_media' ) . '</span>';
     				    $html .= '<a href="'. get_permalink( $post->ID ) . '" class="lightbox-id" data-id="' . $post->ID . '">' . sell_media_item_icon( $post->ID, 'medium', false ) . '</a>';
     				    $html .= '<span class="item-overlay">';
                 $html .= '<h3><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h3>';
@@ -51,7 +51,7 @@ function sell_media_lightbox_generator() {
         }
 		echo $html;
     } else {
-        _e( "No items", "sell_media" );
+        _e( 'No items', 'sell_media' );
     }
     die;
 }
