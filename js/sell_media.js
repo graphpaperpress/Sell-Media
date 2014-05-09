@@ -289,8 +289,6 @@ jQuery(document).ready(function($){
 
     });
 
-    // Lightbox
-
     // Lightbox variables
     var key = 'sellMediaLightbox';
     // get localStorage object, otherwise set to empty array
@@ -304,21 +302,22 @@ jQuery(document).ready(function($){
     if($('.add-to-lightbox').length) {
 
         // set variables for use below
-        var controller = '.add-to-lightbox';
-        var value = $(controller).data('id');
+        var selector = '.add-to-lightbox';
+        var value = $(selector).data('id');
+        var unique_selector = selector + '[data-id=' + value + ']';
 
         // check if item exits in lightbox already, add class
         $.each(lightbox_data, function(i, item) {
             if (item == value) {
-                $(controller).addClass('saved-to-lightbox');
-                $(controller).text('Remove from lightbox');
+                $(unique_selector).addClass('saved-to-lightbox');
+                $(unique_selector).text('Remove');
             }
         });
 
         // add or remove items from lightbox on click
-        $(controller).on('click',function() {
+        $(selector).on('click',function() {
             if ($(this).hasClass('saved-to-lightbox')) {
-                $(this).text('Save to lightbox');
+                $(this).text('Save');
                 // delete the item
                 $.each(lightbox_data, function(i, item) {
                     if (item == value) {
@@ -330,7 +329,7 @@ jQuery(document).ready(function($){
                 });
                 $(this).removeClass('saved-to-lightbox');
             } else {
-                $(this).text('Remove from lightbox');
+                $(this).text('Remove');
                 lightbox_data.push(value);
                 var count = $('.lightbox-menu .lightbox-counter').html();
                 count = parseInt(count) + 1;

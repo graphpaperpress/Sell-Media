@@ -9,13 +9,12 @@ get_header(); ?>
 
 <div id="sell-media-collection-password" class="sell-media">
 	<div id="content" role="main">
-
-	<form action="" method="POST">
-	     <p><?php _e( 'This collection is password protected','sell_media'); ?>
-	     <input type="text" value="" name="collection_password" />
-	     <input type="submit" value="<?php _e( 'Submit', 'sell_media' ); ?>" name="submit" />
-	     </p>
-	</form>
+  	<form action="" method="POST">
+  	     <p><?php _e( 'This collection is password protected.', 'sell_media' ); ?>
+  	     <input type="text" value="" name="collection_password" />
+  	     <input type="submit" value="<?php _e( 'Submit', 'sell_media' ); ?>" name="submit" />
+  	     </p>
+  	</form>
 	</div><!-- #content -->
 </div><!-- #sell_media-single .sell_media -->
 

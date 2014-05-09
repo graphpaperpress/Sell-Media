@@ -132,6 +132,7 @@ table.sell-media-products {
 }
 .sell-media {
   width: 100%;
+  margin: 0 auto;
 }
 .has-sidebar .sell-media #content, .sell-media #content {
   margin: 10px 0;
@@ -233,6 +234,7 @@ table.sell-media-products {
 /*= Archives
 -------------------------------------------------------------- */
 .sell-media .sell-media-grid {
+  position: relative;
   float: left;
   margin: 0 2% 2% 0;
   width: 32%;
@@ -246,12 +248,61 @@ table.sell-media-products {
 .sell-media .sell-media-grid:nth-child(3n+1) {
   clear: left;
 }
+.sell-media .sell-media-grid .item-inner {
+  background: #000;
+}
+.sell-media .sell-media-grid .item-inner img {
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+}
+.sell-media .sell-media-grid .item-overlay {
+  display: none;
+}
+.sell-media .sell-media-grid:hover .item-overlay {
+  display: inline;
+}
+.sell-media .sell-media-grid:hover .item-inner img {
+  opacity: .3;
+}
+.sell-media .sell-media-grid .item-overlay a {
+  color: #ccc;
+  color: rgba(255,255,255,.7);
+  -webkit-transition:color .2s ease-in;
+  -moz-transition:color .2s ease-in;
+  -o-transition:color .2s ease-in;
+  transition:color .2s ease-in;
+  text-decoration: none;
+}
+.sell-media .sell-media-grid .item-overlay a:hover {
+  color: #fff;
+}
 .sell-media .sell-media-grid h3 {
-  float: left;
   margin: 0;
+  position: absolute;
+  top: 30%;
+  text-align: center;
+  width: 100%;
+}
+.sell-media .sell-media-grid .add-to-lightbox,
+.sell-media .sell-media-grid .remove-lightbox {
+  position: absolute;
+  bottom: 15px;
+  left: 10px;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-size: .8rem;
+  letter-spacing: 1px;
 }
 .sell-media .sell-media-grid .sell-media-text {
-  float: right;
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-size: .8rem;
+  letter-spacing: 1px;
 }
 .sell-media-pagination-container {
   clear: both;
@@ -549,7 +600,7 @@ input.wpas-text[type=text] {
   cursor: pointer;
 }
 
-/*= Shortcode all
+/*= Shortcode sell_media_shortcode_all
 -------------------------------------------------------------- */
 .sell-media-shortcode-all h3 {
   float: left;
@@ -563,7 +614,7 @@ input.wpas-text[type=text] {
   font-size: 1em;
 }
 
-/*= sell_media_item
+/*= Shortcode sell_media_item
 ------------------------------------------------------------------- */
 .sell-media-item-container {
   display: inline-block;
@@ -572,7 +623,7 @@ input.wpas-text[type=text] {
   display: block;
 }
 
-/*= sell_media_download_list shortcode
+/*= Shortcode sell_media_download_list
 ------------------------------------------------------------------- */
 .downloads {
   margin: 1em 0;
@@ -712,29 +763,6 @@ input.wpas-text[type=text] {
 
 /*= Lightbox
 -------------------------------------------------------------- */
-.sell-media .sell-media-grid {
-    position: relative;
-}
-.remove-lightbox {
-    background: rgba(255, 0, 0, 0.5);
-    color: #fff;
-    display: none;
-    position: absolute;
-    left: 0;
-    padding: 3px 5px;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 9px;
-    z-index: 10;
-    cursor: pointer;
-}
-.sell-media-grid:hover .remove-lightbox {
-    display: inline;
-}
-.remove-lightbox:hover {
-    background: rgba(255, 0, 0, 0.9);
-}
 .lightbox-counter {
     margin-left: 4px;
 }

@@ -327,6 +327,64 @@ add_action( 'create_collection', 'sell_media_save_extra_taxonomy_fields' );
 
 
 /**
+ * Add icon field to collections
+ *
+ * @since 0.1
+ */
+function sell_media_add_collection_icon( ){ ?>
+    <div class="form-field collection-icon">
+        <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
+    <?php sell_media_collection_icon_field(); ?>
+    </div>
+    <?php }
+add_action( 'collection_add_form_fields', 'sell_media_add_collection_icon' );
+
+
+/**
+ * Helper function to add upload field for collection icon edit form
+ *
+ * @since 0.1
+ */
+function sell_media_collection_icon_field( $icon_id=null ){
+    wp_enqueue_media();
+    if ( empty( $icon_id ) ){
+        $image = $url = null;
+    } else {
+        $url = wp_get_attachment_url( $icon_id );
+        $image = wp_get_attachment_image( $icon_id, 'thumbnail' );
+        $image .= '<br /><a href="javascript:void(0);" class="upload_image_remove">Remove</a>';
+    }
+    ?>
+    <input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
+    <input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
+    <input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
+    <div class="upload_image_preview" style="display: block;">
+        <span id="collection_icon_target"><?php print $image; ?></span>
+    </div>
+    <p class="description"><?php _e( 'The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed', 'sell_media' ); ?></p>
+<?php }
+
+
+/**
+ * Hide collections from archive view
+ *
+ * @since 0.1
+ */
+function sell_media_edit_collection_icon( $tag ){
+    $term_id = is_object( $tag ) ? $tag->term_id : null; ?>
+    <tr class="form-field sell-media-collection-form-field">
+        <th scope="row" valign="top">
+            <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
+        </th>
+        <td>
+            <?php sell_media_collection_icon_field( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ) ); ?>
+        </td>
+    </tr>
+<?php }
+add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_icon' );
+
+
+/**
  * Add password field to collection
  *
  * @since 0.1
@@ -395,57 +453,25 @@ add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_password'
 
 
 /**
- * Add icon field to collection
+ * Add proofing field to collections
  *
- * @since 0.1
+ * @since 1.9.4
  */
-function sell_media_add_collection_icon( ){ ?>
-    <div class="form-field collection-icon">
-        <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
-    <?php sell_media_collection_icon_field(); ?>
+function sell_media_add_collection_proofing(){ ?>
+    <div class="form-field collection-proofing">
+        <label for="collection_proofing"><?php _e( 'Enable Client Proofing', 'sell_media' ); ?></label>
+        <input name="meta_value[collection_proofing]" type="checkbox" id="meta_value[]" style="width:17px"/>
+        <p class="description"><?php _e( 'Check this to allow clients with password access to download items in this collecton as proofs. Clients must add an item to their Lightbox in order to download proofs. A record of which images were downloaded will be sent to both the site admin and the client via email.', 'sell_media' ); ?></p>
     </div>
     <?php }
-add_action( 'collection_add_form_fields', 'sell_media_add_collection_icon' );
+add_action( 'collection_add_form_fields', 'sell_media_add_collection_proofing' );
 
-
-function sell_media_collection_icon_field( $icon_id=null ){
-    wp_enqueue_media();
-    if ( empty( $icon_id ) ){
-        $image = $url = null;
-    } else {
-        $url = wp_get_attachment_url( $icon_id );
-        $image = wp_get_attachment_image( $icon_id, 'thumbnail' );
-        $image .= '<br /><a href="javascript:void(0);" class="upload_image_remove">Remove</a>';
-    }
-    ?>
-    <input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
-    <input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
-    <input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
-    <div class="upload_image_preview" style="display: block;">
-        <span id="collection_icon_target"><?php print $image; ?></span>
-    </div>
-    <p class="description"><?php _e( 'The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed', 'sell_media' ); ?></p>
-<?php }
 
 /**
- * Hide collections from archive view
+ * Custom collection column headers
  *
  * @since 0.1
  */
-function sell_media_edit_collection_icon( $tag ){
-    $term_id = is_object( $tag ) ? $tag->term_id : null; ?>
-    <tr class="form-field sell-media-collection-form-field">
-        <th scope="row" valign="top">
-            <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
-        </th>
-        <td>
-            <?php sell_media_collection_icon_field( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ) ); ?>
-        </td>
-    </tr>
-<?php }
-add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_icon' );
-
-
 function sell_media_custom_collection_columns_headers( $columns ){
 
     $columns_local = array();
@@ -467,21 +493,37 @@ function sell_media_custom_collection_columns_headers( $columns ){
     if (!isset($columns_local['collection_protected']))
         $columns_local['collection_protected'] = __("Protected", 'sell_media');
 
+    if (!isset($columns_local['collection_proofing']))
+        $columns_local['collection_proofing'] = __("Proofing", 'sell_media');
+
     return array_merge($columns_local, $columns);
 }
 add_filter( 'manage_edit-collection_columns', 'sell_media_custom_collection_columns_headers' );
 
 
+/**
+ * Custom collection column header content
+ *
+ * @since 0.1
+ */
 function sell_media_custom_collection_columns_content( $row_content, $column_name, $term_id ){
     switch( $column_name ) {
         case 'collection_icon':
             return wp_get_attachment_image( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ), 'thumbnail' );
             break;
-            case 'collection_protected':
+        case 'collection_protected':
                 if( sell_media_get_term_meta( $term_id, 'collection_password', true ) ) {
                     $colstatus = "Private";
                 } else {
                     $colstatus = "Public";
+                }
+                return $colstatus;
+            break;
+        case 'collection_proofing':
+                if( sell_media_get_term_meta( $term_id, 'collection_proofing', true ) ) {
+                    $colstatus = "Enabled";
+                } else {
+                    $colstatus = "Disabled";
                 }
                 return $colstatus;
             break;
