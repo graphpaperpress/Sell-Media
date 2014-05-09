@@ -36,7 +36,7 @@ function sell_media_lightbox_generator() {
         foreach( $posts->posts as $post ) {
             $html .= '<div class="sell-media-grid">';
 				    $html .= '<div class="item-inner">';
-				    $html .= '<a href="'. get_permalink( $post->ID ) . '">' . sell_media_item_icon( $post->ID, 'medium', false ) . '</a>';
+				    $html .= '<a href="'. get_permalink( $post->ID ) . '" class="lightbox-id" data-id="' . $post->ID . '">' . sell_media_item_icon( $post->ID, 'medium', false ) . '</a>';
 				    $html .= '<span class="item-overlay">';
             $html .= '<h3><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h3>';
             $html .= sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ), false );

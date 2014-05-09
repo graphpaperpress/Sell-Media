@@ -293,9 +293,9 @@ jQuery(document).ready(function($){
     if($('.add-to-lightbox').length) {
 
         // set variables for use below
-        var key = 'sellMediaLightbox';
-        var value = $(this).data('id');
         var controller = '.add-to-lightbox';
+        var key = 'sellMediaLightbox';
+        var value = $(controller).data('id');
 
         // get localStorage object, otherwise set to empty array
         if (localStorage && localStorage.getItem(key)) {
@@ -315,7 +315,7 @@ jQuery(document).ready(function($){
         // add or remove items from lightbox on click
         $(controller).on('click',function() {
             if ($(this).hasClass('saved-to-lightbox')) {
-                $(this).text('Add to lightbox');
+                $(this).text('Save to lightbox');
                 // delete the item
                 $.each(lightbox_data, function(i, item) {
                     if (item == value) {
@@ -338,20 +338,18 @@ jQuery(document).ready(function($){
     // Remove from Lightbox
     if($('.remove-lightbox').length) {
         $('.remove-lightbox').on('click',function() {
-            var id = $(this).attr('id');
-            id = id.split('lightbox-');
-            $.ajax({
-                url: sell_media.ajaxurl,
-                type: "POST",
-                dataType: 'json',
-                data: { action : 'sell_media_lightbox_remove_ajax', id : id[1] },
-                success:function(data) {
-                    if(true==data.success) {
-                        $('#lightbox-'+data.postID).parents('.item-inner').remove();
-                        var count = $('.lightbox-menu .lightbox-counter').html();
-                        count = parseInt(count) - 1;
-                        $('.lightbox-menu .lightbox-counter').html(count);
-                    }
+            var key = 'sellMediaLightbox';
+            var value = $('.lightbox-id').data('id');
+
+            // get localStorage object, otherwise set to empty array
+            if (localStorage && localStorage.getItem(key)) {
+                var lightbox_data = JSON.parse(localStorage.getItem(key));
+            } else {
+                var lightbox_data = new Array();
+            }
+            $.each(lightbox_data, function(i, item) {
+                if (item == value) {
+                    delete lightbox_data[i];
                 }
             });
             return false;
