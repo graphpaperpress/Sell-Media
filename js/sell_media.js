@@ -364,7 +364,7 @@ jQuery(document).ready(function($){
     });
 
     // Lightbox menu
-    $('<span class="lightbox-counter-wrap">(<span class="lightbox-counter">' + lightbox_data.length + '</span>)</span>').appendTo('.lightbox-menu a');
+    $('<span class="lightbox-counter">' + lightbox_data.length + '</span>').appendTo('.lightbox-menu a');
 
     sellMediaCart({
         shippingCustom: function(){

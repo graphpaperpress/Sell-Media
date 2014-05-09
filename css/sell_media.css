@@ -713,30 +713,43 @@ input.wpas-text[type=text] {
 /*= Lightbox
 -------------------------------------------------------------- */
 .sell-media .sell-media-grid {
-  position: relative;
+    position: relative;
 }
 .remove-lightbox {
-  background: rgba(255, 0, 0, 0.5);
-  color: #fff;
-  display: none;
-  position: absolute;
-  left: 0;
-  padding: 3px 5px;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 9px;
-  z-index: 10;
-  cursor: pointer;
+    background: rgba(255, 0, 0, 0.5);
+    color: #fff;
+    display: none;
+    position: absolute;
+    left: 0;
+    padding: 3px 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 9px;
+    z-index: 10;
+    cursor: pointer;
 }
 .sell-media-grid:hover .remove-lightbox {
-  display: inline;
+    display: inline;
 }
 .remove-lightbox:hover {
-  background: rgba(255, 0, 0, 0.9);
+    background: rgba(255, 0, 0, 0.9);
 }
-.lightbox-counter-wrap {
-  margin-left: 4px;
+.lightbox-counter {
+    margin-left: 4px;
+}
+.sell-media-label,
+.lightbox-counter {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    line-height: 1;
+    color: #fff;
+    background: #d9534f;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: .25em;
 }
 
 /*= Media queries
