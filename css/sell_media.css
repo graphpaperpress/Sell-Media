@@ -735,8 +735,8 @@ input.wpas-text[type=text] {
 .remove-lightbox:hover {
   background: rgba(255, 0, 0, 0.9);
 }
-.lightbox-counter {
-  margin-left: 5px;
+.lightbox-counter-wrap {
+  margin-left: 4px;
 }
 
 /*= Media queries
