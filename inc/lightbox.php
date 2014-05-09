@@ -40,9 +40,9 @@ function sell_media_lightbox_generator() {
     				    $html .= '<a href="'. get_permalink( $post->ID ) . '" class="lightbox-id" data-id="' . $post->ID . '">' . sell_media_item_icon( $post->ID, 'medium', false ) . '</a>';
     				    $html .= '<span class="item-overlay">';
                 $html .= '<h3><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h3>';
-                $html .= '<a href="javascript:void(0);" data-id="' . $post->ID . '" class="remove-lightbox genericon genericon-close">' . __( 'Remove', 'sell_media' ) . '</a>';
+                $html .= '<a href="javascript:void(0);" data-id="' . $post->ID . '" class="remove-lightbox">' . __( 'Remove', 'sell_media' ) . '</a>';
                 $html .= sell_media_item_buy_button( $post->ID, 'text', __( 'Buy' ), false );
-                $html .= do_action( 'sell_media_item_overlay' );
+                //$html .= do_action( 'sell_media_item_overlay' );
                 $html .= '</span>';
                 $html .= '</div>';
     				    $html .= '</div>';
