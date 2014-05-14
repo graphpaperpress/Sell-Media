@@ -160,38 +160,42 @@ function sell_media_process_paypal_ipn() {
          */
         if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ){
 
-            $data = array(
-                'post_title' => $_POST['payer_email'],
-                'post_status' => 'publish',
-                'post_type' => 'sell_media_payment'
-            );
+            // make sure the IPN contains a product from Sell Media
+            if ( ! empty( $_POST['option_selection1_1'] ) && ( $_POST['option_selection1_1'] == 'print' || $_POST['option_selection1_1'] == 'download' ) ) {
 
-            $payment_id = wp_insert_post( $data );
-            $payments = Sell_Media()->payments;
+                $data = array(
+                    'post_title' => $_POST['payer_email'],
+                    'post_status' => 'publish',
+                    'post_type' => 'sell_media_payment'
+                );
 
-            if ( $payment_id ) {
+                $payment_id = wp_insert_post( $data );
+                $payments = Sell_Media()->payments;
 
-                update_post_meta( $payment_id, '_paypal_args', $_POST );
+                if ( $payment_id ) {
 
-                // record the PayPal payment details
-                $payments->paypal_copy_args( $payment_id );
+                    update_post_meta( $payment_id, '_paypal_args', $_POST );
 
-                // create new user, auto log them in, email them registration
-                Sell_Media()->customer->insert( $_POST['payer_email'], $_POST['first_name'], $_POST['last_name'] );
+                    // record the PayPal payment details
+                    $payments->paypal_copy_args( $payment_id );
 
-                $message .= "\nSuccess! Your purchase has been completed.\n";
-                $message .= "Your transaction number is: {$_POST['txn_id']}\n";
-                $message .= "To email: {$_POST['payer_email']}\n";
+                    // create new user, auto log them in, email them registration
+                    Sell_Media()->customer->insert( $_POST['payer_email'], $_POST['first_name'], $_POST['last_name'] );
 
-                // Send email to buyer and admin
-                $email_status = $payments->email_receipt( $payment_id, $_POST['payer_email'] );
-                $admin_email_status = $payments->email_receipt( $payment_id, get_option( 'admin_email' ) );
-                
-                $message .= "{$email_status}\n";
-                $message .= "{$admin_email_status}\n";
+                    $message .= "\nSuccess! Your purchase has been completed.\n";
+                    $message .= "Your transaction number is: {$_POST['txn_id']}\n";
+                    $message .= "To email: {$_POST['payer_email']}\n";
 
-                do_action( 'sell_media_after_successful_payment', $payment_id );
+                    // Send email to buyer and admin
+                    $email_status = $payments->email_receipt( $payment_id, $_POST['payer_email'] );
+                    $admin_email_status = $payments->email_receipt( $payment_id, get_option( 'admin_email' ) );
 
+                    $message .= "{$email_status}\n";
+                    $message .= "{$admin_email_status}\n";
+
+                    do_action( 'sell_media_after_successful_payment', $payment_id );
+
+                }
             }
 
         } else {
