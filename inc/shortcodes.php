@@ -78,7 +78,7 @@ function sell_media_item_shortcode( $atts ) {
         ), $atts )
     );
 
-    $image = sell_media_item_icon( $id, 'medium', false );
+    $image = sell_media_item_icon( $id, $size, false );
 
     $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $id ) . '" class="sell-media-cart-trigger sell-media-' . esc_attr( $style ) . '">' . $text . '</a>';
 
