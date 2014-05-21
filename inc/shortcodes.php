@@ -27,12 +27,12 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     if ( $tx ) {
         $post_id = Sell_Media()->payments->get_id_from_tx( $transaction_id=$tx );
         $html = null;
-        $html .= apply_filters( 'sell_media_thanks_filter', $html );
+        $html = apply_filters( 'sell_media_thanks_filter', $html );
         $html .='<p class="sell-media-thanks-message">';
         $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
         $html .= '<script>sellMediaCart.empty();</script>';
         $html .= '</p>';
-        $html .= apply_filters( 'sell_media_thanks_filter_below', $html );
+        $html = apply_filters( 'sell_media_thanks_filter_below', $html );
         return $html;
     } else {
         return false;
