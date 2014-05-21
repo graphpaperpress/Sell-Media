@@ -226,6 +226,10 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.4 =
+* Feature: Lightbox integration
+* Feature: apply_filters to Bulk and Package post_status
+
 = 1.9.3 =
 * Tweak: Add Forgot Password link to login shortcode
 * Tweak: South African rand currency support added
