@@ -310,14 +310,14 @@ jQuery(document).ready(function($){
         $.each(lightbox_data, function(i, item) {
             if (item == value) {
                 $(unique_selector).addClass('saved-to-lightbox');
-                $(unique_selector).text('Remove');
+                $(unique_selector).text(sell_media.remove_text);
             }
         });
 
         // add or remove items from lightbox on click
         $(selector).on('click',function() {
             if ($(this).hasClass('saved-to-lightbox')) {
-                $(this).text('Save');
+                $(this).text(sell_media.save_text);
                 // delete the item
                 $.each(lightbox_data, function(i, item) {
                     if (item == value) {
@@ -329,7 +329,7 @@ jQuery(document).ready(function($){
                 });
                 $(this).removeClass('saved-to-lightbox');
             } else {
-                $(this).text('Remove');
+                $(this).text(sell_media.remove_text);
                 lightbox_data.push(value);
                 var count = $('.lightbox-menu .lightbox-counter').html();
                 count = parseInt(count) + 1;
@@ -356,7 +356,7 @@ jQuery(document).ready(function($){
                 $('.lightbox-menu .lightbox-counter').html(count);
             }
         });
-        console.log(lightbox_data);
+        // console.log(lightbox_data);
         // update the lightbox
         localStorage.setItem(key, JSON.stringify(lightbox_data));
         return false;

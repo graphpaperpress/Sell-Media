@@ -76,7 +76,9 @@ function sell_media_scripts( $hook ) {
         'shipping' => apply_filters( 'sell_media_shipping', 0 ), // should PayPal force buyers add address
         'cart_error' => __( 'There was an error loading the cart data. Please contact the site owner.', 'sell_media' ),
         'checkout_text' => __( 'Checkout Now', 'sell_media' ),
-        'checkout_wait_text' => __( 'Please wait...', 'sell_media' )
+        'checkout_wait_text' => __( 'Please wait...', 'sell_media' ),
+        'remove_text' => __( 'Remove', 'sell_media' ),
+        'save_text' => __( 'Save', 'sell_media' )
     ) );
 
     do_action( 'sell_media_scripts_hook' );

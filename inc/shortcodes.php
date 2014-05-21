@@ -103,16 +103,15 @@ function sell_media_all_items_shortcode( $atts ){
     $args = array(
         'posts_per_page' => -1,
         'post_type' => 'sell_media_item'
-        );
+    );
 
     if ( $collection ){
         $args = array(
-                'posts_per_page' => $show,
-                'taxonomy' => 'collection',
-                'field' => 'slug',
-                'term' => $collection
-                );
-
+            'posts_per_page' => $show,
+            'taxonomy' => 'collection',
+            'field' => 'slug',
+            'term' => $collection
+        );
     }
 
     $posts = New WP_Query( $args );
