@@ -125,7 +125,7 @@ function sell_media_all_items_shortcode( $atts ){
                         <a href="<?php echo get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                         <span class="item-overlay">
                             <h3><a href="<?php the_permalink(); ?>"><?php echo get_the_title( $post ->ID); ?></a></h3>
-                            <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
+                            <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy' ) ); ?>
                             <?php do_action( 'sell_media_item_overlay' ); ?>
                         </span>
                     </div>
