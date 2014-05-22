@@ -23,7 +23,7 @@ get_header(); global $wp_query; ?>
                 </h1>
             </header>
 
-            <div class="sell-media-grid-container">
+            <div class="sell-media-grid-container" id="sell-media-grid-container">
                 <?php if ( have_posts() ) : ?>
                     <?php rewind_posts(); ?>
                     <?php $i = 0; ?>
