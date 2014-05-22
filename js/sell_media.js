@@ -303,12 +303,11 @@ jQuery(document).ready(function($){
 
         // set variables for use below
         var selector = '.add-to-lightbox';
-        var value = $(selector).data('id');
-        var unique_selector = selector + '[data-id=' + value + ']';
 
         // check if item exits in lightbox already, add class
         $.each(lightbox_data, function(i, item) {
-            if (item == value) {
+            var unique_selector = selector + '[data-id=' + item + ']';
+            if (lightbox_data.indexOf(item) > -1) {
                 $(unique_selector).addClass('saved-to-lightbox');
                 $(unique_selector).text(sell_media.remove_text);
             }
@@ -316,6 +315,7 @@ jQuery(document).ready(function($){
 
         // add or remove items from lightbox on click
         $(selector).on('click',function() {
+            var value = $(this).data('id');
             if ($(this).hasClass('saved-to-lightbox')) {
                 $(this).text(sell_media.save_text);
                 // delete the item
