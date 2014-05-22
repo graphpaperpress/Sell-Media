@@ -10,8 +10,8 @@
 get_header(); global $wp_query; ?>
     <div id="sell-media-archive" class="sell-media">
         <div id="content" role="main">
-            <header class="entry-header">
-                <h1 class="entry-title">
+            <header class="page-header">
+                <h1 class="page-title">
                     <?php $taxonomy = get_query_var( 'taxonomy' ); ?>
                     <?php if ( $taxonomy && ! empty( $wp_query->queried_object->name ) ) : ?>
                         <?php echo ucfirst( $taxonomy ); ?>: <?php echo ucfirst( $wp_query->queried_object->name ); ?>
@@ -23,7 +23,7 @@ get_header(); global $wp_query; ?>
                 </h1>
             </header>
 
-            <div class="sell-media-grid-container" id="sell-media-grid-container">
+            <div id="sell-media-grid-container" class="sell-media-grid-container">
                 <?php if ( have_posts() ) : ?>
                     <?php rewind_posts(); ?>
                     <?php $i = 0; ?>

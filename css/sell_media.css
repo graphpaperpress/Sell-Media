@@ -407,6 +407,7 @@ table.sell-media-products {
 }
 .sell-media-dialog-box legend {
   margin: 0 0 5px;
+  font-size: 12px;
 }
 .sell-media-dialog-box .total-container {
   margin: 20px 0;
@@ -774,7 +775,7 @@ input.wpas-text[type=text] {
     background: #d9534f;
     text-align: center;
     white-space: nowrap;
-    vertical-align: middle;
+    vertical-align: baseline;
     border-radius: .25em;
 }
 
