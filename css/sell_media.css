@@ -309,6 +309,15 @@ table.sell-media-products {
 .sell-media-pagination-container .page-numbers {
   padding: 0 3px;
 }
+.sell-media-breadcrumbs li {
+  display: inline;
+  font-size: 11px;
+  list-style-type: none;
+}
+.sell-media-breadcrumbs .raquo {
+  margin: 0 6px;
+  vertical-align: middle;
+}
 
 /*= Cart
 -------------------------------------------------------------- */

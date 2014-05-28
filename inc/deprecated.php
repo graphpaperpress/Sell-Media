@@ -18,13 +18,3 @@ function sell_media_countries_list(){
 function sell_media_us_states_list( $current=null, $req=false ){
     return false;
 }
-function sell_media_item_min_price( $post_id=null, $echo=true, $key='price' ){
-
-    $price = Sell_Media()->products->get_lowest_price( $post_id );
-
-    if ( $echo ){
-        echo $price;
-    } else {
-        return $price;
-    }
-}
