@@ -276,3 +276,24 @@ function sell_media_taxonomy_breadcrumb() {
     // Display the current term in the breadcrumb
     echo '<li><a href="' . esc_url( get_term_link( $term->term_id, get_query_var( 'taxonomy' ) ) ) . '">' . $term->name . '</a></li>';
 }
+
+
+/**
+ * Count posts in a category, including subcategories
+ *
+ * @since 1.9.5
+ */
+function sell_media_get_cat_post_count( $category_id, $taxonomy='collection' ) {
+
+    $cat = get_category( $category_id );
+    $count = 0;
+    $args = array(
+      'child_of' => $category_id,
+    );
+    $tax_terms = get_terms( $taxonomy, $args );
+    foreach ( $tax_terms as $tax_term ) {
+        $count += $tax_term->count;
+    }
+
+    return $count;
+}
