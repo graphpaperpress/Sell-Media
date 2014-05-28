@@ -82,7 +82,7 @@ $settings = sell_media_get_plugin_options();
                                 <span class="item-overlay">
                                     <div class="collection-details">
                                         <h3><a href="<?php echo get_term_link( $category->slug, $taxonomy ); ?>"><?php echo $category->name; ?></a></h3>
-                                        <span class="collection-count"><span class="count"><?php echo sell_media_get_cat_post_count( $term->term_id ); ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo $category->name; ?></span><?php _e(' collection', 'sell_media'); ?></span>
+                                        <span class="collection-count"><span class="count"><?php if ( $category->count ) echo $category->count; else echo sell_media_get_cat_post_count( $term->term_id ); ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo $category->name; ?></span><?php _e(' collection', 'sell_media'); ?></span>
                                         <span class="collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price"><?php echo sell_media_get_currency_symbol(); ?><?php echo sell_media_item_min_price( $post->ID ); ?></span></span>
                                     </div>
                                 </span>

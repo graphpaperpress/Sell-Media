@@ -136,6 +136,10 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 function sell_media_item_min_price( $post_id=null ){
 
     $price = Sell_Media()->products->get_lowest_price( $post_id );
+    if ( empty( $price ) ) {
+        $settings = sell_media_get_plugin_options();
+        $price = $settings->default_price;
+    }
 
     return $price;
 
