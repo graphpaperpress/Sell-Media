@@ -27,10 +27,13 @@ function sell_media_list_downloads_shortcode( $tx=null ) {
     if ( $tx ) {
         $post_id = Sell_Media()->payments->get_id_from_tx( $transaction_id=$tx );
         $html = null;
-        $html = Sell_Media()->payments->get_payment_products_formatted( $post_id );
+        $html = apply_filters( 'sell_media_thanks_filter', $html );
+        $html .='<p class="sell-media-thanks-message">';
+        $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
         $html .= '<script>sellMediaCart.empty();</script>';
-        return '<p class="sell-media-thanks-message">' . $html . '</p>';
-        do_action( 'sell_media_thanks_hook_below' );
+        $html .= '</p>';
+        $html = apply_filters( 'sell_media_thanks_filter_below', $html );
+        return $html;
     } else {
         return false;
     }
@@ -75,7 +78,7 @@ function sell_media_item_shortcode( $atts ) {
         ), $atts )
     );
 
-    $image = sell_media_item_icon( $id, 'medium', false );
+    $image = sell_media_item_icon( $id, $size, false );
 
     $button = '<a href="#" data-sell_media-product-id="' . esc_attr( $id ) . '" data-sell_media-thumb-id="' . esc_attr( $id ) . '" class="sell-media-cart-trigger sell-media-' . esc_attr( $style ) . '">' . $text . '</a>';
 
@@ -100,16 +103,15 @@ function sell_media_all_items_shortcode( $atts ){
     $args = array(
         'posts_per_page' => -1,
         'post_type' => 'sell_media_item'
-        );
+    );
 
     if ( $collection ){
         $args = array(
-                'posts_per_page' => $show,
-                'taxonomy' => 'collection',
-                'field' => 'slug',
-                'term' => $collection
-                );
-
+            'posts_per_page' => $show,
+            'taxonomy' => 'collection',
+            'field' => 'slug',
+            'term' => $collection
+        );
     }
 
     $posts = New WP_Query( $args );
@@ -122,8 +124,8 @@ function sell_media_all_items_shortcode( $atts ){
                     <div class="item-inner">
                         <a href="<?php echo get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                         <span class="item-overlay">
-                            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                            <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase' ) ); ?>
+                            <h3><a href="<?php the_permalink(); ?>"><?php echo get_the_title( $post ->ID); ?></a></h3>
+                            <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy' ) ); ?>
                             <?php do_action( 'sell_media_item_overlay' ); ?>
                         </span>
                     </div>

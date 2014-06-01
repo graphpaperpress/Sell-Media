@@ -26,7 +26,7 @@ Class SellMediaSearch {
      * @since 1.8.7
      */
     public function args(){
-        
+
         // setup our WP Advanced Search arguments
         $args = array();
         $args['wp_query'] = array(
@@ -88,7 +88,7 @@ Class SellMediaSearch {
         static $used;
         if ( ! isset( $used ) ) {
             $used = true;
-        
+
             // enqueue chosen scripts
             wp_enqueue_script( 'sell_media-chosen' );
             wp_enqueue_style( 'sell_media-chosen' );
@@ -136,12 +136,12 @@ Class SellMediaSearch {
             $temp_query = $wp_query;
             $wp_query = $sell_media_search_object->query();
 
-            echo '<div id="sell-media-archive" class="sell-media">';
+            echo '<div id="sell-media-archive" class="sell-media sell-media-search">';
 
             if ( have_posts() ) :
 
                 echo '<p class="sell-media-search-results-total">' . __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts . '</p>';
-                
+
                 echo '<div class="sell-media-grid-container">';
                 $i = 0;
                 while ( have_posts() ) : the_post(); $i++;
@@ -151,7 +151,8 @@ Class SellMediaSearch {
                             <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                             <span class="item-overlay">
                                 <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Purchase', 'sell_media' ) ); ?>
+                                <a href="javascript:void(0);" title="<?php _e( 'Save', 'sell_media' ); ?>" class="add-to-lightbox" id="lightbox-<?php echo $post->ID; ?>" data-id="<?php echo $post->ID; ?>"><?php _e( 'Save', 'sell_media' ); ?></a>
+                                <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy', 'sell_media' ) ); ?>
                                 <?php do_action( 'sell_media_item_overlay' ); ?>
                             </span>
                         </div>
@@ -199,7 +200,7 @@ Class SellMediaSearch {
             $orientation = get_query_var( 'orientation' );
             $post_ids = Sell_Media()->images->get_posts_by_orientation( $orientation );
             $query->set( 'post__in', $post_ids );
-            
+
         }
     }
 

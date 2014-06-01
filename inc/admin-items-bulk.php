@@ -109,7 +109,7 @@ function sell_media_uploader_multiple(){
         $product_args = array(
             'post_title' => $attachment['title'],
             'post_content' => $attachment['description'],
-            'post_status' => 'publish',
+            'post_status' => apply_filters( 'sell_media_post_status', 'publish' ),
             'post_type' => 'sell_media_item',
             'post_date_gmt' => date( 'Y-m-d H:i:s' )
         );

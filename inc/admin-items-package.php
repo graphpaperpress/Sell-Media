@@ -105,7 +105,7 @@ function sell_media_package_update(){
 
     $new_post = array(
         'post_title' => $_POST['name'],
-        'post_status' => 'publish',
+        'post_status' => apply_filters( 'sell_media_post_status', 'publish' ),
         'post_date' => date( 'Y-m-d H:i:s' ),
         'post_type' => 'sell_media_item'
     );
@@ -119,7 +119,7 @@ function sell_media_package_update(){
     do_action( 'sell_media_package_uploader_additional_fields_meta', $post_id, $_POST );
 
     echo $post_id;
-    
+
     die();
 }
 add_action( 'wp_ajax_sell_media_package_update', 'sell_media_package_update' );

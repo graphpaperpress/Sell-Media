@@ -128,6 +128,25 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 
 
 /**
+ * Retrives the lowest price available of an item from the price groups
+ *
+ * @param $post_id (int) The post_id, must be a post type of "sell_media_item"
+ * @return Lowest price of an item
+ */
+function sell_media_item_min_price( $post_id=null ){
+
+    $price = Sell_Media()->products->get_lowest_price( $post_id );
+    if ( empty( $price ) ) {
+        $settings = sell_media_get_plugin_options();
+        $price = $settings->default_price;
+    }
+
+    return $price;
+
+}
+
+
+/**
  * Optionally prints the plugin credit
  * Off by default in compliance with WordPress best practices
  * http://wordpress.org/extend/plugins/about/guidelines/
@@ -229,3 +248,56 @@ function sell_media_cart_dialog(){
     <?php endif;
 }
 add_action( 'wp_footer', 'sell_media_cart_dialog' );
+
+
+/**
+ * Taxonomy Breadcrumbs
+ *
+ * @since 1.9.5
+ */
+function sell_media_taxonomy_breadcrumb() {
+    // Get the current term
+    $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
+
+    // Create a list of all the term's parents
+    $parent = $term->parent;
+    while ( $parent ) :
+        $parents[]  = $parent;
+        $new_parent = get_term_by( 'id', $parent, get_query_var( 'taxonomy' ) );
+        $parent     = $new_parent->parent;
+    endwhile;
+
+    if ( ! empty( $parents ) ) :
+        $parents = array_reverse( $parents );
+
+        // For each parent, create a breadcrumb item
+        foreach ( $parents as $parent ) :
+            $item   = get_term_by( 'id', $parent, get_query_var( 'taxonomy' ) );
+            echo '<li><a href="' . esc_url( get_term_link( $item->term_id, get_query_var( 'taxonomy' ) ) ) . '">' . $item->name . '</a> <span class="raquo">&raquo;</span> </li>';
+        endforeach;
+    endif;
+
+    // Display the current term in the breadcrumb
+    echo '<li><a href="' . esc_url( get_term_link( $term->term_id, get_query_var( 'taxonomy' ) ) ) . '">' . $term->name . '</a></li>';
+}
+
+
+/**
+ * Count posts in a category, including subcategories
+ *
+ * @since 1.9.5
+ */
+function sell_media_get_cat_post_count( $category_id, $taxonomy='collection' ) {
+
+    $cat = get_category( $category_id );
+    $count = 0;
+    $args = array(
+      'child_of' => $category_id,
+    );
+    $tax_terms = get_terms( $taxonomy, $args );
+    foreach ( $tax_terms as $tax_term ) {
+        $count += $tax_term->count;
+    }
+
+    return $count;
+}

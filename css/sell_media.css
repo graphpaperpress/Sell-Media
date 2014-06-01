@@ -132,6 +132,7 @@ table.sell-media-products {
 }
 .sell-media {
   width: 100%;
+  margin: 0 auto;
 }
 .has-sidebar .sell-media #content, .sell-media #content {
   margin: 10px 0;
@@ -187,7 +188,6 @@ table.sell-media-products {
   display: block;
   max-width: 100%;
   height: auto;
-  margin-bottom: 4px;
 }
 .sell-media .sell-media-content-text {
   margin: 10px 0;
@@ -233,6 +233,7 @@ table.sell-media-products {
 /*= Archives
 -------------------------------------------------------------- */
 .sell-media .sell-media-grid {
+  position: relative;
   float: left;
   margin: 0 2% 2% 0;
   width: 32%;
@@ -246,12 +247,60 @@ table.sell-media-products {
 .sell-media .sell-media-grid:nth-child(3n+1) {
   clear: left;
 }
+.sell-media .sell-media-grid .item-inner {
+  background: #000;
+}
+.sell-media .sell-media-grid .item-inner img {
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+  -webkit-backface-visibility: hidden; /* fixes chrome jump */
+}
+.sell-media .sell-media-grid .item-overlay {
+  display: none;
+}
+.sell-media .sell-media-grid:hover .item-overlay {
+  display: inline;
+}
+.sell-media .sell-media-grid:hover .item-inner img {
+  opacity: .3;
+}
+.sell-media .sell-media-grid .item-overlay a {
+  color: #ccc;
+  color: rgba(255,255,255,.7);
+  -webkit-transition:color .2s ease-in;
+  -moz-transition:color .2s ease-in;
+  -o-transition:color .2s ease-in;
+  transition:color .2s ease-in;
+  text-decoration: none;
+}
+.sell-media .sell-media-grid .item-overlay a:hover {
+  color: #fff;
+}
 .sell-media .sell-media-grid h3 {
-  float: left;
   margin: 0;
+  position: absolute;
+  top: 40%;
+  text-align: center;
+  width: 100%;
+}
+.sell-media .sell-media-grid .add-to-lightbox,
+.sell-media .sell-media-grid .remove-lightbox,
+.sell-media .sell-media-grid .sell-media-text {
+  position: absolute;
+  bottom: 10px;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-size: .8rem;
+  letter-spacing: 1px;
+}
+.sell-media .sell-media-grid .add-to-lightbox,
+.sell-media .sell-media-grid .remove-lightbox {
+  left: 10px;
 }
 .sell-media .sell-media-grid .sell-media-text {
-  float: right;
+  right: 10px;
 }
 .sell-media-pagination-container {
   clear: both;
@@ -259,6 +308,15 @@ table.sell-media-products {
 }
 .sell-media-pagination-container .page-numbers {
   padding: 0 3px;
+}
+.sell-media-breadcrumbs li {
+  display: inline;
+  font-size: 11px;
+  list-style-type: none;
+}
+.sell-media-breadcrumbs .raquo {
+  margin: 0 6px;
+  vertical-align: middle;
 }
 
 /*= Cart
@@ -358,6 +416,7 @@ table.sell-media-products {
 }
 .sell-media-dialog-box legend {
   margin: 0 0 5px;
+  font-size: 12px;
 }
 .sell-media-dialog-box .total-container {
   margin: 20px 0;
@@ -549,7 +608,7 @@ input.wpas-text[type=text] {
   cursor: pointer;
 }
 
-/*= Shortcode all
+/*= Shortcode sell_media_shortcode_all
 -------------------------------------------------------------- */
 .sell-media-shortcode-all h3 {
   float: left;
@@ -563,7 +622,7 @@ input.wpas-text[type=text] {
   font-size: 1em;
 }
 
-/*= sell_media_item
+/*= Shortcode sell_media_item
 ------------------------------------------------------------------- */
 .sell-media-item-container {
   display: inline-block;
@@ -572,7 +631,7 @@ input.wpas-text[type=text] {
   display: block;
 }
 
-/*= sell_media_download_list shortcode
+/*= Shortcode sell_media_download_list
 ------------------------------------------------------------------- */
 .downloads {
   margin: 1em 0;
@@ -708,6 +767,25 @@ input.wpas-text[type=text] {
 .sell-media-grid-container:after,
 .wp-advanced-search:after {
     clear: both;
+}
+
+/*= Lightbox
+-------------------------------------------------------------- */
+.lightbox-counter {
+    margin-left: 4px;
+}
+.sell-media-label,
+.lightbox-counter {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    line-height: 1;
+    color: #fff;
+    background: #d9534f;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
 }
 
 /*= Media queries

@@ -24,7 +24,7 @@ function sell_media_scripts( $hook ) {
 
     $settings = sell_media_get_plugin_options();
 
-    // enqueue 
+    // enqueue
     wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
     wp_enqueue_script( 'sellMediaCart', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
     wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', null, SELL_MEDIA_VERSION );
@@ -76,9 +76,11 @@ function sell_media_scripts( $hook ) {
         'shipping' => apply_filters( 'sell_media_shipping', 0 ), // should PayPal force buyers add address
         'cart_error' => __( 'There was an error loading the cart data. Please contact the site owner.', 'sell_media' ),
         'checkout_text' => __( 'Checkout Now', 'sell_media' ),
-        'checkout_wait_text' => __( 'Please wait...', 'sell_media' )
+        'checkout_wait_text' => __( 'Please wait...', 'sell_media' ),
+        'remove_text' => __( 'Remove', 'sell_media' ),
+        'save_text' => __( 'Save', 'sell_media' )
     ) );
-    
+
     do_action( 'sell_media_scripts_hook' );
 }
 add_action( 'wp_enqueue_scripts', 'sell_media_scripts' );
