@@ -33,7 +33,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 
 						<?php
 						if ( $imgdata['image_meta']['aperture'] ) { ?>
-							<li class="aperture"><div class="genericon genericon-small genericon-aside"></div><span class="exif-title"><?php _e( 'Apperture ', 'sell_media' ); ?></span><?php echo 'f/' .  $imgdata['image_meta']['aperture']; ?></li>
+							<li class="aperture"><div class="genericon genericon-small genericon-aside"></div><span class="exif-title"><?php _e( 'Aperture ', 'sell_media' ); ?></span><?php echo 'f/' .  $imgdata['image_meta']['aperture']; ?></li>
 						<?php } ?>
 
 						<?php
@@ -86,7 +86,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 
 				<?php
 				echo $after_widget;
-			
+
 	 		}
 		}
 
