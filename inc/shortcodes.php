@@ -93,7 +93,7 @@ add_shortcode( 'sell_media_item', 'sell_media_item_shortcode' );
  * @since 1.0.4
  */
 function sell_media_all_items_shortcode( $atts ){
-
+    $settings = sell_media_get_plugin_options();
     extract( shortcode_atts( array(
         'collection' => null,
         'show' => -1
@@ -110,7 +110,8 @@ function sell_media_all_items_shortcode( $atts ){
             'posts_per_page' => $show,
             'taxonomy' => 'collection',
             'field' => 'slug',
-            'term' => $collection
+            'term' => $collection,
+            'orderby' => sell_media_order_by( $settings['order_by'] )
         );
     }
 
