@@ -34,10 +34,11 @@ function sell_media_lightbox_generator() {
 		$posts = New WP_Query( $args );
 		if ( $posts->posts ) {
             $html .= '<div class="sell-media-grid-container">';
+            $thumbSize = (has_image_size('sell_media_item')) ? 'sell_media_item' : 'medium';
             foreach( $posts->posts as $post ) {
                 $html .= '<div class="sell-media-grid">';
     				    $html .= '<div class="item-inner">';
-    				    $html .= '<a href="'. get_permalink( $post->ID ) . '" class="lightbox-id" data-id="' . $post->ID . '">' . sell_media_item_icon( $post->ID, 'medium', false ) . '</a>';
+    				    $html .= '<a href="'. get_permalink( $post->ID ) . '" class="lightbox-id" data-id="' . $post->ID . '">' . sell_media_item_icon( $post->ID, $thumbSize, false ) . '</a>';
     				    $html .= '<span class="item-overlay">';
                 $html .= '<h3><a href="' . get_permalink( $post->ID ) . '">' . get_the_title( $post->ID ) . '</a></h3>';
                 $html .= '<a href="javascript:void(0);" data-id="' . $post->ID . '" class="remove-lightbox">' . __( 'Remove', 'sell_media' ) . '</a>';
