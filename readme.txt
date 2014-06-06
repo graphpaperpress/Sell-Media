@@ -227,6 +227,7 @@ Action hooks available:
 == Changelog ==
 
 = 1.9.6 =
+* Buy and Save buttons added back to archives
 * Password protection to childs issue fix
 * Custom thumbnail size parameter added
 * Items order added in all items shortcode
