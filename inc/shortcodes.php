@@ -111,7 +111,7 @@ function sell_media_all_items_shortcode( $atts ){
             'taxonomy' => 'collection',
             'field' => 'slug',
             'term' => $collection,
-            'orderby' => sell_media_order_by( $settings['order_by'] )
+            'orderby' => $settings['order_by']
         );
     }
 
