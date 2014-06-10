@@ -16,13 +16,13 @@ $settings = sell_media_get_plugin_options();
             <header class="page-header">
                 <h1 class="page-title">
                     <?php
-                    if ( !is_post_type_archive( 'sell_media_item' ) ) {
+                    if ( ! is_post_type_archive( 'sell_media_item' ) ) {
                         $taxonomy = get_query_var( 'taxonomy' );
                         $term = get_term_by( 'slug', get_query_var( 'term' ), $taxonomy );
                         $term_parent = get_term( $term->parent, $taxonomy );
                     }
 
-                    if ( !is_post_type_archive( 'sell_media_item' ) && $taxonomy && ! empty( $term ) ) :
+                    if ( ! is_post_type_archive( 'sell_media_item' ) && $taxonomy && ! empty( $term ) ) :
                         echo '<ul class="sell-media-breadcrumbs">';
                         echo '<li><a href="'. site_url( 'collections' ). '" title="' . __( 'Collections', 'sell_media' ) . '">' . __( 'Collections', 'sell_media' ) . '</a> <span class="raquo">&raquo;</span> </li>';
                         sell_media_taxonomy_breadcrumb();
@@ -45,7 +45,7 @@ $settings = sell_media_get_plugin_options();
                  * Retrieves all the terms from the taxonomy collection
                  * http://codex.wordpress.org/Function_Reference/get_categories
                  */
-            if ( is_post_type_archive( 'sell_media_item' ) ) :
+            if ( ! is_post_type_archive( 'sell_media_item' ) ) :
 
                 if ( get_term_children( $term->term_id, $taxonomy ) ) :
 
