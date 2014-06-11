@@ -16,11 +16,13 @@ $settings = sell_media_get_plugin_options();
             <header class="page-header">
                 <h1 class="page-title">
                     <?php
-                    $taxonomy = get_query_var( 'taxonomy' );
-                    $term = get_term_by( 'slug', get_query_var( 'term' ), $taxonomy );
-                    $term_parent = get_term( $term->parent, $taxonomy );
+                    if ( ! is_post_type_archive( 'sell_media_item' ) ) {
+                        $taxonomy = get_query_var( 'taxonomy' );
+                        $term = get_term_by( 'slug', get_query_var( 'term' ), $taxonomy );
+                        $term_parent = get_term( $term->parent, $taxonomy );
+                    }
 
-                    if ( $taxonomy && ! empty( $term ) ) :
+                    if ( ! is_post_type_archive( 'sell_media_item' ) && $taxonomy && ! empty( $term ) ) :
                         echo '<ul class="sell-media-breadcrumbs">';
                         echo '<li><a href="'. site_url( 'collections' ). '" title="' . __( 'Collections', 'sell_media' ) . '">' . __( 'Collections', 'sell_media' ) . '</a> <span class="raquo">&raquo;</span> </li>';
                         sell_media_taxonomy_breadcrumb();
@@ -43,6 +45,7 @@ $settings = sell_media_get_plugin_options();
                  * Retrieves all the terms from the taxonomy collection
                  * http://codex.wordpress.org/Function_Reference/get_categories
                  */
+            if ( ! is_post_type_archive( 'sell_media_item' ) ) :
 
                 if ( get_term_children( $term->term_id, $taxonomy ) ) :
 
@@ -92,6 +95,7 @@ $settings = sell_media_get_plugin_options();
                     }
                     // Reset Post Data
                     wp_reset_postdata();
+                endif;
 
                 else : ?>
 
@@ -104,6 +108,8 @@ $settings = sell_media_get_plugin_options();
                                     <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                                     <span class="item-overlay">
                                         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                        <a href="javascript:void(0);" title="<?php _e( 'Save', 'sell_media' ); ?>" class="add-to-lightbox" id="lightbox-<?php echo $post->ID; ?>" data-id="<?php echo $post->ID; ?>"><?php _e( 'Save', 'sell_media' ); ?></a>
+                                        <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy' ) ); ?>
                                         <?php do_action( 'sell_media_item_overlay' ); ?>
                                     </span>
                                 </div>

@@ -183,4 +183,4 @@ function sell_media_collection_password_check( $query ){
         return $query;
     }
 }
-//add_action( 'pre_get_posts', 'sell_media_collection_password_check' );
+add_action( 'pre_get_posts', 'sell_media_collection_password_check' );

@@ -136,7 +136,7 @@ Class SellMediaSearch {
             $temp_query = $wp_query;
             $wp_query = $sell_media_search_object->query();
 
-            echo '<div id="sell-media-archive" class="sell-media sell-media-search">';
+            echo '<div id="sell-media-archive" class="sell-media sell-media-search-results">';
 
             if ( have_posts() ) :
 
