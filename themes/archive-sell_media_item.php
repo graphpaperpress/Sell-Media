@@ -45,9 +45,7 @@ $settings = sell_media_get_plugin_options();
                  * Retrieves all the terms from the taxonomy collection
                  * http://codex.wordpress.org/Function_Reference/get_categories
                  */
-            if ( ! is_post_type_archive( 'sell_media_item' ) ) :
-
-                if ( get_term_children( $term->term_id, $taxonomy ) ) :
+            if ( ! is_post_type_archive( 'sell_media_item' ) && get_term_children( $term->term_id, $taxonomy ) ) :
 
                     $args = array(
                         'type'          => 'sell_media_item',
@@ -95,7 +93,6 @@ $settings = sell_media_get_plugin_options();
                     }
                     // Reset Post Data
                     wp_reset_postdata();
-                endif;
 
                 else : ?>
 
