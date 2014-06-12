@@ -238,7 +238,7 @@ function sell_media_cart_dialog(){
         <div id="sell-media-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
     <?php endif; ?>
     <?php if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) : ?>
-        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box" style="display:none">
+        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms" style="display:none">
             <span class="close">&times;</span>
             <div class="content">
                 <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
