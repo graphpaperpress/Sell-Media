@@ -226,6 +226,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.9 =
+* Larger images sizes available for purchase bug fix
+
 = 1.9.8 =
 * Bugfix on collection archive template
 

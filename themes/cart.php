@@ -84,7 +84,11 @@ if ( $licenses ) {
                                         $name = $v['name'];
                                         $dimensions = '';
                                     }
-                                    echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                                    $images_obj = Sell_Media()->images;
+                                    $download_sizes = $images_obj->get_downloadable_size( $_POST['product_id'], null, true );
+                                    if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
+                                        echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                                    }
                                 }
                             ?>
                         </select>
