@@ -98,7 +98,7 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 * **Thanks Shortcode** - (REQUIRED) Create a page called "Thanks" and add this shortcode to it: `[sell_media_thanks]`
 * **Buy Button Shortcode** - (OPTIONAL) Used for displaying specific items for sale: `[sell_media_item id="1893" text="Purchase" style="button" size="medium"]` Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"
 * **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: `[sell_media_searchform]`
-* **All items shortcode** - (OPTIONAL) Displays all (or a certain collection) items in a grid view: `[sell_media_all_items collection="type-your-collection-slug-here"]`
+* **All items shortcode** - (OPTIONAL) Displays all (or a certain collection) items in a grid view: `[sell_media_all_items collection="type-your-collection-slug-here" show="type-number-of-items-per-page"]`
 * **Download list shortcode** - (OPTIONAL) List logged in users downloads: `[sell_media_download_list]`
 
 
@@ -228,6 +228,7 @@ Action hooks available:
 
 = 1.9.9 =
 * Larger images sizes available for purchase bug fix
+* All items shortcode paging bug fix
 
 = 1.9.8 =
 * Bugfix on collection archive template

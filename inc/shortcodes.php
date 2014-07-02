@@ -93,16 +93,24 @@ add_shortcode( 'sell_media_item', 'sell_media_item_shortcode' );
  * @since 1.0.4
  */
 function sell_media_all_items_shortcode( $atts ){
+    global $paged;
+    if ( get_query_var('paged') ) {
+        $paged = get_query_var('paged');
+    } elseif ( get_query_var('page') ) {
+        $paged = get_query_var('page');
+    } else {
+        $paged = 1;
+    }
     $settings = sell_media_get_plugin_options();
     extract( shortcode_atts( array(
         'collection' => null,
         'show' => -1
         ), $atts )
     );
-
     $args = array(
-        'posts_per_page' => -1,
-        'post_type' => 'sell_media_item'
+        'posts_per_page' => $show,
+        'post_type' => 'sell_media_item',
+        'paged' => $paged
     );
 
     if ( $collection ){
@@ -111,30 +119,36 @@ function sell_media_all_items_shortcode( $atts ){
             'taxonomy' => 'collection',
             'field' => 'slug',
             'term' => $collection,
-            'orderby' => $settings['order_by']
+            'orderby' => $settings->order_by,
+            'paged' => $paged
         );
     }
+    $wp_query = null;
 
-    $posts = New WP_Query( $args );
+    $wp_query = new WP_Query();
+    $wp_query->query( $args );
     ob_start(); ?>
+    <?php if ( $wp_query->have_posts() ) : ?>
     <div class="sell-media">
         <div class="sell-media-grid-container">
             <?php $i = 0; ?>
-            <?php foreach( $posts->posts as $post ) : $i++; ?>
+            <?php while ( $wp_query->have_posts() ) : $wp_query->the_post(); $i++; ?>
                 <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
                     <div class="item-inner">
-                        <a href="<?php echo get_permalink( $post->ID ); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
+                        <a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php sell_media_item_icon( get_the_ID(), apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                         <span class="item-overlay">
-                            <h3><a href="<?php echo get_permalink( $post->ID ); ?>"><?php echo get_the_title( $post ->ID); ?></a></h3>
-                            <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy' ) ); ?>
+                            <h3><a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php echo get_the_title( get_the_ID() ); ?></a></h3>
+                            <?php sell_media_item_buy_button( get_the_ID(), 'text', __( 'Buy' ) ); ?>
                             <?php do_action( 'sell_media_item_overlay' ); ?>
                         </span>
                     </div>
                 </div>
-            <?php endforeach; ?>
-            <?php sell_media_pagination_filter(); ?>
+            <?php //endforeach; ?>
+            <?php endwhile;  wp_reset_query(); $args = null; ?>
+            <?php sell_media_pagination_filter( $wp_query->max_num_pages ); ?>
         </div><!-- .sell-media-grid-container -->
     </div><!-- #sell-media-shortcode-all .sell_media -->
+    <?php endif; ?>
     <?php return ob_get_clean();
 }
 add_shortcode( 'sell_media_all_items', 'sell_media_all_items_shortcode' );
