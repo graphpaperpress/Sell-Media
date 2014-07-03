@@ -300,7 +300,7 @@ function sell_media_details_meta_box( $fields=null ) {
                     }
                     ?>
                     <select name="_sell_media_price_group">
-                        <option><?php _e("Select a price group"); ?></option>
+                        <option value="0"><?php _e("Select a price group"); ?></option>
                         <?php foreach( get_terms( 'price-group', array('hide_empty'=>false,'parent'=>0) ) as $term ) : ?>
                             <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
                         <?php endforeach; ?>
@@ -455,7 +455,7 @@ function sell_media_save_custom_meta( $post_id ) {
         }
     }
 
-    if ( ! empty( $_POST['_sell_media_price_group'] ) ){
+    if ( "" != $_POST['_sell_media_price_group'] ) {
         wp_set_post_terms( $post_id, $_POST['_sell_media_price_group'], 'price-group' );
     }
 
