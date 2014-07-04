@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Advanced Search 
+ * WP Advanced Search
  *
  * A PHP framework for building advanced search forms in WordPress
  *
@@ -59,7 +59,7 @@ if (!class_exists('WP_Advanced_Search')) {
                         $this->post_types = array($args['wp_query']['post_type']);
                 }
             }
-            if (isset($args['form'])) 
+            if (isset($args['form']))
                 $this->form_args = $args['form'];
             if (isset($args['fields']))
                 $this->fields = $args['fields'];
@@ -101,7 +101,7 @@ if (!class_exists('WP_Advanced_Search')) {
                                 $this->meta_keys[$meta]['compare'] = $operator;
                                 $this->meta_keys[$meta]['data_type'] = $data_type;
                             }
-                            break;  
+                            break;
                         case 'orderby':
                             if (isset($field['orderby_values']) && is_array($field['orderby_values'])) {
                                 foreach ($field['orderby_values'] as $k=>$v) {
@@ -113,7 +113,7 @@ if (!class_exists('WP_Advanced_Search')) {
                                     }
                                 }
                             }
-                            break;  
+                            break;
                     }
                 }
             }
@@ -129,13 +129,18 @@ if (!class_exists('WP_Advanced_Search')) {
             global $post;
             global $wp_query;
 
+            if( ! empty( $post ) ) {
+                $action = get_permalink( $post->ID );
+            } else {
+                $action = '';
+            }
             $defaults = array(
-                'action' => get_permalink( $post->ID ),
-                'method' => 'GET',
-                'id' => 'wp-advanced-search',
-                'name' => 'wp-advanced-search',
-                'class' => 'wp-advanced-search'
-            );
+                    'action' => $action,
+                    'method' => 'GET',
+                    'id' => 'wp-advanced-search',
+                    'name' => 'wp-advanced-search',
+                    'class' => 'wp-advanced-search'
+                );
 
             $args = wp_parse_args($this->form_args, $defaults);
             $fields = $this->fields;
@@ -154,8 +159,8 @@ if (!class_exists('WP_Advanced_Search')) {
             $output = '<form id="'.$args['id'].'" name="'.$args['name'].'" class="'.$args['class'].'" method="'.$args['method'].'" action="'.$args['action'].'">';
 
                 // URL fix if pretty permalinks are not enabled
-                if ( get_option('permalink_structure') == '' ) { 
-                    $output .= '<input type="hidden" name="page_id" value="'.$post->ID.'">'; 
+                if ( get_option('permalink_structure') == '' ) {
+                    $output .= '<input type="hidden" name="page_id" value="'.$post->ID.'">';
                 }
 
                 foreach ($fields as $field) {
@@ -280,7 +285,7 @@ if (!class_exists('WP_Advanced_Search')) {
          * @since 1.0
          */
         function tax_field( $args ) {
-            $defaults = array( 
+            $defaults = array(
                             'label' => '',
                             'taxonomy' => 'category',
                             'format' => 'select',
@@ -290,7 +295,7 @@ if (!class_exists('WP_Advanced_Search')) {
                             'term_args' => array()
                         );
 
-            $term_defaults = array( 
+            $term_defaults = array(
                             'hide_empty' => false
                         );
 
@@ -309,7 +314,7 @@ if (!class_exists('WP_Advanced_Search')) {
 
             if (isset($args['label'])) {
                 $label = $args['label'];
-            } 
+            }
 
             if (isset($term_args) && is_array($term_args)) {
                 $term_args = wp_parse_args($term_args, $term_defaults);
@@ -319,7 +324,7 @@ if (!class_exists('WP_Advanced_Search')) {
             $term_values = array();
 
             if (isset($terms) && is_array($terms) && (count($terms) < 1)) {
-                $term_objects = get_terms($taxonomy, $term_args); 
+                $term_objects = get_terms($taxonomy, $term_args);
             } else {
                 foreach ($terms as $term_identifier) {
                     $term = get_term_by($term_format, $term_identifier, $taxonomy);
@@ -328,7 +333,7 @@ if (!class_exists('WP_Advanced_Search')) {
                     }
                 }
             }
-                
+
             foreach ($term_objects as $term) {
                 switch($term_format) {
                     case 'id' :
@@ -377,7 +382,7 @@ if (!class_exists('WP_Advanced_Search')) {
             $meta_key = $args['meta_key'];
 
             $field = new WPAS_Field('meta_'.$meta_key, $args);
-            return $field->build_field();           
+            return $field->build_field();
         }
 
 
@@ -385,7 +390,7 @@ if (!class_exists('WP_Advanced_Search')) {
          * Generates an order field
          *
          * @since 1.0
-         */         
+         */
         function order_field( $args ) {
             $defaults = array(
                 'label' => '',
@@ -397,7 +402,7 @@ if (!class_exists('WP_Advanced_Search')) {
             $args = wp_parse_args($args, $defaults);
 
             $field = new WPAS_Field('order', $args);
-            return $field->build_field();               
+            return $field->build_field();
 
         }
 
@@ -405,14 +410,14 @@ if (!class_exists('WP_Advanced_Search')) {
          * Generates an orderby field
          *
          * @since 1.0
-         */         
+         */
         function orderby_field( $args ) {
             $defaults = array('label' => '',
                               'format' => 'select',
-                              'values' => array('ID' => 'ID', 
-                                                'post_author' => 'Author', 
-                                                'post_title' => 'Title', 
-                                                'post_date' => 'Date', 
+                              'values' => array('ID' => 'ID',
+                                                'post_author' => 'Author',
+                                                'post_title' => 'Title',
+                                                'post_date' => 'Date',
                                                 'post_modified' => 'Modified',
                                                 'post_parent' => 'Parent ID',
                                                 'rand' => 'Random',
@@ -432,7 +437,7 @@ if (!class_exists('WP_Advanced_Search')) {
             }
 
             $field = new WPAS_Field('orderby', $args);
-            return $field->build_field();   
+            return $field->build_field();
         }
 
 
@@ -440,7 +445,7 @@ if (!class_exists('WP_Advanced_Search')) {
          * Generates an author field
          *
          * @since 1.0
-         */   
+         */
         function author_field( $args ) {
             $defaults = array(
                     'label' => '',
@@ -485,7 +490,7 @@ if (!class_exists('WP_Advanced_Search')) {
          * Generates a post type field
          *
          * @since 1.0
-         */   
+         */
         function post_type_field( $args ) {
             $defaults = array(
                     'label' => '',
@@ -504,27 +509,27 @@ if (!class_exists('WP_Advanced_Search')) {
             }
 
             if (count($values) < 1) {
-                $post_types = get_post_types(array('public' => true)); 
+                $post_types = get_post_types(array('public' => true));
                 foreach ( $post_types as $post_type ) {
                     $obj = get_post_type_object($post_type);
                     $post_type_id = $obj->name;
                     $post_type_name = $obj->labels->name;
                     $values[$post_type_id] = $post_type_name;
                 }
-            } 
+            }
 
             $args['values'] = $values;
 
             $field = new WPAS_Field('ptype', $args);
             return $field->build_field();
-            
+
         }
 
         /**
          * Generates a date field
          *
          * @since 1.0
-         */   
+         */
         function date_field( $args ) {
             $defaults = array(
             'label' => '',
@@ -536,7 +541,7 @@ if (!class_exists('WP_Advanced_Search')) {
 
             $args = wp_parse_args($args, $defaults);
             extract($args);
- 
+
             $selected_values = array();
 
             switch ($date_type) {
@@ -562,7 +567,7 @@ if (!class_exists('WP_Advanced_Search')) {
             if (empty($values)) {
                 $args['values'] = $d_values;
             }
-        
+
             $args['id'] = $id;
 
             $field = new WPAS_Field($id, $args);
@@ -572,12 +577,12 @@ if (!class_exists('WP_Advanced_Search')) {
 
         /**
          * Generates an HTML content field
-         * 
+         *
          * This "field" is not used for data entry but rather for inserting
          * custom markup within the form body.
          *
          * @since 1.0
-         */   
+         */
         function html_field( $args ) {
             $defaults = array('id'=>1, 'value' => '');
             extract(wp_parse_args($args, $defaults));
@@ -591,12 +596,12 @@ if (!class_exists('WP_Advanced_Search')) {
 
         /**
          * Generates a generic form field
-         * 
+         *
          * Used for creating form fields that do not affect
          * the WP_Query object
          *
          * @since 1.0
-         */   
+         */
         function generic_field( $args ) {
             $defaults = array();
             extract(wp_parse_args($args, $defaults));
@@ -609,12 +614,12 @@ if (!class_exists('WP_Advanced_Search')) {
 
         /**
          * Generates a generic form field
-         * 
+         *
          * Used for creating form fields that do not affect
          * the WP_Query object
          *
          * @since 1.0
-         */  
+         */
         function posts_per_page_field( $args ) {
             $defaults = array(
                 'format' => 'text',
@@ -634,7 +639,7 @@ if (!class_exists('WP_Advanced_Search')) {
         function build_tax_query() {
             $query = $this->wp_query_args;
             $taxonomies = $this->selected_taxonomies;
-            
+
 
             foreach ($taxonomies as $tax => $terms) {
                 $term_slugs = array(); // used when term_format is set to 'name'
@@ -646,7 +651,7 @@ if (!class_exists('WP_Advanced_Search')) {
                     $term_format = 'slug';
 
                 if ($term_format == 'name') {
-                    if (!is_array($terms)) 
+                    if (!is_array($terms))
                         $terms = array($terms);
 
                     foreach ($terms as $term) {
@@ -666,7 +671,7 @@ if (!class_exists('WP_Advanced_Search')) {
                     continue;
                 }
 
-                $this->wp_query_args['tax_query'][] = array(    
+                $this->wp_query_args['tax_query'][] = array(
                                                         'taxonomy' => $tax,
                                                         'field' => $term_format,
                                                         'terms' => $terms,
@@ -685,11 +690,11 @@ if (!class_exists('WP_Advanced_Search')) {
             $meta_keys = $this->selected_meta_keys;
 
             foreach ($meta_keys as $key => $values) {
-                
+
                 if ($this->meta_keys[$key]['compare'] == 'BETWEEN') {
 
                     //Special handling for BETWEEN comparisons.
-                    
+
                     foreach($values as $value) {
                         if (strpos($value, '-')) {
                             $value_one = strstr($value,'-',true);
@@ -701,9 +706,9 @@ if (!class_exists('WP_Advanced_Search')) {
                                 $compare = $this->meta_keys[$key]['compare'];
                                 $values = array($value_one, $value_two);
                             }
-                            
 
-                            $this->wp_query_args['meta_query'][] = array(   
+
+                            $this->wp_query_args['meta_query'][] = array(
                                                                     'key' => $key,
                                                                     'value' => $values,
                                                                     'compare' => $compare,
@@ -717,7 +722,7 @@ if (!class_exists('WP_Advanced_Search')) {
 
                 } else {
 
-                    $this->wp_query_args['meta_query'][] = array(   
+                    $this->wp_query_args['meta_query'][] = array(
                                                             'key' => $key,
                                                             'value' => $values,
                                                             'compare' => $this->meta_keys[$key]['compare'],
@@ -725,7 +730,7 @@ if (!class_exists('WP_Advanced_Search')) {
                                                             );
                 }
             }
-     
+
         }
 
         /**
@@ -787,20 +792,20 @@ if (!class_exists('WP_Advanced_Search')) {
                                 $month = substr(strstr(reset($selected), '-'), 1);
                                 $this->wp_query_args['monthnum'] = $month;
                                 $this->wp_query_args['year'] = $year;
-                                break;      
+                                break;
                             case('date_d') :
                                 $dates = explode('-', reset($selected));
                                 if (isset($dates[0])) $this->wp_query_args['year'] = $dates[0];
                                 if (isset($dates[1])) $this->wp_query_args['month'] = $dates[1];
                                 if (isset($dates[2])) $this->wp_query_args['day'] = $dates[2];
-                                break;  
+                                break;
                             case('posts_per_page') :
                                 $ppp = implode(',', $selected);
                                 $this->wp_query_args['posts_per_page'] = intval($ppp);
-                                break;  
+                                break;
                             case('search_query') :
                                 $this->wp_query_args['s'] = implode(',', $selected);
-                                break;  
+                                break;
                         } // switch
 
                     } // endif
@@ -827,7 +832,7 @@ if (!class_exists('WP_Advanced_Search')) {
                         $this->orderby_relevanssi = $this->wp_query_args['orderby'];
                         $this->wp_query_args['orderby'] = substr($this->wp_query_args['orderby'], 5);
                         break;
-                }   
+                }
             }
         }
 
@@ -915,9 +920,9 @@ if (!class_exists('WP_Advanced_Search')) {
                             'pre' => '',
                             'marker' => '-',
                             'post' => ''
-                        );  
+                        );
 
-            $args = wp_parse_args($args, $defaults);    
+            $args = wp_parse_args($args, $defaults);
             extract($args);
 
             $total = $wp_query->found_posts;
@@ -934,7 +939,7 @@ if (!class_exists('WP_Advanced_Search')) {
                 $range = sprintf('%d%s%d', $i, $marker, $j);
                 if ($j > $total) {
                     $range = $total;
-                } 
+                }
             }
 
             if ($count < 1) {
@@ -1014,7 +1019,7 @@ if (!class_exists('WP_Advanced_Search')) {
             $post_status = (!empty($this->wp_query_args['post_status'])) ? $this->wp_query_args['post_status'] : 'publish';
             $posts = get_posts(array('numberposts' => -1, 'post_type' => $post_type, 'post_status' => $post_status));
             $previous_display = "";
-            $previous_value = "";        
+            $previous_value = "";
             $count = 0;
 
             $dates = array();

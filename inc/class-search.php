@@ -26,14 +26,39 @@ Class SellMediaSearch {
      * @since 1.8.7
      */
     public function args(){
+        /**
+         * build an array of terms that are password protected
+         */
+        foreach( get_terms('collection') as $term_obj ){
+            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+            if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
+        }
+
+
+        if ( ! empty( $exclude_term_ids ) ){
+            // echo 'exclude these ids: ';
+            $tax_query = array(
+                     'relation' => 'AND',
+                     array(
+                         'taxonomy' => 'collection',
+                         'field' => 'id',
+                         'terms' => $exclude_term_ids,
+                         'operator' => 'NOT IN'
+                         )
+                     );
+        } else {
+            $tax_query = array();
+        }
 
         // setup our WP Advanced Search arguments
         $args = array();
         $args['wp_query'] = array(
             'post_type' => 'sell_media_item',
-            'posts_per_page' => get_option( 'posts_per_page' ),
+            /*'posts_per_page' => get_option( 'posts_per_page' ),*/  //pagins issue, hence committed
+            'posts_per_page' => -1,
             'order' => 'DESC',
-            'orderby' => 'date'
+            'orderby' => 'date',
+            'tax_query' => $tax_query
         );
         $args['fields'][] = array(
             'type' => 'search',

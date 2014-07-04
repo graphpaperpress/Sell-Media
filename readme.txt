@@ -229,6 +229,7 @@ Action hooks available:
 = 1.9.9 =
 * Larger images sizes available for purchase bug fix
 * All items shortcode paging bug fix
+* Password protected collections visible in search issue fix
 
 = 1.9.8 =
 * Bugfix on collection archive template
