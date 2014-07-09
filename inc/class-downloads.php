@@ -16,7 +16,7 @@ Class SellMediaDownload {
      * @return void
      */
     public function download(){
-        
+
         if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) ) {
 
             $transaction_id = urldecode( $_GET['download'] );
@@ -60,7 +60,7 @@ Class SellMediaDownload {
                     $this->download_package( $file_path );
                 }
                 do_action( 'sell_media_after_successful_download', $product_id );
-                wp_die();
+                exit();
             } else {
                 do_action( 'sell_media_before_failed_download', $product_id );
                 wp_die( __( 'You do not have permission to download this file', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
@@ -134,7 +134,7 @@ Class SellMediaDownload {
         }
 
         if ( false === $handle ) {
-            return false; 
+            return false;
         }
 
         while ( ! @feof( $handle ) ) {
@@ -142,10 +142,10 @@ Class SellMediaDownload {
             echo $buffer;
 
             if ( $retbytes ) {
-                $cnt += strlen( $buffer ); 
+                $cnt += strlen( $buffer );
             }
         }
-        
+
         $status = @fclose( $handle );
 
         if ( $retbytes && $status ) {

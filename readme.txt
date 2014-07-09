@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
 Tested up to: 3.9.1
-Stable tag: 1.9.8
+Stable tag: 1.9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -230,6 +230,7 @@ Action hooks available:
 * Larger images sizes available for purchase bug fix
 * All items shortcode paging bug fix
 * Password protected collections visible in search issue fix
+* Downloads not working on some Apache servers. Replace wp_die() with exit()
 
 = 1.9.8 =
 * Bugfix on collection archive template
