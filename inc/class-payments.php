@@ -733,7 +733,7 @@ Class SellMediaPayments {
         $products = $this->get_payment_products_unformatted( $payment_id );
 
         $message['from_name'] = get_bloginfo( 'name' );
-        $message['from_email'] = get_option( 'admin_email' );
+        $message['from_email'] = $settings->from_email;
 
         // send admins and buyers different email subject and body
         if ( $email == $message['from_email'] ) {
