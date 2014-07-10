@@ -188,7 +188,7 @@ function sell_media_process_paypal_ipn() {
 
                     // Send email to buyer and admin
                     $email_status = $payments->email_receipt( $payment_id, $_POST['payer_email'] );
-                    $admin_email_status = $payments->email_receipt( $payment_id, get_option( 'admin_email' ) );
+                    $admin_email_status = $payments->email_receipt( $payment_id, $settings->from_email );
 
                     $message .= "{$email_status}\n";
                     $message .= "{$admin_email_status}\n";
@@ -212,7 +212,7 @@ function sell_media_process_paypal_ipn() {
         if ( $settings->test_mode == true ){
             $message .= "\nTest Mode\n";
             $email = array(
-                'to' => get_option('admin_email'),
+                'to' => $settings->from_email,
                 'subject' => 'Verified IPN',
                 'message' =>  $message . "\n" . $listener->getTextReport()
                 );
@@ -225,7 +225,7 @@ function sell_media_process_paypal_ipn() {
          * a good idea to have a developer or sys admin manually investigate any
          * invalid IPN.
          */
-        wp_mail( get_option('admin_email'), 'Invalid IPN', $listener->getTextReport());
+        wp_mail( $settings->from_email, 'Invalid IPN', $listener->getTextReport());
     }
 }
 add_action( 'sell_media_verify_paypal_ipn', 'sell_media_process_paypal_ipn' );
