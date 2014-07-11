@@ -49,6 +49,12 @@ jQuery(document).ready(function($){
      * Check the required fields and change state of add to cart button
      */
     function required_fields(){
+        if ($('#sell_media_product_type_fieldset').length == 0 && $('#sell_media_download_wrapper #sell_media_download_license_fieldset select').length == 0 ) {
+                $('.item_add').prop('disabled', false);
+            } else{
+                $('.item_add').prop('disabled', true);
+            }
+
         var required = $('[required]');
         // bind change for all your just click and keyup for all text fields
         required.bind('change keyup', function() {
