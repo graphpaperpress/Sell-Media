@@ -50,10 +50,10 @@ jQuery(document).ready(function($){
      */
     function required_fields(){
         if ($('#sell_media_product_type_fieldset').length == 0 && $('#sell_media_download_wrapper #sell_media_download_license_fieldset select').length == 0 ) {
-                $('.item_add').prop('disabled', false);
-            } else{
-                $('.item_add').prop('disabled', true);
-            }
+            $('.item_add').prop('disabled', false);
+        } else {
+            $('.item_add').prop('disabled', true);
+        }
 
         var required = $('[required]');
         // bind change for all your just click and keyup for all text fields
@@ -73,7 +73,7 @@ jQuery(document).ready(function($){
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
-     * launch our dialogto load the terms of service.
+     * launch our dialog to load the terms of service.
      */
     $(document).on('click','.sell-media-empty-dialog-trigger',function(){
         popup();

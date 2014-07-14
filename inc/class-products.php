@@ -150,14 +150,14 @@ Class SellMediaProducts {
      * @param $post_id (int) product id of post type "sell_media_item"
      * @return (bool) true/false
      */
-    
+
     public function has_price_group( $post_id=null ){
 
         $term = null; // check all
 
         if ( has_term( $term, 'price-group', $post_id ) ) {
             return true;
-        } elseif ( has_term( $term, 'reprint-price-group', $post_id ) ) {
+        } elseif ( has_term( $term, 'reprints-price-group', $post_id ) ) {
             return true;
         } else {
             return false;

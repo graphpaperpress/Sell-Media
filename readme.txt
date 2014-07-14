@@ -231,6 +231,7 @@ Action hooks available:
 * All items shortcode paging bug fix
 * Password protected collections visible in search issue fix
 * Downloads not working on some Apache servers. Replace wp_die() with exit()
+* Fixed "reprints-price-group" typo in Sell_Media->products->has_price_group. Corrects default price shown in cart.
 
 = 1.9.8 =
 * Bugfix on collection archive template

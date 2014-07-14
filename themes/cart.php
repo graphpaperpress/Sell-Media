@@ -12,17 +12,23 @@
 $settings = sell_media_get_plugin_options();
 // check price
 $custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
-if ( ! empty( $custom_price ) ) {
-    $price = number_format( $custom_price, 2, '.', '');
-} else {
-    $price = number_format( $settings->default_price, 2, '.', '');
-}
 // check if is package
 $is_package = get_post_meta( $_POST['product_id'], '_sell_media_is_package', true );
 // check if has assigned price group
 $has_price_group = Sell_Media()->products->has_price_group( $_POST['product_id'] );
 // check if has licenses
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
+
+// set default displayed price
+if ( $has_price_group ) {
+    $price = 0;
+} elseif ( ! empty( $custom_price ) ) {
+    $price = number_format( $custom_price, 2, '.', '');
+} else {
+    $price = number_format( $settings->default_price, 2, '.', '');
+}
+
+// set licenses
 if ( $licenses ) {
     $term_id = $licenses[0]->term_id;
 } else {
