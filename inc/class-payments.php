@@ -754,7 +754,8 @@ Class SellMediaPayments {
                 '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
                 '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
                 '{email}'           => $this->get_meta_key( $payment_id, 'email' ),
-                '{download_links}'  => empty( $products ) ? null : $products
+                '{download_links}'  => empty( $products ) ? null : $products,
+                '{payment_id}'      => $payment_id
             );
             $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 
