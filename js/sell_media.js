@@ -55,7 +55,7 @@ jQuery(document).ready(function($){
             $('.item_add').prop('disabled', true);
         }
 
-        var required = $('[required]');
+        var required = $('#sell-media-dialog-box [required]');
         // bind change for all your just click and keyup for all text fields
         required.bind('change keyup', function() {
             var flag = 0;
