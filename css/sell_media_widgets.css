@@ -12,12 +12,12 @@
 	width: 100%;
 	margin-right: 0;
 }
-.sell-media-widget-item-warp {
+.sell-media-widget-item-wrap {
 	float: left;
 	margin: 0 2% 2% 0;
 	width: 30%;
 }
-.sell-media-widget-item-warp:nth-child(3n+1){
+.sell-media-widget-item-wrap:nth-child(3n+1){
 	clear: left;
 }
 .sell-media-widget-thumb-wrap {
