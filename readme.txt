@@ -226,6 +226,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.10 =
+* Single license mark-up issue fix
+
 = 1.9.9 =
 * Larger images sizes available for purchase bug fix
 * All items shortcode paging bug fix

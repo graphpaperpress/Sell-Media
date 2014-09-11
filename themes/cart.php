@@ -104,7 +104,7 @@ if ( $licenses ) {
                 <?php endif; ?>
                 <?php do_action( 'sell_media_cart_below_size' ); ?>
                 <?php do_action( 'sell_media_cart_above_licenses' ); ?>
-                <?php if ( count( $licenses ) > 1 ) : ?>
+                <?php if ( count( $licenses ) > 0 ) : ?>
                     <fieldset id="sell_media_download_license_fieldset">
                         <legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
                         <select id="sell_media_item_license" class="sum" required>
