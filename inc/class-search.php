@@ -54,8 +54,7 @@ Class SellMediaSearch {
         $args = array();
         $args['wp_query'] = array(
             'post_type' => 'sell_media_item',
-            /*'posts_per_page' => get_option( 'posts_per_page' ),*/  //pagins issue, hence committed
-            'posts_per_page' => -1,
+            'posts_per_page' => get_option( 'posts_per_page' ),
             'order' => 'DESC',
             'orderby' => 'date',
             'tax_query' => $tax_query
