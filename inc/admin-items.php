@@ -38,7 +38,7 @@ function sell_media_add_tabs(){
         echo '<h2>' . __( 'Sell Media', 'sell_media' ) . '</h2>';
     }
 
-    
+
 
     echo '<h2 id="sell-media-tabs" class="nav-tab-wrapper">';
     echo '<a href="' . admin_url( 'post-new.php?post_type=sell_media_item' ) . '" class="nav-tab' . $single_active . '">' . __( 'Add Single', 'sell_media' ) . '</a>';
@@ -186,7 +186,7 @@ function sell_media_details_meta_box( $fields=null ) {
         $my_fields = $fields;
     } else {
         global $sell_media_item_meta_fields;
-        $my_fields 
+        $my_fields
         = $sell_media_item_meta_fields;
     }
 
@@ -300,9 +300,9 @@ function sell_media_details_meta_box( $fields=null ) {
                     }
                     ?>
                     <select name="_sell_media_price_group">
-                        <option><?php _e("Select a price group"); ?></option>
+                        <option value="0"><?php _e("Select a price group"); ?></option>
                         <?php foreach( get_terms( 'price-group', array('hide_empty'=>false,'parent'=>0) ) as $term ) : ?>
-                            <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></opton>
+                            <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
                         <?php endforeach; ?>
                     </select>
                     <br /><span class="description"><?php _e( $field['desc'], 'sell_media' ); ?></span>
@@ -380,7 +380,7 @@ function sell_media_save_custom_meta( $post_id ) {
     }
 
     $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-    
+
     // If the selected file id exists, then this is a new upload
     if ( empty( $_POST['sell_media_selected_file_id'] ) ){
 
@@ -455,7 +455,7 @@ function sell_media_save_custom_meta( $post_id ) {
         }
     }
 
-    if ( ! empty( $_POST['_sell_media_price_group'] ) ){
+    if ( "" != $_POST['_sell_media_price_group'] ) {
         wp_set_post_terms( $post_id, $_POST['_sell_media_price_group'], 'price-group' );
     }
 

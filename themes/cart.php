@@ -12,17 +12,23 @@
 $settings = sell_media_get_plugin_options();
 // check price
 $custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
-if ( ! empty( $custom_price ) ) {
-    $price = number_format( $custom_price, 2, '.', '');
-} else {
-    $price = number_format( $settings->default_price, 2, '.', '');
-}
 // check if is package
 $is_package = get_post_meta( $_POST['product_id'], '_sell_media_is_package', true );
 // check if has assigned price group
 $has_price_group = Sell_Media()->products->has_price_group( $_POST['product_id'] );
 // check if has licenses
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
+
+// set default displayed price
+if ( $has_price_group ) {
+    $price = 0;
+} elseif ( ! empty( $custom_price ) ) {
+    $price = number_format( $custom_price, 2, '.', '');
+} else {
+    $price = number_format( $settings->default_price, 2, '.', '');
+}
+
+// set licenses
 if ( $licenses ) {
     $term_id = $licenses[0]->term_id;
 } else {
@@ -84,7 +90,11 @@ if ( $licenses ) {
                                         $name = $v['name'];
                                         $dimensions = '';
                                     }
-                                    echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                                    $images_obj = Sell_Media()->images;
+                                    $download_sizes = $images_obj->get_downloadable_size( $_POST['product_id'], null, true );
+                                    if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
+                                        echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                                    }
                                 }
                             ?>
                         </select>
@@ -94,7 +104,7 @@ if ( $licenses ) {
                 <?php endif; ?>
                 <?php do_action( 'sell_media_cart_below_size' ); ?>
                 <?php do_action( 'sell_media_cart_above_licenses' ); ?>
-                <?php if ( count( $licenses ) > 1 ) : ?>
+                <?php if ( count( $licenses ) > 0 ) : ?>
                     <fieldset id="sell_media_download_license_fieldset">
                         <legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
                         <select id="sell_media_item_license" class="sum" required>
@@ -115,7 +125,7 @@ if ( $licenses ) {
             </div>
             <?php do_action( 'sell_media_cart_below_licenses' ); ?>
             <div class="total-container group">
-                <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price"><?php echo $price; ?></span></span>
+                <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price" data-price=<?php echo $price; ?>><?php echo $price; ?></span></span>
             </div>
             <div class="button-container group">
                 <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>

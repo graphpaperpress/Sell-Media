@@ -474,9 +474,14 @@ function sell_media_update_sales_stats( $product_id=null, $license_id=null, $pri
  *
  * @since 1.0.1
  */
-function sell_media_pagination_filter(){
+function sell_media_pagination_filter( $max_pages = "" ) {
 
     global $wp_query;
+    if ( "" != $max_pages ) {
+        $max_num_pages = $max_pages;
+    } else {
+        $max_num_pages = $wp_query->max_num_pages;
+    }
 
     $big = 999999999; // need an unlikely integer
 
@@ -484,7 +489,7 @@ function sell_media_pagination_filter(){
         'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
         'format' => '?paged=%#%',
         'current' => max( 1, get_query_var('paged') ),
-        'total' => $wp_query->max_num_pages // note sometimes max_num_pages needs to be sent over
+        'total' => $max_num_pages // note sometimes max_num_pages needs to be sent over
         );
 
     $params = apply_filters( 'sell_media_pagination', $params );

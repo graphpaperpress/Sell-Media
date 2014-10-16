@@ -1,11 +1,11 @@
 === Sell Media ===
 
-Contributors: endortrails, ZaneMatthew
+Contributors: endortrails
 Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
 Requires at least: 3.4
-Tested up to: 3.9.1
-Stable tag: 1.9.7
+Tested up to: 4.0
+Stable tag: 1.9.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,7 +98,7 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 * **Thanks Shortcode** - (REQUIRED) Create a page called "Thanks" and add this shortcode to it: `[sell_media_thanks]`
 * **Buy Button Shortcode** - (OPTIONAL) Used for displaying specific items for sale: `[sell_media_item id="1893" text="Purchase" style="button" size="medium"]` Options include: text="purchase | buy" style="button | text" size="thumbnail | medium | large" align="left | center | right"
 * **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: `[sell_media_searchform]`
-* **All items shortcode** - (OPTIONAL) Displays all (or a certain collection) items in a grid view: `[sell_media_all_items collection="type-your-collection-slug-here"]`
+* **All items shortcode** - (OPTIONAL) Displays all (or a certain collection) items in a grid view: `[sell_media_all_items collection="type-your-collection-slug-here" show="type-number-of-items-per-page"]`
 * **Download list shortcode** - (OPTIONAL) List logged in users downloads: `[sell_media_download_list]`
 
 
@@ -225,6 +225,21 @@ Action hooks available:
 * You must enable Auto Return Payment Data Transfer in PayPal for purchases to be recorded. See readme.txt for instructions.
 
 == Changelog ==
+
+= 1.9.10 =
+* Single license mark-up issue fix
+* BUY button in shortcode for free download fix
+* Search pagination fix
+
+= 1.9.9 =
+* Larger images sizes available for purchase bug fix
+* All items shortcode paging bug fix
+* Password protected collections visible in search issue fix
+* Downloads not working on some Apache servers. Replace wp_die() with exit()
+* Fixed "reprints-price-group" typo in Sell_Media->products->has_price_group. Corrects default price shown in cart.
+
+= 1.9.8 =
+* Bugfix on collection archive template
 
 = 1.9.7 =
 * Bugfix fix not ! check on sell media archive template

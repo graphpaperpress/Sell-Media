@@ -733,7 +733,7 @@ Class SellMediaPayments {
         $products = $this->get_payment_products_unformatted( $payment_id );
 
         $message['from_name'] = get_bloginfo( 'name' );
-        $message['from_email'] = get_option( 'admin_email' );
+        $message['from_email'] = $settings->from_email;
 
         // send admins and buyers different email subject and body
         if ( $email == $message['from_email'] ) {
@@ -754,7 +754,8 @@ Class SellMediaPayments {
                 '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
                 '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
                 '{email}'           => $this->get_meta_key( $payment_id, 'email' ),
-                '{download_links}'  => empty( $products ) ? null : $products
+                '{download_links}'  => empty( $products ) ? null : $products,
+                '{payment_id}'      => $payment_id
             );
             $message['body'] = str_replace( array_keys( $tags ), $tags, nl2br( $message['body'] ) );
 

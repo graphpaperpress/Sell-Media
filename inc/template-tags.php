@@ -117,7 +117,7 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
         else
             $medium_url = null;
 
-        $image =  '<img src="' . $image . '" class="'. apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $medium_url . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+        $image =  '<img src="' . $image . '" class="'. apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $medium_url. '" data-sell_media_large_url="' . $image . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
     }
 
     if ( $echo )
@@ -238,7 +238,7 @@ function sell_media_cart_dialog(){
         <div id="sell-media-dialog-overlay" class="sell-media-dialog-overlay" style="display:none"></div>
     <?php endif; ?>
     <?php if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) : ?>
-        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box" style="display:none">
+        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms" style="display:none">
             <span class="close">&times;</span>
             <div class="content">
                 <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>

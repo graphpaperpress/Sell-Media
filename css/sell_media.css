@@ -454,6 +454,11 @@ table.sell-media-products {
   padding: 10px;
   background: #fcf9d0;
 }
+.sell-media-dialog-box-terms {
+  overflow: scroll;
+  max-height: 500px;
+  width: 500px;
+}
 
 /*= Checkout
 -------------------------------------------------------------- */
@@ -813,5 +818,10 @@ input.wpas-text[type=text] {
     display: block;
     margin: 10px 0;
     text-align: center;
+  }
+  .sell-media-dialog-box-terms {
+    overflow: scroll;
+    max-height: 500px;
+    width: 302px;
   }
 }

@@ -49,7 +49,13 @@ jQuery(document).ready(function($){
      * Check the required fields and change state of add to cart button
      */
     function required_fields(){
-        var required = $('[required]');
+        if ($('#sell_media_product_type_fieldset').length == 0 && $('#sell_media_download_wrapper #sell_media_download_license_fieldset select').length == 0 ) {
+            $('.item_add').prop('disabled', false);
+        } else {
+            $('.item_add').prop('disabled', true);
+        }
+
+        var required = $('#sell-media-dialog-box [required]');
         // bind change for all your just click and keyup for all text fields
         required.bind('change keyup', function() {
             var flag = 0;
@@ -67,7 +73,7 @@ jQuery(document).ready(function($){
 
     /**
      * When the user clicks on our trigger we set-up the overlay,
-     * launch our dialogto load the terms of service.
+     * launch our dialog to load the terms of service.
      */
     $(document).on('click','.sell-media-empty-dialog-trigger',function(){
         popup();

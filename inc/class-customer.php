@@ -74,7 +74,7 @@ Class SellMediaCustomer {
         $message['body'] .= $site_name;
 
         $message['headers'] = "From: " . $site_name . "\r\n";
-        $message['headers'] .= "Reply-To: ". get_option( 'admin_email' ) . "\r\n";
+        $message['headers'] .= "Reply-To: ". $settings->from_email . "\r\n";
         $message['headers'] .= "MIME-Version: 1.0\r\n";
         $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
 

@@ -486,7 +486,7 @@ function sell_media_init_settings(){
             "tab" => "email_plugin_tab",
             "name" => "success_email_body",
             "title" => __("Email Body","sell_media"),
-            "description" => __("This e-mail message is sent to your customers in case of successful and cleared payment. You can use the following keywords: {first_name}, {last_name}, {payer_email}, {download_links}. Be sure to include the {download_links} tag, otherwise your buyers won't receive their download purchases.","sell_media"),
+            "description" => __("This e-mail message is sent to your customers in case of successful and cleared payment. You can use the following email tags: {first_name}, {last_name}, {payer_email}, {download_links}, {payment_id}. These tags are replaced with the real data associated with each payment. Be sure to include the {download_links} tag, otherwise your buyers won't receive their download purchases. The {payment_id} tag can be used to display an invoice number.","sell_media"),
             "section" => "email_section_1",
             "since" => "1.0.",
             "id" => "email_section_1",
