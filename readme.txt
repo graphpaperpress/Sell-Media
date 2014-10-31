@@ -226,6 +226,10 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.11 =
+* Language file added
+* List all collections shortcode layout bug fix
+
 = 1.9.10 =
 * Single license mark-up issue fix
 * BUY button in shortcode for free download fix
