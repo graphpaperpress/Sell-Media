@@ -402,7 +402,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
                         $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
                         $collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
-                        $html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ) );
+                        $html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ), false );
                         if ( 'true' == $details ) {
                             $settings = sell_media_get_plugin_options();
                             $html .= '<div class="item-overlay">';
