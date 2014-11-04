@@ -18,6 +18,10 @@ __Please Note:__ GitHub is for bug reports and contributions only. Feature reque
 * When committing, reference your issue (if present) and include a note about the fix
 * Push the changes to your fork and submit a pull request to the 'master' branch of the Sell Media repository
 
+## Translations
+
+* Please refer to the readme.txt file located inside the sell_media/languages/ folder
+
 ## Additional Resources
 
 * [Sell Media Documentation](http://graphpaperpress.com/docs/sell-media/)
