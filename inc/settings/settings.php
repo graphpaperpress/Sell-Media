@@ -129,7 +129,7 @@ function sell_media_admin_plugin_options_page() {
                 </form>
             </div>
             <div class="sell-media-settings-sidebar">
-                <?php do_action( 'sell_media_above_settings_tabs' ); ?>
+                <?php do_action( 'sell_media_settings_sidebar' ); ?>
             </div>
         </div>
     </div>
@@ -597,17 +597,36 @@ add_action( 'sell_media_above_settings', 'sell_media_above_settings_links' );
 
 
 /**
- * Settings action hook above tab callback
+ * Settings sidebar action hook callback
  */
-function sell_media_above_settings_tabs_callback() {
-    echo '<div id="sell-media-upgrade-promo" class="sell-media-upgrade-promo">';
-    echo '<h3>' . __( 'Get More Sales' , 'sell_media' ) . '</h3>';
-    echo '<p>';
-    echo '<span class="dashicons dashicons-chart-bar sell-media-bar-chart"></span>';
-    echo '</p>';
-    echo '<p>';
-    echo sprintf( __( 'The Business Bundle is a collection of our most popular extensions for Sell Media. Sell prints, create discount codes, watermark images, accept credit cards and much more when you activate this premium extension. %s', 'sell_media' ), '<br /><br /><a href="http://graphpaperpress.com/?download=business-bundle#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank">Order Now</a>' );
-    echo '</p>';
-    echo '</div>';
-}
-add_action( 'sell_media_above_settings_tabs', 'sell_media_above_settings_tabs_callback' );
+function sell_media_settings_sidebar_callback() {
+    global $current_user; ?>
+
+    <div id="sell-media-upgrade-promo" class="sell-media-box">
+        <h3><?php _e( 'Upgrades Available' , 'sell_media' ); ?></h3>
+        <p><span class="dashicons dashicons-update sell-media-dashicon-big"></span></p>
+        <p><?php _e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more when you activate the Business Bundle extension pack for Sell Media.', 'sell_media' ); ?></p>
+        <p><a href="http://graphpaperpress.com/?download=business-bundle#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+    </div>
+
+    <div id="sell-media-support-promo" class="sell-media-box">
+        <h3><?php _e( 'Need Help?' , 'sell_media' ); ?></h3>
+        <p><span class="dashicons dashicons-format-chat sell-media-dashicon-big"></span></p>
+        <p><?php _e( 'Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one consultation over live chat. If we can\'t fix your problem, we\'ll refund your order.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/checkout/?edd_action=add_to_cart&download_id=61368#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+    </div>
+
+    <div id="sell-media-review-promo" class="sell-media-box">
+        <h3><?php _e( 'Reviews' , 'sell_media' ) ; ?></h3>
+        <hr />
+        <p><blockquote>"<?php _e( 'Great plugin with great support. Includes tons of features.', 'sell_media' ); ?>"</blockquote></p>
+        <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
+        <hr />
+        <p><blockquote>"<?php _e( 'A young product with massive potential! You can expect great support from Graph Paper Press.', 'sell_media' ); ?>"</blockquote></p>
+        <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
+        <hr />
+        <p><?php _e( 'We\'d love for you to leave a review if you\'ve found this plugin useful.', 'sell_media' ); ?></p>
+        <p><a href="https://wordpress.org/support/view/plugin-reviews/sell-media?filter=5" class="button centered-block" target="_blank"><?php _e( 'Leave a review', 'sell_media' ); ?></a></p>
+    </div>
+<?php }
+add_action( 'sell_media_settings_sidebar', 'sell_media_settings_sidebar_callback' );
