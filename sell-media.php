@@ -236,7 +236,22 @@ final class SellMedia {
      * @return void
      */
     public function textdomain() {
-        load_plugin_textdomain( 'sell_media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
+        // Get text domain
+        $domain = 'sell_media';
+
+        // The "plugin_locale" filter is also used in load_plugin_textdomain()
+        $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+
+        // Create path to custom language file
+        $custom_mo = WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo';
+
+        if ( file_exists( $custom_mo ) ) {
+            load_textdomain( $domain, $custom_mo );
+        }
+        else {
+            load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        }
     }
 
 } // end SellMedia class

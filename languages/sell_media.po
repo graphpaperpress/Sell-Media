@@ -1,1086 +1,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sell Media\n"
-"POT-Creation-Date: 2014-10-09 13:22-0600\n"
-"PO-Revision-Date: 2014-10-09 19:59-0600\n"
+"POT-Creation-Date: 2014-11-04 15:30-0500\n"
+"PO-Revision-Date: 2014-11-04 16:44-0500\n"
 "Last-Translator: Thad Allender <support@graphpaperpress.com>\n"
 "Language-Team: Thad Allender <support@graphpaperpress.com>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SearchPath-0: /Users/daro/Desktop/SELL MEDIA\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:57
-msgid "Purchase"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:281
-#: MEDIA/sell-media/inc/admin-bulk.php:54
-#: MEDIA/sell-media/inc/admin-items-bulk.php:18
-msgid "Loading items..."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:328
-#: MEDIA/sell-media/inc/install.php:304 MEDIA/sell-media/inc/install.php:318
-#: MEDIA/sell-media/inc/widgets/sell-media-keywords.php:49
-#: MEDIA/sell-media/themes/single-sell_media_item.php:34
-msgid "Keywords"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:336
-msgid "Price Range"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:347
-msgid "Orientation"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:348
-msgid "Horizontal"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:349
-msgid "Vertical"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:352
-msgid "Color"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:360
-#: MEDIA/sell-media/inc/install.php:235
-msgid "Collection"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:362
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:375
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:388
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:413
-msgid "All"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:373
-#: MEDIA/sell-media/inc/admin-payments.php:125
-#: MEDIA/sell-media/inc/class-payments.php:446
-#: MEDIA/sell-media/inc/class-payments.php:615
-#: MEDIA/sell-media/inc/install.php:270 MEDIA/sell-media/inc/scripts.php:69
-msgid "License"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-advanced-search/sell-media-advanced-search.php:386
-msgid "Aspect Ratio"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:69
-msgid "Add New Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:69
-msgid "Go Back"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:75
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:556
-#: MEDIA/sell-media/inc/admin-items-package.php:54
-#: MEDIA/sell-media/inc/admin-payments.php:67
-#: MEDIA/sell-media/inc/admin-payments.php:113
-#: MEDIA/sell-media/inc/class-payments.php:444
-#: MEDIA/sell-media/inc/scripts.php:67
-msgid "Name"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:79
-msgid "The name of this discount code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:84
-msgid "Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:88
-msgid "Enter a code for this discount, such as 10PERCENT"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:93
-#: MEDIA/sell-media/inc/admin-payments.php:119
-msgid "Type"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:97
-msgid "Percentage"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:98
-msgid "Flat amount"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:100
-msgid "The kind of discount to apply for this discount."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:105
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:146
-msgid "Amount"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:109
-msgid "The amount of this discount code."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:114
-msgid "Start date"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:118
-msgid ""
-"Enter the start date for this discount code in the format of mm/dd/yyyy. For "
-"no start date, leave blank."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:123
-msgid "Expiration date"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:127
-msgid ""
-"Enter the expiration date for this discount code in the format of mm/dd/"
-"yyyy. For no expiration, leave blank."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:132
-msgid "Max Uses"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:136
-msgid ""
-"The maximum number of times this discount can be used. Leave blank for "
-"unlimited."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:144
-msgid "Update Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:145
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:104
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:209
-msgid "Delete"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/add-discount-code.php:147
-msgid "Add Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:38
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:166
-msgid "Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:39
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:96
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:131
-msgid "Discount Codes"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:96
-#: MEDIA/sell-media/inc/admin-items-bulk.php:153
-msgid "Edit"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:99
-msgid "Deactive"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:101
-msgid "Activate"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:144
-msgid "Title"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:145
-msgid "Coupon"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:147
-msgid "Uses"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:148
-msgid "Start Date"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:149
-msgid "End Date"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:150
-msgid "Status"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:374
-msgid "Unlimited"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:414
-msgid "Active"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/inc/all-discount-code.php:415
-msgid "Inactive"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:61
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:72
-msgctxt ""
-msgid "Discount Codes"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:62
-msgctxt ""
-msgid "Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:63
-msgctxt ""
-msgid "Add New"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:64
-msgctxt ""
-msgid "Add New Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:65
-msgctxt ""
-msgid "Edit Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:66
-msgctxt ""
-msgid "New Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:67
-msgctxt ""
-msgid "View Discount Code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:68
-msgctxt ""
-msgid "Search Discount Codes"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:69
-msgctxt ""
-msgid "No discount found"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:70
-msgctxt ""
-msgid "No discount codes found in Trash"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:71
-msgctxt ""
-msgid "Parent Discount Code:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:133
-#: MEDIA/sell-media/inc/install.php:103 MEDIA/sell-media/inc/install.php:145
-msgid "Add New"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:169
-msgid "Apply"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:170
-msgid "Verifying..."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:175
-msgid "Discount:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:198
-msgid "Sorry, this discount code is invalid."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:230
-msgid "Sorry, this discount code has expired."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:242
-msgid "Valid code"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:306
-msgid "Discount Code updated successfully!"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:308
-msgid "Discount Code added successfully!"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:310
-msgid "Discount Code deleted successfully!"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:329
-msgctxt "Active discount code status"
-msgid "Active"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:336
-msgctxt "Inactive discount code status"
-msgid "Inactive"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-discount-codes/sell-media-discount-codes.php:358
-msgid "Discount"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-free-downloads/cart.php:25
-msgid "First Name:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-free-downloads/cart.php:31
-msgid "Last Name:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-free-downloads/cart.php:37
-msgid "Email Address:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-free-downloads/cart.php:49
-msgid "Download Now"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-free-downloads/cart.php:53
-msgid ""
-"You are already registered. You can download all free items by visiting our "
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:51
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:147
-msgid "API Key"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:52
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:148
-msgid "Insert your MailChimp API Key."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:63
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:159
-msgid "Newsletter List"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:64
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:160
-msgid "Choose the list to sign users up to."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:85
-msgid "Free Downloads - Mailchimp Settings"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:125
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:41
-#: MEDIA/sell-media/inc/admin-bulk.php:67
-#: MEDIA/sell-media/inc/admin-bulk.php:80
-#: MEDIA/sell-media/inc/admin-bulk.php:91
-#: MEDIA/sell-media/inc/admin-items-bulk.php:31
-#: MEDIA/sell-media/inc/admin-items-bulk.php:44
-#: MEDIA/sell-media/inc/admin-items-bulk.php:55
-#: MEDIA/sell-media/inc/admin-items-package.php:75
-#: MEDIA/sell-media/inc/settings/library/helpers.php:244
-#: MEDIA/sell-media/settings/library/helpers.php:244
-msgid "None"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:197
-msgid "Free Download"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:198
-msgid ""
-"Check this to allow visitors to download this for free in exchange for "
-"signing up for your newsletter."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:243
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:111
-msgid "MailChimp"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:271
-#: MEDIA/sell-media/inc/class-payments.php:474
-msgid "Download"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:306
-msgid "Hi "
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:365
-msgid "Free Downloads"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:404
-msgid "Nice try, but this file is not a free download."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:404
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:409
-#: MEDIA/sell-media/inc/class-downloads.php:66
-msgid "Purchase Verification Failed"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-free-downloads/sell-media-free-downloads.php:409
-msgid "Sorry, but the download url you provided is not valid."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:96
-msgid "Sign up for our newsletter"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-mailchimp/sell-media-mailchimp.php:181
-msgid "MailChimp Settings"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/admin-tags.php:82
-msgid "Sell both"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/admin-tags.php:86
-msgid "Sell print"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/admin-tags.php:90
-msgid "Sell download"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/admin-tags.php:96
-msgid "Price Group for Prints"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/admin-tags.php:101
-#: MEDIA/sell-media/inc/admin-items.php:303
-msgid "Select a price group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/admin-tags.php:109
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:164
-msgid "Selling Options"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:26
-msgid "Download size"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:36
-msgid "Download license"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:82
-msgid ""
-"If you sold a print, be sure to print and ship the order to the address "
-"listed above. If the order contained downloadable products, no further "
-"action is required. Here are the payment details:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:93
-msgid "Download or Print"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:124
-msgid "Ship to:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:141
-msgid ""
-"If you purchased prints, they will be shipped to the address you supplied "
-"during checkout. This address is shown below."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:174
-msgid "Only sell prints"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:181
-msgid "Shipping Rates"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:182
-msgid ""
-"You have three options for calculating shipping rates: Flat Rate, Quantity "
-"Rate, Total Rate. Use Flat Rate to set a basic flat rate shipping to all "
-"cart orders containing prints. Use Quantity Rate to charge a flat rate per "
-"print sold (i.e. 3 prints that cost $10 each with quantity rate shipping of "
-"$1 per print would cost a total of $33). Use Total Rate you want a shipping "
-"rate that is a percentage of the total cost of the cart."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:191
-msgid "Flat Rate"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:195
-msgid "Quantity Rate"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:199
-msgid "Total Rate"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:206
-msgid "Shipping - Flat Rate"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:207
-msgid ""
-"The flat rate shipping price applied once to all orders (i.e. 1, 5, 10)."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:218
-msgid "Shipping - Quantity Rate"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:219
-msgid ""
-"The shipping price applied individually to all prints in the cart (i.e. 1, "
-"5, 10)."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:230
-msgid "Shipping - Total Rate"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:231
-msgid ""
-"The percentage of the total cost of the cart for shipping (use .05 for 5 "
-"percent, .10 for 10 percent, etc)"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:242
-msgid "Unit of Measurement"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:243
-msgid "The unit of measurement in which prints are sold."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:252
-msgid "Centimeters (cm)"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:256
-msgid "Inches (in)"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:263
-#: MEDIA/sell-media/sell-media-settings.php:364
-msgid "Select Default Price Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:274
-#: MEDIA/sell-media/inc/install.php:200 MEDIA/sell-media/inc/install.php:201
-#: MEDIA/sell-media/inc/install.php:214
-#: MEDIA/sell-media/sell-media-settings.php:375
-msgid "Price Groups"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:299
-msgid "Prints"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:318
-msgid "This plugin requires Sell Media to function properly"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:443
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:457
-msgid "Print Price Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:444
-msgid "Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:445
-msgid "Search Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:446
-msgid "Popular Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:447
-msgid "All Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:448
-msgid "Parent Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:449
-msgid "Parent Print  Group:"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:450
-msgid "Edit Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:451
-msgid "Update Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:452
-msgid "Add New Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:453
-msgid "New Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:454
-msgid "Separate Print Group with commas"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:455
-msgid "Add or remove Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:456
-msgid "Choose from most used Print Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:515
-msgid "Add print sizes and prices below."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:529
-msgid "Create a price group, then define specific print sizes and prices."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:620
-msgid "Max Width"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:624
-msgid "Max Height"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/sell-media-reprints-self-fulfillment.php:629
-#: MEDIA/sell-media/inc/admin-items-package.php:62
-#: MEDIA/sell-media/inc/admin-items.php:108
-#: MEDIA/sell-media/inc/admin-items.php:127
-#: MEDIA/sell-media/inc/admin-price-groups.php:251
-#: MEDIA/sell-media/inc/admin-price-groups.php:298
-#: MEDIA/sell-media/inc/class-payments.php:613
-#: MEDIA/sell-media/inc/scripts.php:70
-msgid "Price"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/template-tags.php:22
-msgid "Buy a print"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/template-tags.php:25
-msgid "Buy a download"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/template-tags.php:46
-msgid "Print size"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/template-tags.php:46
-msgid "All print sizes are listed in "
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/template-tags.php:46
-#: MEDIA/sell-media/themes/cart.php:109
-msgid "(see details)"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/template-tags.php:48
-#: MEDIA/sell-media/themes/cart.php:82
-msgid "Select a size"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-reprints-self-fulfillment/template-tags.php:52
-msgid "This item is not currently assigned a price group."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:57
-#: MEDIA/sell-media/inc/class-search.php:179
-#: MEDIA/sell-media/inc/lightbox.php:45
-#: MEDIA/sell-media/inc/shortcodes.php:142
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:110
-#: MEDIA/sell-media/themes/single-sell_media_item.php:23
-msgid "Buy"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:58
-msgid "items"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:125
-msgid "Stripe Test Secret Key"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:126
-#: MEDIA/sell-media-stripe/sell-media-stripe.php:138
-#: MEDIA/sell-media-stripe/sell-media-stripe.php:150
-#: MEDIA/sell-media-stripe/sell-media-stripe.php:162
-msgid " "
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:137
-msgid "Stripe Test Publishable Key"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:149
-msgid "Stripe Live Secret Key"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:161
-msgid "Stripe Live Publishable Key"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:183
-msgid "Stripe Settings"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:185
-msgid ""
-"You must add your <a href=\"https://manage.stripe.com/account/apikeys\" "
-"target=\"_blank\">Stripe API Keys</a> to process transactions."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:203
-msgid "Credit Card"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:204
-#: MEDIA/sell-media/inc/admin-payments.php:164
-#: MEDIA/sell-media/inc/settings/library/helpers.php:268
-#: MEDIA/sell-media/settings/library/helpers.php:266
-msgid "PayPal"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:463
-msgid "Stripe not supported, please enable <code>cURL</code>."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:468
-#, php-format
-msgid ""
-"Your currency, %s is not supported. Please configure your %s account to use "
-"the correct currency."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media-stripe/sell-media-stripe.php:475
-#, php-format
-msgid "Please update your Sell Media %s to contain your Stripe keys"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:36
-msgid ""
-" requires the Sell Media plugin to work properly. Please activate Sell Media."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:127
-msgid "Watermark Image"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:128
-msgid ""
-"For best results, use a transparent PNG cropped to approximately 200 pixels "
-"wide."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:138
-msgid "Watermark Everything"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:148
-msgid ""
-"Watermarks are applied to all Sell Media images when you activate this "
-"extension. You can optionally watermark all images on your site, including "
-"those appearing in Posts and Pages, by checking this box."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:155
-msgid "Watermark Opacity"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:156
-msgid "The opacity of your watermark."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:209
-msgid "Watermark Scale"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:210
-msgid "The scale of your watermark with respect to the image"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:262
-msgid "Watermark Position"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:263
-msgid "The position of your watermak."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media-watermark/sell-media-watermark.php:307
-msgid "Watermark"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-attachments.php:31
-msgid "Sell This"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:31
-#: MEDIA/sell-media/inc/admin-items.php:33
-#: MEDIA/sell-media/inc/admin-items.php:38
-#: MEDIA/sell-media/inc/install.php:100 MEDIA/sell-media/inc/install.php:101
-#: MEDIA/sell-media/inc/install.php:104 MEDIA/sell-media/inc/install.php:112
-msgid "Sell Media"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:34
-#: MEDIA/sell-media/inc/admin-items.php:44
-msgid "Add Single"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:35
-#: MEDIA/sell-media/inc/admin-items.php:45
-#: MEDIA/sell-media/inc/admin-menu.php:26
-msgid "Add Bulk"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:52
-msgid ""
-"Bulk uploading is a server-intensive process. If you are using cheap, shared "
-"web hosting, uploading items in small batches will ensure all items uploaded "
-"are published correctly. All bulk uploads will inherit the default prices "
-"and licenses. You can modify the prices and licenses of each item after "
-"doing the bulk upload. "
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:53
-#: MEDIA/sell-media/inc/admin-items-bulk.php:17
-#: MEDIA/sell-media/inc/admin-items.php:276
-msgid "Upload"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:62
-#: MEDIA/sell-media/inc/admin-items-bulk.php:26
-msgid "Choose a Price Group"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:75
-#: MEDIA/sell-media/inc/admin-items-bulk.php:39
-msgid "Choose a License"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:86
-#: MEDIA/sell-media/inc/admin-items-bulk.php:50
-msgid "Choose a Collection"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-bulk.php:99
-#: MEDIA/sell-media/inc/admin-items-bulk.php:63
-#: MEDIA/sell-media/inc/admin-items-package.php:83
-#: MEDIA/sell-media/inc/class-search.php:178
-#: MEDIA/sell-media/inc/scripts.php:81
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:109
-#: MEDIA/sell-media/themes/single-sell_media_item.php:24
-msgid "Save"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-extensions.php:20
-msgid "Extensions for Sell Media"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-extensions.php:21
-msgid ""
-"These extensions provide additonal functionality for the Sell Media plugin."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-bulk.php:16
+#: inc/admin-items-bulk.php:16
 msgid ""
 "Add Bulk allows you to add many single items at once. Please note: Bulk "
 "uploading is a server-intensive process. The capability of this feature is "
@@ -1089,71 +27,136 @@ msgid ""
 "and licenses of each item after doing the bulk upload."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:22
+#: inc/admin-items-bulk.php:17 inc/admin-items.php:276
+msgid "Upload"
+msgstr ""
+
+#: inc/admin-items-bulk.php:18
+msgid "Loading items..."
+msgstr ""
+
+#: inc/admin-items-bulk.php:26
+msgid "Choose a Price Group"
+msgstr ""
+
+#: inc/admin-items-bulk.php:31 inc/admin-items-bulk.php:44
+#: inc/admin-items-bulk.php:55 inc/admin-items-package.php:75
+#: inc/settings/library/helpers.php:242
+#: sell-media-free-downloads/sell-media-free-downloads.php:125
+#: sell-media-mailchimp/sell-media-mailchimp.php:41
+msgid "None"
+msgstr ""
+
+#: inc/admin-items-bulk.php:39
+msgid "Choose a License"
+msgstr ""
+
+#: inc/admin-items-bulk.php:50
+msgid "Choose a Collection"
+msgstr ""
+
+#: inc/admin-items-bulk.php:63 inc/admin-items-package.php:83
+#: inc/class-search.php:178 inc/scripts.php:81
+#: themes/archive-sell_media_item.php:109 themes/single-sell_media_item.php:24
+msgid "Save"
+msgstr ""
+
+#: inc/admin-items-bulk.php:153
+#: sell-media-discount-codes/inc/all-discount-code.php:96
+msgid "Edit"
+msgstr ""
+
+#: inc/admin-items-package.php:22
 msgid ""
 "Packages are groups of large files that you want to sell as one product "
 "(Example: You photograph an event and want to sell all images in one "
 "package). To sell a package, you must:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:25
+#: inc/admin-items-package.php:25
 msgid "ZIP up the folder full of files on your computer."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:26
+#: inc/admin-items-package.php:26
 #, php-format
 msgid "Using FTP, upload the ZIP file to your website into the %1$s folder."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:27
+#: inc/admin-items-package.php:27
 msgid "Select the package filename from the list below."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:37
+#: inc/admin-items-package.php:37
 msgid "Choose a package"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:44
-#: MEDIA/sell-media/inc/admin-items.php:319
+#: inc/admin-items-package.php:44 inc/admin-items.php:319
 msgid "Select a package"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:70
+#: inc/admin-items-package.php:54 inc/admin-payments.php:67
+#: inc/admin-payments.php:113 inc/class-payments.php:444 inc/scripts.php:67
+#: sell-media-discount-codes/inc/add-discount-code.php:75
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:556
+msgid "Name"
+msgstr ""
+
+#: inc/admin-items-package.php:62 inc/admin-items.php:108
+#: inc/admin-items.php:127 inc/admin-price-groups.php:251
+#: inc/admin-price-groups.php:298 inc/class-payments.php:613
+#: inc/scripts.php:70
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:629
+msgid "Price"
+msgstr ""
+
+#: inc/admin-items-package.php:70
 msgid "Collection (optional)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items-package.php:84
+#: inc/admin-items-package.php:84
 msgid "Edit Package"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:46
-#: MEDIA/sell-media/inc/admin-menu.php:27
+#: inc/admin-items.php:33 inc/admin-items.php:38 inc/install.php:100
+#: inc/install.php:101 inc/install.php:104 inc/install.php:112
+msgid "Sell Media"
+msgstr ""
+
+#: inc/admin-items.php:44
+msgid "Add Single"
+msgstr ""
+
+#: inc/admin-items.php:45 inc/admin-menu.php:26
+msgid "Add Bulk"
+msgstr ""
+
+#: inc/admin-items.php:46 inc/admin-menu.php:27
 msgid "Add Package"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:102
+#: inc/admin-items.php:102
 msgid "Package File"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:121
+#: inc/admin-items.php:121
 msgid "File"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:122
+#: inc/admin-items.php:122
 msgid "A description for the field."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:135
+#: inc/admin-items.php:135
 msgid "Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:136
+#: inc/admin-items.php:136
 msgid ""
 "If you want to sell additional image sizes, select a Price Group or <a href="
 "\""
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:198
+#: inc/admin-items.php:198
 msgid ""
 "This product is a package. Show customers what is included in this package "
 "by adding some images (preferably a gallery of images) to the Post Editor "
@@ -1161,1137 +164,1098 @@ msgid ""
 "pages."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:262
+#: inc/admin-items.php:262
 msgid "Choose Image"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:263
+#: inc/admin-items.php:263
 msgid " Remove Image"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:556
+#: inc/admin-items.php:303 sell-media-reprints/admin-tags.php:101
+msgid "Select a price group"
+msgstr ""
+
+#: inc/admin-items.php:556
 msgid "No price set"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-items.php:592
+#: inc/admin-items.php:592
 msgid "No sales so far."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-menu.php:28
+#: inc/admin-menu.php:28
 msgid "Reports"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-menu.php:29
-msgid "Extensions"
+#: inc/admin-menu.php:29
+msgid "Upgrades"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:14
+#: inc/admin-payments.php:14
 msgid "Purchase Details"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:21
+#: inc/admin-payments.php:21
 msgid "Additional Purchase Details"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:35
+#: inc/admin-payments.php:35
 msgid "Payment Gateway Details"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:68
-#: MEDIA/sell-media/inc/class-payments.php:745
-#: MEDIA/sell-media/inc/settings.php:63
-#: MEDIA/sell-media/sell-media-settings.php:58
+#: inc/admin-payments.php:68 inc/class-payments.php:745 inc/settings.php:63
 msgid "Email"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:69
-#: MEDIA/sell-media/inc/shortcodes.php:186
-#: MEDIA/sell-media/themes/cart.php:128
+#: inc/admin-payments.php:69 inc/shortcodes.php:186 themes/cart.php:128
 msgid "Total"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:96
+#: inc/admin-payments.php:96
 msgid "This is the additional payment data stored with the purchase."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:109
+#: inc/admin-payments.php:109
 msgid "Product"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:116
-#: MEDIA/sell-media/inc/class-payments.php:443
+#: inc/admin-payments.php:116 inc/class-payments.php:443
 msgid "ID"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:122
-#: MEDIA/sell-media/inc/class-payments.php:445
-#: MEDIA/sell-media/inc/class-payments.php:612
-#: MEDIA/sell-media/inc/scripts.php:68
+#: inc/admin-payments.php:119
+#: sell-media-discount-codes/inc/add-discount-code.php:93
+msgid "Type"
+msgstr ""
+
+#: inc/admin-payments.php:122 inc/class-payments.php:445
+#: inc/class-payments.php:612 inc/scripts.php:68
 msgid "Size"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:128
-#: MEDIA/sell-media/inc/class-payments.php:447
-#: MEDIA/sell-media/inc/scripts.php:71
+#: inc/admin-payments.php:125 inc/class-payments.php:446
+#: inc/class-payments.php:615 inc/install.php:270 inc/scripts.php:69
+msgid "License"
+msgstr ""
+
+#: inc/admin-payments.php:128 inc/class-payments.php:447 inc/scripts.php:71
 msgid "Qty"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:131
-#: MEDIA/sell-media/inc/class-payments.php:449
-#: MEDIA/sell-media/inc/scripts.php:72 MEDIA/sell-media/inc/shortcodes.php:173
+#: inc/admin-payments.php:131 inc/class-payments.php:449 inc/scripts.php:72
+#: inc/shortcodes.php:173
 msgid "Subtotal"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:141
+#: inc/admin-payments.php:141
 msgid "This payment has no additional payment details"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:167
+#: inc/admin-payments.php:164 inc/settings/library/helpers.php:266
+#: sell-media-stripe/sell-media-stripe.php:204
+msgid "PayPal"
+msgstr ""
+
+#: inc/admin-payments.php:167
 msgid "Stripe"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:169
+#: inc/admin-payments.php:169
 msgid "This is the data that was sent from "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:169
+#: inc/admin-payments.php:169
 msgid " at time of purchase. Use this for debugging, if needed."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:188
+#: inc/admin-payments.php:188
 msgid "Earnings Report"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:190
+#: inc/admin-payments.php:190
 msgid "Total Earnings To Date:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:191
+#: inc/admin-payments.php:191
 msgid ""
 "Below is a breakdown of earnings per day, month and year. Want to increase "
 "your sales?"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:191
+#: inc/admin-payments.php:191
 msgid "Download new Sell Media extensions"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:204
+#: inc/admin-payments.php:204
 msgid "Day"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:205
-#: MEDIA/sell-media/inc/admin-payments.php:245
-#: MEDIA/sell-media/inc/admin-payments.php:278
+#: inc/admin-payments.php:205 inc/admin-payments.php:245
+#: inc/admin-payments.php:278
 msgid "Earnings"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:225
+#: inc/admin-payments.php:225
 msgid "Earnings per day"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:244
+#: inc/admin-payments.php:244
 msgid "Month"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:258
+#: inc/admin-payments.php:258
 msgid "Earnings per month"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:277
+#: inc/admin-payments.php:277
 msgid "Year"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-payments.php:294
+#: inc/admin-payments.php:294
 msgid "Earnings per year"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:208
+#: inc/admin-price-groups.php:208
 msgid "Create Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:213
+#: inc/admin-price-groups.php:213
 msgid "Are you sure you want to delete the price group:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:213
+#: inc/admin-price-groups.php:213
 msgid "This will delete the price group and ALL its prices associated with it."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:214
+#: inc/admin-price-groups.php:214
 msgid "Delete Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:218
+#: inc/admin-price-groups.php:218
 msgid "Enter price group name here"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:233
-#: MEDIA/sell-media/inc/admin-price-groups.php:285
+#: inc/admin-price-groups.php:233 inc/admin-price-groups.php:285
 msgid "Name (shown to buyer, so be descriptive)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:241
-#: MEDIA/sell-media/inc/admin-price-groups.php:290
+#: inc/admin-price-groups.php:241 inc/admin-price-groups.php:290
 msgid "Max width (pixels)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:246
+#: inc/admin-price-groups.php:246
 msgid "Max Height (pixels)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:257
+#: inc/admin-price-groups.php:257
 msgid "Are you sure you want to delete the price"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:294
+#: inc/admin-price-groups.php:294
 msgid "Max height (pixels)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:303
+#: inc/admin-price-groups.php:303
 msgid ""
 "The sizes listed below determine the maximum dimensions in pixels. Price "
 "Groups only apply to images."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:304
+#: inc/admin-price-groups.php:304
 msgid "Create a price group to add prices to."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:363
+#: inc/admin-price-groups.php:363
 msgid "Add New Price"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/admin-price-groups.php:371
+#: inc/admin-price-groups.php:371
 msgid "Save Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-customer.php:65
+#: inc/class-customer.php:65
 msgid "Account registration at"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-customer.php:66
+#: inc/class-customer.php:66
 msgid "Welcome"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-customer.php:67
+#: inc/class-customer.php:67
 msgid "Here are your login credentials"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-customer.php:68
-#: MEDIA/sell-media/inc/shortcodes.php:458
+#: inc/class-customer.php:68 inc/shortcodes.php:458
 msgid "Username"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-customer.php:69
+#: inc/class-customer.php:69
 msgid ""
 "Create a password if you want to login to our dashboard to download any of "
 "your purchases in the future."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-customer.php:71
+#: inc/class-customer.php:71
 msgid "Any purchases your make will be available on your account dashboard."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-customer.php:73
+#: inc/class-customer.php:73
 msgid "Thanks"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-downloads.php:66
+#: inc/class-downloads.php:66
 msgid "You do not have permission to download this file"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:385
+#: inc/class-downloads.php:66
+#: sell-media-free-downloads/sell-media-free-downloads.php:404
+#: sell-media-free-downloads/sell-media-free-downloads.php:409
+msgid "Purchase Verification Failed"
+msgstr ""
+
+#: inc/class-payments.php:385
 msgid "PRODUCT"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:387
+#: inc/class-payments.php:387
 msgid "SIZE"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:389
+#: inc/class-payments.php:389
 msgid "LICENSE"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:391
+#: inc/class-payments.php:391
 msgid "LICENSE DESCRIPTION"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:393
+#: inc/class-payments.php:393
 msgid "QTY"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:395
+#: inc/class-payments.php:395
 msgid "TYPE"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:397
+#: inc/class-payments.php:397
 msgid "SUBTOTAL"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:399
+#: inc/class-payments.php:399
 msgid "DOWNLOAD LINK"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:401
+#: inc/class-payments.php:401
 msgid "DELIVERY"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:409
-#: MEDIA/sell-media/inc/class-payments.php:497
+#: inc/class-payments.php:409 inc/class-payments.php:497
 msgid "DISCOUNT"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:412
-#: MEDIA/sell-media/inc/class-payments.php:500
+#: inc/class-payments.php:412 inc/class-payments.php:500
 msgid "TAX"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:415
-#: MEDIA/sell-media/inc/class-payments.php:503
+#: inc/class-payments.php:415 inc/class-payments.php:503
 msgid "SHIPPING"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:417
-#: MEDIA/sell-media/inc/class-payments.php:506
+#: inc/class-payments.php:417 inc/class-payments.php:506
 msgid "TOTAL"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:448
+#: inc/class-payments.php:448
 msgid "Delivery"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:611
+#: inc/class-payments.php:474
+#: sell-media-free-downloads/sell-media-free-downloads.php:271
+msgid "Download"
+msgstr ""
+
+#: inc/class-payments.php:611
+#: sell-media-commissions/sell-media-commissions.php:46
+#: sell-media-commissions/sell-media-commissions.php:56
 msgid "Item"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:614
+#: inc/class-payments.php:614
 msgid "Quantity"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:694
+#: inc/class-payments.php:694
+#: sell-media-commissions/sell-media-commissions.php:36
 msgid "Paid"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:741
+#: inc/class-payments.php:741
 msgid "New sale notification"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:743
+#: inc/class-payments.php:743
 msgid "Customer"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-payments.php:744
+#: inc/class-payments.php:744
 msgid "Address"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-products.php:51
+#: inc/class-products.php:51
 msgid "Original"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-products.php:52
+#: inc/class-products.php:52
 msgid "The original high resolution source file"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-search.php:98
+#: inc/class-search.php:94
+msgid "Example: 100"
+msgstr ""
+
+#: inc/class-search.php:98
 msgid "X"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-search.php:167
+#: inc/class-search.php:167
 msgid "Displaying results "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/class-search.php:167
+#: inc/class-search.php:167
 msgid " of "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/collections.php:76
+#: inc/class-search.php:179 inc/lightbox.php:45 inc/shortcodes.php:142
+#: sell-media-stripe/sell-media-stripe.php:57
+#: themes/archive-sell_media_item.php:110 themes/single-sell_media_item.php:23
+msgid "Buy"
+msgstr ""
+
+#: inc/collections.php:76
 msgid "This item is password protected"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:102
+#: inc/install.php:102
 msgid "All Products"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:105
+#: inc/install.php:103 inc/install.php:145
+#: sell-media-discount-codes/sell-media-discount-codes.php:133
+msgid "Add New"
+msgstr ""
+
+#: inc/install.php:105
 msgid "Edit Product"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:106
+#: inc/install.php:106
 msgid "New Product"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:107
+#: inc/install.php:107
 msgid "View Product"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:108
+#: inc/install.php:108
 msgid "Search Products"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:109
+#: inc/install.php:109
 msgid "No products found"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:110
+#: inc/install.php:110
 msgid "No products found in Trash"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:111
+#: inc/install.php:111
 msgid "Parent Product:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:143
-#: MEDIA/sell-media/inc/install.php:154
+#: inc/install.php:143 inc/install.php:154
 msgid "Payments"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:144
-#: MEDIA/sell-media/inc/settings.php:48 MEDIA/sell-media/inc/settings.php:52
-#: MEDIA/sell-media/sell-media-settings.php:43
-#: MEDIA/sell-media/sell-media-settings.php:47
+#: inc/install.php:144 inc/settings.php:48 inc/settings.php:52
 msgid "Payment"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:146
+#: inc/install.php:146
 msgid "Add New Payment"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:147
+#: inc/install.php:147
 msgid "Edit Payment"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:148
+#: inc/install.php:148
 msgid "New Payment"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:149
+#: inc/install.php:149
 msgid "View Payment"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:150
+#: inc/install.php:150
 msgid "Search Payments"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:151
+#: inc/install.php:151
 msgid "No payments found"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:152
+#: inc/install.php:152
 msgid "No payments found in Trash"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:153
+#: inc/install.php:153
 msgid "Parent Payment:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:202
+#: inc/install.php:200 inc/install.php:201 inc/install.php:214
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:274
+msgid "Price Groups"
+msgstr ""
+
+#: inc/install.php:202
 msgid "Search Price Groups"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:203
+#: inc/install.php:203
 msgid "Popular Price Groups"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:204
+#: inc/install.php:204
 msgid "All Price Groups"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:205
+#: inc/install.php:205
 msgid "Parent Price Groups"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:206
+#: inc/install.php:206
 msgid "Parent Price Groups:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:207
+#: inc/install.php:207
 msgid "Edit Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:208
+#: inc/install.php:208
 msgid "Update Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:209
+#: inc/install.php:209
 msgid "Add New Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:210
+#: inc/install.php:210
 msgid "New Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:211
+#: inc/install.php:211
 msgid "Separate Price Groups with commas"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:212
+#: inc/install.php:212
 msgid "Add or remove Price Groups"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:213
+#: inc/install.php:213
 msgid "Choose from most used Price Groups"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:234
+#: inc/install.php:234
 msgid "Product Collections"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:236
+#: inc/install.php:235
+msgid "Collection"
+msgstr ""
+
+#: inc/install.php:236
 msgid "Search Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:237
+#: inc/install.php:237
 msgid "Popular Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:238
-#: MEDIA/sell-media/inc/widgets/sell-media-featured.php:95
+#: inc/install.php:238 inc/widgets/sell-media-featured.php:95
 msgid "All Collections"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:239
+#: inc/install.php:239
 msgid "Parent Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:240
+#: inc/install.php:240
 msgid "Parent Collection:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:241
+#: inc/install.php:241
 msgid "Edit Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:242
+#: inc/install.php:242
 msgid "Update Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:243
+#: inc/install.php:243
 msgid "Add New Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:244
+#: inc/install.php:244
 msgid "New Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:245
+#: inc/install.php:245
 msgid "Separate collection with commas"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:246
+#: inc/install.php:246
 msgid "Add or remove Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:247
+#: inc/install.php:247
 msgid "Choose from most used Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:248
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:27
-#: MEDIA/sell-media/themes/single-sell_media_item.php:31
+#: inc/install.php:248 themes/archive-sell_media_item.php:27
+#: themes/single-sell_media_item.php:31
 msgid "Collections"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:269
-#: MEDIA/sell-media/inc/install.php:283
+#: inc/install.php:269 inc/install.php:283
 msgid "Licenses"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:271
+#: inc/install.php:271
 msgid "Search Licenses"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:272
+#: inc/install.php:272
 msgid "Popular Licenses"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:273
+#: inc/install.php:273
 msgid "All Licenses"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:274
+#: inc/install.php:274
 msgid "Parent License"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:275
+#: inc/install.php:275
 msgid "Parent License:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:276
+#: inc/install.php:276
 msgid "Edit License"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:277
+#: inc/install.php:277
 msgid "Update License"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:278
+#: inc/install.php:278
 msgid "Add New License"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:279
+#: inc/install.php:279
 msgid "New License"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:280
+#: inc/install.php:280
 msgid "Separate licenses with commas"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:281
+#: inc/install.php:281
 msgid "Add or remove Licenses"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:282
+#: inc/install.php:282
 msgid "Choose from most used Licenses"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:305
-#: MEDIA/sell-media/inc/install.php:374 MEDIA/sell-media/inc/install.php:408
+#: inc/install.php:304 inc/install.php:318
+#: inc/widgets/sell-media-keywords.php:49 themes/single-sell_media_item.php:34
+msgid "Keywords"
+msgstr ""
+
+#: inc/install.php:305 inc/install.php:374 inc/install.php:408
 msgid "Keyword"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:306
+#: inc/install.php:306
 msgid "Search Keywords"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:307
+#: inc/install.php:307
 msgid "Popular Keywords"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:308
+#: inc/install.php:308
 msgid "All Keywords"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:309
-#: MEDIA/sell-media/inc/install.php:378 MEDIA/sell-media/inc/install.php:412
+#: inc/install.php:309 inc/install.php:378 inc/install.php:412
 msgid "Parent Keyword"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:310
-#: MEDIA/sell-media/inc/install.php:379 MEDIA/sell-media/inc/install.php:413
+#: inc/install.php:310 inc/install.php:379 inc/install.php:413
 msgid "Parent Keyword:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:311
-#: MEDIA/sell-media/inc/install.php:380 MEDIA/sell-media/inc/install.php:414
+#: inc/install.php:311 inc/install.php:380 inc/install.php:414
 msgid "Edit Keyword"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:312
-#: MEDIA/sell-media/inc/install.php:381 MEDIA/sell-media/inc/install.php:415
+#: inc/install.php:312 inc/install.php:381 inc/install.php:415
 msgid "Update Keyword"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:313
-#: MEDIA/sell-media/inc/install.php:382 MEDIA/sell-media/inc/install.php:416
+#: inc/install.php:313 inc/install.php:382 inc/install.php:416
 msgid "Add New Keyword"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:314
-#: MEDIA/sell-media/inc/install.php:383 MEDIA/sell-media/inc/install.php:417
+#: inc/install.php:314 inc/install.php:383 inc/install.php:417
 msgid "New Keyword"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:315
+#: inc/install.php:315
 msgid "Separate keywords with commas"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:316
+#: inc/install.php:316
 msgid "Add or remove Keywords"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:317
+#: inc/install.php:317
 msgid "Choose from most used Keywords"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:339
-#: MEDIA/sell-media/inc/install.php:353
+#: inc/install.php:339 inc/install.php:353
 msgid "Creators"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:340
+#: inc/install.php:340
 msgid "Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:341
+#: inc/install.php:341
 msgid "Search Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:342
+#: inc/install.php:342
 msgid "Popular Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:343
+#: inc/install.php:343
 msgid "All Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:344
+#: inc/install.php:344
 msgid "Parent Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:345
+#: inc/install.php:345
 msgid "Parent Creator:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:346
+#: inc/install.php:346
 msgid "Edit Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:347
+#: inc/install.php:347
 msgid "Update Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:348
+#: inc/install.php:348
 msgid "Add New Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:349
+#: inc/install.php:349
 msgid "New Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:350
+#: inc/install.php:350
 msgid "Separate creator with commas"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:351
+#: inc/install.php:351
 msgid "Add or remove Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:352
+#: inc/install.php:352
 msgid "Choose from most used Creator"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:373
-#: MEDIA/sell-media/inc/install.php:387
+#: inc/install.php:373 inc/install.php:387
 msgid "City"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:375
+#: inc/install.php:375
 msgid "Search City"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:376
+#: inc/install.php:376
 msgid "Popular City"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:377
+#: inc/install.php:377
 msgid "All City"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:384
+#: inc/install.php:384
 msgid "Separate city with commas"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:385
+#: inc/install.php:385
 msgid "Add or remove City"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:386
+#: inc/install.php:386
 msgid "Choose from most used City"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:407
-#: MEDIA/sell-media/inc/install.php:421
+#: inc/install.php:407 inc/install.php:421
 msgid "State"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:409
+#: inc/install.php:409
 msgid "Search State"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:410
+#: inc/install.php:410
 msgid "Popular State"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:411
+#: inc/install.php:411
 msgid "All State"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:418
+#: inc/install.php:418
 msgid "Separate state with commas"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:419
+#: inc/install.php:419
 msgid "Add or remove State"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/install.php:420
+#: inc/install.php:420
 msgid "Choose from most used State"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/lightbox.php:16
+#: inc/lightbox.php:16
 msgid "Loading..."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/lightbox.php:44
-#: MEDIA/sell-media/inc/scripts.php:80
-#: MEDIA/sell-media/inc/settings/settings.php:441
-#: MEDIA/sell-media/inc/settings/settings.php:536
-#: MEDIA/sell-media/settings/settings.php:444
-#: MEDIA/sell-media/settings/settings.php:539
+#: inc/lightbox.php:44 inc/scripts.php:80 inc/settings/settings.php:449
+#: inc/settings/settings.php:544
 msgid "Remove"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/lightbox.php:55
+#: inc/lightbox.php:55
 msgid "No items"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/scripts.php:54
+#: inc/scripts.php:54
 msgid "Sorry that email already exists or is invalid"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/scripts.php:64
+#: inc/scripts.php:64
 msgid "Added"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/scripts.php:65
+#: inc/scripts.php:65
 msgid "Checkout now"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/scripts.php:77
+#: inc/scripts.php:77
 msgid ""
 "There was an error loading the cart data. Please contact the site owner."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/scripts.php:78
-#: MEDIA/sell-media/inc/shortcodes.php:193
+#: inc/scripts.php:78 inc/shortcodes.php:193
 msgid "Checkout Now"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/scripts.php:79
+#: inc/scripts.php:79
 msgid "Please wait..."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/search/wpas-field.php:141
+#: inc/search/wpas-field.php:141
 msgid "Select"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:18
-#: MEDIA/sell-media/inc/settings.php:22
-#: MEDIA/sell-media/sell-media-settings.php:13
-#: MEDIA/sell-media/sell-media-settings.php:17
+#: inc/settings.php:18 inc/settings.php:22
 msgid "General"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:33
-#: MEDIA/sell-media/inc/settings.php:37
+#: inc/settings.php:33 inc/settings.php:37
 msgid "Pricing"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:67
-#: MEDIA/sell-media/sell-media-settings.php:62
+#: inc/settings.php:67
 msgid "Email Settings"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:78
-#: MEDIA/sell-media/inc/settings.php:82
-#: MEDIA/sell-media/sell-media-settings.php:73
-#: MEDIA/sell-media/sell-media-settings.php:77
+#: inc/settings.php:78 inc/settings.php:82
 msgid "Misc"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:99
-#: MEDIA/sell-media/sell-media-settings.php:94
+#: inc/settings.php:99
 msgid "Mode"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:100
-#: MEDIA/sell-media/sell-media-settings.php:95
+#: inc/settings.php:100
 #, php-format
 msgid ""
-"To accept real payments, select Live Mode. If you want to do test payments, "
-"select Test Mode. In order to fully use Test Mode, you must have %s."
+"Select Live Mode to accept real transactions. Select Test Mode to accept "
+"test transactions (%s)."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:120
-#: MEDIA/sell-media/sell-media-settings.php:115
+#: inc/settings.php:120
 msgid "Checkout Page"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:121
-#: MEDIA/sell-media/sell-media-settings.php:116
+#: inc/settings.php:121
 msgid ""
-"What page contains the <code>[sell_media_checkout]</code> shortcode? This "
-"shortcode generates the checkout cart."
+"Select the page that contains the checkout shortcode "
+"<code>[sell_media_checkout]</code>"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:132
-#: MEDIA/sell-media/sell-media-settings.php:127
+#: inc/settings.php:132
 msgid "Thanks Page"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:133
-#: MEDIA/sell-media/sell-media-settings.php:128
-msgid "What page contains the <code>[sell_media_thanks]</code> shortcode?"
+#: inc/settings.php:133
+msgid ""
+"Select the page that contains the thanks shortcode "
+"<code>[sell_media_thanks]</code>"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:144
-#: MEDIA/sell-media/sell-media-settings.php:139
+#: inc/settings.php:144
 msgid "Dashboard Page"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:145
-#: MEDIA/sell-media/sell-media-settings.php:140
+#: inc/settings.php:145
 msgid ""
-"Where is your customer Dashboard page? This page will contain the "
-"<code>[sell_media_download_list]</code> shortcode."
+"Select the page that contains the dashboard "
+"shortcode<code>[sell_media_download_list]</code>"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:156
-#: MEDIA/sell-media/sell-media-settings.php:151
+#: inc/settings.php:156
 msgid "Login Page"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:157
-#: MEDIA/sell-media/sell-media-settings.php:152
+#: inc/settings.php:157
 msgid ""
-"Where is your customer login page? This page will contain the "
-"<code>[sell_media_login_form]</code> shortcode."
+"Select the page that contains the login shortcode "
+"<code>[sell_media_login_form]</code>"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:168
+#: inc/settings.php:168
 msgid "Search Page"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:169
+#: inc/settings.php:169
 msgid ""
-"Where is your search page? This page will contain the "
-"<code>[sell_media_searchform]</code> shortcode."
+"Select the page that contains the search shortcode "
+"<code>[sell_media_searchform]</code>"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:180
-#: MEDIA/sell-media/sell-media-settings.php:163
+#: inc/settings.php:180
 msgid "Customer Notification"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:181
-#: MEDIA/sell-media/sell-media-settings.php:164
+#: inc/settings.php:181
 msgid "Notify the customer of their site registration."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:190
-#: MEDIA/sell-media/inc/settings.php:232 MEDIA/sell-media/inc/settings.php:349
-#: MEDIA/sell-media/sell-media-settings.php:173
-#: MEDIA/sell-media/sell-media-settings.php:215
-#: MEDIA/sell-media/sell-media-settings.php:310
+#: inc/settings.php:190 inc/settings.php:232 inc/settings.php:349
 msgid "No"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:194
-#: MEDIA/sell-media/inc/settings.php:236 MEDIA/sell-media/inc/settings.php:353
-#: MEDIA/sell-media/sell-media-settings.php:177
-#: MEDIA/sell-media/sell-media-settings.php:219
-#: MEDIA/sell-media/sell-media-settings.php:314
+#: inc/settings.php:194 inc/settings.php:236 inc/settings.php:353
 msgid "Yes"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:201
-#: MEDIA/sell-media/sell-media-settings.php:184
+#: inc/settings.php:201
 msgid "Style"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:202
-#: MEDIA/sell-media/sell-media-settings.php:185
+#: inc/settings.php:202
 msgid ""
 "Choose the style of your theme. Sell Media will load styles to match your "
 "theme."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:211
-#: MEDIA/sell-media/sell-media-settings.php:194
+#: inc/settings.php:211
 msgid "Dark"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:215
-#: MEDIA/sell-media/sell-media-settings.php:198
+#: inc/settings.php:215
 msgid "Light"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:222
-#: MEDIA/sell-media/sell-media-settings.php:205
+#: inc/settings.php:222
 msgid "Plugin Credit"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:223
-#: MEDIA/sell-media/sell-media-settings.php:206
+#: inc/settings.php:223
 msgid "Let your site visitors know you are using the Sell Media plugin?"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:243
-#: MEDIA/sell-media/sell-media-settings.php:226
+#: inc/settings.php:243
 msgid "Post Type Slug"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:244
-#: MEDIA/sell-media/sell-media-settings.php:227
+#: inc/settings.php:244
 msgid ""
 "You can change the post type slug to: &quot;photos&quot; or &quot;"
 "downloads&quot;. The default slug is &quot;items&quot;."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:255
-#: MEDIA/sell-media/sell-media-settings.php:238
+#: inc/settings.php:255
 msgid "Order By"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:256
-#: MEDIA/sell-media/sell-media-settings.php:239
+#: inc/settings.php:256
 msgid "Choose the order of items for the archive pages."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:284
-#: MEDIA/sell-media/sell-media-settings.php:267
+#: inc/settings.php:284
 msgid "Terms and Conditions"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:285
-#: MEDIA/sell-media/sell-media-settings.php:268
+#: inc/settings.php:285
 msgid ""
 "These &quot;Terms and Conditions&quot; will show up on the checkout page. "
 "Users must agree to these terms before completing their purchase."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:296
-#: MEDIA/sell-media/sell-media-settings.php:321
+#: inc/settings.php:296
 msgid "Show Columns"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:297
+#: inc/settings.php:297
 msgid ""
 "Select the columns to show on the admin page &quot;All Products&quot; page."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:327
-#: MEDIA/sell-media/sell-media-settings.php:352
+#: inc/settings.php:327
 msgid "Original Price"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:328
+#: inc/settings.php:328
 msgid ""
 "The original price of new items and bulk uploads. You can set unique prices "
 "by editing each individual item."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:339
-#: MEDIA/sell-media/sell-media-settings.php:300
+#: inc/settings.php:339
 msgid "Hide Original Price"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:340
+#: inc/settings.php:340
 msgid ""
-"Select NO if you're selling single file downloads. Select YES to hide the "
-"original price above and rely solely on the Price Groups below. Please note: "
-"Price Groups can only be used when selling images. You can override this "
-"setting on a per-item basis."
+"Select 'Yes' to hide the original price above and rely solely on Price "
+"Groups (See below. Price Groups can only be used when selling images). "
+"Select 'No' if you're selling single file downloads or if you want to list "
+"the original price for each product. You can override this setting on a per-"
+"item basis."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:360
+#: inc/settings.php:360
 msgid "Default Image Price Group"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:371
+#: inc/settings.php:371
 msgid "Image Price Groups"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:384
-#: MEDIA/sell-media/sell-media-settings.php:388
+#: inc/settings.php:384
 msgid "PayPal Email Address"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:385
-#: MEDIA/sell-media/sell-media-settings.php:389
+#: inc/settings.php:385
 #, php-format
 msgid ""
-"Add the email address associated with your PayPal account above. %1$s You "
-"must complete the steps listed here to complete integration with PayPal: "
-"%2$s Here is the listener URL you need to add in PayPal: %3$s"
+"Add the email address associated with your PayPal account above. %1$s %2$s. "
+"Your listener URL is %3$s (you will need this when completing PayPal setup)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:385
-#: MEDIA/sell-media/sell-media-settings.php:389
-msgid "IMPORTANT"
+#: inc/settings.php:385
+msgid "REQUIRED ACTIONS"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:397
-#: MEDIA/sell-media/sell-media-settings.php:401
+#: inc/settings.php:397
 msgid "Currency"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:398
-#: MEDIA/sell-media/sell-media-settings.php:402
+#: inc/settings.php:398
 msgid "The currency in which you accept payment."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:409
-#: MEDIA/sell-media/sell-media-settings.php:413
+#: inc/settings.php:409
 msgid "PayPal Additional Test Emails"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:410
-#: MEDIA/sell-media/sell-media-settings.php:414
+#: inc/settings.php:410
 msgid ""
 "This is useful when debugging PayPal. Enter a comma separated list of "
 "emails, and when a purchase is made the same email that is sent to the buyer "
 "will be sent to the recipients in the above list."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:421
-#: MEDIA/sell-media/inc/shortcodes.php:178
-#: MEDIA/sell-media/sell-media-settings.php:425
+#: inc/settings.php:421 inc/shortcodes.php:178
 msgid "Tax"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:431
-#: MEDIA/sell-media/sell-media-settings.php:435
+#: inc/settings.php:431
 msgid "Yes, charge tax"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:438
-#: MEDIA/sell-media/sell-media-settings.php:442
+#: inc/settings.php:438
 msgid "Tax Rate"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:452
-#: MEDIA/sell-media/sell-media-settings.php:456
+#: inc/settings.php:452
 msgid "From Name"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:453
-#: MEDIA/sell-media/sell-media-settings.php:457
+#: inc/settings.php:453
 msgid "The name associated with all outgoing email."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:464
-#: MEDIA/sell-media/sell-media-settings.php:468
+#: inc/settings.php:464
 msgid "From Email"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:465
-#: MEDIA/sell-media/sell-media-settings.php:469
+#: inc/settings.php:465
 msgid "The email address used for all outgoing email."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:476
-#: MEDIA/sell-media/sell-media-settings.php:480
+#: inc/settings.php:476
 msgid "Email Subject"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:477
-#: MEDIA/sell-media/sell-media-settings.php:481
+#: inc/settings.php:477
 msgid "The email subject on successful purchase emails."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:483
-#: MEDIA/sell-media/sell-media-settings.php:487
+#: inc/settings.php:483
 msgid "Your Purchase"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:488
-#: MEDIA/sell-media/sell-media-settings.php:492
+#: inc/settings.php:488
 msgid "Email Body"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:489
+#: inc/settings.php:489
 msgid ""
 "This e-mail message is sent to your customers in case of successful and "
 "cleared payment. You can use the following email tags: {first_name}, "
@@ -2301,306 +1265,285 @@ msgid ""
 "purchases. The {payment_id} tag can be used to display an invoice number."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:503
-#: MEDIA/sell-media/sell-media-settings.php:507
+#: inc/settings.php:503
 msgid "Settings for Extensions are shown below."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings.php:510
-#: MEDIA/sell-media/sell-media-settings.php:514
+#: inc/settings.php:510
 msgid "Download Extensions for Sell Media"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:16
-#: MEDIA/sell-media/settings/library/helpers.php:16
+#: inc/settings/library/helpers.php:16
 msgid "-- Choose One --"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:135
-#: MEDIA/sell-media/settings/library/helpers.php:135
+#: inc/settings/library/helpers.php:133
 msgid "US Dollars (&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:139
-#: MEDIA/sell-media/settings/library/helpers.php:139
+#: inc/settings/library/helpers.php:137
 msgid "Euros (&euro;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:143
-#: MEDIA/sell-media/settings/library/helpers.php:143
+#: inc/settings/library/helpers.php:141
 msgid "Pounds Sterling (&pound;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:147
-#: MEDIA/sell-media/settings/library/helpers.php:147
+#: inc/settings/library/helpers.php:145
 msgid "Australian Dollars (&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:151
-#: MEDIA/sell-media/settings/library/helpers.php:151
+#: inc/settings/library/helpers.php:149
 msgid "Brazilian Real (R&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:155
-#: MEDIA/sell-media/settings/library/helpers.php:155
+#: inc/settings/library/helpers.php:153
 msgid "Canadian Dollars (&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:159
-#: MEDIA/sell-media/settings/library/helpers.php:159
+#: inc/settings/library/helpers.php:157
 msgid "Czech Koruna (&#75;&#269;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:163
-#: MEDIA/sell-media/settings/library/helpers.php:163
+#: inc/settings/library/helpers.php:161
 msgid "Danish Krone"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:167
-#: MEDIA/sell-media/settings/library/helpers.php:167
+#: inc/settings/library/helpers.php:165
 msgid "Hong Kong Dollar (&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:171
-#: MEDIA/sell-media/settings/library/helpers.php:171
+#: inc/settings/library/helpers.php:169
 msgid "Hungarian Forint"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:175
-#: MEDIA/sell-media/settings/library/helpers.php:175
+#: inc/settings/library/helpers.php:173
 msgid "Israeli Shekel"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:179
-#: MEDIA/sell-media/settings/library/helpers.php:179
+#: inc/settings/library/helpers.php:177
 msgid "Japanese Yen (&yen;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:183
-#: MEDIA/sell-media/settings/library/helpers.php:183
+#: inc/settings/library/helpers.php:181
 msgid "Malaysian Ringgits"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:187
-#: MEDIA/sell-media/settings/library/helpers.php:187
+#: inc/settings/library/helpers.php:185
 msgid "Mexican Peso (&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:191
-#: MEDIA/sell-media/settings/library/helpers.php:191
+#: inc/settings/library/helpers.php:189
 msgid "New Zealand Dollar (&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:195
-#: MEDIA/sell-media/settings/library/helpers.php:195
+#: inc/settings/library/helpers.php:193
 msgid "Norwegian Krone"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:199
-#: MEDIA/sell-media/settings/library/helpers.php:199
+#: inc/settings/library/helpers.php:197
 msgid "Philippine Pesos"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:203
-#: MEDIA/sell-media/settings/library/helpers.php:203
+#: inc/settings/library/helpers.php:201
 msgid "Polish Zloty"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:207
-#: MEDIA/sell-media/settings/library/helpers.php:207
+#: inc/settings/library/helpers.php:205
 msgid "Singapore Dollar (&#36;)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:211
-#: MEDIA/sell-media/settings/library/helpers.php:211
+#: inc/settings/library/helpers.php:209
 msgid "Swedish Krona"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:215
-#: MEDIA/sell-media/settings/library/helpers.php:215
+#: inc/settings/library/helpers.php:213
 msgid "Swiss Franc"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:219
-#: MEDIA/sell-media/settings/library/helpers.php:219
+#: inc/settings/library/helpers.php:217
 msgid "Taiwan New Dollars"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:223
-#: MEDIA/sell-media/settings/library/helpers.php:223
+#: inc/settings/library/helpers.php:221
 msgid "Thai Baht"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:227
-#: MEDIA/sell-media/settings/library/helpers.php:227
+#: inc/settings/library/helpers.php:225
 msgid "Turkish Lira (TL)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/settings/library/helpers.php:231
-#: MEDIA/sell-media/settings/library/helpers.php:231
+#: inc/settings/library/helpers.php:229
 msgid "South African rand (R)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:78
-#: MEDIA/sell-media/inc/settings/settings.php:80
-#: MEDIA/sell-media/settings/settings.php:86
-#: MEDIA/sell-media/settings/settings.php:88
+#: inc/settings/settings.php:78 inc/settings/settings.php:80
 msgid "Settings"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:113
-#: MEDIA/sell-media/settings/settings.php:121
+#: inc/settings/settings.php:114
 msgid " settings updated successfully."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:124
-#: MEDIA/sell-media/settings/settings.php:132
+#: inc/settings/settings.php:127
 msgid "Save Settings"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:125
-#: MEDIA/sell-media/settings/settings.php:133
+#: inc/settings/settings.php:128
 msgid "Reset Defaults"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:318
-#: MEDIA/sell-media/inc/settings/settings.php:338
-#: MEDIA/sell-media/inc/settings/settings.php:357
+#: inc/settings/settings.php:326 inc/settings/settings.php:346
+#: inc/settings/settings.php:365
 msgid ""
 "This option has no valid options. Please create valid options as an array "
 "inside the settings."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:440
-#: MEDIA/sell-media/inc/term-meta.php:360
-#: MEDIA/sell-media/settings/settings.php:443
+#: inc/settings/settings.php:448 inc/term-meta.php:360
 msgid "Upload or Select Image"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:535
-#: MEDIA/sell-media/settings/settings.php:538
+#: inc/settings/settings.php:543
 msgid "Upload or Select Images"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:582
-#: MEDIA/sell-media/settings/settings.php:585
+#: inc/settings/settings.php:590
 msgid "Version: "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/settings/settings.php:583
+#: inc/settings/settings.php:591
 msgid "Documentation"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:182
+#: inc/settings/settings.php:605
+msgid "Upgrades Available"
+msgstr ""
+
+#: inc/settings/settings.php:607
+msgid ""
+"Sell prints, create discount codes, watermark images, accept credit cards "
+"and much more when you activate the Business Bundle extension pack for Sell "
+"Media."
+msgstr ""
+
+#: inc/settings/settings.php:608 inc/settings/settings.php:615
+msgid "Order Now"
+msgstr ""
+
+#: inc/settings/settings.php:612
+msgid "Need Help?"
+msgstr ""
+
+#: inc/settings/settings.php:614
+msgid ""
+"Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one "
+"consultation over live chat. If we can't fix your problem, we'll refund your "
+"order."
+msgstr ""
+
+#: inc/settings/settings.php:619
+msgid "Reviews"
+msgstr ""
+
+#: inc/settings/settings.php:621
+msgid "Great plugin with great support. Includes tons of features."
+msgstr ""
+
+#: inc/settings/settings.php:624
+msgid ""
+"A young product with massive potential! You can expect great support from "
+"Graph Paper Press."
+msgstr ""
+
+#: inc/settings/settings.php:627
+msgid "We'd love for you to leave a review if you've found this plugin useful."
+msgstr ""
+
+#: inc/settings/settings.php:628
+msgid "Leave a review"
+msgstr ""
+
+#: inc/shortcodes.php:182
 msgid "Shipping"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:195
+#: inc/shortcodes.php:195
 #, php-format
 msgid "or %s"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:207
+#: inc/shortcodes.php:207
 #, php-format
 msgid "Your cart is empty. %s"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:229
+#: inc/shortcodes.php:229
 msgid "Your Purchase History"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:235
+#: inc/shortcodes.php:235
 msgid "Purchase ID"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:265
+#: inc/shortcodes.php:265
 msgid "Description"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:266
+#: inc/shortcodes.php:266
 msgid "width (px)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:267
+#: inc/shortcodes.php:267
 msgid "height (px)"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:268
+#: inc/shortcodes.php:268
 msgid "price"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:411
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:86
+#: inc/shortcodes.php:411 themes/archive-sell_media_item.php:86
 msgid " images in "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:411
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:86
+#: inc/shortcodes.php:411 themes/archive-sell_media_item.php:86
 msgid " collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:414
+#: inc/shortcodes.php:414
 msgid "Starting at "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:449
+#: inc/shortcodes.php:449
 #, php-format
 msgid "You are logged in. %1$s or %2$s."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:453
+#: inc/shortcodes.php:453
 msgid "Login failed"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:459
-#: MEDIA/sell-media/inc/term-meta.php:399
-#: MEDIA/sell-media/inc/term-meta.php:444
+#: inc/shortcodes.php:459 inc/term-meta.php:399 inc/term-meta.php:444
 msgid "Password"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:460
+#: inc/shortcodes.php:460
 msgid "Remember Me"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:461
+#: inc/shortcodes.php:461
 msgid "Log In"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/shortcodes.php:465
+#: inc/shortcodes.php:465
 msgid "Forgot Password"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/template-tags.php:161
+#: inc/template-tags.php:161
 msgid "Shopping cart by "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:84
+#: inc/term-meta.php:84
 msgid ""
 "When a buyer decides to purchase a item from your site, they must choose a "
 "license which most closely identifies their intended use of the item. We "
@@ -2611,64 +1554,61 @@ msgid ""
 "parent and child licenses as you want."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:101
-#: MEDIA/sell-media/inc/term-meta.php:119
+#: inc/term-meta.php:101 inc/term-meta.php:119
 msgid "Markup"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:195
+#: inc/term-meta.php:195
 msgid ""
 "Increase the price of a item if a buyer selects this license by dragging the "
 "slider above."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:205
+#: inc/term-meta.php:205
 msgid "you have not set a default price"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:209
+#: inc/term-meta.php:209
 #, php-format
 msgid " The %1$s of %2$s with %3$s markup is %4$s"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:229
+#: inc/term-meta.php:229
 msgid ""
 "Check to add this as a default license option for all newly created items."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:233
+#: inc/term-meta.php:233
 msgid "Add as default license?"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:336
-#: MEDIA/sell-media/inc/term-meta.php:377
-#: MEDIA/sell-media/inc/term-meta.php:485
+#: inc/term-meta.php:336 inc/term-meta.php:377 inc/term-meta.php:485
 msgid "Icon"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:364
+#: inc/term-meta.php:364
 msgid ""
 "The icon is not prominent by default; however, some themes may show it. If "
 "no icon is used the featured image to the most recent post will be displayed"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:401
+#: inc/term-meta.php:401
 msgid "This will password protect all items in this collection."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:421
+#: inc/term-meta.php:421
 msgid "Password protect all items in this collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:438
+#: inc/term-meta.php:438
 msgid "This collection will inherit the password of the parent collection:"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:462
+#: inc/term-meta.php:462
 msgid "Enable Client Proofing"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:464
+#: inc/term-meta.php:464
 msgid ""
 "Check this to allow clients with password access to download items in this "
 "collecton as proofs. Clients must add an item to their Lightbox in order to "
@@ -2676,209 +1616,852 @@ msgid ""
 "both the site admin and the client via email."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:489
+#: inc/term-meta.php:489
 msgid "Media"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:494
+#: inc/term-meta.php:494
 msgid "Protected"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/term-meta.php:497
+#: inc/term-meta.php:497
 msgid "Proofing"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/widgets.php:21
+#: inc/widgets.php:21
 msgid "Sell Media Below Single Item"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/widgets.php:30
+#: inc/widgets.php:30
 msgid "Sell Media Below Single Sidebar"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/inc/widgets/sell-media-exif.php:8
+#: inc/widgets/sell-media-exif.php:8
 msgid ""
 "Displays image exif data (shutter speed, aperture, ISO, etc). Only use this "
 "on Single Sidebar Widgetized areas."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:31
+#: inc/widgets/sell-media-exif.php:31
 msgid "Camera "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:36
+#: inc/widgets/sell-media-exif.php:36
 msgid "Aperture "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:41
+#: inc/widgets/sell-media-exif.php:41
 msgid "Focal Length "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:46
+#: inc/widgets/sell-media-exif.php:46
 msgid "Shutter Speed "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:64
+#: inc/widgets/sell-media-exif.php:64
 msgid "ISO "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:68
+#: inc/widgets/sell-media-exif.php:68
 msgid "Credit "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:73
+#: inc/widgets/sell-media-exif.php:73
 msgid "Date "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:78
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:80
+#: inc/widgets/sell-media-exif.php:78 inc/widgets/sell-media-exif.php:80
 msgid "Copyright "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:80
+#: inc/widgets/sell-media-exif.php:80
 msgid "by "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-exif.php:104
+#: inc/widgets/sell-media-exif.php:104
 msgid "Camera Info"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/inc/widgets/sell-media-featured.php:93
+#: inc/widgets/sell-media-featured.php:93
 msgid " Select Collection"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media-settings.php:28
-#: MEDIA/sell-media/sell-media-settings.php:32
-msgid "Size &amp; Price"
+#: sell-media-commissions/sell-media-commissions.php:34
+msgid "Sell Media Commissions"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media-settings.php:279
-msgid "Disable Sell Media Search"
+#: sell-media-commissions/sell-media-commissions.php:36
+#: sell-media-discount-codes/inc/all-discount-code.php:413
+msgid "All"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media-settings.php:280
+#: sell-media-commissions/sell-media-commissions.php:36
+msgid "Unpaid"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:45
+#: sell-media-commissions/sell-media-commissions.php:55
+msgid "User"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:47
+#: sell-media-commissions/sell-media-commissions.php:57
+msgid "Commission %"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:48
+#: sell-media-commissions/sell-media-commissions.php:58
+msgid "Commission Amount"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:49
+#: sell-media-commissions/sell-media-commissions.php:59
+msgid "Date"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:50
+#: sell-media-commissions/sell-media-commissions.php:60
+#: sell-media-discount-codes/inc/all-discount-code.php:150
+msgid "Status"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:189
+msgid "Commission Details:"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:192
+msgid "User:"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:200
+msgid "Commissions (%):"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:69
+msgid "Add New Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:69
+msgid "Go Back"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:79
+msgid "The name of this discount code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:84
+msgid "Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:88
+msgid "Enter a code for this discount, such as 10PERCENT"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:97
+msgid "Percentage"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:98
+msgid "Flat amount"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:100
+msgid "The kind of discount to apply for this discount."
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:105
+#: sell-media-discount-codes/inc/all-discount-code.php:146
+msgid "Amount"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:109
+msgid "The amount of this discount code."
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:114
+msgid "Start date"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:118
 msgid ""
-"Set this to &quot;no&quot; if you do not want to use the built in Sell Media "
-"search."
+"Enter the start date for this discount code in the format of mm/dd/yyyy. For "
+"no start date, leave blank."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media-settings.php:301
-msgid "You can also hide the original price by editing each individual item."
+#: sell-media-discount-codes/inc/add-discount-code.php:123
+msgid "Expiration date"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media-settings.php:322
+#: sell-media-discount-codes/inc/add-discount-code.php:127
 msgid ""
-"Select the columns to show on the admin page &quot;All Items&quot; page."
+"Enter the expiration date for this discount code in the format of mm/dd/"
+"yyyy. For no expiration, leave blank."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media-settings.php:353
+#: sell-media-discount-codes/inc/add-discount-code.php:132
+msgid "Max Uses"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:136
 msgid ""
-"The default price of new items and bulk uploads. You can set unique prices "
-"by editing each individual item."
+"The maximum number of times this discount can be used. Leave blank for "
+"unlimited."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media-settings.php:493
+#: sell-media-discount-codes/inc/add-discount-code.php:144
+msgid "Update Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:145
+#: sell-media-discount-codes/inc/all-discount-code.php:104
+#: sell-media-discount-codes/inc/all-discount-code.php:209
+msgid "Delete"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:147
+msgid "Add Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:38
+#: sell-media-discount-codes/sell-media-discount-codes.php:166
+msgid "Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:39
+#: sell-media-discount-codes/sell-media-discount-codes.php:96
+#: sell-media-discount-codes/sell-media-discount-codes.php:131
+msgid "Discount Codes"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:99
+msgid "Deactive"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:101
+msgid "Activate"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:144
+msgid "Title"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:145
+msgid "Coupon"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:147
+msgid "Uses"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:148
+msgid "Start Date"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:149
+msgid "End Date"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:374
+msgid "Unlimited"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:414
+msgid "Active"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:415
+msgid "Inactive"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:61
+#: sell-media-discount-codes/sell-media-discount-codes.php:72
+msgctxt ""
+msgid "Discount Codes"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:62
+msgctxt ""
+msgid "Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:63
+msgctxt ""
+msgid "Add New"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:64
+msgctxt ""
+msgid "Add New Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:65
+msgctxt ""
+msgid "Edit Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:66
+msgctxt ""
+msgid "New Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:67
+msgctxt ""
+msgid "View Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:68
+msgctxt ""
+msgid "Search Discount Codes"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:69
+msgctxt ""
+msgid "No discount found"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:70
+msgctxt ""
+msgid "No discount codes found in Trash"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:71
+msgctxt ""
+msgid "Parent Discount Code:"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:169
+msgid "Apply"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:170
+msgid "Verifying..."
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:175
+msgid "Discount:"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:198
+msgid "Sorry, this discount code is invalid."
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:230
+msgid "Sorry, this discount code has expired."
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:242
+msgid "Valid code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:306
+msgid "Discount Code updated successfully!"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:308
+msgid "Discount Code added successfully!"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:310
+msgid "Discount Code deleted successfully!"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:329
+msgctxt "Active discount code status"
+msgid "Active"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:336
+msgctxt "Inactive discount code status"
+msgid "Inactive"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:358
+msgid "Discount"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:25
+msgid "First Name:"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:31
+msgid "Last Name:"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:37
+msgid "Email Address:"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:49
+msgid "Download Now"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:53
 msgid ""
-"This e-mail message is sent to your customers in case of successful and "
-"cleared payment. You can use the following keywords: {first_name}, "
-"{last_name}, {payer_email}, {download_links}. Be sure to include the "
-"{download_links} tag, otherwise your buyers won't receive their download "
-"purchases."
+"You are already registered. You can download all free items by visiting our "
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/sell-media.php:138
-#: MEDIA/sell-media/sell-media.php:150
+#: sell-media-free-downloads/sell-media-free-downloads.php:51
+#: sell-media-mailchimp/sell-media-mailchimp.php:147
+msgid "API Key"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:52
+#: sell-media-mailchimp/sell-media-mailchimp.php:148
+msgid "Insert your MailChimp API Key."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:63
+#: sell-media-mailchimp/sell-media-mailchimp.php:159
+msgid "Newsletter List"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:64
+#: sell-media-mailchimp/sell-media-mailchimp.php:160
+msgid "Choose the list to sign users up to."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:85
+msgid "Free Downloads - Mailchimp Settings"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:197
+msgid "Free Download"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:198
+msgid ""
+"Check this to allow visitors to download this for free in exchange for "
+"signing up for your newsletter."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:243
+#: sell-media-mailchimp/sell-media-mailchimp.php:111
+msgid "MailChimp"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:306
+msgid "Hi "
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:365
+msgid "Free Downloads"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:404
+msgid "Nice try, but this file is not a free download."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:409
+msgid "Sorry, but the download url you provided is not valid."
+msgstr ""
+
+#: sell-media-mailchimp/sell-media-mailchimp.php:96
+msgid "Sign up for our newsletter"
+msgstr ""
+
+#: sell-media-mailchimp/sell-media-mailchimp.php:181
+msgid "MailChimp Settings"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:82
+msgid "Sell both"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:86
+msgid "Sell print"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:90
+msgid "Sell download"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:96
+msgid "Price Group for Prints"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:109
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:164
+msgid "Selling Options"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:26
+msgid "Download size"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:36
+msgid "Download license"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:82
+msgid ""
+"If you sold a print, be sure to print and ship the order to the address "
+"listed above. If the order contained downloadable products, no further "
+"action is required. Here are the payment details:"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:93
+msgid "Download or Print"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:124
+msgid "Ship to:"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:141
+msgid ""
+"If you purchased prints, they will be shipped to the address you supplied "
+"during checkout. This address is shown below."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:174
+msgid "Only sell prints"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:181
+msgid "Shipping Rates"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:182
+msgid ""
+"You have three options for calculating shipping rates: Flat Rate, Quantity "
+"Rate, Total Rate. Use Flat Rate to set a basic flat rate shipping to all "
+"cart orders containing prints. Use Quantity Rate to charge a flat rate per "
+"print sold (i.e. 3 prints that cost $10 each with quantity rate shipping of "
+"$1 per print would cost a total of $33). Use Total Rate you want a shipping "
+"rate that is a percentage of the total cost of the cart."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:191
+msgid "Flat Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:195
+msgid "Quantity Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:199
+msgid "Total Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:206
+msgid "Shipping - Flat Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:207
+msgid ""
+"The flat rate shipping price applied once to all orders (i.e. 1, 5, 10)."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:218
+msgid "Shipping - Quantity Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:219
+msgid ""
+"The shipping price applied individually to all prints in the cart (i.e. 1, "
+"5, 10)."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:230
+msgid "Shipping - Total Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:231
+msgid ""
+"The percentage of the total cost of the cart for shipping (use .05 for 5 "
+"percent, .10 for 10 percent, etc)"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:242
+msgid "Unit of Measurement"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:243
+msgid "The unit of measurement in which prints are sold."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:252
+msgid "Centimeters (cm)"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:256
+msgid "Inches (in)"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:263
+msgid "Select Default Price Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:299
+msgid "Prints"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:318
+msgid "This plugin requires Sell Media to function properly"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:443
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:457
+msgid "Print Price Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:444
+msgid "Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:445
+msgid "Search Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:446
+msgid "Popular Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:447
+msgid "All Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:448
+msgid "Parent Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:449
+msgid "Parent Print  Group:"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:450
+msgid "Edit Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:451
+msgid "Update Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:452
+msgid "Add New Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:453
+msgid "New Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:454
+msgid "Separate Print Group with commas"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:455
+msgid "Add or remove Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:456
+msgid "Choose from most used Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:515
+msgid "Add print sizes and prices below."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:529
+msgid "Create a price group, then define specific print sizes and prices."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:620
+msgid "Max Width"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:624
+msgid "Max Height"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:22
+msgid "Buy a print"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:25
+msgid "Buy a download"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:46
+msgid "Print size"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:46
+msgid "All print sizes are listed in "
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:46 themes/cart.php:109
+msgid "(see details)"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:48 themes/cart.php:82
+msgid "Select a size"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:52
+msgid "This item is not currently assigned a price group."
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:58
+msgid "items"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:125
+msgid "Stripe Test Secret Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:126
+#: sell-media-stripe/sell-media-stripe.php:138
+#: sell-media-stripe/sell-media-stripe.php:150
+#: sell-media-stripe/sell-media-stripe.php:162
+msgid " "
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:137
+msgid "Stripe Test Publishable Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:149
+msgid "Stripe Live Secret Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:161
+msgid "Stripe Live Publishable Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:183
+msgid "Stripe Settings"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:185
+msgid ""
+"You must add your <a href=\"https://manage.stripe.com/account/apikeys\" "
+"target=\"_blank\">Stripe API Keys</a> to process transactions."
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:203
+msgid "Credit Card"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:463
+msgid "Stripe not supported, please enable <code>cURL</code>."
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:468
+#, php-format
+msgid ""
+"Your currency, %s is not supported. Please configure your %s account to use "
+"the correct currency."
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:475
+#, php-format
+msgid "Please update your Sell Media %s to contain your Stripe keys"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:36
+msgid ""
+" requires the Sell Media plugin to work properly. Please activate Sell Media."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:127
+msgid "Watermark Image"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:128
+msgid ""
+"For best results, use a transparent PNG cropped to approximately 200 pixels "
+"wide."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:138
+msgid "Watermark Everything"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:148
+msgid ""
+"Watermarks are applied to all Sell Media images when you activate this "
+"extension. You can optionally watermark all images on your site, including "
+"those appearing in Posts and Pages, by checking this box."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:155
+msgid "Watermark Opacity"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:156
+msgid "The opacity of your watermark."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:209
+msgid "Watermark Scale"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:210
+msgid "The scale of your watermark with respect to the image"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:262
+msgid "Watermark Position"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:263
+msgid "The position of your watermak."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:307
+msgid "Watermark"
+msgstr ""
+
+#: sell-media.php:138 sell-media.php:150
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/settings/settings.php:321
-#: MEDIA/sell-media/settings/settings.php:341
-#: MEDIA/sell-media/settings/settings.php:360
-msgid ""
-"This option has no valid options. Please create valid options as an array "
-"inside the GPP Framework."
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/settings/settings.php:586
-msgid "Support"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/settings/settings.php:587
-msgid "Theme Instructions"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/settings/settings.php:587
-msgid "Instructions"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/settings/settings.php:599
-msgid "URL"
-msgstr ""
-
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:34
+#: themes/archive-sell_media_item.php:34
 msgid "Archive"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:87
+#: themes/archive-sell_media_item.php:87
 msgid "Starting at"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/themes/archive-sell_media_item.php:118
+#: themes/archive-sell_media_item.php:118
 msgid "Nothing Found"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/themes/cart.php:75
+#: themes/cart.php:75
 msgid "Learn more"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/themes/cart.php:109
-#: MEDIA/sell-media/themes/cart.php:111
+#: themes/cart.php:109 themes/cart.php:111
 msgid ""
 "Select a license that most closely describes the intended use of this item. "
 "Additional license details will be displayed here after selecting a license."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/themes/cart.php:111
+#: themes/cart.php:111
 msgid "Select a license"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/themes/cart.php:131
+#: themes/cart.php:131
 msgid "Add to cart"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/themes/collection-password.php:13
+#: themes/collection-password.php:13
 msgid "This collection is password protected."
 msgstr ""
 
-#: /Users/daro/Desktop/SELL MEDIA/sell-media/themes/collection-password.php:15
+#: themes/collection-password.php:15
 msgid "Submit"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/themes/single-sell_media_item.php:24
+#: themes/single-sell_media_item.php:24
 msgid "Lightbox"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/themes/single-sell_media_item.php:27
+#: themes/single-sell_media_item.php:27
 msgid "File ID"
 msgstr ""
 
-#: /Users/daro/Desktop/SELL
-#: MEDIA/sell-media/themes/single-sell_media_item.php:28
+#: themes/single-sell_media_item.php:28
 msgid "File Type"
 msgstr ""
