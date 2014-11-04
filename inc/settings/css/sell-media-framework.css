@@ -1,7 +1,7 @@
 
 .wrap .sell-media-settings-links {
     font-size: 1em;
-    margin: 24px 0 10px;
+    margin: 24px 0 0;
     position: relative;
     clear: both;
 }
@@ -88,6 +88,10 @@ img {
 .sell-media-settings-wrap {
     display: table;
     width: 100%;
+}
+.sell-media-settings-wrap code {
+    font-size: 11px;
+    padding: 2px;
 }
 .sell-media-settings-content {
     display: inline-block;

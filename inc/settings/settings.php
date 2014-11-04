@@ -102,20 +102,20 @@ function sell_media_admin_plugin_options_page() {
 
     <div class="wrap">
         <?php do_action( 'sell_media_above_settings' ); ?>
+        <?php sell_media_plugin_get_page_tab_markup(); ?>
+        <?php if ( isset( $_GET['settings-updated'] ) ) {
+                if( isset ( $_GET['i'] ) ) {
+                    $tabvalue = $_GET['i'];
+                } else {
+                    $tabvalue = 0;
+                }
+                $current_tab_title = sell_media_plugin_get_current_tab_title( $tabvalue );
+                echo '<div class="updated"><p>';
+                echo '<strong>' . $current_tab_title . __( ' settings updated successfully.', 'sell_media' ) . '</strong>';
+                echo '</p></div>';
+        } ?>
         <div class="sell-media-settings-wrap">
             <div class="sell-media-settings-content">
-                <?php sell_media_plugin_get_page_tab_markup(); ?>
-                <?php if ( isset( $_GET['settings-updated'] ) ) {
-                        if( isset ( $_GET['i'] ) ) {
-                            $tabvalue = $_GET['i'];
-                        } else {
-                            $tabvalue = 0;
-                        }
-                        $current_tab_title = sell_media_plugin_get_current_tab_title( $tabvalue );
-                        echo '<div class="updated"><p>';
-                        echo '<strong>' . $current_tab_title . __( ' settings updated successfully.', 'sell_media' ) . '</strong>';
-                        echo '</p></div>';
-                } ?>
                 <form action="options.php" method="post">
                     <?php
                         // Implement settings field security, nonces, etc.
@@ -599,8 +599,7 @@ add_action( 'sell_media_above_settings', 'sell_media_above_settings_links' );
 /**
  * Settings sidebar action hook callback
  */
-function sell_media_settings_sidebar_callback() {
-    global $current_user; ?>
+function sell_media_settings_sidebar_callback() { ?>
 
     <div id="sell-media-upgrade-promo" class="sell-media-box">
         <h3><?php _e( 'Upgrades Available' , 'sell_media' ); ?></h3>
