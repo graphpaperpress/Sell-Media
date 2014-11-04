@@ -227,10 +227,11 @@ Action hooks available:
 == Changelog ==
 
 = 1.9.11 =
-* Language file added
+* Master language file added
 * List all collections shortcode layout bug fix
 * Extensions direct link & upgrades
 * PayPal POODLE SSL fix
+* Translation updates. See languages/readme.txt for details.
 
 = 1.9.10 =
 * Single license mark-up issue fix
