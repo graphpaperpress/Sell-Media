@@ -2,7 +2,7 @@
 
 Code contributions, patches, localizations and bug reports are always welcome and are critical to the success of Sell Media. Please follow these guidelines when contributing to Sell Media:
 
-__Please Note:__ GitHub is for bug reports and contributions only. Feature requests, extension ideas and general support inquiries should be posted to our [Support Forum](http://support.graphpaperpress.com/).
+__Please Note:__ GitHub is for bug reports and contributions only. Feature requests, extension ideas and general support inquiries can be send here: https://graphpaperpress.com/contact/.
 
 ## Getting Started
 

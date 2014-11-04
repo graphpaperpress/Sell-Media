@@ -25,7 +25,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 1.9.10
+ * @version 1.9.11
  */
 
 // Exit if accessed directly
@@ -161,7 +161,7 @@ final class SellMedia {
 
         // Plugin version
         if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-            define( 'SELL_MEDIA_VERSION', '1.9.10' );
+            define( 'SELL_MEDIA_VERSION', '1.9.11' );
         }
 
         // Plugin Folder Path
@@ -216,7 +216,6 @@ final class SellMedia {
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-bulk.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-package.php';
-            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-extensions.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-menu.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-notices.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';

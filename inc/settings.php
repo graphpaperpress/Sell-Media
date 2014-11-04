@@ -382,7 +382,7 @@ function sell_media_init_settings(){
             "tab" => "sell_media_payment_settings",
             "name" => "paypal_email",
             "title" => __("PayPal Email Address", "sell_media"),
-            'description' => sprintf( __( 'Add the email address associated with your PayPal account above. %1$s You must complete the steps listed here to complete integration with PayPal: %2$s Here is the listener URL you need to add in PayPal: %3$s'), '<br /><br /><strong>'.__('IMPORTANT', 'sell_media').'</strong><br />', '<a href="https://github.com/graphpaperpress/sell-media#paypal-setup" target="_blank">Read PayPal setup instructions</a><br />', '<br />' . site_url( '?sell_media-listener=IPN' ) ),
+            'description' => sprintf( __( 'Add the email address associated with your PayPal account above. %1$s %2$s. Your listener URL is %3$s (you will need this when completing PayPal setup)'), '<br /><br /><strong>'.__('REQUIRED ACTIONS', 'sell_media').'</strong><br />', '<a href="http://graphpaperpress.com/docs/sell-media/#paypal" target="_blank">Complete these steps for PayPal setup</a>', site_url( '?sell_media-listener=IPN' ) ),
             "default" => "",
             "section" => "payment_section_1",
             "since" => "1.0",

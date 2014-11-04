@@ -26,7 +26,7 @@ function sell_media_admin_menu() {
     add_submenu_page( null, __('Add Bulk', 'sell_media'), __('Add Bulk', 'sell_media'),  'upload_files', 'sell_media_add_bulk', 'sell_media_add_bulk_callback_fn' );
     add_submenu_page( null, __('Add Package', 'sell_media'), __('Add Package', 'sell_media'),  'upload_files', 'sell_media_add_package', 'sell_media_add_package_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
-    add_submenu_page( 'edit.php?post_type=sell_media_item', __('Extensions', 'sell_media'), __('Extensions', 'sell_media'),  $permission, 'sell_media_extensions', 'sell_media_extensions_callback_fn' );
+    add_submenu_page( 'edit.php?post_type=sell_media_item', __('Upgrades', 'sell_media'), __('Upgrades', 'sell_media'),  $permission, 'sell_media_upgrades', 'sell_media_upgrades_callback_fn' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=keywords&amp;post_type=sell_media_item' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=creator&amp;post_type=sell_media_item' );
@@ -57,8 +57,8 @@ function sell_media_submenu_order( $menu_ord ) {
         '4'     => 'Licenses',
         '5'     => 'Payments',
         '6'     => 'Reports',
-        '7'     => 'Extensions',
-        '99'    => 'Settings'
+        '98'    => 'Settings',
+        '99'    => 'Upgrades'
     );
 
     $j = 1;
@@ -67,7 +67,7 @@ function sell_media_submenu_order( $menu_ord ) {
             if ( array_search( $value[0], $required_order ) ) {
                 $i = array_search( $value[0], $required_order );
             } else {
-                $i = array_search ( 'Settings', $required_order ) - $j;
+                $i = array_search ( 'Upgrades', $required_order ) - $j;
                 $j++;
             }
             $arr[$i] = $submenu['edit.php?post_type=sell_media_item'][$key];
@@ -79,3 +79,19 @@ function sell_media_submenu_order( $menu_ord ) {
     return $menu_ord;
 }
 add_filter( 'custom_menu_order', 'sell_media_submenu_order' );
+
+/**
+ * Upgrades admin menu page
+ * @return url
+ */
+function sell_media_admin_init_upgrades(){
+
+    if ( isset( $_GET['page'] ) && $_GET['page'] === 'sell_media_upgrades' ) {
+
+        $plugin_data = get_plugin_data( plugin_dir_path( __DIR__ ) . 'sell-media.php', false );
+        wp_redirect( $plugin_data['AuthorURI'] . '/downloads/category/extensions/#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-menu-link', 301 );
+        exit();
+
+    }
+}
+add_action( 'admin_init', 'sell_media_admin_init_upgrades' );
