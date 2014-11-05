@@ -70,6 +70,9 @@
                     "CHF": { code: "CHF", symbol: "CHF&nbsp;", name: "Swiss Franc" },
                     "THB": { code: "THB", symbol: "&#3647;", name: "Thai Baht" },
                     "ZAR": { code: "ZAR", symbol: "R&nbsp;", name: "South African rand" },
+                    "PHP": { code: "PHP", symbol: "&#8369;", name: "Philippine Peso" },
+                    "MYR": { code: "MYR", symbol: "RM &nbsp;", name: "Malaysian Ringgits" },
+                    "TRY": { code: "TRY", symbol: "&#8378;", name: "Turkish Lira" },
                     "BTC": { code: "BTC", symbol: " BTC", name: "Bitcoin", accuracy: 4, after: true }
                 },
 

@@ -4,7 +4,7 @@
  * Plugin Name: Sell Media
  * Plugin URI: http://graphpaperpress.com/plugins/sell-media/
  * Description: A plugin for selling photos, prints and other downloads.
- * Version: 1.9.10
+ * Version: 1.9.11
  * Author: Graph Paper Press
  * Author URI: http://graphpaperpress.com
  * Author Email: support@graphpaperpress.com
@@ -25,7 +25,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 1.9.10
+ * @version 1.9.11
  */
 
 // Exit if accessed directly
@@ -161,7 +161,7 @@ final class SellMedia {
 
         // Plugin version
         if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-            define( 'SELL_MEDIA_VERSION', '1.9.10' );
+            define( 'SELL_MEDIA_VERSION', '1.9.11' );
         }
 
         // Plugin Folder Path
@@ -216,7 +216,6 @@ final class SellMedia {
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-bulk.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-package.php';
-            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-extensions.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-menu.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-notices.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';
@@ -237,7 +236,22 @@ final class SellMedia {
      * @return void
      */
     public function textdomain() {
-        load_plugin_textdomain( 'sell_media', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
+        // Get text domain
+        $domain = 'sell_media';
+
+        // The "plugin_locale" filter is also used in load_plugin_textdomain()
+        $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+
+        // Create path to custom language file
+        $custom_mo = WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo';
+
+        if ( file_exists( $custom_mo ) ) {
+            load_textdomain( $domain, $custom_mo );
+        }
+        else {
+            load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        }
     }
 
 } // end SellMedia class

@@ -51,9 +51,9 @@ add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles',
 * Settings API options initialization and validation
 */
 function sell_media_plugin_register_options() {
-	global $wp_customize;
-	if ( ! isset( $wp_customize ) ) {
-		require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/library/options-register.php';
+    global $wp_customize;
+    if ( ! isset( $wp_customize ) ) {
+        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/library/options-register.php';
     }
 
 }
@@ -101,6 +101,7 @@ function sell_media_admin_plugin_options_page() {
     ?>
 
     <div class="wrap">
+        <?php do_action( 'sell_media_above_settings' ); ?>
         <?php sell_media_plugin_get_page_tab_markup(); ?>
         <?php if ( isset( $_GET['settings-updated'] ) ) {
                 if( isset ( $_GET['i'] ) ) {
@@ -113,17 +114,24 @@ function sell_media_admin_plugin_options_page() {
                 echo '<strong>' . $current_tab_title . __( ' settings updated successfully.', 'sell_media' ) . '</strong>';
                 echo '</p></div>';
         } ?>
-        <form action="options.php" method="post">
-            <?php
-                // Implement settings field security, nonces, etc.
-                settings_fields( sell_media_get_current_plugin_id() . '_options' );
-                // Output each settings section, and each
-                // Settings field in each section
-                do_settings_sections( $settings_section );
-            ?>
-            <?php submit_button( __( 'Save Settings', 'sell_media' ), 'primary', sell_media_get_current_plugin_id() . "_options[submit-{$currenttab}]", false ); ?>
-            <?php submit_button( __( 'Reset Defaults', 'sell_media' ), 'secondary', sell_media_get_current_plugin_id() . "_options[reset-{$currenttab}]", false ); ?>
-        </form>
+        <div class="sell-media-settings-wrap">
+            <div class="sell-media-settings-content">
+                <form action="options.php" method="post">
+                    <?php
+                        // Implement settings field security, nonces, etc.
+                        settings_fields( sell_media_get_current_plugin_id() . '_options' );
+                        // Output each settings section, and each
+                        // Settings field in each section
+                        do_settings_sections( $settings_section );
+                    ?>
+                    <?php submit_button( __( 'Save Settings', 'sell_media' ), 'primary', sell_media_get_current_plugin_id() . "_options[submit-{$currenttab}]", false ); ?>
+                    <?php submit_button( __( 'Reset Defaults', 'sell_media' ), 'secondary', sell_media_get_current_plugin_id() . "_options[reset-{$currenttab}]", false ); ?>
+                </form>
+            </div>
+            <div class="sell-media-settings-sidebar">
+                <?php do_action( 'sell_media_settings_sidebar' ); ?>
+            </div>
+        </div>
     </div>
 <?php
 }
@@ -305,11 +313,11 @@ function sell_media_plugin_field_select( $value, $attr ) { ?>
     if ( isset( $attr['valid_options'] ) ) :
         $options = $attr['valid_options'];
         foreach( $options as $option ) :
-			if( isset( $option['parameter'] ) && '' != $option['parameter'] ) {
-				$opt =  $option['name'] . ':' . $option['parameter'] ;
-			} else {
-				$opt = $option['name'];
-			}
+            if( isset( $option['parameter'] ) && '' != $option['parameter'] ) {
+                $opt =  $option['name'] . ':' . $option['parameter'] ;
+            } else {
+                $opt = $option['name'];
+            }
         ?>
             <option value="<?php echo $opt; ?>" <?php selected( $opt, $value ); ?>><?php echo $option['title']; ?></option>
             <?php
@@ -448,7 +456,7 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
     $images = explode( ',', $value );
     $imgarray = '';
     foreach( $images as $imageID ) {
-		$image = wp_get_attachment_image_src( $imageID );
+        $image = wp_get_attachment_image_src( $imageID );
         $imgarray .= '<img class="eachthumbs" src="' . $image[0] . '" style="cursor:pointer;height:60px;width:auto;margin:5px 5px 0 0;"/>';
     }
     ?>
@@ -572,11 +580,11 @@ add_action( 'wp_ajax_sell_media_imageurl', 'sell_media_plugin_image_url_callback
 /**
  * Theme Name, Theme Version, Readme, Support utility links on theme options
  */
-function sell_media_plugin_utility_links(){
+function sell_media_above_settings_links(){
 
     $plugin_data = get_plugin_data( SELL_MEDIA_PLUGIN_FILE );
 
-    echo '<div class="plugin-options">';
+    echo '<div class="sell-media-settings-links">';
     echo '<ul>';
     echo '<li><a href="' . $plugin_data['PluginURI'] . '" target="_blank">' . $plugin_data['Name'] . '</a></li>';
     echo '<li>' . __( 'Version: ', 'sell_media' ) . $plugin_data['Version'] . '</li>';
@@ -585,3 +593,39 @@ function sell_media_plugin_utility_links(){
     echo '<br class="clear">';
     echo '</div>';
 }
+add_action( 'sell_media_above_settings', 'sell_media_above_settings_links' );
+
+
+/**
+ * Settings sidebar action hook callback
+ */
+function sell_media_settings_sidebar_callback() { ?>
+
+    <div id="sell-media-upgrade-promo" class="sell-media-box">
+        <h3><?php _e( 'Upgrades Available' , 'sell_media' ); ?></h3>
+        <p><span class="dashicons dashicons-update sell-media-dashicon-big"></span></p>
+        <p><?php _e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more when you activate the Business Bundle extension pack for Sell Media.', 'sell_media' ); ?></p>
+        <p><a href="http://graphpaperpress.com/?download=business-bundle#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+    </div>
+
+    <div id="sell-media-support-promo" class="sell-media-box">
+        <h3><?php _e( 'Need Help?' , 'sell_media' ); ?></h3>
+        <p><span class="dashicons dashicons-format-chat sell-media-dashicon-big"></span></p>
+        <p><?php _e( 'Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one consultation over live chat. If we can\'t fix your problem, we\'ll refund your order.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/checkout/?edd_action=add_to_cart&download_id=61368#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+    </div>
+
+    <div id="sell-media-review-promo" class="sell-media-box">
+        <h3><?php _e( 'Reviews' , 'sell_media' ) ; ?></h3>
+        <hr />
+        <p><blockquote>"<?php _e( 'Great plugin with great support. Includes tons of features.', 'sell_media' ); ?>"</blockquote></p>
+        <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
+        <hr />
+        <p><blockquote>"<?php _e( 'A young product with massive potential! You can expect great support from Graph Paper Press.', 'sell_media' ); ?>"</blockquote></p>
+        <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
+        <hr />
+        <p><?php _e( 'We\'d love for you to leave a review if you\'ve found this plugin useful.', 'sell_media' ); ?></p>
+        <p><a href="https://wordpress.org/support/view/plugin-reviews/sell-media?filter=5" class="button centered-block" target="_blank"><?php _e( 'Leave a review', 'sell_media' ); ?></a></p>
+    </div>
+<?php }
+add_action( 'sell_media_settings_sidebar', 'sell_media_settings_sidebar_callback' );

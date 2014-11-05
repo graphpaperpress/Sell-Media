@@ -88,6 +88,12 @@ function sell_media_process_paypal_ipn() {
     $listener->use_curl = false;
     */
 
+   /*
+   SSL Poodle Fix
+   More info: http://stackoverflow.com/questions/26378351/error1408f10bssl-routinesssl3-get-recordwrong-version-number-paypal-maybe
+    */
+   $listener->force_ssl_v3 = false;
+
     /*
     The processIpn() method will encode the POST variables sent by PayPal and then
     POST them back to the PayPal server. An exception will be thrown if there is
