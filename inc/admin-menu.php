@@ -57,6 +57,7 @@ function sell_media_submenu_order( $menu_ord ) {
         '4'     => 'Licenses',
         '5'     => 'Payments',
         '6'     => 'Reports',
+        '7'     => 'Discount Codes',
         '98'    => 'Settings',
         '99'    => 'Upgrades'
     );
