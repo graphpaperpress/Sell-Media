@@ -220,6 +220,7 @@ function sell_media_register_taxonomies(){
         'show_in_nav_menus' => true,
         'show_tagcloud' => true,
         'show_admin_column' => true,
+        'show_ui' => false,
         'hierarchical' => true,
         'rewrite' => true,
         'query_var' => true

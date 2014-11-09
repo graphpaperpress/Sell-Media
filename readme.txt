@@ -226,6 +226,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.12 =
+* Removed default UI of price group from backend
+
 = 1.9.11 =
 * Master language file added
 * List all collections shortcode layout bug fix
