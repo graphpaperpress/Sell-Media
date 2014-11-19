@@ -228,6 +228,8 @@ Action hooks available:
 
 = 1.9.12 =
 * Removed default UI of price group from backend
+* Starting price for free download containing collection set to $0.00
+*  iOS Chrome and Safari crash fix
 
 = 1.9.11 =
 * Master language file added

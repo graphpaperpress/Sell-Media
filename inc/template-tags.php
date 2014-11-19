@@ -141,7 +141,7 @@ function sell_media_item_min_price( $post_id=null ){
         $price = $settings->default_price;
     }
     if( isset( $value ) && "on" == $value ) {
-        return 0;
+        return "0.00";
     } else {
         return $price;
     }

@@ -255,7 +255,7 @@ table.sell-media-products {
   transition: opacity .2s ease-in-out;
   -moz-transition: opacity .2s ease-in-out;
   -webkit-transition: opacity .2s ease-in-out;
-  -webkit-backface-visibility: hidden; /* fixes chrome jump */
+  /*-webkit-backface-visibility: hidden;  fixes chrome jump */
 }
 .sell-media .sell-media-grid .item-overlay {
   display: none;
