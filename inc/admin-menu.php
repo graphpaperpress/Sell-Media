@@ -67,7 +67,7 @@ function sell_media_submenu_order( $menu_ord ) {
             if ( array_search( $value[0], $required_order ) ) {
                 $i = array_search( $value[0], $required_order );
             } else {
-                $i = array_search ( 'Upgrades', $required_order ) - $j;
+                $i = array_search ( 'Settings', $required_order ) - $j;
                 $j++;
             }
             $arr[$i] = $submenu['edit.php?post_type=sell_media_item'][$key];

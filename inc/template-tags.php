@@ -134,14 +134,17 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
  * @return Lowest price of an item
  */
 function sell_media_item_min_price( $post_id=null ){
-
+    $value = get_post_meta( $post_id, 'sell_media_free_downloads', true );
     $price = Sell_Media()->products->get_lowest_price( $post_id );
     if ( empty( $price ) ) {
         $settings = sell_media_get_plugin_options();
         $price = $settings->default_price;
     }
-
-    return $price;
+    if( isset( $value ) && "on" == $value ) {
+        return "0.00";
+    } else {
+        return $price;
+    }
 
 }
 

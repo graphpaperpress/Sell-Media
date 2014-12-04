@@ -4,7 +4,7 @@
  * Plugin Name: Sell Media
  * Plugin URI: http://graphpaperpress.com/plugins/sell-media/
  * Description: A plugin for selling photos, prints and other downloads.
- * Version: 1.9.11
+ * Version: 1.9.12
  * Author: Graph Paper Press
  * Author URI: http://graphpaperpress.com
  * Author Email: support@graphpaperpress.com
@@ -25,7 +25,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 1.9.11
+ * @version 1.9.12
  */
 
 // Exit if accessed directly
@@ -161,7 +161,7 @@ final class SellMedia {
 
         // Plugin version
         if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-            define( 'SELL_MEDIA_VERSION', '1.9.11' );
+            define( 'SELL_MEDIA_VERSION', '1.9.12' );
         }
 
         // Plugin Folder Path
