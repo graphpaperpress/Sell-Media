@@ -107,7 +107,7 @@ $settings = sell_media_get_plugin_options();
                                     <span class="item-overlay">
                                         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                                         <a href="javascript:void(0);" title="<?php _e( 'Save', 'sell_media' ); ?>" class="add-to-lightbox" id="lightbox-<?php echo $post->ID; ?>" data-id="<?php echo $post->ID; ?>"><?php _e( 'Save', 'sell_media' ); ?></a>
-                                        <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy' ) ); ?>
+                                        <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy', 'sell_media' ) ); ?>
                                         <?php do_action( 'sell_media_item_overlay' ); ?>
                                     </span>
                                 </div>
