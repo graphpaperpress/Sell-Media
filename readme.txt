@@ -226,6 +226,10 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.13 =
+* Collections count bug fix
+* Translation bug fix
+
 = 1.9.12 =
 * Removed default UI of price group from backend
 * Starting price for free download containing collection set to $0.00
