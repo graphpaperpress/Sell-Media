@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Payments Class
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 

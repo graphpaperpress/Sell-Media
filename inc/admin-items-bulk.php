@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Admin Items Bulk
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
+/**
  * Build bulk page callback function
  * Called from add_subpage on main sell-media.php file
  *

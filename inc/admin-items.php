@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Admin Items
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
+/**
  * Add a meta box for bulk & package tabs
  *
  * @author Thad Allender

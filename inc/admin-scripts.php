@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Admin scripts
+ * Admin Scripts
  *
- * @package     Sell Media
- * @subpackage  Functions/Install
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.8.5
-*/
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -38,7 +36,7 @@ function sell_media_admin_scripts( $hook ) {
     if ( sell_media_is_reports_page() ) {
         wp_enqueue_script( 'google_charts', 'https://www.google.com/jsapi', array( 'jquery' ), SELL_MEDIA_VERSION );
     }
-    
+
     do_action( 'sell_media_admin_scripts_hook' );
 }
 add_action( 'admin_enqueue_scripts', 'sell_media_admin_scripts' );

@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Admin Payments
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
+/**
  * Add meta boxes to the edit payment page
  *
  * @access public
@@ -54,7 +61,7 @@ add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
 function sell_media_payment_purchase_details( $post ){
 
     $payments = Sell_Media()->payments;
-    
+
     echo '<div class="sell-media-admin-payments">';
     echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
@@ -92,7 +99,7 @@ function sell_media_payment_additional_purchase_details( $post ){
     $args = Sell_Media()->payments->get_meta( $post->ID );
 
     ?>
-    
+
     <p><?php _e( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
     <table class="wp-list-table widefat" cellspacing="0">
         <tbody>

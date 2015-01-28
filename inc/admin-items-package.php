@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Admin Items Package
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
+/**
  * Build package page callback function
  * Called from add_subpage on main sell-media.php file
  *

@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Collections functions
+ * Collections
  *
- * @package     Sell Media
- * @subpackage  Functions/Install
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.8.5
-*/
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;

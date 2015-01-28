@@ -2,6 +2,9 @@
 
 /**
  * Admin Helper Functions
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
  */
 
 // Exit if accessed directly
@@ -40,7 +43,7 @@ function sell_media_default_move( $original_file=null ){
  * @since 1.8.5
  */
 function sell_media_post_type_admin_order( $wp_query ) {
-    
+
     if ( is_admin() ) {
 
         $post_type = $wp_query->query['post_type'];

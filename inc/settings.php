@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Settings
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
+/**
  * Init our settings
  * @since 1.8.5
  */

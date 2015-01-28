@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Admin Upgrade
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
 $version = get_option( 'sell_media_version' );
 
 /**

@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Admin Notices
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
+/**
  * All Sell Media admin notices should be placed in this function
  */
 function sell_media_admin_messages() {
