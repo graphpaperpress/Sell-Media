@@ -76,7 +76,7 @@ function sell_media_process_paypal_ipn() {
 
 
     /*
-    By default the IpnListener object is going  going to post the data back to PayPal
+    By default the IpnListener object is going to post the data back to PayPal
     using cURL over a secure SSL connection. This is the recommended way to post
     the data back, however, some people may have connections problems using this
     method.
@@ -134,10 +134,10 @@ function sell_media_process_paypal_ipn() {
         }
 
         /**
-         * Verify seller PayPal email with PayPal email in settings
+         * Verify currency
          *
-         * Check if the seller email that was processed by the IPN matches what is saved as
-         * the seller email in our DB
+         * Check if the currency that was processed by the IPN matches what is saved as
+         * the currency setting
          */
         $settings = sell_media_get_plugin_options();
         if ( $_POST['mc_currency'] != $settings->currency ){
@@ -170,9 +170,9 @@ function sell_media_process_paypal_ipn() {
             if ( ! empty( $_POST['option_selection1_1'] ) && ( $_POST['option_selection1_1'] == 'print' || $_POST['option_selection1_1'] == 'download' ) ) {
 
                 $data = array(
-                    'post_title' => $_POST['payer_email'],
-                    'post_status' => 'publish',
-                    'post_type' => 'sell_media_payment'
+                    'post_title'    => $_POST['payer_email'],
+                    'post_status'   => 'publish',
+                    'post_type'     => 'sell_media_payment'
                 );
 
                 $payment_id = wp_insert_post( $data );
