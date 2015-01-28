@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Settings
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
+ */
+
 global $sell_media_plugin_options;
 
 $sell_media_plugin_options = array();
