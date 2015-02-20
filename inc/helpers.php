@@ -616,6 +616,7 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
 
 }
 
+
 /**
  * Retrieve the absolute path to the file upload directory without the trailing slash
  *
@@ -629,6 +630,7 @@ function sell_media_get_upload_dir() {
 
     return apply_filters( 'sell_media_get_upload_dir', $path );
 }
+
 
 /**
  * Retrieve the absolute path to the packages file upload directory without the trailing slash
@@ -684,6 +686,7 @@ function sell_media_get_file_extension( $str ) {
  */
 function sell_media_get_original_protected_file( $product_id=null ){
 
+    $file = null;
     // All uploads are saved to this meta field
     // Single uploads are saved like /2014/14/file.zip
     // Packages are saved like /packages/file.zip
@@ -696,10 +699,7 @@ function sell_media_get_original_protected_file( $product_id=null ){
         $file = sell_media_get_upload_dir() . '/' . $attached_file;
     }
 
-    if ( file_exists( $file ) )
-        return $file;
-    else
-        return false;
+    return apply_filters( 'sell_media_get_original_protected_file', $file );
 }
 
 
