@@ -10,6 +10,12 @@ Class SellMediaSearch {
      */
     public function __construct(){
         //add_action( 'pre_get_posts', array( &$this, 'get_orientation' ) );
+
+        //add_filter('posts_where', array( &$this, 'atom_search_where') );
+        //add_filter('posts_join', array( &$this, 'atom_search_join' ) );
+        //add_filter('posts_groupby', array( &$this, 'atom_search_groupby') );
+
+
         $this->includes();
     }
 
@@ -19,6 +25,10 @@ Class SellMediaSearch {
     private function includes(){
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/search/wpas.php';
     }
+
+
+
+
 
     /**
      * Search form arguments
@@ -72,17 +82,17 @@ Class SellMediaSearch {
             'label' => 'Collections',
             'taxonomy' => 'collection',
             'format' => 'multi-select',
-            'operator' => 'AND',
+            'operator' => 'IN',
             'class' => 'chosen-select'
         );
-        $args['fields'][] = array(
+        /*$args['fields'][] = array(
             'type' => 'taxonomy',
             'label' => 'Keywords',
             'taxonomy' => 'keywords',
             'format' => 'multi-select',
             'operator' => 'AND',
             'class' => 'chosen-select'
-        );
+        );*/
         $args['fields'][] = array(
             'type' => 'meta_key',
             'label' => 'Max Price ( Example: 100 )',
@@ -100,6 +110,7 @@ Class SellMediaSearch {
 
         return $args;
     }
+
 
     /**
      * Search form
@@ -158,7 +169,73 @@ Class SellMediaSearch {
             $sell_media_search_object = new WP_Advanced_Search( $args );
 
             $temp_query = $wp_query;
-            $wp_query = $sell_media_search_object->query();
+            $keywords_tax_terms = '';
+            if ( isset ( $_GET['search_query'] ) )
+                $keywords_tax_terms = $_GET['search_query'];
+
+
+            if ( isset ( $_GET['tax_collection'] ) ) {
+                $collection_tax_terms = array();
+
+                foreach ( $_GET['tax_collection'] as $collection ) {
+                    $collection_tax_terms[] = $collection;
+                }
+
+                $args = array(
+                    'post_type' => 'sell_media_item',
+                    'posts_per_page' => get_option( 'posts_per_page' ),
+                    'order' => 'DESC',
+                    'orderby' => 'date',
+                    'tax_query' => array(
+                        'relation' => 'AND',
+                        array(
+                            'taxonomy' => 'keywords',
+                            'field'    => 'name',
+                            'terms'    => $keywords_tax_terms
+                        ),
+                        array(
+                            'taxonomy' => 'collection',
+                            'field'    => 'name',
+                            'terms'    => $collection_tax_terms
+                        ),
+                    ),
+                );
+
+            } else {
+
+                $args = array(
+                    'post_type' => 'sell_media_item',
+                    'posts_per_page' => get_option( 'posts_per_page' ),
+                    'order' => 'DESC',
+                    'orderby' => 'date',
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => 'keywords',
+                            'field'    => 'name',
+                            'terms'    => $keywords_tax_terms
+                        ),
+                    ),
+                );
+            }
+
+            // "keywords" taxonomy query
+            $tax_query = new WP_Query( $args );
+            // WordPress Advanced search query
+            $as_query = $sell_media_search_object->query();
+
+            //echo $as_query->max_num_pages;
+            /*echo '<pre>';
+            print_r( $tax_query );
+            echo '</pre>';*/
+
+            $wp_query = new WP_Query();
+
+            $wp_query->posts = array_merge( $tax_query->posts, $as_query->posts );
+
+            //populate post_count, found_posts, max_num_pages count for the loop to work correctly
+            $wp_query->post_count = $tax_query->post_count + $as_query->post_count;
+            $wp_query->found_posts = $tax_query->found_posts + $as_query->found_posts;
+            $wp_query->max_num_pages = $tax_query->max_num_pages + $as_query->max_num_pages;
 
             echo '<div id="sell-media-archive" class="sell-media sell-media-search-results">';
 
