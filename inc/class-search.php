@@ -173,7 +173,11 @@ Class SellMediaSearch {
             if ( isset ( $_GET['search_query'] ) )
                 $keywords_tax_terms = $_GET['search_query'];
 
+            $meta_sell_media_price = null;
+            if ( isset ( $_GET['meta_sell_media_price'] ) )
+                $meta_sell_media_price = $_GET['meta_sell_media_price'];
 
+            // Search within collections
             if ( isset ( $_GET['tax_collection'] ) ) {
                 $collection_tax_terms = array();
 
@@ -186,6 +190,16 @@ Class SellMediaSearch {
                     'posts_per_page' => get_option( 'posts_per_page' ),
                     'order' => 'DESC',
                     'orderby' => 'date',
+
+                    'meta_query' => array(
+                        array(
+                            'key'       => 'sell_media_price',
+                            'type'      => 'decimal',
+                            'value'     => $meta_sell_media_price,
+                            'compare'   => '<='
+                        ),
+                    ),
+
                     'tax_query' => array(
                         'relation' => 'AND',
                         array(
@@ -201,13 +215,23 @@ Class SellMediaSearch {
                     ),
                 );
 
+            // Search if collection is not defined
             } else {
-
                 $args = array(
                     'post_type' => 'sell_media_item',
                     'posts_per_page' => get_option( 'posts_per_page' ),
                     'order' => 'DESC',
                     'orderby' => 'date',
+
+                    'meta_query' => array(
+                        array(
+                            'key'       => 'sell_media_price',
+                            'type'    => 'decimal',
+                            'value' => $meta_sell_media_price,
+                            'compare'   => '<='
+                        ),
+                    ),
+
                     'tax_query' => array(
                         array(
                             'taxonomy' => 'keywords',
