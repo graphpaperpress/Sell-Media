@@ -251,7 +251,7 @@ Class SellMediaSearch {
             //populate post_count, found_posts, max_num_pages count for the loop to work correctly
             $wp_query->post_count = $tax_query->post_count + $wp_as_query->post_count;
             $wp_query->found_posts = $tax_query->found_posts + $wp_as_query->found_posts;
-            $wp_query->max_num_pages = $tax_query->max_num_pages + $wp_as_query->max_num_pages;
+            $wp_query->max_num_pages = ceil( $wp_query->found_posts / get_option( 'posts_per_page' ) );
 
             echo '<div id="sell-media-archive" class="sell-media sell-media-search-results">';
 
