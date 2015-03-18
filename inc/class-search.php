@@ -196,7 +196,7 @@ Class SellMediaSearch {
                         ),
                         array(
                             'taxonomy' => 'collection',
-                            'field'    => 'name',
+                            'field'    => 'slug',
                             'terms'    => $collection_tax_terms
                         ),
                     ),
