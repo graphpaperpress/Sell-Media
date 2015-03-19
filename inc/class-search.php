@@ -157,7 +157,8 @@ Class SellMediaSearch {
             // keywords to search for
             $keywords_tax_terms = '';
             if ( isset ( $_GET['search_query'] ) )
-                $keywords_tax_terms = $_GET['search_query'];
+                $keywords_tax_termss = $_GET['search_query'];
+                $keywords_tax_terms = explode(" ", $keywords_tax_termss);
 
             // price range to search for
             $meta_sell_media_price = 999999999;
