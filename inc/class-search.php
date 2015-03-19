@@ -10,7 +10,32 @@ Class SellMediaSearch {
      * Init
      */
     public function __construct(){
+        add_filter( 'posts_join', array( &$this, 'search_join' ) );
         add_action( 'pre_get_posts', array( &$this, 'search_query' ) );
+    }
+
+    /**
+     * Search join
+     *
+     *
+     * @since 1.8.7
+     */
+    public function search_join( $join ) {
+        global $wpdb;
+
+        if ( ! empty( get_search_query() ) ) {
+
+            // if we're searching custom taxonomies
+            $taxonomies = get_object_taxonomies( 'sell_media_item' );;
+
+            foreach ( $taxonomies as $taxonomy ) {
+                $on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
+            }
+            // build our final string
+            $on = ' ( ' . implode( ' OR ', $on ) . ' ) ';
+            $join .= " LEFT JOIN $wpdb->term_relationships AS trel ON ($wpdb->posts.ID = trel.object_id) LEFT JOIN $wpdb->term_taxonomy AS ttax ON ( " . $on . " AND trel.term_taxonomy_id = ttax.term_taxonomy_id) LEFT JOIN $wpdb->terms AS tter ON (ttax.term_id = tter.term_id) ";
+        }
+        return $join;
     }
 
     /**
@@ -46,26 +71,6 @@ Class SellMediaSearch {
                 $query->set( 'tax_query', $collections_query );
             }
 
-            /**
-             * Keywords query
-             */
-            $keywords_query = array(
-                array(
-                    'taxonomy' => 'keywords',
-                    'field' => 'name',
-                    'terms' => array( $query->get( 's' ) )
-                )
-            );
-            $query->set( 'tax_query', $keywords_query );
-
-            // echo '<pre>';
-            // print_r( $query );
-            // echo '</pre>';
-            //
-            // $orientation = $query->get( 'orientation' );
-            // $post_ids = Sell_Media()->images->get_posts_by_orientation( $orientation );
-            // $query->set( 'post__in', $post_ids );
-
             return $query;
 
         }
@@ -88,11 +93,19 @@ Class SellMediaSearch {
             $html = '';
             $html .= '<div class="sell-media-search cf">';
             $html .= '<form role="search" method="get" id="sell-media-searchform" action="' . site_url() . '">';
-            $html .= '<div>';
+            $html .= '<div class="sell-media-search-inner">';
+
+            $html .= '<div class="sell-media-search-field">';
             $html .= '<label for="s">' . __( 'Search for', 'sell_media' ) . ':</label>';
             $html .= '<input type="text" value="" name="s" id="s" />';
+            $html .= '</div>';
+
+            $html .= '<div class="sell-media-search-inner">';
             $html .= '<label for="s">' . __( 'Exact phrase match', 'sell_media' ) . ':</label>';
             $html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
+            $html .= '</div>';
+
+            $html .= '<div class="sell-media-search-inner">';
             $html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . ':</label>';
             $html .= '<select name="collection">';
             $html .= '<option value="">' . esc_attr( __( 'All' ) ) . '</option>';
@@ -103,10 +116,9 @@ Class SellMediaSearch {
                 $html .= $category->cat_name;
                 $html .= '</option>';
             }
-
             $html .= '</select>';
+            $html .= '</div>';
 
-            $html .= '<input type="hidden" name="keywords" value="" id="search-keywords" />';
             $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
             $html .= '<input type="submit" id="searchsubmit" value="' . __( 'Search', 'sell_media' ) . '" />';
             $html .= '</div>';
