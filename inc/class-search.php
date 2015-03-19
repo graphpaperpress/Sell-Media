@@ -85,8 +85,6 @@ Class SellMediaSearch {
         if ( ! isset( $used ) ) {
             $used = true;
 
-            $args = $this->args( null );
-
             $html = '';
             $html .= '<div class="sell-media-search cf">';
             $html .= '<form role="search" method="get" id="sell-media-searchform" action="' . site_url() . '">';
