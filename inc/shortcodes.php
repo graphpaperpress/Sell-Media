@@ -51,7 +51,6 @@ function sell_media_search_shortcode( $atts, $content = null ) {
 
     $html = null;
     $html .= Sell_Media()->search->form();
-    $html .= Sell_Media()->search->results();
 
     return $html;
 
