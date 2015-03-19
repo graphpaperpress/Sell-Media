@@ -10,92 +10,66 @@ Class SellMediaSearch {
      * Init
      */
     public function __construct(){
-        //add_action( 'pre_get_posts', array( &$this, 'get_orientation' ) );
-        $this->includes();
+        add_action( 'pre_get_posts', array( &$this, 'search_query' ) );
     }
 
-
     /**
-     * Include WP Advanced Search class files
-     */
-    private function includes(){
-        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/search/wpas.php';
-    }
-
-
-    /**
-     * Search form arguments
+     * Search query
      *
      * @since 1.8.7
      */
-    public function args( $do_not_duplicate ) {
-        /**
-         * build an array of terms that are password protected
-         */
-        foreach( get_terms('collection') as $term_obj ){
-            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-            if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
+    public function search_query( $query ) {
+
+        if ( ! $query->is_search )
+            return $query;
+
+        if ( $query->get( 'post_type' ) && 'sell_media_item' == $query->get( 'post_type' ) ) {
+
+            /**
+             * Exclude password protected collections from search query
+             */
+            foreach( get_terms('collection') as $term_obj ){
+                $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+                if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
+            }
+
+            if ( ! empty( $exclude_term_ids ) ){
+                $collection_querys = array(
+                    'relation' => 'AND',
+                    array(
+                        'taxonomy' => 'collection',
+                        'field' => 'id',
+                        'terms' => $exclude_term_ids,
+                        'operator' => 'NOT IN'
+                    )
+                );
+                $query->set( 'tax_query', $collections_query );
+            }
+
+            /**
+             * Keywords query
+             */
+            $keywords_query = array(
+                array(
+                    'taxonomy' => 'keywords',
+                    'field' => 'name',
+                    'terms' => array( $query->get( 's' ) )
+                )
+            );
+            $query->set( 'tax_query', $keywords_query );
+
+            // echo '<pre>';
+            // print_r( $query );
+            // echo '</pre>';
+            //
+            // $orientation = $query->get( 'orientation' );
+            // $post_ids = Sell_Media()->images->get_posts_by_orientation( $orientation );
+            // $query->set( 'post__in', $post_ids );
+
+            return $query;
+
         }
 
-
-        if ( ! empty( $exclude_term_ids ) ){
-            // echo 'exclude these ids: ';
-            $tax_query = array(
-                     'relation' => 'AND',
-                     array(
-                         'taxonomy' => 'collection',
-                         'field' => 'id',
-                         'terms' => $exclude_term_ids,
-                         'operator' => 'NOT IN'
-                         )
-                     );
-        } else {
-            $tax_query = array();
-        }
-
-        // setup our WP Advanced Search arguments
-        $args = array();
-        $args['wp_query'] = array(
-            'post_type' => 'sell_media_item',
-            'posts_per_page' => get_option( 'posts_per_page' ),
-            'order' => 'DESC',
-            'orderby' => 'date',
-            'tax_query' => $tax_query,
-            'post__not_in' => $do_not_duplicate
-
-        );
-        $args['fields'][] = array(
-            'type' => 'search',
-            'value' => ''
-        );
-        $args['fields'][] = array(
-            'type' => 'submit',
-            'value' => 'Search'
-        );
-        $args['fields'][] = array(
-            'type' => 'taxonomy',
-            'label' => 'Collections',
-            'taxonomy' => 'collection',
-            'format' => 'multi-select',
-            'operator' => 'IN',
-            'class' => 'chosen-select'
-        );
-        $args['fields'][] = array(
-            'type' => 'meta_key',
-            'label' => 'Max Price ( Example: 100 )',
-            'meta_key' => 'sell_media_price',
-            'values' => '',
-            'data_type' => 'NUMERIC',
-            'compare' => '<=',
-            'format' => 'text',
-            'placeholder' => ''
-        );
-        $args['fields'][] = array(
-            'type' => 'html',
-            'value' => '<div id="sell-media-toggle-search-options"><a href="javascript:void(0);">' . __( 'X', 'sell_media' ) . '</a></div>'
-        );
-
-        return $args;
     }
 
 
@@ -111,216 +85,38 @@ Class SellMediaSearch {
         if ( ! isset( $used ) ) {
             $used = true;
 
-            // enqueue chosen scripts
-            wp_enqueue_script( 'sell_media-chosen' );
-            wp_enqueue_style( 'sell_media-chosen' );
+            $args = $this->args( null );
 
-            $args = $this->args(null);
+            $html = '';
+            $html .= '<div class="sell-media-search cf">';
+            $html .= '<form role="search" method="get" id="sell-media-searchform" action="' . site_url() . '">';
+            $html .= '<div>';
+            $html .= '<label for="s">' . __( 'Search for', 'sell_media' ) . ':</label>';
+            $html .= '<input type="text" value="" name="s" id="s" />';
+            $html .= '<label for="s">' . __( 'Exact phrase match', 'sell_media' ) . ':</label>';
+            $html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
+            $html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . ':</label>';
+            $html .= '<select name="collection">';
+            $html .= '<option value="">' . esc_attr( __( 'All' ) ) . '</option>';
 
-            // allow form to post to a custom url
-            if ( ! empty ( $url ) ) {
-                $new_args['form'] = array(
-                    'action' => esc_url( $url ),
-                    'method' => 'GET',
-                    'id' => 'wp-advanced-search',
-                    'name' => 'wp-advanced-search',
-                    'class' => 'wp-advanced-search'
-                );
-
-                $args = array_merge( $args, $new_args );
+            $categories = get_categories( 'taxonomy=collection' );
+            foreach ( $categories as $category ) {
+                $html .= '<option value="' . $category->category_nicename . '">';
+                $html .= $category->cat_name;
+                $html .= '</option>';
             }
 
-            $sell_media_search_object = new WP_Advanced_Search( $args );
+            $html .= '</select>';
 
-            echo '<div class="sell-media-search cf">';
-            $sell_media_search_object->the_form();
-            echo '</div>';
+            $html .= '<input type="hidden" name="keywords" value="" id="search-keywords" />';
+            $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
+            $html .= '<input type="submit" id="searchsubmit" value="' . __( 'Search', 'sell_media' ) . '" />';
+            $html .= '</div>';
+            $html .= '</form>';
+            $html .= '</div>';
+
+            echo apply_filters( 'sell_media_searchform_filter', $html );
         }
     }
-
-
-    /**
-     * Search results
-     *
-     * @since 1.8.7
-     */
-    public function results( $used=null ){
-
-        // only use this method if it hasn't already been used on the page
-        static $used;
-        if ( ! isset( $used ) ) {
-            $used = true;
-
-            global $wp_query, $post;
-            $temp_query = $wp_query;
-
-            // keywords to search for
-            $keywords_tax_terms = '';
-            if ( isset ( $_GET['search_query'] ) )
-                $keywords_tax_termss = $_GET['search_query'];
-                $keywords_tax_terms = explode(",", $keywords_tax_termss);
-
-            // price range to search for
-            $meta_sell_media_price = 999999999;
-            if ( isset ( $_GET['meta_sell_media_price'] ) &&  ! empty ( $_GET['meta_sell_media_price'] ) )
-                $meta_sell_media_price = $_GET['meta_sell_media_price'];
-
-            // query for selected collections
-            if ( isset ( $_GET['tax_collection'] ) ) {
-                $collection_tax_terms = array();
-
-                foreach ( $_GET['tax_collection'] as $collection ) {
-                    $collection_tax_terms[] = $collection;
-                }
-
-                $args = array(
-                    'post_type' => 'sell_media_item',
-                    'posts_per_page' => get_option( 'posts_per_page' ),
-                    'order' => 'DESC',
-                    'orderby' => 'date',
-
-                    'meta_query' => array(
-                        array(
-                            'key'       => 'sell_media_price',
-                            'type'      => 'decimal',
-                            'value'     => $meta_sell_media_price,
-                            'compare'   => '<='
-                        ),
-                    ),
-
-                    'tax_query' => array(
-                        'relation' => 'AND',
-                        array(
-                            'taxonomy' => 'keywords',
-                            'field'    => 'name',
-                            'terms'    => $keywords_tax_terms
-                        ),
-                        array(
-                            'taxonomy' => 'collection',
-                            'field'    => 'slug',
-                            'terms'    => $collection_tax_terms
-                        ),
-                    ),
-                );
-
-            // query if no collection is selected
-            } else {
-                $args = array(
-                    'post_type' => 'sell_media_item',
-                    'posts_per_page' => get_option( 'posts_per_page' ),
-                    'order' => 'DESC',
-                    'orderby' => 'date',
-
-                    'meta_query' => array(
-                        array(
-                            'key'       => 'sell_media_price',
-                            'type'      => 'decimal',
-                            'value'     => $meta_sell_media_price,
-                            'compare'   => '<='
-                        ),
-                    ),
-
-                    'tax_query' => array(
-                        array(
-                            'taxonomy' => 'keywords',
-                            'field'    => 'name',
-                            'terms'    => $keywords_tax_terms
-                        ),
-                    ),
-                );
-            }
-
-            // "keywords" taxonomy query
-            $tax_query = new WP_Query( $args );
-
-            // Do not query duplicate posts
-            $do_not_duplicate = array();
-            while ( $tax_query->have_posts() ) : $tax_query->the_post();
-                $do_not_duplicate[] = $post->ID;
-            endwhile;
-
-            // WordPress Advanced search query
-            $args = '';
-            $args = $this->args( $do_not_duplicate );
-            $sell_media_search_object = new WP_Advanced_Search( $args );
-            $wp_as_query = $sell_media_search_object->query();
-
-            // merge query results
-            $wp_query = new WP_Query();
-            $wp_query->posts = array_merge( $tax_query->posts, $wp_as_query->posts );
-
-            //populate post_count, found_posts, max_num_pages count for the loop to work correctly
-            $wp_query->post_count = $tax_query->post_count + $wp_as_query->post_count;
-            $wp_query->found_posts = $tax_query->found_posts + $wp_as_query->found_posts;
-            $wp_query->max_num_pages = ceil( $wp_query->found_posts / get_option( 'posts_per_page' ) );
-
-            echo '<div id="sell-media-archive" class="sell-media sell-media-search-results">';
-
-            if ( have_posts() ) :
-
-                echo '<p class="sell-media-search-results-total">' . __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts . '</p>';
-
-                echo '<div class="sell-media-grid-container">';
-                $i = 0;
-                while ( have_posts() ) : the_post(); $i++;
-                ?>
-                    <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
-                        <div class="item-inner">
-                            <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
-                            <span class="item-overlay">
-                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                <a href="javascript:void(0);" title="<?php _e( 'Save', 'sell_media' ); ?>" class="add-to-lightbox" id="lightbox-<?php echo $post->ID; ?>" data-id="<?php echo $post->ID; ?>"><?php _e( 'Save', 'sell_media' ); ?></a>
-                                <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy', 'sell_media' ) ); ?>
-                                <?php do_action( 'sell_media_item_overlay' ); ?>
-                            </span>
-                        </div>
-                    </div>
-                <?php
-
-                endwhile;
-                echo '</div>';
-                $i = 0;
-                $sell_media_search_object->pagination();
-
-            else :
-
-                echo apply_filters( 'sell_media_search_no_results_text',
-                    '<p>Sorry, no results. Here are some search tips:</p>
-                    <ol>
-                        <li>Use the top search field to search product titles</li>
-                        <li>Use the "Collections" search field to limit your search to specific categories</li>
-                        <li>Use the "Keywords" search field to search specific tags and keywords</li>
-                        <li>Use the "Max Price" search field to find products that fit your budget</li>
-                        <li>And finally, broaden your search if you are unable to find results</li>
-                    </ol>' );
-
-            endif;
-
-            echo '</div>';
-            $wp_query = $temp_query;
-            wp_reset_query();
-        }
-    }
-
-
-    /**
-     * Filters search results based on aspect ratio
-     *
-     * @param $posts (int)
-     * @param $orientation (string) any|landscape|portrait
-     *
-     * @return Array of post IDs that are either landscape or portrait
-     */
-    public function get_orientation( $query ){
-
-        if ( ! is_admin() && ! empty( $_GET['wpas'] ) && ( $_GET['orientation'] == 'landscape' || $_GET['orientation'] == 'portrait' ) ) {
-
-            $orientation = get_query_var( 'orientation' );
-            $post_ids = Sell_Media()->images->get_posts_by_orientation( $orientation );
-            $query->set( 'post__in', $post_ids );
-
-        }
-    }
-
 
 }
