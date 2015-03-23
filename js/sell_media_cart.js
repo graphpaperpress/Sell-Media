@@ -1753,6 +1753,8 @@
 
                             // add the item
                             sellMediaCart.add(fields);
+                            $button.attr("disabled","disabled");
+
                         }
                     }
                 ]);
