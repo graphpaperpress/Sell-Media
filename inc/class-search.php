@@ -23,7 +23,7 @@ Class SellMediaSearch {
     public function search_join( $join ) {
         global $wpdb;
 
-        if ( ! empty( get_search_query() ) && isset( $_GET['post_type'] ) && 'sell_media_item' == $_GET['post_type'] ) {
+        if ( ! is_admin() && ! empty( get_search_query() ) && isset( $_GET['post_type'] ) && 'sell_media_item' == $_GET['post_type'] ) {
 
             // if we're searching custom taxonomies
             $taxonomies = get_object_taxonomies( 'sell_media_item' );;
