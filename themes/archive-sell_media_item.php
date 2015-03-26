@@ -26,19 +26,10 @@ $settings = sell_media_get_plugin_options();
 
                         if ( ! is_post_type_archive( 'sell_media_item' ) && $taxonomy && ! empty( $term ) ) :
 
-                            if ( $taxonomy == 'collection' ) {
-                                $taxonomy_title = __('Collections', 'sell_media' );
-                            } elseif ( $taxonomy == 'keywords' ) {
-                                $taxonomy_title = __('Keywords', 'sell_media' );
-                            } elseif ( $taxonomy == 'licenses' ) {
-                                $taxonomy_title = __('Licenses', 'sell_media' );
-                            } elseif ( $taxonomy == 'creator' ) {
-                                $taxonomy_title = __('Creator', 'sell_media' );
-                            } else {
-                                $taxonomy_title = __('Archive', 'sell_media' );
-                            }
+                            $current_taxonomy = get_taxonomy( $taxonomy );
+
                             echo '<ul class="sell-media-breadcrumbs">';
-                            echo '<li>' . $taxonomy_title . ' <span class="raquo">&raquo;</span> </li>';
+                            echo '<li>' . $current_taxonomy->label . ' <span class="raquo">&raquo;</span> </li>';
                             sell_media_taxonomy_breadcrumb();
                             echo '</ul>';
                         elseif ( is_post_type_archive( 'sell_media_item' ) ) :
