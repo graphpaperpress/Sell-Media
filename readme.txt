@@ -226,6 +226,13 @@ Action hooks available:
 
 == Changelog ==
 
+= 1.9.14 =
+* Tweak: Improved advanced search
+* Tweak: Improved localization
+* Bug: Breadcrumbs menu fix
+* Bug: Adding multiple downloads by accidental multi-clicking fix
+* Bug: Adding prints to cart without selecting price group fix
+
 = 1.9.13 =
 * Collections count bug fix
 * Translation bug fix
