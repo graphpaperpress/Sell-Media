@@ -11,33 +11,29 @@ Class SellMediaSearch {
      * Init
      */
     public function __construct(){
-        //add_filter( 'posts_join', array( &$this, 'search_join' ) );
-        //add_action( 'pre_get_posts', array( &$this, 'search_query' ) );
-        //add_filter( 'posts_request', array( &$this, 'se_distinct' ) );
-
-        add_filter( 'posts_join', array( &$this, 'se_terms_join' ) );
-        add_filter( 'posts_search', array( &$this, 'se_search_where' ), 10, 2 );
-        add_filter( 'posts_request', array( &$this, 'se_distinct' ) );
+        add_filter( 'posts_join', array( &$this, 'terms_join' ) );
+        add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
+        add_filter( 'posts_request', array( &$this, 'distinct' ) );
     }
 
 
-
-    //join for searching tags
-    function se_terms_join( $join ) {
+    /**
+     * Join for searching tags
+     *
+     * @since 1.8.7
+     */
+    public function terms_join( $join ) {
         global $wpdb;
 
         if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
 
-            // if we're searching custom taxonomies
-            $all_taxonomies = get_taxonomies();
-            $filter_taxonomies = array( 'post_tag', 'category', 'nav_menu', 'link_category' );
+            // searching custom taxonomies
+            $taxonomies = get_object_taxonomies( 'sell_media_item' );
 
-            foreach ( $all_taxonomies as $taxonomy ) {
-                if ( in_array( $taxonomy, $filter_taxonomies ) )
-                    continue;
+            foreach ( $taxonomies as $taxonomy ) {
                 $on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
-
             }
+
             // build our final string
             $on = ' ( ' . implode( ' OR ', $on ) . ' ) ';
             $join .= " LEFT JOIN $wpdb->term_relationships AS trel ON ($wpdb->posts.ID = trel.object_id) LEFT JOIN $wpdb->term_taxonomy AS ttax ON ( " . $on . " AND trel.term_taxonomy_id = ttax.term_taxonomy_id) LEFT JOIN $wpdb->terms AS tter ON (ttax.term_id = tter.term_id) ";
@@ -46,8 +42,12 @@ Class SellMediaSearch {
     }
 
 
-    // creates the list of search keywords from the 's' parameters.
-    function se_get_search_terms() {
+    /**
+     * Creates the list of search keywords from the 's' parameters
+     *
+     * @since 1.8.7
+     */
+    public function get_search_terms() {
         global $wpdb;
         $s = isset( $this->query_instance->query_vars['s'] ) ? $this->query_instance->query_vars['s'] : '';
         $sentence = isset( $this->query_instance->query_vars['sentence'] ) ? $this->query_instance->query_vars['sentence'] : false;
@@ -66,37 +66,43 @@ Class SellMediaSearch {
         return $search_terms;
     }
 
-    // add where clause to the search query
-    function se_search_where( $where, $wp_query ) {
+
+    /**
+     * Add where clause to the search query
+     *
+     * @since 1.8.7
+     */
+    public function search_where( $where, $wp_query ) {
 
         $this->query_instance = &$wp_query;
         global $wpdb;
 
-        $searchQuery = $this->se_search_default();
+        $searchQuery = $this->search_default();
 
-        $searchQuery .= $this->se_build_search_categories();
+        $searchQuery .= $this->build_search_categories();
 
         if ( $searchQuery != '' ) {
             $where = preg_replace( '#\(\(\(.*?\)\)\)#', '(('.$searchQuery.'))', $where );
 
         }
-
         return $where;
     }
 
 
-
-    // search for terms in default locations like title and content
-    // replacing the old search terms seems to be the best way to
-    // avoid issue with multiple terms
-    function se_search_default(){
-
+    /**
+     * Search for terms in default locations like title and content
+     * replacing the old search terms seems to be the best way to
+     * avoid issue with multiple terms
+     *
+     * @since 1.8.7
+     */
+    public function search_default(){
         global $wpdb;
 
         $not_exact = empty($this->query_instance->query_vars['exact']);
         $search_sql_query = '';
         $seperator = '';
-        $terms = $this->se_get_search_terms();
+        $terms = $this->get_search_terms();
 
         // if it's not a sentance add other terms
         $search_sql_query .= '(';
@@ -121,17 +127,21 @@ Class SellMediaSearch {
     }
 
 
-    // create the search categories query
-    function se_build_search_categories() {
+    /**
+     * Create the search categories query
+     *
+     * @since 1.8.7
+     */
+    public function build_search_categories() {
         global $wpdb;
         $vars = $this->query_instance->query_vars;
 
         $s = $vars['s'];
-        $search_terms = $this->se_get_search_terms();
+        $search_terms = $this->get_search_terms();
         $exact = isset( $vars['exact'] ) ? $vars['exact'] : '';
         $search = '';
 
-        if ( !empty( $search_terms ) ) {
+        if ( ! empty( $search_terms ) ) {
             // Building search query for categories slug.
             $n = ( $exact ) ? '' : '%';
             $searchand = '';
@@ -144,7 +154,7 @@ Class SellMediaSearch {
             if ( count( $search_terms ) > 1 && $search_terms[0] != $s ) {
                 $searchSlug = "($searchSlug) OR (tter.slug LIKE '{$n}".sanitize_title_with_dashes( $s )."{$n}')";
             }
-            if ( !empty( $searchSlug ) )
+            if ( ! empty( $searchSlug ) )
                 $search = " OR ({$searchSlug}) ";
 
             // Building search query for categories description.
@@ -159,16 +169,21 @@ Class SellMediaSearch {
             if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
                 $searchDesc = "($searchDesc) OR (ttax.description LIKE '{$n}{$sentence_term}{$n}')";
             }
-            if ( !empty( $searchDesc ) )
+            if ( ! empty( $searchDesc ) )
                 $search = $search." OR ({$searchDesc}) ";
         }
         return $search;
     }
 
-    //Duplicate posts fix
-    function se_distinct( $query ) {
+
+    /**
+     * Duplicate posts fix
+     *
+     * @since 1.8.7
+     */
+    public function distinct( $query ) {
         global $wpdb;
-        if ( !empty( $this->query_instance->query_vars['s'] ) ) {
+        if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
             if ( strstr( $query, 'DISTINCT' ) ) {}
             else {
                 $query = str_replace( 'SELECT', 'SELECT DISTINCT', $query );
