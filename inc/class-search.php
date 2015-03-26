@@ -12,101 +12,233 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 Class SellMediaSearch {
 
+    private $query_instance;
+
     /**
      * Init
      */
     public function __construct(){
-        //add_action( 'pre_get_posts', array( &$this, 'get_orientation' ) );
-        $this->includes();
+        add_filter( 'posts_join', array( &$this, 'terms_join' ) );
+        add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
+        add_filter( 'posts_request', array( &$this, 'distinct' ) );
     }
 
-    /**
-     * Include WP Advanced Search class files
-     */
-    private function includes(){
-        require_once SELL_MEDIA_PLUGIN_DIR . '/inc/search/wpas.php';
-    }
 
     /**
-     * Search form arguments
+     * Join for searching tags
      *
      * @since 1.8.7
      */
-    public function args(){
-        /**
-         * build an array of terms that are password protected
-         */
-        foreach( get_terms('collection') as $term_obj ){
-            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-            if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
+    public function terms_join( $join ) {
+        global $wpdb;
+
+        if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
+
+            // searching custom taxonomies
+            $taxonomies = get_object_taxonomies( 'sell_media_item' );
+
+            foreach ( $taxonomies as $taxonomy ) {
+                $on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
+            }
+
+            // build our final string
+            $on = ' ( ' . implode( ' OR ', $on ) . ' ) ';
+            $join .= " LEFT JOIN $wpdb->term_relationships AS trel ON ($wpdb->posts.ID = trel.object_id) LEFT JOIN $wpdb->term_taxonomy AS ttax ON ( " . $on . " AND trel.term_taxonomy_id = ttax.term_taxonomy_id) LEFT JOIN $wpdb->terms AS tter ON (ttax.term_id = tter.term_id) ";
         }
-
-
-        if ( ! empty( $exclude_term_ids ) ){
-            // echo 'exclude these ids: ';
-            $tax_query = array(
-                     'relation' => 'AND',
-                     array(
-                         'taxonomy' => 'collection',
-                         'field' => 'id',
-                         'terms' => $exclude_term_ids,
-                         'operator' => 'NOT IN'
-                         )
-                     );
-        } else {
-            $tax_query = array();
-        }
-
-        // setup our WP Advanced Search arguments
-        $args = array();
-        $args['wp_query'] = array(
-            'post_type' => 'sell_media_item',
-            'posts_per_page' => get_option( 'posts_per_page' ),
-            'order' => 'DESC',
-            'orderby' => 'date',
-            'tax_query' => $tax_query
-        );
-        $args['fields'][] = array(
-            'type' => 'search',
-            'value' => ''
-        );
-        $args['fields'][] = array(
-            'type' => 'submit',
-            'value' => 'Search'
-        );
-        $args['fields'][] = array(
-            'type' => 'taxonomy',
-            'label' => 'Collections',
-            'taxonomy' => 'collection',
-            'format' => 'multi-select',
-            'operator' => 'AND',
-            'class' => 'chosen-select'
-        );
-        $args['fields'][] = array(
-            'type' => 'taxonomy',
-            'label' => 'Keywords',
-            'taxonomy' => 'keywords',
-            'format' => 'multi-select',
-            'operator' => 'AND',
-            'class' => 'chosen-select'
-        );
-        $args['fields'][] = array(
-            'type' => 'meta_key',
-            'label' => 'Max Price ( Example: 100 )',
-            'meta_key' => 'sell_media_price',
-            'values' => '',
-            'data_type' => 'NUMERIC',
-            'compare' => '<=',
-            'format' => 'text',
-            'placeholder' => ''
-        );
-        $args['fields'][] = array(
-            'type' => 'html',
-            'value' => '<div id="sell-media-toggle-search-options"><a href="javascript:void(0);">' . __( 'X', 'sell_media' ) . '</a></div>'
-        );
-
-        return $args;
+        return $join;
     }
+
+
+    /**
+     * Creates the list of search keywords from the 's' parameters
+     *
+     * @since 1.8.7
+     */
+    public function get_search_terms() {
+        global $wpdb;
+        $s = isset( $this->query_instance->query_vars['s'] ) ? $this->query_instance->query_vars['s'] : '';
+        $sentence = isset( $this->query_instance->query_vars['sentence'] ) ? $this->query_instance->query_vars['sentence'] : false;
+        $search_terms = array();
+
+        if ( !empty( $s ) ) {
+            // added slashes screw with quote grouping when done early, so done later
+            $s = stripslashes( $s );
+            if ( $sentence ) {
+                $search_terms = array( $s );
+            } else {
+                preg_match_all( '/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $s, $matches );
+                $search_terms = array_map( create_function( '$a', 'return trim($a, "\\"\'\\n\\r ");' ), $matches[0] );
+            }
+        }
+        return $search_terms;
+    }
+
+
+    /**
+     * Add where clause to the search query
+     *
+     * @since 1.8.7
+     */
+    public function search_where( $where, $wp_query ) {
+
+        $this->query_instance = &$wp_query;
+        global $wpdb;
+
+        $searchQuery = $this->search_default();
+
+        $searchQuery .= $this->build_search_categories();
+
+        if ( $searchQuery != '' ) {
+            $where = preg_replace( '#\(\(\(.*?\)\)\)#', '(('.$searchQuery.'))', $where );
+
+        }
+        return $where;
+    }
+
+
+    /**
+     * Search for terms in default locations like title and content
+     * replacing the old search terms seems to be the best way to
+     * avoid issue with multiple terms
+     *
+     * @since 1.8.7
+     */
+    public function search_default(){
+        global $wpdb;
+
+        $not_exact = empty($this->query_instance->query_vars['exact']);
+        $search_sql_query = '';
+        $seperator = '';
+        $terms = $this->get_search_terms();
+
+        // if it's not a sentance add other terms
+        $search_sql_query .= '(';
+        foreach ( $terms as $term ) {
+            $search_sql_query .= $seperator;
+
+            $esc_term = esc_sql($term);
+            if ($not_exact) {
+                $esc_term = "%$esc_term%";
+            }
+
+            $like_title = "($wpdb->posts.post_title LIKE '$esc_term')";
+            $like_post = "($wpdb->posts.post_content LIKE '$esc_term')";
+
+            $search_sql_query .= "($like_title OR $like_post)";
+
+            $seperator = ' AND ';
+        }
+
+        $search_sql_query .= ')';
+        return $search_sql_query;
+    }
+
+
+    /**
+     * Create the search categories query
+     *
+     * @since 1.8.7
+     */
+    public function build_search_categories() {
+        global $wpdb;
+        $vars = $this->query_instance->query_vars;
+
+        $s = $vars['s'];
+        $search_terms = $this->get_search_terms();
+        $exact = isset( $vars['exact'] ) ? $vars['exact'] : '';
+        $search = '';
+
+        if ( ! empty( $search_terms ) ) {
+            // Building search query for categories slug.
+            $n = ( $exact ) ? '' : '%';
+            $searchand = '';
+            $searchSlug = '';
+            foreach ( $search_terms as $term ) {
+                $term = addslashes_gpc( $term );
+                $searchSlug .= "{$searchand}(tter.slug LIKE '{$n}".sanitize_title_with_dashes( $term )."{$n}')";
+                $searchand = ' AND ';
+            }
+            if ( count( $search_terms ) > 1 && $search_terms[0] != $s ) {
+                $searchSlug = "($searchSlug) OR (tter.slug LIKE '{$n}".sanitize_title_with_dashes( $s )."{$n}')";
+            }
+            if ( ! empty( $searchSlug ) )
+                $search = " OR ({$searchSlug}) ";
+
+            // Building search query for categories description.
+            $searchand = '';
+            $searchDesc = '';
+            foreach ( $search_terms as $term ) {
+                $term = addslashes_gpc( $term );
+                $searchDesc .= "{$searchand}(ttax.description LIKE '{$n}{$term}{$n}')";
+                $searchand = ' AND ';
+            }
+            $sentence_term = esc_sql( $s );
+            if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
+                $searchDesc = "($searchDesc) OR (ttax.description LIKE '{$n}{$sentence_term}{$n}')";
+            }
+            if ( ! empty( $searchDesc ) )
+                $search = $search." OR ({$searchDesc}) ";
+        }
+        return $search;
+    }
+
+
+    /**
+     * Duplicate posts fix
+     *
+     * @since 1.8.7
+     */
+    public function distinct( $query ) {
+        global $wpdb;
+        if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
+            if ( strstr( $query, 'DISTINCT' ) ) {}
+            else {
+                $query = str_replace( 'SELECT', 'SELECT DISTINCT', $query );
+            }
+        }
+        return $query;
+    }
+
+
+    /**
+     * Search query
+     *
+     * @since 1.8.7
+     */
+    public function search_query( $query ) {
+
+        if ( ! $query->is_search )
+            return $query;
+
+        if ( $query->get( 'post_type' ) && 'sell_media_item' == $query->get( 'post_type' ) ) {
+
+            /**
+             * Exclude password protected collections from search query
+             */
+            foreach( get_terms('collection') as $term_obj ){
+                $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+                if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
+            }
+
+            if ( ! empty( $exclude_term_ids ) ){
+                $collection_querys = array(
+                    'relation' => 'AND',
+                    array(
+                        'taxonomy' => 'collection',
+                        'field' => 'id',
+                        'terms' => $exclude_term_ids,
+                        'operator' => 'NOT IN'
+                    )
+                );
+                $query->set( 'tax_query', $collections_query );
+            }
+
+            return $query;
+
+        }
+
+    }
+
 
     /**
      * Search form
@@ -120,120 +252,43 @@ Class SellMediaSearch {
         if ( ! isset( $used ) ) {
             $used = true;
 
-            // enqueue chosen scripts
-            wp_enqueue_script( 'sell_media-chosen' );
-            wp_enqueue_style( 'sell_media-chosen' );
+            $html = '';
+            $html .= '<div class="sell-media-search cf">';
+            $html .= '<form role="search" method="get" id="sell-media-searchform" action="' . site_url() . '">';
+            $html .= '<div class="sell-media-search-inner">';
 
-            $args = $this->args();
+            $html .= '<div class="sell-media-search-field">';
+            $html .= '<label for="s">' . __( 'Search for', 'sell_media' ) . ':</label>';
+            $html .= '<input type="text" value="" name="s" id="s" />';
+            $html .= '</div>';
 
-            // allow form to post to a custom url
-            if ( ! empty ( $url ) ) {
-                $new_args['form'] = array(
-                    'action' => esc_url( $url ),
-                    'method' => 'GET',
-                    'id' => 'wp-advanced-search',
-                    'name' => 'wp-advanced-search',
-                    'class' => 'wp-advanced-search'
-                );
+            $html .= '<div class="sell-media-search-inner">';
+            $html .= '<label for="s">' . __( 'Exact phrase match', 'sell_media' ) . ':</label>';
+            $html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
+            $html .= '</div>';
 
-                $args = array_merge( $args, $new_args );
+            $html .= '<div class="sell-media-search-inner">';
+            $html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . ':</label>';
+            $html .= '<select name="collection">';
+            $html .= '<option value="">' . esc_attr( __( 'All' ) ) . '</option>';
+
+            $categories = get_categories( 'taxonomy=collection' );
+            foreach ( $categories as $category ) {
+                $html .= '<option value="' . $category->category_nicename . '">';
+                $html .= $category->cat_name;
+                $html .= '</option>';
             }
+            $html .= '</select>';
+            $html .= '</div>';
 
-            $sell_media_search_object = new WP_Advanced_Search( $args );
+            $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
+            $html .= '<input type="submit" id="searchsubmit" value="' . __( 'Search', 'sell_media' ) . '" />';
+            $html .= '</div>';
+            $html .= '</form>';
+            $html .= '</div>';
 
-            echo '<div class="sell-media-search cf">';
-            $sell_media_search_object->the_form();
-            echo '</div>';
+            echo apply_filters( 'sell_media_searchform_filter', $html );
         }
     }
-
-    /**
-     * Search results
-     *
-     * @since 1.8.7
-     */
-    public function results( $used=null ){
-
-        // only use this method if it hasn't already been used on the page
-        static $used;
-        if ( ! isset( $used ) ) {
-            $used = true;
-
-            global $wp_query, $post;
-
-            $args = $this->args();
-            $sell_media_search_object = new WP_Advanced_Search( $args );
-
-            $temp_query = $wp_query;
-            $wp_query = $sell_media_search_object->query();
-
-            echo '<div id="sell-media-archive" class="sell-media sell-media-search-results">';
-
-            if ( have_posts() ) :
-
-                echo '<p class="sell-media-search-results-total">' . __( 'Displaying results ', 'sell_media' ) . $sell_media_search_object->results_range() . __( ' of ', 'sell_media' ) . $wp_query->found_posts . '</p>';
-
-                echo '<div class="sell-media-grid-container">';
-                $i = 0;
-                while ( have_posts() ) : the_post(); $i++;
-                ?>
-                    <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
-                        <div class="item-inner">
-                            <a href="<?php the_permalink(); ?>"><?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
-                            <span class="item-overlay">
-                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                <a href="javascript:void(0);" title="<?php _e( 'Save', 'sell_media' ); ?>" class="add-to-lightbox" id="lightbox-<?php echo $post->ID; ?>" data-id="<?php echo $post->ID; ?>"><?php _e( 'Save', 'sell_media' ); ?></a>
-                                <?php sell_media_item_buy_button( $post->ID, 'text', __( 'Buy', 'sell_media' ) ); ?>
-                                <?php do_action( 'sell_media_item_overlay' ); ?>
-                            </span>
-                        </div>
-                    </div>
-                <?php
-
-                endwhile;
-                echo '</div>';
-                $i = 0;
-                $sell_media_search_object->pagination();
-
-            else :
-
-                echo apply_filters( 'sell_media_search_no_results_text',
-                    '<p>Sorry, no results. Here are some search tips:</p>
-                    <ol>
-                        <li>Use the top search field to search product titles</li>
-                        <li>Use the "Collections" search field to limit your search to specific categories</li>
-                        <li>Use the "Keywords" search field to search specific tags and keywords</li>
-                        <li>Use the "Max Price" search field to find products that fit your budget</li>
-                        <li>And finally, broaden your search if you are unable to find results</li>
-                    </ol>' );
-
-            endif;
-
-            echo '</div>';
-            $wp_query = $temp_query;
-            wp_reset_query();
-        }
-    }
-
-
-    /**
-     * Filters search results based on aspect ratio
-     *
-     * @param $posts (int)
-     * @param $orientation (string) any|landscape|portrait
-     *
-     * @return Array of post IDs that are either landscape or portrait
-     */
-    public function get_orientation( $query ){
-
-        if ( ! is_admin() && ! empty( $_GET['wpas'] ) && ( $_GET['orientation'] == 'landscape' || $_GET['orientation'] == 'portrait' ) ) {
-
-            $orientation = get_query_var( 'orientation' );
-            $post_ids = Sell_Media()->images->get_posts_by_orientation( $orientation );
-            $query->set( 'post__in', $post_ids );
-
-        }
-    }
-
 
 }
