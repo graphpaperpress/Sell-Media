@@ -227,6 +227,7 @@ jQuery(document).ready(function($){
                 cart: data
             },
             success: function( msg ){
+                console.log(data);
                 $.each( msg.cart, function( k, v ){
                     data[k] = v;
                 });
