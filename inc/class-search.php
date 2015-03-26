@@ -254,21 +254,34 @@ Class SellMediaSearch {
 
             $html = '';
             $html .= '<div class="sell-media-search cf">';
-            $html .= '<form role="search" method="get" id="sell-media-searchform" action="' . site_url() . '">';
+            $html .= '<form role="search" method="get" id="wp-advanced-search" class="wp-advanced-search active" action="' . site_url() . '">';
+
             $html .= '<div class="sell-media-search-inner">';
 
-            $html .= '<div class="sell-media-search-field">';
-            $html .= '<label for="s">' . __( 'Search for', 'sell_media' ) . ':</label>';
-            $html .= '<input type="text" value="" name="s" id="s" />';
+            // Input field
+            $html .= '<div id="wpas-search_query" class="wpas-search_query wpas-search-field wpas-field">';
+            $html .= '<input type="text" value="" name="s" id="search_query" class="wpas-text" />';
             $html .= '</div>';
 
-            $html .= '<div class="sell-media-search-inner">';
-            $html .= '<label for="s">' . __( 'Exact phrase match', 'sell_media' ) . ':</label>';
+            // Submit button
+            $html .= '<div id="wpas-submit" class="wpas-submit wpas-submit-field wpas-field">';
+            $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
+            $html .= '<input type="submit" id="searchsubmit" class="wpas-submit" value="' . __( 'Search', 'sell_media' ) . '" />';
+            $html .= '</div>';
+
+            // Exact match field
+            $html .= '<div id="wpas-tax_keywords" class="wpas-tax_keywords wpas-taxonomy-field wpas-field">';
+            $html .= '<div class="label-container">';
+            $html .= '<label for="tax_keywords">' . __( 'Exact phrase match', 'sell_media' ) . '</label>';
+            $html .= '</div>';
             $html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
             $html .= '</div>';
 
-            $html .= '<div class="sell-media-search-inner">';
-            $html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . ':</label>';
+            // Collection field
+            $html .= '<div id="wpas-tax_collection" class="wpas-tax_collection wpas-taxonomy-field wpas-field">';
+            $html .= '<div class="label-container">';
+            $html .= '<label for="tax_collection">' . __( 'Collection', 'sell_media' ) . '</label>';
+            $html .= '</div>';
             $html .= '<select name="collection">';
             $html .= '<option value="">' . esc_attr( __( 'All' ) ) . '</option>';
 
@@ -281,8 +294,13 @@ Class SellMediaSearch {
             $html .= '</select>';
             $html .= '</div>';
 
-            $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
-            $html .= '<input type="submit" id="searchsubmit" value="' . __( 'Search', 'sell_media' ) . '" />';
+            // Close button
+            $html .= '<div id="wpas-1" class="wpas-1 wpas-html-field wpas-field">';
+            $html .= '<div id="sell-media-toggle-search-options">';
+            $html .= '<a href="javascript:void(0);">X</a>';
+            $html .= '</div>';
+            $html .= '</div>';
+
             $html .= '</div>';
             $html .= '</form>';
             $html .= '</div>';
