@@ -928,13 +928,13 @@
                             , upload        : "1"
                             , currency_code : sellMediaCart.currency().code
                             , business      : opts.email
-                            , rm            : opts.method === "GET" ? "0" : "2"
+                            , rm            : "2"
                             , tax_cart      : (sellMediaCart.tax()*1).toFixed(2)
                             , handling_cart : (sellMediaCart.shipping()*1).toFixed(2)
                             , charset       : "utf-8"
                         },
                         action = opts.sandbox ? "https://www.sandbox.paypal.com/cgi-bin/webscr" : "https://www.paypal.com/cgi-bin/webscr",
-                        method = opts.method === "GET" ? "GET" : "POST";
+                        method = "POST";
 
 
                     // check for return and success URLs in the options
