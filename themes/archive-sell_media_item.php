@@ -23,8 +23,11 @@ $settings = sell_media_get_plugin_options();
                     }
 
                     if ( ! is_post_type_archive( 'sell_media_item' ) && $taxonomy && ! empty( $term ) ) :
+
+                        $current_taxonomy = get_taxonomy( $taxonomy );
+
                         echo '<ul class="sell-media-breadcrumbs">';
-                        echo '<li><a href="'. site_url( 'collections' ). '" title="' . __( 'Collections', 'sell_media' ) . '">' . __( 'Collections', 'sell_media' ) . '</a> <span class="raquo">&raquo;</span> </li>';
+                        echo '<li>' . $current_taxonomy->label . ' <span class="raquo">&raquo;</span> </li>';
                         sell_media_taxonomy_breadcrumb();
                         echo '</ul>';
                     elseif ( is_post_type_archive( 'sell_media_item' ) ) :
