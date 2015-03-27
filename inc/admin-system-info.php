@@ -109,6 +109,7 @@ function sell_media_get_system_info() {
     $return .= 'Version:                  ' . SELL_MEDIA_VERSION . "\n";
     $return .= 'Test Mode:                ' . ( sell_media_test_mode() ? "Enabled\n" : "Disabled\n" );
     $return .= 'Currency Code:            ' . $settings->currency . "\n";
+    $return .= 'Post Type Slug:           ' . $settings->post_type_slug . "\n";
 
     // Sell Media pages
     $return .= "\n" . '-- Sell Media Page Configuration' . "\n\n";
