@@ -221,6 +221,7 @@ final class SellMedia {
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-scripts.php';
+            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-system-info.php';
 
         }
 

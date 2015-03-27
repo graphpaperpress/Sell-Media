@@ -26,6 +26,7 @@ function sell_media_admin_menu() {
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Upgrades', 'sell_media'), __('Upgrades', 'sell_media'),  $permission, 'sell_media_upgrades', 'sell_media_upgrades_callback_fn' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
+    add_submenu_page( 'edit.php?post_type=sell_media_item', __('System Info', 'sell_media'), __('System Info', 'sell_media'),  $permission, 'sell_media_system_info', 'sell_media_system_info_callback_fn' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=keywords&amp;post_type=sell_media_item' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=creator&amp;post_type=sell_media_item' );
 
@@ -56,7 +57,8 @@ function sell_media_submenu_order( $menu_ord ) {
         '5'     => 'Payments',
         '6'     => 'Reports',
         '98'    => 'Settings',
-        '99'    => 'Upgrades'
+        '99'    => 'Upgrades',
+        '100'   => 'System Info'
     );
 
     $j = 1;
