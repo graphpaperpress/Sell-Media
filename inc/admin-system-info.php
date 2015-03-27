@@ -11,8 +11,15 @@ function sell_media_system_info_callback_fn(){
     $current_page = admin_url('edit.php?post_type=download&page=sell_media_reports');?>
     <div class="wrap">
         <?php screen_icon(); ?>
-        <h2><?php _e( 'System Info', 'sell_media' ); ?></h2>
+        <h2><?php _e( 'Troubleshooting', 'sell_media' ); ?></h2>
+        <h3>REQUIREMENTS</h3>
+        <ol>
+            <li>You must have the GD Image Library installed on your server. You most likely do. If not, ask your web host to install it.
+You must have a PayPal account to accept online payments. You can also use Stripe.</li>
+            <li>You must have the cURL PHP extension installed on your server. If payments aren't being correctly retrieved from PayPal or Stripe, this is likely the problem.</li>
+        </ol>
 
+        <h2><?php _e( 'System Info', 'sell_media' ); ?></h2>
         <textarea readonly="readonly" onclick="this.focus(); this.select()" id="system-info-textarea" name="sell-media-sysinfo" title="To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).">
             <?php echo sell_media_get_system_info(); ?>
         </textarea>
