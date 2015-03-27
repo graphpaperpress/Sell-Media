@@ -247,41 +247,46 @@ Class SellMediaSearch {
      */
     public function form( $url=null, $used=null ){
 
+        $settings = sell_media_get_plugin_options();
+
         // only use this method if it hasn't already been used on the page
         static $used;
         if ( ! isset( $used ) ) {
             $used = true;
 
             $html = '';
-            $html .= '<div class="sell-media-search cf">';
-            $html .= '<form role="search" method="get" id="wp-advanced-search" class="wp-advanced-search active" action="' . site_url() . '">';
+            $html .= '<div class="sell-media-search">';
+            $html .= '<form role="search" method="get" id="sell-media-search-form" class="sell-media-search-form" action="' . site_url() . '">';
+            $html .= '<div class="sell-media-search-inner cf">';
 
-            $html .= '<div class="sell-media-search-inner">';
+            // Visible search options wrapper
+            $html .= '<div id="sell-media-search-visible" class="sell-media-search-visible cf">';
 
             // Input field
-            $html .= '<div id="wpas-search_query" class="wpas-search_query wpas-search-field wpas-field">';
-            $html .= '<input type="text" value="" name="s" id="search_query" class="wpas-text" />';
+            $html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
+            $html .= '<input type="text" value="" name="s" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
             $html .= '</div>';
 
             // Submit button
-            $html .= '<div id="wpas-submit" class="wpas-submit wpas-submit-field wpas-field">';
+            $html .= '<div id="sell-media-search-submit" class="sell-media-search-field sell-media-search-submit">';
             $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
-            $html .= '<input type="submit" id="searchsubmit" class="wpas-submit" value="' . __( 'Search', 'sell_media' ) . '" />';
+            $html .= '<input type="submit" id="sell-media-search-submit-button" class="sell-media-search-submit-button" value="' . apply_filters( 'sell_media_search_button', __( 'Search', 'sell_media' ) ) . '" />';
             $html .= '</div>';
 
-            // Exact match field
-            $html .= '<div id="wpas-tax_keywords" class="wpas-tax_keywords wpas-taxonomy-field wpas-field">';
-            $html .= '<div class="label-container">';
-            $html .= '<label for="tax_keywords">' . __( 'Exact phrase match', 'sell_media' ) . '</label>';
             $html .= '</div>';
+
+            // Hidden search options wrapper
+            $html .= '<div id="sell-media-search-hidden" class="sell-media-search-hidden cf">';
+
+            // Exact match field
+            $html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-exact-match">';
+            $html .= '<label for="sentence">' . __( 'Exact phrase match', 'sell_media' ) . '</label>';
             $html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
             $html .= '</div>';
 
             // Collection field
-            $html .= '<div id="wpas-tax_collection" class="wpas-tax_collection wpas-taxonomy-field wpas-field">';
-            $html .= '<div class="label-container">';
-            $html .= '<label for="tax_collection">' . __( 'Collection', 'sell_media' ) . '</label>';
-            $html .= '</div>';
+            $html .= '<div id="sell-media-search-collection" class="sell-media-search-field sell-media-search-collection">';
+            $html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . '</label>';
             $html .= '<select name="collection">';
             $html .= '<option value="">' . esc_attr( __( 'All' ) ) . '</option>';
 
@@ -294,12 +299,11 @@ Class SellMediaSearch {
             $html .= '</select>';
             $html .= '</div>';
 
+            // Hidden search options wrapper
+            $html .= '</div>';
+
             // Close button
-            $html .= '<div id="wpas-1" class="wpas-1 wpas-html-field wpas-field">';
-            $html .= '<div id="sell-media-toggle-search-options">';
-            $html .= '<a href="javascript:void(0);">X</a>';
-            $html .= '</div>';
-            $html .= '</div>';
+            $html .= '<a href="javascript:void(0);" class="sell-media-search-close">&times;</a>';
 
             $html .= '</div>';
             $html .= '</form>';
