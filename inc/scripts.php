@@ -53,10 +53,8 @@ function sell_media_scripts( $hook ) {
             ),
         'sandbox' => ( $settings->test_mode == 1 ) ? true : false,
         'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
-        // set this in stripe extension? and make use testing or live key
-        'stripe_public_key' => ( empty( $settings->stripe_test_publishable_key ) ) ? null : $settings->stripe_test_publishable_key,
         'thanks_page' => get_permalink( $settings->thanks_page ),
-        'listener_url' => site_url( '?sell_media-listener=IPN' ),
+        'listener_url' => add_query_arg( 'sell_media-listener', 'IPN', home_url( 'index.php' ) ),
         'added_to_cart' => sprintf(
             "%s! <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
             __( 'Added', 'sell_media' ),

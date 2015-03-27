@@ -932,6 +932,7 @@
                             , tax_cart      : (sellMediaCart.tax()*1).toFixed(2)
                             , handling_cart : (sellMediaCart.shipping()*1).toFixed(2)
                             , charset       : "utf-8"
+                            , cbt           : opts.site
                         },
                         action = opts.sandbox ? "https://www.sandbox.paypal.com/cgi-bin/webscr" : "https://www.paypal.com/cgi-bin/webscr",
                         method = "POST";

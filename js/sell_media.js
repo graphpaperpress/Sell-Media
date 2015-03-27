@@ -129,7 +129,8 @@ jQuery(document).ready(function($){
             cancel: sell_media.checkout_page,
             notify: sell_media.listener_url,
             shipping: sell_media.shipping, // 0 prompt & optional, 1 no prompt, 2 prompt & required
-            method: "POST"
+            method: "POST",
+            site: sell_media.site_name
         },
         cartStyle: sell_media.cart_style,
         taxRate: parseFloat(sell_media.tax),
