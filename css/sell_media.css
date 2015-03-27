@@ -515,12 +515,12 @@ table.sell-media-products {
   margin: 20px 0;
   position: relative;
 }
-.wp-advanced-search {
+.sell-media-search-form {
   border: 1px solid #ccc;
   background-color: #ededed;
   color: #333;
-  margin: 0 0 40px;
-  padding: 3%;
+  margin: 0;
+  padding: 16px;
   position: absolute;
   z-index: 100;
   width: 100%;
@@ -528,41 +528,36 @@ table.sell-media-products {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.wp-advanced-search.active {
+.sell-media-search-form.active {
   box-shadow: 0 0 10px rgba(0,0,0,.2);
 }
-.wpas-search-field {
+.sell-media-search-query {
+  font-size: 20px;
   float: left;
   width: 70%;
 }
-.wpas-submit {
+.sell-media-search-submit {
   float: right;
   width: 30%;
 }
-.wpas-search_query input[type=text],
-.wpas-submit input[type=submit] {
+.sell-media-search-query input[type=text],
+.sell-media-search-submit input[type=submit] {
   height: 50px;
   padding: 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.wpas-search_query input[type=text] {
+.sell-media-search-query input[type=text] {
   border: 1px solid #ccc;
   border-right: 0;
 }
-.wpas-search_query input[type=text],
-.wpas-submit input[type=submit] {
+.sell-media-search-query input[type=text],
+.sell-media-search-submit input[type=submit] {
   border-radius: 0;
   width: 100%;
 }
-#search_query {
-  font-size: 20px;
-}
-.chosen-choices {
-  margin-bottom: 0 !important;
-}
-.wpas-submit input[type=submit] {
+.sell-media-search-submit input[type=submit] {
   background: #555;
   border: 0;
   border-radius: 0;
@@ -574,42 +569,42 @@ table.sell-media-products {
   text-shadow: none;
   text-transform: uppercase;
 }
-.wpas-submit input[type=submit]:hover {
+.sell-media-search-submit input[type=submit]:hover {
   background: #000;
 }
-.wpas-field {
-  border-radius: 0;
-  margin-bottom: 10px;
+.sell-media-search-hidden {
+  margin: 10px 0;
 }
-input.wpas-text[type=text] {
+input.sell-media-search-text[type=text] {
+  background: #fff;
   border-radius: 0;
-  font-size: 13px;
   color: #aaa;
+  font-size: 13px;
+  margin: 0;
 }
-#wpas-tax_collection,
-#wpas-tax_keywords,
-#wpas-meta_sell_media_price,
-#wpas-1 {
-  clear: both;
-  display: none;
-}
-#wpas-tax_collection input,
-#wpas-tax_keywords input,
-#wpas-meta_sell_media_price input {
+.sell-media-search-field input {
   padding: 6px;
   height: auto;
 }
-#wpas-1 {
+.sell-media-search-field label {
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 10px;
+}
+.sell-media-search-field select {
+  display: inline-block;
+}
+.sell-media-search-hidden {
+  display: none;
+  margin-top: 10px;
+}
+.sell-media-search-close {
+  color: #222;
+  display: none;
   float: right;
+  text-decoration: none !important;
 }
-#sell-media-toggle-search-options {
-  width: 12px;
-  height: 12px;
-  display: block;
-  background: url('../images/chosen-sprite.png') -42px 1px no-repeat;
-  text-indent: -999em;
-}
-#sell-media-toggle-search-options:hover {
+.sell-media-search-close:hover {
   cursor: pointer;
 }
 
