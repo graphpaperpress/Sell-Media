@@ -311,3 +311,144 @@ function sell_media_get_cat_post_count( $category_id, $taxonomy='collection' ) {
 
     return $count;
 }
+
+/**
+ * Filter the_content on single templates for sell_media_item post types
+ * and add an action before the content so we can do stuff.
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $content The the_content field of the sell_media_item object
+ * @return string the content with any additional data attached
+ */
+function sell_media_before_content( $content ) {
+    global $post;
+
+    if ( $post && $post->post_type == 'sell_media_item' && is_singular( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
+        ob_start();
+        do_action( 'sell_media_before_content', $post->ID );
+        $content = ob_get_clean() . $content;
+    }
+
+    return $content;
+}
+add_filter( 'the_content', 'sell_media_before_content' );
+
+/**
+ * Filter the_content on single templates for sell_media_item post types
+ * and add an action after the content so we can do stuff.
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $content The the_content field of the download object
+ * @return string the content with any additional data attached
+ */
+function sell_media_after_content( $content ) {
+    global $post;
+
+    if ( $post && $post->post_type == 'sell_media_item' && is_singular( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
+        ob_start();
+        do_action( 'sell_media_after_content', $post->ID );
+        $content .= ob_get_clean();
+    }
+
+    return $content;
+}
+add_filter( 'the_content', 'sell_media_after_content' );
+
+
+/**
+ * Add media (featured image, etc) before the_content
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $content The the_content field of the item object
+ * @return string the content with any additional data attached
+ */
+function sell_media_before_content_media( $post_id ) {
+    echo '<div class="sell-media-content">';
+    sell_media_item_icon( $post_id, 'large' );
+    echo '</div>';
+}
+add_action( 'sell_media_before_content', 'sell_media_before_content_media' );
+
+/**
+ * Append meta data
+ *
+ * Append buy button and add action to append more stuff (lightbox, keywords, etc)
+ *
+ * @since 1.9.2
+ * @param int $post_id Item ID
+ * @return void
+ */
+function sell_media_append_meta( $post_id ) {
+    echo '<div class="sell-media-meta">';
+    echo sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ) );
+    do_action( 'sell_media_below_buy_button' );
+    echo '</div>';
+}
+add_action( 'sell_media_after_content', 'sell_media_append_meta' );
+
+
+/**
+ * Show lightbox
+ *
+ * @since 1.9.2
+ * @param int $post_id Item ID
+ * @return void
+ */
+function sell_media_show_lightbox( $post_id ) {
+    echo '<p class="sell-media-lightbox"><a href="javascript:void(0);" title="' . __( 'Lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save', 'sell_media' ) . '</a></p>';
+}
+add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox' );
+
+/**
+ * Show lightbox
+ *
+ * @since 1.9.2
+ * @param int $post_id Item ID
+ * @return void
+ *
+ * @todo Clean this mess up!
+ */
+function sell_media_show_file_info( $post_id ) { ?>
+
+    <ul>
+        <li class="filename"><span class="title"><?php _e( 'File ID', 'sell_media' ); ?>:</span> <?php echo get_the_id(); ?></li>
+        <li class="filetype"><span class="title"><?php _e( 'File Type', 'sell_media' ); ?>:</span> <?php echo sell_media_get_filetype( $post_id ); ?></li>
+
+        <?php if ( true == wp_get_post_terms( $post_id, 'collection' ) ) { ?>
+            <li class="collections"><span class="title"><?php _e( 'Collections', 'sell_media' ); ?>:</span> <?php sell_media_collections( $post_id ); ?></li>
+        <?php } ?>
+        <?php if ( true == wp_get_post_terms( $post_id, 'keywords' ) ) {?>
+            <li class="keywords"><span class="title"><?php _e( 'Keywords', 'sell_media' ); ?>:</span>
+            <?php $product_terms = wp_get_object_terms( $post_id, 'keywords' );
+            if ( !empty( $product_terms ) ) {
+                if ( ! is_wp_error( $product_terms ) ) {
+                    foreach ( $product_terms as $term ) {
+                        echo '<a href="' . get_term_link( $term->slug, 'keywords' ) . '">' . $term->name . '</a> ';
+                    }
+                }
+            }?>
+            </li>
+        <?php } ?>
+
+        <?php do_action( 'sell_media_additional_list_items' ); ?>
+
+    </ul>
+<?php }
+add_action( 'sell_media_below_buy_button', 'sell_media_show_file_info' );
+
+/**
+ * Adds Sell Media Version to the <head> tag
+ *
+ * @since 1.9.2
+ * @return void
+*/
+function sell_media_version_in_header(){
+    echo '<meta name="generator" content="Sell Media v' . SELL_MEDIA_VERSION . '" />' . "\n";
+}
+add_action( 'wp_head', 'sell_media_version_in_header' );

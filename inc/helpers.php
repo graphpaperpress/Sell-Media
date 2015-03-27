@@ -69,7 +69,7 @@ function sell_media_template_redirect( $original_template ){
 
     return $template;
 }
-add_action( 'template_include', 'sell_media_template_redirect', 6 );
+//add_action( 'template_include', 'sell_media_template_redirect', 6 );
 
 
 /**
