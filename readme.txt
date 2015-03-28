@@ -226,10 +226,12 @@ Action hooks available:
 
 == Changelog ==
 
-= 1.9.14 =
+= 1.9.2 =
+* New Feature: Breadcrumbs
+* New Feature: Exact phrase match for search ("New York", vs "New" and "York")
+* Tweak: Theme compatibility fixes, no longer uses template files
 * Tweak: Improved advanced search
 * Tweak: Improved localization
-* Bug: Breadcrumbs menu fix
 * Bug: Adding multiple downloads by accidental multi-clicking fix
 * Bug: Adding prints to cart without selecting price group fix
 

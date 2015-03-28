@@ -178,58 +178,38 @@ table.sell-media-products {
 
 /*= Single
 -------------------------------------------------------------- */
-.sell-media .sell-media-content {
+.sell-media-breadcrumbs {
+  font-size: .7em;
+  text-transform: uppercase;
+  margin: 1em 0 2em;
+  letter-spacing: 1px;
+}
+.sell-media-content {
   float: left;
-  margin-right: 5%;
+  margin: 0 5% 1.5em 0;
   width: 65%;
   position: relative;
 }
-.sell-media img {
+.sell-media-content img {
   display: block;
   max-width: 100%;
   height: auto;
 }
-.sell-media .sell-media-content-text {
-  margin: 10px 0;
-}
-.sell-media .sell-media-meta {
-  clear: none;
+.sell-media-meta {
   float: right;
   line-height: 1.5;
   width: 30%;
 }
-.sell-media .sell-media-postmeta {
-  clear: both;
-}
-.sell-media ul {
-  margin: 0 0 20px;
-  padding: 0;
+.sell-media-meta ul {
+  list-style-position: inside;
   list-style: none;
-}
-.sell-media li {
-  margin: 6px 0;
-}
-.sell-media li .title {
-  font-weight: 700;
-  border: 0;
+  margin: 0 0 1.5em 0;
+  padding: 0;
 }
 #sell-media-single .gallery .gallery-item a img {
   max-width: 95%;
 }
-.sell-media .sell-media-prev-next {
-  text-align: center;
-  padding: 10px 0;
-  clear: both;
-}
-.sell-media .sell-media-prev-next .next {
-  margin: 0 0 0 10px;
-}
-.sell-media .sell-media-prev-next .prev {
-  margin: 0 10px 0;
-}
-.sell-media-single-button {
-  margin-bottom: 20px;
-}
+
 /*= Archives
 -------------------------------------------------------------- */
 .sell-media .sell-media-grid {
@@ -793,22 +773,22 @@ input.sell-media-search-text[type=text] {
 @media only screen and (max-width : 768px) {
   .sell-media-totals,
   .sell-media-checkout-button,
-  .sell-media .sell-media-content,
-  .sell-media .sell-media-meta {
+  .sell-media-content,
+  .sell-media-meta {
     float: none;
     width: 100%;
   }
-  .sell-media .sell-media-grid {
+  .sell-media-grid {
     float: none;
     margin: 25px auto;
     width: 100%;
   }
-  .sell-media .sell-media-grid img {
+  .sell-media-grid img {
     display: block;
     margin: 0 auto;
   }
-  .sell-media .sell-media-grid h3,
-  .sell-media .sell-media-grid .sell-media-text {
+  .sell-media-grid h3,
+  .sell-media-grid .sell-media-text {
     float: none;
     display: block;
     margin: 10px 0;
