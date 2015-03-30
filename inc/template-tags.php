@@ -303,6 +303,85 @@ function sell_media_get_cat_post_count( $category_id, $taxonomy='collection' ) {
     return $count;
 }
 
+
+/**
+ * Filter the_content on archive templates for sell_media_item post types
+ * and add an action before the content so we can do stuff.
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $content The the_content field of the sell_media_item object
+ * @return string the content with any additional data attached
+ */
+function sell_media_before_archive_content( $content ) {
+    global $post;
+    if ( $post && $post->post_type == 'sell_media_item' && is_archive() && is_main_query() && ! post_password_required() ) {
+        ob_start();
+        do_action( 'sell_media_before_archive_content', $post->ID );
+        $content = ob_get_clean() . $content;
+    }
+
+    return $content;
+}
+add_filter( 'the_content', 'sell_media_before_archive_content' );
+
+/**
+ * Filter the_content on archive templates for sell_media_item post types
+ * and add an action after the content so we can do stuff.
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $content The the_content field of the sell_media_item object
+ * @return string the content with any additional data attached
+ */
+function sell_media_after_archive_content( $content ) {
+    global $post;
+
+    if ( $post && $post->post_type == 'sell_media_item' && is_archive() && is_main_query() && ! post_password_required() ) {
+        ob_start();
+        do_action( 'sell_media_after_archive_content', $post->ID );
+        $content .= ob_get_clean();
+    }
+
+    return $content;
+}
+add_filter( 'the_content', 'sell_media_after_archive_content' );
+
+/**
+ * Add thumbnail image to the_content on archive templates for sell_media_item post types
+ *
+ * @since 1.9.2
+ */
+function sell_media_archive_thumb( $post_id ) {
+    echo '<a href="' . get_permalink() . '">';
+    echo sell_media_item_icon( $post_id, 'large', false );
+    echo '</a>';
+}
+add_action( 'sell_media_before_archive_content', 'sell_media_archive_thumb', 1 );
+
+/**
+ * Add buy button to the_content on archive templates for sell_media_item post types
+ *
+ * @since 1.9.2
+ */
+function sell_media_archive_buy_button( $post_id ) {
+    sell_media_item_buy_button( $post_id, '', __( 'Buy', 'sell_media' ) );
+}
+add_action( 'sell_media_after_archive_content', 'sell_media_archive_buy_button', 10 );
+
+/**
+ * Add lighbox button to the_content on archive templates for sell_media_item post types
+ *
+ * @since 1.9.2
+ */
+function sell_media_archive_lightbox_button( $post_id ) {
+    sell_media_show_lightbox( $post_id );
+}
+add_action( 'sell_media_after_archive_content', 'sell_media_archive_lightbox_button', 20 );
+
+
 /**
  * Filter the_content on single templates for sell_media_item post types
  * and add an action before the content so we can do stuff.
@@ -421,7 +500,7 @@ add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
  */
 function sell_media_show_lightbox( $post_id ) {
     $html = '<p class="sell-media-lightbox"><a href="javascript:void(0);" title="' . __( 'Lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a></p>';
-    apply_filters( 'sell_media_show_lightbox', $html );
+    echo apply_filters( 'sell_media_show_lightbox', $html );
 }
 add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
 
