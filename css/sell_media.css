@@ -101,7 +101,6 @@ input[type="submit"].sell-media-button,
 }
 .sell-media-single-two-col .sell-media-button {
   display: block;
-  width: 100%;
 }
 input[type="submit"].sell-media-button:hover,
 .sell-media-button:hover,
