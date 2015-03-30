@@ -218,6 +218,12 @@ table.sell-media-products {
   margin: 0 0 1.5em 0;
   padding: 0;
 }
+.sell-media-meta li {
+  margin-bottom: .5em;
+}
+.sell-media-meta .title {
+  font-weight: 700;
+}
 #sell-media-single .gallery .gallery-item a img {
   max-width: 95%;
 }

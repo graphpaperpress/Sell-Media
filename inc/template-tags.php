@@ -23,7 +23,10 @@ function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $e
     $text = apply_filters('sell_media_purchase_text', $text, $post_id );
     $html = '<a href="javascript:void(0)" data-sell_media-product-id="' . esc_attr( $post_id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-' . $button . '">' . $text . '</a>';
 
-    if ( $echo ) print $html; else return $html;
+    if ( $echo )
+        echo $html;
+    else
+        return $html;
 }
 
 
@@ -303,87 +306,8 @@ function sell_media_get_cat_post_count( $category_id, $taxonomy='collection' ) {
     return $count;
 }
 
-
 /**
- * Filter the_content on archive templates for sell_media_item post types
- * and add an action before the content so we can do stuff.
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $content The the_content field of the sell_media_item object
- * @return string the content with any additional data attached
- */
-function sell_media_before_archive_content( $content ) {
-    global $post;
-    if ( $post && $post->post_type == 'sell_media_item' && is_archive() && is_main_query() && ! post_password_required() ) {
-        ob_start();
-        do_action( 'sell_media_before_archive_content', $post->ID );
-        $content = ob_get_clean() . $content;
-    }
-
-    return $content;
-}
-add_filter( 'the_content', 'sell_media_before_archive_content' );
-
-/**
- * Filter the_content on archive templates for sell_media_item post types
- * and add an action after the content so we can do stuff.
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $content The the_content field of the sell_media_item object
- * @return string the content with any additional data attached
- */
-function sell_media_after_archive_content( $content ) {
-    global $post;
-
-    if ( $post && $post->post_type == 'sell_media_item' && is_archive() && is_main_query() && ! post_password_required() ) {
-        ob_start();
-        do_action( 'sell_media_after_archive_content', $post->ID );
-        $content .= ob_get_clean();
-    }
-
-    return $content;
-}
-add_filter( 'the_content', 'sell_media_after_archive_content' );
-
-/**
- * Add thumbnail image to the_content on archive templates for sell_media_item post types
- *
- * @since 1.9.2
- */
-function sell_media_archive_thumb( $post_id ) {
-    echo '<a href="' . get_permalink() . '">';
-    echo sell_media_item_icon( $post_id, 'large', false );
-    echo '</a>';
-}
-add_action( 'sell_media_before_archive_content', 'sell_media_archive_thumb', 1 );
-
-/**
- * Add buy button to the_content on archive templates for sell_media_item post types
- *
- * @since 1.9.2
- */
-function sell_media_archive_buy_button( $post_id ) {
-    sell_media_item_buy_button( $post_id, '', __( 'Buy', 'sell_media' ) );
-}
-add_action( 'sell_media_after_archive_content', 'sell_media_archive_buy_button', 10 );
-
-/**
- * Add lighbox button to the_content on archive templates for sell_media_item post types
- *
- * @since 1.9.2
- */
-function sell_media_archive_lightbox_button( $post_id ) {
-    sell_media_show_lightbox( $post_id );
-}
-add_action( 'sell_media_after_archive_content', 'sell_media_archive_lightbox_button', 20 );
-
-
-/**
- * Filter the_content on single templates for sell_media_item post types
+ * Filter the_content for sell_media_item post types
  * and add an action before the content so we can do stuff.
  *
  * @since 1.9.2
@@ -395,7 +319,7 @@ add_action( 'sell_media_after_archive_content', 'sell_media_archive_lightbox_but
 function sell_media_before_content( $content ) {
     global $post;
 
-    if ( $post && $post->post_type == 'sell_media_item' && is_singular( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
+    if ( $post && $post->post_type == 'sell_media_item' && is_main_query() && ! post_password_required() ) {
         ob_start();
         do_action( 'sell_media_before_content', $post->ID );
         $content = '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
@@ -418,7 +342,7 @@ add_filter( 'the_content', 'sell_media_before_content' );
 function sell_media_after_content( $content ) {
     global $post;
 
-    if ( $post && $post->post_type == 'sell_media_item' && is_singular( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
+    if ( $post && $post->post_type == 'sell_media_item' && is_main_query() && ! post_password_required() ) {
         ob_start();
         do_action( 'sell_media_after_content', $post->ID );
         $content .= ob_get_clean();
@@ -429,6 +353,80 @@ function sell_media_after_content( $content ) {
 add_filter( 'the_content', 'sell_media_after_content' );
 
 /**
+ * Filter get_the_excerpt for sell_media_item post types
+ * and add an action before the_excerpt so we can do stuff.
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $content The the_excerpt field of the sell_media_item object
+ * @return string the excerpt with any additional data attached
+ */
+function sell_media_before_excerpt( $excerpt ){
+    global $post;
+
+    if ( $post && $post->post_type == 'sell_media_item' && is_post_type_archive( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
+        ob_start();
+        do_action( 'sell_media_before_excerpt', $post->ID );
+        $content = ob_get_clean() . $excerpt;
+    }
+
+    return $excerpt;
+}
+add_filter( 'get_the_excerpt', 'sell_media_before_excerpt' );
+
+/**
+ * Filter get_the_excerpt for sell_media_item post types
+ * and add an action after the_excerpt so we can do stuff.
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $content The the_excerpt field of the sell_media_item object
+ * @return string the excerpt with any additional data attached
+ */
+function sell_media_after_excerpt( $excerpt ){
+    global $post;
+
+    if ( $post && $post->post_type == 'sell_media_item' && is_post_type_archive( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
+        ob_start();
+        do_action( 'sell_media_after_excerpt', $post->ID );
+        $excerpt .= ob_get_clean();
+    }
+
+    return $excerpt;
+}
+add_filter( 'get_the_excerpt', 'sell_media_after_excerpt' );
+
+/**
+ * Add html before get_the_excerpt
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $excerpt The the_excerpt field of the item object
+ * @return string the excerpt with any additional data attached
+ */
+function sell_media_before_excerpt_media( $post_id ) {
+    echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
+}
+add_action( 'sell_media_before_excerpt', 'sell_media_before_excerpt_media', 10 );
+
+/**
+ * Add html after get_the_excerpt
+ *
+ * @since 1.9.2
+ * @global $post
+ *
+ * @param $excerpt The the_excerpt field of the item object
+ * @return string the excerpt with any additional data attached
+ */
+function sell_media_after_excerpt_links( $post_id ) {
+    echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save to lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+}
+add_action( 'sell_media_after_excerpt', 'sell_media_after_excerpt_links', 10 );
+
+/**
  * Breadcrumb navigation on single entries
  *
  * @since 1.9.2
@@ -437,6 +435,9 @@ add_filter( 'the_content', 'sell_media_after_content' );
  * @return string the content with any additional data attached
  */
 function sell_media_breadcrumbs( $post_id ){
+    if ( is_post_type_archive( 'sell_media_item' ) || is_search() )
+        return;
+
     $settings = sell_media_get_plugin_options();
 
     if ( isset( $settings->breadcrumbs ) && $settings->breadcrumbs ) {
@@ -457,7 +458,6 @@ function sell_media_breadcrumbs( $post_id ){
 }
 add_action( 'sell_media_before_content', 'sell_media_breadcrumbs', 10 );
 
-
 /**
  * Add media (featured image, etc) before the_content
  *
@@ -468,7 +468,11 @@ add_action( 'sell_media_before_content', 'sell_media_breadcrumbs', 10 );
  * @return string the content with any additional data attached
  */
 function sell_media_append_media( $post_id ) {
-    sell_media_item_icon( $post_id, 'large' );
+    if ( is_post_type_archive( 'sell_media_item' ) ) {
+        echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
+    } elseif ( is_singular( 'sell_media_item' ) ) {
+        sell_media_item_icon( $post_id, 'large' );
+    }
 }
 add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
 
@@ -482,12 +486,21 @@ add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
  * @return void
  */
 function sell_media_append_meta( $post_id ) {
-    echo '<div class="sell-media-meta">';
-    echo '<p class="sell-media-buy-button">';
-    sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ) );
-    echo '</p>';
-    do_action( 'sell_media_below_buy_button', $post_id );
-    echo '</div>';
+
+    if ( is_post_type_archive( 'sell_media_item' ) || is_search() ) {
+
+       echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save to lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+
+    } elseif( is_singular( 'sell_media_item' ) ) {
+
+        echo '<div class="sell-media-meta">';
+        echo '<p class="sell-media-buy-button">';
+        sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ) );
+        echo '</p>';
+        do_action( 'sell_media_below_buy_button', $post_id );
+        echo '</div>';
+
+    }
 }
 add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
 
