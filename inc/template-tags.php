@@ -355,7 +355,9 @@ add_filter( 'the_content', 'sell_media_after_archive_content' );
  * @since 1.9.2
  */
 function sell_media_archive_thumb( $post_id ) {
+    echo '<a href="' . get_permalink() . '">';
     echo sell_media_item_icon( $post_id, 'large', false );
+    echo '</a>';
 }
 add_action( 'sell_media_before_archive_content', 'sell_media_archive_thumb', 1 );
 
