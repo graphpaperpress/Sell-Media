@@ -85,13 +85,12 @@
 }
 input[type="submit"].sell-media-button,
 .sell-media-button,
-a.sell-media-button:link,
 #sell-media-submit {
   border: none;
   background: #555;
   padding: 7px 5%;
-  display: block;
-  width: 90%;
+  display: inline-block;
+  width: auto;
   color: #FFF;
   text-align: center;
   text-transform: none;
@@ -99,6 +98,10 @@ a.sell-media-button:link,
   text-shadow: none;
   font-size: 14px;
   border-radius: 3px;
+}
+.sell-media-single-two-col .sell-media-button {
+  display: block;
+  width: 100%;
 }
 input[type="submit"].sell-media-button:hover,
 .sell-media-button:hover,
