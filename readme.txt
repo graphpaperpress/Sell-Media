@@ -230,6 +230,7 @@ Action hooks available:
 * New Feature: Breadcrumbs
 * New Feature: One or two column layouts on single entries
 * New Feature: Exact phrase match for search ("New York", vs "New" and "York")
+* New Feature: 2, 3, 4, 5 column layout options for `[sell_media_all_items]` shortcode
 * Tweak: Theme compatibility fixes, no longer requires template files
 * Tweak: Improved advanced search
 * Tweak: Improved localization
