@@ -40,7 +40,7 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
     global $user;
     if ( isset( $user->roles ) && is_array( $user->roles ) ){
-        if ( in_array( "sell_media_customer", $user->roles ) ){
+        if ( in_array( 'sell_media_customer', $user->roles ) ){
             return site_url('dashboard');
         } else {
             return admin_url();

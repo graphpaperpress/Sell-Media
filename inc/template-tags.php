@@ -385,11 +385,6 @@ add_action( 'sell_media_before_content', 'stock_photography_sell_media_breadcrum
  * @return string the content with any additional data attached
  */
 function sell_media_before_content_media( $post_id ) {
-
-    // don't filter the_content if custom template is used
-    if ( 'single-sell_media_item.php' == sell_media_return_template() )
-        return;
-
     $html = '<div class="sell-media-content">' . sell_media_item_icon( $post_id, 'large', false ) . '</div>';
     echo apply_filters( 'sell_media_before_content_media', $html );
 }
@@ -405,11 +400,6 @@ add_action( 'sell_media_before_content', 'sell_media_before_content_media', 20 )
  * @return void
  */
 function sell_media_append_meta( $post_id ) {
-
-    // don't filter the_content if custom template is used
-    if ( 'single-sell_media_item.php' == sell_media_return_template() )
-        return;
-
     echo '<div class="sell-media-meta">';
     echo '<p class="sell-media-buy-button">';
     sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ) );
@@ -420,7 +410,7 @@ function sell_media_append_meta( $post_id ) {
 add_action( 'sell_media_after_content', 'sell_media_append_meta' );
 
 /**
- * Return the name of the template served by WordPress
+ * Return the name of the template served
  *
  * @since 1.9.2
  * @return string
@@ -429,6 +419,29 @@ function sell_media_return_template() {
     global $template;
     return basename( $template );
 }
+
+/**
+ * Theme setup tweaks
+ *
+ * @since 1.9.2
+ * @return string
+ */
+function sell_media_theme_setup(){
+
+    /**
+     * Don't filter the_content if custom template is used.
+     * Prevents duplicate content on the_content filter.
+     * For backwards compatibility in case users upgrade Sell Media
+     * but have old themes with custom Sell Media templates.
+     */
+    if ( 'single-sell_media_item.php' == sell_media_return_template() ) {
+        remove_filter( 'the_content', 'sell_media_before_content' );
+        remove_filter( 'the_content', 'sell_media_after_content' );
+    }
+    if ( 'archive-sell_media_item.php' == sell_media_return_template() ) {
+    }
+}
+add_action( 'wp_head', 'sell_media_theme_setup' );
 
 /**
  * Show lightbox
