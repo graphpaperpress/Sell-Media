@@ -11,68 +11,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Template Redirect
- * @since 1.0.4
- */
-function sell_media_template_redirect( $original_template ){
-
-    $post_type = get_query_var('post_type');
-    $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
-
-    if ( $post_type == '' )
-       $post_type = 'sell_media_item';
-
-    $default_templates = array(
-        'single'  => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/single-sell_media_item.php',
-        'archive' => plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive-sell_media_item.php'
-        );
-
-    $custom_templates = array(
-        'single'   => locate_template( 'single-sell_media_item.php' ),
-        'archive'  => locate_template( 'archive-sell_media_item.php' ),
-        'taxonomy' => locate_template( 'taxonomy-' . get_query_var('taxonomy') . '.php' )
-        );
-
-    /**
-     * Single
-     */
-    if ( is_single() && get_query_var('post_type') == 'sell_media_item' ) {
-        $template = ( file_exists( $custom_templates['single'] ) ) ? $custom_templates['single'] : $default_templates['single'];
-    }
-
-    /**
-     * Archive -- Check if this is an archive page AND post type is sell media
-     */
-    elseif ( is_post_type_archive( $post_type ) && $post_type == 'sell_media_item' ) {
-        $template = ( file_exists( $custom_templates['archive'] ) ) ? $custom_templates['archive'] : $default_templates['archive'];
-    }
-
-    /**
-     * Taxonomies
-     */
-    elseif ( is_tax() && in_array( get_query_var('taxonomy'), $sell_media_taxonomies ) ) {
-        // check if taxonomy template file exists in active theme
-        if ( file_exists( $custom_templates['taxonomy'] ) ) {
-            $template = $custom_templates['taxonomy'];
-        // cehck if archive template file exists in active theme
-        } elseif ( file_exists( $custom_templates['archive'] ) ) {
-            $template = $custom_templates['archive'];
-        // otherwise, use the archive-sell_media_item.php template in plugin
-        } else {
-            $template = $default_templates['archive'];
-        }
-    }
-
-    else {
-        $template = $original_template;
-    }
-
-    return $template;
-}
-//add_action( 'template_include', 'sell_media_template_redirect', 6 );
-
-
-/**
  * Loads a template from a specified path
  *
  * @package Ajax
@@ -111,6 +49,21 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 
+/**
+ * Add specific CSS classes to the body_class
+ *
+ * @since 1.9.2
+ */
+function sell_media_body_class( $classes ) {
+    $settings = sell_media_get_plugin_options();
+
+    // Layout settings
+    if ( isset( $settings->layout ) )
+        $classes[] = $settings->layout;
+
+    return $classes;
+}
+add_filter( 'body_class', 'sell_media_body_class' );
 
 /**
  * Builds html select field

@@ -386,8 +386,11 @@ add_action( 'sell_media_before_content', 'stock_photography_sell_media_breadcrum
  */
 function sell_media_before_content_media( $post_id ) {
 
-    $html = '<div class="sell-media-content">' . sell_media_item_icon( $post_id, 'large', false ) . '</div>';
+    // don't filter the_content if custom template is used
+    if ( 'single-sell_media_item.php' == sell_media_return_template() )
+        return;
 
+    $html = '<div class="sell-media-content">' . sell_media_item_icon( $post_id, 'large', false ) . '</div>';
     echo apply_filters( 'sell_media_before_content_media', $html );
 }
 add_action( 'sell_media_before_content', 'sell_media_before_content_media', 20 );
@@ -402,6 +405,11 @@ add_action( 'sell_media_before_content', 'sell_media_before_content_media', 20 )
  * @return void
  */
 function sell_media_append_meta( $post_id ) {
+
+    // don't filter the_content if custom template is used
+    if ( 'single-sell_media_item.php' == sell_media_return_template() )
+        return;
+
     echo '<div class="sell-media-meta">';
     echo '<p class="sell-media-buy-button">';
     sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ) );
@@ -411,6 +419,16 @@ function sell_media_append_meta( $post_id ) {
 }
 add_action( 'sell_media_after_content', 'sell_media_append_meta' );
 
+/**
+ * Return the name of the template served by WordPress
+ *
+ * @since 1.9.2
+ * @return string
+ */
+function sell_media_return_template() {
+    global $template;
+    return basename( $template );
+}
 
 /**
  * Show lightbox

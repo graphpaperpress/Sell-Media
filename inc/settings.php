@@ -223,6 +223,27 @@ function sell_media_init_settings(){
                     )
             )
         ),
+        "layout" => array(
+            "tab" => "sell_media_general_settings",
+            "name" => "layout",
+            "title" => __("Layout","sell_media"),
+            "description" => __("Select your layout preference for single Sell Media entries. If your theme already has a sidebar, you probably want to select the 'Single column' option.", "sell_media" ),
+            "section" => "general_plugin_section_1",
+            "since" => "1.0",
+            "id" => "general_plugin_section_1",
+            "type" => "select",
+            "default" => "two_col",
+            "valid_options" => array(
+                "two_col" => array(
+                    "name" => "sell-media-single-two-col",
+                    "title" => "Two columns",
+                ),
+                "one_col" => array(
+                    "name" => "sell-media-single-one-col",
+                    "title" => "One column",
+                )
+            )
+        ),
         "plugin_credit" => array(
             "tab" => "sell_media_general_settings",
             "name" => "plugin_credit",

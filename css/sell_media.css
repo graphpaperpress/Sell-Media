@@ -190,6 +190,11 @@ table.sell-media-products {
   width: 65%;
   position: relative;
 }
+.sell-media-single-one-col .sell-media-content {
+  float: none;
+  margin: 0 0 1.5em 0;
+  width: 100%;
+}
 .sell-media-content img {
   display: block;
   max-width: 100%;
@@ -199,6 +204,10 @@ table.sell-media-products {
   float: right;
   line-height: 1.5;
   width: 30%;
+}
+.sell-media-single-one-col .sell-media-meta {
+  float: none;
+  width: 100%;
 }
 .sell-media-meta ul {
   list-style-position: inside;
