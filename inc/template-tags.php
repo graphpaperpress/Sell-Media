@@ -407,24 +407,11 @@ add_filter( 'get_the_excerpt', 'sell_media_after_excerpt' );
  * @param $excerpt The the_excerpt field of the item object
  * @return string the excerpt with any additional data attached
  */
-function sell_media_before_excerpt_media( $post_id ) {
+function sell_media_before_excerpt_content( $post_id ) {
     echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
+    echo '<p id="sell-media-before-excerpt" class="text-center">' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save to lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
 }
-add_action( 'sell_media_before_excerpt', 'sell_media_before_excerpt_media', 10 );
-
-/**
- * Add html after get_the_excerpt
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $excerpt The the_excerpt field of the item object
- * @return string the excerpt with any additional data attached
- */
-function sell_media_after_excerpt_links( $post_id ) {
-    echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save to lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
-}
-add_action( 'sell_media_after_excerpt', 'sell_media_after_excerpt_links', 10 );
+add_action( 'sell_media_before_excerpt', 'sell_media_before_excerpt_content', 10 );
 
 /**
  * Breadcrumb navigation on single entries
