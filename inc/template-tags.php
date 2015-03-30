@@ -304,81 +304,6 @@ function sell_media_get_cat_post_count( $category_id, $taxonomy='collection' ) {
 }
 
 /**
- * Filter the_content on archive templates for sell_media_item post types
- * and add an action before the content so we can do stuff.
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $content The the_content field of the sell_media_item object
- * @return string the content with any additional data attached
- */
-function sell_media_before_archive_content( $content ) {
-    global $post;
-    if ( $post && $post->post_type == 'sell_media_item' && is_archive() && is_main_query() && ! post_password_required() ) {
-        ob_start();
-        do_action( 'sell_media_before_archive_content', $post->ID );
-        $content = ob_get_clean() . $content;
-    }
-
-    return $content;
-}
-add_filter( 'the_content', 'sell_media_before_archive_content' );
-
-/**
- * Filter the_content on archive templates for sell_media_item post types
- * and add an action after the content so we can do stuff.
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $content The the_content field of the sell_media_item object
- * @return string the content with any additional data attached
- */
-function sell_media_after_archive_content( $content ) {
-    global $post;
-
-    if ( $post && $post->post_type == 'sell_media_item' && is_archive() && is_main_query() && ! post_password_required() ) {
-        ob_start();
-        do_action( 'sell_media_after_archive_content', $post->ID );
-        $content .= ob_get_clean();
-    }
-
-    return $content;
-}
-add_filter( 'the_content', 'sell_media_after_archive_content' );
-
-/**
- * Add thumbnail image to the_content on archive templates for sell_media_item post types
- *
- * @since 1.9.2
- */
-function sell_media_archive_thumb( $post_id ) {
-    echo sell_media_item_icon( $post_id, 'large', false );
-}
-add_action( 'sell_media_before_archive_content', 'sell_media_archive_thumb', 1 );
-
-/**
- * Add buy button to the_content on archive templates for sell_media_item post types
- *
- * @since 1.9.2
- */
-function sell_media_archive_buy_button( $post_id ) {
-    sell_media_item_buy_button( $post_id, '', __( 'Buy', 'sell_media' ) );
-}
-add_action( 'sell_media_after_archive_content', 'sell_media_archive_buy_button', 10 );
-
-/**
- * Add lighbox button to the_content on archive templates for sell_media_item post types
- *
- * @since 1.9.2
- */
-function sell_media_archive_lightbox_button( $post_id ) {
-    sell_media_show_lightbox( $post_id );
-}
-add_action( 'sell_media_after_archive_content', 'sell_media_archive_lightbox_button', 20 );
-
-/**
  * Filter the_content on single templates for sell_media_item post types
  * and add an action before the content so we can do stuff.
  *
@@ -394,7 +319,7 @@ function sell_media_before_content( $content ) {
     if ( $post && $post->post_type == 'sell_media_item' && is_singular( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
         ob_start();
         do_action( 'sell_media_before_content', $post->ID );
-        $content = ob_get_clean() . $content;
+        $content = '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
     }
 
     return $content;
@@ -432,22 +357,26 @@ add_filter( 'the_content', 'sell_media_after_content' );
  *
  * @return string the content with any additional data attached
  */
-function stock_photography_sell_media_breadcrumbs( $post_id ){
-    $obj = get_post_type_object( 'sell_media_item' );
+function sell_media_breadcrumbs( $post_id ){
+    $settings = sell_media_get_plugin_options();
 
-    $html = '<div class="sell-media-breadcrumbs">';
-    $html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . $obj->rewrite['slug'] . '</a>';
-    $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
-    if ( wp_get_post_terms( $post_id, 'collection' ) ) {
-        $html .= sell_media_get_taxonomy_terms( 'collection' );
+    if ( isset( $settings->breadcrumbs ) && $settings->breadcrumbs ) {
+        $obj = get_post_type_object( 'sell_media_item' );
+
+        $html = '<div class="sell-media-breadcrumbs">';
+        $html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . $obj->rewrite['slug'] . '</a>';
         $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
-    }
-    $html .= get_the_title( '', false );
-    $html .= '</div>';
+        if ( wp_get_post_terms( $post_id, 'collection' ) ) {
+            $html .= sell_media_get_taxonomy_terms( 'collection' );
+            $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
+        }
+        $html .= get_the_title( '', false );
+        $html .= '</div>';
 
-    echo apply_filters( 'sell_media_breadcrumbs', $html );
+        echo apply_filters( 'sell_media_breadcrumbs', $html );
+    }
 }
-add_action( 'sell_media_before_content', 'stock_photography_sell_media_breadcrumbs', 10 );
+add_action( 'sell_media_before_content', 'sell_media_breadcrumbs', 10 );
 
 
 /**
@@ -459,11 +388,10 @@ add_action( 'sell_media_before_content', 'stock_photography_sell_media_breadcrum
  * @param $content The the_content field of the item object
  * @return string the content with any additional data attached
  */
-function sell_media_before_content_media( $post_id ) {
-    $html = '<div class="sell-media-content">' . sell_media_item_icon( $post_id, 'large', false ) . '</div>';
-    echo apply_filters( 'sell_media_before_content_media', $html );
+function sell_media_append_media( $post_id ) {
+    sell_media_item_icon( $post_id, 'large' );
 }
-add_action( 'sell_media_before_content', 'sell_media_before_content_media', 20 );
+add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
 
 /**
  * Append meta data
@@ -482,41 +410,7 @@ function sell_media_append_meta( $post_id ) {
     do_action( 'sell_media_below_buy_button', $post_id );
     echo '</div>';
 }
-add_action( 'sell_media_after_content', 'sell_media_append_meta' );
-
-/**
- * Return the name of the template served
- *
- * @since 1.9.2
- * @return string
- */
-function sell_media_return_template() {
-    global $template;
-    return basename( $template );
-}
-
-/**
- * Theme setup tweaks
- *
- * @since 1.9.2
- * @return string
- */
-function sell_media_theme_setup(){
-
-    /**
-     * Don't filter the_content if custom template is used.
-     * Prevents duplicate content on the_content filter.
-     * For backwards compatibility in case users upgrade Sell Media
-     * but have old themes with custom Sell Media templates.
-     */
-    if ( 'single-sell_media_item.php' == sell_media_return_template() ) {
-        remove_filter( 'the_content', 'sell_media_before_content' );
-        remove_filter( 'the_content', 'sell_media_after_content' );
-    }
-    if ( 'archive-sell_media_item.php' == sell_media_return_template() ) {
-    }
-}
-add_action( 'wp_head', 'sell_media_theme_setup' );
+add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
 
 /**
  * Show lightbox
@@ -526,10 +420,8 @@ add_action( 'wp_head', 'sell_media_theme_setup' );
  * @return void
  */
 function sell_media_show_lightbox( $post_id ) {
-
     $html = '<p class="sell-media-lightbox"><a href="javascript:void(0);" title="' . __( 'Lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a></p>';
-
-    echo apply_filters( 'sell_media_show_lightbox', $html );
+    apply_filters( 'sell_media_show_lightbox', $html );
 }
 add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
 
@@ -566,3 +458,37 @@ function sell_media_version_in_header(){
     echo '<meta name="generator" content="Sell Media v' . SELL_MEDIA_VERSION . '" />' . "\n";
 }
 add_action( 'wp_head', 'sell_media_version_in_header' );
+
+/**
+ * Return the name of the template served
+ *
+ * @since 1.9.2
+ * @return string
+ */
+function sell_media_return_template() {
+    global $template;
+    return basename( $template );
+}
+
+/**
+ * Theme setup tweaks
+ *
+ * @since 1.9.2
+ * @return string
+ */
+function sell_media_theme_setup(){
+
+    /**
+     * Don't filter the_content if custom template is used.
+     * Prevents duplicate content on the_content filter.
+     * For backwards compatibility in case users upgrade Sell Media
+     * but have old themes with custom Sell Media templates.
+     */
+    if ( 'single-sell_media_item.php' == sell_media_return_template() ) {
+        remove_filter( 'the_content', 'sell_media_before_content' );
+        remove_filter( 'the_content', 'sell_media_after_content' );
+    }
+    if ( 'archive-sell_media_item.php' == sell_media_return_template() ) {
+    }
+}
+add_action( 'wp_head', 'sell_media_theme_setup' );
