@@ -228,8 +228,9 @@ Action hooks available:
 
 = 1.9.2 =
 * New Feature: Breadcrumbs
+* New Feature: One or two column layouts on single entries
 * New Feature: Exact phrase match for search ("New York", vs "New" and "York")
-* Tweak: Theme compatibility fixes, no longer uses template files
+* Tweak: Theme compatibility fixes, no longer requires template files
 * Tweak: Improved advanced search
 * Tweak: Improved localization
 * Bug: Adding multiple downloads by accidental multi-clicking fix
