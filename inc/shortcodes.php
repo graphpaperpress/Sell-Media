@@ -110,11 +110,13 @@ function sell_media_all_items_shortcode( $atts ){
     }
     $settings = sell_media_get_plugin_options();
     extract( shortcode_atts( array(
-        'collection' => null,
-        'show' => -1,
-        'columns' => 3
+        'collection' => '',
+        'columns' => '3',
+        'show' => -1
         ), $atts )
     );
+    //$class = ( $columns ) ? 'sell-media-grid sell-media-grid-' . $columns : 'sell-media-grid';
+
     $args = array(
         'posts_per_page' => $show,
         'post_type' => 'sell_media_item',
@@ -141,7 +143,7 @@ function sell_media_all_items_shortcode( $atts ){
         <div class="sell-media-grid-container">
             <?php $i = 0; ?>
             <?php while ( $wp_query->have_posts() ) : $wp_query->the_post(); $i++; ?>
-                <div class="sell-media-grid sell-media-grid-<?php echo $columns; ?><?php if ( $i %$columns == 0 ) echo ' end'; ?>">
+                <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
                     <div class="item-inner">
                         <a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php sell_media_item_icon( get_the_ID(), apply_filters( 'sell_media_thumbnail', 'medium' ) ); ?></a>
                         <span class="item-overlay">

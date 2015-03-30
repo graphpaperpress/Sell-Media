@@ -233,35 +233,17 @@ table.sell-media-products {
   margin: 10px 0;
 }
 .sell-media .sell-media-grid {
-  position: relative;
   float: left;
-}
-.sell-media .sell-media-grid-2 {
-  margin: 0 5% 5% 0;
-  width: 47.5%;
-}
-.sell-media .sell-media-grid-3 {
   margin: 0 2% 2% 0;
+  position: relative;
   width: 32%;
 }
-.sell-media .sell-media-grid-4 {
-  margin: 0 2% 2% 0;
-  width: 23%;
-}
-.sell-media .sell-media-grid-5 {
-  margin: 0 2% 2% 0;
-  width: 18%;
-}
-.sell-media .sell-media-grid-2:nth-child(2n),
-.sell-media .sell-media-grid-3:nth-child(3n),
-.sell-media .sell-media-grid-4:nth-child(4n),
-.sell-media .sell-media-grid-5:nth-child(5n) {
+.sell-media .end,
+.sell-media .sell-media-grid:nth-child(3n) {
   margin-right: 0;
 }
-.sell-media .sell-media-grid-2:nth-child(2n+1),
-.sell-media .sell-media-grid-3:nth-child(3n+1),
-.sell-media .sell-media-grid-4:nth-child(4n+1),
-.sell-media .sell-media-grid-5:nth-child(5n+1) {
+.sell-media .end + .sell-media-grid,
+.sell-media .sell-media-grid:nth-child(3n+1) {
   clear: left;
 }
 .sell-media .sell-media-grid .item-inner {
@@ -808,6 +790,14 @@ input.sell-media-search-text[type=text] {
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
+}
+
+/* Images
+-------------------------------------------------------------- */
+.post-type-archive-sell_media_item img.sell_media_image {
+  display: block;
+  float: none;
+  margin: 0 0 2em;
 }
 
 /*= Media queries

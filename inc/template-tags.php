@@ -368,7 +368,7 @@ function sell_media_before_excerpt( $excerpt ){
     if ( $post && $post->post_type == 'sell_media_item' && is_post_type_archive( 'sell_media_item' ) && is_main_query() && ! post_password_required() ) {
         ob_start();
         do_action( 'sell_media_before_excerpt', $post->ID );
-        $content = ob_get_clean() . $excerpt;
+        $excerpt = ob_get_clean() . $excerpt;
     }
 
     return $excerpt;
@@ -468,7 +468,8 @@ add_action( 'sell_media_before_content', 'sell_media_breadcrumbs', 10 );
  * @return string the content with any additional data attached
  */
 function sell_media_append_media( $post_id ) {
-    if ( is_post_type_archive( 'sell_media_item' ) ) {
+    if ( is_post_type_archive( 'sell_media_item' ) || is_search() ) {
+        echo 'hi';
         echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         sell_media_item_icon( $post_id, 'large' );
