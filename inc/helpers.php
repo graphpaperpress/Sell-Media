@@ -15,6 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since 1.0.4
  */
 function sell_media_template_redirect( $original_template ){
+
+    if ( ! sell_media_theme_support() )
+        return $original_template;
+
     $post_type = ( get_query_var( 'post_type' ) ) ? get_query_var( 'post_type' ) : 'sell_media_item';
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
