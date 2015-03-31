@@ -21,7 +21,7 @@ function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $e
 
     $thumb_id = get_post_thumbnail_id( $post_id );
     $text = apply_filters('sell_media_purchase_text', $text, $post_id );
-    $html = '<a href="javascript:void(0)" data-sell_media-product-id="' . esc_attr( $post_id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-' . $button . '">' . $text . '</a>';
+    $html = '<a href="javascript:void(0)" title="' . $text . '" data-sell_media-product-id="' . esc_attr( $post_id ) . '" data-sell_media-thumb-id="' . esc_attr( $thumb_id ) . '" class="sell-media-cart-trigger sell-media-' . $button . '">' . $text . '</a>';
 
     if ( $echo )
         echo $html;
@@ -143,13 +143,13 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 function sell_media_content_loop( $post_id, $i ){
     $class = ( $i %3 == 0 ) ? ' end' : '';
 
-    echo'<div class="sell-media-grid ' . $class . '">';
+    echo '<div class="sell-media-grid ' . $class . '">';
     echo '<div class="item-inner">';
     echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
     echo '<span class="item-overlay">';
     echo '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-    echo sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
-    do_action( 'sell_media_item_overlay' );
+    sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ) );
+    do_action( 'sell_media_item_overlay', $post_id );
     echo '</span>';
     echo '</div>';
     echo '</div>';
@@ -439,13 +439,13 @@ function sell_media_append_meta( $post_id ) {
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
-        echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+        echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         echo '<div class="sell-media-meta">';
         echo '<p class="sell-media-buy-button">';
         echo sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ), false );
         echo '</p>';
-        echo do_action( 'sell_media_below_buy_button', $post_id );
+        do_action( 'sell_media_below_buy_button', $post_id );
         echo '</div>';
     }
 }
@@ -459,7 +459,7 @@ add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
  * @return void
  */
 function sell_media_show_lightbox( $post_id ) {
-    echo '<p class="sell-media-lightbox"><a href="javascript:void(0);" title="' . __( 'Lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save', 'sell_media' ) . '</a></p>';
+    echo '<p class="sell-media-lightbox"><a href="javascript:void(0);" title="' . __( 'Lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a></p>';
 }
 add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
 
@@ -479,7 +479,7 @@ function sell_media_show_file_info( $post_id ){
         echo '<li class="collections"><span class="title">' . __( 'Collections', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'collection' ) . '</li>';
     }
     if ( wp_get_post_terms( $post_id, 'keywords' ) ) {
-        echo '<li class="collections"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>';
+        echo '<li class="keywords"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>';
     }
     echo do_action( 'sell_media_additional_list_items', $post_id );
     echo '</ul>';

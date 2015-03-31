@@ -19,13 +19,12 @@ function sell_media_template_redirect( $original_template ){
     if ( ! sell_media_theme_support() )
         return $original_template;
 
-    $post_type = ( get_query_var( 'post_type' ) ) ? get_query_var( 'post_type' ) : 'sell_media_item';
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
     /**
      * Archive -- Check if this is an archive page AND post type is sell media
      */
-    if ( is_post_type_archive( $post_type ) && 'sell_media_item' == $post_type || is_tax( $sell_media_taxonomies ) ) {
+    if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
         $template = plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive.php';
     } else {
         $template = $original_template;
@@ -458,14 +457,10 @@ function sell_media_update_sales_stats( $product_id=null, $license_id=null, $pri
  *
  * @since 1.0.1
  */
-function sell_media_pagination_filter( $max_pages = "" ) {
+function sell_media_pagination_filter( $max_pages = '' ) {
 
     global $wp_query;
-    if ( "" != $max_pages ) {
-        $max_num_pages = $max_pages;
-    } else {
-        $max_num_pages = $wp_query->max_num_pages;
-    }
+    $max_num_pages = ( '' != $max_pages ) ? $max_pages : $wp_query->max_num_pages;
 
     $big = 999999999; // need an unlikely integer
 
@@ -474,13 +469,9 @@ function sell_media_pagination_filter( $max_pages = "" ) {
         'format' => '?paged=%#%',
         'current' => max( 1, get_query_var('paged') ),
         'total' => $max_num_pages // note sometimes max_num_pages needs to be sent over
-        );
+    );
 
-    $params = apply_filters( 'sell_media_pagination', $params );
-
-    $links = paginate_links( $params );
-
-    print '<div class="sell-media-pagination-container">' . $links . '</div>';
+    echo '<div class="sell-media-pagination-container">' . paginate_links( $params ) . '</div>';
 }
 
 
