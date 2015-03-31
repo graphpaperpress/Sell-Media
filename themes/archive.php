@@ -105,7 +105,7 @@ $settings = sell_media_get_plugin_options();
                     <?php rewind_posts(); ?>
                     <?php $i = 0; ?>
                     <?php while ( have_posts() ) : the_post(); $i++; ?>
-                        <?php echo sell_media_content_loop( $post->ID, $i ); ?>
+                        <?php sell_media_content_loop( $post->ID, $i ); ?>
                     <?php endwhile; ?>
                     <?php sell_media_pagination_filter(); ?>
                 <?php else : ?>
