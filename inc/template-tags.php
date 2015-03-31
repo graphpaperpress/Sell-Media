@@ -532,7 +532,7 @@ function sell_media_theme_setup(){
     if ( 'archive-sell_media_item.php' == sell_media_return_template() ) {
     }
 }
-add_action( 'after_setup_theme', 'sell_media_theme_setup', 999 );
+add_action( 'wp_head', 'sell_media_theme_setup', 999 );
 
 /**
  * Check for Sell Media theme supprt
