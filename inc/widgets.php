@@ -25,8 +25,8 @@ require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-similar.php' );
 function sell_media_widgets_init() {
 
     register_sidebar( array(
-        'name' => __( 'Sell Media Below Single Item', 'sell_media' ),
-        'id' => 'sell-media-single-sidebar',
+        'name' => __( 'Sell Media Below Single Content', 'sell_media' ),
+        'id' => 'sell-media-below-single-content',
         'before_widget' => '<aside id="%1$s" class="widget %2$s">',
         'after_widget' => "</aside>",
         'before_title' => '<h3 class="widget-title">',
@@ -46,25 +46,25 @@ function sell_media_widgets_init() {
 add_action( 'widgets_init', 'sell_media_widgets_init' );
 
 /**
- * Display Widget Below Single Item
+ * Display Widget Below Single Content
  */
-function sell_media_widgets_below_single_item() { ?>
+function sell_media_widgets_below_single_content() { ?>
 
-    <?php if ( is_active_sidebar( 'sell-media-single-sidebar' ) ) : ?>
-        <section id="sell-media-single-sidebar" class="sell-media-widget-area" role="complementary">
-            <?php dynamic_sidebar( 'sell-media-single-sidebar' ); ?>
+    <?php if ( is_active_sidebar( 'sell-media-below-single-content' ) ) : ?>
+        <section id="sell-media-below-single-content" class="sell-media-widget-area" role="complementary">
+            <?php dynamic_sidebar( 'sell-media-below-single-content' ); ?>
         </section>
     <?php endif; ?>
 
 <?php
 
 }
-add_action( 'sell_media_single_bottom_hook', 'sell_media_widgets_below_single_item' );
+add_action( 'sell_media_single_bottom_hook', 'sell_media_widgets_below_single_content' );
 
 /**
- * Display Widget Below Single Item Sidebar
+ * Display Widget Below Single Sidebar
  */
-function sell_media_widgets_below_single_item_sidebar() { ?>
+function sell_media_widgets_below_single_sidebar() { ?>
 
     <?php if ( is_active_sidebar( 'sell-media-below-single-sidebar' ) ) : ?>
         <section id="sell-media-below-single-sidebar" class="sell-media-widget-area" role="complementary">
@@ -75,4 +75,4 @@ function sell_media_widgets_below_single_item_sidebar() { ?>
 <?php
 
 }
-add_action( 'sell_media_additional_list_items', 'sell_media_widgets_below_single_item_sidebar' );
+add_action( 'sell_media_additional_list_items', 'sell_media_widgets_below_single_sidebar' );
