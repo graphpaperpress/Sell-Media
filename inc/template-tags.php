@@ -375,7 +375,11 @@ function sell_media_before_content( $content ) {
     if ( $post && $post->post_type == 'sell_media_item' && is_main_query() && ! post_password_required() ) {
         ob_start();
         do_action( 'sell_media_before_content', $post->ID );
-        $content = sell_media_breadcrumbs( $post->ID ) . '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
+        if ( is_post_type_archive( 'sell_media_item' ) ) {
+            $content = '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
+        } else {
+            $content = sell_media_breadcrumbs( $post->ID ) . '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
+        }
     }
 
     return $content;
