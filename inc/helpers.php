@@ -11,13 +11,33 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Template Redirect
+ * @since 1.0.4
+ */
+function sell_media_template_redirect( $original_template ){
+    $post_type = ( get_query_var( 'post_type' ) ) ? get_query_var( 'post_type' ) : 'sell_media_item';
+    $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
+
+    /**
+     * Archive -- Check if this is an archive page AND post type is sell media
+     */
+    if ( is_post_type_archive( $post_type ) && 'sell_media_item' == $post_type || is_tax( $sell_media_taxonomies ) ) {
+        $template = plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive.php';
+    } else {
+        $template = $original_template;
+    }
+
+    return $template;
+}
+add_action( 'template_include', 'sell_media_template_redirect', 6 );
+
+/**
  * Loads a template from a specified path
  *
  * @package Ajax
  * @uses load_template()
  * @since 0.1
  */
-
 function sell_media_load_template() {
 
     if ( $overridden_template = locate_template( 'cart.php' ) ) {
