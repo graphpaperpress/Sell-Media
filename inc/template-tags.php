@@ -375,7 +375,7 @@ function sell_media_before_content( $content ) {
     if ( $post && $post->post_type == 'sell_media_item' && is_main_query() && ! post_password_required() ) {
         ob_start();
         do_action( 'sell_media_before_content', $post->ID );
-        if ( is_post_type_archive( 'sell_media_item' ) ) {
+        if ( is_post_type_archive( 'sell_media_item' ) || is_tax( 'collection' ) ) {
             $content = '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
         } else {
             $content = sell_media_breadcrumbs( $post->ID ) . '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
@@ -419,7 +419,7 @@ add_filter( 'the_content', 'sell_media_after_content' );
  * @return string the content with any additional data attached
  */
 function sell_media_append_media( $post_id ) {
-    if ( is_post_type_archive( 'sell_media_item' ) || is_search() ) {
+    if ( is_post_type_archive( 'sell_media_item' ) || is_tax( 'collection' ) || is_search() ) {
         echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         sell_media_item_icon( $post_id, 'large' );
@@ -437,7 +437,7 @@ add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
  * @return void
  */
 function sell_media_append_meta( $post_id ) {
-    if ( is_post_type_archive( 'sell_media_item' ) || is_search() ) {
+    if ( is_post_type_archive( 'sell_media_item' ) || is_tax( 'collection' ) || is_search() ) {
        echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         echo '<div class="sell-media-meta">';
