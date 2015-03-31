@@ -793,14 +793,6 @@ input.sell-media-search-text[type=text] {
     border-radius: .25em;
 }
 
-/* Images
--------------------------------------------------------------- */
-.post-type-archive-sell_media_item img.sell_media_image {
-  display: block;
-  float: none;
-  margin: 0 0 2em;
-}
-
 /*= Media queries
 -------------------------------------------------------------- */
 @media only screen and (max-width : 768px) {
