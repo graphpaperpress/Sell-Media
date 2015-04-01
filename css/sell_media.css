@@ -527,6 +527,7 @@ table.sell-media-products {
   margin: 0;
   padding: 16px;
   position: absolute;
+  text-align: left;
   z-index: 100;
   width: 100%;
   -webkit-box-sizing: border-box;

@@ -254,6 +254,8 @@ Class SellMediaSearch {
         if ( ! isset( $used ) ) {
             $used = true;
 
+            $query = ( get_search_query() ) ? get_search_query() : '';
+
             $html = '';
             $html .= '<div class="sell-media-search">';
             $html .= '<form role="search" method="get" id="sell-media-search-form" class="sell-media-search-form" action="' . site_url() . '">';
@@ -264,7 +266,7 @@ Class SellMediaSearch {
 
             // Input field
             $html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
-            $html .= '<input type="text" value="" name="s" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
+            $html .= '<input type="text" value="' . $query . '" name="s" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
             $html .= '</div>';
 
             // Submit button

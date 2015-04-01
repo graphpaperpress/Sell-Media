@@ -35,6 +35,21 @@ function sell_media_template_redirect( $original_template ){
 add_filter( 'template_include', 'sell_media_template_redirect', 6 );
 
 /**
+ * Get search form
+ *
+ * @param  $form
+ * @return $form
+ */
+function sell_media_get_search_form( $form ){
+    // Change the default WP search form if is Sell Media search
+    if ( is_search() && 'sell_media_item' == get_query_var( 'post_type' ) ) {
+        $form = Sell_Media()->search->form();
+    }
+    return $form;
+}
+add_filter( 'get_search_form', 'sell_media_get_search_form' );
+
+/**
  * Loads a template from a specified path
  *
  * @package Ajax

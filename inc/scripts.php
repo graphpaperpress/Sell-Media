@@ -49,7 +49,7 @@ function sell_media_scripts( $hook ) {
         'currency_symbol' => $settings->currency,
         'dashboard_page' => get_permalink( $settings->dashboard_page ),
         'error' => array(
-            'email_exists' => __('Sorry that email already exists or is invalid', 'sell_media')
+            'email_exists' => __( 'Sorry that email already exists or is invalid', 'sell_media' )
             ),
         'sandbox' => ( $settings->test_mode == 1 ) ? true : false,
         'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,

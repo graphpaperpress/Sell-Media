@@ -17,7 +17,9 @@ $settings = sell_media_get_plugin_options();
             <header class="page-header">
                 <h1 class="page-title">
                     <?php
-                        if ( is_post_type_archive( 'sell_media_item' ) ) {
+                        if ( is_search() ) {
+                            printf( __( 'Search results for: %1$s', 'sell_media' ), get_search_query() );
+                        } elseif ( is_post_type_archive( 'sell_media_item' ) ) {
                             $obj = get_post_type_object( 'sell_media_item' );
                             echo esc_attr( ucfirst( $obj->rewrite['slug'] ) );
                         } else {
@@ -25,6 +27,7 @@ $settings = sell_media_get_plugin_options();
                         }
                     ?>
                 </h1>
+                <?php echo do_shortcode( '[sell_media_searchform]' ); ?>
             </header>
 
             <div class="sell-media-grid-container">
@@ -109,7 +112,9 @@ $settings = sell_media_get_plugin_options();
                     <?php endwhile; ?>
                     <?php sell_media_pagination_filter(); ?>
                 <?php else : ?>
-                    <p><?php _e( 'Nothing Found', 'sell_media' ); ?></p>
+                    <h2><?php _e( 'Nothing Found', 'sell_media' ); ?></h2>
+                    <p><?php _e( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ); ?>
+                    <?php echo do_shortcode( '[sell_media_searchform]' ); ?>
                 <?php endif; $i = 0; ?>
 
             <?php endif; ?><!-- show child terms check -->
