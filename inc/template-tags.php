@@ -189,8 +189,8 @@ function sell_media_item_min_price( $post_id=null ){
 function sell_media_plugin_credit() {
     $settings = sell_media_get_plugin_options();
 
-    if ( true == $settings->plugin_credit ) {
-        printf( '%s <a href="http://graphpaperpress.com/plugins/sell-media/" title="Sell Media WordPress plugin">Sell Media</a>', __( 'Shopping cart by ', 'sell_media' ) );
+    if ( $settings->plugin_credit ) {
+        printf( __( 'Photo cart by <a href="%1$s" title="Photo cart">%2$s</a>', 'sell_media' ), 'http://graphpaperpress.com/plugins/sell-media/', 'Sell Media' );
     }
 }
 
@@ -446,6 +446,7 @@ function sell_media_append_meta( $post_id ) {
         echo sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ), false );
         echo '</p>';
         do_action( 'sell_media_below_buy_button', $post_id );
+        sell_media_plugin_credit();
         echo '</div>';
     }
 }
