@@ -100,6 +100,8 @@ add_shortcode( 'sell_media_item', 'sell_media_item_shortcode' );
  * @since 1.0.4
  */
 function sell_media_all_items_shortcode( $atts ){
+    $settings = sell_media_get_plugin_options();
+
     global $paged;
     if ( get_query_var('paged') ) {
         $paged = get_query_var('paged');
@@ -108,11 +110,11 @@ function sell_media_all_items_shortcode( $atts ){
     } else {
         $paged = 1;
     }
-    $settings = sell_media_get_plugin_options();
+
     extract( shortcode_atts( array(
         'collection' => '',
         'columns' => '3',
-        'show' => -1
+        'show' => get_option( 'posts_per_page' )
         ), $atts )
     );
     //$class = ( $columns ) ? 'sell-media-grid sell-media-grid-' . $columns : 'sell-media-grid';
@@ -133,12 +135,15 @@ function sell_media_all_items_shortcode( $atts ){
             'paged' => $paged
         );
     }
-    $wp_query = null;
 
+    $wp_query = null;
     $wp_query = new WP_Query();
     $wp_query->query( $args );
+
     ob_start(); ?>
+
     <?php if ( $wp_query->have_posts() ) : ?>
+
     <div class="sell-media">
         <div class="sell-media-grid-container">
             <?php $i = 0; ?>
@@ -155,9 +160,12 @@ function sell_media_all_items_shortcode( $atts ){
                 </div>
             <?php //endforeach; ?>
             <?php endwhile;  wp_reset_query(); $args = null; ?>
-            <?php sell_media_pagination_filter( $wp_query->max_num_pages ); ?>
+
+            <?php if ( ! is_front_page() && is_main_query() ) sell_media_pagination_filter( $wp_query->max_num_pages ); ?>
+
         </div><!-- .sell-media-grid-container -->
     </div><!-- #sell-media-shortcode-all .sell_media -->
+
     <?php endif; ?>
     <?php return ob_get_clean();
 }
