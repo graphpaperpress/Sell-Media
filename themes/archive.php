@@ -110,7 +110,6 @@ $settings = sell_media_get_plugin_options();
                     <?php while ( have_posts() ) : the_post(); $i++; ?>
                         <?php sell_media_content_loop( $post->ID, $i ); ?>
                     <?php endwhile; ?>
-                    <?php sell_media_pagination_filter(); ?>
                 <?php else : ?>
                     <h2><?php _e( 'Nothing Found', 'sell_media' ); ?></h2>
                     <p><?php _e( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ); ?>
@@ -120,6 +119,7 @@ $settings = sell_media_get_plugin_options();
             <?php endif; ?><!-- show child terms check -->
 
             </div><!-- .sell-media-grid-container -->
+            <?php sell_media_pagination_filter(); ?>
         </div><!-- #content -->
     </div><!-- #sell_media-single .sell_media -->
 

@@ -309,7 +309,8 @@ table.sell-media-products {
 }
 .sell-media-pagination-container {
   clear: both;
-  text-align: center
+  margin: 3em auto;
+  text-align: center;
 }
 .sell-media-pagination-container .page-numbers {
   padding: 0 3px;
