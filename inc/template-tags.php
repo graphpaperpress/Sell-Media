@@ -190,7 +190,7 @@ function sell_media_plugin_credit() {
     $settings = sell_media_get_plugin_options();
 
     if ( $settings->plugin_credit ) {
-        printf( __( 'Photo cart by <a href="%1$s" title="Photo cart">%2$s</a>', 'sell_media' ), 'http://graphpaperpress.com/plugins/sell-media/', 'Sell Media' );
+        printf( __( '<span id="sell-media-credit" class="sell-media-credit">Photo cart by <a href="%1$s" title="Photo cart">%2$s</a></span>', 'sell_media' ), 'http://graphpaperpress.com/plugins/sell-media/', 'Sell Media' );
     }
 }
 
