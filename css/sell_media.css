@@ -799,7 +799,7 @@ input.sell-media-search-text[type=text] {
     border-radius: 50%;
 }
 .checkout-price {
-   color: green;
+   font-weight: bold;
 }
 
 /*= Media queries
