@@ -374,8 +374,11 @@ jQuery(document).ready(function($){
     // Lightbox menu
     $('<span class="lightbox-counter">' + lightbox_data.length + '</span>').appendTo('.lightbox-menu a');
 
-    // Checkout menu
-    $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-menu a');
+    // Checkout total menu
+    $('(<span class="sellMediaCart_total checkout-price">0</span>)').appendTo('.checkout-total a');
+
+    // Checkout qty menu
+    $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
 
     sellMediaCart({
         shippingCustom: function(){

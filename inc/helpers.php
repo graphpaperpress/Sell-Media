@@ -115,10 +115,17 @@ function sell_media_nav_menu_css_class( $classes, $item ){
             $classes[] = 'lightbox-menu';
         }
         if ( $item->object_id == $settings->checkout_page ){
-            $classes[] = 'checkout-menu';
+            if ( in_array( 'total', $item->classes ) ) {
+                $classes[] = 'checkout-total';
+            } else {
+                $classes[] = 'checkout-qty';
+            }
         }
     }
     return $classes;
+    // echo '<pre>';
+    // print_r($item);
+    // echo '</pre>';
 }
 add_filter( 'nav_menu_css_class', 'sell_media_nav_menu_css_class', 10, 2 );
 

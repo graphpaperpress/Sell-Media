@@ -780,7 +780,8 @@ input.sell-media-search-text[type=text] {
 /*= Lightbox & Checkout counters
 -------------------------------------------------------------- */
 .lightbox-counter,
-.checkout-counter {
+.checkout-counter,
+.checkout-price {
     margin-left: 5px;
 }
 .sell-media-label,
@@ -796,6 +797,9 @@ input.sell-media-search-text[type=text] {
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: 50%;
+}
+.checkout-price {
+   color: green;
 }
 
 /*= Media queries
