@@ -374,6 +374,9 @@ jQuery(document).ready(function($){
     // Lightbox menu
     $('<span class="lightbox-counter">' + lightbox_data.length + '</span>').appendTo('.lightbox-menu a');
 
+    // Checkout menu
+    $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-menu a');
+
     sellMediaCart({
         shippingCustom: function(){
             var items = JSON.parse(localStorage.getItem("sellMediaCart_items"));

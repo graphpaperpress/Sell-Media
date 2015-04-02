@@ -777,23 +777,25 @@ input.sell-media-search-text[type=text] {
     clear: both;
 }
 
-/*= Lightbox
+/*= Lightbox & Checkout counters
 -------------------------------------------------------------- */
-.lightbox-counter {
-    margin-left: 4px;
+.lightbox-counter,
+.checkout-counter {
+    margin-left: 5px;
 }
 .sell-media-label,
-.lightbox-counter {
+.lightbox-counter,
+.checkout-counter {
     display: inline;
-    padding: .2em .6em .3em;
-    font-size: 75%;
+    padding: 3px 7px;
+    font-size: 10px;
     line-height: 1;
     color: #fff;
     background: #d9534f;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: .25em;
+    border-radius: 50%;
 }
 
 /*= Media queries

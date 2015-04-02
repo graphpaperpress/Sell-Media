@@ -104,6 +104,25 @@ function sell_media_body_class( $classes ) {
 add_filter( 'body_class', 'sell_media_body_class' );
 
 /**
+ * Add custom class to nav menu items
+ */
+function sell_media_nav_menu_css_class( $classes, $item ){
+    $settings = sell_media_get_plugin_options();
+
+    if ( $item->object == 'page' ){
+        $template = get_post_meta( $item->object_id, '_wp_page_template', true );
+        if ( $template == 'page-lightbox.php' || $item->title == 'lightbox' ) {
+            $classes[] = 'lightbox-menu';
+        }
+        if ( $item->object_id == $settings->checkout_page ){
+            $classes[] = 'checkout-menu';
+        }
+    }
+    return $classes;
+}
+add_filter( 'nav_menu_css_class', 'sell_media_nav_menu_css_class', 10, 2 );
+
+/**
  * Builds html select field
  *
  * @since 0.1
