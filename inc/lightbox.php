@@ -20,7 +20,7 @@ function sell_media_lightbox_shortcode() {
     $html .= '</div>';
     $html .= '</div>';
 
-    return $html;
+    return apply_filters( 'sell_media_lightbox', $html );
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
 
@@ -98,7 +98,8 @@ function sell_media_update_lightbox(){
         // generate the response
         $response = json_encode(
             array(
-                'post_id' => $id
+                'post_id' => $id,
+                'count' => count( $cookie )
             )
         );
 

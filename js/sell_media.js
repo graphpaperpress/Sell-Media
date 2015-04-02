@@ -118,8 +118,6 @@ jQuery(document).ready(function($){
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
 
-    // console.log(sell_media);
-
     // Cart config
     sellMediaCart({
         checkout: {
@@ -136,6 +134,16 @@ jQuery(document).ready(function($){
         cartStyle: sell_media.cart_style,
         taxRate: parseFloat(sell_media.tax),
         currency: sell_media.currency_symbol,
+        shippingCustom: function(){
+            var items = JSON.parse(localStorage.getItem("sellMediaCart_items"));
+            var shipping_cost = false;
+            sellMediaCart.each( items, function (item) {
+                if( "print" == item.type ) {
+                    shipping_cost = true;
+                }
+            });
+            return shipping_cost;
+        },
         cartColumns: [{
             view: "image",
             attr: "image",
@@ -298,6 +306,7 @@ jQuery(document).ready(function($){
 
     });
 
+    // Add to lightbox on click
     $( '.add-to-lightbox' ).on( 'click', function( e ) {
 
         var data = {
@@ -311,97 +320,31 @@ jQuery(document).ready(function($){
             data: data,
             success: function(msg){
                 $('#sell-media-lightbox-content').html(msg);
-                console.log(data);
-                //$(this).removeClass('add-to-lightbox').addClass('remove-from-lightbox');
+                $('.lightbox-counter').text(msg.count);
+                //console.log(msg);
             }
         });
 
     });
 
-    // // Lightbox add
-    // if($('.add-to-lightbox').length) {
-
-    //     // set variables for use below
-    //     var selector = '.add-to-lightbox';
-
-    //     // check if item exits in lightbox already, add class
-    //     $.each(lightbox_data, function(i, item) {
-    //         var unique_selector = selector + '[data-id=' + item + ']';
-    //         if (lightbox_data.indexOf(item) > -1) {
-    //             $(unique_selector).addClass('saved-to-lightbox');
-    //             $(unique_selector).text(sell_media.remove_text);
-    //         }
-    //     });
-
-    //     // add or remove items from lightbox on click
-    //     $(selector).on('click',function() {
-    //         var value = $(this).data('id');
-    //         if ($(this).hasClass('saved-to-lightbox')) {
-    //             $(this).text(sell_media.save_text);
-    //             // delete the item
-    //             $.each(lightbox_data, function(i, item) {
-    //                 if (item == value) {
-    //                     lightbox_data.splice($.inArray(value, lightbox_data),1);
-    //                     var count = $('.lightbox-menu .lightbox-counter').html();
-    //                     count = parseInt(count) - 1;
-    //                     $('.lightbox-menu .lightbox-counter').html(count);
-    //                 }
-    //             });
-    //             $(this).removeClass('saved-to-lightbox');
-    //         } else {
-    //             $(this).text(sell_media.remove_text);
-    //             lightbox_data.push(value);
-    //             var count = $('.lightbox-menu .lightbox-counter').html();
-    //             count = parseInt(count) + 1;
-    //             $('.lightbox-menu .lightbox-counter').html(count);
-    //             $(this).addClass('saved-to-lightbox');
-    //         }
-
-    //         // set the lightbox
-    //         localStorage.setItem(key, JSON.stringify(lightbox_data));
-    //         return false;
-    //     });
-    // }
-
-    // // Lightbox remove
-    // $('#sell-media-lightbox-content').on('click', '.remove-lightbox', function() {
-    //     _this = $(this);
-    //     var value = $(this).data('id');
-    //     $.each(lightbox_data, function(i, item) {
-    //         if (item == value) {
-    //             _this.parents('.sell-media-grid').remove();
-    //             lightbox_data.splice($.inArray(value, lightbox_data),1);
-    //             var count = $('.lightbox-menu .lightbox-counter').html();
-    //             count = parseInt(count) - 1;
-    //             $('.lightbox-menu .lightbox-counter').html(count);
-    //         }
-    //     });
-    //     // console.log(lightbox_data);
-    //     // update the lightbox
-    //     localStorage.setItem(key, JSON.stringify(lightbox_data));
-    //     return false;
-    // });
+    // Count lightbox
+    function countJson() {
+        var json = $.cookie('sell_media_lightbox');
+        var data = $.parseJSON( json );
+        var keys = [];
+        $.each(data, function(key, value) {
+            keys.push(key);
+        });
+        return keys.length;
+    }
 
     // Lightbox menu
-    //$('<span class="lightbox-counter">' + lightbox_data.length + '</span>').appendTo('.lightbox-menu a');
+    $('<span class="lightbox-counter">' + countJson() + '</span>').appendTo('.lightbox-menu a');
 
     // Checkout total menu
     $('(<span class="sellMediaCart_total checkout-price">0</span>)').appendTo('.checkout-total a');
 
     // Checkout qty menu
     $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
-
-    sellMediaCart({
-        shippingCustom: function(){
-            var items = JSON.parse(localStorage.getItem("sellMediaCart_items"));
-            var shipping_cost = false;
-            sellMediaCart.each( items, function (item) {
-                if( "print" == item.type ) {
-                    shipping_cost = true;
-                }
-            });
-            return shipping_cost;
-        }
-    });
 
 });
