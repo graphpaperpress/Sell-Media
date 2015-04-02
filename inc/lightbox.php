@@ -13,46 +13,101 @@
  * @since 1.9.3
  */
 function sell_media_lightbox_shortcode() {
-    wp_enqueue_script( 'sell_media_lightbox', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_lightbox.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-    $html = '<div id="sell-media-lightbox-content" class="sell-media">' . __( "Loading...", "sell_media" ) . '</div>';
+
+    $html  = '<div id="sell-media-lightbox-content" class="sell-media">';
+    $html .= '<div class="sell-media-grid-container">';
+    $html .= sell_media_lightbox_query();
+    $html .= '</div>';
+    $html .= '</div>';
+
     return $html;
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
 
 
 /**
- * Ajax callback to list items in lightbox
+ * Query lightbox items
  */
-function sell_media_lightbox_generator() {
-    $html = null;
-    $lightbox_ids = json_decode( $_POST['lightbox_ids'] );
-    if ( ! empty( $lightbox_ids ) ) {
+function sell_media_lightbox_query() {
+    $html = '';
+
+    // Check if items in lightbox
+    if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
+
+        // Decode the lightbox array of IDs since they're encoded
+        $ids = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+
+        // Setup query args
         $args = array(
             'posts_per_page' => -1,
             'post_type' => 'sell_media_item',
-            'post__in' => $lightbox_ids
+            'post__in' => (array) $ids
         );
-        $i = 0;
-        $thumbSize = ( has_image_size('sell_media_item' ) ) ? 'sell_media_item' : 'medium';
-        $posts = New WP_Query( $args );
-        if ( $posts->posts ) {
 
-            $html .= '<div class="sell-media-grid-container">';
+        $i = 0;
+        $posts = new WP_Query( $args );
+
+        if ( $posts->posts ) {
 
             foreach( $posts->posts as $post ) {
                 $i++;
                 $html .= sell_media_content_loop( $post->ID, $i );
             }
 
-            $html .= '</div>';
-
         }
-        echo $html;
         $i = 0;
+
     } else {
-        _e( 'Nothing saved in lightbox.', 'sell_media' );
+        $html = __( 'Nothing saved in lightbox.', 'sell_media' );
     }
-    die;
+
+    return $html;
+
+    //die;
 }
-add_action( 'wp_ajax_sell_media_lightbox', 'sell_media_lightbox_generator' );
-add_action( 'wp_ajax_nopriv_sell_media_lightbox', 'sell_media_lightbox_generator' );
+add_action( 'wp_ajax_sell_media_lightbox', 'sell_media_lightbox_query' );
+add_action( 'wp_ajax_nopriv_sell_media_lightbox', 'sell_media_lightbox_query' );
+
+/**
+ * Update lightbox
+ */
+function sell_media_update_lightbox(){
+
+    // id is sent over in ajax request
+    if ( isset( $_POST['id'] ) ) {
+        $id = $_POST['id'];
+
+        // check if cookie already exists
+        if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
+            $ids = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+
+            // make sure the id isn't already saved in lightbox
+            if ( ! in_array( $id, $ids ) ) {
+                $ids[] = $id;
+                $cookie = $ids;
+            }
+        // cookie doesn't already exist, so set cookie to the id
+        } else {
+            $cookie = array( $id );
+        }
+
+        // set cookie
+        if ( $cookie )
+            setcookie( 'sell_media_lightbox', json_encode( $cookie ), time()+3600*24*365,'/' );
+
+        // generate the response
+        $response = json_encode(
+            array(
+                'post_id' => $id
+            )
+        );
+
+        // JSON header
+        header( 'Content-type: application/json' );
+        echo $response;
+        die();
+    }
+
+}
+add_action( 'wp_ajax_sell_media_update_lightbox', 'sell_media_update_lightbox' );
+add_action( 'wp_ajax_nopriv_sell_media_update_lightbox', 'sell_media_update_lightbox' );

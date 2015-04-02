@@ -143,16 +143,18 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 function sell_media_content_loop( $post_id, $i ){
     $class = ( $i %3 == 0 ) ? ' end' : '';
 
-    echo '<div class="sell-media-grid ' . $class . '">';
-    echo '<div class="item-inner">';
-    echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
-    echo '<span class="item-overlay">';
-    echo '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-    sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ) );
-    do_action( 'sell_media_item_overlay', $post_id );
-    echo '</span>';
-    echo '</div>';
-    echo '</div>';
+    $html  = '<div class="sell-media-grid' . $class . '">';
+    $html .= '<div class="item-inner">';
+    $html .= '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
+    $html .= '<span class="item-overlay">';
+    $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
+    $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
+    $html .= do_action( 'sell_media_item_overlay', $post_id );
+    $html .= '</span>';
+    $html .= '</div>';
+    $html .= '</div>';
+
+    return apply_filters( 'sell_media_content_loop', $html );
 }
 
 

@@ -298,81 +298,92 @@ jQuery(document).ready(function($){
 
     });
 
-    // Lightbox variables
-    var key = 'sellMediaLightbox';
-    // get localStorage object, otherwise set to empty array
-    if (localStorage && localStorage.getItem(key)) {
-      var lightbox_data = JSON.parse(localStorage.getItem(key));
-    } else {
-      var lightbox_data = new Array();
-    }
+    $( '.add-to-lightbox' ).on( 'click', function( e ) {
 
-    // Lightbox add
-    if($('.add-to-lightbox').length) {
+        var data = {
+            action: 'sell_media_update_lightbox',
+            id: $(this).data('id')
+        };
 
-        // set variables for use below
-        var selector = '.add-to-lightbox';
-
-        // check if item exits in lightbox already, add class
-        $.each(lightbox_data, function(i, item) {
-            var unique_selector = selector + '[data-id=' + item + ']';
-            if (lightbox_data.indexOf(item) > -1) {
-                $(unique_selector).addClass('saved-to-lightbox');
-                $(unique_selector).text(sell_media.remove_text);
+        $.ajax({
+            type: 'POST',
+            url: sell_media.ajaxurl,
+            data: data,
+            success: function(msg){
+                $('#sell-media-lightbox-content').html(msg);
+                console.log(data);
+                //$(this).removeClass('add-to-lightbox').addClass('remove-from-lightbox');
             }
         });
 
-        // add or remove items from lightbox on click
-        $(selector).on('click',function() {
-            var value = $(this).data('id');
-            if ($(this).hasClass('saved-to-lightbox')) {
-                $(this).text(sell_media.save_text);
-                // delete the item
-                $.each(lightbox_data, function(i, item) {
-                    if (item == value) {
-                        lightbox_data.splice($.inArray(value, lightbox_data),1);
-                        var count = $('.lightbox-menu .lightbox-counter').html();
-                        count = parseInt(count) - 1;
-                        $('.lightbox-menu .lightbox-counter').html(count);
-                    }
-                });
-                $(this).removeClass('saved-to-lightbox');
-            } else {
-                $(this).text(sell_media.remove_text);
-                lightbox_data.push(value);
-                var count = $('.lightbox-menu .lightbox-counter').html();
-                count = parseInt(count) + 1;
-                $('.lightbox-menu .lightbox-counter').html(count);
-                $(this).addClass('saved-to-lightbox');
-            }
-
-            // set the lightbox
-            localStorage.setItem(key, JSON.stringify(lightbox_data));
-            return false;
-        });
-    }
-
-    // Lightbox remove
-    $('#sell-media-lightbox-content').on('click', '.remove-lightbox', function() {
-        _this = $(this);
-        var value = $(this).data('id');
-        $.each(lightbox_data, function(i, item) {
-            if (item == value) {
-                _this.parents('.sell-media-grid').remove();
-                lightbox_data.splice($.inArray(value, lightbox_data),1);
-                var count = $('.lightbox-menu .lightbox-counter').html();
-                count = parseInt(count) - 1;
-                $('.lightbox-menu .lightbox-counter').html(count);
-            }
-        });
-        // console.log(lightbox_data);
-        // update the lightbox
-        localStorage.setItem(key, JSON.stringify(lightbox_data));
-        return false;
     });
 
+    // // Lightbox add
+    // if($('.add-to-lightbox').length) {
+
+    //     // set variables for use below
+    //     var selector = '.add-to-lightbox';
+
+    //     // check if item exits in lightbox already, add class
+    //     $.each(lightbox_data, function(i, item) {
+    //         var unique_selector = selector + '[data-id=' + item + ']';
+    //         if (lightbox_data.indexOf(item) > -1) {
+    //             $(unique_selector).addClass('saved-to-lightbox');
+    //             $(unique_selector).text(sell_media.remove_text);
+    //         }
+    //     });
+
+    //     // add or remove items from lightbox on click
+    //     $(selector).on('click',function() {
+    //         var value = $(this).data('id');
+    //         if ($(this).hasClass('saved-to-lightbox')) {
+    //             $(this).text(sell_media.save_text);
+    //             // delete the item
+    //             $.each(lightbox_data, function(i, item) {
+    //                 if (item == value) {
+    //                     lightbox_data.splice($.inArray(value, lightbox_data),1);
+    //                     var count = $('.lightbox-menu .lightbox-counter').html();
+    //                     count = parseInt(count) - 1;
+    //                     $('.lightbox-menu .lightbox-counter').html(count);
+    //                 }
+    //             });
+    //             $(this).removeClass('saved-to-lightbox');
+    //         } else {
+    //             $(this).text(sell_media.remove_text);
+    //             lightbox_data.push(value);
+    //             var count = $('.lightbox-menu .lightbox-counter').html();
+    //             count = parseInt(count) + 1;
+    //             $('.lightbox-menu .lightbox-counter').html(count);
+    //             $(this).addClass('saved-to-lightbox');
+    //         }
+
+    //         // set the lightbox
+    //         localStorage.setItem(key, JSON.stringify(lightbox_data));
+    //         return false;
+    //     });
+    // }
+
+    // // Lightbox remove
+    // $('#sell-media-lightbox-content').on('click', '.remove-lightbox', function() {
+    //     _this = $(this);
+    //     var value = $(this).data('id');
+    //     $.each(lightbox_data, function(i, item) {
+    //         if (item == value) {
+    //             _this.parents('.sell-media-grid').remove();
+    //             lightbox_data.splice($.inArray(value, lightbox_data),1);
+    //             var count = $('.lightbox-menu .lightbox-counter').html();
+    //             count = parseInt(count) - 1;
+    //             $('.lightbox-menu .lightbox-counter').html(count);
+    //         }
+    //     });
+    //     // console.log(lightbox_data);
+    //     // update the lightbox
+    //     localStorage.setItem(key, JSON.stringify(lightbox_data));
+    //     return false;
+    // });
+
     // Lightbox menu
-    $('<span class="lightbox-counter">' + lightbox_data.length + '</span>').appendTo('.lightbox-menu a');
+    //$('<span class="lightbox-counter">' + lightbox_data.length + '</span>').appendTo('.lightbox-menu a');
 
     // Checkout total menu
     $('(<span class="sellMediaCart_total checkout-price">0</span>)').appendTo('.checkout-total a');
