@@ -597,6 +597,7 @@ input.sell-media-search-text[type=text] {
   display: inline-block;
   font-size: 12px;
   margin-right: 10px;
+  padding: 0;
 }
 .sell-media-search-field select {
   display: inline-block;
@@ -608,7 +609,7 @@ input.sell-media-search-text[type=text] {
 .sell-media-search-close {
   color: #222;
   display: none;
-  float: right;
+  float: right !important;
   text-decoration: none !important;
 }
 .sell-media-search-close:hover {

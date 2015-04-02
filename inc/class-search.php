@@ -282,7 +282,7 @@ Class SellMediaSearch {
 
             // Exact match field
             $html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-exact-match">';
-            $html .= '<label for="sentence">' . __( 'Exact phrase match', 'sell_media' ) . '</label>';
+            $html .= '<label for="sentence" id="sell-media-search-exact-match-desc" class="sell-media-search-exact-match-desc sell-media-tooltip" data-tooltip="For example, limit to results only containing the exact phrase \'New York Yankees\' rather than results containing any of the three words \'New\', \'York\' and \'Yankees\'.">' . __( 'Exact phrase match (?)', 'sell_media' ) . '</label>';
             $html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
             $html .= '</div>';
 

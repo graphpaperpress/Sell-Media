@@ -45,14 +45,17 @@ jQuery(document).ready(function($){
 
     });
 
+    console.log($('#sell_media_product_type_fieldset').length);
+
     /**
      * Check the required fields and change state of add to cart button
      */
     function required_fields(){
-        if ( $('#sell_media_product_type_fieldset').length && $('#sell_media_product_type_fieldset').length == 0 && $('#sell_media_download_wrapper #sell_media_download_license_fieldset select').length == 0 ) {
-            $('.item_add').prop('disabled', false);
-        } else {
+        // if size,license, or type (print/download) fields exists, disable add button
+        if ( $('#sell_media_download_size_fieldset').length || $('#sell_media_download_license_fieldset').length || $('#sell_media_product_type').length ) {
             $('.item_add').prop('disabled', true);
+        } else {
+            $('.item_add').prop('disabled', false);
         }
 
         var required = $('#sell-media-dialog-box [required]');
