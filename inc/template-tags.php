@@ -142,7 +142,7 @@ function sell_media_content_loop( $post_id, $i ){
     $html .= '<span class="item-overlay">';
     $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
     $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
-    $html .= do_action( 'sell_media_item_overlay', $post_id );
+    $html .= apply_filters( 'sell_media_item_overlay', $output='', $post_id );
     $html .= '</span>';
     $html .= '</div>';
     $html .= '</div>';
