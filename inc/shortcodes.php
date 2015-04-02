@@ -154,7 +154,7 @@ function sell_media_all_items_shortcode( $atts ){
                         <span class="item-overlay">
                             <h3><a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php echo get_the_title( get_the_ID() ); ?></a></h3>
                             <?php sell_media_item_buy_button( get_the_ID(), 'text', __( 'Buy' ) ); ?>
-                            <?php do_action( 'sell_media_item_overlay' ); ?>
+                            <?php do_action( 'sell_media_item_overlay', $post->ID ); ?>
                         </span>
                     </div>
                 </div>

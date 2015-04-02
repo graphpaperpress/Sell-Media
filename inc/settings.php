@@ -431,7 +431,7 @@ function sell_media_init_settings(){
             "tab" => "sell_media_payment_settings",
             "name" => "paypal_email",
             "title" => __("PayPal Email Address", "sell_media"),
-            'description' => sprintf( __( 'Add the email address associated with your PayPal account above. %1$s %2$s. Your listener URL is %3$s (you will need this when completing PayPal setup)'), '<br /><br /><strong>'.__('REQUIRED ACTIONS', 'sell_media').'</strong><br />', '<a href="http://graphpaperpress.com/docs/sell-media/#paypal" target="_blank">Complete these steps for PayPal setup</a>', site_url( '?sell_media-listener=IPN' ) ),
+            'description' => __( 'Add the email address associated with your PayPal account above.', 'sell_media' ),
             "default" => "",
             "section" => "payment_section_1",
             "since" => "1.0",

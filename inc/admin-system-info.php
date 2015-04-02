@@ -6,19 +6,9 @@
  * @since 1.9.14
  * @return html
  */
-function sell_media_system_info_callback_fn(){
-
-    $current_page = admin_url('edit.php?post_type=download&page=sell_media_reports');?>
+function sell_media_system_info_callback_fn(){ ?>
     <div class="wrap">
         <?php screen_icon(); ?>
-        <h2><?php _e( 'Troubleshooting', 'sell_media' ); ?></h2>
-        <h3>REQUIREMENTS</h3>
-        <ol>
-            <li>You must have the GD Image Library installed on your server. You most likely do. If not, ask your web host to install it.
-You must have a PayPal account to accept online payments. You can also use Stripe.</li>
-            <li>You must have the cURL PHP extension installed on your server. If payments aren't being correctly retrieved from PayPal or Stripe, this is likely the problem.</li>
-        </ol>
-
         <h2><?php _e( 'System Info', 'sell_media' ); ?></h2>
         <textarea readonly="readonly" onclick="this.focus(); this.select()" id="system-info-textarea" name="sell-media-sysinfo" title="To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).">
             <?php echo sell_media_get_system_info(); ?>
@@ -56,7 +46,7 @@ function sell_media_get_system_info() {
         $theme      = $theme_data->Name . ' ' . $theme_data->Version;
     }
 
-    $return  = '### Begin System Info ###' . "\n\n";
+    $return = '### Begin System Info ###' . "\n\n";
 
     // Start with the basics...
     $return .= '-- Site Info' . "\n\n";
@@ -111,27 +101,12 @@ function sell_media_get_system_info() {
     $return .= 'Memory Limit:             ' . WP_MEMORY_LIMIT . "\n";
     $return .= 'Registered Post Stati:    ' . implode( ', ', get_post_stati() ) . "\n";
 
-    // Sell Media configuration
+    // Sell Media settings
     $return .= "\n" . '-- Sell Media Configuration' . "\n\n";
     $return .= 'Version:                  ' . SELL_MEDIA_VERSION . "\n";
-    $return .= 'Test Mode:                ' . ( sell_media_test_mode() ? "Enabled\n" : "Disabled\n" );
-    $return .= 'Currency Code:            ' . $settings->currency . "\n";
-    $return .= 'Post Type Slug:           ' . $settings->post_type_slug . "\n";
-
-    // Sell Media pages
-    $return .= "\n" . '-- Sell Media Page Configuration' . "\n\n";
-    $return .= 'Checkout Page:            ' . ( ! empty ( $settings->checkout_page ) ? get_permalink( $settings->checkout_page ) . "\n" : "Unset\n" );
-    $return .= 'Thanks Page:             ' . ( ! empty( $settings->thanks_page ) ? get_permalink( $settings->thanks_page ) . "\n" : "Unset\n" );
-    $return .= 'Dashboard Page:             ' . ( ! empty( $settings->dashboard_page ) ? get_permalink( $settings->dashboard_page ) . "\n" : "Unset\n" );
-    $return .= 'Login Page:             ' . ( ! empty( $settings->login_page ) ? get_permalink( $settings->login_page ) . "\n" : "Unset\n" );
-    $return .= 'Search Page:             ' . ( ! empty( $settings->search_page ) ? get_permalink( $settings->search_page ) . "\n" : "Unset\n" );
-
-
-    // Sell Media Taxes
-    $return .= "\n" . '-- Sell Media Tax Configuration' . "\n\n";
-    $return .= 'Taxes:                    ' . ( $settings->tax ? "Enabled\n" : "Disabled\n" );
-    $return .= 'Tax Rate:                 ' . $settings->tax_rate . "\n";
-
+    if ( $settings ) foreach ( $settings as $k => $v ) {
+        $return .= $k . ': ' . $v . "\n";
+    }
 
     // Must-use plugins
     $muplugins = get_mu_plugins();
@@ -209,6 +184,7 @@ function sell_media_get_system_info() {
 
     // PHP extensions etc
     $return .= "\n" . '-- PHP Extensions' . "\n\n";
+    $return .= 'GD:                       ' . ( function_exists( 'gd_info' ) ? 'Supported' : 'Not Supported' ) . "\n";
     $return .= 'cURL:                     ' . ( function_exists( 'curl_init' ) ? 'Supported' : 'Not Supported' ) . "\n";
     $return .= 'fsockopen:                ' . ( function_exists( 'fsockopen' ) ? 'Supported' : 'Not Supported' ) . "\n";
     $return .= 'SOAP Client:              ' . ( class_exists( 'SoapClient' ) ? 'Installed' : 'Not Installed' ) . "\n";
