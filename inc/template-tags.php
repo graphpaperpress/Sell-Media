@@ -90,44 +90,37 @@ function sell_media_get_filetype( $post_id=null ){
 function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 
     $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-    // legacy function passed the $attachment_id into sell_media_item_icon
-    // that means the above get_post_meta wouldn't exist
-    // if that's the case, than we assume the $post_id is actually the $attachment_id
-    if ( empty( $attachment_id ) ){
-        $attachment_id = $post_id;
-    }
 
-    // check if featured image is set
+    // check if featured image exists
     if ( '' != get_the_post_thumbnail( $post_id ) ) {
         $image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ) ) );
+
+    // check if attachment thumbnail exists
+    } elseif ( '' != wp_get_attachment_image( $attachment_id ) ) {
+        $image = wp_get_attachment_image( $attachment_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ) ) );
+
+    // use default WP icons
     } else {
         $mime_type = get_post_mime_type( $attachment_id );
         switch ( $mime_type ) {
             case 'image/jpeg':
             case 'image/png':
             case 'image/gif':
-                $image_attr = wp_get_attachment_image_src( $attachment_id, $size );
-                $image = $image_attr[0]; break;
+                $src = wp_mime_type_icon( 'image/jpeg' ); break;
             case 'video/mpeg':
             case 'video/mp4':
             case 'video/quicktime':
-                $image = wp_mime_type_icon( 'video/mpeg' ); break;
+                $src = wp_mime_type_icon( 'video/mpeg' ); break;
             case 'text/csv':
             case 'text/pdf':
             case 'text/plain':
             case 'text/xml':
-                $image = wp_mime_type_icon( 'application/pdf' ); break;
+                $src = wp_mime_type_icon( 'application/pdf' ); break;
             default:
-                $image = wp_mime_type_icon(); break;
+                $src = wp_mime_type_icon(); break;
         }
 
-        $medium_url = wp_get_attachment_image_src( $attachment_id, 'medium' );
-        if ( $medium_url )
-            $medium_url = $medium_url[0];
-        else
-            $medium_url = null;
-
-        $image =  '<img src="' . $image . '" class="'. apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $medium_url. '" data-sell_media_large_url="' . $image . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+        $image =  '<img src="' . $src . '" class="'. apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . $src . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
     }
 
     if ( $echo )
@@ -149,7 +142,7 @@ function sell_media_content_loop( $post_id, $i ){
     $html .= '<span class="item-overlay">';
     $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
     $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
-    do_action( 'sell_media_item_overlay', $post_id );
+    $html .= do_action( 'sell_media_item_overlay', $post_id );
     $html .= '</span>';
     $html .= '</div>';
     $html .= '</div>';
@@ -171,7 +164,7 @@ function sell_media_item_min_price( $post_id=null ){
         $settings = sell_media_get_plugin_options();
         $price = $settings->default_price;
     }
-    if( isset( $value ) && "on" == $value ) {
+    if ( isset( $value ) && "on" == $value ) {
         return "0.00";
     } else {
         return $price;
