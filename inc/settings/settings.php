@@ -596,6 +596,7 @@ function sell_media_above_settings_links(){
     echo '<li><a href="' . $plugin_data['PluginURI'] . '" target="_blank">' . $plugin_data['Name'] . '</a></li>';
     echo '<li>' . __( 'Version: ', 'sell_media' ) . $plugin_data['Version'] . '</li>';
     echo '<li><a href="http://graphpaperpress.com/docs/sell-media/" target="_blank">' . __( 'Documentation', 'sell_media' ) . '</a></li>';
+    echo '<li><a href="' . admin_url('admin.php') . '?page=sell_media_system_info' . '">' . __( 'System Info', 'sell_media' ) . '</a></li>';
     echo '</ul>';
     echo '<br class="clear">';
     echo '</div>';
