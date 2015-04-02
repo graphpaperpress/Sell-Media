@@ -45,13 +45,11 @@ jQuery(document).ready(function($){
 
     });
 
-    console.log($('#sell_media_product_type_fieldset').length);
-
     /**
      * Check the required fields and change state of add to cart button
      */
     function required_fields(){
-        // if size,license, or type (print/download) fields exists, disable add button
+        // if size, license, or type (print/download) fields exists, disable add button
         if ( $('#sell_media_download_size_fieldset').length || $('#sell_media_download_license_fieldset').length || $('#sell_media_product_type').length ) {
             $('.item_add').prop('disabled', true);
         } else {
