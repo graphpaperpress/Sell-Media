@@ -91,6 +91,13 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 
     $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
+    // legacy function passed the $attachment_id into sell_media_item_icon
+    // that means the above get_post_meta wouldn't exist
+    // if that's the case, than we assume the $post_id is actually the $attachment_id
+    if ( empty( $attachment_id ) ){
+        $attachment_id = $post_id;
+    }
+
     // check if featured image exists
     if ( '' != get_the_post_thumbnail( $post_id ) ) {
         $image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ) ) );
