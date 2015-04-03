@@ -156,7 +156,7 @@ function sell_media_build_options( $taxonomy=null ) {
 
     /** All Terms */
     $args = array(
-        'orderby' => 'name',
+        'orderby' => 'id',
         'hide_empty' => false
          );
 
@@ -222,7 +222,7 @@ function sell_media_build_input( $taxonomy=null ) {
 
     /** All Terms */
     $args = array(
-        'orderby' => 'name',
+        'orderby' => 'id',
         'hide_empty' => false
          );
 
@@ -615,7 +615,8 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
         'type' => 'sell_media_item',
         'hide_empty' => false,
         'parent' => $parent_price_group,
-        'taxonomy' => $taxonomy
+        'taxonomy' => $taxonomy,
+        'orderby' => 'id'
         );
 
     $price_groups = get_categories( $args );
