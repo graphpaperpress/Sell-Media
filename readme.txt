@@ -2,14 +2,14 @@
 
 Contributors: endortrails
 Donate link: http://graphpaperpress.com/plugins/sell-media/
-Tags: commerce, digital downloads, download, downloads, e-commerce, paypal, photography, sell digital, sell download, selling, sell photos, sell videos, sell media, stock photos
+Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
-Tested up to: 4.0
-Stable tag: 1.9.2
+Tested up to: 4.2
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Sell photos, prints, videos and pdf's online through WordPress in seconds. Built by creatives, for creatives.
+Sell photos, prints, videos and pdf's online through WordPress in seconds. Everything you need to sell your photography online.
 
 == Description ==
 
@@ -41,54 +41,44 @@ Take Sell Media to the next level with these powerful extensions:
 
 == Installation ==
 
+= Server Requirements =
+
+1. PHP 5.4 or higher
+2. CURL PHP extension
+3. GD PHP extension
+4. Original file uploads are protected automatically on Apache servers using .htaccess. If you are using an NGINX server, you'll need to add this to your sites configuration file:
+`location ~ /wp-content/uploads/sell_media {
+    rewrite / permanent;
+}`
+
 1. Activate the plugin.
 2. Visit Sell Media -> Settings and configure the options.
 3. Insert the **required Sell Media shortcodes** onto your preferred Pages (see FAQ section).
-4. Visit Sell Media -> Licenses and add or configure your default licenses for new uploads.
-5. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
+4. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
 
 = Configuration =
 
 Visit the official plugin [Documentation](http://graphpaperpress.com/docs/sell-media/) to learn how to setup and customize Sell Media
 
-= IMPORTANT: PayPal Setup =
-
-In order for PayPal to communicate with your site, you must do three things:
-
-1. Set your IPN in PayPal
-2. Enable Auto Return in PayPal
-3. Enable Payment Data Transfer in PayPal
-
-Setting your IPN in PayPal
-
-1. Login to your PayPal account.
-2. Mouse over the Profile menu option and then click on the Selling Tools menu option.
-3. Scroll down to "Getting paid and managing my risk" and click the Update link beside "Instant payment notifications".
-4. Paste your PayPal IPN URL onto that page in PayPal. Your PayPal IPN URL is located on the Sell Media Settings page.
-
-Enabling Auto Return in PayPal
-
-1. Log in to your PayPal account at https://www.paypal.com. The My Account Overview page appears.
-2. Click the Profile subtab. The Profile Summary page appears.
-3. Click the My Selling Tools link in the left column.
-4. Under the Selling Online section, click the Update link in the row for Website Preferences.
-5. Under Auto Return for Website Payments, click the On radio button to enable Auto Return.
-6. In the Return URL field, enter the URL to your Thanks Page. NOTE: PayPal checks the Return URL that you enter. If the URL is not properly formatted or cannot be validated, PayPal will not activate Auto Return.
-
-Enabling Payment Data Transfer in PayPal
-
-7. On the same page as you set your Auto Return url, find the Payment Data Transfer section and click the On radio button to enable Payment Data Transfer.
-8. Scroll to the bottom of the page, and click the Save button.
-
-PayPal is now ready to communicate with your website.
-
 == Frequently Asked Questions ==
 
+= Payments aren't showing up in Sell Media. Why? =
+
+Please visit the Add Media -> Settings -> Payments page and double check all of your settings.
+
+Next, double check that your server meets the server requirements (See the Installation page above)
+
+In some rare instances, we've found that web hosts actually have firewalls that block incoming pings from PayPal. This causes payments to not post. PayPal computers use IP ranges 66.211.*.* and 173.0.*.* and visit the IPN URL with NO User-Agent. Some web hosting companies have their servers set up to block incoming pings when the User-Agent is not explicitly set (as is the case with PayPal's IPN). In this case, you'll want to modify your .htaccess file to override user-agent blocking with these address ranges.
+
 = I have 5k+ photos I would like to sell, can Sell Media handle this? =
-* Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. That said, the number of images that can be bulk uploaded at once is largely related to server performance. If you are using a cheap, shared web host, then you will need to contact them and ask them to change [PHP settings] (http://php.net/manual/en/function.set-time-limit.php).
+
+Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. That said, the number of images that can be bulk uploaded at once is largely related to server performance. If you are using a cheap, shared web host, then you will need to contact them and ask them to change [PHP settings] (http://php.net/manual/en/function.set-time-limit.php).
 
 = My file is 500MB+ in size but users cannot download the file after purchasing? =
+
 Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
+
+We do offer an Amazon S3 extension which offloads to storage of all uploads, which might be useful: [View the extensions](http://graphpaperpress.com/downloads/category/extensions/).
 
 = What are shortcodes and how do I use them? =
 
@@ -100,7 +90,8 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 * **Search Form Shortcode** - (OPTIONAL) Used to display a search form exclusively for searching items for sale within Sell Media: `[sell_media_searchform]`
 * **All items shortcode** - (OPTIONAL) Displays all (or a certain collection) items in a grid view: `[sell_media_all_items collection="type-your-collection-slug-here" show="type-number-of-items-per-page"]`
 * **Download list shortcode** - (OPTIONAL) List logged in users downloads: `[sell_media_download_list]`
-
+* **Lightbox shortcode** - (OPTIONAL) Displays a page containing all items that visitors have added to their lightbox: `[sell_media_lightbox]`
+* **Login shortcode** – (OPTIONAL) Used to show a custom login form for your customers: `[sell_media_login_form]`
 
 = How do I show my checkout cart? =
 
@@ -113,10 +104,7 @@ Visit the Sell Media -> Add Product page and configure the page options. Click S
 
 = How do I show a search form for Sell Media items? =
 
-You have two options:
-
-1. Using Shortcode: Create a Page called "Search Media" and add this shortcode to it: `[sell_media_searchform]`
-2. Using a Template Tag: This function will call the custom Sell Media searchform: `<?php if ( class_exists( 'SellMediaSearch' ) ) echo Sell_Media()->search->form( $url ); ?>`. You must pass the URL to your Search Media page into the $url parameter, like this: `<?php if ( class_exists( 'SellMediaSearch' ) ) echo Sell_Media()->search->form( 'http://test.com/search-media' ); ?>`
+Create a Page called "Search Media" and add this shortcode to it: `[sell_media_searchform]`. A search form also shows up above archive pages for products.
 
 = How do I bulk upload images for sale? =
 
@@ -127,7 +115,7 @@ You have two options:
 
 = How do I display a gallery of images for sale? =
 
-Sell Media includes a new "Collections" taxonomy, which you can see on the right side of the screen when adding a new item to Sell Media. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
+Sell Media includes a "Collections" taxonomy, which you can see on the right side of the screen when adding a new item to Sell Media. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
 
 = How do I password protect an item? =
 
@@ -165,12 +153,6 @@ Depending on the web hosting company you choose and the package you select, each
     php_value max_input_time 300`
 
 Again, it is important that we emphasize that if you are on a shared hosting package, these techniques may not work. In that case, you would have to contact your web hosting provider to increase the limit for you.
-
-= Transactions are not posting. Why? =
-
-Please visit the Add Media -> Settings -> Payments page and double check all of your settings. Also, if you are using PayPal, you need to make sure you have [added your IPN Listener URL to PayPal](https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_admin_IPNSetup).
-
-Also, PayPal computers use IP ranges 66.211.*.* and 173.0.*.* and visit the IPN URL with NO User-Agent. Some web hosting companies have their servers set up to block incoming pings when the User-Agent is not explicitly set (as is the case with PayPal's IPN). In this case, you'll want to modify your .htaccess file to override user-agent blocking with these address ranges.
 
 = What are license types? =
 
@@ -226,15 +208,17 @@ Action hooks available:
 
 == Changelog ==
 
-= 1.9.2 =
-* New Feature: Breadcrumbs
-* New Feature: One or two column layouts on single entries
-* New Feature: Exact phrase match for search ("New York", vs "New" and "York")
-* Tweak: Theme compatibility fixes, no longer requires template files
-* Tweak: Improved advanced search
-* Tweak: Improved localization
-* Bug: Adding multiple downloads by accidental multi-clicking fix
-* Bug: Adding prints to cart without selecting price group fix
+= 2.0 =
+* New Feature: Breadcrumb navigation options.
+* New Feature: Layout options. Choose one or two column layouts on single entries.
+* New Feature: Search optimization. Now searches titles, content and keywords and includes exact phrase match for search ("New York", vs "New" and "York").
+* New Feature: Lots of new action hooks and filters.
+* Tweak: Theme compatibility fixes, no longer requires template files.
+* Tweak: Improved localization.
+* Tweak: Rewrite of the lightbox feature.
+* Tweak: Improve the logic of checkout button activation.
+* Bug: Adding multiple downloads by accidental multi-clicking fix.
+* Bug: Adding prints to cart without selecting price group fix.
 
 = 1.9.13 =
 * Collections count bug fix
