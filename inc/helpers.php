@@ -506,7 +506,7 @@ function sell_media_pagination_filter( $max_pages = '' ) {
     $big = 999999999; // need an unlikely integer
 
     $params = array(
-        'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+        //'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
         'format' => '?paged=%#%',
         'current' => max( 1, get_query_var('paged') ),
         'total' => $max_num_pages // note sometimes max_num_pages needs to be sent over
