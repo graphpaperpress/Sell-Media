@@ -170,9 +170,12 @@ Please disable your plugins and see if you still have the issue. Some plugins (o
 
 1. The Shopping Cart
 2. Single Item Template
-3. Add New Item
-4. Payments History
-5. Available Extensions (coming soon)
+3. Archive
+4. Collection Archive
+5. Checkout
+6. Add New Item
+7. [Optional Premium Extensions](http://graphpaperpress.com/downloads/category/extensions/)
+8. [Optional Premium Themes](https://graphpaperpress.com/wordpress-themes/sell-media/)
 
 == Developers ==
 
