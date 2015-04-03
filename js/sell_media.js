@@ -309,9 +309,12 @@ jQuery(document).ready(function($){
     // Add to lightbox on click
     $( '.add-to-lightbox' ).on( 'click', function( e ) {
 
+        var id = $(this).data('id'),
+            selector = $('#sell-media-lightbox-content #sell-media-' + id);
+
         var data = {
             action: 'sell_media_update_lightbox',
-            id: $(this).data('id')
+            id: id
         };
 
         $.ajax({
@@ -319,27 +322,30 @@ jQuery(document).ready(function($){
             url: sell_media.ajaxurl,
             data: data,
             success: function(msg){
-                $('#sell-media-lightbox-content').html(msg);
                 $('.lightbox-counter').text(msg.count);
-                //console.log(msg);
+                $('#lightbox-' + id).text(msg.text);
+                $(selector).hide();
             }
         });
-
     });
 
     // Count lightbox
-    function countJson() {
-        var json = $.cookie('sell_media_lightbox');
-        var data = $.parseJSON( json );
-        var keys = [];
-        $.each(data, function(key, value) {
-            keys.push(key);
-        });
-        return keys.length;
+    function count_lightbox() {
+        var cookie = $.cookie('sell_media_lightbox');
+        if ( cookie == undefined ) {
+            return 0;
+        } else {
+            var data = $.parseJSON( cookie ),
+                keys = [];
+            $.each(data, function(key, value) {
+                keys.push(key);
+            });
+            return keys.length;
+        }
     }
 
     // Lightbox menu
-    $('<span class="lightbox-counter">' + countJson() + '</span>').appendTo('.lightbox-menu a');
+    $('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
 
     // Checkout total menu
     $('(<span class="sellMediaCart_total checkout-price">0</span>)').appendTo('.checkout-total a');

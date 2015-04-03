@@ -136,7 +136,7 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 function sell_media_content_loop( $post_id, $i ){
     $class = ( $i %3 == 0 ) ? ' end' : '';
 
-    $html  = '<div class="sell-media-grid' . $class . '">';
+    $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid' . $class . '">';
     $html .= '<div class="item-inner">';
     $html .= '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
     $html .= '<span class="item-overlay">';
@@ -434,7 +434,7 @@ function sell_media_append_meta( $post_id ) {
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
-        echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . __( 'Save', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+        echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $post_id ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $post_id ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         echo '<div class="sell-media-meta">';
         echo '<p class="sell-media-buy-button">';
@@ -455,12 +455,12 @@ add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
  * @return void
  */
 function sell_media_show_lightbox( $post_id ) {
-    echo '<p class="sell-media-lightbox"><a href="javascript:void(0);" title="' . __( 'Lightbox', 'sell_media' ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . __( 'Save to lightbox', 'sell_media' ) . '</a></p>';
+    echo '<p class="sell-media-lightbox"><a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $post_id ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $post_id ) . '</a></p>';
 }
 add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
 
 /**
- * Show lightbox
+ * Show additional file info
  *
  * @since 1.9.2
  * @param int $post_id Item ID

@@ -788,15 +788,15 @@ input.sell-media-search-text[type=text] {
 .lightbox-counter,
 .checkout-counter {
     display: inline;
-    padding: 3px 7px;
-    font-size: 10px;
+    padding: 2px 5px;
+    font-size: 9px;
     line-height: 1;
     color: #fff;
     background: #d9534f;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: 50%;
+    border-radius: 2px;
 }
 .checkout-price {
    font-weight: bold;
