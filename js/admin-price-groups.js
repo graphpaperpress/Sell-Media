@@ -122,9 +122,8 @@ jQuery( document ).ready(function( $ ){
             html += '<p class="description">Height</p>';
         html += '</td>';
         html += '<td>';
-            html += '<span class="description">'+sell_media_price_groups.currency_symbol+'</span>&nbsp;';
             html += '<input type="text" class="small-text" name="new_child['+counter+'][price]" value="">';
-            html += '<p class="description">Price</p>';
+            html += '<p class="description">Price&nbsp;<span class="description">('+sell_media_price_groups.currency_symbol+')</span></p>';
         html += '</td>';
         html += '<td>';
             html += '<a href="#" class="sell-media-xit sell-media-price-group-repeater-remove" data-type="price">×</a>';
