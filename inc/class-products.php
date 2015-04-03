@@ -69,9 +69,9 @@ Class SellMediaProducts {
             // if no assigned price group, get default from settings
             if ( empty( $term_parent ) || is_wp_error( $term_parent ) ){
                 $default = $this->settings->default_price_group;
-                $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $default ) );
+                $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $default, 'orderby' => 'id' ) );
             } else {
-                $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id ) );
+                $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id, 'orderby' => 'id' ) );
             }
 
             // loop over child terms

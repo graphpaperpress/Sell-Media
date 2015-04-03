@@ -164,7 +164,6 @@ Class SellMediaNavStyleUI {
 
         $parent_terms = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'parent' => 0 ) );
         $current_parent = empty( $_GET['term_parent'] ) ? '' : $_GET['term_parent'];
-
         if ( is_wp_error( $parent_terms ) ){
             return;
         }
@@ -230,7 +229,8 @@ Class SellMediaNavStyleUI {
 
         // build terms array
         $tmp = null;
-        $terms_obj = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'child_of' => $current_term_id ) );
+        $terms_obj = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'child_of' => $current_term_id, 'orderby' => 'id' ) );
+
         foreach( $terms_obj as $term ){
             $tmp[] = array_merge( (array)$term,
                 array(
