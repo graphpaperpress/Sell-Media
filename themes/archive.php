@@ -108,7 +108,7 @@ $settings = sell_media_get_plugin_options();
                     <?php rewind_posts(); ?>
                     <?php $i = 0; ?>
                     <?php while ( have_posts() ) : the_post(); $i++; ?>
-                        <?php echo sell_media_content_loop( $post->ID, $i ); ?>
+                        <?php echo apply_filters( 'sell_media_content_loop', $post->ID, $i ); ?>
                     <?php endwhile; ?>
                 <?php else : ?>
                     <h2><?php _e( 'Nothing Found', 'sell_media' ); ?></h2>

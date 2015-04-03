@@ -147,8 +147,9 @@ function sell_media_content_loop( $post_id, $i ){
     $html .= '</div>';
     $html .= '</div>';
 
-    return apply_filters( 'sell_media_content_loop', $html );
+    return $html;
 }
+add_filter('sell_media_content_loop', 'sell_media_content_loop', 10, 2);
 
 
 /**

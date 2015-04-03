@@ -141,24 +141,25 @@ function sell_media_all_items_shortcode( $atts ){
     $wp_query->query( $args );
     $i = 0;
 
-    ob_start(); ?>
+    if ( $wp_query->have_posts() ) :
 
-    <?php if ( $wp_query->have_posts() ) : ?>
+        $html = '<div class="sell-media">';
+        $html .= '<div class="sell-media-grid-container">';
 
-    <div class="sell-media">
-        <div class="sell-media-grid-container">
-            <?php while ( $wp_query->have_posts() ) : $wp_query->the_post(); $i++; ?>
-                <?php echo sell_media_content_loop( get_the_ID(), $i ); ?>
-            <?php endwhile; wp_reset_query(); $i = 0; ?>
-        </div><!-- .sell-media-grid-container -->
-        <?php if ( ! is_front_page() && is_main_query() ) sell_media_pagination_filter( $wp_query->max_num_pages ); ?>
-    </div><!-- #sell-media-shortcode-all .sell_media -->
+        while ( $wp_query->have_posts() ) : $wp_query->the_post(); $i++;
+            $html .= apply_filters( 'sell_media_content_loop', get_the_id(), $i );
+        endwhile; wp_reset_query(); $i = 0;
 
-    <?php endif; ?>
-    <?php return ob_get_clean();
+        $html .= '</div><!-- .sell-media-grid-container -->';
+        if ( ! is_front_page() && is_main_query() )
+            sell_media_pagination_filter( $wp_query->max_num_pages );
+        $html .= '</div><!-- #sell-media-shortcode-all .sell_media -->';
+
+    endif;
+
+    return $html;
 }
 add_shortcode( 'sell_media_all_items', 'sell_media_all_items_shortcode' );
-
 
 
 /**

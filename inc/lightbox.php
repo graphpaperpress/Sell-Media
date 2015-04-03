@@ -63,7 +63,7 @@ function sell_media_lightbox_query() {
 
             foreach( $posts->posts as $post ) {
                 $i++;
-                $html .= sell_media_content_loop( $post->ID, $i );
+                $html .= apply_filters( 'sell_media_content_loop', $post->ID, $i );
             }
 
         }
