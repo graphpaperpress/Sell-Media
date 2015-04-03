@@ -152,7 +152,7 @@ function sell_media_all_items_shortcode( $atts ){
 
         $html .= '</div><!-- .sell-media-grid-container -->';
         if ( ! is_front_page() && is_main_query() )
-            sell_media_pagination_filter( $wp_query->max_num_pages );
+            $html .= sell_media_pagination_filter( $wp_query->max_num_pages );
         $html .= '</div><!-- #sell-media-shortcode-all .sell_media -->';
 
     endif;

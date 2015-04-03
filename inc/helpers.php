@@ -122,10 +122,8 @@ function sell_media_nav_menu_css_class( $classes, $item ){
             }
         }
     }
+
     return $classes;
-    // echo '<pre>';
-    // print_r($item);
-    // echo '</pre>';
 }
 add_filter( 'nav_menu_css_class', 'sell_media_nav_menu_css_class', 10, 2 );
 
@@ -512,8 +510,9 @@ function sell_media_pagination_filter( $max_pages = '' ) {
         'total' => $max_num_pages // note sometimes max_num_pages needs to be sent over
     );
 
-    echo '<div class="sell-media-pagination-container">' . paginate_links( $params ) . '</div>';
+    return '<div class="sell-media-pagination-container">' . paginate_links( $params ) . '</div>';
 }
+add_filter( 'sell_media_pagination_filter', 'sell_media_pagination_filter', 10, 1 );
 
 
 /**
