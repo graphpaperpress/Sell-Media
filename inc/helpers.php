@@ -633,7 +633,6 @@ function sell_media_build_select( $items=array(), $args=array() ){
  * @param $post_id, $taxonomy
  * @return $price_groups (object)
  */
-
 function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
 
     // first, check price group set on the item
@@ -676,6 +675,32 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
 
     return $price_groups;
 
+}
+
+/**
+ * Get the assigned price group
+ *
+ * @param $post_id, $taxonomy
+ * @since 2.0.1
+ * @return integer $price_group_id
+ */
+function sell_media_get_item_price_group( $post_id, $taxonomy ){
+
+    $terms = get_the_terms( $post_id, $taxonomy );
+    if ( $terms && ! is_wp_error( $terms ) ) foreach ( $terms as $term ) {
+        if ( $term->parent == 0 ){
+            $price_group_id = $term->term_id;
+        }
+    } else {
+        $settings = sell_media_get_plugin_options();
+        if ( $taxonomy == 'reprints-price-group' ){
+            $price_group_id = $settings->reprints_default_price_group;
+        } else {
+            $price_group_id = $settings->default_price_group;
+        }
+    }
+
+    return $price_group_id;
 }
 
 

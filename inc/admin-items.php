@@ -67,7 +67,8 @@ function sell_media_files_meta_box( $post ) {
                     <option <?php selected( $saved, basename( $directory ) ); ?> value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
                 <?php endforeach; ?>
             </select>
-            <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" disabled><?php _e( 'Add files', 'sell_media' ); ?></button>
+            <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
+            <p class="desc"><?php printf( __( 'Upload folders of images using the options above. Add new folders inside wp-content/uploads/sell_media/packages/. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a>.', 'sell_media' ), 'http://graphpaperpress.com/docs/#lightroom' ); ?></p>
             <?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
         </div>
     </div>
@@ -78,11 +79,7 @@ function sell_media_files_meta_box( $post ) {
             $attachment_ids = array();
             if ( $attachments ) foreach ( $attachments as $attachment ) {
                 $attachment_ids[] = $attachment->ID;
-                echo '<li class="attachment" data-post_id="' . $attachment->ID . '">';
-                echo '<a href="' . admin_url( 'post.php?post=' . $attachment->ID . '&action=edit' ) . '" target="_blank">';
-                echo wp_get_attachment_image( $attachment->ID, 'thumbnail' );
-                echo '</a>';
-                echo '</li>';
+                echo sell_media_list_uploads( $attachment->ID );
             }
         ?>
     </ul>
@@ -118,7 +115,8 @@ function sell_media_options_meta_box( $post ) {
                 'taxonomy' => 'price-group',
                 'hierarchical' => true,
                 'depth' => 1,
-                'hide_empty' => false
+                'hide_empty' => false,
+                'selected' => sell_media_get_item_price_group( $post->ID, 'price-group' )
             );
             wp_dropdown_categories( $args );
         ?>
@@ -136,138 +134,6 @@ function sell_media_stats_meta_box( $post ) {
     echo 'Nothing here yet';
 }
 
-/**
- * Field builder for meta boxes
- *
- * @author Thad Allender
- * @since 0.1
- */
-function sell_media_build_meta_box_fields( $fields=null ) {
-    global $post, $sell_media_item_meta_fields;
-    // Since the first param coming into this functions is
-    // ALWAYS the global $post which is an OBJECT we check it.
-    // If it is an ARRAY we assume its new settings.
-    $my_fields = ( is_array( $fields ) ) ? $fields : $sell_media_item_meta_fields;
-
-    // Use nonce for verification
-    wp_nonce_field( '_sell_media_meta_box_nonce', 'sell_media_meta_box_nonce' );
-    // Begin the field table and loop
-    echo '<table class="form-table sell-media-item-table">';
-    foreach ( $my_fields as $field ) {
-        $default = get_post_meta( $post->ID, $field['id'], true );
-        // begin a table row with
-        echo '<tr>
-        <th><label for="' . $field['id'] . '">' . $field['label'] . '</label></th>
-        <td>';
-        $meta = null; // I have to find out what "meta" was used for, just setting it to null
-        switch( $field['type'] ) {
-            // text
-            case 'text':
-                if ( $field['std'] )
-                    $default = $field['std'];
-                echo '<input type="text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. $default .'" value="' . wp_filter_nohtml_kses( $field['value'] ) . '" size="2"/><br /><span class="description">' . $field['desc'] . '</span>';
-            break;
-            // price
-            case 'price':
-                if ( $field['std'] )
-                    $default = $field['std'];
-                if ( '' != $field['value'] ) {
-                    $price_value = wp_filter_nohtml_kses( $field['value'] );
-                } else {
-                    $price_value = $default;
-                }
-                echo '<input type="number" step="0.01" min="0" class="small-text" name="' . $field['id'].'" id="' . $field['id'] . '" placeholder="'. $default .'" value="' . $price_value . '" /><br /><span class="description">' . $field['desc'] . '</span>';
-            break;
-            // textarea
-            case 'textarea':
-                echo '<textarea name="' . $field['id'] . '" id="' . $field['id'] . '" cols="60" rows="4">' . $default . '</textarea>
-                    <br /><span class="description">' . $field['desc'] . '</span>';
-            break;
-            // checkbox
-            case 'checkbox':
-                echo '<input type="checkbox" name="' . $field['id'] . '" id="' . $field['id'] . '" ' . checked( $field['value'], "on", false ) . '/>
-                    <label for="' . $field['id'] . '">' . $field['desc'] . '</label>';
-            break;
-            // select
-            case 'select':
-                echo '<select name="'.$field['id'].'" id="'.$field['id'].'">';
-                foreach ($field['options'] as $option) {
-                    echo '<option', $meta == $option['value'] ? ' selected="selected"' : '', ' value="'. $option['value'] .'">' . $option['label'] . '</option>';
-                }
-                echo '</select><br /><span class="description">' . $field['desc'] .'</span>';
-            break;
-            // image
-            case 'image':
-                $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-                echo '<span class="custom_default_image" style="display:none">' . $image[0] . '</span>';
-                if ($meta) { $image = wp_get_attachment_image_src( $meta, 'medium' ); $image = $image[0]; }
-                echo    '<input name="' . $field['id'] . '" type="hidden" class="custom_upload_image" value="' . $meta . '" />
-                <img src="' . $image[0] . '" class="custom_preview_image" alt="" /><br />
-                <input class="custom_upload_image_button button" type="button" value="' . __( 'Choose Image', 'sell_media' ) . '" />
-                <small> <a href="#" class="custom_clear_image_button">' . __(' Remove Image', 'sell_media' ) . '</a></small>
-                <br clear="all" /><span class="description">' . $field['desc'] . '</span>';
-            break;
-            // File
-            case 'file':
-                $attachment_id = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
-                $attached_file = get_post_meta( $post->ID, '_sell_media_attached_file', true );
-                $hide = empty( $attachment_id ) ? 'style="display: none";' : null;
-                echo '<input type="hidden" name="sell_media_selected_file_id" class="sell_media_selected_file_id" />';
-                echo '<input type="text" name="_sell_media_attached_file" class="sell_media_attached_file sell-media-item-url field-has-button" value="' . $attached_file . '" size="30" />';
-                echo '<a class="sell-media-upload-trigger button">' . __( 'Upload', 'sell_media' ) . '</a><br class="clear"/>';
-                echo '<div class="sell-media-upload-trigger">';
-                echo '<div class="sell-media-item-thumbnail" ' . $hide . '>' . sell_media_item_icon( $post->ID, 'thumbnail', false ) . '</div>';
-                echo '</div>';
-                break;
-            // text
-            case 'html':
-                echo '<p id="' . $field['id'] . '"><span class="description">' . $field['desc'] . '</span></p>';
-                break;
-            case 'price_group':
-                /**
-                 * get our current term id for the parent only
-                 */
-                $parent_id = false;
-                $settings = sell_media_get_plugin_options();
-                foreach( wp_get_post_terms( $post->ID, 'price-group' ) as $terms ){
-                    if ( $terms->parent == 0 )
-                        $parent_id = $terms->term_id;
-                }
-                if( false == $parent_id ) {
-                    $parent_id = $settings->default_price_group;
-                }
-                ?>
-                <select name="_sell_media_price_group">
-                    <option value="0"><?php _e("Select a price group"); ?></option>
-                    <?php foreach( get_terms( 'price-group', array('hide_empty'=>false,'parent'=>0) ) as $term ) : ?>
-                        <option <?php selected( $parent_id, $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <br /><span class="description"><?php _e( $field['desc'], 'sell_media' ); ?></span>
-                <?php
-                break;
-            case 'package':
-                $packages_dir = sell_media_get_packages_upload_dir();
-                $files = glob( $packages_dir . '/' . '*.{zip,gz}', GLOB_BRACE );
-                $saved = get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?>
-
-                <select name="_sell_media_attached_file" id="_sell_media_attached_file" value="">
-                    <option value=""><?php _e( 'Select a package', 'sell_media' ); ?></option>
-                    <?php if ( $files ) foreach( $files as $file ) : ?>
-                        <option <?php selected( $saved, basename( $file ) ); ?> value="<?php echo basename( $file ); ?>"><?php echo basename( $file ); ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-                <?php
-                break;
-            break;
-        } //end switch
-        echo '</td></tr>';
-    } // end foreach
-    echo '</table>'; // end table
-    do_action('sell_media_additional_item_meta_section');
-}
-
 
 /**
  * Saves post meta data.
@@ -278,8 +144,6 @@ function sell_media_build_meta_box_fields( $fields=null ) {
  * the attachment meta data is also updated.
  */
 function sell_media_save_custom_meta( $post_id ) {
-
-    do_action( 'sell_media_extra_meta_save' );
 
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
     if ( ! isset( $_POST['sell_media_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_meta_box_nonce'], '_sell_media_meta_box_nonce' ) ) return;
@@ -297,66 +161,62 @@ function sell_media_save_custom_meta( $post_id ) {
 
         if ( isset( $_POST[ $field ] ) ) {
 
-            $old = get_post_meta( $post_id, $field, true );
-            $new = $_POST[ $field ];
 
-            if ( $new && $new != $old ) {
 
-                // Loop over attachment ids, assign post parent, and move files into protected directory
-                if ( $field == 'sell_media_files' ) {
-                    $attachment_ids = explode( ',', $_POST[ $field ] );
-                    if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-                        $attachment = get_post( $attachment_id );
-                        if ( $attachment->ID != $post_id ) {
-                            $attachment->post_parent = $post_id;
-                            $result = wp_update_post( $attachment );
-                            if ( $result ) {
-                                sell_media_move_file( $attachment_id );
+            // price groups fields
+            if ( $field == 'sell_media_price_group' ) {
+
+                if ( ! empty( $_POST['sell_media_price_group'] ) ) {
+                    wp_set_post_terms( $post_id, $_POST['sell_media_price_group'], 'price-group' );
+                }
+
+            // print price groups fields
+            } elseif( $field == 'sell_media_print_price_group' ) {
+
+                if ( ! empty( $_POST['sell_media_print_price_group'] ) ) {
+                    wp_set_post_terms( $post_id, $_POST['sell_media_print_price_group'], 'reprints-price-group' );
+                }
+
+            // post meta fields
+            } else {
+
+                $old = get_post_meta( $post_id, $field, true );
+                $new = $_POST[ $field ];
+
+                if ( $new && $new != $old ) {
+
+                    // Loop over attachment ids, assign post parent, and move files into protected directory
+                    if ( $field == 'sell_media_files' ) {
+                        $attachment_ids = explode( ',', $_POST[ $field ] );
+                        if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+                            $attachment = get_post( $attachment_id );
+                            if ( $attachment->ID != $post_id ) {
+                                $attachment->post_parent = $post_id;
+                                $result = wp_update_post( $attachment );
+                                if ( $result ) {
+                                    sell_media_move_file( $attachment_id );
+                                }
                             }
                         }
                     }
-                }
 
-                if ( $field == 'sell_media_price' ) {
-                    $new = sprintf( '%0.2f', ( float ) $new );
-                }
+                    if ( $field == 'sell_media_price' ) {
+                        $new = sprintf( '%0.2f', ( float ) $new );
+                    }
 
-                update_post_meta( $post_id, $field, $new );
-            } elseif ( '' == $new && $old ) {
-                delete_post_meta( $post_id, $field, $old );
+                    // new meta and it's different than old saved value, so update it
+                    update_post_meta( $post_id, $field, $new );
+
+                // new meta is empty, so delete it
+                } elseif ( '' == $new && $old ) {
+
+                    delete_post_meta( $post_id, $field, $old );
+
+                }
             }
         }
     } // end foreach
-
-    // Save the post content
-    global $post_type;
-    if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
-
-        $new_content = $_POST['sell_media_editor'];
-        $old_content = get_post_field( 'post_content', $post_id );
-
-        if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ){
-
-            $args = array(
-                    'ID' => $post_id,
-                    'post_content' => $new_content
-                    );
-
-            // unhook this function so it doesn't loop infinitely
-            remove_action('save_post', 'sell_media_save_custom_meta');
-            // update the post, which calls save_post again
-            wp_update_post( $args );
-
-            // re-hook this function
-            add_action('save_post', 'sell_media_save_custom_meta');
-
-        }
-    }
-
-    if ( ! empty( $_POST['_sell_media_price_group'] ) ) {
-        wp_set_post_terms( $post_id, $_POST['_sell_media_price_group'], 'price-group' );
-    }
-
+    do_action( 'sell_media_extra_meta_save', $post_id );
 }
 add_action( 'save_post', 'sell_media_save_custom_meta' );
 
@@ -364,16 +224,12 @@ add_action( 'save_post', 'sell_media_save_custom_meta' );
  * Upload callback
  */
 function sell_media_upload_callback(){
-
+    $html = '';
     check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
 
     // Display thumbnails after upload/selection
     if ( $_POST['attachments'] ) foreach( $_POST['attachments'] as $attachment ){
-        $html .= '<li class="attachment" data-post_id="' . $attachment['id'] . '">';
-        $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment['id'] . '&action=edit' ) . '">';
-        $html .= wp_get_attachment_image( $attachment['id'], 'thumbnail' );
-        $html .= '</a>';
-        $html .= '</li>';
+        $html .= sell_media_list_uploads( $attachment['id'] );
     }
     echo $html;
     die();
@@ -386,7 +242,6 @@ add_action( 'wp_ajax_sell_media_upload_callback', 'sell_media_upload_callback' )
  */
 function sell_media_upload_bulk_callback(){
 
-    $html = '';
     check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
 
     if ( isset( $_POST['dir'] ) ) {
@@ -396,6 +251,8 @@ function sell_media_upload_bulk_callback(){
         if ( file_exists( $path ) ) {
 
             $files = glob( $path . '*.*' );
+
+            $html = '';
 
             if ( $files ) foreach ( $files as $file ) {
 
@@ -420,19 +277,15 @@ function sell_media_upload_bulk_callback(){
                 if ( is_wp_error( $attachment_id ) ) {
                     $html .= '<li class="attachment">' . sprintf( __( 'Sorry, %1$s could\'t be added.', 'sell_media' ), basename( $file ) ) . '</li>';
                 } else {
-                    $html .= '<li class="attachment" data-post_id="' . $attachment_id . '">';
-                    $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment_id . '&action=edit' ) . '">';
-                    $html .= wp_get_attachment_image( $attachment_id, 'thumbnail' );
-                    $html .= '</a>';
-                    $html .= '</li>';
+                    $html .= sell_media_list_uploads( $attachment_id );
                 }
 
             }
+
+            echo $html;
         }
 
     }
-
-    echo $html;
     die();
 }
 add_action( 'wp_ajax_sell_media_upload_bulk_callback', 'sell_media_upload_bulk_callback' );
@@ -448,7 +301,7 @@ function sell_media_meta_box_fields() {
     $fields = array(
         'sell_media_files',
         'sell_media_price',
-        '_sell_media_price_group'
+        'sell_media_price_group'
     );
 
     return apply_filters( 'sell_media_meta_box_fields', $fields );

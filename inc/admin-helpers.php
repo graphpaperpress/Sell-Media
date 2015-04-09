@@ -75,3 +75,20 @@ function sell_media_post_type_admin_order( $wp_query ) {
     }
 }
 add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );
+
+/**
+ * List file uploads on add/edit item page
+ *
+ * This same markup is used in multiple places
+ * So let's make it into a reusable function
+ */
+function sell_media_list_uploads( $attachment_id ) {
+
+    $html .= '<li class="attachment" data-post_id="' . $attachment_id . '">';
+    $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment_id . '&action=edit' ) . '" target="_blank">';
+    $html .= wp_get_attachment_image( $attachment_id, 'medium' );
+    $html .= '</a>';
+    $html .= '</li>';
+
+    return apply_filters( 'sell_media_list_uploads', $html, $attachment_id );
+}
