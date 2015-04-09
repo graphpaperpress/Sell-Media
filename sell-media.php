@@ -214,7 +214,6 @@ final class SellMedia {
 
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-helpers.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
-            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-bulk.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items-package.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-menu.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-notices.php';

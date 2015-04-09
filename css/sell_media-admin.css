@@ -1,8 +1,17 @@
 /* Global
 -------------------------------------------------------------- */
-#adminmenu div.wp-menu-image { overflow: hidden; }
-#adminmenu div.wp-menu-image img{ display: none; }
-#product_meta_box input[type="file"] { padding: 0px; border: 0; background: transparent; margin: 1em 0; }
+#adminmenu div.wp-menu-image {
+    overflow: hidden;
+}
+#adminmenu div.wp-menu-image img{
+    display: none;
+}
+#product_meta_box input[type="file"] {
+    padding: 0px;
+    border: 0;
+    background: transparent;
+    margin: 1em 0;
+}
 
 /* jQuery UI Slider
 -------------------------------------------------------------- */
@@ -96,34 +105,8 @@
 #poststuff #sell-media-tabs { margin-top: 0; padding: 0 0 0 10px; }
 .field-has-button { margin-right: 10px; float: left; }
 .sell-media-image { margin: 1em 0 0; }
-.sell-media-bulk-list-item {
-    width: 75px;
-    height: 75px;
-    background: #000;
-    }
-.sell-media-bulk-list-item .sell-media-bulk-list-item-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    }
-.sell-media-bulk-list-item .sell-media-bulk-list-item-img img { max-width: 100%; max-height: 100%; }
-.sell-media-bulk-list-item-edit {
-    color: #FFF;
-    position: absolute;
-    top: 0;
-    left: 0;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    height: 55px;
-    width: 75px;
-    padding: 20px 0 0 0;
-    }
-
-.sell-media-bulk-list-item-edit:hover { color: #fff; }
-.uploader { background: #F9F9F9; padding: 4em; text-align: center; border: 1px solid #EEE; }
-.uploader .button { font-size: 14px; height: 46px; line-height: 44px; padding: 0 36px; }
+.sell-media-upload { background: #FDFDFD; padding: 4em; text-align: center; border: 1px solid #dfdfdf; }
+.sell-media-upload .button { font-size: 14px; height: 46px; line-height: 44px; padding: 0 36px; }
 .compat-field-sell th { padding: 0 5px 0 0; }
 .compat-field-sell input[type="checkbox"] { width: auto; }
 
@@ -160,21 +143,36 @@
 
 /* Item meta section
 -------------------------------------------------------------- */
-.sell-media-item-table th { width: 100%; display: block; font-weight: bold; padding: 10px 10px 0 10px; }
-.sell-media-item-table td { display: block; padding: 5px 10px 0; }
-.sell-media-item-table .sell-media-item-url { padding: 4px; margin: 0 5px 10px 0; }
-
-.sell-media-bulk-controls {
+.sell-media-upload-list:after {
+    content: "";
+    display: table;
     clear: both;
-    float: left;
-    }
-
+}
 .sell-media-temp-target {
     background: url('../images/ajax-loader.gif') no-repeat center;
     display: block;
     height: 58px;
     width: 58px;
-    }
+}
+.sell-media-field {
+    display: block;
+    padding: 10px 0;
+}
+.sell-media-field label {
+    width: 30%;
+    float: left;
+}
+.sell-media-field label,
+.sell-media-field input,
+.sell-media-field select,
+.sell-media-field textarea {
+    display: inline-block;
+}
+.sell-media-field .desc {
+    color: #666;
+    font-style: italic;
+    margin-left: 10px;
+}
 
 /* Term meta
 -------------------------------------------------------------- */

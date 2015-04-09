@@ -21,7 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function sell_media_admin_menu() {
 
     $permission = 'manage_options';
-    add_submenu_page( null, __('Add Bulk', 'sell_media'), __('Add Bulk', 'sell_media'),  'upload_files', 'sell_media_add_bulk', 'sell_media_add_bulk_callback_fn' );
     add_submenu_page( null, __('Add Package', 'sell_media'), __('Add Package', 'sell_media'),  'upload_files', 'sell_media_add_package', 'sell_media_add_package_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Upgrades', 'sell_media'), __('Upgrades', 'sell_media'),  $permission, 'sell_media_upgrades', 'sell_media_upgrades_callback_fn' );
@@ -62,7 +61,7 @@ function sell_media_submenu_order( $menu_ord ) {
     );
 
     $j = 1;
-    if( ! empty ( $submenu['edit.php?post_type=sell_media_item'] ) ) {
+    if ( ! empty ( $submenu['edit.php?post_type=sell_media_item'] ) ) {
         foreach ( $submenu['edit.php?post_type=sell_media_item'] as $key => $value ) {
             if ( array_search( $value[0], $required_order ) ) {
                 $i = array_search( $value[0], $required_order );
@@ -73,7 +72,7 @@ function sell_media_submenu_order( $menu_ord ) {
             $arr[$i] = $submenu['edit.php?post_type=sell_media_item'][$key];
 
         }
-        ksort($arr);
+        ksort( $arr );
         $submenu['edit.php?post_type=sell_media_item'] = $arr;
     }
     return $menu_ord;

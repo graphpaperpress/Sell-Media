@@ -53,25 +53,6 @@ function sell_media_item_image_src( $post_id=null ) {
 
 
 /**
- * Echo the attachment thumbnail image. Used in ajax calls in admin.
- * @param $attachment_id
- * @return (html) image
- */
-function sell_media_item_get_thumbnail( $attachment_id=null ){
-    // ajax on single item addition page
-    if ( ! empty( $_POST['attachment_id'] ) )
-        $attachment_id = $_POST['attachment_id'];
-    $image_attributes = wp_get_attachment_image_src( $attachment_id );
-    $image = '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" />';
-    echo $image;
-    // we're going ajax, so we must die
-    if ( ! empty( $_POST['action'] ) && $_POST['action'] == 'sell_media_item_get_thumbnail' )
-        die();
-}
-add_action( 'wp_ajax_sell_media_item_get_thumbnail', 'sell_media_item_get_thumbnail' );
-
-
-/**
  * Returns the file extension of the product file
  * @return (string) file extension
  */
@@ -134,6 +115,31 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
         echo $image;
     else
         return $image;
+}
+
+/**
+ * Get item icons
+ *
+ * Similar to the function above sell_media_item
+ * But returns multiple icons
+ */
+function sell_media_item_icons( $post_id ) {
+    if ( sell_media_has_multiple_attachments( $post_id ) ) {
+        $attachments = get_attached_media( '', $post_id );
+        $html = '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
+        if ( $attachments ) foreach ( $attachments as $attachment ) {
+            $attr = array(
+                'class' => 'sell-media-gallery-image'
+            );
+            $html .= '<div class="sell-media-gallery-item">';
+            $html .= '<a href="' . get_permalink( $attachment->ID ). '">';
+            $html .= wp_get_attachment_image( $attachment->ID, 'medium', '', $attr );
+            $html .= '</a>';
+            $html .= '</div>';
+        }
+        $html .= '</div>';
+        return $html;
+    }
 }
 
 /**
@@ -424,7 +430,11 @@ function sell_media_append_media( $post_id ) {
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
         echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
-        sell_media_item_icon( $post_id, 'large' );
+        if ( sell_media_has_multiple_attachments( $post_id ) ) {
+            echo sell_media_item_icons( $post_id );
+        } else {
+            sell_media_item_icon( $post_id, 'large' );
+        }
     }
 }
 add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );

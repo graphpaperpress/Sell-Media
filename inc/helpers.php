@@ -359,6 +359,59 @@ function sell_media_is_license_term_page(){
 
 
 /**
+ * Get custom fields
+ *
+ * @author Thad Allender
+ * @since 2.0.1
+ */
+function sell_media_get_custom_field( $value ) {
+    global $post;
+
+    $custom_field = get_post_meta( $post->ID, $value, true );
+    if ( !empty( $custom_field ) )
+        return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
+
+    return false;
+}
+
+/**
+ * Get Attachments
+ *
+ * All Sell Media uploads are assigned a post_parent so we can better leverage core
+ * Legacy Sell Media uploads were saved as an integer in post meta.
+ * This function checks for both and returns a WP_Post object
+ *
+ * @var $post_id
+ * @return WP_Post object
+ * @since 2.0.1
+ */
+function sell_media_get_attachments( $post_id ) {
+
+    $attachments = '';
+
+    if ( get_attached_media( '', $post_id ) ) {
+        $attachments = get_attached_media( '', $post_id );
+    } else {
+        $attachment_id = get_post( get_post_meta( $post_id, '_sell_media_attachment_id', true ) );
+        $attachments = array( get_post( $attachment_id ) );
+    }
+    return $attachments;
+}
+
+/**
+ * Check if item has multiple attachments
+ */
+function sell_media_has_multiple_attachments() {
+
+    $attachments = sell_media_get_attachments( $post_id );
+    $count = count( $attachments );
+
+    if ( $count > 1 ) {
+        return true;
+    }
+}
+
+/**
  * Get Currency
  *
  * @since 0.1
@@ -653,6 +706,24 @@ function sell_media_get_packages_upload_dir() {
     $path = $wp_upload_dir['basedir'] . '/sell_media/packages';
 
     return apply_filters( 'sell_media_get_packages_upload_dir', $path );
+}
+
+
+/**
+ * Get bulk upload directories
+ *
+ * @since 2.0.1
+ * @return array (directories)
+ */
+function sell_media_get_bulk_upload_directories() {
+
+    $directories = '';
+    $path = sell_media_get_packages_upload_dir();
+
+    foreach ( glob( $path . "/*", GLOB_ONLYDIR ) as $directory ) {
+        $directories[] = $directory;
+    }
+    return $directories;
 }
 
 

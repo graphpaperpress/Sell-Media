@@ -226,6 +226,17 @@ table.sell-media-products {
 #sell-media-single .gallery .gallery-item a img {
   max-width: 95%;
 }
+.sell-media-gallery-item {
+  width: 30%;
+  margin: 0 5% 5% 0;
+  float: left;
+}
+.sell-media-gallery-item:nth-child(3n) {
+ margin-right: 0;
+}
+.sell-media-gallery-item:nth-child(3n+1) {
+  clear: left;
+}
 
 /*= Archives
 -------------------------------------------------------------- */

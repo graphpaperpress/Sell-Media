@@ -113,7 +113,7 @@ function sell_media_register_post_types(){
     $item_args = array(
         'labels' => $item_labels,
         'hierarchical' => true,
-        'supports' => array( 'title', 'thumbnail', 'author' ),
+        'supports' => array( 'title', 'thumbnail', 'author', 'custom-fields' ),
         'taxonomies' => array( 'licenses', 'keywords', 'city', 'state', 'creator', 'collection' ),
         'public' => true,
         'show_ui' => true,

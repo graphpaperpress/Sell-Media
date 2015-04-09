@@ -11,6 +11,25 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Checks if the attached file is an image
+ * and runs functions that resizes and moves
+ * high resolution files into protected dir.
+ * If attachment isn't an image, it just moves it.
+ * Original files are deleted.
+ *
+ * @param  [integer] $attachment_id [The attachment id]
+ * @return [null]
+ */
+function sell_media_move_file( $attachment_id ){
+    if ( Sell_Media()->products->mimetype_is_image( $attachment_id ) ) {
+        Sell_Media()->images->move_image_from_attachment( $attachment_id );
+    } else {
+        $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+        sell_media_default_move( $attached_file );
+    }
+}
+
+/**
  * Moves and uploaded file from the uploads dir into the "protected"
  * sell_media dir. Note the original file is deleted.
  *
