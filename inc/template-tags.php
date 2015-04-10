@@ -118,10 +118,17 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 }
 
 /**
- * Get item icons
+ * Gallery
  *
- * Similar to the function above sell_media_item
- * But returns multiple icons
+ * If a user has uploaded multiple attachments to the post
+ * we display them in a three column gallery. We then add
+ * a query variable to all image links which act as both
+ * our gallery navigation and a way to conditionally
+ * show the large, single photo layout.
+ *
+ * @param $post_id
+ * @return html the gallery html with filter
+ * @since 2.0.1
  */
 function sell_media_gallery( $post_id ) {
     $html = '';
@@ -163,23 +170,20 @@ function sell_media_gallery( $post_id ) {
 /**
  * Display Gallery Image Navigation
  *
- * returns previous image / next image links
+ * @param $attachment_id
+ * @return html the previous image / next image links
+ * @since 2.0.1
  */
 function sell_media_gallery_navigation( $attachment_id ) {
     global $post;
 
     $attachment_ids = sell_media_get_attachments( $post->ID );
-
-    // current image id in array
     $current_image = array_search( $attachment_id, $attachment_ids );
 
     $html = '<div class="sell-media-gallery-navigation">';
-    // previous image link
     if ( array_key_exists( $current_image - 1, $attachment_ids ) )
         $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) . '" class="sell-media-gallery-prev">' . __( 'Previous Image', 'sell_media' ) . '</a>';
-    // back to gallery link
     $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index">' . __( 'Back to Gallery', 'sell_media' ) . '</a>';
-    // next image link
     if ( array_key_exists( $current_image + 1, $attachment_ids ) )
         $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) . '"class="sell-media-gallery-next">' . __( 'Next Image', 'sell_media' ) . '</a>';
     $html .= '</div>';
