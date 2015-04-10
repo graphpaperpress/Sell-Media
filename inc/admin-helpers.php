@@ -89,6 +89,7 @@ function sell_media_list_uploads( $attachment_id ) {
 
     $html  = '<li class="attachment sell-media-attachment" data-post_id="' . $attachment_id . '">';
     $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment_id . '&action=edit' ) . '" target="_blank">';
+    $html .= '<span class="sell-media-edit dashicons dashicons-edit" data-id="' . $attachment_id . '"></span>';
     $html .= '<span class="sell-media-delete dashicons dashicons-no" data-id="' . $attachment_id . '"></span>';
     $html .= wp_get_attachment_image( $attachment_id, 'medium', true );
     $html .= '</a>';

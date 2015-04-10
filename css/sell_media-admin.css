@@ -188,15 +188,29 @@
 .sell-media-attachment:hover img {
     opacity: 0.75;
 }
+.sell-media-attachment .sell-media-edit,
 .sell-media-attachment .sell-media-delete {
     display: none;
     position: absolute;
-    bottom: 20px;
-    right: 14px;
     text-decoration: none;
-    color: white;
+    color: rgba(255,255,255,.5);
+    background: rgba(0,0,0,.5);
     z-index: 10;
 }
+.sell-media-attachment .sell-media-edit {
+    bottom: 20px;
+    left: 14px;
+}
+.sell-media-attachment .sell-media-delete {
+    bottom: 20px;
+    left: 44px;
+}
+.sell-media-attachment .sell-media-edit:hover,
+.sell-media-attachment .sell-media-delete:hover {
+    color: #fff;
+    background: #000;
+}
+.sell-media-attachment:hover .sell-media-edit,
 .sell-media-attachment:hover .sell-media-delete {
     display: inline-block;
 }
