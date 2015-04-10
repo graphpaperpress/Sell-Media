@@ -95,7 +95,7 @@ function sell_media_files_meta_box( $post ) {
 function sell_media_options_meta_box( $post ) {
 
     $settings = sell_media_get_plugin_options();
-    $price = ( get_post_meta( $post_id, 'sell_media_price', true ) ) ? get_post_meta( $post_id, 'sell_media_price', true ) : sprintf( '%0.2f', $settings->default_price );
+    $price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : sprintf( '%0.2f', $settings->default_price );
     do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
     <div id="sell-media-price-field" class="sell-media-field">
@@ -131,7 +131,6 @@ function sell_media_options_meta_box( $post ) {
  * Stats meta box
  */
 function sell_media_stats_meta_box( $post ) {
-    echo 'Nothing here yet';
 }
 
 
@@ -161,8 +160,6 @@ function sell_media_save_custom_meta( $post_id ) {
 
         if ( isset( $_POST[ $field ] ) ) {
 
-
-
             // price groups fields
             if ( $field == 'sell_media_price_group' ) {
 
@@ -187,6 +184,7 @@ function sell_media_save_custom_meta( $post_id ) {
 
                     // Loop over attachment ids, assign post parent, and move files into protected directory
                     if ( $field == 'sell_media_files' ) {
+
                         $attachment_ids = explode( ',', $_POST[ $field ] );
                         if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
                             $attachment = get_post( $attachment_id );
@@ -200,6 +198,7 @@ function sell_media_save_custom_meta( $post_id ) {
                         }
                     }
 
+                    // Sanitize price
                     if ( $field == 'sell_media_price' ) {
                         $new = sprintf( '%0.2f', ( float ) $new );
                     }
