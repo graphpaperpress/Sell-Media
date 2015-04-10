@@ -140,7 +140,6 @@ function sell_media_gallery( $post_id ) {
          */
         $attachment_id = get_query_var( 'id' );
         if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
-            // Image navigation
             $html .= sell_media_gallery_navigation( $attachment_id );
             $html .= sell_media_item_icon( $attachment_id, 'large' );
         }
@@ -149,16 +148,17 @@ function sell_media_gallery( $post_id ) {
          * show the gallery grid view
          */
         else {
-            $attachments = sell_media_get_attachments ( $post_id );
+            $attachment_ids = sell_media_get_attachments ( $post_id );
             $html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
-            if ( $attachments ) foreach ( $attachments as $attachment ) {
+            if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
                 $attr = array(
                     'class' => 'sell-media-gallery-image'
                 );
                 $html .= '<div class="sell-media-gallery-item">';
-                $html .= '<a href="' . add_query_arg( 'id', $attachment, get_permalink() ) . '">';
-                $html .= wp_get_attachment_image( $attachment, 'medium', '', $attr );
+                $html .= '<a href="' . add_query_arg( 'id', $attachment_id, get_permalink() ) . '">';
+                $html .= wp_get_attachment_image( $attachment_id, 'medium', '', $attr );
                 $html .= '</a>';
+                $html .= '<p>' . sell_media_item_buy_button( $attachment_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $attachment_id ) . '" class="add-to-lightbox" id="lightbox-' . $attachment_id . '" data-id="' . $attachment_id . '">' . sell_media_get_lightbox_text( $attachment_id ) . '</a> | <a href="' . add_query_arg( 'id', $attachment_id, get_permalink() ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
                 $html .= '</div>';
             }
             $html .= '</div>';
@@ -500,8 +500,12 @@ add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
 function sell_media_append_meta( $post_id ) {
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
+    // We're on gallery page, so return
+    if ( sell_media_is_gallery_page() )
+        return;
+
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
-        echo '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $post_id ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $post_id ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+        echo sell_media_item_links( $post_id );
     } elseif ( is_singular( 'sell_media_item' ) ) {
         echo '<div class="sell-media-meta">';
         echo '<p class="sell-media-buy-button">';
@@ -513,6 +517,17 @@ function sell_media_append_meta( $post_id ) {
     }
 }
 add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
+
+/**
+ * Show item links
+ *
+ * @param $post_id
+ * @return $html
+ * @since 2.0.1
+ */
+function sell_media_item_links( $post_id ){
+    return '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $post_id ) . '" class="add-to-lightbox" id="lightbox-' . $post_id . '" data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $post_id ) . '</a> | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+}
 
 /**
  * Show lightbox

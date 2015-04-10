@@ -93,10 +93,16 @@ add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
  * @since 1.9.2
  */
 function sell_media_body_class( $classes ) {
+    global $post;
     $settings = sell_media_get_plugin_options();
 
+    // Layout is set
     if ( isset( $settings->layout ) )
         $classes[] = $settings->layout;
+
+    // Gallery
+    if ( sell_media_is_gallery_page() )
+        $classes[] = 'sell-media-gallery-page';
 
     return $classes;
 }
@@ -104,6 +110,7 @@ add_filter( 'body_class', 'sell_media_body_class' );
 
 /**
  * Adds a custom query var for gallery links
+ *
  * @param  $vars Existing query vars
  * @return $vars Updated query vars
  * @since 2.0.1
@@ -113,6 +120,19 @@ function sell_media_add_query_vars_filter( $vars ){
     return $vars;
 }
 add_filter( 'query_vars', 'sell_media_add_query_vars_filter' );
+
+/**
+ * Checks if on sell media gallery page
+ *
+ * @return boolean true/false
+ * @since 2.0.1
+ */
+function sell_media_is_gallery_page(){
+    global $post;
+
+    if ( sell_media_has_multiple_attachments( $post->ID ) && empty( get_query_var( 'id' ) ) )
+        return true;
+}
 
 /**
  * Add custom class to nav menu items
