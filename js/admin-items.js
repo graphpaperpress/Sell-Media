@@ -89,15 +89,8 @@ jQuery( document ).ready(function( $ ){
         var id = $(this).data('id');
         $('.sell-media-attachment[data-post_id="' + id +'"]').remove();
 
-        // Update the array
-        var array = [];
-        $('.sell-media-upload-list li').each(function(){
-            array.push($(this).data('post_id'));
-        });
-        var new_array = array.join(',');
-
-        // Set the new value
-        $('#sell-media-files').val(new_array);
+        // Update the file list hidden field
+        update_files();
 
     });
 
@@ -105,15 +98,14 @@ jQuery( document ).ready(function( $ ){
      * Update the file list hidden field
      */
     function update_files(){
-        var old_value = $('#sell-media-files').val(),
-            arr = old_value === '' ? [] : old_value.split(',');
-
+        var array = [];
         $('.sell-media-upload-list li').each(function(){
-            arr.push($(this).data('post_id'));
+            array.push($(this).data('post_id'));
         });
+        var new_array = array.join(',');
 
-        var new_value = arr.join(',');
-        $('#sell-media-files').val(new_value);
+        // Set the new value
+        $('#sell-media-attachment-id').val(new_array);
     }
 
     /**

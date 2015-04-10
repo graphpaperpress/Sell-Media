@@ -359,43 +359,18 @@ function sell_media_is_license_term_page(){
 
 
 /**
- * Get custom fields
- *
- * @author Thad Allender
- * @since 2.0.1
- */
-function sell_media_get_custom_field( $value ) {
-    global $post;
-
-    $custom_field = get_post_meta( $post->ID, $value, true );
-    if ( !empty( $custom_field ) )
-        return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
-
-    return false;
-}
-
-/**
  * Get Attachments
  *
- * All Sell Media uploads are assigned a post_parent so we can better leverage core
- * Legacy Sell Media uploads were saved as an integer in post meta.
+ * Get attachment ids from post meta.
  * This function checks for both and returns a WP_Post object
  *
- * @var $post_id
+ * @param $post_id
  * @return WP_Post object
  * @since 2.0.1
  */
 function sell_media_get_attachments( $post_id ) {
-
-    $attachments = '';
-
-    if ( get_attached_media( '', $post_id ) ) {
-        $attachments = get_attached_media( '', $post_id );
-    } else {
-        $attachment_id = get_post( get_post_meta( $post_id, '_sell_media_attachment_id', true ) );
-        $attachments = array( get_post( $attachment_id ) );
-    }
-    return $attachments;
+    $meta = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+    return ( ! empty ( $meta ) ) ? explode( ',', $meta ) : false;
 }
 
 /**

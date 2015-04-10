@@ -76,18 +76,17 @@ function sell_media_files_meta_box( $post ) {
 
     <ul class="attachments sell-media-upload-list">
         <?php
-            $attachments = sell_media_get_attachments( $post->ID );
-            $attachment_ids = array();
-            if ( $attachments ) foreach ( $attachments as $attachment ) {
-                $attachment_ids[] = $attachment->ID;
-                echo sell_media_list_uploads( $attachment->ID );
+            $attachment_ids = sell_media_get_attachments( $post->ID );
+            // print_r($attachment_ids);
+            if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+                echo sell_media_list_uploads( $attachment_id );
             }
         ?>
     </ul>
 
     <?php do_action( 'sell_media_after_files_meta_box', $post ); ?>
     <!-- This hidden field holds all attached file ids -->
-    <input type="hidden" name="sell_media_files" id="sell-media-files" class="sell-media-files" value="<?php echo implode( ',', $attachment_ids ); ?>"/>
+    <input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
 <?php }
 
 /**
@@ -183,19 +182,11 @@ function sell_media_save_custom_meta( $post_id ) {
 
                 if ( $new && $new != $old ) {
 
-                    // Loop over attachment ids, assign post parent, and move files into protected directory
-                    if ( $field == 'sell_media_files' ) {
-
+                    // Loop over attachment ids and move files into protected directory
+                    if ( $field == '_sell_media_attachment_id' ) {
                         $attachment_ids = explode( ',', $_POST[ $field ] );
                         if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-                            $attachment = get_post( $attachment_id );
-                            if ( $attachment->ID != $post_id ) {
-                                $attachment->post_parent = $post_id;
-                                $result = wp_update_post( $attachment );
-                                if ( $result ) {
-                                    sell_media_move_file( $attachment_id );
-                                }
-                            }
+                            sell_media_move_file( $attachment_id );
                         }
                     }
 
@@ -299,7 +290,7 @@ add_action( 'wp_ajax_sell_media_upload_bulk_callback', 'sell_media_upload_bulk_c
 function sell_media_meta_box_fields() {
 
     $fields = array(
-        'sell_media_files',
+        '_sell_media_attachment_id',
         'sell_media_price',
         'sell_media_price_group'
     );
