@@ -157,7 +157,7 @@ function sell_media_gallery( $post_id ) {
             $html .= '</div>';
         }
     }
-    return $html;
+    return apply_filters( 'sell_media_gallery', $html, $post_id );
 }
 
 /**
