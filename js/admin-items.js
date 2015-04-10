@@ -138,8 +138,12 @@ jQuery( document ).ready(function( $ ){
     $('#sell-media-upload-bulk-processor').on('click', function( event ){
         event.preventDefault();
 
+        var selector = $(this);
+
+        $(selector).text($(selector).data('uploading-text'));
+
         var directory = $('#sell-media-upload-bulk-selector').val(),
-            post_id = $('.sell-media-upload-button button').data('id');
+            post_id = $('.sell-media-upload-button').data('id');
 
         var data = {
                 action: "sell_media_upload_bulk_callback",
@@ -155,6 +159,7 @@ jQuery( document ).ready(function( $ ){
                 success: function( msg ){
                     $('.sell-media-upload-list').append( msg );
                     update_files();
+                    $(selector).text($(selector).data('default-text'));
                     //console.log(msg);
                 }
             });

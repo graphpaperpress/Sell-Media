@@ -70,7 +70,7 @@ function sell_media_files_meta_box( $post ) {
                 <option <?php selected( $saved, basename( $directory ) ); ?> value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
             <?php endforeach; ?>
         </select>
-        <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
+        <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php _e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php _e( 'Uploading files...', 'sell_media' ); ?>" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
         <?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
     </div>
 

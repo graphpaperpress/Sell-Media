@@ -182,6 +182,8 @@
     -moz-transition: opacity 0.25s ease;
     -o-transition: opacity 0.25s ease;
     transition: opacity 0.25s ease;
+    /* prevents flickering */
+    -webkit-backface-visibility: hidden;
 }
 .sell-media-attachment:hover img {
     opacity: 0.75;

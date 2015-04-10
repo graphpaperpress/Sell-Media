@@ -84,15 +84,24 @@ function sell_media_admin_messages() {
 
                             $og_size = $images_obj->get_original_image_size( $post->ID );
 
-                            $message = 'This image (' . $og_size['original']['width'] . ' x ' . $og_size['original']['height'] . ') is smaller than the available size(s), so these sizes won\'t be available for sale. <br />';
-                            foreach( $download_sizes['unavailable'] as $unavailable ){
-                                $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['height'] . ')<br />';
+                            if ( sell_media_has_multiple_attachments( $post->ID ) ) {
+
+                                $message = __( 'Some of these images are smaller than the size(s) that you are selling, so these sizes won\'t be available for sale.', 'sell_media' );
+
+                            } else {
+
+                                $message = sprintf( __( 'This image (%1$s x %2$s) is smaller than the size(s) that you are selling, so these sizes won\'t be available for sale. <br />', 'sell_media' ), $og_size['original']['width'], $og_size['original']['height'] );
+                                foreach( $download_sizes['unavailable'] as $unavailable ){
+                                    $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['height'] . ')<br />';
+                                }
+
                             }
 
                             $notices[] = array(
                                 'slug' => 'download-sizes',
                                 'message' => $message
-                                );
+                            );
+
                         }
                     }
                 }

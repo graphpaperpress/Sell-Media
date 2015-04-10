@@ -140,8 +140,8 @@ function sell_media_gallery( $post_id ) {
          */
         $attachment_id = get_query_var( 'id' );
         if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
+            $html .= sell_media_item_icon( $attachment_id, 'large', false );
             $html .= sell_media_gallery_navigation( $attachment_id );
-            $html .= sell_media_item_icon( $attachment_id, 'large' );
         }
         /**
          * If the query var doesn't exist,
