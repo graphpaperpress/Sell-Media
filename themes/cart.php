@@ -10,30 +10,16 @@
  * plugin settings
  */
 $settings = sell_media_get_plugin_options();
-// check price
-$custom_price = get_post_meta( $_POST['product_id'], 'sell_media_price', true );
+
 // check if is package
 $is_package = get_post_meta( $_POST['product_id'], '_sell_media_is_package', true );
 // check if has assigned price group
 $has_price_group = Sell_Media()->products->has_price_group( $_POST['product_id'] );
-// check if has licenses
+// assign price
+$price = ( $has_price_group ) ? 0 : get_post_meta( $_POST['product_id'], 'sell_media_price', true );
+// assign licenses
 $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
 
-// set default displayed price
-if ( $has_price_group ) {
-    $price = 0;
-} elseif ( ! empty( $custom_price ) ) {
-    $price = number_format( $custom_price, 2, '.', '');
-} else {
-    $price = number_format( $settings->default_price, 2, '.', '');
-}
-
-// set licenses
-if ( $licenses ) {
-    $term_id = $licenses[0]->term_id;
-} else {
-    $term_id = null;
-}
 ?>
 <div class="main-container sellMediaCart_shelfItem">
     <span class="close">&times;</span>
@@ -68,12 +54,15 @@ if ( $licenses ) {
                 <input class="item_usage" type="text" value="" />
                 <input class="item_license" type="text" value="" />
             </form>
+
             <?php do_action( 'sell_media_above_item_form' ); ?>
             <?php do_action( 'sell_media_cart_above_size' ); ?>
+
             <?php if ( $is_package ) : ?>
                 <p class="sell-media-package-excerpt"><?php echo sell_media_get_excerpt( $_POST['product_id'] ); ?></p>
                 <p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo get_permalink( $_POST['product_id'] ); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
             <?php endif; ?>
+
             <div id="sell_media_download_wrapper">
                 <?php if ( ! $is_package && $has_price_group ) : ?>
                     <fieldset id="sell_media_download_size_fieldset">
@@ -102,35 +91,34 @@ if ( $licenses ) {
                 <?php else : ?>
                     <input id="sell_media_item_base_price" type="hidden" value="<?php echo $price; ?>" data-price="<?php echo $price; ?>" data-id="original" data-size="original" />
                 <?php endif; ?>
+
                 <?php do_action( 'sell_media_cart_below_size' ); ?>
                 <?php do_action( 'sell_media_cart_above_licenses' ); ?>
+
                 <?php if ( count( $licenses ) > 0 ) : ?>
                     <fieldset id="sell_media_download_license_fieldset">
                         <legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
                         <select id="sell_media_item_license" class="sum" required>
                             <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
-                            <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
+                            <?php wp_dropdown_categories( array( 'name' => 'sell_media_item_license', 'id' => 'sell_media_item_license', 'class' => 'sell_media_item_license', 'taxonomy' => 'licenses' ) ); ?>
+                            <?php // sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                         </select>
                     </fieldset>
-                <?php elseif ( ! empty( $term_id ) ) : ?>
-                    <fieldset id="sell_media_download_license_fieldset">
-                        <div id="sell_media_item_license" data-id="<?php echo $term_id; ?>" data-value="<?php echo $licenses[0]->slug; ?>" data-taxonomy="licenses" data-name="<?php echo $licenses[0]->name; ?>" data-price="<?php echo str_replace('%', '', sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ) ); ?>">
-                            <?php $markup = sell_media_get_term_meta( $licenses[0]->term_id, 'markup', true ); ?>
-                            <?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?>: <?php echo $licenses[0]->name; ?><?php if ( $markup ) : ?> (<?php echo $markup; ?> markup) <?php endif; ?>
-                        </div>
-                    </fieldset>
-                <?php else : ?>
-                    <?php // no license ?>
                 <?php endif; ?>
             </div>
+
             <?php do_action( 'sell_media_cart_below_licenses' ); ?>
+
             <div class="total-container group">
                 <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price" data-price=<?php echo $price; ?>><?php echo $price; ?></span></span>
             </div>
+
             <div class="button-container group">
                 <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
             </div>
+
             <footer><?php sell_media_plugin_credit(); ?></footer>
+
         </section>
     </div>
 </div>
