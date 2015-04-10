@@ -86,11 +86,11 @@ function sell_media_admin_messages() {
 
                             if ( sell_media_has_multiple_attachments( $post->ID ) ) {
 
-                                $message = __( 'Some of these images are smaller than the size(s) that you are selling, so these sizes won\'t be available for sale.', 'sell_media' );
+                                $message = __( 'Some of these images are smaller than the size(s) that you are selling, so these sizes won\'t be available for sale. Either upload higher resolution images, or decrease the sizes that you\'re selling.', 'sell_media' );
 
                             } else {
 
-                                $message = sprintf( __( 'This image (%1$s x %2$s) is smaller than the size(s) that you are selling, so these sizes won\'t be available for sale. <br />', 'sell_media' ), $og_size['original']['width'], $og_size['original']['height'] );
+                                $message = sprintf( __( 'This image (%1$s x %2$s) is smaller than the size(s) that you are selling, so these sizes won\'t be available for sale. Either upload higher resolution images, or decrease the sizes that you\'re selling.<br />', 'sell_media' ), $og_size['original']['width'], $og_size['original']['height'] );
                                 foreach( $download_sizes['unavailable'] as $unavailable ){
                                     $message .= $unavailable['name'] . ' (' . $unavailable['width'] . ' x ' . $unavailable['height'] . ')<br />';
                                 }
@@ -111,7 +111,6 @@ function sell_media_admin_messages() {
         foreach( $notices as $notice ){
             add_settings_error( 'sell-media-notices', 'sell-media-notice-' . $notice['slug'], $notice['message'], 'updated' );
         }
-
 
         settings_errors( 'sell-media-notices' );
     }
