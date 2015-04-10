@@ -100,8 +100,7 @@ $licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
                         <legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
                         <select id="sell_media_item_license" class="sum" required>
                             <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
-                            <?php wp_dropdown_categories( array( 'name' => 'sell_media_item_license', 'id' => 'sell_media_item_license', 'class' => 'sell_media_item_license', 'taxonomy' => 'licenses' ) ); ?>
-                            <?php // sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
+                            <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                         </select>
                     </fieldset>
                 <?php endif; ?>
