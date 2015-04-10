@@ -125,15 +125,15 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
  */
 function sell_media_item_icons( $post_id ) {
     if ( sell_media_has_multiple_attachments( $post_id ) ) {
-        $attachments = get_attached_media( '', $post_id );
+        $attachments = sell_media_get_attachments ( $post_id );
         $html = '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
         if ( $attachments ) foreach ( $attachments as $attachment ) {
             $attr = array(
                 'class' => 'sell-media-gallery-image'
             );
             $html .= '<div class="sell-media-gallery-item">';
-            $html .= '<a href="' . get_permalink( $attachment->ID ). '">';
-            $html .= wp_get_attachment_image( $attachment->ID, 'medium', '', $attr );
+            $html .= '<a href="' . get_permalink( $attachment ). '">';
+            $html .= wp_get_attachment_image( $attachment, 'medium', '', $attr );
             $html .= '</a>';
             $html .= '</div>';
         }
