@@ -134,7 +134,7 @@ function sell_media_gallery( $post_id ) {
         $attachment_id = get_query_var( 'id' );
         if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
             // Image navigation
-            echo sell_media_gallery_navigation();
+            $html .= sell_media_gallery_navigation( $attachment_id );
             $html .= sell_media_item_icon( $attachment_id, 'large' );
         }
         /**
@@ -161,40 +161,29 @@ function sell_media_gallery( $post_id ) {
 }
 
 /**
- * Get item icons
+ * Display Gallery Image Navigation
  *
- * Similar to the function above sell_media_item
- * But returns multiple icons
+ * returns previous image / next image links
  */
-function sell_media_gallery_navigation() {
+function sell_media_gallery_navigation( $attachment_id ) {
     global $post;
 
-    $attachment_id = get_query_var( 'id' );
     $ids = explode( ',', get_post_meta( $post->ID, '_sell_media_attachment_id', true ) );
 
-    if ( ! empty( $attachment_id ) ) {
-        // current image id in array
-        $current_image = array_search( $attachment_id, $ids);
-        // next image id in array
-        $next_image = $current_image + 1;
-        // previous image id in array
-        $prev_image = $current_image - 1;
+    // current image id in array
+    $current_image = array_search( $attachment_id, $ids);
 
-        $html = '<div class="sell-media-gallery-navigation">';
+    $html = '<div class="sell-media-gallery-navigation">';
+    // previous image link
+    if ( array_key_exists( $current_image - 1, $ids ) )
+        $html .= '<a href="' . add_query_arg( 'id', $ids[$current_image - 1], get_permalink() ) . '" class="sell-media-gallery-prev">' . __( 'Previous Image', 'sell_media' ) . '</a>';
+    // back to gallery link
+    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index">' . __( 'Back to Gallery', 'sell_media' ) . '</a>';
+    // next image link
+    if ( array_key_exists( $current_image + 1, $ids ) )
+        $html .= '<a href="' . add_query_arg( 'id', $ids[$current_image + 1], get_permalink() ) . '"class="sell-media-gallery-next">' . __( 'Next Image', 'sell_media' ) . '</a>';
+    $html .= '</div>';
 
-        // previous image link
-        if ( array_key_exists( $prev_image, $ids ) )
-            $html .= '<a href="' . add_query_arg( 'id', $ids[$prev_image], get_permalink() ) . '" class="sell-media-gallery-prev">' . __( 'Previous Image', 'sell_media' ) . '</a>';
-
-        // back to gallery link
-        $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index">' . __( 'Back to Gallery', 'sell_media' ) . '</a>';
-
-        // next image link
-        if ( array_key_exists( $next_image, $ids ) )
-            $html .= '<a href="' . add_query_arg( 'id', $ids[$next_image], get_permalink() ) . '"class="sell-media-gallery-next">' . __( 'Next Image', 'sell_media' ) . '</a>';
-
-        $html .= '</div>';
-    }
     return $html;
 }
 
