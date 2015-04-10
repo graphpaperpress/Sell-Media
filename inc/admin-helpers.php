@@ -84,9 +84,13 @@ add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );
  */
 function sell_media_list_uploads( $attachment_id ) {
 
-    $html .= '<li class="attachment" data-post_id="' . $attachment_id . '">';
+    if ( ! wp_get_attachment_url( $attachment_id ) )
+        return;
+
+    $html .= '<li class="attachment sell-media-attachment" data-post_id="' . $attachment_id . '">';
     $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment_id . '&action=edit' ) . '" target="_blank">';
-    $html .= wp_get_attachment_image( $attachment_id, 'medium' );
+    $html .= '<span class="sell-media-delete dashicons dashicons-no" data-id="' . $attachment_id . '"></span>';
+    $html .= wp_get_attachment_image( $attachment_id, 'medium', true );
     $html .= '</a>';
     $html .= '</li>';
 

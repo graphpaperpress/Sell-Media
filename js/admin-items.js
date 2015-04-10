@@ -80,6 +80,28 @@ jQuery( document ).ready(function( $ ){
     });
 
     /**
+     * Remove from file list
+     */
+    $('.sell-media-delete').on('click', function( event ){
+        event.preventDefault();
+
+        // Remove the file
+        var id = $(this).data('id');
+        $('.sell-media-attachment[data-post_id="' + id +'"]').remove();
+
+        // Update the array
+        var array = [];
+        $('.sell-media-upload-list li').each(function(){
+            array.push($(this).data('post_id'));
+        });
+        var new_array = array.join(',');
+
+        // Set the new value
+        $('#sell-media-files').val(new_array);
+
+    });
+
+    /**
      * Update the file list hidden field
      */
     function update_files(){
@@ -147,45 +169,4 @@ jQuery( document ).ready(function( $ ){
 
     });
 
-    // $('#sell_media_bulk_upload_form').on('submit', function( event ){
-    //     event.preventDefault();
-
-    //     var _post_ids = [];
-
-    //     $('.sell-media-bulk-list li').each(function(){
-    //         _post_ids.push( $(this).attr('data-post_id') );
-    //     });
-
-    //     if ( _post_ids.length === 0 ) return;
-
-    //     $('#sell_media_bulk_upload_save_button').attr('disabled', true).val('Saving...');
-
-    //     $.ajax({
-    //         data: 'action=sell_media_bulk_update_collection&post_ids=' + _post_ids + '&' + $('#sell_media_bulk_upload_form').serialize(),
-    //         type: "POST",
-    //         url: ajaxurl,
-    //         success: function( msg ){
-    //             $('#sell_media_bulk_upload_save_button').removeAttr('disabled').val('Saved!');
-    //         }
-    //     });
-    // });
-
-    // // Save Package
-    // $('#sell_media_package_upload_form').on('submit', function( event ){
-    //     event.preventDefault();
-
-    //     $('#sell_media_package_upload_save_button').attr('disabled', true).val('Saving...');
-
-    //     $.ajax({
-    //         data: 'action=sell_media_package_update&' + $('#sell_media_package_upload_form').serialize(),
-    //         type: "POST",
-    //         url: ajaxurl,
-    //         success: function(msg){
-    //             $('#sell_media_package_upload_save_button').removeAttr('disabled').val('Saved');
-    //             $('#sell_media_package_edit_link a').attr('href', "post.php?post=" + msg + "&action=edit" );
-    //             $('#sell_media_package_edit_link').show();
-
-    //         }
-    //     });
-    // });
 });

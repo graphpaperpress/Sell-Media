@@ -401,7 +401,7 @@ function sell_media_get_attachments( $post_id ) {
 /**
  * Check if item has multiple attachments
  */
-function sell_media_has_multiple_attachments() {
+function sell_media_has_multiple_attachments( $post_id ) {
 
     $attachments = sell_media_get_attachments( $post_id );
     $count = count( $attachments );

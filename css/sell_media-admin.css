@@ -102,11 +102,8 @@
 
 /* Media attachment edit page
 -------------------------------------------------------------- */
-#poststuff #sell-media-tabs { margin-top: 0; padding: 0 0 0 10px; }
 .field-has-button { margin-right: 10px; float: left; }
 .sell-media-image { margin: 1em 0 0; }
-.sell-media-upload { background: #FDFDFD; padding: 4em; text-align: center; border: 1px solid #dfdfdf; }
-.sell-media-upload .button { font-size: 14px; height: 46px; line-height: 44px; padding: 0 36px; }
 .compat-field-sell th { padding: 0 5px 0 0; }
 .compat-field-sell input[type="checkbox"] { width: auto; }
 
@@ -172,6 +169,34 @@
     color: #666;
     font-style: italic;
     margin-left: 10px;
+}
+.sell-media-upload-options {
+    vertical-align: -webkit-baseline-middle;
+}
+.sell-media-attachment:nth-child(4n+1){
+    clear: left;
+}
+.sell-media-attachment img {
+    opacity: 1;
+    -webkit-transition: opacity 0.25s ease;
+    -moz-transition: opacity 0.25s ease;
+    -o-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
+}
+.sell-media-attachment:hover img {
+    opacity: 0.75;
+}
+.sell-media-attachment .sell-media-delete {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    right: 14px;
+    text-decoration: none;
+    color: white;
+    z-index: 10;
+}
+.sell-media-attachment:hover .sell-media-delete {
+    display: inline-block;
 }
 
 /* Term meta

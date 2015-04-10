@@ -53,24 +53,25 @@ function sell_media_files_meta_box( $post ) {
     wp_nonce_field( '_sell_media_meta_box_nonce', 'sell_media_meta_box_nonce' );
     do_action( 'sell_media_before_files_meta_box', $post ); ?>
 
-    <div class="sell-media-upload">
-        <p><input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" /></p>
-        <p><a href="" class="sell-media-upload-options" data-show-text="+ <?php _e( 'More options', 'sell_media' ); ?>" data-hide-text="- <?php _e( 'Hide options', 'sell_media' ); ?>">+ <?php _e( 'More options', 'sell_media' ); ?></a></p>
+    <div id="sell-media-upload-field" class="sell-media-field">
+        <input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" />
+        <span class="desc"><a href="" class="sell-media-upload-options" data-show-text="+ <?php _e( 'More options', 'sell_media' ); ?>" data-hide-text="- <?php _e( 'Hide options', 'sell_media' ); ?>">+ <?php _e( 'More options', 'sell_media' ); ?></a></span>
+    </div>
 
-        <div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
-            <select id="sell-media-upload-bulk-selector" value="">
-                <option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
-                <?php
-                $saved = null;
-                $directories = sell_media_get_bulk_upload_directories();
-                if ( $directories ) foreach ( $directories as $directory ) : ?>
-                    <option <?php selected( $saved, basename( $directory ) ); ?> value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
-                <?php endforeach; ?>
-            </select>
-            <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
-            <p class="desc"><?php printf( __( 'Upload folders of images using the options above. Add new folders inside wp-content/uploads/sell_media/packages/. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a>.', 'sell_media' ), 'http://graphpaperpress.com/docs/#lightroom' ); ?></p>
-            <?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
-        </div>
+    <div id="sell-media-upload-show-options" class="sell-media-upload-show-options sell-media-field" style="display:none;">
+        <h4><?php _e( 'Bulk upload', 'sell_media' ); ?></h4>
+        <p class="description"><?php printf( __( 'Add new folders of images inside wp-content/uploads/sell_media/packages/ by using an FTP application or by <a href="%1$s" target="_blank">exporting directly from Lightroom</a>. Then, select the folder below to process the bulk upload.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#lightroom' ); ?></p>
+        <select id="sell-media-upload-bulk-selector" value="">
+            <option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
+            <?php
+            $saved = null;
+            $directories = sell_media_get_bulk_upload_directories();
+            if ( $directories ) foreach ( $directories as $directory ) : ?>
+                <option <?php selected( $saved, basename( $directory ) ); ?> value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
+        <?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
     </div>
 
     <ul class="attachments sell-media-upload-list">
