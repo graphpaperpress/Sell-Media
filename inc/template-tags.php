@@ -158,7 +158,6 @@ function sell_media_gallery( $post_id ) {
                 $html .= '<a href="' . add_query_arg( 'id', $attachment_id, get_permalink() ) . '">';
                 $html .= wp_get_attachment_image( $attachment_id, 'medium', '', $attr );
                 $html .= '</a>';
-                $html .= '<p>' . sell_media_item_buy_button( $attachment_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | <a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $attachment_id ) . '" class="add-to-lightbox" id="lightbox-' . $attachment_id . '" data-id="' . $attachment_id . '">' . sell_media_get_lightbox_text( $attachment_id ) . '</a> | <a href="' . add_query_arg( 'id', $attachment_id, get_permalink() ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
                 $html .= '</div>';
             }
             $html .= '</div>';
@@ -182,10 +181,10 @@ function sell_media_gallery_navigation( $attachment_id ) {
 
     $html = '<div class="sell-media-gallery-navigation">';
     if ( array_key_exists( $current_image - 1, $attachment_ids ) )
-        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) . '" class="sell-media-gallery-prev">' . __( 'Previous Image', 'sell_media' ) . '</a>';
-    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index">' . __( 'Back to Gallery', 'sell_media' ) . '</a>';
+        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span></a>';
+    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Gallery', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-up-alt"></span></a>';
     if ( array_key_exists( $current_image + 1, $attachment_ids ) )
-        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) . '"class="sell-media-gallery-next">' . __( 'Next Image', 'sell_media' ) . '</a>';
+        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-right-alt"></span></a>';
     $html .= '</div>';
 
     return apply_filters( 'sell_media_gallery_navigation', $html, $attachment_id );

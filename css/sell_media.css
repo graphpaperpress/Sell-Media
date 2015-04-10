@@ -211,6 +211,11 @@ table.sell-media-products {
   float: none;
   width: 100%;
 }
+.sell-media-single-one-col .sell-media-meta .sell-media-button,
+.sell-media-single-one-col .sell-media-meta .sell-media-lightbox {
+  display: block;
+  text-align: center;
+}
 .sell-media-meta ul {
   list-style-position: inside;
   list-style: none;
@@ -244,6 +249,18 @@ table.sell-media-products {
 }
 .sell-media-gallery-item:nth-child(3n+1) {
   clear: left;
+}
+.sell-media-gallery-navigation {
+  margin: 24px auto;
+  text-align: center;
+}
+.sell-media-gallery-navigation a {
+  margin-right: 24px;
+  text-decoration: none;
+  border: 0 !important;
+}
+.sell-media-gallery-navigation a:last-child {
+  margin-right: 0;
 }
 
 /*= Archives

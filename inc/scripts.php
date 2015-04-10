@@ -26,7 +26,7 @@ function sell_media_scripts( $hook ) {
     wp_enqueue_script( 'sell_media_jquery_cookie', SELL_MEDIA_PLUGIN_URL . 'js/jquery.cookie.js', array( 'jquery'), SELL_MEDIA_VERSION );
     wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery', 'sell_media_jquery_cookie' ), SELL_MEDIA_VERSION );
     wp_enqueue_script( 'sellMediaCart', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-    wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', array(), SELL_MEDIA_VERSION );
+    wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
     wp_enqueue_style( 'sell_media-widgets-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
 
     // register
