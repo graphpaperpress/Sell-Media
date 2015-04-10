@@ -104,6 +104,18 @@ function sell_media_body_class( $classes ) {
 add_filter( 'body_class', 'sell_media_body_class' );
 
 /**
+ * Adds a custom query var for gallery links
+ * @param  $vars Existing query vars
+ * @return $vars Updated query vars
+ * @since 2.0.1
+ */
+function sell_media_add_query_vars_filter( $vars ){
+    $vars[] = 'id';
+    return $vars;
+}
+add_filter( 'query_vars', 'sell_media_add_query_vars_filter' );
+
+/**
  * Add custom class to nav menu items
  */
 function sell_media_nav_menu_css_class( $classes, $item ){
@@ -385,6 +397,19 @@ function sell_media_has_multiple_attachments( $post_id ) {
         return true;
     }
 }
+
+/**
+ * Determines if a post, identified by the specified ID, exist
+ * within the WordPress database.
+ *
+ * @param    int    $id    The ID of the post to check
+ * @return   bool          True if the post exists; otherwise, false.
+ * @since    2.0.1
+ */
+function sell_media_post_exists( $id ) {
+    return is_string( get_post_status( $id ) );
+}
+
 
 /**
  * Get Currency

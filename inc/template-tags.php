@@ -123,23 +123,39 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
  * Similar to the function above sell_media_item
  * But returns multiple icons
  */
-function sell_media_item_icons( $post_id ) {
+function sell_media_gallery( $post_id ) {
+    $html = '';
     if ( sell_media_has_multiple_attachments( $post_id ) ) {
-        $attachments = sell_media_get_attachments ( $post_id );
-        $html = '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
-        if ( $attachments ) foreach ( $attachments as $attachment ) {
-            $attr = array(
-                'class' => 'sell-media-gallery-image'
-            );
-            $html .= '<div class="sell-media-gallery-item">';
-            $html .= '<a href="' . get_permalink( $attachment ). '">';
-            $html .= wp_get_attachment_image( $attachment, 'medium', '', $attr );
-            $html .= '</a>';
+
+        /**
+         * We pass the attachment id as a query var
+         * So if it exists, we show the attachment image
+         */
+        $attachment_id = get_query_var( 'id' );
+        if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
+            $html .= sell_media_item_icon( $attachment_id, 'large' );
+        }
+        /**
+         * If the query var doesn't exist,
+         * show the gallery grid view
+         */
+        else {
+            $attachments = sell_media_get_attachments ( $post_id );
+            $html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
+            if ( $attachments ) foreach ( $attachments as $attachment ) {
+                $attr = array(
+                    'class' => 'sell-media-gallery-image'
+                );
+                $html .= '<div class="sell-media-gallery-item">';
+                $html .= '<a href="' . add_query_arg( 'id', $attachment, get_permalink() ) . '">';
+                $html .= wp_get_attachment_image( $attachment, 'medium', '', $attr );
+                $html .= '</a>';
+                $html .= '</div>';
+            }
             $html .= '</div>';
         }
-        $html .= '</div>';
-        return $html;
     }
+    return $html;
 }
 
 /**
@@ -431,7 +447,7 @@ function sell_media_append_media( $post_id ) {
         echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         if ( sell_media_has_multiple_attachments( $post_id ) ) {
-            echo sell_media_item_icons( $post_id );
+            echo sell_media_gallery( $post_id );
         } else {
             sell_media_item_icon( $post_id, 'large' );
         }
