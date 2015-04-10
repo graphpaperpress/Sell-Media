@@ -202,8 +202,11 @@ function sell_media_content_loop( $post_id, $i ){
     $html .= '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
     $html .= '<span class="item-overlay">';
     $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-    $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
-    $html .= apply_filters( 'sell_media_item_overlay', $output='', $post_id );
+    // Don't show buy button, lightbox, etc, if post has multiple attachments
+    if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+        $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
+        $html .= apply_filters( 'sell_media_item_overlay', $output='', $post_id );
+    }
     $html .= '</span>';
     $html .= '</div>';
     $html .= '</div>';
