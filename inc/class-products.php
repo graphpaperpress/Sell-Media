@@ -132,6 +132,20 @@ Class SellMediaProducts {
         return $final_price;
     }
 
+    /**
+     * Get the original price of an item
+     *
+     * @param $post_id (int) The post id
+     * @return string (int)
+     */
+    public function get_original_price( $post_id=null ){
+
+        $price = sprintf( '%0.2f', ( float ) get_post_meta( $post_id, 'sell_media_price', true ) );
+        if ( $price )
+            return $price;
+    }
+
+
 
     /**
      * Retrieves the lowest price available of an item from the price groups
@@ -160,16 +174,13 @@ Class SellMediaProducts {
 
     public function has_price_group( $post_id=null ){
 
-        $term = null; // check all
+        $taxonomies = array( 'price-group', 'reprints-price-group' );
 
-        if ( has_term( $term, 'price-group', $post_id ) ) {
-            return true;
-        } elseif ( has_term( $term, 'reprints-price-group', $post_id ) ) {
-            return true;
-        } else {
-            return false;
+        foreach ( $taxonomies as $taxonomy ) {
+            if ( has_term( '', $taxonomy, $post_id ) ) {
+                return true;
+            }
         }
-
     }
 
 
@@ -227,6 +238,18 @@ Class SellMediaProducts {
         }
 
         return $markup_amount;
+    }
+
+    /**
+     * Determine if the item is a package
+     *
+     * @param $post_id (int) Post ID
+     * @return true/false (boolean)
+     */
+    public function is_package( $post_id=null ){
+
+        if ( get_post_meta( $post_id, '_sell_media_is_package', true ) )
+            return true;
     }
 
 }

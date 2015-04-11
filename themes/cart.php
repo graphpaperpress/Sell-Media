@@ -10,23 +10,25 @@
  * plugin settings
  */
 $settings = sell_media_get_plugin_options();
+$post_id = $_POST['product_id'];
+$attachment_id = $_POST['attachment_id'];
 
 // check if is package
-$is_package = get_post_meta( $_POST['product_id'], '_sell_media_is_package', true );
+$is_package = Sell_Media()->products->is_package( $post_id );
 // check if has assigned price group
-$has_price_group = Sell_Media()->products->has_price_group( $_POST['product_id'] );
+$has_price_group = Sell_Media()->products->has_price_group( $post_id );
 // assign price
-$price = ( $has_price_group ) ? 0 : get_post_meta( $_POST['product_id'], 'sell_media_price', true );
+$price = ( $has_price_group ) ? 0 : Sell_Media()->products->get_original_price( $post_id );
 // assign licenses
-$licenses = wp_get_post_terms( $_POST['product_id'], 'licenses' );
+$licenses = wp_get_post_terms( $post_id, 'licenses' );
 
 ?>
 <div class="main-container sellMediaCart_shelfItem">
     <span class="close">&times;</span>
     <div class="content">
         <header>
-            <figure><?php sell_media_item_icon( $_POST['product_id'] ); ?></figure>
-            <figcaption><?php echo get_the_title( $_POST['product_id'] ); ?></figcaption>
+            <figure><?php sell_media_item_icon( $attachment_id ); ?></figure>
+            <figcaption><?php echo get_the_title( $post_id ); ?></figcaption>
         </header>
         <section>
             <?php

@@ -405,6 +405,31 @@ function sell_media_get_attachments( $post_id ) {
 }
 
 /**
+ * Get Attachment
+ *
+ * If the item has multiple attachments,
+ * set the attachment_id to the query variable.
+ * Otherwise, get the attachments and assign
+ * the first as the $attachment_id.
+ *
+ * @param int $post_id
+ * @return int $attachment_id
+ * @since 2.0.1
+ */
+function sell_media_get_attachment_id( $post_id ) {
+    $attachment_id = '';
+
+    if ( sell_media_has_multiple_attachments( $post_id ) ) {
+        $attachment_id = get_query_var( 'id' );
+    } else {
+        $attachments = sell_media_get_attachments( $post_id );
+        $attachment_id = $attachments[0];
+    }
+
+    return $attachment_id;
+}
+
+/**
  * Check if item has multiple attachments
  */
 function sell_media_has_multiple_attachments( $post_id ) {

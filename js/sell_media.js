@@ -33,8 +33,8 @@ jQuery(document).ready(function($){
             data: {
                 "action": "sell_media_load_template",
                 "template": "cart.php",
-                "product_id": $(this).attr('data-sell_media-product-id'),
-                "attachment_id": $(this).attr('data-sell_media-thumb-id')
+                "product_id": $(this).data('product-id'),
+                "attachment_id": $(this).data('attachment-id')
             },
             success: function(msg){
                 $('#sell-media-dialog-box-target').fadeIn().html(msg);
