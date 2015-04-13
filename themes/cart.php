@@ -72,10 +72,12 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                         <legend><?php echo apply_filters( 'sell_media_download_size_text', 'Size' ); ?></legend>
                         <select id="sell_media_item_size" class="sum" required>
                             <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
+
+
                             <?php
-                                $prices = Sell_Media()->products->get_prices( $post_id );
+                                $prices = Sell_Media()->products->get_prices( $post_id, $attachment_id );
                                 if ( $prices ) foreach ( $prices as $k => $v ) {
-                                    if ( Sell_Media()->products->mimetype_is_image( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) ){
+                                    if ( wp_attachment_is_image( $attachment_id ) ) {
                                         $name = $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')';
                                         $dimensions = $v['width'] . ' x ' . $v['height'];
                                     } else {
@@ -83,7 +85,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                                         $dimensions = '';
                                     }
                                     $images_obj = Sell_Media()->images;
-                                    $download_sizes = $images_obj->get_downloadable_size( $post_id, null, true );
+                                    $download_sizes = $images_obj->get_downloadable_size( $post_id, $attachment_id, null, true );
                                     if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
                                         echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
                                     }

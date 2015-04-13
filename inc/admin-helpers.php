@@ -21,10 +21,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return [null]
  */
 function sell_media_move_file( $attachment_id ){
-    if ( Sell_Media()->products->mimetype_is_image( $attachment_id ) ) {
+    if ( wp_attachment_is_image( $attachment_id ) ) {
         Sell_Media()->images->move_image_from_attachment( $attachment_id );
     } else {
-        $attached_file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+        $attached_file = get_attached_file( $attachment_id );
         sell_media_default_move( $attached_file );
     }
 }

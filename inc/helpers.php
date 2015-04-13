@@ -830,22 +830,34 @@ function sell_media_get_file_extension( $str ) {
  * Returns the full system path to the file
  *
  * @since 1.8.5
- * @param product id ( post_id )
+ * @param attachment id ( attachment_id )
  * @return file path
  */
-function sell_media_get_original_protected_file( $product_id=null ){
+function sell_media_get_original_protected_file( $product_id=null, $attachment_id=null ){
 
-    $file = null;
-    // All uploads are saved to this meta field
-    // Single uploads are saved like /2014/14/file.zip
-    // Packages are saved like /packages/file.zip
-    $attached_file = get_post_meta( $product_id, '_sell_media_attached_file', true );
+    /**
+     * When we upload items into Sell Media, we move the original file
+     * into the protected wp-content/uploads/sell_media/* directory
+     * and copy all of the intermediate image sizes into the regular
+     * wp-content/uploads/* directory. Using get_attached_file()
+     * will not return the original, high resolution file. It will return
+     * only the largest publicly accessible (derived from Settings -> Media).
+     * So, we now need to build the path protected sell_media directory.
+     * Example (public): /var/www/wp.local/wp-content/uploads/2015/04/mansion.jpeg
+     * Example (protected): /var/www/wp.local/wp-content/uploads/sell_media/2015/04/mansion.jpeg
+     */
+
+    $wp_upload_dir = wp_upload_dir();
+    $protected_path = $wp_upload_dir['basedir'] . '/sell_media';
+
+    // Full system file path to the public low resolution version.
+    $unprotected_file_path = get_attached_file( $attachment_id );
+
     // Check if this item is a package and change the file location
-    $is_package = get_post_meta( $product_id, '_sell_media_is_package', true );
-    if ( $is_package ) {
-        $file = sell_media_get_packages_upload_dir() . '/' . $attached_file;
+    if ( Sell_Media()->products->is_package( $product_id ) ) {
+        $file = sell_media_get_packages_upload_dir() . '/' . basename( $unprotected_file_path );
     } else {
-        $file = sell_media_get_upload_dir() . '/' . $attached_file;
+        $file = str_replace( $wp_upload_dir['basedir'], $protected_path, $unprotected_file_path );
     }
 
     return apply_filters( 'sell_media_get_original_protected_file', $file );
@@ -864,8 +876,8 @@ function sell_media_get_original_protected_file( $product_id=null ){
  * @param width
  * @return resized image file path
  */
-function sell_media_resize_original_image( $product_id=null, $width=null, $height=null ){
-    $file_path = sell_media_get_original_protected_file( $product_id );
+function sell_media_resize_original_image( $product_id=null, $attachment_id=null, $width=null, $height=null ){
+    $file_path = sell_media_get_original_protected_file( $product_id, $attachment_id );
     $img = wp_get_image_editor( $file_path );
     if ( ! is_wp_error( $img ) ) {
         // resize if height and width supplied
@@ -880,38 +892,4 @@ function sell_media_resize_original_image( $product_id=null, $width=null, $heigh
         }
         $img->stream();
     }
-}
-
-/**
- * Is this an image?
- *
- * @since 1.0
- * @param string $file
- * @return bool (true/false)
- */
-function sell_media_is_image( $file ) {
-    $ext = sell_media_get_file_extension( $file );
-
-    switch ( strtolower( $ext ) ) {
-        case 'jpg';
-            $return = true;
-            break;
-        case 'png';
-            $return = true;
-            break;
-        case 'gif';
-            $return = true;
-            break;
-        case 'tif';
-            $return = true;
-        case 'tiff';
-            $return = true;
-        case 'psd';
-            $return = true;
-        default:
-            $return = false;
-            break;
-    }
-
-    return (bool) apply_filters( 'sell_media_is_image_filter', $return, $file );
 }

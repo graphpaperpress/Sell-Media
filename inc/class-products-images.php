@@ -21,7 +21,7 @@ class SellMediaImages extends SellMediaProducts {
      * Last, we copy (rename) our resized uploaded file to be the original
      * file.
      *
-     * @param $attached_file As WordPress sees it in *postmeta table
+     * @param $attachment_id As WordPress sees it in *postmeta table
      * "_wp_attached_file", i.e., YYYY/MM/file-name.ext
      * @since 1.0.1
      */
@@ -121,12 +121,10 @@ class SellMediaImages extends SellMediaProducts {
     *
     * @param (int)$post_id The post_id to the sell media item
     * @since 1.2.4
-    * @author Zane Matthew
     */
-    public function get_original_image_size( $post_id=null ){
+    public function get_original_image_size( $attachment_id=null ){
         // check if attachment is an image
-        $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-        if ( $this->mimetype_is_image( $attachment_id ) ) {
+        if ( wp_attachment_is_image( $attachment_id ) ) {
             $original_size = wp_get_attachment_image_src( $attachment_id, 'full' );
             return array(
                 'original'=> array(
@@ -134,8 +132,6 @@ class SellMediaImages extends SellMediaProducts {
                     'width' => $original_size[1]
                 )
             );
-        } else {
-            return false;
         }
     }
 
@@ -147,7 +143,7 @@ class SellMediaImages extends SellMediaProducts {
      *
      * @return Array of downloadable sizes or single size if $term_id is present
      */
-    public function get_downloadable_size( $post_id=null, $term_id=null, $size_not_available=false ){
+    public function get_downloadable_size( $post_id=null, $attachment_id=null, $term_id=null, $size_not_available=false ){
 
         $null = null;
         $download_sizes = array();
@@ -161,7 +157,7 @@ class SellMediaImages extends SellMediaProducts {
         $size_groups = sell_media_get_price_groups( $post_id, 'price-group' );
         if ( ! empty( $size_groups ) ){
 
-            $image = $this->get_original_image_size( $post_id );
+            $image = $this->get_original_image_size( $attachment_id );
 
             foreach( $size_groups as $size ){
 

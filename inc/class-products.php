@@ -49,11 +49,11 @@ Class SellMediaProducts {
      *
      * @return $prices (array)
      */
-    public function get_prices( $post_id=null, $taxonomy='price-group' ){
+    public function get_prices( $post_id=null, $attachment_id=null, $taxonomy='price-group' ){
         $i = 0;
 
         if ( $this->settings->hide_original_price !== 'yes' ){
-            $original_size = Sell_Media()->images->get_original_image_size( $post_id, false );
+            $original_size = Sell_Media()->images->get_original_image_size( $attachment_id );
             $prices[$i]['id'] = 'original';
             $prices[$i]['name'] = __( 'Original', 'sell_media' );
             $prices[$i]['description'] = __( 'The original high resolution source file', 'sell_media' );
@@ -62,7 +62,7 @@ Class SellMediaProducts {
             $prices[$i]['height'] = $original_size['original']['height'];
         }
 
-        if ( $this->mimetype_is_image( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) ){
+        if ( $this->has_image_attachments( $post_id ) ) {
             // check assigned price group. We're assuming there is just one.
             $term_parent = wp_get_post_terms( $post_id, $taxonomy );
 
@@ -100,7 +100,7 @@ Class SellMediaProducts {
      *
      * @return price on success false on failure
      */
-    public function get_price( $product_id=null, $price_id=null, $formatted=false, $taxonomy='price-group' ){
+    public function get_price( $product_id=null, $attachment_id=null, $price_id=null, $formatted=false, $taxonomy='price-group' ){
 
         $final_price = false;
 
@@ -112,8 +112,7 @@ Class SellMediaProducts {
         }
 
         // Use price group price
-        elseif ( ! empty( $price_id ) && $this->mimetype_is_image( get_post_meta( $product_id, '_sell_media_attachment_id', true ) )
-            && $price_id != 'original' ){
+        elseif ( ! empty( $price_id ) &&  wp_attachment_is_image( $attachment_id ) && $price_id != 'original' ) {
             foreach( $this->get_prices( $product_id, $taxonomy ) as $price ){
                 if ( $price_id == $price['id'] ){
                     $final_price = $price['price'];
@@ -185,19 +184,19 @@ Class SellMediaProducts {
 
 
     /**
-     * Checks if the attachment ID is an image mime type
+     * Checks if the post has image attachments
      *
      * @param $attachment_id ID of the attachment
      * @param $mimetype an array of mimetypes
      * @return boolean true/false
      * @since 1.6.9
      */
-    public function mimetype_is_image( $post_id=null, $mimetypes=array( 'image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/tiff', 'image/icon' ) ){
-        $attachment_mimetype = get_post_mime_type( $post_id );
-        if ( in_array( $attachment_mimetype, $mimetypes ) ) {
-            return true;
-        } else {
-            return false;
+    public function has_image_attachments( $post_id=null ){
+        $attachment_ids = sell_media_get_attachments( $post_id );
+        if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+            if ( wp_attachment_is_image( $attachment_id ) ) {
+                return true;
+            }
         }
     }
 

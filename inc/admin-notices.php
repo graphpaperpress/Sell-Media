@@ -71,10 +71,9 @@ function sell_media_admin_messages() {
                 global $post;
 
                 // don't show notice on packages
-                $is_package = get_post_meta( $post->ID, '_sell_media_is_package', true );
-                if ( ! $is_package ) {
+                if ( ! Sell_Media()->products->is_package( $post->ID ) ) {
 
-                    if ( Sell_Media()->products->mimetype_is_image( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) ) ){
+                    if ( Sell_Media()->products->has_image_attachments( $post->ID ) ) {
 
                         $images_obj = Sell_Media()->images;
 

@@ -702,11 +702,21 @@ Class SellMediaPayments {
         $tmp_links = array();
 
         if ( $products ) foreach( $products as $product ){
+
+            /**
+             * Legacy purchases didn't save attachment ID's
+             * so we need to derive the attachment ID from
+             * the _sell_media_attachment_id meta field.
+             * The first item in the array will be the attachment id.
+             */
+            $attachments = sell_media_get_attachments( $product['id'] );
+            $attachment_id = $attachments[0];
+
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
                 'payment_id' => $payment_id,
                 'product_id' => $product['id'],
-                'attachment_id' => ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : ''
+                'attachment_id' => ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : $attachment_id
             ) );
         }
 
