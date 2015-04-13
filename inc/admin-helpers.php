@@ -88,11 +88,9 @@ function sell_media_list_uploads( $attachment_id ) {
         return;
 
     $html  = '<li class="attachment sell-media-attachment" data-post_id="' . $attachment_id . '">';
-    $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment_id . '&action=edit' ) . '" target="_blank">';
-    $html .= '<span class="sell-media-edit dashicons dashicons-edit" data-id="' . $attachment_id . '"></span>';
+    $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment_id . '&action=edit' ) . '" class="sell-media-edit dashicons dashicons-edit" data-id="' . $attachment_id . '" target="_blank"></a>';
     $html .= '<span class="sell-media-delete dashicons dashicons-no" data-id="' . $attachment_id . '"></span>';
     $html .= wp_get_attachment_image( $attachment_id, 'medium', true );
-    $html .= '</a>';
     $html .= '</li>';
 
     return apply_filters( 'sell_media_list_uploads', $html, $attachment_id );

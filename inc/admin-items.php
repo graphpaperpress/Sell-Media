@@ -64,10 +64,9 @@ function sell_media_files_meta_box( $post ) {
         <select id="sell-media-upload-bulk-selector" value="">
             <option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
             <?php
-            $saved = null;
             $directories = sell_media_get_bulk_upload_directories();
             if ( $directories ) foreach ( $directories as $directory ) : ?>
-                <option <?php selected( $saved, basename( $directory ) ); ?> value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
+                <option value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
             <?php endforeach; ?>
         </select>
         <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php _e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php _e( 'Uploading files...', 'sell_media' ); ?>" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
