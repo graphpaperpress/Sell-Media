@@ -34,17 +34,12 @@ function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $e
  * Determines the image source for a product
  * @return (string) url to product image or feature image
  */
-function sell_media_item_image_src( $post_id=null ) {
+function sell_media_item_image_src( $attachment_id=null ) {
 
-    $attachment_id = get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true );
-    $image = wp_get_attachment_image_src( $attachment_id, 'medium' );
-    $featured_image_id = get_post_thumbnail_id( $_POST['product_id'] );
-    $featured_image = wp_get_attachment_image_src( $featured_image_id, 'medium' );
+    $image_attributes = wp_get_attachment_image_src( $attachment_id, 'medium', true );
 
-    if ( $image[0] )
-        $image = $image[0];
-    elseif ( $featured_image[0] )
-        $image = $featured_image[0];
+    if ( $image_attributes )
+        $image = $image_attributes[0];
     else
         $image = wp_mime_type_icon();
 

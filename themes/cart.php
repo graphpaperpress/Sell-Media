@@ -28,7 +28,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
     <div class="content">
         <header>
             <figure><?php sell_media_item_icon( $attachment_id ); ?></figure>
-            <figcaption><?php echo get_the_title( $post_id ); ?></figcaption>
+            <figcaption><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></figcaption>
         </header>
         <section>
             <?php
@@ -47,10 +47,10 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                  */
             ?>
             <form id="sell-media-cart-items" class="hide">
-                <input class="item_number" type="text" value="<?php echo $_POST['product_id']; ?>" />
-                <input class="item_name" type="text" value="<?php echo get_the_title( $_POST['product_id'] ); ?>" />
+                <input class="item_number" type="text" value="<?php echo $post_id; ?>" />
+                <input class="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
                 <input class="item_type" type="text" value="<?php if ( $is_package ) echo 'download'; else echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
-                <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $_POST['product_id'] ); ?>" />
+                <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $attachment_id ); ?>" />
                 <input class="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
                 <input class="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
                 <input class="item_usage" type="text" value="" />
@@ -61,8 +61,8 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
             <?php do_action( 'sell_media_cart_above_size' ); ?>
 
             <?php if ( $is_package ) : ?>
-                <p class="sell-media-package-excerpt"><?php echo sell_media_get_excerpt( $_POST['product_id'] ); ?></p>
-                <p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo get_permalink( $_POST['product_id'] ); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
+                <p class="sell-media-package-excerpt"><?php echo sell_media_get_excerpt( $post_id ); ?></p>
+                <p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo get_permalink( $post_id ); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
             <?php endif; ?>
 
             <div id="sell_media_download_wrapper">
@@ -72,9 +72,9 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                         <select id="sell_media_item_size" class="sum" required>
                             <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
                             <?php
-                                $prices = Sell_Media()->products->get_prices( $_POST['product_id'] );
+                                $prices = Sell_Media()->products->get_prices( $post_id );
                                 if ( $prices ) foreach ( $prices as $k => $v ) {
-                                    if ( Sell_Media()->products->mimetype_is_image( get_post_meta( $_POST['product_id'], '_sell_media_attachment_id', true ) ) ){
+                                    if ( Sell_Media()->products->mimetype_is_image( get_post_meta( $post_id, '_sell_media_attachment_id', true ) ) ){
                                         $name = $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')';
                                         $dimensions = $v['width'] . ' x ' . $v['height'];
                                     } else {
@@ -82,7 +82,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                                         $dimensions = '';
                                     }
                                     $images_obj = Sell_Media()->images;
-                                    $download_sizes = $images_obj->get_downloadable_size( $_POST['product_id'], null, true );
+                                    $download_sizes = $images_obj->get_downloadable_size( $post_id, null, true );
                                     if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
                                         echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
                                     }
@@ -102,7 +102,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                         <legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
                         <select id="sell_media_item_license" class="sum" required>
                             <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
-                            <?php sell_media_build_options( array( 'post_id' => $_POST['product_id'], 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
+                            <?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                         </select>
                     </fieldset>
                 <?php endif; ?>
