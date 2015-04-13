@@ -314,7 +314,7 @@ jQuery(document).ready(function($){
         } else {
             attachment_id = '';
         }
-        var post_id = $(this).data('post-id'),
+        var post_id = $(this).data('id'),
             selector = $('#sell-media-lightbox-content #sell-media-' + post_id);
 
         var data = {

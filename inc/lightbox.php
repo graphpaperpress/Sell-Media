@@ -33,7 +33,7 @@ function sell_media_lightbox_link( $post_id ) {
         $item['attachment_id'] = '';
     }
 
-    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" ' . $data_attachment_id . ' data-post-id="' . $post_id . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
+    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" ' . $data_attachment_id . ' data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
     return apply_filters( 'sell_media_lightbox_link', $html, $post_id );
 }
 
