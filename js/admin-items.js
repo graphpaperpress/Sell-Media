@@ -114,14 +114,7 @@ jQuery( document ).ready(function( $ ){
      */
     $('.sell-media-upload-options').on('click', function( event ){
         event.preventDefault();
-        var icon = $(this).find('span');
-        if ($(icon).hasClass('dashicons-arrow-up')){
-            $(icon).removeClass('dashicons-arrow-up');
-            $(icon).addClass('dashicons-arrow-down');
-        } else {
-            $(icon).removeClass('dashicons-arrow-down');
-            $(icon).addClass('dashicons-arrow-up');
-        }
+        $(this).find('span').toggleClass('dashicons-arrow-up dashicons-arrow-down');
         $('#sell-media-upload-show-options').toggle();
     });
 
