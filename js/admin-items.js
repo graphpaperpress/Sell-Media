@@ -114,7 +114,14 @@ jQuery( document ).ready(function( $ ){
      */
     $('.sell-media-upload-options').on('click', function( event ){
         event.preventDefault();
-        $(this).text( $(this).text() == $(this).data('show-text') ? $(this).data('hide-text') : $(this).data('show-text'));
+        var icon = $(this).find('span');
+        if ($(icon).hasClass('dashicons-arrow-up')){
+            $(icon).removeClass('dashicons-arrow-up');
+            $(icon).addClass('dashicons-arrow-down');
+        } else {
+            $(icon).removeClass('dashicons-arrow-down');
+            $(icon).addClass('dashicons-arrow-up');
+        }
         $('#sell-media-upload-show-options').toggle();
     });
 

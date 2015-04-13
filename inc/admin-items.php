@@ -55,7 +55,7 @@ function sell_media_files_meta_box( $post ) {
 
     <div id="sell-media-upload-field" class="sell-media-field">
         <input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" />
-        <span class="desc"><a href="" class="sell-media-upload-options" data-show-text="+ <?php _e( 'More options', 'sell_media' ); ?>" data-hide-text="- <?php _e( 'Hide options', 'sell_media' ); ?>">+ <?php _e( 'More options', 'sell_media' ); ?></a></span>
+        <span class="desc"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Options', 'sell_media' ); ?></a></span>
     </div>
 
     <div id="sell-media-upload-show-options" class="sell-media-upload-show-options sell-media-field" style="display:none;">
@@ -100,6 +100,9 @@ function sell_media_options_meta_box( $post ) {
     <div id="sell-media-price-field" class="sell-media-field">
         <label for="sell-media-price"><?php _e( 'Price', 'sell_media' ); ?> (<?php echo sell_media_get_currency_symbol(); ?>)</label>
         <input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo $price; ?>" />
+        <?php if ( sell_media_has_multiple_attachments( $post->ID ) ) { ?>
+            <span class="desc"><?php _e( 'The price of each original, high-resolution file.', 'sell_media' ); ?></span>
+        <?php } ?>
     </div>
 
     <div id="sell-media-price-group-field" class="sell-media-field">

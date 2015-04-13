@@ -102,30 +102,27 @@
 
 /* Media attachment edit page
 -------------------------------------------------------------- */
-.field-has-button { margin-right: 10px; float: left; }
-.sell-media-image { margin: 1em 0 0; }
-.compat-field-sell th { padding: 0 5px 0 0; }
-.compat-field-sell input[type="checkbox"] { width: auto; }
-
+.field-has-button {
+    margin-right: 10px;
+    float: left;
+}
+.sell-media-image {
+    margin: 1em 0 0;
+}
+.compat-field-sell th {
+    padding: 0 5px 0 0;
+}
+.compat-field-sell input[type="checkbox"] {
+    width: auto;
+}
 .sell-media-item-table .sell-media-upload-trigger {
     cursor: pointer;
     float: left;
-    }
-
+}
 .sell_media_item_page_sell_media_add_bulk .media-sidebar .compat-field-sell,
 .media-sidebar .compat-field-sell {
     display: none;
-    }
-
-.sell-media-ajax-loader {
-    background: url("../images/ajax-loader.gif") no-repeat center top;
-    height: 58px;
-    width: 100%;
-    text-align: center;
-    padding-top: 20px;
-    color: #BBB;
-    font-size: 12px;
-    }
+}
 
 /* Settings Page
 -------------------------------------------------------------- */
@@ -144,12 +141,6 @@
     content: "";
     display: table;
     clear: both;
-}
-.sell-media-temp-target {
-    background: url('../images/ajax-loader.gif') no-repeat center;
-    display: block;
-    height: 58px;
-    width: 58px;
 }
 .sell-media-field {
     display: block;
@@ -172,6 +163,13 @@
 }
 .sell-media-upload-options {
     vertical-align: -webkit-baseline-middle;
+    text-decoration: none;
+}
+.sell-media-upload-options .dashicons {
+    width: 13px;
+    height: 13px;
+    font-size: 13px;
+    vertical-align: baseline;
 }
 .sell-media-attachment:nth-child(4n+1){
     clear: left;
