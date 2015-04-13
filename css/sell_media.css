@@ -251,8 +251,7 @@ table.sell-media-products {
   clear: left;
 }
 .sell-media-gallery-navigation {
-  margin: 24px auto;
-  text-align: center;
+  float: right;
 }
 .sell-media-gallery-navigation a {
   margin-right: 24px;
@@ -261,6 +260,12 @@ table.sell-media-products {
 }
 .sell-media-gallery-navigation a:last-child {
   margin-right: 0;
+}
+.sell-media-gallery-navigation .dashicons,
+.sell-media-gallery-navigation .dashicons-before:before {
+  width: 13px;
+  height: 13px;
+  font-size: 13px;
 }
 
 /*= Archives

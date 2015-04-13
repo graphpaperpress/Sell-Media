@@ -174,13 +174,13 @@ function sell_media_gallery_navigation( $attachment_id ) {
     $attachment_ids = sell_media_get_attachments( $post->ID );
     $current_image = array_search( $attachment_id, $attachment_ids );
 
-    $html = '<div class="sell-media-gallery-navigation">';
+    $html = '<span class="sell-media-gallery-navigation">';
     if ( array_key_exists( $current_image - 1, $attachment_ids ) )
-        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span></a>';
-    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Gallery', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-up-alt"></span></a>';
+        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span> ' . __( 'Previous Image', 'sell_media' ) . '</a>';
+    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Gallery', 'sell_media' ) . '"><span class="dashicons dashicons-screenoptions"></span> ' . __( 'Gallery', 'sell_media' ) . '</a>';
     if ( array_key_exists( $current_image + 1, $attachment_ids ) )
-        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-right-alt"></span></a>';
-    $html .= '</div>';
+        $html .= '<a href="' . add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '">' . __( 'Next Image', 'sell_media' ) . ' <span class="dashicons dashicons-arrow-right-alt"></span></a>';
+    $html .= '</span>';
 
     return apply_filters( 'sell_media_gallery_navigation', $html, $attachment_id );
 }
@@ -384,6 +384,9 @@ function sell_media_breadcrumbs( $post_id ){
             $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
         }
         $html .= get_the_title( '', false );
+        if ( sell_media_has_multiple_attachments( $post_id ) && ! empty( get_query_var( 'id' ) ) ) {
+            $html .= sell_media_gallery_navigation( get_query_var( 'id' ) );
+        }
         $html .= '</div>';
 
         return apply_filters( 'sell_media_breadcrumbs', $html );
