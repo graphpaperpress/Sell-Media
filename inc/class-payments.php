@@ -30,8 +30,6 @@ Class SellMediaPayments {
         $meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
         if ( ! empty ( $meta ) ){
             return $unserilaized_meta = maybe_unserialize( $meta );
-        } else {
-            return false;
         }
     }
 
@@ -47,8 +45,6 @@ Class SellMediaPayments {
         $meta = $this->get_meta( $post_id );
         if ( is_array( $meta ) && array_key_exists( $key, $meta ) ) {
             return $meta[$key];
-        } else {
-            return false;
         }
     }
 
@@ -63,8 +59,6 @@ Class SellMediaPayments {
         $meta = $this->get_meta( $post_id );
         if ( is_array( $meta ) && array_key_exists( 'products', $meta ) ) {
             return maybe_unserialize( $meta['products'] );
-        } else {
-            return false;
         }
     }
 
@@ -123,8 +117,6 @@ Class SellMediaPayments {
         }
         if ( in_array( $type, $types ) ) {
             return true;
-        } else {
-            return false;
         }
     }
 
@@ -143,8 +135,6 @@ Class SellMediaPayments {
         }
         if ( in_array( $type, $types ) ) {
             return true;
-        } else {
-            return false;
         }
     }
 
@@ -563,6 +553,7 @@ Class SellMediaPayments {
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
+                        'attachment' => $paypal_args[ 'option_selection7_' . $i ],
                         'type' => $paypal_args[ 'option_selection1_' . $i ],
                         'size' => array(
                             'name' => $paypal_args[ 'option_selection4_' . $i ],
@@ -714,7 +705,8 @@ Class SellMediaPayments {
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
                 'payment_id' => $payment_id,
-                'product_id' => $product['id']
+                'product_id' => $product['id'],
+                'attachment_id' => ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : ''
             ) );
         }
 

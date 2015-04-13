@@ -17,36 +17,38 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return string
  * @since 0.1
  */
-function sell_media_list_downloads_shortcode( $tx=null ) {
+function sell_media_thanks_shortcode( $tx=null ) {
 
     do_action( 'sell_media_thanks_hook' );
 
-    $tx = null;
-
-    if ( isset( $_GET['tx'] ) && ! empty( $_GET['tx'] ) ) {
+    if ( ! empty( $_GET['tx'] ) ) {
         $tx = $_GET['tx'];
-    } elseif ( isset( $_POST['stripeToken'] ) && ! empty( $_POST['stripeToken'] ) ) {
+        $gateway = 'PayPal';
+    } elseif ( ! empty( $_POST['stripeToken'] ) ) {
         $tx = $_POST['stripeToken'];
+        $gateway = 'Stripe';
     } else {
         $tx = null;
     }
 
     if ( $tx ) {
-        $post_id = Sell_Media()->payments->get_id_from_tx( $transaction_id=$tx );
-        $html = null;
-        $html = apply_filters( 'sell_media_thanks_filter', $html );
+        $post_id = Sell_Media()->payments->get_id_from_tx( $tx );
+        $html  = null;
         $html .='<p class="sell-media-thanks-message">';
-        $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
+        if ( $post_id ) {
+            $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
+        } else {
+            $html .= __( 'We\'ve received your payment and are processing your order. We will email you the files shortly. Your patience is appreciated.', 'sell_media' );
+            $html .= wp_mail( get_option( 'admin_email' ), __( 'Unable to retrieve transaction ID', 'sell_media' ), sprintf( __( 'We have some good news and bad news. First the good news: Somebody just purchased from your store! The bad news: Your website was unable to retrieve transaction ID from %1$s. This is typically easy to fix. Please see these tips for resolving this issue: %2$s' ), $gateway, 'https://github.com/graphpaperpress/Sell-Media/issues/670#issuecomment-89428248' ) );
+        }
+
         $html .= '<script>sellMediaCart.empty();</script>';
         $html .= '</p>';
-        $html = apply_filters( 'sell_media_thanks_filter_below', $html );
-        return $html;
-    } else {
-        return false;
+        return apply_filters( 'sell_media_thanks_filter_below', $html );
     }
 
 }
-add_shortcode( 'sell_media_thanks', 'sell_media_list_downloads_shortcode' );
+add_shortcode( 'sell_media_thanks', 'sell_media_thanks_shortcode' );
 
 
 /**

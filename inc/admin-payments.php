@@ -400,7 +400,8 @@ function sell_media_payment_content( $column, $post_id ){
         case "products":
             $products = Sell_Media()->payments->get_products( $post_id );
             if ( $products ) foreach ( $products as $product ) {
-                echo $product['name'] . ' (' . $product['type'] . ')<br />';
+                $type = ( ! empty( $product['type'] ) ) ? ' (' . $product['type'] . ') ' : '';
+                echo $product['name'] . $type . '<br />';
             }
             break;
         case "customer":

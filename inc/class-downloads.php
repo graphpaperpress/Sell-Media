@@ -29,6 +29,7 @@ Class SellMediaDownload {
             $transaction_id = urldecode( $_GET['download'] );
             $payment_id = urldecode( $_GET['payment_id'] );
             $product_id = urldecode( $_GET['product_id'] );
+            $attachment_id = urldecode( $_GET['attachment_id'] );
 
             $verified = $this->verify_download_link( $transaction_id, $payment_id );
 
