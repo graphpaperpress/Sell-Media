@@ -59,8 +59,8 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  * Query lightbox items
  */
 function sell_media_lightbox_query() {
-    $html = '';
-    echo '<div class="sell-media">';
+    $html  = '';
+    $html .= '<div class="sell-media">';
 
     // Decode the lightbox array of IDs since they're encoded
     $items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
@@ -83,7 +83,7 @@ function sell_media_lightbox_query() {
             $i++;
             $class = ( $i %3 == 0 ) ? ' end' : '';
 
-            $html  = '<div id="sell-media-' . $item['post_id'] . '" class="sell-media-grid' . $class . '">';
+            $html .= '<div id="sell-media-' . $item['post_id'] . '" class="sell-media-grid' . $class . '">';
             $html .= '<div class="item-inner">';
             $html .= '<a href="' . $permalink . '">' . sell_media_item_icon( $image_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
             $html .= '<span class="item-overlay">';
@@ -91,16 +91,16 @@ function sell_media_lightbox_query() {
             $html .= '</span>';
             $html .= '</div>';
             $html .= '</div>';
-
-            echo $html;
         }
 
     } else {
 
-        echo __( 'Nothing saved in lightbox.', 'sell_media' );
+        $html .= __( 'Nothing saved in lightbox.', 'sell_media' );
 
     }
-    echo '</div>';
+    $html .= '</div>';
+
+    return $html;
 }
 
 /**
