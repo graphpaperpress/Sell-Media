@@ -329,7 +329,7 @@ jQuery(document).ready(function($){
             data: data,
             success: function(msg){
                 $('.lightbox-counter').text(msg.count);
-                $('#lightbox-' + post_id).text(msg.text);
+                $('#lightbox-' + post_id).html(msg.text);
                 $(selector).hide();
             }
         });

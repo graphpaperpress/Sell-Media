@@ -36,7 +36,7 @@ function sell_media_lightbox_link( $post_id ) {
         $item['attachment_id'] = '';
     }
 
-    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" ' . $data_attr_attachment_id . ' data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
+    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_title_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" ' . $data_attr_attachment_id . ' data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
     return apply_filters( 'sell_media_lightbox_link', $html, $post_id );
 }
 
@@ -65,7 +65,8 @@ function sell_media_lightbox_query() {
     $html = '';
 
     // Decode the lightbox array of IDs since they're encoded
-    $items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+    if ( isset( $_COOKIE['sell_media_lightbox'] ) )
+        $items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
 
     // Check if items in lightbox
     if ( isset( $items ) ) {
@@ -151,18 +152,18 @@ function sell_media_update_lightbox(){
             if ( ! in_array( $item, $items ) ) {
 
                 $items[] = $item;
-                $text = __( 'Remove from lightbox', 'sell_media' );
+                $text = '<span class="dashicons dashicons-dismiss"></span> ' . __( 'Lightbox', 'sell_media' );
             // it is in lightbox, remove it
             } else {
                 $remove = array_search( $item, $items );
                 unset( $items[$remove] );
-                $text = __( 'Add to lightbox', 'sell_media' );
+                $text = '<span class="dashicons dashicons-plus-alt"></span> ' . __( 'Lightbox', 'sell_media' );
             }
             $cookie = $items;
         // cookie doesn't already exist, so set cookie to the id
         } else {
             $cookie = array( $item );
-            $text = __( 'Remove from lightbox', 'sell_media' );
+            $text = '<span class="dashicons dashicons-dismiss"></span> ' . __( 'Lightbox', 'sell_media' );
         }
 
         // set cookie
@@ -198,10 +199,24 @@ add_action( 'wp_ajax_nopriv_sell_media_update_lightbox', 'sell_media_update_ligh
 function sell_media_get_lightbox_text( $item ) {
 
     if ( sell_media_get_lightbox_state( $item) ) {
+        $text = '<span class="dashicons dashicons-dismiss"></span> ' . __( 'Lightbox', 'sell_media' );
+    } else {
+        $text = '<span class="dashicons dashicons-plus-alt"></span> ' . __( 'Lightbox', 'sell_media' );
+    }
+
+    return apply_filters( 'sell_media_get_lightbox_text', $text, $item );
+}
+
+/**
+ * Lightbox title text
+ */
+function sell_media_get_lightbox_title_text( $item ) {
+
+    if ( sell_media_get_lightbox_state( $item) ) {
         $text = __( 'Remove from lightbox', 'sell_media' );
     } else {
         $text = __( 'Add to lightbox', 'sell_media' );
     }
 
-    return apply_filters( 'sell_media_get_lightbox_text', $text, $item );
+    return apply_filters( 'sell_media_get_lightbox_title_text', $text, $item );
 }
