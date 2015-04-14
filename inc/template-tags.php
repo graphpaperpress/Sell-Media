@@ -80,7 +80,9 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 
     // check if attachment thumbnail exists
     } elseif ( '' != wp_get_attachment_image( $attachment_id ) ) {
-        $image = wp_get_attachment_image( $attachment_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ) ) );
+        $image_attr = wp_get_attachment_image_src( $attachment_id, $size );
+        $src = $image_attr[0];
+        $image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
 
     // use default WP icons
     } else {
