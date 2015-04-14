@@ -105,8 +105,19 @@ function sell_media_get_system_info() {
     $return .= "\n" . '-- Sell Media Configuration' . "\n\n";
     $return .= 'Version:                  ' . SELL_MEDIA_VERSION . "\n";
     if ( $settings ) foreach ( $settings as $k => $v ) {
-        $return .= $k . ': ' . $v . "\n";
+        if ( is_array( $v ) ) {
+            $return .= $k . ': ';
+            $vv_array = array();
+            foreach ( $v as $kk => $vv ) {
+                $vv_array[] .= $vv;
+            }
+            $return .= implode( ', ', $vv_array );
+            $return .= "\n";
+        } else {
+            $return .= $k . ': ' . $v . "\n";
+        }
     }
+
 
     // Must-use plugins
     $muplugins = get_mu_plugins();
