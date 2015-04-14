@@ -76,22 +76,21 @@ function sell_media_lightbox_query() {
         // loop over items from 'sell_media_lightbox' cookie
         foreach ( $items as $item ) {
 
-            if ( isset( $item['attachment_id'] ) && ! empty ( $item['attachment_id'] ) ) {
-                $image_id = $item['attachment_id'];
-                $permalink = add_query_arg( 'id', $image_id, get_permalink( $item['post_id'] ) );
-            } else {
-                $image_id = $item['post_id'];
-                $permalink = get_permalink( $item['post_id'] );
-            }
+            // Old cookies were stored as simple array of ids
+            // New cookies are stored as a multidimensional array of ids
+            // so that we can support attachments (galleries)
+            $post_id        = ( ! empty( $item['post_id'] ) ) ? $item['post_id'] : $item;
+            $attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? $item['attachment_id'] : $post_id;
+            $permalink      = ( ! empty( $item['attachment_id'] ) ) ? add_query_arg( 'id', $attachment_id, get_permalink( $post_id ) ) : get_permalink( $attachment_id );
 
             $i++;
             $class = ( $i %3 == 0 ) ? ' end' : '';
 
-            $html .= '<div id="sell-media-' . $item['post_id'] . '" class="sell-media-grid' . $class . '">';
+            $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid' . $class . '">';
             $html .= '<div class="item-inner">';
-            $html .= '<a href="' . $permalink . '">' . sell_media_item_icon( $image_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
+            $html .= '<a href="' . esc_url( $permalink ) . '">' . sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
             $html .= '<span class="item-overlay">';
-            $html .= '<h3><a href="' . $permalink . '">' . get_the_title( $item['post_id'] ) . '</a></h3>';
+            $html .= '<h3><a href="' . esc_url( $permalink ) . '">' . get_the_title( $post_id ) . '</a></h3>';
             $html .= '</span>';
             $html .= '</div>';
             $html .= '</div>';
@@ -201,7 +200,7 @@ function sell_media_get_lightbox_text( $item ) {
     if ( sell_media_get_lightbox_state( $item) ) {
         $text = '<span class="dashicons dashicons-dismiss"></span> ' . __( 'Lightbox', 'sell_media' );
     } else {
-        $text = '<span class="dashicons dashicons-plus-alt"></span> ' . __( 'Lightbox', 'sell_media' );
+        $text = '<span class="dashicons dashicons-plus"></span> ' . __( 'Lightbox', 'sell_media' );
     }
 
     return apply_filters( 'sell_media_get_lightbox_text', $text, $item );
