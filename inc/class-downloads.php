@@ -29,14 +29,20 @@ Class SellMediaDownload {
             $transaction_id = urldecode( $_GET['download'] );
             $payment_id     = urldecode( $_GET['payment_id'] );
             $product_id     = urldecode( $_GET['product_id'] );
-            $attachment_id  = urldecode( $_GET['attachment_id'] );
-            $size_id        = ( isset( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : '';
+            $attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) : null;
+            $size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : null;
 
             $verified = $this->verify( $transaction_id, $payment_id );
 
             if ( $verified ) {
 
                 $requested_file = get_attached_file( $attachment_id );
+
+                if ( ! file_exists( $requested_file ) ) {
+                    wp_die( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $requested_file );
+                    exit();
+                }
+
                 $file_type = wp_check_filetype( $requested_file );
 
                 if ( ! ini_get( 'safe_mode' ) ){
@@ -59,7 +65,7 @@ Class SellMediaDownload {
 
                 // If this download is an image, generate the image sizes purchased and create a download
                 if ( wp_attachment_is_image( $attachment_id ) ){
-                    $this->download_image( $payment_id, $product_id, $attachment_id, $size_id );
+                    $this->download_image( $product_id, $attachment_id, $size_id );
                 // Otherwise, just deliver the download
                 } else {
                     // Get the original uploaded file in the sell_media dir
@@ -106,9 +112,9 @@ Class SellMediaDownload {
      * Returns the new image file path
      *
      * @since 1.8.5
-     * @param file path
-     * @param width
-     * @param width
+     * @param $product_id
+     * @param $attachment_id
+     * @param $size_id
      * @return resized image file path
      */
     public function download_image( $product_id=null, $attachment_id=null, $size_id=null ) {
