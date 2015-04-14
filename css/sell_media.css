@@ -115,6 +115,7 @@ input[type="submit"].sell-media-button:hover,
 
 /* Product Purchases */
 table.sell-media-products {
+  font-size: 11px;
   width: 100%;
 }
 .sell-media-products th {

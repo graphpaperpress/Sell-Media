@@ -448,36 +448,40 @@ Class SellMediaPayments {
             $html .= '</thead>';
             $html .= '<tbody>';
             foreach ( $products as $product ) {
-                if ( ! empty( $product['id'] ) ){
-                $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
-                $items = array( 'id', 'name', 'license', 'price', 'qty', 'total' );
-                $html .= '<td class="sell-media-product-id">';
-                if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) $html .= $product['id'];
-                $html .= '</td>';
-                $html .= '<td class="sell-media-product-name">';
-                if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) ) $html .= $product['name'];
-                $html .= '</td>';
-                $html .= '<td class="sell-media-product-size">';
-                if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) $html .= $product['size']['name'];
-                $html .= '</td>';
-                $html .= '<td class="sell-media-product-license">';
-                if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) $html .= $product['license']['name'] . '<span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>';
-                $html .= '</td>';
-                $html .= '<td class="sell-media-product-qty text-center">';
-                if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) ) $html .= $product['qty'];
-                $html .= '</td>';
-                $html .= '<td class="sell-media-product-download text-center">';
-                if ( 'download' == $product['type'] ) {
-                    $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
-                } elseif ( 'print' == $product['type'] ) {
-                    $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
-                }
-                $html .= '</td>';
-                $html .= '<td class="sell-media-product-total">';
-                if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
-                    $html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
-                $html .= '</td>';
-                $html .= '</tr>';
+                if ( ! empty( $product['id'] ) ) {
+                    $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
+                    $html .= '<td class="sell-media-product-id">';
+                    if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) )
+                        $html .= $product['id'];
+                    $html .= '</td>';
+                    $html .= '<td class="sell-media-product-name">';
+                    if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) )
+                        $html .= $product['name'];
+                    $html .= '</td>';
+                    $html .= '<td class="sell-media-product-size">';
+                    if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) )
+                        $html .= $product['size']['name'];
+                    $html .= '</td>';
+                    $html .= '<td class="sell-media-product-license">';
+                    if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) )
+                        $html .= $product['license']['name'] . '<span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>';
+                    $html .= '</td>';
+                    $html .= '<td class="sell-media-product-qty text-center">';
+                    if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) )
+                        $html .= $product['qty'];
+                    $html .= '</td>';
+                    $html .= '<td class="sell-media-product-download text-center">';
+                    if ( 'download' == $product['type'] ) {
+                        $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
+                    } elseif ( 'print' == $product['type'] ) {
+                        $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
+                    }
+                    $html .= '</td>';
+                    $html .= '<td class="sell-media-product-total">';
+                    if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
+                        $html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
+                    $html .= '</td>';
+                    $html .= '</tr>';
                 }
             }
             $html .= '</tbody>';
@@ -703,14 +707,7 @@ Class SellMediaPayments {
 
         if ( $products ) foreach( $products as $product ){
 
-            /**
-             * Legacy purchases didn't save attachment ID's
-             * so we need to derive the attachment ID from
-             * the _sell_media_attachment_id meta field.
-             * The first item in the array will be the attachment id.
-             */
-            $attachments = sell_media_get_attachments( $product['id'] );
-            $attachment_id = $attachments[0];
+            print_r( $product );
 
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
