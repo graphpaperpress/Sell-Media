@@ -472,7 +472,7 @@ Class SellMediaPayments {
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-download text-center">';
                     if ( 'download' == $product['type'] ) {
-                        $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
+                        $html .= '<a href="' . $this->build_download_link( $post_id, $product['id'], $product['attachment'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
                     } elseif ( 'print' == $product['type'] ) {
                         $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
                     }
@@ -722,6 +722,23 @@ Class SellMediaPayments {
         } else {
             $link = $tmp_links;
         }
+
+        return $link;
+    }
+
+
+    public function build_download_link( $payment_id=null, $product_id=null, $attachment_id=null ){
+
+        echo '<pre>';
+        print_r( $product );
+        echo '</pre>';
+
+        $link = site_url() . '?' . http_build_query( array(
+            'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
+            'payment_id' => $payment_id,
+            'product_id' => $product_id,
+            'attachment_id' => $attachment_id
+        ) );
 
         return $link;
     }
