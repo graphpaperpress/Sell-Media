@@ -42,6 +42,12 @@ function sell_media_lightbox_link( $post_id ) {
     if ( is_single() ) {
         $settings = sell_media_get_plugin_options();
 
+        if ( ! empty( $settings->lightbox_page ) ) {
+            $link = '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __('Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>';
+        } else {
+            $link = __( 'lightbox', 'sell_media' );
+        }
+
         // set css class based on item status
         if ( sell_media_get_lightbox_state( $item ) ) {
             $status = 'in-lightbox';
@@ -50,8 +56,7 @@ function sell_media_lightbox_link( $post_id ) {
         }
         // lightbox notice
         $html .= '<div class="lightbox-notice ' . $status . '">';
-        $html .= '<p>' . __( 'This item was saved to your ', 'sell_media' );
-        $html .= '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __('Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>';
+        $html .= '<p>' . sprintf( __( 'This item was saved to your %1$s.', 'sell_media' ), $link ) . '</p>';
         $html .= '</div>';
     }
     return apply_filters( 'sell_media_lightbox_link', $html, $post_id );
