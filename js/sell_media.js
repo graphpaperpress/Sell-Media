@@ -330,7 +330,13 @@ jQuery(document).ready(function($){
             success: function(msg){
                 $('.lightbox-counter').text(msg.count);
                 $('#lightbox-' + post_id).html(msg.text);
+                $('#lightbox-' + post_id).attr("title", msg.text);
                 $(selector).hide();
+                if ( msg.text == 'Remove' ) {
+                    $('.lightbox-notice').fadeIn('fast');
+                } else {
+                    $('.lightbox-notice').fadeOut('fast');
+                }
             }
         });
     });

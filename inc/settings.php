@@ -181,6 +181,18 @@ function sell_media_init_settings(){
             "default" => '',
             "valid_options" => sell_media_pages_options()
         ),
+        "lightbox_page" => array(
+            "tab" => "sell_media_general_settings",
+            "name" => "lightbox_page",
+            "title" => __("Lightbox Page","sell_media"),
+            "description" => __( "Select the page that contains the lightbox shortcode <code>[sell_media_lightbox]</code>", "sell_media" ),
+            "section" => "general_plugin_section_1",
+            "since" => "1.0",
+            "id" => "general_plugin_section_1",
+            "type" => "select",
+            "default" => '',
+            "valid_options" => sell_media_pages_options()
+        ),
         "customer_notification" => array(
             "tab" => "sell_media_general_settings",
             "name" => "customer_notification",
