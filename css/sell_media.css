@@ -358,6 +358,13 @@ table.sell-media-products {
 .sell-media .sell-media-grid .remove-lightbox {
   left: 10px;
 }
+.add-to-lightbox .dashicons-dismiss {
+  color: red;
+}
+.add-to-lightbox .dashicons {
+  font-size: 1.3em;
+  text-decoration: none;
+}
 .sell-media .sell-media-grid .sell-media-text {
   right: 10px;
 }

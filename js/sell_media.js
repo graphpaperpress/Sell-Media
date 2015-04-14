@@ -309,12 +309,18 @@ jQuery(document).ready(function($){
     // Add to lightbox on click
     $( '.add-to-lightbox' ).on( 'click', function( e ) {
 
-        var id = $(this).data('id'),
-            selector = $('#sell-media-lightbox-content #sell-media-' + id);
+        if ( $(this).attr('data-attachment-id') ) {
+            attachment_id = $(this).data('attachment-id');
+        } else {
+            attachment_id = '';
+        }
+        var post_id = $(this).data('id'),
+            selector = $('#sell-media-lightbox-content #sell-media-' + post_id);
 
         var data = {
             action: 'sell_media_update_lightbox',
-            id: id
+            post_id: post_id,
+            attachment_id: attachment_id
         };
 
         $.ajax({
@@ -323,7 +329,7 @@ jQuery(document).ready(function($){
             data: data,
             success: function(msg){
                 $('.lightbox-counter').text(msg.count);
-                $('#lightbox-' + id).text(msg.text);
+                $('#lightbox-' + post_id).html(msg.text);
                 $(selector).hide();
             }
         });
