@@ -353,4 +353,8 @@ jQuery(document).ready(function($){
     // Checkout qty menu
     $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
 
+    // Reload current location
+    $('.reload').click(function() {
+        location.reload();
+    });
 });
