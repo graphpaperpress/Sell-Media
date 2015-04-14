@@ -448,10 +448,11 @@ Class SellMediaPayments {
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
                     $html .= '<td class="sell-media-product-id">';
                     if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
-                        $html .= '#' . $product['id'] . ', ' . $product['name'];
-                        $html .= sell_media_item_icon( $product['attachment'], 'medium', false ) . '<br />';
+                        $html .= '<strong>' . __( 'ID', 'sell_media' ) . ':</strong> ' . $product['id'] . '<br />';
+                        $html .= '<strong>' . __( 'Title', 'sell_media' ) . ':</strong> ' . $product['name'] . '<br />';
+                        $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'medium', false ) . '</a><br />';
                         if ( 'download' == $product['type'] ) {
-                            $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
+                            $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center">' . __( 'Download', 'sell_media' ) . '</a>';
                         } elseif ( 'print' == $product['type'] ) {
                             $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
                         }
