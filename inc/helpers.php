@@ -130,7 +130,7 @@ add_filter( 'query_vars', 'sell_media_add_query_vars_filter' );
 function sell_media_is_gallery_page(){
     global $post;
 
-    if ( sell_media_has_multiple_attachments( $post->ID ) && empty( get_query_var( 'id' ) ) )
+    if ( $post && sell_media_has_multiple_attachments( $post->ID ) && empty( get_query_var( 'id' ) ) )
         return true;
 }
 
