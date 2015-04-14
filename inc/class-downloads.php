@@ -106,7 +106,7 @@ Class SellMediaDownload {
      */
     public function download_image( $payment_id=null, $product_id=null, $attachment_id=null ){
         // get height and width associated with the price group
-        $price_group_id = Sell_Media()->payments->get_product_size( $payment_id, $product_id, 'download' );
+        $price_group_id = Sell_Media()->payments->get_product_size( $payment_id, $product_id, $attachment_id, 'download' );
         $width = sell_media_get_term_meta( $price_group_id, 'width', true );
         $height = sell_media_get_term_meta( $price_group_id, 'height', true );
         $file_download = $this->resize_image( $product_id, $attachment_id, $width, $height );

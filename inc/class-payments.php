@@ -69,10 +69,10 @@ Class SellMediaPayments {
     *
     * @return Array
     */
-    public function get_product_size( $post_id=null, $product_id=null, $type=null ){
+    public function get_product_size( $post_id=null, $product_id=null, $attachment_id=null, $type=null ){
         $products = $this->get_products( $post_id );
         if ( $products ) foreach ( $products as $product ) {
-            if ( $product_id == $product['id'] ) {
+            if ( $product_id == $product['id'] && $attachment_id == $product['attachment'] ) {
                 if ( array_key_exists( 'size', $product ) && $type == $product['type'] ) {
                     return $product['size']['id'];
                 }
@@ -727,6 +727,14 @@ Class SellMediaPayments {
     }
 
 
+    /**
+     * Builds the download link url
+     *
+     * @param  int $payment_id
+     * @param  int $product_id
+     * @param  int $attachment_id
+     * @return url
+     */
     public function build_download_link( $payment_id=null, $product_id=null, $attachment_id=null ){
 
         $link = site_url() . '?' . http_build_query( array(
