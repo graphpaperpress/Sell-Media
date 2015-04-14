@@ -478,6 +478,7 @@ function sell_media_append_media( $post_id ) {
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
         echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
+        sell_media_set_post_views( $post_id );
         if ( sell_media_has_multiple_attachments( $post_id ) ) {
             echo sell_media_gallery( $post_id );
         } else {
@@ -622,3 +623,48 @@ function sell_media_theme_support() {
     }
 }
 add_action( 'after_setup_theme', 'sell_media_theme_support', 999 );
+
+/**
+ * Get the number of post views
+ * Shown in admin on add/edit post screen
+ *
+ * @return string
+ */
+function sell_media_get_post_views( $post_id=null ) {
+
+    $key = '_sell_media_post_views_count';
+    $count = get_post_meta( $post_id, $key, true );
+
+    if ( $count == '' ) {
+        delete_post_meta( $post_id, $key );
+        add_post_meta( $post_id, $key, 0 );
+
+        return 0;
+    }
+
+    return $count;
+}
+
+
+/**
+ * Set the number of post views
+ * Used in templates, filters and functions to increase post view count
+ *
+ * @return void
+ */
+function sell_media_set_post_views( $post_id ) {
+    $key = '_sell_media_post_views_count';
+    $count = get_post_meta( $post_id, $key, true );
+
+    if ( $count=='' ) {
+        $count = 0;
+        delete_post_meta( $post_id, $key );
+        add_post_meta( $post_id, $key, 0 );
+    } else {
+        $count++;
+        update_post_meta( $post_id, $key, $count );
+    }
+}
+
+// Remove issues with prefetching adding extra views
+remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );

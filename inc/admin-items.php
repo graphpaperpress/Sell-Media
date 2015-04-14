@@ -76,7 +76,6 @@ function sell_media_files_meta_box( $post ) {
     <ul class="attachments sell-media-upload-list">
         <?php
             $attachment_ids = sell_media_get_attachments( $post->ID );
-            // print_r($attachment_ids);
             if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
                 echo sell_media_list_uploads( $attachment_id );
             }
@@ -109,7 +108,7 @@ function sell_media_options_meta_box( $post ) {
         <label for="sell-media-price-group"><?php _e( 'Price group for downloads', 'sell_media' ); ?></label>
         <?php
             $args = array(
-                'show_option_none' => __( 'Select a price group', 'sell_media' ),
+                'show_option_none' => __( 'None', 'sell_media' ),
                 'option_none_value' => 0,
                 'name' => 'sell_media_price_group',
                 'id' => 'sell-media-price-group',
@@ -132,7 +131,18 @@ function sell_media_options_meta_box( $post ) {
 /**
  * Stats meta box
  */
-function sell_media_stats_meta_box( $post ) {
+function sell_media_stats_meta_box( $post ) { ?>
+
+    <?php do_action( 'sell_media_before_stats_meta_box', $post ); ?>
+
+    <div id="sell-media-stats" class="sell-media-field">
+        <ul>
+            <li><strong><?php _e( 'Views', 'sell_media' ); ?>:</strong> <?php echo sell_media_get_post_views( $post->ID ); ?></li>
+            <li><strong><?php _e( 'Sales', 'sell_media' ); ?>:</strong> <?php echo Sell_Media()->payments->get_item_sales( $post->ID ); ?></li>
+        </ul>
+    </div>
+
+    <?php do_action( 'sell_media_after_stats_meta_box', $post );
 }
 
 
@@ -165,14 +175,14 @@ function sell_media_save_custom_meta( $post_id ) {
             // price groups fields
             if ( $field == 'sell_media_price_group' ) {
 
-                if ( ! empty( $_POST['sell_media_price_group'] ) ) {
+                if ( isset( $_POST['sell_media_price_group'] ) ) {
                     wp_set_post_terms( $post_id, $_POST['sell_media_price_group'], 'price-group' );
                 }
 
             // print price groups fields
-            } elseif( $field == 'sell_media_print_price_group' ) {
+            } elseif ( $field == 'sell_media_print_price_group' ) {
 
-                if ( ! empty( $_POST['sell_media_print_price_group'] ) ) {
+                if ( isset( $_POST['sell_media_print_price_group'] ) ) {
                     wp_set_post_terms( $post_id, $_POST['sell_media_print_price_group'], 'reprints-price-group' );
                 }
 

@@ -733,20 +733,19 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
  * @since 2.0.1
  * @return integer $price_group_id
  */
-function sell_media_get_item_price_group( $post_id, $taxonomy ){
-
+function sell_media_get_item_price_group( $post_id, $taxonomy ) {
+    $settings = sell_media_get_plugin_options();
     $terms = get_the_terms( $post_id, $taxonomy );
     if ( $terms && ! is_wp_error( $terms ) ) foreach ( $terms as $term ) {
         if ( $term->parent == 0 ){
             $price_group_id = $term->term_id;
         }
+    } elseif ( $taxonomy == 'reprints-price-group' ) {
+        $price_group_id = $settings->reprints_default_price_group;
+    } elseif ( $taxonomy == 'price-group' ) {
+        $price_group_id = $settings->default_price_group;
     } else {
-        $settings = sell_media_get_plugin_options();
-        if ( $taxonomy == 'reprints-price-group' ){
-            $price_group_id = $settings->reprints_default_price_group;
-        } else {
-            $price_group_id = $settings->default_price_group;
-        }
+        $price_group_id = 0;
     }
 
     return $price_group_id;

@@ -14,8 +14,8 @@ Class SellMediaPayments {
 
 
     public function __construct(){
-        add_action('wp_ajax_nopriv_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback') );
-        add_action('wp_ajax_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback') );
+        add_action( 'wp_ajax_nopriv_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
+        add_action( 'wp_ajax_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
     }
 
 
@@ -190,6 +190,45 @@ Class SellMediaPayments {
                 }
             endwhile;
         }
+    }
+
+    /**
+    * Get total sales for each item
+    *
+    * @param $post_id (string) The post_id to check
+    *
+    * @return (int) $total
+    */
+    public function get_item_sales( $post_id ) {
+
+        $total = ( float ) 0;
+        $count = 0;
+        $payments = get_transient( 'sell_media_total_revenue_' . $post_id );
+
+        if ( false === $payments || '' === $payments ) {
+
+            $args = array(
+                'mode' => 'live',
+                'post_type' => 'sell_media_payment',
+                'post_status' => 'publish',
+                'posts_per_page' => -1
+            );
+            set_transient( 'sell_media_total_revenue_' . $post_id, $payments, 1800 );
+        }
+
+        $payments = get_posts( $args );
+        if ( $payments ) foreach ( $payments as $payment ) {
+            $products = $this->get_products( $payment->ID );
+            if ( $products ) foreach ( $products as $payment_products ) {
+                if ( isset( $payment_products['id'] ) && $payment_products['id'] == $post_id ) {
+                    $subtotal = $payment_products['total'];
+                    $total += $subtotal;
+                    $count++;
+                }
+            }
+        }
+
+        return $count . ' ' .  __( 'sales totaling', 'sell_media' ) . ' ' . sell_media_get_currency_symbol() . number_format( ( float ) $total, 2, '.', '' );
     }
 
 
