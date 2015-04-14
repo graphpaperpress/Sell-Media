@@ -439,7 +439,6 @@ Class SellMediaPayments {
             $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
             $html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
             $html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
-            $html .= '<th class="text-center">' . __( 'Delivery', 'sell_media' ) . '</td>';
             $html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
             $html .= '</tr>';
             $html .= '</thead>';
