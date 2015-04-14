@@ -69,13 +69,11 @@ Class SellMediaPayments {
     *
     * @return Array
     */
-    public function get_product_size( $post_id=null, $product_id=null, $attachment_id=null, $type=null ){
+    public function get_product_size( $post_id=null, $product_id=null, $attachment_id=null, $size_id=null, $type=null ){
         $products = $this->get_products( $post_id );
         if ( $products ) foreach ( $products as $product ) {
-            if ( $product_id == $product['id'] && $attachment_id == $product['attachment'] ) {
-                if ( array_key_exists( 'size', $product ) && $type == $product['type'] ) {
-                    return $product['size']['id'];
-                }
+            if ( $product_id == $product['id'] && $attachment_id == $product['attachment'] && $size_id == $product['size']['id'] && $type == $product['type'] ) {
+                return $product['size']['id'];
             }
         }
     }
@@ -393,7 +391,7 @@ Class SellMediaPayments {
             if ( $v['total'] )
                 $text .= __( 'SUBTOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $v['total'], 2, '.', ',' ) . '<br />';
             if ( 'download' == $v['type'] )
-                $text .= __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'] ) . '<br />';
+                $text .= __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'], $v['attachment'], $v['size']['id'] ) . '<br />';
             elseif ( 'print' == $v['type'] )
                 $text .= __( 'DELIVERY', 'sell_media' ) . ': ' . apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' ) . '<br />';
             $text .= '<br />';
@@ -472,7 +470,7 @@ Class SellMediaPayments {
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-download text-center">';
                     if ( 'download' == $product['type'] ) {
-                        $html .= '<a href="' . $this->build_download_link( $post_id, $product['id'], $product['attachment'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
+                        $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
                     } elseif ( 'print' == $product['type'] ) {
                         $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
                     }
@@ -624,32 +622,24 @@ Class SellMediaPayments {
 
         if ( $products ) {
             foreach ( $this->get_products( $post_id ) as $product ){
+
+                $product['attachment']      = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : null;
+                $product['size']['name']    = ( ! empty( $product['size']['name'] ) ) ? $product['size']['name'] : null;
+                $product['size']['id']      = ( ! empty( $product['size']['id'] ) ) ? $product['size']['id'] : null;
+                $product['size']['amount']  = ( ! empty( $product['size']['amount'] ) ) ? $product['size']['amount'] : null;
+                $product['license']['name'] = ( ! empty( $product['license']['name'] ) ) ? $product['license']['name'] : null;
+
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
                 $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['id'], 'medium', false ) . '</a></td>';
-                if ( empty( $product['size']['name'] ) ) {
-                    $size_name = null;
-                } else {
-                    $size_name = $product['size']['name'];
-                }
-                $html .= '<td>' . $size_name . '</td>';
-                if ( empty( $product['size']['amount'] ) ){
-                    $size_amount = null;
-                } else {
-                    $size_amount = $product['size']['amount'];
-                }
-                $html .= '<td>' . sell_media_get_currency_symbol() . $size_amount . '</td>';
+                $html .= '<td>' . $product['size']['name'] . '</td>';
+                $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
                 $html .= '<td>' . $product['qty'] . '</td>';
-                if ( empty( $product['license']['name'] ) ){
-                    $license_name = null;
-                } else {
-                    $license_name = $product['license']['name'];
-                }
-                $html .= '<td>' . $license_name . '</td>';
+                $html .= '<td>' . $product['license']['name'] . '</td>';
                 if ( ! empty( $product['type'] ) && 'print' == $product['type'] ){
                     $html .= '<td class="title column-title">Sold a print</td>';
                 } else {
-                    $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+                    $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" /></td>';
                 }
                 $html .= '</tr>';
             }
@@ -671,7 +661,7 @@ Class SellMediaPayments {
                 $html .= '<td>' . sell_media_get_currency_symbol() . $product['price']['amount'] . '</td>';
                 $html .= '<td>' . $product['qty'] . '</td>';
                 $html .= '<td>' . $product['license']['name'] . '</td>';
-                $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'] ) . '" /></td>';
+                $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" /></td>';
                 $html .= '</tr>';
             } // foreach
         } // if legacy
@@ -699,49 +689,22 @@ Class SellMediaPayments {
     }
 
 
-    public function get_download_link( $payment_id=null, $product_id=null ){
-
-        $products = $this->get_products( $payment_id );
-
-        $tmp_links = array();
-
-        if ( $products ) foreach( $products as $product ){
-            echo '<pre>';
-            print_r( $product );
-            echo '</pre>';
-            $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
-                'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
-                'payment_id' => $payment_id,
-                'product_id' => $product['id'],
-                'attachment_id' => ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : ''
-            ) );
-        }
-
-        if ( ! empty( $product_id ) && ! empty( $tmp_links[ $product_id ] ) ){
-            $link = $tmp_links[ $product_id ];
-        } else {
-            $link = $tmp_links;
-        }
-
-        return $link;
-    }
-
-
     /**
-     * Builds the download link url
+     * Gets the download link url
      *
      * @param  int $payment_id
      * @param  int $product_id
      * @param  int $attachment_id
      * @return url
      */
-    public function build_download_link( $payment_id=null, $product_id=null, $attachment_id=null ){
+    public function get_download_link( $payment_id=null, $product_id=null, $attachment_id=null, $size_id=null ){
 
         $link = site_url() . '?' . http_build_query( array(
             'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
             'payment_id' => $payment_id,
             'product_id' => $product_id,
-            'attachment_id' => $attachment_id
+            'attachment_id' => $attachment_id,
+            'size_id' => $size_id
         ) );
 
         return $link;
