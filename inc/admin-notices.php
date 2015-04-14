@@ -14,7 +14,7 @@ function sell_media_admin_messages() {
 
     $screen = get_current_screen();
 
-    if ( $screen->id == 'edit-sell_media_item' || $screen->id == 'sell_media_item' ||  $screen->id == 'sell_media_item_page_sell_media_plugin_options' || $screen->id == 'sell_media_item_page_sell_media_add_bulk' || $screen->id == 'sell_media_item_page_sell_media_add_package' ) {
+    if ( $screen->id == 'edit-sell_media_item' || $screen->id == 'sell_media_item' ||  $screen->id == 'sell_media_item_page_sell_media_plugin_options' ) {
 
         $settings = sell_media_get_plugin_options();
 
@@ -26,8 +26,8 @@ function sell_media_admin_messages() {
         if ( isset( $settings->test_mode ) && $settings->test_mode == 1 ){
             $notices[] = array(
                 'slug' => 'test-mode',
-                'message' => 'Your site is currently in <a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) . '">test mode</a>.'
-                );
+                'message' => sprintf( __( 'Your site is currently in <a href="%1$s">test mode</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options ' ) ) )
+            );
         }
 
         /**
@@ -36,8 +36,8 @@ function sell_media_admin_messages() {
         if ( isset( $settings->checkout_page ) && $settings->checkout_page == 1 || empty( $settings->checkout_page ) ){
             $notices[] = array(
                 'slug' => 'checkout-page',
-                'message' => 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) . '">settings</a>.'
-                );
+                'message' => sprintf( __( 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
+            );
         }
 
         /**
@@ -46,8 +46,8 @@ function sell_media_admin_messages() {
         if ( isset( $settings->thanks_page ) && $settings->thanks_page == 1 || empty( $settings->thanks_page ) ){
             $notices[] = array(
                 'slug' => 'thanks-page',
-                'message' => 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) . '">settings</a>.'
-                );
+                'message' => sprintf( __( 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
+            );
         }
 
         /**
@@ -56,8 +56,29 @@ function sell_media_admin_messages() {
         if ( empty( $settings->paypal_email ) ){
             $notices[] = array(
                 'slug' => 'paypal-email',
-                'message' => 'Please set a PayPal email in your <a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) . '">payment settings</a>.'
-                );
+                'message' => sprintf( __( 'Please set a PayPal email in your <a href="%1$s">payment settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) )
+            );
+        }
+
+        /**
+         * Sell Media upgrades available for extensions
+         */
+        $plugins = get_plugins();
+        $upgrade_plugins = array();
+
+        foreach ( array_keys( $plugins ) as $plugin ) {
+            if ( preg_match( '/sell-media-(.*)$/', $plugin, $matches ) ) {
+                if ( $plugins[$plugin]['Version'] < 2 ) {
+                    $upgrade_plugins[] = $plugins[$plugin]['Name'];
+                }
+            }
+        }
+
+        if ( ! empty( $upgrade_plugins ) ) {
+            $notices[] = array(
+                'slug' => 'sell-media-upgrades',
+                'message' => sprintf( __( 'Important upgrades are now available for %1$s. <a href="%2$s" target="_blank">Learn more</a>.', 'sell_media' ), implode( ', ', $upgrade_plugins ), 'http://graphpaperpress.com/docs/sell-media/#upgrading' )
+            );
         }
 
         /**
