@@ -141,8 +141,7 @@ function sell_media_nav_menu_css_class( $classes, $item ){
     $settings = sell_media_get_plugin_options();
 
     if ( $item->object == 'page' ){
-        $template = get_post_meta( $item->object_id, '_wp_page_template', true );
-        if ( $template == 'page-lightbox.php' || $item->title == 'lightbox' ) {
+        if ( $item->object_id == $settings->lightbox_page ) {
             $classes[] = 'lightbox-menu';
         }
         if ( $item->object_id == $settings->checkout_page ){

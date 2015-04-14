@@ -50,8 +50,8 @@ function sell_media_lightbox_link( $post_id ) {
         }
         // lightbox notice
         $html .= '<div class="lightbox-notice ' . $status . '">';
-        $html .= '<p>' . __( 'This item was added to your ', 'sell_media' );
-        $html .= '<a href="' . get_the_permalink( $settings->lightbox_page ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>';
+        $html .= '<p>' . __( 'This item was saved to your ', 'sell_media' );
+        $html .= '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __('Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>';
         $html .= '</div>';
     }
     return apply_filters( 'sell_media_lightbox_link', $html, $post_id );
