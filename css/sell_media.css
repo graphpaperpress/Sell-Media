@@ -86,7 +86,7 @@
 input[type="submit"].sell-media-button,
 .sell-media-button,
 #sell-media-submit {
-  border: none;
+  border: none !important;
   background: #555;
   padding: 7px 5%;
   display: inline-block;
