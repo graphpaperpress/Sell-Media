@@ -376,6 +376,9 @@ Class SellMediaPayments {
         $text = '<br /><br />';
 
         if ( $products ) foreach ( $products as $k => $v ) {
+
+            $v['attachment'] = ( ! empty( $v['attachment'] ) ) ? $v['attachment'] : sell_media_get_attachment_id( $v['id'] );
+
             if ( $v['name'] )
                 $text .= __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . '<br />';
             if ( $v['size']['name'] )
@@ -431,6 +434,11 @@ Class SellMediaPayments {
         $total = $this->get_meta_key( $post_id, $key='total' );
 
         if ( $products ) {
+
+            // Old purchase links didn't have attachment_id set
+            // So we derive the attachment_id from the product's post_meta
+            $product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
+
             $html = null;
             $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%">';
             $html .= '<thead>';
@@ -622,9 +630,11 @@ Class SellMediaPayments {
                 $product['size']['amount']  = ( ! empty( $product['size']['amount'] ) ) ? $product['size']['amount'] : null;
                 $product['license']['name'] = ( ! empty( $product['license']['name'] ) ) ? $product['license']['name'] : null;
 
+                $image_id = ( $product['attachment'] ) ? $product['attachment'] : $product['id'];
+
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
-                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'medium', false ) . '</a></td>';
+                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $image_id, 'medium', false ) . '</a></td>';
                 $html .= '<td>' . $product['size']['name'] . '</td>';
                 $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
                 $html .= '<td>' . $product['qty'] . '</td>';
