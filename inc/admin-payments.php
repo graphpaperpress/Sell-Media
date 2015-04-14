@@ -174,9 +174,11 @@ function sell_media_payment_gateway_details( $post ){
         $gateway = __( 'Stripe', 'sell_media' );
     }
     echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase. Use this for debugging, if needed.', 'sell_media' ) . '</p>';
-    echo '<pre style="overflow:hidden">';
-    print_r( $arguments );
-    echo '</pre>';
+    echo '<ul>';
+    if ( $arguments ) foreach ( $arguments as $k => $v ) {
+        echo '<li><strong>' . $k . ':</strong> ' . $v . '</li>';
+    }
+    echo '</ul>';
 }
 
 

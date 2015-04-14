@@ -555,10 +555,11 @@ function sell_media_show_file_info(){
     echo '<ul>';
     echo '<li class="filename"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>';
     echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . get_post_mime_type( $attachment_id ) . '</li>';
+    echo '<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post->ID, $attachment_id ) . '</li>';
     if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
         echo '<li class="collections"><span class="title">' . __( 'Collections', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'collection' ) . '</li>';
     }
-    if ( wp_get_post_terms( $post->ID, 'keywords' ) ) {
+    if ( wp_get_post_terms( $post->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
         echo '<li class="keywords"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>';
     }
     echo do_action( 'sell_media_additional_list_items', $post->ID );

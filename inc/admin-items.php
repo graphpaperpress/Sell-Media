@@ -78,7 +78,6 @@ function sell_media_files_meta_box( $post ) {
             $attachment_ids = sell_media_get_attachments( $post->ID );
             // print_r($attachment_ids);
             if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-                echo sell_media_get_original_protected_file( $attachment_id );
                 echo sell_media_list_uploads( $attachment_id );
             }
         ?>

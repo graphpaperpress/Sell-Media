@@ -31,7 +31,7 @@ Class SellMediaDownload {
             $product_id     = urldecode( $_GET['product_id'] );
             $attachment_id  = urldecode( $_GET['attachment_id'] );
 
-            $verified = $this->verify_download_link( $transaction_id, $payment_id );
+            $verified = $this->verify( $transaction_id, $payment_id );
 
             if ( $verified ) {
 
@@ -62,7 +62,7 @@ Class SellMediaDownload {
                 // Otherwise, just deliver the download
                 } else {
                     // Get the original uploaded file in the sell_media dir
-                    $file_path = sell_media_get_original_protected_file( $product_id, $attachment_id );
+                    $file_path = Sell_Media()->products->get_protected_file( $product_id, $attachment_id );
                     $this->download_package( $file_path );
                 }
                 do_action( 'sell_media_after_successful_download', $product_id );
@@ -91,7 +91,7 @@ Class SellMediaDownload {
      * @param $download (string) The download hash
      * @return boolean
      */
-    public function verify_download_link( $transaction_id=null, $payment_id=null ) {
+    public function verify( $transaction_id=null, $payment_id=null ) {
         if ( $transaction_id == Sell_Media()->payments->get_meta_key( $payment_id, 'transaction_id' ) ){
             return true;
         }
@@ -109,7 +109,7 @@ Class SellMediaDownload {
         $price_group_id = Sell_Media()->payments->get_product_size( $payment_id, $product_id, 'download' );
         $width = sell_media_get_term_meta( $price_group_id, 'width', true );
         $height = sell_media_get_term_meta( $price_group_id, 'height', true );
-        $file_download = sell_media_resize_original_image( $product_id, $attachment_id, $width, $height );
+        $file_download = $this->resize_image( $product_id, $attachment_id, $width, $height );
 
         return $file_download;
     }
@@ -155,6 +155,36 @@ Class SellMediaDownload {
         }
 
         return $status;
+    }
+
+    /**
+     * Resize an image to the specified dimensions
+     * http://codex.wordpress.org/Class_Reference/WP_Image_Editor
+     *
+     * Returns the new image file path
+     *
+     * @since 1.8.5
+     * @param file path
+     * @param width
+     * @param width
+     * @return resized image file path
+     */
+    public function resize_image( $product_id=null, $attachment_id=null, $width=null, $height=null ){
+        $file_path = Sell_Media()->products->get_protected_file( $product_id, $attachment_id );
+        $img = wp_get_image_editor( $file_path );
+        if ( ! is_wp_error( $img ) ) {
+            // resize if height and width supplied
+            if ( $width || $height ) {
+                if ( $width >= $height ) {
+                    $max = $width;
+                } else {
+                    $max = $height;
+                }
+                $img->resize( $max, $max, false );
+                $img->set_quality( 100 );
+            }
+            $img->stream();
+        }
     }
 
 }

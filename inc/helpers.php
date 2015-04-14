@@ -561,13 +561,18 @@ if ( ! is_admin() )
  * @return string
  * @since 1.6.9
  */
-function sell_media_get_size( $attachment_id=null ){
+function sell_media_get_filesize( $post_id=null, $attachment_id=null ){
 
-    $file_path = get_attached_file( $attachment_id );
-    $bytes = filesize( $file_path );
-    $s = array( 'b', 'Kb', 'Mb', 'Gb' );
-    $e = floor( log( $bytes )/log( 1024 ) );
-    return sprintf( '%.2f ' . $s[$e], ( $bytes/pow( 1024, floor( $e ) ) ) );
+    $file_path = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+
+    if ( file_exists( $file_path ) ) {
+
+        $bytes = filesize( $file_path );
+        $s = array( 'b', 'Kb', 'Mb', 'Gb' );
+        $e = floor( log( $bytes )/log( 1024 ) );
+
+        return sprintf( '%.2f ' . $s[$e], ( $bytes/pow( 1024, floor( $e ) ) ) );
+    }
 }
 
 
@@ -807,89 +812,4 @@ function sell_media_get_upload_dir_url() {
     $url = $wp_upload_dir['baseurl'] . '/sell_media';
 
     return apply_filters( 'sell_media_get_upload_dir_url', $url );
-}
-
-/**
- * Get File Extension
- *
- * Returns the file extension of a filename.
- *
- * @since 1.8.5
- * @param unknown $str File name
- * @return mixed File extension
- */
-function sell_media_get_file_extension( $str ) {
-    $parts = explode( '.', $str );
-    return end( $parts );
-}
-
-
-/**
- * Get full system path to the originally uploaded file
- *
- * Returns the full system path to the file
- *
- * @since 1.8.5
- * @param attachment id ( attachment_id )
- * @return file path
- */
-function sell_media_get_original_protected_file( $product_id=null, $attachment_id=null ){
-
-    /**
-     * When we upload items into Sell Media, we move the original file
-     * into the protected wp-content/uploads/sell_media/* directory
-     * and copy all of the intermediate image sizes into the regular
-     * wp-content/uploads/* directory. Using get_attached_file()
-     * will not return the original, high resolution file. It will return
-     * only the largest publicly accessible (derived from Settings -> Media).
-     * So, we now need to build the path protected sell_media directory.
-     * Example (public): /var/www/wp.local/wp-content/uploads/2015/04/mansion.jpeg
-     * Example (protected): /var/www/wp.local/wp-content/uploads/sell_media/2015/04/mansion.jpeg
-     */
-
-    $wp_upload_dir = wp_upload_dir();
-    $protected_path = $wp_upload_dir['basedir'] . '/sell_media';
-
-    // Full system file path to the public low resolution version.
-    $unprotected_file_path = get_attached_file( $attachment_id );
-
-    // Check if this item is a package and change the file location
-    if ( Sell_Media()->products->is_package( $product_id ) ) {
-        $file = sell_media_get_packages_upload_dir() . '/' . basename( $unprotected_file_path );
-    } else {
-        $file = str_replace( $wp_upload_dir['basedir'], $protected_path, $unprotected_file_path );
-    }
-
-    return apply_filters( 'sell_media_get_original_protected_file', $file );
-}
-
-
-/**
- * Resize an image to the specified dimensions
- * http://codex.wordpress.org/Class_Reference/WP_Image_Editor
- *
- * Returns the new image file path
- *
- * @since 1.8.5
- * @param file path
- * @param width
- * @param width
- * @return resized image file path
- */
-function sell_media_resize_original_image( $product_id=null, $attachment_id=null, $width=null, $height=null ){
-    $file_path = sell_media_get_original_protected_file( $product_id, $attachment_id );
-    $img = wp_get_image_editor( $file_path );
-    if ( ! is_wp_error( $img ) ) {
-        // resize if height and width supplied
-        if ( $width || $height ) {
-            if ( $width >= $height ) {
-                $max = $width;
-            } else {
-                $max = $height;
-            }
-            $img->resize( $max, $max, false );
-            $img->set_quality( 100 );
-        }
-        $img->stream();
-    }
 }

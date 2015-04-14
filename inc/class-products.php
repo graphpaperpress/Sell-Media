@@ -205,15 +205,38 @@ Class SellMediaProducts {
      * Get the protected image from the server
      *
      * @param (int) $post_id The post id to a sell media item
+     * @param (int) $attachment_id The attachment id
      * @return Returns the path to a protected image
      */
-    public function protected_file( $post_id=null ){
-        $attached_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
-        $attached_path_file = sell_media_get_upload_dir() . '/' . $attached_file;
-        return ( file_exists( $attached_file ) ) ? $attached_file : false;
+    public function get_protected_file( $post_id=null, $attachment_id=null ){
+
+        /**
+         * When we upload items into Sell Media, we move the original file
+         * into the protected wp-content/uploads/sell_media/* directory
+         * and copy all of the intermediate image sizes into the regular
+         * wp-content/uploads/* directory. Using get_attached_file()
+         * will not return the original, high resolution file. It will return
+         * only the largest publicly accessible (derived from Settings -> Media).
+         * So, we now need to build the path protected sell_media directory.
+         * Example (public): /var/www/wp.local/wp-content/uploads/2015/04/mansion.jpeg
+         * Example (protected): /var/www/wp.local/wp-content/uploads/sell_media/2015/04/mansion.jpeg
+         */
+
+        $wp_upload_dir = wp_upload_dir();
+        $protected_path = $wp_upload_dir['basedir'] . '/sell_media';
+
+        // Full system file path to the public low resolution version.
+        $unprotected_file_path = get_attached_file( $attachment_id );
+
+        // Check if this item is a package and change the file location
+        if ( Sell_Media()->products->is_package( $post_id ) ) {
+            $file = sell_media_get_packages_upload_dir() . '/' . basename( $unprotected_file_path );
+        } else {
+            $file = str_replace( $wp_upload_dir['basedir'], $protected_path, $unprotected_file_path );
+        }
+
+        return apply_filters( 'sell_media_get_original_protected_file', $file );
     }
-
-
 
     /**
      * Determine the markup amount.
