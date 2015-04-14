@@ -706,14 +706,14 @@ Class SellMediaPayments {
         $tmp_links = array();
 
         if ( $products ) foreach( $products as $product ){
-
+            echo '<pre>';
             print_r( $product );
-
+            echo '</pre>';
             $tmp_links[ $product['id'] ] = site_url() . '?' . http_build_query( array(
                 'download' => $this->get_meta_key( $payment_id, 'transaction_id' ),
                 'payment_id' => $payment_id,
                 'product_id' => $product['id'],
-                'attachment_id' => ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : $attachment_id
+                'attachment_id' => ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : ''
             ) );
         }
 
