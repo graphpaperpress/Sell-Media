@@ -435,8 +435,7 @@ Class SellMediaPayments {
             $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%">';
             $html .= '<thead>';
             $html .= '<tr>';
-            $html .= '<th>' . __( 'ID', 'sell_media' ) . '</th>';
-            $html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
+            $html .= '<th>' . __( 'Product', 'sell_media' ) . '</th>';
             $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
             $html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
             $html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
@@ -449,12 +448,15 @@ Class SellMediaPayments {
                 if ( ! empty( $product['id'] ) ) {
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
                     $html .= '<td class="sell-media-product-id">';
-                    if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) )
-                        $html .= $product['id'];
-                    $html .= '</td>';
-                    $html .= '<td class="sell-media-product-name">';
-                    if ( isset ( $product['name'] ) && ! is_array( $product['name'] ) )
-                        $html .= $product['name'];
+                    if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
+                        $html .= '#' . $product['id'] . ', ' . $product['name'];
+                        $html .= sell_media_item_icon( $product['attachment'], 'medium', false ) . '<br />';
+                        if ( 'download' == $product['type'] ) {
+                            $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
+                        } elseif ( 'print' == $product['type'] ) {
+                            $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
+                        }
+                    }
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-size">';
                     if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) )
@@ -468,13 +470,6 @@ Class SellMediaPayments {
                     if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) )
                         $html .= $product['qty'];
                     $html .= '</td>';
-                    $html .= '<td class="sell-media-product-download text-center">';
-                    if ( 'download' == $product['type'] ) {
-                        $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . __( 'Download', 'sell_media' ) . '</a>';
-                    } elseif ( 'print' == $product['type'] ) {
-                        $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
-                    }
-                    $html .= '</td>';
                     $html .= '<td class="sell-media-product-total">';
                     if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
                         $html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
@@ -485,8 +480,6 @@ Class SellMediaPayments {
             $html .= '</tbody>';
             $html .= '<tfoot>';
             $html .= '<tr>';
-            $html .= '<td>&nbsp;</td>';
-            $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
@@ -596,7 +589,7 @@ Class SellMediaPayments {
 
 
     /**
-     * Used to build out an HTML table for a single payment containing ALL items for that payment
+     * Used to build out an HTML table for a single payment containing all items for that payment
      *
      * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
      *
@@ -631,7 +624,7 @@ Class SellMediaPayments {
 
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
-                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['id'], 'medium', false ) . '</a></td>';
+                $html .= '<a href="' . get_edit_post_link( $product['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'medium', false ) . '</a></td>';
                 $html .= '<td>' . $product['size']['name'] . '</td>';
                 $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
                 $html .= '<td>' . $product['qty'] . '</td>';
