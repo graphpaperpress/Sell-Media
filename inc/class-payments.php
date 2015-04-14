@@ -435,10 +435,6 @@ Class SellMediaPayments {
 
         if ( $products ) {
 
-            // Old purchase links didn't have attachment_id set
-            // So we derive the attachment_id from the product's post_meta
-            $product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
-
             $html = null;
             $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%">';
             $html .= '<thead>';
@@ -451,8 +447,15 @@ Class SellMediaPayments {
             $html .= '</tr>';
             $html .= '</thead>';
             $html .= '<tbody>';
+
             foreach ( $products as $product ) {
+
+            // Old purchase links didn't have attachment_id set
+            // So we derive the attachment_id from the product's post_meta
+            $product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
+
                 if ( ! empty( $product['id'] ) ) {
+
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
                     $html .= '<td class="sell-media-product-id">';
                     if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
