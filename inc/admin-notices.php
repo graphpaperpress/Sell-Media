@@ -61,23 +61,23 @@ function sell_media_admin_messages() {
         }
 
         /**
-         * Sell Media upgrades available for extensions
+         * Updates available for extensions
          */
         $plugins = get_plugins();
-        $upgrade_plugins = array();
+        $update_plugins = array();
 
         foreach ( array_keys( $plugins ) as $plugin ) {
             if ( preg_match( '/sell-media-(.*)$/', $plugin, $matches ) ) {
                 if ( $plugins[$plugin]['Version'] < 2 ) {
-                    $upgrade_plugins[] = $plugins[$plugin]['Name'];
+                    $update_plugins[] = $plugins[$plugin]['Name'];
                 }
             }
         }
 
-        if ( ! empty( $upgrade_plugins ) ) {
+        if ( ! empty( $update_plugins ) ) {
             $notices[] = array(
-                'slug' => 'sell-media-upgrades',
-                'message' => sprintf( __( 'Important upgrades are now available for %1$s. <a href="%2$s" target="_blank">Learn more</a>.', 'sell_media' ), implode( ', ', $upgrade_plugins ), 'http://graphpaperpress.com/docs/sell-media/#upgrading' )
+                'slug' => 'sell-media-updates',
+                'message' => sprintf( __( 'Important updates are now available for %1$s. <a href="%2$s" target="_blank">Learn more</a>.', 'sell_media' ), implode( ', ', $update_plugins ), 'http://graphpaperpress.com/docs/sell-media/#updates' )
             );
         }
 

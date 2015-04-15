@@ -244,6 +244,11 @@ table.sell-media-products {
 
 /*= Gallery
 -------------------------------------------------------------- */
+.sell-media-gallery:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .sell-media-gallery-page .sell-media-content {
   float: none;
   margin: 0;

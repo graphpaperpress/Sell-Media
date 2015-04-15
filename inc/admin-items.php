@@ -145,6 +145,17 @@ function sell_media_stats_meta_box( $post ) { ?>
     <?php do_action( 'sell_media_after_stats_meta_box', $post );
 }
 
+/**
+ * Editor meta box
+ */
+function sell_media_editor() {
+    global $post_type;
+    if ( $post_type != "sell_media_item" ) return;
+    global $post;
+    wp_editor( $post->post_content, 'post_content', array( 'sell_media_editor' => 'post_content' ) );
+}
+add_action( 'edit_form_advanced', 'sell_media_editor' );
+
 
 /**
  * Saves post meta data.
@@ -219,6 +230,25 @@ function sell_media_save_custom_meta( $post_id ) {
             }
         }
     } // end foreach
+
+    // Save the post content
+    global $post_type;
+    if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
+        $new_content = $_POST['sell_media_editor'];
+        $old_content = get_post_field( 'post_content', $post_id );
+        if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ){
+            $args = array(
+                'ID' => $post_id,
+                'post_content' => $new_content
+            );
+            // unhook this function so it doesn't loop infinitely
+            remove_action( 'save_post', 'sell_media_save_custom_meta' );
+            // update the post, which calls save_post again
+            wp_update_post( $args );
+            // re-hook this function
+            add_action( 'save_post', 'sell_media_save_custom_meta' );
+        }
+    }
     do_action( 'sell_media_extra_meta_save', $post_id );
 }
 add_action( 'save_post', 'sell_media_save_custom_meta' );
@@ -309,25 +339,6 @@ function sell_media_meta_box_fields() {
 
     return apply_filters( 'sell_media_meta_box_fields', $fields );
 }
-
-
-/**
- * Editor
- *
- * @author Zane Matthew
- * @since 0.1
- */
-function sell_media_editor() {
-
-    global $post_type;
-
-    if ( $post_type != "sell_media_item" ) return;
-
-    global $post;
-    //wp_editor( stripslashes_deep( get_post_field( 'post_content', $post->ID ) ), 'sell_media_editor' );
-    wp_editor( $post->post_content, 'post_content', array( 'sell_media_editor' => 'post_content' ) );
-}
-//add_action( 'edit_form_advanced', 'sell_media_editor' );
 
 
 /**
