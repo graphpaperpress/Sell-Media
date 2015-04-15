@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.2
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ Sell photos, prints, videos and pdf's online through WordPress in seconds. Every
 
 Using Sell Media, you can:
 
-*   Sell photos, videos, pdf's and other digital files.
+*   Sell photos, galleries, videos, pdf's and other digital files.
 *   Create you own stock photo or video site.
 *   Charge licensing fees for commercial, editorial, or personal usages.
 *   Protect file uploads.
@@ -66,9 +66,7 @@ Visit the official plugin [Documentation](http://graphpaperpress.com/docs/sell-m
 
 Please visit the Add Media -> Settings -> Payments page and double check all of your settings.
 
-Next, double check that your server meets the server requirements (See the Installation page above)
-
-In some rare instances, we've found that web hosts actually have firewalls that block incoming pings from PayPal. This causes payments to not post. PayPal computers use IP ranges 66.211.*.* and 173.0.*.* and visit the IPN URL with NO User-Agent. Some web hosting companies have their servers set up to block incoming pings when the User-Agent is not explicitly set (as is the case with PayPal's IPN). In this case, you'll want to modify your .htaccess file to override user-agent blocking with these address ranges.
+If you're still having issues, [check these tips in the PayPal section](https://graphpaperpress.com/docs/sell-media/#paypal).
 
 = I have 5k+ photos I would like to sell, can Sell Media handle this? =
 
@@ -106,16 +104,13 @@ Visit the Sell Media -> Add Product page and configure the page options. Click S
 
 Create a Page called "Search Media" and add this shortcode to it: `[sell_media_searchform]`. A search form also shows up above archive pages for products.
 
-= How do I bulk upload images for sale? =
+= Can I sell image galleries? =
 
-1. Click Sell Media -> Add New -> Add Bulk
-2. Click "Upload or Select Images"
-2. Simply drag and drop your files into the box that appears, or click Select Files to choose a file from your computer to upload. Please keep in mind that the drag and drop uploader only works in browsers with HTML5 upload support such as the latest versions of Chrome, Firefox, or Safari. Other browsers will still show the Select Files button or the basic browser uploader form.
-4. This item will be added as a new entry in Sell Media. By default, the newly created Sell Media item will inherit the sizes, prices and licenses that you chose on Sell Media -> Settings. You can modify the price and available licenses on the Sell Media tab by editing each individual item.
+Yes and you have two options:
 
-= How do I display a gallery of images for sale? =
+1. Simply upload more than one image on the Sell Media -> Add New page. The price listed below is for each image in the gallery. In the near future, we will be releasing an extension for selling the entire gallery of images for one price.
+2. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
 
-Sell Media includes a "Collections" taxonomy, which you can see on the right side of the screen when adding a new item to Sell Media. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
 
 = How do I password protect an item? =
 
@@ -210,6 +205,23 @@ Action hooks available:
 * You must enable Auto Return Payment Data Transfer in PayPal for purchases to be recorded. See readme.txt for instructions.
 
 == Changelog ==
+
+= 2.0.1 =
+* New Feature: Galleries. Upload multiple files.
+* New Feature: Gallery navigation.
+* New Feature: Sales stats for each product.
+* New Feature: View counts for each product.
+* New Feature: Lightbox notification text.
+* New Feature: Automatic classes for Checkout and Lightbox menu items.
+* New Feature: Upgrade notices for extensions.
+* New Feature: Dashicon integration.
+* Tweak: Updated download methods for accepting $attachment_id.
+* Tweak: Lightbox changes to accomodate $attachment_id.
+* Tweak: Lightbox now uses serialized multidimensional array.
+* Tweak: Flush permalinks if slug changed on settings.
+* Tweak
+* Bugfix: Missing sell_media_image class.
+* Bugix: Notice fix on system info and payments pages.
 
 = 2.0 =
 * New Feature: Breadcrumb navigation options.
