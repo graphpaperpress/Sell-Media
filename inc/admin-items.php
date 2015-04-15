@@ -124,7 +124,7 @@ function sell_media_options_meta_box( $post ) {
         <span class="desc"><?php printf( __( '<a href="%1$s">Create new price group</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' ); ?></span>
     </div>
 
-    <?php do_action( 'sell_media_after_options_meta_box', $post );
+    <?php do_action( 'sell_media_after_options_meta_box', $post->ID );
 
 }
 
@@ -216,11 +216,6 @@ function sell_media_save_custom_meta( $post_id ) {
                     // Sanitize price
                     if ( $field == 'sell_media_price' ) {
                         $new = sprintf( '%0.2f', ( float ) $new );
-                    }
-
-                    // Sanitize free downloads
-                    if ( $field == 'sell_media_free_downloads' ) {
-                        // wp_die( $new );
                     }
 
                     // new meta and it's different than old saved value, so update it
