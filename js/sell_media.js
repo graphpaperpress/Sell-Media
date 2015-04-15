@@ -307,15 +307,13 @@ jQuery(document).ready(function($){
     });
 
     // Add to lightbox on click
-    $( '.add-to-lightbox' ).on( 'click', function( e ) {
+    $( '.add-to-lightbox' ).on( 'click', function( event ) {
 
-        if ( $(this).attr('data-attachment-id') ) {
-            attachment_id = $(this).data('attachment-id');
-        } else {
-            attachment_id = '';
-        }
+        event.preventDefault();
+
         var post_id = $(this).data('id'),
-            selector = $('#sell-media-lightbox-content #sell-media-' + post_id);
+            attachment_id = $(this).data('attachment-id'),
+            selector = $('#sell-media-lightbox-content #sell-media-' + attachment_id);
 
         var data = {
             action: 'sell_media_update_lightbox',
@@ -329,7 +327,7 @@ jQuery(document).ready(function($){
             data: data,
             success: function(msg){
                 $('.lightbox-counter').text(msg.count);
-                $('#lightbox-' + post_id).html(msg.text);
+                $('#lightbox-' + post_id).text(msg.text);
                 $('#lightbox-' + post_id).attr("title", msg.text);
                 $(selector).hide();
                 if ( msg.text == 'Remove' ) {
@@ -342,7 +340,9 @@ jQuery(document).ready(function($){
     });
 
     // Empty the lightbox
-    $('.empty-lightbox').on( 'click', function(){
+    $('.empty-lightbox').on( 'click', function( event ){
+        event.preventDefault();
+
         var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
 
         if ( emptied ) {

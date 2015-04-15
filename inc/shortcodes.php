@@ -79,7 +79,8 @@ function sell_media_item_shortcode( $atts ) {
     extract( shortcode_atts( array(
         'style' => 'default',
         'color' => 'blue',
-        'id' => 'none',
+        'id' => '',
+        'attachment' => '',
         'text' => 'BUY',
         'size' => 'medium',
         'align' => 'center'
@@ -89,7 +90,7 @@ function sell_media_item_shortcode( $atts ) {
     $image = sell_media_item_icon( $id, $size, false );
     $text = apply_filters('sell_media_purchase_text', $text, $id );
 
-    $button = sell_media_item_buy_button( $id, 'button', $text, false );
+    $button = sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
 
     return '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a>' . $button . '</div>';
 }

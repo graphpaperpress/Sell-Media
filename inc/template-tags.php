@@ -17,9 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since       0.1
  * @return      html
  */
-function sell_media_item_buy_button( $post_id=null, $button=null, $text=null, $echo=true ) {
+function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button=null, $text=null, $echo=true ) {
 
-    $attachment_id = sell_media_get_attachment_id( $post_id );
+    $attachment_id = ( empty( $attachment_id ) ) ? sell_media_get_attachment_id( $post_id ) : $attachment_id;
     $text = apply_filters('sell_media_purchase_text', $text, $post_id );
     $html = '<a href="javascript:void(0)" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-cart-trigger sell-media-' . $button . '">' . $text . '</a>';
 
@@ -76,13 +76,13 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 
     // check if featured image exists
     if ( '' != get_the_post_thumbnail( $post_id ) ) {
-        $image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ) ) );
+        $image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image' ) ) );
 
     // check if attachment thumbnail exists
     } elseif ( '' != wp_get_attachment_image( $attachment_id ) ) {
         $image_attr = wp_get_attachment_image_src( $attachment_id, $size );
         $src = $image_attr[0];
-        $image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
+        $image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
 
     // use default WP icons
     } else {
@@ -200,8 +200,8 @@ function sell_media_content_loop( $post_id, $i ){
     $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
     // Don't show buy button, lightbox, etc, if post has multiple attachments
     if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
-        $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
-        $html .= apply_filters( 'sell_media_item_overlay', $output='', $post_id );
+        $html .= sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy' ), false );
+        $html .= apply_filters( 'sell_media_item_overlay', $output = '', $post_id );
     }
     $html .= '</span>';
     $html .= '</div>';
@@ -511,7 +511,7 @@ function sell_media_append_meta( $post_id ) {
     } elseif ( is_singular( 'sell_media_item' ) ) {
         echo '<div class="sell-media-meta">';
         echo '<p class="sell-media-buy-button">';
-        echo sell_media_item_buy_button( $post_id, 'button', __( 'Buy', 'sell_media' ), false );
+        echo sell_media_item_buy_button( $post_id, $attachment_id = '', 'button', __( 'Buy', 'sell_media' ), false );
         echo '</p>';
         do_action( 'sell_media_below_buy_button', $post_id );
         sell_media_plugin_credit();
@@ -528,7 +528,7 @@ add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
  * @since 2.0.1
  */
 function sell_media_item_links( $post_id ){
-    return '<p>' . sell_media_item_buy_button( $post_id, 'text', __( 'Buy', 'sell_media' ), false ) . ' | ' . sell_media_lightbox_link( $post_id ) . ' | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+    return '<p id="sell-media-item-links-' . $post_id . '" class="sell-media-item-links">' . sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy', 'sell_media' ), false ) . ' | ' . sell_media_lightbox_link( $post_id ) . ' | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
 }
 
 /**

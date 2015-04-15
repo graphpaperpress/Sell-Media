@@ -14,20 +14,20 @@
  * @return html
  * @since 1.9.2
  */
-function sell_media_lightbox_link( $post_id ) {
+function sell_media_lightbox_link( $post_id=null, $attachment_id=null ) {
 
     $item                   = array();
     $item['post_id']        = $post_id;
-    $item['attachment_id']  = sell_media_get_attachment_id( $post_id );
+    $item['attachment_id']  = ( ! empty( $attachment_id ) ) ? $attachment_id : sell_media_get_attachment_id( $post_id );
 
-    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" data-id="' . $post_id . '" data-attachment-id="' . sell_media_get_attachment_id( $post_id ) . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
+    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" data-id="' . $post_id . '" data-attachment-id="' . $item['attachment_id'] . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
 
     // display lightbox notice on single posts
     if ( is_single() ) {
         $settings = sell_media_get_plugin_options();
 
         // show a link if lightbox page is assigned in settings
-        $link = ( ! empty( $settings->lightbox_page ) ) ? '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __('Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>' : __( 'lightbox', 'sell_media' );
+        $link = ( ! empty( $settings->lightbox_page ) ) ? '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __( 'Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>' : __( 'lightbox', 'sell_media' );
         // set css class based on item status
         $class = ( sell_media_get_lightbox_state( $item ) ) ? 'in-lightbox' : 'not-in-lightbox';
 
@@ -113,7 +113,7 @@ function sell_media_lightbox_query() {
             // New cookies are stored as a multidimensional array of ids
             // so that we can support attachments (galleries)
             $post_id        = ( ! empty( $item['post_id'] ) ) ? $item['post_id'] : $item;
-            $attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? $item['attachment_id'] : $post_id;
+            $attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? $item['attachment_id'] : sell_media_get_attachment_id( $post_id );
             $permalink      = ( ! empty( $item['attachment_id'] ) ) ? add_query_arg( 'id', $attachment_id, get_permalink( $post_id ) ) : get_permalink( $attachment_id );
 
             $i++;
@@ -124,8 +124,8 @@ function sell_media_lightbox_query() {
             $html .= '<a href="' . esc_url( $permalink ) . '">' . sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
             $html .= '<span class="item-overlay">';
             $html .= '<h3><a href="' . esc_url( $permalink ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-            // $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
-            // $html .= sell_media_lightbox_link( $post_id );
+            $html .= sell_media_item_buy_button( $post_id, $attachment_id, 'text', __( 'Buy' ), false );
+            $html .= sell_media_lightbox_link( $post_id, $attachment_id );
             $html .= '</span>';
             $html .= '</div>';
             $html .= '</div>';
