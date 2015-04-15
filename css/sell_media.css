@@ -384,7 +384,8 @@ table.sell-media-products {
 
 /*= Images
 -------------------------------------------------------------- */
-.sell-media-image {
+.sell-media-image,
+.sell_media_image {
   margin: 0 0 1.5em;
 }
 
