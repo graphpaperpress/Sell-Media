@@ -349,6 +349,7 @@ jQuery(document).ready(function($){
             $('.sell-media-grid-container').remove();
             $(this).text($(this).data('empty-text'));
             $(this).removeClass('empty-lightbox');
+            $('.lightbox-counter').text(0);
         }
     });
 
