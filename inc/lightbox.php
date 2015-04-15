@@ -16,50 +16,58 @@
  */
 function sell_media_lightbox_link( $post_id ) {
 
-    // build lightbox item array
-    $item = array();
-    $item['post_id'] = $post_id;
+    $item                   = array();
+    $item['post_id']        = $post_id;
+    $item['attachment_id']  = sell_media_get_attachment_id( $post_id );
 
-    if ( sell_media_has_multiple_attachments( $post_id ) ) {
+    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" data-id="' . $post_id . '" data-attachment-id="' . sell_media_get_attachment_id( $post_id ) . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
 
-        $attachment_id = get_query_var( 'id' );
-
-        if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
-            $image_id = $attachment_id;
-            $data_attr_attachment_id = 'data-attachment-id="' . $image_id . '"';
-            $item['attachment_id'] = $image_id;
-        }
-
-    } else {
-        $image_id = $post_id;
-        $data_attr_attachment_id = '';
-        $item['attachment_id'] = '';
-    }
-
-    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" ' . $data_attr_attachment_id . ' data-id="' . $post_id . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
-
-    // display lightbox notice on sigle posts
+    // display lightbox notice on single posts
     if ( is_single() ) {
         $settings = sell_media_get_plugin_options();
 
-        if ( ! empty( $settings->lightbox_page ) ) {
-            $link = '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __('Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>';
-        } else {
-            $link = __( 'lightbox', 'sell_media' );
-        }
-
+        // show a link if lightbox page is assigned in settings
+        $link = ( ! empty( $settings->lightbox_page ) ) ? '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __('Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>' : __( 'lightbox', 'sell_media' );
         // set css class based on item status
-        if ( sell_media_get_lightbox_state( $item ) ) {
-            $status = 'in-lightbox';
-        } else {
-            $status = 'not-in-lightbox';
-        }
+        $class = ( sell_media_get_lightbox_state( $item ) ) ? 'in-lightbox' : 'not-in-lightbox';
+
         // lightbox notice
-        $html .= '<div class="lightbox-notice ' . $status . '">';
+        $html .= '<div class="lightbox-notice ' . $class . '">';
         $html .= '<p>' . sprintf( __( 'This item was saved to your %1$s.', 'sell_media' ), $link ) . '</p>';
         $html .= '</div>';
     }
     return apply_filters( 'sell_media_lightbox_link', $html, $post_id );
+}
+
+/**
+ * Lightbox text
+ */
+function sell_media_get_lightbox_text( $item ) {
+    $text = ( sell_media_get_lightbox_state( $item ) ) ? __( 'Remove', 'sell_media' ) : __( 'Save', 'sell_media' );
+    return apply_filters( 'sell_media_get_lightbox_text', $text, $item );
+}
+
+/**
+ * Lightbox state
+ *
+ * @var $post_id
+ * @return bool
+ */
+function sell_media_get_lightbox_state( $item ) {
+
+    // default state
+    $state = false;
+
+    // check if cookie already exists
+    if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
+        $items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+        // if id is in lightbox, return true
+        if ( in_array( $item, $items ) ) {
+            $state = true;
+        }
+    }
+
+    return $state;
 }
 
 /**
@@ -70,6 +78,9 @@ function sell_media_lightbox_link( $post_id ) {
 function sell_media_lightbox_shortcode() {
 
     $html  = '<div id="sell-media-lightbox-content" class="sell-media">';
+    if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
+         $html .= '<p class="empty-lightbox" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove all from lightbox', 'sell_media' ) . '</p>';
+    }
     $html .= '<div id="sell-media-grid-container" class="sell-media-grid-container">';
     $html .= sell_media_lightbox_query();
     $html .= '</div>';
@@ -113,6 +124,8 @@ function sell_media_lightbox_query() {
             $html .= '<a href="' . esc_url( $permalink ) . '">' . sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
             $html .= '<span class="item-overlay">';
             $html .= '<h3><a href="' . esc_url( $permalink ) . '">' . get_the_title( $post_id ) . '</a></h3>';
+            // $html .= sell_media_item_buy_button( $post_id, 'text', __( 'Buy' ), false );
+            // $html .= sell_media_lightbox_link( $post_id );
             $html .= '</span>';
             $html .= '</div>';
             $html .= '</div>';
@@ -120,35 +133,11 @@ function sell_media_lightbox_query() {
 
     } else {
 
-        $html .= __( 'Nothing saved in lightbox.', 'sell_media' );
+        $html .= __( 'Your lightbox is empty.', 'sell_media' );
 
     }
 
     return $html;
-}
-
-/**
- * Lightbox state
- *
- * @var $post_id
- * @return bool
- */
-function sell_media_get_lightbox_state( $item ) {
-
-    // default state
-    $state = false;
-
-    // check if cookie already exists
-    if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
-        $items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
-
-        // if id is in lightbox, return true
-        if ( in_array( $item, $items ) ) {
-            $state = true;
-        }
-    }
-
-    return $state;
 }
 
 /**
@@ -213,17 +202,3 @@ function sell_media_update_lightbox(){
 }
 add_action( 'wp_ajax_sell_media_update_lightbox', 'sell_media_update_lightbox' );
 add_action( 'wp_ajax_nopriv_sell_media_update_lightbox', 'sell_media_update_lightbox' );
-
-/**
- * Lightbox text
- */
-function sell_media_get_lightbox_text( $item ) {
-
-    if ( sell_media_get_lightbox_state( $item) ) {
-        $text = __( 'Remove', 'sell_media' );
-    } else {
-        $text = __( 'Save', 'sell_media' );
-    }
-
-    return apply_filters( 'sell_media_get_lightbox_text', $text, $item );
-}

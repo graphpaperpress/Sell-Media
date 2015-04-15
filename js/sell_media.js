@@ -341,10 +341,21 @@ jQuery(document).ready(function($){
         });
     });
 
+    // Empty the lightbox
+    $('.empty-lightbox').on( 'click', function(){
+        var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
+
+        if ( emptied ) {
+            $('.sell-media-grid-container').remove();
+            $(this).text($(this).data('empty-text'));
+            $(this).removeClass('empty-lightbox');
+        }
+    });
+
     // Count lightbox
     function count_lightbox() {
         var cookie = $.cookie('sell_media_lightbox');
-        if ( cookie == undefined ) {
+        if ( cookie === undefined ) {
             return 0;
         } else {
             var data = $.parseJSON( cookie ),

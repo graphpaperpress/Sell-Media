@@ -366,6 +366,10 @@ table.sell-media-products {
   display: block;
   margin: 1em 0;
 }
+.sell-media .empty-lightbox {
+  color: red;
+  cursor: pointer;
+}
 .sell-media .sell-media-grid .sell-media-text {
   right: 10px;
 }

@@ -415,8 +415,7 @@ function sell_media_get_attachments( $post_id ) {
  * @return int $attachment_id
  * @since 2.0.1
  */
-function sell_media_get_attachment_id( $post_id ) {
-    $attachment_id = '';
+function sell_media_get_attachment_id( $post_id=null ) {
 
     if ( sell_media_has_multiple_attachments( $post_id ) ) {
         $attachment_id = get_query_var( 'id' );
