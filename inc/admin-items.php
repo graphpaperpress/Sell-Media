@@ -60,7 +60,7 @@ function sell_media_files_meta_box( $post ) {
 
     <div id="sell-media-upload-show-options" class="sell-media-upload-show-options sell-media-field" style="display:none;">
         <h4><?php _e( 'Bulk upload', 'sell_media' ); ?></h4>
-        <p class="description"><?php printf( __( 'Add new folders of images inside wp-content/uploads/sell_media/packages/ by using an FTP application or by <a href="%1$s" target="_blank">exporting directly from Lightroom</a>. Then, select the folder below to process the bulk upload.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#lightroom' ); ?></p>
+        <p class="description"><?php printf( __( 'Add new folders of images inside wp-content/uploads/sell_media/packages/ by using an FTP application or by <a href="%1$s" target="_blank">exporting directly from Lightroom</a>. Then, select the folder below to process the bulk upload.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
         <select id="sell-media-upload-bulk-selector" value="">
             <option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
             <?php
