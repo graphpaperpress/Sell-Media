@@ -382,13 +382,6 @@ table.sell-media-products {
   padding: 0 3px;
 }
 
-/*= Images
--------------------------------------------------------------- */
-.sell-media-image,
-.sell_media_image {
-  margin: 0 0 1.5em;
-}
-
 /*= Cart
 -------------------------------------------------------------- */
 .sell-media-dialog-overlay {
