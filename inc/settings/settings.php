@@ -87,7 +87,7 @@ function sell_media_add_plugin_page() {
         __('Settings', 'sell_media'),
         // User capability required to access page
         sell_media_get_plugin_settings_page_cap(),
-        // String to append to URL after "themes.php"
+        // String to append to URL
         'sell_media_plugin_options',
         // Function to define settings page markup
         'sell_media_admin_plugin_options_page'
@@ -288,17 +288,38 @@ function sell_media_get_plugin_settings_by_tab() {
     return $settingsbytab;
 }
 
+/**
+ * Hook into option_page_capability_{option_page}
+ * @return capability
+ */
 function sell_media_get_plugin_settings_page_cap() {
     return 'edit_theme_options';
 }
-// Hook into option_page_capability_{option_page}
 add_action( 'option_page_capability_sell_media_plugin_options', 'sell_media_get_plugin_settings_page_cap' );
 
 
 /**
+ * Flush rewrite rules
+ *
+ * If users change the post type slug, we need to
+ * flush rewrite rules. Since flush_rewrite_rules()
+ * is an expensive operation, we check if current screen
+ * is the settings page and run only if settings are updated.
+ */
+function sell_media_after_settings_saved(){
+
+    // Check if current screen is settings page
+    // Flush rewrite rules when settings are updated
+    if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] ) {
+        flush_rewrite_rules();
+    }
+
+}
+add_action( 'load-sell_media_item_page_sell_media_plugin_options', 'sell_media_after_settings_saved' );
+
+/**
  * Fields
  */
-
 function sell_media_plugin_field_text( $value, $attr ) { ?>
     <input type="text" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" value="<?php echo esc_attr( $value ); ?>">
 <?php

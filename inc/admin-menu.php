@@ -21,7 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function sell_media_admin_menu() {
 
     $permission = 'manage_options';
-    add_submenu_page( null, __('Add Package', 'sell_media'), __('Add Package', 'sell_media'),  'upload_files', 'sell_media_add_package', 'sell_media_add_package_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Reports', 'sell_media'), __('Reports', 'sell_media'),  $permission, 'sell_media_reports', 'sell_media_reports_callback_fn' );
     add_submenu_page( 'edit.php?post_type=sell_media_item', __('Upgrades', 'sell_media'), __('Upgrades', 'sell_media'),  $permission, 'sell_media_upgrades', 'sell_media_upgrades_callback_fn' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=price-group&amp;post_type=sell_media_item' );
