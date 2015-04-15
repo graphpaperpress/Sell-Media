@@ -169,7 +169,7 @@ function sell_media_save_custom_meta( $post_id ) {
 
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
     if ( ! isset( $_POST['sell_media_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_meta_box_nonce'], '_sell_media_meta_box_nonce' ) ) return;
-    if ( ! current_user_can( 'edit_post' ) ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
     // Prevents an infinite loop
     // See: http://codex.wordpress.org/Function_Reference/wp_update_post
@@ -216,6 +216,11 @@ function sell_media_save_custom_meta( $post_id ) {
                     // Sanitize price
                     if ( $field == 'sell_media_price' ) {
                         $new = sprintf( '%0.2f', ( float ) $new );
+                    }
+
+                    // Sanitize free downloads
+                    if ( $field == 'sell_media_free_downloads' ) {
+                        // wp_die( $new );
                     }
 
                     // new meta and it's different than old saved value, so update it
