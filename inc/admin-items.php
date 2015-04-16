@@ -54,22 +54,23 @@ function sell_media_files_meta_box( $post ) {
     do_action( 'sell_media_before_files_meta_box', $post ); ?>
 
     <div id="sell-media-upload-field" class="sell-media-field">
-        <input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" />
-        <span class="desc"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Options', 'sell_media' ); ?></a></span>
+        <p><input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" /></p>
+        <p class="description"><?php _e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
+        <p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
     </div>
 
-    <div id="sell-media-upload-show-options" class="sell-media-upload-show-options sell-media-field" style="display:none;">
-        <h4><?php _e( 'Bulk upload', 'sell_media' ); ?></h4>
-        <p class="description"><?php printf( __( 'Add new folders of images inside wp-content/uploads/sell_media/packages/ by using an FTP application or by <a href="%1$s" target="_blank">exporting directly from Lightroom</a>. Then, select the folder below to process the bulk upload.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
+    <div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
+        <h4><?php _e( 'Importing', 'sell_media' ); ?></h4>
+        <p class="description"><?php printf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the wp-content/uploads/sell_media/import/ folder. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
         <select id="sell-media-upload-bulk-selector" value="">
             <option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
             <?php
-            $directories = sell_media_get_bulk_upload_directories();
+            $directories = sell_media_get_directories();
             if ( $directories ) foreach ( $directories as $directory ) : ?>
                 <option value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
             <?php endforeach; ?>
         </select>
-        <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php _e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php _e( 'Uploading files...', 'sell_media' ); ?>" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
+        <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php _e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php _e( 'Importing files...', 'sell_media' ); ?>" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
         <?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
     </div>
 
@@ -279,7 +280,7 @@ function sell_media_upload_bulk_callback(){
 
     if ( isset( $_POST['dir'] ) ) {
 
-        $path = sell_media_get_packages_upload_dir() . '/' . $_POST['dir'] . '/';
+        $path = sell_media_get_import_dir() . '/' . $_POST['dir'] . '/';
 
         if ( file_exists( $path ) ) {
 
