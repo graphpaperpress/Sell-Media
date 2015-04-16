@@ -33,7 +33,7 @@ Class SellMediaDownload {
             // This means they were purchased before we added support
             // for multiple attachments. So, we just grab the first
             // attachment_id saved in post meta.
-            $attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) : sell_media_get_attachment_id( $product_id );
+            $attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) :  sell_media_get_packages_upload_dir() . '/' . sell_media_get_attachment_id( $product_id );
             $size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : null;
 
             $verified = $this->verify( $transaction_id, $payment_id );
