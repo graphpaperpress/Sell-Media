@@ -781,15 +781,31 @@ function sell_media_get_packages_upload_dir() {
 
 
 /**
- * Get bulk upload directories
+ * Retrieve the absolute path to the import directory without the trailing slash
+ *
+ * @since  2.0.1
+ * @return string $path Absolute path to the sell_media/import directory
+ */
+function sell_media_get_import_dir() {
+    $wp_upload_dir = wp_upload_dir();
+    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/import' );
+    $path = $wp_upload_dir['basedir'] . '/sell_media/import';
+
+    return apply_filters( 'sell_media_get_import_dir', $path );
+}
+
+
+/**
+ * Get directories
  *
  * @since 2.0.1
+ * @param $dir (packages or import)
  * @return array (directories)
  */
-function sell_media_get_bulk_upload_directories() {
+function sell_media_get_directories( $dir=null ) {
 
     $directories = '';
-    $path = sell_media_get_packages_upload_dir();
+    $path = ( $dir == 'packages' ) ? sell_media_get_packages_upload_dir() : sell_media_get_import_dir();
 
     foreach ( glob( $path . "/*", GLOB_ONLYDIR ) as $directory ) {
         $directories[] = $directory;

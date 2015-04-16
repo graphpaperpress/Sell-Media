@@ -209,6 +209,7 @@ Action hooks available:
 = 2.0.1 =
 * New Feature: Galleries. Upload multiple files.
 * New Feature: Gallery navigation.
+* New Feature: Importing options (Lightroom, etc)
 * New Feature: Sales stats for each product.
 * New Feature: View counts for each product.
 * New Feature: Lightbox notification text.
