@@ -45,7 +45,7 @@ Class SellMediaDownload {
                 if ( file_exists( $file ) ) {
                     $requested_file = $file;
                 } elseif ( file_exists( sell_media_get_packages_upload_dir() . '/' . $file ) ) {
-                    $requested_file = sell_media_get_packages_upload_dir() . '/' . $file );
+                    $requested_file = sell_media_get_packages_upload_dir() . '/' . $file;
                 } else {
                     $requested_file = get_attached_file( $attachment_id );
                 }
