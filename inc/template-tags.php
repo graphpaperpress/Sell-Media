@@ -385,7 +385,7 @@ function sell_media_breadcrumbs( $post_id ){
             $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
         }
         $html .= get_the_title( '', false );
-        if ( sell_media_has_multiple_attachments( $post_id ) && ! empty( get_query_var( 'id' ) ) ) {
+        if ( sell_media_has_multiple_attachments( $post_id ) && get_query_var( 'id' ) == true ) {
             $html .= sell_media_gallery_navigation( get_query_var( 'id' ) );
         }
         $html .= '</div>';
@@ -441,7 +441,9 @@ function sell_media_before_content( $content ) {
             $new_content .= sell_media_breadcrumbs( $post->ID );
             $new_content .= '<div class="sell-media-content">';
             $new_content .= ob_get_clean() . $content;
-            $new_content .= sell_media_below_content_widgets();
+            if ( sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == true ) {
+                $new_content .= sell_media_below_content_widgets();
+            }
             $new_content .= '</div>';
         }
         $content = $new_content;
