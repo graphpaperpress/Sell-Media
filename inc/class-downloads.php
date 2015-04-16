@@ -33,14 +33,15 @@ Class SellMediaDownload {
             // This means they were purchased before we added support
             // for multiple attachments. So, we just grab the first
             // attachment_id saved in post meta.
-            $attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) :  sell_media_get_packages_upload_dir() . '/' . sell_media_get_attachment_id( $product_id );
+            $attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) : sell_media_get_attachment_id( $product_id );
             $size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : null;
 
             $verified = $this->verify( $transaction_id, $payment_id );
 
             if ( $verified ) {
 
-                $requested_file = ( get_post_meta( $product_id, '_sell_media_attached_file', true ) ) ? get_post_meta( $product_id, '_sell_media_attached_file', true ) : get_attached_file( $attachment_id );
+                $requested_file = ( get_post_meta( $product_id, '_sell_media_attached_file', true ) ) ? sell_media_get_packages_upload_dir() . '/' . sell_media_get_attachment_id( $product_id ) : get_attached_file( $attachment_id );
+
 
                 if ( ! file_exists( $requested_file ) ) {
                     wp_die( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $requested_file );
