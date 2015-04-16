@@ -226,11 +226,11 @@ Class SellMediaProducts {
         $protected_path = $wp_upload_dir['basedir'] . '/sell_media';
 
         // Full system file path to the public low resolution version.
-        $unprotected_file_path = ( get_post_meta( $product_id, '_sell_media_attached_file', true ) ) ? get_post_meta( $product_id, '_sell_media_attached_file', true ) : get_attached_file( $attachment_id );
+        $unprotected_file_path = get_attached_file( $attachment_id );
 
         // Check if this item is a package and change the file location
         if ( sell_media_is_package( $post_id ) ) {
-            $file = sell_media_get_packages_upload_dir() . '/' . basename( $unprotected_file_path );
+            $file = sell_media_get_package_filepath( $post_id );
         } else {
             $file = str_replace( $wp_upload_dir['basedir'], $protected_path, $unprotected_file_path );
         }
