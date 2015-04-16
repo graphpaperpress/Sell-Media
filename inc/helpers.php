@@ -441,6 +441,29 @@ function sell_media_has_multiple_attachments( $post_id ) {
 }
 
 /**
+ * Checks if product is a package
+ */
+function sell_media_is_package( $post_id ){
+
+    $is_package = get_post_meta( $post_id, '_sell_media_is_package', true );
+
+    if ( $is_package )
+        return true;
+}
+
+/**
+ * Return full path to package file
+ */
+function sell_media_get_package_filepath( $post_id ){
+
+    $is_package = get_post_meta( $post_id, '_sell_media_is_package', true );
+    $file = get_post_meta( $post_id, '_sell_media_attached_file', true );
+
+    if ( $is_package && $file )
+        return sell_media_get_packages_upload_dir() . '/' . $file;
+}
+
+/**
  * Determines if a post, identified by the specified ID, exist
  * within the WordPress database.
  *

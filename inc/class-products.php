@@ -229,7 +229,7 @@ Class SellMediaProducts {
         $unprotected_file_path = get_attached_file( $attachment_id );
 
         // Check if this item is a package and change the file location
-        if ( Sell_Media()->products->is_package( $post_id ) ) {
+        if ( sell_media_is_package( $post_id ) ) {
             $file = sell_media_get_packages_upload_dir() . '/' . basename( $unprotected_file_path );
         } else {
             $file = str_replace( $wp_upload_dir['basedir'], $protected_path, $unprotected_file_path );

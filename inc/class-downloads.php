@@ -40,15 +40,8 @@ Class SellMediaDownload {
 
             if ( $verified ) {
 
-                $file = get_post_meta( $product_id, '_sell_media_attached_file', true );
-
-                if ( file_exists( $file ) ) {
-                    $requested_file = $file;
-                } elseif ( file_exists( sell_media_get_packages_upload_dir() . '/' . $file ) ) {
-                    $requested_file = sell_media_get_packages_upload_dir() . '/' . $file;
-                } else {
-                    $requested_file = get_attached_file( $attachment_id );
-                }
+                // Filepath to package or attachment
+                $requested_file = ( sell_media_is_package( $product_id ) ) ? sell_media_get_package_filepath( $product_id ) : get_attached_file( $attachment_id );
 
                 if ( ! file_exists( $requested_file ) ) {
                     wp_die( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $requested_file );
@@ -75,14 +68,19 @@ Class SellMediaDownload {
                 header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
                 header( "Content-Transfer-Encoding: binary" );
 
-                // If this download is an image, generate the image sizes purchased and create a download
-                if ( wp_attachment_is_image( $attachment_id ) ){
+                // If package, download it from correct packages path ($requested_file)
+                if ( sell_media_is_package( $product_id ) ) {
+                    $this->download_file( $requested_file );
+                }
+                // If image, generate the image sizes purchased and create a download
+                elseif ( wp_attachment_is_image( $attachment_id ) ){
                     $this->download_image( $product_id, $attachment_id, $size_id );
+                }
                 // Otherwise, just deliver the download
-                } else {
+                else {
                     // Get the original uploaded file in the sell_media dir
                     $file_path = Sell_Media()->products->get_protected_file( $product_id, $attachment_id );
-                    $this->download_package( $file_path );
+                    $this->download_file( $file_path );
                 }
                 do_action( 'sell_media_after_successful_download', $product_id );
                 exit();
@@ -158,7 +156,7 @@ Class SellMediaDownload {
      * @param    boolean $retbytes  Return the bytes of file
      * @return   bool|string        If string, $status || $cnt
      */
-    public function download_package( $file=null, $retbytes=true ) {
+    public function download_file( $file=null, $retbytes=true ) {
 
         $chunksize = 1024 * 1024;
         $buffer    = '';
