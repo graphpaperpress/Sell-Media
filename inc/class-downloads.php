@@ -40,7 +40,7 @@ Class SellMediaDownload {
 
             if ( $verified ) {
 
-                $requested_file = ( get_post_meta( $product_id, '_sell_media_attached_file', true ) ) ? sell_media_get_packages_upload_dir() . '/' . sell_media_get_attachment_id( $product_id ) : get_attached_file( $attachment_id );
+                $requested_file = ( get_post_meta( $product_id, '_sell_media_attached_file', true ) ) ? sell_media_get_packages_upload_dir() . '/' . get_post_meta( $product_id, '_sell_media_attached_file', true ) : get_attached_file( $attachment_id );
 
 
                 if ( ! file_exists( $requested_file ) ) {
