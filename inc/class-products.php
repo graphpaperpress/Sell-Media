@@ -226,7 +226,7 @@ Class SellMediaProducts {
         $protected_path = $wp_upload_dir['basedir'] . '/sell_media';
 
         // Full system file path to the public low resolution version.
-        $unprotected_file_path = get_attached_file( $attachment_id );
+        $unprotected_file_path = ( get_post_meta( $product_id, '_sell_media_attached_file', true ) ) ? get_post_meta( $product_id, '_sell_media_attached_file', true ) : get_attached_file( $attachment_id );
 
         // Check if this item is a package and change the file location
         if ( Sell_Media()->products->is_package( $post_id ) ) {
