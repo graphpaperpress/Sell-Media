@@ -47,19 +47,23 @@ add_action( 'widgets_init', 'sell_media_widgets_init' );
 
 /**
  * Display Widget Below Single Content
+ *
+ * Output buffering is required because this needs
+ * to return content (we're filtering the_content)
+ * and dynamic_sidebar() echos content.
  */
-function sell_media_widgets_below_single_content() { ?>
+function sell_media_below_content_widgets() {
 
-    <?php if ( is_active_sidebar( 'sell-media-below-single-content' ) ) : ?>
-        <section id="sell-media-below-single-content" class="sell-media-widget-area" role="complementary">
-            <?php dynamic_sidebar( 'sell-media-below-single-content' ); ?>
-        </section>
-    <?php endif; ?>
+    if ( is_active_sidebar( 'sell-media-below-single-content' ) ) {
 
-<?php
-
+        ob_start(); ?>
+        <div id="sell-media-below-single-content" class="sell-media-widget-area">
+        <?php dynamic_sidebar( 'sell-media-below-single-content' ); ?>
+        </div>
+        <?php $html = ob_get_clean();
+        return $html;
+    }
 }
-add_action( 'sell_media_single_bottom_hook', 'sell_media_widgets_below_single_content' );
 
 /**
  * Display Widget Below Single Sidebar

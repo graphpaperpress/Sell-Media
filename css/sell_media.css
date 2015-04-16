@@ -143,6 +143,7 @@ table.sell-media-products {
   max-width: 100%;
   width: 100%;
 }
+.sell-media-meta:after,
 .group:after {
   content: "";
   display: table;

@@ -427,16 +427,24 @@ function sell_media_get_cat_post_count( $category_id, $taxonomy='collection' ) {
  */
 function sell_media_before_content( $content ) {
     global $post;
+    $new_content = '';
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
     if ( $post && $post->post_type == 'sell_media_item' && is_main_query() && ! post_password_required() ) {
         ob_start();
         do_action( 'sell_media_before_content', $post->ID );
         if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
-            $content = '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
+            $new_content .= '<div class="sell-media-content">';
+            $new_content .= ob_get_clean() . $content;
+            $new_content .= '</div>';
         } else {
-            $content = sell_media_breadcrumbs( $post->ID ) . '<div class="sell-media-content">' . ob_get_clean() . $content . '</div>';
+            $new_content .= sell_media_breadcrumbs( $post->ID );
+            $new_content .= '<div class="sell-media-content">';
+            $new_content .= ob_get_clean() . $content;
+            $new_content .= sell_media_below_content_widgets();
+            $new_content .= '</div>';
         }
+        $content = $new_content;
     }
 
     return $content;
@@ -580,6 +588,26 @@ function sell_media_version_in_header(){
     echo '<meta name="generator" content="Sell Media v' . SELL_MEDIA_VERSION . '" />' . "\n";
 }
 add_action( 'wp_head', 'sell_media_version_in_header' );
+
+/**
+ * Filter the wp_title
+ *
+ * @param  $title
+ * @param  $sep
+ * @return title
+ */
+function sell_media_wp_title( $title, $sep ) {
+    global $paged, $page;
+    $settings = sell_media_get_plugin_options();
+
+    if ( is_post_type_archive( 'sell_media_item' ) ) {
+        $slug = ucfirst( preg_replace( '/[^a-zA-Z0-9]+/', ' ', $settings->post_type_slug ) );
+        $title = "$slug $sep ";
+    }
+
+    return $title;
+}
+add_filter( 'wp_title', 'sell_media_wp_title', 10, 2 );
 
 /**
  * Return the name of the template served
