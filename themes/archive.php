@@ -70,6 +70,7 @@ $settings = sell_media_get_plugin_options();
 
                                         <div class="item-overlay">
                                             <div class="collection-details">
+                                                <h3 class="collection-title"><?php echo $child->name; ?></h3>
                                                 <span class="collection-count"><span class="count"><?php echo $post_count; ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo $child->name; ?></span><?php _e(' collection', 'sell_media'); ?></span>
                                                 <span class="collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price"><?php echo sell_media_get_currency_symbol(); ?><?php echo $settings->default_price; ?></span></span>
                                             </div>
@@ -93,7 +94,6 @@ $settings = sell_media_get_plugin_options();
                                                     sell_media_item_icon( $post->ID, 'sell_media_item' );
                                                 }
                                             ?>
-                                            <h3 class="collection-title"><?php echo $child->name; ?></h3>
                                         <?php endforeach; ?>
                                     </a>
                                 </div><!-- .item-inner -->
