@@ -603,7 +603,8 @@ function sell_media_wp_title( $title, $sep ) {
     $settings = sell_media_get_plugin_options();
 
     if ( is_post_type_archive( 'sell_media_item' ) ) {
-        $slug = ucfirst( preg_replace( '/[^a-zA-Z0-9]+/', ' ', $settings->post_type_slug ) );
+        $obj = get_post_type_object( 'sell_media_item' );
+        $slug = ( $settings->post_type_slug ) ? ucfirst( preg_replace( '/[^a-zA-Z0-9]+/', ' ', $settings->post_type_slug ) ) : $obj->labels->name;
         $title = "$slug $sep ";
     }
 
