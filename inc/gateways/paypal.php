@@ -57,8 +57,8 @@ function sell_media_process_paypal_ipn() {
     sure your web server has permissions to write to that file. In a production
     environment it is better to have that log file outside of the web root.
     */
-    ini_set('log_errors', true);
-    ini_set('error_log', dirname(__FILE__).'/ipn_errors.log');
+    // ini_set('log_errors', true);
+    // ini_set('error_log', dirname(__FILE__).'/ipn_errors.log');
 
 
     // instantiate the IpnListener class

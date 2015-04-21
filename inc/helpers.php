@@ -873,6 +873,8 @@ function sell_media_nocache(){
             return;
 
         $page_uris   = array();
+        // Exclude IPN listener
+        $page_uris[] = '?sell_media-listener=IPN';
         // Exclude default permalinks for pages
         $page_uris[] = '?page_id=' . $checkout_page;
         $page_uris[] = '?page_id=' . $thanks_page;
@@ -896,5 +898,6 @@ function sell_media_nocache(){
             }
         }
     }
+    delete_transient( 'sell_media_cache_excluded_uris' );
 }
 add_action( 'init', 'sell_media_nocache', 0 );
