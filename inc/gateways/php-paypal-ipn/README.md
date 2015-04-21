@@ -1,11 +1,46 @@
 PHP-PayPal-IPN
 ==============
 
-A PayPal Instant Payment Notification (IPN) class for PHP 5. 
+Forked from: https://github.com/Quixotix/PHP-PayPal-IPN/
 
-Use the `IpnListener` class in your PHP IPN script to handle the encoding 
-of POST data, post back to PayPal, and parsing of the response from PayPal.
+Forked from the great Quixotix PayPal IPN script, which is no longer maintained. From now on, you should use this repo instead, as I have adddressed it's issues and brought it back to life.
 
+This fork fixes the known issues with the original repo, as well as updates the code according to PayPal's documentation, and today's standards.
+
+**NOTICE: The SSLv3 issue is fixed!**
+
+**This has been fixed and works out of the box, the old `Quixotix` repo no longer works!**
+
+**PLEASE NOTE: I am still in the works of cleaning this package up. These docs still have remnants of the original repo, so please bare with me.** I am not trying to remove his name, and I give Quixotix full credit for his original work. His repo just hasn't been updated since 2012, and it's now 2015 and it isn't maintained anymore. If there is anything I need to do, or reword, to ensure he is appropriately credited just let me know.
+
+@TODO Recode to follow best practices (camelCase, etc).
+
+@TODO Finish updating Readme and Documentation.
+
+@TODO Add security to verify payment status is completed and owner's PayPal email address.
+
+@TODO Update examples
+
+**Requires:** PHP >= 5.3
+
+A PayPal Instant Payment Notification (IPN) class for PHP >= 5.3 (if you aren't on at least 5.3, then I can't help you! I will not support dead versions!)
+
+Use the `IPNListener` class in your PHP IPN script to handle the encoding of POST data, post back to PayPal, and parsing of the response from PayPal.
+
+Install with Composer
+---------------------
+
+Composer is now supported!
+
+Packagist: https://packagist.org/packages/wadeshuler/php-paypal-ipn
+
+composer.json
+
+    {
+        "require": {
+            "wadeshuler/php-paypal-ipn": "*"
+        }
+    }
 
 Features
 --------
@@ -16,7 +51,7 @@ Features
 * Supports both cURL and fsockopen network libraries by setting the `use_curl`
   property (cURL is recommended).
 * Verifies an HTTP &quot;200&quot; response status code from the PayPal server.
-* Get detailed plain text reports of the entire IPN using the `getTextReport()` 
+* Get detailed plain text reports of the entire IPN using the `getTextReport()`
   method for use in emails and logs to administrators.
 * Throws various exceptions to differentiate between common errors in code or
   server configuration versus invalid IPN responses.
@@ -32,35 +67,38 @@ place to start.
 
 You should also have a [PayPal Sandbox Account][2] with a test buyer account and
 a test seller account. When logged into your sandbox account there is an IPN
-simulator under the 'Test Tools' menu which you can used to test your IPN 
+simulator under the 'Test Tools' menu which you can used to test your IPN
 listener.
 
 [1]: https://cms.paypal.com/cms_content/US/en_US/files/developer/IPNGuide.pdf
 [2]: https://developer.paypal.com
 
 Once you have your sandbox account setup, you simply create a PHP script that
-will be your IPN listener. In that script, use the `IpnListener()` class as shown
-below. For a more thoroughly documented example, take a look at the 
+will be your IPN listener. In that script, use the `IPNListener()` class as shown
+below. For a more thoroughly documented example, take a look at the
 `example/ipn.php` script in the source code.
 
     <?php
 
-    include('ipnlistener.php');
+    include('/path/to/IPNListener.php');
 
-    $listener = new IpnListener();
+    $listener = new IPNListener();
     $listener->use_sandbox = true;
 
-    try {
-        $verified = $listener->processIpn();
-    } catch (Exception $e) {
-        // fatal error trying to process IPN.
-        exit(0);
-    }
+    if ($verified = $listener->processIpn())
+    {
+        // Valid IPN
+        /*
+            1. Check that $_POST['payment_status'] is "Completed"
+            2. Check that $_POST['txn_id'] has not been previously processed
+            3. Check that $_POST['receiver_email'] is your Primary PayPal email
+            4. Check that $_POST['payment_amount'] and $_POST['payment_currency'] are correct
+        */
 
-    if ($verified) {
-        // IPN response was "VERIFIED"
     } else {
-        // IPN response was "INVALID"
+
+        // Invalid IPN
+
     }
 
     ?>
@@ -76,44 +114,6 @@ public properties and methods.
 I have also written a more in-depth IPN tutorial on my blog: [PayPal IPN with PHP][3]
 
 [3]: http://www.micahcarrick.com/paypal-ipn-with-php.html
-
-
-Known Issues
-------------
-
-__Problem__
-
-The `processIpn()` method throws the following exception:
-
-    cURL error: [52] GnuTLS recv error (-9): A TLS packet with unexpected length was received.
-
-__Solution__
-
-When cURL is compiled with GnuTLS the call to PayPal will fail if the SSL version
-is not explicitly set as a cURL option. Set the `force_ssl_v3` property to force 
-SSL 3:
-
-    $listener = new IpnListener();
-    $listener->force_ssl_v3 = true;
-
-_Note: force_ssl_v3 is now true by default_
-
-
-
-__Problem__
-
-     PHP Warning: curl_setopt() [function.curl-setopt]: CURLOPT_FOLLOWLOCATION 
-     cannot be activated when in safe_mode or an open_basedir is set in ...
-
-__Solution__
-
-If you need PHP safe mode, you can disable CURLOPT_FOLLOWLOCATION using the
-`follow_location` property.
-
-    $listener = new IpnListener();
-    $listener->follow_location = false;
-
-_Note: follow_location is now false enabled by default_
 
 
 Example Report
