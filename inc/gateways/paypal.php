@@ -47,34 +47,27 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
  */
 function sell_media_process_paypal_ipn() {
 
+    /**
+     * Optionally log errors
+     */
+    ini_set( 'log_errors', true );
+    ini_set( 'error_log', dirname( __FILE__ ).'/ipn_errors.log' );
 
-    /*
-    Since this script is executed on the back end between the PayPal server and this
-    script, you will want to log errors to a file or email. Do not try to use echo
-    or print--it will not work!
-
-    Here I am turning on PHP error logging to a file called "ipn_errors.log". Make
-    sure your web server has permissions to write to that file. In a production
-    environment it is better to have that log file outside of the web root.
-    */
-    // ini_set('log_errors', true);
-    // ini_set('error_log', dirname(__FILE__).'/ipn_errors.log');
-
-
-    // instantiate the IPNListener class
+    /**
+     * Instantiate the IPNListener class
+     */
     include( dirname( __FILE__ ) . '/php-paypal-ipn/IPNListener.php' );
     $listener = new IPNListener();
 
-
-    /*
-    When you are testing your IPN script you should be using a PayPal "Sandbox"
-    account: https://developer.paypal.com
-    When you are ready to go live change use_sandbox to false.
-    */
+    /**
+     * Set to PayPal sandbox or live mode
+     */
     $settings = sell_media_get_plugin_options();
     $listener->use_sandbox = ( $settings->test_mode ) ? true : false;
 
-
+    /**
+     * Check if IPN was successfully processed
+     */
     if ( $verified = $listener->processIpn() ) {
 
         $message = null;
@@ -101,7 +94,6 @@ function sell_media_process_paypal_ipn() {
             $message .= "\nCurrency does not match those assigned in settings\n";
         }
 
-
         /**
          * Check if this payment was already processed
          *
@@ -114,7 +106,6 @@ function sell_media_process_paypal_ipn() {
         } else {
             $message .= "\nThis payment was already processed\n";
         }
-
 
         /**
          * Verify the payment is set to "Completed".
@@ -158,9 +149,10 @@ function sell_media_process_paypal_ipn() {
             }
 
         } else {
-            $message .= "\nPayment status not set to Completed\n";
-        }
 
+            $message .= "\nPayment status not set to Completed\n";
+
+        }
 
         /**
          * Check if this is the test mode
@@ -169,22 +161,27 @@ function sell_media_process_paypal_ipn() {
          * note about and box http://stackoverflow.com/questions/4298117/paypal-ipn-always-return-payment-status-pending-on-sandbox
          */
         if ( $settings->test_mode == true ){
+
             $message .= "\nTest Mode\n";
             $email = array(
                 'to' => $settings->from_email,
                 'subject' => 'Verified IPN',
                 'message' =>  $message . "\n" . $listener->getTextReport()
                 );
+
             wp_mail( $email['to'], $email['subject'], $email['message'] );
+
         }
 
     } else {
+
         /**
          * An Invalid IPN *may* be caused by a fraudulent transaction attempt. It's
          * a good idea to have a developer or sys admin manually investigate any
          * invalid IPN.
          */
         wp_mail( $settings->from_email, 'Invalid IPN', $listener->getTextReport() );
+
     }
 }
 add_action( 'sell_media_verify_paypal_ipn', 'sell_media_process_paypal_ipn' );
