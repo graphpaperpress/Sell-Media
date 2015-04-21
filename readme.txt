@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.2
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,11 @@ Action hooks available:
 * You must enable Auto Return Payment Data Transfer in PayPal for purchases to be recorded. See readme.txt for instructions.
 
 == Changelog ==
+
+= 2.0.2 =
+* Tweak: Properly sanitize add_query_arg with esc_url
+* Tweak: Define select box width in dialog to prevent overflow on long titles
+* Tweak: Notice for is_gallery check on 404 and Search pages.
 
 = 2.0.1 =
 * New Feature: Galleries. Upload multiple files.
