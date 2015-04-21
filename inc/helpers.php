@@ -854,25 +854,47 @@ function sell_media_get_upload_dir_url() {
 }
 
 /**
- * Disable cache on Checkout, Thanks and Lightbox pages
+ * Disable cache on Checkout and Thanks pages
  *
  * @since 2.0.2
  * @return void
  */
 function sell_media_nocache(){
 
-    $settings           = sell_media_get_plugin_options();
-    $exclude_pages      = array();
-    $pages              = array( 'checkout_page', 'lightbox_page', 'thanks_page' );
-    foreach ( $pages as $page ) {
-        $exclude_pages[] = ( ! empty( $settings->$page ) ) ? $settings->$page : null;
+    if ( is_admin() )
+        return;
+
+    if ( false === ( $page_uris = get_transient( 'sell_media_cache_excluded_uris' ) ) ) {
+        $settings       = sell_media_get_plugin_options();
+        $checkout_page  = $settings->checkout_page;
+        $thanks_page    = $settings->thanks_page;
+
+        if ( empty( $checkout_page ) || empty( $thanks_page ) )
+            return;
+
+        $page_uris   = array();
+        // Exclude default permalinks for pages
+        $page_uris[] = '?page_id=' . $checkout_page;
+        $page_uris[] = '?page_id=' . $thanks_page;
+        // Exclude nice permalinks for pages
+        $checkout_page  = get_post( $checkout_page );
+        $thanks_page    = get_post( $thanks_page );
+        if ( ! is_null( $checkout_page ) )
+            $page_uris[] = '/' . $checkout_page->post_name;
+        if ( ! is_null( $thanks_page ) )
+            $page_uris[] = '/' . $thanks_page->post_name;
+        set_transient( 'sell_media_cache_excluded_uris', $page_uris );
     }
 
-    if ( is_page( $exclude_pages ) ) {
-        if ( ! defined( 'DONOTCACHEPAGE' ) )
-            define( 'DONOTCACHEPAGE', 'true' );
-        nocache_headers();
+    if ( is_array( $page_uris ) ) {
+        foreach( $page_uris as $uri ) {
+            if ( strstr( $_SERVER['REQUEST_URI'], $uri ) ) {
+                if ( ! defined( 'DONOTCACHEPAGE' ) )
+                    define( 'DONOTCACHEPAGE', 'true' );
+                nocache_headers();
+                break;
+            }
+        }
     }
-
 }
-add_action( 'init', 'sell_media_nocache' );
+add_action( 'init', 'sell_media_nocache', 0 );
