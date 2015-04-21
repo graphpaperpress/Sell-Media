@@ -50,8 +50,12 @@ $settings = sell_media_get_plugin_options();
 
                 $terms = get_terms( $taxonomy_name, $args );
 
+                // count number of child terms
+                $c = 0;
+
                 if ( ! is_wp_error( $terms ) ) {
                     foreach ( $terms as $child ) {
+                        $c++;
                         $args = array(
                             'post_status' => 'publish',
                             'taxonomy' => 'collection',
@@ -119,7 +123,12 @@ $settings = sell_media_get_plugin_options();
             <?php endif; ?><!-- show child terms check -->
 
             </div><!-- .sell-media-grid-container -->
-            <?php echo sell_media_pagination_filter( $wp_query->max_num_pages ); ?>
+            <?php if ( ! is_wp_error( $terms ) ) {
+                $pages = ceil ( $c / get_option('posts_per_page ') );
+            } else {
+                $pages = $wp_query->max_num_pages;
+            }
+            echo sell_media_pagination_filter( $pages ); ?>
         </div><!-- #content -->
     </div><!-- #sell_media-single .sell_media -->
 

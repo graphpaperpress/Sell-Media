@@ -287,6 +287,8 @@ function sell_media_upload_bulk_callback(){
 
     check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
 
+    @ini_set( 'max_execution_time', '300' );
+
     if ( isset( $_POST['dir'] ) ) {
 
         $path = sell_media_get_import_dir() . '/' . $_POST['dir'] . '/';
