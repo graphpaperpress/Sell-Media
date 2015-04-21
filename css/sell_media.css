@@ -664,6 +664,7 @@ input.sell-media-search-text[type=text] {
 }
 .sell-media-search-field select {
   display: inline-block;
+  width: 100px;
 }
 .sell-media-search-hidden {
   display: none;
