@@ -852,3 +852,27 @@ function sell_media_get_upload_dir_url() {
 
     return apply_filters( 'sell_media_get_upload_dir_url', $url );
 }
+
+/**
+ * Disable cache on Checkout, Thanks and Lightbox pages
+ *
+ * @since 2.0.2
+ * @return void
+ */
+function sell_media_nocache(){
+
+    $settings           = sell_media_get_plugin_options();
+    $exclude_pages      = array();
+    $pages              = array( 'checkout_page', 'lightbox_page', 'thanks_page' );
+    foreach ( $pages as $page ) {
+        $exclude_pages[] = ( ! empty( $settings->$page ) ) ? $settings->$page : null;
+    }
+
+    if ( is_page( $exclude_pages ) ) {
+        if ( ! defined( 'DONOTCACHEPAGE' ) )
+            define( 'DONOTCACHEPAGE', 'true' );
+        nocache_headers();
+    }
+
+}
+add_action( 'init', 'sell_media_nocache' );
