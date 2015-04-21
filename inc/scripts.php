@@ -42,22 +42,22 @@ function sell_media_scripts( $hook ) {
     $settings = sell_media_get_plugin_options();
 
     wp_localize_script( 'sell_media', 'sell_media', array(
-        'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'pluginurl' => SELL_MEDIA_PLUGIN_URL . 'sell-media.php',
-        'site_name' => get_bloginfo( 'name' ),
-        'site_url' => site_url(),
-        'checkout_url' => empty( $settings->checkout_page ) ? null : get_permalink( $settings->checkout_page ),
+        'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+        'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
+        'site_name' => esc_html( get_bloginfo( 'name' ) ),
+        'site_url' => esc_url( site_url() ),
+        'checkout_url' => empty( $settings->checkout_page ) ? null : esc_url( get_permalink( $settings->checkout_page ) ),
         'currency_symbol' => $settings->currency,
-        'dashboard_page' => get_permalink( $settings->dashboard_page ),
+        'dashboard_page' => esc_url( get_permalink( $settings->dashboard_page ) ),
         'error' => array(
             'email_exists' => __( 'Sorry that email already exists or is invalid', 'sell_media' )
             ),
         'sandbox' => ( $settings->test_mode == 1 ) ? true : false,
         'paypal_email' => ( empty( $settings->paypal_email ) ) ? null : $settings->paypal_email,
-        'thanks_page' => get_permalink( $settings->thanks_page ),
-        'listener_url' => add_query_arg( 'sell_media-listener', 'IPN', home_url( 'index.php' ) ),
+        'thanks_page' => esc_url( get_permalink( $settings->thanks_page ) ),
+        'listener_url' => esc_url( add_query_arg( 'sell_media-listener', 'IPN', home_url( 'index.php' ) ) ),
         'added_to_cart' => sprintf(
-            "%s! <a href='" . get_permalink( $settings->checkout_page ) . "' class='cart'>%s</a>!",
+            "%s! <a href='" . esc_url( get_permalink( $settings->checkout_page ) ) . "' class='cart'>%s</a>!",
             __( 'Added', 'sell_media' ),
             __( 'Checkout now','sell_media' ) ),
         'cart_labels' => array(
