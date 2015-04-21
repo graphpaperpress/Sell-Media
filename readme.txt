@@ -207,6 +207,8 @@ Action hooks available:
 == Changelog ==
 
 = 2.0.2 =
+* Tweak: Do not cache checkout, thanks and lightbox pages. Prevents PayPal IPN misses.
+* Tweak: Increase max_execution_time for bulk uploads
 * Tweak: Properly sanitize add_query_arg with esc_url
 * Tweak: Define select box width in dialog to prevent overflow on long titles
 * Tweak: Notice for is_gallery check on 404 and Search pages.
