@@ -167,8 +167,7 @@ jQuery( document ).ready(function( $ ){
     });
 
     /**
-     * Set thumbnail icon for collections
-     *
+     * Upload thumbnail icon for collections
      */
     $(document).on('click', '.sell-media-upload-trigger-collection-icon', function( event ){
 
