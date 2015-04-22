@@ -70,6 +70,12 @@ function sell_media_process_paypal_ipn() {
      */
     if ( $verified = $listener->processIpn() ) {
 
+        /**
+         * Log successful purchases
+         */
+        $transactionData = $listener->getPostData();            // POST data array
+        file_put_contents( 'ipn_success.log', print_r( $transactionData, true ) . PHP_EOL, LOCK_EX | FILE_APPEND );
+
         $message = null;
 
         /**
@@ -174,6 +180,12 @@ function sell_media_process_paypal_ipn() {
         }
 
     } else {
+
+        /**
+         * Log errors
+         */
+        $errors = $listener->getErrors();
+        file_put_contents( 'ipn_errors.log', print_r( $errors, true ) . PHP_EOL, LOCK_EX | FILE_APPEND );
 
         /**
          * An Invalid IPN *may* be caused by a fraudulent transaction attempt. It's
