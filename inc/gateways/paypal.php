@@ -48,12 +48,6 @@ add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
 function sell_media_process_paypal_ipn() {
 
     /**
-     * Optionally log errors
-     */
-    ini_set( 'log_errors', true );
-    ini_set( 'error_log', dirname( __FILE__ ).'/ipn_errors.log' );
-
-    /**
      * Instantiate the IPNListener class
      */
     include( dirname( __FILE__ ) . '/php-paypal-ipn/IPNListener.php' );
@@ -73,7 +67,7 @@ function sell_media_process_paypal_ipn() {
         /**
          * Log successful purchases
          */
-        $transactionData = $listener->getPostData();            // POST data array
+        $transactionData = $listener->getPostData(); // POST data array
         file_put_contents( 'ipn_success.log', print_r( $transactionData, true ) . PHP_EOL, LOCK_EX | FILE_APPEND );
 
         $message = null;
