@@ -497,7 +497,7 @@ function sell_media_init_settings(){
             "tab" => "sell_media_payment_settings",
             "name" => "tax_rate",
             "title" => __("Tax Rate","sell_media"),
-            "description" => "Set you tax rates. This tax rate will be applied to all cart orders (use .05 for 5 percent, .10 for 10 percent, etc)",
+            "description" => "Set your tax rates. This tax rate will be applied to all cart orders (use .05 for 5 percent, .10 for 10 percent, etc)",
             "section" => "payment_section_1",
             "since" => "1.0",
             "id" => "payment_section_1",

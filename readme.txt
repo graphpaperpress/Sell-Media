@@ -212,6 +212,7 @@ Action hooks available:
 * Tweak: Properly sanitize add_query_arg with esc_url
 * Tweak: Define select box width in dialog to prevent overflow on long titles
 * Tweak: Notice for is_gallery check on 404 and Search pages.
+* Tweak: Update PayPal IPN class and cert files.
 
 = 2.0.1 =
 * New Feature: Galleries. Upload multiple files.
