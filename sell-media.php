@@ -122,6 +122,7 @@ final class SellMedia {
             self::$instance->payments       = new SellMediaPayments();
             self::$instance->products       = new SellMediaProducts();
             self::$instance->search         = new SellMediaSearch();
+            self::$instance->notices        = new SellMediaAdminNotices();
         }
         return self::$instance;
     }
@@ -215,7 +216,7 @@ final class SellMedia {
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-helpers.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-menu.php';
-            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-notices.php';
+            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-notices.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-scripts.php';
