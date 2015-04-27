@@ -8,7 +8,10 @@
  */
 
 /**
- * All Sell Media admin notices should be placed in this function
+ * All admin notices
+ *
+ * @since 1.0
+ * @return array admin notices
  */
 function sell_media_admin_messages() {
 
@@ -21,7 +24,7 @@ function sell_media_admin_messages() {
         $notices = array();
 
         /**
-         * test mode
+         * Test mode
          */
         if ( isset( $settings->test_mode ) && $settings->test_mode == 1 ){
             $notices[] = array(
@@ -31,7 +34,7 @@ function sell_media_admin_messages() {
         }
 
         /**
-         * checkout
+         * Checkout
          */
         if ( isset( $settings->checkout_page ) && $settings->checkout_page == 1 || empty( $settings->checkout_page ) ){
             $notices[] = array(
@@ -41,7 +44,7 @@ function sell_media_admin_messages() {
         }
 
         /**
-         * thanks
+         * Thanks
          */
         if ( isset( $settings->thanks_page ) && $settings->thanks_page == 1 || empty( $settings->thanks_page ) ){
             $notices[] = array(
@@ -61,23 +64,12 @@ function sell_media_admin_messages() {
         }
 
         /**
-         * Updates available for extensions
+         * Updates availalble
          */
-        $plugins = get_plugins();
-        $update_plugins = array();
-
-        foreach ( array_keys( $plugins ) as $plugin ) {
-            if ( preg_match( '/sell-media-(.*)$/', $plugin, $matches ) ) {
-                if ( $plugins[$plugin]['Version'] < 2 ) {
-                    $update_plugins[] = $plugins[$plugin]['Name'];
-                }
-            }
-        }
-
-        if ( ! empty( $update_plugins ) ) {
+        if ( ! empty( sell_media_get_available_updates() ) ) {
             $notices[] = array(
                 'slug' => 'sell-media-updates',
-                'message' => sprintf( __( 'Important updates are now available for %1$s. <a href="%2$s" target="_blank">Learn more</a>.', 'sell_media' ), implode( ', ', $update_plugins ), 'http://graphpaperpress.com/docs/sell-media/#updates' )
+                'message' => sprintf( __( 'Important updates are now available for %1$s. <a href="%2$s" target="_blank">Learn more</a>.', 'sell_media' ), implode( ', ', sell_media_get_available_updates() ), 'http://graphpaperpress.com/docs/sell-media/#updates' )
             );
         }
 
@@ -136,3 +128,104 @@ function sell_media_admin_messages() {
     }
 }
 add_action( 'admin_notices', 'sell_media_admin_messages' );
+
+/**
+ * Get latest versions of all extensions every day
+ * and store them in a transient.
+ *
+ * @since 2.0.3
+ * @return array newest plugins from transient cache
+ */
+function sell_media_get_newest_plugins() {
+
+    // get data from transient if it's set
+    if ( false === ( $cache = get_transient( 'sell_media_get_newest_plugins' ) ) ) {
+        $json = wp_remote_get( 'http://demo.graphpaperpress.com/wp-content/plugins/gpp-theme-plugin-s3-updater/plugins.json', array( 'sslverify' => false ) );
+        if ( ! is_wp_error( $json ) ) {
+            if ( isset( $json['body'] ) && strlen( $json['body'] ) > 0 ) {
+                $cache = wp_remote_retrieve_body( $json );
+                set_transient( 'sell_media_get_newest_plugins', $cache, 3600 );
+            }
+        }
+    }
+    return maybe_unserialize( $cache );
+}
+
+/**
+ * Get all installed Sell Media plugin versions and store them in a transient.
+ *
+ * @since 2.0.3
+ * @return array installed plugins from transient cache
+ */
+function sell_media_get_installed_plugins() {
+
+    // get data from transient if it's set
+    if ( false === ( $cache = get_transient( 'sell_media_get_installed_plugins' ) ) ) {
+        $plugins = get_plugins();
+        $cache = array();
+
+        if ( $plugins ) foreach ( array_keys( $plugins ) as $plugin ) {
+            if ( preg_match( '/sell-media-(.*)$/', $plugin, $matches ) ) {
+                $cache[$plugin] = $plugins[$plugin]['Version'];
+            }
+        }
+        set_transient( 'sell_media_get_installed_plugins', $cache, 3600 );
+    }
+    return maybe_unserialize( $cache );
+}
+
+/**
+ * Compare latest versions available with user's installed versions
+ *
+ * @since 2.0.3
+ * @return array plugins have updates available
+ */
+function sell_media_compare_versions() {
+
+    $installed_plugins = sell_media_get_installed_plugins();
+    $newest_plugins = sell_media_get_newest_plugins();
+    $update_plugins = array();
+
+    foreach ( $installed_plugins as $key => $value ) {
+        // if the plugin exists in available update cache and the installed version is outdated, add to updates array
+        if ( ! empty( $newest_plugins[$key] ) && $value < $newest_plugins[$key] ) {
+            $update_plugins[] = $key;
+        }
+    }
+
+    return $update_plugins;
+
+}
+
+/**
+ * Return the names of available theme updates.
+ * Derive plugin nice names since get_plugins is expensive.
+ *
+ * @since 2.0.3
+ * @return array plugin names with available updates
+ */
+function sell_media_get_available_updates() {
+
+    $plugins = sell_media_compare_versions();
+    $plugin_names = array();
+
+    if ( $plugins ) foreach ( $plugins as $plugin ) {
+        $dir = substr( $plugin, 0, strpos( $plugin, '/' ) );
+        $plugin_names[]= ucwords( str_replace( '-', ' ', $dir ) );
+    }
+
+    return $plugin_names;
+
+}
+
+/**
+ * Delete transients if plugins are updated
+ *
+ * @since 2.0.3
+ * @return void
+ */
+function sell_media_delete_transients_after_update(){
+    delete_transient( 'sell_media_get_installed_plugins' );
+    delete_transient( 'sell_media_get_newest_plugins' );
+}
+add_action( 'set_site_transient_update_plugins', 'sell_media_delete_transients_after_update' );
