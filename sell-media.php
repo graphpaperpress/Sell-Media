@@ -122,7 +122,9 @@ final class SellMedia {
             self::$instance->payments       = new SellMediaPayments();
             self::$instance->products       = new SellMediaProducts();
             self::$instance->search         = new SellMediaSearch();
-            self::$instance->notices        = new SellMediaAdminNotices();
+            if ( is_admin() ) {
+                self::$instance->notices        = new SellMediaAdminNotices();
+            }
         }
         return self::$instance;
     }
