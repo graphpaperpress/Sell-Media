@@ -47,9 +47,13 @@ Class SellMediaDownload {
                     $requested_file = get_attached_file( $attachment_id );
 
                 } else {
-                    $upload_dir = wp_upload_dir();
-                    $protected_dir = $upload_dir['basedir'] . '/sell_media';
-                    $requested_file = str_replace( $upload_dir['basedir'], $protected_dir, get_attached_file( $attachment_id ));
+                    if ( file_exists( get_attached_file( $attachment_id ) ) ) {
+                        $requested_file = get_attached_file( $attachment_id );
+                    } else {
+                        $upload_dir = wp_upload_dir();
+                        $protected_dir = $upload_dir['basedir'] . '/sell_media';
+                        $requested_file = str_replace( $upload_dir['basedir'], $protected_dir, get_attached_file( $attachment_id ));
+                    }
                 }
 
                 if ( ! file_exists( $requested_file ) ) {
