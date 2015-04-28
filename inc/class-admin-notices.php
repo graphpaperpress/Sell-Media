@@ -12,10 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 Class SellMediaAdminNotices {
 
+    private $settings;
+
     /**
      * Constructor
      */
     public function __construct(){
+
+        $this->settings = sell_media_get_plugin_options();
 
         add_action( 'admin_notices', array( &$this, 'admin_notices' ) );
         add_action( 'set_site_transient_update_plugins', array( &$this, 'delete_transients' ) );
@@ -34,14 +38,12 @@ Class SellMediaAdminNotices {
 
         if ( $screen->id == 'edit-sell_media_item' || $screen->id == 'sell_media_item' ||  $screen->id == 'sell_media_item_page_sell_media_plugin_options' ) {
 
-            $settings = sell_media_get_plugin_options();
-
             $notices = array();
 
             /**
              * Test mode
              */
-            if ( isset( $settings->test_mode ) && $settings->test_mode == 1 ){
+            if ( isset( $this->settings->test_mode ) && $this->settings->test_mode == 1 ){
                 $notices[] = array(
                     'slug' => 'test-mode',
                     'message' => sprintf( __( 'Your site is currently in <a href="%1$s">test mode</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options ' ) ) )
@@ -51,7 +53,7 @@ Class SellMediaAdminNotices {
             /**
              * Checkout
              */
-            if ( isset( $settings->checkout_page ) && $settings->checkout_page == 1 || empty( $settings->checkout_page ) ){
+            if ( isset( $this->settings->checkout_page ) && $this->settings->checkout_page == 1 || empty( $this->settings->checkout_page ) ){
                 $notices[] = array(
                     'slug' => 'checkout-page',
                     'message' => sprintf( __( 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
@@ -61,7 +63,7 @@ Class SellMediaAdminNotices {
             /**
              * Thanks
              */
-            if ( isset( $settings->thanks_page ) && $settings->thanks_page == 1 || empty( $settings->thanks_page ) ){
+            if ( isset( $this->settings->thanks_page ) && $this->settings->thanks_page == 1 || empty( $this->settings->thanks_page ) ){
                 $notices[] = array(
                     'slug' => 'thanks-page',
                     'message' => sprintf( __( 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
@@ -71,7 +73,7 @@ Class SellMediaAdminNotices {
             /**
              * PayPal email
              */
-            if ( empty( $settings->paypal_email ) ){
+            if ( empty( $this->settings->paypal_email ) ){
                 $notices[] = array(
                     'slug' => 'paypal-email',
                     'message' => sprintf( __( 'Please set a PayPal email in your <a href="%1$s">payment settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) )

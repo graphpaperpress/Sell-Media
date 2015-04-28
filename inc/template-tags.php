@@ -148,7 +148,7 @@ function sell_media_gallery( $post_id ) {
             $html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
             if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
                 $attr = array(
-                    'class' => 'sell-media-gallery-image'
+                    'class' => 'sell-media-gallery-image sell_media_image'
                 );
                 $html .= '<div class="sell-media-gallery-item">';
                 $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '">';
