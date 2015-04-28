@@ -40,8 +40,17 @@ Class SellMediaDownload {
 
             if ( $verified ) {
 
-                // Filepath to package or attachment
-                $requested_file = ( sell_media_is_package( $product_id ) ) ? sell_media_get_package_filepath( $product_id ) : get_attached_file( $attachment_id );
+                if ( sell_media_is_package( $product_id ) ) {
+                    $requested_file = sell_media_get_package_filepath( $product_id );
+
+                } elseif ( wp_attachment_is_image( $attachment_id ) ) {
+                    $requested_file = get_attached_file( $attachment_id );
+
+                } else {
+                    $upload_dir = wp_upload_dir();
+                    $protected_dir = $upload_dir['basedir'] . '/sell_media';
+                    $requested_file = str_replace( $upload_dir['basedir'], $protected_dir, get_attached_file( $attachment_id ));
+                }
 
                 if ( ! file_exists( $requested_file ) ) {
                     wp_die( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $requested_file );

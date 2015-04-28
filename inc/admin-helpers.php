@@ -39,7 +39,8 @@ function sell_media_move_file( $attachment_id ){
 function sell_media_default_move( $original_file=null ){
 
     $dir = wp_upload_dir();
-    $destination_file_path = str_replace( $dir['basedir'], sell_media_get_upload_dir(), $original_file );
+    $protected_dir = $dir['basedir'] . '/sell_media';
+    $destination_file_path = str_replace( $dir['basedir'], $protected_dir, $original_file );
 
     if ( file_exists( $original_file ) ){
 
