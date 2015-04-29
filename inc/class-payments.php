@@ -418,23 +418,23 @@ Class SellMediaPayments {
 
             $v['attachment'] = ( ! empty( $v['attachment'] ) ) ? $v['attachment'] : sell_media_get_attachment_id( $v['id'] );
 
-            if ( $v['name'] )
+            if ( ! empty( $v['name'] ) )
                 $text .= __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . '<br />';
-            if ( $v['size']['name'] )
+            if ( ! empty( $v['size']['name'] ) )
                 $text .= __( 'SIZE', 'sell_media' ) . ': ' . $v['size']['name'] . '<br />';
-            if ( $v['license']['name'] )
+            if ( ! empty( $v['license']['name'] ) )
                 $text .= __( 'LICENSE', 'sell_media' ) . ': ' . $v['license']['name'] . '<br />';
-            if ( $v['license']['description'] )
+            if ( ! empty( $v['license']['description'] ) )
                 $text .= __( 'LICENSE DESCRIPTION', 'sell_media' ) . ': ' . $v['license']['description'] . '<br /';
-            if ( $v['qty'] )
+            if ( ! empty( $v['qty'] ) )
                 $text .= __( 'QTY', 'sell_media' ) . ': ' . $v['qty'] . '<br />';
-            if ( $v['type'] )
+            if ( ! empty( $v['type'] ) )
                 $text .= __( 'TYPE', 'sell_media' ) . ': ' . $v['type'] . '<br />';
-            if ( $v['total'] )
+            if ( ! empty( $v['total'] ) )
                 $text .= __( 'SUBTOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $v['total'], 2, '.', ',' ) . '<br />';
-            if ( 'download' == $v['type'] )
+            if ( ! empty( $v['type'] ) && 'download' == $v['type'] )
                 $text .= __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'], $v['attachment'], $v['size']['id'] ) . '<br />';
-            elseif ( 'print' == $v['type'] )
+            elseif ( ! empty( $v['type'] ) && 'print' == $v['type'] )
                 $text .= __( 'DELIVERY', 'sell_media' ) . ': ' . apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' ) . '<br />';
             $text .= '<br />';
             do_action( 'sell_media_after_products_unformatted_list', $post_id );
@@ -442,13 +442,13 @@ Class SellMediaPayments {
         $text .= '<br /><br />';
         $text .= '---';
         $text .= '<br />';
-        if ( $discount ) {
+        if ( ! empty( $discount ) ) {
             $text .= __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '<br />';
         }
-        if ( $tax ) {
+        if ( ! empty( $tax ) ) {
             $text .= __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '<br />';
         }
-        if ( $shipping ) {
+        if ( ! empty( $shipping ) ) {
             $text .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
         }
         $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '<br />';
@@ -765,7 +765,7 @@ Class SellMediaPayments {
     public function email_receipt( $payment_id=null, $email=null ) {
 
         $settings = sell_media_get_plugin_options();
-        $products = $this->get_payment_products_unformatted( $payment_id );
+        $products = $this->get_payment_products_formatted( $payment_id );
 
         $message['from_name'] = get_bloginfo( 'name' );
         $message['from_email'] = $settings->from_email;

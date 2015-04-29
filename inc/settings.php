@@ -553,7 +553,7 @@ function sell_media_init_settings(){
             "id" => "email_section_1",
             "type" => "textarea",
             "sanitize" => "html",
-            "default" => "Hi {first_name} {last_name},\nThanks for purchasing from my site. Here are your download links:\n{download_links}\nThanks!"
+            "default" => "Hi {first_name} {last_name},\n\nThanks for purchasing from my site. Here are your download links:\n\n{download_links}\n\nThanks!"
         ),
 
 
