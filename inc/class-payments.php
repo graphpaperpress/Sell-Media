@@ -471,7 +471,7 @@ Class SellMediaPayments {
         $shipping = $this->get_meta_key( $post_id, $key='shipping' );
         $discount = $this->get_meta_key( $post_id, $key='discount' );
         $total = $this->get_meta_key( $post_id, $key='total' );
-        $css = 'border: 1px solid #ccc; padding: 0.5rem; text-align: left;';
+        $css = 'border-bottom: 1px solid #ccc; padding: 0.5rem; text-align: left;';
         $style = apply_filters( 'sell_media_products_table_style', $css );
 
         if ( $products ) {
