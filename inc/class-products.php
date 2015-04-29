@@ -222,20 +222,32 @@ Class SellMediaProducts {
          * Example (protected): /var/www/wp.local/wp-content/uploads/sell_media/2015/04/mansion.jpeg
          */
 
-        $wp_upload_dir = wp_upload_dir();
-        $protected_path = $wp_upload_dir['basedir'] . '/sell_media';
-
-        // Full system file path to the public low resolution version.
-        $unprotected_file_path = get_attached_file( $attachment_id );
+        // Full system file path to the public low res. version.
+        $unprotected_file   = get_attached_file( $attachment_id );
+        // Full system file path to the protected high res. version.
+        $wp_upload_dir      = wp_upload_dir();
+        $protected_dir      = $wp_upload_dir['basedir'] . '/sell_media';
+        $protected_file     = str_replace( $wp_upload_dir['basedir'], $protected_dir, $unprotected_file );
 
         // Check if this item is a package and change the file location
-        if ( sell_media_is_package( $post_id ) ) {
-            $file = sell_media_get_package_filepath( $post_id );
+        if ( $this->is_package( $post_id ) ) {
+            $file = $this->get_package_file( $post_id );
+        } elseif ( file_exists( $protected_file ) ) {
+            $file = $protected_file;
         } else {
-            $file = str_replace( $wp_upload_dir['basedir'], $protected_path, $unprotected_file_path );
+            $file = $unprotected_file;
         }
 
         return apply_filters( 'sell_media_get_original_protected_file', $file );
+    }
+
+    /**
+     * Return full path to package file
+     */
+    public function get_package_file( $post_id ) {
+
+        $file = get_post_meta( $post_id, '_sell_media_attached_file', true );
+        return sell_media_get_packages_upload_dir() . '/' . $file;
     }
 
     /**

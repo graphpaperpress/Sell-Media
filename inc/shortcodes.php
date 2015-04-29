@@ -39,7 +39,7 @@ function sell_media_thanks_shortcode( $tx=null ) {
             $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
         } else {
             $html .= __( 'We\'ve received your payment and are processing your order. <a href="" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' );
-            wp_mail( get_option( 'admin_email' ), __( 'Unable to retrieve transaction ID', 'sell_media' ), sprintf( __( 'We have some good news and bad news. First the good news: Somebody just purchased from your store! The bad news: Your website was unable to retrieve transaction ID from %1$s. This is typically easy to fix. Please see these tips for resolving this issue: %2$s' ), $gateway, 'https://github.com/graphpaperpress/Sell-Media/issues/670#issuecomment-89428248' ) );
+            // wp_mail( get_option( 'admin_email' ), __( 'Unable to retrieve transaction ID', 'sell_media' ), sprintf( __( 'We have some good news and bad news. First the good news: Somebody just purchased from your store! The bad news: Your website was unable to retrieve transaction ID from %1$s. This is typically easy to fix. Please see these tips for resolving this issue: %2$s' ), $gateway, 'https://github.com/graphpaperpress/Sell-Media/issues/670#issuecomment-89428248' ) );
         }
 
         $html .= '<script>sellMediaCart.empty();</script>';

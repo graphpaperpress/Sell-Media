@@ -74,12 +74,11 @@ function sell_media_files_meta_box( $post ) {
         <?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
     </div>
 
-    <?php if ( sell_media_is_package( $post->ID ) ) : ?>
+    <?php if ( Sell_Media()->products->is_package( $post->ID ) ) : ?>
         <div id="sell-media-packages" class="sell-media-field">
             <h4><?php _e( 'Packages', 'sell_media' ); ?></h4>
             <p><?php _e( 'This feature was retired in version 2.0 because product galleries can now be created. Your old package file will still be available for sale and is listed below.', 'sell_media' ); ?></p>
             <p><strong><?php echo get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?></strong></p>
-            <?php //echo sell_media_get_package_filepath( $post->ID ); ?>
         </div>
     <?php endif; ?>
 
