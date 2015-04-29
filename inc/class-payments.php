@@ -475,14 +475,14 @@ Class SellMediaPayments {
         if ( $products ) {
 
             $html = null;
-            $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%">';
+            $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%" border-collapse="collapse">';
             $html .= '<thead>';
             $html .= '<tr>';
-            $html .= '<th>' . __( 'Product', 'sell_media' ) . '</th>';
-            $html .= '<th>' . __( 'Size', 'sell_media' ) . '</th>';
-            $html .= '<th>' . __( 'License', 'sell_media' ) . '</th>';
-            $html .= '<th class="text-center">' . __( 'Qty', 'sell_media' ) . '</th>';
-            $html .= '<th class="sell-media-product-subtotal">' . __( 'Subtotal', 'sell_media' ) . '</th>';
+            $html .= '<th style="border: 1px solid #999; padding: 0.5rem; text-align: left; font-weight: bold;">' . __( 'Product', 'sell_media' ) . '</th>';
+            $html .= '<th style="border: 1px solid #999; padding: 0.5rem; text-align: left; font-weight: bold;">' . __( 'Size', 'sell_media' ) . '</th>';
+            $html .= '<th style="border: 1px solid #999; padding: 0.5rem; text-align: left; font-weight: bold;">' . __( 'License', 'sell_media' ) . '</th>';
+            $html .= '<th class="text-center" style="border: 1px solid #999; padding: 0.5rem; text-align: center; font-weight: bold;">' . __( 'Qty', 'sell_media' ) . '</th>';
+            $html .= '<th class="sell-media-product-subtotal" style="border: 1px solid #999; padding: 0.5rem; text-align: right; font-weight: bold;">' . __( 'Subtotal', 'sell_media' ) . '</th>';
             $html .= '</tr>';
             $html .= '</thead>';
             $html .= '<tbody>';
@@ -496,7 +496,7 @@ Class SellMediaPayments {
                 if ( ! empty( $product['id'] ) ) {
 
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
-                    $html .= '<td class="sell-media-product-id">';
+                    $html .= '<td class="sell-media-product-id" style="border: 1px solid #999; padding: 0.5rem; text-align: left;">';
                     if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
                         $html .= '<strong>' . __( 'ID', 'sell_media' ) . ':</strong> ' . $product['id'] . '<br />';
                         $html .= '<strong>' . __( 'Title', 'sell_media' ) . ':</strong> ' . $product['name'] . '<br />';
@@ -508,19 +508,19 @@ Class SellMediaPayments {
                         }
                     }
                     $html .= '</td>';
-                    $html .= '<td class="sell-media-product-size">';
+                    $html .= '<td class="sell-media-product-size" style="border: 1px solid #999; padding: 0.5rem; text-align: left;">';
                     if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) )
                         $html .= $product['size']['name'];
                     $html .= '</td>';
-                    $html .= '<td class="sell-media-product-license">';
+                    $html .= '<td class="sell-media-product-license" style="border: 1px solid #999; padding: 0.5rem; text-align: left;">';
                     if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) )
                         $html .= $product['license']['name'] . '<span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>';
                     $html .= '</td>';
-                    $html .= '<td class="sell-media-product-qty text-center">';
+                    $html .= '<td class="sell-media-product-qty text-center" style="border: 1px solid #999; padding: 0.5rem; text-align: center;">';
                     if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) )
                         $html .= $product['qty'];
                     $html .= '</td>';
-                    $html .= '<td class="sell-media-product-total">';
+                    $html .= '<td class="sell-media-product-total" style="border: 1px solid #999; padding: 0.5rem; text-align: right;">';
                     if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
                         $html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
                     $html .= '</td>';
@@ -534,7 +534,7 @@ Class SellMediaPayments {
             $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
-            $html .= '<td class="sell-media-products-grandtotal">';
+            $html .= '<td class="sell-media-products-grandtotal" style="padding: 0.5rem; text-align: right;">';
             if ( $discount ) {
                 $html .= __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '<br />';
             }
@@ -769,23 +769,12 @@ Class SellMediaPayments {
 
         $message['from_name'] = get_bloginfo( 'name' );
         $message['from_email'] = $settings->from_email;
-        $message['body'] = '
-            <style>
-                table {
-                    border-collapse: collapse;
-                }
-                td, th {
-                    border: 1px solid #999;
-                    padding: 0.5rem;
-                    text-align: left;
-                }
-            </style>';
 
         // send admins and buyers different email subject and body
         if ( $email == $message['from_email'] ) {
 
             $message['subject'] = __( 'New sale notification', 'sell_media' );
-            $message['body'] .= apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
+            $message['body']  = apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
             $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Customer', 'sell_media' ) . ': ' . $this->get_buyer_name( $payment_id ) . '</p>';
             $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Address', 'sell_media' ) . ': ' . $this->get_buyer_address( $payment_id ) . '</p>';
             $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Email', 'sell_media' ) . ': ' . $this->get_meta_key( $payment_id, 'email' ) . '</p>';
@@ -795,7 +784,7 @@ Class SellMediaPayments {
         } else {
 
             $message['subject'] = $settings->success_email_subject;
-            $message['body'] .= $settings->success_email_body;
+            $message['body'] = $settings->success_email_body;
             $tags = array(
                 '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
                 '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
