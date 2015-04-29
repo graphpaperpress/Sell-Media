@@ -477,7 +477,7 @@ Class SellMediaPayments {
         if ( $products ) {
 
             $html = null;
-            $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">';
+            $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" width="100%" style="border-collapse:collapse">';
             $html .= '<thead>';
             $html .= '<tr>';
             $html .= '<th style="' . $style . '  font-weight: bold;">' . __( 'Product', 'sell_media' ) . '</th>';
@@ -511,11 +511,11 @@ Class SellMediaPayments {
                         }
                     }
                     $html .= '</td>';
-                    $html .= '<td class="sell-media-product-size" style="' . $style . ' ">';
+                    $html .= '<td class="sell-media-product-size" style="' . $style . '">';
                     if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) )
                         $html .= $product['size']['name'];
                     $html .= '</td>';
-                    $html .= '<td class="sell-media-product-license" style="' . $style . ' ">';
+                    $html .= '<td class="sell-media-product-license" style="' . $style . '">';
                     if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) )
                         $html .= $product['license']['name'] . $product['license']['desc'];
                     $html .= '</td>';
