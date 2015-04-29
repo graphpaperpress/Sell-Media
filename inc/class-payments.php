@@ -500,8 +500,7 @@ Class SellMediaPayments {
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
                     $html .= '<td class="sell-media-product-id" style="' . $style . '">';
                     if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
-                        $html .= '<strong>' . __( 'ID', 'sell_media' ) . ':</strong> ' . $product['id'] . '<br />';
-                        $html .= '<strong>' . __( 'Title', 'sell_media' ) . ':</strong> ' . $product['name'] . '<br />';
+                        $html .= '#' . $product['id'] . ', ' . $product['name'] . '<br />';
                         $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a><br />';
                         if ( 'download' == $product['type'] ) {
                             $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center">' . __( 'Download', 'sell_media' ) . '</a>';
