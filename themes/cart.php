@@ -80,7 +80,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                                         $dimensions = $v['width'] . ' x ' . $v['height'];
                                     } else {
                                         $name = $v['name'];
-                                        $dimensions = '';
+                                        $dimensions = 'original';
                                     }
                                     $download_sizes = Sell_Media()->images->get_downloadable_size( $post_id, $attachment_id, null, true );
                                     if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {

@@ -792,10 +792,10 @@ Class SellMediaPayments {
         for( $i=1; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
-            $type = empty( $cart[ 'os0_' . $i ] ) ? 'download' : $cart[ 'os0_' . $i ];
+            $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
             $cart[ 'os1_' . $i ] = null; // Remove image url from the paypal checkout page
-            $price_id = empty( $cart[ 'os2_' . $i ] ) ? 'original' : $cart[ 'os2_' . $i ];
-            $license_id = empty( $cart[ 'os5_' . $i ] ) ? 'none' : $cart[ 'os5_' . $i ];
+            $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
+            $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
 
             // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
