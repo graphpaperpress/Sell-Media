@@ -83,7 +83,7 @@ Class SellMediaAdminNotices {
             /**
              * Updates availalble
              */
-            if ( ! empty( $this->get_updates() ) ) {
+            if ( $this->get_updates() ) {
                 $notices[] = array(
                     'slug' => 'sell-media-updates',
                     'message' => sprintf( __( 'Important updates are now available for %1$s. <a href="%2$s" target="_blank">Learn more</a>.', 'sell_media' ), implode( ', ', $this->get_updates() ), 'http://graphpaperpress.com/docs/sell-media/#updates' )
