@@ -498,7 +498,7 @@ Class SellMediaPayments {
                 if ( ! empty( $product['id'] ) ) {
 
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
-                    $html .= '<td class="sell-media-product-id" style="' . $style . ' ">';
+                    $html .= '<td class="sell-media-product-id" style="' . $style . '">';
                     if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
                         $html .= '<strong>' . __( 'ID', 'sell_media' ) . ':</strong> ' . $product['id'] . '<br />';
                         $html .= '<strong>' . __( 'Title', 'sell_media' ) . ':</strong> ' . $product['name'] . '<br />';
