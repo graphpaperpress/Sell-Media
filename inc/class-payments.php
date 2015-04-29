@@ -397,68 +397,6 @@ Class SellMediaPayments {
 
 
     /**
-    * Loop over products in payment meta and format them for plaintext email
-    *
-    * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
-    *
-    * @return string
-    */
-    public function get_payment_products_unformatted( $post_id=null ){
-
-        $products = $this->get_products( $post_id );
-        $discount = $this->get_meta_key( $post_id, $key='discount' );
-        $tax = $this->get_meta_key( $post_id, $key='tax' );
-        $shipping = $this->get_meta_key( $post_id, $key='shipping' );
-        $total = $this->get_meta_key( $post_id, $key='total' );
-        $text = '<br /><br />';
-        $text .= '---';
-        $text = '<br /><br />';
-
-        if ( $products ) foreach ( $products as $k => $v ) {
-
-            $v['attachment'] = ( ! empty( $v['attachment'] ) ) ? $v['attachment'] : sell_media_get_attachment_id( $v['id'] );
-
-            if ( ! empty( $v['name'] ) )
-                $text .= __( 'PRODUCT', 'sell_media' ) . ': ' . $v['name'] . '<br />';
-            if ( ! empty( $v['size']['name'] ) )
-                $text .= __( 'SIZE', 'sell_media' ) . ': ' . $v['size']['name'] . '<br />';
-            if ( ! empty( $v['license']['name'] ) )
-                $text .= __( 'LICENSE', 'sell_media' ) . ': ' . $v['license']['name'] . '<br />';
-            if ( ! empty( $v['license']['description'] ) )
-                $text .= __( 'LICENSE DESCRIPTION', 'sell_media' ) . ': ' . $v['license']['description'] . '<br /';
-            if ( ! empty( $v['qty'] ) )
-                $text .= __( 'QTY', 'sell_media' ) . ': ' . $v['qty'] . '<br />';
-            if ( ! empty( $v['type'] ) )
-                $text .= __( 'TYPE', 'sell_media' ) . ': ' . $v['type'] . '<br />';
-            if ( ! empty( $v['total'] ) )
-                $text .= __( 'SUBTOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $v['total'], 2, '.', ',' ) . '<br />';
-            if ( ! empty( $v['type'] ) && 'download' == $v['type'] )
-                $text .= __( 'DOWNLOAD LINK', 'sell_media' ) . ': ' . $this->get_download_link( $post_id, $v['id'], $v['attachment'], $v['size']['id'] ) . '<br />';
-            elseif ( ! empty( $v['type'] ) && 'print' == $v['type'] )
-                $text .= __( 'DELIVERY', 'sell_media' ) . ': ' . apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' ) . '<br />';
-            $text .= '<br />';
-            do_action( 'sell_media_after_products_unformatted_list', $post_id );
-        }
-        $text .= '<br /><br />';
-        $text .= '---';
-        $text .= '<br />';
-        if ( ! empty( $discount ) ) {
-            $text .= __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '<br />';
-        }
-        if ( ! empty( $tax ) ) {
-            $text .= __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '<br />';
-        }
-        if ( ! empty( $shipping ) ) {
-            $text .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
-        }
-        $text .= __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $total, 2, '.', ',' ) . '<br />';
-        $text .= '---';
-
-        return $text;
-    }
-
-
-    /**
     * Loop over products in payment meta and format them
     *
     * @param $post_id (int) The post_id for a post of post type "sell_media_payment"
@@ -854,10 +792,10 @@ Class SellMediaPayments {
         for( $i=1; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
-            $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
+            $type = empty( $cart[ 'os0_' . $i ] ) ? 'download' : $cart[ 'os0_' . $i ];
             $cart[ 'os1_' . $i ] = null; // Remove image url from the paypal checkout page
-            $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
-            $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
+            $price_id = empty( $cart[ 'os2_' . $i ] ) ? 'original' : $cart[ 'os2_' . $i ];
+            $license_id = empty( $cart[ 'os5_' . $i ] ) ? 'none' : $cart[ 'os5_' . $i ];
 
             // this is a download with an assigned license, so add license markup
             if ( ! empty( $license_id ) || $license_id != "undefined" ) {
