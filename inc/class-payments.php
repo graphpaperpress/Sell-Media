@@ -769,12 +769,23 @@ Class SellMediaPayments {
 
         $message['from_name'] = get_bloginfo( 'name' );
         $message['from_email'] = $settings->from_email;
+        $message['body'] = '
+            <style>
+                table {
+                    border-collapse: collapse;
+                }
+                td, th {
+                    border: 1px solid #999;
+                    padding: 0.5rem;
+                    text-align: left;
+                }
+            </style>';
 
         // send admins and buyers different email subject and body
         if ( $email == $message['from_email'] ) {
 
             $message['subject'] = __( 'New sale notification', 'sell_media' );
-            $message['body'] = apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
+            $message['body'] .= apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
             $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Customer', 'sell_media' ) . ': ' . $this->get_buyer_name( $payment_id ) . '</p>';
             $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Address', 'sell_media' ) . ': ' . $this->get_buyer_address( $payment_id ) . '</p>';
             $message['body'] .= '<p style="margin: 10px 0;">' . __( 'Email', 'sell_media' ) . ': ' . $this->get_meta_key( $payment_id, 'email' ) . '</p>';
@@ -784,7 +795,7 @@ Class SellMediaPayments {
         } else {
 
             $message['subject'] = $settings->success_email_subject;
-            $message['body'] = $settings->success_email_body;
+            $message['body'] .= $settings->success_email_body;
             $tags = array(
                 '{first_name}'      => $this->get_meta_key( $payment_id, 'first_name' ),
                 '{last_name}'       => $this->get_meta_key( $payment_id, 'last_name' ),
