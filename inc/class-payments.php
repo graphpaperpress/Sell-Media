@@ -465,13 +465,13 @@ Class SellMediaPayments {
     *
     * @return html
     */
-    public function get_payment_products_formatted( $post_id=null ){
+    public function get_payment_products_formatted( $post_id=null, $inline_css=false ){
         $products = $this->get_products( $post_id );
         $tax = $this->get_meta_key( $post_id, $key='tax' );
         $shipping = $this->get_meta_key( $post_id, $key='shipping' );
         $discount = $this->get_meta_key( $post_id, $key='discount' );
         $total = $this->get_meta_key( $post_id, $key='total' );
-        $css = 'border-bottom: 1px solid #ccc; padding: 0.5rem; text-align: left;';
+        $css = ( $inline_css ) ? 'border-bottom: 1px solid #ccc; padding: 0.5rem; text-align: left;' : '';
         $style = apply_filters( 'sell_media_products_table_style', $css );
 
         if ( $products ) {
@@ -768,7 +768,7 @@ Class SellMediaPayments {
     public function email_receipt( $payment_id=null, $email=null ) {
 
         $settings = sell_media_get_plugin_options();
-        $products = $this->get_payment_products_formatted( $payment_id );
+        $products = $this->get_payment_products_formatted( $payment_id, $inline_css = true );
 
         $message['from_name'] = get_bloginfo( 'name' );
         $message['from_email'] = $settings->from_email;
