@@ -433,7 +433,7 @@ Class SellMediaPayments {
             // So we derive the attachment_id from the product's post_meta
             $product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
             // If license description exists, show it.
-            $product['license']['desc'] = ( ! empty( term_description( $product['license']['id'], 'licenses' ) ) ) ? '<br /><span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>' : '';
+            $product['license']['desc'] = ( term_description( $product['license']['id'], 'licenses' ) ) ? '<br /><span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>' : '';
 
                 if ( ! empty( $product['id'] ) ) {
 
