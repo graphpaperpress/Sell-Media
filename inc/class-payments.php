@@ -495,7 +495,7 @@ Class SellMediaPayments {
             // So we derive the attachment_id from the product's post_meta
             $product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
             // If license description exists, show it.
-            $product['license']['desc'] = ( ! empty( term_description( $product['license']['id'], 'licenses' ) ) ) ? '<span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>' : '';
+            $product['license']['desc'] = ( ! empty( term_description( $product['license']['id'], 'licenses' ) ) ) ? '<br /><span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>' : '';
 
                 if ( ! empty( $product['id'] ) ) {
 
@@ -517,7 +517,7 @@ Class SellMediaPayments {
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-license" style="' . $style . ' ">';
                     if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) )
-                        $html .= $product['license']['name'] . '<br />' . $product['license']['desc'];
+                        $html .= $product['license']['name'] . $product['license']['desc'];
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-qty text-center" style="' . $style . ' text-align: center;">';
                     if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) )
@@ -537,7 +537,7 @@ Class SellMediaPayments {
             $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
             $html .= '<td>&nbsp;</td>';
-            $html .= '<td class="sell-media-products-grandtotal" style="text-align: right;">';
+            $html .= '<td class="sell-media-products-grandtotal" style="border-bottom: 3px solid #ccc; padding: 0.5rem; text-align: right;">';
             if ( $discount ) {
                 $html .= __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '<br />';
             }
