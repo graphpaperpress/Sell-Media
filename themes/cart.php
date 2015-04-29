@@ -53,7 +53,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                 <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $attachment_id ); ?>" />
                 <input class="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
                 <input class="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
-                <input class="item_usage" type="text" value="None" />
+                <input class="item_usage" type="text" value="No license" />
                 <input class="item_license" type="text" value="0" />
                 <input class="item_attachment" type="text" value="<?php echo $attachment_id; ?>" />
             </form>

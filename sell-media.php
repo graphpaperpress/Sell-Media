@@ -4,7 +4,7 @@
  * Plugin Name: Sell Media
  * Plugin URI: http://graphpaperpress.com/plugins/sell-media/
  * Description: A plugin for selling photos, prints and other downloads.
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Graph Paper Press
  * Author URI: http://graphpaperpress.com
  * Author Email: support@graphpaperpress.com
@@ -25,7 +25,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 2.0.2
+ * @version 2.0.3
  */
 
 // Exit if accessed directly
@@ -124,6 +124,7 @@ final class SellMedia {
             self::$instance->search         = new SellMediaSearch();
             if ( is_admin() ) {
                 self::$instance->notices        = new SellMediaAdminNotices();
+                self::$instance->admin_search   = new SellMediaAdminSearch();
             }
         }
         return self::$instance;
@@ -164,7 +165,7 @@ final class SellMedia {
 
         // Plugin version
         if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-            define( 'SELL_MEDIA_VERSION', '2.0.2' );
+            define( 'SELL_MEDIA_VERSION', '2.0.3' );
         }
 
         // Plugin Folder Path
@@ -218,11 +219,13 @@ final class SellMedia {
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-helpers.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-menu.php';
-            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-notices.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-scripts.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-system-info.php';
+
+            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-notices.php';
+            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-search.php';
 
         }
 

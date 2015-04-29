@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.2
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -202,9 +202,18 @@ Action hooks available:
 
 == Upgrade Notice ==
 
-* You must enable Auto Return Payment Data Transfer in PayPal for purchases to be recorded. See readme.txt for instructions.
 
 == Changelog ==
+
+= 2.0.3 =
+* New Feature: Check for newest version of Sell Media extensions.
+* Tweak: Add search by ID in admin.
+* Tweak: Don't send empty sizes and licenses to gateway.
+* Tweak: Improved html email receipts.
+* Bugfix: Missing sell_media_image class on gallery images.
+* Bugfix: Move non-image files to /uploads/sell_media/.
+* Bugfix: Filepath checks for non-image uploads (zips, etc).
+
 
 = 2.0.2 =
 * Tweak: Do not cache checkout, thanks and lightbox pages. Prevents PayPal IPN misses.
