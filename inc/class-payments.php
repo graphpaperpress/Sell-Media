@@ -475,7 +475,7 @@ Class SellMediaPayments {
         if ( $products ) {
 
             $html = null;
-            $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%" border-collapse="collapse">';
+            $html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">';
             $html .= '<thead>';
             $html .= '<tr>';
             $html .= '<th style="border: 1px solid #999; padding: 0.5rem; text-align: left; font-weight: bold;">' . __( 'Product', 'sell_media' ) . '</th>';
