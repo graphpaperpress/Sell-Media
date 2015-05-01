@@ -62,7 +62,7 @@ function sell_media_files_meta_box( $post ) {
     <div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
         <h4><?php _e( 'Importing', 'sell_media' ); ?></h4>
         <p class="description"><?php printf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the server path listed below. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
-        <p class="description"><strong>Server Path:</strong> <?php echo sell_media_get_import_dir(); ?></p>
+        <p class="description"><strong><?php _e( 'Server Path', 'sell_media' ); ?>:</strong> <?php echo sell_media_get_import_dir(); ?></p>
         <select id="sell-media-upload-bulk-selector" value="">
             <option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
             <?php
