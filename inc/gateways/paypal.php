@@ -105,6 +105,7 @@ function sell_media_process_paypal_ipn() {
             update_post_meta( $_POST['custom'], 'txn_id', $_POST['txn_id'] );
         } else {
             $message .= "\nThis payment was already processed\n";
+            return;
         }
 
         /**
@@ -112,7 +113,11 @@ function sell_media_process_paypal_ipn() {
          *
          * Create a new payment, send customer an email and empty the cart
          */
-        if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ){
+        if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ) {
+
+            // Return if this IPN doesn't contain a Sell Media item
+            if ( empty( $_POST['option_selection1_1'] ) && ( $_POST['option_selection1_1'] != 'print' || $_POST['option_selection1_1'] != 'download' ) )
+                return;
 
             $data = array(
                 'post_title'    => $_POST['payer_email'],

@@ -21,13 +21,15 @@ $has_price_group = Sell_Media()->products->has_price_group( $post_id );
 $price = ( $has_price_group ) ? 0 : Sell_Media()->products->get_original_price( $post_id );
 // assign licenses
 $licenses = wp_get_post_terms( $post_id, 'licenses' );
+// featured image id
+$image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
 
 ?>
 <div class="main-container sellMediaCart_shelfItem">
     <span class="close">&times;</span>
     <div class="content">
         <header>
-            <figure><?php sell_media_item_icon( $attachment_id ); ?></figure>
+            <figure><?php sell_media_item_icon( $image_id ); ?></figure>
             <figcaption><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></figcaption>
         </header>
         <section>
@@ -50,7 +52,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
                 <input class="item_number" type="text" value="<?php echo $post_id; ?>" />
                 <input class="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
                 <input class="item_type" type="text" value="<?php if ( $is_package ) echo 'download'; else echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
-                <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $attachment_id ); ?>" />
+                <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
                 <input class="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
                 <input class="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
                 <input class="item_usage" type="text" value="No license" />

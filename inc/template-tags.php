@@ -34,16 +34,25 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
  * Determines the image source for a product
  * @return (string) url to product image or feature image
  */
-function sell_media_item_image_src( $attachment_id=null ) {
+function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
 
-    $image_attributes = wp_get_attachment_image_src( $attachment_id, 'medium', true );
+    /**
+     * If the post has multiple attachments, get the attributes of the attachment.
+     * Otherwise, get the attributes of the featured image.
+     */
+    if ( sell_media_has_multiple_attachments( $post_id ) ) {
+        $image_attributes = wp_get_attachment_image_src( $attachment_id, 'medium', true );
+    } else {
+        $image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'medium' );
+    }
 
-    if ( $image_attributes )
-        $image = $image_attributes[0];
-    else
-        $image = wp_mime_type_icon();
+    if ( $image_attributes ) {
+        $file_url = $image_attributes[0];
+    } else {
+        $file_url = wp_mime_type_icon();
+    }
 
-    return $image;
+    return $file_url;
 }
 
 
