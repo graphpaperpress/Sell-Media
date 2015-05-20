@@ -1,0 +1,2594 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sell Media\n"
+"Report-Msgid-Bugs-To: https://graphpaperpress.com/\n"
+"POT-Creation-Date: 2015-05-20 10:49:00+00:00\n"
+"PO-Revision-Date: 2015-05-20 09:14+0100\n"
+"Last-Translator: fxbenard | FxB <fx@fxbenard.com>\n"
+"Language-Team: Thad Allender <support@graphpaperpress.com>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8beta3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: inc/admin-items.php:57
+msgid "Upload"
+msgstr "Envois"
+
+#: inc/admin-items.php:58
+msgid ""
+"Upload one file to create a single product or many files to create a gallery."
+msgstr ""
+
+#: inc/admin-items.php:59
+#, fuzzy
+msgid "Importing Options"
+msgstr "Ventes Croisées/Incitatives"
+
+#: inc/admin-items.php:63
+msgid "Importing"
+msgstr ""
+
+#: inc/admin-items.php:64
+msgid ""
+"Quickly import folders of images using this option. Use FTP or <a href=\"%1$s"
+"\" target=\"_blank\">export directly from Lightroom</a> and place new "
+"folders into the server path listed below. Then, select the folder below to "
+"import into WordPress."
+msgstr ""
+
+#: inc/admin-items.php:65
+msgid "Server Path"
+msgstr ""
+
+#: inc/admin-items.php:67
+#, fuzzy
+msgid "Select a folder"
+msgstr "Sélectionnez une taille."
+
+#: inc/admin-items.php:74
+#, fuzzy
+msgid "Add more files"
+msgstr "Ajouter une nouvelle licence"
+
+#: inc/admin-items.php:74
+#, fuzzy
+msgid "Importing files..."
+msgstr "Chargement&#8230;"
+
+#: inc/admin-items.php:74
+#, fuzzy
+msgid "Add files"
+msgstr "Singulier :"
+
+#: inc/admin-items.php:80
+#, fuzzy
+msgid "Packages"
+msgstr "AJOUTER UN PAQUET"
+
+#: inc/admin-items.php:81
+msgid ""
+"This feature was retired in version 2.0 because product galleries can now be "
+"created. Your old package file will still be available for sale and is "
+"listed below."
+msgstr ""
+
+#: inc/admin-items.php:110 inc/admin-price-groups.php:258
+#: inc/admin-price-groups.php:305 inc/class-payments.php:597
+#: inc/scripts.php:67
+msgid "Price"
+msgstr "Prix"
+
+#: inc/admin-items.php:113
+msgid "The price of each original, high-resolution file."
+msgstr ""
+
+#: inc/admin-items.php:118
+#, fuzzy
+msgid "Price group for downloads"
+msgstr "Prix total pour le groupe"
+
+#: inc/admin-items.php:121 inc/settings/library/helpers.php:242
+msgid "None"
+msgstr "Aucun"
+
+#: inc/admin-items.php:134
+msgid "<a href=\"%1$s\">Create new price group</a>"
+msgstr ""
+
+#: inc/admin-items.php:150
+#, fuzzy
+msgid "Views"
+msgstr "Avis"
+
+#: inc/admin-items.php:151
+msgid "Sales"
+msgstr ""
+
+#: inc/admin-items.php:323
+msgid "Sorry, %1$s could't be added."
+msgstr ""
+
+#: inc/admin-items.php:446
+#, fuzzy
+msgid "No price set"
+msgstr "Définir le prix du produit"
+
+#: inc/admin-items.php:482
+#, fuzzy
+msgid "No sales so far."
+msgstr "Un commentaire pour le moment"
+
+#: inc/admin-menu.php:24
+msgid "Reports"
+msgstr "Rapports"
+
+#: inc/admin-menu.php:25
+msgid "Upgrades"
+msgstr "Mises à jour"
+
+#: inc/admin-menu.php:27 inc/admin-system-info.php:12
+#: inc/settings/settings.php:620
+msgid "System Info"
+msgstr ""
+
+#: inc/admin-payments.php:21
+#, fuzzy
+msgid "Purchase Details"
+msgstr "Détails de la commande pour le paiement #%s"
+
+#: inc/admin-payments.php:28
+#, fuzzy
+msgid "Additional Purchase Details"
+msgstr "Informations complémentaires"
+
+#: inc/admin-payments.php:42
+#, fuzzy
+msgid "Payment Gateway Details"
+msgstr "Détails du paiement"
+
+#: inc/admin-payments.php:74 inc/admin-payments.php:120 inc/scripts.php:64
+msgid "Name"
+msgstr "Nom"
+
+#: inc/admin-payments.php:75 inc/class-payments.php:721 inc/settings.php:70
+msgid "Email"
+msgstr "E-Mail"
+
+#: inc/admin-payments.php:76 inc/shortcodes.php:196 themes/cart.php:116
+msgid "Total"
+msgstr "Total"
+
+#: inc/admin-payments.php:103
+msgid "This is the additional payment data stored with the purchase."
+msgstr ""
+
+#: inc/admin-payments.php:116 inc/class-payments.php:421
+msgid "Product"
+msgstr "Produit"
+
+#: inc/admin-payments.php:123
+msgid "ID"
+msgstr "ID"
+
+#: inc/admin-payments.php:126
+msgid "Type"
+msgstr "Type"
+
+#: inc/admin-payments.php:129 inc/class-payments.php:422
+#: inc/class-payments.php:596 inc/scripts.php:65
+msgid "Size"
+msgstr "Dimension"
+
+#: inc/admin-payments.php:132 inc/class-payments.php:423
+#: inc/class-payments.php:599 inc/install.php:269 inc/scripts.php:66
+msgid "License"
+msgstr "Licence"
+
+#: inc/admin-payments.php:135 inc/class-payments.php:424 inc/scripts.php:68
+#, fuzzy
+msgid "Qty"
+msgstr "Qté"
+
+#: inc/admin-payments.php:138 inc/class-payments.php:425 inc/scripts.php:69
+#: inc/shortcodes.php:183
+msgid "Subtotal"
+msgstr "Sous-total"
+
+#: inc/admin-payments.php:148
+#, fuzzy
+msgid "This payment has no additional payment details"
+msgstr "Détails de la commande pour le paiement #%s"
+
+#: inc/admin-payments.php:171 inc/settings/library/helpers.php:266
+msgid "PayPal"
+msgstr "PayPal"
+
+#: inc/admin-payments.php:174
+msgid "Stripe"
+msgstr "Stripe"
+
+#: inc/admin-payments.php:176
+#, fuzzy
+msgid "This is the data that was sent from "
+msgstr "Récupération des données depuis Twitter"
+
+#: inc/admin-payments.php:176
+msgid " at time of purchase. Use this for debugging, if needed."
+msgstr ""
+
+#: inc/admin-payments.php:197
+msgid "Earnings Report"
+msgstr "Rapport de gains"
+
+#: inc/admin-payments.php:199
+#, fuzzy
+msgid "Total Earnings To Date:"
+msgstr "Revenus à ce jour"
+
+#: inc/admin-payments.php:200
+msgid ""
+"Below is a breakdown of earnings per day, month and year. Want to increase "
+"your sales?"
+msgstr ""
+
+#: inc/admin-payments.php:200
+msgid "Download new Sell Media extensions"
+msgstr ""
+
+#: inc/admin-payments.php:213
+msgid "Day"
+msgstr "Jour"
+
+#: inc/admin-payments.php:214 inc/admin-payments.php:254
+#: inc/admin-payments.php:287
+msgid "Earnings"
+msgstr "Revenus"
+
+#: inc/admin-payments.php:234
+#, fuzzy
+msgid "Earnings per day"
+msgstr "Inscriptions par jour"
+
+#: inc/admin-payments.php:253
+msgid "Month"
+msgstr "Mois"
+
+#: inc/admin-payments.php:267
+#, fuzzy
+msgid "Earnings per month"
+msgstr "Gains payés ce mois"
+
+#: inc/admin-payments.php:286
+msgid "Year"
+msgstr "Année"
+
+#: inc/admin-payments.php:303
+#, fuzzy
+msgid "Earnings per year"
+msgstr "par année"
+
+#: inc/admin-price-groups.php:214
+#, fuzzy
+msgid "Create Price Group"
+msgstr "Créer un groupe"
+
+#: inc/admin-price-groups.php:219
+#, fuzzy
+msgid "Are you sure you want to delete the price group:"
+msgstr ""
+"Êtes-vous sûr de vouloir supprimer l&#39;ensemble de l'index de SearchWP ?"
+
+#: inc/admin-price-groups.php:219
+msgid "This will delete the price group and ALL its prices associated with it."
+msgstr ""
+
+#: inc/admin-price-groups.php:220
+msgid "Delete Group"
+msgstr "Supprimer le groupe"
+
+#: inc/admin-price-groups.php:224
+#, fuzzy
+msgid "Enter price group name here"
+msgstr "Saisissez ici le nom du menu"
+
+#: inc/admin-price-groups.php:240 inc/admin-price-groups.php:292
+msgid "Name (shown to buyer, so be descriptive)"
+msgstr ""
+
+#: inc/admin-price-groups.php:248 inc/admin-price-groups.php:297
+#, fuzzy
+msgid "Max width (pixels)"
+msgstr "Largeur maximale"
+
+#: inc/admin-price-groups.php:253
+#, fuzzy
+msgid "Max Height (pixels)"
+msgstr "Hauteur maximale"
+
+#: inc/admin-price-groups.php:264
+#, fuzzy
+msgid "Are you sure you want to delete the price"
+msgstr "Êtes-vous certain(e) de vouloir effacer cela ?"
+
+#: inc/admin-price-groups.php:301
+#, fuzzy
+msgid "Max height (pixels)"
+msgstr "Hauteur maximale"
+
+#: inc/admin-price-groups.php:310
+msgid ""
+"The sizes listed below determine the maximum dimensions in pixels. Price "
+"Groups only apply to images."
+msgstr ""
+
+#: inc/admin-price-groups.php:311
+msgid "Create a price group to add prices to."
+msgstr "Créer un groupe de prix pour y ajouter des prix."
+
+#: inc/admin-price-groups.php:370
+msgid "Add New Price"
+msgstr "Ajouter un nouveau prix"
+
+#: inc/admin-price-groups.php:378
+#, fuzzy
+msgid "Save Price Group"
+msgstr "Prix de groupe ?"
+
+#: inc/class-admin-notices.php:49
+msgid "Your site is currently in <a href=\"%1$s\">test mode</a>."
+msgstr ""
+
+#: inc/class-admin-notices.php:59
+msgid ""
+"Please create a checkout page using the <code>[sell_media_checkout]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+
+#: inc/class-admin-notices.php:69
+msgid ""
+"Please create a thanks page using the <code>[sell_media_thanks]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+
+#: inc/class-admin-notices.php:79
+msgid ""
+"Please set a PayPal email in your <a href=\"%1$s\">payment settings</a>."
+msgstr ""
+
+#: inc/class-admin-notices.php:89
+msgid ""
+"Important updates are now available for %1$s. <a href=\"%2$s\" target="
+"\"_blank\">Learn more</a>."
+msgstr ""
+
+#: inc/class-customer.php:72
+#, fuzzy
+msgid "Account registration at"
+msgstr "Inscription"
+
+#: inc/class-customer.php:73
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: inc/class-customer.php:74
+#, fuzzy
+msgid "Here are your login credentials"
+msgstr "Veuillez saisir votre identifiant FTP pour continuer."
+
+#: inc/class-customer.php:75 inc/shortcodes.php:468
+#, fuzzy
+msgid "Username"
+msgstr "utilisateur"
+
+#: inc/class-customer.php:76
+msgid ""
+"Create a password if you want to login to our dashboard to download any of "
+"your purchases in the future."
+msgstr ""
+
+#: inc/class-customer.php:78
+msgid "Any purchases your make will be available on your account dashboard."
+msgstr ""
+
+#: inc/class-customer.php:80
+msgid "Thanks"
+msgstr "Merci"
+
+#: inc/class-downloads.php:46
+msgid "The original high resolution file doesn't exist here: %1$s"
+msgstr ""
+
+#: inc/class-downloads.php:82
+msgid "You do not have permission to download this file"
+msgstr "Vous n'avez pas la permission de télécharger ce fichier"
+
+#: inc/class-downloads.php:82
+msgid "Purchase Verification Failed"
+msgstr "Erreur lors de la vérification de l'achat"
+
+#: inc/class-payments.php:231
+msgid "sales totaling"
+msgstr ""
+
+#: inc/class-payments.php:446
+msgid "Download"
+msgstr "Télécharger"
+
+#: inc/class-payments.php:480
+#, fuzzy
+msgid "DISCOUNT"
+msgstr "Remise"
+
+#: inc/class-payments.php:483
+#, fuzzy
+msgid "TAX"
+msgstr "TVA"
+
+#: inc/class-payments.php:486
+#, fuzzy
+msgid "SHIPPING"
+msgstr "Livraison"
+
+#: inc/class-payments.php:489
+#, fuzzy
+msgid "TOTAL"
+msgstr "Total"
+
+#: inc/class-payments.php:595
+msgid "Item"
+msgstr "Achat"
+
+#: inc/class-payments.php:598
+#, fuzzy
+msgid "Quantity"
+msgstr "Quantité :"
+
+#: inc/class-payments.php:672
+msgid "Paid"
+msgstr "Payé"
+
+#: inc/class-payments.php:717
+#, fuzzy
+msgid "New sale notification"
+msgstr "Configurer les e-mails de notification d'une nouvelle vente"
+
+#: inc/class-payments.php:719
+msgid "Customer"
+msgstr "Client"
+
+#: inc/class-payments.php:720
+msgid "Address"
+msgstr "Adresse"
+
+#: inc/class-products.php:58
+msgid "Original"
+msgstr "Originale"
+
+#: inc/class-products.php:59
+msgid "The original high resolution source file"
+msgstr ""
+
+#: inc/class-search.php:269
+#, fuzzy
+msgid "Search for %1$s"
+msgstr "Le mot à rechercher doit contenir au moins 3 lettres."
+
+#: inc/class-search.php:275
+#, fuzzy
+msgid "Search"
+msgstr "Commune"
+
+#: inc/class-search.php:285
+msgid "Exact phrase match (?)"
+msgstr ""
+
+#: inc/class-search.php:291 inc/install.php:234
+msgid "Collection"
+msgstr "Collection"
+
+#: inc/class-search.php:293
+msgid "All"
+msgstr "Tout"
+
+#: inc/collections.php:74
+#, fuzzy
+msgid "This item is password protected"
+msgstr "Password Protected"
+
+#: inc/install.php:100
+msgid "All Products"
+msgstr "Tous les produits"
+
+#: inc/install.php:101 inc/install.php:143
+msgid "Add New"
+msgstr "Ajouter"
+
+#: inc/install.php:103
+msgid "Edit Product"
+msgstr "Modifier Produit"
+
+#: inc/install.php:104
+msgid "New Product"
+msgstr "Nouveau produit"
+
+#: inc/install.php:105
+msgid "View Product"
+msgstr "Voir le produit"
+
+#: inc/install.php:106
+msgid "Search Products"
+msgstr "Chercher des produits"
+
+#: inc/install.php:107
+#, fuzzy
+msgid "No products found"
+msgstr "Aucun produit trouvé"
+
+#: inc/install.php:108
+#, fuzzy
+msgid "No products found in Trash"
+msgstr "Aucun produit trouvé dans la corbeille"
+
+#: inc/install.php:109
+#, fuzzy
+msgid "Parent Product:"
+msgstr "Produit parent"
+
+#: inc/install.php:141 inc/install.php:152
+msgid "Payments"
+msgstr "Paiements"
+
+#: inc/install.php:142 inc/settings.php:55 inc/settings.php:59
+msgid "Payment"
+msgstr "Paiement"
+
+#: inc/install.php:144
+msgid "Add New Payment"
+msgstr "Ajouter un paiement"
+
+#: inc/install.php:145
+msgid "Edit Payment"
+msgstr "Modifier le paiement "
+
+#: inc/install.php:146
+msgid "New Payment"
+msgstr "Nouveau paiement"
+
+#: inc/install.php:147
+#, fuzzy
+msgid "View Payment"
+msgstr "Afficher le paiement"
+
+#: inc/install.php:148
+msgid "Search Payments"
+msgstr "Chercher des paiements"
+
+#: inc/install.php:149
+#, fuzzy
+msgid "No payments found"
+msgstr "Aucun paiement trouvé"
+
+#: inc/install.php:150
+#, fuzzy
+msgid "No payments found in Trash"
+msgstr "Aucun paiement trouvé dans la corbeille"
+
+#: inc/install.php:151
+#, fuzzy
+msgid "Parent Payment:"
+msgstr "Paiement parent : <a href=\"%s\">%s</a>"
+
+#: inc/install.php:198 inc/install.php:199 inc/install.php:212
+#, fuzzy
+msgid "Price Groups"
+msgstr "Prix"
+
+#: inc/install.php:200
+#, fuzzy
+msgid "Search Price Groups"
+msgstr "Rechercher un groupe..."
+
+#: inc/install.php:201
+#, fuzzy
+msgid "Popular Price Groups"
+msgstr "Groupes de whistle populaires"
+
+#: inc/install.php:202
+#, fuzzy
+msgid "All Price Groups"
+msgstr "Ajouter un groupe de diapos"
+
+#: inc/install.php:203
+msgid "Parent Price Groups"
+msgstr "Groupes de prix parent"
+
+#: inc/install.php:204
+msgid "Parent Price Groups:"
+msgstr "Groupes de prix parent :"
+
+#: inc/install.php:205
+#, fuzzy
+msgid "Edit Price Group"
+msgstr "Prix de groupe ?"
+
+#: inc/install.php:206
+#, fuzzy
+msgid "Update Price Group"
+msgstr "Prix de groupe ?"
+
+#: inc/install.php:207
+#, fuzzy
+msgid "Add New Price Group"
+msgstr "Ajouter un nouveau groupe de diapos"
+
+#: inc/install.php:208
+#, fuzzy
+msgid "New Price Group"
+msgstr "Prix de groupe ?"
+
+#: inc/install.php:209
+#, fuzzy
+msgid "Separate Price Groups with commas"
+msgstr "Séparez les groupes de whistle par des virgules"
+
+#: inc/install.php:210
+#, fuzzy
+msgid "Add or remove Price Groups"
+msgstr "Ajouter ou retirer des groupes de whistle"
+
+#: inc/install.php:211
+#, fuzzy
+msgid "Choose from most used Price Groups"
+msgstr "Choisir parmi les groupes de whistle les plus utilisés"
+
+#: inc/install.php:233
+#, fuzzy
+msgid "Product Collections"
+msgstr "Collections"
+
+#: inc/install.php:235
+#, fuzzy
+msgid "Search Collection"
+msgstr "Collection"
+
+#: inc/install.php:236
+#, fuzzy
+msgid "Popular Collection"
+msgstr "Collection"
+
+#: inc/install.php:237 inc/widgets/sell-media-featured.php:95
+#, fuzzy
+msgid "All Collections"
+msgstr "Collections"
+
+#: inc/install.php:238
+#, fuzzy
+msgid "Parent Collection"
+msgstr "Collection"
+
+#: inc/install.php:239
+#, fuzzy
+msgid "Parent Collection:"
+msgstr "Collection"
+
+#: inc/install.php:240
+#, fuzzy
+msgid "Edit Collection"
+msgstr "Collection"
+
+#: inc/install.php:241
+#, fuzzy
+msgid "Update Collection"
+msgstr "Collection"
+
+#: inc/install.php:242
+#, fuzzy
+msgid "Add New Collection"
+msgstr "Collection"
+
+#: inc/install.php:243
+#, fuzzy
+msgid "New Collection"
+msgstr "Collection"
+
+#: inc/install.php:244
+#, fuzzy
+msgid "Separate collection with commas"
+msgstr "Séparez les équipements par des virgules"
+
+#: inc/install.php:245
+#, fuzzy
+msgid "Add or remove Collection"
+msgstr "Collection"
+
+#: inc/install.php:246
+#, fuzzy
+msgid "Choose from most used Collection"
+msgstr "Choisir parmi les mots-clés les plus utilisés"
+
+#: inc/install.php:247 inc/template-tags.php:582
+msgid "Collections"
+msgstr "Collections"
+
+#: inc/install.php:268 inc/install.php:282
+msgid "Licenses"
+msgstr "Licences"
+
+#: inc/install.php:270
+msgid "Search Licenses"
+msgstr "Chercher des licences"
+
+#: inc/install.php:271
+#, fuzzy
+msgid "Popular Licenses"
+msgstr "Licences"
+
+#: inc/install.php:272
+#, fuzzy
+msgid "All Licenses"
+msgstr "Afficher toutes les licences achetées"
+
+#: inc/install.php:273
+msgid "Parent License"
+msgstr "Licence parente"
+
+#: inc/install.php:274
+msgid "Parent License:"
+msgstr "Licence parente :"
+
+#: inc/install.php:275
+msgid "Edit License"
+msgstr "Modifier la licence"
+
+#: inc/install.php:276
+#, fuzzy
+msgid "Update License"
+msgstr "Licence…"
+
+#: inc/install.php:277
+msgid "Add New License"
+msgstr "Ajouter une nouvelle licence"
+
+#: inc/install.php:278
+msgid "New License"
+msgstr "Ajouter une licence"
+
+#: inc/install.php:279
+#, fuzzy
+msgid "Separate licenses with commas"
+msgstr "Séparer les mots-clefs de doc par des virgules"
+
+#: inc/install.php:280
+#, fuzzy
+msgid "Add or remove Licenses"
+msgstr "Extensions et licences"
+
+#: inc/install.php:281
+#, fuzzy
+msgid "Choose from most used Licenses"
+msgstr "Choisir parmi les plus utilisés"
+
+#: inc/install.php:303 inc/install.php:317 inc/template-tags.php:585
+#: inc/widgets/sell-media-keywords.php:49
+msgid "Keywords"
+msgstr ""
+
+#: inc/install.php:304 inc/install.php:373 inc/install.php:407
+msgid "Keyword"
+msgstr ""
+
+#: inc/install.php:305
+#, fuzzy
+msgid "Search Keywords"
+msgstr "Le mot à rechercher doit contenir au moins 3 lettres."
+
+#: inc/install.php:306
+#, fuzzy
+msgid "Popular Keywords"
+msgstr "Mots-clés"
+
+#: inc/install.php:307
+#, fuzzy
+msgid "All Keywords"
+msgstr "Mots-clés"
+
+#: inc/install.php:308 inc/install.php:377 inc/install.php:411
+#, fuzzy
+msgid "Parent Keyword"
+msgstr "Mot-clef :"
+
+#: inc/install.php:309 inc/install.php:378 inc/install.php:412
+#, fuzzy
+msgid "Parent Keyword:"
+msgstr "Mot-clef :"
+
+#: inc/install.php:310 inc/install.php:379 inc/install.php:413
+#, fuzzy
+msgid "Edit Keyword"
+msgstr "Mot-clef :"
+
+#: inc/install.php:311 inc/install.php:380 inc/install.php:414
+#, fuzzy
+msgid "Update Keyword"
+msgstr "Mot-clef :"
+
+#: inc/install.php:312 inc/install.php:381 inc/install.php:415
+#, fuzzy
+msgid "Add New Keyword"
+msgstr "Ajouter"
+
+#: inc/install.php:313 inc/install.php:382 inc/install.php:416
+#, fuzzy
+msgid "New Keyword"
+msgstr "Mot-clef :"
+
+#: inc/install.php:314
+#, fuzzy
+msgid "Separate keywords with commas"
+msgstr "Séparer les mots-clefs de doc par des virgules"
+
+#: inc/install.php:315
+#, fuzzy
+msgid "Add or remove Keywords"
+msgstr "Mots-clés"
+
+#: inc/install.php:316
+#, fuzzy
+msgid "Choose from most used Keywords"
+msgstr "Choisir parmi les plus utilisés"
+
+#: inc/install.php:338 inc/install.php:352
+msgid "Creators"
+msgstr "Créateurs"
+
+#: inc/install.php:339
+msgid "Creator"
+msgstr "Créateur"
+
+#: inc/install.php:340
+#, fuzzy
+msgid "Search Creator"
+msgstr "Créateur"
+
+#: inc/install.php:341
+#, fuzzy
+msgid "Popular Creator"
+msgstr "Créateur"
+
+#: inc/install.php:342
+#, fuzzy
+msgid "All Creator"
+msgstr "Créateur"
+
+#: inc/install.php:343
+#, fuzzy
+msgid "Parent Creator"
+msgstr "Créateur"
+
+#: inc/install.php:344
+#, fuzzy
+msgid "Parent Creator:"
+msgstr "Créateur"
+
+#: inc/install.php:345
+#, fuzzy
+msgid "Edit Creator"
+msgstr "Créateur"
+
+#: inc/install.php:346
+#, fuzzy
+msgid "Update Creator"
+msgstr "Créateur"
+
+#: inc/install.php:347
+#, fuzzy
+msgid "Add New Creator"
+msgstr "Ajouter une autre créateur"
+
+#: inc/install.php:348
+#, fuzzy
+msgid "New Creator"
+msgstr "Créateur"
+
+#: inc/install.php:349
+#, fuzzy
+msgid "Separate creator with commas"
+msgstr "Séparez les pays par des virgules"
+
+#: inc/install.php:350
+#, fuzzy
+msgid "Add or remove Creator"
+msgstr "Ajouter une autre créateur"
+
+#: inc/install.php:351
+#, fuzzy
+msgid "Choose from most used Creator"
+msgstr "Choisir parmi les plus utilisés"
+
+#: inc/install.php:372 inc/install.php:386
+msgid "City"
+msgstr "Ville"
+
+#: inc/install.php:374
+#, fuzzy
+msgid "Search City"
+msgstr "Commune"
+
+#: inc/install.php:375
+#, fuzzy
+msgid "Popular City"
+msgstr "Populaires"
+
+#: inc/install.php:376
+#, fuzzy
+msgid "All City"
+msgstr "Ville :"
+
+#: inc/install.php:383
+#, fuzzy
+msgid "Separate city with commas"
+msgstr "Séparez les états par des virgules"
+
+#: inc/install.php:384
+#, fuzzy
+msgid "Add or remove City"
+msgstr "Ajouter ou supprimer des équipements"
+
+#: inc/install.php:385
+#, fuzzy
+msgid "Choose from most used City"
+msgstr "Choisir parmi les plus utilisés"
+
+#: inc/install.php:406 inc/install.php:420
+msgid "State"
+msgstr "&Eacute;tat"
+
+#: inc/install.php:408
+#, fuzzy
+msgid "Search State"
+msgstr "&Eacute;tat"
+
+#: inc/install.php:409
+#, fuzzy
+msgid "Popular State"
+msgstr "Populaires"
+
+#: inc/install.php:410
+#, fuzzy
+msgid "All State"
+msgstr "État :"
+
+#: inc/install.php:417
+#, fuzzy
+msgid "Separate state with commas"
+msgstr "Séparez les cantons par des virgules"
+
+#: inc/install.php:418
+#, fuzzy
+msgid "Add or remove State"
+msgstr "Ajouter ou supprimer des équipements"
+
+#: inc/install.php:419
+#, fuzzy
+msgid "Choose from most used State"
+msgstr "Choisir parmi les plus utilisés"
+
+#: inc/lightbox.php:30
+#, fuzzy
+msgid "Go to lightbox"
+msgstr "Lightbox"
+
+#: inc/lightbox.php:30
+#, fuzzy
+msgid "lightbox"
+msgstr "Lightbox"
+
+#: inc/lightbox.php:36
+msgid "This item was saved to your %1$s."
+msgstr ""
+
+#: inc/lightbox.php:46 inc/lightbox.php:165 inc/lightbox.php:176
+#: inc/settings/settings.php:477 inc/settings/settings.php:572
+msgid "Remove"
+msgstr "Supprimer"
+
+#: inc/lightbox.php:46 inc/lightbox.php:170
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: inc/lightbox.php:82 inc/lightbox.php:136
+#, fuzzy
+msgid "Your lightbox is empty."
+msgstr "Votre panier est actuellement vide."
+
+#: inc/lightbox.php:82
+msgid "Remove all from lightbox"
+msgstr ""
+
+#: inc/lightbox.php:127 inc/template-tags.php:212 inc/template-tags.php:533
+#: inc/template-tags.php:550
+msgid "Buy"
+msgstr "Acheter"
+
+#: inc/scripts.php:53
+#, fuzzy
+msgid "Sorry that email already exists or is invalid"
+msgstr "Cette adresse email est déja enregistrée"
+
+#: inc/scripts.php:61
+msgid "Added"
+msgstr "Ajouté"
+
+#: inc/scripts.php:62
+#, fuzzy
+msgid "Checkout now"
+msgstr "Commander."
+
+#: inc/scripts.php:74
+msgid ""
+"There was an error loading the cart data. Please contact the site owner."
+msgstr ""
+
+#: inc/scripts.php:75 inc/shortcodes.php:203
+#, fuzzy
+msgid "Checkout Now"
+msgstr "Commander."
+
+#: inc/scripts.php:76
+#, fuzzy
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+#: inc/scripts.php:77
+msgid "Remove from Lightbox"
+msgstr ""
+
+#: inc/scripts.php:78
+#, fuzzy
+msgid "Save to Lightbox"
+msgstr "Lightbox"
+
+#: inc/settings/library/helpers.php:16
+#, fuzzy
+msgid "-- Choose One --"
+msgstr "Choisissez un ou plus %s"
+
+#: inc/settings/library/helpers.php:133
+msgid "US Dollars (&#36;)"
+msgstr "Dollar US (&#36;)"
+
+#: inc/settings/library/helpers.php:137
+msgid "Euros (&euro;)"
+msgstr "Euro (&euro;)"
+
+#: inc/settings/library/helpers.php:141
+msgid "Pounds Sterling (&pound;)"
+msgstr "Livre Sterling (&pound;)"
+
+#: inc/settings/library/helpers.php:145
+msgid "Australian Dollars (&#36;)"
+msgstr "Dollar Australien (&#36;)"
+
+#: inc/settings/library/helpers.php:149
+msgid "Brazilian Real (R&#36;)"
+msgstr "Réal brésilien (&#36;)"
+
+#: inc/settings/library/helpers.php:153
+msgid "Canadian Dollars (&#36;)"
+msgstr "Dollar canadien (&#36;)"
+
+#: inc/settings/library/helpers.php:157
+#, fuzzy
+msgid "Czech Koruna (&#75;&#269;)"
+msgstr "Couronne tchèque"
+
+#: inc/settings/library/helpers.php:161
+msgid "Danish Krone"
+msgstr "Couronne danoise"
+
+#: inc/settings/library/helpers.php:165
+msgid "Hong Kong Dollar (&#36;)"
+msgstr "Dollar de Hong Kong (&#36;)"
+
+#: inc/settings/library/helpers.php:169
+msgid "Hungarian Forint"
+msgstr "Forint hongrois"
+
+#: inc/settings/library/helpers.php:173
+msgid "Israeli Shekel"
+msgstr "Shekel israélien"
+
+#: inc/settings/library/helpers.php:177
+msgid "Japanese Yen (&yen;)"
+msgstr "Yen japonais (&yen;)"
+
+#: inc/settings/library/helpers.php:181
+msgid "Malaysian Ringgits"
+msgstr "Ringgit malaisien"
+
+#: inc/settings/library/helpers.php:185
+msgid "Mexican Peso (&#36;)"
+msgstr "Peso mexicain (&#36;)"
+
+#: inc/settings/library/helpers.php:189
+msgid "New Zealand Dollar (&#36;)"
+msgstr "Dollar Nouvelle Zélande (&#36;)"
+
+#: inc/settings/library/helpers.php:193
+msgid "Norwegian Krone"
+msgstr "Couronne norvégienne"
+
+#: inc/settings/library/helpers.php:197
+msgid "Philippine Pesos"
+msgstr "Peso philippin"
+
+#: inc/settings/library/helpers.php:201
+msgid "Polish Zloty"
+msgstr "Zloty polonais"
+
+#: inc/settings/library/helpers.php:205
+msgid "Singapore Dollar (&#36;)"
+msgstr "Dollar de Singapour (&#36;)"
+
+#: inc/settings/library/helpers.php:209
+msgid "Swedish Krona"
+msgstr "Couronne suédoise"
+
+#: inc/settings/library/helpers.php:213
+msgid "Swiss Franc"
+msgstr "Franc suisse"
+
+#: inc/settings/library/helpers.php:217
+msgid "Taiwan New Dollars"
+msgstr "Nouveau dollar de Taiwan"
+
+#: inc/settings/library/helpers.php:221
+msgid "Thai Baht"
+msgstr "Baht thaïlandais"
+
+#: inc/settings/library/helpers.php:225
+#, fuzzy
+msgid "Turkish Lira (TL)"
+msgstr "Lire turque"
+
+#: inc/settings/library/helpers.php:229
+#, fuzzy
+msgid "South African rand (R)"
+msgstr "Rand sud-africain"
+
+#: inc/settings/settings.php:85 inc/settings/settings.php:87
+msgid "Settings"
+msgstr "Réglages"
+
+#: inc/settings/settings.php:121
+#, fuzzy
+msgid " settings updated successfully."
+msgstr "Réglages bien mis à jour"
+
+#: inc/settings/settings.php:134
+msgid "Save Settings"
+msgstr "Enregistrer les paramètres"
+
+#: inc/settings/settings.php:135
+msgid "Reset Defaults"
+msgstr "Réinitialiser"
+
+#: inc/settings/settings.php:354 inc/settings/settings.php:374
+#: inc/settings/settings.php:393
+msgid ""
+"This option has no valid options. Please create valid options as an array "
+"inside the settings."
+msgstr ""
+
+#: inc/settings/settings.php:476 inc/term-meta.php:367
+#, fuzzy
+msgid "Upload or Select Image"
+msgstr "Choisir / Envoyer une image de diapo"
+
+#: inc/settings/settings.php:571
+#, fuzzy
+msgid "Upload or Select Images"
+msgstr "Sélectionner les images"
+
+#: inc/settings/settings.php:618
+msgid "Version: "
+msgstr "Version :"
+
+#: inc/settings/settings.php:619
+msgid "Documentation"
+msgstr "Documentation"
+
+#: inc/settings/settings.php:634
+#, fuzzy
+msgid "Upgrades Available"
+msgstr "Mises à jour"
+
+#: inc/settings/settings.php:636
+msgid ""
+"Sell prints, create discount codes, watermark images, accept credit cards "
+"and much more when you activate the Business Bundle extension pack for Sell "
+"Media."
+msgstr ""
+
+#: inc/settings/settings.php:637 inc/settings/settings.php:644
+#, fuzzy
+msgid "Order Now"
+msgstr ""
+"Désolé, nous n'avons pas assez de \"%s\" en stock  pour remplir votre "
+"commande dès maintenant. Veuillez essayer de nouveau dans %d minutes ou "
+"modifiez votre panier et essayez à nouveau. Nous nous excusons pour ce "
+"désagrément."
+
+#: inc/settings/settings.php:641
+msgid "Need Help?"
+msgstr "Besoin d'aide&nbsp;?"
+
+#: inc/settings/settings.php:643
+msgid ""
+"Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one "
+"consultation over live chat. If we can't fix your problem, we'll refund your "
+"order."
+msgstr ""
+
+#: inc/settings/settings.php:648
+msgid "Reviews"
+msgstr "Avis"
+
+#: inc/settings/settings.php:650
+msgid "Great plugin with great support. Includes tons of features."
+msgstr ""
+
+#: inc/settings/settings.php:653
+msgid ""
+"A young product with massive potential! You can expect great support from "
+"Graph Paper Press."
+msgstr ""
+
+#: inc/settings/settings.php:656
+msgid "We'd love for you to leave a review if you've found this plugin useful."
+msgstr ""
+
+#: inc/settings/settings.php:657
+msgid "Leave a review"
+msgstr "Laisser un avis"
+
+#: inc/settings.php:25 inc/settings.php:29
+msgid "General"
+msgstr "Généraux"
+
+#: inc/settings.php:40 inc/settings.php:44
+msgid "Pricing"
+msgstr "Prix"
+
+#: inc/settings.php:74
+msgid "Email Settings"
+msgstr "Configuration des e-mails"
+
+#: inc/settings.php:85 inc/settings.php:89
+#, fuzzy
+msgid "Misc"
+msgstr "Divers"
+
+#: inc/settings.php:106
+msgid "Mode"
+msgstr "Mode"
+
+#: inc/settings.php:107
+msgid ""
+"Select Live Mode to accept real transactions. Select Test Mode to accept "
+"test transactions (%s)."
+msgstr ""
+
+#: inc/settings.php:127
+msgid "Checkout Page"
+msgstr "Page de commande"
+
+#: inc/settings.php:128
+msgid ""
+"Select the page that contains the checkout shortcode "
+"<code>[sell_media_checkout]</code>"
+msgstr ""
+
+#: inc/settings.php:139
+msgid "Thanks Page"
+msgstr "Page de remerciements"
+
+#: inc/settings.php:140
+msgid ""
+"Select the page that contains the thanks shortcode "
+"<code>[sell_media_thanks]</code>"
+msgstr ""
+
+#: inc/settings.php:151
+#, fuzzy
+msgid "Dashboard Page"
+msgstr "Page du tableau de bord du vendeur"
+
+#: inc/settings.php:152
+msgid ""
+"Select the page that contains the dashboard "
+"shortcode<code>[sell_media_download_list]</code>"
+msgstr ""
+
+#: inc/settings.php:163
+msgid "Login Page"
+msgstr "Page de connexion"
+
+#: inc/settings.php:164
+msgid ""
+"Select the page that contains the login shortcode "
+"<code>[sell_media_login_form]</code>"
+msgstr ""
+
+#: inc/settings.php:175
+msgid "Search Page"
+msgstr "Page de recherche"
+
+#: inc/settings.php:176
+msgid ""
+"Select the page that contains the search shortcode "
+"<code>[sell_media_searchform]</code>"
+msgstr ""
+
+#: inc/settings.php:187
+#, fuzzy
+msgid "Lightbox Page"
+msgstr "Lightbox"
+
+#: inc/settings.php:188
+msgid ""
+"Select the page that contains the lightbox shortcode "
+"<code>[sell_media_lightbox]</code>"
+msgstr ""
+
+#: inc/settings.php:199
+#, fuzzy
+msgid "Customer Notification"
+msgstr "Notification"
+
+#: inc/settings.php:200
+#, fuzzy
+msgid "Notify the customer of their site registration."
+msgstr "Autoriser, mais avec notification client"
+
+#: inc/settings.php:209 inc/settings.php:272 inc/settings.php:293
+#: inc/settings.php:410
+msgid "No"
+msgstr ""
+
+#: inc/settings.php:213 inc/settings.php:276 inc/settings.php:297
+#: inc/settings.php:414
+#, fuzzy
+msgid "Yes"
+msgstr "oui"
+
+#: inc/settings.php:220
+msgid "Style"
+msgstr "Style"
+
+#: inc/settings.php:221
+msgid ""
+"Choose the style of your theme. Sell Media will load styles to match your "
+"theme."
+msgstr ""
+
+#: inc/settings.php:230
+msgid "Dark"
+msgstr "Sombre"
+
+#: inc/settings.php:234
+msgid "Light"
+msgstr "Clair"
+
+#: inc/settings.php:241
+msgid "Layout"
+msgstr ""
+
+#: inc/settings.php:242
+msgid ""
+"Select your layout preference for single Sell Media entries. If your theme "
+"already has a sidebar, you probably want to select the 'Single column' "
+"option."
+msgstr ""
+
+#: inc/settings.php:262
+msgid "Breadcrumbs"
+msgstr ""
+
+#: inc/settings.php:263
+msgid "Show breadcrumb navigation on single entries."
+msgstr ""
+
+#: inc/settings.php:283
+#, fuzzy
+msgid "Plugin Credit"
+msgstr "Crédit"
+
+#: inc/settings.php:284
+msgid "Let your site visitors know you are using the Sell Media plugin?"
+msgstr ""
+
+#: inc/settings.php:304
+msgid "Post Type Slug"
+msgstr "Identifiant du type d'article"
+
+#: inc/settings.php:305
+msgid ""
+"You can change the post type slug to: &quot;photos&quot; or &quot;"
+"downloads&quot;. The default slug is &quot;items&quot;."
+msgstr ""
+
+#: inc/settings.php:316
+msgid "Order By"
+msgstr "Trier par"
+
+#: inc/settings.php:317
+msgid "Choose the order of items for the archive pages."
+msgstr ""
+
+#: inc/settings.php:345
+#, fuzzy
+msgid "Terms and Conditions"
+msgstr "Conditions d'utilisation"
+
+#: inc/settings.php:346
+msgid ""
+"These &quot;Terms and Conditions&quot; will show up on the checkout page. "
+"Users must agree to these terms before completing their purchase."
+msgstr ""
+
+#: inc/settings.php:357
+#, fuzzy
+msgid "Show Columns"
+msgstr "Colonnes"
+
+#: inc/settings.php:358
+msgid ""
+"Select the columns to show on the admin page &quot;All Products&quot; page."
+msgstr ""
+
+#: inc/settings.php:388
+#, fuzzy
+msgid "Original Price"
+msgstr "Taille originale (%@)"
+
+#: inc/settings.php:389
+msgid ""
+"The original price of new items and bulk uploads. You can set unique prices "
+"by editing each individual item."
+msgstr ""
+
+#: inc/settings.php:400
+#, fuzzy
+msgid "Hide Original Price"
+msgstr "Prix"
+
+#: inc/settings.php:401
+msgid ""
+"Select 'Yes' to hide the original price above and rely solely on Price "
+"Groups (See below. Price Groups can only be used when selling images). "
+"Select 'No' if you're selling single file downloads or if you want to list "
+"the original price for each product. You can override this setting on a per-"
+"item basis."
+msgstr ""
+
+#: inc/settings.php:421
+#, fuzzy
+msgid "Default Image Price Group"
+msgstr "Prix total pour le groupe"
+
+#: inc/settings.php:432
+#, fuzzy
+msgid "Image Price Groups"
+msgstr "Prix"
+
+#: inc/settings.php:445
+#, fuzzy
+msgid "PayPal Email Address"
+msgstr ""
+"Veuillez entrer votre adresse email PayPal, cela est nécessaire pour valider "
+"le paiement."
+
+#: inc/settings.php:446
+#, fuzzy
+msgid "Add the email address associated with your PayPal account above."
+msgstr "Adresse email FROM sur les mails sortants"
+
+#: inc/settings.php:458
+msgid "Currency"
+msgstr "Monnaie"
+
+#: inc/settings.php:459
+msgid "The currency in which you accept payment."
+msgstr ""
+
+#: inc/settings.php:470
+#, fuzzy
+msgid "PayPal Additional Test Emails"
+msgstr "Le test wp_remote_post() pour PayPal a réussi."
+
+#: inc/settings.php:471
+msgid ""
+"This is useful when debugging PayPal. Enter a comma separated list of "
+"emails, and when a purchase is made the same email that is sent to the buyer "
+"will be sent to the recipients in the above list."
+msgstr ""
+
+#: inc/settings.php:482 inc/shortcodes.php:188
+msgid "Tax"
+msgstr "TVA"
+
+#: inc/settings.php:492
+#, fuzzy
+msgid "Yes, charge tax"
+msgstr "Taux de la taxe"
+
+#: inc/settings.php:499
+#, fuzzy
+msgid "Tax Rate"
+msgstr "Taux de taxe :"
+
+#: inc/settings.php:513
+msgid "From Name"
+msgstr "Nom de l'expéditeur"
+
+#: inc/settings.php:514
+msgid "The name associated with all outgoing email."
+msgstr ""
+
+#: inc/settings.php:525
+msgid "From Email"
+msgstr "E-mail de l'expéditeur"
+
+#: inc/settings.php:526
+#, fuzzy
+msgid "The email address used for all outgoing email."
+msgstr "Adresse email FROM sur les mails sortants"
+
+#: inc/settings.php:537
+msgid "Email Subject"
+msgstr "Sujet de l'e-mail"
+
+#: inc/settings.php:538
+#, fuzzy
+msgid "The email subject on successful purchase emails."
+msgstr "Le sujet de l'e-mail correspondant à la facture de l'achat."
+
+#: inc/settings.php:544
+#, fuzzy
+msgid "Your Purchase"
+msgstr "S'il vous plaît essayez à nouveau votre achat."
+
+#: inc/settings.php:549
+msgid "Email Body"
+msgstr "Corps du message :"
+
+#: inc/settings.php:550
+msgid ""
+"This e-mail message is sent to your customers in case of successful and "
+"cleared payment. You can use the following email tags: {first_name}, "
+"{last_name}, {payer_email}, {download_links}, {payment_id}. These tags are "
+"replaced with the real data associated with each payment. Be sure to include "
+"the {download_links} tag, otherwise your buyers won't receive their download "
+"purchases. The {payment_id} tag can be used to display an invoice number."
+msgstr ""
+
+#: inc/settings.php:564
+#, fuzzy
+msgid "Settings for Extensions are shown below."
+msgstr "sous les réglages"
+
+#: inc/settings.php:571
+#, fuzzy
+msgid "Download Extensions for Sell Media"
+msgstr "Extensions Easy Digital Download"
+
+#: inc/shortcodes.php:41
+msgid ""
+"We've received your payment and are processing your order. <a href=\"\" "
+"class=\"reload\">Refresh this page</a> to check your order status. If you "
+"continue to see this message, please contact us."
+msgstr ""
+
+#: inc/shortcodes.php:192
+msgid "Shipping"
+msgstr "Livraison"
+
+#: inc/shortcodes.php:205
+msgid "or %s"
+msgstr "ou %s"
+
+#: inc/shortcodes.php:217
+#, fuzzy
+msgid "Your cart is empty. %s"
+msgstr "Votre panier est actuellement vide."
+
+#: inc/shortcodes.php:239
+#, fuzzy
+msgid "Your Purchase History"
+msgstr "Historique des achats"
+
+#: inc/shortcodes.php:245
+#, fuzzy
+msgid "Purchase ID"
+msgstr "Vous pouvez saisir l'ID de l'achat"
+
+#: inc/shortcodes.php:275
+msgid "Description"
+msgstr "Description"
+
+#: inc/shortcodes.php:276
+#, fuzzy
+msgid "width (px)"
+msgstr "Width(px)"
+
+#: inc/shortcodes.php:277
+#, fuzzy
+msgid "height (px)"
+msgstr "Height(px)"
+
+#: inc/shortcodes.php:278
+#, fuzzy
+msgid "price"
+msgstr "Prix"
+
+#: inc/shortcodes.php:421 themes/archive.php:78
+#, fuzzy
+msgid " images in "
+msgstr "Images :"
+
+#: inc/shortcodes.php:421 themes/archive.php:78
+#, fuzzy
+msgid " collection"
+msgstr "Collection"
+
+#: inc/shortcodes.php:424
+#, fuzzy
+msgid "Starting at "
+msgstr "Démarrage…"
+
+#: inc/shortcodes.php:459
+#, fuzzy
+msgid "You are logged in. %1$s or %2$s."
+msgstr "Connecté en tant que <a href=\"%1$s\">%2$s</a>."
+
+#: inc/shortcodes.php:463
+#, fuzzy
+msgid "Login failed"
+msgstr "Connecté en tant que"
+
+#: inc/shortcodes.php:469 inc/term-meta.php:406 inc/term-meta.php:451
+msgid "Password"
+msgstr "Mot de passe"
+
+#: inc/shortcodes.php:470
+#, fuzzy
+msgid "Remember Me"
+msgstr "Se souvenir de moi"
+
+#: inc/shortcodes.php:471
+msgid "Log In"
+msgstr "Se connecter"
+
+#: inc/shortcodes.php:475
+msgid "Forgot Password"
+msgstr "Mot de passe oublié"
+
+#: inc/template-tags.php:189
+#, fuzzy
+msgid "Previous Image"
+msgstr "Choisir image"
+
+#: inc/template-tags.php:190
+msgid "Back to Gallery"
+msgstr ""
+
+#: inc/template-tags.php:190
+msgid "Gallery"
+msgstr ""
+
+#: inc/template-tags.php:192
+#, fuzzy
+msgid "Next Image"
+msgstr "Choisir image"
+
+#: inc/template-tags.php:258
+msgid ""
+"<span id=\"sell-media-credit\" class=\"sell-media-credit\">Photo cart by <a "
+"href=\"%1$s\" title=\"Photo cart\">%2$s</a></span>"
+msgstr ""
+
+#: inc/template-tags.php:550
+msgid "More"
+msgstr ""
+
+#: inc/template-tags.php:576
+#, fuzzy
+msgid "Details"
+msgstr "Détails de la commande pour le paiement #%s"
+
+#: inc/template-tags.php:578
+#, fuzzy
+msgid "File ID"
+msgstr "ID du Site"
+
+#: inc/template-tags.php:579
+msgid "File Type"
+msgstr "Type du fichier"
+
+#: inc/template-tags.php:580
+#, fuzzy
+msgid "File Size"
+msgstr "Type du fichier"
+
+#: inc/term-meta.php:91
+msgid ""
+"When a buyer decides to purchase a item from your site, they must choose a "
+"license which most closely identifies their intended use of the item. We "
+"have included some default license types, grouped into two \"parent\" "
+"categories: Personal and Commercial. Each of these two categories have "
+"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
+"Commercial) and \"Website\" (a child of Personal). You can create as many "
+"parent and child licenses as you want."
+msgstr ""
+
+#: inc/term-meta.php:108 inc/term-meta.php:126
+#, fuzzy
+msgid "Markup"
+msgstr "Ajouter le balisage de la lightbox"
+
+#: inc/term-meta.php:202
+msgid ""
+"Increase the price of a item if a buyer selects this license by dragging the "
+"slider above."
+msgstr ""
+
+#: inc/term-meta.php:212
+#, fuzzy
+msgid "you have not set a default price"
+msgstr "Vous devez avoir au moins un prix"
+
+#: inc/term-meta.php:216
+#, fuzzy
+msgid " The %1$s of %2$s with %3$s markup is %4$s"
+msgstr "%1$s %2$s, il y a %3$s (%4$s)"
+
+#: inc/term-meta.php:236
+msgid ""
+"Check to add this as a default license option for all newly created items."
+msgstr ""
+
+#: inc/term-meta.php:240
+#, fuzzy
+msgid "Add as default license?"
+msgstr "Licence"
+
+#: inc/term-meta.php:343 inc/term-meta.php:384 inc/term-meta.php:492
+msgid "Icon"
+msgstr "Icône"
+
+#: inc/term-meta.php:371
+msgid ""
+"The icon is not prominent by default; however, some themes may show it. If "
+"no icon is used the featured image to the most recent post will be displayed"
+msgstr ""
+
+#: inc/term-meta.php:408
+msgid "This will password protect all items in this collection."
+msgstr ""
+
+#: inc/term-meta.php:428
+msgid "Password protect all items in this collection"
+msgstr ""
+
+#: inc/term-meta.php:445
+msgid "This collection will inherit the password of the parent collection:"
+msgstr ""
+
+#: inc/term-meta.php:469
+#, fuzzy
+msgid "Enable Client Proofing"
+msgstr "Client"
+
+#: inc/term-meta.php:471
+msgid ""
+"Check this to allow clients with password access to download items in this "
+"collecton as proofs. Clients must add an item to their Lightbox in order to "
+"download proofs. A record of which images were downloaded will be sent to "
+"both the site admin and the client via email."
+msgstr ""
+
+#: inc/term-meta.php:496
+msgid "Media"
+msgstr "Médias"
+
+#: inc/term-meta.php:501
+msgid "Protected"
+msgstr "Protégé"
+
+#: inc/term-meta.php:504
+msgid "Proofing"
+msgstr ""
+
+#: inc/widgets/sell-media-exif.php:8
+msgid ""
+"Displays image exif data (shutter speed, aperture, ISO, etc). Only use this "
+"on Single Sidebar Widgetized areas."
+msgstr ""
+
+#: inc/widgets/sell-media-exif.php:31
+#, fuzzy
+msgid "Camera "
+msgstr "Appareil photo"
+
+#: inc/widgets/sell-media-exif.php:36
+#, fuzzy
+msgid "Aperture "
+msgstr "Ouverture"
+
+#: inc/widgets/sell-media-exif.php:41
+#, fuzzy
+msgid "Focal Length "
+msgstr "Longueur focale "
+
+#: inc/widgets/sell-media-exif.php:46
+#, fuzzy
+msgid "Shutter Speed "
+msgstr "Vitesse Shutter"
+
+#: inc/widgets/sell-media-exif.php:64
+#, fuzzy
+msgid "ISO "
+msgstr "ISO"
+
+#: inc/widgets/sell-media-exif.php:68
+#, fuzzy
+msgid "Credit "
+msgstr "Crédit"
+
+#: inc/widgets/sell-media-exif.php:73
+#, fuzzy
+msgid "Date "
+msgstr "petit(e)-ami(e)"
+
+#: inc/widgets/sell-media-exif.php:78 inc/widgets/sell-media-exif.php:80
+#, fuzzy
+msgid "Copyright "
+msgstr "Droit d'auteur"
+
+#: inc/widgets/sell-media-exif.php:80
+msgid "by "
+msgstr ""
+
+#: inc/widgets/sell-media-exif.php:104
+#, fuzzy
+msgid "Camera Info"
+msgstr "Appareil photo"
+
+#: inc/widgets/sell-media-featured.php:93
+#, fuzzy
+msgid " Select Collection"
+msgstr "Collection"
+
+#: inc/widgets.php:28
+msgid "Sell Media Below Single Content"
+msgstr ""
+
+#: inc/widgets.php:37
+msgid "Sell Media Below Single Sidebar"
+msgstr ""
+
+#: sell-media.php:142 sell-media.php:154
+msgid "Cheatin&#8217; huh?"
+msgstr "Alors on essaye de tricher&nbsp;?"
+
+#: themes/archive.php:21
+#, fuzzy
+msgid "Search results for: %1$s"
+msgstr "Créateur"
+
+#: themes/archive.php:79
+#, fuzzy
+msgid "Starting at"
+msgstr "Démarrage…"
+
+#: themes/archive.php:118
+msgid "Nothing Found"
+msgstr "Rien n'a été trouvé"
+
+#: themes/archive.php:119
+msgid "Sorry, but we couldn't find anything that matches your search query."
+msgstr ""
+
+#: themes/cart.php:68
+msgid "Learn more"
+msgstr "Lire plus"
+
+#: themes/cart.php:76
+#, fuzzy
+msgid "Select a size"
+msgstr "Sélectionnez une taille."
+
+#: themes/cart.php:104 themes/cart.php:106
+msgid ""
+"Select a license that most closely describes the intended use of this item. "
+"Additional license details will be displayed here after selecting a license."
+msgstr ""
+
+#: themes/cart.php:104
+#, fuzzy
+msgid "(see details)"
+msgstr "Détails"
+
+#: themes/cart.php:106
+#, fuzzy
+msgid "Select a license"
+msgstr "Licence…"
+
+#: themes/cart.php:120
+#, fuzzy
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+#: themes/collection-password.php:13
+#, fuzzy
+msgid "This collection is password protected."
+msgstr "Password Protected"
+
+#: themes/collection-password.php:15
+msgid "Submit"
+msgstr "Envoyer"
+
+#. Description of the plugin/theme
+msgid "A plugin for selling photos, prints and other downloads."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Choose a Price Group"
+#~ msgstr "Prix total pour le groupe"
+
+#, fuzzy
+#~ msgid "Choose a License"
+#~ msgstr "Choisir"
+
+#, fuzzy
+#~ msgid "Choose a Collection"
+#~ msgstr "Collection"
+
+#~ msgid "Edit"
+#~ msgstr "Modifier"
+
+#, fuzzy
+#~ msgid "Choose a package"
+#~ msgstr "Vous avez besoin de choisir un packae d'adhésion."
+
+#, fuzzy
+#~ msgid "Select a package"
+#~ msgstr ""
+#~ "Sélectionnez le type de formule pour changer la façon dont la formule "
+#~ "affecte le prix de l'annonce pendant le processus d'affichage."
+
+#, fuzzy
+#~ msgid "Collection (optional)"
+#~ msgstr "Collection"
+
+#, fuzzy
+#~ msgid "Edit Package"
+#~ msgstr "Modifier la formule d'annonce"
+
+#, fuzzy
+#~ msgid "Sell Media"
+#~ msgstr "Médias"
+
+#, fuzzy
+#~ msgid "Add Bulk"
+#~ msgstr "Ajout de groupe / Choix prédéfinis"
+
+#, fuzzy
+#~ msgid "Package File"
+#~ msgstr "Veuillez choisir un fichier .zip"
+
+#~ msgid "File"
+#~ msgstr "Fichier"
+
+#, fuzzy
+#~ msgid "A description for the field."
+#~ msgstr "Champ de description du professeur"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Prix de groupe ?"
+
+#, fuzzy
+#~ msgid " Remove Image"
+#~ msgstr "Supprimer l'image"
+
+#, fuzzy
+#~ msgid "Select a price group"
+#~ msgstr "Prix total pour le groupe"
+
+#, fuzzy
+#~ msgid "PRODUCT"
+#~ msgstr "Produit"
+
+#, fuzzy
+#~ msgid "SIZE"
+#~ msgstr "Dimension"
+
+#, fuzzy
+#~ msgid "LICENSE"
+#~ msgstr "Licence"
+
+#, fuzzy
+#~ msgid "LICENSE DESCRIPTION"
+#~ msgstr "Licence"
+
+#, fuzzy
+#~ msgid "QTY"
+#~ msgstr "Qté"
+
+#, fuzzy
+#~ msgid "TYPE"
+#~ msgstr "Type"
+
+#, fuzzy
+#~ msgid "SUBTOTAL"
+#~ msgstr "Sous-total"
+
+#, fuzzy
+#~ msgid "DOWNLOAD LINK"
+#~ msgstr "Votre lien de téléchargement a expiré."
+
+#, fuzzy
+#~ msgid "DELIVERY"
+#~ msgstr "Frais de livraison"
+
+#, fuzzy
+#~ msgid "Delivery"
+#~ msgstr "Frais de livraison"
+
+#, fuzzy
+#~ msgid "Example: 100"
+#~ msgstr "Saisir la largeur du CTA en pixels. Exemple : 100% ou 300px."
+
+#~ msgid "X"
+#~ msgstr "X"
+
+#, fuzzy
+#~ msgid "Displaying results "
+#~ msgstr "Résultats de recherche"
+
+#~ msgid " of "
+#~ msgstr "de "
+
+#~ msgid "Loading..."
+#~ msgstr "Chargement..."
+
+#, fuzzy
+#~ msgid "No items"
+#~ msgstr "Aucune entrée."
+
+#~ msgid "Select"
+#~ msgstr "Sélectionner"
+
+#~ msgid "REQUIRED ACTIONS"
+#~ msgstr "ACTIONS REQUISES"
+
+#, fuzzy
+#~ msgid "Shopping cart by "
+#~ msgstr "Configuration du panier"
+
+#, fuzzy
+#~ msgid "Sell Media Commissions"
+#~ msgstr "Commissions"
+
+#~ msgid "Unpaid"
+#~ msgstr "Impayée"
+
+#~ msgid "User"
+#~ msgstr "Titulaire"
+
+#, fuzzy
+#~ msgid "Commission %"
+#~ msgstr "Commission"
+
+#, fuzzy
+#~ msgid "Commission Amount"
+#~ msgstr "Le montant total de la commission"
+
+#~ msgid "Date"
+#~ msgstr "Date"
+
+#~ msgid "Status"
+#~ msgstr "État"
+
+#, fuzzy
+#~ msgid "Commission Details:"
+#~ msgstr "Commission"
+
+#~ msgid "User:"
+#~ msgstr "Utilisateur :"
+
+#, fuzzy
+#~ msgid "Commissions (%):"
+#~ msgstr "Commissions"
+
+#, fuzzy
+#~ msgid "Add New Discount Code"
+#~ msgstr "Ajouter une nouvelle remise"
+
+#, fuzzy
+#~ msgid "Go Back"
+#~ msgstr "Retour"
+
+#, fuzzy
+#~ msgid "The name of this discount code"
+#~ msgstr "Le nom de la remise."
+
+#~ msgid "Code"
+#~ msgstr "Code"
+
+#~ msgid "Enter a code for this discount, such as 10PERCENT"
+#~ msgstr "Encoder un code pour cette remise, par exemple 10POURCENT."
+
+#~ msgid "Percentage"
+#~ msgstr "Pourcentage"
+
+#~ msgid "Flat amount"
+#~ msgstr "Montant fixe"
+
+#~ msgid "The kind of discount to apply for this discount."
+#~ msgstr "Le type de remise à lui appliquer."
+
+#~ msgid "Amount"
+#~ msgstr "Montant"
+
+#, fuzzy
+#~ msgid "The amount of this discount code."
+#~ msgstr "Voici votre code de remise {discount_amount}"
+
+#, fuzzy
+#~ msgid "Start date"
+#~ msgstr "Date de début"
+
+#, fuzzy
+#~ msgid ""
+#~ "Enter the start date for this discount code in the format of mm/dd/yyyy. "
+#~ "For no start date, leave blank."
+#~ msgstr ""
+#~ "Saisir la date d'expiration pour ce code de remise au format mm/jj/aaaa. "
+#~ "Laissez vide pour ne pas appliquer de date d'expiration."
+
+#, fuzzy
+#~ msgid "Expiration date"
+#~ msgstr "Date d'expiration"
+
+#, fuzzy
+#~ msgid ""
+#~ "Enter the expiration date for this discount code in the format of mm/dd/"
+#~ "yyyy. For no expiration, leave blank."
+#~ msgstr ""
+#~ "Entrez la date d'expiration pour ce code de remise au format mm/jj/aaaa. "
+#~ "Laissez vide pour ne pas appliquer de date d'expiration."
+
+#~ msgid "Max Uses"
+#~ msgstr "Nombre maximum d'utilisations"
+
+#~ msgid ""
+#~ "The maximum number of times this discount can be used. Leave blank for "
+#~ "unlimited."
+#~ msgstr ""
+#~ "Nombre maximum d'utilisations autorisées pour ce code de remise. Laissez "
+#~ "vide pour un nombre illimité."
+
+#~ msgid "Update Discount Code"
+#~ msgstr "Mettre à jour Code de Remise"
+
+#~ msgid "Delete"
+#~ msgstr "Effacer"
+
+#~ msgid "Add Discount Code"
+#~ msgstr "Ajouter un code de remise"
+
+#~ msgid "Discount Code"
+#~ msgstr "Code de remise"
+
+#~ msgid "Discount Codes"
+#~ msgstr "Codes de remise "
+
+#~ msgid "Activate"
+#~ msgstr "Activée"
+
+#~ msgid "Title"
+#~ msgstr "Titre"
+
+#~ msgid "Coupon"
+#~ msgstr "Code Promo"
+
+#~ msgid "Uses"
+#~ msgstr "Utilisations"
+
+#~ msgid "Start Date"
+#~ msgstr "Date de début"
+
+#~ msgid "End Date"
+#~ msgstr "Date de fin"
+
+#~ msgid "Unlimited"
+#~ msgstr "Illimitée"
+
+#~ msgid "Active"
+#~ msgstr "Actif"
+
+#~ msgid "Inactive"
+#~ msgstr "Inactif"
+
+#~ msgctxt ""
+#~ msgid "Discount Codes"
+#~ msgstr "Codes de remise "
+
+#~ msgctxt ""
+#~ msgid "Discount Code"
+#~ msgstr "Code de remise"
+
+#~ msgctxt ""
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid "Add New Discount Code"
+#~ msgstr "Ajouter une nouvelle remise"
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid "Edit Discount Code"
+#~ msgstr "Modifier la remise"
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid "New Discount Code"
+#~ msgstr "Ajouter une Nouvelle Remise"
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid "View Discount Code"
+#~ msgstr "Code de remise"
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid "Search Discount Codes"
+#~ msgstr "Codes de remise "
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid "No discount found"
+#~ msgstr "Code de remise %s non trouvé !"
+
+#~ msgctxt ""
+#~ msgid "No discount codes found in Trash"
+#~ msgstr "Aucun code de réduction trouvé dans la Corbeille"
+
+#, fuzzy
+#~ msgctxt ""
+#~ msgid "Parent Discount Code:"
+#~ msgstr "Code de remise donné : %s : "
+
+#~ msgid "Apply"
+#~ msgstr "Appliquer"
+
+#, fuzzy
+#~ msgid "Verifying..."
+#~ msgstr "Vérification des fichiers décompressés&#8230;"
+
+#, fuzzy
+#~ msgid "Discount:"
+#~ msgstr "Remise :"
+
+#, fuzzy
+#~ msgid "Sorry, this discount code is invalid."
+#~ msgstr "Code de remise"
+
+#, fuzzy
+#~ msgid "Sorry, this discount code has expired."
+#~ msgstr "Désolé, ce téléchargement a expiré"
+
+#, fuzzy
+#~ msgid "Valid code"
+#~ msgstr "Valide"
+
+#, fuzzy
+#~ msgid "Discount Code updated successfully!"
+#~ msgstr "Code de remise mis à jour."
+
+#, fuzzy
+#~ msgid "Discount Code added successfully!"
+#~ msgstr "Le code de remise a été ajouté."
+
+#, fuzzy
+#~ msgid "Discount Code deleted successfully!"
+#~ msgstr "effacement réussi"
+
+#~ msgctxt "Active discount code status"
+#~ msgid "Active"
+#~ msgstr "Actif"
+
+#~ msgctxt "Inactive discount code status"
+#~ msgid "Inactive"
+#~ msgstr "Inactif"
+
+#~ msgid "Discount"
+#~ msgstr "Remise"
+
+#~ msgid "First Name:"
+#~ msgstr "Prénom :"
+
+#~ msgid "Last Name:"
+#~ msgstr "Nom :"
+
+#~ msgid "Email Address:"
+#~ msgstr "Adresse e-mail :"
+
+#~ msgid "Download Now"
+#~ msgstr "Télécharger maintenant"
+
+#, fuzzy
+#~ msgid "API Key"
+#~ msgstr "Clé API"
+
+#, fuzzy
+#~ msgid "Insert your MailChimp API Key."
+#~ msgstr "Clé API de MailChimp"
+
+#, fuzzy
+#~ msgid "Newsletter List"
+#~ msgstr "Newsletter"
+
+#, fuzzy
+#~ msgid "Choose the list to sign users up to."
+#~ msgstr "Autoriser les nouveaux utilisateurs à s&rsquo;inscrire"
+
+#, fuzzy
+#~ msgid "Free Downloads - Mailchimp Settings"
+#~ msgstr "Réglages de Free Downloads"
+
+#~ msgid "Free Download"
+#~ msgstr "Téléchargement gratuit"
+
+#~ msgid "MailChimp"
+#~ msgstr "MailChimp"
+
+#, fuzzy
+#~ msgid "Hi "
+#~ msgstr "Salut !"
+
+#~ msgid "Free Downloads"
+#~ msgstr "Téléchargements gratuits"
+
+#, fuzzy
+#~ msgid "Sign up for our newsletter"
+#~ msgstr "Inscrivez-vous à notre newsletter"
+
+#, fuzzy
+#~ msgid "MailChimp Settings"
+#~ msgstr "Réglages de MailPoet MailChimp Importer"
+
+#, fuzzy
+#~ msgid "Sell both"
+#~ msgstr "Ventes croisées & incitatives"
+
+#, fuzzy
+#~ msgid "Sell print"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "Sell download"
+#~ msgstr "Vente croisée %s"
+
+#, fuzzy
+#~ msgid "Download size"
+#~ msgstr "Téléchargement :"
+
+#, fuzzy
+#~ msgid "Download license"
+#~ msgstr "Licence…"
+
+#, fuzzy
+#~ msgid "Download or Print"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "Ship to:"
+#~ msgstr "Livrer uniquement à l'adresse de facturation"
+
+#, fuzzy
+#~ msgid "Only sell prints"
+#~ msgstr "Ventes croisées & incitatives"
+
+#, fuzzy
+#~ msgid "Shipping Rates"
+#~ msgstr "Livraison"
+
+#~ msgid "Flat Rate"
+#~ msgstr "Taux Fixe"
+
+#, fuzzy
+#~ msgid "Quantity Rate"
+#~ msgstr "Quantité :"
+
+#, fuzzy
+#~ msgid "Total Rate"
+#~ msgstr "Total du<br>Taux de conversion"
+
+#, fuzzy
+#~ msgid "Shipping - Flat Rate"
+#~ msgstr "Taux Fixe"
+
+#, fuzzy
+#~ msgid "Shipping - Quantity Rate"
+#~ msgstr "Quantité :"
+
+#, fuzzy
+#~ msgid "Shipping - Total Rate"
+#~ msgstr "Total du<br>Taux de conversion"
+
+#, fuzzy
+#~ msgid "Centimeters (cm)"
+#~ msgstr "cm"
+
+#, fuzzy
+#~ msgid "Inches (in)"
+#~ msgstr "inches"
+
+#, fuzzy
+#~ msgid "Select Default Price Group"
+#~ msgstr "Prix de groupe ?"
+
+#, fuzzy
+#~ msgid "Prints"
+#~ msgstr "affiche l'url de votre site web"
+
+#, fuzzy
+#~ msgid "Print Price Group"
+#~ msgstr "Prix de groupe ?"
+
+#, fuzzy
+#~ msgid "Print Group"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "Search Print Group"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "Popular Print Group"
+#~ msgstr "Nombre de produits populaires par groupe"
+
+#, fuzzy
+#~ msgid "All Print Group"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "Parent Print Group"
+#~ msgstr "Parent du groupe de diapos"
+
+#, fuzzy
+#~ msgid "Parent Print  Group:"
+#~ msgstr "Parent du groupe de diapos"
+
+#, fuzzy
+#~ msgid "Edit Print Group"
+#~ msgstr "Modifier"
+
+#, fuzzy
+#~ msgid "Update Print Group"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "Add New Print Group"
+#~ msgstr "Ajouter un nouveau groupe de diapos"
+
+#, fuzzy
+#~ msgid "New Print Group"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "Separate Print Group with commas"
+#~ msgstr "Séparez les mots-clefs de produit par des virgules"
+
+#, fuzzy
+#~ msgid "Add or remove Print Group"
+#~ msgstr "Ajouter un groupe"
+
+#, fuzzy
+#~ msgid "Choose from most used Print Group"
+#~ msgstr "Choisir parmi les mots-clés les plus utilisés"
+
+#~ msgid "Max Width"
+#~ msgstr "Largeur maximale"
+
+#~ msgid "Max Height"
+#~ msgstr "Hauteur maximale"
+
+#, fuzzy
+#~ msgid "Buy a print"
+#~ msgstr "Imprimer"
+
+#~ msgid "Buy a download"
+#~ msgstr "Acheter un téléchargement"
+
+#, fuzzy
+#~ msgid "Print size"
+#~ msgstr "Imprimer"
+
+#, fuzzy
+#~ msgid "All print sizes are listed in "
+#~ msgstr "Toutes les tailles"
+
+#~ msgid "items"
+#~ msgstr "éléments"
+
+#, fuzzy
+#~ msgid "Stripe Test Secret Key"
+#~ msgstr "Clé secrète de test"
+
+#, fuzzy
+#~ msgid "Stripe Test Publishable Key"
+#~ msgstr "Clé publiable de test"
+
+#, fuzzy
+#~ msgid "Stripe Live Secret Key"
+#~ msgstr "Clé secrète live"
+
+#, fuzzy
+#~ msgid "Stripe Live Publishable Key"
+#~ msgstr "Clé publiable live"
+
+#, fuzzy
+#~ msgid "Stripe Settings"
+#~ msgstr "Paramètres de Stripe"
+
+#~ msgid "Credit Card"
+#~ msgstr "Carte de crédit"
+
+#~ msgid "Watermark Image"
+#~ msgstr "Image du Watermark"
+
+#, fuzzy
+#~ msgid "Watermark Everything"
+#~ msgstr "Tout"
+
+#, fuzzy
+#~ msgid "Watermark Opacity"
+#~ msgstr "Filigrane"
+
+#, fuzzy
+#~ msgid "The opacity of your watermark."
+#~ msgstr "Filigrane"
+
+#, fuzzy
+#~ msgid "Watermark Scale"
+#~ msgstr "Redimensionner"
+
+#, fuzzy
+#~ msgid "Watermark Position"
+#~ msgstr "Position"
+
+#, fuzzy
+#~ msgid "The position of your watermak."
+#~ msgstr "position"
+
+#~ msgid "Watermark"
+#~ msgstr "Filigrane"
+
+#~ msgid "Archive"
+#~ msgstr "Archiver"
