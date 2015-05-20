@@ -1,0 +1,19 @@
+# Grunt aliases
+---
+# Checktextdomain and makepot task(s)
+'bumpit':
+- 'replace'
+- 'wp_readme_to_markdown'
+# Checktextdomain and makepot task(s)
+'build:i18n':
+- 'checktextdomain'
+- 'makepot'
+- 'newer:potomo'
+# Build everything
+build:
+- 'clean'
+- 'copy'
+- 'compress'
+# Default task
+default:
+- 'makepot'
