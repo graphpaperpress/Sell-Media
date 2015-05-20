@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Sell Media\n"
 "Report-Msgid-Bugs-To: https://graphpaperpress.com/\n"
 "POT-Creation-Date: 2015-05-20 10:49:00+00:00\n"
-"PO-Revision-Date: 2015-05-20 18:50+0100\n"
+"PO-Revision-Date: 2015-05-20 18:51+0100\n"
 "Last-Translator: fxbenard | FxB <fx@fxbenard.com>\n"
 "Language-Team: Thad Allender <support@graphpaperpress.com>\n"
 "Language: fr_FR\n"
@@ -735,7 +735,7 @@ msgstr "Choisir parmi les licences plus utilisées"
 #: inc/install.php:303 inc/install.php:317 inc/template-tags.php:585
 #: inc/widgets/sell-media-keywords.php:49
 msgid "Keywords"
-msgstr "Éi18n]tiquettes"
+msgstr "Étiquettes"
 
 #: inc/install.php:304 inc/install.php:373 inc/install.php:407
 msgid "Keyword"
