@@ -27,19 +27,12 @@ function sell_media_scripts( $hook ) {
     wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery', 'sell_media_jquery_cookie' ), SELL_MEDIA_VERSION );
     wp_enqueue_script( 'sellMediaCart', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
     wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
-    wp_enqueue_style( 'sell_media-widgets-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media_widgets.css', null, SELL_MEDIA_VERSION );
-
-    // register
-    wp_register_script( 'sell_media-chosen', SELL_MEDIA_PLUGIN_URL . 'js/chosen.jquery.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-    wp_register_style( 'sell_media-chosen', SELL_MEDIA_PLUGIN_URL . 'css/chosen.css', null, SELL_MEDIA_VERSION );
 
     if ( isset( $settings->style ) && '' != $settings->style ) {
         wp_enqueue_style( 'sell-media-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-' . $settings->style . '.css' );
     } else {
         wp_enqueue_style( 'sell-media-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-light.css' );
     }
-
-    $settings = sell_media_get_plugin_options();
 
     wp_localize_script( 'sell_media', 'sell_media', array(
         'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),

@@ -203,4 +203,13 @@ jQuery( document ).ready(function( $ ){
         file_frame.open();
     });
 
+    /**
+     * Remove thumbnail icon for collections
+     */
+    $(document).on('click', '.upload_image_remove', function(){
+        $('#collection_icon_input_field').val('');
+        $('#collection_icon_url').val('');
+        $('#collection_icon_target img').remove();
+    });
+
 });

@@ -28,7 +28,6 @@ function sell_media_admin_scripts( $hook ) {
         wp_enqueue_script( 'sell_media-admin-items', SELL_MEDIA_PLUGIN_URL . 'js/admin-items.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
         if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
-            wp_enqueue_script( 'sell_media-admin', SELL_MEDIA_PLUGIN_URL . 'js/sell_media-admin.js', array( 'jquery', 'jquery-ui-sortable' ), SELL_MEDIA_VERSION );
             wp_enqueue_script( 'jquery-ui-slider' );
         }
     }
