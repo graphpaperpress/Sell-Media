@@ -146,10 +146,11 @@ function sell_media_gallery( $post_id ) {
          */
         $attachment_id = get_query_var( 'id' );
         if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
-            $attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
-
             $html .= sell_media_item_icon( $attachment_id, 'large', false );
-            $html .= $attachment_meta['caption'];
+            $html .= '<p class="sell-media-caption">';
+            $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span> &mdash; ';
+            $html .= sell_media_get_attachment_meta( $post_id, 'caption' );
+            $html .= '</p>';
         }
         /**
          * If the query var doesn't exist,
@@ -502,17 +503,23 @@ add_filter( 'the_content', 'sell_media_after_content' );
  * @return string the content with any additional data attached
  */
 function sell_media_append_media( $post_id ) {
+    $html = '';
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
-        echo '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
+        $html .= '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         sell_media_set_post_views( $post_id );
         if ( sell_media_has_multiple_attachments( $post_id ) ) {
-            echo sell_media_gallery( $post_id );
+            $html .= sell_media_gallery( $post_id );
         } else {
             sell_media_item_icon( $post_id, 'large' );
+            $html .= '<p class="sell-media-caption">';
+            $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span> &mdash; ';
+            $html .= sell_media_get_attachment_meta( $post_id, 'caption' );
+            $html .= '</p>';
         }
     }
+    echo apply_filters( 'sell_media_append_media_filter', $html, $post_id );
 }
 add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
 

@@ -242,6 +242,13 @@ table.sell-media-products {
 #sell-media-single .gallery .gallery-item a img {
   max-width: 95%;
 }
+.sell-media-caption {
+  font-style: italic;
+  text-align: center;
+}
+.sell-media-title {
+  font-weight: 700;
+}
 
 /*= Gallery
 -------------------------------------------------------------- */

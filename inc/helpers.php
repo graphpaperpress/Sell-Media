@@ -444,6 +444,34 @@ function sell_media_has_multiple_attachments( $post_id ) {
     }
 }
 
+/**
+ * Get Attachment Meta
+ *
+ * Returns the attachment meta field.
+ * Use to get title, caption, description
+ * Or anything else listed here:
+ * https://codex.wordpress.org/Function_Reference/wp_prepare_attachment_for_js
+ *
+ * @param int $post_id
+ * @param int $field
+ * @uses wp_prepare_attachment_for_js();
+ * @return string field (id, caption, title, description, etc)
+ * @since 2.0.4
+ */
+function sell_media_get_attachment_meta( $post_id=null, $field='id' ) {
+
+    if ( sell_media_has_multiple_attachments( $post_id ) ) {
+        $attachment_id = get_query_var( 'id' );
+    } else {
+        $attachments = sell_media_get_attachments( $post_id );
+        $attachment_id = $attachments[0];
+    }
+
+    $attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
+
+    return $attachment_meta[$field];
+}
+
 
 /**
  * Determines if a post, identified by the specified ID, exist
