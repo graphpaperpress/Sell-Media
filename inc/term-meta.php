@@ -458,22 +458,6 @@ function sell_media_edit_collection_password( $tag ){
 <?php }
 add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_password' );
 
-
-/**
- * Add proofing field to collections
- *
- * @since 1.9.4
- */
-function sell_media_add_collection_proofing(){ ?>
-    <div class="form-field collection-proofing">
-        <label for="collection_proofing"><?php _e( 'Enable Client Proofing', 'sell_media' ); ?></label>
-        <input name="meta_value[collection_proofing]" type="checkbox" id="meta_value[]" style="width:17px"/>
-        <p class="description"><?php _e( 'Check this to allow clients with password access to download items in this collecton as proofs. Clients must add an item to their Lightbox in order to download proofs. A record of which images were downloaded will be sent to both the site admin and the client via email.', 'sell_media' ); ?></p>
-    </div>
-    <?php }
-add_action( 'collection_add_form_fields', 'sell_media_add_collection_proofing' );
-
-
 /**
  * Custom collection column headers
  *
@@ -500,9 +484,6 @@ function sell_media_custom_collection_columns_headers( $columns ){
     if (!isset($columns_local['collection_protected']))
         $columns_local['collection_protected'] = __("Protected", 'sell_media');
 
-    if (!isset($columns_local['collection_proofing']))
-        $columns_local['collection_proofing'] = __("Proofing", 'sell_media');
-
     return array_merge($columns_local, $columns);
 }
 add_filter( 'manage_edit-collection_columns', 'sell_media_custom_collection_columns_headers' );
@@ -523,14 +504,6 @@ function sell_media_custom_collection_columns_content( $row_content, $column_nam
                     $colstatus = "Private";
                 } else {
                     $colstatus = "Public";
-                }
-                return $colstatus;
-            break;
-        case 'collection_proofing':
-                if( sell_media_get_term_meta( $term_id, 'collection_proofing', true ) ) {
-                    $colstatus = "Enabled";
-                } else {
-                    $colstatus = "Disabled";
                 }
                 return $colstatus;
             break;

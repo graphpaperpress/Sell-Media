@@ -222,7 +222,7 @@ function sell_media_content_loop( $post_id, $i ){
 
     return $html;
 }
-add_filter('sell_media_content_loop', 'sell_media_content_loop', 10, 2);
+add_filter( 'sell_media_content_loop', 'sell_media_content_loop', 10, 2 );
 
 
 /**
@@ -449,7 +449,7 @@ function sell_media_before_content( $content ) {
 
     if ( $post && $post->post_type == 'sell_media_item' && is_main_query() && ! post_password_required() ) {
         ob_start();
-        do_action( 'sell_media_before_content', $post->ID );
+        $new_content .= do_action( 'sell_media_before_content', $post->ID );
         if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
             $new_content .= '<div class="sell-media-content">';
             $new_content .= ob_get_clean() . $content;
