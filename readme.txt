@@ -33,11 +33,12 @@ These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/
 
 Take Sell Media to the next level with these powerful extensions:
 
-* [Sell photo prints](http://graphpaperpress.com/?download=reprints-self-fulfillment)
-* [Watermark your images](http://graphpaperpress.com/?download=watermark)
-* [Newsletter integration with Mailchimp](http://graphpaperpress.com/?download=mailchimp)
-* [Sales Commissions](http://graphpaperpress.com/?download=commissions)
-* [And many more](http://graphpaperpress.com/downloads/category/extensions/)
+* [Sell photo prints](http://graphpaperpress.com/plugins/sell-media-reprints)
+* [Cloud Backups](http://graphpaperpress.com/plugins/sell-media-s3)
+* [Watermark your images](http://graphpaperpress.com/plugins/sell-media-watermark)
+* [Newsletter integration with Mailchimp](http://graphpaperpress.com/plugins/sell-media-mailchimp)
+* [Sales Commissions](http://graphpaperpress.com/plugins/sell-media-commissions)
+* [And many more](https://graphpaperpress.com/extensions/sell-media/)
 
 == Installation ==
 

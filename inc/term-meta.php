@@ -213,7 +213,7 @@ function sell_media_the_markup_slider( $tag ){
             }
 
             printf(
-                __( ' The %1$s of %2$s with %3$s markup is %4$s' ),
+                __( ' The %1$s of %2$s with %3$s markup is %4$s', 'sell_media' ),
                 '<a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_general_settings
                 ">default item price</a>',
                 '<strong>' . $price . '</strong>',
@@ -442,7 +442,7 @@ function sell_media_edit_collection_password( $tag ){
         <?php if ( ! empty( $parent ) && ! empty( $password ) ) : ?>
         <div class="updated">
             <p>
-                <?php _e( 'This collection will inherit the password of the parent collection:', 'my-text-domain' ); ?>
+                <?php _e( 'This collection will inherit the password of the parent collection:', 'sell_media' ); ?>
                 <a href="<?php echo admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item'); ?>"><?php echo $parent->name; ?></a>
             </p>
         </div>

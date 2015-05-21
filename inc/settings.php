@@ -103,8 +103,8 @@ function sell_media_init_settings(){
         "test_mode" => array(
             "tab" => "sell_media_general_settings",
             "name" => "test_mode",
-            "title" => __("Mode","sell_media"),
-            "description" => sprintf( __("Select Live Mode to accept real transactions. Select Test Mode to accept test transactions (%s)."), "<a href='https://developer.paypal.com/' target='_blank'>PayPal sandbox account required</a>" ),
+            "title" => __( "Mode","sell_media" ),
+            "description" => sprintf( __( "Select Live Mode to accept real transactions. Select Test Mode to accept test transactions (%s).", "sell_media" ), "<a href='https://developer.paypal.com/' target='_blank'>PayPal sandbox account required</a>" ),
             "section" => "general_plugin_section_1",
             "since" => "1.0",
             "id" => "general_plugin_section_1",

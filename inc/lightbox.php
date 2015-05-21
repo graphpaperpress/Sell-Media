@@ -124,7 +124,7 @@ function sell_media_lightbox_query() {
             $html .= '<a href="' . esc_url( $permalink ) . '">' . sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
             $html .= '<span class="item-overlay">';
             $html .= '<h3><a href="' . esc_url( $permalink ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-            $html .= sell_media_item_buy_button( $post_id, $attachment_id, 'text', __( 'Buy' ), false );
+            $html .= sell_media_item_buy_button( $post_id, $attachment_id, 'text', __( 'Buy', 'sell_media' ), false );
             $html .= sell_media_lightbox_link( $post_id, $attachment_id );
             $html .= '</span>';
             $html .= '</div>';

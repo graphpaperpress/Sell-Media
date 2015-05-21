@@ -211,13 +211,13 @@ Class SellMediaNavStyleUI {
             $value = null;
             $data_term_id = null;
             $class = "button-primary sell-media-add-term";
-            $link_text = __('Create Price Group','sell_media');
+            $link_text = __( 'Create Price Group', 'sell_media' );
             $message = null;
         } else {
             $data_term_id = $current_term_id;
             $class = "submitdelete sell-media-delete-term-group";
             $message = sprintf( "%s %s?\n\n%s", __("Are you sure you want to delete the price group:", "sell_media" ), $current_term, __("This will delete the price group and ALL its prices associated with it.","sell_media") );
-            $link_text = __('Delete Group','sell_menu');
+            $link_text = __( 'Delete Group', 'sell_media' );
         }
 
         $final['header'] = array(

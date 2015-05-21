@@ -209,7 +209,7 @@ function sell_media_content_loop( $post_id, $i ){
     $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
     // Don't show buy button, lightbox, etc, if post has multiple attachments
     if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
-        $html .= sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy' ), false );
+        $html .= sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy', 'sell_media' ), false );
         $html .= apply_filters( 'sell_media_item_overlay', $output = '', $post_id );
     }
     $html .= '</span>';
