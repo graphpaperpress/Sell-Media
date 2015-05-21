@@ -146,7 +146,10 @@ function sell_media_gallery( $post_id ) {
          */
         $attachment_id = get_query_var( 'id' );
         if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
+            $attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
+
             $html .= sell_media_item_icon( $attachment_id, 'large', false );
+            $html .= $attachment_meta['caption'];
         }
         /**
          * If the query var doesn't exist,
@@ -186,10 +189,10 @@ function sell_media_gallery_navigation( $attachment_id ) {
 
     $html = '<span class="sell-media-gallery-navigation">';
     if ( array_key_exists( $current_image - 1, $attachment_ids ) )
-        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span> ' . __( 'Previous Image', 'sell_media' ) . '</a>';
+        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span> ' . __( 'Previous', 'sell_media' ) . '</a>';
     $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Gallery', 'sell_media' ) . '"><span class="dashicons dashicons-screenoptions"></span> ' . __( 'Gallery', 'sell_media' ) . '</a>';
     if ( array_key_exists( $current_image + 1, $attachment_ids ) )
-        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '">' . __( 'Next Image', 'sell_media' ) . ' <span class="dashicons dashicons-arrow-right-alt"></span></a>';
+        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '">' . __( 'Next', 'sell_media' ) . ' <span class="dashicons dashicons-arrow-right-alt"></span></a>';
     $html .= '</span>';
 
     return apply_filters( 'sell_media_gallery_navigation', $html, $attachment_id );
@@ -393,16 +396,20 @@ function sell_media_breadcrumbs( $post_id ){
             $html .= sell_media_get_taxonomy_terms( 'collection' );
             $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
         }
-        $html .= get_the_title( '', false );
         if ( sell_media_has_multiple_attachments( $post_id ) && get_query_var( 'id' ) == true ) {
+            $attachment_meta = wp_prepare_attachment_for_js( get_query_var( 'id' ) );
+            $html .= '<a href="' . get_permalink() . '">' . get_the_title( '', false ) . '</a>';
+            $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
+            $html .= $attachment_meta['title'];
             $html .= sell_media_gallery_navigation( get_query_var( 'id' ) );
+        } else {
+            $html .= get_the_title( '', false );
         }
         $html .= '</div>';
 
         return apply_filters( 'sell_media_breadcrumbs', $html );
     }
 }
-
 
 /**
  * Count posts in a category, including subcategories
