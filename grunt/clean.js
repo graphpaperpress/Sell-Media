@@ -1,3 +1,3 @@
 module.exports = {
-	main: ['build/<%= pkg.name %>']
+    main: ['build/<%= pkg.name %>']
 };

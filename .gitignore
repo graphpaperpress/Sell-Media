@@ -37,4 +37,8 @@ Icon?
 ehthumbs.db
 Thumbs.db
 .htaccess
+
+# Node and Grunt #
+##################
 /node_modules/
+/build/

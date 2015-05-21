@@ -290,7 +290,7 @@ Class SellMediaSearch {
             $html .= '<div id="sell-media-search-collection" class="sell-media-search-field sell-media-search-collection">';
             $html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . '</label>';
             $html .= '<select name="collection">';
-            $html .= '<option value="">' . esc_attr( __( 'All' ) ) . '</option>';
+            $html .= '<option value="">' . esc_attr( __( 'All', 'sell_media' ) ) . '</option>';
 
             $categories = get_categories( 'taxonomy=collection' );
             foreach ( $categories as $category ) {

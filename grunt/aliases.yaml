@@ -8,6 +8,12 @@
 - 'checktextdomain'
 - 'makepot'
 - 'newer:potomo'
+# Coding standards
+'check':
+- 'phpcs'
+# Coding standards
+'readme':
+- 'wp_readme_to_markdown'
 # Build everything
 build:
 - 'clean'
