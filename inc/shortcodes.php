@@ -455,7 +455,7 @@ function sell_media_login_form_shortcode(){
 
     if ( is_user_logged_in() ) {
 
-        return '<p class="sell-media-login-out">' . sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . wp_logout_url() . '">' . __( 'Logout', 'sell_media' ) . '</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . __( 'continue shopping', 'sell_media' ) . '</a>' ) . '</p>';
+        return '<p class="sell-media-login-out">' . sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . apply_filters( 'sell_media_logout_redirect_url', wp_logout_url( site_url() ) ) . '">' . __( 'Logout', 'sell_media' ) . '</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . __( 'continue shopping', 'sell_media' ) . '</a>' ) . '</p>';
 
     } else {
         if ( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
