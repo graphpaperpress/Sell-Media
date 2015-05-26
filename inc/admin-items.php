@@ -237,7 +237,13 @@ function sell_media_save_custom_meta( $post_id ) {
                     delete_post_meta( $post_id, $field, $old );
 
                 }
+
             }
+        // Checkbox field isn't set, so delete the meta
+        } else {
+
+            delete_post_meta( $post_id, $field );
+
         }
     } // end foreach
 
