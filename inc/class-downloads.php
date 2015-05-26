@@ -29,6 +29,7 @@ Class SellMediaDownload {
             $transaction_id = urldecode( $_GET['download'] );
             $payment_id     = urldecode( $_GET['payment_id'] );
             $product_id     = urldecode( $_GET['product_id'] );
+
             // Old download links might not have attachment_id set.
             // This means they were purchased before we added support
             // for multiple attachments. So, we just grab the first
@@ -36,7 +37,7 @@ Class SellMediaDownload {
             $attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) : sell_media_get_attachment_id( $product_id );
             $size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : null;
 
-            $verified = $this->verify( $transaction_id, $payment_id );
+            $verified = apply_filters( 'sell_media_verify_download', $this->verify( $transaction_id, $payment_id ), $product_id );
 
             if ( $verified ) {
 
@@ -104,6 +105,8 @@ Class SellMediaDownload {
     public function verify( $transaction_id=null, $payment_id=null ) {
         if ( $transaction_id == Sell_Media()->payments->get_meta_key( $payment_id, 'transaction_id' ) ){
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -180,6 +183,7 @@ Class SellMediaDownload {
         }
 
         return $status;
+
     }
 
 }

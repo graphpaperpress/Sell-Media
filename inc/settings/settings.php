@@ -49,7 +49,6 @@ function sell_media_get_current_plugin_id() {
 function sell_media_enqueue_plugin_scripts_styles() {
 
     wp_enqueue_style( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/inc/settings/css/sell-media-framework.css' );
-    wp_enqueue_script( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/inc/settings/js/sell-media-framework.js', array( 'jquery' ) );
 
 }
 add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles', 40 );
