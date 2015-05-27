@@ -156,6 +156,9 @@
 .sell-media-field textarea {
     display: inline-block;
 }
+.sell-media-field select {
+   width: 100px;
+}
 .sell-media-field .desc {
     color: #666;
     font-style: italic;
