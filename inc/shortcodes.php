@@ -90,7 +90,11 @@ function sell_media_item_shortcode( $atts ) {
     $image = sell_media_item_icon( $id, $size, false );
     $text = apply_filters('sell_media_purchase_text', $text, $id );
 
-    $button = sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
+    if ( sell_media_has_multiple_attachments( $id ) ) {
+        $button = sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
+    } else {
+        $button = '';
+    }
 
     return '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a>' . $button . '</div>';
 }
