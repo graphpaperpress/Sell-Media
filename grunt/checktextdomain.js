@@ -26,7 +26,7 @@ module.exports = {
     files: {
         expand: true,
         src: [
-            '**/*.php', // Include all files
+            '../sell-media*/*.php', // Include all php files in plugins dir
             '!node_modules/**', // Exclude node_modules/
             '!grunt/**', // Exclude grunt files/
             '!build/**', // Exclude build folder/
