@@ -187,7 +187,6 @@ Class SellMediaProducts {
      * Checks if the post has image attachments
      *
      * @param $attachment_id ID of the attachment
-     * @param $mimetype an array of mimetypes
      * @return boolean true/false
      * @since 1.6.9
      */
