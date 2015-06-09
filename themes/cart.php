@@ -71,7 +71,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
             <div id="sell_media_download_wrapper">
                 <?php if ( ! $is_package && $has_price_group ) : ?>
                     <fieldset id="sell_media_download_size_fieldset">
-                        <legend><?php echo apply_filters( 'sell_media_download_size_text', 'Size' ); ?></legend>
+                        <legend><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></legend>
                         <select id="sell_media_item_size" class="sum" required>
                             <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
                             <?php
@@ -101,7 +101,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
 
                 <?php if ( count( $licenses ) > 0 ) : ?>
                     <fieldset id="sell_media_download_license_fieldset">
-                        <legend><?php echo apply_filters( 'sell_media_download_license_text', 'License' ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
+                        <legend><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
                         <select id="sell_media_item_license" class="sum" required>
                             <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
                             <?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>

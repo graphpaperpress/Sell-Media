@@ -63,6 +63,7 @@ Class SellMediaProducts {
         }
 
         if ( $this->has_image_attachments( $post_id ) ) {
+
             // check assigned price group. We're assuming there is just one.
             $term_parent = wp_get_post_terms( $post_id, $taxonomy );
 
@@ -157,6 +158,7 @@ Class SellMediaProducts {
         if ( $prices ) foreach ( $prices as $price ){
             $lowest_price[] = $price['price'];
         }
+
         if ( is_array( $lowest_price ) ) {
             return min( $lowest_price );
         } else {

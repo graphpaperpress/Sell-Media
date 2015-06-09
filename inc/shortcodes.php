@@ -206,12 +206,18 @@ function sell_media_checkout_shortcode(){
                 <?php do_action( 'sell_media_above_checkout_button' ); ?>
                 <p><a href="javascript:void(0)" class="sellMediaCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
                 <p id="sell-media-continue-shopping" class="text-center">
-                    <?php echo apply_filters( 'sell_media_or_continue_shopping', sprintf( __( 'or %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">continue shopping &raquo;</a>' ) ); ?>
+                    <?php
+                    $html  = __( 'or', 'sell_media' );
+                    $html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">';
+                    $html .= __( 'continue shopping &raquo;', 'sell_media' );
+                    $html .= '</a>';
+                    echo apply_filters( 'sell_media_or_continue_shopping', $html );
+                    ?>
                 </p>
                 <?php
                 $settings = sell_media_get_plugin_options();
                 if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
-                    <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.' ); ?></p>
+                    <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
                 <?php endif; ?>
             </div>
         </div><!-- .sell-media-totals -->
