@@ -642,13 +642,15 @@ add_action( 'wp_head', 'sell_media_version_in_header' );
  * @return title
  */
 function sell_media_wp_title( $title, $sep ) {
+
     global $paged, $page;
     $settings = sell_media_get_plugin_options();
 
     if ( is_post_type_archive( 'sell_media_item' ) ) {
-        $obj = get_post_type_object( 'sell_media_item' );
-        $slug = ( $settings->post_type_slug ) ? ucfirst( preg_replace( '/[^a-zA-Z0-9]+/', ' ', $settings->post_type_slug ) ) : $obj->labels->name;
-        $title = "$slug $sep ";
+        $name   = get_bloginfo( 'name' );
+        $obj    = get_post_type_object( 'sell_media_item' );
+        $slug   = ( $settings->post_type_slug ) ? ucfirst( preg_replace( '/[^a-zA-Z0-9]+/', ' ', $settings->post_type_slug ) ) : $obj->labels->name;
+        $title  = "$slug $sep $name";
     }
 
     return $title;
