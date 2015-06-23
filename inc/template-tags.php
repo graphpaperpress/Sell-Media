@@ -149,8 +149,11 @@ function sell_media_gallery( $post_id ) {
         if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
             $html .= sell_media_item_icon( $attachment_id, 'large', false );
             $html .= '<p class="sell-media-caption">';
-            $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span> &mdash; ';
-            $html .= sell_media_get_attachment_meta( $post_id, 'caption' );
+            $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span>';
+            if ( sell_media_get_attachment_meta( $post_id, 'caption' ) ) {
+                $html .= ' &mdash; ';
+                $html .= sell_media_get_attachment_meta( $post_id, 'caption' );
+            }
             $html .= '</p>';
         }
         /**
