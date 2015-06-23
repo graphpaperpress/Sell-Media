@@ -35,8 +35,7 @@ Class SellMediaSearch {
         if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
 
             // searching custom taxonomies
-            $taxonomies = get_object_taxonomies( 'sell_media_item' );
-
+            $taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
             foreach ( $taxonomies as $taxonomy ) {
                 $on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
             }
