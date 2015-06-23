@@ -112,6 +112,9 @@ input[type="submit"].sell-media-button:hover,
 .sell-media-button:disabled {
   background: #ccc;
 }
+.sell-media-item-links {
+  font-size: 11px;
+}
 
 /* Product Purchases */
 table.sell-media-products {

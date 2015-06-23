@@ -215,14 +215,6 @@ function sell_media_save_custom_meta( $post_id ) {
 
                 if ( $new && $new != $old ) {
 
-                    // Loop over attachment ids and move files into protected directory
-                    if ( $field == '_sell_media_attachment_id' ) {
-                        $attachment_ids = explode( ',', $_POST[ $field ] );
-                        if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-                            sell_media_move_file( $attachment_id );
-                        }
-                    }
-
                     // Sanitize price
                     if ( $field == 'sell_media_price' ) {
                         $new = sprintf( '%0.2f', ( float ) $new );
@@ -230,6 +222,14 @@ function sell_media_save_custom_meta( $post_id ) {
 
                     // new meta and it's different than old saved value, so update it
                     update_post_meta( $post_id, $field, $new );
+
+                    // Loop over attachment ids and move files into protected directory
+                    if ( $field == '_sell_media_attachment_id' ) {
+                        $attachment_ids = explode( ',', $_POST[ $field ] );
+                        if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+                            sell_media_move_file( $attachment_id );
+                        }
+                    }
 
                 // new meta is empty, so delete it
                 } elseif ( '' == $new && $old ) {

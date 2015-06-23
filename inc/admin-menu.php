@@ -28,6 +28,8 @@ function sell_media_admin_menu() {
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit.php?post_type=sell_media_item&amp;page=sell_media_system_info' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=keywords&amp;post_type=sell_media_item' );
     remove_submenu_page( 'edit.php?post_type=sell_media_item', 'edit-tags.php?taxonomy=creator&amp;post_type=sell_media_item' );
+    remove_submenu_page( 'upload.php', 'edit-tags.php?taxonomy=keywords&amp;post_type=attachment' );
+    remove_submenu_page( 'upload.php', 'edit-tags.php?taxonomy=creator&amp;post_type=attachment' );
 
     do_action( 'sell_media_menu_hook' );
 }

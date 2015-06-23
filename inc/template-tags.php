@@ -168,6 +168,7 @@ function sell_media_gallery( $post_id ) {
                 $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '">';
                 $html .= wp_get_attachment_image( $attachment_id, 'medium', '', $attr );
                 $html .= '</a>';
+                $html .= sell_media_item_links( $attachment_id );
                 $html .= '</div>';
             }
             $html .= '</div>';
@@ -209,7 +210,7 @@ function sell_media_content_loop( $post_id, $i ){
 
     $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid' . $class . '">';
     $html .= '<div class="item-inner">';
-    $html .= '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
+    $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . '>' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
     $html .= '<span class="item-overlay">';
     $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
     // Don't show buy button, lightbox, etc, if post has multiple attachments
@@ -507,7 +508,7 @@ function sell_media_append_media( $post_id ) {
     $html = '';
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
-        $html .= '<a href="' . get_permalink( $post_id ) . '">' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
+        $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . '>' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
         sell_media_set_post_views( $post_id );
         if ( sell_media_has_multiple_attachments( $post_id ) ) {
@@ -561,8 +562,26 @@ add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
  * @return $html
  * @since 2.0.1
  */
-function sell_media_item_links( $post_id ){
-    return '<p id="sell-media-item-links-' . $post_id . '" class="sell-media-item-links">' . sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy', 'sell_media' ), false ) . ' | ' . sell_media_lightbox_link( $post_id ) . ' | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a></p>';
+function sell_media_item_links( $post_id ) {
+
+    $links = sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy', 'sell_media' ), false ) . ' | ' . sell_media_lightbox_link( $post_id ) . ' | <a href="' . get_permalink( $post_id ) . '" class="sell-media-permalink">' . __( 'More', 'sell_media' ) . ' &raquo;</a>';
+
+    $html  = '<p id="sell-media-item-links-' . $post_id . '" class="sell-media-item-links">';
+    $html .= apply_filters( 'sell_media_item_links_filter', $links, $post_id );
+    $html .= '</p>';
+
+    return $html;
+}
+
+/**
+ * Link attributes
+ * Use for adding data-attributes for lightboxes, etc.
+ *
+ * @param $post_id
+ * @return $html
+ */
+function sell_media_link_attributes( $post_id ) {
+    return apply_filters( 'sell_media_link_attribute', $attributes='', $post_id );
 }
 
 /**

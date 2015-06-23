@@ -329,7 +329,7 @@ function sell_media_register_taxonomies(){
         'query_var' => true
     );
 
-    register_taxonomy( 'keywords', array( 'sell_media_item' ), $keywords_args );
+    register_taxonomy( 'keywords', array( 'sell_media_item', 'attachment' ), $keywords_args );
 
     /**
      * Register Creator
@@ -363,7 +363,7 @@ function sell_media_register_taxonomies(){
         'query_var' => true
     );
 
-    register_taxonomy( 'creator', array('sell_media_item'), $creator_args );
+    register_taxonomy( 'creator', array( 'sell_media_item', 'attachment' ), $creator_args );
 
     /**
      * Register City
@@ -397,7 +397,7 @@ function sell_media_register_taxonomies(){
         'query_var' => true
     );
 
-    register_taxonomy( 'city', array( 'sell_media_item' ), $city_args );
+    register_taxonomy( 'city', array( 'sell_media_item', 'attachment' ), $city_args );
 
     /**
      * Register State
@@ -431,7 +431,7 @@ function sell_media_register_taxonomies(){
         'query_var' => true
     );
 
-    register_taxonomy( 'state', array( 'sell_media_item' ), $state_args );
+    register_taxonomy( 'state', array( 'sell_media_item', 'attachment' ), $state_args );
 
 }
 add_action( 'init', 'sell_media_register_taxonomies', 1 );

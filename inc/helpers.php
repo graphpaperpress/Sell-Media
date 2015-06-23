@@ -95,6 +95,14 @@ add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 function sell_media_body_class( $classes ) {
     global $post;
     $settings = sell_media_get_plugin_options();
+    $pages = array( 'checkout', 'thanks', 'dashboard', 'login', 'search', 'lightbox' );
+
+    // Pages assigned with shortcode
+    foreach ( $pages as $page ) {
+        $setting = $page . '_page';
+        if ( isset( $settings->$setting ) && $post->ID == $settings->$setting )
+            $classes[] = 'sell-media-' . str_replace( '_', '-', $setting );
+    }
 
     // Layout is set
     if ( isset( $settings->layout ) )

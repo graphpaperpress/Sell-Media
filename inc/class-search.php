@@ -210,7 +210,7 @@ Class SellMediaSearch {
         if ( ! $query->is_search )
             return $query;
 
-        if ( $query->get( 'post_type' ) && 'sell_media_item' == $query->get( 'post_type' ) ) {
+        if ( $query->get( 'post_type' ) && 'sell_media_item' == $query->get( 'post_type' ) || 'attachment' == $query->get( 'post_type' ) ) {
 
             /**
              * Exclude password protected collections from search query
@@ -271,7 +271,8 @@ Class SellMediaSearch {
 
             // Submit button
             $html .= '<div id="sell-media-search-submit" class="sell-media-search-field sell-media-search-submit">';
-            $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
+            $html .= '<input type="hidden" name="post_type[]" value="sell_media_item" />';
+            $html .= '<input type="hidden" name="post_type[]" value="attachment" />';
             $html .= '<input type="submit" id="sell-media-search-submit-button" class="sell-media-search-submit-button" value="' . apply_filters( 'sell_media_search_button', __( 'Search', 'sell_media' ) ) . '" />';
             $html .= '</div>';
 
