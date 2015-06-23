@@ -168,7 +168,6 @@ function sell_media_gallery( $post_id ) {
                 $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '">';
                 $html .= wp_get_attachment_image( $attachment_id, 'medium', '', $attr );
                 $html .= '</a>';
-                $html .= sell_media_item_links( $attachment_id );
                 $html .= '</div>';
             }
             $html .= '</div>';
@@ -516,8 +515,11 @@ function sell_media_append_media( $post_id ) {
         } else {
             sell_media_item_icon( $post_id, 'large' );
             $html .= '<p class="sell-media-caption">';
-            $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span> &mdash; ';
-            $html .= sell_media_get_attachment_meta( $post_id, 'caption' );
+            $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span>';
+            if ( sell_media_get_attachment_meta( $post_id, 'caption' ) ) {
+                $html .= ' &mdash; ';
+                $html .= sell_media_get_attachment_meta( $post_id, 'caption' );
+            }
             $html .= '</p>';
         }
     }
