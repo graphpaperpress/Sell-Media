@@ -43,7 +43,7 @@ function sell_media_widgets_init() {
     ) );
 
 }
-add_action( 'widgets_init', 'sell_media_widgets_init' );
+add_action( 'widgets_init', 'sell_media_widgets_init', 20 );
 
 /**
  * Display Widget Below Single Content
