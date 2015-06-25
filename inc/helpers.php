@@ -95,14 +95,22 @@ add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 function sell_media_body_class( $classes ) {
     global $post;
     $settings = sell_media_get_plugin_options();
-    $pages = array( 'checkout', 'thanks', 'dashboard', 'login', 'search', 'lightbox' );
 
     // Pages assigned with shortcode
+    $pages = array( 'checkout', 'thanks', 'dashboard', 'login', 'search', 'lightbox' );
     foreach ( $pages as $page ) {
         $setting = $page . '_page';
         if ( isset( $settings->$setting ) && $post->ID == $settings->$setting ) {
             $classes[] = 'sell-media-page';
             $classes[] = 'sell-media-' . str_replace( '_', '-', $setting );
+        }
+    }
+
+    // Shortcodes
+    $shortcodes = array( 'sell_media_thanks', 'sell_media_searchform', 'sell_media_item', 'sell_media_all_items', 'sell_media_checkout', 'sell_media_download_list', 'sell_media_price_group', 'sell_media_list_all_collections', 'sell_media_login_form' );
+    foreach ( $shortcodes as $shortcode ) {
+        if ( isset( $post->post_content ) && has_shortcode( $post->post_content, $shortcode ) ) {
+            $classes[] = 'sell-media-page';
         }
     }
 
@@ -119,6 +127,11 @@ function sell_media_body_class( $classes ) {
     // Gallery
     if ( sell_media_is_gallery_page() ) {
         $classes[] = 'sell-media-gallery-page';
+    }
+
+    // Sell Media shortcodes
+    if ( isset( $post->post_content ) && has_shortcode( $post->post_content, 'sell_media_all_items' ) ) {
+        $c[] = 'your-class';
     }
 
     return $classes;
