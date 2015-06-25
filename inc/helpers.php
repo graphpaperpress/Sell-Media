@@ -100,8 +100,10 @@ function sell_media_body_class( $classes ) {
     // Pages assigned with shortcode
     foreach ( $pages as $page ) {
         $setting = $page . '_page';
-        if ( isset( $settings->$setting ) && $post->ID == $settings->$setting )
-            $classes[] = 'sell-media-page sell-media-' . str_replace( '_', '-', $setting );
+        if ( isset( $settings->$setting ) && $post->ID == $settings->$setting ) {
+            $classes[] = 'sell-media-page';
+            $classes[] = 'sell-media-' . str_replace( '_', '-', $setting );
+        }
     }
 
     // All Sell Media pages
