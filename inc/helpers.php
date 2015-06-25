@@ -101,16 +101,23 @@ function sell_media_body_class( $classes ) {
     foreach ( $pages as $page ) {
         $setting = $page . '_page';
         if ( isset( $settings->$setting ) && $post->ID == $settings->$setting )
-            $classes[] = 'sell-media-' . str_replace( '_', '-', $setting );
+            $classes[] = 'sell-media-page sell-media-' . str_replace( '_', '-', $setting );
+    }
+
+    // All Sell Media pages
+    if ( 'sell_media_item' == get_post_type( $post->ID ) ) {
+        $classes[] = 'sell-media-page';
     }
 
     // Layout is set
-    if ( isset( $settings->layout ) )
+    if ( isset( $settings->layout ) ) {
         $classes[] = $settings->layout;
+    }
 
     // Gallery
-    if ( sell_media_is_gallery_page() )
+    if ( sell_media_is_gallery_page() ) {
         $classes[] = 'sell-media-gallery-page';
+    }
 
     return $classes;
 }
