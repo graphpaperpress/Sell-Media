@@ -129,11 +129,6 @@ function sell_media_body_class( $classes ) {
         $classes[] = 'sell-media-gallery-page';
     }
 
-    // Sell Media shortcodes
-    if ( isset( $post->post_content ) && has_shortcode( $post->post_content, 'sell_media_all_items' ) ) {
-        $c[] = 'your-class';
-    }
-
     return $classes;
 }
 add_filter( 'body_class', 'sell_media_body_class' );
