@@ -253,7 +253,6 @@ function sell_media_download_shortcode( $atts ) {
             $html .= '</p>';
             $html .= Sell_Media()->payments->get_payment_products_formatted( $purchase );
             $html .= '</div>';
-            $html .= '<div id="purchase-history">' . $html . '</div>';
         }
     }
     return $html;
