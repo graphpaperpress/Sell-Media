@@ -1,13 +1,13 @@
 <?php class Sell_Media_Keywords_Widget extends WP_Widget
 {
-    function Sell_Media_Keywords_Widget(){
+	function Sell_Media_Keywords_Widget(){
 		$widget_ops = array('description' => 'Displays Sell Media keywords');
 		$control_ops = array('width' => 200, 'height' => 200);
-		parent::WP_Widget(false,$name='Sell Media Keywords',$widget_ops,$control_ops);
-    }
+		parent::__construct( false, $name='Sell Media Keywords', $widget_ops, $control_ops );
+	}
 
 	/* Displays the Widget in the front-end */
-    function widget($args, $instance){
+	function widget($args, $instance){
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		extract($args);
@@ -20,7 +20,7 @@
 
 			<?php
 			$keywords = get_terms('keywords');
-			
+
 			if ( !empty( $keywords ) ) {
 
 				foreach ( $keywords as $keyword ) {
@@ -31,7 +31,7 @@
 
 		</div><!-- .sell-media-keywords-widget -->
 
-<?php 
+<?php
 		echo $after_widget;
 
 }
@@ -43,8 +43,8 @@
 		return $instance;
 	}
 
-    /*Creates the form for the widget in the back-end. */
-    function form($instance){
+	/*Creates the form for the widget in the back-end. */
+	function form($instance){
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array('title'=> __( 'Keywords', 'sell_media') ) );
 		$title = htmlspecialchars($instance['title']);

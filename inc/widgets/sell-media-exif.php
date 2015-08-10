@@ -4,14 +4,14 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 
 	class Sell_Media_Image_Exif_Widget extends WP_Widget {
 
-	    function Sell_Media_Image_Exif_Widget(){
+		function Sell_Media_Image_Exif_Widget(){
 			$widget_ops = array( 'description' => __( 'Displays image exif data (shutter speed, aperture, ISO, etc). Only use this on Single Sidebar Widgetized areas.', 'sell_media' ) );
 			$control_ops = array( 'width' => 200, 'height' => 200 );
-			parent::WP_Widget( false, $name='Sell Media Exif', $widget_ops, $control_ops );
-	    }
+			parent::__construct( false, $name='Sell Media Exif', $widget_ops, $control_ops );
+		}
 
 		/* Displays the Widget in the front-end */
-	    function widget($args, $instance){
+		function widget($args, $instance){
 			extract($args);
 			$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
 			extract($args);
@@ -87,7 +87,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 				<?php
 				echo $after_widget;
 
-	 		}
+			}
 		}
 
 		/* Saves the settings. */
@@ -98,8 +98,8 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 			return $instance;
 		}
 
-	    /* Creates the form for the widget in the back-end. */
-	    function form($instance){
+		/* Creates the form for the widget in the back-end. */
+		function form($instance){
 			// Defaults
 			$instance = wp_parse_args( (array) $instance, array( 'title' => __( 'Camera Info', 'sell_media' ) ) );
 			$title = htmlspecialchars($instance['title']);
