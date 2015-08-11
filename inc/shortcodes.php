@@ -208,7 +208,7 @@ function sell_media_checkout_shortcode(){
                 <p id="sell-media-continue-shopping" class="text-center">
                     <?php
                     $html  = __( 'or', 'sell_media' );
-                    $html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">';
+                    $html .= ' <a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">';
                     $html .= __( 'continue shopping &raquo;', 'sell_media' );
                     $html .= '</a>';
                     echo apply_filters( 'sell_media_or_continue_shopping', $html );

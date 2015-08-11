@@ -36,15 +36,19 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
  * @return (string) url to product image or feature image
  */
 function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
+    $size = 'medium';
 
     /**
      * If the post has multiple attachments, get the attributes of the attachment.
-     * Otherwise, get the attributes of the featured image.
+     * Otherwise, get the attributes of the featured image,
+     * or finally the attached image.
      */
     if ( sell_media_has_multiple_attachments( $post_id ) ) {
-        $image_attributes = wp_get_attachment_image_src( $attachment_id, 'medium', true );
+        $image_attributes = wp_get_attachment_image_src( $attachment_id, $size, true );
+    } elseif ( '' != get_the_post_thumbnail( $post_id ) ) {
+        $image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size );
     } else {
-        $image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'medium' );
+        $image_attributes = wp_get_attachment_image_src( $attachment_id, $size );
     }
 
     if ( $image_attributes ) {
@@ -93,7 +97,6 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
         $image_attr = wp_get_attachment_image_src( $attachment_id, $size );
         $src = $image_attr[0];
         $image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
-
     // use default WP icons
     } else {
         $mime_type = get_post_mime_type( $attachment_id );
