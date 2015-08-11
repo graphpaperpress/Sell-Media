@@ -85,7 +85,7 @@ function sell_media_add_plugin_page() {
         // Name displayed in the Admin Menu
         __('Settings', 'sell_media'),
         // User capability required to access page
-        sell_media_get_plugin_settings_page_cap(),
+        apply_filters( 'sell_media_settings_page_cap_filter', sell_media_get_plugin_settings_page_cap() ),
         // String to append to URL
         'sell_media_plugin_options',
         // Function to define settings page markup

@@ -280,7 +280,7 @@ Class SellMediaSearch {
         if ( is_search()
             && isset( $_GET['post_type'] )
             && 'sell_media_item' == $_GET['post_type']
-            && 'attachment' == get_post_type( $post ) ) {
+            && 'attachment' == get_post_type( $post_id ) ) {
 
             // Check if post has a post_parent (it's a gallery)
             $ancestors  = get_post_ancestors( $post_id );

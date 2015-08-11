@@ -123,12 +123,7 @@ $settings = sell_media_get_plugin_options();
             <?php endif; ?><!-- show child terms check -->
 
             </div><!-- .sell-media-grid-container -->
-            <?php if ( ! is_wp_error( $terms ) ) {
-                $pages = ceil ( $c / get_option('posts_per_page ') );
-            } else {
-                $pages = $wp_query->max_num_pages;
-            }
-            echo sell_media_pagination_filter( $pages ); ?>
+            <?php echo sell_media_pagination_filter( $wp_query->max_num_pages ); ?>
         </div><!-- #content -->
     </div><!-- #sell_media-single .sell_media -->
 
