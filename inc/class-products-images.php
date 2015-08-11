@@ -288,6 +288,7 @@ class SellMediaImages extends SellMediaProducts {
      * Save IPTC data as custom taxonomy terms
      */
     public function parse_iptc_info( $original_file=null, $attachment_id=null ){
+        global $post;
 
         // Extract IPTC meta info from the uploaded image.
         $city = sell_media_iptc_parser( 'city', $original_file );
@@ -302,8 +303,6 @@ class SellMediaImages extends SellMediaProducts {
          * Since multiple images can be assigned, taxonomy terms (keywords)
          * should be assigned to the attachments, not the post.
          */
-        global $post;
-        // wp_die( var_dump( sell_media_has_multiple_attachments( $post->ID ) ) );
         if ( ! sell_media_has_multiple_attachments( $post->ID ) ) {
             $attachment_id = $post->ID;
         }

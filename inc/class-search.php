@@ -21,6 +21,9 @@ Class SellMediaSearch {
         add_filter( 'posts_join', array( &$this, 'terms_join' ) );
         add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
         add_filter( 'posts_request', array( &$this, 'distinct' ) );
+        add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
+        add_filter( 'attachment_link', array( &$this, 'the_search_attachment_link' ), 10, 2 );
+        add_filter( 'the_excerpt', array( &$this, 'the_search_excerpt' ) );
     }
 
 
@@ -105,7 +108,7 @@ Class SellMediaSearch {
     public function search_default(){
         global $wpdb;
 
-        $not_exact = empty($this->query_instance->query_vars['exact']);
+        $not_exact = empty( $this->query_instance->query_vars['exact'] );
         $search_sql_query = '';
         $seperator = '';
         $terms = $this->get_search_terms();
@@ -115,7 +118,7 @@ Class SellMediaSearch {
         foreach ( $terms as $term ) {
             $search_sql_query .= $seperator;
 
-            $esc_term = esc_sql($term);
+            $esc_term = esc_sql( $term );
             if ($not_exact) {
                 $esc_term = "%$esc_term%";
             }
@@ -209,7 +212,31 @@ Class SellMediaSearch {
         if ( ! $query->is_search )
             return $query;
 
-        if ( $query->get( 'post_type' ) && 'sell_media_item' == $query->get( 'post_type' ) || 'attachment' == $query->get( 'post_type' ) ) {
+        /**
+         * Only proceed if searching Sell Media
+         */
+        if ( $query->get( 'post_type' ) && 'sell_media_item' == $query->get( 'post_type' ) ) {
+
+            /**
+             * Add "sell_media_item" and "attachment" to search query
+             */
+            $post_types = $query->get( 'post_type' );
+            if ( $post_types && 'sell_media_item' == $post_types )
+                $post_types = array( 'sell_media_item', 'attachment' );
+
+            $query->set( 'post_type', $post_types );
+
+            /**
+             * Add post status "inherit" (for attachments) since WP only searches "publish"
+             */
+            $post_status = $query->get( 'post_status' );
+            if ( ! $post_status || 'publish' == $post_status )
+                $post_status = array( 'publish', 'inherit' );
+
+            if ( is_array( $post_status ) )
+                $post_status[] = 'inherit';
+
+            $query->set( 'post_status', $post_status );
 
             /**
              * Exclude password protected collections from search query
@@ -236,6 +263,71 @@ Class SellMediaSearch {
 
         }
 
+    }
+
+    /**
+     * If the post has a post parent, then it's part of a gallery
+     * So let's link users to the ?id=# page rather than the attachment page
+     *
+     * @param  [string] $url       [the permalink]
+     * @param  [object] $post      [full post object]
+     * @param  [string] $leavename [leave name]
+     * @return [string]            [the filtered permalink]
+     */
+    public function the_search_attachment_link( $url, $post_id ) {
+
+        // Only proceed if on Sell Media search page
+        if ( is_search()
+            && isset( $_GET['post_type'] )
+            && 'sell_media_item' == $_GET['post_type']
+            && 'attachment' == get_post_type( $post ) ) {
+
+            // Check if post has a post_parent (it's a gallery)
+            $ancestors  = get_post_ancestors( $post_id );
+            if ( $ancestors ) {
+                $url = esc_url( add_query_arg( 'id', $post_id, get_permalink( $ancestors[0] ) ) );
+            }
+        }
+
+        return $url;
+    }
+
+    /**
+     * By default, WordPress search results page shows.
+     *
+     * @param  [string] $excerpt [the_excerpt]
+     * @return [string]          [the_excerpt]
+     */
+    public function the_search_excerpt( $excerpt ) {
+
+        // Only proceed if on Sell Media search page
+        if ( is_search()
+            && isset( $_GET['post_type'] )
+            && 'sell_media_item' == $_GET['post_type'] ) {
+
+            // return if no ID
+            $id = get_the_ID();
+            if ( ! $id )
+                return $excerpt;
+
+            // set variables
+            $ancestors  = get_post_ancestors( $id ); // check if in gallery (has post_parent)
+            $link       = ( $ancestors ) ? esc_url( add_query_arg( 'id', $id, get_permalink( $ancestors[0] ) ) ) : get_permalink( $id );
+            $caption    = wptexturize( get_post( $id )->post_excerpt );
+            $attributes = wp_get_attachment_image_src( $id );
+
+            // compile output with thumbnail image
+            $excerpt  = "<div id='attachment_{$id}' class='wp-caption aligncenter'>";
+            $excerpt .= "<a href='{$link}'>";
+            $excerpt .= sell_media_item_icon( $id, 'large', false );
+            $excerpt .= "</a>";
+            if ( $caption )
+                $excerpt .= "<p class='wp-caption-text'>$caption</p>";
+            $excerpt .= "</div>";
+
+        }
+
+        return $excerpt;
     }
 
 
@@ -270,8 +362,7 @@ Class SellMediaSearch {
 
             // Submit button
             $html .= '<div id="sell-media-search-submit" class="sell-media-search-field sell-media-search-submit">';
-            $html .= '<input type="hidden" name="post_type[]" value="sell_media_item" />';
-            $html .= '<input type="hidden" name="post_type[]" value="attachment" />';
+            $html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
             $html .= '<input type="submit" id="sell-media-search-submit-button" class="sell-media-search-submit-button" value="' . apply_filters( 'sell_media_search_button', __( 'Search', 'sell_media' ) ) . '" />';
             $html .= '</div>';
 
