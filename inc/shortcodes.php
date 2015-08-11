@@ -255,11 +255,10 @@ function sell_media_download_shortcode( $atts ) {
             $html .= '<div class="sell-media-purchase">';
             $html .= '<p>';
             $html .= '<strong>' . __( 'Purchase ID', 'sell_media' ) . ': ' . $purchase . '</strong>';
-            $html .= '<br /><span class="date">' . get_the_time( 'M N, Y', $purchase ) . '</span>';
+            $html .= '<br /><span class="date">' . get_the_time( 'F j, Y', $purchase ) . '</span>';
             $html .= '</p>';
             $html .= Sell_Media()->payments->get_payment_products_formatted( $purchase );
             $html .= '</div>';
-            $html .= '<div id="purchase-history">' . $html . '</div>';
         }
     }
     return $html;
