@@ -4,8 +4,8 @@ Contributors: endortrails
 Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
-Tested up to: 4.2
-Stable tag: 2.0.4
+Tested up to: 4.3
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,18 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.0.5 =
+* New Feature: Search widget.
+* New Feature: Keywords saved with attachments, improves search results.
+* Tweak: Widget construct for 4.3 compatibility.
+* Tweak: Make settings page access filterable.
+* Tweak: Lower priority on widgets_init so it doesn't get priority over sidebar.
+* Tweak: Improve gallery caption display.
+* Tweak: Add missing strings for translation.
+* Bugfix: Add missing watermark class to galleries.
+* Bugfix: Missing thumbnails on checkout if not in a gallery or if item doesn't have featured image.
+
 
 = 2.0.4 =
 * Tweak: New filters for Access Control extension

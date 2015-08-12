@@ -1,13 +1,13 @@
 # Sell Media #
 
-**Contributors:** endortrails  
-**Donate link:** http://graphpaperpress.com/plugins/sell-media/  
-**Tags:** photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos  
-**Requires at least:** 3.4  
-**Tested up to:** 4.2  
-**Stable tag:** 2.0.3  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** endortrails
+**Donate link:** http://graphpaperpress.com/plugins/sell-media/
+**Tags:** photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
+**Requires at least:** 3.4
+**Tested up to:** 4.3
+**Stable tag:** 2.0.5
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Sell photos, prints, videos and pdf's online through WordPress in seconds. Everything you need to sell your photography online.
 
@@ -77,7 +77,7 @@ Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or
 
 Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
 
-**We do offer an Amazon S3 extension which offloads to storage of all uploads, which might be useful:** [View the extensions](http://graphpaperpress.com/downloads/category/extensions/).  
+**We do offer an Amazon S3 extension which offloads to storage of all uploads, which might be useful:** [View the extensions](http://graphpaperpress.com/downloads/category/extensions/).
 
 ### What are shortcodes and how do I use them? ###
 
@@ -94,7 +94,7 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 
 ### How do I show my checkout cart? ###
 
-**1. Create a page called "Checkout" and add this shortcode to the page:** `[sell_media_checkout]`  
+**1. Create a page called "Checkout" and add this shortcode to the page:** `[sell_media_checkout]`
 2. Visit Sell Media -> Settings and select the Checkout page you created above to the "Checkout Page" option.
 
 ### How do I show an item available for sale? ###
@@ -103,14 +103,14 @@ Visit the Sell Media -> Add Product page and configure the page options. Click S
 
 ### How do I show a search form for Sell Media items? ###
 
-**Create a Page called "Search Media" and add this shortcode to it:** `[sell_media_searchform]`. A search form also shows up above archive pages for products.  
+**Create a Page called "Search Media" and add this shortcode to it:** `[sell_media_searchform]`. A search form also shows up above archive pages for products.
 
 ### Can I sell image galleries? ###
 
 Yes and you have two options:
 
 1. Simply upload more than one image on the Sell Media -> Add New page. The price listed below is for each image in the gallery. In the near future, we will be releasing an extension for selling the entire gallery of images for one price.
-**2. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this:** http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.  
+**2. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this:** http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
 
 
 ### How do I password protect an item? ###
@@ -152,7 +152,7 @@ Again, it is important that we emphasize that if you are on a shared hosting pac
 
 ### What are license types? ###
 
-**The Sell Media plugin helps you to create and assign different licenses and prices for each image, video or audio file based on the anticipated usage of the media. For example:** If a large company wants to purchase one of your images for a billboard, you should charge one price for commercial usage, charge another for editorial, and so on.  
+**The Sell Media plugin helps you to create and assign different licenses and prices for each image, video or audio file based on the anticipated usage of the media. For example:** If a large company wants to purchase one of your images for a billboard, you should charge one price for commercial usage, charge another for editorial, and so on.
 
 ### Does the plugin work for a WordPress Network ###
 
@@ -221,6 +221,29 @@ Action hooks available:
 
 
 ## Changelog ##
+
+### 2.0.5 ###
+* New Feature: Search widget.
+* New Feature: Keywords saved with attachments, improves search results.
+* Tweak: Widget construct for 4.3 compatibility.
+* Tweak: Make settings page access filterable.
+* Tweak: Lower priority on widgets_init so it doesn't get priority over sidebar.
+* Tweak: Improve gallery caption display.
+* Tweak: Add missing strings for translation.
+* Bugfix: Add missing watermark class to galleries.
+* Bugfix: Missing thumbnails on checkout if not in a gallery or if item doesn't have featured image.
+
+
+### 2.0.4 ###
+* Tweak: New filters for Access Control extension
+* Tweak: Minor UI changes in admin
+* Tweak: Show image caption and title on gallery images
+* Tweak: Added logout url to dashboard, with filter
+* Tweak: New translation files
+* Tweak: Grunt tasks for translations, coding standards
+* Bugfix: sell_media_item shortcode shouldn't show buy button for galleries
+* Bugfix: Deleting collection thumbnail fix
+
 
 ### 2.0.3 ###
 * New Feature: Check for newest version of Sell Media extensions.
