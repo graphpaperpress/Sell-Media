@@ -3,18 +3,18 @@
 	function Sell_Media_Recent_Widget(){
 		$widget_ops = array('description' => 'Displays recently added media items');
 		$control_ops = array('width' => 200, 'height' => 200);
-		parent::__construct( false, $name='Sell Media Recent Items', $widget_ops, $control_ops );
+		parent::__construct( false, $name = 'Sell Media Recent Items', $widget_ops, $control_ops );
 	}
 
 	/* Displays the Widget in the front-end */
 	function widget($args, $instance){
-		extract($args);
-		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
-		extract($args);
+		extract( $args );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
+		extract( $args );
 		echo $before_widget;
 
-		if ( $title )
-			echo $before_title . $title . $after_title;
+		if ( $title ) {
+			echo $before_title . $title . $after_title; }
 ?>
 		<div class="sell-media-recent-widget sell-media">
 			<?php
@@ -22,8 +22,8 @@
 			$image_sizes = get_intermediate_image_sizes(); ?>
 
 			<?php
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'ASC', 'posts_per_page' => '6' );
-			$type_posts = new WP_Query ($args);
+			$args = array( 'post_type' => 'sell_media_item', 'field' => 'slug', 'orderby' => 'ASC', 'posts_per_page' => '6' );
+			$type_posts = new WP_Query( $args );
 			?>
 
 			<?php while ( $type_posts->have_posts() ) : $type_posts->the_post();
@@ -48,7 +48,7 @@
 	/* Saves the settings. */
 	function update($new_instance, $old_instance){
 		$instance = $old_instance;
-		$instance['title'] = stripslashes($new_instance['title']);
+		$instance['title'] = stripslashes( $new_instance['title'] );
 
 		return $instance;
 	}
@@ -56,11 +56,11 @@
 	/* Creates the form for the widget in the back-end. */
 	function form($instance){
 		// Defaults
-		$instance = wp_parse_args( (array) $instance, array('title'=>'Recent Items') );
-		$title = htmlspecialchars($instance['title']);
+		$instance = wp_parse_args( (array) $instance, array('title' => 'Recent Items') );
+		$title = htmlspecialchars( $instance['title'] );
 
 		// Title
-		echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
+		echo '<p><label for="' . $this->get_field_id( 'title' ) . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '" /></p>';
 
 	}
 

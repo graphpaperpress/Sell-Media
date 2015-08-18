@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Template Redirect
@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function sell_media_template_redirect( $original_template ){
 
-    if ( ! sell_media_theme_support() )
-        return $original_template;
+    if ( ! sell_media_theme_support() ) {
+        return $original_template; }
 
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
@@ -77,9 +77,9 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
  */
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
     global $user;
-    if ( isset( $user->roles ) && is_array( $user->roles ) ){
-        if ( in_array( 'sell_media_customer', $user->roles ) ){
-            return site_url('dashboard');
+    if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+        if ( in_array( 'sell_media_customer', $user->roles ) ) {
+            return site_url( 'dashboard' );
         } else {
             return admin_url();
         }
@@ -155,11 +155,11 @@ add_filter( 'query_vars', 'sell_media_add_query_vars_filter' );
 function sell_media_is_gallery_page(){
     global $post;
 
-    if ( ! $post )
-        return false;
+    if ( ! $post ) {
+        return false; }
 
-    if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == false )
-        return true;
+    if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == false ) {
+        return true; }
 }
 
 /**
@@ -168,11 +168,11 @@ function sell_media_is_gallery_page(){
 function sell_media_nav_menu_css_class( $classes, $item ){
     $settings = sell_media_get_plugin_options();
 
-    if ( $item->object == 'page' ){
+    if ( $item->object == 'page' ) {
         if ( $item->object_id == $settings->lightbox_page ) {
             $classes[] = 'lightbox-menu';
         }
-        if ( $item->object_id == $settings->checkout_page ){
+        if ( $item->object_id == $settings->checkout_page ) {
             if ( in_array( 'total', $item->classes ) ) {
                 $classes[] = 'checkout-total';
             } else {
@@ -192,11 +192,11 @@ add_filter( 'nav_menu_css_class', 'sell_media_nav_menu_css_class', 10, 2 );
  */
 function sell_media_build_options( $taxonomy=null ) {
 
-    if ( is_array( $taxonomy ) )
-        extract( $taxonomy );
+    if ( is_array( $taxonomy ) ) {
+        extract( $taxonomy ); }
 
-    if ( !isset( $label ) )
-        $label = $taxonomy;
+    if ( ! isset( $label ) ) {
+        $label = $taxonomy; }
 
     // @todo need to merge
     $defaults = array(
@@ -204,11 +204,11 @@ function sell_media_build_options( $taxonomy=null ) {
     );
 
     // white list
-    if ( empty( $prepend ) )
-        $prepend = null;
+    if ( empty( $prepend ) ) {
+        $prepend = null; }
 
-    if ( empty( $current_term ) )
-        $current_term = null;
+    if ( empty( $current_term ) ) {
+        $current_term = null; }
 
     extract( $defaults );
 
@@ -228,8 +228,8 @@ function sell_media_build_options( $taxonomy=null ) {
 
     ?>
     <?php if ( $terms ) : ?>
-        <?php do_action('sell_media_build_options_before'); ?>
-        <?php foreach( $terms as $term ) : ?>
+        <?php do_action( 'sell_media_build_options_before' ); ?>
+        <?php foreach ( $terms as $term ) : ?>
             <?php $price = str_replace( '%', '', sell_media_get_term_meta( $term->term_id, 'markup', true ) ); ?>
             <option
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
@@ -246,7 +246,7 @@ function sell_media_build_options( $taxonomy=null ) {
         </option>
         <?php endforeach; ?>
         </optgroup>
-        <?php do_action('sell_media_build_options_after'); ?>
+        <?php do_action( 'sell_media_build_options_after' ); ?>
     <?php endif; ?>
 <?php }
 
@@ -258,11 +258,11 @@ function sell_media_build_options( $taxonomy=null ) {
  */
 function sell_media_build_input( $taxonomy=null ) {
 
-    if ( is_array( $taxonomy ) )
-        extract( $taxonomy );
+    if ( is_array( $taxonomy ) ) {
+        extract( $taxonomy ); }
 
-    if ( !isset( $label ) )
-        $label = $taxonomy;
+    if ( ! isset( $label ) ) {
+        $label = $taxonomy; }
 
     // @todo need to merge
     $defaults = array(
@@ -270,11 +270,11 @@ function sell_media_build_input( $taxonomy=null ) {
     );
 
     // white list
-    if ( empty( $prepend ) )
-        $prepend = null;
+    if ( empty( $prepend ) ) {
+        $prepend = null; }
 
-    if ( empty( $current_term ) )
-        $current_term = null;
+    if ( empty( $current_term ) ) {
+        $current_term = null; }
 
     extract( $defaults );
 
@@ -294,9 +294,9 @@ function sell_media_build_input( $taxonomy=null ) {
 
     ?>
     <?php if ( $terms ) : ?>
-        <?php do_action('sell_media_build_input_before'); ?>
-        <?php foreach( $terms as $term ) : ?>
-            <?php $price = sell_media_get_term_meta( $term->term_id, 'markup', true); ?>
+        <?php do_action( 'sell_media_build_input_before' ); ?>
+        <?php foreach ( $terms as $term ) : ?>
+            <?php $price = sell_media_get_term_meta( $term->term_id, 'markup', true ); ?>
             <input
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
                 class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
@@ -310,7 +310,7 @@ function sell_media_build_input( $taxonomy=null ) {
                 />
             <?php echo $term->name; ?> <?php if ( $price ) : ?>+<?php echo $price; ?>%<?php endif; ?><br />
         <?php endforeach; ?>
-        <?php do_action('sell_media_build_input_after'); ?>
+        <?php do_action( 'sell_media_build_input_after' ); ?>
     <?php endif; ?>
 <?php }
 
@@ -324,27 +324,27 @@ function sell_media_iptc_parser( $value=null, $image=null ){
 
     $size = getimagesize( $image, $info );
 
-    if ( ! isset( $info['APP13'] ) )
-        return;
+    if ( ! isset( $info['APP13'] ) ) {
+        return; }
 
     $iptc = iptcparse( $info['APP13'] );
 
-    switch( $value ){
+    switch ( $value ) {
         case 'keywords':
-            if ( isset( $iptc['2#025'] ) )
-                return $iptc['2#025'];
+            if ( isset( $iptc['2#025'] ) ) {
+                return $iptc['2#025']; }
 
         case 'city':
-            if ( isset( $iptc['2#090'] ) )
-                return $iptc['2#090'];
+            if ( isset( $iptc['2#090'] ) ) {
+                return $iptc['2#090']; }
 
         case 'region':
-            if ( isset( $iptc['2#095'] ) )
-                return $iptc['2#095'];
+            if ( isset( $iptc['2#095'] ) ) {
+                return $iptc['2#095']; }
 
         case 'country':
-            if ( isset( $iptc['2#101'] ) )
-                return $iptc['2#101'];
+            if ( isset( $iptc['2#101'] ) ) {
+                return $iptc['2#101']; }
 
         default:
             return false;
@@ -361,10 +361,10 @@ function sell_media_iptc_parser( $value=null, $image=null ){
  * @since 0.1
  */
 function sell_media_iptc_save( $keys=null, $values=null, $post_id=null ){
-    if ( is_null( $keys ) )
-        return false;
+    if ( is_null( $keys ) ) {
+        return false; }
 
-    foreach( $values as $value ){
+    foreach ( $values as $value ) {
         $result = wp_set_post_terms( $post_id, $value, $keys, true );
     }
     return;
@@ -378,10 +378,8 @@ function sell_media_iptc_save( $keys=null, $values=null, $post_id=null ){
  */
 function sell_media_is_sell_media_post_type_page(){
 
-    if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' )
-        return true;
-    else
-        return false;
+    if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
+        return true; } else {         return false; }
 }
 
 
@@ -409,10 +407,8 @@ function sell_media_is_license_page(){
  */
 function sell_media_is_license_term_page(){
 
-    if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' && isset( $_GET['taxonomy'] ) && $_GET['taxonomy'] == 'licenses' )
-        return true;
-    else
-        return false;
+    if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' && isset( $_GET['taxonomy'] ) && $_GET['taxonomy'] == 'licenses' ) {
+        return true; } else {         return false; }
 }
 
 
@@ -428,7 +424,7 @@ function sell_media_is_license_term_page(){
  */
 function sell_media_get_attachments( $post_id ) {
     $meta = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-    return ( ! empty ( $meta ) ) ? explode( ',', $meta ) : false;
+    return ( ! empty( $meta ) ) ? explode( ',', $meta ) : false;
 }
 
 
@@ -528,9 +524,9 @@ function sell_media_get_currency() {
  * @since 0.1
  **/
 function sell_media_get_currency_symbol( $currency = '' ) {
-    if ( ! $currency ) $currency = sell_media_get_currency();
+    if ( ! $currency ) { $currency = sell_media_get_currency(); }
     $currency_symbol = '';
-    switch ($currency) :
+    switch ( $currency ) :
         case 'BRL' : $currency_symbol = 'R&#36;'; break; // in Brazil the correct is R$ 0.00,00
         case 'AUD' :
         case 'CAD' :
@@ -585,9 +581,9 @@ function sell_media_order_by( $orderby_statement ) {
     $settings = sell_media_get_plugin_options();
 
     if ( ! empty( $settings->order_by ) && is_archive() ||
-         ! empty( $settings->order_by ) && is_tax() ){
+         ! empty( $settings->order_by ) && is_tax() ) {
         global $wpdb;
-        switch( $settings->order_by ){
+        switch ( $settings->order_by ) {
             case 'title-asc' :
                 $order_by = "{$wpdb->prefix}posts.post_title ASC";
                 break;
@@ -606,8 +602,8 @@ function sell_media_order_by( $orderby_statement ) {
     }
     return $order_by;
 }
-if ( ! is_admin() )
-    add_filter( 'posts_orderby', 'sell_media_order_by' );
+if ( ! is_admin() ) {
+    add_filter( 'posts_orderby', 'sell_media_order_by' ); }
 
 
 /**
@@ -625,9 +621,9 @@ function sell_media_get_filesize( $post_id=null, $attachment_id=null ){
 
         $bytes = filesize( $file_path );
         $s = array( 'b', 'Kb', 'Mb', 'Gb' );
-        $e = floor( log( $bytes )/log( 1024 ) );
+        $e = floor( log( $bytes ) / log( 1024 ) );
 
-        return sprintf( '%.2f ' . $s[$e], ( $bytes/pow( 1024, floor( $e ) ) ) );
+        return sprintf( '%.2f ' . $s[$e], ( $bytes / pow( 1024, floor( $e ) ) ) );
     }
 }
 
@@ -664,7 +660,7 @@ function sell_media_pagination_filter( $max_pages = '' ) {
     $params = array(
         //'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
         'format' => '?paged=%#%',
-        'current' => max( 1, get_query_var('paged') ),
+        'current' => max( 1, get_query_var( 'paged' ) ),
         'total' => $max_num_pages // note sometimes max_num_pages needs to be sent over
     );
 
@@ -680,10 +676,8 @@ add_filter( 'sell_media_pagination_filter', 'sell_media_pagination_filter', 10, 
  */
 function sell_media_is_reports_page(){
 
-    if ( 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] )
-        return true;
-    else
-        return false;
+    if ( 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] ) {
+        return true; } else {         return false; }
 }
 
 /**
@@ -705,26 +699,26 @@ function sell_media_plugin_data( $field=null ){
 function sell_media_build_select( $items=array(), $args=array() ){
     extract( $args );
 
-    if ( $required ){
-        $required = " required ";
+    if ( $required ) {
+        $required = ' required ';
     } else {
         $required = false;
         $required_html = false;
     }
 
-    if ( ! $title ){
+    if ( ! $title ) {
         $title = false;
     }
 
-    if ( empty( $name ) )
-        $name = null;
+    if ( empty( $name ) ) {
+        $name = null; }
 
-    if ( empty( $current ) )
-        $current = null;
+    if ( empty( $current ) ) {
+        $current = null; }
     ?>
     <select id="<?php print $name; ?>" class="sell_media_form_control" name="<?php print $name; ?>" <?php print $required; ?>>
         <option></option>
-        <?php foreach( $items as $key => $value ) : ?>
+        <?php foreach ( $items as $key => $value ) : ?>
             <option value="<?php print $key; ?>" <?php selected( $key, $current ); ?>><?php print $value; ?></option>
         <?php endforeach; ?>
     </select>
@@ -738,23 +732,23 @@ function sell_media_build_select( $items=array(), $args=array() ){
  * @param $post_id, $taxonomy
  * @return $price_groups (object)
  */
-function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
+function sell_media_get_price_groups( $post_id = null, $taxonomy = null ){
 
     // first, check price group set on the item
     $price_groups_custom = wp_get_post_terms( $post_id, $taxonomy );
 
-    foreach( $price_groups_custom as $price_group ){
-        if ( $price_group->parent == 0 ){
+    foreach ( $price_groups_custom as $price_group ) {
+        if ( $price_group->parent == 0 ) {
             $parent_price_group = $price_group->term_id;
         }
     }
 
     // if the item doesn't have a price group set, use the default from settings
-    if ( empty( $price_groups_custom ) ){
+    if ( empty( $price_groups_custom ) ) {
 
         $settings = sell_media_get_plugin_options();
 
-        if ( $taxonomy == 'reprints-price-group'){
+        if ( $taxonomy == 'reprints-price-group' ) {
             $price_group_id = $settings->reprints_default_price_group;
         } else {
             $price_group_id = $settings->default_price_group;
@@ -762,8 +756,8 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
 
         $default_price_group_obj = get_term( $price_group_id, $taxonomy );
 
-        if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) )
-            return;
+        if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) ) {
+            return; }
 
         $parent_price_group = $default_price_group_obj->term_id;
     }
@@ -792,11 +786,12 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
 function sell_media_get_item_price_group( $post_id, $taxonomy ) {
     $settings = sell_media_get_plugin_options();
     $terms = get_the_terms( $post_id, $taxonomy );
-    if ( $terms && ! is_wp_error( $terms ) ) foreach ( $terms as $term ) {
-        if ( $term->parent == 0 ){
+    if ( $terms && ! is_wp_error( $terms ) ) { foreach ( $terms as $term ) {
+        if ( $term->parent == 0 ) {
             $price_group_id = $term->term_id;
         }
-    } elseif ( $taxonomy == 'reprints-price-group' ) {
+    }
+} elseif ( $taxonomy == 'reprints-price-group' ) {
         $price_group_id = $settings->reprints_default_price_group;
     } elseif ( $taxonomy == 'price-group' ) {
         $price_group_id = $settings->default_price_group;
@@ -865,7 +860,7 @@ function sell_media_get_directories( $dir=null ) {
     $directories = '';
     $path = ( $dir == 'packages' ) ? sell_media_get_packages_upload_dir() : sell_media_get_import_dir();
 
-    foreach ( glob( $path . "/*", GLOB_ONLYDIR ) as $directory ) {
+    foreach ( glob( $path . '/*', GLOB_ONLYDIR ) as $directory ) {
         $directories[] = $directory;
     }
     return $directories;
@@ -893,16 +888,16 @@ function sell_media_get_upload_dir_url() {
  */
 function sell_media_nocache(){
 
-    if ( is_admin() )
-        return;
+    if ( is_admin() ) {
+        return; }
 
     if ( false === ( $page_uris = get_transient( 'sell_media_cache_excluded_uris' ) ) ) {
         $settings       = sell_media_get_plugin_options();
         $checkout_page  = $settings->checkout_page;
         $thanks_page    = $settings->thanks_page;
 
-        if ( empty( $checkout_page ) || empty( $thanks_page ) )
-            return;
+        if ( empty( $checkout_page ) || empty( $thanks_page ) ) {
+            return; }
 
         $page_uris   = array();
         // Exclude IPN listener
@@ -913,18 +908,18 @@ function sell_media_nocache(){
         // Exclude nice permalinks for pages
         $checkout_page  = get_post( $checkout_page );
         $thanks_page    = get_post( $thanks_page );
-        if ( ! is_null( $checkout_page ) )
-            $page_uris[] = '/' . $checkout_page->post_name;
-        if ( ! is_null( $thanks_page ) )
-            $page_uris[] = '/' . $thanks_page->post_name;
+        if ( ! is_null( $checkout_page ) ) {
+            $page_uris[] = '/' . $checkout_page->post_name; }
+        if ( ! is_null( $thanks_page ) ) {
+            $page_uris[] = '/' . $thanks_page->post_name; }
         set_transient( 'sell_media_cache_excluded_uris', $page_uris );
     }
 
     if ( is_array( $page_uris ) ) {
-        foreach( $page_uris as $uri ) {
+        foreach ( $page_uris as $uri ) {
             if ( strstr( $_SERVER['REQUEST_URI'], $uri ) ) {
-                if ( ! defined( 'DONOTCACHEPAGE' ) )
-                    define( 'DONOTCACHEPAGE', 'true' );
+                if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+                    define( 'DONOTCACHEPAGE', 'true' ); }
                 nocache_headers();
                 break;
             }

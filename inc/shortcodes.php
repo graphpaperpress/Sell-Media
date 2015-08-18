@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Lists all downloads using sell_media_thanks shortcode.
@@ -34,7 +34,7 @@ function sell_media_thanks_shortcode( $tx=null ) {
     if ( $tx ) {
         $post_id = Sell_Media()->payments->get_id_from_tx( $tx );
         $html  = null;
-        $html .='<p class="sell-media-thanks-message">';
+        $html .= '<p class="sell-media-thanks-message">';
         if ( $post_id ) {
             $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
         } else {
@@ -88,7 +88,7 @@ function sell_media_item_shortcode( $atts ) {
     );
 
     $image = sell_media_item_icon( $id, $size, false );
-    $text = apply_filters('sell_media_purchase_text', $text, $id );
+    $text = apply_filters( 'sell_media_purchase_text', $text, $id );
 
     if ( sell_media_has_multiple_attachments( $id ) ) {
         $button = sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
@@ -110,10 +110,10 @@ function sell_media_all_items_shortcode( $atts ){
     $settings = sell_media_get_plugin_options();
 
     global $paged;
-    if ( get_query_var('paged') ) {
-        $paged = get_query_var('paged');
-    } elseif ( get_query_var('page') ) {
-        $paged = get_query_var('page');
+    if ( get_query_var( 'paged' ) ) {
+        $paged = get_query_var( 'paged' );
+    } elseif ( get_query_var( 'page' ) ) {
+        $paged = get_query_var( 'page' );
     } else {
         $paged = 1;
     }
@@ -132,7 +132,7 @@ function sell_media_all_items_shortcode( $atts ){
         'paged' => $paged
     );
 
-    if ( $collection ){
+    if ( $collection ) {
         $args = array(
             'posts_per_page' => $show,
             'taxonomy' => 'collection',
@@ -158,8 +158,8 @@ function sell_media_all_items_shortcode( $atts ){
         endwhile; wp_reset_query(); $i = 0;
 
         $html .= '</div><!-- .sell-media-grid-container -->';
-        if ( ! is_front_page() && is_main_query() )
-            $html .= sell_media_pagination_filter( $wp_query->max_num_pages );
+        if ( ! is_front_page() && is_main_query() ) {
+            $html .= sell_media_pagination_filter( $wp_query->max_num_pages ); }
         $html .= '</div><!-- #sell-media-shortcode-all .sell_media -->';
 
     endif;
@@ -189,7 +189,7 @@ function sell_media_checkout_shortcode(){
                 </tr>
                 <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
                 <tr class="tax">
-                    <td class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</td>
+                    <td class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) { echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; } ?></span>:</td>
                     <td class="sell-media-value"><span class="sellMediaCart_tax"></span></td>
                 </tr>
                 <tr class="shipping">
@@ -216,7 +216,7 @@ function sell_media_checkout_shortcode(){
                 </p>
                 <?php
                 $settings = sell_media_get_plugin_options();
-                if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
+                if ( ! empty( $settings->terms_and_conditions ) ) : ?>
                     <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
                 <?php endif; ?>
             </div>
@@ -224,7 +224,7 @@ function sell_media_checkout_shortcode(){
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div><!-- #sell-media-checkout-cart -->
     <p id="sell-media-empty-cart-message" style="display:none;">
-        <?php echo apply_filters( 'sell_media_continue_shopping', sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">Continue shopping &raquo;</a>' ) ); ?>
+        <?php echo apply_filters( 'sell_media_continue_shopping', sprintf( __( 'Your cart is empty. %s', 'sell_media' ), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">Continue shopping &raquo;</a>' ) ); ?>
     </p>
     <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
     <?php return ob_get_clean();
@@ -251,7 +251,7 @@ function sell_media_download_shortcode( $atts ) {
         $html .= __( 'Your Purchase History', 'sell_media' );
         $html .= '</h2>';
 
-        if ( $purchases ) foreach ( $purchases as $purchase ) {
+        if ( $purchases ) { foreach ( $purchases as $purchase ) {
             $html .= '<div class="sell-media-purchase">';
             $html .= '<p>';
             $html .= '<strong>' . __( 'Purchase ID', 'sell_media' ) . ': ' . $purchase . '</strong>';
@@ -260,6 +260,7 @@ function sell_media_download_shortcode( $atts ) {
             $html .= Sell_Media()->payments->get_payment_products_formatted( $purchase );
             $html .= '</div>';
         }
+}
     }
     return $html;
 }
@@ -275,18 +276,18 @@ function sell_media_price_group_shortcode(){
     ob_start(); ?>
     <table class="">
         <tbody>
-        <?php foreach( get_terms('price-group', array( 'hide_empty' => false, 'parent' => 0 ) ) as $parent ) : ?>
+        <?php foreach ( get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => 0 ) ) as $parent ) : ?>
             <tr>
                 <th colspan="4"><?php echo $parent->name; ?></th>
             </tr>
             <tr class="sell-media-price-group-parent sell-media-price-group-parent-<?php echo $parent->name; ?>" id="sell-media-price-group-parent-<?php echo $parent->term_id; ?>">
-                <th><?php _e('Description','sell_media'); ?></th>
-                <th><?php _e('width (px)','sell_media'); ?></th>
-                <th><?php _e('height (px)','sell_media'); ?></th>
-                <th><?php _e('price','sell_media'); ?>(<span class="currency-symbol"><?php echo sell_media_get_currency_symbol(); ?></span>)</th>
+                <th><?php _e( 'Description','sell_media' ); ?></th>
+                <th><?php _e( 'width (px)','sell_media' ); ?></th>
+                <th><?php _e( 'height (px)','sell_media' ); ?></th>
+                <th><?php _e( 'price','sell_media' ); ?>(<span class="currency-symbol"><?php echo sell_media_get_currency_symbol(); ?></span>)</th>
             </tr>
-            <?php $i=0; foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $parent->term_id, 'orderby' => 'id' ) ) as $term ): ?>
-                <tr class="sell-media-price-group-row-<?php echo ($i++%2==1) ? 'odd' : 'even'; ?> sell-media-price-group-child-<?php echo $term->name; ?>" id="sell-media-price-group-child-<?php echo $term->term_id; ?>">
+            <?php $i = 0; foreach ( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $parent->term_id, 'orderby' => 'id' ) ) as $term ) :   ?>
+                <tr class="sell-media-price-group-row-<?php echo ($i++ % 2 == 1) ? 'odd' : 'even'; ?> sell-media-price-group-child-<?php echo $term->name; ?>" id="sell-media-price-group-child-<?php echo $term->term_id; ?>">
                     <td>
                         <span class="sell-media-price-group-name"><?php echo $term->name; ?></span>
                     </td>
@@ -333,9 +334,9 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
         $taxonomy = 'collection';
         $term_ids = array();
-        foreach( get_terms( $taxonomy ) as $term_obj ){
+        foreach ( get_terms( $taxonomy ) as $term_obj ) {
             $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-            if ( $password ) $term_ids[] = $term_obj->term_id;
+            if ( $password ) { $term_ids[] = $term_obj->term_id; }
         }
 
         $args = array(
@@ -347,11 +348,11 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
         $terms = get_terms( $taxonomy, $args );
 
-        if ( empty( $terms ) )
-            return;
+        if ( empty( $terms ) ) {
+            return; }
 
         $html .= '<ul class="sell-media-collections-shortcode-list">';
-        foreach( $terms as $term ) :
+        foreach ( $terms as $term ) :
             $html .= '<li class="sell-media-collections-shortcode-list-item">';
             $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="sell-media-collections-shortcode-list-item-link">' . $term->name . '</a>';
             $html .= '</li>';
@@ -368,9 +369,9 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
         $taxonomy = 'collection';
         $term_ids = array();
-        foreach( get_terms( $taxonomy ) as $term_obj ){
+        foreach ( get_terms( $taxonomy ) as $term_obj ) {
             $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-            if ( $password ) $term_ids[] = $term_obj->term_id;
+            if ( $password ) { $term_ids[] = $term_obj->term_id; }
         }
 
         $args = array(
@@ -382,10 +383,10 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
         $terms = get_terms( $taxonomy, $args );
 
-        if ( empty( $terms ) )
-            return;
+        if ( empty( $terms ) ) {
+            return; }
 
-        foreach( $terms as $term ) :
+        foreach ( $terms as $term ) :
             $args = array(
                     'post_status' => 'publish',
                     'taxonomy' => 'collection',
@@ -416,7 +417,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
                     $posts = New WP_Query( $args );
 
-                    foreach( $posts->posts as $post ) :
+                    foreach ( $posts->posts as $post ) :
 
                         $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
                         $collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
@@ -426,10 +427,10 @@ function sell_media_list_all_collections_shortcode( $atts ) {
                             $html .= '<div class="item-overlay">';
                             $html .= '<div class="collection-details">';
                             $html .= '<span class="collection-count">';
-                            $html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
+                            $html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __( ' collection', 'sell_media' );
                             $html .= '</span>';
                             $html .= '<span class="collection-price">';
-                            $html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
+                            $html .= __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
                             $html .= '</span>';
                             $html .= '</div>';
                             $html .= '</div>';
@@ -464,10 +465,10 @@ function sell_media_login_form_shortcode(){
 
     if ( is_user_logged_in() ) {
 
-        return '<p class="sell-media-login-out">' . sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media'), '<a href="' . apply_filters( 'sell_media_logout_redirect_url', wp_logout_url( site_url() ) ) . '">' . __( 'Logout', 'sell_media' ) . '</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . __( 'continue shopping', 'sell_media' ) . '</a>' ) . '</p>';
+        return '<p class="sell-media-login-out">' . sprintf( __( 'You are logged in. %1$s or %2$s.', 'sell_media' ), '<a href="' . apply_filters( 'sell_media_logout_redirect_url', wp_logout_url( site_url() ) ) . '">' . __( 'Logout', 'sell_media' ) . '</a>', '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . __( 'continue shopping', 'sell_media' ) . '</a>' ) . '</p>';
 
     } else {
-        if ( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
+        if ( isset( $_GET['login'] ) && 'failed' == $_GET['login'] ) {
             echo '<span class="error">' . __( 'Login failed', 'sell_media' ) . '</span>';
         }
 

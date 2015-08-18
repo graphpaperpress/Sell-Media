@@ -8,12 +8,12 @@
  */
 
 // Block direct requests
-if ( ! defined( 'ABSPATH' ) )
-	die( '-1' );
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' ); }
 
 
 add_action( 'widgets_init', function(){
-	register_widget( 'Sell_Media_Search_Widget' );
+    register_widget( 'Sell_Media_Search_Widget' );
 });
 
 /**
@@ -25,9 +25,9 @@ class Sell_Media_Search_Widget extends WP_Widget {
 	 */
 	function __construct() {
 		parent::__construct(
-			'Sell_Media_Search_Widget', // Base ID
-			__( 'Sell Media Search', 'sell_media' ), // Name
-			array( 'description' => __( 'Adds a search form for searching Sell Media items', 'sell_media' ), ) // Args
+      'Sell_Media_Search_Widget', // Base ID
+      __( 'Sell Media Search', 'sell_media' ), // Name
+      array( 'description' => __( 'Adds a search form for searching Sell Media items', 'sell_media' ), ) // Args
 		);
 	}
 	/**
@@ -57,8 +57,7 @@ class Sell_Media_Search_Widget extends WP_Widget {
 	public function form( $instance ) {
 		if ( isset( $instance[ 'title' ] ) ) {
 			$title = $instance[ 'title' ];
-		}
-		else {
+		} else {
 			$title = __( 'Search', 'sell_media' );
 		}
 		?>

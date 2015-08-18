@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 Class SellMediaPayments {
 
@@ -28,7 +28,7 @@ Class SellMediaPayments {
     */
     public function get_meta( $post_id=null ){
         $meta = get_post_meta( $post_id, '_sell_media_payment_meta', true );
-        if ( ! empty ( $meta ) ){
+        if ( ! empty( $meta ) ) {
             return $unserilaized_meta = maybe_unserialize( $meta );
         }
     }
@@ -71,11 +71,12 @@ Class SellMediaPayments {
     */
     public function get_product_size( $post_id=null, $product_id=null, $attachment_id=null, $size_id=null, $type=null ){
         $products = $this->get_products( $post_id );
-        if ( $products ) foreach ( $products as $product ) {
+        if ( $products ) { foreach ( $products as $product ) {
             if ( $product_id == $product['id'] && $attachment_id == $product['attachment'] && $size_id == $product['size']['id'] && $type == $product['type'] ) {
                 return $product['size']['id'];
             }
         }
+}
     }
 
     /**
@@ -89,13 +90,14 @@ Class SellMediaPayments {
     */
     public function is_product_type( $post_id=null, $product_id=null, $type=null ){
         $products = $this->get_products( $post_id );
-        if ( $products ) foreach ( $products as $product ) {
+        if ( $products ) { foreach ( $products as $product ) {
             if ( $product_id == $product['id'] ) {
                 if ( array_key_exists( 'type', $product ) && $type == $product['type'] ) {
                     return true;
                 }
             }
         }
+}
     }
 
 
@@ -110,9 +112,10 @@ Class SellMediaPayments {
     public function products_include_type( $post_id=null, $type=null ){
         $products = $this->get_products( $post_id );
         $types = array();
-        if ( $products ) foreach ( $products as $product ) {
+        if ( $products ) { foreach ( $products as $product ) {
             $types[] = $this->get_meta_key( $post_id, 'type' );
         }
+}
         if ( in_array( $type, $types ) ) {
             return true;
         }
@@ -217,16 +220,18 @@ Class SellMediaPayments {
         }
 
         $payments = get_posts( $args );
-        if ( $payments ) foreach ( $payments as $payment ) {
+        if ( $payments ) { foreach ( $payments as $payment ) {
             $products = $this->get_products( $payment->ID );
-            if ( $products ) foreach ( $products as $payment_products ) {
+            if ( $products ) { foreach ( $products as $payment_products ) {
                 if ( isset( $payment_products['id'] ) && $payment_products['id'] == $post_id ) {
                     $subtotal = $payment_products['total'];
                     $total += $subtotal;
                     $count++;
                 }
             }
+}
         }
+}
 
         return $count . ' ' .  __( 'sales totaling', 'sell_media' ) . ' ' . sell_media_get_currency_symbol() . number_format( ( float ) $total, 2, '.', '' );
     }
@@ -295,7 +300,7 @@ Class SellMediaPayments {
 
         foreach ( $keys as $key ) {
             $sep = null;
-            if ( ++$i != $items ) $sep = ', ';
+            if ( ++$i != $items ) { $sep = ', '; }
                 $values .= $this->get_meta_key( $post_id, $key ) . $sep;
         }
 
@@ -313,10 +318,11 @@ Class SellMediaPayments {
         $subtotal = 0;
 
         $products = $this->get_products( $post_id );
-        if ( $products ) foreach ( $products as $k => $v ) {
+        if ( $products ) { foreach ( $products as $k => $v ) {
             $product_total = $v['total'];
             $subtotal += $product_total;
         }
+}
 
         // apply the discount based on type (percent or flat)
         if ( 'percent' == $discount_code_meta['type'] ) {
@@ -356,10 +362,11 @@ Class SellMediaPayments {
 
         $payments = get_posts( $args );
 
-        if ( $payments ) foreach ( $payments as $payment ) {
+        if ( $payments ) { foreach ( $payments as $payment ) {
             $subtotal = $this->get_meta_key( $payment->ID, 'total' );
             $total += $subtotal;
         }
+}
 
         return number_format( ( float ) $total, 2, '.', '' );
     }
@@ -381,16 +388,17 @@ Class SellMediaPayments {
             'monthnum' => $month_num,
             'post_status' => 'publish'
         );
-        if ( ! empty( $day ) )
-            $args['day'] = $day;
+        if ( ! empty( $day ) ) {
+            $args['day'] = $day; }
 
         $payments = get_posts( $args );
 
         $total = 0;
-        if ( $payments ) foreach ( $payments as $payment ) {
+        if ( $payments ) { foreach ( $payments as $payment ) {
             $subtotal = $this->get_meta_key( $payment->ID, 'total' );
             $total += $subtotal;
         }
+}
 
         return number_format( ( float ) $total, 2, '.', '' );
     }
@@ -405,10 +413,10 @@ Class SellMediaPayments {
     */
     public function get_payment_products_formatted( $post_id=null, $inline_css=false ){
         $products = $this->get_products( $post_id );
-        $tax = $this->get_meta_key( $post_id, $key='tax' );
-        $shipping = $this->get_meta_key( $post_id, $key='shipping' );
-        $discount = $this->get_meta_key( $post_id, $key='discount' );
-        $total = $this->get_meta_key( $post_id, $key='total' );
+        $tax = $this->get_meta_key( $post_id, $key = 'tax' );
+        $shipping = $this->get_meta_key( $post_id, $key = 'shipping' );
+        $discount = $this->get_meta_key( $post_id, $key = 'discount' );
+        $total = $this->get_meta_key( $post_id, $key = 'total' );
         $css = ( $inline_css ) ? 'border-bottom: 1px solid #ccc; padding: 0.5rem; text-align: left;' : '';
         $style = apply_filters( 'sell_media_products_table_style', $css );
 
@@ -439,7 +447,7 @@ Class SellMediaPayments {
 
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
                     $html .= '<td class="sell-media-product-id" style="' . $style . '">';
-                    if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
+                    if ( isset( $product['id'] ) && ! is_array( $product['id'] ) ) {
                         $html .= '#' . $product['id'] . ', ' . $product['name'] . '<br />';
                         $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a><br />';
                         if ( 'download' == $product['type'] ) {
@@ -450,20 +458,20 @@ Class SellMediaPayments {
                     }
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-size" style="' . $style . '">';
-                    if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) )
-                        $html .= $product['size']['name'];
+                    if ( isset( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) {
+                        $html .= $product['size']['name']; }
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-license" style="' . $style . '">';
-                    if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) )
-                        $html .= $product['license']['name'] . $product['license']['desc'];
+                    if ( isset( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) {
+                        $html .= $product['license']['name'] . $product['license']['desc']; }
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-qty text-center" style="' . $style . ' text-align: center;">';
-                    if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) )
-                        $html .= $product['qty'];
+                    if ( isset( $product['qty'] ) && ! is_array( $product['qty'] ) ) {
+                        $html .= $product['qty']; }
                     $html .= '</td>';
                     $html .= '<td class="sell-media-product-total" style="' . $style . ' text-align: right;">';
-                    if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
-                        $html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
+                    if ( isset( $product['total'] ) && ! is_array( $product['total'] ) ) {
+                        $html .= sell_media_get_currency_symbol() . sprintf( '%0.2f', $product['total'] ); }
                     $html .= '</td>';
                     $html .= '</tr>';
                 }
@@ -486,7 +494,7 @@ Class SellMediaPayments {
                 $html .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
             }
             do_action( 'sell_media_above_products_formatted_table_total', $post_id );
-            $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key='total' ), 2, '.', ',' ) . '</strong>';
+            $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key = 'total' ), 2, '.', ',' ) . '</strong>';
             $html .= '</td>';
             $html .= '</tr>';
             $html .= '</table>';
@@ -527,15 +535,14 @@ Class SellMediaPayments {
             'gateway' => 'PayPal'
         );
 
-
-        foreach( $keys as $k => $v ){
+        foreach ( $keys as $k => $v ) {
 
             // Assign our contact info
-            if ( array_key_exists( $v, $paypal_args ) ){
+            if ( array_key_exists( $v, $paypal_args ) ) {
                 $tmp[ $k ] = $paypal_args[ $v ];
             // Assign the products
             } else {
-                for ( $i=1; $i <= $paypal_args['num_cart_items']; $i++ ) {
+                for ( $i = 1; $i <= $paypal_args['num_cart_items']; $i++ ) {
                     $tmp_products = array(
                         'name' => $paypal_args[ 'item_name' . $i ],
                         'id' => $paypal_args[ 'item_number' . $i ],
@@ -592,11 +599,11 @@ Class SellMediaPayments {
         $html .= '<table class="wp-list-table widefat" cellspacing="0">';
         $html .= '<thead>
                 <tr>
-                    <th scope="col">' . __('Item','sell_media') . '</th>
-                    <th>' . __('Size','sell_media') . '</th>
-                    <th>' . __('Price','sell_media') . '</th>
-                    <th>' . __('Quantity','sell_media') . '</th>
-                    <th>' . __('License','sell_media') . '</th>
+                    <th scope="col">' . __( 'Item','sell_media' ) . '</th>
+                    <th>' . __( 'Size','sell_media' ) . '</th>
+                    <th>' . __( 'Price','sell_media' ) . '</th>
+                    <th>' . __( 'Quantity','sell_media' ) . '</th>
+                    <th>' . __( 'License','sell_media' ) . '</th>
                     <th>' . apply_filters( 'sell_media_download_link_label', 'Download Link' ) . '</th>
                 </tr>
             </thead>';
@@ -605,7 +612,7 @@ Class SellMediaPayments {
         $products = $this->get_products( $post_id );
 
         if ( $products ) {
-            foreach ( $this->get_products( $post_id ) as $product ){
+            foreach ( $this->get_products( $post_id ) as $product ) {
 
                 $product['attachment']      = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : null;
                 $product['size']['name']    = ( ! empty( $product['size']['name'] ) ) ? $product['size']['name'] : null;
@@ -622,7 +629,7 @@ Class SellMediaPayments {
                 $html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
                 $html .= '<td>' . $product['qty'] . '</td>';
                 $html .= '<td>' . $product['license']['name'] . '</td>';
-                if ( ! empty( $product['type'] ) && 'print' == $product['type'] ){
+                if ( ! empty( $product['type'] ) && 'print' == $product['type'] ) {
                     $html .= '<td class="title column-title">Sold a print</td>';
                 } else {
                     $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" /></td>';
@@ -634,11 +641,11 @@ Class SellMediaPayments {
         } else {
 
             $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta' );
-            if ( ! $payment_meta ) return;
+            if ( ! $payment_meta ) { return; }
 
             $products_legacy = maybe_unserialize( $payment_meta['products'] );
 
-            if ( $products_legacy ) foreach ( $products as $product ) {
+            if ( $products_legacy ) { foreach ( $products as $product ) {
 
                 $html .= '<tr class="" valign="top">';
                 $html .= '<td class="media-icon">';
@@ -650,7 +657,8 @@ Class SellMediaPayments {
                 $html .= '<td class="title column-title"><input type="text" value="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" /></td>';
                 $html .= '</tr>';
             } // foreach
-        } // if legacy
+}
+} // if legacy
 
         $html .= '</tbody>';
         $html .= '</table>';
@@ -668,8 +676,8 @@ Class SellMediaPayments {
      */
     static public function status( $post_id=null ){
         $status = get_post_status( $post_id );
-        if ( $status == 'publish' )
-            $status = __( 'Paid','sell_media' );
+        if ( $status == 'publish' ) {
+            $status = __( 'Paid','sell_media' ); }
 
         return apply_filters( 'sell_media_payment_status_filter', ucfirst( $status ), $post_id );
     }
@@ -737,15 +745,15 @@ Class SellMediaPayments {
 
         }
 
-        $message['headers'] = "From: " . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
-        $message['headers'] .= "Reply-To: ". $message['from_email'] . "\r\n";
+        $message['headers'] = 'From: ' . stripslashes_deep( html_entity_decode( $message['from_name'], ENT_COMPAT, 'UTF-8' ) ) . " <{$message['from_email']}>\r\n";
+        $message['headers'] .= 'Reply-To: '. $message['from_email'] . "\r\n";
         $message['headers'] .= "MIME-Version: 1.0\r\n";
         $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
 
         /**
          * Check if we have additional test emails, if so we concatenate them
          */
-        if ( ! empty( $settings->paypal_additional_test_email ) ){
+        if ( ! empty( $settings->paypal_additional_test_email ) ) {
             $email = $email . ', ' . $settings->paypal_additional_test_email;
         }
 
@@ -778,18 +786,18 @@ Class SellMediaPayments {
         $cart = $_POST['cart'];
 
         // Set discount code id to 0 if it isn't in cart array
-        if ( empty( $cart['custom'] ) )
-            $cart['custom'] = 0;
+        if ( empty( $cart['custom'] ) ) {
+            $cart['custom'] = 0; }
 
         // Count the number of keys that match the pattern "item_number_"
         $cart_count = count( preg_grep( '/^item_number_/', array_keys( $cart ) ) );
         $cnt = 0;
-        for( $i=1; $i <= $cart_count; $i++ ) {
+        for ( $i = 1; $i <= $cart_count; $i++ ) {
             $cnt += $cart['quantity_' . $i];
         }
         $sub_total = 0;
         $shipping_flag = false;
-        for( $i=1; $i <= $cart_count; $i++ ) {
+        for ( $i = 1; $i <= $cart_count; $i++ ) {
 
             $product_id = $cart[ 'item_number_' . $i ];
             $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
@@ -798,7 +806,7 @@ Class SellMediaPayments {
             $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
 
             // this is a download with an assigned license, so add license markup
-            if ( ! empty( $license_id ) || $license_id != "undefined" ) {
+            if ( ! empty( $license_id ) || $license_id != 'undefined' ) {
                 $price = Sell_Media()->products->verify_the_price( $product_id, $price_id );
                 $markup = Sell_Media()->products->markup_amount( $product_id, $price_id, $license_id );
                 $amount = $price + $markup;
@@ -810,10 +818,9 @@ Class SellMediaPayments {
             $sub_total += $cart[ 'amount_' . $i ] * $cart['quantity_' . $i];
         }
 
-
         // Add shipping
-        if ( $shipping_flag ){
-            switch( $settings->reprints_shipping ){
+        if ( $shipping_flag ) {
+            switch ( $settings->reprints_shipping ) {
                 case 'shippingFlatRate':
                     $shipping_amount = $settings->reprints_shipping_flat_rate;
                     break;
@@ -831,7 +838,6 @@ Class SellMediaPayments {
             $shipping_amount = 0;
         }
         $cart['handling'] = number_format( $shipping_amount, 2, '.', '' );
-
 
         // If tax is enabled, tax the order
         if ( $settings->tax ) {

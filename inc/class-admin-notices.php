@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 Class SellMediaAdminNotices {
 
@@ -43,7 +43,7 @@ Class SellMediaAdminNotices {
             /**
              * Test mode
              */
-            if ( isset( $this->settings->test_mode ) && $this->settings->test_mode == 1 ){
+            if ( isset( $this->settings->test_mode ) && $this->settings->test_mode == 1 ) {
                 $notices[] = array(
                     'slug' => 'test-mode',
                     'message' => sprintf( __( 'Your site is currently in <a href="%1$s">test mode</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options ' ) ) )
@@ -53,7 +53,7 @@ Class SellMediaAdminNotices {
             /**
              * Checkout
              */
-            if ( isset( $this->settings->checkout_page ) && $this->settings->checkout_page == 1 || empty( $this->settings->checkout_page ) ){
+            if ( isset( $this->settings->checkout_page ) && $this->settings->checkout_page == 1 || empty( $this->settings->checkout_page ) ) {
                 $notices[] = array(
                     'slug' => 'checkout-page',
                     'message' => sprintf( __( 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
@@ -63,7 +63,7 @@ Class SellMediaAdminNotices {
             /**
              * Thanks
              */
-            if ( isset( $this->settings->thanks_page ) && $this->settings->thanks_page == 1 || empty( $this->settings->thanks_page ) ){
+            if ( isset( $this->settings->thanks_page ) && $this->settings->thanks_page == 1 || empty( $this->settings->thanks_page ) ) {
                 $notices[] = array(
                     'slug' => 'thanks-page',
                     'message' => sprintf( __( 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
@@ -73,7 +73,7 @@ Class SellMediaAdminNotices {
             /**
              * PayPal email
              */
-            if ( empty( $this->settings->paypal_email ) ){
+            if ( empty( $this->settings->paypal_email ) ) {
                 $notices[] = array(
                     'slug' => 'paypal-email',
                     'message' => sprintf( __( 'Please set a PayPal email in your <a href="%1$s">payment settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) )
@@ -90,7 +90,7 @@ Class SellMediaAdminNotices {
                 );
             }
 
-            foreach( $notices as $notice ){
+            foreach ( $notices as $notice ) {
                 add_settings_error( 'sell-media-notices', 'sell-media-notice-' . $notice['slug'], $notice['message'], 'updated' );
             }
 
@@ -134,11 +134,12 @@ Class SellMediaAdminNotices {
             $plugins = get_plugins();
             $cache = array();
 
-            if ( $plugins ) foreach ( array_keys( $plugins ) as $plugin ) {
+            if ( $plugins ) { foreach ( array_keys( $plugins ) as $plugin ) {
                 if ( preg_match( '/sell-media-(.*)$/', $plugin, $matches ) ) {
                     $cache[$plugin] = $plugins[$plugin]['Version'];
                 }
             }
+}
             set_transient( 'sell_media_get_installed_plugins', $cache, 3600 );
         }
         return maybe_unserialize( $cache );
@@ -179,10 +180,11 @@ Class SellMediaAdminNotices {
         $plugins = $this->compare_versions();
         $plugin_names = array();
 
-        if ( $plugins ) foreach ( $plugins as $plugin ) {
+        if ( $plugins ) { foreach ( $plugins as $plugin ) {
             $dir = substr( $plugin, 0, strpos( $plugin, '/' ) );
-            $plugin_names[]= ucwords( str_replace( '-', ' ', $dir ) );
+            $plugin_names[] = ucwords( str_replace( '-', ' ', $dir ) );
         }
+}
 
         return $plugin_names;
 

@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Install
@@ -27,8 +27,8 @@ function sell_media_install() {
 
     $version = get_option( 'sell_media_version' );
 
-    if ( $version && $version > SELL_MEDIA_VERSION )
-        return;
+    if ( $version && $version > SELL_MEDIA_VERSION ) {
+        return; }
 
     // Register Custom Post Types
     sell_media_register_post_types();
@@ -68,9 +68,9 @@ function sell_media_install() {
     add_role( 'sell_media_customer', 'Customer', array( 'read' => true ) );
 
     // This is a new install so add the defaults to the options table
-    if ( empty( $version ) ){
+    if ( empty( $version ) ) {
         $defaults = sell_media_get_plugin_option_defaults();
-        update_option( sell_media_get_current_plugin_id() . "_options" , $defaults );
+        update_option( sell_media_get_current_plugin_id() . '_options' , $defaults );
     // A version number exists, so run upgrades
     } else {
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-upgrade.php';

@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 Class SellMediaProducts {
 
@@ -31,8 +31,7 @@ Class SellMediaProducts {
         // check that the price_id exists and that the price meta is set
         if ( ! empty( $price_group_price ) ) {
             $price = $price_group_price;
-        }
-        // finally, set the price to the custom price
+        } // finally, set the price to the custom price
         elseif ( ! empty( $custom_price ) ) {
             $price = get_post_meta( $product_id, 'sell_media_price', true );
         } else {
@@ -52,7 +51,7 @@ Class SellMediaProducts {
     public function get_prices( $post_id=null, $attachment_id=null, $taxonomy='price-group' ){
         $i = 0;
 
-        if ( $this->settings->hide_original_price !== 'yes' ){
+        if ( $this->settings->hide_original_price !== 'yes' ) {
             $original_size = Sell_Media()->images->get_original_image_size( $attachment_id );
             $prices[$i]['id'] = 'original';
             $prices[$i]['name'] = __( 'Original', 'sell_media' );
@@ -68,7 +67,7 @@ Class SellMediaProducts {
             $term_parent = wp_get_post_terms( $post_id, $taxonomy );
 
             // if no assigned price group, get default from settings
-            if ( empty( $term_parent ) || is_wp_error( $term_parent ) ){
+            if ( empty( $term_parent ) || is_wp_error( $term_parent ) ) {
                 $default = $this->settings->default_price_group;
                 $terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $default, 'orderby' => 'id' ) );
             } else {
@@ -76,8 +75,8 @@ Class SellMediaProducts {
             }
 
             // loop over child terms
-            foreach( $terms as $term ){
-                if ( ! empty( $term->term_id ) ){
+            foreach ( $terms as $term ) {
+                if ( ! empty( $term->term_id ) ) {
                     $i++;
                     $prices[$i]['id'] = $term->term_id;
                     $prices[$i]['name'] = $term->name;
@@ -108,20 +107,16 @@ Class SellMediaProducts {
         // Use custom price of item
         $original_price = get_post_meta( $product_id, 'sell_media_price', true );
 
-        if ( ! empty( $original_price ) && ! empty( $price_id ) && $price_id == 'original' ){
+        if ( ! empty( $original_price ) && ! empty( $price_id ) && $price_id == 'original' ) {
             $final_price = $original_price;
-        }
-
-        // Use price group price
+        } // Use price group price
         elseif ( ! empty( $price_id ) &&  wp_attachment_is_image( $attachment_id ) && $price_id != 'original' ) {
-            foreach( $this->get_prices( $product_id, $taxonomy ) as $price ){
-                if ( $price_id == $price['id'] ){
+            foreach ( $this->get_prices( $product_id, $taxonomy ) as $price ) {
+                if ( $price_id == $price['id'] ) {
                     $final_price = $price['price'];
                 }
             }
-        }
-
-        // Use original price from settings
+        } // Use original price from settings
         else {
             $final_price = $this->settings->default_price;
         }
@@ -141,8 +136,8 @@ Class SellMediaProducts {
     public function get_original_price( $post_id=null ){
 
         $price = sprintf( '%0.2f', ( float ) get_post_meta( $post_id, 'sell_media_price', true ) );
-        if ( $price )
-            return $price;
+        if ( $price ) {
+            return $price; }
     }
 
 
@@ -155,9 +150,10 @@ Class SellMediaProducts {
      */
     public function get_lowest_price( $post_id=null ){
         $prices = $this->get_prices( $post_id );
-        if ( $prices ) foreach ( $prices as $price ){
+        if ( $prices ) { foreach ( $prices as $price ) {
             $lowest_price[] = $price['price'];
         }
+}
 
         if ( is_array( $lowest_price ) ) {
             return min( $lowest_price );
@@ -194,11 +190,12 @@ Class SellMediaProducts {
      */
     public function has_image_attachments( $post_id=null ){
         $attachment_ids = sell_media_get_attachments( $post_id );
-        if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+        if ( $attachment_ids ) { foreach ( $attachment_ids as $attachment_id ) {
             if ( wp_attachment_is_image( $attachment_id ) ) {
                 return true;
             }
         }
+}
     }
 
 
@@ -262,13 +259,13 @@ Class SellMediaProducts {
      */
     public function markup_amount( $post_id=null, $price_id=null, $license_id=null ){
 
-        $license_obj = get_term_by('id', $license_id, 'licenses');
+        $license_obj = get_term_by( 'id', $license_id, 'licenses' );
 
         if ( empty( $license_obj ) ) {
             $markup_amount = 0;
         } else {
             $price = $this->verify_the_price( $post_id, $price_id );
-            $markup_percent = str_replace( "%", "", sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) );
+            $markup_percent = str_replace( '%', '', sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) );
             $markup_amount = ( $markup_percent / 100 ) * $price;
         }
 
@@ -283,8 +280,8 @@ Class SellMediaProducts {
      */
     public function is_package( $post_id=null ){
 
-        if ( get_post_meta( $post_id, '_sell_media_is_package', true ) )
-            return true;
+        if ( get_post_meta( $post_id, '_sell_media_is_package', true ) ) {
+            return true; }
     }
 
 }

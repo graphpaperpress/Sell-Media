@@ -29,7 +29,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 if ( ! class_exists( 'SellMedia' ) ) :
 
@@ -253,9 +253,8 @@ final class SellMedia {
 
 		if ( file_exists( $custom_mo ) ) {
 			load_textdomain( $domain, $custom_mo );
-		}
-		else {
-			load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		} else {
+			load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		}
 	}
 

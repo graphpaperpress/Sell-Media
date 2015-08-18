@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Admin Scripts
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function sell_media_admin_scripts( $hook ) {
 
