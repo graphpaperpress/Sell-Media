@@ -12,9 +12,14 @@ if ( ! defined( 'ABSPATH' ) )
 	die( '-1' );
 
 
-add_action( 'widgets_init', function(){
+/**
+ * Register the widget
+ * @return [type] [description]
+ */
+function sell_media_search_widgets_init() {
 	register_widget( 'Sell_Media_Search_Widget' );
-});
+}
+add_action( 'widgets_init', 'sell_media_search_widgets_init' );
 
 /**
  * Adds My_Widget widget.
@@ -30,6 +35,7 @@ class Sell_Media_Search_Widget extends WP_Widget {
 			array( 'description' => __( 'Adds a search form for searching Sell Media items', 'sell_media' ), ) // Args
 		);
 	}
+
 	/**
 	 * Front-end display of widget.
 	 *

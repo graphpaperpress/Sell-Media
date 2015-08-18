@@ -222,6 +222,9 @@ Action hooks available:
 
 ## Changelog ##
 
+= 2.0.6 =
+* Hotfix for users with PHP versions older than 5.3.
+
 ### 2.0.5 ###
 * New Feature: Search widget.
 * New Feature: Keywords saved with attachments, improves search results.
