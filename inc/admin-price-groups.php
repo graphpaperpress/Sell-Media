@@ -40,14 +40,13 @@ Class SellMediaNavStyleUI {
 
         $screen = get_current_screen();
 
-        if ( $screen->id == 'sell_media_item_page_sell_media_plugin_options' && ! empty( $_GET['tab'] ) && $_GET['tab'] == 'sell_media_size_settings' ){
+        if ( $screen->id == 'sell_media_item_page_sell_media_plugin_options' && ! empty( $_GET['tab'] ) && $_GET['tab'] == 'sell_media_size_settings' ) {
             wp_enqueue_script( 'sell_media-admin-price-groups', SELL_MEDIA_PLUGIN_URL . '/js/admin-price-groups.js', array( 'jquery' ) );
             wp_localize_script('sell_media-admin-price-groups', 'sell_media_price_groups',
                 array(
                     'currency_symbol' => sell_media_get_currency_symbol()
                 )
             );
-
 
         }
     }
@@ -67,24 +66,23 @@ Class SellMediaNavStyleUI {
         $taxonomy = $_POST['taxonomy'];
 
         // Update the price group name if it has changed
-        if ( ! empty( $form_data['price_group']['term_id'] ) ){
+        if ( ! empty( $form_data['price_group']['term_id'] ) ) {
             $parent_obj = get_term_by( 'id', $form_data['price_group']['term_id'], $taxonomy );
-            if ( ! empty( $parent_obj ) && $parent_obj->name != $form_data['price_group']['term_name'] ){
+            if ( ! empty( $parent_obj ) && $parent_obj->name != $form_data['price_group']['term_name'] ) {
                 wp_update_term( $form_data['price_group']['term_id'], $taxonomy, array( 'name' => $form_data['price_group']['term_name'] ) );
             }
         }
 
-
-        if ( ! empty( $form_data['terms_children'] ) ){
-            foreach( $form_data['terms_children'] as $k => $v ){
+        if ( ! empty( $form_data['terms_children'] ) ) {
+            foreach ( $form_data['terms_children'] as $k => $v ) {
                 wp_update_term( $k, $taxonomy, array( 'name' => $v['name'] ) );
 
                 // Dynamically save ALL fields that are NOT 'name' as
                 // term meta! It would have been nice to store all
                 // meta into an array and loop over saving that,
                 // can't wait for term meta to make it into core.
-                foreach( $v as $kk => $vv ){
-                    if ( $k != 'name' ){
+                foreach ( $v as $kk => $vv ) {
+                    if ( $k != 'name' ) {
                         sell_media_update_term_meta( $k, $kk, $vv );
                     }
                 }
@@ -92,16 +90,16 @@ Class SellMediaNavStyleUI {
         }
 
         // Dynamically add new prices for this price group
-        if ( ! empty( $form_data['new_child'] ) ){
-            foreach( $form_data['new_child'] as $child ){
-                if ( ! empty( $child['name'] ) ){
-                    $term = wp_insert_term( $child['name'], $taxonomy, array('parent'=> $child['parent'] ) );
+        if ( ! empty( $form_data['new_child'] ) ) {
+            foreach ( $form_data['new_child'] as $child ) {
+                if ( ! empty( $child['name'] ) ) {
+                    $term = wp_insert_term( $child['name'], $taxonomy, array('parent' => $child['parent'] ) );
 
                     // Dynamically save ALL fields that are NOT 'name' as
                     // term meta!
-                    if ( ! is_wp_error( $term ) ){
-                        foreach( $child as $k => $v ){
-                            if ( $k != 'name' ){
+                    if ( ! is_wp_error( $term ) ) {
+                        foreach ( $child as $k => $v ) {
+                            if ( $k != 'name' ) {
                                 sell_media_update_term_meta( $term['term_id'], $k, $v );
                             }
                         }
@@ -125,7 +123,7 @@ Class SellMediaNavStyleUI {
         if ( ! empty( $_POST['term_id'] ) ) {
             $terms = get_term_children( $_POST['term_id'], $_POST['taxonomy'] );
             $terms[] = $_POST['term_id'];
-            foreach( $terms as $term_id ){
+            foreach ( $terms as $term_id ) {
                 wp_delete_term( $term_id, $_POST['taxonomy'] );
             }
         }
@@ -145,14 +143,14 @@ Class SellMediaNavStyleUI {
 
         $termarray = array();
         $terms = get_terms( $_POST['taxonomy'], array( 'hide_empty' => 0, 'parent' => 0 ) );
-        foreach( $terms as $term ) {
+        foreach ( $terms as $term ) {
             $termarray[] = $term->name;
         }
 
         if ( ! empty( $_POST['term_name'] )  && ! in_array( $_POST['term_name'], $termarray ) ) {
             $term = wp_insert_term( $_POST['term_name'], $_POST['taxonomy'] );
             $timestamp = time();
-            $return_url = admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp);
+            $return_url = admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' . '&term_parent=' . $term['term_id'] .'&cache_buster='.$timestamp );
         } else {
             $return_url = null;
         }
@@ -164,7 +162,7 @@ Class SellMediaNavStyleUI {
 
         $parent_terms = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'parent' => 0 ) );
         $current_parent = empty( $_GET['term_parent'] ) ? '' : $_GET['term_parent'];
-        if ( is_wp_error( $parent_terms ) ){
+        if ( is_wp_error( $parent_terms ) ) {
             return;
         }
 
@@ -176,13 +174,13 @@ Class SellMediaNavStyleUI {
         $current_term = null;
 
         // Build our menu array
-        foreach( $parent_terms as $term ) {
+        foreach ( $parent_terms as $term ) {
             if ( $current_parent == $term->term_id ) {
                 $current_term = $term->name;
                 $current_term_id = $term->term_id;
                 $link = '<span class="nav-tab nav-tab-active">' . $term->name . '</span>';
             } else {
-                $link = '<a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=' . $term->term_id ) . '" class="nav-tab" data-term_id="' . $term->term_id . '">' . $term->name . '</a>';
+                $link = '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=' . $term->term_id ) . '" class="nav-tab" data-term_id="' . $term->term_id . '">' . $term->name . '</a>';
             }
 
             $tmp[] = array(
@@ -202,7 +200,7 @@ Class SellMediaNavStyleUI {
                 );
         } else {
             $final['menu'][] = array(
-                'html' => '<a href="' . admin_url('edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=new_term') .'" class="nav-tab menu-add-new"><abbr title="Add menu">+</abbr></a>'
+                'html' => '<a href="' . admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings&term_parent=new_term' ) .'" class="nav-tab menu-add-new"><abbr title="Add menu">+</abbr></a>'
                 );
         }
 
@@ -210,65 +208,64 @@ Class SellMediaNavStyleUI {
         if ( empty( $current_term_id ) ) {
             $value = null;
             $data_term_id = null;
-            $class = "button-primary sell-media-add-term";
+            $class = 'button-primary sell-media-add-term';
             $link_text = __( 'Create Price Group', 'sell_media' );
             $message = null;
         } else {
             $data_term_id = $current_term_id;
-            $class = "submitdelete sell-media-delete-term-group";
-            $message = sprintf( "%s %s?\n\n%s", __("Are you sure you want to delete the price group:", "sell_media" ), $current_term, __("This will delete the price group and ALL its prices associated with it.","sell_media") );
+            $class = 'submitdelete sell-media-delete-term-group';
+            $message = sprintf( "%s %s?\n\n%s", __( 'Are you sure you want to delete the price group:', 'sell_media' ), $current_term, __( 'This will delete the price group and ALL its prices associated with it.','sell_media' ) );
             $link_text = __( 'Delete Group', 'sell_media' );
         }
 
         $final['header'] = array(
-            'html' => '<input name="price_group[term_name]" type="text" class="regular-text" placeholder="'. __('Enter price group name here', 'sell_media') . '" value="' . $current_term . '" data-term_id="' . $data_term_id . '" data-taxonomy="' . $this->taxonomy . '" />
+            'html' => '<input name="price_group[term_name]" type="text" class="regular-text" placeholder="'. __( 'Enter price group name here', 'sell_media' ) . '" value="' . $current_term . '" data-term_id="' . $data_term_id . '" data-taxonomy="' . $this->taxonomy . '" />
                 <input type="hidden" value="'.$data_term_id.'" name="price_group[term_id]" />
                 <a href="#" class="' . $class . '" data-term_id="' . $data_term_id . '" data-message="' . $message . '" data-taxonomy="' . $this->taxonomy . '">' . $link_text . '</a>'
             );
-
 
         // build terms array
         $tmp = null;
         $terms_obj = get_terms( $this->taxonomy, array( 'hide_empty' => false, 'child_of' => $current_term_id, 'orderby' => 'id' ) );
 
-        foreach( $terms_obj as $term ){
+        foreach ( $terms_obj as $term ) {
             $tmp[] = array_merge( (array)$term,
                 array(
                     'field' => array(
                         'html' => '
                                 <input type="text" class="" name="terms_children[' . $term->term_id . '][name]" size="24" value="' . $term->name . '" />
-                                <p class="description">'. __('Name (shown to buyer, so be descriptive)','sell_media') . '</p>'
+                                <p class="description">'. __( 'Name (shown to buyer, so be descriptive)','sell_media' ) . '</p>'
                         )
                     ),
                 array(
-                    'meta'=> array(
+                    'meta' => array(
                         'html' => '
                         <td>
                             <input type="text" class="small-text" name="terms_children[' . $term->term_id . '][width]" value="'. sell_media_get_term_meta( $term->term_id, 'width', true ) . '">
-                            <p class="description">'. __('Max width (pixels)','sell_media') . '</p>
+                            <p class="description">'. __( 'Max width (pixels)','sell_media' ) . '</p>
                         </td>
 
                         <td>
                             <input type="text" class="small-text" name="terms_children['. $term->term_id . '][height]" value="'. sell_media_get_term_meta( $term->term_id, 'height', true ) . '">
-                            <p class="description">'. __('Max Height (pixels)','sell_media') . '</p>
+                            <p class="description">'. __( 'Max Height (pixels)','sell_media' ) . '</p>
                         </td>
 
                         <td>
                             <input type="text" class="small-text" name="terms_children['. $term->term_id . '][price]" value="'. sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ) . '">
-                            <p class="description">' . __('Price','sell_media') . ' (' . sell_media_get_currency_symbol() . ')</p>
+                            <p class="description">' . __( 'Price','sell_media' ) . ' (' . sell_media_get_currency_symbol() . ')</p>
                         </td>'
                     )
                 ),
                 array(
                     'delete' => array(
-                        'html' => '<a href="#" class="sell-media-xit sell-media-delete-term" data-taxonomy="'.$this->taxonomy.'" data-term_id="' . $term->term_id .'" data-type="price" data-message="' . sprintf( '%s: %s?', __('Are you sure you want to delete the price', 'sell_media'), $term->name ) . '">×</a>'
+                        'html' => '<a href="#" class="sell-media-xit sell-media-delete-term" data-taxonomy="'.$this->taxonomy.'" data-term_id="' . $term->term_id .'" data-type="price" data-message="' . sprintf( '%s: %s?', __( 'Are you sure you want to delete the price', 'sell_media' ), $term->name ) . '">×</a>'
                         )
                     )
             );
             $final['terms'] = $tmp;
         }
 
-        $final_additional = apply_filters('sell_media_additional_meta_price_group', $this->taxonomy, $final['terms']);
+        $final_additional = apply_filters( 'sell_media_additional_meta_price_group', $this->taxonomy, $final['terms'] );
 
         if ( ! empty( $final_additional ) ) {
             $final['terms'] = $final_additional;
@@ -277,38 +274,38 @@ Class SellMediaNavStyleUI {
         }
 
         if ( has_filter( 'sell_media_additional_meta_price_group' ) ) {
-            $final['terms'] = apply_filters('sell_media_additional_meta_price_group', $this->taxonomy, $final['terms']);
+            $final['terms'] = apply_filters( 'sell_media_additional_meta_price_group', $this->taxonomy, $final['terms'] );
         } else {
             $final['terms'] = $tmp;
         }
         // Default terms
         $max = count( $final['terms'] ) < 1 ? 1 : 1;
         $html = null;
-        for( $i = 1; $i <= $max; $i++ ) {
+        for ( $i = 1; $i <= $max; $i++ ) {
             $html .=
                 '<tr class="sell-media-price-groups-row" data-index="' . $i . '">
                     <td class="name">
                         <input type="text" class="" name="new_child['.$i.'][name]" size="24" value="">
-                        <p class="description">' . __('Name (shown to buyer, so be descriptive)','sell_media') . '</p>
+                        <p class="description">' . __( 'Name (shown to buyer, so be descriptive)','sell_media' ) . '</p>
                     </td>
                     <td>
                         <input type="hidden" class="sell-media-price-group-parent-id" name="new_child[' . $i . '][parent]" value="' . $current_term_id . '" />
                         <input type="text" class="small-text" name="new_child[' . $i . '][width]" value="">
-                        <p class="description">' . __('Max width (pixels)','sell_media') . '</p>
+                        <p class="description">' . __( 'Max width (pixels)','sell_media' ) . '</p>
                     </td>
                     <td>
                         <input type="text" class="small-text" name="new_child[' . $i . '][height]" value="">
-                        <p class="description">' . __('Max height (pixels)','sell_media') . '</p>
+                        <p class="description">' . __( 'Max height (pixels)','sell_media' ) . '</p>
                     </td>
                     <td>
                         <input type="text" class="small-text" name="new_child[' . $i . '][price]" value="">
-                        <p class="description">' . __('Price','sell_media') . ' (' . sell_media_get_currency_symbol() . ')</p>
+                        <p class="description">' . __( 'Price','sell_media' ) . ' (' . sell_media_get_currency_symbol() . ')</p>
                     </td>
                 </tr>';
         }
 
-        $price_copy = apply_filters( 'sell_media_default_price_copy', __('The sizes listed below determine the maximum dimensions in pixels. Price Groups only apply to images.', 'sell_media'), $this->taxonomy );
-        $price_group_copy = apply_filters( 'sell_media_default_price_group_copy', __('Create a price group to add prices to.', 'sell_media'), $this->taxonomy );
+        $price_copy = apply_filters( 'sell_media_default_price_copy', __( 'The sizes listed below determine the maximum dimensions in pixels. Price Groups only apply to images.', 'sell_media' ), $this->taxonomy );
+        $price_group_copy = apply_filters( 'sell_media_default_price_group_copy', __( 'Create a price group to add prices to.', 'sell_media' ), $this->taxonomy );
 
         ?>
         <div id="menu-management-liquid" class="sell-media-price-groups-container">
@@ -318,7 +315,7 @@ Class SellMediaNavStyleUI {
                 <div class="nav-tabs-nav">
                     <div class="nav-tabs-wrapper">
                         <div class="nav-tabs">
-                            <?php foreach( $final['menu'] as $menu ) : ?>
+                            <?php foreach ( $final['menu'] as $menu ) : ?>
                                 <?php echo $menu['html']; ?>
                             <?php endforeach; ?>
                         </div>
@@ -330,7 +327,7 @@ Class SellMediaNavStyleUI {
 
                     <!-- Print out the input field w/term name and delete button -->
                     <div id="nav-menu-header">
-                        <?php foreach( $final['header'] as $header ) : ?>
+                        <?php foreach ( $final['header'] as $header ) : ?>
                             <?php echo $header; ?>
                         <?php endforeach; ?>
                     </div>
@@ -352,7 +349,7 @@ Class SellMediaNavStyleUI {
                             <?php if ( empty( $current_term_id ) ) : ?>
 
                             <?php else : ?>
-                                <?php if ( $final['terms'] && is_array( $final['terms'] ) ) : foreach( $final['terms'] as $term ) : ?>
+                                <?php if ( $final['terms'] && is_array( $final['terms'] ) ) : foreach ( $final['terms'] as $term ) : ?>
                                     <tr>
                                         <td><?php echo $term['field']['html']; ?></td>
                                         <?php echo $term['meta']['html']; ?>
@@ -367,7 +364,7 @@ Class SellMediaNavStyleUI {
                             <tfoot>
                                 <tr colspan="4">
                                     <td>
-                                        <a href="#" class="button sell-media-price-groups-repeater-add"><?php _e('Add New Price','sell_media'); ?></a>
+                                        <a href="#" class="button sell-media-price-groups-repeater-add"><?php _e( 'Add New Price','sell_media' ); ?></a>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -375,7 +372,7 @@ Class SellMediaNavStyleUI {
                     </table>
                     <div class="nav-menu-footer">
                         <?php if ( ! empty( $current_term ) ) : ?>
-                            <a href="#" class="button-primary sell-media-save-term" data-taxonomy="<?php echo $this->taxonomy; ?>"><?php _e('Save Price Group','sell_media'); ?></a>
+                            <a href="#" class="button-primary sell-media-save-term" data-taxonomy="<?php echo $this->taxonomy; ?>"><?php _e( 'Save Price Group','sell_media' ); ?></a>
                         <?php endif; ?>
                     </div><!-- /.nav-menu-footer -->
                 </div>

@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 Class SellMediaDownload {
 
@@ -50,29 +50,28 @@ Class SellMediaDownload {
 
                 $file_type = wp_check_filetype( $file );
 
-                if ( ! ini_get( 'safe_mode' ) ){
+                if ( ! ini_get( 'safe_mode' ) ) {
                     set_time_limit( 0 );
                 }
 
                 if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
-                    set_magic_quotes_runtime(0);
+                    set_magic_quotes_runtime( 0 );
                 }
 
-                if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
+                if ( function_exists( 'apache_setenv' ) ) { @apache_setenv( 'no-gzip', 1 ); }
                 @ini_set( 'zlib.output_compression', 'Off' );
 
                 nocache_headers();
-                header( "Robots: none" );
-                header( "Content-Type: " . $file_type['type'] . "" );
-                header( "Content-Description: File Transfer" );
-                header( "Content-Disposition: attachment; filename=\"" . basename( $file ) . "\"" );
-                header( "Content-Transfer-Encoding: binary" );
+                header( 'Robots: none' );
+                header( 'Content-Type: ' . $file_type['type'] . '' );
+                header( 'Content-Description: File Transfer' );
+                header( 'Content-Disposition: attachment; filename="' . basename( $file ) . '"' );
+                header( 'Content-Transfer-Encoding: binary' );
 
                 // If image, generate the image sizes purchased and create a download
-                if ( wp_attachment_is_image( $attachment_id ) ){
+                if ( wp_attachment_is_image( $attachment_id ) ) {
                     $this->download_image( $product_id, $attachment_id, $size_id );
-                }
-                // Otherwise, just deliver the download
+                } // Otherwise, just deliver the download
                 else {
                     $this->download_file( $file );
                 }
@@ -80,13 +79,13 @@ Class SellMediaDownload {
                 exit();
             } else {
                 do_action( 'sell_media_before_failed_download', $product_id, $attachment_id );
-                wp_die( __( 'You do not have permission to download this file', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
+                wp_die( __( 'You do not have permission to download this file', 'sell_media' ), __( 'Purchase Verification Failed', 'sell_media' ) );
             }
             exit;
         }
 
         // Rend purchase receipt?
-        if ( isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ){
+        if ( isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ) {
             $payment_id = $_GET['payment_id'];
             $payment_email = get_meta_key( $payment_id, 'email' );
 
@@ -103,7 +102,7 @@ Class SellMediaDownload {
      * @return boolean
      */
     public function verify( $transaction_id=null, $payment_id=null ) {
-        if ( $transaction_id == Sell_Media()->payments->get_meta_key( $payment_id, 'transaction_id' ) ){
+        if ( $transaction_id == Sell_Media()->payments->get_meta_key( $payment_id, 'transaction_id' ) ) {
             return true;
         } else {
             return false;
@@ -160,7 +159,7 @@ Class SellMediaDownload {
         $handle    = @fopen( $file, 'r' );
 
         if ( $size = @filesize( $file ) ) {
-            header("Content-Length: " . $size );
+            header( 'Content-Length: ' . $size );
         }
 
         if ( false === $handle ) {

@@ -36,7 +36,7 @@ function sell_media_add_payment_meta_boxes(){
         global $post;
         $paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
         $stripe_args = get_post_meta( $post->ID, '_stripe_args', true );
-        if ( ! empty( $paypal_args ) || ! empty( $stripe_args ) ){
+        if ( ! empty( $paypal_args ) || ! empty( $stripe_args ) ) {
             add_meta_box(
                 'meta_field_details',
                 __( 'Payment Gateway Details', 'sell_media' ),
@@ -100,17 +100,17 @@ function sell_media_payment_additional_purchase_details( $post ){
 
     ?>
 
-    <p><?php _e( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
+    <p><?php _e( 'This is the additional payment data stored with the purchase.', 'sell_media' ); ?></p>
     <table class="wp-list-table widefat" cellspacing="0">
         <tbody>
-            <?php if ( $args ) : foreach( $args as $k => $v ) : ?>
+            <?php if ( $args ) : foreach ( $args as $k => $v ) : ?>
                 <?php if ( ! is_array( $v ) ) : ?>
                     <tr>
-                        <td><?php echo ucwords( str_replace('_', ' ', $k ) ); ?></td><td><?php echo $v; ?></td>
+                        <td><?php echo ucwords( str_replace( '_', ' ', $k ) ); ?></td><td><?php echo $v; ?></td>
                     </tr>
                 <?php else : ?>
                     <?php $i = 0; ?>
-                    <?php foreach( $v as $name => $value ) : $i++ ?>
+                    <?php foreach ( $v as $name => $value ) : $i++ ?>
                         <?php if ( ! is_array( $name ) ) : ?>
                             <tr>
                                 <td><?php _e( 'Product', 'sell_media' ); ?> <?php echo $i; ?></td>
@@ -175,9 +175,10 @@ function sell_media_payment_gateway_details( $post ){
     }
     echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase. Use this for debugging, if needed.', 'sell_media' ) . '</p>';
     echo '<ul>';
-    if ( $arguments ) foreach ( $arguments as $k => $v ) {
+    if ( $arguments ) { foreach ( $arguments as $k => $v ) {
         echo '<li><strong>' . $k . ':</strong> ' . $v . '</li>';
     }
+}
     echo '</ul>';
 }
 
@@ -191,13 +192,13 @@ function sell_media_payment_gateway_details( $post ){
  */
 function sell_media_reports_callback_fn(){
 
-    $current_page = admin_url('edit.php?post_type=download&page=sell_media_reports');?>
+    $current_page = admin_url( 'edit.php?post_type=download&page=sell_media_reports' );?>
     <div class="wrap">
         <?php screen_icon(); ?>
         <h2><?php _e( 'Earnings Report', 'sell_media' ); ?></h2>
         <div class="tool-box total-revenue">
-            <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
-            <p><?php printf('%s <a href="' . sell_media_plugin_data( $field='PluginURI' ) . '" class="button secondary" target="_blank">%s</a>', __( 'Below is a breakdown of earnings per day, month and year. Want to increase your sales?', 'sell_media' ), __( 'Download new Sell Media extensions', 'sell_media' ) ); ?></p>
+            <h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status = 'publish' ); ?></strong></h3>
+            <p><?php printf( '%s <a href="' . sell_media_plugin_data( $field = 'PluginURI' ) . '" class="button secondary" target="_blank">%s</a>', __( 'Below is a breakdown of earnings per day, month and year. Want to increase your sales?', 'sell_media' ), __( 'Download new Sell Media extensions', 'sell_media' ) ); ?></p>
             <?php do_action( 'sell_media_payments_below_total_earning' ); ?>
         </div>
 
@@ -210,19 +211,19 @@ function sell_media_reports_callback_fn(){
             google.setOnLoadCallback(drawChart);
             function drawChart() {
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', '<?php _e("Day", "sell_media"); ?>');
-                data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+                data.addColumn('string', '<?php _e( 'Day', 'sell_media' ); ?>');
+                data.addColumn('number', '<?php _e( 'Earnings', 'sell_media' ); ?>');
                 data.addRows([
                     <?php
                     $num_of_days = apply_filters( 'sell_media_earnings_per_day_days', 30 ); // show payments for the last 30 days
                     $i = $num_of_days;
-                    while( $i > 1 ) :
+                    while ( $i > 1 ) :
                         $day_time   = strtotime( '-' . $num_of_days - $i . ' days', time() );
                         $day        = date( 'd', $day_time ) + 1;
                         $month      = date( 'n', $day_time ) + 1;
                         $year       = date( 'Y', $day_time );
                         ?>
-                        ['<?php echo date( "n/d", mktime( 0, 0, 0, $month, $day, $year ) ); ?>',
+                        ['<?php echo date( 'n/d', mktime( 0, 0, 0, $month, $day, $year ) ); ?>',
                         <?php echo sell_media_get_sales_by_date( $day, $month, $year ); ?>,
                         ],
                         <?php $i--;
@@ -231,7 +232,7 @@ function sell_media_reports_callback_fn(){
                 ]);
 
                 var options = {
-                    title: "<?php _e('Earnings per day', 'sell_media'); ?>",
+                    title: "<?php _e( 'Earnings per day', 'sell_media' ); ?>",
                     fontSize: "12"
                 };
 
@@ -250,13 +251,13 @@ function sell_media_reports_callback_fn(){
             google.setOnLoadCallback(drawChart);
             function drawChart() {
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', '<?php _e("Month", "sell_media"); ?>');
-                data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+                data.addColumn('string', '<?php _e( 'Month', 'sell_media' ); ?>');
+                data.addColumn('number', '<?php _e( 'Earnings', 'sell_media' ); ?>');
                 data.addRows([
                     <?php
                     $i = 1;
-                    while($i <= 12) : ?>
-                        ['<?php echo sell_media_month_num_to_name($i) . ' ' . date("Y"); ?>', <?php echo sell_media_get_sales_by_date(null, $i, date('Y') ); ?>,
+                    while ( $i <= 12 ) : ?>
+                        ['<?php echo sell_media_month_num_to_name( $i ) . ' ' . date( 'Y' ); ?>', <?php echo sell_media_get_sales_by_date( null, $i, date( 'Y' ) ); ?>,
                         ],
                     <?php
                     $i++;
@@ -264,7 +265,7 @@ function sell_media_reports_callback_fn(){
                     ?>
                 ]);
                 var options = {
-                    title: "<?php _e('Earnings per month', 'sell_media'); ?>",
+                    title: "<?php _e( 'Earnings per month', 'sell_media' ); ?>",
                     fontSize: "12"
                 };
 
@@ -283,15 +284,15 @@ function sell_media_reports_callback_fn(){
             google.setOnLoadCallback(drawChart);
             function drawChart() {
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', '<?php _e("Year", "sell_media"); ?>');
-                data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+                data.addColumn('string', '<?php _e( 'Year', 'sell_media' ); ?>');
+                data.addColumn('number', '<?php _e( 'Earnings', 'sell_media' ); ?>');
                 data.addRows([
                     <?php
-                    $current = date('Y');
+                    $current = date( 'Y' );
                     $i = $current - 12;
-                    while($current >= $i) : ?>
+                    while ( $current >= $i ) : ?>
                         ['<?php echo $i; ?>',
-                        <?php echo sell_media_get_sales_by_date(null, null, $i ); ?>,
+                        <?php echo sell_media_get_sales_by_date( null, null, $i ); ?>,
                         ],
                         <?php
                         $i++;
@@ -300,7 +301,7 @@ function sell_media_reports_callback_fn(){
                 ]);
 
                 var options = {
-                    title: "<?php _e('Earnings per year', 'sell_media'); ?>",
+                    title: "<?php _e( 'Earnings per year', 'sell_media' ); ?>",
                     fontSize: "12"
                 };
 
@@ -347,7 +348,7 @@ function sell_media_get_sales_by_date( $day = null, $month_num, $year ) {
 function sell_media_month_num_to_name( $n ) {
     $timestamp = mktime( 0, 0, 0, $n, 1, 2005 );
 
-    return date( "M", $timestamp );
+    return date( 'M', $timestamp );
 }
 
 /**
@@ -362,24 +363,24 @@ function sell_media_payment_header( $columns ){
     // Allows to "move the checkbox" to be first
     if ( isset( $columns['cb'] ) ) {
         $columns_local['cb'] = $columns['cb'];
-        unset($columns['cb']);
+        unset( $columns['cb'] );
     }
 
     unset( $columns['title'] );
 
     // Our next column header is the 'id', we use this,
     // to ensure that our head has the class 'column-id'
-    if ( ! isset( $columns_local['id'] ) )
-        $columns_local['id'] = "Payment ID";
+    if ( ! isset( $columns_local['id'] ) ) {
+        $columns_local['id'] = 'Payment ID'; }
 
-    if ( ! isset( $columns_local['products'] ) )
-        $columns_local['products'] = "Products";
+    if ( ! isset( $columns_local['products'] ) ) {
+        $columns_local['products'] = 'Products'; }
 
-    if ( ! isset( $columns_local['customer'] ) )
-        $columns_local['customer'] = "Customer";
+    if ( ! isset( $columns_local['customer'] ) ) {
+        $columns_local['customer'] = 'Customer'; }
 
-    if ( ! isset( $columns_local['total'] ) )
-        $columns_local['total'] = "Total";
+    if ( ! isset( $columns_local['total'] ) ) {
+        $columns_local['total'] = 'Total'; }
 
     return array_merge( $columns_local, $columns );
 }
@@ -392,24 +393,25 @@ add_filter( 'manage_edit-sell_media_payment_columns', 'sell_media_payment_header
  * @since 0.1
  */
 function sell_media_payment_content( $column, $post_id ){
-    switch( $column ) {
-        case "id":
+    switch ( $column ) {
+        case 'id':
             $html = '<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
             $html .= $post_id;
             $html .= '</a>';
             echo $html;
             break;
-        case "products":
+        case 'products':
             $products = Sell_Media()->payments->get_products( $post_id );
-            if ( $products ) foreach ( $products as $product ) {
+            if ( $products ) { foreach ( $products as $product ) {
                 $type = ( ! empty( $product['type'] ) ) ? ' (' . $product['type'] . ') ' : '';
                 echo $product['name'] . $type . '<br />';
             }
+}
             break;
-        case "customer":
+        case 'customer':
             echo Sell_Media()->payments->get_buyer_name( $post_id );
             break;
-        case "total":
+        case 'total':
             echo sell_media_get_currency_symbol() . number_format( Sell_Media()->payments->get_meta_key( $post_id, 'total' ), 2, '.', '' );
             break;
         default:

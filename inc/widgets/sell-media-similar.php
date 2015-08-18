@@ -3,7 +3,7 @@
 	function Sell_Media_Similar_Widget(){
 		$widget_ops = array( 'description' => 'Displays similar items' );
 		$control_ops = array( 'width' => 200, 'height' => 200 );
-		parent::__construct( false, $name='Sell Media Similar Items', $widget_ops, $control_ops );
+		parent::__construct( false, $name = 'Sell Media Similar Items', $widget_ops, $control_ops );
 	}
 
 	/* Displays the Widget in the front-end */
@@ -13,8 +13,8 @@
 		extract( $args );
 		echo $before_widget;
 
-		if ( $title )
-			echo $before_title . $title . $after_title;
+		if ( $title ) {
+			echo $before_title . $title . $after_title; }
 
 		global $post;
 		//Returns Array of Term Names for "collection"
@@ -35,7 +35,7 @@
 			);
 
 		} else {
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => '6' );
+			$args = array( 'post_type' => 'sell_media_item', 'field' => 'slug', 'orderby' => 'rand', 'posts_per_page' => '6' );
 		} ?>
 
 		<div class="sell-media-similar-widget sell-media">
@@ -45,7 +45,7 @@
 			$image_sizes = get_intermediate_image_sizes(); ?>
 
 			<?php
-			$type_posts = new WP_Query ( $args );
+			$type_posts = new WP_Query( $args );
 			?>
 			<?php while ( $type_posts->have_posts() ) : $type_posts->the_post();
 
@@ -81,11 +81,11 @@
 	/* Creates the form for the widget in the back-end. */
 	function form( $instance ){
 		// Defaults
-		$instance = wp_parse_args( ( array ) $instance, array( 'title'=>'Similar Items' ) );
-		$title = htmlspecialchars($instance['title']);
+		$instance = wp_parse_args( ( array ) $instance, array( 'title' => 'Similar Items' ) );
+		$title = htmlspecialchars( $instance['title'] );
 
 		// Title
-		echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
+		echo '<p><label for="' . $this->get_field_id( 'title' ) . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '" /></p>';
 	}
 
 }

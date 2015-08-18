@@ -79,7 +79,7 @@ function sell_media_process_paypal_ipn() {
          * the seller email in our DB
          */
         $settings = sell_media_get_plugin_options();
-        if ( $_POST['receiver_email'] != $settings->paypal_email ){
+        if ( $_POST['receiver_email'] != $settings->paypal_email ) {
             $message .= "\nEmail seller email does not match email in settings\n";
         }
 
@@ -90,7 +90,7 @@ function sell_media_process_paypal_ipn() {
          * the currency setting
          */
         $settings = sell_media_get_plugin_options();
-        if ( $_POST['mc_currency'] != $settings->currency ){
+        if ( $_POST['mc_currency'] != $settings->currency ) {
             $message .= "\nCurrency does not match those assigned in settings\n";
         }
 
@@ -101,7 +101,7 @@ function sell_media_process_paypal_ipn() {
          * that against the txn_id returned.
          */
         $txn_id = get_post_meta( $_POST['custom'], 'txn_id', true );
-        if ( empty( $txn_id ) ){
+        if ( empty( $txn_id ) ) {
             update_post_meta( $_POST['custom'], 'txn_id', $_POST['txn_id'] );
         } else {
             $message .= "\nThis payment was already processed\n";
@@ -116,8 +116,8 @@ function sell_media_process_paypal_ipn() {
         if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ) {
 
             // Return if this IPN doesn't contain a Sell Media item
-            if ( empty( $_POST['option_selection1_1'] ) && ( $_POST['option_selection1_1'] != 'print' || $_POST['option_selection1_1'] != 'download' ) )
-                return;
+            if ( empty( $_POST['option_selection1_1'] ) && ( $_POST['option_selection1_1'] != 'print' || $_POST['option_selection1_1'] != 'download' ) ) {
+                return; }
 
             $data = array(
                 'post_title'    => $_POST['payer_email'],
@@ -152,8 +152,7 @@ function sell_media_process_paypal_ipn() {
                 do_action( 'sell_media_after_successful_payment', $payment_id );
 
             }
-
-        } else {
+} else {
 
             $message .= "\nPayment status not set to Completed\n";
 
@@ -165,20 +164,19 @@ function sell_media_process_paypal_ipn() {
          * If this is the test mode we email the IPN text report.
          * note about and box http://stackoverflow.com/questions/4298117/paypal-ipn-always-return-payment-status-pending-on-sandbox
          */
-        if ( $settings->test_mode == true ){
+        if ( $settings->test_mode == true ) {
 
             $message .= "\nTest Mode\n";
             $email = array(
                 'to' => $settings->from_email,
                 'subject' => 'Verified IPN',
-                'message' =>  $message . "\n" . $listener->getTextReport()
+                'message' => $message . "\n" . $listener->getTextReport()
                 );
 
             wp_mail( $email['to'], $email['subject'], $email['message'] );
 
         }
-
-    } else {
+} else {
 
         /**
          * Log errors

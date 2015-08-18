@@ -30,7 +30,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
     <div class="content">
         <header>
             <figure><?php sell_media_item_icon( $image_id ); ?></figure>
-            <figcaption><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></figcaption>
+            <figcaption><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) { echo ', ' . $attachment_id; } ?></figcaption>
         </header>
         <section>
             <?php
@@ -50,11 +50,11 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
             ?>
             <form id="sell-media-cart-items" class="hide">
                 <input class="item_number" type="text" value="<?php echo $post_id; ?>" />
-                <input class="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
-                <input class="item_type" type="text" value="<?php if ( $is_package ) echo 'download'; else echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
+                <input class="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) { echo ', ' . $attachment_id; } ?>" />
+                <input class="item_type" type="text" value="<?php if ( $is_package ) { echo 'download'; } else { echo apply_filters( 'sell_media_set_product_type', 'download' ); } ?>" />
                 <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
-                <input class="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
-                <input class="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
+                <input class="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) { echo 'original'; } ?>" />
+                <input class="item_size" type="text" value="<?php if ( ! $has_price_group ) { echo 'Original'; } ?>" />
                 <input class="item_usage" type="text" value="No license" />
                 <input class="item_license" type="text" value="0" />
                 <input class="item_attachment" type="text" value="<?php echo $attachment_id; ?>" />
@@ -73,10 +73,10 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                     <fieldset id="sell_media_download_size_fieldset">
                         <legend><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></legend>
                         <select id="sell_media_item_size" class="sum" required>
-                            <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
+                            <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media' ); ?> --</option>
                             <?php
                                 $prices = Sell_Media()->products->get_prices( $post_id, $attachment_id );
-                                if ( $prices ) foreach ( $prices as $k => $v ) {
+                                if ( $prices ) { foreach ( $prices as $k => $v ) {
                                     if ( wp_attachment_is_image( $attachment_id ) ) {
                                         $name = $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')';
                                         $dimensions = $v['width'] . ' x ' . $v['height'];
@@ -85,10 +85,11 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                                         $dimensions = 'Original';
                                     }
                                     $download_sizes = Sell_Media()->images->get_downloadable_size( $post_id, $attachment_id, null, true );
-                                    if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
-                                        echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+                                    if ( array_key_exists( $v['id'], $download_sizes['available'] ) || 'original' == $v['id'] ) {
+                                        echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '' ) . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
                                     }
                                 }
+}
                             ?>
                         </select>
                     </fieldset>
@@ -103,8 +104,8 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                     <fieldset id="sell_media_download_license_fieldset">
                         <legend><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
                         <select id="sell_media_item_license" class="sum" required>
-                            <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
-                            <?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
+                            <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media' ); ?> --</option>
+                            <?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => 'licenses', 'type' => 'select' ) ); ?>
                         </select>
                     </fieldset>
                 <?php endif; ?>
@@ -117,7 +118,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
             </div>
 
             <div class="button-container group">
-                <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
+                <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) { echo 'disabled'; } ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
             </div>
 
             <footer><?php sell_media_plugin_credit(); ?></footer>

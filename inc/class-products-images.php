@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 class SellMediaImages extends SellMediaProducts {
 
@@ -39,13 +39,11 @@ class SellMediaImages extends SellMediaProducts {
             $destination_file = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
             $destination_dir  = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/';
 
-
             // Check if the destination directory exists, i.e.
             // wp-content/uploads/sell_media/YYYY/MM if not we create it.
-            if ( ! file_exists( dirname( $destination_file ) ) ){
+            if ( ! file_exists( dirname( $destination_file ) ) ) {
                 wp_mkdir_p( dirname( $destination_file ) );
             }
-
 
             /**
              * Resize original file down to the largest size set in the Media Settings
@@ -56,8 +54,7 @@ class SellMediaImages extends SellMediaProducts {
              * functions that are in trunk and not in 3.4
              */
             global $wp_version;
-            if ( version_compare( $wp_version, '3.5', '>=' ) ){
-
+            if ( version_compare( $wp_version, '3.5', '>=' ) ) {
 
                 /**
                  * Resize the "original" to our largest size set in the Media Settings.
@@ -70,12 +67,11 @@ class SellMediaImages extends SellMediaProducts {
                  */
                 $image_new_size = image_make_intermediate_size( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false );
 
-
                 /**
                  * If for some reason the image resize fails we just fall back to the original image.
                  * Example, the image the user is trying to sell is smaller than our "max width".
                  */
-                if ( empty( $image_new_size ) ){
+                if ( empty( $image_new_size ) ) {
                     $resized_image = $original_file;
                     $keep_original = true;
                 } else {
@@ -83,14 +79,13 @@ class SellMediaImages extends SellMediaProducts {
                     $resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
                 }
 
-
-                if ( ! file_exists( $destination_file ) ){
+                if ( ! file_exists( $destination_file ) ) {
 
                     /**
                      * Move our originally upload file into the protected area
                      */
                     copy( $original_file, $destination_file );
-                    if ( ! $keep_original ) unlink( $original_file );
+                    if ( ! $keep_original ) { unlink( $original_file ); }
 
                     /**
                      * We rename our resize original file i.e., "filename-[width]x[height].jpg" located in our uploads directory
@@ -100,11 +95,10 @@ class SellMediaImages extends SellMediaProducts {
                     $new_path_destination = $original_file;
                     copy( $new_path_source, $new_path_destination );
                 }
-
-            } else {
+} else {
 
                 $resized_image = image_resize( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false, null, $wp_upload_dir['path'], 90 );
-                if ( ! file_exists( $destination_file ) ){
+                if ( ! file_exists( $destination_file ) ) {
                     // Copy original to our protected area
                     @copy( $original_file, $destination_file );
 
@@ -127,7 +121,7 @@ class SellMediaImages extends SellMediaProducts {
         if ( wp_attachment_is_image( $attachment_id ) ) {
             $original_size = wp_get_attachment_image_src( $attachment_id, 'full' );
             return array(
-                'original'=> array(
+                'original' => array(
                     'height' => $original_size[2],
                     'width' => $original_size[1]
                 )
@@ -155,16 +149,16 @@ class SellMediaImages extends SellMediaProducts {
          * sizes that are not downloadable.
          */
         $size_groups = sell_media_get_price_groups( $post_id, 'price-group' );
-        if ( ! empty( $size_groups ) ){
+        if ( ! empty( $size_groups ) ) {
 
             $image = $this->get_original_image_size( $attachment_id );
 
-            foreach( $size_groups as $size ){
+            foreach ( $size_groups as $size ) {
 
                 /**
                  * Check for children only
                  */
-                if ( $size->parent > 0 ){
+                if ( $size->parent > 0 ) {
 
                     /**
                      * Retrieve the height and width for our price group
@@ -179,7 +173,6 @@ class SellMediaImages extends SellMediaProducts {
                     $download_sizes[ $size->term_id ] = array(
                         'name' => $size->name
                         );
-
 
                     /**
                      * Calculate dimensions and coordinates for a resized image that fits
@@ -201,8 +194,8 @@ class SellMediaImages extends SellMediaProducts {
                             $image['original']['height'],
                             $pg_width,
                             $pg_height,
-                            $crop=false
-                            );
+                            $crop = false
+                        );
 
                     /**
                      * If no width/height can be determined we remove it from our array of
@@ -217,16 +210,15 @@ class SellMediaImages extends SellMediaProducts {
                         unset( $download_sizes[ $size->term_id ] );
                     }
 
-
                     /**
                      * Check for portraits and if the available download size is larger than
                      * the original we remove it.
                      */
                     $terms = wp_get_post_terms( $post_id, 'price-group' );
                     $heights[] = '';
-                    if ( ! empty( $terms ) ){
-                        foreach( $terms as $term ){
-                            if ( $term->parent != 0 ){
+                    if ( ! empty( $terms ) ) {
+                        foreach ( $terms as $term ) {
+                            if ( $term->parent != 0 ) {
                                 $height = sell_media_get_term_meta( $term->term_id, 'height', true );
                                 $heights[] = $height;
                             }
@@ -234,14 +226,13 @@ class SellMediaImages extends SellMediaProducts {
                     }
                     $smallest_height = min( $heights );
 
-
                     /**
                      * Compare the original image size with our array of images sizes from
                      * Price Groups array, removing items that are not available.
                      */
                     if ( $image['original']['height'] >= $image['original']['width']
                         && isset( $download_sizes[ $size->term_id ] )
-                        && $download_sizes[ $size->term_id ]['height'] <= $smallest_height ){
+                        && $download_sizes[ $size->term_id ]['height'] <= $smallest_height ) {
                             $unavailable_size[ $size->term_id ] = array(
                                 'name' => $download_sizes[ $size->term_id ]['name'],
                                 'price' => $download_sizes[ $size->term_id ]['price'],
@@ -255,19 +246,15 @@ class SellMediaImages extends SellMediaProducts {
         }
 
         // Returns an array of available and unavailable sizes
-        if ( $size_not_available ){
+        if ( $size_not_available ) {
             $sizes = array(
                 'available' => $download_sizes,
                 'unavailable' => empty( $unavailable_size ) ? null : $unavailable_size
                 );
-        }
-
-        // return all available sizes
+        } // return all available sizes
         elseif ( empty( $term_id ) ) {
             $sizes = $download_sizes;
-        }
-
-        // return available size for a given product
+        } // return available size for a given product
         else {
             // Since we no longer check if the image sold is available in the download sizes
             // we allow the buyer to download the original image if the size they purchased
@@ -309,17 +296,17 @@ class SellMediaImages extends SellMediaProducts {
 
         // Save IPTC info as taxonomies
         if ( ! empty( $attachment_id ) ) {
-            if ( $city )
-                sell_media_iptc_save( 'city', $city, $attachment_id );
+            if ( $city ) {
+                sell_media_iptc_save( 'city', $city, $attachment_id ); }
 
-            if ( $state )
-                sell_media_iptc_save( 'state', $state, $attachment_id );
+            if ( $state ) {
+                sell_media_iptc_save( 'state', $state, $attachment_id ); }
 
-            if ( $creator )
-                sell_media_iptc_save( 'creator', $creator, $attachment_id );
+            if ( $creator ) {
+                sell_media_iptc_save( 'creator', $creator, $attachment_id ); }
 
-            if ( $keywords )
-                sell_media_iptc_save( 'keywords', $keywords, $attachment_id );
+            if ( $keywords ) {
+                sell_media_iptc_save( 'keywords', $keywords, $attachment_id ); }
         }
     }
 
@@ -336,17 +323,17 @@ class SellMediaImages extends SellMediaProducts {
         $attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
         $meta = wp_get_attachment_metadata( $attachment_id, true );
 
-        if ( ! empty( $meta ) ){
+        if ( ! empty( $meta ) ) {
 
-            if ( empty( $orientation ) || $orientation == 'any' ){
+            if ( empty( $orientation ) || $orientation == 'any' ) {
                 return true;
             }
 
-            if ( $orientation == 'landscape' && $meta['height'] < $meta['width'] ){
+            if ( $orientation == 'landscape' && $meta['height'] < $meta['width'] ) {
                 return true;
             }
 
-            if ( $orientation == 'portrait' && $meta['height'] > $meta['width'] ){
+            if ( $orientation == 'portrait' && $meta['height'] > $meta['width'] ) {
                 return true;
             }
         }

@@ -44,7 +44,7 @@ $settings = sell_media_get_plugin_options();
                 $args = array(
                     'orderby' => 'name',
                     'hide_empty' => false,
-                    'number' => get_option('posts_per_page '),
+                    'number' => get_option( 'posts_per_page ' ),
                     'parent' => $term_ID
                 );
 
@@ -68,14 +68,14 @@ $settings = sell_media_get_plugin_options();
 
                         if ( $post_count != 0 ) : $i++; ?>
 
-                            <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
+                            <div class="sell-media-grid<?php if ( $i % 3 == 0 ) { echo ' end'; } ?>">
                                 <div class="item-inner sell-media-collection">
                                     <a href="<?php echo get_term_link( $child ); ?>" class="collection">
 
                                         <div class="item-overlay">
                                             <div class="collection-details">
                                                 <h3 class="collection-title"><?php echo $child->name; ?></h3>
-                                                <span class="collection-count"><span class="count"><?php echo $post_count; ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo $child->name; ?></span><?php _e(' collection', 'sell_media'); ?></span>
+                                                <span class="collection-count"><span class="count"><?php echo $post_count; ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo $child->name; ?></span><?php _e( ' collection', 'sell_media' ); ?></span>
                                                 <span class="collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price"><?php echo sell_media_get_currency_symbol(); ?><?php echo $settings->default_price; ?></span></span>
                                             </div>
                                         </div>
@@ -89,10 +89,10 @@ $settings = sell_media_get_plugin_options();
                                         $posts = New WP_Query( $args );
                                         ?>
 
-                                        <?php foreach( $posts->posts as $post ) : ?>
+                                        <?php foreach ( $posts->posts as $post ) : ?>
                                             <?php
                                                 $collection_attachment_id = sell_media_get_term_meta( $child->term_id, 'collection_icon_id', true );
-                                                if ( ! empty ( $collection_attachment_id ) ) {
+                                                if ( ! empty( $collection_attachment_id ) ) {
                                                     echo wp_get_attachment_image( $collection_attachment_id, 'sell_media_item' );
                                                 } else {
                                                     sell_media_item_icon( $post->ID, 'sell_media_item' );

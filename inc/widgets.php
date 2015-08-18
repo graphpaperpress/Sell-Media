@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Include Widgets
@@ -29,7 +29,7 @@ function sell_media_widgets_init() {
         'name' => __( 'Sell Media Below Single Content', 'sell_media' ),
         'id' => 'sell-media-below-single-content',
         'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-        'after_widget' => "</aside>",
+        'after_widget' => '</aside>',
         'before_title' => '<h3 class="widget-title">',
         'after_title' => '</h3>',
     ) );
@@ -38,7 +38,7 @@ function sell_media_widgets_init() {
         'name' => __( 'Sell Media Below Single Sidebar', 'sell_media' ),
         'id' => 'sell-media-below-single-sidebar',
         'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-        'after_widget' => "</aside>",
+        'after_widget' => '</aside>',
         'before_title' => '<h3 class="widget-title">',
         'after_title' => '</h3>',
     ) );

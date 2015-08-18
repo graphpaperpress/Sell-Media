@@ -7,21 +7,21 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 		function Sell_Media_Image_Exif_Widget(){
 			$widget_ops = array( 'description' => __( 'Displays image exif data (shutter speed, aperture, ISO, etc). Only use this on Single Sidebar Widgetized areas.', 'sell_media' ) );
 			$control_ops = array( 'width' => 200, 'height' => 200 );
-			parent::__construct( false, $name='Sell Media Exif', $widget_ops, $control_ops );
+			parent::__construct( false, $name = 'Sell Media Exif', $widget_ops, $control_ops );
 		}
 
 		/* Displays the Widget in the front-end */
 		function widget($args, $instance){
-			extract($args);
+			extract( $args );
 			$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
-			extract($args);
+			extract( $args );
 			echo $before_widget;
 
 			global $post;
 			$imgdata = wp_get_attachment_metadata( get_post_meta( $post->ID, '_sell_media_attachment_id', true ) );
-			if ( $imgdata) {
-				if ( $title )
-					echo $before_title . $title . $after_title;
+			if ( $imgdata ) {
+				if ( $title ) {
+					echo $before_title . $title . $after_title; }
 				?>
 				<div class="sell-media-exif-widget">
 					<ul class="exif-info">
@@ -45,12 +45,12 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 						if ( $imgdata['image_meta']['shutter_speed'] ) { ?>
 							<li class="shutter-speed"><div class="genericon genericon-small genericon-time"></div><span class="exif-title"><?php _e( 'Shutter Speed ', 'sell_media' ); ?></span>
 								<?php
-								if ((1 / $imgdata['image_meta']['shutter_speed']) > 1) {
-									echo "1/";
-									if (number_format((1 / $imgdata['image_meta']['shutter_speed']), 1) == number_format((1 / $imgdata['image_meta']['shutter_speed']), 0)) {
-										echo number_format((1 / $imgdata['image_meta']['shutter_speed']), 0, '.', '') . ' sec';
+								if ( (1 / $imgdata['image_meta']['shutter_speed']) > 1 ) {
+									echo '1/';
+									if ( number_format( (1 / $imgdata['image_meta']['shutter_speed']), 1 ) == number_format( (1 / $imgdata['image_meta']['shutter_speed']), 0 ) ) {
+										echo number_format( (1 / $imgdata['image_meta']['shutter_speed']), 0, '.', '' ) . ' sec';
 									} else {
-										echo number_format((1 / $imgdata['image_meta']['shutter_speed']), 1, '.', '') . ' sec';
+										echo number_format( (1 / $imgdata['image_meta']['shutter_speed']), 1, '.', '' ) . ' sec';
 									}
 									} else {
 										echo $imgdata['image_meta']['shutter_speed'].' sec';
@@ -70,14 +70,14 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 
 						<?php
 						if ( $imgdata['image_meta']['created_timestamp'] ) { ?>
-							<li class="timestamp"><div class="genericon genericon-small genericon-month"></div><span class="exif-title"><?php _e( 'Date ', 'sell_media' ); ?></span><?php echo date("M d, Y", $imgdata['image_meta']['created_timestamp']); ?></li>
+							<li class="timestamp"><div class="genericon genericon-small genericon-month"></div><span class="exif-title"><?php _e( 'Date ', 'sell_media' ); ?></span><?php echo date( 'M d, Y', $imgdata['image_meta']['created_timestamp'] ); ?></li>
 						<?php } ?>
 
 						<?php
 						if ( $imgdata['image_meta']['copyright'] ) { ?>
 							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php echo $imgdata['image_meta']['copyright']; ?></li>
 						<?php } else { ?>
-							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php the_time('Y '); _e( 'by ', 'sell_media' ); bloginfo( 'name' ); ?><?php echo $imgdata['image_meta']['copyright']; ?></li>
+							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php the_time( 'Y ' ); _e( 'by ', 'sell_media' ); bloginfo( 'name' ); ?><?php echo $imgdata['image_meta']['copyright']; ?></li>
 						<?php } ?>
 
 					</ul>
@@ -93,7 +93,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 		/* Saves the settings. */
 		function update($new_instance, $old_instance){
 			$instance = $old_instance;
-			$instance['title'] = stripslashes($new_instance['title']);
+			$instance['title'] = stripslashes( $new_instance['title'] );
 
 			return $instance;
 		}
@@ -102,10 +102,10 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 		function form($instance){
 			// Defaults
 			$instance = wp_parse_args( (array) $instance, array( 'title' => __( 'Camera Info', 'sell_media' ) ) );
-			$title = htmlspecialchars($instance['title']);
+			$title = htmlspecialchars( $instance['title'] );
 
 			/* Title */
-			echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
+			echo '<p><label for="' . $this->get_field_id( 'title' ) . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '" /></p>';
 
 		}
 

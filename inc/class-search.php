@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 Class SellMediaSearch {
 
@@ -62,7 +62,7 @@ Class SellMediaSearch {
         $sentence = isset( $this->query_instance->query_vars['sentence'] ) ? $this->query_instance->query_vars['sentence'] : false;
         $search_terms = array();
 
-        if ( !empty( $s ) ) {
+        if ( ! empty( $s ) ) {
             // added slashes screw with quote grouping when done early, so done later
             $s = stripslashes( $s );
             if ( $sentence ) {
@@ -119,7 +119,7 @@ Class SellMediaSearch {
             $search_sql_query .= $seperator;
 
             $esc_term = esc_sql( $term );
-            if ($not_exact) {
+            if ( $not_exact ) {
                 $esc_term = "%$esc_term%";
             }
 
@@ -163,8 +163,8 @@ Class SellMediaSearch {
             if ( count( $search_terms ) > 1 && $search_terms[0] != $s ) {
                 $searchSlug = "($searchSlug) OR (tter.slug LIKE '{$n}".sanitize_title_with_dashes( $s )."{$n}')";
             }
-            if ( ! empty( $searchSlug ) )
-                $search = " OR ({$searchSlug}) ";
+            if ( ! empty( $searchSlug ) ) {
+                $search = " OR ({$searchSlug}) "; }
 
             // Building search query for categories description.
             $searchand = '';
@@ -178,8 +178,8 @@ Class SellMediaSearch {
             if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
                 $searchDesc = "($searchDesc) OR (ttax.description LIKE '{$n}{$sentence_term}{$n}')";
             }
-            if ( ! empty( $searchDesc ) )
-                $search = $search." OR ({$searchDesc}) ";
+            if ( ! empty( $searchDesc ) ) {
+                $search = $search." OR ({$searchDesc}) "; }
         }
         return $search;
     }
@@ -193,8 +193,7 @@ Class SellMediaSearch {
     public function distinct( $query ) {
         global $wpdb;
         if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
-            if ( strstr( $query, 'DISTINCT' ) ) {}
-            else {
+            if ( strstr( $query, 'DISTINCT' ) ) {} else {
                 $query = str_replace( 'SELECT', 'SELECT DISTINCT', $query );
             }
         }
@@ -209,8 +208,8 @@ Class SellMediaSearch {
      */
     public function search_query( $query ) {
 
-        if ( ! $query->is_search )
-            return $query;
+        if ( ! $query->is_search ) {
+            return $query; }
 
         /**
          * Only proceed if searching Sell Media
@@ -221,8 +220,8 @@ Class SellMediaSearch {
              * Add "sell_media_item" and "attachment" to search query
              */
             $post_types = $query->get( 'post_type' );
-            if ( $post_types && 'sell_media_item' == $post_types )
-                $post_types = array( 'sell_media_item', 'attachment' );
+            if ( $post_types && 'sell_media_item' == $post_types ) {
+                $post_types = array( 'sell_media_item', 'attachment' ); }
 
             $query->set( 'post_type', $post_types );
 
@@ -230,23 +229,23 @@ Class SellMediaSearch {
              * Add post status "inherit" (for attachments) since WP only searches "publish"
              */
             $post_status = $query->get( 'post_status' );
-            if ( ! $post_status || 'publish' == $post_status )
-                $post_status = array( 'publish', 'inherit' );
+            if ( ! $post_status || 'publish' == $post_status ) {
+                $post_status = array( 'publish', 'inherit' ); }
 
-            if ( is_array( $post_status ) )
-                $post_status[] = 'inherit';
+            if ( is_array( $post_status ) ) {
+                $post_status[] = 'inherit'; }
 
             $query->set( 'post_status', $post_status );
 
             /**
              * Exclude password protected collections from search query
              */
-            foreach( get_terms('collection') as $term_obj ){
+            foreach ( get_terms( 'collection' ) as $term_obj ) {
                 $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
-                if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
+                if ( $password ) { $exclude_term_ids[] = $term_obj->term_id; }
             }
 
-            if ( ! empty( $exclude_term_ids ) ){
+            if ( ! empty( $exclude_term_ids ) ) {
                 $collection_querys = array(
                     'relation' => 'AND',
                     array(
@@ -307,8 +306,8 @@ Class SellMediaSearch {
 
             // return if no ID
             $id = get_the_ID();
-            if ( ! $id )
-                return $excerpt;
+            if ( ! $id ) {
+                return $excerpt; }
 
             // set variables
             $ancestors  = get_post_ancestors( $id ); // check if in gallery (has post_parent)
@@ -320,10 +319,10 @@ Class SellMediaSearch {
             $excerpt  = "<div id='attachment_{$id}' class='wp-caption aligncenter'>";
             $excerpt .= "<a href='{$link}'>";
             $excerpt .= sell_media_item_icon( $id, 'large', false );
-            $excerpt .= "</a>";
-            if ( $caption )
-                $excerpt .= "<p class='wp-caption-text'>$caption</p>";
-            $excerpt .= "</div>";
+            $excerpt .= '</a>';
+            if ( $caption ) {
+                $excerpt .= "<p class='wp-caption-text'>$caption</p>"; }
+            $excerpt .= '</div>';
 
         }
 

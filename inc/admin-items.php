@@ -54,7 +54,7 @@ function sell_media_files_meta_box( $post ) {
     do_action( 'sell_media_before_files_meta_box', $post ); ?>
 
     <div id="sell-media-upload-field" class="sell-media-field">
-        <p><input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" /></p>
+        <p><input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media' ); ?>" /></p>
         <p class="description"><?php _e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
         <p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
     </div>
@@ -67,9 +67,9 @@ function sell_media_files_meta_box( $post ) {
             <option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
             <?php
             $directories = sell_media_get_directories();
-            if ( $directories ) foreach ( $directories as $directory ) : ?>
+            if ( $directories ) { foreach ( $directories as $directory ) : ?>
                 <option value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
-            <?php endforeach; ?>
+            <?php endforeach; }; ?>
         </select>
         <button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php _e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php _e( 'Importing files...', 'sell_media' ); ?>" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
         <?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
@@ -86,9 +86,10 @@ function sell_media_files_meta_box( $post ) {
     <ul class="attachments sell-media-upload-list">
         <?php
             $attachment_ids = sell_media_get_attachments( $post->ID );
-            if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+            if ( $attachment_ids ) { foreach ( $attachment_ids as $attachment_id ) {
                 echo sell_media_list_uploads( $attachment_id );
             }
+}
         ?>
     </ul>
 
@@ -160,7 +161,7 @@ function sell_media_stats_meta_box( $post ) { ?>
  */
 function sell_media_editor() {
     global $post_type;
-    if ( $post_type != "sell_media_item" ) return;
+    if ( $post_type != 'sell_media_item' ) { return; }
     global $post;
     wp_editor( $post->post_content, 'post_content', array( 'sell_media_editor' => 'post_content' ) );
 }
@@ -177,13 +178,13 @@ add_action( 'edit_form_advanced', 'sell_media_editor' );
  */
 function sell_media_save_custom_meta( $post_id ) {
 
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-    if ( ! isset( $_POST['sell_media_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_meta_box_nonce'], '_sell_media_meta_box_nonce' ) ) return;
-    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return; }
+    if ( ! isset( $_POST['sell_media_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_meta_box_nonce'], '_sell_media_meta_box_nonce' ) ) { return; }
+    if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
 
     // Prevents an infinite loop
     // See: http://codex.wordpress.org/Function_Reference/wp_update_post
-    if ( wp_is_post_revision( $post_id ) ) return;
+    if ( wp_is_post_revision( $post_id ) ) { return; }
     remove_action( 'save_post', 'sell_media_save_custom_meta' );
 
     // loop through sell media fields and save the data
@@ -226,9 +227,10 @@ function sell_media_save_custom_meta( $post_id ) {
                     // Loop over attachment ids and move files into protected directory
                     if ( $field == '_sell_media_attachment_id' ) {
                         $attachment_ids = explode( ',', $_POST[ $field ] );
-                        if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+                        if ( $attachment_ids ) { foreach ( $attachment_ids as $attachment_id ) {
                             sell_media_move_file( $attachment_id );
                         }
+}
                     }
 
                 // new meta is empty, so delete it
@@ -237,8 +239,7 @@ function sell_media_save_custom_meta( $post_id ) {
                     delete_post_meta( $post_id, $field, $old );
 
                 }
-
-            }
+}
         // Checkbox field isn't set, so delete the meta
         } else {
 
@@ -249,10 +250,10 @@ function sell_media_save_custom_meta( $post_id ) {
 
     // Save the post content
     global $post_type;
-    if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
+    if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ) {
         $new_content = $_POST['sell_media_editor'];
         $old_content = get_post_field( 'post_content', $post_id );
-        if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ){
+        if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ) {
             $args = array(
                 'ID' => $post_id,
                 'post_content' => $new_content
@@ -277,9 +278,10 @@ function sell_media_upload_callback(){
     check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
 
     // Display thumbnails after upload/selection
-    if ( $_POST['attachments'] ) foreach( $_POST['attachments'] as $attachment ){
+    if ( $_POST['attachments'] ) { foreach ( $_POST['attachments'] as $attachment ) {
         $html .= sell_media_list_uploads( $attachment['id'] );
     }
+}
     echo $html;
     die();
 }
@@ -305,7 +307,7 @@ function sell_media_upload_bulk_callback(){
 
             $html = '';
 
-            if ( $files ) foreach ( $files as $file ) {
+            if ( $files ) { foreach ( $files as $file ) {
 
                 /**
                  * The WP function media_handle_sideload requires a files array ($_FILES).
@@ -330,13 +332,12 @@ function sell_media_upload_bulk_callback(){
                 } else {
                     $html .= sell_media_list_uploads( $attachment_id );
                 }
-
-            }
+}
+}
 
             echo $html;
         }
-
-    }
+}
     die();
 }
 add_action( 'wp_ajax_sell_media_upload_bulk_callback', 'sell_media_upload_bulk_callback' );
@@ -371,22 +372,22 @@ function sell_media_item_header( $columns ){
     // Allows to "move the checkbox" to be first
     if ( isset( $columns['cb'] ) ) {
         $columns_local['cb'] = $columns['cb'];
-        unset($columns['cb']);
+        unset( $columns['cb'] );
     }
 
     // Our next column header is the 'icon', we use this,
     // to ensure that our head has the class 'column-icon'
-    if ( ! isset( $columns_local['icon'] ) )
-        $columns_local['icon'] = "Item";
+    if ( ! isset( $columns_local['icon'] ) ) {
+        $columns_local['icon'] = 'Item'; }
 
     // We have to unset default columns to "move" them
     if ( isset( $columns['title'] ) ) {
         $columns_local['title'] = $columns['title'];
-        unset($columns['title']);
+        unset( $columns['title'] );
     }
 
-    if ( ! isset( $columns_local['sell_media_price'] ) )
-        $columns_local['sell_media_price'] = "Price";
+    if ( ! isset( $columns_local['sell_media_price'] ) ) {
+        $columns_local['sell_media_price'] = 'Price'; }
 
     return array_merge( $columns_local, $columns );
 }
@@ -434,14 +435,14 @@ add_filter( 'request', 'sell_media_column_orderby' );
  * @since 0.1
  */
 function sell_media_item_content( $column, $post_id ){
-    switch( $column ) {
-        case "icon":
-            $html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
+    switch ( $column ) {
+        case 'icon':
+            $html = '<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
             $html .= sell_media_item_icon( $post_id, 'thumbnail', false );
             $html .= '</a>';
             echo $html;
             break;
-        case "sell_media_price":
+        case 'sell_media_price':
             $price = get_post_meta( $post_id, 'sell_media_price', true );
             $settings = sell_media_get_plugin_options();
             if ( $price ) {
@@ -473,10 +474,10 @@ function sell_media_sales_stats(){
     if ( $stats_array ) {
         $i = 0;
         $count = count( $stats_array );
-        foreach( $stats_array as $license_id => $stats ) {
+        foreach ( $stats_array as $license_id => $stats ) {
             $term_obj = get_term( $license_id, 'licenses' );
             $i++;
-            if ( $i == $count ){
+            if ( $i == $count ) {
                 $last_class = 'misc-pub-section-last';
             } else {
                 $last_class = null;
@@ -500,19 +501,18 @@ function sell_media_before_delete_post( $postid, $attachment_id=null ){
 
     $post_type = get_post_type( $postid );
 
-    if ( $post_type != 'sell_media_item' ) return;
+    if ( $post_type != 'sell_media_item' ) { return; }
 
     /**
      * Get the attachment/thumbnail file so we can replace the "original", i.e.
      * lower quality "original" with the file in the protected area.
      */
     $attached_file = get_post_meta( $postid, '_sell_media_attached_file', true );
-    if ( empty( $attachment_id ) ){
+    if ( empty( $attachment_id ) ) {
         $attachment_id = get_post_meta( $postid, '_sell_media_attachment_id', true );
     } else {
         delete_post_meta( $attachment_id, '_sell_media_for_sale_product_id' );
     }
-
 
     delete_post_meta( $attachment_id, '_sell_media_for_sale_product_id' );
 
@@ -528,7 +528,7 @@ function sell_media_before_delete_post( $postid, $attachment_id=null ){
          * "one" copy of the attachment.
          */
         $pos = strpos( $attached_file, 'sell_media/' );
-        if ( $pos !== false ){
+        if ( $pos !== false ) {
             $attached_file = str_replace( 'sell_media/', '', $attached_file );
         }
 
@@ -549,10 +549,10 @@ add_action( 'before_delete_post', 'sell_media_before_delete_post' );
  */
 function sell_media_trash_payment_redirect() {
     $screen = get_current_screen();
-    if( 'edit-sell_media_payment' == $screen->id ) {
-        if( isset( $_GET['trashed'] ) &&  intval( $_GET['trashed']) > 0 ) {
-            $redirect = esc_url_raw( add_query_arg( array( 'post_type' => 'sell_media_item', 'page'=>'sell_media_payments' ), admin_url() . "edit.php" ) );
-            wp_redirect($redirect);
+    if ( 'edit-sell_media_payment' == $screen->id ) {
+        if ( isset( $_GET['trashed'] ) &&  intval( $_GET['trashed'] ) > 0 ) {
+            $redirect = esc_url_raw( add_query_arg( array( 'post_type' => 'sell_media_item', 'page' => 'sell_media_payments' ), admin_url() . 'edit.php' ) );
+            wp_redirect( $redirect );
             exit();
         }
     }

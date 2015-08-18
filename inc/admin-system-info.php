@@ -32,8 +32,8 @@ function sell_media_get_system_info() {
     // Sell Media Settings
     $settings = sell_media_get_plugin_options();
 
-    if( ! class_exists( 'Browser' ) )
-        require_once  ( dirname(__FILE__) . '/libraries/browser.php' );
+    if ( ! class_exists( 'Browser' ) ) {
+        require_once( dirname( __FILE__ ) . '/libraries/browser.php' ); }
 
     $browser = new Browser();
 
@@ -54,11 +54,9 @@ function sell_media_get_system_info() {
     $return .= 'Home URL:                 ' . home_url() . "\n";
     $return .= 'Multisite:                ' . ( is_multisite() ? 'Yes' : 'No' ) . "\n";
 
-
     // The local users' browser information, handled by the Browser class
     $return .= "\n" . '-- User Browser' . "\n\n";
     $return .= $browser;
-
 
     // WordPress configuration
     $return .= "\n" . '-- WordPress Configuration' . "\n\n";
@@ -104,7 +102,7 @@ function sell_media_get_system_info() {
     // Sell Media settings
     $return .= "\n" . '-- Sell Media Configuration' . "\n\n";
     $return .= 'Version:                  ' . SELL_MEDIA_VERSION . "\n";
-    if ( $settings ) foreach ( $settings as $k => $v ) {
+    if ( $settings ) { foreach ( $settings as $k => $v ) {
         if ( is_array( $v ) ) {
             $return .= $k . ': ';
             $vv_array = array();
@@ -117,18 +115,17 @@ function sell_media_get_system_info() {
             $return .= $k . ': ' . $v . "\n";
         }
     }
-
+}
 
     // Must-use plugins
     $muplugins = get_mu_plugins();
-    if( count( $muplugins > 0 ) ) {
+    if ( count( $muplugins > 0 ) ) {
         $return .= "\n" . '-- Must-Use Plugins' . "\n\n";
 
-        foreach( $muplugins as $plugin => $plugin_data ) {
+        foreach ( $muplugins as $plugin => $plugin_data ) {
             $return .= $plugin_data['Name'] . ': ' . $plugin_data['Version'] . "\n";
         }
     }
-
 
     // WordPress active plugins
     $return .= "\n" . '-- WordPress Active Plugins' . "\n\n";
@@ -136,24 +133,22 @@ function sell_media_get_system_info() {
     $plugins = get_plugins();
     $active_plugins = get_option( 'active_plugins', array() );
 
-    foreach( $plugins as $plugin_path => $plugin ) {
-        if( !in_array( $plugin_path, $active_plugins ) )
-            continue;
+    foreach ( $plugins as $plugin_path => $plugin ) {
+        if ( ! in_array( $plugin_path, $active_plugins ) ) {
+            continue; }
 
         $return .= $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
     }
-
 
     // WordPress inactive plugins
     $return .= "\n" . '-- WordPress Inactive Plugins' . "\n\n";
 
-    foreach( $plugins as $plugin_path => $plugin ) {
-        if( in_array( $plugin_path, $active_plugins ) )
-            continue;
+    foreach ( $plugins as $plugin_path => $plugin ) {
+        if ( in_array( $plugin_path, $active_plugins ) ) {
+            continue; }
 
         $return .= $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
     }
-
 
     if ( is_multisite() ) {
         // WordPress Multisite active plugins
@@ -162,24 +157,22 @@ function sell_media_get_system_info() {
         $plugins = wp_get_active_network_plugins();
         $active_plugins = get_site_option( 'active_sitewide_plugins', array() );
 
-        foreach( $plugins as $plugin_path ) {
+        foreach ( $plugins as $plugin_path ) {
             $plugin_base = plugin_basename( $plugin_path );
 
-            if( !array_key_exists( $plugin_base, $active_plugins ) )
-                continue;
+            if ( ! array_key_exists( $plugin_base, $active_plugins ) ) {
+                continue; }
 
             $plugin  = get_plugin_data( $plugin_path );
             $return .= $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
         }
     }
 
-
     // Server configuration
     $return .= "\n" . '-- Webserver Configuration' . "\n\n";
     $return .= 'PHP Version:              ' . PHP_VERSION . "\n";
     $return .= 'MySQL Version:            ' . $wpdb->db_version() . "\n";
     $return .= 'Webserver Info:           ' . $_SERVER['SERVER_SOFTWARE'] . "\n";
-
 
     // PHP config
     $return .= "\n" . '-- PHP Configuration' . "\n\n";
@@ -191,7 +184,6 @@ function sell_media_get_system_info() {
     $return .= 'Time Limit:               ' . ini_get( 'max_execution_time' ) . "\n";
     $return .= 'Max Input Vars:           ' . ini_get( 'max_input_vars' ) . "\n";
     $return .= 'Display Errors:           ' . ( ini_get( 'display_errors' ) ? 'On (' . ini_get( 'display_errors' ) . ')' : 'N/A' ) . "\n";
-
 
     // PHP extensions etc
     $return .= "\n" . '-- PHP Extensions' . "\n\n";

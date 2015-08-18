@@ -87,7 +87,7 @@ class IPNListener
     protected function curlPost($encoded_data)
 	{
 
-        if ($this->use_ssl) {
+        if ( $this->use_ssl ) {
             $uri = 'https://'.$this->getPaypalHost().'/cgi-bin/webscr';
             $this->post_uri = $uri;
         } else {
@@ -97,24 +97,24 @@ class IPNListener
 
         $ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cert/api_cert_chain.crt');
-        curl_setopt($ch, CURLOPT_URL, $uri);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_data);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $this->follow_location);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, true );
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 2 );
+		curl_setopt( $ch, CURLOPT_CAINFO, dirname( __FILE__ ) . '/cert/api_cert_chain.crt' );
+        curl_setopt( $ch, CURLOPT_URL, $uri );
+        curl_setopt( $ch, CURLOPT_POST, true );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $encoded_data );
+        curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, $this->follow_location );
+        curl_setopt( $ch, CURLOPT_TIMEOUT, $this->timeout );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $ch, CURLOPT_HEADER, true );
 
-        $this->response = curl_exec($ch);
-        $this->response_status = strval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
+        $this->response = curl_exec( $ch );
+        $this->response_status = strval( curl_getinfo( $ch, CURLINFO_HTTP_CODE ) );
 
-        if ($this->response === false || $this->response_status == '0') {
-            $errno = curl_errno($ch);
-            $errstr = curl_error($ch);
-            throw new Exception("cURL error: [$errno] $errstr");
+        if ( $this->response === false || $this->response_status == '0' ) {
+            $errno = curl_errno( $ch );
+            $errstr = curl_error( $ch );
+            throw new Exception( "cURL error: [$errno] $errstr" );
         }
 
 		return $this->response;		// function should return it's data itself
@@ -135,7 +135,7 @@ class IPNListener
     protected function fsockPost($encoded_data)
 	{
 
-        if ($this->use_ssl) {
+        if ( $this->use_ssl ) {
             $uri = 'ssl://'.$this->getPaypalHost();
             $port = '443';
             $this->post_uri = $uri.'/cgi-bin/webscr';
@@ -145,32 +145,32 @@ class IPNListener
             $this->post_uri = 'http://'.$uri.'/cgi-bin/webscr';
         }
 
-        $fp = fsockopen($uri, $port, $errno, $errstr, $this->timeout);
+        $fp = fsockopen( $uri, $port, $errno, $errstr, $this->timeout );
 
-        if (!$fp) {
+        if ( ! $fp ) {
             // fsockopen error
-            throw new Exception("fsockopen error: [$errno] $errstr");
+            throw new Exception( "fsockopen error: [$errno] $errstr" );
         }
 
         $header = "POST /cgi-bin/webscr HTTP/1.1\r\n";
-        $header .= "Host: ".$this->getPaypalHost()."\r\n";
+        $header .= 'Host: '.$this->getPaypalHost()."\r\n";
         $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= "Content-Length: ".strlen($encoded_data)."\r\n";
+        $header .= 'Content-Length: '.strlen( $encoded_data )."\r\n";
         $header .= "Connection: Close\r\n\r\n";
 
-        fputs($fp, $header.$encoded_data."\r\n\r\n");
+        fputs( $fp, $header.$encoded_data."\r\n\r\n" );
 
-        while(!feof($fp)) {
-            if (empty($this->response)) {
+        while ( ! feof( $fp ) ) {
+            if ( empty( $this->response ) ) {
                 // extract HTTP status from first line
-                $this->response .= $status = fgets($fp, 1024);
-                $this->response_status = trim(substr($status, 9, 4));
+                $this->response .= $status = fgets( $fp, 1024 );
+                $this->response_status = trim( substr( $status, 9, 4 ) );
             } else {
-                $this->response .= fgets($fp, 1024);
+                $this->response .= fgets( $fp, 1024 );
             }
         }
 
-        fclose($fp);
+        fclose( $fp );
 		return $this->response;		// function should return it's data itself
     }
 
@@ -254,21 +254,20 @@ class IPNListener
         $r = '';
 
         // date and POST url
-        for ($i=0; $i<80; $i++) { $r .= '-'; }
-        $r .= "\n[".date('m/d/Y g:i A').'] - '.$this->getPostUri();
-        if ($this->use_curl) $r .= " (curl)\n";
-        else $r .= " (fsockopen)\n";
+        for ( $i = 0; $i < 80; $i++ ) { $r .= '-'; }
+        $r .= "\n[".date( 'm/d/Y g:i A' ).'] - '.$this->getPostUri();
+        if ( $this->use_curl ) { $r .= " (curl)\n"; } else { $r .= " (fsockopen)\n"; }
 
         // HTTP Response
-        for ($i=0; $i<80; $i++) { $r .= '-'; }
+        for ( $i = 0; $i < 80; $i++ ) { $r .= '-'; }
         $r .= "\n{$this->getResponse()}\n";
 
         // POST vars
-        for ($i=0; $i<80; $i++) { $r .= '-'; }
+        for ( $i = 0; $i < 80; $i++ ) { $r .= '-'; }
         $r .= "\n";
 
-        foreach ($this->post_data as $key => $value) {
-            $r .= str_pad($key, 25)."$value\n";
+        foreach ( $this->post_data as $key => $value ) {
+            $r .= str_pad( $key, 25 )."$value\n";
         }
         $r .= "\n\n";
 
@@ -289,34 +288,33 @@ class IPNListener
      */
     public function processIpn($post_data=null)
 	{
-		try
-		{
+		try {
 			$this->requirePostMethod();		// processIpn() should check itself if data is POST
 
 			// Read POST data
 			// reading posted data directly from $_POST causes serialization
 			// issues with array data in POST. Reading raw POST data from input stream instead.
-			if ($post_data === null) {
-				$raw_post_data = file_get_contents('php://input');
+			if ( $post_data === null ) {
+				$raw_post_data = file_get_contents( 'php://input' );
 			} else {
 				$raw_post_data = $post_data;
 			}
 			$this->rawPostData = $raw_post_data;							// set raw post data for Class use
 
 			// if post_data is php input stream, make it an array.
-			if ( ! is_array($raw_post_data) ) {
-				$raw_post_array = explode('&', $raw_post_data);
+			if ( ! is_array( $raw_post_data ) ) {
+				$raw_post_array = explode( '&', $raw_post_data );
 				$this->post_data = $raw_post_array;								// use post array because it's same as $_POST
 			} else {
 				$this->post_data = $raw_post_data;								// use post array because it's same as $_POST
 			}
 
 			$myPost = array();
-            if (isset($raw_post_array)) {
-                foreach ($raw_post_array as $keyval) {
-                    $keyval = explode('=', $keyval);
-                    if (count($keyval) == 2) {
-                        $myPost[$keyval[0]] = urldecode($keyval[1]);
+            if ( isset( $raw_post_array ) ) {
+                foreach ( $raw_post_array as $keyval ) {
+                    $keyval = explode( '=', $keyval );
+                    if ( count( $keyval ) == 2 ) {
+                        $myPost[$keyval[0]] = urldecode( $keyval[1] );
                     }
                 }
             }
@@ -324,37 +322,37 @@ class IPNListener
 			// read the post from PayPal system and add 'cmd'
 			$req = 'cmd=_notify-validate';
 
-			foreach ($myPost as $key => $value) {
-				if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() == 1) {
-					$value = urlencode(stripslashes($value));
+			foreach ( $myPost as $key => $value ) {
+				if ( function_exists( 'get_magic_quotes_gpc' ) && get_magic_quotes_gpc() == 1 ) {
+					$value = urlencode( stripslashes( $value ) );
 				} else {
-					$value = urlencode($value);
+					$value = urlencode( $value );
 				}
 				$req .= "&$key=$value";
 			}
 
-			if ($this->use_curl) {
-				$res = $this->curlPost($req);
+			if ( $this->use_curl ) {
+				$res = $this->curlPost( $req );
 			} else {
-				$res = $this->fsockPost($req);
+				$res = $this->fsockPost( $req );
 			}
 
-			if (strpos($res, '200') === false) {
-				throw new Exception("Invalid response status: " . $res);
+			if ( strpos( $res, '200' ) === false ) {
+				throw new Exception( 'Invalid response status: ' . $res );
 			}
 
 			// Split response headers and payload, a better way for strcmp
-			$tokens = explode("\r\n\r\n", trim($res));
-			$res = trim(end($tokens));
-			if (strcmp ($res, "VERIFIED") == 0) {
+			$tokens = explode( "\r\n\r\n", trim( $res ) );
+			$res = trim( end( $tokens ) );
+			if ( strcmp( $res, 'VERIFIED' ) == 0 ) {
 				return true;
-			} else if (strcmp ($res, "INVALID") == 0) {
+			} else if ( strcmp( $res, 'INVALID' ) == 0 ) {
 				return false;
 			} else {
-				throw new Exception("Unexpected response from PayPal.");
+				throw new Exception( 'Unexpected response from PayPal.' );
 			}
 		} catch (Exception $e) {
-			$this->addError($e->getMessage());
+			$this->addError( $e->getMessage() );
             return false;
 		}
 		return false;
@@ -369,9 +367,9 @@ class IPNListener
     public function requirePostMethod()
 	{
         // require POST requests
-        if ($_SERVER['REQUEST_METHOD'] && $_SERVER['REQUEST_METHOD'] != 'POST') {
-            header('Allow: POST', true, 405);
-            throw new Exception("Invalid HTTP request method.");
+        if ( $_SERVER['REQUEST_METHOD'] && $_SERVER['REQUEST_METHOD'] != 'POST' ) {
+            header( 'Allow: POST', true, 405 );
+            throw new Exception( 'Invalid HTTP request method.' );
         }
     }
 

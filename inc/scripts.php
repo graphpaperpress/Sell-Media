@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Scripts
@@ -52,7 +52,7 @@ function sell_media_scripts( $hook ) {
         'added_to_cart' => sprintf(
             "%s! <a href='" . esc_url( get_permalink( $settings->checkout_page ) ) . "' class='cart'>%s</a>!",
             __( 'Added', 'sell_media' ),
-            __( 'Checkout now','sell_media' ) ),
+        __( 'Checkout now','sell_media' ) ),
         'cart_labels' => array(
             'name' => __( 'Name', 'sell_media' ),
             'size' => __( 'Size', 'sell_media' ),

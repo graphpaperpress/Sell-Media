@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Checks if the attached file is an image
@@ -42,9 +42,9 @@ function sell_media_default_move( $original_file=null ){
     $protected_dir = $dir['basedir'] . '/sell_media';
     $destination_file_path = str_replace( $dir['basedir'], $protected_dir, $original_file );
 
-    if ( file_exists( $original_file ) ){
+    if ( file_exists( $original_file ) ) {
 
-        if ( ! file_exists( dirname( $destination_file_path ) ) ){
+        if ( ! file_exists( dirname( $destination_file_path ) ) ) {
             wp_mkdir_p( dirname( $destination_file_path ) );
         }
 
@@ -71,10 +71,9 @@ function sell_media_post_type_admin_order( $wp_query ) {
             $wp_query->set( 'orderby', 'date' );
             $wp_query->set( 'order', 'DESC' );
         }
-
-    }
 }
-add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );
+}
+add_filter( 'pre_get_posts', 'sell_media_post_type_admin_order' );
 
 /**
  * List file uploads on add/edit item page
@@ -84,8 +83,8 @@ add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );
  */
 function sell_media_list_uploads( $attachment_id ) {
 
-    if ( ! wp_get_attachment_url( $attachment_id ) )
-        return;
+    if ( ! wp_get_attachment_url( $attachment_id ) ) {
+        return; }
 
     $html  = '<li class="attachment sell-media-attachment" data-post_id="' . $attachment_id . '">';
     $html .= '<a href="' . admin_url( 'post.php?post=' . $attachment_id . '&action=edit' ) . '" class="sell-media-edit dashicons dashicons-edit" data-id="' . $attachment_id . '" target="_blank"></a>';

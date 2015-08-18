@@ -11,7 +11,7 @@ function sell_media_plugin_get_taxonomy_list( $taxonomy = 'category', $firstblan
 
     $terms_obj = get_terms( $taxonomy, $args );
     $terms = array();
-    if( $firstblank ) {
+    if ( $firstblank ) {
         $terms['']['name'] = '';
         $terms['']['title'] = __( '-- Choose One --', 'sell_media' );
     }
@@ -86,11 +86,11 @@ function sell_media_plugin_get_page_tab_markup() {
 
     $links = array();
     $i = 0;
-    foreach( $tabs as $tab ) {
-        if( isset( $tab['name'] ) )
-            $tabname = $tab['name'];
-        if( isset( $tab['title'] ) )
-            $tabtitle = $tab['title'];
+    foreach ( $tabs as $tab ) {
+        if ( isset( $tab['name'] ) ) {
+            $tabname = $tab['name']; }
+        if ( isset( $tab['title'] ) ) {
+            $tabtitle = $tab['title']; }
         if ( $tabname == $current ) {
             $links[] = "<a class='nav-tab nav-tab-active' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>$tabtitle</a>";
         } else {
@@ -99,8 +99,8 @@ function sell_media_plugin_get_page_tab_markup() {
         $i++;
     }
     echo '<h2 class="nav-tab-wrapper">';
-    foreach ( $links as $link )
-        echo $link;
+    foreach ( $links as $link ) {
+        echo $link; }
     echo '</h2>';
 }
 
@@ -113,7 +113,7 @@ function sell_media_pages_options() {
         'name' => 0,
         'title' => 'None'
         );
-    foreach( get_pages() as $page ){
+    foreach ( get_pages() as $page ) {
         $final_pages[ $page->ID ] = array(
             'name' => $page->ID,
             'title' => $page->post_title
@@ -128,105 +128,105 @@ function sell_media_pages_options() {
  */
 function sell_media_currencies(){
     $currencies = array(
-    "USD" => array(
+    'USD' => array(
         'name' => 'USD',
-        'title' => __('US Dollars (&#36;)','sell_media')
+        'title' => __( 'US Dollars (&#36;)','sell_media' )
         ),
-    "EUR" => array(
+    'EUR' => array(
         'name' => 'EUR',
-        'title' => __('Euros (&euro;)','sell_media')
+        'title' => __( 'Euros (&euro;)','sell_media' )
         ),
-    "GBP" => array(
+    'GBP' => array(
         'name' => 'GBP',
-        'title' => __('Pounds Sterling (&pound;)','sell_media')
+        'title' => __( 'Pounds Sterling (&pound;)','sell_media' )
         ),
-    "AUD" => array(
+    'AUD' => array(
         'name' => 'AUD',
-        'title' => __('Australian Dollars (&#36;)','sell_media')
+        'title' => __( 'Australian Dollars (&#36;)','sell_media' )
         ),
-    "BRL" => array(
+    'BRL' => array(
         'name' => 'BRL',
-        'title' => __('Brazilian Real (R&#36;)','sell_media')
+        'title' => __( 'Brazilian Real (R&#36;)','sell_media' )
         ),
-    "CAD" => array(
+    'CAD' => array(
         'name' => 'CAD',
-        'title' => __('Canadian Dollars (&#36;)','sell_media')
+        'title' => __( 'Canadian Dollars (&#36;)','sell_media' )
         ),
-    "CZK" => array(
+    'CZK' => array(
         'name' => 'CZK',
-        'title' => __('Czech Koruna (&#75;&#269;)','sell_media')
+        'title' => __( 'Czech Koruna (&#75;&#269;)','sell_media' )
         ),
-    "DKK" => array(
+    'DKK' => array(
         'name' => 'DKK',
-        'title' => __('Danish Krone','sell_media')
+        'title' => __( 'Danish Krone','sell_media' )
         ),
-    "HKD" => array(
+    'HKD' => array(
         'name' => 'HKD',
-        'title' => __('Hong Kong Dollar (&#36;)','sell_media')
+        'title' => __( 'Hong Kong Dollar (&#36;)','sell_media' )
         ),
-    "HUF" => array(
+    'HUF' => array(
         'name' => 'HUF',
-        'title' => __('Hungarian Forint','sell_media')
+        'title' => __( 'Hungarian Forint','sell_media' )
         ),
-    "ILS" => array(
+    'ILS' => array(
         'name' => 'ILS',
-        'title' => __('Israeli Shekel','sell_media')
+        'title' => __( 'Israeli Shekel','sell_media' )
         ),
-    "JPY" => array(
+    'JPY' => array(
         'name' => 'JPY',
-        'title' => __('Japanese Yen (&yen;)','sell_media')
+        'title' => __( 'Japanese Yen (&yen;)','sell_media' )
         ),
-    "MYR" => array(
+    'MYR' => array(
         'name' => 'MYR',
-        'title' => __('Malaysian Ringgits','sell_media')
+        'title' => __( 'Malaysian Ringgits','sell_media' )
         ),
-    "MXN" => array(
+    'MXN' => array(
         'name' => 'MXN',
-        'title' => __('Mexican Peso (&#36;)','sell_media')
+        'title' => __( 'Mexican Peso (&#36;)','sell_media' )
         ),
-    "NZD" => array(
+    'NZD' => array(
         'name' => 'NZD',
-        'title' => __('New Zealand Dollar (&#36;)','sell_media')
+        'title' => __( 'New Zealand Dollar (&#36;)','sell_media' )
         ),
-    "NOK" => array(
+    'NOK' => array(
         'name' => 'NOK',
-        'title' => __('Norwegian Krone','sell_media')
+        'title' => __( 'Norwegian Krone','sell_media' )
         ),
-    "PHP" => array(
+    'PHP' => array(
         'name' => 'PHP',
-        'title' => __('Philippine Pesos','sell_media')
+        'title' => __( 'Philippine Pesos','sell_media' )
         ),
-    "PLN" => array(
+    'PLN' => array(
         'name' => 'PLN',
-        'title' => __('Polish Zloty','sell_media')
+        'title' => __( 'Polish Zloty','sell_media' )
         ),
-    "SGD" => array(
+    'SGD' => array(
         'name' => 'SGD',
-        'title' => __('Singapore Dollar (&#36;)','sell_media')
+        'title' => __( 'Singapore Dollar (&#36;)','sell_media' )
         ),
-    "SEK" => array(
+    'SEK' => array(
         'name' => 'SEK',
-        'title' => __('Swedish Krona','sell_media')
+        'title' => __( 'Swedish Krona','sell_media' )
         ),
-    "CHF" => array(
+    'CHF' => array(
         'name' => 'CHF',
-        'title' => __('Swiss Franc','sell_media')
+        'title' => __( 'Swiss Franc','sell_media' )
         ),
-    "TWD" => array(
+    'TWD' => array(
         'name' => 'TWD',
-        'title' => __('Taiwan New Dollars','sell_media')
+        'title' => __( 'Taiwan New Dollars','sell_media' )
         ),
-    "THB" => array(
+    'THB' => array(
         'name' => 'THB',
-        'title' => __('Thai Baht','sell_media')
+        'title' => __( 'Thai Baht','sell_media' )
         ),
-    "TRY" => array(
+    'TRY' => array(
         'name' => 'TRY',
-        'title' => __('Turkish Lira (TL)','sell_media')
+        'title' => __( 'Turkish Lira (TL)','sell_media' )
         ),
-    "ZAR" => array(
+    'ZAR' => array(
         'name' => 'ZAR',
-        'title' => __('South African rand (R)','sell_media')
+        'title' => __( 'South African rand (R)','sell_media' )
         )
     );
     return $currencies;
@@ -239,13 +239,13 @@ function sell_media_currencies(){
 function sell_media_settings_price_group( $taxonomy=null ){
     $array[] = array(
         'name' => 0,
-        'title' => __('None','sell_media')
+        'title' => __( 'None','sell_media' )
         );
 
-    $terms = get_terms( $taxonomy, array('hide_empty'=>false, 'parent'=>0) );
+    $terms = get_terms( $taxonomy, array('hide_empty' => false, 'parent' => 0) );
 
-    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){
-        foreach( $terms as $term ) {
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        foreach ( $terms as $term ) {
             $array[ $term->term_id ] = array(
                 'name' => $term->term_id,
                 'title' => $term->name
@@ -263,11 +263,11 @@ function sell_media_settings_payment_gateway(){
     $gateways = array(
         array(
             'name' => 'PayPal',
-            'title' => __('PayPal','sell_media')
+            'title' => __( 'PayPal','sell_media' )
             )
         );
 
-    return apply_filters('sell_media_payment_gateway', $gateways);
+    return apply_filters( 'sell_media_payment_gateway', $gateways );
 }
 
 /**

@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Set Default Terms
@@ -18,23 +18,23 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function sell_media_set_default_terms( $post_id, $post=null, $term_ids=null ){
 
-    if ( is_null( $post ) ){
+    if ( is_null( $post ) ) {
         $post_type = get_post_type( $post_id );
     } else {
         $post_type = $post->post_type;
         $post_status = $post->post_status;
     }
 
-    if ( empty( $post_status ) )
-        return;
+    if ( empty( $post_status ) ) {
+        return; }
 
-    if ( empty( $term_ids ) || $term_ids === true )
-        $term_ids = sell_media_get_default_terms();
+    if ( empty( $term_ids ) || $term_ids === true ) {
+        $term_ids = sell_media_get_default_terms(); }
 
     $taxonomy = 'licenses';
     $default_terms = array();
 
-    foreach( $term_ids as $term_id ){
+    foreach ( $term_ids as $term_id ) {
         $tmp_term_id = get_term_by( 'id', $term_id, $taxonomy );
 
         if ( $tmp_term_id ) {
@@ -49,7 +49,7 @@ function sell_media_set_default_terms( $post_id, $post=null, $term_ids=null ){
 
     $taxonomies = get_object_taxonomies( $post_type );
 
-    foreach( ( array )$taxonomies as $taxonomy ) {
+    foreach ( ( array )$taxonomies as $taxonomy ) {
         $terms = wp_get_post_terms( $post_id, $taxonomy );
         if ( empty( $terms ) && array_key_exists( $taxonomy, $defaults ) ) {
             wp_set_object_terms( $post_id, $defaults[$taxonomy], $taxonomy );
@@ -73,7 +73,7 @@ function sell_media_get_default_terms(){
     $term_ids = array();
     $default_terms = array();
 
-    foreach( $terms_meta as $meta ) {
+    foreach ( $terms_meta as $meta ) {
         $term_ids[] = $meta->taxonomy_id;
     }
 
@@ -99,13 +99,11 @@ add_action( 'licenses_pre_add_form', 'sell_media_license_description' );
  * @since 0.1
  */
 function sell_media_add_custom_term_form_fields( $tag ){
-    if ( is_object( $tag ) )
-        $term_id = $tag->term_id;
-    else
-        $term_id = null;
+    if ( is_object( $tag ) ) {
+        $term_id = $tag->term_id; } else {         $term_id = null; }
     ?>
     <div class="form-field">
-        <label for="markup"><?php _e('Markup', 'sell_media'); ?></label>
+        <label for="markup"><?php _e( 'Markup', 'sell_media' ); ?></label>
         <?php sell_media_the_markup_slider( $tag ); ?>
     </div>
     <div class="form-field">
@@ -143,13 +141,11 @@ add_action( 'licenses_edit_form_fields', 'sell_media_edit_custom_term_form_field
  */
 function sell_media_the_markup_slider( $tag ){
 
-    if ( isset( $_GET['tag_ID'] ) )
-        $term_id = $_GET['tag_ID'];
-    else
-        $term_id = null;
+    if ( isset( $_GET['tag_ID'] ) ) {
+        $term_id = $_GET['tag_ID']; } else {         $term_id = null; }
 
-    if ( sell_media_get_term_meta( $term_id, 'markup', true) ) {
-        $initial_markup = str_replace( "%", "", sell_media_get_term_meta( $term_id, 'markup', true ) );
+    if ( sell_media_get_term_meta( $term_id, 'markup', true ) ) {
+        $initial_markup = str_replace( '%', '', sell_media_get_term_meta( $term_id, 'markup', true ) );
     } else {
         $initial_markup = 0;
     }
@@ -196,20 +192,18 @@ function sell_media_the_markup_slider( $tag ){
     <div class="sell_media-slider-container">
         <div id="markup_slider"></div>
         <div class="sell_media-price-container">
-            <input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo sell_media_get_term_meta($term_id, 'markup', true); ?>" size="40" />
+            <input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo sell_media_get_term_meta( $term_id, 'markup', true ); ?>" size="40" />
         </div>
         <p class="description">
             <?php _e( 'Increase the price of a item if a buyer selects this license by dragging the slider above.', 'sell_media' ); ?>
             <?php
-                if ( sell_media_get_term_meta( $term_id, 'markup', true ) )
-                    $default_markup = sell_media_get_term_meta( $term_id, 'markup', true );
-                else
-                    $default_markup = '0%';
+                if ( sell_media_get_term_meta( $term_id, 'markup', true ) ) {
+                    $default_markup = sell_media_get_term_meta( $term_id, 'markup', true ); } else {                     $default_markup = '0%'; }
 
-            if ( $settings->default_price ){
+            if ( $settings->default_price ) {
                 $price = sell_media_get_currency_symbol() . $settings->default_price;
             } else {
-                $price = __('you have not set a default price', 'sell_media');
+                $price = __( 'you have not set a default price', 'sell_media' );
             }
 
             printf(
@@ -219,7 +213,7 @@ function sell_media_the_markup_slider( $tag ){
                 '<strong>' . $price . '</strong>',
                 '<strong><span class="markup-target">' . $default_markup . '</span></strong>',
                 '<strong>' . sell_media_get_currency_symbol() . '<span class="menu-cart-total"></span></strong>'
-                );
+            );
             ?>
         </p>
     </div>
@@ -232,15 +226,15 @@ function sell_media_the_markup_slider( $tag ){
  * @since 0.1
  */
 function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
-    if ( is_null( $desc ) )
-        $desc = __( 'Check to add this as a default license option for all newly created items.', 'sell_media' );
+    if ( is_null( $desc ) ) {
+        $desc = __( 'Check to add this as a default license option for all newly created items.', 'sell_media' ); }
     ?>
     <tr class="form-field sell_media-markup-container">
         <th scope="row" valign="top">
             <label for="markup"><?php _e( 'Add as default license?', 'sell_media' ); ?></label>
         </th>
         <td>
-            <input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( sell_media_get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
+            <input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( sell_media_get_term_meta( $term_id, 'default', true ), 'on' ); ?> size="40" />
             <span class="description"><label for="meta_value[default]"><?php echo $desc; ?></label></span>
         </td>
     </tr>
@@ -258,24 +252,24 @@ function sell_media_custom_license_columns_headers( $columns ){
 
     if ( isset( $columns['cb'] ) ) {
         $columns_local['cb'] = $columns['cb'];
-        unset($columns['cb']);
+        unset( $columns['cb'] );
     }
 
     if ( isset( $columns['name'] ) ) {
         $columns_local['name'] = $columns['name'];
-        unset($columns['name']);
+        unset( $columns['name'] );
     }
 
-    if (!isset($columns_local['license_term_price']))
-        $columns_local['license_term_price'] = "% Markup";
+    if ( ! isset( $columns_local['license_term_price'] ) ) {
+        $columns_local['license_term_price'] = '% Markup'; }
 
     // Rename the post column to Images
-    if ( isset( $columns['posts'] ) )
-        $columns['posts'] = "Media";
+    if ( isset( $columns['posts'] ) ) {
+        $columns['posts'] = 'Media'; }
 
-     $columns_local = array_merge($columns_local, $columns);
+     $columns_local = array_merge( $columns_local, $columns );
 
-    return array_merge($columns_local, $columns);
+    return array_merge( $columns_local, $columns );
 }
 add_filter( 'manage_edit-licenses_columns', 'sell_media_custom_license_columns_headers' );
 
@@ -286,9 +280,9 @@ add_filter( 'manage_edit-licenses_columns', 'sell_media_custom_license_columns_h
  * @since 0.1
  */
 function sell_media_custom_license_columns_content( $row_content, $column_name, $term_id ){
-    switch( $column_name ) {
+    switch ( $column_name ) {
         case 'license_term_price':
-            return sell_media_get_term_meta($term_id, 'markup', true);
+            return sell_media_get_term_meta( $term_id, 'markup', true );
             break;
         default:
             break;
@@ -306,12 +300,12 @@ add_filter( 'manage_licenses_custom_column', 'sell_media_custom_license_columns_
 function sell_media_save_extra_taxonomy_fields( $term_id ) {
 
     if ( ! isset( $_POST['meta_value']['default'] ) ) {
-        sell_media_update_term_meta( $term_id, 'default', 'off');
+        sell_media_update_term_meta( $term_id, 'default', 'off' );
     }
 
     if ( ! isset( $_POST['meta_value']['collection_hidden'] ) ) {
-        if ( ! empty(  $_SESSION['sell_media']['collection_password'] ) )
-            unset( $_SESSION['sell_media']['collection_password'] );
+        if ( ! empty( $_SESSION['sell_media']['collection_password'] ) ) {
+            unset( $_SESSION['sell_media']['collection_password'] ); }
     }
 
     if ( isset( $_POST['meta_value'] ) ) {
@@ -320,7 +314,7 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
         foreach ( $cat_keys as $key ) {
             if ( ! empty( $_POST['meta_value'][$key] ) ) {
                 $meta_value[$key] = $_POST['meta_value'][$key];
-                sell_media_update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
+                sell_media_update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key] ) );
             } else {
                 sell_media_delete_term_meta( $term_id, $key );
             }
@@ -354,7 +348,7 @@ add_action( 'collection_add_form_fields', 'sell_media_add_collection_icon' );
  */
 function sell_media_collection_icon_field( $icon_id=null ){
     wp_enqueue_media();
-    if ( empty( $icon_id ) ){
+    if ( empty( $icon_id ) ) {
         $image = $url = null;
     } else {
         $url = wp_get_attachment_url( $icon_id );
@@ -364,7 +358,7 @@ function sell_media_collection_icon_field( $icon_id=null ){
     ?>
     <input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
     <input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
-    <input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
+    <input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media' ); ?>" />
     <div class="upload_image_preview" style="display: block;">
         <span id="collection_icon_target"><?php print $image; ?></span>
     </div>
@@ -397,10 +391,8 @@ add_action( 'collection_edit_form_fields', 'sell_media_edit_collection_icon' );
  * @since 0.1
  */
 function sell_media_add_collection_field( $tag ){
-    if ( is_object( $tag ) )
-        $term_id = $tag->term_id;
-    else
-        $term_id = null;
+    if ( is_object( $tag ) ) {
+        $term_id = $tag->term_id; } else {         $term_id = null; }
     ?>
     <div class="form-field">
         <label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
@@ -417,10 +409,8 @@ add_action( 'collection_add_form_fields', 'sell_media_add_collection_field' );
  * @since 0.1
  */
 function sell_media_edit_collection_password( $tag ){
-    if ( is_object( $tag ) )
-        $term_id = $tag->term_id;
-    else
-        $term_id = null;
+    if ( is_object( $tag ) ) {
+        $term_id = $tag->term_id; } else {         $term_id = null; }
 
     $child_term = get_term( $term_id, 'collection' );
 
@@ -443,7 +433,7 @@ function sell_media_edit_collection_password( $tag ){
         <div class="updated">
             <p>
                 <?php _e( 'This collection will inherit the password of the parent collection:', 'sell_media' ); ?>
-                <a href="<?php echo admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item'); ?>"><?php echo $parent->name; ?></a>
+                <a href="<?php echo admin_url( 'edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item' ); ?>"><?php echo $parent->name; ?></a>
             </p>
         </div>
         <?php endif; ?>
@@ -469,22 +459,22 @@ function sell_media_custom_collection_columns_headers( $columns ){
 
     if ( isset( $columns['cb'] ) ) {
         $columns_local['cb'] = $columns['cb'];
-        unset($columns['cb']);
+        unset( $columns['cb'] );
     }
 
-    if (!isset($columns_local['collection_icon']))
-        $columns_local['collection_icon'] = __("Icon", 'sell_media');
+    if ( ! isset( $columns_local['collection_icon'] ) ) {
+        $columns_local['collection_icon'] = __( 'Icon', 'sell_media' ); }
 
     // Rename the post column to Images
-    if ( isset( $columns['posts'] ) )
-        $columns['posts'] = __("Media", 'sell_media');
+    if ( isset( $columns['posts'] ) ) {
+        $columns['posts'] = __( 'Media', 'sell_media' ); }
 
-     $columns_local = array_merge($columns_local, $columns);
+     $columns_local = array_merge( $columns_local, $columns );
 
-    if (!isset($columns_local['collection_protected']))
-        $columns_local['collection_protected'] = __("Protected", 'sell_media');
+    if ( ! isset( $columns_local['collection_protected'] ) ) {
+        $columns_local['collection_protected'] = __( 'Protected', 'sell_media' ); }
 
-    return array_merge($columns_local, $columns);
+    return array_merge( $columns_local, $columns );
 }
 add_filter( 'manage_edit-collection_columns', 'sell_media_custom_collection_columns_headers' );
 
@@ -495,15 +485,15 @@ add_filter( 'manage_edit-collection_columns', 'sell_media_custom_collection_colu
  * @since 0.1
  */
 function sell_media_custom_collection_columns_content( $row_content, $column_name, $term_id ){
-    switch( $column_name ) {
+    switch ( $column_name ) {
         case 'collection_icon':
             return wp_get_attachment_image( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ), 'thumbnail' );
             break;
         case 'collection_protected':
-                if( sell_media_get_term_meta( $term_id, 'collection_password', true ) ) {
-                    $colstatus = "Private";
+                if ( sell_media_get_term_meta( $term_id, 'collection_password', true ) ) {
+                    $colstatus = 'Private';
                 } else {
-                    $colstatus = "Public";
+                    $colstatus = 'Public';
                 }
                 return $colstatus;
             break;
@@ -543,7 +533,7 @@ class SellMediaTaxonomyMetadata {
         global $wpdb;
 
         // if activated on a particular blog, just set it up there.
-        if ( !$network_wide ) {
+        if ( ! $network_wide ) {
             $this->setup_blog();
             return;
         }
@@ -553,23 +543,23 @@ class SellMediaTaxonomyMetadata {
             $this->setup_blog( $blog_id );
         }
         // I feel dirty... this line smells like perl.
-        do {} while ( restore_current_blog() );
+        do { } while ( restore_current_blog() );
     }
 
     function setup_blog( $id = false ) {
         global $wpdb;
 
-        if ( $id !== false)
-            switch_to_blog( $id );
+        if ( $id !== false ) {
+            switch_to_blog( $id ); }
 
         $charset_collate = '';
-        if ( ! empty($wpdb->charset) )
-            $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-        if ( ! empty($wpdb->collate) )
-            $charset_collate .= " COLLATE $wpdb->collate";
+        if ( ! empty( $wpdb->charset ) ) {
+            $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset"; }
+        if ( ! empty( $wpdb->collate ) ) {
+            $charset_collate .= " COLLATE $wpdb->collate"; }
 
-        $tables = $wpdb->get_results("show tables like '{$wpdb->prefix}taxonomymeta'");
-        if (!count($tables))
+        $tables = $wpdb->get_results( "show tables like '{$wpdb->prefix}taxonomymeta'" );
+        if ( ! count( $tables ) ) {
             $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}taxonomymeta (
                 meta_id bigint(20) unsigned NOT NULL auto_increment,
                 taxonomy_id bigint(20) unsigned NOT NULL default '0',
@@ -578,12 +568,12 @@ class SellMediaTaxonomyMetadata {
                 PRIMARY KEY (meta_id),
                 KEY taxonomy_id (taxonomy_id),
                 KEY meta_key (meta_key)
-            ) $charset_collate;");
+            ) $charset_collate;"); }
     }
 
     function new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-        if ( is_plugin_active_for_network(plugin_basename(__FILE__)) )
-            $this->setup_blog($blog_id);
+        if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+            $this->setup_blog( $blog_id ); }
     }
 }
 
@@ -605,7 +595,7 @@ class SellMediaTaxonomyMetadata {
  */
 function sell_media_add_term_meta($term_id, $meta_key, $meta_value, $unique = false) {
     SellMediaTaxonomyMetadata::wpdbfix();
-    return add_metadata('taxonomy', $term_id, $meta_key, $meta_value, $unique);
+    return add_metadata( 'taxonomy', $term_id, $meta_key, $meta_value, $unique );
 }
 
 /**
@@ -622,7 +612,7 @@ function sell_media_add_term_meta($term_id, $meta_key, $meta_value, $unique = fa
  */
 function sell_media_delete_term_meta($term_id, $meta_key, $meta_value = '') {
     SellMediaTaxonomyMetadata::wpdbfix();
-    return delete_metadata('taxonomy', $term_id, $meta_key, $meta_value);
+    return delete_metadata( 'taxonomy', $term_id, $meta_key, $meta_value );
 }
 
 /**
@@ -636,7 +626,7 @@ function sell_media_delete_term_meta($term_id, $meta_key, $meta_value = '') {
  */
 function sell_media_get_term_meta($term_id, $key, $single = false) {
     SellMediaTaxonomyMetadata::wpdbfix();
-    return get_metadata('taxonomy', $term_id, $key, $single);
+    return get_metadata( 'taxonomy', $term_id, $key, $single );
 }
 
 /**
@@ -655,6 +645,6 @@ function sell_media_get_term_meta($term_id, $key, $single = false) {
  */
 function sell_media_update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
     SellMediaTaxonomyMetadata::wpdbfix();
-    return update_metadata('taxonomy', $term_id, $meta_key, $meta_value, $prev_value);
+    return update_metadata( 'taxonomy', $term_id, $meta_key, $meta_value, $prev_value );
 }
 // End 'taxonomy meta plugin code'

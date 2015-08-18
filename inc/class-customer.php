@@ -8,7 +8,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 Class SellMediaCustomer {
 
@@ -80,8 +80,8 @@ Class SellMediaCustomer {
         $message['body'] .= __( 'Thanks', 'sell_media' ) . ',' . "\n";
         $message['body'] .= $site_name;
 
-        $message['headers'] = "From: " . $site_name . "\r\n";
-        $message['headers'] .= "Reply-To: ". $settings->from_email . "\r\n";
+        $message['headers'] = 'From: ' . $site_name . "\r\n";
+        $message['headers'] .= 'Reply-To: '. $settings->from_email . "\r\n";
         $message['headers'] .= "MIME-Version: 1.0\r\n";
         $message['headers'] .= "Content-Type: text/html; charset=utf-8\r\n";
 
@@ -109,7 +109,7 @@ Class SellMediaCustomer {
             $creds['remember'] = true;
             $user = wp_signon( $creds, false );
 
-            if ( is_wp_error( $user  ) ) {
+            if ( is_wp_error( $user ) ) {
                 return;
             } else {
                 wp_set_current_user( $user->ID, $user->user_login );

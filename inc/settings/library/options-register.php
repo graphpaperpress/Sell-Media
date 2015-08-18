@@ -89,27 +89,24 @@ function sell_media_plugin_options_validate( $input ) {
             // Validate checkbox fields
             if ( 'checkbox' == $optiondetails['type'] ) {
                 // If input value is set and is true, return true; otherwise return false
-                if( isset( $input[ $setting ] ) && is_array( $input[ $setting ] ) ) :
-                    foreach( $input[ $setting ] as $key => $checkbox ) :
-                        if( isset( $checkbox ) && 'on' == $checkbox ) {
-                            $valid_input[ $setting ][] =  true;
+                if ( isset( $input[ $setting ] ) && is_array( $input[ $setting ] ) ) :
+                    foreach ( $input[ $setting ] as $key => $checkbox ) :
+                        if ( isset( $checkbox ) && 'on' == $checkbox ) {
+                            $valid_input[ $setting ][] = true;
                         }
                     endforeach;
-                else:
+                else :
                     $valid_input[ $setting ] = ( ( isset( $input[ $setting ] ) && true == $input[ $setting ] ) ? true : false );
                 endif;
-            }
-            // Validate radio button fields
+            } // Validate radio button fields
             else if ( 'radio' == $optiondetails['type'] ) {
                 // Only update setting if input value is in the list of valid options
                 $valid_input[ $setting ] = ( array_key_exists( $input[ $setting ], $valid_options ) ? $input[ $setting ] : $valid_input[ $setting ] );
-            }
-            // Validate select fields
+            } // Validate select fields
             else if ( 'select' == $optiondetails['type'] ) {
                 // Only update setting if input value is in the list of valid options
                 $valid_input[ $setting ] = ( array_key_exists( $setting, $valid_options ) ? $input[ $setting ] : $valid_input[ $setting ] );
-            }
-            // Validate text input and textarea fields
+            } // Validate text input and textarea fields
             else if ( ( 'text' == $optiondetails['type'] || 'textarea' == $optiondetails['type'] ) ) {
                 // Validate no-HTML content
                 if ( 'nohtml' == $optiondetails['sanitize'] ) {
@@ -126,8 +123,7 @@ function sell_media_plugin_options_validate( $input ) {
                     $valid_input[ $setting ] = sanitize_title( $input[ $setting ] );
                 }
             }
-        }
-        // If reset, reset defaults
+        } // If reset, reset defaults
         elseif ( 'reset' == $submittype ) {
             // Set $setting to the default value
             $valid_input[ $setting ] = $option_defaults[ $setting ];
