@@ -456,7 +456,7 @@ function sell_media_item_content( $column, $post_id ){
             break;
     }
 }
-add_filter( 'manage_pages_custom_column', 'sell_media_item_content', 10, 2 );
+add_filter( 'manage_sell_media_item_posts_custom_column', 'sell_media_item_content', 10, 2 );
 
 
 /**

@@ -21,7 +21,7 @@ Class SellMediaSearch {
         add_filter( 'posts_join', array( &$this, 'terms_join' ) );
         add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
         add_filter( 'posts_request', array( &$this, 'distinct' ) );
-        add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
+        //add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
         add_filter( 'attachment_link', array( &$this, 'the_search_attachment_link' ), 10, 2 );
         add_filter( 'the_excerpt', array( &$this, 'the_search_excerpt' ) );
     }

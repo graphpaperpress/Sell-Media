@@ -74,7 +74,7 @@ function sell_media_post_type_admin_order( $wp_query ) {
 
     }
 }
-add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );
+//add_filter ( 'pre_get_posts', 'sell_media_post_type_admin_order' );
 
 /**
  * List file uploads on add/edit item page
