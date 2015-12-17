@@ -222,7 +222,7 @@ Class SellMediaSearch {
              */
             $post_types = $query->get( 'post_type' );
             if ( $post_types && 'sell_media_item' == $post_types )
-                $post_types = array( 'sell_media_item', 'attachment' );
+                $post_types = array( 'sell_media_item' );
 
             $query->set( 'post_type', $post_types );
 
