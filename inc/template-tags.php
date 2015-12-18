@@ -213,21 +213,30 @@ function sell_media_gallery_navigation( $attachment_id ) {
 function sell_media_content_loop( $post_id, $i ){
     $class = ( $i %3 == 0 ) ? ' end' : '';
 
-    $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid' . $class . '">';
-    $html .= '<div class="item-inner">';
-    $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . '>' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
-    $html .= '<span class="item-overlay">';
-    $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-    // Don't show buy button, lightbox, etc, if post has multiple attachments
-    if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
-        $html .= sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy', 'sell_media' ), false );
-        $html .= apply_filters( 'sell_media_item_overlay', $output = '', $post_id );
-    }
-    $html .= '</span>';
-    $html .= '</div>';
-    $html .= '</div>';
+    /**  
+     * Only display posts of type 'sell_media_item' or their attachment
+    */
+    $the_post_type = get_post_type( $post_id );
+    $parent_id = wp_get_post_parent_id( $post_id );
+    if ( ( $the_post_type == 'sell_media_item' ) OR ( ( $the_post_type == 'attachment' ) && ( $parent_id > 0 ) ) ) {
 
-    return $html;
+      $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid' . $class . '">';
+      $html .= '<div class="item-inner">';
+      $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . '>' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
+      $html .= '<span class="item-overlay">';
+      $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
+      // Don't show buy button, lightbox, etc, if post has multiple attachments
+      if ( !sell_media_has_multiple_attachments( $post_id ) )  {
+           $html .= sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy', 'sell_media' ), false );
+           $html .= apply_filters( 'sell_media_item_overlay', $output = '', $post_id );
+      }
+      $html .= '</span>';
+      $html .= '</div>';
+      $html .= '</div>';
+
+      return $html;
+
+    }
 }
 add_filter( 'sell_media_content_loop', 'sell_media_content_loop', 10, 2 );
 
