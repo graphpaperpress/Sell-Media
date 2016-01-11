@@ -94,6 +94,10 @@ add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
  */
 function sell_media_body_class( $classes ) {
     global $post;
+
+    if ( empty( $post ) )
+        return;
+    
     $settings = sell_media_get_plugin_options();
 
     // Pages assigned with shortcode
