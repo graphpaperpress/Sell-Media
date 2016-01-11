@@ -175,6 +175,9 @@ function sell_media_update_lightbox(){
             $cookie = array( $item );
             $text = __( 'Remove', 'sell_media' );
         }
+        
+        // allow text to be filtered
+        $text = apply_filters( 'sell_media_get_lightbox_text', $text, $item );
 
         // set cookie
         if ( $cookie ) {
