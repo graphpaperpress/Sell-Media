@@ -65,7 +65,7 @@ function sell_media_search_shortcode( $atts, $content = null ) {
 
 }
 add_shortcode( 'sell_media_searchform', 'sell_media_search_shortcode' );
-
+add_shortcode( 'sell_media_search', 'sell_media_search_shortcode' );
 
 
 
@@ -264,7 +264,7 @@ function sell_media_download_shortcode( $atts ) {
     return $html;
 }
 add_shortcode( 'sell_media_download_list', 'sell_media_download_shortcode' );
-
+add_shortcode( 'sell_media_dashboard', 'sell_media_download_shortcode' );
 
 /**
  * Displays all the price groups in a table
@@ -486,3 +486,4 @@ function sell_media_login_form_shortcode(){
 
 }
 add_shortcode( 'sell_media_login_form', 'sell_media_login_form_shortcode' );
+add_shortcode( 'sell_media_login', 'sell_media_login_form_shortcode' );

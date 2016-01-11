@@ -36,6 +36,9 @@ function sell_media_install() {
     // Register Taxonomies
     sell_media_register_taxonomies();
 
+    // Autocreate Pages
+    sell_media_autocreate_pages();
+
     // Flush the permalinks
     flush_rewrite_rules();
 
@@ -435,3 +438,40 @@ function sell_media_register_taxonomies(){
 
 }
 add_action( 'init', 'sell_media_register_taxonomies', 1 );
+
+// $settings = sell_media_get_plugin_options();
+// die( print_r( $settings ) );
+
+/**
+ * Create required pages if they don't already exist and are saved in options
+ */
+function sell_media_autocreate_pages() {
+
+    $settings = sell_media_get_plugin_options();
+    $settings = ( array ) $settings;
+    $pages = sell_media_get_pages_array();
+
+    foreach ( $pages as $page ) {
+        $setting = $page . '_page';
+        $shortcode = '[sell_media_' . $page . ']';
+        if ( ! isset( $settings->$setting ) ) {
+
+            $new_page = array(
+                'post_title'    => 'Sell Media ' . ucfirst( $page ),
+                'post_content'  => $shortcode,
+                'post_status'   => 'publish',
+                'post_type'     => 'page'
+            );
+
+            $post_id = wp_insert_post( $new_page );
+
+            if ( $post_id ) {
+
+                $settings[$setting] = $post_id;
+            }
+        }
+    }
+
+    update_option( 'sell_media_options', $settings );
+
+}

@@ -632,15 +632,15 @@ function sell_media_settings_sidebar_callback() { ?>
     <div id="sell-media-upgrade-promo" class="sell-media-box">
         <h3><?php _e( 'Upgrades Available' , 'sell_media' ); ?></h3>
         <p><span class="dashicons dashicons-update sell-media-dashicon-big"></span></p>
-        <p><?php _e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more when you activate the Business Bundle extension pack for Sell Media.', 'sell_media' ); ?></p>
-        <p><a href="http://graphpaperpress.com/?download=business-bundle#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+        <p><?php _e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more with extensions for Sell Media.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/extensions/sell-media/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
     </div>
 
     <div id="sell-media-support-promo" class="sell-media-box">
         <h3><?php _e( 'Need Help?' , 'sell_media' ); ?></h3>
         <p><span class="dashicons dashicons-format-chat sell-media-dashicon-big"></span></p>
-        <p><?php _e( 'Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one consultation over live chat. If we can\'t fix your problem, we\'ll refund your order.', 'sell_media' ); ?></p>
-        <p><a href="https://graphpaperpress.com/checkout/?edd_action=add_to_cart&download_id=61368#utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+        <p><?php _e( 'Having trouble setting up Sell Media? Hire one of our affiliated developers.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/customization/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
     </div>
 
     <div id="sell-media-review-promo" class="sell-media-box">

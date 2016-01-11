@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.3
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,10 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.0.7 =
+* Hide attachments not not for sale from Sell Media Search page.
+* Change CPT priority
 
 = 2.0.6 =
 * Hotfix for users with PHP versions older than 5.3.

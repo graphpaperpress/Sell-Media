@@ -97,7 +97,7 @@ function sell_media_body_class( $classes ) {
     $settings = sell_media_get_plugin_options();
 
     // Pages assigned with shortcode
-    $pages = array( 'checkout', 'thanks', 'dashboard', 'login', 'search', 'lightbox' );
+    $pages = sell_media_get_pages_array();
     foreach ( $pages as $page ) {
         $setting = $page . '_page';
         if ( isset( $settings->$setting ) && $post->ID == $settings->$setting ) {
@@ -132,6 +132,18 @@ function sell_media_body_class( $classes ) {
     return $classes;
 }
 add_filter( 'body_class', 'sell_media_body_class' );
+
+/**
+ * An array of pages required for plugin setup.
+ * No need to define this in multiple places.
+ * 
+ * @return an array of pages required for plugin setup.
+ */
+function sell_media_get_pages_array() {
+    $pages = array( 'checkout', 'thanks', 'dashboard', 'login', 'search', 'lightbox' );
+
+    return $pages;
+}
 
 /**
  * Adds a custom query var for gallery links

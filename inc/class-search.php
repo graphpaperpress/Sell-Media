@@ -27,14 +27,18 @@ Class SellMediaSearch {
 		add_filter( 'posts_where' , array( &$this, 'posts_where' ));       
 	}
 
-
+	/**
+	 * Only show attachments on search page that are attached to a Sell Media item.
+	 *
+	 * @since 2.0.7
+	 */
 	public function posts_where( $where ) {
 
-	global $wpdb;
-	if( is_search() ) {
+		global $wpdb;
+		if ( is_search() ) {
 			$where .= ' AND ( post_type = \'sell_media_item\' OR ( post_type = \'attachment\' AND post_parent != 0 AND ID IN ( SELECT meta_value FROM wp_postmeta WHERE meta_key = \'_sell_media_attachment_id\' ) ) )';
-	}
-	return $where;
+		}
+		return $where;
 	}
 
 	/**
