@@ -439,8 +439,10 @@ Class SellMediaPayments {
 
                     $html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
                     $html .= '<td class="sell-media-product-id" style="' . $style . '">';
+                    $filename = wp_get_attachment_image_src($product['attachment'], 'full');
+                    $filename = basename($filename[0]);
                     if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
-                        $html .= '#' . $product['id'] . ', ' . $product['name'] . '<br />';
+                        $html .= '#' . $product['id'] . ', ' . $product['name'] . ', File name: '. $filename . '<br />';
                         $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a><br />';
                         if ( 'download' == $product['type'] ) {
                             $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center">' . __( 'Download', 'sell_media' ) . '</a>';

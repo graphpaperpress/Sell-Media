@@ -1,0 +1,1867 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sell Media\n"
+"Report-Msgid-Bugs-To: https://graphpaperpress.com/\n"
+"POT-Creation-Date: 2015-05-20 10:49:00+00:00\n"
+"PO-Revision-Date: 2015-09-05 12:15+0200\n"
+"Last-Translator: Thad Allender <support@graphpaperpress.com>\n"
+"Language-Team: Thad Allender <support@graphpaperpress.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: inc/admin-items.php:57
+msgid "Upload"
+msgstr "Upload"
+
+#: inc/admin-items.php:58
+msgid ""
+"Upload one file to create a single product or many files to create a gallery."
+msgstr ""
+"Upload een bestand voor een product of meerdere bestanden om een galerij te "
+"maken"
+
+#: inc/admin-items.php:59
+msgid "Importing Options"
+msgstr "Importeren opties"
+
+#: inc/admin-items.php:63
+msgid "Importing"
+msgstr "Importeren"
+
+#: inc/admin-items.php:64
+msgid ""
+"Quickly import folders of images using this option. Use FTP or <a href=\"%1$s"
+"\" target=\"_blank\">export directly from Lightroom</a> and place new "
+"folders into the server path listed below. Then, select the folder below to "
+"import into WordPress."
+msgstr ""
+"Gebruik deze optie op afbeeldingsmappen te importeren. Gebruik een FTP-"
+"programma of <a href=\"%1$s\" target=\"_blank\">exporteer vanuit Lightroom</"
+"a> en plaats nieuwe mappen in onderstaande server map. Selecteer daarna de "
+"onderstaande map om naar Wordpress te importeren."
+
+#: inc/admin-items.php:65
+msgid "Server Path"
+msgstr "Server map"
+
+#: inc/admin-items.php:67
+msgid "Select a folder"
+msgstr "Selecteer een folder"
+
+#: inc/admin-items.php:74
+msgid "Add more files"
+msgstr "Voeg meer bestanden toe"
+
+#: inc/admin-items.php:74
+msgid "Importing files..."
+msgstr "Bestanden importeren..."
+
+#: inc/admin-items.php:74
+msgid "Add files"
+msgstr "Voeg bestanden toe"
+
+#: inc/admin-items.php:80
+msgid "Packages"
+msgstr "Pakketten"
+
+#: inc/admin-items.php:81
+msgid ""
+"This feature was retired in version 2.0 because product galleries can now be "
+"created. Your old package file will still be available for sale and is "
+"listed below."
+msgstr ""
+"Deze functie is gestopt in versie 2.0, omdat product galerijen nu aangemaakt "
+"kunnen worden. Uw oude pakket-bestand zal nog steeds beschikbaar zijn voor "
+"verkoop en wordt hieronder vermeld."
+
+#: inc/admin-items.php:110 inc/admin-price-groups.php:258
+#: inc/admin-price-groups.php:305 inc/class-payments.php:597 inc/scripts.php:67
+msgid "Price"
+msgstr "Prijs"
+
+#: inc/admin-items.php:113
+msgid "The price of each original, high-resolution file."
+msgstr "De prijs van elk origineel, hoge resolutie bestand."
+
+#: inc/admin-items.php:118
+msgid "Price group for downloads"
+msgstr "Prijsgroep voor downloads"
+
+#: inc/admin-items.php:121 inc/settings/library/helpers.php:242
+msgid "None"
+msgstr "Geen"
+
+#: inc/admin-items.php:134
+msgid "<a href=\"%1$s\">Create new price group</a>"
+msgstr "<a href=\"%1$s\">Creëer nieuwe prijsgroep</a>"
+
+#: inc/admin-items.php:150
+msgid "Views"
+msgstr "Bekeken"
+
+#: inc/admin-items.php:151
+msgid "Sales"
+msgstr "Verkoop"
+
+#: inc/admin-items.php:323
+msgid "Sorry, %1$s could't be added."
+msgstr "Excuses, %1$s kan niet worden toegevoegd."
+
+#: inc/admin-items.php:446
+msgid "No price set"
+msgstr "Geen prijs opgegeven"
+
+#: inc/admin-items.php:482
+msgid "No sales so far."
+msgstr "Nog geen verkopen."
+
+#: inc/admin-menu.php:24
+msgid "Reports"
+msgstr "Raporten"
+
+#: inc/admin-menu.php:25
+msgid "Upgrades"
+msgstr "Vernieuwingen"
+
+#: inc/admin-menu.php:27 inc/admin-system-info.php:12
+#: inc/settings/settings.php:620
+msgid "System Info"
+msgstr "Systeem informatie"
+
+#: inc/admin-payments.php:21
+msgid "Purchase Details"
+msgstr "Aankoop details"
+
+#: inc/admin-payments.php:28
+msgid "Additional Purchase Details"
+msgstr "Extra aankoop details"
+
+#: inc/admin-payments.php:42
+msgid "Payment Gateway Details"
+msgstr "Betalings Gateway Details"
+
+#: inc/admin-payments.php:74 inc/admin-payments.php:120 inc/scripts.php:64
+msgid "Name"
+msgstr "Naam"
+
+#: inc/admin-payments.php:75 inc/class-payments.php:721 inc/settings.php:70
+msgid "Email"
+msgstr "E-mail"
+
+#: inc/admin-payments.php:76 inc/shortcodes.php:196 themes/cart.php:116
+msgid "Total"
+msgstr "Totaal"
+
+#: inc/admin-payments.php:103
+msgid "This is the additional payment data stored with the purchase."
+msgstr "Dit zijn extra betalingsgegevens die zijn opgeslagen met de aankoop."
+
+#: inc/admin-payments.php:116 inc/class-payments.php:421
+msgid "Product"
+msgstr "Product"
+
+#: inc/admin-payments.php:123
+msgid "ID"
+msgstr "ID"
+
+#: inc/admin-payments.php:126
+msgid "Type"
+msgstr "Type"
+
+#: inc/admin-payments.php:129 inc/class-payments.php:422
+#: inc/class-payments.php:596 inc/scripts.php:65
+msgid "Size"
+msgstr "Afmeting"
+
+#: inc/admin-payments.php:132 inc/class-payments.php:423
+#: inc/class-payments.php:599 inc/install.php:269 inc/scripts.php:66
+msgid "License"
+msgstr "Licensie"
+
+#: inc/admin-payments.php:135 inc/class-payments.php:424 inc/scripts.php:68
+msgid "Qty"
+msgstr "Aantal"
+
+#: inc/admin-payments.php:138 inc/class-payments.php:425 inc/scripts.php:69
+#: inc/shortcodes.php:183
+msgid "Subtotal"
+msgstr "Subtotaal"
+
+#: inc/admin-payments.php:148
+msgid "This payment has no additional payment details"
+msgstr "Deze betaling heeft geen extra details"
+
+#: inc/admin-payments.php:171 inc/settings/library/helpers.php:266
+msgid "PayPal"
+msgstr "PayPal"
+
+#: inc/admin-payments.php:174
+msgid "Stripe"
+msgstr "Stripe"
+
+#: inc/admin-payments.php:176
+msgid "This is the data that was sent from "
+msgstr "Dit zijn de gegevens die verzonden zijn van"
+
+#: inc/admin-payments.php:176
+msgid " at time of purchase. Use this for debugging, if needed."
+msgstr ""
+"op het moment van aankoop. Gebruik dit voor het debuggen, indien nodig."
+
+#: inc/admin-payments.php:197
+msgid "Earnings Report"
+msgstr "Winstraportage"
+
+#: inc/admin-payments.php:199
+msgid "Total Earnings To Date:"
+msgstr "Totale winst op datum:"
+
+#: inc/admin-payments.php:200
+msgid ""
+"Below is a breakdown of earnings per day, month and year. Want to increase "
+"your sales?"
+msgstr ""
+"Hieronder is een overzicht van de winst per dag, maand en jaar. Wilt u uw "
+"omzet verhogen?"
+
+#: inc/admin-payments.php:200
+msgid "Download new Sell Media extensions"
+msgstr "Download nieuwe Sell Media extenties"
+
+#: inc/admin-payments.php:213
+msgid "Day"
+msgstr "Dag"
+
+#: inc/admin-payments.php:214 inc/admin-payments.php:254
+#: inc/admin-payments.php:287
+msgid "Earnings"
+msgstr "Winst"
+
+#: inc/admin-payments.php:234
+msgid "Earnings per day"
+msgstr "Winst per dag"
+
+#: inc/admin-payments.php:253
+msgid "Month"
+msgstr "Maand"
+
+#: inc/admin-payments.php:267
+msgid "Earnings per month"
+msgstr "Winst per maand"
+
+#: inc/admin-payments.php:286
+msgid "Year"
+msgstr "Jaar"
+
+#: inc/admin-payments.php:303
+msgid "Earnings per year"
+msgstr "Winst per jaar"
+
+#: inc/admin-price-groups.php:214
+msgid "Create Price Group"
+msgstr "Creëer een prijsgroep"
+
+#: inc/admin-price-groups.php:219
+msgid "Are you sure you want to delete the price group:"
+msgstr "Weet u het zeker om de prijsgroep te verwijderen:"
+
+#: inc/admin-price-groups.php:219
+msgid "This will delete the price group and ALL its prices associated with it."
+msgstr "Dit zal de prijsgroep en alle bijbehorende prijzen verwijderen"
+
+#: inc/admin-price-groups.php:220
+msgid "Delete Group"
+msgstr "Verwijder groep"
+
+#: inc/admin-price-groups.php:224
+msgid "Enter price group name here"
+msgstr "Vul hier de prijsgroep in"
+
+#: inc/admin-price-groups.php:240 inc/admin-price-groups.php:292
+msgid "Name (shown to buyer, so be descriptive)"
+msgstr "Naam (wordt getoond aan de koper, dus duidelijk vermelden)"
+
+#: inc/admin-price-groups.php:248 inc/admin-price-groups.php:297
+msgid "Max width (pixels)"
+msgstr "Max breedte (pixels)"
+
+#: inc/admin-price-groups.php:253
+msgid "Max Height (pixels)"
+msgstr "Max Hoogte (pixels)"
+
+#: inc/admin-price-groups.php:264
+msgid "Are you sure you want to delete the price"
+msgstr "Prijs verwijderen. Weet u het zeker?"
+
+#: inc/admin-price-groups.php:301
+msgid "Max height (pixels)"
+msgstr "Max hoogte (pixels)"
+
+#: inc/admin-price-groups.php:310
+msgid ""
+"The sizes listed below determine the maximum dimensions in pixels. Price "
+"Groups only apply to images."
+msgstr ""
+"De onderstaande afmetingen bepalen de maximale afmetingen in pixels. "
+"Prijsgroepen alleen van toepassing op afbeeldingen."
+
+#: inc/admin-price-groups.php:311
+msgid "Create a price group to add prices to."
+msgstr "Creëer een nieuwe prijsgroep om prijzen toe te voegen."
+
+#: inc/admin-price-groups.php:370
+msgid "Add New Price"
+msgstr "Voeg nieuwe prijs toe"
+
+#: inc/admin-price-groups.php:378
+msgid "Save Price Group"
+msgstr "Sla prijsgroep op"
+
+#: inc/class-admin-notices.php:49
+msgid "Your site is currently in <a href=\"%1$s\">test mode</a>."
+msgstr ""
+"Uw website bevind zich momenteel in een <a href=\"%1$s\">test mode</a>."
+
+#: inc/class-admin-notices.php:59
+msgid ""
+"Please create a checkout page using the <code>[sell_media_checkout]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+"Maak een bestelpagina met behulp van de <code> [sell_media_checkout] </ "
+"code> shortcode en toewijzen in uw <a href=\"%1$s\"> instellingen </a>."
+
+#: inc/class-admin-notices.php:69
+msgid ""
+"Please create a thanks page using the <code>[sell_media_thanks]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+"Maak een bedankpagina met behulp van de <code>[sell_media_thanks]</code> "
+"shortcode en toewijzen in uw <a href=\"%1$s\">instellingen</a>.\v"
+
+#: inc/class-admin-notices.php:79
+msgid ""
+"Please set a PayPal email in your <a href=\"%1$s\">payment settings</a>."
+msgstr "Vul een E-mailadres in bij uw <a href=\"%1$s\">betaalinstellingen</a>."
+
+#: inc/class-admin-notices.php:89
+msgid ""
+"Important updates are now available for %1$s. <a href=\"%2$s\" target="
+"\"_blank\">Learn more</a>."
+msgstr ""
+"Er zijn belangrijke updates voor %1$s. <a href=\"%2$s\" target=\"_blank"
+"\">Meer informatie</a>."
+
+#: inc/class-customer.php:72
+msgid "Account registration at"
+msgstr "Account registratie bij"
+
+#: inc/class-customer.php:73
+msgid "Welcome"
+msgstr "Welkom"
+
+#: inc/class-customer.php:74
+msgid "Here are your login credentials"
+msgstr "Hier zijn uw inlogggevens"
+
+#: inc/class-customer.php:75 inc/shortcodes.php:468
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: inc/class-customer.php:76
+msgid ""
+"Create a password if you want to login to our dashboard to download any of "
+"your purchases in the future."
+msgstr ""
+"Maak een wachtwoord aan als u wilt inloggen op ons dashboard om later een "
+"van uw aankopen te downloaden."
+
+#: inc/class-customer.php:78
+msgid "Any purchases your make will be available on your account dashboard."
+msgstr ""
+"Elke aankoop die u gedaan heeft is beschikbaar op uw account dashboard."
+
+#: inc/class-customer.php:80
+msgid "Thanks"
+msgstr "Bedankt"
+
+#: inc/class-downloads.php:46
+msgid "The original high resolution file doesn't exist here: %1$s"
+msgstr "Het originele hoge resolutie bestand is niet aanwezig: %1$s"
+
+#: inc/class-downloads.php:82
+msgid "You do not have permission to download this file"
+msgstr "U heeft geen rechten om dit bestand te downloaden."
+
+#: inc/class-downloads.php:82
+msgid "Purchase Verification Failed"
+msgstr "Aankoop verificatie mislukt"
+
+#: inc/class-payments.php:231
+msgid "sales totaling"
+msgstr "Verkoop totalen"
+
+#: inc/class-payments.php:446
+msgid "Download"
+msgstr "Download"
+
+#: inc/class-payments.php:480
+msgid "DISCOUNT"
+msgstr "KORTING"
+
+#: inc/class-payments.php:483
+msgid "TAX"
+msgstr "Btw"
+
+#: inc/class-payments.php:486
+msgid "SHIPPING"
+msgstr "VERZENDING"
+
+#: inc/class-payments.php:489
+msgid "TOTAL"
+msgstr "TOTAAL"
+
+#: inc/class-payments.php:595
+msgid "Item"
+msgstr "Artikel"
+
+#: inc/class-payments.php:598
+msgid "Quantity"
+msgstr "Aantallen"
+
+#: inc/class-payments.php:672
+msgid "Paid"
+msgstr "Betaald"
+
+#: inc/class-payments.php:717
+msgid "New sale notification"
+msgstr "Nieuwe verkoop melding"
+
+#: inc/class-payments.php:719
+msgid "Customer"
+msgstr "Klant"
+
+#: inc/class-payments.php:720
+msgid "Address"
+msgstr "Adres"
+
+#: inc/class-products.php:58
+msgid "Original"
+msgstr "Origineel"
+
+#: inc/class-products.php:59
+msgid "The original high resolution source file"
+msgstr "Het originele hoge resolutie bronbestand"
+
+#: inc/class-search.php:269
+msgid "Search for %1$s"
+msgstr "Zoeken naar %1$s"
+
+#: inc/class-search.php:275
+msgid "Search"
+msgstr "Zoeken"
+
+#: inc/class-search.php:285
+msgid "Exact phrase match (?)"
+msgstr "Exacte overeenkomst (?)"
+
+#: inc/class-search.php:291 inc/install.php:234
+msgid "Collection"
+msgstr "Collectie"
+
+#: inc/class-search.php:293
+msgid "All"
+msgstr "Alles"
+
+#: inc/collections.php:74
+msgid "This item is password protected"
+msgstr "Dit Artikel is beveiligd met een wachtwoord"
+
+#: inc/install.php:100
+msgid "All Products"
+msgstr "Alle producten"
+
+#: inc/install.php:101 inc/install.php:143
+msgid "Add New"
+msgstr "Nieuw toevoegen"
+
+#: inc/install.php:103
+msgid "Edit Product"
+msgstr "Product bewerken"
+
+#: inc/install.php:104
+msgid "New Product"
+msgstr "Nieuw product"
+
+#: inc/install.php:105
+msgid "View Product"
+msgstr "Product bekijken"
+
+#: inc/install.php:106
+msgid "Search Products"
+msgstr "Producten zoeken"
+
+#: inc/install.php:107
+msgid "No products found"
+msgstr "Geen producten gevonden"
+
+#: inc/install.php:108
+msgid "No products found in Trash"
+msgstr "Geen producten gevonden in de prullenbak"
+
+#: inc/install.php:109
+msgid "Parent Product:"
+msgstr "Bovenliggend Product:"
+
+#: inc/install.php:141 inc/install.php:152
+msgid "Payments"
+msgstr "Betalingen"
+
+#: inc/install.php:142 inc/settings.php:55 inc/settings.php:59
+msgid "Payment"
+msgstr "Betaling"
+
+#: inc/install.php:144
+msgid "Add New Payment"
+msgstr "Voeg nieuwe betaling toe"
+
+#: inc/install.php:145
+msgid "Edit Payment"
+msgstr "bewerk betaling"
+
+#: inc/install.php:146
+msgid "New Payment"
+msgstr "Nieuwe betaling"
+
+#: inc/install.php:147
+msgid "View Payment"
+msgstr "Betaling bekijken"
+
+#: inc/install.php:148
+msgid "Search Payments"
+msgstr "Zoek betalingen"
+
+#: inc/install.php:149
+msgid "No payments found"
+msgstr "Geen betalingen gevonden"
+
+#: inc/install.php:150
+msgid "No payments found in Trash"
+msgstr "Geen betalingen gevonden in de prullenbak"
+
+#: inc/install.php:151
+msgid "Parent Payment:"
+msgstr "Bovenliggende betaling"
+
+#: inc/install.php:198 inc/install.php:199 inc/install.php:212
+msgid "Price Groups"
+msgstr "Prijsgroepen"
+
+#: inc/install.php:200
+msgid "Search Price Groups"
+msgstr "Zoek prijsgroeppen"
+
+#: inc/install.php:201
+msgid "Popular Price Groups"
+msgstr "Populaire prijsgroepen"
+
+#: inc/install.php:202
+msgid "All Price Groups"
+msgstr "Alle prijsgroepen"
+
+#: inc/install.php:203
+msgid "Parent Price Groups"
+msgstr "Bovenliggende prijsgroepen"
+
+#: inc/install.php:204
+msgid "Parent Price Groups:"
+msgstr "Bovenliggende prijsgroepen:"
+
+#: inc/install.php:205
+msgid "Edit Price Group"
+msgstr "Bewerk prijsgroep"
+
+#: inc/install.php:206
+msgid "Update Price Group"
+msgstr "Update prijsgroep"
+
+#: inc/install.php:207
+msgid "Add New Price Group"
+msgstr "Voeg nieuwe prijsgroep toe"
+
+#: inc/install.php:208
+msgid "New Price Group"
+msgstr "nieuwe prijsgroep"
+
+#: inc/install.php:209
+msgid "Separate Price Groups with commas"
+msgstr "Aparte prijsgroepen met komma's"
+
+#: inc/install.php:210
+msgid "Add or remove Price Groups"
+msgstr "Toevoegen of verwijder prijsgroepen"
+
+#: inc/install.php:211
+msgid "Choose from most used Price Groups"
+msgstr "Kies uit de meest gebruikte prijsgroepen"
+
+#: inc/install.php:233
+msgid "Product Collections"
+msgstr "Product collecties"
+
+#: inc/install.php:235
+msgid "Search Collection"
+msgstr "Zoek collecties"
+
+#: inc/install.php:236
+msgid "Popular Collection"
+msgstr "populaire collecties"
+
+#: inc/install.php:237 inc/widgets/sell-media-featured.php:95
+msgid "All Collections"
+msgstr "Alle collecties"
+
+#: inc/install.php:238
+msgid "Parent Collection"
+msgstr "Bovenliggende collectie"
+
+#: inc/install.php:239
+msgid "Parent Collection:"
+msgstr "Bovenliggende collectie:"
+
+#: inc/install.php:240
+msgid "Edit Collection"
+msgstr "Bewerk collectie"
+
+#: inc/install.php:241
+msgid "Update Collection"
+msgstr "Update Collectie"
+
+#: inc/install.php:242
+msgid "Add New Collection"
+msgstr "Voeg nieuwe collectie toe"
+
+#: inc/install.php:243
+msgid "New Collection"
+msgstr "Nieuwe collectie"
+
+#: inc/install.php:244
+msgid "Separate collection with commas"
+msgstr "Aparte collectie met komma's"
+
+#: inc/install.php:245
+msgid "Add or remove Collection"
+msgstr "Toevoegen of verwijderen collectie"
+
+#: inc/install.php:246
+msgid "Choose from most used Collection"
+msgstr "Kies uit de meest gebruikte collectie"
+
+#: inc/install.php:247 inc/template-tags.php:582
+msgid "Collections"
+msgstr "Collecties"
+
+#: inc/install.php:268 inc/install.php:282
+msgid "Licenses"
+msgstr "Licenties"
+
+#: inc/install.php:270
+msgid "Search Licenses"
+msgstr "Zoek Licenties"
+
+#: inc/install.php:271
+msgid "Popular Licenses"
+msgstr "Populaire Licenties"
+
+#: inc/install.php:272
+msgid "All Licenses"
+msgstr "Alle Licenties"
+
+#: inc/install.php:273
+msgid "Parent License"
+msgstr "Bovenliggende Licentie"
+
+#: inc/install.php:274
+msgid "Parent License:"
+msgstr "Bovenliggende Licentie:"
+
+#: inc/install.php:275
+msgid "Edit License"
+msgstr "Bewerk licentie"
+
+#: inc/install.php:276
+msgid "Update License"
+msgstr "Update licentie"
+
+#: inc/install.php:277
+msgid "Add New License"
+msgstr "Voeg nieuwe licentie toe"
+
+#: inc/install.php:278
+msgid "New License"
+msgstr "Nieuwe licentie"
+
+#: inc/install.php:279
+msgid "Separate licenses with commas"
+msgstr "Aparte licenties met komma's"
+
+#: inc/install.php:280
+msgid "Add or remove Licenses"
+msgstr "Toevoegen of verwijderen licenties"
+
+#: inc/install.php:281
+msgid "Choose from most used Licenses"
+msgstr "Kies uit de meest gebruikte licenties"
+
+#: inc/install.php:303 inc/install.php:317 inc/template-tags.php:585
+#: inc/widgets/sell-media-keywords.php:49
+msgid "Keywords"
+msgstr "Zoektermen"
+
+#: inc/install.php:304 inc/install.php:373 inc/install.php:407
+msgid "Keyword"
+msgstr "Zoekterm"
+
+#: inc/install.php:305
+msgid "Search Keywords"
+msgstr "Zoek Zoektermen"
+
+#: inc/install.php:306
+msgid "Popular Keywords"
+msgstr "Populaire Zoektermen"
+
+#: inc/install.php:307
+msgid "All Keywords"
+msgstr "Alle Zoektermen"
+
+#: inc/install.php:308 inc/install.php:377 inc/install.php:411
+msgid "Parent Keyword"
+msgstr "Bovenliggende Zoekterm"
+
+#: inc/install.php:309 inc/install.php:378 inc/install.php:412
+msgid "Parent Keyword:"
+msgstr "Bovenliggende Zoekterm:"
+
+#: inc/install.php:310 inc/install.php:379 inc/install.php:413
+msgid "Edit Keyword"
+msgstr "Bewerk zoekterm"
+
+#: inc/install.php:311 inc/install.php:380 inc/install.php:414
+msgid "Update Keyword"
+msgstr "Update zoekterm"
+
+#: inc/install.php:312 inc/install.php:381 inc/install.php:415
+msgid "Add New Keyword"
+msgstr "Nieuwe zoekterm toevoegen"
+
+#: inc/install.php:313 inc/install.php:382 inc/install.php:416
+msgid "New Keyword"
+msgstr "Nieuwe zoekterm"
+
+#: inc/install.php:314
+msgid "Separate keywords with commas"
+msgstr "Aparte zoektermen met komma's"
+
+#: inc/install.php:315
+msgid "Add or remove Keywords"
+msgstr "Toevoegen of verwijderen zoektermen"
+
+#: inc/install.php:316
+msgid "Choose from most used Keywords"
+msgstr "Kies uit de meest gebruikte zoektermen"
+
+#: inc/install.php:338 inc/install.php:352
+msgid "Creators"
+msgstr "Ontwerpers"
+
+#: inc/install.php:339
+msgid "Creator"
+msgstr "Ontwerper"
+
+#: inc/install.php:340
+msgid "Search Creator"
+msgstr "Zoek ontwerpers"
+
+#: inc/install.php:341
+msgid "Popular Creator"
+msgstr "Populaire ontwerpers"
+
+#: inc/install.php:342
+msgid "All Creator"
+msgstr "Alle ontwerpers"
+
+#: inc/install.php:343
+msgid "Parent Creator"
+msgstr "Bovenliggende ontwerper"
+
+#: inc/install.php:344
+msgid "Parent Creator:"
+msgstr "Bovenliggende ontwerper:"
+
+#: inc/install.php:345
+msgid "Edit Creator"
+msgstr "Bewerk ontwerper"
+
+#: inc/install.php:346
+msgid "Update Creator"
+msgstr "Update ontwerper"
+
+#: inc/install.php:347
+msgid "Add New Creator"
+msgstr "Voeg nieuwe ontwerper toe"
+
+#: inc/install.php:348
+msgid "New Creator"
+msgstr "Nieuwe ontwerper"
+
+#: inc/install.php:349
+msgid "Separate creator with commas"
+msgstr "Aparte ontwerper met komma's"
+
+#: inc/install.php:350
+msgid "Add or remove Creator"
+msgstr "Toevoegen of verwijderen ontwerpers"
+
+#: inc/install.php:351
+msgid "Choose from most used Creator"
+msgstr "Kies uit de meest gebruikte ontwerpers"
+
+#: inc/install.php:372 inc/install.php:386
+msgid "City"
+msgstr "Woonplaats"
+
+#: inc/install.php:374
+msgid "Search City"
+msgstr "Zoek woonplaatsen"
+
+#: inc/install.php:375
+msgid "Popular City"
+msgstr "Populaire woonplaatsen"
+
+#: inc/install.php:376
+msgid "All City"
+msgstr "Alle woonplaatsen"
+
+#: inc/install.php:383
+msgid "Separate city with commas"
+msgstr "Aparte woonplaatsen met komma's"
+
+#: inc/install.php:384
+msgid "Add or remove City"
+msgstr "Toevoegen of verwijderen woonplaatsen"
+
+#: inc/install.php:385
+msgid "Choose from most used City"
+msgstr "Kies uit de meest gebruikte woonplaatsen"
+
+#: inc/install.php:406 inc/install.php:420
+msgid "State"
+msgstr "Provincie"
+
+#: inc/install.php:408
+msgid "Search State"
+msgstr "Zoek provincies"
+
+#: inc/install.php:409
+msgid "Popular State"
+msgstr "populaire provincies"
+
+#: inc/install.php:410
+msgid "All State"
+msgstr "Alle provincies"
+
+#: inc/install.php:417
+msgid "Separate state with commas"
+msgstr "Aparte provincies met komma's"
+
+#: inc/install.php:418
+msgid "Add or remove State"
+msgstr "Toevoegen of verwijderen provincies"
+
+#: inc/install.php:419
+msgid "Choose from most used State"
+msgstr "Kies uit de meest gebruikte provincies"
+
+#: inc/lightbox.php:30
+msgid "Go to lightbox"
+msgstr "Ga naar lightbox"
+
+#: inc/lightbox.php:30
+msgid "lightbox"
+msgstr "lightbox"
+
+#: inc/lightbox.php:36
+msgid "This item was saved to your %1$s."
+msgstr "Dit artikel is opgeslagen naar uw %1$s."
+
+#: inc/lightbox.php:46 inc/lightbox.php:165 inc/lightbox.php:176
+#: inc/settings/settings.php:477 inc/settings/settings.php:572
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: inc/lightbox.php:46 inc/lightbox.php:170
+msgid "Save"
+msgstr "Opslaan"
+
+#: inc/lightbox.php:82 inc/lightbox.php:136
+msgid "Your lightbox is empty."
+msgstr "Uw lightbox is leeg"
+
+#: inc/lightbox.php:82
+msgid "Remove all from lightbox"
+msgstr "Verwijder alles uit uw lightbox"
+
+#: inc/lightbox.php:127 inc/template-tags.php:212 inc/template-tags.php:533
+#: inc/template-tags.php:550
+msgid "Buy"
+msgstr "Koop"
+
+#: inc/scripts.php:53
+msgid "Sorry that email already exists or is invalid"
+msgstr "Sorry maar dit E-mailadres bestaat al of is onjuist"
+
+#: inc/scripts.php:61
+msgid "Added"
+msgstr "Toegevoegd"
+
+#: inc/scripts.php:62
+msgid "Checkout now"
+msgstr "Nu afrekenen"
+
+#: inc/scripts.php:74
+msgid ""
+"There was an error loading the cart data. Please contact the site owner."
+msgstr ""
+"Er is een fout opgetreden bij het laden van uw winkelwagen. Neem contact op "
+"met de website beheerder."
+
+#: inc/scripts.php:75 inc/shortcodes.php:203
+msgid "Checkout Now"
+msgstr "Nu afrekenen"
+
+#: inc/scripts.php:76
+msgid "Please wait..."
+msgstr "Even geduld aub..."
+
+#: inc/scripts.php:77
+msgid "Remove from Lightbox"
+msgstr "verijwder uit uw lightbox"
+
+#: inc/scripts.php:78
+msgid "Save to Lightbox"
+msgstr "Opslaan in uw lightbox"
+
+#: inc/settings/library/helpers.php:16
+msgid "-- Choose One --"
+msgstr "-- Kies een --"
+
+#: inc/settings/library/helpers.php:133
+msgid "US Dollars (&#36;)"
+msgstr "US Dollars (&#36;)"
+
+#: inc/settings/library/helpers.php:137
+msgid "Euros (&euro;)"
+msgstr "Euros (&euro;)"
+
+#: inc/settings/library/helpers.php:141
+msgid "Pounds Sterling (&pound;)"
+msgstr "Pounds Sterling (&pound;)"
+
+#: inc/settings/library/helpers.php:145
+msgid "Australian Dollars (&#36;)"
+msgstr "Australian Dollars (&#36;)"
+
+#: inc/settings/library/helpers.php:149
+msgid "Brazilian Real (R&#36;)"
+msgstr "Brazilian Real (R&#36;)"
+
+#: inc/settings/library/helpers.php:153
+msgid "Canadian Dollars (&#36;)"
+msgstr "Canadian Dollars (&#36;)"
+
+#: inc/settings/library/helpers.php:157
+msgid "Czech Koruna (&#75;&#269;)"
+msgstr "Czech Koruna (&#75;&#269;)"
+
+#: inc/settings/library/helpers.php:161
+msgid "Danish Krone"
+msgstr "Danish Krone (&#107;&#114;)"
+
+#: inc/settings/library/helpers.php:165
+msgid "Hong Kong Dollar (&#36;)"
+msgstr "Hong Kong Dollar (&#36;)"
+
+#: inc/settings/library/helpers.php:169
+msgid "Hungarian Forint"
+msgstr "Hungarian Forint (&#70;&#116;)"
+
+#: inc/settings/library/helpers.php:173
+msgid "Israeli Shekel"
+msgstr "Israeli Shekel (&#8362;)"
+
+#: inc/settings/library/helpers.php:177
+msgid "Japanese Yen (&yen;)"
+msgstr "Japanese Yen (&yen;)"
+
+#: inc/settings/library/helpers.php:181
+msgid "Malaysian Ringgits"
+msgstr "Malaysian Ringgits (rm&#82;&#77;)"
+
+#: inc/settings/library/helpers.php:185
+msgid "Mexican Peso (&#36;)"
+msgstr "Mexican Peso (&#36;)"
+
+#: inc/settings/library/helpers.php:189
+msgid "New Zealand Dollar (&#36;)"
+msgstr "New Zealand Dollar (&#36;)"
+
+#: inc/settings/library/helpers.php:193
+msgid "Norwegian Krone"
+msgstr "Norwegian Krone (&#107;&#114;)"
+
+#: inc/settings/library/helpers.php:197
+msgid "Philippine Pesos"
+msgstr "Philippine Pesos (&#8369;)"
+
+#: inc/settings/library/helpers.php:201
+msgid "Polish Zloty"
+msgstr "Polish Zloty (&#122;&#322;)"
+
+#: inc/settings/library/helpers.php:205
+msgid "Singapore Dollar (&#36;)"
+msgstr "Singapore Dollar (&#36;)"
+
+#: inc/settings/library/helpers.php:209
+msgid "Swedish Krona"
+msgstr "Swedish Krona (&#107;&#114;)"
+
+#: inc/settings/library/helpers.php:213
+msgid "Swiss Franc"
+msgstr "Swiss Franc (&#67;&#72;&#70;)"
+
+#: inc/settings/library/helpers.php:217
+msgid "Taiwan New Dollars"
+msgstr "Taiwan New Dollars (&#78;&#84;&#36;)"
+
+#: inc/settings/library/helpers.php:221
+msgid "Thai Baht"
+msgstr "Thai Baht (&#3647;)"
+
+#: inc/settings/library/helpers.php:225
+msgid "Turkish Lira (TL)"
+msgstr "Turkish Lira TRL (&#8356;)"
+
+#: inc/settings/library/helpers.php:229
+msgid "South African rand (R)"
+msgstr "South African rand ((&#82;)"
+
+#: inc/settings/settings.php:85 inc/settings/settings.php:87
+msgid "Settings"
+msgstr "Instellingen"
+
+#: inc/settings/settings.php:121
+msgid " settings updated successfully."
+msgstr " instellingen succesvol geupdate."
+
+#: inc/settings/settings.php:134
+msgid "Save Settings"
+msgstr "Instellingen opslaan"
+
+#: inc/settings/settings.php:135
+msgid "Reset Defaults"
+msgstr "Instellingen resetten"
+
+#: inc/settings/settings.php:354 inc/settings/settings.php:374
+#: inc/settings/settings.php:393
+msgid ""
+"This option has no valid options. Please create valid options as an array "
+"inside the settings."
+msgstr ""
+"Deze optie heeft geen geldige opties. Creëer geldige opties met een formule "
+"binnen de instellingen."
+
+#: inc/settings/settings.php:476 inc/term-meta.php:367
+msgid "Upload or Select Image"
+msgstr "Upload of selecteer afbeelding"
+
+#: inc/settings/settings.php:571
+msgid "Upload or Select Images"
+msgstr "Upload of selecteer afbeeldingen"
+
+#: inc/settings/settings.php:618
+msgid "Version: "
+msgstr "Versie:"
+
+#: inc/settings/settings.php:619
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: inc/settings/settings.php:634
+msgid "Upgrades Available"
+msgstr "Upgrades beschikbaar"
+
+#: inc/settings/settings.php:636
+msgid ""
+"Sell prints, create discount codes, watermark images, accept credit cards "
+"and much more when you activate the Business Bundle extension pack for Sell "
+"Media."
+msgstr ""
+"Verkoop prints, creëer kortingscodes, watermerk afbeeldingen, accepteer "
+"creditcards en nog veel meer als je het Business Bundel uitbreidingspakket "
+"voor Sell Media activeert."
+
+#: inc/settings/settings.php:637 inc/settings/settings.php:644
+msgid "Order Now"
+msgstr "Bestel nu"
+
+#: inc/settings/settings.php:641
+msgid "Need Help?"
+msgstr "Hulp nodig?"
+
+#: inc/settings/settings.php:643
+msgid ""
+"Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one "
+"consultation over live chat. If we can't fix your problem, we'll refund your "
+"order."
+msgstr ""
+"Problemen met het instellen van Sell Media? Huur ons in voor een 30 minuten, "
+"een-op-een overleg via live chat. Als we uw probleem niet kunnen oplossen, "
+"zullen wij uw bestelling terugbetalen."
+
+#: inc/settings/settings.php:648
+msgid "Reviews"
+msgstr "Beoordelingen"
+
+#: inc/settings/settings.php:650
+msgid "Great plugin with great support. Includes tons of features."
+msgstr "Geweldige plugin met goede ondersteuning. Bevat veel functies."
+
+#: inc/settings/settings.php:653
+msgid ""
+"A young product with massive potential! You can expect great support from "
+"Graph Paper Press."
+msgstr ""
+"Een jong product met gigantische mogelijkheden! U kunt goede ondersteuning "
+"van Graph Paper Press verwachten."
+
+#: inc/settings/settings.php:656
+msgid "We'd love for you to leave a review if you've found this plugin useful."
+msgstr ""
+"Als u deze plugin nuttig vindt dan zou het erg fijn zijn als u een "
+"beoordeling achter laat."
+
+#: inc/settings/settings.php:657
+msgid "Leave a review"
+msgstr "Laat een beoordeling achter"
+
+#: inc/settings.php:25 inc/settings.php:29
+msgid "General"
+msgstr "Algemeen"
+
+#: inc/settings.php:40 inc/settings.php:44
+msgid "Pricing"
+msgstr "Prijzen"
+
+#: inc/settings.php:74
+msgid "Email Settings"
+msgstr "E-mail instellingen"
+
+#: inc/settings.php:85 inc/settings.php:89
+msgid "Misc"
+msgstr "Diversen"
+
+#: inc/settings.php:106
+msgid "Mode"
+msgstr "Functie"
+
+#: inc/settings.php:107
+msgid ""
+"Select Live Mode to accept real transactions. Select Test Mode to accept "
+"test transactions (%s)."
+msgstr ""
+"Selecteer Live Mode om transacties te accepteren. Selecteer Test Mode om "
+"TEST transacties te accepteren (%s)."
+
+#: inc/settings.php:127
+msgid "Checkout Page"
+msgstr "Bestelpagina"
+
+#: inc/settings.php:128
+msgid ""
+"Select the page that contains the checkout shortcode "
+"<code>[sell_media_checkout]</code>"
+msgstr ""
+"Selecteer de pagina met de bestelling-shortcode <code>[sell_media_checkout]</"
+"code>"
+
+#: inc/settings.php:139
+msgid "Thanks Page"
+msgstr "Bedankpagina"
+
+#: inc/settings.php:140
+msgid ""
+"Select the page that contains the thanks shortcode "
+"<code>[sell_media_thanks]</code>"
+msgstr ""
+"Selecteer de pagina met de bedankt-shortcode <code>[sell_media_thanks]</code>"
+
+#: inc/settings.php:151
+msgid "Dashboard Page"
+msgstr "Deashboard pagina"
+
+#: inc/settings.php:152
+msgid ""
+"Select the page that contains the dashboard "
+"shortcode<code>[sell_media_download_list]</code>"
+msgstr ""
+"Selecteer de pagina met de dashboard-"
+"shortcode<code>[sell_media_download_list]</code>"
+
+#: inc/settings.php:163
+msgid "Login Page"
+msgstr "Inlogpagina"
+
+#: inc/settings.php:164
+msgid ""
+"Select the page that contains the login shortcode "
+"<code>[sell_media_login_form]</code>"
+msgstr ""
+"Selecteer de pagina met de inlog-shortcode <code>[sell_media_login_form]</"
+"code>"
+
+#: inc/settings.php:175
+msgid "Search Page"
+msgstr "Zoekpagina"
+
+#: inc/settings.php:176
+msgid ""
+"Select the page that contains the search shortcode "
+"<code>[sell_media_searchform]</code>"
+msgstr ""
+"Selecteer de pagina met de  zoek-shortcode <code>[sell_media_searchform]</"
+"code>"
+
+#: inc/settings.php:187
+msgid "Lightbox Page"
+msgstr "Lightbox pagina"
+
+#: inc/settings.php:188
+msgid ""
+"Select the page that contains the lightbox shortcode "
+"<code>[sell_media_lightbox]</code>"
+msgstr ""
+"Selecteer de pagina met de lightbox-shortcode <code>[sell_media_lightbox]</"
+"code>"
+
+#: inc/settings.php:199
+msgid "Customer Notification"
+msgstr "Klant notificatie"
+
+#: inc/settings.php:200
+msgid "Notify the customer of their site registration."
+msgstr "Informeer de klant van deze website registratie."
+
+#: inc/settings.php:209 inc/settings.php:272 inc/settings.php:293
+#: inc/settings.php:410
+msgid "No"
+msgstr "Nee"
+
+#: inc/settings.php:213 inc/settings.php:276 inc/settings.php:297
+#: inc/settings.php:414
+msgid "Yes"
+msgstr "Ja"
+
+#: inc/settings.php:220
+msgid "Style"
+msgstr "Stijl"
+
+#: inc/settings.php:221
+msgid ""
+"Choose the style of your theme. Sell Media will load styles to match your "
+"theme."
+msgstr ""
+"Kies een stijl voor je thema. Sell media verwerkt de stijl in uw thema."
+
+#: inc/settings.php:230
+msgid "Dark"
+msgstr "Donker"
+
+#: inc/settings.php:234
+msgid "Light"
+msgstr "Licht"
+
+#: inc/settings.php:241
+msgid "Layout"
+msgstr "Opmaak"
+
+#: inc/settings.php:242
+msgid ""
+"Select your layout preference for single Sell Media entries. If your theme "
+"already has a sidebar, you probably want to select the 'Single column' "
+"option."
+msgstr ""
+"Selecteer uw opmaakvoorkeur voor enkele Sell Media vermeldingen. Als uw "
+"thema al een sidebar heeft, wilt u waarschijnlijk de optie 'Single kolom' te "
+"selecteren."
+
+#: inc/settings.php:262
+msgid "Breadcrumbs"
+msgstr "Breadcrumbs"
+
+#: inc/settings.php:263
+msgid "Show breadcrumb navigation on single entries."
+msgstr "Toon broodkruimelnavigatie op enkele inzendingen."
+
+#: inc/settings.php:283
+msgid "Plugin Credit"
+msgstr "Plugin Credit"
+
+#: inc/settings.php:284
+msgid "Let your site visitors know you are using the Sell Media plugin?"
+msgstr "Uw bezoekers laten weten dat u gebruik maakt van de Sell Media Plugin?"
+
+#: inc/settings.php:304
+msgid "Post Type Slug"
+msgstr "Post Type Slug"
+
+#: inc/settings.php:305
+msgid ""
+"You can change the post type slug to: &quot;photos&quot; or &quot;"
+"downloads&quot;. The default slug is &quot;items&quot;."
+msgstr ""
+"U kunt de post type slug veranderen naar: &quot;photos&quot; or &quot;"
+"downloads&quot;. De standaard slug is &quot;artikelen&quot;."
+
+#: inc/settings.php:316
+msgid "Order By"
+msgstr "Besteld door"
+
+#: inc/settings.php:317
+msgid "Choose the order of items for the archive pages."
+msgstr "Bepaal de volgorde van artikelen voor archiefpagina's"
+
+#: inc/settings.php:345
+msgid "Terms and Conditions"
+msgstr "Algemene Voorwaarden"
+
+#: inc/settings.php:346
+msgid ""
+"These &quot;Terms and Conditions&quot; will show up on the checkout page. "
+"Users must agree to these terms before completing their purchase."
+msgstr ""
+"Deze &quot;Algemene Voorwaarden&quot; worden getoond op de betaalpagina. "
+"gebruikers moeten deze voorwaarden accepteren om een betaling te kunnen "
+"afronden."
+
+#: inc/settings.php:357
+msgid "Show Columns"
+msgstr "Laat kolommen zien"
+
+#: inc/settings.php:358
+msgid ""
+"Select the columns to show on the admin page &quot;All Products&quot; page."
+msgstr ""
+"Selecteer de kolommen om te laten zien op de admin pagina &quot;Alle "
+"Producten&quot; pagina."
+
+#: inc/settings.php:388
+msgid "Original Price"
+msgstr "Originele prijs"
+
+#: inc/settings.php:389
+msgid ""
+"The original price of new items and bulk uploads. You can set unique prices "
+"by editing each individual item."
+msgstr ""
+"De oorspronkelijke prijs van nieuwe artikelen en bulk-uploads. U kunt unieke "
+"prijzen instellen door elk artikel afzonderlijk te bewerken."
+
+#: inc/settings.php:400
+msgid "Hide Original Price"
+msgstr "Verberg originele prijs"
+
+#: inc/settings.php:401
+msgid ""
+"Select 'Yes' to hide the original price above and rely solely on Price "
+"Groups (See below. Price Groups can only be used when selling images). "
+"Select 'No' if you're selling single file downloads or if you want to list "
+"the original price for each product. You can override this setting on a per-"
+"item basis."
+msgstr ""
+"Selecteer 'Ja' om de oorspronkelijke prijs boven verbergen en uitsluitend op "
+"prijsgroepen (Zie hieronder. Prijs Groepen kunnen alleen worden gebruikt bij "
+"de verkoop van afbeeldingen). Selecteer 'Nee' als u downloads van een enkel "
+"bestand verkoopt of als u de oorspronkelijke prijs voor elk product wilt "
+"weergeven. U kunt deze instelling op een per-artikel basis overschrijven."
+
+#: inc/settings.php:421
+msgid "Default Image Price Group"
+msgstr "Standaard afbeelding prijsgroep"
+
+#: inc/settings.php:432
+msgid "Image Price Groups"
+msgstr "Afbeelding groepsprijzen"
+
+#: inc/settings.php:445
+msgid "PayPal Email Address"
+msgstr "PayPal e-mailadres"
+
+#: inc/settings.php:446
+msgid "Add the email address associated with your PayPal account above."
+msgstr ""
+"Voeg het e-mailadres toe dat is gekoppeld aan uw PayPal-rekening hierboven."
+
+#: inc/settings.php:458
+msgid "Currency"
+msgstr "Valuta"
+
+#: inc/settings.php:459
+msgid "The currency in which you accept payment."
+msgstr "Het valuta waarin u betalingen wilt ontvangen."
+
+#: inc/settings.php:470
+msgid "PayPal Additional Test Emails"
+msgstr "PayPal extra testberichten"
+
+#: inc/settings.php:471
+msgid ""
+"This is useful when debugging PayPal. Enter a comma separated list of "
+"emails, and when a purchase is made the same email that is sent to the buyer "
+"will be sent to the recipients in the above list."
+msgstr ""
+"Dit is handig bij het debuggen van PayPal. Voer een door komma's gescheiden "
+"lijst van e-mails in, en wanneer een aankoop wordt gedaan wordt hetzelfde "
+"bericht die naar de koper wordt verzonden, naar de ontvangers verzonden in "
+"de bovenstaande lijst."
+
+#: inc/settings.php:482 inc/shortcodes.php:188
+msgid "Tax"
+msgstr "Btw"
+
+#: inc/settings.php:492
+msgid "Yes, charge tax"
+msgstr "Ja, Btw berekenen"
+
+#: inc/settings.php:499
+msgid "Tax Rate"
+msgstr "Belastingpercentage (0% - 9% - 20%)"
+
+#: inc/settings.php:513
+msgid "From Name"
+msgstr "Van naam"
+
+#: inc/settings.php:514
+msgid "The name associated with all outgoing email."
+msgstr "Naam voor alle uitgaande berichten"
+
+#: inc/settings.php:525
+msgid "From Email"
+msgstr "Van E-mail"
+
+#: inc/settings.php:526
+msgid "The email address used for all outgoing email."
+msgstr "Het e-mailadres voor uitgaande berichten"
+
+#: inc/settings.php:537
+msgid "Email Subject"
+msgstr "E-mail onderwerp"
+
+#: inc/settings.php:538
+msgid "The email subject on successful purchase emails."
+msgstr "Het e-mail onderwerp voor succesvolle aankoopberichten."
+
+#: inc/settings.php:544
+msgid "Your Purchase"
+msgstr "Uw aankoop"
+
+#: inc/settings.php:549
+msgid "Email Body"
+msgstr "E-mail inhoud"
+
+#: inc/settings.php:550
+msgid ""
+"This e-mail message is sent to your customers in case of successful and "
+"cleared payment. You can use the following email tags: {first_name}, "
+"{last_name}, {payer_email}, {download_links}, {payment_id}. These tags are "
+"replaced with the real data associated with each payment. Be sure to include "
+"the {download_links} tag, otherwise your buyers won't receive their download "
+"purchases. The {payment_id} tag can be used to display an invoice number."
+msgstr ""
+"Dit e-mail bericht wordt verzonden naar uw klanten wanneer de betaling is "
+"geslaagd. U kunt de volgende e-mail tags gebruiken: {Voornaam}, "
+"{achternaam}, {payer_email}, {download_links}, {payment_id}. Deze tags "
+"worden vervangen door de echte gegevens, per betaling. Vermeld altijd de "
+"{download_links} tag, anders kunnen uw kopers hun download aankopen niet "
+"ontvangen. De tag {payment_id} kan worden gebruikt om een factuur weer te "
+"geven."
+
+#: inc/settings.php:564
+msgid "Settings for Extensions are shown below."
+msgstr "Instellingen voor extensies staan hieronder"
+
+#: inc/settings.php:571
+msgid "Download Extensions for Sell Media"
+msgstr "Download extensies voor Sell Media"
+
+#: inc/shortcodes.php:41
+msgid ""
+"We've received your payment and are processing your order. <a href=\"\" "
+"class=\"reload\">Refresh this page</a> to check your order status. If you "
+"continue to see this message, please contact us."
+msgstr ""
+"Wij hebben uw betaling ontvangen en zullen uw order verwerken. <a href=\"\" "
+"class=\"reload\">Vernieuw deze pagina</a> om de orderstatus te bekijken. Als "
+"u dit bericht blijf zien, neem dan contact met ons op."
+
+#: inc/shortcodes.php:192
+msgid "Shipping"
+msgstr "Verzenden"
+
+#: inc/shortcodes.php:205
+msgid "or %s"
+msgstr "of %s"
+
+#: inc/shortcodes.php:217
+msgid "Your cart is empty. %s"
+msgstr "Uw winkelwagen is leeg. %s"
+
+#: inc/shortcodes.php:239
+msgid "Your Purchase History"
+msgstr "Uw aankoop verleden"
+
+#: inc/shortcodes.php:245
+msgid "Purchase ID"
+msgstr "Aankoop ID"
+
+#: inc/shortcodes.php:275
+msgid "Description"
+msgstr "Omschrijving"
+
+#: inc/shortcodes.php:276
+msgid "width (px)"
+msgstr "breedte (px)"
+
+#: inc/shortcodes.php:277
+msgid "height (px)"
+msgstr "hoogte (px)"
+
+#: inc/shortcodes.php:278
+msgid "price"
+msgstr "prijs"
+
+#: inc/shortcodes.php:421 themes/archive.php:78
+msgid " images in "
+msgstr " afbeeldingen in"
+
+#: inc/shortcodes.php:421 themes/archive.php:78
+msgid " collection"
+msgstr " collectie"
+
+#: inc/shortcodes.php:424
+msgid "Starting at "
+msgstr "Starten met"
+
+#: inc/shortcodes.php:459
+msgid "You are logged in. %1$s or %2$s."
+msgstr "U bent ingelogd. %1$s of %2$s."
+
+#: inc/shortcodes.php:463
+msgid "Login failed"
+msgstr "Inloggen mislukt"
+
+#: inc/shortcodes.php:469 inc/term-meta.php:406 inc/term-meta.php:451
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: inc/shortcodes.php:470
+msgid "Remember Me"
+msgstr "Onthouden"
+
+#: inc/shortcodes.php:471
+msgid "Log In"
+msgstr "Inloggen"
+
+#: inc/shortcodes.php:475
+msgid "Forgot Password"
+msgstr "Wachtwoord vergeten"
+
+#: inc/template-tags.php:189
+msgid "Previous Image"
+msgstr "Vorige afbeelding"
+
+#: inc/template-tags.php:190
+msgid "Back to Gallery"
+msgstr "Terug naar Galerij"
+
+#: inc/template-tags.php:190
+msgid "Gallery"
+msgstr "Galerij"
+
+#: inc/template-tags.php:192
+msgid "Next Image"
+msgstr "Volgende afbeelding"
+
+#: inc/template-tags.php:258
+msgid ""
+"<span id=\"sell-media-credit\" class=\"sell-media-credit\">Photo cart by <a "
+"href=\"%1$s\" title=\"Photo cart\">%2$s</a></span>"
+msgstr ""
+"<span id=\"sell-media-credit\" class=\"sell-media-credit\">Photo cart by <a "
+"href=\"%1$s\" title=\"Photo cart\">%2$s</a></span>"
+
+#: inc/template-tags.php:550
+msgid "More"
+msgstr "Meer"
+
+#: inc/template-tags.php:576
+msgid "Details"
+msgstr "Details"
+
+#: inc/template-tags.php:578
+msgid "File ID"
+msgstr "Bestand ID"
+
+#: inc/template-tags.php:579
+msgid "File Type"
+msgstr "Bestandstype"
+
+#: inc/template-tags.php:580
+msgid "File Size"
+msgstr "Bestand afmeting"
+
+#: inc/term-meta.php:91
+msgid ""
+"When a buyer decides to purchase a item from your site, they must choose a "
+"license which most closely identifies their intended use of the item. We "
+"have included some default license types, grouped into two \"parent\" "
+"categories: Personal and Commercial. Each of these two categories have "
+"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
+"Commercial) and \"Website\" (a child of Personal). You can create as many "
+"parent and child licenses as you want."
+msgstr ""
+"Wanneer een koper besluit om een artikel van uw site te kopen, moeten zij "
+"een licentie kiezen die het gebruik van het artikel het meest identificeert. "
+"We hebben een aantal soorten standaard licenties, gegroepeerd in twee \"hoofd"
+"\" categorieën: Persoonlijk en Commercieel. Elk van deze twee categorieën "
+"hebben specifieke \"onderliggende\" licenties, zoals \"Print Advertising"
+"\" (een onderligger van Commercieel) en \"Website\" (een onderligger van "
+"Persoonlijk). U kunt zoveel hoofd en onderliggende licenties maken als u "
+"wilt."
+
+#: inc/term-meta.php:108 inc/term-meta.php:126
+msgid "Markup"
+msgstr "Prijsverhoging"
+
+#: inc/term-meta.php:202
+msgid ""
+"Increase the price of a item if a buyer selects this license by dragging the "
+"slider above."
+msgstr ""
+"Verhoog de prijs van een artikel, als een koper deze licentie kiest, door "
+"het verslepen van de schuifregelaar boven."
+
+#: inc/term-meta.php:212
+msgid "you have not set a default price"
+msgstr "U heeft geen standaard prijs geselecteerd"
+
+#: inc/term-meta.php:216
+msgid " The %1$s of %2$s with %3$s markup is %4$s"
+msgstr " De %1$s van %2$s met %3$s prijsverhoging is %4$s"
+
+#: inc/term-meta.php:236
+msgid ""
+"Check to add this as a default license option for all newly created items."
+msgstr ""
+"Selecteer om dit als standaard licentie toe te voegen voor alle nieuwe "
+"artikelen."
+
+#: inc/term-meta.php:240
+msgid "Add as default license?"
+msgstr "Toevoegen als standaard licentie"
+
+#: inc/term-meta.php:343 inc/term-meta.php:384 inc/term-meta.php:492
+msgid "Icon"
+msgstr "Icoon"
+
+#: inc/term-meta.php:371
+msgid ""
+"The icon is not prominent by default; however, some themes may show it. If "
+"no icon is used the featured image to the most recent post will be displayed"
+msgstr ""
+"Het pictogram wordt niet standaard weergegeven; enkele thema tonen wel "
+"pictogrammen. Als er geen pictogram wordt gebruikt dan wordt het meest "
+"recente bericht getoond"
+
+#: inc/term-meta.php:408
+msgid "This will password protect all items in this collection."
+msgstr ""
+"Dit schakelt wachtwoord beveiliging in op alle artikelen in deze collectie."
+
+#: inc/term-meta.php:428
+msgid "Password protect all items in this collection"
+msgstr "Wachtwoord beveiliging op alle artikelen in deze collectie"
+
+#: inc/term-meta.php:445
+msgid "This collection will inherit the password of the parent collection:"
+msgstr ""
+"Deze collectie zal het wachtwoord van de bovenliggende collectie overnemen:"
+
+#: inc/term-meta.php:469
+msgid "Enable Client Proofing"
+msgstr "Klant proefdrukken inschakelen"
+
+#: inc/term-meta.php:471
+msgid ""
+"Check this to allow clients with password access to download items in this "
+"collecton as proofs. Clients must add an item to their Lightbox in order to "
+"download proofs. A record of which images were downloaded will be sent to "
+"both the site admin and the client via email."
+msgstr ""
+"Selecteer dit om klanten met een wachtwoord toegang te geven tot het "
+"downloaden van artikelen in deze collectie als proefdruk. Klanten moeten een "
+"item toe te voegen aan hun Lightbox om proefdruk te downloaden. Een "
+"overzicht van de gedownloade afbeeldingen wordt zowel naar de site-admin als "
+"de klant via e-mail."
+
+#: inc/term-meta.php:496
+msgid "Media"
+msgstr "Media"
+
+#: inc/term-meta.php:501
+msgid "Protected"
+msgstr "Beveiligd"
+
+#: inc/term-meta.php:504
+msgid "Proofing"
+msgstr "Proefdrukken"
+
+#: inc/widgets/sell-media-exif.php:8
+msgid ""
+"Displays image exif data (shutter speed, aperture, ISO, etc). Only use this "
+"on Single Sidebar Widgetized areas."
+msgstr ""
+"Exif data weergeven (sluitertijd, diafragma, ISO, etc). Gebruik dit alleen "
+"op Single Sidebar widget gebieden."
+
+#: inc/widgets/sell-media-exif.php:31
+msgid "Camera "
+msgstr "Camera "
+
+#: inc/widgets/sell-media-exif.php:36
+msgid "Aperture "
+msgstr "Diafragma"
+
+#: inc/widgets/sell-media-exif.php:41
+msgid "Focal Length "
+msgstr "Brandpuntafstand "
+
+#: inc/widgets/sell-media-exif.php:46
+msgid "Shutter Speed "
+msgstr "Sluitertijd"
+
+#: inc/widgets/sell-media-exif.php:64
+msgid "ISO "
+msgstr "ISO "
+
+#: inc/widgets/sell-media-exif.php:68
+msgid "Credit "
+msgstr "Credit "
+
+#: inc/widgets/sell-media-exif.php:73
+msgid "Date "
+msgstr "Datum "
+
+#: inc/widgets/sell-media-exif.php:78 inc/widgets/sell-media-exif.php:80
+msgid "Copyright "
+msgstr "Copyright "
+
+#: inc/widgets/sell-media-exif.php:80
+msgid "by "
+msgstr "by "
+
+#: inc/widgets/sell-media-exif.php:104
+msgid "Camera Info"
+msgstr "Camera Info"
+
+#: inc/widgets/sell-media-featured.php:93
+msgid " Select Collection"
+msgstr " Selecteer Collectie"
+
+#: inc/widgets.php:28
+msgid "Sell Media Below Single Content"
+msgstr "Sell Media Below Single Content"
+
+#: inc/widgets.php:37
+msgid "Sell Media Below Single Sidebar"
+msgstr "Sell Media Below Single Sidebar"
+
+#: sell-media.php:142 sell-media.php:154
+msgid "Cheatin&#8217; huh?"
+msgstr "Cheatin&#8217; huh?"
+
+#: themes/archive.php:21
+msgid "Search results for: %1$s"
+msgstr "Zoekresultaten voor: %1$s"
+
+#: themes/archive.php:79
+msgid "Starting at"
+msgstr "vanaf"
+
+#: themes/archive.php:118
+msgid "Nothing Found"
+msgstr "Niets gevonden"
+
+#: themes/archive.php:119
+msgid "Sorry, but we couldn't find anything that matches your search query."
+msgstr "Sorry, maar uw zoekopdracht heeft geen resultaten opgeleverd."
+
+#: themes/cart.php:68
+msgid "Learn more"
+msgstr "Meer informatie"
+
+#: themes/cart.php:76
+msgid "Select a size"
+msgstr "Selecteer een afmeting"
+
+#: themes/cart.php:104 themes/cart.php:106
+msgid ""
+"Select a license that most closely describes the intended use of this item. "
+"Additional license details will be displayed here after selecting a license."
+msgstr ""
+"Selecteer een licentie die het meest past bij het gebruik omschrijft van dit "
+"artikel. Na een licentie te hebben geselecteerd zullen hier de details "
+"worden getoond."
+
+#: themes/cart.php:104
+msgid "(see details)"
+msgstr "(zie details)"
+
+#: themes/cart.php:106
+msgid "Select a license"
+msgstr "Selecteer een licentie"
+
+#: themes/cart.php:120
+msgid "Add to cart"
+msgstr "Aan winkelwagen toevoegen"
+
+#: themes/collection-password.php:13
+msgid "This collection is password protected."
+msgstr "Deze collectie os beveiligd met een wachtwoord."
+
+#: themes/collection-password.php:15
+msgid "Submit"
+msgstr "Bevestigen"
+
+#. Description of the plugin/theme
+msgid "A plugin for selling photos, prints and other downloads."
+msgstr "Een plugin om foto's, prints en andere downloads te verkopen."
+

@@ -612,19 +612,33 @@ add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
  * @return void
  */
 function sell_media_show_file_info(){
-    global $post;
+    $post = get_post();
     $attachment_id = sell_media_get_attachment_id( $post->ID );
+    $media_dims = '';
+    $meta = wp_get_attachment_metadata( $attachment_id );
+    $filename = basename( get_attached_file( $attachment_id ) );
+    $postguid = get_the_guid( $attachment_id );
 
-    echo '<h2 class="widget-title">' . __( 'Details', 'sell_media' ) . '</h2>';
-    echo '<ul>';
-    echo '<li class="filename"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>';
-    echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . get_post_mime_type( $attachment_id ) . '</li>';
+    echo '<h2 class="widget-title sell-media-item-details-title">' . __( 'Details', 'sell_media' ) . '</h2>';
+    echo '<ul class="sell-media-item-details">';
+    echo '<li class="filename"><span class="title">' . __( 'File Name', 'sell_media' ) . ':</span> ' . $filename . '</li>';
+    echo '<li class="fileid"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>';
+    preg_match('/^.*?\.(\w+)$/',$filename,$ext);
+    echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . esc_html( strtoupper( $ext[1] ) ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>';
     echo '<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post->ID, $attachment_id ) . '</li>';
+    if ( isset( $meta['width'], $meta['height'] ) ) {
+        echo '<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $meta['width']. ' x '. $meta['height'] .'</li>';
+    }
     if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
         echo '<li class="collections"><span class="title">' . __( 'Collections', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'collection' ) . '</li>';
     }
     if ( wp_get_post_terms( $post->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
         echo '<li class="keywords"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>';
+    }
+
+    if ( preg_match( '#^(audio|video)/#', get_post_mime_type( $attachment_id ) ) ) {
+        echo '<li class="length"><span class="title">' . __( 'Length', 'sell_media' ) . ':</span> ' . $meta['length_formatted'] . '</li>';
+        echo '<li class="bitrate"><span class="title">' . __( 'Bitrate', 'sell_media' ) . ':</span> ' . round( $meta['bitrate'] / 1000 ) . 'kb/s</li>';
     }
     echo do_action( 'sell_media_additional_list_items', $post->ID );
     echo '</ul>';
