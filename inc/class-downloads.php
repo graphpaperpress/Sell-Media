@@ -70,7 +70,15 @@ Class SellMediaDownload {
 
                 // If image, generate the image sizes purchased and create a download
                 if ( wp_attachment_is_image( $attachment_id ) ){
-                    $this->download_image( $product_id, $attachment_id, $size_id );
+                    // Don't resize images if original size is purchased.
+                    // Also helps retain metadata, since WP strips image metadata during resize
+                    // https://github.com/graphpaperpress/Sell-Media/issues/740
+                    // https://core.trac.wordpress.org/ticket/11877
+                    if ( 'original' == $size_id ) {
+                        $this->download_file( $file );
+                    } else {
+                        $this->download_image( $product_id, $attachment_id, $size_id );
+                    }
                 }
                 // Otherwise, just deliver the download
                 else {
