@@ -452,26 +452,24 @@ function sell_media_autocreate_pages() {
         $setting = $page . '_page';
         $shortcode = '[sell_media_' . $page . ']';
         $title = 'Sell Media ' . ucfirst( $page );
-        if ( ! isset( $settings->$setting ) ) {
 
-            // Check if this page already exists, with shortcode
-            $existing_page = get_page_by_title( $title );
-            if ( is_page( $existing_page->ID ) && has_shortcode( $existing_page->post_content, $shortcode ) ) {
-                $settings[$setting] = $existing_page->ID;
-            } else {
-                // If the page doesn't exist, create it
-                $new_page = array(
-                    'post_title'    => $title,
-                    'post_content'  => $shortcode,
-                    'post_status'   => 'publish',
-                    'post_type'     => 'page'
-                );
+        // Check if this page already exists, with shortcode
+        $existing_page = get_page_by_title( $title );
+        if ( 'page' === $existing_page->post_type && has_shortcode( $existing_page->post_content, 'sell_media_' . $page ) ) {
+            $settings[$setting] = $existing_page->ID;
+        } else {
+            // If the page doesn't exist, create it
+            $new_page = array(
+                'post_title'    => $title,
+                'post_content'  => $shortcode,
+                'post_status'   => 'publish',
+                'post_type'     => 'page'
+            );
 
-                $post_id = wp_insert_post( $new_page );
+            $post_id = wp_insert_post( $new_page );
 
-                if ( $post_id ) {
-                    $settings[$setting] = $post_id;
-                }
+            if ( $post_id ) {
+                $settings[$setting] = $post_id;
             }
         }
     }
