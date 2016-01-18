@@ -33,10 +33,9 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 if ( ! class_exists( 'SellMedia' ) ) :
 
 	/**
- * Main SellMedia Class (singleton)
- *
- * @since 1.8.5
- */
+	 * Main SellMedia Class (singleton).
+	 * @since 1.8.5
+	 */
 	final class SellMedia {
 
 		/**
@@ -267,11 +266,11 @@ endif; // End if class_exists check.
  * Example: <?php $sell_media = Sell_Media(); ?>
  *
  * @since 1.8.5
- * @return object The one true SellMedia instance
+ * @return object The one true SellMedia instance.
  */
 function Sell_Media() {
 	return SellMedia::instance();
 }
 
-// Start Sell Media
+// Start Sell Media.
 Sell_Media();
