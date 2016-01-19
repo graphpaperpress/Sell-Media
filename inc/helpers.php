@@ -949,3 +949,102 @@ function sell_media_nocache(){
     delete_transient( 'sell_media_cache_excluded_uris' );
 }
 add_action( 'init', 'sell_media_nocache', 0 );
+
+
+/**
+ * Change buy button text to download if price if 0.
+ * 
+ * @since 2.0.7
+ * 
+ * @param  String $text     Button Text.
+ * @param  int    $post_id  Id of post.
+ * @return String           Button Text.
+ */
+function sell_media_free_download_button_text( $text, $post_id ) {
+    $price = get_post_meta( $post_id, 'sell_media_price', true );
+    if ( $price <= 0 )
+         $text = __( 'Download', 'sell_media' );
+
+    return $text;
+}
+
+add_filter( 'sell_media_purchase_text', 'sell_media_free_download_button_text', 10, 2 );
+
+/**
+ * Change button html.
+ *
+ * @since 2.0.7
+ * 
+ * @param  string  $html             Html output of button.
+ * @param  int     $post_id          ID of post.
+ * @param  int     $attachment_id    ID of attachment
+ * @param  string  $button           Button type.
+ * @param  string  $text             Button Text.
+ * @param  boolean $echo             Echo output or return.
+ * @return string                    Html output of button.
+ */
+function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo ){
+    
+    $price = get_post_meta( $post_id, 'sell_media_price', true );
+    $value = get_post_meta( $post_id, 'sell_media_free_downloads', true );
+    if ( $price > 0 || $value )
+        return $html;
+
+    $link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id);
+    $html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
+    return $html;
+}
+
+add_filter( 'sell_media_item_buy_button', 'sell_media_free_download_button_button', 10, 6 );
+
+/**
+ * Forces the file to be downloaded for free.
+ * 
+ * @since 2.0.7
+ * 
+ * @param  init $post_id       ID of post
+ * @param  init $attachment_id ID of attacment
+ * @return void
+ */
+function sell_media_free_download_file( $post_id, $attachment_id ){
+
+    $price = get_post_meta( $post_id, 'sell_media_price', true );
+    
+    // product is not free, so die
+    if ( $price > 0 ) {
+
+        wp_die( __( 'Nice try, but this file is not a free download.', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
+
+    }
+    else {
+
+        $requested_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+        $file_type = wp_check_filetype( $requested_file );
+
+        if ( ! ini_get( 'safe_mode' ) ){
+            set_time_limit( 0 );
+        }
+
+        if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
+            set_magic_quotes_runtime(0);
+        }
+
+        if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
+        @ini_set( 'zlib.output_compression', 'Off' );
+
+        nocache_headers();
+        header( "Robots: none" );
+        header( "Content-Type: " . $file_type['type'] . "" );
+        header( "Content-Description: File Transfer" );
+        header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
+        header( "Content-Transfer-Encoding: binary" );
+
+        // Deliver the download
+        Sell_Media()->download->download_file( $requested_file );
+
+        exit();
+    }
+
+}
+
+add_action( 'sell_media_before_failed_download', 'sell_media_free_download_file', 10, 2 );
