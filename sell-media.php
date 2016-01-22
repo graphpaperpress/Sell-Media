@@ -213,6 +213,13 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/lightbox.php';
 
+			// Load files if is front end.
+			if( ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) ){
+
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/ajax.php';
+
+			}
+
 			if ( is_admin() ) {
 
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-helpers.php';

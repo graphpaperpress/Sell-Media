@@ -154,7 +154,7 @@ class SellMediaPhpSessions {
 		if ( ! self::$instance ) {
 			self::$instance = new SellMediaPhpSessions;
 			self::$instance->wpdb = clone $GLOBALS['wpdb'];
-			self::$instance->table = self::$instance->wpdb->prefix . 'wpdb_sessions';
+			self::$instance->table = self::$instance->wpdb->prefix . 'sm_sessions';
 			self::$instance->maybe_upgrade();
 			session_set_save_handler(
 				array( self::$instance, 'open' ),

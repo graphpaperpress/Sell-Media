@@ -115,8 +115,8 @@ class SellMediaClass {
 		if ( $this->itemLimit > 0 && count( $this->items ) >= $this->itemLimit ) {
 			$this->clear(); }
 
-		$cart_item_id = ( isset( $attr['license'] ) && '' !== $attr['license'] )? $id . '_' . $attr['license'] : $id ;
-		$cart_item_id = ( isset( $attr['group'] ) && '' !== $attr['group'] )? $cart_item_id . '_' . $attr['group'] : $cart_item_id;
+		$cart_item_id = ( isset( $attr['item_license'] ) && '' !== $attr['item_license'] )? $id . '_' . $attr['item_license'] : $id ;
+		$cart_item_id = ( isset( $attr['item_pgroup'] ) && '' !== $attr['item_pgroup'] )? $cart_item_id . '_' . $attr['item_pgroup'] : $cart_item_id;
 
 		// Add product id
 		$this->items[ $cart_item_id ]['item_id'] = $id;
@@ -128,11 +128,11 @@ class SellMediaClass {
 		// Add product price
 		$this->items[ $cart_item_id ]['price'] = $price;
 
-		if ( isset( $attr['license'] ) && '' !== $attr['license'] ) {
-			$this->items[ $cart_item_id ]['license'] = $attr['license']; }
+		if ( isset( $attr['item_license'] ) && '' !== $attr['item_license'] ) {
+			$this->items[ $cart_item_id ]['item_license'] = $attr['item_license']; }
 
-		if ( isset( $attr['group'] ) && '' !== $attr['group'] ) {
-			$this->items[ $cart_item_id ]['group'] = $attr['group']; }
+		if ( isset( $attr['item_pgroup'] ) && '' !== $attr['item_pgroup'] ) {
+			$this->items[ $cart_item_id ]['item_pgroup'] = $attr['item_pgroup']; }
 
 		$this->write();
 		return true;

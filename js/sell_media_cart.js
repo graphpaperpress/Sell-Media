@@ -1703,61 +1703,61 @@
                     }
 
                     /* here is our shelfItem add to cart button listener */
-                    , { selector: 'shelfItem .item_add'
-                        , event: 'click'
-                        , callback: function () {
-                            var $button = sellMediaCart.$(this),
-                                fields = {};
+                    // , { selector: 'shelfItem .item_add'
+                    //     , event: 'click'
+                    //     , callback: function () {
+                    //         var $button = sellMediaCart.$(this),
+                    //             fields = {};
 
-                            $button.closest("." + namespace + "_shelfItem").descendants().each(function (x,item) {
-                                var $item = sellMediaCart.$(item);
+                    //         $button.closest("." + namespace + "_shelfItem").descendants().each(function (x,item) {
+                    //             var $item = sellMediaCart.$(item);
 
-                                // check to see if the class matches the item_[fieldname] pattern
-                                if ($item.attr("class") &&
-                                    $item.attr("class").match(/item_.+/) &&
-                                    !$item.attr('class').match(/item_add/)) {
+                    //             // check to see if the class matches the item_[fieldname] pattern
+                    //             if ($item.attr("class") &&
+                    //                 $item.attr("class").match(/item_.+/) &&
+                    //                 !$item.attr('class').match(/item_add/)) {
 
-                                    // find the class name
-                                    sellMediaCart.each($item.attr('class').split(' '), function (klass) {
-                                        var attr,
-                                            val,
-                                            type;
+                    //                 // find the class name
+                    //                 sellMediaCart.each($item.attr('class').split(' '), function (klass) {
+                    //                     var attr,
+                    //                         val,
+                    //                         type;
 
-                                        // get the value or text depending on the tagName
-                                        if (klass.match(/item_.+/)) {
-                                            attr = klass.split("_")[1];
-                                            val = "";
-                                            switch($item.tag().toLowerCase()) {
-                                                case "input":
-                                                case "textarea":
-                                                case "select":
-                                                    type = $item.attr("type");
-                                                    if (!type || ((type.toLowerCase() === "checkbox" || type.toLowerCase() === "radio") && $item.attr("checked")) || type.toLowerCase() === "text" || type.toLowerCase() === "number") {
-                                                        val = $item.val();
-                                                    }
-                                                    break;
-                                                case "img":
-                                                    val = $item.attr('src');
-                                                    break;
-                                                default:
-                                                    val = $item.text();
-                                                    break;
-                                            }
+                    //                     // get the value or text depending on the tagName
+                    //                     if (klass.match(/item_.+/)) {
+                    //                         attr = klass.split("_")[1];
+                    //                         val = "";
+                    //                         switch($item.tag().toLowerCase()) {
+                    //                             case "input":
+                    //                             case "textarea":
+                    //                             case "select":
+                    //                                 type = $item.attr("type");
+                    //                                 if (!type || ((type.toLowerCase() === "checkbox" || type.toLowerCase() === "radio") && $item.attr("checked")) || type.toLowerCase() === "text" || type.toLowerCase() === "number") {
+                    //                                     val = $item.val();
+                    //                                 }
+                    //                                 break;
+                    //                             case "img":
+                    //                                 val = $item.attr('src');
+                    //                                 break;
+                    //                             default:
+                    //                                 val = $item.text();
+                    //                                 break;
+                    //                         }
 
-                                            if (val !== null && val !== "") {
-                                                fields[attr.toLowerCase()] = fields[attr.toLowerCase()] ? fields[attr.toLowerCase()] + ", " +  val : val;
-                                            }
-                                        }
-                                    });
-                                }
-                            });
+                    //                         if (val !== null && val !== "") {
+                    //                             fields[attr.toLowerCase()] = fields[attr.toLowerCase()] ? fields[attr.toLowerCase()] + ", " +  val : val;
+                    //                         }
+                    //                     }
+                    //                 });
+                    //             }
+                    //         });
 
-                            // add the item
-                            sellMediaCart.add(fields);
-                            $button.attr("disabled","disabled");
+                    //         // add the item
+                    //         sellMediaCart.add(fields);
+                    //         $button.attr("disabled","disabled");
 
-                        }
-                    }
+                    //     }
+                    // }
                 ]);
             });
 
@@ -1869,3 +1869,24 @@ p=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u20
 (function () {if (!this.localStorage)if (this.globalStorage)try {this.localStorage=this.globalStorage}catch(e) {}else{var a=document.createElement("div");a.style.display="none";document.getElementsByTagName("head")[0].appendChild(a);if (a.addBehavior) {a.addBehavior("#default#userdata");var d=this.localStorage={length:0,setItem:function (b,d) {a.load("localStorage");b=c(b);a.getAttribute(b)||this.length++;a.setAttribute(b,d);a.save("localStorage")},getItem:function (b) {a.load("localStorage");b=c(b);return a.getAttribute(b)},
 removeItem:function (b) {a.load("localStorage");b=c(b);a.removeAttribute(b);a.save("localStorage");this.length=0},clear:function () {a.load("localStorage");for (var b=0;attr=a.XMLDocument.documentElement.attributes[b++];)a.removeAttribute(attr.name);a.save("localStorage");this.length=0},key:function (b) {a.load("localStorage");return a.XMLDocument.documentElement.attributes[b]}},c=function (a) {return a.replace(/[^-._0-9A-Za-z\xb7\xc0-\xd6\xd8-\xf6\xf8-\u037d\u37f-\u1fff\u200c-\u200d\u203f\u2040\u2070-\u218f]/g,
 "-")};a.load("localStorage");d.length=a.XMLDocument.documentElement.attributes.length}}})();
+
+
+// Added new cart script.
+jQuery( function( $ ){
+
+    $(document).on( 'click', 'button.item_add', function(){
+        var $button = $(this);
+        var data = $( "form#sell-media-cart-items" ).serializeArray();
+
+        var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart';
+
+        $.post( ajaxurl, data, function( response ){
+            alert( response );
+            $('.sell-media-added').remove();
+            $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
+        });
+
+        $button.attr("disabled","disabled");
+    });
+
+});
