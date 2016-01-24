@@ -12,13 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function sell_media_add_to_cart(){
 
 	// Initialize cart
-	$cart = new SellMediaClass();
+	$cart = new SellMediaCart();
 
-	if( !empty( $_POST ) && isset( $_POST['add_to_cart'] ) ){
+	if( !empty( $_POST ) && isset( $_POST['item_number'] ) ){
 		
 		$qty = 1;
 		$attr = array();
-
+		$item_number = absint($_POST['item_number']);
 		if( isset( $_POST['item_license'] ) && '' != $_POST['item_license'] )
 			$attr['item_license'] = sanitize_text_field( $_POST['item_license'] );
 
@@ -41,8 +41,10 @@ function sell_media_add_to_cart(){
 			$attr['item_attachment'] = esc_url( sanitize_text_field( $_POST['item_attachment'] ) );
 
 		if( '' != $item_number ){
-			$cart->add( $item_number, $products[$product_id]['price'], $qty, $attr );
+			$price = floatval( $_GET['price'] );
+			$cart->add( $item_number, $price, $qty, $attr );
 		}
+
 	}
 	exit;
 }

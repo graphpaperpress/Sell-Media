@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 /**
  * Cart class.
  */
-class SellMediaClass {
+class SellMediaCart {
 	/**
 	 * Vars.
 	 * @var string
@@ -274,20 +274,28 @@ class SellMediaClass {
 		$listItem = ($this->cookie && isset( $_COOKIE[ $this->session_id ] )) ? $_COOKIE[ $this->session_id ] : (isset( $_SESSION[ $this->session_id ] ) ? $_SESSION[ $this->session_id ] : '');
 		$listAttribute = (isset( $_SESSION[ $this->session_id . '_attributes' ] )) ? $_SESSION[ $this->session_id . '_attributes' ] : (($this->cookie && isset( $_COOKIE[ $this->session_id . '_attributes' ] )) ? $_COOKIE[ $this->session_id . '_attributes' ] : '');
 
-		foreach ( $listItem as $id => $item ) {
-			if ( empty( $item ) ) {
-				continue; }
-			$this->items[ $id ] = $item;
+		if( !empty( $item ) ){
+
+			foreach ( $listItem as $id => $item ) {
+				if ( empty( $item ) ) {
+					continue; }
+				$this->items[ $id ] = $item;
+			}
+
 		}
 
 		$attributes = @explode( ';', $listAttribute );
-		foreach ( $attributes as $attribute ) {
-			if ( ! strpos( $attribute, ',' ) ) {
-				continue; }
+		if( !empty( $attributes ) ){
 
-			list($id, $key, $value) = @explode( ',', $attribute );
+			foreach ( $attributes as $attribute ) {
+				if ( ! strpos( $attribute, ',' ) ) {
+					continue; }
 
-			$this->attributes[ $id ][ $key ] = $value;
+				list($id, $key, $value) = @explode( ',', $attribute );
+
+				$this->attributes[ $id ][ $key ] = $value;
+			}
+
 		}
 	}
 

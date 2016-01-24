@@ -1877,8 +1877,8 @@ jQuery( function( $ ){
     $(document).on( 'click', 'button.item_add', function(){
         var $button = $(this);
         var data = $( "form#sell-media-cart-items" ).serializeArray();
-
-        var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart';
+        var price = $("#sell-media-dialog-box span#total").attr('data-price');
+        var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart&price=' + price;
 
         $.post( ajaxurl, data, function( response ){
             alert( response );
