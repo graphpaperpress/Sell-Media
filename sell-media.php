@@ -121,9 +121,14 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				self::$instance->payments       = new SellMediaPayments();
 				self::$instance->products       = new SellMediaProducts();
 				self::$instance->search         = new SellMediaSearch();
-				if ( is_admin() ) {
+				if ( $this->is_request( 'admin' ) ) {
 					self::$instance->notices        = new SellMediaAdminNotices();
 					self::$instance->admin_search   = new SellMediaAdminSearch();
+				}
+
+				// Set cart global variable.
+				if( ( $this->is_request( 'frontend' ) ){
+					$GLOBALS['sm_cart'] = new SellMediaCart();
 				}
 			}
 			return self::$instance;
@@ -185,6 +190,25 @@ if ( ! class_exists( 'SellMedia' ) ) :
 		}
 
 		/**
+		 * What type of request is this?
+		 * string $type ajax, frontend or admin.
+		 *
+		 * @return bool
+		 */
+		private function is_request( $type ) {
+			switch ( $type ) {
+				case 'admin' :
+					return is_admin();
+				case 'ajax' :
+					return defined( 'DOING_AJAX' );
+				case 'cron' :
+					return defined( 'DOING_CRON' );
+				case 'frontend' :
+					return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
+			}
+		}
+
+		/**
 		 * Include required files.
 		 *
 		 * @access private
@@ -214,7 +238,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/lightbox.php';
 
 			// Load files if is front end.
-			if( ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) ){
+			if( ( $this->is_request( 'frontend' ) ){
 
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-phpsessions.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-cart.php';
@@ -222,7 +246,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			}
 
-			if ( is_admin() ) {
+			if ( $this->is_request( 'admin' ) ) {
 
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-helpers.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
