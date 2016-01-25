@@ -216,6 +216,8 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			// Load files if is front end.
 			if( ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) ){
 
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-phpsessions.php';
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-cart.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/ajax.php';
 
 			}

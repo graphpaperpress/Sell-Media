@@ -10,7 +10,9 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 function sell_media_add_to_cart(){
-
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 	// Initialize cart
 	$cart = new SellMediaCart();
 
@@ -42,9 +44,15 @@ function sell_media_add_to_cart(){
 
 		if( '' != $item_number ){
 			$price = floatval( $_GET['price'] );
-			$cart->add( $item_number, $price, $qty, $attr );
+			echo $cart->add( $item_number, $price, $qty, $attr );
 		}
+		else{
+			echo '0';
+		}	
 
+	}
+	else{
+		echo '0';
 	}
 	exit;
 }
