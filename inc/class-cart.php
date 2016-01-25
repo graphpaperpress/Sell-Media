@@ -106,7 +106,7 @@ class SellMediaCart {
 	 *
 	 * @return boolean Result as true/false
 	 */
-	public function add( $id, $price = 0, $qty = 1, $attr = array() ) {
+	public function add( $id, $price = 0, $qty = 1, $attrs = array() ) {
 		if ( ! $this->isInteger( $qty ) ) {
 			$this->errors[] = 'Cart::add($qty): $qty must be integer.';
 			return false;
@@ -115,8 +115,8 @@ class SellMediaCart {
 		if ( $this->itemLimit > 0 && count( $this->items ) >= $this->itemLimit ) {
 			$this->clear(); }
 
-		$cart_item_id = ( isset( $attr['item_license'] ) && '' !== $attr['item_license'] )? $id . '_' . $attr['item_license'] : $id ;
-		$cart_item_id = ( isset( $attr['item_pgroup'] ) && '' !== $attr['item_pgroup'] )? $cart_item_id . '_' . $attr['item_pgroup'] : $cart_item_id;
+		$cart_item_id = ( isset( $attrs['item_license'] ) && '' !== $attrs['item_license'] )? $id . '_' . $attrs['item_license'] : $id ;
+		$cart_item_id = ( isset( $attrs['item_pgroup'] ) && '' !== $attrs['item_pgroup'] )? $cart_item_id . '_' . $attrs['item_pgroup'] : $cart_item_id;
 
 		// Add product id
 		$this->items[ $cart_item_id ]['item_id'] = $id;
@@ -128,11 +128,9 @@ class SellMediaCart {
 		// Add product price
 		$this->items[ $cart_item_id ]['price'] = $price;
 
-		if ( isset( $attr['item_license'] ) && '' !== $attr['item_license'] ) {
-			$this->items[ $cart_item_id ]['item_license'] = $attr['item_license']; }
-
-		if ( isset( $attr['item_pgroup'] ) && '' !== $attr['item_pgroup'] ) {
-			$this->items[ $cart_item_id ]['item_pgroup'] = $attr['item_pgroup']; }
+		foreach ( $attrs as $key => $attr ) {
+			$this->items[ $cart_item_id ][$key] = $attr;
+		}
 
 		$this->write();
 		return true;
@@ -199,22 +197,17 @@ class SellMediaCart {
 	 *
 	 * @return boolean Result as true/false
 	 */
-	public function update( $id, $qty, $attr = array() ) {
+	public function update( $cart_item_id, $qty, $attr = array() ) {
 		if ( ! $this->isInteger( $qty ) ) {
-			$this->errors[] = 'Cart::update($id, $qty): $qty must be integer.';
+			$this->errors[] = 'Cart::update($cart_item_id, $qty): $qty must be integer.';
 			return false;
 		}
 
-		$cart_item_id = ( isset( $attr['license'] ) && '' !== $attr['license'] )? $id . '_' . $attr['license'] : $id ;
-		$cart_item_id = ( isset( $attr['group'] ) && '' !== $attr['group'] )? $cart_item_id . '_' . $attr['group'] : $cart_item_id;
-
 		if ( $qty < 1 ) {
-			return $this->remove( $cart_item_id ); }
+			return $this->remove( $cart_item_id ); 
+		}
 
-		// Add product id
-		$this->items[ $cart_item_id ]['item_id'] = $id;
-
-		// Add quantity
+		// Update quantity
 		$this->items[ $cart_item_id ]['qty'] = ($qty > $this->quantityLimit) ? $this->quantityLimit : $qty;
 
 		$this->write();
@@ -274,7 +267,7 @@ class SellMediaCart {
 		$listItem = ($this->cookie && isset( $_COOKIE[ $this->session_id ] )) ? $_COOKIE[ $this->session_id ] : (isset( $_SESSION[ $this->session_id ] ) ? $_SESSION[ $this->session_id ] : '');
 		$listAttribute = (isset( $_SESSION[ $this->session_id . '_attributes' ] )) ? $_SESSION[ $this->session_id . '_attributes' ] : (($this->cookie && isset( $_COOKIE[ $this->session_id . '_attributes' ] )) ? $_COOKIE[ $this->session_id . '_attributes' ] : '');
 
-		if( !empty( $item ) ){
+		if( !empty( $listItem ) ){
 
 			foreach ( $listItem as $id => $item ) {
 				if ( empty( $item ) ) {
