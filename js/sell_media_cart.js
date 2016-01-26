@@ -142,4 +142,8 @@ jQuery( function( $ ){
         sm_update_cart_item( $(this), 'plus' );
     });
 
+    $(document).on('click', '.sellMediaCart_checkout', function(){
+        $("#sell_media_payment_gateway").submit();
+    });
+
 });
