@@ -54,6 +54,8 @@ class SM_Gateway_Paypal_Request {
 	}
 
 	private function get_args(){
+        global $sm_cart;
+
 		// Get settings.
         $settings = sell_media_get_plugin_options();
 
@@ -63,44 +65,14 @@ class SM_Gateway_Paypal_Request {
         }
 
         $paypal_email = sanitize_email( $settings->paypal_email );
+        $subtotal = $sm_cart->getSubtotal();
+        $item_args = $this->get_item_args();
 
-        global $sm_cart;
-        $cart_items = $sm_cart->getItems();
-
-        if( empty( $cart_items ) ){
+        if( !$item_args ){
         	return false;
         }
 
-        $index = 1;
-        $subtotal = 0;
-        foreach ( $cart_items as $key => $item ) {
-            $args['item_name_' . $index ]   = $item['item_name'];
-            $args['quantity_' . $index ]   = $item['qty'];
-            $args['amount_' . $index ]   = number_format( $item['price'], 2 );
-            $args['item_number_1']   = $index;
-            $args["on0_" . $index] = 'type';
-            $args["on1_" . $index] = 'image';
-            $args["on2_" . $index] = 'pgroup';
-            $args["on3_" . $index] = 'size';
-            $args["on4_" . $index] = 'usage';
-            $args["on5_" . $index] = 'license';
-            $args["on6_" . $index] = 'attachment';
-            $args['option_index_0' ] = "7";
-
-            $args["os0_" . $index] = $item['item_type'];
-            $args["os1_" . $index] = $item['item_image'];
-            $args["os2_" . $index] = $item['item_pgroup'];
-            $args["os3_" . $index] = $item['item_size'];
-            $args["os4_" . $index] = $item['item_usage'];
-            $args["os5_" . $index] = $item['item_license'];
-            $args["os6_" . $index] = $item['item_attachment'];
-
-            $subtotal += ( $item['price'] *  $item['qty'] );
-            $index++;
-        }
-
-
-        $args['cmd'] = "_cart";
+	    $args['cmd'] = "_cart";
         $args['upload']        = "1";
         $args['currency_code'] = sanitize_text_field( $settings->currency );
         $args['business']      = sanitize_email( $paypal_email );
@@ -123,7 +95,45 @@ class SM_Gateway_Paypal_Request {
         $args['no_shipping'] = apply_filters( 'sell_media_shipping', 0 );
         $args['notify_url'] = esc_url( add_query_arg( 'sell_media-listener', 'IPN', home_url( 'index.php' ) ) );
 
+        return apply_filters( 'sell_media_paypal_args', array_merge(
+			$args,
+			$item_args
+		), $cart_items );
+	}
+
+	private function get_item_args(){
+		global $sm_cart;
+		$cart_items = $sm_cart->getItems();
+		if( empty( $cart_items ) )
+			return false;
+
+		$index = 1;
+        foreach ( $cart_items as $key => $item ) {
+            $args['item_name_' . $index ]   = $item['item_name'];
+            $args['quantity_' . $index ]   = $item['qty'];
+            $args['amount_' . $index ]   = number_format( $item['price'], 2 );
+            $args['item_number_1']   = $index;
+            $args["on0_" . $index] = 'type';
+            $args["on1_" . $index] = 'image';
+            $args["on2_" . $index] = 'pgroup';
+            $args["on3_" . $index] = 'size';
+            $args["on4_" . $index] = 'usage';
+            $args["on5_" . $index] = 'license';
+            $args["on6_" . $index] = 'attachment';
+            $args['option_index_0' ] = "7";
+
+            $args["os0_" . $index] = $item['item_type'];
+            $args["os1_" . $index] = $item['item_image'];
+            $args["os2_" . $index] = $item['item_pgroup'];
+            $args["os3_" . $index] = $item['item_size'];
+            $args["os4_" . $index] = $item['item_usage'];
+            $args["os5_" . $index] = $item['item_license'];
+            $args["os6_" . $index] = $item['item_attachment'];
+            $index++;
+        }
+
         return $args;
+
 	}
 }
 

@@ -207,12 +207,23 @@ class SellMediaCart {
 			return $this->remove( $cart_item_id ); 
 		}
 
-		// Update quantity
+		// Update quantity.
 		$this->items[ $cart_item_id ]['qty'] = ($qty > $this->quantityLimit) ? $this->quantityLimit : $qty;
 
 		$this->write();
 
 		return true;
+	}
+
+	public function getSubtotal(){
+		$items = $this->items;
+		if( empty( $items ) )
+			return 0;
+		$subtotal = 0;
+		foreach ( $items as $key => $item ) {
+			$subtotal += $item['price'] * $item['qty'] ;
+		}
+		return $subtotal;
 	}
 
 	/**
@@ -303,7 +314,6 @@ class SellMediaCart {
 
 			$_SESSION[ $this->session_id ][ $id ] = $item;
 		}
-
 		$_SESSION[ $this->session_id . '_attributes' ] = '';
 		foreach ( $this->attributes as $id => $attributes ) {
 			if ( ! $id ) {
@@ -319,5 +329,7 @@ class SellMediaCart {
 			setcookie( $this->session_id, serialize( $_SESSION[ $this->session_id ] ), time() + 604800 );
 			setcookie( $this->session_id . '_attributes', $_SESSION[ $this->session_id . '_attributes' ], time() + 604800 );
 		}
+
+		
 	}
 }
