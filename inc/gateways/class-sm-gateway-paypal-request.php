@@ -25,7 +25,8 @@ class SM_Gateway_Paypal_Request {
 
 	function form(){
 	?>
-	<form id="sell_media_payment_gateway" style="margin: 20px 0;display:none;">
+	<form id="sell_media_payment_gateway" style="margin: 20px 0;display:none;" method="post">
+		<?php do_action( 'sell_media_payment_gateway_fields' ); ?>
 		<label for="paypal"><input type="radio" name="gateway" id="paypal" value="paypal" checked><?php _e( 'PayPal', 'sell_media' ); ?></label>
 	</form>
 	<?php
@@ -33,7 +34,7 @@ class SM_Gateway_Paypal_Request {
 
 	function process(){
 		// Check if paypal is selected.
-		if( !isset( $_GET['gateway'] ) || 'paypal' !== $_GET['gateway'] ){
+		if( !isset( $_POST['gateway'] ) || 'paypal' !== $_POST['gateway'] ){
 			return;
 		}
 
@@ -45,7 +46,7 @@ class SM_Gateway_Paypal_Request {
 		}
 
         $paypal_args = http_build_query( $args, '', '&' );
-
+// wp_die( "<pre>".print_r( $args, true ) );
         $redirect_uri = esc_url( sell_media_get_paypal_redirect() ) . '?' . $paypal_args;
 
         wp_redirect( $redirect_uri );
@@ -65,7 +66,7 @@ class SM_Gateway_Paypal_Request {
         }
 
         $paypal_email = sanitize_email( $settings->paypal_email );
-        $subtotal = $sm_cart->getSubtotal();
+        $subtotal = apply_filters( 'sell_media_paypal_subtotal', $sm_cart->getSubtotal() );
         $item_args = $this->get_item_args();
 
         if( !$item_args ){
@@ -111,7 +112,7 @@ class SM_Gateway_Paypal_Request {
         foreach ( $cart_items as $key => $item ) {
             $args['item_name_' . $index ]   = $item['item_name'];
             $args['quantity_' . $index ]   = $item['qty'];
-            $args['amount_' . $index ]   = number_format( $item['price'], 2 );
+            $args['amount_' . $index ]   = apply_filters( 'sell_media_payment_gateway_item_price', number_format( $item['price'], 2 ) );
             $args['item_number_1']   = $index;
             $args["on0_" . $index] = 'type';
             $args["on1_" . $index] = 'image';
