@@ -310,7 +310,8 @@ class SellMediaCart {
 		$_SESSION[ $this->session_id ] = '';
 		foreach ( $this->items as $id => $item ) {
 			if ( ! $id ) {
-				continue; }
+				continue; 
+			}
 
 			$_SESSION[ $this->session_id ][ $id ] = $item;
 		}
