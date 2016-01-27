@@ -201,7 +201,7 @@ function sell_media_checkout_shortcode(){
                     <?php 
                     $cart_index = 0;
                     foreach( $cart_items as $key => $item ): ?>
-                    <tr class="itemRow row-<?php echo $cart_index; ?> odd" id="<?php echo $key; ?>">
+                    <tr class="itemRow row-<?php echo $cart_index; ?> odd" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>">
                         <td class="item-image">
                             <?php if( isset( $item['item_image'] ) && '' != $item['item_image'] ): ?>
                             <img src="<?php echo esc_url( $item['item_image'] ); ?>">
