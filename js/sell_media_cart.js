@@ -34,8 +34,8 @@ function sm_update_cart_totals(){
 
     // Add shipping
     if( sell_media.shipping > 0 ){
-        var tax = parseFloat( subtotal ) + parseFloat( sell_media.shipping );
-        var subtotal = ( subtotal  + tax ).toFixed(2);
+        // var tax = parseFloat( subtotal ) + parseFloat( sell_media.shipping );
+        // var subtotal = ( subtotal  + tax ).toFixed(2);
     }
 
     // Grand total.
