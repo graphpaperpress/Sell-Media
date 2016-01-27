@@ -7,10 +7,13 @@ function sm_calculate_shipping(){
     var total_qty = 0;
     items.each( function(){
         var price = jQuery(this).find('.item-price').attr('data-price');
+        var type = jQuery(this).attr('data-type');
         var current_qty = jQuery(this).find( '.item-quantity' ).text();
 
-        total_qty += parseInt(current_qty);
-        subtotal+= parseFloat( price ) * parseFloat( current_qty );
+        if( 'print' === type ){
+            total_qty += parseInt(current_qty);
+            subtotal+= parseFloat( price ) * parseFloat( current_qty );
+        }
     });
 
     if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping ){
