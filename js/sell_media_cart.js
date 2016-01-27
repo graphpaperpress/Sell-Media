@@ -1,38 +1,9 @@
-// Currencies lists
-var currencies = {
-    "USD": { code: "USD", symbol: "&#36;", name: "US Dollar" },
-    "AUD": { code: "AUD", symbol: "&#36;", name: "Australian Dollar" },
-    "BRL": { code: "BRL", symbol: "R&#36;", name: "Brazilian Real" },
-    "CAD": { code: "CAD", symbol: "&#36;", name: "Canadian Dollar" },
-    "CZK": { code: "CZK", symbol: "&nbsp;&#75;&#269;", name: "Czech Koruna", after: true },
-    "DKK": { code: "DKK", symbol: "DKK&nbsp;", name: "Danish Krone" },
-    "EUR": { code: "EUR", symbol: "&euro;", name: "Euro" },
-    "HKD": { code: "HKD", symbol: "&#36;", name: "Hong Kong Dollar" },
-    "HUF": { code: "HUF", symbol: "&#70;&#116;", name: "Hungarian Forint" },
-    "ILS": { code: "ILS", symbol: "&#8362;", name: "Israeli New Sheqel" },
-    "JPY": { code: "JPY", symbol: "&yen;", name: "Japanese Yen", accuracy: 0 },
-    "MXN": { code: "MXN", symbol: "&#36;", name: "Mexican Peso" },
-    "NOK": { code: "NOK", symbol: "NOK&nbsp;", name: "Norwegian Krone" },
-    "NZD": { code: "NZD", symbol: "&#36;", name: "New Zealand Dollar" },
-    "PLN": { code: "PLN", symbol: "PLN&nbsp;", name: "Polish Zloty" },
-    "GBP": { code: "GBP", symbol: "&pound;", name: "Pound Sterling" },
-    "SGD": { code: "SGD", symbol: "&#36;", name: "Singapore Dollar" },
-    "SEK": { code: "SEK", symbol: "SEK&nbsp;", name: "Swedish Krona" },
-    "CHF": { code: "CHF", symbol: "CHF&nbsp;", name: "Swiss Franc" },
-    "THB": { code: "THB", symbol: "&#3647;", name: "Thai Baht" },
-    "ZAR": { code: "ZAR", symbol: "R&nbsp;", name: "South African rand" },
-    "PHP": { code: "PHP", symbol: "&#8369;", name: "Philippine Peso" },
-    "MYR": { code: "MYR", symbol: "RM &nbsp;", name: "Malaysian Ringgits" },
-    "TRY": { code: "TRY", symbol: "&#8378;", name: "Turkish Lira" },
-    "BTC": { code: "BTC", symbol: " BTC", name: "Bitcoin", accuracy: 4, after: true }
-}
-
 /**
  * Update cart total.
  */
 function sm_update_cart_totals(){
     var items = jQuery( "#sell-media-checkout-cart tr.itemRow" );
-    var currency_symbol = currencies[sell_media.currency_symbol].symbol;
+    var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
     var subtotal = 0;
 
     // Get price of all items
@@ -82,7 +53,7 @@ function sm_update_cart_item( el, type ){
     var id = parent.attr('id');
     var price = parent.find('.item-price').attr('data-price');
     var current_qty = parent.find( '.item-quantity' ).text();
-    var currency_symbol = currencies[sell_media.currency_symbol].symbol;
+    var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
     var updated_qty = parseInt(current_qty) - 1;
 
     // Add qty if type is 'plus'.
