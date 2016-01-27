@@ -242,7 +242,7 @@ function sell_media_checkout_shortcode(){
                             ?>
                         </td>
                         <td class="item-increment"><a href="javascript:;" class="sellMediaCart_increment">+</a></td>
-                        <td class="item-total"><?php echo '$' . number_format( $item['price'] * $item['qty'], 2 ); ?></td>
+                        <td class="item-total"><?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?></td>
                     </tr>
                     <?php 
                     $cart_index++;
