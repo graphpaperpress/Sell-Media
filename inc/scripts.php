@@ -68,7 +68,8 @@ function sell_media_scripts( $hook ) {
         'checkout_text' => __( 'Checkout Now', 'sell_media' ),
         'checkout_wait_text' => __( 'Please wait...', 'sell_media' ),
         'remove_text' => __( 'Remove from Lightbox', 'sell_media' ),
-        'save_text' => __( 'Save to Lightbox', 'sell_media' )
+        'save_text' => __( 'Save to Lightbox', 'sell_media' ),
+        'currencies' => sell_media_currencies()
     ) );
 
     do_action( 'sell_media_scripts_hook' );
