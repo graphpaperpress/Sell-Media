@@ -22,29 +22,39 @@ function sell_media_add_to_cart(){
 		$attrs = array();
 		$item_number = absint($_POST['item_number']);
 
-		if( isset( $_POST['item_name'] ) && '' != $_POST['item_name'] )
+		if( isset( $_POST['item_name'] ) && '' != $_POST['item_name'] ){
 			$attrs['item_name'] = sanitize_text_field( $_POST['item_name'] );
+		}
 
-		if( isset( $_POST['item_type'] ) && '' != $_POST['item_type'] )
+		if( isset( $_POST['item_type'] ) && '' != $_POST['item_type'] ){
 			$attrs['item_type'] = sanitize_text_field( $_POST['item_type'] );
+		}
 
-		if( isset( $_POST['item_image'] ) && '' != $_POST['item_image'] )
+		if( isset( $_POST['item_image'] ) && '' != $_POST['item_image'] ){
 			$attrs['item_image'] = sanitize_text_field( $_POST['item_image'] );
+		}
 
-		if( isset( $_POST['item_pgroup'] ) && '' != $_POST['item_pgroup'] )
+		if( isset( $_POST['item_pgroup'] ) && '' != $_POST['item_pgroup'] ){
 			$attrs['item_pgroup'] = sanitize_text_field( $_POST['item_pgroup'] );
+		}
 
-		if( isset( $_POST['item_size'] ) && '' != $_POST['item_size'] )
+		if( isset( $_POST['item_size'] ) && '' != $_POST['item_size'] ){
 			$attrs['item_size'] = sanitize_text_field( $_POST['item_size'] );
+		}
 		
-		if( isset( $_POST['item_usage'] ) && '' != $_POST['item_usage'] )
+		if( isset( $_POST['item_usage'] ) && '' != $_POST['item_usage'] ){
 			$attrs['item_usage'] = sanitize_text_field( $_POST['item_usage'] );
+		}
 
-		if( isset( $_POST['item_license'] ) && '' != $_POST['item_license'] )
+		if( isset( $_POST['item_license'] ) && '' != $_POST['item_license'] ){
 			$attrs['item_license'] = sanitize_text_field( $_POST['item_license'] );
+		}
 
-		if( isset( $_POST['item_attachment'] ) && '' != $_POST['item_attachment'] )
+		if( isset( $_POST['item_attachment'] ) && '' != $_POST['item_attachment'] ){
 			$attrs['item_attachment'] = absint( sanitize_text_field( $_POST['item_attachment'] ) );
+		}
+
+		$attrs = apply_filters( 'sell_media_cart_item_attrs', $attrs );
 
 		if( '' != $item_number ){
 			$price = floatval( $_GET['price'] );
