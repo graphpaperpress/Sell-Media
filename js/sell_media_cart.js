@@ -1,3 +1,33 @@
+function sm_calculate_shipping(){
+    var total_shipping = 0;
+    var subtotal = 0;
+    var items = jQuery( "#sell-media-checkout-cart tr.itemRow" );
+
+    // Get price of all items
+    var total_qty = 0;
+    items.each( function(){
+        var price = jQuery(this).find('.item-price').attr('data-price');
+        var current_qty = jQuery(this).find( '.item-quantity' ).text();
+
+        total_qty += parseInt(current_qty);
+        subtotal+= parseFloat( price ) * parseFloat( current_qty );
+    });
+
+    if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping ){
+        var total_shipping = parseFloat( subtotal ) * parseFloat( sell_media_reprints.reprints_shipping_flat_rate );
+    }
+
+    if( 'shippingFlatRate' == sell_media_reprints.reprints_shipping ){
+        var total_shipping = parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
+    }
+
+    if( 'shippingQuantityRate' == sell_media_reprints.reprints_shipping ){
+        var total_shipping = parseInt( total_qty ) * parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
+    }
+
+    return total_shipping;
+}
+
 /**
  * Update cart total.
  */
@@ -5,12 +35,15 @@ function sm_update_cart_totals(){
     var items = jQuery( "#sell-media-checkout-cart tr.itemRow" );
     var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
     var subtotal = 0;
+    var grand_total = 0;
 
     // Get price of all items
+    var total_qty = 0;
     items.each( function(){
         var price = jQuery(this).find('.item-price').attr('data-price');
         var current_qty = jQuery(this).find( '.item-quantity' ).text();
 
+        total_qty += parseInt(current_qty);
         subtotal+= parseFloat( price ) * parseFloat( current_qty );
     });
 
@@ -23,23 +56,27 @@ function sm_update_cart_totals(){
     // Add tax if tax is set.
     if( sell_media.tax > 0 ){
         var tax = parseFloat( subtotal ) * parseFloat( sell_media.tax );
-        var subtotal = ( subtotal  + tax ).toFixed(2);
+        var grand_total = ( subtotal  + tax ).toFixed(2);
 
         tax = tax.toFixed(2);
         jQuery( '.sell-media-totals .sellMediaCart_tax' ).html( currency_symbol + tax );
     }
 
-    // Show shipping.
-    jQuery( '.sell-media-totals .sellMediaCart_shipping' ).html( currency_symbol + (sell_media.shipping) );
 
+    
+    
     // Add shipping
-    if( sell_media.shipping > 0 ){
-        // var tax = parseFloat( subtotal ) + parseFloat( sell_media.shipping );
-        // var subtotal = ( subtotal  + tax ).toFixed(2);
+    if( '2' === sell_media.shipping  ){
+        var total_shipping = sm_calculate_shipping();
+
+        var grand_total = ( parseFloat( grand_total )  + parseFloat(total_shipping) );
     }
 
+    // Show shipping.
+    jQuery( '.sell-media-totals .sellMediaCart_shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
+
     // Grand total.
-    jQuery( '.sell-media-totals .sellMediaCart_grandTotal' ).html( currency_symbol + ( subtotal ) );
+    jQuery( '.sell-media-totals .sellMediaCart_grandTotal' ).html( currency_symbol + grand_total );
 
 }
 
