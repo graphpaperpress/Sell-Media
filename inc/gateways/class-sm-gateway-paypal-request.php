@@ -97,7 +97,7 @@ class SM_Gateway_Paypal_Request {
         return apply_filters( 'sell_media_paypal_args', array_merge(
 			$args,
 			$item_args
-		), $cart_items );
+		) );
 	}
 
 	private function get_item_args(){
