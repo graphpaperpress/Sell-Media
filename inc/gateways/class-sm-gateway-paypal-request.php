@@ -40,14 +40,12 @@ class SM_Gateway_Paypal_Request {
 
 		$args = $this->get_args();        
 
-		if( ! $args ){
-			wp_redirect( esc_url( home_url( '/' ) ) );
-			exit;
-		}
+		$redirect_uri = esc_url( home_url( '/' ) );
 
-        $paypal_args = http_build_query( $args, '', '&' );
-// wp_die( "<pre>".print_r( $args, true ) );
-        $redirect_uri = esc_url( sell_media_get_paypal_redirect() ) . '?' . $paypal_args;
+		if( $args ){
+	        $paypal_args = http_build_query( $args, '', '&' );
+	        $redirect_uri = esc_url( sell_media_get_paypal_redirect() ) . '?' . $paypal_args;
+		}
 
         wp_redirect( $redirect_uri );
 
