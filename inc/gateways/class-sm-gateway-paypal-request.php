@@ -83,14 +83,13 @@ class SM_Gateway_Paypal_Request {
         else
             $shipping = 0;
 
-        $args['handling_cart'] = number_format( $shipping * 1, 2 );
         $args['charset']       = "utf-8";
         $args['cbt']           = get_bloginfo( 'name' );
         $args['return'] = esc_url( get_permalink( $settings->thanks_page ) );
         $args['cancel'] = empty( $settings->checkout_page ) ? null : esc_url( get_permalink( $settings->checkout_page ) );
         $args['custom'] = 0;
-        $args['handling']   = "0.00";
-        $args['handling_cart'] = "0.00";
+        $args['handling']   = apply_filters( 'sell_media_payment_gateway_handling', number_format( 0, 2 ) );
+        $args['handling_cart'] = apply_filters( 'sell_media_payment_gateway_handling_cart', number_format( 0, 2 ) );
         $args['no_shipping'] = apply_filters( 'sell_media_shipping', 0 );
         $args['notify_url'] = esc_url( add_query_arg( 'sell_media-listener', 'IPN', home_url( 'index.php' ) ) );
 
