@@ -1,5 +1,9 @@
 function sm_calculate_shipping(){
     var total_shipping = 0;
+    if( 'undefined' === typeof sell_media_reprints ){
+        return total_shipping;
+    }
+
     var subtotal = 0;
     var items = jQuery( "#sell-media-checkout-cart tr.itemRow" );
 
@@ -67,7 +71,8 @@ function sm_update_cart_totals(){
 
 
     
-    
+    var total_shipping = 0;
+
     // Add shipping
     if( '2' === sell_media.shipping  ){
         var total_shipping = sm_calculate_shipping();
