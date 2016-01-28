@@ -159,7 +159,9 @@ jQuery( function( $ ){
     });
 
     $(document).on('click', '.sellMediaCart_checkout', function(){
-        $("#sell_media_payment_gateway").submit();
+        var selected_payment = $( '#sell_media_payment_gateway' ).find( 'input:checked' );
+        if( 'paypal' == selected_payment.val() )
+            $("#sell_media_payment_gateway").submit();
     });
 
 });
