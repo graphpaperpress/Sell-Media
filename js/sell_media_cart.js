@@ -1,37 +1,44 @@
 function sm_calculate_shipping(){
-    var total_shipping = 0;
+    // Define vars.
+    var total_shipping = 0,
+        subtotal = 0,
+        items = jQuery( "#sell-media-checkout-cart tr.itemRow" ),
+        total_print_qty = 0;
+
+    // Check if sell media reprints is active.
     if( 'undefined' === typeof sell_media_reprints ){
         return total_shipping;
     }
 
-    var subtotal = 0;
-    var items = jQuery( "#sell-media-checkout-cart tr.itemRow" );
-
-    // Get price of all items
-    var total_qty = 0;
+    // Get price of all items.
     items.each( function(){
         var price = jQuery(this).find('.item-price').attr('data-price');
         var type = jQuery(this).attr('data-type');
         var current_qty = jQuery(this).find( '.item-quantity' ).text();
 
+        // Check if product is printable.
         if( 'print' === type ){
-            total_qty += parseInt(current_qty);
+            total_print_qty += parseInt(current_qty);
             subtotal+= parseFloat( price ) * parseFloat( current_qty );
         }
     });
 
+    // Check if shipping is on total rate.
     if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping ){
         var total_shipping = parseFloat( subtotal ) * parseFloat( sell_media_reprints.reprints_shipping_flat_rate );
     }
 
+    // Check if shipping is on flate rate.
     if( 'shippingFlatRate' == sell_media_reprints.reprints_shipping ){
         var total_shipping = parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
     }
 
+    // Check if shipping is on quantity rate.
     if( 'shippingQuantityRate' == sell_media_reprints.reprints_shipping ){
-        var total_shipping = parseInt( total_qty ) * parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
+        var total_shipping = parseInt( total_print_qty ) * parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
     }
 
+    // Return total shipping cost.
     return total_shipping;
 }
 
@@ -39,13 +46,15 @@ function sm_calculate_shipping(){
  * Update cart total.
  */
 function sm_update_cart_totals(){
-    var items = jQuery( "#sell-media-checkout-cart tr.itemRow" );
-    var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
-    var subtotal = 0;
-    var grand_total = 0;
+    // Define vars.
+    var items = jQuery( "#sell-media-checkout-cart tr.itemRow" ),
+        currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
+        subtotal = 0,
+        tax = 0,
+        total_shipping = 0,
+        total_qty = 0;
 
-    // Get price of all items
-    var total_qty = 0;
+    // Get price of all items.
     items.each( function(){
         var price = jQuery(this).find('.item-price').attr('data-price');
         var current_qty = jQuery(this).find( '.item-quantity' ).text();
@@ -54,37 +63,32 @@ function sm_update_cart_totals(){
         subtotal+= parseFloat( price ) * parseFloat( current_qty );
     });
 
-    // Show sub total
-    jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal );
-    
-    // Add tax
-    jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + '0' );
+    // Set grand total.
+    var grand_total = subtotal;
 
     // Add tax if tax is set.
     if( sell_media.tax > 0 ){
-        var tax = parseFloat( subtotal ) * parseFloat( sell_media.tax );
-        var grand_total = ( subtotal  + tax ).toFixed(2);
-
-        tax = tax.toFixed(2);
-        jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + tax );
+        tax = parseFloat( subtotal ) * parseFloat( sell_media.tax );
+        grand_total = subtotal  + tax ;
     }
 
-
-    
-    var total_shipping = 0;
-
-    // Add shipping
+    // Add shipping cost.
     if( '2' === sell_media.shipping  ){
         var total_shipping = sm_calculate_shipping();
-
-        var grand_total = ( parseFloat( grand_total )  + parseFloat(total_shipping) );
+        var grand_total = parseFloat( grand_total )  + parseFloat( total_shipping );
     }
+    
+    // Show sub total.
+    jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal.toFixed( 2 ) );
+
+    // Show tax.
+    jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + tax.toFixed( 2 ) );
 
     // Show shipping.
     jQuery( '.sell-media-totals .sell-media-cart-shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
 
-    // Grand total.
-    jQuery( '.sell-media-totals .sell-media-cart-grand-total' ).html( currency_symbol + grand_total );
+    // Show Grand total.
+    jQuery( '.sell-media-totals .sell-media-cart-grand-total' ).html( currency_symbol + grand_total.toFixed( 2 ) );
 
 }
 
@@ -94,12 +98,12 @@ function sm_update_cart_totals(){
  * @param  {string} type Update type
  */
 function sm_update_cart_item( el, type ){
-    var parent = el.parents( 'tr' );
-    var id = parent.attr('id');
-    var price = parent.find('.item-price').attr('data-price');
-    var current_qty = parent.find( '.item-quantity' ).text();
-    var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
-    var updated_qty = parseInt(current_qty) - 1;
+    var parent = el.parents( 'tr' ),
+        id = parent.attr('id'),
+        price = parent.find('.item-price').attr('data-price'),
+        current_qty = parent.find( '.item-quantity' ).text(),
+        currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
+        updated_qty = parseInt(current_qty) - 1;
 
     // Add qty if type is 'plus'.
     if( 'plus' === type )
@@ -117,6 +121,8 @@ function sm_update_cart_item( el, type ){
     // Hide if qty is less than 1.
     if( updated_qty < 1 ){
         parent.fadeOut( 'slow' );
+        jQuery("#sell-media-checkout-cart").fadeOut( 'slow' );
+        jQuery("#sell-media-empty-cart-message").fadeIn( 'slow' );
     }
 
     // Update cart total.
