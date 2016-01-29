@@ -914,8 +914,8 @@ function sell_media_nocache(){
 
     if ( false === ( $page_uris = get_transient( 'sell_media_cache_excluded_uris' ) ) ) {
         $settings       = sell_media_get_plugin_options();
-        $checkout_page  = $settings->checkout_page;
-        $thanks_page    = $settings->thanks_page;
+        $checkout_page  = isset( $settings->checkout_page )? $settings->checkout_page:"";
+        $thanks_page    = isset($settings->thanks_page)?$settings->thanks_page:"";
 
         if ( empty( $checkout_page ) || empty( $thanks_page ) )
             return;
