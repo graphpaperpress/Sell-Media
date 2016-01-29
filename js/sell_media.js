@@ -93,7 +93,7 @@ jQuery(document).ready(function($){
         if (!$('.sell-media-dialog-box').is(':hidden')) popup();
     });
 
-    $(document).on('click', '.sellMediaCart_checkout', function(){
+    $(document).on('click', '.sell-media-cart-checkout', function(){
         $(this).prop('disabled', true).css({"cursor": "progress"}).text(sell_media.checkout_wait_text);
     });
 
@@ -242,10 +242,10 @@ jQuery(document).ready(function($){
     $('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
 
     // Checkout total menu
-    $('(<span class="sellMediaCart_total checkout-price">0</span>)').appendTo('.checkout-total a');
+    $('(<span class="sell-media-cart-total checkout-price">0</span>)').appendTo('.checkout-total a');
 
     // Checkout qty menu
-    $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
+    $('(<span class="sell-media-cart-quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
 
     // Reload current location
     $('.reload').click(function() {
