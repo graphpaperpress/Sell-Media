@@ -25,7 +25,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
 $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
 
 ?>
-<div class="main-container sellMediaCart_shelfItem">
+<div class="main-container sell-media-cart-shelfItem">
     <span class="close">&times;</span>
     <div class="content">
         <header>
@@ -36,7 +36,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
             <?php
                 /*
                  * Set required cart items to be passed to gateway
-                 * Any element tagged with item_* inside .sellMediaCart_shelfItem will be passed as an option/value key pair to PayPal
+                 * Any element tagged with item_* inside .sell-media-cart-shelfItem will be passed as an option/value key pair to PayPal
                  * If you want to show these items on the checkout page, edit cartColumns[] in sell_media.js
                  * We use input type="text" because using type="hidden" is unreliable
                  * The order in which these appear control the option names passed to PayPal
