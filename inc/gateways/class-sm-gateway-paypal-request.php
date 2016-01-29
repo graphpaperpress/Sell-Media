@@ -110,7 +110,7 @@ class SM_Gateway_Paypal_Request {
             $args['item_name_' . $index ]   = $item['item_name'];
             $args['quantity_' . $index ]   = $item['qty'];
             $args['amount_' . $index ]   = apply_filters( 'sell_media_payment_gateway_item_price', number_format( $item['price'], 2 ) );
-            $args['item_number_1']   = $item['item_number'];
+            $args['item_number_'.$index]   = $item['item_id'];
             $args["on0_" . $index] = 'type';
             $args["on1_" . $index] = 'image';
             $args["on2_" . $index] = 'pgroup';
