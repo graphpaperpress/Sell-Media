@@ -84,7 +84,7 @@ function sm_update_cart_totals(){
     jQuery( '.sell-media-totals .sell-media-cart-shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
 
     // Grand total.
-    jQuery( '.sell-media-totals .sell-media-cart-grandTotal' ).html( currency_symbol + grand_total );
+    jQuery( '.sell-media-totals .sell-media-cart-grand-total' ).html( currency_symbol + grand_total );
 
 }
 
