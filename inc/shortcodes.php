@@ -293,12 +293,11 @@ function sell_media_checkout_shortcode(){
         </div><!-- .sell-media-totals -->
         <?php do_action( 'sell_media_below_registration_form' ); ?>
     </div><!-- #sell-media-checkout-cart -->
-    <?php else: ?>
+    <?php endif; ?>
 
-    <p id="sell-media-empty-cart-message">
+    <p id="sell-media-empty-cart-message" class="<?php echo ( !empty( $cart_items ) ) ? 'hide' : ''?>">
         <?php echo apply_filters( 'sell_media_continue_shopping', sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">Continue shopping &raquo;</a>' ) ); ?>
     </p>
-    <?php endif; ?>
 
     <?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
     <?php return ob_get_clean();
