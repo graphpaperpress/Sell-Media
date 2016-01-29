@@ -55,10 +55,10 @@ function sm_update_cart_totals(){
     });
 
     // Show sub total
-    jQuery( '.sell-media-totals .sellMediaCart_total' ).html( currency_symbol + subtotal );
+    jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal );
     
     // Add tax
-    jQuery( '.sell-media-totals .sellMediaCart_tax' ).html( currency_symbol + '0' );
+    jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + '0' );
 
     // Add tax if tax is set.
     if( sell_media.tax > 0 ){
@@ -66,7 +66,7 @@ function sm_update_cart_totals(){
         var grand_total = ( subtotal  + tax ).toFixed(2);
 
         tax = tax.toFixed(2);
-        jQuery( '.sell-media-totals .sellMediaCart_tax' ).html( currency_symbol + tax );
+        jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + tax );
     }
 
 
@@ -81,10 +81,10 @@ function sm_update_cart_totals(){
     }
 
     // Show shipping.
-    jQuery( '.sell-media-totals .sellMediaCart_shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
+    jQuery( '.sell-media-totals .sell-media-cart-shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
 
     // Grand total.
-    jQuery( '.sell-media-totals .sellMediaCart_grandTotal' ).html( currency_symbol + grand_total );
+    jQuery( '.sell-media-totals .sell-media-cart-grandTotal' ).html( currency_symbol + grand_total );
 
 }
 
@@ -149,16 +149,16 @@ jQuery( function( $ ){
     });
 
     // Decrease item qty.
-    $(document).on( 'click', '.sellMediaCart_decrement', function(){
+    $(document).on( 'click', '.sell-media-cart-decrement', function(){
         sm_update_cart_item( $(this), 'minus' );
     });
 
     // Increase item qty.
-    $(document).on( 'click', '.sellMediaCart_increment', function(){
+    $(document).on( 'click', '.sell-media-cart-increment', function(){
         sm_update_cart_item( $(this), 'plus' );
     });
 
-    $(document).on('click', '.sellMediaCart_checkout', function(){
+    $(document).on('click', '.sell-media-cart-checkout', function(){
         var selected_payment = $( '#sell_media_payment_gateway' ).find( 'input:checked' );
         if( 'paypal' == selected_payment.val() )
             $("#sell_media_payment_gateway").submit();
