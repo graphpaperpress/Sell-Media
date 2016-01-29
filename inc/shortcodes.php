@@ -184,7 +184,7 @@ function sell_media_checkout_shortcode(){
     if( !empty( $cart_items ) ) :
     ?>
     <div id="sell-media-checkout-cart">
-        <div class="sellMediaCart_items">
+        <div class="sell-media-cart-items">
             <table>
                 <thead>
                     <tr class="headerRow">
@@ -233,7 +233,7 @@ function sell_media_checkout_shortcode(){
                             }
                             ?>
                         </td>
-                        <td class="item-decrement"><a href="javascript:;" class="sellMediaCart_decrement">-</a></td>
+                        <td class="item-decrement"><a href="javascript:;" class="sell-media-cart-decrement">-</a></td>
                         <td class="item-quantity">
                             <?php 
                             if( isset( $item['qty'] ) && '' != $item['qty'] ){
@@ -241,7 +241,7 @@ function sell_media_checkout_shortcode(){
                             }
                             ?>
                         </td>
-                        <td class="item-increment"><a href="javascript:;" class="sellMediaCart_increment">+</a></td>
+                        <td class="item-increment"><a href="javascript:;" class="sell-media-cart-increment">+</a></td>
                         <td class="item-total"><?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?></td>
                     </tr>
                     <?php 
@@ -255,26 +255,26 @@ function sell_media_checkout_shortcode(){
             <table id="sell-media-totals-table" class="sell-media-totals-table">
                 <tr class="subtotal">
                     <td class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</td>
-                    <td class="sell-media-value"><span class="sellMediaCart_total"></span></td>
+                    <td class="sell-media-value"><span class="sell-media-cart-total"></span></td>
                 </tr>
                 <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
                 <tr class="tax">
                     <td class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</td>
-                    <td class="sell-media-value"><span class="sellMediaCart_tax"></span></td>
+                    <td class="sell-media-value"><span class="sell-media-cart-tax"></span></td>
                 </tr>
                 <tr class="shipping">
                     <td class="sell-media-key"><?php _e( 'Shipping', 'sell_media' ); ?>:</td>
-                    <td class="sell-media-value"><span class="sellMediaCart_shipping"></span></td>
+                    <td class="sell-media-value"><span class="sell-media-cart-shipping"></span></td>
                 </tr>
                 <tr class="total sell-media-bold">
                     <td class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</td>
-                    <td class="sell-media-value"><span class="sellMediaCart_grandTotal"></span></td>
+                    <td class="sell-media-value"><span class="sell-media-cart-grandTotal"></span></td>
                 </tr>
             </table>
             <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
             <div class="sell-media-checkout-button group">
                 <?php do_action( 'sell_media_above_checkout_button' ); ?>
-                <p><a href="javascript:void(0)" class="sellMediaCart_checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
+                <p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
                 <p id="sell-media-continue-shopping" class="text-center">
                     <?php
                     $html  = __( 'or', 'sell_media' );
