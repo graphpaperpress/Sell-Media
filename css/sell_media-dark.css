@@ -3,13 +3,13 @@
 .sell-media-subtotal {
 	border-bottom: 1px solid #111;
 }
-.sellMediaCart_items td.item-decrement a,
-.sellMediaCart_items td.item-increment a {
+.sell-media-cart-items td.item-decrement a,
+.sell-media-cart-items td.item-increment a {
   background: #333;
   border: 1px solid #444;
 }
-.sellMediaCart_items td.item-decrement a:hover,
-.sellMediaCart_items td.item-increment a:hover {
+.sell-media-cart-items td.item-decrement a:hover,
+.sell-media-cart-items td.item-increment a:hover {
   background: #555;
   border: 1px solid #666;
 }
