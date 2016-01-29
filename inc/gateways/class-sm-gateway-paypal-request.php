@@ -76,7 +76,7 @@ class SM_Gateway_Paypal_Request {
         $args['currency_code'] = sanitize_text_field( $settings->currency );
         $args['business']      = sanitize_email( $paypal_email );
         $args['rm']            = "2";
-        $args['tax_cart']      = number_format( $subtotal * $settings->tax_rate, 2 );
+        $args['tax_cart']      = ( $settings->tax )? number_format( $subtotal * $settings->tax_rate, 2 ) : 0;
 
         if( isset( $settings->shipping ) )
             $shipping = $settings->shipping;
