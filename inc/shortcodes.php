@@ -268,7 +268,7 @@ function sell_media_checkout_shortcode(){
                 </tr>
                 <tr class="total sell-media-bold">
                     <td class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</td>
-                    <td class="sell-media-value"><span class="sell-media-cart-grandTotal"></span></td>
+                    <td class="sell-media-value"><span class="sell-media-cart-grand-total"></span></td>
                 </tr>
             </table>
             <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
