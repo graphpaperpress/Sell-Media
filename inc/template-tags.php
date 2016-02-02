@@ -198,7 +198,7 @@ function sell_media_gallery_navigation( $attachment_id ) {
     $html = '<span class="sell-media-gallery-navigation">';
     if ( array_key_exists( $current_image - 1, $attachment_ids ) )
         $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span> ' . __( 'Previous', 'sell_media' ) . '</a>';
-    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Gallery', 'sell_media' ) . '"><span class="dashicons dashicons-screenoptions"></span> ' . __( 'Gallery', 'sell_media' ) . '</a>';
+    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Thumbnails', 'sell_media' ) . '">' . __( 'Thumbnails', 'sell_media' ) . '</a>';
     if ( array_key_exists( $current_image + 1, $attachment_ids ) )
         $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '">' . __( 'Next', 'sell_media' ) . ' <span class="dashicons dashicons-arrow-right-alt"></span></a>';
     $html .= '</span>';
