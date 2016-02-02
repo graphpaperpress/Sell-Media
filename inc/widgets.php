@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Widgets
  *
@@ -7,8 +6,8 @@
  * @author Thad Allender <support@graphpaperpress.com>
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Include Widgets
@@ -25,23 +24,23 @@ require_once( SELL_MEDIA_PLUGIN_DIR . '/inc/widgets/sell-media-similar.php' );
  */
 function sell_media_widgets_init() {
 
-    register_sidebar( array(
-        'name' => __( 'Sell Media Below Single Content', 'sell_media' ),
-        'id' => 'sell-media-below-single-content',
-        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-        'after_widget' => "</aside>",
-        'before_title' => '<h3 class="widget-title">',
-        'after_title' => '</h3>',
-    ) );
+	register_sidebar( array(
+		'name' => __( 'Sell Media Below Single Content', 'sell_media' ),
+		'id' => 'sell-media-below-single-content',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => '</aside>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
 
-    register_sidebar( array(
-        'name' => __( 'Sell Media Below Single Sidebar', 'sell_media' ),
-        'id' => 'sell-media-below-single-sidebar',
-        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-        'after_widget' => "</aside>",
-        'before_title' => '<h3 class="widget-title">',
-        'after_title' => '</h3>',
-    ) );
+	register_sidebar( array(
+		'name' => __( 'Sell Media Below Single Sidebar', 'sell_media' ),
+		'id' => 'sell-media-below-single-sidebar',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => '</aside>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
 
 }
 add_action( 'widgets_init', 'sell_media_widgets_init', 20 );
@@ -55,21 +54,22 @@ add_action( 'widgets_init', 'sell_media_widgets_init', 20 );
  */
 function sell_media_below_content_widgets() {
 
-    if ( is_active_sidebar( 'sell-media-below-single-content' ) ) {
+	if ( is_active_sidebar( 'sell-media-below-single-content' ) ) {
 
-        ob_start(); ?>
+		ob_start(); ?>
         <div id="sell-media-below-single-content" class="sell-media-widget-area">
         <?php dynamic_sidebar( 'sell-media-below-single-content' ); ?>
         </div>
         <?php $html = ob_get_clean();
-        return $html;
-    }
+		return $html;
+	}
 }
 
 /**
  * Display Widget Below Single Sidebar
  */
-function sell_media_widgets_below_single_sidebar() { ?>
+function sell_media_widgets_below_single_sidebar() {
+	?>
 
     <?php if ( is_active_sidebar( 'sell-media-below-single-sidebar' ) ) : ?>
         <section id="sell-media-below-single-sidebar" class="sell-media-widget-area" role="complementary">

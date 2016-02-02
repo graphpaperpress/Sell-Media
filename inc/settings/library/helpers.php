@@ -130,103 +130,128 @@ function sell_media_currencies(){
     $currencies = array(
     "USD" => array(
         'name' => 'USD',
-        'title' => __('US Dollars (&#36;)','sell_media')
+        'title' => __('US Dollars (&#36;)','sell_media'),
+        'symbol' => "&#36;"
         ),
     "EUR" => array(
         'name' => 'EUR',
-        'title' => __('Euros (&euro;)','sell_media')
+        'title' => __('Euros (&euro;)','sell_media'),
+        'symbol' => "&euro;"
         ),
     "GBP" => array(
         'name' => 'GBP',
-        'title' => __('Pounds Sterling (&pound;)','sell_media')
+        'title' => __('Pounds Sterling (&pound;)','sell_media'),
+        'symbol' => "&pound;"
         ),
     "AUD" => array(
         'name' => 'AUD',
-        'title' => __('Australian Dollars (&#36;)','sell_media')
+        'title' => __('Australian Dollars (&#36;)','sell_media'),
+        'symbol' => "&#36;"
         ),
     "BRL" => array(
         'name' => 'BRL',
-        'title' => __('Brazilian Real (R&#36;)','sell_media')
+        'title' => __('Brazilian Real (R&#36;)','sell_media'),
+        'symbol' => "R&#36;"
         ),
     "CAD" => array(
         'name' => 'CAD',
-        'title' => __('Canadian Dollars (&#36;)','sell_media')
+        'title' => __('Canadian Dollars (&#36;)','sell_media'),
+        'symbol' => "&#36;"
         ),
     "CZK" => array(
         'name' => 'CZK',
-        'title' => __('Czech Koruna (&#75;&#269;)','sell_media')
+        'title' => __('Czech Koruna (&#75;&#269;)','sell_media'),
+        'symbol' => "&#75;&#269;"
         ),
     "DKK" => array(
         'name' => 'DKK',
-        'title' => __('Danish Krone','sell_media')
+        'title' => __('Danish Krone','sell_media'),
+        'symbol' => "DKK"
         ),
     "HKD" => array(
         'name' => 'HKD',
-        'title' => __('Hong Kong Dollar (&#36;)','sell_media')
+        'title' => __('Hong Kong Dollar (&#36;)','sell_media'),
+        'symbol' => "&#36;"
         ),
     "HUF" => array(
         'name' => 'HUF',
-        'title' => __('Hungarian Forint','sell_media')
+        'title' => __('Hungarian Forint','sell_media'),
+        'symbol' => "HUF"
         ),
     "ILS" => array(
         'name' => 'ILS',
-        'title' => __('Israeli Shekel','sell_media')
+        'title' => __('Israeli Shekel','sell_media'),
+        'symbol' => "ILS"
         ),
     "JPY" => array(
         'name' => 'JPY',
-        'title' => __('Japanese Yen (&yen;)','sell_media')
+        'title' => __('Japanese Yen (&yen;)','sell_media'),
+        'symbol' => "&yen;"
         ),
     "MYR" => array(
         'name' => 'MYR',
-        'title' => __('Malaysian Ringgits','sell_media')
+        'title' => __('Malaysian Ringgits','sell_media'),
+        'symbol' => "RM"
         ),
     "MXN" => array(
         'name' => 'MXN',
-        'title' => __('Mexican Peso (&#36;)','sell_media')
+        'title' => __('Mexican Peso (&#36;)','sell_media'),
+        'symbol' => "&#36;"
         ),
     "NZD" => array(
         'name' => 'NZD',
-        'title' => __('New Zealand Dollar (&#36;)','sell_media')
+        'title' => __('New Zealand Dollar (&#36;)','sell_media'),
+        'symbol' => "&#36;"
         ),
     "NOK" => array(
         'name' => 'NOK',
-        'title' => __('Norwegian Krone','sell_media')
+        'title' => __('Norwegian Krone','sell_media'),
+        'symbol' => "kr"
         ),
     "PHP" => array(
         'name' => 'PHP',
-        'title' => __('Philippine Pesos','sell_media')
+        'title' => __('Philippine Pesos','sell_media'),
+        'symbol' => "PHP"
         ),
     "PLN" => array(
         'name' => 'PLN',
-        'title' => __('Polish Zloty','sell_media')
+        'title' => __('Polish Zloty','sell_media'),
+        'symbol' => "PLN"
         ),
     "SGD" => array(
         'name' => 'SGD',
-        'title' => __('Singapore Dollar (&#36;)','sell_media')
+        'title' => __('Singapore Dollar (&#36;)','sell_media'),
+        'symbol' => "&#36;"
         ),
     "SEK" => array(
         'name' => 'SEK',
-        'title' => __('Swedish Krona','sell_media')
+        'title' => __('Swedish Krona','sell_media'),
+        'symbol' => "SEK"
         ),
     "CHF" => array(
         'name' => 'CHF',
-        'title' => __('Swiss Franc','sell_media')
+        'title' => __('Swiss Franc','sell_media'),
+        'symbol' => "CHF"
         ),
     "TWD" => array(
         'name' => 'TWD',
-        'title' => __('Taiwan New Dollars','sell_media')
+        'title' => __('Taiwan New Dollars','sell_media'),
+        'symbol' => "TWD"
         ),
     "THB" => array(
         'name' => 'THB',
-        'title' => __('Thai Baht','sell_media')
+        'title' => __('Thai Baht','sell_media'),
+        'symbol' => "THB"
         ),
     "TRY" => array(
         'name' => 'TRY',
-        'title' => __('Turkish Lira (TL)','sell_media')
+        'title' => __('Turkish Lira (TL)','sell_media'),
+        'symbol' => "TL"
         ),
     "ZAR" => array(
         'name' => 'ZAR',
-        'title' => __('South African rand (R)','sell_media')
+        'title' => __('South African rand (R)','sell_media'),
+        'symbol' => "R"
         )
     );
     return $currencies;
