@@ -399,15 +399,15 @@ function sell_media_breadcrumbs( $post_id ){
 
         $html = '<div class="sell-media-breadcrumbs">';
         $html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . $obj->rewrite['slug'] . '</a>';
-        $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
+        $html .= ' <span class="sell-media-breadcrumbs-sep">&#47;</span> ';
         if ( wp_get_post_terms( $post_id, 'collection' ) ) {
             $html .= sell_media_get_taxonomy_terms( 'collection' );
-            $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
+            $html .= ' <span class="sell-media-breadcrumbs-sep">&#47;</span> ';
         }
         if ( sell_media_has_multiple_attachments( $post_id ) && get_query_var( 'id' ) == true ) {
             $attachment_meta = wp_prepare_attachment_for_js( get_query_var( 'id' ) );
             $html .= '<a href="' . get_permalink() . '">' . get_the_title( '', false ) . '</a>';
-            $html .= ' <span class="sell-media-breadcrumbs-sep">&raquo;</span> ';
+            $html .= ' <span class="sell-media-breadcrumbs-sep">&#47;</span> ';
             $html .= $attachment_meta['title'];
             $html .= sell_media_gallery_navigation( get_query_var( 'id' ) );
         } else {
