@@ -25,7 +25,7 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
 $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
 
 ?>
-<div class="main-container sellMediaCart_shelfItem">
+<div class="main-container sell-media-cart-shelfItem">
     <span class="close">&times;</span>
     <div class="content">
         <header>
@@ -36,7 +36,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
             <?php
                 /*
                  * Set required cart items to be passed to gateway
-                 * Any element tagged with item_* inside .sellMediaCart_shelfItem will be passed as an option/value key pair to PayPal
+                 * Any element tagged with item_* inside .sell-media-cart-shelfItem will be passed as an option/value key pair to PayPal
                  * If you want to show these items on the checkout page, edit cartColumns[] in sell_media.js
                  * We use input type="text" because using type="hidden" is unreliable
                  * The order in which these appear control the option names passed to PayPal
@@ -49,15 +49,15 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                  */
             ?>
             <form id="sell-media-cart-items" class="hide">
-                <input class="item_number" type="text" value="<?php echo $post_id; ?>" />
-                <input class="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
-                <input class="item_type" type="text" value="<?php if ( $is_package ) echo 'download'; else echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
-                <input class="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
-                <input class="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
-                <input class="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
-                <input class="item_usage" type="text" value="No license" />
-                <input class="item_license" type="text" value="0" />
-                <input class="item_attachment" type="text" value="<?php echo $attachment_id; ?>" />
+                <input class="item_number" name="item_number" type="text" value="<?php echo $post_id; ?>" />
+                <input class="item_name" name="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
+                <input class="item_type" name="item_type" type="text" value="<?php if ( $is_package ) echo 'download'; else echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
+                <input class="item_image" name="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
+                <input class="item_pgroup" name="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
+                <input class="item_size" name="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
+                <input class="item_usage" name="item_usage" type="text" value="No license" />
+                <input class="item_license" name="item_license" type="text" value="0" />
+                <input class="item_attachment" name="item_attachment" type="text" value="<?php echo $attachment_id; ?>" />
             </form>
 
             <?php do_action( 'sell_media_above_item_form' ); ?>
