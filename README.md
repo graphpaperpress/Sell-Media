@@ -5,8 +5,8 @@
 ![The Shopping Cart](http://s.wordpress.org/extend/plugins/sell-media/screenshot-1.png)
 
 * [Documentation](http://graphpaperpress.com/docs/sell-media/)
-* [Roadmap](https://github.com/graphpaperpress/sell-media/ROADMAP.md)
-* [Contributing](https://github.com/graphpaperpress/sell-media/CONTRIBUTING.md)
+* [Roadmap](Sell-Media/ROADMAP.md)
+* [Contributing](Sell-Media/CONTRIBUTING.md)
 * [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
 
 ### Main Features ###
