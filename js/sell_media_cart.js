@@ -120,9 +120,11 @@ function sm_update_cart_item( el, type ){
 
     // Hide if qty is less than 1.
     if( updated_qty < 1 ){
-        parent.fadeOut( 'slow' );
-        jQuery("#sell-media-checkout-cart").fadeOut( 'slow' );
-        jQuery("#sell-media-empty-cart-message").fadeIn( 'slow' );
+        parent.fadeOut( 'slow' ).remove();
+        if( jQuery("#sell-media-checkout-cart .sell-media-cart-items table tbody tr").length < 1 ){
+            jQuery("#sell-media-checkout-cart").fadeOut( 'slow' );
+            jQuery("#sell-media-empty-cart-message").fadeIn( 'slow' );
+        }
     }
 
     // Update cart total.
