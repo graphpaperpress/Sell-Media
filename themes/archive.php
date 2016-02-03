@@ -50,7 +50,6 @@ $settings = sell_media_get_plugin_options();
                 $args = array(
                     'orderby' => 'name',
                     'hide_empty' => false,
-                    'number' => get_option('posts_per_page '),
                     'parent' => $term_ID
                 );
 
@@ -129,7 +128,11 @@ $settings = sell_media_get_plugin_options();
             <?php endif; ?><!-- show child terms check -->
 
             </div><!-- .sell-media-grid-container -->
-            <?php echo sell_media_pagination_filter( $wp_query->max_num_pages ); ?>
+            <?php 
+            if( !$children ){
+                echo sell_media_pagination_filter( $wp_query->max_num_pages ); 
+            }
+            ?>
         </div><!-- #content -->
     </div><!-- #sell_media-single .sell_media -->
 
