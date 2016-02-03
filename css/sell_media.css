@@ -909,7 +909,20 @@ input.sell-media-search-text[type=text] {
   max-width: 100%;
   height: auto;
 }
-
+.mobile-element a,
+.mobile-element span.nomba{
+  background-color:#ebebeb;
+  display:block;
+  margin-bottom:1px;
+  text-decoration: none;
+}
+.mobile-element a span.fa,
+.mobile-element span.nomba{
+  color:#a7a7a7;
+}
+.mobile-element #count{
+  display: block;
+}
 
 /*= Media queries
 -------------------------------------------------------------- */
@@ -941,5 +954,29 @@ input.sell-media-search-text[type=text] {
     overflow: scroll;
     max-height: 500px;
     width: 302px;
+  }
+}
+
+@media only screen and (min-width : 768px) {
+  .mobile-element{
+    display:none;
+  }
+}
+    
+@media only screen and (max-width : 767px) {
+  tr.headerRow,
+  td.item-price,
+  td.item-decrement,
+  td.item-increment,
+  td.item-total,
+  span#count{
+    display:none;
+  }
+  span.price{
+    color:#000;
+    font-weight:bold;
+  }
+  .sell-media-bold td{
+    font-weight: bold;
   }
 }
