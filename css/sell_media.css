@@ -277,21 +277,18 @@ table.sell-media-products {
   clear: left;
 }
 .sell-media-gallery-navigation {
+  display: inline-block;
   float: right;
 }
 .sell-media-gallery-navigation a {
-  margin-right: 24px;
+  margin-right: 20px;
   text-decoration: none !important;
   border: 0 !important;
+  padding: 0 !important;;
+  width: auto !important;;
 }
 .sell-media-gallery-navigation a:last-child {
   margin-right: 0;
-}
-.sell-media-gallery-navigation .dashicons,
-.sell-media-gallery-navigation .dashicons-before:before {
-  width: 13px;
-  height: 13px;
-  font-size: 13px;
 }
 
 /*= Archives
