@@ -44,7 +44,11 @@ These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/
 
 1. Activate the plugin.
 2. Visit Sell Media -> Settings and configure the options.
-3. Insert the **required Sell Media shortcodes** onto your preferred Pages (see FAQ section).
-4. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
+3. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
 
 ## Community ##
+
+1. Get help from the creators of Sell Media by joining [Graph Paper Press](https://graphpaperpress.com).
+2. There is an [unmonitored forum at WordPress.org](https://wordpress.org/support/plugin/sell-media) for Sell Media.
+3. Fix issues reported on the [issue tracker](https://github.com/graphpaperpress/Sell-Media/issues).
+4. Contribute ideas to the [roadmap](https://github.com/graphpaperpress/Sell-Media/blob/master/ROADMAP.md).
