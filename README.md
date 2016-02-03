@@ -5,10 +5,11 @@
 ![The Shopping Cart](http://s.wordpress.org/extend/plugins/sell-media/screenshot-1.png)
 
 * [Documentation](http://graphpaperpress.com/docs/sell-media/)
+* [Roadmap](https://github.com/graphpaperpress/sell-media/ROADMAP.md)
+* [Contributing](https://github.com/graphpaperpress/sell-media/CONTRIBUTING.md)
 * [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
-* [Github Code Repository](https://github.com/graphpaperpress/sell-media)
 
-Using Sell Media, you can:
+### Main Features ###
 
 *   Sell photos, galleries, videos, pdf's and other digital files.
 *   Create you own stock photo or video site.
@@ -16,11 +17,11 @@ Using Sell Media, you can:
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
 
-### Theme Integration ###
+### Themes ###
 
 These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/) were designed to enhance the functionality of Sell Media. Sell Media also works with any properly coded WordPress theme, however, some tweaks might be required.
 
-Take Sell Media to the next level with these powerful extensions:
+### Extensions ###
 
 * [Sell photo prints](http://graphpaperpress.com/plugins/sell-media-reprints)
 * [Cloud Backups](http://graphpaperpress.com/plugins/sell-media-s3)
@@ -46,6 +47,4 @@ Take Sell Media to the next level with these powerful extensions:
 3. Insert the **required Sell Media shortcodes** onto your preferred Pages (see FAQ section).
 4. Visit Sell Media -> Add New and upload an image, video, audio file or pdf for sale.
 
-### Configuration ###
-
-Visit the official plugin [Documentation](http://graphpaperpress.com/docs/sell-media/) to learn how to setup and customize Sell Media
+## Community ##
