@@ -113,7 +113,7 @@ function sm_update_cart_item( el, type ){
     var updated_price = parseInt( updated_qty ) * parseFloat( price );
 
     // Update qty.
-    parent.find( '.item-quantity' ).text( updated_qty );
+    parent.find( '.item-quantity #count' ).text( updated_qty );
 
     // Update item total.
     parent.find( '.item-total' ).html( currency_symbol + updated_price.toFixed( 2 ) );
