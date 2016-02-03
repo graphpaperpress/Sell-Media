@@ -93,7 +93,7 @@ jQuery(document).ready(function($){
         if (!$('.sell-media-dialog-box').is(':hidden')) popup();
     });
 
-    $(document).on('click', '.sellMediaCart_checkout', function(){
+    $(document).on('click', '.sell-media-cart-checkout', function(){
         $(this).prop('disabled', true).css({"cursor": "progress"}).text(sell_media.checkout_wait_text);
     });
 
@@ -116,136 +116,6 @@ jQuery(document).ready(function($){
     $('#sell_media_terms_cb').on('click', function(){
         $this = $(this);
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
-    });
-
-    // Cart config
-    sellMediaCart({
-        checkout: {
-            type: "PayPal",
-            sandbox: sell_media.sandbox,
-            email: sell_media.paypal_email,
-            success: sell_media.thanks_page,
-            cancel: sell_media.checkout_page,
-            notify: sell_media.listener_url,
-            shipping: sell_media.shipping, // 0 prompt & optional, 1 no prompt, 2 prompt & required
-            method: "POST",
-            site: sell_media.site_name
-        },
-        cartStyle: sell_media.cart_style,
-        taxRate: parseFloat(sell_media.tax),
-        currency: sell_media.currency_symbol,
-        shippingCustom: function(){
-            var items = JSON.parse(localStorage.getItem("sellMediaCart_items"));
-            var shipping_cost = false;
-            sellMediaCart.each( items, function (item) {
-                if( "print" == item.type ) {
-                    shipping_cost = true;
-                }
-            });
-            return shipping_cost;
-        },
-        cartColumns: [{
-            view: "image",
-            attr: "image",
-            label: false
-        },
-            {
-                view: function(item, column){
-
-                    var name = item.get( "name" );
-                    var sep = ', ';
-
-                    var license = item.get( "usage" );
-                    if ( license == undefined ) {
-                        license = '';
-                        sep = '';
-                    }
-
-                    var size = item.get( "size" );
-                    if ( size == undefined ) {
-                        size = '';
-                        sep = '';
-                    }
-
-                    return name + "<span class='size-license'>" + size + sep + license + "</span>";
-                },
-                attr: "custom",
-                label: sell_media.cart_labels.name
-            },
-            {
-                attr: "price",
-                label: sell_media.cart_labels.price,
-                view: "currency"
-            },
-            {
-                view: "decrement",
-                label: false,
-                text: "-"
-            },
-            {
-                attr: "quantity",
-                label: sell_media.cart_labels.qty
-            },
-            {
-                view: "increment",
-                label: false,
-                text: "+"
-            },
-            {
-                attr: "total",
-                label: sell_media.cart_labels.sub_total,
-                view: "currency"
-            }]
-    });
-
-    // Hide cart if no items, otherwise, show the cart
-    sellMediaCart.bind('update', function(){
-
-        if ( sellMediaCart.quantity() === 0 ){
-            // hide the cart
-            $('#sell-media-checkout-cart').hide();
-            $('#sell-media-empty-cart-message').show();
-        } else {
-            // show the cart
-            $('#sell-media-checkout-cart').show();
-        }
-
-    });
-
-    // Show added to cart message on dialog
-    sellMediaCart.bind( 'afterAdd' , function( item ){
-        $('.sell-media-added').remove();
-        $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
-    });
-
-    // Validate cart prices (price group, license markup, discount codes) on the server
-    sellMediaCart.bind( 'beforeCheckout', function( data ){
-
-        // pass discount codes into cart data
-        if ( $('#discount-id').length ) {
-            data.custom = $('#discount-id').val();
-        }
-
-        // ajax callback to vertify prices
-        $.ajax({
-            type: "POST",
-            url: sell_media.ajaxurl,
-            async: false,
-            data: {
-                security: $('#cart_nonce_security').val(),
-                action: 'sell_media_verify_callback',
-                cart: data
-            },
-            success: function( msg ){
-                console.log(data);
-                $.each( msg.cart, function( k, v ){
-                    data[k] = v;
-                });
-            },
-            error: function () {
-                alert( sell_media.cart_error );
-            }
-        });
     });
 
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
@@ -372,10 +242,10 @@ jQuery(document).ready(function($){
     $('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
 
     // Checkout total menu
-    $('(<span class="sellMediaCart_total checkout-price">0</span>)').appendTo('.checkout-total a');
+    $('(<span class="sell-media-cart-total checkout-price">0</span>)').appendTo('.checkout-total a');
 
     // Checkout qty menu
-    $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
+    $('(<span class="sell-media-cart-quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
 
     // Reload current location
     $('.reload').click(function() {
