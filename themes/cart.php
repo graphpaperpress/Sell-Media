@@ -124,4 +124,5 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
 
         </section>
     </div>
+    <?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id ); ?>
 </div>
