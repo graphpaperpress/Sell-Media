@@ -16,9 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function sell_media_template_redirect( $original_template ){
 
-    if ( ! sell_media_theme_support() )
-        return $original_template;
-
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
     /**
