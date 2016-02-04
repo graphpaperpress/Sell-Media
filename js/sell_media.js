@@ -22,7 +22,10 @@ jQuery(document).ready(function($){
      * When the user clicks on our trigger we set-up the overlay,
      * launch our dialog, and send an Ajax request to load our cart form.
      */
-    $(document).on('click','.sell-media-cart-trigger',function(){
+    $(document).on('click','.quick-view',function( event ){
+
+        event.preventDefault();
+
         popup();
         // show a loading message while doing ajax request
         $('#sell-media-dialog-box-target').html('<div class="sell-media-ajax-loader">Loading...</div>');

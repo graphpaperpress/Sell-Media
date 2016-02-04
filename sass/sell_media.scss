@@ -1,5 +1,29 @@
+/*= Variables
+-------------------------------------------------------------- */
+$font-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-size: 16px;
+$line-height: $font-size * 1.6;
+$margin: $font-size * 2;
+$default-color: gray;
+$dark-color: darken($default-color, 60%);
+$light-color: lighten($default-color, 20%);
+$white-color: #fff;
+$black-color: #000;
+$dark-opaque: rgba(black, .5);
+$light-opaque: rgba(white, .8);
+$border-color: #eee;
+
+
 /*= Grids
 -------------------------------------------------------------- */
+
+.sell-media-row {
+    display: flex; /* equal height of the children */
+}
+
+.sell-media-col {
+    flex: 1; /* additionally, equal width */
+}
 
 .sell-media-two-col {
     margin-right: 10%;
@@ -37,11 +61,11 @@
 .sell-media-main-col {
     clear: left;
     margin-right: 5%;
-    width: 75%;
+    width: 65%;
 }
 
 .sell-media-side-col {
-    width: 20%;
+    width: 30%;
 }
 
 .sell-media-two-col,
@@ -50,12 +74,12 @@
 .sell-media-main-col,
 .sell-media-side-col {
     float: left;
-    margin-bottom : 32px;
+    margin-bottom : $margin;
 
     @media only screen and (max-width: 767px) {
         clear: both;
         float: none;
-        margin: 0 0 32px 0;
+        margin: 0 0 $margin 0;
         width: 100%;
     }
 }
@@ -88,7 +112,7 @@
             @media only screen and (max-width: 767px) {
                 float: left;
                 width: 50%;
-                margin: 0 0 32px;
+                margin: 0 0 $margin;
                 clear: none;
 
                 .item-name,
@@ -114,22 +138,25 @@
         text-align: right;
         
         span {
-            border: 1px solid #ddd;
-            background: #eee;
             display: inline-block;
+            font-size: 12px;
             width: 24px;
-            height: 24px;
+            height: 16px;
             line-height: 1;
             text-align: center;
-            vertical-align: middle;
-        }
-    }
 
-    .sell-media-cart-increment:hover,
-    .sell-media-cart-decrement:hover {
-        cursor: pointer;
-        background: #ddd;
-        border: 1px solid #ccc;
+            &.dashicons {
+                border: 1px solid darken($border-color, 10%);
+                background: $border-color;
+                cursor: pointer;
+                margin: 1px;
+
+                &:hover {
+                    border-color: darken($border-color, 20%);
+                    background-color: darken($border-color, 10%);
+                }
+            }
+        }
     }
 
     .item-total {
@@ -183,8 +210,8 @@
 
             .sell-media-button {
                 display: block;
-                margin: 32px 0;
-                padding: 32px;
+                margin: $margin 0;
+                padding: $margin;
             }
         }
     }
@@ -206,17 +233,16 @@ input[type="submit"].sell-media-button,
 .sell-media-button,
 #sell-media-submit {
     border: none !important;
-    background: #555;
-    padding: 7px 5%;
+    background: $default-color;
+    padding: $font-size;
     display: inline-block;
     width: auto;
-    color: #FFF;
+    color: $white-color;
     text-align: center;
     text-transform: none;
     text-decoration: none !important;
     text-shadow: none;
-    font-size: 14px;
-    border-radius: 3px;
+    font-size: $font-size;
 }
 
 .sell-media-single-two-col .sell-media-meta .sell-media-button {
@@ -226,13 +252,13 @@ input[type="submit"].sell-media-button,
 input[type="submit"].sell-media-button:hover,
 .sell-media-button:hover,
 #sell-media-submit:hover {
-    background: #000;
-    color: #FFF;
+    background: $dark-color;
+    color: $white-color;
     text-decoration: none;
 }
 
 .sell-media-button:disabled {
-    background: #ccc;
+    background: $light-color;
 }
 
 .sell-media-item-links {
@@ -314,15 +340,6 @@ input[type="submit"].sell-media-button:hover,
     text-decoration: none;
 }
 
-.sell-media-credit {
-    font-size: 11px;
-}
-
-.sell-media-dialog-box .sell-media-credit {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-}
 
 /*= Single
 -------------------------------------------------------------- */
@@ -434,7 +451,7 @@ input[type="submit"].sell-media-button:hover,
     @media only screen and (max-width: 767px) {
         display: block;
         float: none;
-        margin: 32px 0 32px;
+        margin: $margin 0 $margin;
         text-align: center;
     }
 
@@ -454,110 +471,60 @@ input[type="submit"].sell-media-button:hover,
 
 /*= Archives
 -------------------------------------------------------------- */
-.sell-media .sell-media-grid-container {
-    margin: 10px 0;
+.sell-media-grid-container {
+    margin: $line-height 0;
 }
 
-.sell-media .sell-media-grid {
+.sell-media-grid {
     @extend .sell-media-three-col;
+}
 
-    .item-inner {
-        background: #000;
-        position: relative;
+.sell-media-item {
+    font-family: $font-sans-serif;
+    position: relative;
+    overflow: hidden;
+    float: left;
+    margin: 0 0 $margin;
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .quick-view {
+        font-size: 11px;
+        letter-spacing: 1px;
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -40px;
+        color: $white-color;
+        background: $dark-opaque;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 10px 0;
+        transition: all 0.1s ease;
+        z-index: 1;
+
+        &:hover {
+            background: $black-color;
+        }
+    }
+
+    &:hover {
 
         img {
             opacity: 1;
-            transition: opacity .2s ease-in-out;
-            -moz-transition: opacity .2s ease-in-out;
-            -webkit-transition: opacity .2s ease-in-out;
-            /* fixes chrome jump */
-            -webkit-backface-visibility: hidden;
-            display: block;
-            width: 100%;
-            height: auto;
-
-            @media only screen and (max-width : 768px) {
-                display: block;
-                margin: 0 auto;
-            }
         }
 
-        .item-overlay {
-            display: none;
-
-            a {
-                color: #ccc;
-                color: rgba(255,255,255,.7);
-                -webkit-transition:color .2s ease-in;
-                -moz-transition:color .2s ease-in;
-                -o-transition:color .2s ease-in;
-                transition:color .2s ease-in;
-                text-decoration: none;
-
-                &:hover {
-                    color: #fff;
-                }
-            }
-        }
-
-        // on hover, show text and fade image
-        &:hover {
-
-            .item-overlay {
-                display: inline;
-            }
-
-            img {
-                opacity: .3;
-            }
-        }   
-    }
-
-    h3 {
-        margin: 0;
-        position: absolute;
-        top: 40%;
-        text-align: center;
-        width: 100%;
-    }
-
-    @media only screen and (max-width : 768px) {
-
-        h3,
-        .sell-media-text {
-            float: none;
-            display: block;
-            margin: 10px 0;
-            text-align: center;
+        .quick-view {
+            bottom: 0;
+            opacity: 1;
         }
 
     }
 
-    .add-to-lightbox,
-    .remove-lightbox,
-    .sell-media-text {
-        position: absolute;
-        bottom: 10px;
-        text-transform: uppercase;
-        font-size: 11px;
-        font-size: .8rem;
-        letter-spacing: 1px;
-    }
-
-    .add-to-lightbox,
-    .remove-lightbox {
-        left: 10px;
-    }
-
-    .sell-media-text {
-        right: 10px;
-    }
-}
-
-.sell-media .sell-media-grid-3 h3,
-.sell-media .sell-media-grid-4 h3,
-.sell-media .sell-media-grid-5 h3 {
-    font-size: 13px;
 }
 
 
@@ -601,7 +568,7 @@ input[type="submit"].sell-media-button:hover,
     }
 }
 
-/*= Cart
+/*= Dialog
 -------------------------------------------------------------- */
 
 .sell-media-dialog-overlay {
@@ -620,95 +587,116 @@ input[type="submit"].sell-media-button:hover,
 }
 
 .sell-media-dialog-box {
+    color: $dark-color;
+    font-family: $font-sans-serif;
+    font-size: 13px;
     position: absolute;
     top: 50px;
-    min-height: 250px;
-    background: #f5f5f7;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-    border: 1px solid rgba(0,0,0,0.9);
-    color: #333;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    -o-border-radius: 6px;
-    border-radius: 6px;
-    width: 302px;
+    background: $white-color;
+    box-shadow: 0 12px 30px $dark-opaque;
+    max-width: 1000px;
+    width: 80%;
     box-sizing: border-box;
     z-index: 5000;
     display: none;
 
     p,
     a,
-    a:visited {
-        color: #333;
+    a:visited,
+    label,
+    h2 {
+        color: $dark-color;
+        font-family: $font-sans-serif;
+        text-decoration: none;
     }
 
     a:hover,
     a:focus {
-        color: #000;
+        color: $black-color;
     }
 
     p {
-        margin-bottom: 10px;
+        margin: 0 0 $font-size;
     }
-    
-    .content {
-        color: #666;
-        font-family: arial;
-        font-size: 11px;
-        padding: 25px;
+
+    label {
+        margin-left: 5px;
     }
 
     figure {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        width: 100%;
-        background: transparent;
+        display: block;
+
+        img {
+
+            &.wp-post-image {
+                float: none;
+            }
+
+        }
     }
 
-    figcaption,
-    footer {
-        font-size: 10px;
-        margin: 5px 0;
-        text-align: center;
+    .quick-view-container {
+        @extend .cf;
+        padding: $margin;
+
+        @media only screen and (max-width : 768px) {
+            padding: 0;
+        }
+    }
+
+    .quick-view-image {
+        @extend .sell-media-main-col;
+        margin-bottom: 0;
     }
     
-    img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100%;
-        width: auto;
-        height: auto;
-        max-height: 167px;
+    .quick-view-content {
+        @extend .sell-media-side-col;
+        margin-bottom: 0;
 
-        &.wp-post-image {
-            float: none;
+        @media only screen and (max-width : 768px) {
+            padding: $margin;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1;
+            margin: 0 0 24px;
+            padding: 0;
+        }
+
+        .quick-view-fields {
+            border-top: 1px solid $border-color;
+
+            fieldset {
+                @extend .cf;
+                padding: $font-size 0;
+                border: 0;
+                border-bottom: 1px solid $border-color;
+
+                legend {
+                    float: left;
+                    width: 25%;
+                }
+
+                select {
+                    float: left;
+                    width: 70%;
+                    margin-left: 5%;
+                }
+            }
         }
     }
 
-    img
-    section {
-        margin: 20px 0 0;
-    }
-
-    select {
-        width: 100%;
-    }
-
-    .license_desc {
-        color: #999;
-
-        &:after {
-            clear: both;
-        }
+    .sell-media-tooltip {
+        color: $light-color;
+        font-size: 11px;
     }
 
     .total-container,
     .button-container {
         clear: both;
-        margin: 20px 0;
+        margin: $font-size 0;
     }
 
     .price-container {
@@ -717,7 +705,7 @@ input[type="submit"].sell-media-button:hover,
 
     .subtotal {
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: $line-height;
     }
 
     .cart {
@@ -725,25 +713,36 @@ input[type="submit"].sell-media-button:hover,
         background: url(../images/cart.png) no-repeat 0 50%;
     }
 
-    fieldset {
-        margin: 20px 0;
-        border: 0;
-    }
+    .add-to-lightbox {
+        text-decoration: none;
+        font-size: 11px;
+        color: $default-color;
 
-    legend {
-        margin: 0 0 5px;
-        font-size: 12px;
+        &:hover {
+            color: $dark-color;
+        }
     }
 
     .close {
-        right: 5px;
-        top: 5px;
+        color: $light-color;
+        right: 0;
+        top: 0;
         position: absolute;
         cursor: pointer;
-        font-size: 20px;
+        font-size: $margin;
         line-height: 1;
         text-align: center;
-        width: 20px;
+        width: 34px;
+        height: 36px;
+
+        @media only screen and (max-width : 768px) {
+            color: $white-color;
+        }
+
+        &:hover {
+            background-color: $dark-color;
+            color: $white-color;
+        }
     }
 
     .sell-media-button {
@@ -752,10 +751,26 @@ input[type="submit"].sell-media-button:hover,
     }
 
     .sell-media-added {
-        margin: 15px 0;
+        margin: $line-height 0;
         text-align: center;
         padding: 10px;
         background: #fcf9d0;
+    }
+
+    .sell-media-credit {
+        color: $white-color;
+        font-size: 11px;
+        position: absolute;
+        bottom: -$margin;
+        left: 0;
+        right: 0;
+        margin: auto;
+        text-align: center;
+
+        a {
+            color: $white-color;
+            text-decoration: none;
+        }
     }
 
 }
@@ -914,15 +929,6 @@ input.sell-media-search-text[type=text] {
     font-size: 1em;
 }
 
-/* sell_media_item */
-.sell-media-item-container {
-    display: inline-block;
-    
-    a.sell-media-cart-trigger {
-        display: block;
-    }
-}
-
 /* sell_media_download_list */
 .downloads {
     margin: 1em 0;
@@ -985,8 +991,7 @@ input.sell-media-search-text[type=text] {
     display: inline;
     position: relative;
     cursor: help;
-    font-size: 10px;
-    padding: 3px 0 0 5px;
+    font-size: 11px;
     
     &:hover:after {
         background: #333;

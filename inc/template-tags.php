@@ -30,6 +30,22 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
         return $html;
 }
 
+/**
+ * Quick view link
+ *
+ * @access      public
+ * @since       0.1
+ * @return      html
+ */
+function sell_media_quick_view_link( $post_id=null, $attachment_id=null ) {
+
+    $attachment_id = ( empty( $attachment_id ) ) ? sell_media_get_attachment_id( $post_id ) : $attachment_id;
+    $text = apply_filters('sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id );
+    $html = '<a href="javascript:void(0)" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="quick-view">' . $text . '</a>';
+
+    return $html;
+}
+
 
 /**
  * Determines the image source for a product
@@ -214,17 +230,10 @@ function sell_media_content_loop( $post_id, $i ){
     $class = ( $i %3 == 0 ) ? ' end' : '';
 
     $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid' . $class . '">';
-    $html .= '<div class="item-inner">';
-    $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . '>' . sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
-    $html .= '<span class="item-overlay">';
-    $html .= '<h3><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-    // Don't show buy button, lightbox, etc, if post has multiple attachments
-    if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
-        $html .= sell_media_item_buy_button( $post_id, $attachment_id = '', 'text', __( 'Buy', 'sell_media' ), false );
-        $html .= apply_filters( 'sell_media_item_overlay', $output = '', $post_id );
-    }
-    $html .= '</span>';
-    $html .= '</div>';
+    $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
+    $html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
+    $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
+    $html .= '</a>';
     $html .= '</div>';
 
     return $html;
@@ -266,7 +275,7 @@ function sell_media_plugin_credit() {
     $settings = sell_media_get_plugin_options();
 
     if ( $settings->plugin_credit ) {
-        printf( __( '<span id="sell-media-credit" class="sell-media-credit">Photo cart by <a href="%1$s" title="Photo cart">%2$s</a></span>', 'sell_media' ), 'http://graphpaperpress.com/plugins/sell-media/', 'Sell Media' );
+        printf( __( '<span id="sell-media-credit" class="sell-media-credit">Powered by <a href="%1$s" title="Sell Media">%2$s</a></span>', 'sell_media' ), 'http://graphpaperpress.com/plugins/sell-media/', 'Sell Media' );
     }
 }
 

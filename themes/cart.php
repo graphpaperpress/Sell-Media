@@ -25,29 +25,18 @@ $licenses = wp_get_post_terms( $post_id, 'licenses' );
 $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
 
 ?>
-<div class="main-container sell-media-cart-shelfItem">
-    <span class="close">&times;</span>
-    <div class="content">
-        <header>
-            <figure><?php sell_media_item_icon( $image_id ); ?></figure>
-            <figcaption><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></figcaption>
-        </header>
-        <section>
-            <?php
-                /*
-                 * Set required cart items to be passed to gateway
-                 * Any element tagged with item_* inside .sell-media-cart-shelfItem will be passed as an option/value key pair to PayPal
-                 * If you want to show these items on the checkout page, edit cartColumns[] in sell_media.js
-                 * We use input type="text" because using type="hidden" is unreliable
-                 * The order in which these appear control the option names passed to PayPal
-                 * So we must set all required tags high
-                 * Otherwise, our server-side price validation fails
-                 * The item_pgroup class is shared between downloads and reprints, which use different price group taxonomies
-                 * Check if terms exist in these price group taxonomies to determine verified prices
-                 * Some values below are set via javascript (select options on change event)
-                 * .item_usage (license name to be shown on cartColumns) and .item_license are set inline with their select boxes
-                 */
-            ?>
+<div class="quick-view-container">
+
+    <div class="quick-view-image">
+        <figure><?php sell_media_item_icon( $image_id, 'large' ); ?></figure>
+    </div>
+    
+    <div class="quick-view-content">
+        <span class="close">&times;</span>
+        <h2><a href="<?php echo get_permalink( $post_id ); ?>" <?php echo sell_media_link_attributes( $post_id ); ?>><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></a></h2>
+
+        <div class="quick-view-fields">
+
             <form id="sell-media-cart-items" class="hide">
                 <input class="item_number" name="item_number" type="text" value="<?php echo $post_id; ?>" />
                 <input class="item_name" name="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
@@ -68,9 +57,9 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                 <p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo get_permalink( $post_id ); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
             <?php endif; ?>
 
-            <div id="sell_media_download_wrapper">
+            <div id="sell_media_download_wrapper" class="quick-view-size-fields">
                 <?php if ( ! $is_package && $has_price_group ) : ?>
-                    <fieldset id="sell_media_download_size_fieldset">
+                    <fieldset id="sell_media_download_size_fieldset" class="quick-view-fieldset quick-view-size-fieldset">
                         <legend><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></legend>
                         <select id="sell_media_item_size" class="sum" required>
                             <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
@@ -100,8 +89,8 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                 <?php do_action( 'sell_media_cart_above_licenses' ); ?>
 
                 <?php if ( count( $licenses ) > 0 ) : ?>
-                    <fieldset id="sell_media_download_license_fieldset">
-                        <legend><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span id="license_desc" class="license_desc sell-media-tooltip" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"> <?php _e( '(see details)', 'sell_media' ); ?></span></legend>
+                    <fieldset id="sell_media_download_license_fieldset" class="quick-view-fieldset quick-view-license-fieldset">
+                        <legend><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span class="sell-media-tooltip license-info" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">(?)</span></legend>
                         <select id="sell_media_item_license" class="sum" required>
                             <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
                             <?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
@@ -112,17 +101,21 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
 
             <?php do_action( 'sell_media_cart_below_licenses' ); ?>
 
-            <div class="total-container group">
-                <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price" data-price=<?php echo $price; ?>><?php echo $price; ?></span></span>
-            </div>
+        </div>
 
-            <div class="button-container group">
-                <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
-            </div>
+        <div class="total-container group">
+            <strong><?php _e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price" data-price=<?php echo $price; ?>><?php echo $price; ?></span></span>
+        </div>
 
-            <footer><?php sell_media_plugin_credit(); ?></footer>
+        <div class="button-container group">
+            <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
+            <p id="sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id ); ?></p>
+        </div>
 
-        </section>
-    </div>
+        <?php sell_media_plugin_credit(); ?>
+
+    </div><!-- .quick-view-content -->
+
     <?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id ); ?>
-</div>
+
+</div><!-- .quick-view-container -->
