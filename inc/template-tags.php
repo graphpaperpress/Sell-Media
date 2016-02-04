@@ -195,7 +195,7 @@ function sell_media_gallery_navigation( $attachment_id ) {
     $attachment_ids = sell_media_get_attachments( $post->ID );
     $current_image = array_search( $attachment_id, $attachment_ids );
 
-    $html = '<span class="sell-media-gallery-navigation">';
+    $html = '<span class="sell-media-gallery-nav">';
     $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Thumbnails', 'sell_media' ) . '"><span class="dashicons dashicons-screenoptions"></span></a>';
     if ( array_key_exists( $current_image - 1, $attachment_ids ) )
         $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span></a>';

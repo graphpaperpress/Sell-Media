@@ -2,7 +2,7 @@ function sm_calculate_shipping(){
     // Define vars.
     var total_shipping = 0,
         subtotal = 0,
-        items = jQuery( "#sell-media-checkout-cart tr.itemRow" ),
+        items = jQuery( "#sell-media-checkout-cart .item" ),
         total_print_qty = 0;
 
     // Check if sell media reprints is active.
@@ -12,7 +12,7 @@ function sm_calculate_shipping(){
 
     // Get price of all items.
     items.each( function(){
-        var price = jQuery(this).find('.item-price').attr('data-price');
+        var price = jQuery(this).attr('data-price');
         var type = jQuery(this).attr('data-type');
         var current_qty = jQuery(this).find( '.item-quantity' ).text();
 
@@ -47,7 +47,7 @@ function sm_calculate_shipping(){
  */
 function sm_update_cart_totals(){
     // Define vars.
-    var items = jQuery( "#sell-media-checkout-cart tr.itemRow" ),
+    var items = jQuery( "#sell-media-checkout-cart .item" ),
         currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
         subtotal = 0,
         tax = 0,
@@ -56,7 +56,7 @@ function sm_update_cart_totals(){
 
     // Get price of all items.
     items.each( function(){
-        var price = jQuery(this).find('.item-price').attr('data-price');
+        var price = jQuery(this).attr('data-price');
         var current_qty = jQuery(this).find( '.item-quantity' ).text();
 
         total_qty += parseInt(current_qty);
@@ -98,9 +98,9 @@ function sm_update_cart_totals(){
  * @param  {string} type Update type
  */
 function sm_update_cart_item( el, type ){
-    var parent = el.parents( 'tr' ),
+    var parent = el.parents( 'li' ),
         id = parent.attr('id'),
-        price = parent.find('.item-price').attr('data-price'),
+        price = parent.attr('data-price'),
         current_qty = parent.find( '.item-quantity' ).text(),
         currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
         updated_qty = parseInt(current_qty) - 1;
@@ -113,7 +113,7 @@ function sm_update_cart_item( el, type ){
     var updated_price = parseInt( updated_qty ) * parseFloat( price );
 
     // Update qty.
-    parent.find( '.item-quantity #count' ).text( updated_qty );
+    parent.find( '.item-quantity .count' ).text( updated_qty );
 
     // Update item total.
     parent.find( '.item-total' ).html( currency_symbol + updated_price.toFixed( 2 ) );
@@ -121,7 +121,7 @@ function sm_update_cart_item( el, type ){
     // Hide if qty is less than 1.
     if( updated_qty < 1 ){
         parent.fadeOut( 'slow' ).remove();
-        if( jQuery("#sell-media-checkout-cart .sell-media-cart-items table tbody tr").length < 1 ){
+        if( jQuery("#sell-media-checkout-cart .sell-media-cart-items li").length < 1 ){
             jQuery("#sell-media-checkout-cart").fadeOut( 'slow' );
             jQuery("#sell-media-empty-cart-message").fadeIn( 'slow' );
         }

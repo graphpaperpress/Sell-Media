@@ -43,3 +43,8 @@ Thumbs.db
 /node_modules/
 /build/
 /grunt/
+
+# SASS #
+########
+*.map
+.sass-cache

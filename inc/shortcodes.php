@@ -181,117 +181,90 @@ function sell_media_checkout_shortcode(){
     <?php 
     global $sm_cart;
     $cart_items = $sm_cart->getItems();
-    if( !empty( $cart_items ) ) :
+    if ( ! empty( $cart_items ) ) :
     ?>
     <div id="sell-media-checkout-cart">
-        <div class="sell-media-cart-items">
-            <table>
-                <thead>
-                    <tr class="headerRow">
-                        <th class="item-image"></th>
-                        <th class="item-custom"><?php _e( 'Name', 'sell_media' ); ?></th>
-                        <th class="item-price"><?php _e( 'Price', 'sell_media' ); ?></th>
-                        <th class="item-decrement"></th>
-                        <th class="item-quantity"><?php _e( 'Qty', 'sell_media' ); ?></th>
-                        <th class="item-increment"></th>
-                        <th class="item-total"><?php _e( 'Subtotal', 'sell_media' ); ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                    $cart_index = 0;
-                    foreach( $cart_items as $key => $item ): ?>
-                    <tr class="itemRow row-<?php echo $cart_index; ?> odd" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>">
-                        <td class="item-image">
-                            <?php if( isset( $item['item_image'] ) && '' != $item['item_image'] ): ?>
+        <ul class="sell-media-cart-items">
+            <?php 
+            $cart_index = 0;
+            foreach( $cart_items as $key => $item ): ?>
+                <li class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo number_format( $item['price'], 2 ); ?>">
+                    <div class="item-image">
+                        <?php if ( ! empty( $item['item_image'] ) ) : ?>
                             <img src="<?php echo esc_url( $item['item_image'] ); ?>">
-                            <?php endif; ?>
-                        </td>
-                        <td class="item-custom">
-                            <?php if( isset( $item['item_name'] ) && '' != $item['item_name'] ): ?>
-                                <?php echo esc_attr( $item['item_name'] ); ?>
-                            <?php endif; ?>
-                            <span class="size-license">
-                            <?php
-                            if( isset( $item['item_size'] ) && '' != $item['item_size'] ){
-                                echo $item['item_size'];
-                            }
-                            ?>, 
-                            <?php 
-                            if( isset( $item['item_usage'] ) && '' != $item['item_usage'] ){
-                                echo $item['item_usage'];
-                            }
-                            else{
-                                _e( 'No license', 'sell_media' );
-                            }
-                            ?>
-                            </span></td>
-                        <td class="item-price" data-price="<?php echo number_format( $item['price'], 2 ); ?>">
-                            <?php 
-                            if( isset( $item['price'] ) && '' != $item['price'] ){
-                                echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'], 2 );
-                            }
-                            ?>
-                        </td>
-                        <td class="item-decrement"><a href="javascript:;" class="sell-media-cart-decrement">-</a></td>
-                        <td class="item-quantity">
-                            <span id="count">
-                            <?php 
-                            if( isset( $item['qty'] ) && '' != $item['qty'] ){
-                                echo $item['qty'];
-                            }
-                            ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">
+                        <?php if ( ! empty( $item['item_name'] ) ) : ?>
+                            <?php echo esc_attr( $item['item_name'] ); ?>
+                        <?php endif; ?>
+                        </div>
+                        <div class="item-size">
+                        <?php if ( ! empty( $item['item_size'] ) ) : ?>
+                            <?php echo $item['item_size']; ?>
+                        <?php endif; ?>
+                        </div>
+                        <div class="item-license">
+                        <?php if ( ! empty( $item['item_usage'] ) ) : ?>
+                            <?php echo $item['item_usage']; ?>
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="item-qty-total">
+                        <div class="item-increment">
+                            <span class="sell-media-cart-increment dashicons dashicons-arrow-up-alt2"></span>
+                        </div>
+                        <div class="item-quantity">
+                            <span class="count">
+                                <?php if ( ! empty( $item['qty'] ) ) : ?>
+                                    <?php echo $item['qty']; ?>
+                                <?php endif; ?>
                             </span>
-                            <div class="mobile-element">
-                                <a href="javascript:;" class="sell-media-cart-increment">
-                                    <span class="fa fa-chevron-up">&#8896;</span>
-                                </a>
-                                <span class="nomba" id="count"><?php 
-                            if( isset( $item['qty'] ) && '' != $item['qty'] ){
-                                echo $item['qty'];
-                            }
-                            ?></span>
-                                <a href="javascript:;" class="sell-media-cart-decrement">
-                                    <span class="fa fa-chevron-down">&#8897;</span>
-                                </a>
-                                <span class="price item-total"><?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?></span>
-                            </div>
-                        </td>
-                        <td class="item-increment"><a href="javascript:;" class="sell-media-cart-increment">+</a></td>
-                        <td class="item-total"><?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?></td>
-                    </tr>
-                    <?php 
-                    $cart_index++;
-                    endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+                        </div>
+                        <div class="item-decrement">
+                            <span class="sell-media-cart-decrement dashicons dashicons-arrow-down-alt2"></span>
+                        </div>
+                        <div class="item-total">
+                            <?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?>
+                        </div>
+                    </div>
+                </li>
+            <?php 
+            $cart_index++;
+            endforeach; ?> 
+        </ul>
+
         <?php do_action( 'sell_media_checkout_after_cart' ); ?>
+        
         <div class="sell-media-totals group">
-            <table id="sell-media-totals-table" class="sell-media-totals-table">
-                <tr class="subtotal">
-                    <td class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</td>
-                    <td class="sell-media-value"><span class="sell-media-cart-total"></span></td>
-                </tr>
+            <div id="sell-media-totals-table" class="sell-media-totals-table cf">
+                <div class="subtotal cf">
+                    <div class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</div>
+                    <div class="sell-media-value"><span class="sell-media-cart-total"></span></div>
+                </div>
                 <?php do_action( 'sell_media_checkout_registration_fields' ); ?>
-                <tr class="tax">
-                    <td class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</td>
-                    <td class="sell-media-value"><span class="sell-media-cart-tax"></span></td>
-                </tr>
-                <tr class="shipping">
-                    <td class="sell-media-key"><?php _e( 'Shipping', 'sell_media' ); ?>:</td>
-                    <td class="sell-media-value"><span class="sell-media-cart-shipping"></span></td>
-                </tr>
-                <tr class="total sell-media-bold">
-                    <td class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</td>
-                    <td class="sell-media-value"><span class="sell-media-cart-grand-total"></span></td>
-                </tr>
-            </table>
+                <div class="tax cf">
+                    <div class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</div>
+                    <div class="sell-media-value"><span class="sell-media-cart-tax"></span></div>
+                </div>
+                <div class="shipping cf">
+                    <div class="sell-media-key"><?php _e( 'Shipping', 'sell_media' ); ?>:</div>
+                    <div class="sell-media-value"><span class="sell-media-cart-shipping"></span></div>
+                </div>
+                <?php do_action( 'sell_media_checkout_before_grand_total' ); ?>
+                <div class="total cf">
+                    <div class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</div>
+                    <div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
+                </div>
+            </div>
+            
             <?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
+            
             <div class="sell-media-checkout-button group">
                 <?php do_action( 'sell_media_above_checkout_button' ); ?>
                 <p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
-                <p id="sell-media-continue-shopping" class="text-center">
+                <p id="sell-media-continue-shopping">
                     <?php
                     $html  = __( 'or', 'sell_media' );
                     $html .= ' <a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">';
@@ -305,10 +278,14 @@ function sell_media_checkout_shortcode(){
                 if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
                     <p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
                 <?php endif; ?>
-            </div>
+            </div><!-- .sell-media-checkout-button -->
+
         </div><!-- .sell-media-totals -->
+
         <?php do_action( 'sell_media_below_registration_form' ); ?>
+
     </div><!-- #sell-media-checkout-cart -->
+    
     <?php endif; ?>
 
     <p id="sell-media-empty-cart-message" class="<?php echo ( !empty( $cart_items ) ) ? 'hide' : ''?>">
