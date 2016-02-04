@@ -223,7 +223,7 @@ class SellMediaCart {
 		foreach ( $items as $key => $item ) {
 			$subtotal += $item['price'] * $item['qty'] ;
 		}
-		return $subtotal;
+		return number_format( $subtotal, 2 );
 	}
 
 	/**
