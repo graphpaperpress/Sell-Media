@@ -43,7 +43,7 @@ function sell_media_lightbox_link( $post_id=null, $attachment_id=null ) {
  * Lightbox text
  */
 function sell_media_get_lightbox_text( $item ) {
-    $text = ( sell_media_get_lightbox_state( $item ) ) ? __( 'Remove', 'sell_media' ) : __( 'Save', 'sell_media' );
+    $text = ( sell_media_get_lightbox_state( $item ) ) ? __( 'Remove from lightbox', 'sell_media' ) : __( 'Save to Lightbox', 'sell_media' );
     return apply_filters( 'sell_media_get_lightbox_text', $text, $item );
 }
 
@@ -162,18 +162,18 @@ function sell_media_update_lightbox(){
             if ( ! in_array( $item, $items ) ) {
 
                 $items[] = $item;
-                $text = __( 'Remove', 'sell_media' );
+                $text = __( 'Remove from lightbox', 'sell_media' );
             // it is in lightbox, remove it
             } else {
                 $remove = array_search( $item, $items );
                 unset( $items[$remove] );
-                $text = __( 'Save', 'sell_media' );
+                $text = __( 'Save to Lightbox', 'sell_media' );
             }
             $cookie = $items;
         // cookie doesn't already exist, so set cookie to the id
         } else {
             $cookie = array( $item );
-            $text = __( 'Remove', 'sell_media' );
+            $text = __( 'Remove from lightbox', 'sell_media' );
         }
         
         // allow text to be filtered
