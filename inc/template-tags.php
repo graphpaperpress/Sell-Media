@@ -232,7 +232,9 @@ function sell_media_content_loop( $post_id, $i ){
     $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid' . $class . '">';
     $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
     $html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
-    $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
+    if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+        $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
+    }
     $html .= '</a>';
     $html .= '</div>';
 

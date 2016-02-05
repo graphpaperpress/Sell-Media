@@ -1,5 +1,11 @@
 /*= Variables
 -------------------------------------------------------------- */
+/*= Global
+-------------------------------------------------------------- */
+img {
+  max-width: 100%;
+  height: auto; }
+
 /*= Grids
 -------------------------------------------------------------- */
 .sell-media-row {
@@ -83,7 +89,7 @@
     .sell-media-dialog-box .quick-view-content {
       clear: both;
       float: none;
-      margin: 0 0 32px 0;
+      margin: 0 0 32px;
       width: 100%; } }
 
 /*= Checkout Page
@@ -109,9 +115,6 @@
         .sell-media-cart-items li .item-qty-total .item-size,
         .sell-media-cart-items li .item-qty-total .item-license {
           text-align: left; } }
-  .sell-media-cart-items img {
-    max-width: 100%;
-    height: auto; }
   .sell-media-cart-items .item-name,
   .sell-media-cart-items .item-total {
     font-weight: bold; }
@@ -279,9 +282,7 @@ input[type="submit"].sell-media-button:hover,
 .sell-media-content {
   position: relative; }
   .sell-media-content img {
-    display: block;
-    max-width: 100%;
-    height: auto; }
+    display: block; }
 
 .sell-media-single-one-col .sell-media-content {
   float: none;
@@ -350,37 +351,36 @@ input[type="submit"].sell-media-button:hover,
 .sell-media-grid-container {
   margin: 25.6px 0; }
 
-.sell-media-item {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+.sell-media-grid a {
   position: relative;
   overflow: hidden;
-  float: left;
-  margin: 0 0 32px; }
-  .sell-media-item img {
+  display: block; }
+  .sell-media-grid a img {
     display: block;
     margin: 0 auto; }
-  .sell-media-item .quick-view {
+  .sell-media-grid a .quick-view {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 11px;
     letter-spacing: 1px;
-    opacity: 0;
     position: absolute;
     left: 0;
-    right: 0;
-    bottom: -40px;
+    bottom: 0;
+    margin-bottom: -37px;
     color: #fff;
     background: rgba(0, 0, 0, 0.5);
     text-align: center;
     text-transform: uppercase;
     padding: 10px 0;
+    width: 100%;
+    display: table;
     transition: all 0.1s ease;
     z-index: 1; }
-    .sell-media-item .quick-view:hover {
+    .sell-media-grid a .quick-view:hover {
       background: #000; }
-  .sell-media-item:hover img {
+  .sell-media-grid a:hover img {
     opacity: 1; }
-  .sell-media-item:hover .quick-view {
-    bottom: 0;
-    opacity: 1; }
+  .sell-media-grid a:hover .quick-view {
+    margin-bottom: 0; }
 
 /*= Lightbox
 -------------------------------------------------------------- */
@@ -452,7 +452,11 @@ input[type="submit"].sell-media-button:hover,
   .sell-media-dialog-box label {
     margin-left: 5px; }
   .sell-media-dialog-box figure {
-    display: block; }
+    display: block;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    width: 100%; }
     .sell-media-dialog-box figure img.wp-post-image {
       float: none; }
   .sell-media-dialog-box .quick-view-container {
@@ -461,9 +465,9 @@ input[type="submit"].sell-media-button:hover,
       .sell-media-dialog-box .quick-view-container {
         padding: 0; } }
   .sell-media-dialog-box .quick-view-image {
-    margin-bottom: 0; }
+    margin-bottom: 0 !important; }
   .sell-media-dialog-box .quick-view-content {
-    margin-bottom: 0; }
+    margin-bottom: 0 !important; }
     @media only screen and (max-width: 768px) {
       .sell-media-dialog-box .quick-view-content {
         padding: 32px; } }
@@ -824,9 +828,6 @@ input.sell-media-search-text[type=text] {
   float: left;
   width: 100%;
   margin-top: 1em; }
-  #sell-media-single-sidebar img {
-    max-width: 100%;
-    height: auto; }
   #sell-media-single-sidebar .widget {
     float: left;
     width: 100%;
@@ -836,9 +837,7 @@ input.sell-media-search-text[type=text] {
   float: left;
   max-width: 100%; }
   .sell-media-widget-thumb-wrap img {
-    float: left;
-    max-width: 100%;
-    height: auto; }
+    float: left; }
 
 /*= Media queries
 -------------------------------------------------------------- */

@@ -13,6 +13,13 @@ $dark-opaque: rgba(black, .5);
 $light-opaque: rgba(white, .8);
 $border-color: #eee;
 
+/*= Global
+-------------------------------------------------------------- */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 
 /*= Grids
 -------------------------------------------------------------- */
@@ -60,12 +67,12 @@ $border-color: #eee;
 
 .sell-media-main-col {
     clear: left;
-    margin-right: 5%;
-    width: 65%;
+    margin-right: 5%; // Legacy themes have conflicting margins. Let's make theme consistent.
+    width: 65%;  // Legacy themes have conflicting widths. Let's make theme consistent.
 }
 
 .sell-media-side-col {
-    width: 30%;
+    width: 30%; // Legacy themes have conflicting widths. Let's make theme consistent.
 }
 
 .sell-media-two-col,
@@ -79,7 +86,7 @@ $border-color: #eee;
     @media only screen and (max-width: 767px) {
         clear: both;
         float: none;
-        margin: 0 0 $margin 0;
+        margin: 0 0 $margin;
         width: 100%;
     }
 }
@@ -122,11 +129,6 @@ $border-color: #eee;
                 }
             }
         }
-    }
-    
-    img {
-        max-width: 100%;
-        height: auto;
     }
 
     .item-name,
@@ -367,8 +369,6 @@ input[type="submit"].sell-media-button:hover,
 
     img {
         display: block;
-        max-width: 100%;
-        height: auto;
     }
 }
 
@@ -477,54 +477,52 @@ input[type="submit"].sell-media-button:hover,
 
 .sell-media-grid {
     @extend .sell-media-three-col;
-}
 
-.sell-media-item {
-    font-family: $font-sans-serif;
-    position: relative;
-    overflow: hidden;
-    float: left;
-    margin: 0 0 $margin;
-
-    img {
+    a {
+        position: relative;
+        overflow: hidden;
         display: block;
-        margin: 0 auto;
-    }
-
-    .quick-view {
-        font-size: 11px;
-        letter-spacing: 1px;
-        opacity: 0;
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -40px;
-        color: $white-color;
-        background: $dark-opaque;
-        text-align: center;
-        text-transform: uppercase;
-        padding: 10px 0;
-        transition: all 0.1s ease;
-        z-index: 1;
-
-        &:hover {
-            background: $black-color;
-        }
-    }
-
-    &:hover {
 
         img {
-            opacity: 1;
+            display: block;
+            margin: 0 auto;
         }
 
         .quick-view {
+            font-family: $font-sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 0;
             bottom: 0;
-            opacity: 1;
+            margin-bottom: -37px;
+            color: $white-color;
+            background: $dark-opaque;
+            text-align: center;
+            text-transform: uppercase;
+            padding: 10px 0;
+            width: 100%;
+            display: table;
+            transition: all 0.1s ease;
+            z-index: 1;
+
+            &:hover {
+                background: $black-color;
+            }
         }
 
-    }
+        &:hover {
 
+            img {
+                opacity: 1;
+            }
+
+            .quick-view {
+                margin-bottom: 0;
+            }
+
+        }
+    }
 }
 
 
@@ -625,6 +623,10 @@ input[type="submit"].sell-media-button:hover,
 
     figure {
         display: block;
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+        width: 100%;
 
         img {
 
@@ -646,12 +648,12 @@ input[type="submit"].sell-media-button:hover,
 
     .quick-view-image {
         @extend .sell-media-main-col;
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
     }
     
     .quick-view-content {
         @extend .sell-media-side-col;
-        margin-bottom: 0;
+        margin-bottom: 0 !important; // required because plugin adds margin bottom to override legacy theme styles
 
         @media only screen and (max-width : 768px) {
             padding: $margin;
@@ -1116,11 +1118,6 @@ input.sell-media-search-text[type=text] {
     width: 100%;
     margin-top: 1em;
     
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-    
     .widget {
         float: left;
         width: 100%;
@@ -1138,8 +1135,6 @@ input.sell-media-search-text[type=text] {
 
     img {
         float: left;
-        max-width: 100%;
-        height: auto;
     }
 }
 
