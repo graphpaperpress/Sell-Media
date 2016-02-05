@@ -520,7 +520,7 @@ function sell_media_append_media( $post_id ) {
 
             $attachment_ids = sell_media_get_attachments ( $post_id );
             $comma_separated = implode( ',', $attachment_ids );
-            $html .= do_shortcode( '[gallery ids="' . $comma_separated . '"]' );
+            $html .= do_shortcode( '[gallery ids="' . $comma_separated . '" link="file" size="medium" columns="3"]' );
         
         } else {
             
