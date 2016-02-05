@@ -24,17 +24,17 @@ function sm_calculate_shipping(){
     });
 
     // Check if shipping is on total rate.
-    if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping ){
+    if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
         var total_shipping = parseFloat( subtotal ) * parseFloat( sell_media_reprints.reprints_shipping_flat_rate );
     }
 
     // Check if shipping is on flate rate.
-    if( 'shippingFlatRate' == sell_media_reprints.reprints_shipping ){
+    if( 'shippingFlatRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
         var total_shipping = parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
     }
 
     // Check if shipping is on quantity rate.
-    if( 'shippingQuantityRate' == sell_media_reprints.reprints_shipping ){
+    if( 'shippingQuantityRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
         var total_shipping = parseInt( total_print_qty ) * parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
     }
 
