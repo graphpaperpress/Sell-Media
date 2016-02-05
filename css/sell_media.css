@@ -412,10 +412,10 @@ input[type="submit"].sell-media-button:hover,
 .sell-media-dialog-overlay {
   width: 100%;
   height: 100%;
-  filter: alpha(opacity=50);
-  -moz-opacity: 0.5;
-  -khtml-opacity: 0.5;
-  opacity: 0.5;
+  filter: alpha(opacity=70);
+  -moz-opacity: 0.7;
+  -khtml-opacity: 0.7;
+  opacity: 0.7;
   background: #000;
   position: absolute;
   top: 0;
@@ -457,20 +457,21 @@ input[type="submit"].sell-media-button:hover,
     padding: 0;
     margin: 0;
     width: 100%; }
-    .sell-media-dialog-box figure img.wp-post-image {
-      float: none; }
-  .sell-media-dialog-box .quick-view-container {
-    padding: 32px; }
-    @media only screen and (max-width: 768px) {
-      .sell-media-dialog-box .quick-view-container {
-        padding: 0; } }
+    .sell-media-dialog-box figure img {
+      float: left;
+      width: auto;
+      height: auto;
+      max-width: none; }
   .sell-media-dialog-box .quick-view-image {
-    margin-bottom: 0 !important; }
+    margin: 0 !important;
+    overflow: hidden; }
   .sell-media-dialog-box .quick-view-content {
-    margin-bottom: 0 !important; }
+    margin: 2.5%; }
     @media only screen and (max-width: 768px) {
       .sell-media-dialog-box .quick-view-content {
-        padding: 32px; } }
+        margin: 0; }
+        .sell-media-dialog-box .quick-view-content .quick-view-content-inner {
+          padding: 32px; } }
     .sell-media-dialog-box .quick-view-content h2 {
       font-size: 24px;
       font-weight: bold;
@@ -496,7 +497,7 @@ input[type="submit"].sell-media-button:hover,
   .sell-media-dialog-box .total-container,
   .sell-media-dialog-box .button-container {
     clear: both;
-    margin: 16px 0; }
+    margin: 16px 0 0; }
   .sell-media-dialog-box .price-container {
     color: green; }
   .sell-media-dialog-box .subtotal {
