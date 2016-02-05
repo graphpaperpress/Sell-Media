@@ -194,19 +194,16 @@ input[type="submit"].sell-media-button,
   text-decoration: none !important;
   text-shadow: none;
   font-size: 16px; }
-
-.sell-media-single-two-col .sell-media-meta .sell-media-button {
-  display: block; }
-
-input[type="submit"].sell-media-button:hover,
-.sell-media-button:hover,
-#sell-media-submit:hover {
-  background: black;
-  color: #fff;
-  text-decoration: none; }
-
-.sell-media-button:disabled {
-  background: #b3b3b3; }
+  input[type="submit"].sell-media-button:hover,
+  .sell-media-button:hover,
+  #sell-media-submit:hover {
+    background: black;
+    color: #fff;
+    text-decoration: none; }
+  input[type="submit"].sell-media-button:disabled,
+  .sell-media-button:disabled,
+  #sell-media-submit:disabled {
+    background: #b3b3b3; }
 
 .sell-media-item-links {
   font-size: 11px; }
@@ -264,7 +261,7 @@ input[type="submit"].sell-media-button:hover,
 .sell-media-text {
   text-decoration: none; }
 
-/*= Single
+/*= Breadcrumbs
 -------------------------------------------------------------- */
 .sell-media-breadcrumbs {
   font-size: .7em;
@@ -279,26 +276,23 @@ input[type="submit"].sell-media-button:hover,
     margin: 0 6px;
     vertical-align: middle; }
 
+/*= Single Layouts
+-------------------------------------------------------------- */
 .sell-media-content {
   position: relative; }
   .sell-media-content img {
     display: block; }
-
-.sell-media-single-one-col .sell-media-content {
-  float: none;
-  margin: 0 0 1.5em 0;
-  width: 100%; }
-.sell-media-single-one-col .sell-media-meta {
-  float: none;
-  width: 100%; }
-  .sell-media-single-one-col .sell-media-meta .sell-media-button,
-  .sell-media-single-one-col .sell-media-meta .sell-media-lightbox {
-    display: block;
-    text-align: center; }
+  .sell-media-single-one-col .sell-media-content {
+    float: none;
+    margin: 0 0 1.5em 0;
+    width: 100%; }
 
 .sell-media-meta {
   font-size: 13px;
   line-height: 1.5; }
+  .sell-media-meta .sell-media-button {
+    display: block;
+    text-align: center; }
   .sell-media-meta ul {
     list-style-position: inside;
     list-style: none;
@@ -308,6 +302,10 @@ input[type="submit"].sell-media-button:hover,
       margin-bottom: .5em; }
       .sell-media-meta ul li .title {
         font-weight: 700; }
+  .sell-media-single-one-col .sell-media-meta {
+    float: none;
+    width: 100%;
+    display: block; }
 
 #sell-media-single .gallery .gallery-item a img {
   max-width: 95%; }
@@ -614,12 +612,12 @@ input[type="submit"].sell-media-button:hover,
   width: 100%; }
 
 .sell-media-search-submit input[type=submit] {
-  background: #555;
+  background: gray;
   border: 0;
   border-radius: 0;
   box-shadow: none;
   color: #eee;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: 2px;
   font-size: 12px;
   text-shadow: none;

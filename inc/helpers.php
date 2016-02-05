@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Template Redirect
  * @since 1.0.4
  */
-function sell_media_template_redirect( $original_template ) {
+function sell_media_template_redirect( $original_template ){
 
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
@@ -23,15 +23,6 @@ function sell_media_template_redirect( $original_template ) {
      */
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
         $template = plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive.php';
-    } elseif ( is_attachment() ) {
-        global $post;
-        if ( isset( $post->post_parent ) && $post->post_parent ) {
-            $parent = get_post( $id = $post->post_parent );
-            //if ( $parent->post_type == 'sell_media_item' ) {
-                //$template = plugin_dir_path( dirname( __FILE__ ) ) . 'themes/attachment.php';
-                $template = locate_template( array( 'single.php' ) );
-            //}
-        }
     } else {
         $template = $original_template;
     }
