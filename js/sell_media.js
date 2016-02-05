@@ -10,6 +10,11 @@ jQuery(document).ready(function($){
      */
     required_fields();
 
+    /**
+     * Update menu cart qty and subtotal on load
+     */
+    sm_update_cart_menu();
+
     /** 
      * Dialog popup
      */
@@ -272,30 +277,6 @@ jQuery(document).ready(function($){
         }
     }
 
-    /**
-     * Update the menu cart with Qty and Subtotal
-     * @return {[type]} [description]
-     */
-    function menu_cart(){
-
-        var data = {
-            action: 'sell_media_cart_menu'
-        };
-
-        $.ajax({
-            type: 'POST',
-            url: sell_media.ajaxurl,
-            data: data,
-            success: function(msg){
-                $('.checkout-price').text(msg.subtotal);
-                $('.checkout-counter').text(msg.qty);
-            }
-        });
-    }
-
-    // Fire the menu cart function
-    menu_cart();
-
     // Lightbox menu
     $('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
 
@@ -325,10 +306,12 @@ jQuery(document).ready(function($){
         $.post( ajaxurl, data, function( response ){
             $('.sell-media-added').remove();
             $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
+            sm_update_cart_menu();
         });
 
         // Disable add to cart button.
         $button.attr("disabled","disabled");
+
     });
 
     // Decrease item qty.
@@ -358,6 +341,26 @@ jQuery(document).ready(function($){
             $("#sell_media_payment_gateway").submit();
     });
 });
+
+/**
+ * Update the menu cart with Qty and Subtotal
+ */
+function sm_update_cart_menu(){
+
+    var data = {
+        action: 'sell_media_cart_menu'
+    };
+
+    jQuery.ajax({
+        type: 'POST',
+        url: sell_media.ajaxurl,
+        data: data,
+        success: function(msg){
+            jQuery('.checkout-price').text(msg.subtotal);
+            jQuery('.checkout-counter').text(msg.qty);
+        }
+    });
+}
 
 /**
  * Calculate shipping costs
