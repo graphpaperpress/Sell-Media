@@ -26,16 +26,16 @@ img {
 
 .sell-media-three-col, .sell-media-cart-items li .item-image,
 .sell-media-cart-items li .item-details,
-.sell-media-cart-items li .item-qty-total, .sell-media-gallery-item, .sell-media-grid, .sell-media-widget-item-wrap {
+.sell-media-cart-items li .item-qty-total, .sell-media-grid, .sell-media-widget-item-wrap {
   margin-right: 5%;
   width: 30%; }
   .sell-media-three-col:nth-child(3n), .sell-media-cart-items li .item-image:nth-child(3n),
   .sell-media-cart-items li .item-details:nth-child(3n),
-  .sell-media-cart-items li .item-qty-total:nth-child(3n), .sell-media-gallery-item:nth-child(3n), .sell-media-grid:nth-child(3n), .sell-media-widget-item-wrap:nth-child(3n) {
+  .sell-media-cart-items li .item-qty-total:nth-child(3n), .sell-media-grid:nth-child(3n), .sell-media-widget-item-wrap:nth-child(3n) {
     margin-right: 0; }
   .sell-media-three-col:nth-child(3n+1), .sell-media-cart-items li .item-image:nth-child(3n+1),
   .sell-media-cart-items li .item-details:nth-child(3n+1),
-  .sell-media-cart-items li .item-qty-total:nth-child(3n+1), .sell-media-gallery-item:nth-child(3n+1), .sell-media-grid:nth-child(3n+1), .sell-media-widget-item-wrap:nth-child(3n+1) {
+  .sell-media-cart-items li .item-qty-total:nth-child(3n+1), .sell-media-grid:nth-child(3n+1), .sell-media-widget-item-wrap:nth-child(3n+1) {
     clear: left; }
 
 .sell-media-four-col {
@@ -59,7 +59,6 @@ img {
 .sell-media-cart-items li .item-image,
 .sell-media-cart-items li .item-details,
 .sell-media-cart-items li .item-qty-total,
-.sell-media-gallery-item,
 .sell-media-grid,
 .sell-media-widget-item-wrap,
 .sell-media-four-col,
@@ -77,7 +76,6 @@ img {
     .sell-media-cart-items li .item-image,
     .sell-media-cart-items li .item-details,
     .sell-media-cart-items li .item-qty-total,
-    .sell-media-gallery-item,
     .sell-media-grid,
     .sell-media-widget-item-wrap,
     .sell-media-four-col,
@@ -321,14 +319,13 @@ input[type="submit"].sell-media-button,
 .sell-media-title {
   font-weight: 700; }
 
-/*= Gallery
+/*= Galleries
 -------------------------------------------------------------- */
 .sell-media-gallery-page .sell-media-content {
   float: none;
   margin: 0;
   width: 100%; }
 
-/* Gallery Navigation */
 .sell-media-gallery-nav {
   display: inline-block;
   float: right; }
@@ -623,7 +620,8 @@ input[type="submit"].sell-media-button,
   text-transform: uppercase; }
 
 .sell-media-search-submit input[type=submit]:hover {
-  background: #000; }
+  background: #000;
+  box-shadow: none; }
 
 .sell-media-search-hidden {
   margin: 10px 0; }
@@ -631,7 +629,7 @@ input[type="submit"].sell-media-button,
 input.sell-media-search-text[type=text] {
   background: #fff;
   border-radius: 0;
-  color: #aaa;
+  color: gray;
   font-size: 13px;
   margin: 0; }
 
@@ -652,7 +650,7 @@ input.sell-media-search-text[type=text] {
   margin-top: 10px; }
 
 .sell-media-search-close {
-  color: #222;
+  color: black;
   display: none;
   float: right !important;
   text-decoration: none !important; }
@@ -785,7 +783,7 @@ input.sell-media-search-text[type=text] {
 
 /*= Clearing Floats
 -------------------------------------------------------------- */
-.cf:before, .sell-media-dialog-box .quick-view-container:before, .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:before,
+.cf:before, .sell-media-gallery:before, .sell-media-dialog-box .quick-view-container:before, .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:before,
 .cf:after,
 .sell-media-cart-items li:after,
 .sell-media-meta:after,

@@ -165,14 +165,15 @@ function sell_media_gallery( $post_id ) {
          */
         else {
             $attachment_ids = sell_media_get_attachments ( $post_id );
-            $html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
+            $html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery">';
             if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
                 $attr = array(
-                    'class' => 'sell-media-gallery-image sell_media_image sell_media_watermark'
+                    'class' => 'sell-media-image sell_media_image sell_media_watermark'
                 );
-                $html .= '<div class="sell-media-gallery-item">';
+                $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid">';
                 $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '">';
                 $html .= wp_get_attachment_image( $attachment_id, 'medium', '', $attr );
+                $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
                 $html .= '</a>';
                 $html .= '</div>';
             }
