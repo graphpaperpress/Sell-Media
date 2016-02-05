@@ -630,25 +630,26 @@ input[type="submit"].sell-media-button:hover,
 
         img {
             float: left;
-            width: auto;
-            height: auto;
-            max-width: none;
         }
     }
 
     .quick-view-container {
         @extend .cf;
+        padding: $margin;
+
+        @media only screen and (max-width : 768px) {
+            padding: 0;
+        }
     }
 
     .quick-view-image {
         @extend .sell-media-main-col;
-        margin: 0 !important; // override grid margins
-        overflow: hidden; // allows image to flow right
+        margin-bottom: 0 !important; // override grid margins
     }
     
     .quick-view-content {
         @extend .sell-media-side-col;
-        margin: 2.5%; // override grid margins
+        margin-bottom: 0 !important; // override grid margins
 
         @media only screen and (max-width : 768px) {
             margin: 0;
@@ -677,13 +678,13 @@ input[type="submit"].sell-media-button:hover,
 
                 legend {
                     float: left;
-                    width: 25%;
+                    width: 35%;
+                    margin-right: 5%;
                 }
 
                 select {
                     float: left;
-                    width: 70%;
-                    margin-left: 5%;
+                    width: 60%;
                 }
             }
         }
@@ -698,6 +699,10 @@ input[type="submit"].sell-media-button:hover,
     .button-container {
         clear: both;
         margin: $font-size 0 0;
+    }
+
+    .total-container {
+        text-transform: uppercase;
     }
 
     .price-container {

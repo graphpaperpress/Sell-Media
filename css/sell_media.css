@@ -458,15 +458,16 @@ input[type="submit"].sell-media-button:hover,
     margin: 0;
     width: 100%; }
     .sell-media-dialog-box figure img {
-      float: left;
-      width: auto;
-      height: auto;
-      max-width: none; }
+      float: left; }
+  .sell-media-dialog-box .quick-view-container {
+    padding: 32px; }
+    @media only screen and (max-width: 768px) {
+      .sell-media-dialog-box .quick-view-container {
+        padding: 0; } }
   .sell-media-dialog-box .quick-view-image {
-    margin: 0 !important;
-    overflow: hidden; }
+    margin-bottom: 0 !important; }
   .sell-media-dialog-box .quick-view-content {
-    margin: 2.5%; }
+    margin-bottom: 0 !important; }
     @media only screen and (max-width: 768px) {
       .sell-media-dialog-box .quick-view-content {
         margin: 0; }
@@ -486,11 +487,11 @@ input[type="submit"].sell-media-button:hover,
         border-bottom: 1px solid #eee; }
         .sell-media-dialog-box .quick-view-content .quick-view-fields fieldset legend {
           float: left;
-          width: 25%; }
+          width: 35%;
+          margin-right: 5%; }
         .sell-media-dialog-box .quick-view-content .quick-view-fields fieldset select {
           float: left;
-          width: 70%;
-          margin-left: 5%; }
+          width: 60%; }
   .sell-media-dialog-box .sell-media-tooltip {
     color: #b3b3b3;
     font-size: 11px; }
@@ -498,6 +499,8 @@ input[type="submit"].sell-media-button:hover,
   .sell-media-dialog-box .button-container {
     clear: both;
     margin: 16px 0 0; }
+  .sell-media-dialog-box .total-container {
+    text-transform: uppercase; }
   .sell-media-dialog-box .price-container {
     color: green; }
   .sell-media-dialog-box .subtotal {
