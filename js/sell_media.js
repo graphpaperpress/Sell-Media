@@ -1,6 +1,18 @@
 jQuery(document).ready(function($){
 
-    // Sell Media popup dialog
+    /** 
+     * Update cart totals on load
+     */
+    sm_update_cart_totals();
+
+    /**
+     * Check required fields on load
+     */
+    required_fields();
+
+    /** 
+     * Dialog popup
+     */
     function popup(message){
 
         // get the screen height and width
@@ -59,7 +71,7 @@ jQuery(document).ready(function($){
             $('.item_add').prop('disabled', false);
         }
 
-        var required = $('#sell-media-dialog-box [required]');
+        var required = $('.sell-media-add-to-cart-fields [required]');
         // bind change for all your just click and keyup for all text fields
         required.bind('change keyup', function() {
             var flag = 0;
@@ -83,19 +95,29 @@ jQuery(document).ready(function($){
         popup();
     });
 
+    /**
+     * Close dialog
+     */
     $(document).on('click','.sell-media-dialog-overlay, .sell-media-dialog-box .close',function(){
         // close the dialog if the overlay layer or the close button are clicked
         $('.sell-media-dialog-overlay, .sell-media-dialog-box').hide();
         return false;
     });
 
-    // if user resizes the window, call the same function again
-    // to make sure the overlay fills the screen and dialog box is aligned to center
+    /**
+     * Resize dialog
+     * 
+     * if user resizes the window, call the same function again
+     * to make sure the overlay fills the screen and dialog box is aligned to center
+     */
     $(window).resize(function(){
         //only do it if the dialog box is not hidden
         if (!$('.sell-media-dialog-box').is(':hidden')) popup();
     });
 
+    /**
+    * Checkout click
+    */
     $(document).on('click', '.sell-media-cart-checkout', function(){
         $(this).prop('disabled', true).css({"cursor": "progress"}).text(sell_media.checkout_wait_text);
     });
@@ -116,11 +138,17 @@ jQuery(document).ready(function($){
         $('.sell-media-search-form').removeClass('active');
     });
 
+    /**
+     * Terms of service checkbox
+     */
     $('#sell_media_terms_cb').on('click', function(){
         $this = $(this);
         $this.val() == 'checked' ? $this.val('') : $this.val('checked');
     });
 
+    /**
+     * Size/License selections
+     */
     $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 
         // get the price from the selected option
@@ -172,7 +200,7 @@ jQuery(document).ready(function($){
         // set the license description
         var license_desc = $('#sell_media_item_license :selected').attr('title');
         // must use .attr since .data types are cached by jQuery
-        if(license_desc){
+        if ( license_desc ) {
             $('#license_desc').attr('data-tooltip', license_desc).show();
         } else {
             $('#license_desc').hide();
@@ -180,7 +208,9 @@ jQuery(document).ready(function($){
 
     });
 
-    // Add to lightbox on click
+    /**
+     * Lightbox
+     */
     $( document ).on( 'click', '.add-to-lightbox', function( event ) {
 
         event.preventDefault();
@@ -242,11 +272,35 @@ jQuery(document).ready(function($){
         }
     }
 
+    /**
+     * Update the menu cart with Qty and Subtotal
+     * @return {[type]} [description]
+     */
+    function menu_cart(){
+
+        var data = {
+            action: 'sell_media_cart_menu'
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: sell_media.ajaxurl,
+            data: data,
+            success: function(msg){
+                $('.checkout-price').text(msg.subtotal);
+                $('.checkout-counter').text(msg.qty);
+            }
+        });
+    }
+
+    // Fire the menu cart function
+    menu_cart();
+
     // Lightbox menu
     $('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
 
     // Checkout total menu
-    $('(<span class="sell-media-cart-total checkout-price">0</span>)').appendTo('.checkout-total a');
+    $('(<span class="sell-media-cart-total checkout-counter-wrap">' + sell_media.currency_symbol + '<span class="checkout-price">0</span></span>)').appendTo('.checkout-total a');
 
     // Checkout qty menu
     $('(<span class="sell-media-cart-quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
@@ -255,4 +309,191 @@ jQuery(document).ready(function($){
     $('.reload').click(function() {
         location.reload();
     });
+
+
+    /**
+     * Add to cart
+     */
+    $(document).on( 'click', 'button.item_add', function(){
+        var $button = $(this);
+        var data = $( "form#sell-media-cart-items" ).serializeArray();
+        var price = $("span#total").text();
+        var qty = $(".checkout-qty").text();
+        var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart&price=' + price;
+
+        // Add cart item in session.
+        $.post( ajaxurl, data, function( response ){
+            $('.sell-media-added').remove();
+            $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
+        });
+
+        // Disable add to cart button.
+        $button.attr("disabled","disabled");
+    });
+
+    // Decrease item qty.
+    $(document).on( 'click', '.sell-media-cart-decrement', function(){
+        sm_update_cart_item( $(this), 'minus' );
+        var el = $('.checkout-counter');
+        var value = parseInt($(el).text());
+        if (!isNaN(value)) {
+            $(el).text(value - 1);
+        }
+    });
+
+    // Increase item qty.
+    $(document).on( 'click', '.sell-media-cart-increment', function(){
+        sm_update_cart_item( $(this), 'plus' );
+        var el = $('.checkout-counter');
+        var value = parseInt($(el).text());
+        if (!isNaN(value)) {
+            $(el).text(value + 1);
+        }
+    });
+
+    // Submit to payment gateway
+    $(document).on('click', '.sell-media-cart-checkout', function(){
+        var selected_payment = $( '#sell_media_payment_gateway' ).find( 'input:checked' );
+        if( 'paypal' == selected_payment.val() )
+            $("#sell_media_payment_gateway").submit();
+    });
 });
+
+/**
+ * Calculate shipping costs
+ */
+function sm_calculate_shipping(){
+    // Define vars.
+    var total_shipping = 0,
+        subtotal = 0,
+        items = jQuery( "#sell-media-checkout-cart .item" ),
+        total_print_qty = 0;
+
+    // Check if sell media reprints is active.
+    if( 'undefined' === typeof sell_media_reprints ){
+        return total_shipping;
+    }
+
+    // Get price of all items.
+    items.each( function(){
+        var price = jQuery(this).attr('data-price');
+        var type = jQuery(this).attr('data-type');
+        var current_qty = jQuery(this).find( '.item-quantity' ).text();
+
+        // Check if product is printable.
+        if( 'print' === type ){
+            total_print_qty += parseInt(current_qty);
+            subtotal+= parseFloat( price ) * parseFloat( current_qty );
+        }
+    });
+
+    // Check if shipping is on total rate.
+    if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
+        var total_shipping = parseFloat( subtotal ) * parseFloat( sell_media_reprints.reprints_shipping_flat_rate );
+    }
+
+    // Check if shipping is on flate rate.
+    if( 'shippingFlatRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
+        var total_shipping = parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
+    }
+
+    // Check if shipping is on quantity rate.
+    if( 'shippingQuantityRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
+        var total_shipping = parseInt( total_print_qty ) * parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
+    }
+
+    // Return total shipping cost.
+    return total_shipping;
+}
+
+/**
+ * Update cart total.
+ */
+function sm_update_cart_totals(){
+    // Define vars.
+    var items = jQuery( "#sell-media-checkout-cart .item" ),
+        currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
+        subtotal = 0,
+        tax = 0,
+        total_shipping = 0,
+        total_qty = 0;
+
+    // Get price of all items.
+    items.each( function(){
+        var price = jQuery(this).attr('data-price');
+        var current_qty = jQuery(this).find( '.item-quantity' ).text();
+
+        total_qty += parseInt(current_qty);
+        subtotal+= parseFloat( price ) * parseFloat( current_qty );
+    });
+
+    // Set grand total.
+    var grand_total = subtotal;
+
+    // Add tax if tax is set.
+    if( sell_media.tax > 0 ){
+        tax = parseFloat( subtotal ) * parseFloat( sell_media.tax );
+        grand_total = subtotal  + tax ;
+    }
+
+    // Add shipping cost.
+    if( '2' === sell_media.shipping  ){
+        var total_shipping = sm_calculate_shipping();
+        var grand_total = parseFloat( grand_total )  + parseFloat( total_shipping );
+    }
+    
+    // Show sub total.
+    jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal.toFixed( 2 ) );
+
+    // Show tax.
+    jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + tax.toFixed( 2 ) );
+
+    // Show shipping.
+    jQuery( '.sell-media-totals .sell-media-cart-shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
+
+    // Show Grand total.
+    jQuery( '.sell-media-totals .sell-media-cart-grand-total' ).html( currency_symbol + grand_total.toFixed( 2 ) );
+
+}
+
+/**
+ * Update cart item
+ * @param  {object} el   Element of item
+ * @param  {string} type Update type
+ */
+function sm_update_cart_item( el, type ){
+    var parent = el.parents( 'li' ),
+        id = parent.attr('id'),
+        price = parent.attr('data-price'),
+        current_qty = parent.find( '.item-quantity' ).text(),
+        currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
+        updated_qty = parseInt(current_qty) - 1;
+
+    // Add qty if type is 'plus'.
+    if( 'plus' === type )
+        updated_qty = parseInt(current_qty) + 1;
+
+    // Update price.
+    var updated_price = parseInt( updated_qty ) * parseFloat( price );
+
+    // Update qty.
+    parent.find( '.item-quantity .count' ).text( updated_qty );
+
+    // Update item total.
+    parent.find( '.item-total' ).html( currency_symbol + updated_price.toFixed( 2 ) );
+
+    // Hide if qty is less than 1.
+    if( updated_qty < 1 ){
+        parent.fadeOut( 'slow' ).remove();
+        if( jQuery("#sell-media-checkout-cart .sell-media-cart-items li").length < 1 ){
+            jQuery("#sell-media-checkout-cart").fadeOut( 'slow' );
+            jQuery("#sell-media-empty-cart-message").fadeIn( 'slow' );
+        }
+    }
+
+    // Update cart total.
+    sm_update_cart_totals();
+
+    // Update cart item in session.
+    jQuery.post( sell_media.ajaxurl, { action: 'sm_update_cart', cart_item_id: id, qty:updated_qty });
+}

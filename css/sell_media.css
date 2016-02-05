@@ -185,19 +185,23 @@ input[type="submit"].sell-media-button,
 #sell-media-submit {
   border: none !important;
   background: gray;
-  padding: 16px;
+  box-shadow: none;
+  padding: 16px !important;
   display: inline-block;
   width: auto;
   color: #fff;
   text-align: center;
-  text-transform: none;
+  text-transform: none !important;
   text-decoration: none !important;
   text-shadow: none;
   font-size: 16px; }
-  input[type="submit"].sell-media-button:hover,
+  input[type="submit"].sell-media-button:hover, input[type="submit"].sell-media-button:focus,
   .sell-media-button:hover,
-  #sell-media-submit:hover {
+  .sell-media-button:focus,
+  #sell-media-submit:hover,
+  #sell-media-submit:focus {
     background: black;
+    box-shadow: none;
     color: #fff;
     text-decoration: none; }
   input[type="submit"].sell-media-button:disabled,
@@ -477,17 +481,17 @@ input[type="submit"].sell-media-button,
       line-height: 1;
       margin: 0 0 24px;
       padding: 0; }
-    .sell-media-dialog-box .quick-view-content .quick-view-fields {
+    .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields {
       border-top: 1px solid #eee; }
-      .sell-media-dialog-box .quick-view-content .quick-view-fields fieldset {
+      .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset {
         padding: 16px 0;
         border: 0;
         border-bottom: 1px solid #eee; }
-        .sell-media-dialog-box .quick-view-content .quick-view-fields fieldset legend {
+        .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset legend {
           float: left;
           width: 35%;
           margin-right: 5%; }
-        .sell-media-dialog-box .quick-view-content .quick-view-fields fieldset select {
+        .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset select {
           float: left;
           width: 60%; }
   .sell-media-dialog-box .sell-media-tooltip {
@@ -533,11 +537,6 @@ input[type="submit"].sell-media-button,
   .sell-media-dialog-box .sell-media-button {
     display: block;
     width: 100%; }
-  .sell-media-dialog-box .sell-media-added {
-    margin: 25.6px 0;
-    text-align: center;
-    padding: 10px;
-    background: #fcf9d0; }
   .sell-media-dialog-box .sell-media-credit {
     color: #fff;
     font-size: 11px;
@@ -744,6 +743,13 @@ input.sell-media-search-text[type=text] {
     position: absolute;
     z-index: 99; }
 
+/*= Notifications
+-----------------------------------------------------------------------*/
+.sell-media-added {
+  margin: 25.6px 0;
+  text-align: center;
+  padding: 16px; }
+
 /*= Terms and Conditions
 -----------------------------------------------------------------------*/
 #terms-and-conditions-dialog {
@@ -779,14 +785,13 @@ input.sell-media-search-text[type=text] {
 
 /*= Clearing Floats
 -------------------------------------------------------------- */
-.cf:before, .sell-media-dialog-box .quick-view-container:before, .sell-media-dialog-box .quick-view-content .quick-view-fields fieldset:before,
+.cf:before, .sell-media-dialog-box .quick-view-container:before, .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:before,
 .cf:after,
 .sell-media-cart-items li:after,
 .sell-media-meta:after,
-.group:after,
 .sell-media-gallery:after,
 .sell-media-dialog-box .quick-view-container:after,
-.sell-media-dialog-box .quick-view-content .quick-view-fields fieldset:after,
+.sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:after,
 .sell-media-grid-container:before,
 .sell-media-grid-container:after,
 .wp-advanced-search:before,
@@ -794,8 +799,7 @@ input.sell-media-search-text[type=text] {
   content: " ";
   display: table; }
 
-.cf:after, .sell-media-cart-items li:after, .sell-media-meta:after,
-.group:after, .sell-media-gallery:after, .sell-media-dialog-box .quick-view-container:after, .sell-media-dialog-box .quick-view-content .quick-view-fields fieldset:after,
+.cf:after, .sell-media-cart-items li:after, .sell-media-meta:after, .sell-media-gallery:after, .sell-media-dialog-box .quick-view-container:after, .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:after,
 .sell-media-grid-container:after,
 .wp-advanced-search:after {
   clear: both; }
@@ -804,12 +808,14 @@ input.sell-media-search-text[type=text] {
 -------------------------------------------------------------- */
 .lightbox-counter,
 .checkout-counter,
-.checkout-price {
+.checkout-price,
+.checkout-counter-wrap {
   margin-left: 5px; }
 
 .sell-media-label,
 .lightbox-counter,
-.checkout-counter {
+.checkout-counter,
+.checkout-counter-wrap {
   display: inline;
   padding: 2px 5px;
   font-size: 9px;
@@ -820,9 +826,6 @@ input.sell-media-search-text[type=text] {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 2px; }
-
-.checkout-price {
-  font-weight: bold; }
 
 /*= Widgets
 -------------------------------------------------------------- */

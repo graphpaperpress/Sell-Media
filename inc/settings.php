@@ -277,6 +277,27 @@ function sell_media_init_settings(){
 					)
 			)
 		),
+		"file_info" => array(
+			"tab" => "sell_media_general_settings",
+			"name" => "file_info",
+			"title" => __("File Info","sell_media"),
+			"description" => __( "Show file information (file size, file type, dimensions, keywords, etc.) on single entries.", "sell_media" ),
+			"section" => "general_plugin_section_1",
+			"since" => "1.0",
+			"id" => "general_plugin_section_1",
+			"type" => "select",
+			"default" => 0,
+			"valid_options" => array(
+				0 => array(
+					"name" => 0,
+					"title" => __("No","sell_media")
+					),
+				1 => array(
+					"name" => 1,
+					"title" => __("Yes","sell_media"),
+					)
+			)
+		),
 		"plugin_credit" => array(
 			"tab" => "sell_media_general_settings",
 			"name" => "plugin_credit",

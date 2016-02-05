@@ -107,3 +107,17 @@ function sell_media_update_cart(){
 
 add_action( 'wp_ajax_sm_update_cart', 'sell_media_update_cart' );
 add_action( 'wp_ajax_nopriv_sm_update_cart', 'sell_media_update_cart' );
+
+/**
+ * Count cart qty and subtotal for the menu ajax
+ */
+function sell_media_cart_menu(){
+	global $sm_cart;
+	$data = array();
+	$data['qty'] = $sm_cart->getQty();
+	$data['subtotal'] = $sm_cart->getSubtotal();
+
+	wp_send_json( $data );
+}
+add_action( 'wp_ajax_sell_media_cart_menu', 'sell_media_cart_menu' );
+add_action( 'wp_ajax_nopriv_sell_media_cart_menu', 'sell_media_cart_menu' );

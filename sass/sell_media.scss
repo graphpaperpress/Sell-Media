@@ -236,18 +236,21 @@ input[type="submit"].sell-media-button,
 #sell-media-submit {
 	border: none !important;
 	background: $default-color;
-	padding: $font-size;
+	box-shadow: none;
+	padding: $font-size !important;
 	display: inline-block;
 	width: auto;
 	color: $white-color;
 	text-align: center;
-	text-transform: none;
+	text-transform: none !important;
 	text-decoration: none !important;
 	text-shadow: none;
 	font-size: $font-size;
 
-	&:hover {
+	&:hover,
+	&:focus {
 		background: $dark-color;
+		box-shadow: none;
 		color: $white-color;
 		text-decoration: none;
 	}
@@ -305,8 +308,7 @@ input[type="submit"].sell-media-button,
 	width: 100%;
 }
 
-.sell-media-meta:after,
-.group:after {
+.sell-media-meta:after {
 	@extend .cf;
 }
 
@@ -661,7 +663,7 @@ input[type="submit"].sell-media-button,
 			padding: 0;
 		}
 
-		.quick-view-fields {
+		.sell-media-add-to-cart-fields {
 			border-top: 1px solid $border-color;
 
 			fieldset {
@@ -748,13 +750,6 @@ input[type="submit"].sell-media-button,
 	.sell-media-button {
 		display: block;
 		width: 100%;
-	}
-
-	.sell-media-added {
-		margin: $line-height 0;
-		text-align: center;
-		padding: 10px;
-		background: #fcf9d0;
 	}
 
 	.sell-media-credit {
@@ -1021,6 +1016,16 @@ input.sell-media-search-text[type=text] {
 	}
 }
 
+/*= Notifications
+-----------------------------------------------------------------------*/
+.sell-media-added {
+
+	margin: $line-height 0;
+	text-align: center;
+	padding: $font-size;
+
+}
+
 /*= Terms and Conditions
 -----------------------------------------------------------------------*/
 
@@ -1085,13 +1090,15 @@ input.sell-media-search-text[type=text] {
 
 .lightbox-counter,
 .checkout-counter,
-.checkout-price {
+.checkout-price,
+.checkout-counter-wrap {
 	margin-left: 5px;
 }
 
 .sell-media-label,
 .lightbox-counter,
-.checkout-counter {
+.checkout-counter,
+.checkout-counter-wrap {
 	display: inline;
 	padding: 2px 5px;
 	font-size: 9px;
@@ -1102,10 +1109,6 @@ input.sell-media-search-text[type=text] {
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: 2px;
-}
-
-.checkout-price {
-	font-weight: bold;
 }
 
 /*= Widgets

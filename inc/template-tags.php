@@ -217,6 +217,7 @@ function sell_media_content_loop( $post_id, $i ){
     $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
     $html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
     if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+        $attachment_id = sell_media_get_attachment_id( $post_id );
         $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
     }
     $html .= '</a>';
@@ -548,9 +549,10 @@ function sell_media_append_meta( $post_id ) {
         echo sell_media_item_links( $post_id );
     } elseif ( is_singular( 'sell_media_item' ) ) {
         echo '<div class="sell-media-meta">';
-        echo '<p class="sell-media-buy-button">';
-        echo sell_media_item_buy_button( $post_id, $attachment_id = '', 'button', __( 'Buy', 'sell_media' ), false );
-        echo '</p>';
+        // echo '<p class="sell-media-buy-button">';
+        // echo sell_media_item_buy_button( $post_id, $attachment_id = '', 'button', __( 'Buy', 'sell_media' ), false );
+        // echo '</p>';
+        do_action( 'sell_media_add_to_cart_fields', $post_id );
         do_action( 'sell_media_below_buy_button', $post_id );
         sell_media_plugin_credit();
         echo '</div>';
@@ -597,7 +599,7 @@ function sell_media_link_attributes( $post_id ) {
 function sell_media_show_lightbox( $post_id ) {
     echo sell_media_lightbox_link( $post_id );
 }
-add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
+//add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
 
 /**
  * Show additional file info
@@ -607,6 +609,12 @@ add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
  * @return void
  */
 function sell_media_show_file_info(){
+
+    // Bail if file info isn't set to be shown
+    $settings = sell_media_get_plugin_options();
+    if ( empty( $settings->file_info ) )
+        return;
+
     $post = get_post();
     $attachment_id = sell_media_get_attachment_id( $post->ID );
     $media_dims = '';
@@ -637,6 +645,7 @@ function sell_media_show_file_info(){
     }
     echo do_action( 'sell_media_additional_list_items', $post->ID );
     echo '</ul>';
+
 }
 add_action( 'sell_media_below_buy_button', 'sell_media_show_file_info', 12 );
 

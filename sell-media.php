@@ -226,6 +226,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/collections.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/deprecated.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/fields.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/helpers.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/paypal.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';

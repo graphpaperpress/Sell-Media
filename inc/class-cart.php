@@ -215,13 +215,38 @@ class SellMediaCart {
 		return true;
 	}
 
+	/**
+	 * Get cart qty
+	 * 
+	 * @return int
+	 */
+	public function getQty(){
+		$items = $this->items;
+
+		if ( empty( $items ) )
+			return 0;
+
+		$qty = 0;
+		foreach ( $items as $key => $item ) {
+			if ( ! empty( $item['qty'] ) ) {
+				$qty += $item['qty'];
+			}
+		}
+		return (int) $qty;
+	}
+
+	/**
+	 * Get cart subtotal
+	 * 
+	 * @return int
+	 */
 	public function getSubtotal(){
 		$items = $this->items;
 		if( empty( $items ) )
 			return 0;
 		$subtotal = 0;
 		foreach ( $items as $key => $item ) {
-			$subtotal += $item['price'] * $item['qty'] ;
+			$subtotal += $item['price'] * $item['qty'];
 		}
 		return number_format( $subtotal, 2 );
 	}

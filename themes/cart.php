@@ -37,7 +37,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
             <span class="close">&times;</span>
             <h2><a href="<?php echo get_permalink( $post_id ); ?>" <?php echo sell_media_link_attributes( $post_id ); ?>><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></a></h2>
 
-            <div class="quick-view-fields">
+            <div class="sell-media-add-to-cart-fields">
 
                 <form id="sell-media-cart-items" class="hide">
                     <input class="item_number" name="item_number" type="text" value="<?php echo $post_id; ?>" />
@@ -59,9 +59,9 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                     <p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo get_permalink( $post_id ); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
                 <?php endif; ?>
 
-                <div id="sell_media_download_wrapper" class="quick-view-size-fields">
+                <div id="sell_media_download_wrapper" class="sell-media-add-to-cart-download-fields">
                     <?php if ( ! $is_package && $has_price_group ) : ?>
-                        <fieldset id="sell_media_download_size_fieldset" class="quick-view-fieldset quick-view-size-fieldset">
+                        <fieldset id="sell_media_download_size_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-download-fieldset">
                             <legend><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></legend>
                             <select id="sell_media_item_size" class="sum" required>
                                 <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
@@ -91,7 +91,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
                     <?php do_action( 'sell_media_cart_above_licenses' ); ?>
 
                     <?php if ( count( $licenses ) > 0 ) : ?>
-                        <fieldset id="sell_media_download_license_fieldset" class="quick-view-fieldset quick-view-license-fieldset">
+                        <fieldset id="sell_media_download_license_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-license-fields">
                             <legend><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span class="sell-media-tooltip license-info" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">(?)</span></legend>
                             <select id="sell_media_item_license" class="sum" required>
                                 <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
