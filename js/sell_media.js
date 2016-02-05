@@ -146,6 +146,7 @@ jQuery(document).ready(function($){
             sum = ( + price + ( markup / 100 ) * price ).toFixed(2);
 
         $('#total').text(sum);
+        $('#total').attr( 'data-price', sum );
 
         // set price_group id so it is passed to cart
         var price_group = $('#sell_media_item_size :selected').data('id');
