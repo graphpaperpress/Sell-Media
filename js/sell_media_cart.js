@@ -143,7 +143,7 @@ jQuery( function( $ ){
     $(document).on( 'click', 'button.item_add', function(){
         var $button = $(this);
         var data = $( "form#sell-media-cart-items" ).serializeArray();
-        var price = $("#sell-media-dialog-box span#total").text();
+        var price = $("span#total").text();
         var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart&price=' + price;
 
         // Add cart item in session.
