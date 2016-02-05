@@ -12,6 +12,7 @@
 $settings = sell_media_get_plugin_options();
 $post_id = $_POST['product_id'];
 $attachment_id = $_POST['attachment_id'];
+$location = isset( $_POST['location'] ) ? $_POST['location'] : '' ;
 
 // check if is package
 $is_package = Sell_Media()->products->is_package( $post_id );
@@ -124,5 +125,5 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
 
         </section>
     </div>
-    <?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id ); ?>
+    <?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id, $location ); ?>
 </div>
