@@ -30,22 +30,6 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
         return $html;
 }
 
-/**
- * Quick view link
- *
- * @access      public
- * @since       0.1
- * @return      html
- */
-function sell_media_quick_view_link( $post_id=null, $attachment_id=null ) {
-
-    $attachment_id = ( empty( $attachment_id ) ) ? sell_media_get_attachment_id( $post_id ) : $attachment_id;
-    $text = apply_filters('sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id );
-    $html = '<a href="javascript:void(0)" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="quick-view">' . $text . '</a>';
-
-    return $html;
-}
-
 
 /**
  * Determines the image source for a product
@@ -181,6 +165,7 @@ function sell_media_gallery( $post_id ) {
          */
         else {
             $attachment_ids = sell_media_get_attachments ( $post_id );
+
             $html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery sell-media-gallery-' . $post_id . '">';
             if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
                 $attr = array(
@@ -521,22 +506,33 @@ add_filter( 'the_content', 'sell_media_after_content' );
  * @return string the content with any additional data attached
  */
 function sell_media_append_media( $post_id ) {
+    
     $html = '';
     $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
+    
     if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
         $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . '>' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
     } elseif ( is_singular( 'sell_media_item' ) ) {
+        
         sell_media_set_post_views( $post_id );
+        
         if ( sell_media_has_multiple_attachments( $post_id ) ) {
-            $html .= sell_media_gallery( $post_id );
+
+            $attachment_ids = sell_media_get_attachments ( $post_id );
+            $comma_separated = implode( ',', $attachment_ids );
+            $html .= do_shortcode( '[gallery ids="' . $comma_separated . '"]' );
+        
         } else {
+            
             sell_media_item_icon( $post_id, 'large' );
             $html .= '<p class="sell-media-caption">';
             $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span>';
+            
             if ( sell_media_get_attachment_meta( $post_id, 'caption' ) ) {
                 $html .= ' &mdash; ';
                 $html .= sell_media_get_attachment_meta( $post_id, 'caption' );
             }
+            
             $html .= '</p>';
         }
     }
