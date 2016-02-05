@@ -177,7 +177,7 @@ jQuery(document).ready(function($){
     });
 
     // Add to lightbox on click
-    $( '.add-to-lightbox' ).on( 'click', function( event ) {
+    $( document ).on( 'click', '.add-to-lightbox', function( event ) {
 
         event.preventDefault();
 
