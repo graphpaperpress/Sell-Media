@@ -406,7 +406,7 @@ input[type="submit"].sell-media-button,
   .sell-media-pagination-container .page-numbers {
     padding: 0 3px; }
 
-/*= Dialog
+/*= Quick View Dialog
 -------------------------------------------------------------- */
 .sell-media-dialog-overlay {
   width: 100%;
@@ -448,8 +448,6 @@ input[type="submit"].sell-media-button,
     color: #000; }
   .sell-media-dialog-box p {
     margin: 0 0 16px; }
-  .sell-media-dialog-box label {
-    margin-left: 5px; }
   .sell-media-dialog-box figure {
     display: block;
     background-color: transparent;
@@ -478,42 +476,6 @@ input[type="submit"].sell-media-button,
       line-height: 1;
       margin: 0 0 24px;
       padding: 0; }
-    .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields {
-      border-top: 1px solid #eee; }
-      .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset {
-        padding: 16px 0;
-        border: 0;
-        border-bottom: 1px solid #eee; }
-        .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset legend {
-          float: left;
-          width: 35%;
-          margin-right: 5%; }
-        .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset select {
-          float: left;
-          width: 60%; }
-  .sell-media-dialog-box .sell-media-tooltip {
-    color: #b3b3b3;
-    font-size: 11px; }
-  .sell-media-dialog-box .total-container,
-  .sell-media-dialog-box .button-container {
-    clear: both;
-    margin: 16px 0 0; }
-  .sell-media-dialog-box .total-container {
-    text-transform: uppercase; }
-  .sell-media-dialog-box .price-container {
-    color: green; }
-  .sell-media-dialog-box .subtotal {
-    font-weight: bold;
-    margin-bottom: 25.6px; }
-  .sell-media-dialog-box .cart {
-    padding-left: 16px;
-    background: url(../images/cart.png) no-repeat 0 50%; }
-  .sell-media-dialog-box .add-to-lightbox {
-    text-decoration: none;
-    font-size: 11px;
-    color: gray; }
-    .sell-media-dialog-box .add-to-lightbox:hover {
-      color: black; }
   .sell-media-dialog-box .close {
     color: #b3b3b3;
     right: 0;
@@ -556,6 +518,47 @@ input[type="submit"].sell-media-button,
       overflow: scroll;
       max-height: 500px;
       width: 302px; } }
+
+/*= Cart Fields
+-------------------------------------------------------------- */
+.sell-media-add-to-cart-fields {
+  border-top: 1px solid #eee; }
+  .sell-media-add-to-cart-fields label {
+    margin-left: 5px; }
+  .sell-media-add-to-cart-fields fieldset {
+    padding: 16px 0;
+    border: 0;
+    border-bottom: 1px solid #eee; }
+    .sell-media-add-to-cart-fields fieldset legend {
+      float: left;
+      width: 35%;
+      margin-right: 5%; }
+    .sell-media-add-to-cart-fields fieldset select {
+      float: left;
+      width: 60%; }
+  .sell-media-add-to-cart-fields .sell-media-tooltip {
+    color: #b3b3b3;
+    font-size: 11px; }
+  .sell-media-add-to-cart-fields .total-container,
+  .sell-media-add-to-cart-fields .button-container {
+    clear: both;
+    margin: 16px 0 0; }
+  .sell-media-add-to-cart-fields .total-container {
+    text-transform: uppercase; }
+  .sell-media-add-to-cart-fields .price-container {
+    color: green; }
+  .sell-media-add-to-cart-fields .subtotal {
+    font-weight: bold;
+    margin-bottom: 25.6px; }
+  .sell-media-add-to-cart-fields .cart {
+    padding-left: 16px;
+    background: url(../images/cart.png) no-repeat 0 50%; }
+  .sell-media-add-to-cart-fields .add-to-lightbox {
+    text-decoration: none;
+    font-size: 11px;
+    color: gray; }
+    .sell-media-add-to-cart-fields .add-to-lightbox:hover {
+      color: black; }
 
 /*= Search
 -------------------------------------------------------------- */
@@ -745,8 +748,9 @@ input.sell-media-search-text[type=text] {
 -----------------------------------------------------------------------*/
 .sell-media-added {
   margin: 25.6px 0;
-  text-align: center;
-  padding: 16px; }
+  padding: 16px;
+  background: #FFFCDD;
+  text-align: center; }
 
 /*= Terms and Conditions
 -----------------------------------------------------------------------*/
@@ -783,13 +787,13 @@ input.sell-media-search-text[type=text] {
 
 /*= Clearing Floats
 -------------------------------------------------------------- */
-.cf:before, .sell-media-gallery:before, .sell-media-dialog-box .quick-view-container:before, .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:before,
+.cf:before, .sell-media-gallery:before, .sell-media-dialog-box .quick-view-container:before, .sell-media-add-to-cart-fields fieldset:before,
 .cf:after,
 .sell-media-cart-items li:after,
 .sell-media-meta:after,
 .sell-media-gallery:after,
 .sell-media-dialog-box .quick-view-container:after,
-.sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:after,
+.sell-media-add-to-cart-fields fieldset:after,
 .sell-media-grid-container:before,
 .sell-media-grid-container:after,
 .wp-advanced-search:before,
@@ -797,7 +801,7 @@ input.sell-media-search-text[type=text] {
   content: " ";
   display: table; }
 
-.cf:after, .sell-media-cart-items li:after, .sell-media-meta:after, .sell-media-gallery:after, .sell-media-dialog-box .quick-view-container:after, .sell-media-dialog-box .quick-view-content .sell-media-add-to-cart-fields fieldset:after,
+.cf:after, .sell-media-cart-items li:after, .sell-media-meta:after, .sell-media-gallery:after, .sell-media-dialog-box .quick-view-container:after, .sell-media-add-to-cart-fields fieldset:after,
 .sell-media-grid-container:after,
 .wp-advanced-search:after {
   clear: both; }
