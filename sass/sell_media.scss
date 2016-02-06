@@ -12,6 +12,7 @@ $black-color: #000;
 $dark-opaque: rgba(black, .5);
 $light-opaque: rgba(white, .8);
 $border-color: #eee;
+$yellow-color: #FFFCDD;
 
 /*= Global
 -------------------------------------------------------------- */
@@ -1018,7 +1019,7 @@ input.sell-media-search-text[type=text] {
 .sell-media-added {
 	margin: $line-height 0;
 	padding: $font-size;
-	background: #FFFCDD;
+	background: $yellow-color;
 	text-align: center;
 }
 
@@ -1135,14 +1136,18 @@ input.sell-media-search-text[type=text] {
 	}
 }
 
-/*= Media queries
+/*= Theme Overrides
 -------------------------------------------------------------- */
+.sell-media-single-one-col {
+	#main .sell-media-content,
+	#main .sell-media-meta {
+		width: 100%;
 
-@media only screen and (max-width : 768px) {
-
-	.sell-media-dialog-box-terms {
-		overflow: scroll;
-		max-height: 500px;
-		width: 302px;
+		legend {
+			width: 100px;
+		}
+		select {
+			width: 200px;
+		}
 	}
 }

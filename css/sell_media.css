@@ -846,12 +846,16 @@ input.sell-media-search-text[type=text] {
   .sell-media-widget-thumb-wrap img {
     float: left; }
 
-/*= Media queries
+/*= Theme Overrides
 -------------------------------------------------------------- */
-@media only screen and (max-width: 768px) {
-  .sell-media-dialog-box-terms {
-    overflow: scroll;
-    max-height: 500px;
-    width: 302px; } }
+.sell-media-single-one-col #main .sell-media-content,
+.sell-media-single-one-col #main .sell-media-meta {
+  width: 100%; }
+  .sell-media-single-one-col #main .sell-media-content legend,
+  .sell-media-single-one-col #main .sell-media-meta legend {
+    width: 100px; }
+  .sell-media-single-one-col #main .sell-media-content select,
+  .sell-media-single-one-col #main .sell-media-meta select {
+    width: 200px; }
 
 /*# sourceMappingURL=sell_media.css.map */
