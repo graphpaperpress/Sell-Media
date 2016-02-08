@@ -607,10 +607,11 @@ input[type="submit"].sell-media-button,
     .sell-media-add-to-cart-fields fieldset legend {
       float: left;
       display: block;
-      margin-right: 5%; }
+      margin-right: 5%;
+      width: 30%; }
     .sell-media-add-to-cart-fields fieldset select {
       float: left;
-      width: 80%; }
+      width: 65%; }
   .sell-media-add-to-cart-fields .sell-media-tooltip {
     color: #b3b3b3;
     font-size: 11px; }

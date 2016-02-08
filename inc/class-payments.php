@@ -14,8 +14,8 @@ Class SellMediaPayments {
 
 
     public function __construct(){
-        add_action( 'wp_ajax_nopriv_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
-        add_action( 'wp_ajax_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
+        // add_action( 'wp_ajax_nopriv_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
+        // add_action( 'wp_ajax_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
     }
 
 

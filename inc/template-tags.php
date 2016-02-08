@@ -328,6 +328,7 @@ function sell_media_get_taxonomy_terms( $taxonomy ){
 function sell_media_cart_dialog(){
 
     global $post;
+    $post_type = 'sell_media_item';
     $settings = sell_media_get_plugin_options();
 
     // Check if shortcode has been used
@@ -339,7 +340,17 @@ function sell_media_cart_dialog(){
         }
     }
 
-    if ( is_singular( 'sell_media_item' ) || is_post_type_archive( 'sell_media_item' ) || $shortcode ) {
+    // Check if on Sell Media taxonomy archive page
+    $taxonomy = false;
+    $taxonomy_objects = get_object_taxonomies( $post_type );
+    if ( $taxonomy_objects ) foreach ( $taxonomy_objects as $taxonomy_object ) {
+        if ( is_tax( $taxonomy_object ) ) {
+            $taxonomy = true;
+        }
+    }
+
+    // Only inject markup on specific pages
+    if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || $shortcode || $taxonomy ) {
         $popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
 
         if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
