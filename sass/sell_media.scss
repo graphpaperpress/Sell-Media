@@ -114,6 +114,28 @@ img {
 			@extend .sell-media-three-col;
 			.item-increment{
 				line-height:0px
+
+			}
+			
+			span.count {     
+				width: 28px;
+				display: inline-block;
+				padding-bottom: 2px;
+			}
+			.dashicons-arrow-up-alt2:before {
+				content: "\f343";
+				display: block;
+				padding-top: 2px;
+			}
+			.dashicons-arrow-down-alt2:before {
+				content: "\f347";
+				display: block;
+				padding-top: 2px;
+			}
+
+			.dashicons-arrow-up-alt2:before, .dashicons-arrow-down-alt2:before { 
+				display: block;
+				padding-top: 2px; 
 			}
 		}
 
