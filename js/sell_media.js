@@ -19,20 +19,12 @@ jQuery(document).ready(function($){
      * Dialog popup
      */
     function popup(message){
-
-        // get the screen height and width
-        var maskHeight = $(document).height();
-        var maskWidth = $(window).width();
-
-        // calculate the values for center alignment and position from top
-        var dialogLeft = (maskWidth/2) - ($('.sell-media-dialog-box').width()/2);
-        var dialogTop = $(document).scrollTop() + 100;
-
         // assign values to the overlay and dialog box and show overlay and dialog
-        $('.sell-media-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
-        $('.sell-media-dialog-box').css({left:dialogLeft, top:dialogTop}).show();
-        $('.sell-media-dialog-overlay, .sell-media-dialog-box').show();
-
+        var width = $(window).width();
+        var height = $(document).height();
+        var dialogTop = $(document).scrollTop() + 25;
+        $('.sell-media-dialog-box').width(width).height(height).addClass('is-visible');
+        $('.sell-media-dialog-box #sell-media-dialog-box-target').css({top:dialogTop});
     }
 
     /**
@@ -103,12 +95,12 @@ jQuery(document).ready(function($){
     /**
      * Close dialog
      */
-    $(document).on('click','.sell-media-dialog-overlay, .sell-media-dialog-box .close',function(){
-        // close the dialog if the overlay layer or the close button are clicked
-        $('.sell-media-dialog-overlay, .sell-media-dialog-box').hide();
-        return false;
+    $(document).on('click', '.sell-media-dialog-box', function(event){
+        if( $(event.target).is('.close') || $(event.target).is('.sell-media-dialog-box') ) {
+            event.preventDefault();
+            $(this).removeClass('is-visible');
+        }
     });
-
     /**
      * Resize dialog
      * 
