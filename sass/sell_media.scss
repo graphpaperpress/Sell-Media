@@ -537,6 +537,7 @@ input[type="submit"].sell-media-button,
 -------------------------------------------------------------- */
 .item-inner {
 	background: $black-color;
+	position: relative;
 
 	.item-overlay {
 		opacity: 0;
@@ -550,6 +551,10 @@ input[type="submit"].sell-media-button,
 	img {
 		opacity: 1;
 		transition: all 0.25s ease;
+	}
+
+	h3 {
+		position: absolute;
 	}
 
 	&:hover {

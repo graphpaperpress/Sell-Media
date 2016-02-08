@@ -413,7 +413,8 @@ input[type="submit"].sell-media-button,
 /*= Overlays
 -------------------------------------------------------------- */
 .item-inner {
-  background: #000; }
+  background: #000;
+  position: relative; }
   .item-inner .item-overlay {
     opacity: 0;
     transition: all 0.25s ease; }
@@ -422,6 +423,8 @@ input[type="submit"].sell-media-button,
   .item-inner img {
     opacity: 1;
     transition: all 0.25s ease; }
+  .item-inner h3 {
+    position: absolute; }
   .item-inner:hover .item-overlay {
     opacity: 1; }
   .item-inner:hover img {
