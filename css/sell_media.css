@@ -459,20 +459,6 @@ input[type="submit"].sell-media-button,
 
 /*= Quick View Dialog
 -------------------------------------------------------------- */
-.sell-media-dialog-overlay {
-  width: 100%;
-  height: 100%;
-  filter: alpha(opacity=70);
-  -moz-opacity: 0.7;
-  -khtml-opacity: 0.7;
-  opacity: 0.7;
-  background: #000;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3000;
-  display: none; }
-
 .sell-media-dialog-box {
   color: black;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -480,7 +466,7 @@ input[type="submit"].sell-media-button,
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(0, 0, 0, 0.7);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   height: 100%;
   width: 100%;
@@ -565,11 +551,16 @@ input[type="submit"].sell-media-button,
       color: #fff;
       text-decoration: none; }
   .sell-media-dialog-box #sell-media-dialog-box-target {
+    background: #fff;
     position: relative;
     max-width: 1000px;
     width: 80%;
     margin: 4em auto;
-    background: #FFF;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
     -webkit-transform: translateY(-40px);
     -moz-transform: translateY(-40px);
     -ms-transform: translateY(-40px);
@@ -583,22 +574,26 @@ input[type="submit"].sell-media-button,
     -webkit-transition-duration: 0.3s;
     -moz-transition-duration: 0.3s;
     transition-duration: 0.3s; }
+  .sell-media-dialog-box.is-visible {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+    transition: opacity 0.3s 0s, visibility 0s 0s; }
+    .sell-media-dialog-box.is-visible #sell-media-dialog-box-target.loaded {
+      opacity: 1;
+      visibility: visible;
+      -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+      -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+      transition: opacity 0.3s 0s, visibility 0s 0s;
+      -webkit-transform: translateY(0);
+      -moz-transform: translateY(0);
+      -ms-transform: translateY(0);
+      -o-transform: translateY(0);
+      transform: translateY(0); }
   @media only screen and (min-width: 1170px) {
     .sell-media-dialog-box #sell-media-dialog-box-target {
       margin: 8em auto; } }
-
-.sell-media-dialog-box.is-visible {
-  opacity: 1;
-  visibility: visible;
-  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
-  -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
-  transition: opacity 0.3s 0s, visibility 0s 0s; }
-  .sell-media-dialog-box.is-visible #sell-media-dialog-box-target {
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
-    transform: translateY(0); }
 
 .sell-media-dialog-box-terms {
   overflow: scroll; }
