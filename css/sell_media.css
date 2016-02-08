@@ -412,9 +412,11 @@ input[type="submit"].sell-media-button,
 
 /*= Lightbox
 -------------------------------------------------------------- */
-.sell-media-meta .add-to-lightbox {
+.add-to-lightbox {
   display: block;
-  margin: 1em 0; }
+  font-size: 13px;
+  margin: 16px 0; }
+
 .sell-media-meta .lightbox-notice.not-in-lightbox {
   display: none;
   margin: 1em 0; }
@@ -631,13 +633,6 @@ input[type="submit"].sell-media-button,
 .cart {
   padding-left: 16px;
   background: url(../images/cart.png) no-repeat 0 50%; }
-
-.add-to-lightbox {
-  text-decoration: none;
-  font-size: 11px;
-  color: gray; }
-  .add-to-lightbox:hover {
-    color: black; }
 
 /*= Search
 -------------------------------------------------------------- */
@@ -936,5 +931,8 @@ input.sell-media-search-text[type=text] {
   .sell-media-single-one-col #main .sell-media-content select,
   .sell-media-single-one-col #main .sell-media-meta select {
     width: 200px; }
+
+.sell-media-grid {
+  background-color: transparent !important; }
 
 /*# sourceMappingURL=sell_media.css.map */

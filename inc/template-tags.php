@@ -326,12 +326,23 @@ function sell_media_get_taxonomy_terms( $taxonomy ){
  * @since 1.8.5
  */
 function sell_media_cart_dialog(){
+
+    global $post;
     $settings = sell_media_get_plugin_options();
-    if( is_singular() ){
-        global $post;
+
+    // Check if shortcode has been used
+    $shortcode = false;
+    if ( ! empty( $post->post_content ) ) {
+        $content = $post->post_content;
+        if ( has_shortcode( $content, 'sell_media_all_items' ) || has_shortcode( $content, 'sell_media_lightbox' ) || is_search() ) {
+            $shortcode = true;
+        }
+    }
+
+    if ( is_singular( 'sell_media_item' ) || is_post_type_archive( 'sell_media_item' ) || $shortcode ) {
         $popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
 
-        if ( !in_array( $post->ID, $popup_restricted_pages ) ) : ?>
+        if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
             <div id="sell-media-dialog-box" class="sell-media-dialog-box">
                 <div id="sell-media-dialog-box-target"></div>
             </div>

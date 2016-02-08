@@ -21,10 +21,8 @@ img {
 	height: auto;
 }
 
-
 /*= Grids
 -------------------------------------------------------------- */
-
 .sell-media-row {
 	display: flex; /* equal height of the children */
 }
@@ -94,7 +92,6 @@ img {
 
 /*= Checkout Page
 -------------------------------------------------------------- */
-
 .sell-media-cart-items {
 	list-style: none;
 	margin: 0 0 2em;
@@ -256,7 +253,6 @@ img {
 
 /*= Buttons
 -------------------------------------------------------------- */
-
 input[type="submit"].sell-media-button,
 .sell-media-button,
 #sell-media-submit {
@@ -293,7 +289,6 @@ input[type="submit"].sell-media-button,
 
 /*= Product Purchases
 -------------------------------------------------------------- */
-
 .sell-media-products {
 	font-size: 11px;
 	width: 100%;
@@ -320,7 +315,6 @@ input[type="submit"].sell-media-button,
 
 /*= Layouts
 -------------------------------------------------------------- */
-
 .sell-media {
 	width: 100%;
 	margin: 0 auto;
@@ -448,7 +442,6 @@ input[type="submit"].sell-media-button,
 
 /*= Galleries
 -------------------------------------------------------------- */
-
 .sell-media-gallery-page .sell-media-content {
 	float: none;
 	margin: 0;
@@ -543,13 +536,13 @@ input[type="submit"].sell-media-button,
 
 /*= Lightbox
 -------------------------------------------------------------- */
+.add-to-lightbox {
+	display: block;
+	font-size: 13px;
+	margin: $font-size 0;
+}
 
 .sell-media-meta {
-
-	.add-to-lightbox {
-		display: block;
-		margin: 1em 0;
-	}
 
 	.lightbox-notice.not-in-lightbox {
 		display: none;
@@ -796,7 +789,6 @@ input[type="submit"].sell-media-button,
 
 /*= Cart Fields
 -------------------------------------------------------------- */
-
 .sell-media-add-to-cart-fields {
 	border-top: 1px solid $border-color;
 
@@ -850,16 +842,6 @@ input[type="submit"].sell-media-button,
 .cart {
 	padding-left: 16px;
 	background: url(../images/cart.png) no-repeat 0 50%;
-}
-
-.add-to-lightbox {
-	text-decoration: none;
-	font-size: 11px;
-	color: $default-color;
-
-	&:hover {
-		color: $dark-color;
-	}
 }
 
 /*= Search
@@ -1231,4 +1213,8 @@ input.sell-media-search-text[type=text] {
 			width: 200px;
 		}
 	}
+}
+
+.sell-media-grid {
+	background-color: transparent !important;
 }

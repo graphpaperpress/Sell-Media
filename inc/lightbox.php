@@ -120,14 +120,11 @@ function sell_media_lightbox_query() {
             $class = ( $i %3 == 0 ) ? ' end' : '';
 
             $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid' . $class . '">';
-            $html .= '<div class="item-inner">';
-            $html .= '<a href="' . esc_url( $permalink ) . '">' . sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false ) . '</a>';
-            $html .= '<span class="item-overlay">';
-            $html .= '<h3><a href="' . esc_url( $permalink ) . '">' . get_the_title( $post_id ) . '</a></h3>';
-            $html .= sell_media_item_buy_button( $post_id, $attachment_id, 'text', __( 'Buy', 'sell_media' ), false );
+            $html .= '<a href="' . esc_url( $permalink ) . '" class="sell-media-item">';
+            $html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
+            $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
+            $html .= '</a>';
             $html .= sell_media_lightbox_link( $post_id, $attachment_id );
-            $html .= '</span>';
-            $html .= '</div>';
             $html .= '</div>';
         }
 
