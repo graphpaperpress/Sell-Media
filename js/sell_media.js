@@ -15,15 +15,24 @@ jQuery(document).ready(function($){
      */
     sm_update_cart_menu();
 
+    /**
+     * Dialog resize
+     */
+    function popup_resize(){
+        // assign values to the overlay and dialog box and show overlay and dialog
+        var width = $(window).width();
+        var height = $(document).height();
+        
+        $('.sell-media-dialog-box').width(width).height(height)
+    }
+
     /** 
      * Dialog popup
      */
     function popup(message){
-        // assign values to the overlay and dialog box and show overlay and dialog
-        var width = $(window).width();
-        var height = $(document).height();
+        popup_resize();
+        $('.sell-media-dialog-box').addClass('is-visible');
         var dialogTop = $(document).scrollTop() + 25;
-        $('.sell-media-dialog-box').width(width).height(height).addClass('is-visible');
         $('.sell-media-dialog-box #sell-media-dialog-box-target').css({top:dialogTop});
     }
 
@@ -109,7 +118,8 @@ jQuery(document).ready(function($){
      */
     $(window).resize(function(){
         //only do it if the dialog box is not hidden
-        if (!$('.sell-media-dialog-box').is(':hidden')) popup();
+        // if ($('.sell-media-dialog-box').is(':visible')) popup();
+        popup_resize();
     });
 
     /**
