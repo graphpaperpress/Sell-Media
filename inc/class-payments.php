@@ -14,8 +14,6 @@ Class SellMediaPayments {
 
 
     public function __construct(){
-        // add_action( 'wp_ajax_nopriv_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
-        // add_action( 'wp_ajax_sell_media_verify_callback', array( &$this, 'sell_media_verify_callback' ) );
     }
 
 
@@ -757,95 +755,5 @@ Class SellMediaPayments {
         return ( $r ) ? "Sent to: {$email}" : "Failed to send to: {$email}";
     }
 
-
-    /**
-     * Determine the price of all items in the cart that is being sent during checkout and set it.
-     */
-    public function sell_media_verify_callback(){
-
-        ini_set( 'display_errors', 0 );
-
-        check_ajax_referer( 'validate_cart', 'security' );
-
-        $settings = sell_media_get_plugin_options();
-
-        // Our PayPal settings
-        $args = array(
-            'currency_code' => $settings->currency,
-            'business'      => $settings->paypal_email,
-            'return'        => get_permalink( $settings->thanks_page ),
-            'notify_url'    => site_url( '?sell_media-listener=IPN' )
-        );
-
-        $cart = $_POST['cart'];
-
-        // Set discount code id to 0 if it isn't in cart array
-        if ( empty( $cart['custom'] ) )
-            $cart['custom'] = 0;
-
-        // Count the number of keys that match the pattern "item_number_"
-        $cart_count = count( preg_grep( '/^item_number_/', array_keys( $cart ) ) );
-        $cnt = 0;
-        for( $i=1; $i <= $cart_count; $i++ ) {
-            $cnt += $cart['quantity_' . $i];
-        }
-        $sub_total = 0;
-        $shipping_flag = false;
-        for( $i=1; $i <= $cart_count; $i++ ) {
-
-            $product_id = $cart[ 'item_number_' . $i ];
-            $type = empty( $cart[ 'os0_' . $i ] ) ? null : $cart[ 'os0_' . $i ];
-            $cart[ 'os1_' . $i ] = null; // Remove image url from the paypal checkout page
-            $price_id = empty( $cart[ 'os2_' . $i ] ) ? null : $cart[ 'os2_' . $i ];
-            $license_id = empty( $cart[ 'os5_' . $i ] ) ? null : $cart[ 'os5_' . $i ];
-
-            // this is a download with an assigned license, so add license markup
-            if ( ! empty( $license_id ) || $license_id != "undefined" ) {
-                $price = Sell_Media()->products->verify_the_price( $product_id, $price_id );
-                $markup = Sell_Media()->products->markup_amount( $product_id, $price_id, $license_id );
-                $amount = $price + $markup;
-            } else {
-                // this is either a download without a license or a print, so just verify the price
-                $amount = Sell_Media()->products->verify_the_price( $product_id, $price_id );
-            }
-            $cart[ 'amount_' . $i ] = number_format( apply_filters( 'sell_media_price_filter', $amount, $cart['custom'], $cnt ), 2, '.', '' );
-            $sub_total += $cart[ 'amount_' . $i ] * $cart['quantity_' . $i];
-        }
-
-
-        // Add shipping
-        if ( $shipping_flag ){
-            switch( $settings->reprints_shipping ){
-                case 'shippingFlatRate':
-                    $shipping_amount = $settings->reprints_shipping_flat_rate;
-                    break;
-                case 'shippingQuantityRate':
-                    $shipping_amount = $settings->reprints_shipping_quantity_rate;
-                    break;
-                case 'shippingTotalRate':
-                    $shipping_amount = $settings->reprints_shipping_total_rate;
-                    break;
-                default:
-                    $shipping_amount = 0;
-                    break;
-            }
-        } else {
-            $shipping_amount = 0;
-        }
-        $cart['handling'] = number_format( $shipping_amount, 2, '.', '' );
-
-
-        // If tax is enabled, tax the order
-        if ( $settings->tax ) {
-            // Cannot validate taxes because of qty
-            // So just get the tax rate from local storage
-            //$cart['tax_cart'] = $cart['tax_cart'];
-            // If we could validate taxes, we could start here:
-            $tax_amount = ( $settings->tax_rate * $sub_total );
-            $cart['tax_cart'] = number_format( $tax_amount, 2, '.', '' );
-        }
-
-        wp_send_json( array( 'cart' => $cart ) );
-    }
 }
 new SellMediaPayments;
