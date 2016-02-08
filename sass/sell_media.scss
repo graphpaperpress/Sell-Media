@@ -752,6 +752,10 @@ input[type="submit"].sell-media-button,
 	#sell-media-dialog-box-target {
     	max-height: 500px;
     	width: 500px; 
+
+    	.content{
+    		padding: 5px 10px;
+    	}
     }
 
 	@media only screen and (max-width : 768px) {
@@ -789,6 +793,7 @@ input[type="submit"].sell-media-button,
 
 		select {
 			float: left;
+			width:80%;
 		}
 	}
 
