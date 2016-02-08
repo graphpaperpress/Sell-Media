@@ -783,13 +783,12 @@ input[type="submit"].sell-media-button,
 
 		legend {
 			float: left;
-			width: 35%;
+			display: block;
 			margin-right: 5%;
 		}
 
 		select {
 			float: left;
-			width: 60%;
 		}
 	}
 
