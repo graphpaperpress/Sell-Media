@@ -341,16 +341,10 @@ function sell_media_cart_dialog(){
     }
 
     // Check if on Sell Media taxonomy archive page
-    $taxonomy = false;
-    $taxonomy_objects = get_object_taxonomies( $post_type );
-    if ( $taxonomy_objects ) foreach ( $taxonomy_objects as $taxonomy_object ) {
-        if ( is_tax( $taxonomy_object ) ) {
-            $taxonomy = true;
-        }
-    }
+    $sell_media_taxonomies = get_object_taxonomies( $post_type );
 
     // Only inject markup on specific pages
-    if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || $shortcode || $taxonomy ) {
+    if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode ) {
         $popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
 
         if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>

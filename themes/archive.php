@@ -11,6 +11,7 @@ get_header();
 global $wp_query;
 $settings = sell_media_get_plugin_options();
 ?>
+
     <div id="sell-media-archive" class="sell-media">
         <div id="content" role="main">
 

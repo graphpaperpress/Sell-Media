@@ -212,4 +212,16 @@ jQuery( document ).ready(function( $ ){
         $('#collection_icon_target img').remove();
     });
 
+    /**
+     * Remove thumbnail icon for collections
+     */
+    $(document).ajaxComplete(function( event, xhr, settings ){
+        /**
+         * We should somehow intercept the correct event among lots of them fired by WordPress
+         */
+        $('#collection_icon_target img').remove();
+
+    });
+
 });
+

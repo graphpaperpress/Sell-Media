@@ -533,6 +533,36 @@ input[type="submit"].sell-media-button,
 	}
 }
 
+/*= Overlays
+-------------------------------------------------------------- */
+.item-inner {
+	background: $black-color;
+
+	.item-overlay {
+		opacity: 0;
+		transition: all 0.25s ease;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	img {
+		opacity: 1;
+		transition: all 0.25s ease;
+	}
+
+	&:hover {
+		.item-overlay {
+			opacity: 1;
+		}
+		
+		img {
+			opacity: .5 !important;
+		}
+	}
+}
+
 
 /*= Lightbox
 -------------------------------------------------------------- */
@@ -563,7 +593,6 @@ input[type="submit"].sell-media-button,
 
 /*= Pagination
 -------------------------------------------------------------- */
-
 .sell-media-pagination-container {
 	clear: both;
 	margin: 3em auto;
@@ -577,7 +606,6 @@ input[type="submit"].sell-media-button,
 
 /*= Quick View Dialog
 -------------------------------------------------------------- */
-
 .sell-media-dialog-overlay {
 	width: 100%;
 	height: 100%;
@@ -847,7 +875,6 @@ input[type="submit"].sell-media-button,
 
 /*= Search
 -------------------------------------------------------------- */
-
 .sell-media-search {
 	clear: both;
 	height: 90px;
@@ -971,7 +998,6 @@ input.sell-media-search-text[type=text] {
 
 /*= Shortcodes
 -------------------------------------------------------------- */
-
 /*  sell_media_shortcode_all */
 .sell-media-shortcode-all h3 {
 	float: left;
@@ -1039,7 +1065,6 @@ input.sell-media-search-text[type=text] {
 
 /*= Form styling
 ------------------------------------------------------------------- */
-
 .sell-media-form input[type="number"].small-text {
 	width: 40px;
 }
@@ -1089,7 +1114,6 @@ input.sell-media-search-text[type=text] {
 
 /*= Terms and Conditions
 -----------------------------------------------------------------------*/
-
 #terms-and-conditions-dialog {
 	z-index: 10000;
 	position: absolute;
@@ -1121,7 +1145,6 @@ input.sell-media-search-text[type=text] {
 
 /*= Error styling
 -------------------------------------------------------------- */
-
 .sell-media-error {
 	font-size: 13px;
 	margin: 0 0 0 7px;
@@ -1130,7 +1153,6 @@ input.sell-media-search-text[type=text] {
 
 /*= Clearing Floats
 -------------------------------------------------------------- */
-
 .cf:before,
 .cf:after,
 .sell-media-grid-container:before,
@@ -1148,7 +1170,6 @@ input.sell-media-search-text[type=text] {
 
 /*= Lightbox & Checkout counters
 -------------------------------------------------------------- */
-
 .lightbox-counter,
 .checkout-counter,
 .checkout-price,

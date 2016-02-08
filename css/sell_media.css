@@ -410,6 +410,23 @@ input[type="submit"].sell-media-button,
   .sell-media-grid a:hover .quick-view {
     margin-bottom: 0; }
 
+/*= Overlays
+-------------------------------------------------------------- */
+.item-inner {
+  background: #000; }
+  .item-inner .item-overlay {
+    opacity: 0;
+    transition: all 0.25s ease; }
+  .item-inner a {
+    text-decoration: none; }
+  .item-inner img {
+    opacity: 1;
+    transition: all 0.25s ease; }
+  .item-inner:hover .item-overlay {
+    opacity: 1; }
+  .item-inner:hover img {
+    opacity: .5 !important; }
+
 /*= Lightbox
 -------------------------------------------------------------- */
 .add-to-lightbox {
