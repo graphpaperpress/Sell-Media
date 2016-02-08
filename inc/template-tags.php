@@ -328,6 +328,10 @@ function sell_media_get_taxonomy_terms( $taxonomy ){
 function sell_media_cart_dialog(){
 
     global $post;
+
+    if ( empty( $post ) )
+        return;
+    
     $post_type = 'sell_media_item';
     $settings = sell_media_get_plugin_options();
 
