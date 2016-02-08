@@ -745,39 +745,39 @@ input[type="submit"].sell-media-button,
 		color: $light-color;
 		font-size: 11px;
 	}
+}
 
-	.total-container,
-	.button-container {
-		clear: both;
-		margin: $font-size 0 0;
-	}
+.total-container,
+.button-container {
+	clear: both;
+	margin: $font-size 0 0;
+}
 
-	.total-container {
-		text-transform: uppercase;
-	}
+.total-container {
+	text-transform: uppercase;
+}
 
-	.price-container {
-		color: green;
-	}
+.price-container {
+	color: green;
+}
 
-	.subtotal {
-		font-weight: bold;
-		margin-bottom: $line-height;
-	}
+.subtotal {
+	font-weight: bold;
+	margin-bottom: $line-height;
+}
 
-	.cart {
-		padding-left: 16px;
-		background: url(../images/cart.png) no-repeat 0 50%;
-	}
+.cart {
+	padding-left: 16px;
+	background: url(../images/cart.png) no-repeat 0 50%;
+}
 
-	.add-to-lightbox {
-		text-decoration: none;
-		font-size: 11px;
-		color: $default-color;
+.add-to-lightbox {
+	text-decoration: none;
+	font-size: 11px;
+	color: $default-color;
 
-		&:hover {
-			color: $dark-color;
-		}
+	&:hover {
+		color: $dark-color;
 	}
 }
 
