@@ -112,6 +112,9 @@ img {
 		.item-details,
 		.item-qty-total {
 			@extend .sell-media-three-col;
+			.item-increment{
+				line-height:0px
+			}
 		}
 
 		// make into two columns
