@@ -518,9 +518,12 @@ input[type="submit"].sell-media-button,
 			font-size: $font-size * .75;
 			letter-spacing: 1px;
 			position: absolute;
-			left: 0;
 			bottom: 0;
-			margin-bottom: -40px;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: -42px;
 			color: $white-color;
 			background: $dark-opaque;
 			text-align: center;
@@ -563,26 +566,26 @@ input[type="submit"].sell-media-button,
 		position: absolute;
 		top: 50%;
 		left: 50%;
-  		transform: translate(-50%, -50%);
-  		width: 80%;
-    	text-align: center;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		text-align: center;
 		text-transform: none;
 		font-size: $font-size;
 		letter-spacing: 0;
 
-    	.sell-media-collection-details {
-    		font-size: $font-size;
-    		line-height: $font-size * 1.5;
-    		display: block;
-    		padding: 0;
-    		position: relative;
-    		width: 100%;
-    	}
+		.sell-media-collection-details {
+			font-size: $font-size;
+			line-height: $font-size * 1.5;
+			display: block;
+			padding: 0;
+			position: relative;
+			width: 100%;
+		}
 
-    	.sell-media-collection-count,
-    	.sell-media-collection-price {
-    		display: block;
-    	}
+		.sell-media-collection-count,
+		.sell-media-collection-price {
+			display: block;
+		}
 	}
 
 	a {
@@ -601,22 +604,22 @@ input[type="submit"].sell-media-button,
 		-moz-transition: opacity .25s ease-in-out;
 		-webkit-transition: opacity .25s ease-in-out;
 		position: absolute;
-		    bottom: 0 !important; /* override legacy theme styles */
-	    	top: auto !important; /* override legacy theme styles */
-	    text-align: left;
-	    text-transform: uppercase;
-	    margin: 0 !important; /* override legacy theme styles */
-	    padding: 10px !important; /* override legacy theme styles */
-	    width: 100% !important; /* override legacy theme styles */
-	    max-width: 100% !important; /* override legacy theme styles */
-	    box-sizing: border-box;
-	    background: $dark-opaque;
-	    color: $white-color;
-	    font-size:  12px !important; /* override legacy theme styles */
-	    letter-spacing: 1px;
-	    font-style: normal;
-	    font-weight: normal;
-	    line-height: $font-size !important; /* override legacy theme styles */
+			bottom: 0 !important; /* override legacy theme styles */
+			top: auto !important; /* override legacy theme styles */
+		text-align: left;
+		text-transform: uppercase;
+		margin: 0 !important; /* override legacy theme styles */
+		padding: 10px !important; /* override legacy theme styles */
+		width: 100% !important; /* override legacy theme styles */
+		max-width: 100% !important; /* override legacy theme styles */
+		box-sizing: border-box;
+		background: $dark-opaque;
+		color: $white-color;
+		font-size:  12px !important; /* override legacy theme styles */
+		letter-spacing: 1px;
+		font-style: normal;
+		font-weight: normal;
+		line-height: $font-size !important; /* override legacy theme styles */
 	}
 
 	&:hover {
@@ -687,7 +690,7 @@ input[type="submit"].sell-media-button,
 	background: rgba(0, 0, 0, 0.7);
 	box-shadow: 0 12px 30px $dark-opaque;
 	height: 100%;
-  	width: 100%;
+	width: 100%;
 	box-sizing: border-box;
 	z-index: 5000;
 	opacity: 0;
@@ -807,10 +810,10 @@ input[type="submit"].sell-media-button,
 
 	#sell-media-dialog-box-target {
 		background: $white-color;
-	    position: relative;
-	    max-width: 1000px;
-	    width: 80%;
-	    margin: 4em auto;
+		position: relative;
+		max-width: 1000px;
+		width: 80%;
+		margin: 4em auto;
 
 		opacity: 0;
 		visibility: hidden;
@@ -834,7 +837,7 @@ input[type="submit"].sell-media-button,
 		transition-duration: 0.3s;
 	}
 
-    &.is-visible {
+	&.is-visible {
 		opacity: 1;
 		visibility: visible;
 		-webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
@@ -859,31 +862,31 @@ input[type="submit"].sell-media-button,
 		}
 	}
 
-    @media only screen and (min-width: 1170px) {
-    	#sell-media-dialog-box-target {
-        	margin: 8em auto; 
-        } 
-    }
+	@media only screen and (min-width: 1170px) {
+		#sell-media-dialog-box-target {
+			margin: 8em auto; 
+		} 
+	}
 }
 
 .sell-media-dialog-box-terms {
 	overflow: scroll;
 	#sell-media-dialog-box-target {
-    	max-height: 500px;
-    	width: 500px; 
+		max-height: 500px;
+		width: 500px; 
 
-    	.content{
-    		padding: 5px 10px;
-    	}
-    }
+		.content{
+			padding: 5px 10px;
+		}
+	}
 
 	@media only screen and (max-width : 768px) {
 
 		overflow: scroll;
 		#sell-media-dialog-box-target {
-	    	max-height: 500px;
-	    	width: 302px; 
-	    }
+			max-height: 500px;
+			width: 302px; 
+		}
 
 	}
 }

@@ -402,9 +402,12 @@ input[type="submit"].sell-media-button,
     font-size: 12px;
     letter-spacing: 1px;
     position: absolute;
-    left: 0;
     bottom: 0;
-    margin-bottom: -40px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -42px;
     color: #fff;
     background: rgba(0, 0, 0, 0.5);
     text-align: center;

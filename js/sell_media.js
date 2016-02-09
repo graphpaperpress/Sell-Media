@@ -11,6 +11,11 @@ jQuery(document).ready(function($){
 	required_fields();
 
 	/**
+	 * Resize item overlays to fit image
+	 */
+	resize_item_overlay();
+
+	/**
 	 * Popup resize
 	 */
 	function popup_resize(){
@@ -120,7 +125,18 @@ jQuery(document).ready(function($){
 		//only do it if the dialog box is not hidden
 		// if ($('.sell-media-dialog-box').is(':visible')) popup();
 		popup_resize();
+		resize_item_overlay();
 	});
+
+	/**
+	 * Resize item overlays to match image
+	 */
+	function resize_item_overlay(){
+		$('#sell-media-archive .sell-media-item').each(function(i,elem) {
+			var width = $(this).children('img').width();
+			$(this).find('.quick-view').css({'width':width});
+		});
+	}
 
 	/**
 	* Checkout click
