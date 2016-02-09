@@ -11,11 +11,6 @@ jQuery(document).ready(function($){
 	required_fields();
 
 	/**
-	 * Update menu cart qty and subtotal on load
-	 */
-	sm_update_cart_menu();
-
-	/**
 	 * Popup resize
 	 */
 	function popup_resize(){
@@ -293,6 +288,11 @@ jQuery(document).ready(function($){
 	// Checkout qty menu
 	$('(<span class="sell-media-cart-quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
 
+	/**
+	 * Update menu cart qty and subtotal on load
+	 */
+	sm_update_cart_menu();
+	
 	// Reload current location
 	$('.reload').click(function() {
 		location.reload();
@@ -353,20 +353,11 @@ jQuery(document).ready(function($){
  * Update the menu cart with Qty and Subtotal
  */
 function sm_update_cart_menu(){
-
-	var data = {
-		action: 'sell_media_cart_menu'
-	};
-
-	jQuery.ajax({
-		type: 'POST',
-		url: sell_media.ajaxurl,
-		data: data,
-		success: function(msg){
-			jQuery('.checkout-price').text(msg.subtotal);
-			jQuery('.checkout-counter').text(msg.qty);
-		}
-	});
+	var sm_cart_info = jQuery.parseJSON( jQuery.cookie('sm_cart_info') );
+	jQuery('.checkout-price').text( sm_cart_info.subtotal );
+	jQuery('.checkout-counter').text( sm_cart_info.qty )
+	jQuery('.checkout-counter').addClass('ert435');
+	console.log( sm_cart_info.qty );
 }
 
 /**
