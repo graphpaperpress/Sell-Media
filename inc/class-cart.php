@@ -333,12 +333,14 @@ class SellMediaCart {
 	 */
 	private function write() {
 		$_SESSION[ $this->session_id ] = '';
+		$total_cart_qty = 0;
 		foreach ( $this->items as $id => $item ) {
 			if ( ! $id ) {
 				continue; 
 			}
 
 			$_SESSION[ $this->session_id ][ $id ] = $item;
+			$total_cart_qty += $item['qty'];
 		}
 		$_SESSION[ $this->session_id . '_attributes' ] = '';
 		foreach ( $this->attributes as $id => $attributes ) {
@@ -350,6 +352,11 @@ class SellMediaCart {
 		}
 
 		$_SESSION[ $this->session_id . '_attributes' ] = rtrim( $_SESSION[ $this->session_id . '_attributes' ], ';' );
+
+		$sm_cart_info['qty'] = $total_cart_qty;
+		$sm_cart_info['subtotal'] = $this->getSubtotal();
+
+		setcookie ("sm_cart_info", json_encode( $sm_cart_info ), time() +604800, '/' );
 
 		if ( $this->cookie ) {
 			setcookie( $this->session_id, serialize( $_SESSION[ $this->session_id ] ), time() + 604800 );
