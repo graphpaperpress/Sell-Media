@@ -355,17 +355,18 @@ function sell_media_cart_dialog(){
             <div id="sell-media-dialog-box" class="sell-media-dialog-box">
                 <div id="sell-media-dialog-box-target"></div>
             </div>
-        <?php endif; ?>
-        <?php if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) : ?>
-            <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms">
-                <div id="sell-media-dialog-box-target">
-                    <span class="close">&times;</span>
-                    <div class="content">
-                        <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
-                    </div>
+        <?php endif; 
+    }
+    if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ){ ?>
+        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms">
+            <div id="sell-media-dialog-box-target">
+                <span class="close">&times;</span>
+                <div class="content">
+                    <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
                 </div>
             </div>
-        <?php endif;        
+        </div>
+    <?php 
     }
 }
 add_action( 'wp_footer', 'sell_media_cart_dialog' );
