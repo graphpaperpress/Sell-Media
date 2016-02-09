@@ -218,7 +218,7 @@ jQuery(document).ready(function($){
 	/**
 	 * Lightbox
 	 */
-	$( document ).on( 'click', '.add-to-lightbox', function( event ) {
+	$( document ).on( 'click', '.sell-media-add-to-lightbox', function( event ) {
 
 		event.preventDefault();
 
@@ -257,7 +257,7 @@ jQuery(document).ready(function($){
 		var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
 
 		if ( emptied ) {
-			$('.sell-media-grid-container').remove();
+			$('.sell-media-grid-item-container').remove();
 			$(this).text($(this).data('empty-text'));
 			$(this).removeClass('empty-lightbox');
 			$('.lightbox-counter').text(0);
@@ -439,7 +439,7 @@ function sm_update_cart_totals(){
 		var grand_total = parseFloat( grand_total )  + parseFloat( total_shipping );
 	}
 	
-	// Show sub total.
+	// Show subtotal.
 	jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal.toFixed( 2 ) );
 
 	// Show tax.

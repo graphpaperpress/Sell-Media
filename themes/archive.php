@@ -37,7 +37,7 @@ $settings = sell_media_get_plugin_options();
                 <?php echo do_shortcode( '[sell_media_searchform]' ); ?>
             </header>
 
-            <div class="sell-media-grid-container">
+            <div class="sell-media-grid-item-container">
 
             <?php
             // check if this term has child terms, if so, show terms
@@ -74,15 +74,15 @@ $settings = sell_media_get_plugin_options();
 
                         if ( $post_count != 0 ) : $i++; ?>
 
-                            <div class="sell-media-grid<?php if ( $i %3 == 0 ) echo ' end'; ?>">
-                                <div class="item-inner sell-media-collection">
+                            <div class="sell-media-grid-item<?php if ( $i %3 == 0 ) echo ' end'; ?>">
+                                <div class="sell-media-item-wrap sell-media-collection">
                                     <a href="<?php echo get_term_link( $child ); ?>" class="collection">
 
-                                        <div class="item-overlay">
-                                            <div class="collection-details">
+                                        <div class="sell-media-item-details">
+                                            <div class="sell-media-collection-details">
                                                 <h3 class="collection-title"><?php echo $child->name; ?></h3>
-                                                <span class="collection-count"><span class="count"><?php echo $post_count; ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo $child->name; ?></span><?php _e(' collection', 'sell_media'); ?></span>
-                                                <span class="collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price"><?php echo sell_media_get_currency_symbol(); ?><?php echo $settings->default_price; ?></span></span>
+                                                <span class="sell-media-collection-count"><span class="count"><?php echo $post_count; ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo $child->name; ?></span><?php _e(' collection', 'sell_media'); ?></span>
+                                                <span class="sell-media-collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price"><?php echo sell_media_get_currency_symbol(); ?><?php echo $settings->default_price; ?></span></span>
                                             </div>
                                         </div>
                                         <?php
@@ -106,7 +106,7 @@ $settings = sell_media_get_plugin_options();
                                             ?>
                                         <?php endforeach; ?>
                                     </a>
-                                </div><!-- .item-inner -->
+                                </div><!-- .sell-media-item-wrap -->
                             </div>
                         <?php endif; ?><!-- loop over term children -->
                     <?php } ?><!-- show child terms check -->
@@ -128,7 +128,7 @@ $settings = sell_media_get_plugin_options();
 
             <?php endif; ?><!-- show child terms check -->
 
-            </div><!-- .sell-media-grid-container -->
+            </div><!-- .sell-media-grid-item-container -->
             <?php 
             if( !$children ){
                 echo sell_media_pagination_filter( $wp_query->max_num_pages ); 

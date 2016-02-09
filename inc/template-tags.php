@@ -170,7 +170,7 @@ function sell_media_gallery( $post_id ) {
                 $attr = array(
                     'class' => 'sell-media-image sell_media_image sell_media_watermark'
                 );
-                $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid">';
+                $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid-item">';
                 $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '">';
                 $html .= wp_get_attachment_image( $attachment_id, 'medium', '', $attr );
                 $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
@@ -197,11 +197,11 @@ function sell_media_gallery_navigation( $attachment_id ) {
     $current_image = array_search( $attachment_id, $attachment_ids );
 
     $html = '<span class="sell-media-gallery-nav">';
-    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Thumbnails', 'sell_media' ) . '"><span class="dashicons dashicons-screenoptions"></span></a>';
+    $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Thumbnails', 'sell_media' ) . '">' . __( 'Back to Thumbnails', 'sell_media' ) . '</a>';
     if ( array_key_exists( $current_image - 1, $attachment_ids ) )
-        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt"></span></a>';
+        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt2"></span></a>';
     if ( array_key_exists( $current_image + 1, $attachment_ids ) )
-        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-right-alt"></span></a>';
+        $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-right-alt2"></span></a>';
     $html .= '</span>';
 
     return apply_filters( 'sell_media_gallery_navigation', $html, $attachment_id );
@@ -214,7 +214,7 @@ function sell_media_gallery_navigation( $attachment_id ) {
 function sell_media_content_loop( $post_id, $i ){
     $class = ( $i %3 == 0 ) ? ' end' : '';
 
-    $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid' . $class . '">';
+    $html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid-item' . $class . '">';
     $html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
     $html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
     if ( ! sell_media_has_multiple_attachments( $post_id ) ) {

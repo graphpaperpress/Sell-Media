@@ -111,7 +111,7 @@ $image_id = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id
 
             <div class="button-container group">
                 <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
-                <p id="sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id ); ?></p>
+                <p id="sell-media-sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id ); ?></p>
             </div>
 
             <?php sell_media_plugin_credit(); ?>

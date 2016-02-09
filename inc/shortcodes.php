@@ -124,7 +124,7 @@ function sell_media_all_items_shortcode( $atts ){
         'show' => get_option( 'posts_per_page' )
         ), $atts )
     );
-    //$class = ( $columns ) ? 'sell-media-grid sell-media-grid-' . $columns : 'sell-media-grid';
+    //$class = ( $columns ) ? 'sell-media-grid-item sell-media-grid-item-' . $columns : 'sell-media-grid-item';
 
     $args = array(
         'posts_per_page' => $show,
@@ -151,13 +151,13 @@ function sell_media_all_items_shortcode( $atts ){
     if ( $wp_query->have_posts() ) :
 
         $html = '<div class="sell-media">';
-        $html .= '<div class="sell-media-grid-container">';
+        $html .= '<div class="sell-media-grid-item-container">';
 
         while ( $wp_query->have_posts() ) : $wp_query->the_post(); $i++;
             $html .= apply_filters( 'sell_media_content_loop', get_the_id(), $i );
         endwhile; wp_reset_query(); $i = 0;
 
-        $html .= '</div><!-- .sell-media-grid-container -->';
+        $html .= '</div><!-- .sell-media-grid-item-container -->';
         if ( ! is_front_page() && is_main_query() )
             $html .= sell_media_pagination_filter( $wp_query->max_num_pages );
         $html .= '</div><!-- #sell-media-shortcode-all .sell_media -->';
@@ -430,7 +430,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
         $html = null;
         $html .= '<div class="sell-media-collections-shortcode sell-media">';
-        $html .= '<div class="sell-media-grid-container">';
+        $html .= '<div class="sell-media-grid-item-container">';
 
         $taxonomy = 'collection';
         $term_ids = array();
@@ -471,8 +471,8 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
             if ( $post_count != 0 ) :
 
-                $html .= '<div class="sell-media-grid third">';
-                $html .= '<div class="item-inner sell-media-collection">';
+                $html .= '<div class="sell-media-grid-item third">';
+                $html .= '<div class="sell-media-item-wrap sell-media-collection">';
                     $args = array(
                             'posts_per_page' => 1,
                             'taxonomy' => 'collection',
@@ -489,12 +489,12 @@ function sell_media_list_all_collections_shortcode( $atts ) {
                         $html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ), false );
                         if ( 'true' == $details ) {
                             $settings = sell_media_get_plugin_options();
-                            $html .= '<div class="item-overlay">';
-                            $html .= '<div class="collection-details">';
-                            $html .= '<span class="collection-count">';
+                            $html .= '<div class="sell-media-item-details">';
+                            $html .= '<div class="sell-media-collection-details">';
+                            $html .= '<span class="sell-media-collection-count">';
                             $html .= '<span class="count">' . $post_count . '</span>' .  __( ' images in ', 'sell_media' ) . '<span class="collection">' . $term->name . '</span>' . __(' collection', 'sell_media');
                             $html .= '</span>';
-                            $html .= '<span class="collection-price">';
+                            $html .= '<span class="sell-media-collection-price">';
                             $html .=  __( 'Starting at ', 'sell_media' ) . '<span class="price">' . sell_media_get_currency_symbol() . $settings->default_price . '</span>';
                             $html .= '</span>';
                             $html .= '</div>';

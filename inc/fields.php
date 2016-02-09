@@ -87,7 +87,7 @@ function sell_media_add_to_cart_fields( $post_id=null, $attachment_id=null ) {
 
         <div class="button-container cf">
             <p id="sell-media-add-to-cart"><button class="item_add sell-media-button" <?php if ( ! $is_package && $has_price_group ) echo 'disabled'; ?>><?php _e( 'Add to cart', 'sell_media' ); ?></button></p>
-            <p id="sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id ); ?></p>
+            <p id="sell-media-sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id ); ?></p>
         </div>
 
     </div><!-- .sell-media-add-to-cart-fields -->

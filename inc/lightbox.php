@@ -20,7 +20,7 @@ function sell_media_lightbox_link( $post_id=null, $attachment_id=null ) {
     $item['post_id']        = $post_id;
     $item['attachment_id']  = ( ! empty( $attachment_id ) ) ? $attachment_id : sell_media_get_attachment_id( $post_id );
 
-    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="add-to-lightbox" data-id="' . $post_id . '" data-attachment-id="' . $item['attachment_id'] . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
+    $html = '<a href="javascript:void(0);" title="' . sell_media_get_lightbox_text( $item ) . '" id="lightbox-' . $post_id . '" class="sell-media-add-to-lightbox" data-id="' . $post_id . '" data-attachment-id="' . $item['attachment_id'] . '">' . sell_media_get_lightbox_text( $item ) . '</a>';
 
     // display lightbox notice on single posts
     if ( is_single() ) {
@@ -81,7 +81,7 @@ function sell_media_lightbox_shortcode() {
     if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
          $html .= '<p class="empty-lightbox" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove all from lightbox', 'sell_media' ) . '</p>';
     }
-    $html .= '<div id="sell-media-grid-container" class="sell-media-grid-container">';
+    $html .= '<div id="sell-media-grid-item-container" class="sell-media-grid-item-container">';
     $html .= sell_media_lightbox_query();
     $html .= '</div>';
     $html .= '</div>';
@@ -119,7 +119,7 @@ function sell_media_lightbox_query() {
             $i++;
             $class = ( $i %3 == 0 ) ? ' end' : '';
 
-            $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid' . $class . '">';
+            $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid-item' . $class . '">';
             $html .= '<a href="' . esc_url( $permalink ) . '" class="sell-media-item">';
             $html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
             $html .= '<div class="quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
