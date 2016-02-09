@@ -23,7 +23,7 @@ jQuery(document).ready(function($){
 		var width = $(window).width();
 		var height = $(document).height();
 		
-		$('#sell-media-dialog-box').width(width).height(height)
+		$('.sell-media-dialog-box').width(width).height(height)
 	}
 
 	/** 
@@ -31,9 +31,9 @@ jQuery(document).ready(function($){
 	 */
 	function popup(message){
 		popup_resize();
-		$('#sell-media-dialog-box').addClass('is-visible');
+		$('.sell-media-dialog-box').addClass('is-visible');
 		var dialogTop = $(document).scrollTop() + 25;
-		$('#sell-media-dialog-box #sell-media-dialog-box-target').css({top:dialogTop});
+		$('.sell-media-dialog-box #sell-media-dialog-box-target').css({top:dialogTop});
 	}
 
 	/**
@@ -98,6 +98,7 @@ jQuery(document).ready(function($){
 	 * launch our dialog to load the terms of service.
 	 */
 	$(document).on('click','.sell-media-empty-dialog-trigger',function(){
+		$('#sell-media-dialog-box-target').addClass('loaded');
 		popup();
 	});
 
@@ -108,7 +109,10 @@ jQuery(document).ready(function($){
 		if( $(event.target).is('.close') || $(event.target).is('.sell-media-dialog-box') ) {
 			event.preventDefault();
 			$(this).removeClass('is-visible');
-			$('#sell-media-dialog-box-target').html('').removeClass('loaded');
+			$('#sell-media-dialog-box-target').removeClass('loaded');
+			if( 'sell-media-empty-dialog-box' !== $(this).attr( 'id' ) ){
+				$('#sell-media-dialog-box-target').html('');
+			}
 		}
 	});
 	/**
