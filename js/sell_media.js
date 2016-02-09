@@ -346,7 +346,6 @@ function sm_update_cart_menu(){
 	var sm_cart_info = jQuery.parseJSON( jQuery.cookie('sm_cart_info') );
 	jQuery('.checkout-price').text( sm_cart_info.subtotal );
 	jQuery('.checkout-counter').text( sm_cart_info.qty );
-	console.log( sm_cart_info.qty );
 }
 
 /**
