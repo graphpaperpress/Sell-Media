@@ -344,8 +344,10 @@ jQuery(document).ready(function($){
  */
 function sm_update_cart_menu(){
 	var sm_cart_info = jQuery.parseJSON( jQuery.cookie('sm_cart_info') );
-	jQuery('.checkout-price').text( sm_cart_info.subtotal );
-	jQuery('.checkout-counter').text( sm_cart_info.qty );
+	if( sm_cart_info != null ){
+		jQuery('.checkout-price').text( sm_cart_info.subtotal );
+		jQuery('.checkout-counter').text( sm_cart_info.qty );
+	}
 }
 
 /**
