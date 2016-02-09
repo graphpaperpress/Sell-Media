@@ -40,7 +40,7 @@ jQuery(document).ready(function($){
 	 * When the user clicks on our trigger we set-up the overlay,
 	 * launch our dialog, and send an Ajax request to load our cart form.
 	 */
-	$(document).on('click','.quick-view',function(event){
+	$(document).on('click','.sell-media-quick-view',function(event){
 
 		event.preventDefault();
 
@@ -135,7 +135,7 @@ jQuery(document).ready(function($){
 	function resize_item_overlay(){
 		$('#sell-media-archive .sell-media-item').each(function(i,elem) {
 			var width = $(this).children('img').width();
-			$(this).find('.quick-view').css({'width':width});
+			$(this).find('.sell-media-quick-view').css({'width':width});
 		});
 	}
 
