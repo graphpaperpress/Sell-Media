@@ -115,6 +115,7 @@ jQuery(document).ready(function($){
 			}
 		}
 	});
+	
 	/**
 	 * Resize dialog
 	 * 

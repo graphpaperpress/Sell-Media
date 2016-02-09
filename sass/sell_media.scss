@@ -497,6 +497,7 @@ input[type="submit"].sell-media-button,
 -------------------------------------------------------------- */
 .sell-media-grid-item-container {
 	margin: $line-height 0;
+	position: relative;
 }
 
 .sell-media-grid-item {
@@ -718,16 +719,8 @@ input[type="submit"].sell-media-button,
 		margin: 0 0 $font-size;
 	}
 
-	figure {
-		display: block;
-		background-color: transparent;
-		padding: 0;
-		margin: 0;
-		width: 100%;
-
-		img {
-			float: left;
-		}
+	img {
+		float: left;
 	}
 
 	.quick-view-container {

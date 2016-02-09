@@ -387,7 +387,8 @@ input[type="submit"].sell-media-button,
 /*= Archives
 -------------------------------------------------------------- */
 .sell-media-grid-item-container {
-  margin: 25.6px 0; }
+  margin: 25.6px 0;
+  position: relative; }
 
 .sell-media-grid-item a {
   position: relative;
@@ -555,14 +556,8 @@ input[type="submit"].sell-media-button,
     color: #000; }
   .sell-media-dialog-box p {
     margin: 0 0 16px; }
-  .sell-media-dialog-box figure {
-    display: block;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    width: 100%; }
-    .sell-media-dialog-box figure img {
-      float: left; }
+  .sell-media-dialog-box img {
+    float: left; }
   .sell-media-dialog-box .quick-view-container {
     padding: 32px; }
     @media only screen and (max-width: 768px) {
