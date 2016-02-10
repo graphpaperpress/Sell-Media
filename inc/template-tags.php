@@ -38,6 +38,11 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
 function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
 	$size = 'medium';
 
+	/**
+	 * The $attachment_id might be empty if product doesn't have a featured image
+	 * and it was sold from a page without ?id (not a gallery).
+	 * If so, derive the $attachment_id from the post_meta of the product.
+	 */
 	$attachment_id = ( $attachment_id ) ? $attachment_id : sell_media_get_attachment_id( $post_id );
 
 	/**
@@ -45,6 +50,7 @@ function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
 	 * Otherwise, get the attributes of the featured image,
 	 * or finally the attached image.
 	 */
+	
 	// is gallery
 	if ( sell_media_has_multiple_attachments( $post_id ) ) {
 		$image_attributes = wp_get_attachment_image_src( $attachment_id, $size, true );
