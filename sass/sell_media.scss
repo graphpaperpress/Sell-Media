@@ -867,26 +867,27 @@ input[type="submit"].sell-media-button,
 				color: #fff;
 				top: 45%;
 				text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.53);
-				
+
 				span{
-			    	font-size: 80px;
+			    	font-size: 35px;
+					height: 40px;
+					width: 40px;
 			    }
 			}
 
 			.sell-media-dialog-box-prev {
-				left: -9%;
+				left: -40px;
 				float: left;
 			}
 
 			.sell-media-dialog-box-next {
 				float:right;
-				right: -3%;
+				right: -40px;
 			}
 			@media only screen and (max-width : 768px) {
 
 				.sell-media-dialog-box-next {
 					float:right;
-					right: 4%;
 				}
 
 			}
