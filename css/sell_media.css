@@ -115,9 +115,9 @@ a:focus {
           margin-right: 0; }
       .sell-media-cart-items li .item-qty-total .dashicons {
         font-size: 12px;
-        width: 24px;
-        height: 24px;
-        padding: 5px;
+        width: 12px;
+        height: 12px;
+        padding: 8px;
         text-align: center;
         border: 1px solid #d5d5d5;
         background: #eee;
@@ -1009,5 +1009,11 @@ input.sell-media-search-text[type=text] {
   max-width: 100%; }
   .sell-media-widget-thumb-wrap img {
     float: left; }
+
+/*= Overrides
+-------------------------------------------------------------- */
+.sell-media-single-one-col #main .sell-media-content,
+.sell-media-single-one-col #main .sell-media-meta {
+  width: 100%; }
 
 /*# sourceMappingURL=sell_media.css.map */

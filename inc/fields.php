@@ -6,8 +6,6 @@
 
 function sell_media_add_to_cart_fields( $post_id=null, $attachment_id=null ) {
 
-    // check if has attachment_id
-    $attachment_id = get_query_var( 'id' );
     // check if is package
     $is_package = Sell_Media()->products->is_package( $post_id );
     // check if has assigned price group

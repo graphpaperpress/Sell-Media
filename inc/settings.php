@@ -113,11 +113,11 @@ function sell_media_init_settings(){
 			"valid_options" => array(
 				1 => array(
 					'name' => 1,
-					'title' => 'Test Mode',
+					'title' => __( 'Test Mode', 'sell_media' ),
 					),
 				0 => array(
 					'name' => 0,
-					'title' => 'Live Mode'
+					'title' => __( 'Live Mode', 'sell_media' )
 					)
 			)
 		),
@@ -244,7 +244,7 @@ function sell_media_init_settings(){
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",
 			"type" => "select",
-			"default" => "two_col",
+			"default" => "sell-media-single-one-col",
 			"valid_options" => array(
 				"two_col" => array(
 					"name" => "sell-media-single-two-col",
@@ -307,7 +307,7 @@ function sell_media_init_settings(){
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",
 			"type" => "select",
-			"default" => 1,
+			"default" => 0,
 			"valid_options" => array(
 				0 => array(
 					"name" => 0,

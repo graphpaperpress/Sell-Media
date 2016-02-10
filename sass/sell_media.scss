@@ -130,10 +130,10 @@ a:focus {
 			}
 
 			.dashicons {
-				font-size: 12px;
-				width: 24px;
-				height: 24px;
-				padding: 5px;
+				font-size: $font-size * .75;
+				width: $font-size * .75;
+				height: $font-size * .75;
+				padding: $font-size * .5;
 				text-align: center;
 				border: 1px solid darken($border-color, 10%);
 				background: $border-color;
@@ -1328,5 +1328,15 @@ input.sell-media-search-text[type=text] {
 
 	img {
 		float: left;
+	}
+}
+
+/*= Overrides
+-------------------------------------------------------------- */
+.sell-media-single-one-col #main {
+
+	.sell-media-content,
+	.sell-media-meta {
+		width: 100%;
 	}
 }
