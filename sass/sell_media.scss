@@ -138,6 +138,7 @@ a:focus {
 				border: 1px solid darken($border-color, 10%);
 				background: $border-color;
 				cursor: pointer;
+				vertical-align: middle;
 
 				&:hover {
 					border-color: darken($border-color, 20%);

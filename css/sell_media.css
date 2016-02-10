@@ -126,7 +126,8 @@ a:focus {
         text-align: center;
         border: 1px solid #d5d5d5;
         background: #eee;
-        cursor: pointer; }
+        cursor: pointer;
+        vertical-align: middle; }
         .sell-media-cart-items li .item-qty-total .dashicons:hover {
           border-color: #bbbbbb;
           background-color: #d5d5d5; }
