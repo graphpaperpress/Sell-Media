@@ -654,8 +654,7 @@ input[type="submit"].sell-media-button,
 /*= Lightbox
 -------------------------------------------------------------- */
 .sell-media-add-to-lightbox {
-	display: block;
-	font-size: 13px;
+	font-size: $font-size * .75;
 	margin: $font-size 0;
 }
 
@@ -934,35 +933,29 @@ input[type="submit"].sell-media-button,
 /*= Cart Fields
 -------------------------------------------------------------- */
 .sell-media-add-to-cart-fields {
-	border-top: 1px solid $border-color;
-
-	label {
-		margin-left: 5px;
-		font-weight: normal;
-		font-size: $font-size * .75;
-	}
 
 	fieldset {
 		@extend .cf;
-		padding: $font-size 0;
+		padding: $font-size * .75 0;
 		border: 0;
 		border-bottom: 1px solid $border-color;
 	}
 
-	legend {
+	label {
+		display: inline-block;
 		font-weight: normal;
 		font-size: $font-size * .75;
-		display: block;
-		float: left;
-		margin-right: 10px;
-		padding: 0;
+		width: 125px;
 	}
 
 	select {
 		border: 1px solid $default-color;
 		font-size: $font-size * .75;
-		max-width: 140px;
-		float: right;
+		width: 125px;
+	}
+
+	input[type="radio"] {
+		margin-right: 5px;
 	}
 
 	.sell-media-tooltip {
@@ -1343,21 +1336,5 @@ input.sell-media-search-text[type=text] {
 
 	img {
 		float: left;
-	}
-}
-
-/*= Theme Overrides
--------------------------------------------------------------- */
-.sell-media-single-one-col {
-	#main .sell-media-content,
-	#main .sell-media-meta {
-		width: 100%;
-
-		legend {
-			width: 100px;
-		}
-		select {
-			width: 200px;
-		}
 	}
 }

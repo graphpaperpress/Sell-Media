@@ -40,9 +40,9 @@ function sell_media_add_to_cart_fields( $post_id=null, $attachment_id=null ) {
         <div id="sell_media_download_wrapper" class="sell-media-add-to-cart-download-fields">
             <?php if ( ! $is_package && $has_price_group ) : ?>
                 <fieldset id="sell_media_download_size_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-download-fieldset">
-                    <legend><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></legend>
+                    <label for="sell_media_item_size"><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></label>
                     <select id="sell_media_item_size" class="sum" required>
-                        <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0">-- <?php _e( 'Select a size', 'sell_media'); ?> --</option>
+                        <option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0"><?php _e( 'Select a size', 'sell_media'); ?></option>
                         <?php
                             $prices = Sell_Media()->products->get_prices( $post_id, $attachment_id );
                             if ( $prices ) foreach ( $prices as $k => $v ) {
@@ -70,9 +70,9 @@ function sell_media_add_to_cart_fields( $post_id=null, $attachment_id=null ) {
 
             <?php if ( count( $licenses ) > 0 ) : ?>
                 <fieldset id="sell_media_download_license_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-license-fieldset">
-                    <legend><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span class="sell-media-tooltip license-info" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">(?)</span></legend>
+                    <label for="sell_media_item_license"><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span class="sell-media-tooltip license-info" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">(?)</span></label>
                     <select id="sell_media_item_license" class="sum" required>
-                        <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">-- <?php _e( 'Select a license', 'sell_media'); ?> --</option>
+                        <option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"><?php _e( 'Select a license', 'sell_media'); ?></option>
                         <?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
                     </select>
                 </fieldset>

@@ -506,8 +506,7 @@ input[type="submit"].sell-media-button,
 /*= Lightbox
 -------------------------------------------------------------- */
 .sell-media-add-to-lightbox {
-  display: block;
-  font-size: 13px;
+  font-size: 12px;
   margin: 16px 0; }
 
 .sell-media-meta .lightbox-notice.not-in-lightbox {
@@ -698,31 +697,24 @@ input[type="submit"].sell-media-button,
 
 /*= Cart Fields
 -------------------------------------------------------------- */
-.sell-media-add-to-cart-fields {
-  border-top: 1px solid #eee; }
-  .sell-media-add-to-cart-fields label {
-    margin-left: 5px;
-    font-weight: normal;
-    font-size: 12px; }
-  .sell-media-add-to-cart-fields fieldset {
-    padding: 16px 0;
-    border: 0;
-    border-bottom: 1px solid #eee; }
-  .sell-media-add-to-cart-fields legend {
-    font-weight: normal;
-    font-size: 12px;
-    display: block;
-    float: left;
-    margin-right: 10px;
-    padding: 0; }
-  .sell-media-add-to-cart-fields select {
-    border: 1px solid gray;
-    font-size: 12px;
-    max-width: 140px;
-    float: right; }
-  .sell-media-add-to-cart-fields .sell-media-tooltip {
-    color: #b3b3b3;
-    font-size: 12px; }
+.sell-media-add-to-cart-fields fieldset {
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid #eee; }
+.sell-media-add-to-cart-fields label {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 12px;
+  width: 125px; }
+.sell-media-add-to-cart-fields select {
+  border: 1px solid gray;
+  font-size: 12px;
+  width: 125px; }
+.sell-media-add-to-cart-fields input[type="radio"] {
+  margin-right: 5px; }
+.sell-media-add-to-cart-fields .sell-media-tooltip {
+  color: #b3b3b3;
+  font-size: 12px; }
 
 .total-container,
 .button-container {
@@ -1032,17 +1024,5 @@ input.sell-media-search-text[type=text] {
   max-width: 100%; }
   .sell-media-widget-thumb-wrap img {
     float: left; }
-
-/*= Theme Overrides
--------------------------------------------------------------- */
-.sell-media-single-one-col #main .sell-media-content,
-.sell-media-single-one-col #main .sell-media-meta {
-  width: 100%; }
-  .sell-media-single-one-col #main .sell-media-content legend,
-  .sell-media-single-one-col #main .sell-media-meta legend {
-    width: 100px; }
-  .sell-media-single-one-col #main .sell-media-content select,
-  .sell-media-single-one-col #main .sell-media-meta select {
-    width: 200px; }
 
 /*# sourceMappingURL=sell_media.css.map */
