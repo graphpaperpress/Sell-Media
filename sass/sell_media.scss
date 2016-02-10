@@ -366,6 +366,12 @@ input[type="submit"].sell-media-button,
 	letter-spacing: 1px;
 	display: block;
 	line-height: 1;
+	float: left;
+
+	@media only screen and (max-width: 767px) {
+		float: none;
+		text-align: center;
+	}
 	
 	a {
 		display: inline-block;
@@ -464,9 +470,11 @@ input[type="submit"].sell-media-button,
 	font-size: $font-size * .75;
 	text-align: right;
 	margin-bottom: 10px;
+	float: right;
 
 	@media only screen and (max-width: 767px) {
 		text-align: center;
+		float: none;
 
 		.sell-media-gallery-index {
 			display: block;
@@ -1341,7 +1349,7 @@ input.sell-media-search-text[type=text] {
 
 /*= Overrides
 -------------------------------------------------------------- */
-.sell-media-single-one-col #main {
+#main {
 
 	.sell-media-content,
 	.sell-media-meta {

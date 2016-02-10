@@ -218,7 +218,7 @@ function sell_media_gallery_navigation( $post_id ) {
 			$html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-right-alt2"></span></a>';
 		$html .= '</div>';
 
-		return apply_filters( 'sell_media_gallery_navigation', $html, $attachment_id );
+		return $html;
 	}
 }
 
@@ -376,7 +376,7 @@ function sell_media_taxonomy_breadcrumb() {
  *
  * @return string the breadcrumb navigation
  */
-function sell_media_breadcrumbs( $query ){
+function sell_media_breadcrumbs(){
 	global $post;
 	$post_type = 'sell_media_item';
 
@@ -396,10 +396,9 @@ function sell_media_breadcrumbs( $query ){
 		}
 		$html .= '</div>';
 
-		echo apply_filters( 'sell_media_breadcrumbs', $html );
+		return $html;
 	}
 }
-add_action( 'loop_start', 'sell_media_breadcrumbs' );
 
 /**
  * Count posts in a category, including subcategories
@@ -444,6 +443,7 @@ function sell_media_before_content( $content ) {
 			$new_content .= ob_get_clean() . $content;
 			$new_content .= '</div>';
 		} else {
+			$new_content .= sell_media_breadcrumbs();
 			$new_content .= sell_media_gallery_navigation( $post->ID );
 			$new_content .= '<div class="sell-media-content">';
 			$new_content .= ob_get_clean() . $content;
