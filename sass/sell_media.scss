@@ -809,7 +809,7 @@ input[type="submit"].sell-media-button,
 	}
 
 	#sell-media-dialog-box-target {
-		background: $white-color;
+		background-color: $white-color;
 		position: relative;
 		max-width: 1000px;
 		width: 80%;
@@ -858,6 +858,37 @@ input[type="submit"].sell-media-button,
 				-ms-transform: translateY(0);
 				-o-transform: translateY(0);
 				transform: translateY(0);
+			}
+
+			.sell-media-dialog-box-arrow{
+				position: absolute;
+				display: inline;
+				z-index: 1000;
+				color: #fff;
+				top: 45%;
+				text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.53);
+				
+				span{
+			    	font-size: 80px;
+			    }
+			}
+
+			.sell-media-dialog-box-prev {
+				left: -9%;
+				float: left;
+			}
+
+			.sell-media-dialog-box-next {
+				float:right;
+				right: -3%;
+			}
+			@media only screen and (max-width : 768px) {
+
+				.sell-media-dialog-box-next {
+					float:right;
+					right: 4%;
+				}
+
 			}
 		}
 	}
