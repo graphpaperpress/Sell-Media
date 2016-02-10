@@ -710,7 +710,12 @@ function sell_media_cart_dialog(){
 
         if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
             <div id="sell-media-dialog-box" class="sell-media-dialog-box">
-                <div id="sell-media-dialog-box-target"></div>
+                <div id="sell-media-dialog-box-target">
+                <a href="javascript:void(0);" class="sell-media-dialog-box-prev sell-media-dialog-box-arrow"><span class="dashicons dashicons-arrow-left-alt2"></span></a>
+                    <div class="sell-media-dialog-box-content">
+                    </div>
+                <a href="javascript:void(0);" class="sell-media-dialog-box-next sell-media-dialog-box-arrow"><span class="dashicons dashicons-arrow-right-alt2"></span></a>
+                </div>
             </div>
         <?php endif; 
     }
