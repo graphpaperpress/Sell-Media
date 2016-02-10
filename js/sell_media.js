@@ -37,6 +37,68 @@ jQuery(document).ready(function($){
 	}
 
 	/**
+	 * Ajax request.
+	 */
+	function sell_media_popup_ajax_request( new_data ){
+		var old_data = {
+			"action": "sell_media_load_template",
+			"template": "cart.php",
+		};
+		var final_data = $.extend( old_data, new_data );
+
+		$('#sell-media-dialog-box-target .sell-media-dialog-box-content').html('').addClass( 'sell-media-ajax-loader' );
+		// send ajax request for product in shopping cart
+		$.ajax({
+			type: "POST",
+			url: sell_media.ajaxurl,
+			data: final_data,
+			success: function(msg){
+				$('#sell-media-dialog-box-target .sell-media-dialog-box-content').removeClass( 'sell-media-ajax-loader' );
+				$('#sell-media-dialog-box-target .sell-media-dialog-box-content').html(msg);
+				$('#sell-media-dialog-box-target').addClass('loaded');
+				required_fields();
+
+			}
+		});
+	}
+
+	/**
+	 * Popup next previous.
+	 */
+	function sell_media_popup_next_prev( event ){
+		if( !$('.sell-media-dialog-box').hasClass( 'is-visible' ) )
+			return false;
+
+		var current_item = $('.sell-media-grid-item.sell-media-active-popup-item');
+
+		if( 'next' == event ){
+			var next_item = current_item.next();
+			if(  current_item.is(':last-child') ){
+				var next_item = $('.sell-media-grid-item:first');
+			}			
+		}
+		if( 'prev' == event ){
+			var next_item = current_item.prev();
+			if(  current_item.is(':first-child') ){
+				var next_item = $('.sell-media-grid-item:last');
+			}			
+		}
+
+		var next_item_id = next_item.find( '.sell-media-quick-view' ).attr('data-product-id');
+		var next_item_attachment_id = next_item.find( '.sell-media-quick-view' ).attr('data-attachment-id');
+
+		// remove active class from current element
+		current_item.removeClass( 'sell-media-active-popup-item' );
+		next_item.addClass( 'sell-media-active-popup-item' );
+		
+		// send ajax request for product in shopping cart
+		sell_media_popup_ajax_request({
+			"product_id": next_item_id,
+			"attachment_id": next_item_attachment_id
+		});
+	}
+
+	/**
 	 * When the user clicks on our trigger we set-up the overlay,
 	 * launch our dialog, and send an Ajax request to load our cart form.
 	 */
@@ -45,25 +107,75 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 
 		popup();
-		
+
+		var parent = $(this).parents( '.sell-media-grid-item' );
+		var item_id = $(this).data('product-id');
+		var item_attachment_id = $(this).data('attachment-id');
+
+		parent.addClass( 'sell-media-active-popup-item' );
 		
 		// send ajax request for product in shopping cart
-		$.ajax({
-			type: "POST",
-			url: sell_media.ajaxurl,
-			data: {
-				"action": "sell_media_load_template",
-				"template": "cart.php",
-				"product_id": $(this).data('product-id'),
-				"attachment_id": $(this).data('attachment-id')
-			},
-			success: function(msg){
-				$('#sell-media-dialog-box-target').html(msg).addClass('loaded');
-				required_fields();
-
-			}
+		sell_media_popup_ajax_request({
+			"product_id": item_id,
+			"attachment_id": item_attachment_id
 		});
 
+	});
+
+	/**
+	 * Close dialog
+	 */
+	$(document).on('click', '.sell-media-dialog-box', function(event){
+		if( $(event.target).is('.close') || $(event.target).is('.sell-media-dialog-box') ) {
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+			$('.sell-media-grid-item').removeClass( 'sell-media-active-popup-item' );
+			$('#sell-media-dialog-box-target').removeClass('loaded');
+			if( 'sell-media-empty-dialog-box' !== $(this).attr( 'id' ) ){
+				$('#sell-media-dialog-box-target .sell-media-dialog-box-content').html('');
+			}
+		}
+	});
+
+	/**
+	 * Close popup when clicking the esc keyboard button.
+	 * Next popup on next keybord button.
+	 * Previous popup on previous keybord button.
+	 */
+	$(document).keyup(function(event){
+		// Esc
+		if(event.which=='27'){
+			$('.sell-media-dialog-box').removeClass('is-visible');
+			$('.sell-media-grid-item').removeClass( 'sell-media-active-popup-item' );
+			$('#sell-media-dialog-box-target').removeClass('loaded');
+			if( 'sell-media-empty-dialog-box' !== $('.sell-media-dialog-box').attr( 'id' ) ){
+				$('#sell-media-dialog-box-target .sell-media-dialog-box-content').html('');
+			}
+	    }
+
+	    // Next
+	    if( event.which == '39' ){
+	    	sell_media_popup_next_prev( 'next' );
+	    }
+
+	    // Prev
+	    if( event.which == '37' ){
+	    	sell_media_popup_next_prev( 'prev' );
+	    }
+	});
+
+	// Prev slide on prev button.
+	$( document ).on( 'click', '.sell-media-dialog-box-prev', function(event){
+		event.preventDefault();
+		sell_media_popup_next_prev( 'prev' );		
+		return false;
+	});
+
+	// Next slide on next button.
+	$( document ).on( 'click', '.sell-media-dialog-box-next', function(event){
+		event.preventDefault();
+		sell_media_popup_next_prev( 'next' );		
+		return false;
 	});
 
 	/**
@@ -101,20 +213,6 @@ jQuery(document).ready(function($){
 		$('#sell-media-dialog-box-target').addClass('loaded');
 		popup();
 	});
-
-	/**
-	 * Close dialog
-	 */
-	$(document).on('click', '.sell-media-dialog-box', function(event){
-		if( $(event.target).is('.close') || $(event.target).is('.sell-media-dialog-box') ) {
-			event.preventDefault();
-			$(this).removeClass('is-visible');
-			$('#sell-media-dialog-box-target').removeClass('loaded');
-			if( 'sell-media-empty-dialog-box' !== $(this).attr( 'id' ) ){
-				$('#sell-media-dialog-box-target').html('');
-			}
-		}
-	});
 	
 	/**
 	 * Resize dialog
@@ -123,8 +221,6 @@ jQuery(document).ready(function($){
 	 * to make sure the overlay fills the screen and dialog box is aligned to center
 	 */
 	$(window).resize(function(){
-		//only do it if the dialog box is not hidden
-		// if ($('.sell-media-dialog-box').is(':visible')) popup();
 		popup_resize();
 		resize_item_overlay();
 	});
