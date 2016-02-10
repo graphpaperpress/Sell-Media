@@ -455,7 +455,7 @@ function sell_media_autocreate_pages() {
 
         // Check if this page already exists, with shortcode
         $existing_page = get_page_by_title( $title );
-        if ( 'page' === $existing_page->post_type && has_shortcode( $existing_page->post_content, 'sell_media_' . $page ) ) {
+        if ( !empty( $existing_page ) && 'page' === $existing_page->post_type && has_shortcode( $existing_page->post_content, 'sell_media_' . $page ) ) {
             $settings[$setting] = $existing_page->ID;
         } else {
             // If the page doesn't exist, create it
