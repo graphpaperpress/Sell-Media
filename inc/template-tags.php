@@ -150,6 +150,7 @@ function sell_media_gallery( $post_id ) {
          */
         $attachment_id = get_query_var( 'id' );
         if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
+            do_action( 'sell_media_above_gallery', $post_id );
             $html .= sell_media_item_icon( $attachment_id, 'large', false );
             $html .= '<p class="sell-media-caption">';
             $html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span>';
@@ -199,17 +200,16 @@ function sell_media_gallery_navigation( $post_id ) {
         $current_image  = array_search( $attachment_id, $attachment_ids );
 
         $html = '<div class="sell-media-gallery-nav">';
-        $html .= '<a href="' . get_permalink() . '"class="sell-media-gallery-index" title="' . __( 'Back to Thumbnails', 'sell_media' ) . '">' . __( 'Back to Thumbnails', 'sell_media' ) . '</a>';
         if ( array_key_exists( $current_image - 1, $attachment_ids ) )
             $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt2"></span></a>';
         if ( array_key_exists( $current_image + 1, $attachment_ids ) )
             $html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-right-alt2"></span></a>';
+        $html .= '<a href="' . esc_url( get_permalink() ) . '"class="sell-media-gallery-index" title="' . __( 'Back to Thumbnails', 'sell_media' ) . '">' . __( 'Back to Thumbnails', 'sell_media' ) . '</a>';
         $html .= '</div>';
 
-        echo apply_filters( 'sell_media_gallery_navigation', $html, $attachment_id );
+        return apply_filters( 'sell_media_gallery_navigation', $html, $attachment_id );
     }
 }
-add_action( 'sell_media_above_buy_button', 'sell_media_gallery_navigation', 10, 1 );
 
 /**
  * Main content loop used in all themes
@@ -283,12 +283,12 @@ function sell_media_get_excerpt( $post_id, $excerpt_length = 140, $trailing_char
     $the_excerpt = strip_tags( strip_shortcodes( $the_post->post_excerpt ) );
 
     if ( empty( $the_excerpt ) )
-      $the_excerpt = strip_tags( strip_shortcodes( $the_post->post_content ) );
+        $the_excerpt = strip_tags( strip_shortcodes( $the_post->post_content ) );
 
     $words = explode( ' ', $the_excerpt, $excerpt_length + 1 );
 
-    if( count( $words ) > $excerpt_length )
-      $words = array_slice( $words, 0, $excerpt_length );
+    if ( count( $words ) > $excerpt_length )
+        $words = array_slice( $words, 0, $excerpt_length );
 
     $the_excerpt = implode( ' ', $words ) . $trailing_character;
     return $the_excerpt;
@@ -322,58 +322,6 @@ function sell_media_get_taxonomy_terms( $taxonomy ){
 
     return apply_filters( 'sell_media_get_taxonomy_terms', $html );
 }
-
-
-/**
- * Put the cart dialog markup in the footer
- *
- * @since 1.8.5
- */
-function sell_media_cart_dialog(){
-
-    global $post;
-
-    if ( empty( $post ) )
-        return;
-    
-    $post_type = 'sell_media_item';
-    $settings = sell_media_get_plugin_options();
-
-    // Check if shortcode has been used
-    $shortcode = false;
-    if ( ! empty( $post->post_content ) ) {
-        $content = $post->post_content;
-        if ( has_shortcode( $content, 'sell_media_all_items' ) || has_shortcode( $content, 'sell_media_lightbox' ) || is_search() ) {
-            $shortcode = true;
-        }
-    }
-
-    // Check if on Sell Media taxonomy archive page
-    $sell_media_taxonomies = get_object_taxonomies( $post_type );
-
-    // Only inject markup on specific pages
-    if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode ) {
-        $popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
-
-        if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
-            <div id="sell-media-dialog-box" class="sell-media-dialog-box">
-                <div id="sell-media-dialog-box-target"></div>
-            </div>
-        <?php endif; 
-    }
-    if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ){ ?>
-        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms">
-            <div id="sell-media-dialog-box-target">
-                <span class="close">&times;</span>
-                <div class="content">
-                    <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
-                </div>
-            </div>
-        </div>
-    <?php 
-    }
-}
-add_action( 'wp_footer', 'sell_media_cart_dialog' );
 
 
 /**
@@ -415,8 +363,11 @@ function sell_media_taxonomy_breadcrumb() {
  *
  * @return string the breadcrumb navigation
  */
-function sell_media_breadcrumbs( $post_id ){
-    if ( is_post_type_archive( 'sell_media_item' ) || is_search() )
+function sell_media_breadcrumbs( $query ){
+    global $post;
+    $post_type = 'sell_media_item';
+
+    if ( $post_type != get_post_type( $post->ID ) || is_post_type_archive( $post_type ) || is_search() )
         return;
 
     $settings = sell_media_get_plugin_options();
@@ -425,25 +376,17 @@ function sell_media_breadcrumbs( $post_id ){
         $obj = get_post_type_object( 'sell_media_item' );
 
         $html = '<div class="sell-media-breadcrumbs">';
-        $html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . $obj->rewrite['slug'] . '</a>';
-        $html .= ' <span class="sell-media-breadcrumbs-sep">&#47;</span> ';
-        if ( wp_get_post_terms( $post_id, 'collection' ) ) {
+        $html .= '<a href="' . esc_url( home_url() ) . '" title="' . __( 'Home', 'sell_media' ) . '">' . __( 'Home', 'sell_media' ) . '</a>';
+        $html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '" title="' . $obj->rewrite['slug'] . '">' . $obj->rewrite['slug'] . '</a>';
+        if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
             $html .= sell_media_get_taxonomy_terms( 'collection' );
-            $html .= ' <span class="sell-media-breadcrumbs-sep">&#47;</span> ';
-        }
-        if ( sell_media_has_multiple_attachments( $post_id ) && get_query_var( 'id' ) == true ) {
-            $attachment_meta = wp_prepare_attachment_for_js( get_query_var( 'id' ) );
-            $html .= '<a href="' . get_permalink() . '">' . get_the_title( '', false ) . '</a>';
-            $html .= ' <span class="sell-media-breadcrumbs-sep">&#47;</span> ';
-            $html .= $attachment_meta['title'];
-        } else {
-            $html .= get_the_title( '', false );
         }
         $html .= '</div>';
 
-        return apply_filters( 'sell_media_breadcrumbs', $html );
+        echo apply_filters( 'sell_media_breadcrumbs', $html );
     }
 }
+add_action( 'loop_start', 'sell_media_breadcrumbs' );
 
 /**
  * Count posts in a category, including subcategories
@@ -488,7 +431,7 @@ function sell_media_before_content( $content ) {
             $new_content .= ob_get_clean() . $content;
             $new_content .= '</div>';
         } else {
-            $new_content .= sell_media_breadcrumbs( $post->ID );
+            $new_content .= sell_media_gallery_navigation( $post->ID );
             $new_content .= '<div class="sell-media-content">';
             $new_content .= ob_get_clean() . $content;
             if ( sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == true ) {
@@ -618,18 +561,6 @@ function sell_media_link_attributes( $post_id ) {
 }
 
 /**
- * Show lightbox
- *
- * @since 1.9.2
- * @param int $post_id Item ID
- * @return void
- */
-function sell_media_show_lightbox( $post_id ) {
-    echo sell_media_lightbox_link( $post_id );
-}
-//add_action( 'sell_media_below_buy_button', 'sell_media_show_lightbox', 10 );
-
-/**
  * Show additional file info
  *
  * @since 1.9.2
@@ -744,6 +675,58 @@ function sell_media_theme_setup(){
     }
 }
 add_action( 'wp_head', 'sell_media_theme_setup', 999 );
+
+
+/**
+ * Put the cart dialog markup in the footer
+ *
+ * @since 1.8.5
+ */
+function sell_media_cart_dialog(){
+
+    global $post;
+
+    if ( empty( $post ) )
+        return;
+    
+    $post_type = 'sell_media_item';
+    $settings = sell_media_get_plugin_options();
+
+    // Check if shortcode has been used
+    $shortcode = false;
+    if ( ! empty( $post->post_content ) ) {
+        $content = $post->post_content;
+        if ( has_shortcode( $content, 'sell_media_all_items' ) || has_shortcode( $content, 'sell_media_lightbox' ) || is_search() ) {
+            $shortcode = true;
+        }
+    }
+
+    // Check if on Sell Media taxonomy archive page
+    $sell_media_taxonomies = get_object_taxonomies( $post_type );
+
+    // Only inject markup on specific pages
+    if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode ) {
+        $popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
+
+        if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
+            <div id="sell-media-dialog-box" class="sell-media-dialog-box">
+                <div id="sell-media-dialog-box-target"></div>
+            </div>
+        <?php endif; 
+    }
+    if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ){ ?>
+        <div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms">
+            <div id="sell-media-dialog-box-target">
+                <span class="close">&times;</span>
+                <div class="content">
+                    <p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
+                </div>
+            </div>
+        </div>
+    <?php 
+    }
+}
+add_action( 'wp_footer', 'sell_media_cart_dialog' );
 
 /**
  * Check for Sell Media theme supprt

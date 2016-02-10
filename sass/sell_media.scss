@@ -374,20 +374,26 @@ input[type="submit"].sell-media-button,
 /*= Breadcrumbs
 -------------------------------------------------------------- */
 .sell-media-breadcrumbs {
-	font-size: $font-size * .75;
+	font-size: 10px;
 	text-transform: uppercase;
-	margin: 1em 0 2em;
+	margin: 0 0 10px;
 	letter-spacing: 1px;
+	display: block;
+	line-height: 1;
 	
-	li {
-		display: inline;
-		font-size: $font-size * .75;
-		list-style-type: none;
-	}
+	a {
+		display: inline-block;
+		margin-right: 10px;
+		text-decoration: none;
 
-	.raquo {
-		margin: 0 6px;
-		vertical-align: middle;
+		&:after {
+			padding-left: 10px;
+			content: '/';
+		}
+
+		&:last-child:after {
+			content: '';
+		}
 	}
 }
 
@@ -469,8 +475,7 @@ input[type="submit"].sell-media-button,
 }
 
 .sell-media-gallery-nav {
-	margin: $margin 0;
-	text-align: right;
+	margin-bottom: 10px;
 
 	@media only screen and (max-width: 767px) {
 		text-align: center;

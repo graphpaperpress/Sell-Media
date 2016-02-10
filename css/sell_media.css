@@ -304,17 +304,21 @@ input[type="submit"].sell-media-button,
 /*= Breadcrumbs
 -------------------------------------------------------------- */
 .sell-media-breadcrumbs {
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
-  margin: 1em 0 2em;
-  letter-spacing: 1px; }
-  .sell-media-breadcrumbs li {
-    display: inline;
-    font-size: 12px;
-    list-style-type: none; }
-  .sell-media-breadcrumbs .raquo {
-    margin: 0 6px;
-    vertical-align: middle; }
+  margin: 0 0 10px;
+  letter-spacing: 1px;
+  display: block;
+  line-height: 1; }
+  .sell-media-breadcrumbs a {
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none; }
+    .sell-media-breadcrumbs a:after {
+      padding-left: 10px;
+      content: '/'; }
+    .sell-media-breadcrumbs a:last-child:after {
+      content: ''; }
 
 /*= Single Layouts
 -------------------------------------------------------------- */
@@ -366,8 +370,7 @@ input[type="submit"].sell-media-button,
   width: 100%; }
 
 .sell-media-gallery-nav {
-  margin: 32px 0;
-  text-align: right; }
+  margin-bottom: 10px; }
   @media only screen and (max-width: 767px) {
     .sell-media-gallery-nav {
       text-align: center; }
