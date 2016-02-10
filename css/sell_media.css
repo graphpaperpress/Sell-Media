@@ -374,6 +374,8 @@ input[type="submit"].sell-media-button,
   width: 100%; }
 
 .sell-media-gallery-nav {
+  font-size: 12px;
+  text-align: right;
   margin-bottom: 10px; }
   @media only screen and (max-width: 767px) {
     .sell-media-gallery-nav {
@@ -661,9 +663,11 @@ input[type="submit"].sell-media-button,
       position: absolute;
       display: inline;
       z-index: 1000;
-      color: #fff;
+      color: rgba(255, 255, 255, 0.7);
       top: 45%;
-      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.53); }
+      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5); }
+      .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-arrow:hover {
+        color: #fff; }
       .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-arrow span {
         font-size: 35px;
         height: 40px;
@@ -697,24 +701,28 @@ input[type="submit"].sell-media-button,
 
 /*= Cart Fields
 -------------------------------------------------------------- */
-.sell-media-add-to-cart-fields fieldset {
-  padding: 12px 0;
-  border: 0;
-  border-bottom: 1px solid #eee; }
-.sell-media-add-to-cart-fields label {
-  display: inline-block;
-  font-weight: normal;
-  font-size: 12px;
-  width: 125px; }
-.sell-media-add-to-cart-fields select {
-  border: 1px solid gray;
-  font-size: 12px;
-  width: 125px; }
-.sell-media-add-to-cart-fields input[type="radio"] {
-  margin-right: 5px; }
-.sell-media-add-to-cart-fields .sell-media-tooltip {
-  color: #b3b3b3;
-  font-size: 12px; }
+.sell-media-add-to-cart-fields {
+  border-top: 1px solid #eee; }
+  .sell-media-add-to-cart-fields fieldset {
+    padding: 12px 0;
+    border: 0;
+    border-bottom: 1px solid #eee; }
+  .sell-media-add-to-cart-fields label {
+    display: inline-block;
+    font-weight: normal;
+    font-size: 12px;
+    width: 125px; }
+  .sell-media-add-to-cart-fields select {
+    border: 1px solid gray;
+    font-size: 12px;
+    width: 125px; }
+    .sell-media-meta .sell-media-add-to-cart-fields select {
+      width: auto; }
+  .sell-media-add-to-cart-fields input[type="radio"] {
+    margin-right: 5px; }
+  .sell-media-add-to-cart-fields .sell-media-tooltip {
+    color: #b3b3b3;
+    font-size: 12px; }
 
 .total-container,
 .button-container {

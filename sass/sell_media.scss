@@ -480,6 +480,8 @@ input[type="submit"].sell-media-button,
 }
 
 .sell-media-gallery-nav {
+	font-size: $font-size * .75;
+	text-align: right;
 	margin-bottom: 10px;
 
 	@media only screen and (max-width: 767px) {
@@ -864,15 +866,19 @@ input[type="submit"].sell-media-button,
 				transform: translateY(0);
 			}
 
-			.sell-media-dialog-box-arrow{
+			.sell-media-dialog-box-arrow {
 				position: absolute;
 				display: inline;
 				z-index: 1000;
-				color: #fff;
+				color: rgba($white-color, 0.7);
 				top: 45%;
-				text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.53);
+				text-shadow: 0px 2px 3px rgba($black-color, 0.5);
 
-				span{
+				&:hover {
+					color: $white-color;
+				}
+
+				span {
 			    	font-size: 35px;
 					height: 40px;
 					width: 40px;
@@ -933,6 +939,7 @@ input[type="submit"].sell-media-button,
 /*= Cart Fields
 -------------------------------------------------------------- */
 .sell-media-add-to-cart-fields {
+	border-top: 1px solid $border-color;
 
 	fieldset {
 		@extend .cf;
@@ -952,6 +959,10 @@ input[type="submit"].sell-media-button,
 		border: 1px solid $default-color;
 		font-size: $font-size * .75;
 		width: 125px;
+
+		.sell-media-meta & {
+			width: auto;
+		}
 	}
 
 	input[type="radio"] {
