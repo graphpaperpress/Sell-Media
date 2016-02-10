@@ -469,13 +469,10 @@ input[type="submit"].sell-media-button,
 }
 
 .sell-media-gallery-nav {
-	display: inline-block;
-	float: right;
+	margin: $margin 0;
+	text-align: right;
 
 	@media only screen and (max-width: 767px) {
-		display: block;
-		float: none;
-		margin: $margin 0 $margin;
 		text-align: center;
 
 		.sell-media-gallery-index {
@@ -757,7 +754,7 @@ input[type="submit"].sell-media-button,
 		h2 {
 			font-size: 24px;
 			font-weight: bold;
-			line-height: 1;
+			line-height: 1.4;
 			margin: 0 0 24px;
 			padding: 0;
 		}
@@ -913,34 +910,17 @@ input[type="submit"].sell-media-button,
 	legend {
 		font-weight: normal;
 		font-size: $font-size * .75;
-		float: left;
 		display: block;
-		margin-right: 5%;
+		float: left;
+		margin-right: 10px;
 		padding: 0;
-		width: 30%;
-
-		.sell-media-single-one-col & {
-			width: auto;
-		}
-
-		@media only screen and (max-width : 768px) {
-			width: auto;
-		}
 	}
 
 	select {
 		border: 1px solid $default-color;
 		font-size: $font-size * .75;
-		float: left;
-		width: 65%;
-
-		.sell-media-single-one-col & {
-			width: auto;
-		}
-
-		@media only screen and (max-width : 768px) {
-			width: auto;
-		}
+		max-width: 140px;
+		float: right;
 	}
 
 	.sell-media-tooltip {
