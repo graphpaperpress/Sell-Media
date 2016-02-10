@@ -113,30 +113,36 @@ a:focus {
 		.item-details,
 		.item-qty-total {
 			@extend .sell-media-three-col;
-			.item-increment{
-				line-height:0px
+		}
 
-			}
-			
-			span.count {     
-				width: 28px;
+		.item-qty-total {
+			text-align: right;
+
+			.item-decrement,
+			.item-increment,
+			.item-quantity {
 				display: inline-block;
-				padding-bottom: 2px;
-			}
-			.dashicons-arrow-up-alt2:before {
-				content: "\f343";
-				display: block;
-				padding-top: 2px;
-			}
-			.dashicons-arrow-down-alt2:before {
-				content: "\f347";
-				display: block;
-				padding-top: 2px;
+				margin-right: 10px;
+
+				&:last-child {
+					margin-right: 0;
+				}
 			}
 
-			.dashicons-arrow-up-alt2:before, .dashicons-arrow-down-alt2:before { 
-				display: block;
-				padding-top: 2px; 
+			.dashicons {
+				font-size: 12px;
+				width: 24px;
+				height: 24px;
+				padding: 5px;
+				text-align: center;
+				border: 1px solid darken($border-color, 10%);
+				background: $border-color;
+				cursor: pointer;
+
+				&:hover {
+					border-color: darken($border-color, 20%);
+					background-color: darken($border-color, 10%);
+				}
 			}
 		}
 
@@ -161,31 +167,6 @@ a:focus {
 	.item-name,
 	.item-total {
 		font-weight: bold;
-	}
-
-	.item-qty-total {
-		text-align: right;
-		
-		span {
-			display: inline-block;
-			font-size: 12px;
-			width: 24px;
-			height: 16px;
-			line-height: 1;
-			text-align: center;
-
-			&.dashicons {
-				border: 1px solid darken($border-color, 10%);
-				background: $border-color;
-				cursor: pointer;
-				margin: 1px;
-
-				&:hover {
-					border-color: darken($border-color, 20%);
-					background-color: darken($border-color, 10%);
-				}
-			}
-		}
 	}
 
 	.item-total {

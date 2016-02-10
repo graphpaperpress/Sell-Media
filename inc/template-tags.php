@@ -38,15 +38,20 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
 function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
 	$size = 'medium';
 
+	$attachment_id = ( $attachment_id ) ? $attachment_id : sell_media_get_attachment_id( $post_id );
+
 	/**
 	 * If the post has multiple attachments, get the attributes of the attachment.
 	 * Otherwise, get the attributes of the featured image,
 	 * or finally the attached image.
 	 */
+	// is gallery
 	if ( sell_media_has_multiple_attachments( $post_id ) ) {
 		$image_attributes = wp_get_attachment_image_src( $attachment_id, $size, true );
+	// has a featured image
 	} elseif ( '' != get_the_post_thumbnail( $post_id ) ) {
 		$image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size );
+	// no featured image, so get the attachment src from the attached file
 	} else {
 		$image_attributes = wp_get_attachment_image_src( $attachment_id, $size );
 	}

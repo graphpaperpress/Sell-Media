@@ -212,8 +212,8 @@ function sell_media_checkout_shortcode(){
                         </div>
                     </div>
                     <div class="item-qty-total">
-                        <div class="item-increment">
-                            <span class="sell-media-cart-increment dashicons dashicons-arrow-up-alt2"></span>
+                        <div class="item-decrement">
+                            <span class="sell-media-cart-decrement dashicons dashicons-minus"></span>
                         </div>
                         <div class="item-quantity">
                             <span class="count">
@@ -222,8 +222,8 @@ function sell_media_checkout_shortcode(){
                                 <?php endif; ?>
                             </span>
                         </div>
-                        <div class="item-decrement">
-                            <span class="sell-media-cart-decrement dashicons dashicons-arrow-down-alt2"></span>
+                        <div class="item-increment">
+                            <span class="sell-media-cart-increment dashicons dashicons-plus"></span>
                         </div>
                         <div class="item-total">
                             <?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?>
