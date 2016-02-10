@@ -119,7 +119,7 @@ function sell_media_lightbox_query() {
             $i++;
             $class = ( $i %3 == 0 ) ? ' end' : '';
 
-            $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid-item' . $class . '">';
+            $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid-item sell-media-grid-single-item' . $class . '">';
             $html .= '<a href="' . esc_url( $permalink ) . '" class="sell-media-item">';
             $html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
             $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
