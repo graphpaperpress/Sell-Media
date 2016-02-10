@@ -614,7 +614,7 @@ input[type="submit"].sell-media-button,
       color: #fff;
       text-decoration: none; }
   .sell-media-dialog-box #sell-media-dialog-box-target {
-    background: #fff;
+    background-color: #fff;
     position: relative;
     max-width: 1000px;
     width: 80%;
@@ -654,6 +654,25 @@ input[type="submit"].sell-media-button,
       -ms-transform: translateY(0);
       -o-transform: translateY(0);
       transform: translateY(0); }
+    .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-arrow {
+      position: absolute;
+      display: inline;
+      z-index: 1000;
+      color: #fff;
+      top: 45%;
+      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.53); }
+      .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-arrow span {
+        font-size: 80px; }
+    .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-prev {
+      left: -9%;
+      float: left; }
+    .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-next {
+      float: right;
+      right: -3%; }
+    @media only screen and (max-width: 768px) {
+      .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-next {
+        float: right;
+        right: 4%; } }
   @media only screen and (min-width: 1170px) {
     .sell-media-dialog-box #sell-media-dialog-box-target {
       margin: 8em auto; } }
