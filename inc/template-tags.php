@@ -729,6 +729,7 @@ function sell_media_cart_dialog(){
 					</div>
 				<a href="javascript:void(0);" class="sell-media-dialog-box-next sell-media-dialog-box-arrow"><span class="dashicons dashicons-arrow-right-alt2"></span></a>
 				</div>
+				<span class="close">&times;</span>
 			</div>
 		<?php endif; 
 	}

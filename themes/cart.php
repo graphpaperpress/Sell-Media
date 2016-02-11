@@ -19,8 +19,7 @@ $image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachm
     <div class="sell-media-quick-view-content">
         <div class="sell-media-quick-view-content-inner">
 
-            <span class="close">&times;</span>
-            <h2><a href="<?php echo get_permalink( $post_id ); ?>" <?php echo sell_media_link_attributes( $post_id ); ?>><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></a></h2>
+            <h6><a href="<?php echo get_permalink( $post_id ); ?>" <?php echo sell_media_link_attributes( $post_id ); ?>><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?></a></h6>
             <?php do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id ); ?>
             <?php sell_media_plugin_credit(); ?>
 

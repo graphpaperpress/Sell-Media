@@ -761,8 +761,8 @@ input[type="submit"].sell-media-button,
 			}
 		}
 
-		h2 {
-			font-size: 24px;
+		h6 {
+			font-size: $font-size;
 			font-weight: bold;
 			line-height: 1.4;
 			margin: 0 0 24px;
@@ -774,7 +774,7 @@ input[type="submit"].sell-media-button,
 		color: $light-color;
 		right: 0;
 		top: 0;
-		position: absolute;
+		position: fixed;
 		cursor: pointer;
 		font-size: $margin;
 		line-height: 1;
@@ -782,12 +782,19 @@ input[type="submit"].sell-media-button,
 		width: 34px;
 		height: 36px;
 
+		.admin-bar & {
+			top: 32px;
+
+			@media only screen and (max-width : 768px) {
+				top: 42px;
+			}
+		}
+
 		@media only screen and (max-width : 768px) {
 			color: $white-color;
 		}
 
 		&:hover {
-			background-color: $dark-color;
 			color: $white-color;
 		}
 	}

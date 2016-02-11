@@ -610,8 +610,8 @@ input[type="submit"].sell-media-button,
         margin: 0; }
         .sell-media-dialog-box .sell-media-quick-view-content .sell-media-quick-view-content-inner {
           padding: 32px; } }
-    .sell-media-dialog-box .sell-media-quick-view-content h2 {
-      font-size: 24px;
+    .sell-media-dialog-box .sell-media-quick-view-content h6 {
+      font-size: 16px;
       font-weight: bold;
       line-height: 1.4;
       margin: 0 0 24px;
@@ -620,18 +620,22 @@ input[type="submit"].sell-media-button,
     color: #b3b3b3;
     right: 0;
     top: 0;
-    position: absolute;
+    position: fixed;
     cursor: pointer;
     font-size: 32px;
     line-height: 1;
     text-align: center;
     width: 34px;
     height: 36px; }
+    .admin-bar .sell-media-dialog-box .close {
+      top: 32px; }
+      @media only screen and (max-width: 768px) {
+        .admin-bar .sell-media-dialog-box .close {
+          top: 42px; } }
     @media only screen and (max-width: 768px) {
       .sell-media-dialog-box .close {
         color: #fff; } }
     .sell-media-dialog-box .close:hover {
-      background-color: black;
       color: #fff; }
   .sell-media-dialog-box .sell-media-button {
     display: block;
