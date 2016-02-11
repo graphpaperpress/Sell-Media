@@ -821,7 +821,6 @@ input[type="submit"].sell-media-button,
 	}
 
 	#sell-media-dialog-box-target {
-		background-color: $white-color;
 		position: relative;
 		max-width: 1000px;
 		width: 80%;
@@ -847,6 +846,11 @@ input[type="submit"].sell-media-button,
 		-webkit-transition-duration: 0.3s;
 		-moz-transition-duration: 0.3s;
 		transition-duration: 0.3s;
+
+		.sell-media-dialog-box-content{
+			background-color: $white-color;
+			position: relative;
+		}
 	}
 
 	&.is-visible {
@@ -1164,7 +1168,7 @@ input.sell-media-search-text[type=text] {
 }
 
 .sell-media-ajax-loader {
-	background: url( ../images/ajax-loader.gif) no-repeat center 70px;
+	background: url( ../images/ajax-loader.gif) no-repeat center center;
 	height: 58px;
 	width: 100%;
 	text-align: center;

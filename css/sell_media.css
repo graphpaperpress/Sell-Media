@@ -653,7 +653,6 @@ input[type="submit"].sell-media-button,
       color: #fff;
       text-decoration: none; }
   .sell-media-dialog-box #sell-media-dialog-box-target {
-    background-color: #fff;
     position: relative;
     max-width: 1000px;
     width: 80%;
@@ -676,6 +675,9 @@ input[type="submit"].sell-media-button,
     -webkit-transition-duration: 0.3s;
     -moz-transition-duration: 0.3s;
     transition-duration: 0.3s; }
+    .sell-media-dialog-box #sell-media-dialog-box-target .sell-media-dialog-box-content {
+      background-color: #fff;
+      position: relative; }
   .sell-media-dialog-box.is-visible {
     opacity: 1;
     visibility: visible;
@@ -906,7 +908,7 @@ input.sell-media-search-text[type=text] {
     margin: 0 20px 20px 0; }
 
 .sell-media-ajax-loader {
-  background: url(../images/ajax-loader.gif) no-repeat center 70px;
+  background: url(../images/ajax-loader.gif) no-repeat center center;
   height: 58px;
   width: 100%;
   text-align: center;
