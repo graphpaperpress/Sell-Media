@@ -454,36 +454,39 @@ add_action( 'init', 'sell_media_register_taxonomies', 1 );
  * Add default options on plugin activation
  */
 function sell_media_register_default_settings() {
+
+    if ( false === ( $options = get_transient( 'sell_media_options' ) ) ) {
     
-    $defaults = array(
-        'test_mode' => 1,
-        'customer_notification' => 1,
-        'style' => 'light',
-        'layout' => 'sell-media-single-one-col',
-        'breadcrumbs' => 1,
-        'file_info' => 0,
-        'plugin_credit' => 0,
-        'post_type_slug' => '',
-        'order_by' => 'date-desc',
-        'terms_and_conditions' => '',
-        'admin_columns' => '',
-        'default_price' => '1',
-        'hide_original_price' => 'no',
-        'default_price_group' => '',
-        'price_group' => '',
-        'paypal_email' => '',
-        'currency' => 'USD',
-        'paypal_additional_test_email' => '',
-        'tax' => '',
-        'tax_rate' => '',
-        'from_name' => get_option( 'blogname' ),
-        'from_email' => get_option( 'admin_email' ),
-        'success_email_subject' => 'Your Purchase',
-        'success_email_body' => "Hi {first_name} {last_name},\n\nThanks for purchasing from my site. Here are your download links:\n\n{download_links}\n\nThanks!",
-        'misc' => ''
-    );
-    
-    $options = wp_parse_args( update_option( 'sell_media_options', $defaults ) );
+        $defaults = array(
+            'test_mode' => 1,
+            'customer_notification' => 1,
+            'style' => 'light',
+            'layout' => 'sell-media-single-one-col',
+            'breadcrumbs' => 1,
+            'file_info' => 0,
+            'plugin_credit' => 0,
+            'post_type_slug' => '',
+            'order_by' => 'date-desc',
+            'terms_and_conditions' => '',
+            'admin_columns' => '',
+            'default_price' => '1',
+            'hide_original_price' => 'no',
+            'default_price_group' => '',
+            'price_group' => '',
+            'paypal_email' => '',
+            'currency' => 'USD',
+            'paypal_additional_test_email' => '',
+            'tax' => '',
+            'tax_rate' => '',
+            'from_name' => get_option( 'blogname' ),
+            'from_email' => get_option( 'admin_email' ),
+            'success_email_subject' => 'Your Purchase',
+            'success_email_body' => "Hi {first_name} {last_name},\n\nThanks for purchasing from my site. Here are your download links:\n\n{download_links}\n\nThanks!",
+            'misc' => ''
+        );
+        
+        $options = wp_parse_args( update_option( 'sell_media_options', $defaults ) );
+    }
 }
 
 

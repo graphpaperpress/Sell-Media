@@ -41,7 +41,7 @@ $settings = sell_media_get_plugin_options();
                 <?php echo do_shortcode( '[sell_media_searchform]' ); ?>
             </header>
 
-            <?php do_action( 'sell_media_after_archive_header_content' ); ?>
+            <?php do_action( 'sell_media_below_archive_header_content' ); ?>
 
             <div class="sell-media-grid-item-container">
 
@@ -143,6 +143,6 @@ $settings = sell_media_get_plugin_options();
         </div><!-- #content -->
     </div><!-- #sell-media-archive .sell-media -->
 
-<?php do_action( 'sell_media_after_archive_content' ); ?>
+<?php do_action( 'sell_media_below_archive_content' ); ?>
 <?php do_action( 'sell_media_before_footer' ); ?>
 <?php get_footer(); ?>

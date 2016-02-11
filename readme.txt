@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.3
-Stable tag: 2.0.7
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,7 +164,7 @@ Please disable your plugins and see if you still have the issue. Some plugins (o
 
 == Screenshots ==
 
-1. The Shopping Cart
+1. Quick View
 2. Single Item Template
 3. Archive
 4. Collection Archive
@@ -193,6 +193,12 @@ Example for adding a message below the cart:
 add_action( 'sell_media_below_cart', 'sell_media_below_cart_function' );`
 
 Action hooks available:
+
+* sell_media_above_archive_content - Above archive content
+* sell_media_below_archive_content - Below archive content
+* sell_media_above_archive_header_content - Above archive header content
+* sell_media_below_archive_header_content - Below archive header content
+* sell_media_above_archive_header_content
 * sell_media_above_cart - Above the cart
 * sell_media_below_cart - Below the cart
 * sell_media_cart_below_licenses - Between license and price on cart
@@ -205,6 +211,23 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.1 =
+* New Feature: Quick View.
+* New Feature: $0 prices creates a free download.
+* New Feature: PHP Sessions saved to DB.
+* New Feature: Auto page creation w/ shortcodes during activation.
+* New Feature: Set default options during plugin activation.
+* New Feature: Delete options during plugin deactivation.
+* New Feature: Various hooks and filters added on archive.php and for text strings.
+* Tweak: Responsive improvements.
+* Tweak: Theme compatibility css.
+* Tweak: wp_title fix on single entries.
+* Tweak: Improved gallery navigation.
+* Tweak: CSS vendor prefixes.
+* Fix: Attachments now propertly searched. There is a known issue, however, with attachments previously uploaded to Posts or Pages. Users can change the post parent on the attachment page, should it be needed.
+* Fix: delete_transient for caching fix
+
 
 = 2.0.7 =
 * Hide attachments not not for sale from Sell Media Search page.
