@@ -947,7 +947,6 @@ function sell_media_nocache(){
             }
         }
     }
-    delete_transient( 'sell_media_cache_excluded_uris' );
 }
 add_action( 'init', 'sell_media_nocache', 0 );
 
