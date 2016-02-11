@@ -130,6 +130,7 @@ a:focus {
 			}
 
 			.dashicons {
+				display: inline;
 				font-size: $font-size * .75;
 				width: $font-size * .75;
 				height: $font-size * .75;
@@ -313,18 +314,12 @@ input[type="submit"].sell-media-button,
 
 /*= Layouts
 -------------------------------------------------------------- */
-.sell-media {
-	width: 100%;
-	margin: 0 auto;
-}
-
-.has-sidebar .sell-media #content,
-.sell-media #content {
-	margin: 10px 0;
-	padding: 0;
-	max-width: 100%;
-	width: 100%;
-}
+// .sell-media,
+// .sell-media .site-content,
+// .sell-media #content {
+// 	width: 100%;
+// 	margin: 0 auto;
+// }
 
 .sell-media-meta:after {
 	@extend .cf;
@@ -1315,9 +1310,52 @@ input.sell-media-search-text[type=text] {
 	}
 }
 
+/*= Themes
+-------------------------------------------------------------- */
+.sell-media {
+
+	.theme-twenty-thirteen &,
+	.theme-photolog &,
+	.theme-awesome &,
+	.theme-twenty-fourteen &,
+	.theme-hemingway &,
+	.theme-radcliffe &,
+	.theme-garfunkel &,
+	.theme-fukasawa &,
+	.theme-lovecraft &,
+	.theme-rowling &,
+	.theme-hitchcock &,
+	.theme-iwata & {
+    	width: 90%;
+    	margin: 50px auto;
+	}
+
+	.theme-twenty-fourteen & {
+		@media screen and (min-width: 1008px) {
+			width: 78%;
+			float: right;
+			margin: 0 auto;
+		}
+	}
+
+	.theme-garfunkel & {
+		z-index: 100;
+    	position: relative;
+	}
+}
+
+#content {
+
+	.theme-base &,
+	.theme-twenty-ten & {
+		margin: 0 auto;
+		width: 100%;
+	}
+}
+
 /*= Overrides
 -------------------------------------------------------------- */
-#main {
+.sell-media-single-one-col #main {
 
 	.sell-media-content,
 	.sell-media-meta {

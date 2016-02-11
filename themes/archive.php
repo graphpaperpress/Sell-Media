@@ -12,11 +12,15 @@ global $wp_query;
 $settings = sell_media_get_plugin_options();
 ?>
 
+    <?php do_action( 'sell_media_above_archive_content' ); ?>
+
     <div id="sell-media-archive" class="sell-media">
         <div id="content" role="main">
 
-            <header class="page-header">
-                <h1 class="page-title">
+            <?php do_action( 'sell_media_above_archive_header_content' ); ?>
+
+            <header class="sell-media-page-header">
+                <h1 class="sell-media-page-title">
                     <?php
                         if ( is_search() ) {
                             printf( __( 'Search results for: %1$s', 'sell_media' ), get_search_query() );
@@ -36,6 +40,8 @@ $settings = sell_media_get_plugin_options();
                 ?>
                 <?php echo do_shortcode( '[sell_media_searchform]' ); ?>
             </header>
+
+            <?php do_action( 'sell_media_after_archive_header_content' ); ?>
 
             <div class="sell-media-grid-item-container">
 
@@ -135,7 +141,8 @@ $settings = sell_media_get_plugin_options();
             }
             ?>
         </div><!-- #content -->
-    </div><!-- #sell_media-single .sell_media -->
+    </div><!-- #sell-media-archive .sell-media -->
 
+<?php do_action( 'sell_media_after_archive_content' ); ?>
 <?php do_action( 'sell_media_before_footer' ); ?>
 <?php get_footer(); ?>

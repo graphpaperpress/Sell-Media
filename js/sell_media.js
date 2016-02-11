@@ -80,6 +80,8 @@ jQuery(document).ready(function($){
 		// If next item exists
 		if ( next_item_id && next_item_attachment_id ) {
 
+			$('.sell-media-dialog-box-next, .sell-media-dialog-box-prev').show();
+
 			// remove active class from current element
 			current_item.removeClass( 'sell-media-active-popup-item' );
 			next_item.addClass( 'sell-media-active-popup-item' );

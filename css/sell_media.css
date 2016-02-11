@@ -119,6 +119,7 @@ a:focus {
         .sell-media-cart-items li .item-qty-total .item-quantity:last-child {
           margin-right: 0; }
       .sell-media-cart-items li .item-qty-total .dashicons {
+        display: inline;
         font-size: 12px;
         width: 12px;
         height: 12px;
@@ -254,17 +255,6 @@ input[type="submit"].sell-media-button,
 
 /*= Layouts
 -------------------------------------------------------------- */
-.sell-media {
-  width: 100%;
-  margin: 0 auto; }
-
-.has-sidebar .sell-media #content,
-.sell-media #content {
-  margin: 10px 0;
-  padding: 0;
-  max-width: 100%;
-  width: 100%; }
-
 .sell-media-alignleft {
   float: left;
   text-align: left;
@@ -1032,10 +1022,28 @@ input.sell-media-search-text[type=text] {
   .sell-media-widget-thumb-wrap img {
     float: left; }
 
+/*= Themes
+-------------------------------------------------------------- */
+.theme-twenty-thirteen .sell-media, .theme-photolog .sell-media, .theme-awesome .sell-media, .theme-twenty-fourteen .sell-media, .theme-hemingway .sell-media, .theme-radcliffe .sell-media, .theme-garfunkel .sell-media, .theme-fukasawa .sell-media, .theme-lovecraft .sell-media, .theme-rowling .sell-media, .theme-hitchcock .sell-media, .theme-iwata .sell-media {
+  width: 90%;
+  margin: 50px auto; }
+@media screen and (min-width: 1008px) {
+  .theme-twenty-fourteen .sell-media {
+    width: 78%;
+    float: right;
+    margin: 0 auto; } }
+.theme-garfunkel .sell-media {
+  z-index: 100;
+  position: relative; }
+
+.theme-base #content, .theme-twenty-ten #content {
+  margin: 0 auto;
+  width: 100%; }
+
 /*= Overrides
 -------------------------------------------------------------- */
-#main .sell-media-content,
-#main .sell-media-meta {
+.sell-media-single-one-col #main .sell-media-content,
+.sell-media-single-one-col #main .sell-media-meta {
   width: 100%; }
 
 /*# sourceMappingURL=sell_media.css.map */

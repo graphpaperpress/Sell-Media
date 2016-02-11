@@ -120,7 +120,7 @@ function sell_media_body_class( $classes ) {
         $classes[] = 'sell-media-page';
     }
 
-    // Layout is set
+    // Layout
     if ( isset( $settings->layout ) ) {
         $classes[] = $settings->layout;
     }
@@ -129,6 +129,10 @@ function sell_media_body_class( $classes ) {
     if ( sell_media_is_gallery_page() ) {
         $classes[] = 'sell-media-gallery-page';
     }
+
+    // Theme
+    $theme = wp_get_theme();
+    $classes[] = 'theme-' . sanitize_title_with_dashes( $theme->get( 'Name' ) );
 
     return $classes;
 }

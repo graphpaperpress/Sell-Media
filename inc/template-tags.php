@@ -642,13 +642,19 @@ add_action( 'wp_head', 'sell_media_version_in_header' );
 function sell_media_wp_title( $title, $sep ) {
 
 	global $paged, $page;
-	$settings = sell_media_get_plugin_options();
+	$post_type 	= 'sell_media_item';
+	$name   	= get_bloginfo( 'name' );
+	$settings 	= sell_media_get_plugin_options();
 
-	if ( is_post_type_archive( 'sell_media_item' ) ) {
-		$name   = get_bloginfo( 'name' );
-		$obj    = get_post_type_object( 'sell_media_item' );
+	if ( is_post_type_archive( $post_type ) ) {
+		
+		$obj    = get_post_type_object( $post_type );
 		$slug   = ( $settings->post_type_slug ) ? ucfirst( preg_replace( '/[^a-zA-Z0-9]+/', ' ', $settings->post_type_slug ) ) : $obj->labels->name;
 		$title  = "$slug $sep $name";
+	}
+
+	if ( is_singular( $post_type ) ) {
+		$title = "$title $name";
 	}
 
 	return $title;
