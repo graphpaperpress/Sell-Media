@@ -83,6 +83,7 @@ jQuery(document).ready(function($){
 					minHeight:'auto'
 				}).html(msg);
 				$('#sell-media-dialog-box-target').addClass('loaded');
+				$('.sell-media-dialog-box-arrow').removeClass('stop');
 				required_fields();
 
 			}
@@ -95,6 +96,11 @@ jQuery(document).ready(function($){
 	function sell_media_popup_next_prev( event ){
 		if( !$('.sell-media-dialog-box').hasClass( 'is-visible' ) )
 			return false;
+
+		if( $('.sell-media-dialog-box-arrow').hasClass('stop') )
+			return false;
+
+		$('.sell-media-dialog-box-arrow').addClass('stop');
 
 		var current_item = $('.sell-media-grid-single-item.sell-media-active-popup-item');
 		var current_item_index = $('.sell-media-grid-single-item').index(current_item);
