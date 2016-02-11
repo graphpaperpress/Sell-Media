@@ -45,8 +45,6 @@ jQuery(document).ready(function($){
 			"template": "cart.php",
 		};
 		var final_data = $.extend( old_data, new_data );
-
-		$('#sell-media-dialog-box-target .sell-media-dialog-box-content');
 		// send ajax request for product in shopping cart
 		$.ajax({
 			type: "POST",
@@ -70,30 +68,28 @@ jQuery(document).ready(function($){
 		var current_item = $('.sell-media-grid-single-item.sell-media-active-popup-item');
 
 		if( 'next' == event ){
-			var next_item = current_item.nextAll('.sell-media-grid-single-item').first();
-			if(  current_item.is(':last-child') ){
-				var next_item = $('.sell-media-grid-single-item:first');
-			}			
+			var next_item = current_item.nextAll('.sell-media-grid-single-item').first();			
 		}
 		if( 'prev' == event ){
-			var next_item = current_item.prevAll('.sell-media-grid-single-item').first();
-			if(  current_item.is(':first-child') ){
-				var next_item = $('.sell-media-grid-single-item:last');
-			}			
+			var next_item = current_item.prevAll('.sell-media-grid-single-item').first();		
 		}
 
 		var next_item_id = next_item.find( '.sell-media-quick-view' ).attr('data-product-id');
 		var next_item_attachment_id = next_item.find( '.sell-media-quick-view' ).attr('data-attachment-id');
 
-		// remove active class from current element
-		current_item.removeClass( 'sell-media-active-popup-item' );
-		next_item.addClass( 'sell-media-active-popup-item' );
+		// If next item exists
+		if ( next_item_id && next_item_attachment_id ) {
+
+			// remove active class from current element
+			current_item.removeClass( 'sell-media-active-popup-item' );
+			next_item.addClass( 'sell-media-active-popup-item' );
 		
-		// send ajax request for product in shopping cart
-		sell_media_popup_ajax_request({
-			"product_id": next_item_id,
-			"attachment_id": next_item_attachment_id
-		});
+			// send ajax request for product in shopping cart
+			sell_media_popup_ajax_request({
+				"product_id": next_item_id,
+				"attachment_id": next_item_attachment_id
+			});
+		}
 	}
 
 	/**
