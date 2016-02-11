@@ -25,13 +25,12 @@ function sell_media_scripts( $hook ) {
     // enqueue
     wp_enqueue_script( 'sell_media_jquery_cookie', SELL_MEDIA_PLUGIN_URL . 'js/jquery.cookie.js', array( 'jquery'), SELL_MEDIA_VERSION );
     wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery', 'sell_media_jquery_cookie' ), SELL_MEDIA_VERSION );
-    wp_enqueue_script( 'sellMediaCart', SELL_MEDIA_PLUGIN_URL . 'js/sell_media_cart.js', array( 'jquery' ), SELL_MEDIA_VERSION );
     wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
 
     if ( isset( $settings->style ) && '' != $settings->style ) {
-        wp_enqueue_style( 'sell-media-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-' . $settings->style . '.css' );
+        wp_enqueue_style( 'sell_media_style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-' . $settings->style . '.css', array( 'sell_media' ), SELL_MEDIA_VERSION );
     } else {
-        wp_enqueue_style( 'sell-media-style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-light.css' );
+        wp_enqueue_style( 'sell_media_style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-light.css', array( 'sell_media' ), SELL_MEDIA_VERSION );
     }
 
     wp_localize_script( 'sell_media', 'sell_media', array(
@@ -68,9 +67,10 @@ function sell_media_scripts( $hook ) {
         'checkout_text' => __( 'Checkout Now', 'sell_media' ),
         'checkout_wait_text' => __( 'Please wait...', 'sell_media' ),
         'remove_text' => __( 'Remove from Lightbox', 'sell_media' ),
-        'save_text' => __( 'Save to Lightbox', 'sell_media' )
+        'save_text' => __( 'Save to Lightbox', 'sell_media' ),
+        'currencies' => sell_media_currencies()
     ) );
 
     do_action( 'sell_media_scripts_hook' );
 }
-add_action( 'wp_enqueue_scripts', 'sell_media_scripts' );
+add_action( 'wp_enqueue_scripts', 'sell_media_scripts', 15 );

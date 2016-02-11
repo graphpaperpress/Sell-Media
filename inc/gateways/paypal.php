@@ -62,7 +62,7 @@ function sell_media_process_paypal_ipn() {
     /**
      * Check if IPN was successfully processed
      */
-    if ( $verified = $listener->processIpn() ) {
+    if ( $verified = $listener->processIpn( ) ) {
 
         /**
          * Log successful purchases

@@ -157,6 +157,8 @@ Class SellMediaProducts {
         $prices = $this->get_prices( $post_id );
         if ( $prices ) foreach ( $prices as $price ){
             $lowest_price[] = $price['price'];
+        } else {
+            $lowest_price = ( $this->get_original_price( $post_id ) ) ? $this->get_original_price( $post_id ) : $this->settings->default_price;
         }
 
         if ( is_array( $lowest_price ) ) {

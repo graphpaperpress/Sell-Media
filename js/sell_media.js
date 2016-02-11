@@ -1,384 +1,613 @@
 jQuery(document).ready(function($){
 
-    // Sell Media popup dialog
-    function popup(message){
+	/** 
+	 * Update cart totals on load
+	 */
+	sm_update_cart_totals();
 
-        // get the screen height and width
-        var maskHeight = $(document).height();
-        var maskWidth = $(window).width();
+	/**
+	 * Check required fields on load
+	 */
+	required_fields();
 
-        // calculate the values for center alignment and position from top
-        var dialogLeft = (maskWidth/2) - ($('.sell-media-dialog-box').width()/2);
-        var dialogTop = $(document).scrollTop() + 100;
+	/**
+	 * Resize item overlays to fit image
+	 */
+	resize_item_overlay();
 
-        // assign values to the overlay and dialog box and show overlay and dialog
-        $('.sell-media-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
-        $('.sell-media-dialog-box').css({left:dialogLeft, top:dialogTop}).show();
-        $('.sell-media-dialog-overlay, .sell-media-dialog-box').show();
+	/**
+	 * Popup resize
+	 */
+	function popup_resize(){
+		// assign values to the overlay and dialog box and show overlay and dialog
+		var width = $(window).width();
+		var height = $(document).height();
+		
+		$('.sell-media-dialog-box').width(width).height(height)
+	}
 
-    }
+	/** 
+	 * Popup
+	 */
+	function popup(message){
+		popup_resize();
+		$('.sell-media-dialog-box').addClass('is-visible');
+		var dialogTop = $(document).scrollTop() + 25;
+		$('.sell-media-dialog-box #sell-media-dialog-box-target').css({top:dialogTop});
+	}
 
-    /**
-     * When the user clicks on our trigger we set-up the overlay,
-     * launch our dialog, and send an Ajax request to load our cart form.
-     */
-    $(document).on('click','.sell-media-cart-trigger',function(){
-        popup();
-        // show a loading message while doing ajax request
-        $('#sell-media-dialog-box-target').html('<div class="sell-media-ajax-loader">Loading...</div>');
-        // send ajax request for product in shopping cart
-        $.ajax({
-            type: "POST",
-            url: sell_media.ajaxurl,
-            data: {
-                "action": "sell_media_load_template",
-                "template": "cart.php",
-                "product_id": $(this).data('product-id'),
-                "attachment_id": $(this).data('attachment-id')
-            },
-            success: function(msg){
-                $('#sell-media-dialog-box-target').fadeIn().html(msg);
-                required_fields();
+	/**
+	 * Ajax request.
+	 */
+	function sell_media_popup_ajax_request( new_data ){
+		var old_data = {
+			"action": "sell_media_load_template",
+			"template": "cart.php",
+		};
+		var final_data = $.extend( old_data, new_data );
+		// send ajax request for product in shopping cart
+		$.ajax({
+			type: "POST",
+			url: sell_media.ajaxurl,
+			data: final_data,
+			success: function(msg){
+				var target = $('#sell-media-dialog-box-target .sell-media-dialog-box-content');
+				// if there's an image already, fade out, then fade in
+				if ($('#sell-media-dialog-box-target .sell-media-dialog-box-content img').length){
+					$(target).fadeOut('fast', function() {
+						$(target).html(msg).fadeIn('fast');
+    				});
+    			// otherwise, this is the first load
+				} else {
+					$(target).html(msg);
+				}
+				required_fields();
+			}
+		});
+	}
 
-            }
-        });
+	/**
+	 * Popup next previous.
+	 */
+	function sell_media_popup_next_prev( event ){
+		if( !$('.sell-media-dialog-box').hasClass( 'is-visible' ) )
+			return false;
 
-    });
+		var current_item = $('.sell-media-grid-single-item.sell-media-active-popup-item');
 
-    /**
-     * Check the required fields and change state of add to cart button
-     */
-    function required_fields(){
-        // if size, license, or type (print/download) fields exists, disable add button
-        if ( $('#sell_media_download_size_fieldset').length || $('#sell_media_download_license_fieldset').length || $('#sell_media_product_type').length ) {
-            $('.item_add').prop('disabled', true);
-        } else {
-            $('.item_add').prop('disabled', false);
-        }
+		if( 'next' == event ){
+			var next_item = current_item.nextAll('.sell-media-grid-single-item').first();			
+		}
+		if( 'prev' == event ){
+			var next_item = current_item.prevAll('.sell-media-grid-single-item').first();		
+		}
 
-        var required = $('#sell-media-dialog-box [required]');
-        // bind change for all your just click and keyup for all text fields
-        required.bind('change keyup', function() {
-            var flag = 0;
-            // check every el in collection
-            required.each(function() {
-                if ( $(this).val() != '' ) flag++;
-            });
-            // number of nonempty (nonchecked) fields == nubmer of required fields
-            if ( flag == required.length )
-                $('.item_add').prop('disabled',false);
-            else
-                $('.item_add').prop('disabled', true);
-        });
-    }
+		var next_item_id = next_item.find( '.sell-media-quick-view' ).attr('data-product-id');
+		var next_item_attachment_id = next_item.find( '.sell-media-quick-view' ).attr('data-attachment-id');
 
-    /**
-     * When the user clicks on our trigger we set-up the overlay,
-     * launch our dialog to load the terms of service.
-     */
-    $(document).on('click','.sell-media-empty-dialog-trigger',function(){
-        popup();
-    });
+		// If next item exists
+		if ( next_item_id && next_item_attachment_id ) {
 
-    $(document).on('click','.sell-media-dialog-overlay, .sell-media-dialog-box .close',function(){
-        // close the dialog if the overlay layer or the close button are clicked
-        $('.sell-media-dialog-overlay, .sell-media-dialog-box').hide();
-        return false;
-    });
+			$('.sell-media-dialog-box-next, .sell-media-dialog-box-prev').show();
 
-    // if user resizes the window, call the same function again
-    // to make sure the overlay fills the screen and dialog box is aligned to center
-    $(window).resize(function(){
-        //only do it if the dialog box is not hidden
-        if (!$('.sell-media-dialog-box').is(':hidden')) popup();
-    });
+			// remove active class from current element
+			current_item.removeClass( 'sell-media-active-popup-item' );
+			next_item.addClass( 'sell-media-active-popup-item' );
+		
+			// send ajax request for product in shopping cart
+			sell_media_popup_ajax_request({
+				"product_id": next_item_id,
+				"attachment_id": next_item_attachment_id
+			});
+		}
+	}
 
-    $(document).on('click', '.sellMediaCart_checkout', function(){
-        $(this).prop('disabled', true).css({"cursor": "progress"}).text(sell_media.checkout_wait_text);
-    });
+	/**
+	 * When the user clicks on our trigger we set-up the overlay,
+	 * launch our dialog, and send an Ajax request to load our cart form.
+	 */
+	$(document).on('click','.sell-media-quick-view',function(event){
 
-    /**
-     * Show search options when user clicks inside the search field
-     */
-    $('.sell-media-search-query').on('click', function(){
-        $('.sell-media-search-hidden, .sell-media-search-close').show();
-        $('.sell-media-search-form').addClass('active');
-    });
+		event.preventDefault();
 
-    /**
-     * Hide search options when user clicks close
-     */
-    $('.sell-media-search-close').on('click', function(){
-        $('.sell-media-search-hidden, .sell-media-search-close').hide();
-        $('.sell-media-search-form').removeClass('active');
-    });
+		popup();
 
-    $('#sell_media_terms_cb').on('click', function(){
-        $this = $(this);
-        $this.val() == 'checked' ? $this.val('') : $this.val('checked');
-    });
+		var parent = $(this).parents( '.sell-media-grid-item' );
+		var item_id = $(this).data('product-id');
+		var item_attachment_id = $(this).data('attachment-id');
 
-    // Cart config
-    sellMediaCart({
-        checkout: {
-            type: "PayPal",
-            sandbox: sell_media.sandbox,
-            email: sell_media.paypal_email,
-            success: sell_media.thanks_page,
-            cancel: sell_media.checkout_page,
-            notify: sell_media.listener_url,
-            shipping: sell_media.shipping, // 0 prompt & optional, 1 no prompt, 2 prompt & required
-            method: "POST",
-            site: sell_media.site_name
-        },
-        cartStyle: sell_media.cart_style,
-        taxRate: parseFloat(sell_media.tax),
-        currency: sell_media.currency_symbol,
-        shippingCustom: function(){
-            var items = JSON.parse(localStorage.getItem("sellMediaCart_items"));
-            var shipping_cost = false;
-            sellMediaCart.each( items, function (item) {
-                if( "print" == item.type ) {
-                    shipping_cost = true;
-                }
-            });
-            return shipping_cost;
-        },
-        cartColumns: [{
-            view: "image",
-            attr: "image",
-            label: false
-        },
-            {
-                view: function(item, column){
+		parent.addClass( 'sell-media-active-popup-item' );
+		
+		// send ajax request for product in shopping cart
+		sell_media_popup_ajax_request({
+			"product_id": item_id,
+			"attachment_id": item_attachment_id
+		});
 
-                    var name = item.get( "name" );
-                    var sep = ', ';
+	});
 
-                    var license = item.get( "usage" );
-                    if ( license == undefined ) {
-                        license = '';
-                        sep = '';
-                    }
+	/**
+	 * Close dialog
+	 */
+	$(document).on('click', '.sell-media-dialog-box', function(event){
+		if( $(event.target).is('.close') || $(event.target).is('.sell-media-dialog-box') ) {
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+			$('.sell-media-grid-item').removeClass( 'sell-media-active-popup-item' );
+			$('#sell-media-dialog-box-target').removeClass('loaded');
+			if( 'sell-media-empty-dialog-box' !== $(this).attr( 'id' ) ){
+				$('#sell-media-dialog-box-target .sell-media-dialog-box-content').html('');
+			}
+		}
+	});
 
-                    var size = item.get( "size" );
-                    if ( size == undefined ) {
-                        size = '';
-                        sep = '';
-                    }
+	/**
+	 * Close popup when clicking the esc keyboard button.
+	 * Next popup on next keybord button.
+	 * Previous popup on previous keybord button.
+	 */
+	$(document).keyup(function(event){
+		// Esc
+		if(event.which=='27'){
+			$('.sell-media-dialog-box').removeClass('is-visible');
+			$('.sell-media-grid-item').removeClass( 'sell-media-active-popup-item' );
+			$('#sell-media-dialog-box-target').removeClass('loaded');
+			if( 'sell-media-empty-dialog-box' !== $('.sell-media-dialog-box').attr( 'id' ) ){
+				$('#sell-media-dialog-box-target .sell-media-dialog-box-content').html('');
+			}
+	    }
 
-                    return name + "<span class='size-license'>" + size + sep + license + "</span>";
-                },
-                attr: "custom",
-                label: sell_media.cart_labels.name
-            },
-            {
-                attr: "price",
-                label: sell_media.cart_labels.price,
-                view: "currency"
-            },
-            {
-                view: "decrement",
-                label: false,
-                text: "-"
-            },
-            {
-                attr: "quantity",
-                label: sell_media.cart_labels.qty
-            },
-            {
-                view: "increment",
-                label: false,
-                text: "+"
-            },
-            {
-                attr: "total",
-                label: sell_media.cart_labels.sub_total,
-                view: "currency"
-            }]
-    });
+	    // Next
+	    if( event.which == '39' ){
+	    	sell_media_popup_next_prev( 'next' );
+	    }
 
-    // Hide cart if no items, otherwise, show the cart
-    sellMediaCart.bind('update', function(){
+	    // Prev
+	    if( event.which == '37' ){
+	    	sell_media_popup_next_prev( 'prev' );
+	    }
+	});
 
-        if ( sellMediaCart.quantity() === 0 ){
-            // hide the cart
-            $('#sell-media-checkout-cart').hide();
-            $('#sell-media-empty-cart-message').show();
-        } else {
-            // show the cart
-            $('#sell-media-checkout-cart').show();
-        }
+	// Prev slide on prev button.
+	$( document ).on( 'click', '.sell-media-dialog-box-prev', function(event){
+		event.preventDefault();
+		sell_media_popup_next_prev( 'prev' );		
+		return false;
+	});
 
-    });
+	// Next slide on next button.
+	$( document ).on( 'click', '.sell-media-dialog-box-next', function(event){
+		event.preventDefault();
+		sell_media_popup_next_prev( 'next' );		
+		return false;
+	});
 
-    // Show added to cart message on dialog
-    sellMediaCart.bind( 'afterAdd' , function( item ){
-        $('.sell-media-added').remove();
-        $('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
-    });
+	/**
+	 * Check the required fields and change state of add to cart button
+	 */
+	function required_fields(){
+		// if size, license, or type (print/download) fields exists, disable add button
+		if ( $('#sell_media_download_size_fieldset').length || $('#sell_media_download_license_fieldset').length || $('#sell_media_product_type').length ) {
+			$('.item_add').prop('disabled', true);
+		} else {
+			$('.item_add').prop('disabled', false);
+		}
 
-    // Validate cart prices (price group, license markup, discount codes) on the server
-    sellMediaCart.bind( 'beforeCheckout', function( data ){
+		var required = $('.sell-media-add-to-cart-fields [required]');
+		// bind change for all your just click and keyup for all text fields
+		required.bind('change keyup', function() {
+			var flag = 0;
+			// check every el in collection
+			required.each(function() {
+				if ( $(this).val() != '' ) flag++;
+			});
+			// number of nonempty (nonchecked) fields == nubmer of required fields
+			if ( flag == required.length )
+				$('.item_add').prop('disabled',false);
+			else
+				$('.item_add').prop('disabled', true);
+		});
+	}
 
-        // pass discount codes into cart data
-        if ( $('#discount-id').length ) {
-            data.custom = $('#discount-id').val();
-        }
+	/**
+	 * When the user clicks on our trigger we set-up the overlay,
+	 * launch our dialog to load the terms of service.
+	 */
+	$(document).on('click','.sell-media-empty-dialog-trigger',function(){
+		$('#sell-media-dialog-box-target').addClass('loaded');
+		popup();
+	});
+	
+	/**
+	 * Resize dialog
+	 * 
+	 * if user resizes the window, call the same function again
+	 * to make sure the overlay fills the screen and dialog box is aligned to center
+	 */
+	$(window).resize(function(){
+		popup_resize();
+		resize_item_overlay();
+	});
 
-        // ajax callback to vertify prices
-        $.ajax({
-            type: "POST",
-            url: sell_media.ajaxurl,
-            async: false,
-            data: {
-                security: $('#cart_nonce_security').val(),
-                action: 'sell_media_verify_callback',
-                cart: data
-            },
-            success: function( msg ){
-                console.log(data);
-                $.each( msg.cart, function( k, v ){
-                    data[k] = v;
-                });
-            },
-            error: function () {
-                alert( sell_media.cart_error );
-            }
-        });
-    });
+	/**
+	 * Resize item overlays to match image
+	 */
+	function resize_item_overlay(){
+		$('#sell-media-archive .sell-media-item').each(function(i,elem) {
+			var width = $(this).children('img').width();
+			// $(this).find('.sell-media-quick-view').css({'width':width});
+		});
+	}
 
-    $(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
+	/**
+	* Checkout click
+	*/
+	$(document).on('click', '.sell-media-cart-checkout', function(){
+		$(this).prop('disabled', true).css({"cursor": "progress"}).text(sell_media.checkout_wait_text);
+	});
 
-        // get the price from the selected option
-        var price = $('#sell_media_item_size :selected').data('price');
-        // if the price doesn't exist, set the price to the total shown
-        // either the custom price of the item or the default price from settings
-        if ( price == undefined || price == 0 )
-            price = $('#sell_media_item_base_price').val();
+	/**
+	 * Show search options when user clicks inside the search field
+	 */
+	$('.sell-media-search-query').on('click', function(){
+		$('.sell-media-search-hidden, .sell-media-search-close').show();
+		$('.sell-media-search-form').addClass('active');
+	});
 
-        // check for selected license or single license
-        if ( $('#sell_media_item_license :selected').data('name') ){
-            var markup = $('#sell_media_item_license :selected').data('price');
-            var license_name = $('#sell_media_item_license :selected').data('name');
-            var license_id = $('#sell_media_item_license :selected').val();
-        } else {
-            var markup = $('#sell_media_item_license').data('price');
-            var license_name = $('#sell_media_item_license').data('name');
-            var license_id = $('#sell_media_item_license').data('id');
-        }
+	/**
+	 * Hide search options when user clicks close
+	 */
+	$('.sell-media-search-close').on('click', function(){
+		$('.sell-media-search-hidden, .sell-media-search-close').hide();
+		$('.sell-media-search-form').removeClass('active');
+	});
 
-        // selected license doesn't have markup
-        if ( markup == undefined || markup == 0 )
-            sum = price;
-        // selected license has markup
-        else
-            sum = ( + price + ( markup / 100 ) * price ).toFixed(2);
+	/**
+	 * Terms of service checkbox
+	 */
+	$('#sell_media_terms_cb').on('click', function(){
+		$this = $(this);
+		$this.val() == 'checked' ? $this.val('') : $this.val('checked');
+	});
 
-        $('#total').text(sum);
+	/**
+	 * Size/License selections
+	 */
+	$(document).on('change', '#sell_media_item_size, #sell_media_item_license', function(){
 
-        // set price_group id so it is passed to cart
-        var price_group = $('#sell_media_item_size :selected').data('id');
-        if ( price_group != null )
-            $('.item_pgroup').attr('value', price_group);
+		// get the price from the selected option
+		var price = $('#sell_media_item_size :selected').data('price');
+		// if the price doesn't exist, set the price to the total shown
+		// either the custom price of the item or the default price from settings
+		if ( price == undefined || price == 0 )
+			price = $('#sell_media_item_base_price').val();
 
-        // set item_size so it is passed to cart
-        var size = $('#sell_media_item_size :selected').data('size');
-        if ( size != null )
-            $('.item_size').attr('value', size);
+		// check for selected license or single license
+		if ( $('#sell_media_item_license :selected').data('name') ){
+			var markup = $('#sell_media_item_license :selected').data('price');
+			var license_name = $('#sell_media_item_license :selected').data('name');
+			var license_id = $('#sell_media_item_license :selected').val();
+		} else {
+			var markup = $('#sell_media_item_license').data('price');
+			var license_name = $('#sell_media_item_license').data('name');
+			var license_id = $('#sell_media_item_license').data('id');
+		}
 
-        // set license name for display on cart
-        if ( license_name != null )
-            $('.item_usage').attr('value', license_name);
+		// selected license doesn't have markup
+		if ( markup == undefined || markup == 0 )
+			sum = price;
+		// selected license has markup
+		else
+			sum = ( + price + ( markup / 100 ) * price ).toFixed(2);
 
-        // set license id
-        if ( license_id != null )
-            $('.item_license').attr('value', license_id);
+		$('#total').text(sum);
+		$('#total').attr( 'data-price', sum );
 
-        // set the license description
-        var license_desc = $('#sell_media_item_license :selected').attr('title');
-        // must use .attr since .data types are cached by jQuery
-        if(license_desc){
-            $('#license_desc').attr('data-tooltip', license_desc).show();
-        } else {
-            $('#license_desc').hide();
-        }
+		// set price_group id so it is passed to cart
+		var price_group = $('#sell_media_item_size :selected').data('id');
+		if ( price_group != null )
+			$('.item_pgroup').attr('value', price_group);
 
-    });
+		// set item_size so it is passed to cart
+		var size = $('#sell_media_item_size :selected').data('size');
+		if ( size != null )
+			$('.item_size').attr('value', size);
 
-    // Add to lightbox on click
-    $( '.add-to-lightbox' ).on( 'click', function( event ) {
+		// set license name for display on cart
+		if ( license_name != null )
+			$('.item_usage').attr('value', license_name);
 
-        event.preventDefault();
+		// set license id
+		if ( license_id != null )
+			$('.item_license').attr('value', license_id);
 
-        var post_id = $(this).data('id'),
-            attachment_id = $(this).data('attachment-id'),
-            selector = $('#sell-media-lightbox-content #sell-media-' + attachment_id);
+		// set the license description
+		var license_desc = $('#sell_media_item_license :selected').attr('title');
+		// must use .attr since .data types are cached by jQuery
+		if ( license_desc ) {
+			$('#license_desc').attr('data-tooltip', license_desc).show();
+		} else {
+			$('#license_desc').hide();
+		}
 
-        var data = {
-            action: 'sell_media_update_lightbox',
-            post_id: post_id,
-            attachment_id: attachment_id
-        };
+	});
 
-        $.ajax({
-            type: 'POST',
-            url: sell_media.ajaxurl,
-            data: data,
-            success: function(msg){
-                $('.lightbox-counter').text(msg.count);
-                $('#lightbox-' + post_id).text(msg.text);
-                $('#lightbox-' + post_id).attr("title", msg.text);
-                $(selector).hide();
-                if ( msg.text == 'Remove' ) {
-                    $('.lightbox-notice').fadeIn('fast');
-                } else {
-                    $('.lightbox-notice').fadeOut('fast');
-                }
-            }
-        });
-    });
+	/**
+	 * Lightbox
+	 */
+	$( document ).on( 'click', '.sell-media-add-to-lightbox', function( event ) {
 
-    // Empty the lightbox
-    $('.empty-lightbox').on( 'click', function( event ){
-        event.preventDefault();
+		event.preventDefault();
 
-        var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
+		var post_id = $(this).data('id'),
+			attachment_id = $(this).data('attachment-id'),
+			selector = $('#sell-media-lightbox-content #sell-media-' + attachment_id);
 
-        if ( emptied ) {
-            $('.sell-media-grid-container').remove();
-            $(this).text($(this).data('empty-text'));
-            $(this).removeClass('empty-lightbox');
-            $('.lightbox-counter').text(0);
-        }
-    });
+		var data = {
+			action: 'sell_media_update_lightbox',
+			post_id: post_id,
+			attachment_id: attachment_id
+		};
 
-    // Count lightbox
-    function count_lightbox() {
-        var cookie = $.cookie('sell_media_lightbox');
-        if ( cookie === undefined ) {
-            return 0;
-        } else {
-            var data = $.parseJSON( cookie ),
-                keys = [];
-            $.each(data, function(key, value) {
-                keys.push(key);
-            });
-            return keys.length;
-        }
-    }
+		$.ajax({
+			type: 'POST',
+			url: sell_media.ajaxurl,
+			data: data,
+			success: function(msg){
+				$('.lightbox-counter').text(msg.count);
+				$('#lightbox-' + post_id).text(msg.text);
+				$('#lightbox-' + post_id).attr("title", msg.text);
+				$(selector).hide();
+				if ( msg.text == 'Remove' ) {
+					$('.lightbox-notice').fadeIn('fast');
+				} else {
+					$('.lightbox-notice').fadeOut('fast');
+				}
+			}
+		});
+	});
 
-    // Lightbox menu
-    $('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
+	// Empty the lightbox
+	$('.empty-lightbox').on( 'click', function( event ){
+		event.preventDefault();
 
-    // Checkout total menu
-    $('(<span class="sellMediaCart_total checkout-price">0</span>)').appendTo('.checkout-total a');
+		var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
 
-    // Checkout qty menu
-    $('(<span class="sellMediaCart_quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
+		if ( emptied ) {
+			$('.sell-media-grid-item-container').remove();
+			$(this).text($(this).data('empty-text'));
+			$(this).removeClass('empty-lightbox');
+			$('.lightbox-counter').text(0);
+		}
+	});
 
-    // Reload current location
-    $('.reload').click(function() {
-        location.reload();
-    });
+	// Count lightbox
+	function count_lightbox() {
+		var cookie = $.cookie('sell_media_lightbox');
+		if ( cookie === undefined ) {
+			return 0;
+		} else {
+			var data = $.parseJSON( cookie ),
+				keys = [];
+			$.each(data, function(key, value) {
+				keys.push(key);
+			});
+			return keys.length;
+		}
+	}
+
+	// Lightbox menu
+	$('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
+
+	// Checkout total menu
+	$('(<span class="sell-media-cart-total checkout-counter-wrap">' + sell_media.currency_symbol + '<span class="checkout-price">0</span></span>)').appendTo('.checkout-total a');
+
+	// Checkout qty menu
+	$('(<span class="sell-media-cart-quantity checkout-counter">0</span>)').appendTo('.checkout-qty a');
+
+	/**
+	 * Update menu cart qty and subtotal on load
+	 */
+	sm_update_cart_menu();
+
+	// Reload current location
+	$('.reload').click(function() {
+		location.reload();
+	});
+
+
+	/**
+	 * Add to cart
+	 */
+	$(document).on( 'click', 'button.item_add', function(){
+		var $button = $(this);
+		var data = $( "form#sell-media-cart-items" ).serializeArray();
+		var price = $("span#total").text();
+		var qty = $(".checkout-qty").text();
+		var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart&price=' + price;
+
+		// Add cart item in session.
+		$.post( ajaxurl, data, function( response ){
+			$('.sell-media-added').remove();
+			$('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
+			sm_update_cart_menu();
+		});
+
+		// Disable add to cart button.
+		$button.attr("disabled","disabled");
+
+	});
+
+	// Decrease item qty.
+	$(document).on( 'click', '.sell-media-cart-decrement', function(){
+		sm_update_cart_item( $(this), 'minus' );
+	});
+
+	// Increase item qty.
+	$(document).on( 'click', '.sell-media-cart-increment', function(){
+		sm_update_cart_item( $(this), 'plus' );
+	});
+
+	// Submit to payment gateway
+	$(document).on('click', '.sell-media-cart-checkout', function(){
+		var selected_payment = $( '#sell_media_payment_gateway' ).find( 'input:checked' );
+		if( 'paypal' == selected_payment.val() )
+			$("#sell_media_payment_gateway").submit();
+	});
 });
+
+/**
+ * Update the menu cart with Qty and Subtotal
+ */
+function sm_update_cart_menu(){
+	var sm_cart_info = jQuery.parseJSON( jQuery.cookie('sm_cart_info') );
+	if( sm_cart_info != null ){
+		jQuery('.checkout-price').text( sm_cart_info.subtotal );
+		jQuery('.checkout-counter').text( sm_cart_info.qty );
+	}
+}
+
+/**
+ * Calculate shipping costs
+ */
+function sm_calculate_shipping(){
+	// Define vars.
+	var total_shipping = 0,
+		subtotal = 0,
+		items = jQuery( "#sell-media-checkout-cart .item" ),
+		total_print_qty = 0;
+
+	// Check if sell media reprints is active.
+	if( 'undefined' === typeof sell_media_reprints ){
+		return total_shipping;
+	}
+
+	// Get price of all items.
+	items.each( function(){
+		var price = jQuery(this).attr('data-price');
+		var type = jQuery(this).attr('data-type');
+		var current_qty = jQuery(this).find( '.item-quantity' ).text();
+
+		// Check if product is printable.
+		if( 'print' === type ){
+			total_print_qty += parseInt(current_qty);
+			subtotal+= parseFloat( price ) * parseFloat( current_qty );
+		}
+	});
+
+	// Check if shipping is on total rate.
+	if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
+		var total_shipping = parseFloat( subtotal ) * parseFloat( sell_media_reprints.reprints_shipping_flat_rate );
+	}
+
+	// Check if shipping is on flate rate.
+	if( 'shippingFlatRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
+		var total_shipping = parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
+	}
+
+	// Check if shipping is on quantity rate.
+	if( 'shippingQuantityRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
+		var total_shipping = parseInt( total_print_qty ) * parseFloat(sell_media_reprints.reprints_shipping_flat_rate);
+	}
+
+	// Return total shipping cost.
+	return total_shipping;
+}
+
+/**
+ * Update cart total.
+ */
+function sm_update_cart_totals(){
+	// Define vars.
+	var items = jQuery( "#sell-media-checkout-cart .item" ),
+		currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
+		subtotal = 0,
+		tax = 0,
+		total_shipping = 0,
+		total_qty = 0;
+
+	// Get price of all items.
+	items.each( function(){
+		var price = jQuery(this).attr('data-price');
+		var current_qty = jQuery(this).find( '.item-quantity' ).text();
+
+		total_qty += parseInt(current_qty);
+		subtotal+= parseFloat( price ) * parseFloat( current_qty );
+	});
+
+	// Update menu qty counter
+	jQuery('.checkout-counter').text( total_qty );
+
+	// Update menu subtotal
+	jQuery('.checkout-price').text( subtotal.toFixed( 2 ) );
+
+	// Set grand total.
+	var grand_total = subtotal;
+
+	// Add tax if tax is set.
+	if( sell_media.tax > 0 ){
+		tax = parseFloat( subtotal ) * parseFloat( sell_media.tax );
+		grand_total = subtotal  + tax ;
+	}
+
+	// Add shipping cost.
+	if( '2' === sell_media.shipping  ){
+		var total_shipping = sm_calculate_shipping();
+		var grand_total = parseFloat( grand_total )  + parseFloat( total_shipping );
+	}
+	
+	// Show subtotal.
+	jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal.toFixed( 2 ) );
+
+	// Show tax.
+	jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + tax.toFixed( 2 ) );
+
+	// Show shipping.
+	jQuery( '.sell-media-totals .sell-media-cart-shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
+
+	// Show Grand total.
+	jQuery( '.sell-media-totals .sell-media-cart-grand-total' ).html( currency_symbol + grand_total.toFixed( 2 ) );
+
+}
+
+/**
+ * Update cart item
+ * @param  {object} el   Element of item
+ * @param  {string} type Update type
+ */
+function sm_update_cart_item( el, type ){
+	var parent = el.parents( 'li' ),
+		id = parent.attr('id'),
+		price = parent.attr('data-price'),
+		current_qty = parent.find( '.item-quantity' ).text(),
+		currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol,
+		updated_qty = parseInt(current_qty) - 1;
+
+	// Add qty if type is 'plus'.
+	if( 'plus' === type )
+		updated_qty = parseInt(current_qty) + 1;
+
+	// Update price.
+	var updated_price = parseInt( updated_qty ) * parseFloat( price );
+
+	// Update qty.
+	parent.find( '.item-quantity .count' ).text( updated_qty );
+
+	// Update item total.
+	parent.find( '.item-total' ).html( currency_symbol + updated_price.toFixed( 2 ) );
+
+	// Hide if qty is less than 1.
+	if( updated_qty < 1 ){
+		parent.fadeOut( 'slow' ).remove();
+		if( jQuery("#sell-media-checkout-cart .sell-media-cart-items li").length < 1 ){
+			jQuery("#sell-media-checkout-cart").fadeOut( 'slow' );
+			jQuery("#sell-media-empty-cart-message").fadeIn( 'slow' );
+		}
+	}
+
+	// Update cart total.
+	sm_update_cart_totals();
+
+	// Update cart item in session.
+	jQuery.post( sell_media.ajaxurl, { action: 'sm_update_cart', cart_item_id: id, qty:updated_qty });
+}

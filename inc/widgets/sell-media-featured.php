@@ -43,7 +43,7 @@
 				global $post;
 			?>
 
-				<div class="sell-media-widget-item-warp sell-media-grid">
+				<div class="sell-media-widget-item-warp sell-media-grid-item">
 					<div class="sell-media-widget-thumb-wrap">
 						<a href="<?php echo get_permalink(); ?>">
 							<?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'thumbnail' ) ); ?>

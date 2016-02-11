@@ -36,7 +36,7 @@ Class SellMediaSearch {
 
 		global $wpdb;
 		if ( is_search() ) {
-			$where .= ' AND ( post_type = \'sell_media_item\' OR ( post_type = \'attachment\' AND post_parent != 0 AND ID IN ( SELECT meta_value FROM wp_postmeta WHERE meta_key = \'_sell_media_attachment_id\' ) ) )';
+			$where .= ' AND ( post_type = \'sell_media_item\' OR ( post_type = \'attachment\' AND post_parent != 0 AND ID IN ( SELECT meta_value FROM '.$wpdb->postmeta.' WHERE meta_key = \'_sell_media_attachment_id\' ) ) )';
 		}
 		return $where;
 	}
@@ -170,11 +170,11 @@ Class SellMediaSearch {
 			$searchSlug = '';
 			foreach ( $search_terms as $term ) {
 				$term = addslashes_gpc( $term );
-				$searchSlug .= "{$searchand}(tter.slug LIKE '{$n}".sanitize_title_with_dashes( $term )."{$n}')";
+				$searchSlug .= "{$searchand}(tter.slug LIKE '{$n}".sanitize_title_with_dashes( sanitize_title( $term ) )."{$n}')";
 				$searchand = ' AND ';
 			}
 			if ( count( $search_terms ) > 1 && $search_terms[0] != $s ) {
-				$searchSlug = "($searchSlug) OR (tter.slug LIKE '{$n}".sanitize_title_with_dashes( $s )."{$n}')";
+				$searchSlug = "($searchSlug) OR (tter.slug LIKE '{$n}".sanitize_title_with_dashes( sanitize_title( $s ) )."{$n}')";
 			}
 			if ( ! empty( $searchSlug ) )
 				$search = " OR ({$searchSlug}) ";
