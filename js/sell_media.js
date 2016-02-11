@@ -51,9 +51,17 @@ jQuery(document).ready(function($){
 			url: sell_media.ajaxurl,
 			data: final_data,
 			success: function(msg){
-				$('#sell-media-dialog-box-target .sell-media-dialog-box-content').html(msg);
+				var target = $('#sell-media-dialog-box-target .sell-media-dialog-box-content');
+				// if there's an image already, fade out, then fade in
+				if ($('#sell-media-dialog-box-target .sell-media-dialog-box-content img').length){
+					$(target).fadeOut('fast', function() {
+						$(target).html(msg).fadeIn('fast');
+    				});
+    			// otherwise, this is the first load
+				} else {
+					$(target).html(msg);
+				}
 				required_fields();
-
 			}
 		});
 	}
