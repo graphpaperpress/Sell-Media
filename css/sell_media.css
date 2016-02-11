@@ -577,10 +577,7 @@ input[type="submit"].sell-media-button,
   box-sizing: border-box;
   z-index: 5000;
   opacity: 0;
-  visibility: hidden;
-  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
-  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
-  transition: opacity 0.3s 0s, visibility 0s 0.3s; }
+  visibility: hidden; }
   .sell-media-dialog-box p,
   .sell-media-dialog-box a,
   .sell-media-dialog-box a:visited,
@@ -653,48 +650,14 @@ input[type="submit"].sell-media-button,
       color: #fff;
       text-decoration: none; }
   .sell-media-dialog-box #sell-media-dialog-box-target {
+    background-color: #fff;
     position: relative;
     max-width: 1000px;
     width: 80%;
-    margin: 4em auto;
-    opacity: 0;
-    visibility: hidden;
-    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
-    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
-    transition: opacity 0.3s 0s, visibility 0s 0.3s;
-    -webkit-transform: translateY(-40px);
-    -moz-transform: translateY(-40px);
-    -ms-transform: translateY(-40px);
-    -o-transform: translateY(-40px);
-    transform: translateY(-40px);
-    /* Force Hardware Acceleration in WebKit */
-    -webkit-backface-visibility: hidden;
-    -webkit-transition-property: -webkit-transform;
-    -moz-transition-property: -moz-transform;
-    transition-property: transform;
-    -webkit-transition-duration: 0.3s;
-    -moz-transition-duration: 0.3s;
-    transition-duration: 0.3s; }
-    .sell-media-dialog-box #sell-media-dialog-box-target .sell-media-dialog-box-content {
-      background-color: #fff;
-      position: relative; }
+    margin: 4em auto; }
   .sell-media-dialog-box.is-visible {
     opacity: 1;
-    visibility: visible;
-    -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
-    -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
-    transition: opacity 0.3s 0s, visibility 0s 0s; }
-    .sell-media-dialog-box.is-visible #sell-media-dialog-box-target.loaded {
-      opacity: 1;
-      visibility: visible;
-      -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
-      -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
-      transition: opacity 0.3s 0s, visibility 0s 0s;
-      -webkit-transform: translateY(0);
-      -moz-transform: translateY(0);
-      -ms-transform: translateY(0);
-      -o-transform: translateY(0);
-      transform: translateY(0); }
+    visibility: visible; }
     .sell-media-dialog-box.is-visible #sell-media-dialog-box-target .sell-media-dialog-box-arrow {
       position: absolute;
       display: inline;
