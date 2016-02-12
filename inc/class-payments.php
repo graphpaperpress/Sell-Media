@@ -431,7 +431,7 @@ Class SellMediaPayments {
             // So we derive the attachment_id from the product's post_meta
             $product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
             // If license description exists, show it.
-            $product['license']['desc'] = ( term_description( $product['license']['id'], 'licenses' ) ) ? '<br /><span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span>' : '';
+            $product['license']['desc'] = ( term_description( $product['license']['id'], 'licenses' ) ) ? '<p><span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span></p>' : '';
 
                 if ( ! empty( $product['id'] ) ) {
 
@@ -440,10 +440,10 @@ Class SellMediaPayments {
                     $filename = wp_get_attachment_image_src( $product['attachment'], 'full' );
                     $filename = basename( $filename[0] );
                     if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
-                        $html .= '#' . $product['id'] . ', ' . $product['name'] . ', File name: '. $filename . '<br />';
-                        $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a><br />';
+                        $html .= '<p>#' . $product['id'] . ', ' . $product['name'] . ', File name: '. $filename . '</p>';
+                        $html .= '<p><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a></p>';
                         if ( 'download' == $product['type'] ) {
-                            $html .= '<a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center">' . __( 'Download', 'sell_media' ) . '</a>';
+                            $html .= '<p><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center">' . __( 'Download', 'sell_media' ) . '</a></p>';
                         } elseif ( 'print' == $product['type'] ) {
                             $html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
                         }
@@ -454,11 +454,11 @@ Class SellMediaPayments {
                         $html .= $product['size']['name'];
                         $product_width = sell_media_get_term_meta( (int) $product['size']['id'], 'width', true );
                         if( $product_width ){
-                            $html .= "<br/>Width: " . $product_width;
+                            $html .= "<p>Width: " . $product_width . "</p>";
                         }
                         $product_height = sell_media_get_term_meta( (int) $product['size']['id'], 'height', true );
                         if( $product_height){
-                            $html .= "<br/>Height: " . $product_height;
+                            $html .= "<p>Height: " . $product_height . "</p>";
                         }
                     }
                     $html .= '</td>';
@@ -486,13 +486,13 @@ Class SellMediaPayments {
             $html .= '<td>&nbsp;</td>';
             $html .= '<td class="sell-media-products-grandtotal" style="border-bottom: 3px solid #ccc; padding: 0.5rem; text-align: right;">';
             if ( $discount ) {
-                $html .= __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '<br />';
+                $html .= '<p>' . __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '</p>';
             }
             if ( $tax ) {
-                $html .= __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '<br />';
+                $html .= '<p>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</p>';
             }
             if ( $shipping ) {
-                $html .= __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '<br />';
+                $html .= '<p>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</p>';
             }
             do_action( 'sell_media_above_products_formatted_table_total', $post_id );
             $html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key='total' ), 2, '.', ',' ) . '</strong>';
