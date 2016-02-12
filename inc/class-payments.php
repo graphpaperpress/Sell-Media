@@ -452,7 +452,6 @@ Class SellMediaPayments {
                     $html .= '<td class="sell-media-product-size" style="' . $style . '">';
                     if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ){
                         $html .= $product['size']['name'];
-                        $html .= $product['size']['name'];
                         $product_width = sell_media_get_term_meta( (int) $product['size']['id'], 'width', true );
                         if( $product_width ){
                             $html .= "<br/>Width: " . $product_width;
