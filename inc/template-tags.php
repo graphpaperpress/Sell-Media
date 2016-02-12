@@ -21,7 +21,7 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
 
 	$attachment_id = ( empty( $attachment_id ) ) ? sell_media_get_attachment_id( $post_id ) : $attachment_id;
 	$text = apply_filters('sell_media_purchase_text', $text, $post_id );
-	$html = '<a href="javascript:void(0)" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-cart-trigger sell-media-' . $button . '">' . $text . '</a>';
+	$html = '<a href="' . esc_url( get_permalink( $post_id ) ). '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
 	$html = apply_filters( 'sell_media_item_buy_button', $html, $post_id, $attachment_id, $button, $text, $echo );
 
 	if ( $echo )
