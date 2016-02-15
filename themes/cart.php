@@ -9,6 +9,7 @@ $attachment_id  = $_POST['attachment_id'];
 $location       = isset( $_POST['location'] ) ? $_POST['location'] : '';
 $image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
 
+ob_start();
 ?>
 <div class="sell-media-quick-view-container">
 
@@ -29,3 +30,8 @@ $image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachm
     <?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id, $location ); ?>
 
 </div><!-- .sell-media-quick-view-container -->
+<?php
+$cart_markup = ob_get_contents();
+ob_end_clean();
+
+echo apply_filters( 'sell_media_cart_output', $cart_markup, $post_id, $attachment_id, $location );
