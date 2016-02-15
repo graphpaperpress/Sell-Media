@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.3
-Stable tag: 2.1
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -211,6 +211,12 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.1.1 =
+* Tweak: Multisite support
+* Tweak: Hook added for Free Downloads extension
+* Fix: Checkout blank if missing $attachment_id
+* Fix: Missing price options on dropdown
 
 = 2.1 =
 * New Feature: Quick View.
