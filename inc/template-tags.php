@@ -534,12 +534,29 @@ function sell_media_append_meta( $post_id ) {
 	if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
 		echo sell_media_item_links( $post_id );
 	} elseif ( is_singular( 'sell_media_item' ) ) {
+		
+		$location = "";
+
+		if( isset( $_GET['id'] ) && '' !== $_GET['id'] ){
+			$attachment_id = absint( $_GET['id'] );
+		}
+		else{
+			$attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+		}
+		
+		ob_start();
+
 		echo '<div class="sell-media-meta">';
 		do_action( 'sell_media_above_buy_button', $post_id );
-		do_action( 'sell_media_add_to_cart_fields', $post_id );
+		do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
 		do_action( 'sell_media_below_buy_button', $post_id );
 		sell_media_plugin_credit();
 		echo '</div>';
+
+		$cart_markup = ob_get_contents();
+		ob_end_clean();
+
+		echo apply_filters( 'sell_media_cart_output', $cart_markup, $post_id, $attachment_id, $location );
 	}
 }
 add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );

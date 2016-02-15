@@ -1012,6 +1012,8 @@ function sell_media_free_download_file( $post_id, $attachment_id ){
     
     // product is not free, so die
     if ( $price > 0 ) {
+        
+        do_action( 'sell_media_zero_price_download_fail', $post_id, $attachment_id );
 
         wp_die( __( 'Nice try, but this file is not a free download.', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
 
