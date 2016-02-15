@@ -42,6 +42,7 @@ jQuery(document).ready(function($){
 	function sell_media_popup_ajax_request( new_data ){
 		var old_data = {
 			"action": "sell_media_load_template",
+			"location": "quick_view",
 			"template": "cart.php",
 		};
 		var final_data = $.extend( old_data, new_data );
