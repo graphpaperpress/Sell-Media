@@ -99,7 +99,13 @@ class SellMediaPhpSessions {
 	 * Compare versions and maybe run an upgrade routine.
 	 */
 	public function maybe_upgrade() {
-		$current_version = (int) get_site_option( 'sell_media_wpdb_sessions_version', 0 );
+		if( function_exists( 'get_blog_option' ) ){
+			$current_version = get_blog_option( get_current_blog_id(), 'sell_media_wpdb_sessions_version', 0 );
+		}
+		else{
+			$current_version = get_option( 'sell_media_wpdb_sessions_version', 0 );;
+		}
+
 		if ( version_compare( $this->version, $current_version, '>' ) ) {
 			$this->do_upgrade( $current_version ); }
 	}
@@ -118,7 +124,13 @@ class SellMediaPhpSessions {
 				PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;" );
 			$current_version = 1;
-			update_site_option( 'sell_media_wpdb_sessions_version', $current_version );
+
+			if( function_exists( 'add_blog_option' ) ){
+				add_blog_option( get_current_blog_id(), 'sell_media_wpdb_sessions_version', $current_version );
+			}
+			else{
+				add_option( 'sell_media_wpdb_sessions_version', $current_version );
+			}
 		}
 	}
 	/**
@@ -145,6 +157,8 @@ class SellMediaPhpSessions {
 	 * Runs at the end of this script.
 	 */
 	public static function init() {
+		global $wpdb;
+		
 		self::$config = self::maybe_user_config( array(
 			'enable' => true,
 		) );
@@ -154,7 +168,7 @@ class SellMediaPhpSessions {
 		if ( ! self::$instance ) {
 			self::$instance = new SellMediaPhpSessions;
 			self::$instance->wpdb = $GLOBALS['wpdb'];
-			self::$instance->table = self::$instance->wpdb->prefix . 'sm_sessions';
+			self::$instance->table = $wpdb->prefix . 'sm_sessions';
 			self::$instance->maybe_upgrade();
 			session_set_save_handler(
 				array( self::$instance, 'open' ),
