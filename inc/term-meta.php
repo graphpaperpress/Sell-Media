@@ -322,7 +322,7 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
                 $meta_value[$key] = $_POST['meta_value'][$key];
                 update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
             } else {
-                sell_media_delete_term_meta( $term_id, $key );
+                delete_term_meta( $term_id, $key );
             }
         }
     }
