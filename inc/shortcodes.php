@@ -44,7 +44,7 @@ function sell_media_thanks_shortcode( $tx=null ) {
         
         // Clear cart item.
         global $sm_cart;
-        $sm_cart->clear();
+        @$sm_cart->clear();
 
         $html .= '</p>';
         return apply_filters( 'sell_media_thanks_filter_below', $html );
