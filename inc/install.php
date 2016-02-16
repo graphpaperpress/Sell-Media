@@ -82,6 +82,10 @@ function sell_media_install() {
         require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-upgrade.php';
     }
 
+    // Migrate old tax meta.
+    $tax_meta_migrate = new SellMediaTaxMetaMigrate();
+    $tax_meta_migrate->run();
+
     // Update the version number
     update_option( 'sell_media_version', SELL_MEDIA_VERSION );
 
