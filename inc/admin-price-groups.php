@@ -85,7 +85,7 @@ Class SellMediaNavStyleUI {
                 // can't wait for term meta to make it into core.
                 foreach( $v as $kk => $vv ){
                     if ( $k != 'name' ){
-                        sell_media_update_term_meta( $k, $kk, $vv );
+                        update_term_meta( $k, $kk, $vv );
                     }
                 }
             }
@@ -102,7 +102,7 @@ Class SellMediaNavStyleUI {
                     if ( ! is_wp_error( $term ) ){
                         foreach( $child as $k => $v ){
                             if ( $k != 'name' ){
-                                sell_media_update_term_meta( $term['term_id'], $k, $v );
+                                update_term_meta( $term['term_id'], $k, $v );
                             }
                         }
                     }
