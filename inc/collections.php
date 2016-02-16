@@ -51,7 +51,7 @@ function sell_media_collection_password_check( $query ){
          * build an array of terms that are password protected
          */
         foreach( get_terms('collection') as $term_obj ){
-            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+            $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
             if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
         }
 
@@ -69,7 +69,7 @@ function sell_media_collection_password_check( $query ){
          */
         if ( ! empty( $exclude_term_ids ) ){
             foreach( $exclude_term_ids as $t ){
-                if ( has_term( $t, 'collection', $post_id ) && sell_media_get_term_meta( $t, 'collection_password', true ) ){
+                if ( has_term( $t, 'collection', $post_id ) && get_term_meta( $t, 'collection_password', true ) ){
                     $term_id = $t;
                     $message = __( 'This item is password protected', 'sell_media' );
                 }
@@ -94,7 +94,7 @@ function sell_media_collection_password_check( $query ){
          * build an array of terms that are password protected
          */
         foreach( get_terms('collection') as $term_obj ){
-            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+            $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
             if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
         }
 
@@ -133,12 +133,12 @@ function sell_media_collection_password_check( $query ){
         /**
          * get the password for the collection
          */
-        $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
+        $password = get_term_meta( $term_id, 'collection_password', true );
         if ( empty( $password ) ){
             $child_term = get_term( $term_id, 'collection' );
             $parent_term = get_term( $child_term->parent, 'collection' );
             if ( ! empty( $parent_term->term_id ) )
-                $password = sell_media_get_term_meta( $parent_term->term_id, 'collection_password', true );
+                $password = get_term_meta( $parent_term->term_id, 'collection_password', true );
             else
                 $password = null;
         }

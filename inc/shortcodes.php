@@ -360,15 +360,15 @@ function sell_media_price_group_shortcode(){
                         <span class="sell-media-price-group-name"><?php echo $term->name; ?></span>
                     </td>
                     <td>
-                        <span class="sell-media-price-group-width"><?php echo sell_media_get_term_meta( $term->term_id, 'width', true ); ?></span>
+                        <span class="sell-media-price-group-width"><?php echo get_term_meta( $term->term_id, 'width', true ); ?></span>
                     </td>
                     <td>
-                        <span class="sell-media-price-group-height"><?php echo sell_media_get_term_meta( $term->term_id, 'height', true ); ?></span>
+                        <span class="sell-media-price-group-height"><?php echo get_term_meta( $term->term_id, 'height', true ); ?></span>
                     </td>
                     <td>
                         <span class="sell-media-price-group-height">
                             <span class="currency-symbol"><?php echo sell_media_get_currency_symbol(); ?></span>
-                            <?php echo sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ); ?>
+                            <?php echo sprintf( '%0.2f', get_term_meta( $term->term_id, 'price', true ) ); ?>
                         </span>
                     </td>
                 </tr>
@@ -403,7 +403,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
         $taxonomy = 'collection';
         $term_ids = array();
         foreach( get_terms( $taxonomy ) as $term_obj ){
-            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+            $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
             if ( $password ) $term_ids[] = $term_obj->term_id;
         }
 
@@ -438,7 +438,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
         $taxonomy = 'collection';
         $term_ids = array();
         foreach( get_terms( $taxonomy ) as $term_obj ){
-            $password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+            $password = get_term_meta( $term_obj->term_id, 'collection_password', true );
             if ( $password ) $term_ids[] = $term_obj->term_id;
         }
 
@@ -488,7 +488,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
                     foreach( $posts->posts as $post ) :
 
                         $html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
-                        $collection_attachment_id = sell_media_get_term_meta( $term->term_id, 'collection_icon_id', true );
+                        $collection_attachment_id = get_term_meta( $term->term_id, 'collection_icon_id', true );
                         $html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ), false );
                         if ( 'true' == $details ) {
                             $settings = sell_media_get_plugin_options();

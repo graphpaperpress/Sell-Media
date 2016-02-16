@@ -452,11 +452,11 @@ Class SellMediaPayments {
                     $html .= '<td class="sell-media-product-size" style="' . $style . '">';
                     if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ){
                         $html .= $product['size']['name'];
-                        $product_width = sell_media_get_term_meta( (int) $product['size']['id'], 'width', true );
+                        $product_width = get_term_meta( (int) $product['size']['id'], 'width', true );
                         if( $product_width ){
                             $html .= "<p>Width: " . $product_width . "</p>";
                         }
-                        $product_height = sell_media_get_term_meta( (int) $product['size']['id'], 'height', true );
+                        $product_height = get_term_meta( (int) $product['size']['id'], 'height', true );
                         if( $product_height){
                             $html .= "<p>Height: " . $product_height . "</p>";
                         }
@@ -560,7 +560,7 @@ Class SellMediaPayments {
                             'name' => $paypal_args[ 'option_selection5_' . $i ],
                             'id' => empty( $paypal_args[ 'option_selection6_' . $i ] ) ? null : $paypal_args[ 'option_selection6_' . $i ],
                             'description' => null,
-                            'markup' => empty( $paypal_args[ 'option_selection6_' . $i ] ) ? null : str_replace( '%', '', sell_media_get_term_meta( $paypal_args[ 'option_selection6_' . $i ], 'markup', true ) )
+                            'markup' => empty( $paypal_args[ 'option_selection6_' . $i ] ) ? null : str_replace( '%', '', get_term_meta( $paypal_args[ 'option_selection6_' . $i ], 'markup', true ) )
                             ),
                         'qty' => $paypal_args[ 'quantity' . $i ],
                         'total' => $paypal_args[ 'mc_gross_' . $i ],

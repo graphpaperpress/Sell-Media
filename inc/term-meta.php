@@ -148,8 +148,8 @@ function sell_media_the_markup_slider( $tag ){
     else
         $term_id = null;
 
-    if ( sell_media_get_term_meta( $term_id, 'markup', true) ) {
-        $initial_markup = str_replace( "%", "", sell_media_get_term_meta( $term_id, 'markup', true ) );
+    if ( get_term_meta( $term_id, 'markup', true) ) {
+        $initial_markup = str_replace( "%", "", get_term_meta( $term_id, 'markup', true ) );
     } else {
         $initial_markup = 0;
     }
@@ -196,13 +196,13 @@ function sell_media_the_markup_slider( $tag ){
     <div class="sell_media-slider-container">
         <div id="markup_slider"></div>
         <div class="sell_media-price-container">
-            <input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo sell_media_get_term_meta($term_id, 'markup', true); ?>" size="40" />
+            <input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo get_term_meta($term_id, 'markup', true); ?>" size="40" />
         </div>
         <p class="description">
             <?php _e( 'Increase the price of a item if a buyer selects this license by dragging the slider above.', 'sell_media' ); ?>
             <?php
-                if ( sell_media_get_term_meta( $term_id, 'markup', true ) )
-                    $default_markup = sell_media_get_term_meta( $term_id, 'markup', true );
+                if ( get_term_meta( $term_id, 'markup', true ) )
+                    $default_markup = get_term_meta( $term_id, 'markup', true );
                 else
                     $default_markup = '0%';
 
@@ -240,7 +240,7 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
             <label for="markup"><?php _e( 'Add as default license?', 'sell_media' ); ?></label>
         </th>
         <td>
-            <input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( sell_media_get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
+            <input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
             <span class="description"><label for="meta_value[default]"><?php echo $desc; ?></label></span>
         </td>
     </tr>
@@ -288,7 +288,7 @@ add_filter( 'manage_edit-licenses_columns', 'sell_media_custom_license_columns_h
 function sell_media_custom_license_columns_content( $row_content, $column_name, $term_id ){
     switch( $column_name ) {
         case 'license_term_price':
-            return sell_media_get_term_meta($term_id, 'markup', true);
+            return get_term_meta($term_id, 'markup', true);
             break;
         default:
             break;
@@ -384,7 +384,7 @@ function sell_media_edit_collection_icon( $tag ){
             <label for="collection_icon"><?php _e( 'Icon', 'sell_media' ); ?></label>
         </th>
         <td>
-            <?php sell_media_collection_icon_field( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ) ); ?>
+            <?php sell_media_collection_icon_field( get_term_meta( $term_id, 'collection_icon_id', true ) ); ?>
         </td>
     </tr>
 <?php }
@@ -427,11 +427,11 @@ function sell_media_edit_collection_password( $tag ){
     //if ( $child_term->parent == 0 ){
         $description = __( 'Password protect all items in this collection', 'sell_media' );
         $html_extra = null;
-        $password = $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
-        $password = sell_media_get_term_meta( $term_id, 'collection_password', true );
+        $password = $password = get_term_meta( $term_id, 'collection_password', true );
+        $password = get_term_meta( $term_id, 'collection_password', true );
    /* } else {
         $parent = get_term( $child_term->parent, 'collection' );
-        $password = sell_media_get_term_meta( $parent->term_id, 'collection_password', true );
+        $password = get_term_meta( $parent->term_id, 'collection_password', true );
         $description = __('This colleciton inherits the password set in its parent collection: ', 'sell_media') . ' <a href="' . admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item') . '">' . $parent->name . '</a>. ';
         $description .= __('To edit the password of this collection you must change the parent password.', 'sell_media');
         $html_extra = 'class="disabled" disabled ';
@@ -497,10 +497,10 @@ add_filter( 'manage_edit-collection_columns', 'sell_media_custom_collection_colu
 function sell_media_custom_collection_columns_content( $row_content, $column_name, $term_id ){
     switch( $column_name ) {
         case 'collection_icon':
-            return wp_get_attachment_image( sell_media_get_term_meta( $term_id, 'collection_icon_id', true ), 'thumbnail' );
+            return wp_get_attachment_image( get_term_meta( $term_id, 'collection_icon_id', true ), 'thumbnail' );
             break;
         case 'collection_protected':
-                if( sell_media_get_term_meta( $term_id, 'collection_password', true ) ) {
+                if( get_term_meta( $term_id, 'collection_password', true ) ) {
                     $colstatus = "Private";
                 } else {
                     $colstatus = "Public";

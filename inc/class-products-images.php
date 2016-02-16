@@ -169,8 +169,8 @@ class SellMediaImages extends SellMediaProducts {
                     /**
                      * Retrieve the height and width for our price group
                      */
-                    $pg_width = sell_media_get_term_meta( $size->term_id, 'width', true );
-                    $pg_height = sell_media_get_term_meta( $size->term_id, 'height', true );
+                    $pg_width = get_term_meta( $size->term_id, 'width', true );
+                    $pg_height = get_term_meta( $size->term_id, 'height', true );
 
                     /**
                      * Build our array to be returned, the downloadable width and height
@@ -227,7 +227,7 @@ class SellMediaImages extends SellMediaProducts {
                     if ( ! empty( $terms ) ){
                         foreach( $terms as $term ){
                             if ( $term->parent != 0 ){
-                                $height = sell_media_get_term_meta( $term->term_id, 'height', true );
+                                $height = get_term_meta( $term->term_id, 'height', true );
                                 $heights[] = $height;
                             }
                         }

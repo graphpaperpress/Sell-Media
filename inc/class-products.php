@@ -26,7 +26,7 @@ Class SellMediaProducts {
     public function verify_the_price( $product_id=null, $price_id=null ){
 
         // price group price
-        $price_group_price = sell_media_get_term_meta( $price_id, 'price', true );
+        $price_group_price = get_term_meta( $price_id, 'price', true );
         $custom_price = get_post_meta( $product_id, 'sell_media_price', true );
         // check that the price_id exists and that the price meta is set
         if ( ! empty( $price_group_price ) ) {
@@ -82,9 +82,9 @@ Class SellMediaProducts {
                     $prices[$i]['id'] = $term->term_id;
                     $prices[$i]['name'] = $term->name;
                     $prices[$i]['description'] = $term->description;
-                    $prices[$i]['price'] = sell_media_get_term_meta( $term->term_id, 'price', true );
-                    $prices[$i]['width'] = sell_media_get_term_meta( $term->term_id, 'width', true );
-                    $prices[$i]['height'] = sell_media_get_term_meta( $term->term_id, 'height', true );
+                    $prices[$i]['price'] = get_term_meta( $term->term_id, 'price', true );
+                    $prices[$i]['width'] = get_term_meta( $term->term_id, 'width', true );
+                    $prices[$i]['height'] = get_term_meta( $term->term_id, 'height', true );
                 }
             }
         }
@@ -270,7 +270,7 @@ Class SellMediaProducts {
             $markup_amount = 0;
         } else {
             $price = $this->verify_the_price( $post_id, $price_id );
-            $markup_percent = str_replace( "%", "", sell_media_get_term_meta( $license_obj->term_id, 'markup', true ) );
+            $markup_percent = str_replace( "%", "", get_term_meta( $license_obj->term_id, 'markup', true ) );
             $markup_amount = ( $markup_percent / 100 ) * $price;
         }
 

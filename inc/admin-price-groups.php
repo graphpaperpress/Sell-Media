@@ -244,17 +244,17 @@ Class SellMediaNavStyleUI {
                     'meta'=> array(
                         'html' => '
                         <td>
-                            <input type="text" class="small-text" name="terms_children[' . $term->term_id . '][width]" value="'. sell_media_get_term_meta( $term->term_id, 'width', true ) . '">
+                            <input type="text" class="small-text" name="terms_children[' . $term->term_id . '][width]" value="'. get_term_meta( $term->term_id, 'width', true ) . '">
                             <p class="description">'. __('Max width (pixels)','sell_media') . '</p>
                         </td>
 
                         <td>
-                            <input type="text" class="small-text" name="terms_children['. $term->term_id . '][height]" value="'. sell_media_get_term_meta( $term->term_id, 'height', true ) . '">
+                            <input type="text" class="small-text" name="terms_children['. $term->term_id . '][height]" value="'. get_term_meta( $term->term_id, 'height', true ) . '">
                             <p class="description">'. __('Max Height (pixels)','sell_media') . '</p>
                         </td>
 
                         <td>
-                            <input type="text" class="small-text" name="terms_children['. $term->term_id . '][price]" value="'. sprintf( '%0.2f', sell_media_get_term_meta( $term->term_id, 'price', true ) ) . '">
+                            <input type="text" class="small-text" name="terms_children['. $term->term_id . '][price]" value="'. sprintf( '%0.2f', get_term_meta( $term->term_id, 'price', true ) ) . '">
                             <p class="description">' . __('Price','sell_media') . ' (' . sell_media_get_currency_symbol() . ')</p>
                         </td>'
                     )

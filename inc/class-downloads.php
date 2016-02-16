@@ -135,8 +135,8 @@ Class SellMediaDownload {
         $file_path = Sell_Media()->products->get_protected_file( $product_id, $attachment_id );
         $img = wp_get_image_editor( $file_path );
         if ( ! is_wp_error( $img ) ) {
-            $width = sell_media_get_term_meta( $size_id, 'width', true );
-            $height = sell_media_get_term_meta( $size_id, 'height', true );
+            $width = get_term_meta( $size_id, 'width', true );
+            $height = get_term_meta( $size_id, 'height', true );
             if ( $width || $height ) {
                 if ( $width >= $height ) {
                     $max = $width;
