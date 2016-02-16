@@ -239,6 +239,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/settings.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/lightbox.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-meta-migrate.php';
 
 			// Load files if is front end.
 			if( self::$instance->is_request( 'frontend' ) ){
