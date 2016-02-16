@@ -306,7 +306,7 @@ add_filter( 'manage_licenses_custom_column', 'sell_media_custom_license_columns_
 function sell_media_save_extra_taxonomy_fields( $term_id ) {
 
     if ( ! isset( $_POST['meta_value']['default'] ) ) {
-        sell_media_update_term_meta( $term_id, 'default', 'off');
+        update_term_meta( $term_id, 'default', 'off');
     }
 
     if ( ! isset( $_POST['meta_value']['collection_hidden'] ) ) {
@@ -320,7 +320,7 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
         foreach ( $cat_keys as $key ) {
             if ( ! empty( $_POST['meta_value'][$key] ) ) {
                 $meta_value[$key] = $_POST['meta_value'][$key];
-                sell_media_update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
+                update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
             } else {
                 sell_media_delete_term_meta( $term_id, $key );
             }
@@ -585,76 +585,5 @@ class SellMediaTaxonomyMetadata {
         if ( is_plugin_active_for_network(plugin_basename(__FILE__)) )
             $this->setup_blog($blog_id);
     }
-}
-
-// THE REST OF THIS CODE IS FROM http://core.trac.wordpress.org/ticket/10142
-// BY sirzooro
-
-//
-// Taxonomy meta functions
-//
-
-/**
- * Add meta data field to a term.
- *
- * @param int $term_id Post ID.
- * @param string $key Metadata name.
- * @param mixed $value Metadata value.
- * @param bool $unique Optional, default is false. Whether the same key should not be added.
- * @return bool False for failure. True for success.
- */
-function sell_media_add_term_meta($term_id, $meta_key, $meta_value, $unique = false) {
-    SellMediaTaxonomyMetadata::wpdbfix();
-    return add_metadata('taxonomy', $term_id, $meta_key, $meta_value, $unique);
-}
-
-/**
- * Remove metadata matching criteria from a term.
- *
- * You can match based on the key, or key and value. Removing based on key and
- * value, will keep from removing duplicate metadata with the same key. It also
- * allows removing all metadata matching key, if needed.
- *
- * @param int $term_id term ID
- * @param string $meta_key Metadata name.
- * @param mixed $meta_value Optional. Metadata value.
- * @return bool False for failure. True for success.
- */
-function sell_media_delete_term_meta($term_id, $meta_key, $meta_value = '') {
-    SellMediaTaxonomyMetadata::wpdbfix();
-    return delete_metadata('taxonomy', $term_id, $meta_key, $meta_value);
-}
-
-/**
- * Retrieve term meta field for a term.
- *
- * @param int $term_id Term ID.
- * @param string $key The meta key to retrieve.
- * @param bool $single Whether to return a single value.
- * @return mixed Will be an array if $single is false. Will be value of meta data field if $single
- *  is true.
- */
-function sell_media_get_term_meta($term_id, $key, $single = false) {
-    SellMediaTaxonomyMetadata::wpdbfix();
-    return get_metadata('taxonomy', $term_id, $key, $single);
-}
-
-/**
- * Update term meta field based on term ID.
- *
- * Use the $prev_value parameter to differentiate between meta fields with the
- * same key and term ID.
- *
- * If the meta field for the term does not exist, it will be added.
- *
- * @param int $term_id Term ID.
- * @param string $key Metadata key.
- * @param mixed $value Metadata value.
- * @param mixed $prev_value Optional. Previous value to check before removing.
- * @return bool False on failure, true if success.
- */
-function sell_media_update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '') {
-    SellMediaTaxonomyMetadata::wpdbfix();
-    return update_metadata('taxonomy', $term_id, $meta_key, $meta_value, $prev_value);
 }
 // End 'taxonomy meta plugin code'
