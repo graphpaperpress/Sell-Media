@@ -110,7 +110,7 @@ Class SellMediaAdminNotices {
 
         // get data from transient if it's set
         if ( false === ( $cache = get_transient( 'sell_media_get_newest_plugins' ) ) ) {
-            $json = wp_remote_get( 'http://demo.graphpaperpress.com/wp-content/plugins/gpp-theme-plugin-s3-updater/plugins.json', array( 'sslverify' => false ) );
+            $json = wp_remote_get( 'http://demo.graphpaperpress.com/wp-content/plugins/gpp-deployment/products.json', array( 'sslverify' => false ) );
             if ( ! is_wp_error( $json ) ) {
                 if ( isset( $json['body'] ) && strlen( $json['body'] ) > 0 ) {
                     $cache = wp_remote_retrieve_body( $json );
