@@ -99,12 +99,7 @@ class SellMediaPhpSessions {
 	 * Compare versions and maybe run an upgrade routine.
 	 */
 	public function maybe_upgrade() {
-		if( function_exists( 'get_blog_option' ) ){
-			$current_version = get_blog_option( get_current_blog_id(), 'sell_media_wpdb_sessions_version', 0 );
-		}
-		else{
-			$current_version = get_option( 'sell_media_wpdb_sessions_version', 0 );;
-		}
+		$current_version = sell_media_get_option( 'sell_media_wpdb_sessions_version', 0 );
 
 		if ( version_compare( $this->version, $current_version, '>' ) ) {
 			$this->do_upgrade( $current_version ); }
@@ -125,12 +120,7 @@ class SellMediaPhpSessions {
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;" );
 			$current_version = 1;
 
-			if( function_exists( 'add_blog_option' ) ){
-				add_blog_option( get_current_blog_id(), 'sell_media_wpdb_sessions_version', $current_version );
-			}
-			else{
-				add_option( 'sell_media_wpdb_sessions_version', $current_version );
-			}
+			sell_media_add_option( 'sell_media_wpdb_sessions_version', $current_version );
 		}
 	}
 	/**
