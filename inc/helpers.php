@@ -1068,3 +1068,33 @@ function sell_media_version(){
     $version = get_option( $option_name, $default_value );
     return $version;
 }
+
+/**
+ * Get option based on the site type
+ * @param  string  $option  Name of option to add. Expected to not be SQL-escaped.
+ * @param  mixed   $value       Optional. Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
+ * @return bool False if option was not added and true if option was added.
+ */
+function sell_media_get_option( $option, $default = false ){
+    if( is_multisite() ){
+        return get_blog_option( get_current_blog_id(), $option, $default );
+    }
+
+    return get_option( $option, $default );
+}
+
+/**
+ * Add a new option based on the site type
+ * @param  string $option    Name of option to add. Expected to not be SQL-escaped.
+ * @param  mixed $value      Optional. Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
+ * @param  string $deprecated Optional. Description. Not used anymore.
+ * @param  string|bool $autoload   Optional. Whether to load the option when WordPress starts up.
+ * @return bool             False if option was not added and true if option was added.
+ */
+function sell_media_add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ){
+    if( is_multisite() ){
+        return add_blog_option( get_current_blog_id(), $option, $value );
+    }
+
+    return add_option( $option, $value, $deprecated, $autoload );
+}
