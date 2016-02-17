@@ -256,7 +256,7 @@ Class SellMediaPayments {
                 }
             endwhile;
         }
-
+        wp_reset_postdata();
         return $purchases;
     }
 

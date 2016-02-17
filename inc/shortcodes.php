@@ -92,14 +92,15 @@ function sell_media_item_shortcode( $atts ) {
 
     $image = sell_media_item_icon( $id, $size, false );
     $text = apply_filters('sell_media_purchase_text', $text, $id );
-
+    $button = sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
+    
     if ( sell_media_has_multiple_attachments( $id ) ) {
-        $button = sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
+        $html = sell_media_gallery( $id );
     } else {
-        $button = '';
+        $html = '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a><br />' . $button . '</div>';
     }
 
-    return '<div class="sell-media-item-container sell-media-align' . $align . ' "><a href="' . get_permalink( $id ) . '">' . $image . '</a>' . $button . '</div>';
+    return $html;
 }
 add_shortcode( 'sell_media_item', 'sell_media_item_shortcode' );
 
@@ -166,6 +167,7 @@ function sell_media_all_items_shortcode( $atts ){
         $html .= '</div><!-- #sell-media-shortcode-all .sell_media -->';
 
     endif;
+    wp_reset_postdata();
 
     return $html;
 }
@@ -330,6 +332,7 @@ function sell_media_download_shortcode( $atts ) {
             $html .= '</div>';
         }
     }
+    
     return $html;
 }
 add_shortcode( 'sell_media_download_list', 'sell_media_download_shortcode' );
