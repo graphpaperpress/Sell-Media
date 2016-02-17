@@ -23,24 +23,32 @@ Class SellMediaTaxMetaMigrate {
      * Run migration process
      */
     public function run(){
-        $version = get_option( 'sell_media_version' );
+        $version = sell_media_version();
 
         if ( $version && $version > SELL_MEDIA_VERSION )
             return;
 
         $metas = $this->get_all_meta();
+        $drop_table = true;
 
         if( !empty( $metas ) ){
             foreach ($metas as $key => $meta) {
-                update_term_meta ( (int) $meta->taxonomy_id, $meta->meta_key, $meta->meta_value );
+                $result = update_term_meta ( (int) $meta->taxonomy_id, $meta->meta_key, $meta->meta_value );
+
+                if( is_wp_error( $result ) || false === $result ){
+                    $drop_table = false;
+                }
             }
         }
 
-        $this->delete_meta_table();
+        if( $drop_table ){
+            $this->delete_meta_table();
+        }
     }
 
     /**
-     * Get all old metas
+     * Get old tax metas.
+     * @return object Old tax metas
      */
     private function get_all_meta(){
         global $wpdb;
@@ -50,7 +58,8 @@ Class SellMediaTaxMetaMigrate {
     }
 
     /**
-     * Delete old meta table
+     * Delete old meta table.
+     * @return mixed Query output.
      */
     private function delete_meta_table(){
         global $wpdb;
