@@ -258,7 +258,7 @@ Class SellMediaSearch {
 			 * Exclude password protected collections from search query
 			 */
 			foreach( get_terms('collection') as $term_obj ){
-				$password = sell_media_get_term_meta( $term_obj->term_id, 'collection_password', true );
+				$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
 				if ( $password ) $exclude_term_ids[] = $term_obj->term_id;
 			}
 

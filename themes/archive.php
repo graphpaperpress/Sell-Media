@@ -103,7 +103,7 @@ $settings = sell_media_get_plugin_options();
 
                                         <?php foreach( $posts->posts as $post ) : ?>
                                             <?php
-                                                $collection_attachment_id = sell_media_get_term_meta( $child->term_id, 'collection_icon_id', true );
+                                                $collection_attachment_id = get_term_meta( $child->term_id, 'collection_icon_id', true );
                                                 if ( ! empty ( $collection_attachment_id ) ) {
                                                     echo wp_get_attachment_image( $collection_attachment_id, 'sell_media_item' );
                                                 } else {

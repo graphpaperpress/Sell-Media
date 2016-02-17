@@ -86,7 +86,7 @@
 
 		$i = 0;
 		foreach( $productTerms as $collection ){
-			$password = sell_media_get_term_meta( $collection->term_id, 'collection_password', true );
+			$password = get_term_meta( $collection->term_id, 'collection_password', true );
 			if ( $password ) unset( $productTerms[ $i ] );
 			$i++;
 		} ?>
