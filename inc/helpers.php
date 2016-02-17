@@ -1050,3 +1050,21 @@ function sell_media_free_download_file( $post_id, $attachment_id ){
 }
 
 add_action( 'sell_media_before_failed_download', 'sell_media_free_download_file', 10, 2 );
+
+/**
+ * Get current sell media plugin version.
+ * @return int Retrun current sell media plugin version.
+ */
+function sell_media_version(){
+    $option_name = 'sell_media_version';
+    $default_value = 0;
+
+    if( is_multisite() ){
+        $blog_id = get_current_blog_id();
+        $version = get_blog_option( $blog_id, $option_name, $default_value );
+        return $version;
+    }
+
+    $version = get_option( $option_name, $default_value );
+    return $version;
+}
