@@ -67,7 +67,7 @@ add_action( 'save_post_sell_media_item', 'sell_media_set_default_terms', 100, 3 
 function sell_media_get_default_terms(){
     global $wpdb;
 
-    $query = "SELECT * FROM {$wpdb->prefix}taxonomymeta WHERE `meta_value` LIKE 'on'";
+    $query = "SELECT * FROM {$wpdb->prefix}termmeta WHERE `meta_value` LIKE 'on'";
     $terms_meta = $wpdb->get_results( $query );
 
     $term_ids = array();
