@@ -89,8 +89,11 @@ class SellMediaUpdater {
 		// NOTE: Everything should be done through actions and filters.
 		if ( is_admin() ) {
 			// Add the menu screen for inserting license information.
-			add_action( 'admin_menu', array( $this, 'add_license_settings_page' ) );
-			add_action( 'admin_init', array( $this, 'add_license_settings_fields' ) );
+			// add_action( 'admin_menu', array( $this, 'add_license_settings_page' ) );
+			// add_action( 'admin_init', array( $this, 'add_license_settings_fields' ) );
+
+			// Add settings tabs on admin.
+			add_action( 'init', array( $this, 'register_settings' ) );
 
 			// Add a nag text for reminding the user to save the license information.
 			add_action( 'admin_notices', array( $this, 'show_admin_notices' ) );
@@ -134,6 +137,59 @@ class SellMediaUpdater {
 
 		delete_transient( $this->prefix . '_license_cache' );
 		delete_transient( 'update_plugins' );
+	}
+
+	/**
+	 * Register updater settings.
+	 * @return void
+	 */
+	function register_settings() {
+
+		// Updater Tab.
+		$updater_settings_tab = array(
+			'name' => 'sell_media_updater_settings',
+			'title' => __( 'License', 'sell_media' ),
+			'sections' => array(
+				'updater_license_section_1' => array(
+					'name' => 'updater_license_section_1',
+					'title' => __( 'License', 'sell_media' ),
+					'description' => sprintf( wp_kses( __( '<a href="%s" target="_blank">Get your license keys here</a> and paste them below to enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/dashboard/' ) ),
+				),
+			),
+		);
+		sell_media_register_plugin_option_tab( apply_filters( 'sell_media_updater_tab', $updater_settings_tab ) );
+
+		/**
+		 * The following example shows you how to register theme options and assign them to tabs and sections.
+		 */
+		$options = array(
+			$this->prefix . '-license-email' => array(
+				'tab' => 'sell_media_updater_settings',
+				'name' => $this->prefix . '-license-email',
+				'title' => __( 'License E-mail Address', $this->text_domain ),
+				'description' => '',
+				'section' => 'updater_license_section_1',
+				'since' => '1.0',
+				'id' => 'updater_license_section_1',
+				'type' => 'text',
+				'default' => '',
+				"sanitize" => "html",
+			),
+			$this->prefix . '-license-key' => array(
+				'tab' => 'sell_media_updater_settings',
+				'name' => $this->prefix . '-license-key',
+				'title' => __( 'License Key', $this->text_domain ),
+				'description' => '',
+				'section' => 'updater_license_section_1',
+				'since' => '1.0',
+				'id' => 'updater_license_section_1',
+				'type' => 'text',
+				'default' => '',
+				"sanitize" => "html",
+			),
+		);
+		sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
+
 	}
 
 	//
