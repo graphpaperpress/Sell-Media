@@ -8,26 +8,26 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Template Redirect
  * @since 1.0.4
  */
-function sell_media_template_redirect( $original_template ){
+function sell_media_template_redirect( $original_template ) {
 
-    $sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
+	$sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
 
-    /**
-     * Archive -- Check if this is an archive page AND post type is sell media
-     */
-    if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
-        $template = plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive.php';
-    } else {
-        $template = $original_template;
-    }
+	/**
+	 * Archive -- Check if this is an archive page AND post type is sell media
+	 */
+	if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
+		$template = plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive.php';
+	} else {
+		$template = $original_template;
+	}
 
-    return $template;
+	return $template;
 }
 add_filter( 'template_include', 'sell_media_template_redirect', 6 );
 
@@ -37,12 +37,12 @@ add_filter( 'template_include', 'sell_media_template_redirect', 6 );
  * @param  $form
  * @return $form
  */
-function sell_media_get_search_form( $form ){
-    // Change the default WP search form if is Sell Media search
-    if ( is_search() && 'sell_media_item' == get_query_var( 'post_type' ) ) {
-        $form = Sell_Media()->search->form();
-    }
-    return $form;
+function sell_media_get_search_form( $form ) {
+	// Change the default WP search form if is Sell Media search
+	if ( is_search() && 'sell_media_item' == get_query_var( 'post_type' ) ) {
+		$form = Sell_Media()->search->form();
+	}
+	return $form;
 }
 add_filter( 'get_search_form', 'sell_media_get_search_form' );
 
@@ -55,12 +55,12 @@ add_filter( 'get_search_form', 'sell_media_get_search_form' );
  */
 function sell_media_load_template() {
 
-    if ( $overridden_template = locate_template( 'cart.php' ) ) {
-        load_template( apply_filters( 'sell_media_cart_template', $overridden_template ) );
-    } else {
-        load_template( apply_filters( 'sell_media_cart_template', SELL_MEDIA_PLUGIN_DIR . '/themes/cart.php' ) );
-    }
-    die();
+	if ( $overridden_template = locate_template( 'cart.php' ) ) {
+		load_template( apply_filters( 'sell_media_cart_template', $overridden_template ) );
+	} else {
+		load_template( apply_filters( 'sell_media_cart_template', SELL_MEDIA_PLUGIN_DIR . '/themes/cart.php' ) );
+	}
+	die();
 }
 add_action( 'wp_ajax_nopriv_sell_media_load_template', 'sell_media_load_template' );
 add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
@@ -73,14 +73,14 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
  * @since 1.4.6
  */
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
-    global $user;
-    if ( isset( $user->roles ) && is_array( $user->roles ) ){
-        if ( in_array( 'sell_media_customer', $user->roles ) ){
-            return site_url('dashboard');
-        } else {
-            return admin_url();
-        }
-    }
+	global $user;
+	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+		if ( in_array( 'sell_media_customer', $user->roles ) ) {
+			return site_url( 'dashboard' );
+		} else {
+			return admin_url();
+		}
+	}
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 
@@ -90,64 +90,64 @@ add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
  * @since 1.9.2
  */
 function sell_media_body_class( $classes ) {
-    global $post;
+	global $post;
 
-    if ( empty( $post ) )
-        return;
-    
-    $settings = sell_media_get_plugin_options();
+	if ( empty( $post ) ) {
+		return; }
 
-    // Pages assigned with shortcode
-    $pages = sell_media_get_pages_array();
-    foreach ( $pages as $page ) {
-        $setting = $page . '_page';
-        if ( isset( $settings->$setting ) && $post->ID == $settings->$setting ) {
-            $classes[] = 'sell-media-page';
-            $classes[] = 'sell-media-' . str_replace( '_', '-', $setting );
-        }
-    }
+	$settings = sell_media_get_plugin_options();
 
-    // Shortcodes
-    $shortcodes = array( 'sell_media_thanks', 'sell_media_searchform', 'sell_media_item', 'sell_media_all_items', 'sell_media_checkout', 'sell_media_download_list', 'sell_media_price_group', 'sell_media_list_all_collections', 'sell_media_login_form' );
-    foreach ( $shortcodes as $shortcode ) {
-        if ( isset( $post->post_content ) && has_shortcode( $post->post_content, $shortcode ) ) {
-            $classes[] = 'sell-media-page';
-        }
-    }
+	// Pages assigned with shortcode
+	$pages = sell_media_get_pages_array();
+	foreach ( $pages as $page ) {
+		$setting = $page . '_page';
+		if ( isset( $settings->$setting ) && $post->ID == $settings->$setting ) {
+			$classes[] = 'sell-media-page';
+			$classes[] = 'sell-media-' . str_replace( '_', '-', $setting );
+		}
+	}
 
-    // All Sell Media pages
-    if ( 'sell_media_item' == get_post_type( $post->ID ) ) {
-        $classes[] = 'sell-media-page';
-    }
+	// Shortcodes
+	$shortcodes = array( 'sell_media_thanks', 'sell_media_searchform', 'sell_media_item', 'sell_media_all_items', 'sell_media_checkout', 'sell_media_download_list', 'sell_media_price_group', 'sell_media_list_all_collections', 'sell_media_login_form' );
+	foreach ( $shortcodes as $shortcode ) {
+		if ( isset( $post->post_content ) && has_shortcode( $post->post_content, $shortcode ) ) {
+			$classes[] = 'sell-media-page';
+		}
+	}
 
-    // Layout
-    if ( isset( $settings->layout ) ) {
-        $classes[] = $settings->layout;
-    }
+	// All Sell Media pages
+	if ( 'sell_media_item' == get_post_type( $post->ID ) ) {
+		$classes[] = 'sell-media-page';
+	}
 
-    // Gallery
-    if ( sell_media_is_gallery_page() ) {
-        $classes[] = 'sell-media-gallery-page';
-    }
+	// Layout
+	if ( isset( $settings->layout ) ) {
+		$classes[] = $settings->layout;
+	}
 
-    // Theme
-    $theme = wp_get_theme();
-    $classes[] = 'theme-' . sanitize_title_with_dashes( $theme->get( 'Name' ) );
+	// Gallery
+	if ( sell_media_is_gallery_page() ) {
+		$classes[] = 'sell-media-gallery-page';
+	}
 
-    return $classes;
+	// Theme
+	$theme = wp_get_theme();
+	$classes[] = 'theme-' . sanitize_title_with_dashes( $theme->get( 'Name' ) );
+
+	return $classes;
 }
 add_filter( 'body_class', 'sell_media_body_class' );
 
 /**
  * An array of pages required for plugin setup.
  * No need to define this in multiple places.
- * 
+ *
  * @return an array of pages required for plugin setup.
  */
 function sell_media_get_pages_array() {
-    $pages = array( 'checkout', 'thanks', 'dashboard', 'login', 'search', 'lightbox' );
+	$pages = array( 'checkout', 'thanks', 'dashboard', 'login', 'search', 'lightbox' );
 
-    return $pages;
+	return $pages;
 }
 
 /**
@@ -157,9 +157,9 @@ function sell_media_get_pages_array() {
  * @return $vars Updated query vars
  * @since 2.0.1
  */
-function sell_media_add_query_vars_filter( $vars ){
-    $vars[] = 'id';
-    return $vars;
+function sell_media_add_query_vars_filter( $vars ) {
+	$vars[] = 'id';
+	return $vars;
 }
 add_filter( 'query_vars', 'sell_media_add_query_vars_filter' );
 
@@ -169,36 +169,36 @@ add_filter( 'query_vars', 'sell_media_add_query_vars_filter' );
  * @return boolean true/false
  * @since 2.0.1
  */
-function sell_media_is_gallery_page(){
-    global $post;
+function sell_media_is_gallery_page() {
+	global $post;
 
-    if ( ! $post )
-        return false;
+	if ( ! $post ) {
+		return false; }
 
-    if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == false )
-        return true;
+	if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == false ) {
+		return true; }
 }
 
 /**
  * Add custom class to nav menu items
  */
-function sell_media_nav_menu_css_class( $classes, $item ){
-    $settings = sell_media_get_plugin_options();
+function sell_media_nav_menu_css_class( $classes, $item ) {
+	$settings = sell_media_get_plugin_options();
 
-    if ( $item->object == 'page' ){
-        if ( $item->object_id == $settings->lightbox_page ) {
-            $classes[] = 'lightbox-menu';
-        }
-        if ( $item->object_id == $settings->checkout_page ){
-            if ( in_array( 'total', $item->classes ) ) {
-                $classes[] = 'checkout-total';
-            } else {
-                $classes[] = 'checkout-qty';
-            }
-        }
-    }
+	if ( $item->object == 'page' ) {
+		if ( $item->object_id == $settings->lightbox_page ) {
+			$classes[] = 'lightbox-menu';
+		}
+		if ( $item->object_id == $settings->checkout_page ) {
+			if ( in_array( 'total', $item->classes ) ) {
+				$classes[] = 'checkout-total';
+			} else {
+				$classes[] = 'checkout-qty';
+			}
+		}
+	}
 
-    return $classes;
+	return $classes;
 }
 add_filter( 'nav_menu_css_class', 'sell_media_nav_menu_css_class', 10, 2 );
 
@@ -207,46 +207,46 @@ add_filter( 'nav_menu_css_class', 'sell_media_nav_menu_css_class', 10, 2 );
  *
  * @since 0.1
  */
-function sell_media_build_options( $taxonomy=null ) {
+function sell_media_build_options( $taxonomy = null ) {
 
-    if ( is_array( $taxonomy ) )
-        extract( $taxonomy );
+	if ( is_array( $taxonomy ) ) {
+		extract( $taxonomy ); }
 
-    if ( !isset( $label ) )
-        $label = $taxonomy;
+	if ( ! isset( $label ) ) {
+		$label = $taxonomy; }
 
-    // @todo need to merge
-    $defaults = array(
-        'value' => 'term_id'
-    );
+	// @todo need to merge
+	$defaults = array(
+		'value' => 'term_id',
+	);
 
-    // white list
-    if ( empty( $prepend ) )
-        $prepend = null;
+	// white list
+	if ( empty( $prepend ) ) {
+		$prepend = null; }
 
-    if ( empty( $current_term ) )
-        $current_term = null;
+	if ( empty( $current_term ) ) {
+		$current_term = null; }
 
-    extract( $defaults );
+	extract( $defaults );
 
-    /** All Terms */
-    $args = array(
-        'orderby' => 'id',
-        'hide_empty' => false
-         );
+	/** All Terms */
+	$args = array(
+		'orderby' => 'id',
+		'hide_empty' => false,
+		 );
 
-    $terms = null;
+	$terms = null;
 
-    if ( isset( $post_id ) ) {
-        $terms = wp_get_post_terms( $post_id, $taxonomy );
-    } else {
-        $terms = get_terms( $taxonomy, $args );
-    }
+	if ( isset( $post_id ) ) {
+		$terms = wp_get_post_terms( $post_id, $taxonomy );
+	} else {
+		$terms = get_terms( $taxonomy, $args );
+	}
 
-    ?>
+	?>
     <?php if ( $terms ) : ?>
-        <?php do_action('sell_media_build_options_before'); ?>
-        <?php foreach( $terms as $term ) : ?>
+        <?php do_action( 'sell_media_build_options_before' ); ?>
+        <?php foreach ( $terms as $term ) : ?>
             <?php $price = str_replace( '%', '', get_term_meta( $term->term_id, 'markup', true ) ); ?>
             <option
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
@@ -263,7 +263,7 @@ function sell_media_build_options( $taxonomy=null ) {
         </option>
         <?php endforeach; ?>
         </optgroup>
-        <?php do_action('sell_media_build_options_after'); ?>
+        <?php do_action( 'sell_media_build_options_after' ); ?>
     <?php endif; ?>
 <?php }
 
@@ -273,47 +273,47 @@ function sell_media_build_options( $taxonomy=null ) {
  *
  * @since 0.1
  */
-function sell_media_build_input( $taxonomy=null ) {
+function sell_media_build_input( $taxonomy = null ) {
 
-    if ( is_array( $taxonomy ) )
-        extract( $taxonomy );
+	if ( is_array( $taxonomy ) ) {
+		extract( $taxonomy ); }
 
-    if ( !isset( $label ) )
-        $label = $taxonomy;
+	if ( ! isset( $label ) ) {
+		$label = $taxonomy; }
 
-    // @todo need to merge
-    $defaults = array(
-        'value' => 'term_id'
-    );
+	// @todo need to merge
+	$defaults = array(
+		'value' => 'term_id',
+	);
 
-    // white list
-    if ( empty( $prepend ) )
-        $prepend = null;
+	// white list
+	if ( empty( $prepend ) ) {
+		$prepend = null; }
 
-    if ( empty( $current_term ) )
-        $current_term = null;
+	if ( empty( $current_term ) ) {
+		$current_term = null; }
 
-    extract( $defaults );
+	extract( $defaults );
 
-    /** All Terms */
-    $args = array(
-        'orderby' => 'id',
-        'hide_empty' => false
-         );
+	/** All Terms */
+	$args = array(
+		'orderby' => 'id',
+		'hide_empty' => false,
+		 );
 
-    $terms = null;
+	$terms = null;
 
-    if ( isset( $post_id ) ) {
-        $terms = wp_get_post_terms( $post_id, $taxonomy );
-    } else {
-        $terms = get_terms( $taxonomy, $args );
-    }
+	if ( isset( $post_id ) ) {
+		$terms = wp_get_post_terms( $post_id, $taxonomy );
+	} else {
+		$terms = get_terms( $taxonomy, $args );
+	}
 
-    ?>
+	?>
     <?php if ( $terms ) : ?>
-        <?php do_action('sell_media_build_input_before'); ?>
-        <?php foreach( $terms as $term ) : ?>
-            <?php $price = get_term_meta( $term->term_id, 'markup', true); ?>
+        <?php do_action( 'sell_media_build_input_before' ); ?>
+        <?php foreach ( $terms as $term ) : ?>
+            <?php $price = get_term_meta( $term->term_id, 'markup', true ); ?>
             <input
                 value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
                 class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
@@ -327,7 +327,7 @@ function sell_media_build_input( $taxonomy=null ) {
                 />
             <?php echo $term->name; ?> <?php if ( $price ) : ?>+<?php echo $price; ?>%<?php endif; ?><br />
         <?php endforeach; ?>
-        <?php do_action('sell_media_build_input_after'); ?>
+        <?php do_action( 'sell_media_build_input_after' ); ?>
     <?php endif; ?>
 <?php }
 
@@ -337,35 +337,35 @@ function sell_media_build_input( $taxonomy=null ) {
  *
  * @since 0.1
  */
-function sell_media_iptc_parser( $value=null, $image=null ){
+function sell_media_iptc_parser( $value = null, $image = null ) {
 
-    $size = getimagesize( $image, $info );
+	$size = getimagesize( $image, $info );
 
-    if ( ! isset( $info['APP13'] ) )
-        return;
+	if ( ! isset( $info['APP13'] ) ) {
+		return; }
 
-    $iptc = iptcparse( $info['APP13'] );
+	$iptc = iptcparse( $info['APP13'] );
 
-    switch( $value ){
-        case 'keywords':
-            if ( isset( $iptc['2#025'] ) )
-                return $iptc['2#025'];
+	switch ( $value ) {
+		case 'keywords':
+			if ( isset( $iptc['2#025'] ) ) {
+				return $iptc['2#025']; }
 
-        case 'city':
-            if ( isset( $iptc['2#090'] ) )
-                return $iptc['2#090'];
+			case 'city':
+				if ( isset( $iptc['2#090'] ) ) {
+					return $iptc['2#090']; }
 
-        case 'region':
-            if ( isset( $iptc['2#095'] ) )
-                return $iptc['2#095'];
+				case 'region':
+					if ( isset( $iptc['2#095'] ) ) {
+						return $iptc['2#095']; }
 
-        case 'country':
-            if ( isset( $iptc['2#101'] ) )
-                return $iptc['2#101'];
+					case 'country':
+						if ( isset( $iptc['2#101'] ) ) {
+							return $iptc['2#101']; }
 
-        default:
-            return false;
-    }
+						default:
+			return false;
+	}
 }
 
 
@@ -377,14 +377,14 @@ function sell_media_iptc_parser( $value=null, $image=null ){
  * @param $post_id, duh, the post_id, NOT the attachment_id
  * @since 0.1
  */
-function sell_media_iptc_save( $keys=null, $values=null, $post_id=null ){
-    if ( is_null( $keys ) )
-        return false;
+function sell_media_iptc_save( $keys = null, $values = null, $post_id = null ) {
+	if ( is_null( $keys ) ) {
+		return false; }
 
-    foreach( $values as $value ){
-        $result = wp_set_post_terms( $post_id, $value, $keys, true );
-    }
-    return;
+	foreach ( $values as $value ) {
+		$result = wp_set_post_terms( $post_id, $value, $keys, true );
+	}
+	return;
 }
 
 
@@ -393,12 +393,11 @@ function sell_media_iptc_save( $keys=null, $values=null, $post_id=null ){
  *
  * @since 0.1
  */
-function sell_media_is_sell_media_post_type_page(){
+function sell_media_is_sell_media_post_type_page() {
 
-    if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' )
-        return true;
-    else
-        return false;
+	if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
+		return true;
+	} else { 		return false; }
 }
 
 
@@ -407,15 +406,15 @@ function sell_media_is_sell_media_post_type_page(){
  *
  * @since 0.1
  */
-function sell_media_is_license_page(){
-    if ( isset( $_GET['action'] )
-        && $_GET['action'] == 'edit'
-        && isset( $_GET['taxonomy'] )
-        && $_GET['taxonomy'] == 'licenses' ) {
-        return true;
-    } else {
-        return false;
-    }
+function sell_media_is_license_page() {
+	if ( isset( $_GET['action'] )
+		&& $_GET['action'] == 'edit'
+		&& isset( $_GET['taxonomy'] )
+		&& $_GET['taxonomy'] == 'licenses' ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 
@@ -424,12 +423,11 @@ function sell_media_is_license_page(){
  *
  * @since 0.1
  */
-function sell_media_is_license_term_page(){
+function sell_media_is_license_term_page() {
 
-    if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' && isset( $_GET['taxonomy'] ) && $_GET['taxonomy'] == 'licenses' )
-        return true;
-    else
-        return false;
+	if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' && isset( $_GET['taxonomy'] ) && $_GET['taxonomy'] == 'licenses' ) {
+		return true;
+	} else { 		return false; }
 }
 
 
@@ -444,8 +442,8 @@ function sell_media_is_license_term_page(){
  * @since 2.0.1
  */
 function sell_media_get_attachments( $post_id ) {
-    $meta = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-    return ( ! empty ( $meta ) ) ? explode( ',', $meta ) : false;
+	$meta = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+	return ( ! empty( $meta ) ) ? explode( ',', $meta ) : false;
 }
 
 
@@ -461,16 +459,16 @@ function sell_media_get_attachments( $post_id ) {
  * @return int $attachment_id
  * @since 2.0.1
  */
-function sell_media_get_attachment_id( $post_id=null ) {
+function sell_media_get_attachment_id( $post_id = null ) {
 
-    if ( sell_media_has_multiple_attachments( $post_id ) ) {
-        $attachment_id = get_query_var( 'id' );
-    } else {
-        $attachments = sell_media_get_attachments( $post_id );
-        $attachment_id = $attachments[0];
-    }
+	if ( sell_media_has_multiple_attachments( $post_id ) ) {
+		$attachment_id = get_query_var( 'id' );
+	} else {
+		$attachments = sell_media_get_attachments( $post_id );
+		$attachment_id = $attachments[0];
+	}
 
-    return $attachment_id;
+	return $attachment_id;
 }
 
 /**
@@ -478,12 +476,12 @@ function sell_media_get_attachment_id( $post_id=null ) {
  */
 function sell_media_has_multiple_attachments( $post_id ) {
 
-    $attachments = sell_media_get_attachments( $post_id );
-    $count = count( $attachments );
+	$attachments = sell_media_get_attachments( $post_id );
+	$count = count( $attachments );
 
-    if ( $count > 1 ) {
-        return true;
-    }
+	if ( $count > 1 ) {
+		return true;
+	}
 }
 
 /**
@@ -500,18 +498,18 @@ function sell_media_has_multiple_attachments( $post_id ) {
  * @return string field (id, caption, title, description, etc)
  * @since 2.0.4
  */
-function sell_media_get_attachment_meta( $post_id=null, $field='id' ) {
+function sell_media_get_attachment_meta( $post_id = null, $field = 'id' ) {
 
-    if ( sell_media_has_multiple_attachments( $post_id ) ) {
-        $attachment_id = get_query_var( 'id' );
-    } else {
-        $attachments = sell_media_get_attachments( $post_id );
-        $attachment_id = $attachments[0];
-    }
+	if ( sell_media_has_multiple_attachments( $post_id ) ) {
+		$attachment_id = get_query_var( 'id' );
+	} else {
+		$attachments = sell_media_get_attachments( $post_id );
+		$attachment_id = $attachments[0];
+	}
 
-    $attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
+	$attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
 
-    return $attachment_meta[$field];
+	return $attachment_meta[ $field ];
 }
 
 
@@ -519,12 +517,12 @@ function sell_media_get_attachment_meta( $post_id=null, $field='id' ) {
  * Determines if a post, identified by the specified ID, exist
  * within the WordPress database.
  *
- * @param    int    $id    The ID of the post to check
+ * @param    int $id    The ID of the post to check
  * @return   bool          True if the post exists; otherwise, false.
  * @since    2.0.1
  */
 function sell_media_post_exists( $id ) {
-    return is_string( get_post_status( $id ) );
+	return is_string( get_post_status( $id ) );
 }
 
 
@@ -534,8 +532,8 @@ function sell_media_post_exists( $id ) {
  * @since 0.1
  **/
 function sell_media_get_currency() {
-    $settings = sell_media_get_plugin_options();
-    return apply_filters( 'sell_media_currency', empty( $settings->currency ) ? null : $settings->currency );
+	$settings = sell_media_get_plugin_options();
+	return apply_filters( 'sell_media_currency', empty( $settings->currency ) ? null : $settings->currency );
 }
 
 
@@ -545,38 +543,50 @@ function sell_media_get_currency() {
  * @since 0.1
  **/
 function sell_media_get_currency_symbol( $currency = '' ) {
-    if ( ! $currency ) $currency = sell_media_get_currency();
-    $currency_symbol = '';
-    switch ($currency) :
-        case 'BRL' : $currency_symbol = 'R&#36;'; break; // in Brazil the correct is R$ 0.00,00
-        case 'AUD' :
-        case 'CAD' :
-        case 'MXN' :
-        case 'NZD' :
-        case 'HKD' :
-        case 'SGD' :
-        case 'USD' : $currency_symbol = '&#36;'; break;
-        case 'EUR' : $currency_symbol = '&euro;'; break;
-        case 'RMB' :
-        case 'JPY' : $currency_symbol = '&yen;'; break;
-        case 'TRY' : $currency_symbol = 'TL'; break;
-        case 'NOK' : $currency_symbol = 'kr'; break;
-        case 'ZAR' : $currency_symbol = 'R'; break;
-        case 'CZK' : $currency_symbol = '&#75;&#269;'; break;
-        case 'MYR' : $currency_symbol = 'RM'; break;
-        case 'DKK' :
-        case 'HUF' :
-        case 'ILS' :
-        case 'PHP' :
-        case 'PLN' :
-        case 'SEK' :
-        case 'CHF' :
-        case 'TWD' :
-        case 'THB' : $currency_symbol = $currency; break;
-        case 'GBP' : $currency_symbol = '&pound;'; break;
-        default    : $currency_symbol = '&#36;'; break;
-    endswitch;
-    return apply_filters( 'sell_media_currency_symbol', $currency_symbol, $currency );
+	if ( ! $currency ) { $currency = sell_media_get_currency(); }
+	$currency_symbol = '';
+	switch ( $currency ) :
+		case 'BRL' : $currency_symbol = 'R&#36;';
+break; // in Brazil the correct is R$ 0.00,00
+		case 'AUD' :
+		case 'CAD' :
+		case 'MXN' :
+		case 'NZD' :
+		case 'HKD' :
+		case 'SGD' :
+		case 'USD' : $currency_symbol = '&#36;';
+break;
+		case 'EUR' : $currency_symbol = '&euro;';
+break;
+		case 'RMB' :
+		case 'JPY' : $currency_symbol = '&yen;';
+break;
+		case 'TRY' : $currency_symbol = 'TL';
+break;
+		case 'NOK' : $currency_symbol = 'kr';
+break;
+		case 'ZAR' : $currency_symbol = 'R';
+break;
+		case 'CZK' : $currency_symbol = '&#75;&#269;';
+break;
+		case 'MYR' : $currency_symbol = 'RM';
+break;
+		case 'DKK' :
+		case 'HUF' :
+		case 'ILS' :
+		case 'PHP' :
+		case 'PLN' :
+		case 'SEK' :
+		case 'CHF' :
+		case 'TWD' :
+		case 'THB' : $currency_symbol = $currency;
+break;
+		case 'GBP' : $currency_symbol = '&pound;';
+break;
+		default    : $currency_symbol = '&#36;';
+break;
+	endswitch;
+	return apply_filters( 'sell_media_currency_symbol', $currency_symbol, $currency );
 }
 
 
@@ -585,9 +595,9 @@ function sell_media_get_currency_symbol( $currency = '' ) {
  *
  * @since 0.1
  */
-function sell_media_test_mode(){
-    $settings = sell_media_get_plugin_options();
-    return $settings->test_mode;
+function sell_media_test_mode() {
+	$settings = sell_media_get_plugin_options();
+	return $settings->test_mode;
 }
 
 
@@ -599,32 +609,32 @@ function sell_media_test_mode(){
  */
 function sell_media_order_by( $orderby_statement ) {
 
-    $settings = sell_media_get_plugin_options();
+	$settings = sell_media_get_plugin_options();
 
-    if ( ! empty( $settings->order_by ) && is_archive() ||
-         ! empty( $settings->order_by ) && is_tax() ){
-        global $wpdb;
-        switch( $settings->order_by ){
-            case 'title-asc' :
-                $order_by = "{$wpdb->prefix}posts.post_title ASC";
-                break;
-            case 'title-desc' :
-                $order_by = "{$wpdb->prefix}posts.post_title DESC";
-                break;
-            case 'date-asc' :
-                $order_by = "{$wpdb->prefix}posts.post_date ASC";
-                break;
-            case 'date-desc' :
-                $order_by = "{$wpdb->prefix}posts.post_date DESC";
-                break;
-        }
-    } else {
-        $order_by = $orderby_statement;
-    }
-    return $order_by;
+	if ( ! empty( $settings->order_by ) && is_archive() ||
+		 ! empty( $settings->order_by ) && is_tax() ) {
+		global $wpdb;
+		switch ( $settings->order_by ) {
+			case 'title-asc' :
+				$order_by = "{$wpdb->prefix}posts.post_title ASC";
+				break;
+			case 'title-desc' :
+				$order_by = "{$wpdb->prefix}posts.post_title DESC";
+				break;
+			case 'date-asc' :
+				$order_by = "{$wpdb->prefix}posts.post_date ASC";
+				break;
+			case 'date-desc' :
+				$order_by = "{$wpdb->prefix}posts.post_date DESC";
+				break;
+		}
+	} else {
+		$order_by = $orderby_statement;
+	}
+	return $order_by;
 }
-if ( ! is_admin() )
-    add_filter( 'posts_orderby', 'sell_media_order_by' );
+if ( ! is_admin() ) {
+	add_filter( 'posts_orderby', 'sell_media_order_by' ); }
 
 
 /**
@@ -634,18 +644,18 @@ if ( ! is_admin() )
  * @return string
  * @since 1.6.9
  */
-function sell_media_get_filesize( $post_id=null, $attachment_id=null ){
+function sell_media_get_filesize( $post_id = null, $attachment_id = null ) {
 
-    $file_path = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+	$file_path = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
 
-    if ( file_exists( $file_path ) ) {
+	if ( file_exists( $file_path ) ) {
 
-        $bytes = filesize( $file_path );
-        $s = array( 'b', 'Kb', 'Mb', 'Gb' );
-        $e = floor( log( $bytes )/log( 1024 ) );
+		$bytes = filesize( $file_path );
+		$s = array( 'b', 'Kb', 'Mb', 'Gb' );
+		$e = floor( log( $bytes ) / log( 1024 ) );
 
-        return sprintf( '%.2f ' . $s[$e], ( $bytes/pow( 1024, floor( $e ) ) ) );
-    }
+		return sprintf( '%.2f ' . $s[ $e ], ( $bytes / pow( 1024, floor( $e ) ) ) );
+	}
 }
 
 
@@ -654,15 +664,15 @@ function sell_media_get_filesize( $post_id=null, $attachment_id=null ){
  *
  * @since 0.1
  */
-function sell_media_update_sales_stats( $product_id=null, $license_id=null, $price=null ){
+function sell_media_update_sales_stats( $product_id = null, $license_id = null, $price = null ) {
 
-    $prev = maybe_unserialize( get_post_meta( $product_id, 'sell_media_sales_stats', true ) );
+	$prev = maybe_unserialize( get_post_meta( $product_id, 'sell_media_sales_stats', true ) );
 
-    $new[ $license_id ]['count'] = $prev[ $license_id ]['count'] + 1;
-    $new[ $license_id ]['total'] = $prev[ $license_id ]['total'] + $price;
-    $sales_stats_s = serialize( $new );
+	$new[ $license_id ]['count'] = $prev[ $license_id ]['count'] + 1;
+	$new[ $license_id ]['total'] = $prev[ $license_id ]['total'] + $price;
+	$sales_stats_s = serialize( $new );
 
-    return update_post_meta( $product_id, 'sell_media_sales_stats', $sales_stats_s );
+	return update_post_meta( $product_id, 'sell_media_sales_stats', $sales_stats_s );
 }
 
 
@@ -673,19 +683,19 @@ function sell_media_update_sales_stats( $product_id=null, $license_id=null, $pri
  */
 function sell_media_pagination_filter( $max_pages = '' ) {
 
-    global $wp_query;
-    $max_num_pages = ( '' != $max_pages ) ? $max_pages : $wp_query->max_num_pages;
+	global $wp_query;
+	$max_num_pages = ( '' != $max_pages ) ? $max_pages : $wp_query->max_num_pages;
 
-    $big = 999999999; // need an unlikely integer
+	$big = 999999999; // need an unlikely integer
 
-    $params = array(
-        //'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-        'format' => '?paged=%#%',
-        'current' => max( 1, get_query_var('paged') ),
-        'total' => $max_num_pages // note sometimes max_num_pages needs to be sent over
-    );
+	$params = array(
+		// 'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+		'format' => '?paged=%#%',
+		'current' => max( 1, get_query_var( 'paged' ) ),
+		'total' => $max_num_pages,// note sometimes max_num_pages needs to be sent over
+	);
 
-    return '<div class="sell-media-pagination-container">' . paginate_links( $params ) . '</div>';
+	return '<div class="sell-media-pagination-container">' . paginate_links( $params ) . '</div>';
 }
 add_filter( 'sell_media_pagination_filter', 'sell_media_pagination_filter', 10, 1 );
 
@@ -695,12 +705,11 @@ add_filter( 'sell_media_pagination_filter', 'sell_media_pagination_filter', 10, 
  *
  * @since 1.2
  */
-function sell_media_is_reports_page(){
+function sell_media_is_reports_page() {
 
-    if ( 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] )
-        return true;
-    else
-        return false;
+	if ( 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] ) {
+		return true;
+	} else { 		return false; }
 }
 
 /**
@@ -708,9 +717,9 @@ function sell_media_is_reports_page(){
  *
  * @since 1.2
  */
-function sell_media_plugin_data( $field=null ){
-    $plugin_data = get_plugin_data( SELL_MEDIA_PLUGIN_FILE, $markup = true, $translate = true );
-    return $plugin_data[$field];
+function sell_media_plugin_data( $field = null ) {
+	$plugin_data = get_plugin_data( SELL_MEDIA_PLUGIN_FILE, $markup = true, $translate = true );
+	return $plugin_data[ $field ];
 }
 
 
@@ -719,29 +728,29 @@ function sell_media_plugin_data( $field=null ){
  *
  * @since 1.2
  */
-function sell_media_build_select( $items=array(), $args=array() ){
-    extract( $args );
+function sell_media_build_select( $items = array(), $args = array() ) {
+	extract( $args );
 
-    if ( $required ){
-        $required = " required ";
-    } else {
-        $required = false;
-        $required_html = false;
-    }
+	if ( $required ) {
+		$required = ' required ';
+	} else {
+		$required = false;
+		$required_html = false;
+	}
 
-    if ( ! $title ){
-        $title = false;
-    }
+	if ( ! $title ) {
+		$title = false;
+	}
 
-    if ( empty( $name ) )
-        $name = null;
+	if ( empty( $name ) ) {
+		$name = null; }
 
-    if ( empty( $current ) )
-        $current = null;
-    ?>
+	if ( empty( $current ) ) {
+		$current = null; }
+	?>
     <select id="<?php print $name; ?>" class="sell_media_form_control" name="<?php print $name; ?>" <?php print $required; ?>>
         <option></option>
-        <?php foreach( $items as $key => $value ) : ?>
+        <?php foreach ( $items as $key => $value ) : ?>
             <option value="<?php print $key; ?>" <?php selected( $key, $current ); ?>><?php print $value; ?></option>
         <?php endforeach; ?>
     </select>
@@ -755,47 +764,47 @@ function sell_media_build_select( $items=array(), $args=array() ){
  * @param $post_id, $taxonomy
  * @return $price_groups (object)
  */
-function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
+function sell_media_get_price_groups( $post_id = null, $taxonomy = null ) {
 
-    // first, check price group set on the item
-    $price_groups_custom = wp_get_post_terms( $post_id, $taxonomy );
+	// first, check price group set on the item
+	$price_groups_custom = wp_get_post_terms( $post_id, $taxonomy );
 
-    foreach( $price_groups_custom as $price_group ){
-        if ( $price_group->parent == 0 ){
-            $parent_price_group = $price_group->term_id;
-        }
-    }
+	foreach ( $price_groups_custom as $price_group ) {
+		if ( $price_group->parent == 0 ) {
+			$parent_price_group = $price_group->term_id;
+		}
+	}
 
-    // if the item doesn't have a price group set, use the default from settings
-    if ( empty( $price_groups_custom ) ){
+	// if the item doesn't have a price group set, use the default from settings
+	if ( empty( $price_groups_custom ) ) {
 
-        $settings = sell_media_get_plugin_options();
+		$settings = sell_media_get_plugin_options();
 
-        if ( $taxonomy == 'reprints-price-group'){
-            $price_group_id = $settings->reprints_default_price_group;
-        } else {
-            $price_group_id = $settings->default_price_group;
-        }
+		if ( $taxonomy == 'reprints-price-group' ) {
+			$price_group_id = $settings->reprints_default_price_group;
+		} else {
+			$price_group_id = $settings->default_price_group;
+		}
 
-        $default_price_group_obj = get_term( $price_group_id, $taxonomy );
+		$default_price_group_obj = get_term( $price_group_id, $taxonomy );
 
-        if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) )
-            return;
+		if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) ) {
+			return; }
 
-        $parent_price_group = $default_price_group_obj->term_id;
-    }
+		$parent_price_group = $default_price_group_obj->term_id;
+	}
 
-    $args = array(
-        'type' => 'sell_media_item',
-        'hide_empty' => false,
-        'parent' => $parent_price_group,
-        'taxonomy' => $taxonomy,
-        'orderby' => 'id'
-        );
+	$args = array(
+		'type' => 'sell_media_item',
+		'hide_empty' => false,
+		'parent' => $parent_price_group,
+		'taxonomy' => $taxonomy,
+		'orderby' => 'id',
+		);
 
-    $price_groups = get_categories( $args );
+	$price_groups = get_categories( $args );
 
-    return $price_groups;
+	return $price_groups;
 
 }
 
@@ -807,21 +816,22 @@ function sell_media_get_price_groups( $post_id = NULL, $taxonomy = NULL ){
  * @return integer $price_group_id
  */
 function sell_media_get_item_price_group( $post_id, $taxonomy ) {
-    $settings = sell_media_get_plugin_options();
-    $terms = get_the_terms( $post_id, $taxonomy );
-    if ( $terms && ! is_wp_error( $terms ) ) foreach ( $terms as $term ) {
-        if ( $term->parent == 0 ){
-            $price_group_id = $term->term_id;
-        }
-    } elseif ( $taxonomy == 'reprints-price-group' ) {
-        $price_group_id = $settings->reprints_default_price_group;
-    } elseif ( $taxonomy == 'price-group' ) {
-        $price_group_id = $settings->default_price_group;
-    } else {
-        $price_group_id = 0;
-    }
+	$settings = sell_media_get_plugin_options();
+	$terms = get_the_terms( $post_id, $taxonomy );
+	if ( $terms && ! is_wp_error( $terms ) ) { foreach ( $terms as $term ) {
+			if ( $term->parent == 0 ) {
+				$price_group_id = $term->term_id;
+			}
+	}
+	} elseif ( $taxonomy == 'reprints-price-group' ) {
+		$price_group_id = $settings->reprints_default_price_group;
+	} elseif ( $taxonomy == 'price-group' ) {
+		$price_group_id = $settings->default_price_group;
+	} else {
+		$price_group_id = 0;
+	}
 
-    return $price_group_id;
+	return $price_group_id;
 }
 
 
@@ -832,11 +842,11 @@ function sell_media_get_item_price_group( $post_id, $taxonomy ) {
  * @return string $path Absolute path to the sell_media upload directory
  */
 function sell_media_get_upload_dir() {
-    $wp_upload_dir = wp_upload_dir();
-    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media' );
-    $path = $wp_upload_dir['basedir'] . '/sell_media';
+	$wp_upload_dir = wp_upload_dir();
+	wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media' );
+	$path = $wp_upload_dir['basedir'] . '/sell_media';
 
-    return apply_filters( 'sell_media_get_upload_dir', $path );
+	return apply_filters( 'sell_media_get_upload_dir', $path );
 }
 
 
@@ -847,11 +857,11 @@ function sell_media_get_upload_dir() {
  * @return string $path Absolute path to the sell_media/packages upload directory
  */
 function sell_media_get_packages_upload_dir() {
-    $wp_upload_dir = wp_upload_dir();
-    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/packages' );
-    $path = $wp_upload_dir['basedir'] . '/sell_media/packages';
+	$wp_upload_dir = wp_upload_dir();
+	wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/packages' );
+	$path = $wp_upload_dir['basedir'] . '/sell_media/packages';
 
-    return apply_filters( 'sell_media_get_packages_upload_dir', $path );
+	return apply_filters( 'sell_media_get_packages_upload_dir', $path );
 }
 
 
@@ -862,11 +872,11 @@ function sell_media_get_packages_upload_dir() {
  * @return string $path Absolute path to the sell_media/import directory
  */
 function sell_media_get_import_dir() {
-    $wp_upload_dir = wp_upload_dir();
-    wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/import' );
-    $path = $wp_upload_dir['basedir'] . '/sell_media/import';
+	$wp_upload_dir = wp_upload_dir();
+	wp_mkdir_p( $wp_upload_dir['basedir'] . '/sell_media/import' );
+	$path = $wp_upload_dir['basedir'] . '/sell_media/import';
 
-    return apply_filters( 'sell_media_get_import_dir', $path );
+	return apply_filters( 'sell_media_get_import_dir', $path );
 }
 
 
@@ -877,15 +887,15 @@ function sell_media_get_import_dir() {
  * @param $dir (packages or import)
  * @return array (directories)
  */
-function sell_media_get_directories( $dir=null ) {
+function sell_media_get_directories( $dir = null ) {
 
-    $directories = '';
-    $path = ( $dir == 'packages' ) ? sell_media_get_packages_upload_dir() : sell_media_get_import_dir();
+	$directories = '';
+	$path = ( $dir == 'packages' ) ? sell_media_get_packages_upload_dir() : sell_media_get_import_dir();
 
-    foreach ( glob( $path . "/*", GLOB_ONLYDIR ) as $directory ) {
-        $directories[] = $directory;
-    }
-    return $directories;
+	foreach ( glob( $path . '/*', GLOB_ONLYDIR ) as $directory ) {
+		$directories[] = $directory;
+	}
+	return $directories;
 }
 
 
@@ -896,10 +906,10 @@ function sell_media_get_directories( $dir=null ) {
  * @return string $url url to the sell_media upload directory
  */
 function sell_media_get_upload_dir_url() {
-    $wp_upload_dir = wp_upload_dir();
-    $url = $wp_upload_dir['baseurl'] . '/sell_media';
+	$wp_upload_dir = wp_upload_dir();
+	$url = $wp_upload_dir['baseurl'] . '/sell_media';
 
-    return apply_filters( 'sell_media_get_upload_dir_url', $url );
+	return apply_filters( 'sell_media_get_upload_dir_url', $url );
 }
 
 /**
@@ -908,64 +918,64 @@ function sell_media_get_upload_dir_url() {
  * @since 2.0.2
  * @return void
  */
-function sell_media_nocache(){
+function sell_media_nocache() {
 
-    if ( is_admin() )
-        return;
+	if ( is_admin() ) {
+		return; }
 
-    if ( false === ( $page_uris = get_transient( 'sell_media_cache_excluded_uris' ) ) ) {
-        $settings       = sell_media_get_plugin_options();
-        $checkout_page  = isset( $settings->checkout_page ) ? $settings->checkout_page: '';
-        $thanks_page    = isset( $settings->thanks_page ) ? $settings->thanks_page: '';
+	if ( false === ( $page_uris = get_transient( 'sell_media_cache_excluded_uris' ) ) ) {
+		$settings       = sell_media_get_plugin_options();
+		$checkout_page  = isset( $settings->checkout_page ) ? $settings->checkout_page: '';
+		$thanks_page    = isset( $settings->thanks_page ) ? $settings->thanks_page: '';
 
-        if ( empty( $checkout_page ) || empty( $thanks_page ) )
-            return;
+		if ( empty( $checkout_page ) || empty( $thanks_page ) ) {
+			return; }
 
-        $page_uris   = array();
-        // Exclude IPN listener
-        $page_uris[] = '?sell_media-listener=IPN';
-        // Exclude default permalinks for pages
-        $page_uris[] = '?page_id=' . $checkout_page;
-        $page_uris[] = '?page_id=' . $thanks_page;
-        // Exclude nice permalinks for pages
-        $checkout_page  = get_post( $checkout_page );
-        $thanks_page    = get_post( $thanks_page );
-        if ( ! is_null( $checkout_page ) )
-            $page_uris[] = '/' . $checkout_page->post_name;
-        if ( ! is_null( $thanks_page ) )
-            $page_uris[] = '/' . $thanks_page->post_name;
-        set_transient( 'sell_media_cache_excluded_uris', $page_uris );
-    }
+		$page_uris   = array();
+		// Exclude IPN listener
+		$page_uris[] = '?sell_media-listener=IPN';
+		// Exclude default permalinks for pages
+		$page_uris[] = '?page_id=' . $checkout_page;
+		$page_uris[] = '?page_id=' . $thanks_page;
+		// Exclude nice permalinks for pages
+		$checkout_page  = get_post( $checkout_page );
+		$thanks_page    = get_post( $thanks_page );
+		if ( ! is_null( $checkout_page ) ) {
+			$page_uris[] = '/' . $checkout_page->post_name; }
+		if ( ! is_null( $thanks_page ) ) {
+			$page_uris[] = '/' . $thanks_page->post_name; }
+		set_transient( 'sell_media_cache_excluded_uris', $page_uris );
+	}
 
-    if ( is_array( $page_uris ) ) {
-        foreach( $page_uris as $uri ) {
-            if ( strstr( $_SERVER['REQUEST_URI'], $uri ) ) {
-                if ( ! defined( 'DONOTCACHEPAGE' ) )
-                    define( 'DONOTCACHEPAGE', 'true' );
-                nocache_headers();
-                break;
-            }
-        }
-    }
+	if ( is_array( $page_uris ) ) {
+		foreach ( $page_uris as $uri ) {
+			if ( strstr( $_SERVER['REQUEST_URI'], $uri ) ) {
+				if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+					define( 'DONOTCACHEPAGE', 'true' ); }
+				nocache_headers();
+				break;
+			}
+		}
+	}
 }
 add_action( 'init', 'sell_media_nocache', 0 );
 
 
 /**
  * Change buy button text to download if price if 0.
- * 
+ *
  * @since 2.0.7
- * 
+ *
  * @param  String $text     Button Text.
  * @param  int    $post_id  Id of post.
  * @return String           Button Text.
  */
 function sell_media_free_download_button_text( $text, $post_id ) {
-    $price = get_post_meta( $post_id, 'sell_media_price', true );
-    if ( $price <= 0 )
-         $text = __( 'Download', 'sell_media' );
+	$price = get_post_meta( $post_id, 'sell_media_price', true );
+	if ( $price <= 0 ) {
+		 $text = __( 'Download', 'sell_media' ); }
 
-    return $text;
+	return $text;
 }
 
 add_filter( 'sell_media_purchase_text', 'sell_media_free_download_button_text', 10, 2 );
@@ -974,7 +984,7 @@ add_filter( 'sell_media_purchase_text', 'sell_media_free_download_button_text', 
  * Change button html.
  *
  * @since 2.0.7
- * 
+ *
  * @param  string  $html             Html output of button.
  * @param  int     $post_id          ID of post.
  * @param  int     $attachment_id    ID of attachment
@@ -983,69 +993,68 @@ add_filter( 'sell_media_purchase_text', 'sell_media_free_download_button_text', 
  * @param  boolean $echo             Echo output or return.
  * @return string                    Html output of button.
  */
-function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo ){
-    
-    $price = get_post_meta( $post_id, 'sell_media_price', true );
-    $value = get_post_meta( $post_id, 'sell_media_free_downloads', true );
-    if ( $price > 0 || $value )
-        return $html;
+function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo ) {
 
-    $link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id);
-    $html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
-    return $html;
+	$price = get_post_meta( $post_id, 'sell_media_price', true );
+	$value = get_post_meta( $post_id, 'sell_media_free_downloads', true );
+	if ( $price > 0 || $value ) {
+		return $html; }
+
+	$link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id );
+	$html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
+	return $html;
 }
 
 add_filter( 'sell_media_item_buy_button', 'sell_media_free_download_button_button', 10, 6 );
 
 /**
  * Forces the file to be downloaded for free.
- * 
+ *
  * @since 2.0.7
- * 
+ *
  * @param  init $post_id       ID of post
  * @param  init $attachment_id ID of attacment
  * @return void
  */
-function sell_media_free_download_file( $post_id, $attachment_id ){
+function sell_media_free_download_file( $post_id, $attachment_id ) {
 
-    $price = get_post_meta( $post_id, 'sell_media_price', true );
-    
-    // product is not free, so die
-    if ( $price > 0 ) {
-        
-        do_action( 'sell_media_zero_price_download_fail', $post_id, $attachment_id );
+	$price = get_post_meta( $post_id, 'sell_media_price', true );
 
-        wp_die( __( 'Nice try, but this file is not a free download.', 'sell_media'), __( 'Purchase Verification Failed', 'sell_media' ) );
+	// product is not free, so die
+	if ( $price > 0 ) {
 
-    }
-    else {
+		do_action( 'sell_media_zero_price_download_fail', $post_id, $attachment_id );
 
-        $requested_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
-        $file_type = wp_check_filetype( $requested_file );
+		wp_die( __( 'Nice try, but this file is not a free download.', 'sell_media' ), __( 'Purchase Verification Failed', 'sell_media' ) );
 
-        if ( ! ini_get( 'safe_mode' ) ){
-            set_time_limit( 0 );
-        }
+	} else {
 
-        if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
-            set_magic_quotes_runtime(0);
-        }
+		$requested_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+		$file_type = wp_check_filetype( $requested_file );
 
-        if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
-        @ini_set( 'zlib.output_compression', 'Off' );
+		if ( ! ini_get( 'safe_mode' ) ) {
+			set_time_limit( 0 );
+		}
 
-        nocache_headers();
-        header( "Robots: none" );
-        header( "Content-Type: " . $file_type['type'] . "" );
-        header( "Content-Description: File Transfer" );
-        header( "Content-Disposition: attachment; filename=\"" . basename( $requested_file ) . "\"" );
-        header( "Content-Transfer-Encoding: binary" );
+		if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
+			set_magic_quotes_runtime( 0 );
+		}
 
-        // Deliver the download
-        Sell_Media()->download->download_file( $requested_file );
+		if ( function_exists( 'apache_setenv' ) ) { @apache_setenv( 'no-gzip', 1 ); }
+		@ini_set( 'zlib.output_compression', 'Off' );
 
-        exit();
-    }
+		nocache_headers();
+		header( 'Robots: none' );
+		header( 'Content-Type: ' . $file_type['type'] . '' );
+		header( 'Content-Description: File Transfer' );
+		header( 'Content-Disposition: attachment; filename="' . basename( $requested_file ) . '"' );
+		header( 'Content-Transfer-Encoding: binary' );
+
+		// Deliver the download
+		Sell_Media()->download->download_file( $requested_file );
+
+		exit();
+	}
 
 }
 
@@ -1055,46 +1064,46 @@ add_action( 'sell_media_before_failed_download', 'sell_media_free_download_file'
  * Get current sell media plugin version.
  * @return int Retrun current sell media plugin version.
  */
-function sell_media_version(){
-    $option_name = 'sell_media_version';
-    $default_value = 0;
+function sell_media_version() {
+	$option_name = 'sell_media_version';
+	$default_value = 0;
 
-    if( is_multisite() ){
-        $blog_id = get_current_blog_id();
-        $version = get_blog_option( $blog_id, $option_name, $default_value );
-        return $version;
-    }
+	if ( is_multisite() ) {
+		$blog_id = get_current_blog_id();
+		$version = get_blog_option( $blog_id, $option_name, $default_value );
+		return $version;
+	}
 
-    $version = get_option( $option_name, $default_value );
-    return $version;
+	$version = get_option( $option_name, $default_value );
+	return $version;
 }
 
 /**
  * Get option based on the site type
- * @param  string  $option  Name of option to add. Expected to not be SQL-escaped.
- * @param  mixed   $value       Optional. Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
+ * @param  string $option  Name of option to add. Expected to not be SQL-escaped.
+ * @param  mixed  $value       Optional. Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
  * @return bool False if option was not added and true if option was added.
  */
-function sell_media_get_option( $option, $default = false ){
-    if( is_multisite() ){
-        return get_blog_option( get_current_blog_id(), $option, $default );
-    }
+function sell_media_get_option( $option, $default = false ) {
+	if ( is_multisite() ) {
+		return get_blog_option( get_current_blog_id(), $option, $default );
+	}
 
-    return get_option( $option, $default );
+	return get_option( $option, $default );
 }
 
 /**
  * Add a new option based on the site type
- * @param  string $option    Name of option to add. Expected to not be SQL-escaped.
- * @param  mixed $value      Optional. Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
- * @param  string $deprecated Optional. Description. Not used anymore.
+ * @param  string      $option    Name of option to add. Expected to not be SQL-escaped.
+ * @param  mixed       $value      Optional. Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
+ * @param  string      $deprecated Optional. Description. Not used anymore.
  * @param  string|bool $autoload   Optional. Whether to load the option when WordPress starts up.
  * @return bool             False if option was not added and true if option was added.
  */
-function sell_media_add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ){
-    if( is_multisite() ){
-        return add_blog_option( get_current_blog_id(), $option, $value );
-    }
+function sell_media_add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ) {
+	if ( is_multisite() ) {
+		return add_blog_option( get_current_blog_id(), $option, $value );
+	}
 
-    return add_option( $option, $value, $deprecated, $autoload );
+	return add_option( $option, $value, $deprecated, $autoload );
 }
