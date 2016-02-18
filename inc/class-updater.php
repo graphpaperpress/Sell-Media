@@ -122,8 +122,20 @@ class SellMediaUpdater {
 	 */
 	public function deactivation() {
 
-		delete_option( $this->get_settings_field_name() );
+		$this->delete_license();
+
 		$this->delete_transients();
+	}
+
+	private function delete_license() {
+		$settings = sell_media_get_plugin_options();
+		$email_name = $this->prefix . '_license_email';
+		$key_name = $this->prefix . '_license_key';
+
+		$settings->{ $email_name } = '';
+		$settings->{ $key_name } = '';
+
+		sell_media_update_option( $settings );
 	}
 
 	/**
@@ -197,7 +209,7 @@ class SellMediaUpdater {
 			<div class="error">
 				<p>
 					<?php esc_html_e( 'Please enter your email and license key to enable updates to plugins from Graph Paper Press.', $this->text_domain ); ?>
-					<a href="<?php echo esc_url( admin_url( 'options-general.php?page=' . $this->get_settings_page_slug() ) ); ?>">
+					<a href="<?php echo esc_url( $this->get_settings_page_url() ); ?>">
 						<?php esc_html_e( 'Complete the setup now.', $this->text_domain ); ?>
 					</a>
 				</p>
@@ -211,7 +223,7 @@ class SellMediaUpdater {
 								__( 'Your <a href="%1$s">license key</a> for Graph Paper Press plugins has expired or is invalid. Please <a href="%2$s" target="_blank">renew your license</a> to re-enable automatic updates.', $this->text_domain ),
 								array( 'a' => array( 'href' => array(), '_target' => array(), 'class' => array() ) )
 							),
-							esc_url( admin_url( 'options-general.php?page=' . $this->get_settings_page_slug() ) ),
+							esc_url( $this->get_settings_page_url() ),
 							esc_url( $this->home . '/pricing/?action=renewal' )
 						);
 					?>
@@ -286,7 +298,7 @@ class SellMediaUpdater {
 		if ( ( $info = get_transient( $transient ) ) === false ) {
 			$license = $this->get_license_key();
 
-			if( !$license ){
+			if ( ! $license ) {
 				return false;
 			}
 
@@ -359,26 +371,14 @@ class SellMediaUpdater {
 		return false;
 	}
 
-
-	//
-	// HELPER FUNCTIONS FOR ACCESSING PROPERTIES.
-	//
-	/**
-	 * Get name of the settings field storing all license manager settings.
-	 *
-	 * @return string   The name of the settings field storing all license manager settings.
-	 */
-	protected function get_settings_field_name() {
-		return $this->prefix . '-license-settings';
-	}
-
 	/**
 	 * Get slug id of the licenses settings page.
 	 *
 	 * @return string   The slug id of the licenses settings page.
 	 */
-	protected function get_settings_page_slug() {
-		return $this->prefix . '-licenses';
+	protected function get_settings_page_url() {
+		$url = esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_updater_settings' ) );
+		return $url;
 	}
 
 	/**
