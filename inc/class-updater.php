@@ -88,9 +88,6 @@ class SellMediaUpdater {
 		// Add actions required for the class's functionality.
 		// NOTE: Everything should be done through actions and filters.
 		if ( is_admin() ) {
-			// Add the menu screen for inserting license information.
-			// add_action( 'admin_menu', array( $this, 'add_license_settings_page' ) );
-			// add_action( 'admin_init', array( $this, 'add_license_settings_fields' ) );
 			// Add settings tabs on admin.
 			add_action( 'init', array( $this, 'register_settings' ) );
 
@@ -172,7 +169,7 @@ class SellMediaUpdater {
 				'default' => '',
 				'sanitize' => 'html',
 			),
-			$this->prefix . 'license_key' => array(
+			$this->prefix . '_license_key' => array(
 				'tab' => 'sell_media_updater_settings',
 				'name' => $this->prefix . '_license_key',
 				'title' => __( 'License Key', $this->text_domain ),
@@ -189,7 +186,7 @@ class SellMediaUpdater {
 		sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
 
 	}
-	
+
 	/**
 	 * If the license has not been configured properly, display an admin notice.
 	 */
@@ -287,10 +284,9 @@ class SellMediaUpdater {
 
 		// Get from transient cache.
 		if ( ( $info = get_transient( $transient ) ) === false ) {
-			print_r( $this->get_license_key() );
-			$options = get_option( $this->get_settings_field_name() );
-			if ( ! isset( $options['email'] ) || ! isset( $options['license_key'] ) ) {
-				// User hasn't saved the license to settings yet. No use making the call.
+			$license = $this->get_license_key();
+
+			if( !$license ){
 				return false;
 			}
 
@@ -298,8 +294,8 @@ class SellMediaUpdater {
 				'info',
 				array(
 					'p' => $this->product_id,
-					'e' => $options['email'],
-					'l' => $options['license_key'],
+					'e' => $license['email'],
+					'l' => $license['key'],
 				)
 			);
 
