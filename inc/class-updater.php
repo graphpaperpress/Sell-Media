@@ -91,7 +91,6 @@ class SellMediaUpdater {
 			// Add the menu screen for inserting license information.
 			// add_action( 'admin_menu', array( $this, 'add_license_settings_page' ) );
 			// add_action( 'admin_init', array( $this, 'add_license_settings_fields' ) );
-
 			// Add settings tabs on admin.
 			add_action( 'init', array( $this, 'register_settings' ) );
 
@@ -153,19 +152,17 @@ class SellMediaUpdater {
 				'updater_license_section_1' => array(
 					'name' => 'updater_license_section_1',
 					'title' => __( 'License', 'sell_media' ),
-					'description' => sprintf( wp_kses( __( '<a href="%s" target="_blank">Get your license keys here</a> and paste them below to enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/dashboard/' ) ),
+					'description' => $this->get_license_status(),
 				),
 			),
 		);
 		sell_media_register_plugin_option_tab( apply_filters( 'sell_media_updater_tab', $updater_settings_tab ) );
 
-		/**
-		 * The following example shows you how to register theme options and assign them to tabs and sections.
-		 */
+		// The following example shows you how to register theme options and assign them to tabs and sections.
 		$options = array(
-			$this->prefix . '-license-email' => array(
+			$this->prefix . '_license_email' => array(
 				'tab' => 'sell_media_updater_settings',
-				'name' => $this->prefix . '-license-email',
+				'name' => $this->prefix . '_license_email',
 				'title' => __( 'License E-mail Address', $this->text_domain ),
 				'description' => '',
 				'section' => 'updater_license_section_1',
@@ -173,11 +170,11 @@ class SellMediaUpdater {
 				'id' => 'updater_license_section_1',
 				'type' => 'text',
 				'default' => '',
-				"sanitize" => "html",
+				'sanitize' => 'html',
 			),
-			$this->prefix . '-license-key' => array(
+			$this->prefix . 'license_key' => array(
 				'tab' => 'sell_media_updater_settings',
-				'name' => $this->prefix . '-license-key',
+				'name' => $this->prefix . '_license_key',
 				'title' => __( 'License Key', $this->text_domain ),
 				'description' => '',
 				'section' => 'updater_license_section_1',
@@ -185,144 +182,14 @@ class SellMediaUpdater {
 				'id' => 'updater_license_section_1',
 				'type' => 'text',
 				'default' => '',
-				"sanitize" => "html",
+				'sanitize' => 'html',
 			),
 		);
+
 		sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
 
 	}
-
-	//
-	// LICENSE SETTINGS.
-	//
-	/**
-	 * Creates the settings items for entering license information (email + license key).
-	 *
-	 * NOTE:
-	 * If you want to move the license settings somewhere else (e.g. your plugin settings page), we suggest you override this function in a subclass and initialize the settings fields yourself. Just make sure to use the same settings fields so that SellMediaUpdater can still find the settings values.
-	 */
-	public function add_license_settings_page() {
-		$title = __( 'GPP License', $this->text_domain );
-
-		add_options_page(
-			$title,
-			$title,
-			'read',
-			$this->get_settings_page_slug(),
-			array( $this, 'render_licenses_menu' )
-		);
-	}
-
-	/**
-	 * Creates the settings fields needed for the license settings menu.
-	 */
-	public function add_license_settings_fields() {
-		$settings_group_id = $this->prefix . '-license-settings-group';
-		$settings_section_id = $this->prefix . '-license-settings-section';
-
-		register_setting(
-			$settings_group_id,
-			$this->get_settings_field_name(),
-			array( $this, 'license_settings_callback' )
-		);
-
-		add_settings_section(
-			$settings_section_id,
-			__( 'Add Your License', $this->text_domain ),
-			array( $this, 'render_settings_section' ),
-			$settings_group_id
-		);
-
-		add_settings_field(
-			$this->prefix . '-license-email',
-			__( 'License E-mail Address', $this->text_domain ),
-			array( $this, 'render_email_settings_field' ),
-			$settings_group_id,
-			$settings_section_id
-		);
-
-		add_settings_field(
-			$this->prefix . '-license-key',
-			__( 'License Key', $this->text_domain ),
-			array( $this, 'render_license_key_settings_field' ),
-			$settings_group_id,
-			$settings_section_id
-		);
-	}
-
-	/**
-	 * Sanitizes and returns settings. Also deletes the license transient cache. Transients are used to minimize calls to the API.
-	 *
-	 * @return [type] [description]
-	 */
-
-	/**
-	 * Sanitizes and returns settings. Also deletes the license transient cache. Transients are used to minimize calls to the API.
-	 * @param  mixed $input Settings.
-	 * @return mixed        Settings.
-	 */
-	public function license_settings_callback( $input ) {
-		$this->delete_transients();
-		return $input;
-	}
-
-	/**
-	 * Renders the description for the settings section.
-	 */
-	public function render_settings_section() {
-		$html = $this->get_license_status();
-		echo $html;
-	}
-
-	/**
-	 * Renders the settings page for entering license information.
-	 */
-	public function render_licenses_menu() {
-		$title = __( 'GPP License', $this->text_domain );
-		$settings_group_id = $this->prefix . '-license-settings-group';
-
-		?>
-		<div class="wrap">
-			<form action='options.php' method='post'>
-
-				<h2><?php echo $title; ?></h2>
-
-				<?php
-				settings_fields( $settings_group_id );
-				do_settings_sections( $settings_group_id );
-				submit_button();
-
-				?>
-
-			</form>
-		</div>
-	<?php
-	}
-
-	/**
-	 * Renders the email settings field on the license settings page.
-	 */
-	public function render_email_settings_field() {
-		$settings_field_name = $this->get_settings_field_name();
-		$options = get_option( $settings_field_name );
-		?>
-		<input type='text' name='<?php echo $settings_field_name; ?>[email]'
-			   value='<?php echo $options['email']; ?>' class='regular-text'>
-	<?php
-	}
-
-	/**
-	 * Renders the license key settings field on the license settings page.
-	 */
-	public function render_license_key_settings_field() {
-		$settings_field_name = $this->get_settings_field_name();
-		$options = get_option( $settings_field_name );
-		?>
-		<input type='text' name='<?php echo $settings_field_name; ?>[license_key]'
-			   value='<?php echo $options['license_key']; ?>' class='regular-text'>
-	<?php
-	}
-
+	
 	/**
 	 * If the license has not been configured properly, display an admin notice.
 	 */
@@ -420,7 +287,7 @@ class SellMediaUpdater {
 
 		// Get from transient cache.
 		if ( ( $info = get_transient( $transient ) ) === false ) {
-
+			print_r( $this->get_license_key() );
 			$options = get_option( $this->get_settings_field_name() );
 			if ( ! isset( $options['email'] ) || ! isset( $options['license_key'] ) ) {
 				// User hasn't saved the license to settings yet. No use making the call.
@@ -542,15 +409,21 @@ class SellMediaUpdater {
 
 		// If not found, look up from database.
 		if ( empty( $license_key ) || empty( $license_key ) ) {
-			$options = get_option( $this->get_settings_field_name() );
-			if ( $options && is_email( $options['email'] ) && ! empty( $options['license_key'] ) ) {
+			$settings = sell_media_get_plugin_options();
+			$license_email = '';
+			$license_key = '';
 
-				$license_email = $options['email'];
-				$license_key = $options['license_key'];
+			if (
+				! empty( $settings )
+				&& isset( $settings->gpp_license_email )
+				&& is_email( $settings->gpp_license_email )
+				&& isset( $settings->gpp_license_key )
+				&& '' !== $settings->gpp_license_key
+			) {
 
-			} else {
-				$license_email = '';
-				$license_key = '';
+				$license_email = $settings->gpp_license_email;
+				$license_key = $settings->gpp_license_key;
+
 			}
 		}
 
@@ -621,13 +494,13 @@ class SellMediaUpdater {
 	private function get_license_status() {
 
 		if ( ! $this->get_license_key() ) {
-			$msg = sprintf( wp_kses( __( '<a href="%s" target="_blank">Get your license keys here</a> and paste them below to enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), '_target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/dashboard/' ) );
+			$msg = sprintf( wp_kses( __( '<a href="%s" target="_blank">Get your license keys here</a> and paste them below to enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/dashboard/' ) );
 			return $msg;
 		}
 
 		$license_status = $this->get_license_info();
 		if ( $this->is_api_error( $license_status ) ) {
-			$msg = sprintf( wp_kses( __( 'Your license key for Graph Paper Press plugins has expired or is invalid. Please <a href="%s" target="_blank">renew your license</a> to re-enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), '_target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/pricing/?action=renewal' ) );
+			$msg = sprintf( wp_kses( __( 'Your license key for Graph Paper Press plugins has expired or is invalid. Please <a href="%s" target="_blank">renew your license</a> to re-enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/pricing/?action=renewal' ) );
 		} else {
 			$msg = '<span class="dashicons dashicons-yes" style="color:green;"></span> ' . __( 'Your license is valid and your account is active.', $this->text_domain );
 		}
