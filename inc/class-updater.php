@@ -221,7 +221,7 @@ class SellMediaUpdater {
 						printf(
 							wp_kses(
 								__( 'Your <a href="%1$s">license key</a> for Graph Paper Press plugins has expired or is invalid. Please <a href="%2$s" target="_blank">renew your license</a> to re-enable automatic updates.', $this->text_domain ),
-								array( 'a' => array( 'href' => array(), '_target' => array(), 'class' => array() ) )
+								array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) )
 							),
 							esc_url( $this->get_settings_page_url() ),
 							esc_url( $this->home . '/pricing/?action=renewal' )
@@ -293,7 +293,7 @@ class SellMediaUpdater {
 	public function get_license_info() {
 
 		$transient = $this->prefix . '_license_cache';
-
+		
 		// Get from transient cache.
 		if ( ( $info = get_transient( $transient ) ) === false ) {
 			$license = $this->get_license_key();
