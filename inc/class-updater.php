@@ -85,14 +85,17 @@ class SellMediaUpdater {
 		$this->type = 'plugin';
 		$this->plugin_file = $plugin_file;
 
-		if( is_multisite() ){
+		if( is_network_admin() ){
 			// Add the menu screen for inserting license information
 			add_action( 'network_admin_menu', array( $this, 'ms_settings_page' ) );
 			add_action( 'admin_init', array( $this, 'ms_settings_fields' ) );
 
 			// Update network license settings.
-		}
 			add_action('network_admin_edit_sm_update_network_settings',  array( $this, 'sm_update_network_settings' ) );
+		
+			// Add a nag text for reminding the user to save the license information.
+			add_action( 'network_admin_notices', array( $this, 'show_admin_notices' ) );
+		}
 
 		// Add actions required for the class's functionality.
 		// NOTE: Everything should be done through actions and filters.
@@ -220,21 +223,17 @@ class SellMediaUpdater {
 	}
 
 	function sm_update_network_settings(){     
-	  if( !current_user_can('manage_network_options') ){
-	  	wp_die('FU');
-	  } 
-	  $settings_field_name = $this->get_settings_field_name();
-	  $options['email'] = sanitize_email( $_POST[$settings_field_name]['email'] );
-	  $options['license_key'] = sanitize_text_field( $_POST[$settings_field_name]['license_key'] );
-	  $update = sell_media_update_option( $settings_field_name, $options );
-	  if( $update ){
-	  	wp_redirect( admin_url( 'network/settings.php?page=sell-media-license&update=true' ) );	  	
-	  }
-	  else{
-	  	wp_die( 'Some error' );
-	  }
+		if( !current_user_can('manage_network_options') ){
+			wp_die('FU');
+		} 
 
-	  exit;  
+		$settings_field_name = $this->get_settings_field_name();
+		$options['email'] = sanitize_email( $_POST[$settings_field_name]['email'] );
+		$options['license_key'] = sanitize_text_field( $_POST[$settings_field_name]['license_key'] );
+		$update = update_site_option( $settings_field_name, $options );
+		wp_redirect( admin_url( 'network/settings.php?page=sell-media-license&update=true' ) );	  	
+
+	  	exit;  
 	}
 
 	/**
@@ -563,6 +562,10 @@ class SellMediaUpdater {
 		$license_email = ( defined( 'GPP_LICENSE_EMAIL' ) ) ? GPP_LICENSE_EMAIL : '';
 		$license_key = ( defined( 'GPP_LICENSE_KEY' ) ) ? GPP_LICENSE_KEY : '';
 
+		if( is_network_admin() ){
+			return false;
+		}
+		
 		// If not found, look up from database.
 		if ( empty( $license_key ) || empty( $license_key ) ) {
 			$settings = sell_media_get_plugin_options();
