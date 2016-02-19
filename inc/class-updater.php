@@ -228,12 +228,21 @@ class SellMediaUpdater {
 		} 
 
 		$settings_field_name = $this->get_settings_field_name();
-		$options['email'] = sanitize_email( $_POST[$settings_field_name]['email'] );
-		$options['license_key'] = sanitize_text_field( $_POST[$settings_field_name]['license_key'] );
-		$update = update_site_option( $settings_field_name, $options );
-		wp_redirect( admin_url( 'network/settings.php?page=sell-media-license&update=true' ) );	  	
 
-	  	exit;  
+		if( 
+			isset( $_POST[$settings_field_name]['email'] ) &&
+			'' !== $_POST[$settings_field_name]['email'] &&
+			isset( $_POST[$settings_field_name]['license_key'] ) &&
+			'' !== $_POST[$settings_field_name]['license_key']
+		){
+
+			$options['email'] = sanitize_email( $_POST[$settings_field_name]['email'] );
+			$options['license_key'] = sanitize_text_field( $_POST[$settings_field_name]['license_key'] );
+			$update = update_site_option( $settings_field_name, $options );
+			wp_redirect( admin_url( 'network/settings.php?page=sell-media-license&update=true' ) );	  	
+		  	exit;  
+		  	
+		}
 	}
 
 	/**
