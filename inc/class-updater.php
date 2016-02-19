@@ -121,6 +121,8 @@ class SellMediaUpdater {
 			// Showing plugin information.
 			add_filter( 'plugins_api', array( $this, 'plugins_api_handler' ), 10, 3 );
 
+			add_filter( 'pre_update_option_sell_media_options', array( $this, 'before_update_options' ), 10, 2 );
+
 			// Activation and Deactivation hooks.
 			add_action( 'upgrader_process_complete', array( $this, 'activation' ) );
 			register_activation_hook( SELL_MEDIA_PLUGIN_FILE, array( $this, 'activation' ) );
@@ -275,11 +277,25 @@ class SellMediaUpdater {
 	<?php
 	}
 
+	//
+	// NETWORK SETTING METHODS END.
+	//
+
 	/**
 	 * @return string   The name of the settings field storing all license manager settings.
 	 */
 	protected function get_settings_field_name() {
 		return $this->prefix . '-license-settings';
+	}
+
+	/**
+	 * Function to run before options update.
+	 * @param  array $new_value New options values.
+	 * @return array            Modified option values.
+	 */
+	function before_update_options( $new_value ) {
+		$this->delete_transients();
+		return $new_value;
 	}
 
 	/**
@@ -302,6 +318,10 @@ class SellMediaUpdater {
 		$this->delete_transients();
 	}
 
+	/**
+	 * Remove license information.
+	 * @return void
+	 */
 	private function delete_license() {
 		$settings = sell_media_get_plugin_options();
 		$email_name = $this->prefix . '_license_email';
@@ -632,16 +652,16 @@ class SellMediaUpdater {
 				}
 			} else {
 				$settings = sell_media_get_plugin_options();
+
 				if (
 					! empty( $settings )
-					&& isset( $settings->gpp_license_email )
-					&& is_email( $settings->gpp_license_email )
-					&& isset( $settings->gpp_license_key )
-					&& '' !== $settings->gpp_license_key
+					&& isset( $settings->sell_media_ms_license_email )
+					&& is_email( $settings->sell_media_ms_license_email )
+					&& isset( $settings->sell_media_ms_license_key )
+					&& '' !== $settings->sell_media_ms_license_key
 				) {
-
-					$license_email = $settings->gpp_license_email;
-					$license_key = $settings->gpp_license_key;
+					$license_email = $settings->sell_media_ms_license_email;
+					$license_key = $settings->sell_media_ms_license_key;
 
 				}
 			}
@@ -712,7 +732,6 @@ class SellMediaUpdater {
 	 * This helps users know when the license is expired on the settings page.
 	 */
 	private function get_license_status() {
-
 		if ( ! $this->get_license_key() ) {
 			$msg = sprintf( wp_kses( __( '<a href="%s" target="_blank">Get your license keys here</a> and paste them below to enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/dashboard/' ) );
 			return $msg;
