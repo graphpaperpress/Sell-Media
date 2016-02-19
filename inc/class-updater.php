@@ -76,7 +76,7 @@ class SellMediaUpdater {
 	public function __construct( $product_id, $product_name, $text_domain, $plugin_file = '' ) {
 
 		// Store setup data.
-		$this->prefix = 'gpp';
+		$this->prefix = 'sell_media_ms';
 		$this->home = 'https://graphpaperpress.com';
 		$this->api_endpoint = $this->home . '/api/license-manager/v1/';
 		$this->product_id = $product_id;
@@ -85,12 +85,22 @@ class SellMediaUpdater {
 		$this->type = 'plugin';
 		$this->plugin_file = $plugin_file;
 
+		if( is_multisite() ){
+			// Add the menu screen for inserting license information
+			add_action( 'network_admin_menu', array( $this, 'ms_settings_page' ) );
+			add_action( 'admin_init', array( $this, 'ms_settings_fields' ) );
+
+			// Update network license settings.
+		}
+			add_action('network_admin_edit_sm_update_network_settings',  array( $this, 'sm_update_network_settings' ) );
+
 		// Add actions required for the class's functionality.
 		// NOTE: Everything should be done through actions and filters.
 		if ( is_admin() ) {
 
 			// Add settings tabs on admin.
 			add_action( 'init', array( $this, 'register_settings' ), 100 );
+
 
 			// Add a nag text for reminding the user to save the license information.
 			add_action( 'admin_notices', array( $this, 'show_admin_notices' ) );
@@ -106,6 +116,156 @@ class SellMediaUpdater {
 			register_activation_hook( __FILE__, array( $this, 'activation' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
 		}
+	}
+
+	//
+	// NETWORK SETTING METHODS START.
+	//
+
+	/**
+	 * Creates the network settings items for entering license information (email + license key).
+	 */
+	public function ms_settings_page() {
+		$title = __( 'Sell Media License', $this->text_domain );
+		add_submenu_page(
+			'settings.php',
+			$title,
+			$title,
+			'read',
+			'sell-media-license',
+			array( $this, 'ms_render_licenses_menu' )
+	 	); 
+	}
+
+	/**
+	 * Creates the settings fields needed for the license settings menu.
+	 */
+	public function ms_settings_fields() {
+		$settings_group_id = $this->prefix . '-license-settings-group';
+		$settings_section_id = $this->prefix . '-license-settings-section';
+
+		register_setting(
+			$settings_group_id,
+			$this->get_settings_field_name(),
+			array( $this, 'ms_settings_callback' )
+		);
+
+		add_settings_section(
+			$settings_section_id,
+			__( 'Add Your License', $this->text_domain ),
+			array( $this, 'ms_render_settings_section' ),
+			$settings_group_id
+		);
+
+		add_settings_field(
+			$this->prefix . '-license-email',
+			__( 'License E-mail Address', $this->text_domain ),
+			array( $this, 'ms_render_email_settings_field' ),
+			$settings_group_id,
+			$settings_section_id
+		);
+
+		add_settings_field(
+			$this->prefix . '-license-key',
+			__( 'License Key', $this->text_domain ),
+			array( $this, 'ms_render_license_key_settings_field' ),
+			$settings_group_id,
+			$settings_section_id
+		);
+	}
+
+	/**
+	 * Sanitizes and returns settings.
+	 * Also deletes the license transient cache.
+	 * Transients are used to minimize calls to the API.
+	 * 
+	 * @return [type] [description]
+	 */
+	public function ms_settings_callback( $input ) {
+		$this->delete_transients();
+		return $input;
+	}
+
+	/**
+	 * Renders the description for the settings section.
+	 */
+	public function ms_render_settings_section() {
+		$html = $this->get_license_status();
+		echo $html;
+	}
+
+	/**
+	 * Renders the settings page for entering license information.
+	 */
+	public function ms_render_licenses_menu() {
+		$title = __( 'Sell Media License', $this->text_domain );
+		$settings_group_id = $this->prefix . '-license-settings-group';
+
+		?>
+		<div class="wrap">
+			<form action='<?php echo admin_url('network/edit.php?action=sm_update_network_settings'); ?>' method='post'>
+
+				<h2><?php echo $title; ?></h2>
+
+				<?php
+				settings_fields( $settings_group_id );
+				do_settings_sections( $settings_group_id );
+				submit_button();
+
+				?>
+
+			</form>
+		</div>
+	<?php
+	}
+
+	function sm_update_network_settings(){     
+	  if( !current_user_can('manage_network_options') ){
+	  	wp_die('FU');
+	  } 
+	  $settings_field_name = $this->get_settings_field_name();
+	  $options['email'] = sanitize_email( $_POST[$settings_field_name]['email'] );
+	  $options['license_key'] = sanitize_text_field( $_POST[$settings_field_name]['license_key'] );
+	  $update = sell_media_update_option( $settings_field_name, $options );
+	  if( $update ){
+	  	wp_redirect( admin_url( 'network/settings.php?page=sell-media-license&update=true' ) );	  	
+	  }
+	  else{
+	  	wp_die( 'Some error' );
+	  }
+
+	  exit;  
+	}
+
+	/**
+	 * Renders the email settings field on the license settings page.
+	 */
+	public function ms_render_email_settings_field() {
+		$settings_field_name = $this->get_settings_field_name();
+		$options = get_site_option( $settings_field_name );
+		?>
+		<input type='text' name='<?php echo $settings_field_name; ?>[email]'
+			   value='<?php echo $options['email']; ?>' class='regular-text'>
+	<?php
+	}
+
+	/**
+	 * Renders the license key settings field on the license settings page.
+	 */
+	public function ms_render_license_key_settings_field() {
+		$settings_field_name = $this->get_settings_field_name();
+		$options = get_site_option( $settings_field_name );
+		?>
+		<input type='text' name='<?php echo $settings_field_name; ?>[license_key]'
+			   value='<?php echo $options['license_key']; ?>' class='regular-text'>
+	<?php
+	}
+
+	/**
+	 * @return string   The name of the settings field storing all license manager settings.
+	 */
+	protected function get_settings_field_name() {
+		return $this->prefix . '-license-settings';
 	}
 
 	/**
