@@ -190,7 +190,7 @@ class SellMediaUpdater {
 				'section' => 'updater_license_section_1',
 				'since' => '1.0',
 				'id' => 'updater_license_section_1',
-				'type' => 'text',
+				'type' => 'password',
 				'default' => '',
 				'sanitize' => 'html',
 			),
