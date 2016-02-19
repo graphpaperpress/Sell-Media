@@ -99,7 +99,7 @@ class SellMediaUpdater {
 
 		// Add actions required for the class's functionality.
 		// NOTE: Everything should be done through actions and filters.
-		if ( is_admin() ) {
+		if ( !is_multisite() && is_admin() ) {
 
 			// Add settings tabs on admin.
 			add_action( 'init', array( $this, 'register_settings' ), 100 );
@@ -452,25 +452,49 @@ class SellMediaUpdater {
 	public function get_license_info() {
 
 		$transient = $this->prefix . '_license_cache';
-		
-		// Get from transient cache.
-		if ( ( $info = get_transient( $transient ) ) === false ) {
-			$license = $this->get_license_key();
+		if( is_network_admin() ){
+			// Get from transient cache.
+			if ( ( $info = get_site_transient( $transient ) ) === false ) {
+				$license = $this->get_license_key();
 
-			if ( ! $license ) {
-				return false;
+				if ( ! $license ) {
+					return false;
+				}
+
+				$info = $this->call_api(
+					'info',
+					array(
+						'p' => $this->product_id,
+						'e' => $license['email'],
+						'l' => $license['key'],
+					)
+				);
+
+				set_site_transient( $transient, $info, 3600 );
+			}
+		}
+		else{
+
+			// Get from transient cache.
+			if ( ( $info = get_transient( $transient ) ) === false ) {
+				$license = $this->get_license_key();
+
+				if ( ! $license ) {
+					return false;
+				}
+
+				$info = $this->call_api(
+					'info',
+					array(
+						'p' => $this->product_id,
+						'e' => $license['email'],
+						'l' => $license['key'],
+					)
+				);
+
+				set_transient( $transient, $info, 3600 );
 			}
 
-			$info = $this->call_api(
-				'info',
-				array(
-					'p' => $this->product_id,
-					'e' => $license['email'],
-					'l' => $license['key'],
-				)
-			);
-
-			set_transient( $transient, $info, 3600 );
 		}
 
 		return $info;
@@ -537,6 +561,11 @@ class SellMediaUpdater {
 	 */
 	protected function get_settings_page_url() {
 		$url = esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_updater_settings' ) );
+
+		if( is_multisite() ){
+			$url = esc_url( admin_url('network/settings.php?page=sell-media-license') );
+		}
+
 		return $url;
 	}
 
@@ -562,28 +591,47 @@ class SellMediaUpdater {
 		$license_email = ( defined( 'GPP_LICENSE_EMAIL' ) ) ? GPP_LICENSE_EMAIL : '';
 		$license_key = ( defined( 'GPP_LICENSE_KEY' ) ) ? GPP_LICENSE_KEY : '';
 
-		if( is_network_admin() ){
-			return false;
-		}
 		
 		// If not found, look up from database.
 		if ( empty( $license_key ) || empty( $license_key ) ) {
-			$settings = sell_media_get_plugin_options();
+			
 			$license_email = '';
 			$license_key = '';
 
-			if (
-				! empty( $settings )
-				&& isset( $settings->gpp_license_email )
-				&& is_email( $settings->gpp_license_email )
-				&& isset( $settings->gpp_license_key )
-				&& '' !== $settings->gpp_license_key
-			) {
+			if( is_network_admin() ){
+				$settings_field_name = $this->get_settings_field_name();
+				$settings = get_site_option( $settings_field_name );
+				// print_r( $settings );
+				if (
+					! empty( $settings )
+					&& isset( $settings['email'] )
+					&& is_email( $settings['email'] )
+					&& isset( $settings['license_key'] )
+					&& '' !== $settings['license_key']
+				) {
 
-				$license_email = $settings->gpp_license_email;
-				$license_key = $settings->gpp_license_key;
+					$license_email = $settings['email'];
+					$license_key = $settings['license_key'];
 
+				}
 			}
+			else{
+				$settings = sell_media_get_plugin_options();
+				if (
+					! empty( $settings )
+					&& isset( $settings->gpp_license_email )
+					&& is_email( $settings->gpp_license_email )
+					&& isset( $settings->gpp_license_key )
+					&& '' !== $settings->gpp_license_key
+				) {
+
+					$license_email = $settings->gpp_license_email;
+					$license_key = $settings->gpp_license_key;
+
+				}
+			}
+			
+
 		}
 
 		if ( strlen( $license_email ) > 0 && strlen( $license_key ) >= 8 ) {
@@ -666,4 +714,5 @@ class SellMediaUpdater {
 
 		return $msg;
 	}
+
 }
