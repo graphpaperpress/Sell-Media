@@ -46,7 +46,7 @@ Class SellMediaAdminNotices {
             if ( isset( $this->settings->test_mode ) && $this->settings->test_mode == 1 ){
                 $notices[] = array(
                     'slug' => 'test-mode',
-                    'message' => sprintf( __( 'Your site is currently in <a href="%1$s">test mode</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options ' ) ) )
+                    'message' => sprintf( __( 'Your site is currently in <a href="%1$s">test mode</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_general_settings' ) ) )
                 );
             }
 
