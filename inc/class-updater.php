@@ -88,8 +88,9 @@ class SellMediaUpdater {
 		// Add actions required for the class's functionality.
 		// NOTE: Everything should be done through actions and filters.
 		if ( is_admin() ) {
+
 			// Add settings tabs on admin.
-			add_action( 'init', array( $this, 'register_settings' ) );
+			add_action( 'init', array( $this, 'register_settings' ), 100 );
 
 			// Add a nag text for reminding the user to save the license information.
 			add_action( 'admin_notices', array( $this, 'show_admin_notices' ) );
