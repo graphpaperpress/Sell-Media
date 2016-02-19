@@ -85,25 +85,32 @@ class SellMediaUpdater {
 		$this->type = 'plugin';
 		$this->plugin_file = $plugin_file;
 
-		if( is_network_admin() ){
+		if ( is_network_admin() ) {
 			// Add the menu screen for inserting license information
 			add_action( 'network_admin_menu', array( $this, 'ms_settings_page' ) );
+
+			// Add settings
 			add_action( 'admin_init', array( $this, 'ms_settings_fields' ) );
 
 			// Update network license settings.
-			add_action('network_admin_edit_sm_update_network_settings',  array( $this, 'sm_update_network_settings' ) );
-		
+			add_action( 'network_admin_edit_sm_update_network_settings',  array( $this, 'sm_update_network_settings' ) );
+
 			// Add a nag text for reminding the user to save the license information.
 			add_action( 'network_admin_notices', array( $this, 'show_admin_notices' ) );
+
+			// Check for updates (for plugins).
+			add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'check_for_update' ) );
+
+			// Showing plugin information.
+			add_filter( 'plugins_api', array( $this, 'plugins_api_handler' ), 10, 3 );
 		}
 
 		// Add actions required for the class's functionality.
 		// NOTE: Everything should be done through actions and filters.
-		if ( !is_multisite() && is_admin() ) {
+		if ( ! is_multisite() && is_admin() ) {
 
 			// Add settings tabs on admin.
 			add_action( 'init', array( $this, 'register_settings' ), 100 );
-
 
 			// Add a nag text for reminding the user to save the license information.
 			add_action( 'admin_notices', array( $this, 'show_admin_notices' ) );
@@ -124,7 +131,6 @@ class SellMediaUpdater {
 	//
 	// NETWORK SETTING METHODS START.
 	//
-
 	/**
 	 * Creates the network settings items for entering license information (email + license key).
 	 */
@@ -137,7 +143,7 @@ class SellMediaUpdater {
 			'read',
 			'sell-media-license',
 			array( $this, 'ms_render_licenses_menu' )
-	 	); 
+	 	);
 	}
 
 	/**
@@ -181,7 +187,7 @@ class SellMediaUpdater {
 	 * Sanitizes and returns settings.
 	 * Also deletes the license transient cache.
 	 * Transients are used to minimize calls to the API.
-	 * 
+	 *
 	 * @return [type] [description]
 	 */
 	public function ms_settings_callback( $input ) {
@@ -206,7 +212,7 @@ class SellMediaUpdater {
 
 		?>
 		<div class="wrap">
-			<form action='<?php echo admin_url('network/edit.php?action=sm_update_network_settings'); ?>' method='post'>
+			<form action='<?php echo admin_url( 'network/edit.php?action=sm_update_network_settings' ); ?>' method='post'>
 
 				<h2><?php echo $title; ?></h2>
 
@@ -222,26 +228,26 @@ class SellMediaUpdater {
 	<?php
 	}
 
-	function sm_update_network_settings(){     
-		if( !current_user_can('manage_network_options') ){
-			wp_die('FU');
-		} 
+	function sm_update_network_settings() {
+		if ( ! current_user_can( 'manage_network_options' ) ) {
+			wp_die( 'FU' );
+		}
 
 		$settings_field_name = $this->get_settings_field_name();
 
-		if( 
-			isset( $_POST[$settings_field_name]['email'] ) &&
-			'' !== $_POST[$settings_field_name]['email'] &&
-			isset( $_POST[$settings_field_name]['license_key'] ) &&
-			'' !== $_POST[$settings_field_name]['license_key']
-		){
-
-			$options['email'] = sanitize_email( $_POST[$settings_field_name]['email'] );
-			$options['license_key'] = sanitize_text_field( $_POST[$settings_field_name]['license_key'] );
+		if (
+			isset( $_POST[ $settings_field_name ]['email'] ) &&
+			'' !== $_POST[ $settings_field_name ]['email'] &&
+			isset( $_POST[ $settings_field_name ]['license_key'] ) &&
+			'' !== $_POST[ $settings_field_name ]['license_key']
+		) {
+			$this->delete_transients();
+			$options['email'] = sanitize_email( $_POST[ $settings_field_name ]['email'] );
+			$options['license_key'] = sanitize_text_field( $_POST[ $settings_field_name ]['license_key'] );
 			$update = update_site_option( $settings_field_name, $options );
-			wp_redirect( admin_url( 'network/settings.php?page=sell-media-license&update=true' ) );	  	
-		  	exit;  
-		  	
+			wp_redirect( admin_url( 'network/settings.php?page=sell-media-license&update=true' ) );
+		  	exit;
+
 		}
 	}
 
@@ -311,9 +317,13 @@ class SellMediaUpdater {
 	 * Delete transients so updates work as expected.
 	 */
 	private function delete_transients() {
-
-		delete_transient( $this->prefix . '_license_cache' );
-		delete_transient( 'update_plugins' );
+		if ( is_multisite() ) {
+			delete_site_transient( $this->prefix . '_license_cache' );
+			delete_site_transient( 'update_plugins' );
+		} else {
+			delete_transient( $this->prefix . '_license_cache' );
+			delete_transient( 'update_plugins' );
+		}
 	}
 
 	/**
@@ -461,7 +471,7 @@ class SellMediaUpdater {
 	public function get_license_info() {
 
 		$transient = $this->prefix . '_license_cache';
-		if( is_network_admin() ){
+		if ( is_network_admin() ) {
 			// Get from transient cache.
 			if ( ( $info = get_site_transient( $transient ) ) === false ) {
 				$license = $this->get_license_key();
@@ -481,8 +491,7 @@ class SellMediaUpdater {
 
 				set_site_transient( $transient, $info, 3600 );
 			}
-		}
-		else{
+		} else {
 
 			// Get from transient cache.
 			if ( ( $info = get_transient( $transient ) ) === false ) {
@@ -503,7 +512,6 @@ class SellMediaUpdater {
 
 				set_transient( $transient, $info, 3600 );
 			}
-
 		}
 
 		return $info;
@@ -571,8 +579,8 @@ class SellMediaUpdater {
 	protected function get_settings_page_url() {
 		$url = esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_updater_settings' ) );
 
-		if( is_multisite() ){
-			$url = esc_url( admin_url('network/settings.php?page=sell-media-license') );
+		if ( is_multisite() ) {
+			$url = esc_url( admin_url( 'network/settings.php?page=sell-media-license' ) );
 		}
 
 		return $url;
@@ -600,14 +608,13 @@ class SellMediaUpdater {
 		$license_email = ( defined( 'GPP_LICENSE_EMAIL' ) ) ? GPP_LICENSE_EMAIL : '';
 		$license_key = ( defined( 'GPP_LICENSE_KEY' ) ) ? GPP_LICENSE_KEY : '';
 
-		
 		// If not found, look up from database.
 		if ( empty( $license_key ) || empty( $license_key ) ) {
-			
+
 			$license_email = '';
 			$license_key = '';
 
-			if( is_network_admin() ){
+			if ( is_network_admin() ) {
 				$settings_field_name = $this->get_settings_field_name();
 				$settings = get_site_option( $settings_field_name );
 				// print_r( $settings );
@@ -623,8 +630,7 @@ class SellMediaUpdater {
 					$license_key = $settings['license_key'];
 
 				}
-			}
-			else{
+			} else {
 				$settings = sell_media_get_plugin_options();
 				if (
 					! empty( $settings )
@@ -639,8 +645,6 @@ class SellMediaUpdater {
 
 				}
 			}
-			
-
 		}
 
 		if ( strlen( $license_email ) > 0 && strlen( $license_key ) >= 8 ) {
@@ -723,5 +727,4 @@ class SellMediaUpdater {
 
 		return $msg;
 	}
-
 }
