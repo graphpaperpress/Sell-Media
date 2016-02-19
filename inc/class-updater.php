@@ -86,10 +86,10 @@ class SellMediaUpdater {
 		$this->plugin_file = $plugin_file;
 
 		if ( is_network_admin() ) {
-			// Add the menu screen for inserting license information
+			// Add the menu screen for inserting license information.
 			add_action( 'network_admin_menu', array( $this, 'ms_settings_page' ) );
 
-			// Add settings
+			// Add settings.
 			add_action( 'admin_init', array( $this, 'ms_settings_fields' ) );
 
 			// Update network license settings.
@@ -123,8 +123,8 @@ class SellMediaUpdater {
 
 			// Activation and Deactivation hooks.
 			add_action( 'upgrader_process_complete', array( $this, 'activation' ) );
-			register_activation_hook( __FILE__, array( $this, 'activation' ) );
-			register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
+			register_activation_hook( SELL_MEDIA_PLUGIN_FILE, array( $this, 'activation' ) );
+			register_deactivation_hook( SELL_MEDIA_PLUGIN_FILE, array( $this, 'deactivation' ) );
 		}
 	}
 
