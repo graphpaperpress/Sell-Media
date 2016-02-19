@@ -1107,3 +1107,18 @@ function sell_media_add_option( $option, $value = '', $deprecated = '', $autoloa
 
 	return add_option( $option, $value, $deprecated, $autoload );
 }
+
+/**
+ * Update the value of an option that was already added based on site type.
+ * @param  string      $option    Name of option to add. Expected to not be SQL-escaped.
+ * @param  mixed       $value      Optional. Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
+ * @param  string|bool $autoload   Optional. Whether to load the option when WordPress starts up.
+ * @return bool             False if option was not added and true if option was added.
+ */
+function sell_media_update_option( $option, $value, $autoload = null ) {
+	if ( is_multisite() ) {
+		return update_blog_option( get_current_blog_id(), $option, $value );
+	}
+
+	return update_option( $option, $value, $deprecated, $autoload );
+}
