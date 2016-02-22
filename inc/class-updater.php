@@ -108,7 +108,7 @@ class SellMediaUpdater {
 		if( empty( $this->plugins ) )
 			return;
 
-		$title = __( 'Sell Media License', $this->text_domain );
+		$title = __( 'Sell Media License', 'sell_media' );
 		add_submenu_page(
 			'settings.php',
 			$title,
@@ -134,14 +134,14 @@ class SellMediaUpdater {
 
 		add_settings_section(
 			$settings_section_id,
-			__( 'Add Your License', $this->text_domain ),
+			__( 'Add Your License', 'sell_media' ),
 			array( $this, 'ms_render_settings_section' ),
 			$settings_group_id
 		);
 
 		add_settings_field(
 			$this->prefix . '-license-email',
-			__( 'License E-mail Address', $this->text_domain ),
+			__( 'License E-mail Address', 'sell_media' ),
 			array( $this, 'ms_render_email_settings_field' ),
 			$settings_group_id,
 			$settings_section_id
@@ -149,7 +149,7 @@ class SellMediaUpdater {
 
 		add_settings_field(
 			$this->prefix . '-license-key',
-			__( 'License Key', $this->text_domain ),
+			__( 'License Key', 'sell_media' ),
 			array( $this, 'ms_render_license_key_settings_field' ),
 			$settings_group_id,
 			$settings_section_id
@@ -180,7 +180,7 @@ class SellMediaUpdater {
 	 * Renders the settings page for entering license information.
 	 */
 	public function ms_render_licenses_menu() {
-		$title = __( 'Sell Media License', $this->text_domain );
+		$title = __( 'Sell Media License', 'sell_media' );
 		$settings_group_id = $this->prefix . '-license-settings-group';
 
 		?>
@@ -348,7 +348,7 @@ class SellMediaUpdater {
 			$this->prefix . '_license_email' => array(
 				'tab' => 'sell_media_updater_settings',
 				'name' => $this->prefix . '_license_email',
-				'title' => __( 'License E-mail Address', $this->text_domain ),
+				'title' => __( 'License E-mail Address', 'sell_media' ),
 				'description' => '',
 				'section' => 'updater_license_section_1',
 				'since' => '1.0',
@@ -360,7 +360,7 @@ class SellMediaUpdater {
 			$this->prefix . '_license_key' => array(
 				'tab' => 'sell_media_updater_settings',
 				'name' => $this->prefix . '_license_key',
-				'title' => __( 'License Key', $this->text_domain ),
+				'title' => __( 'License Key', 'sell_media' ),
 				'description' => '',
 				'section' => 'updater_license_section_1',
 				'since' => '1.0',
@@ -387,9 +387,9 @@ class SellMediaUpdater {
 		if ( ! $options ) : ?>
 			<div class="error">
 				<p>
-					<?php esc_html_e( 'Please enter your email and license key to enable updates to plugins from Graph Paper Press.', $this->text_domain ); ?>
+					<?php esc_html_e( 'Please enter your email and license key to enable updates to plugins from Graph Paper Press.', 'sell_media' ); ?>
 					<a href="<?php echo esc_url( $this->get_settings_page_url() ); ?>">
-						<?php esc_html_e( 'Complete the setup now.', $this->text_domain ); ?>
+						<?php esc_html_e( 'Complete the setup now.', 'sell_media' ); ?>
 					</a>
 				</p>
 			</div>
@@ -399,7 +399,7 @@ class SellMediaUpdater {
 					<?php
 						printf(
 							wp_kses(
-								__( 'Your <a href="%1$s">license key</a> for Graph Paper Press plugins has expired or is invalid. Please <a href="%2$s" target="_blank">renew your license</a> to re-enable automatic updates.', $this->text_domain ),
+								__( 'Your <a href="%1$s">license key</a> for Graph Paper Press plugins has expired or is invalid. Please <a href="%2$s" target="_blank">renew your license</a> to re-enable automatic updates.', 'sell_media' ),
 								array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) )
 							),
 							esc_url( $this->get_settings_page_url() ),
@@ -738,15 +738,15 @@ class SellMediaUpdater {
 	 */
 	private function get_license_status() {
 		if ( ! $this->get_license_key() ) {
-			$msg = sprintf( wp_kses( __( '<a href="%s" target="_blank">Get your license keys here</a> and paste them below to enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/dashboard/' ) );
+			$msg = sprintf( wp_kses( __( '<a href="%s" target="_blank">Get your license keys here</a> and paste them below to enable automatic updates.', 'sell_media' ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/dashboard/' ) );
 			return $msg;
 		}
 
 		$license_status = $this->get_license_info();
 		if ( $this->is_api_error( $license_status ) ) {
-			$msg = sprintf( wp_kses( __( 'Your license key for Graph Paper Press plugins has expired or is invalid. Please <a href="%s" target="_blank">renew your license</a> to re-enable automatic updates.', $this->text_domain ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/pricing/?action=renewal' ) );
+			$msg = sprintf( wp_kses( __( 'Your license key for Graph Paper Press plugins has expired or is invalid. Please <a href="%s" target="_blank">renew your license</a> to re-enable automatic updates.', 'sell_media' ), array( 'a' => array( 'href' => array(), 'target' => array(), 'class' => array() ) ) ), esc_url( $this->home . '/pricing/?action=renewal' ) );
 		} else {
-			$msg = '<span class="dashicons dashicons-yes" style="color:green;"></span> ' . __( 'Your license is valid and your account is active.', $this->text_domain );
+			$msg = '<span class="dashicons dashicons-yes" style="color:green;"></span> ' . __( 'Your license is valid and your account is active.', 'sell_media' );
 		}
 
 		return $msg;
