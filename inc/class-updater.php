@@ -37,54 +37,21 @@ class SellMediaUpdater {
 	private $api_endpoint;
 
 	/**
-	 * The product id (slug) used for this product on the License Manager site.
-	 * Configured through the class's constructor.
-	 *
-	 * @var int     The product id of the related product in the license manager.
-	 */
-	private $product_id;
-
-	/**
-	 * The name of the product using this class. Configured in the class's constructor.
-	 *
-	 * @var int     The name of the plugin using this class.
-	 */
-	private $product_name;
-
-	/**
-	 * The text domain of the plugin using this class.
-	 * Populated in the class's constructor.
-	 *
-	 * @var string  The text domain of the plugin.
-	 */
-	private $text_domain;
-
-	/**
-	 * The absolute path to the plugin's main file. Only applicable when using the class with a plugin.
+	 * Plugin lists.
 	 * @var string
 	 */
-	private $plugin_file;
+	private $plugins;
 
 	/**
 	 * Initializes the license manager client.
-	 *
-	 * @param string $product_id     The text id (slug) of the product on the license manager site.
-	 * @param string $product_name   The name of the product, used for menus.
-	 * @param string $text_domain    Plugin text domain, used for localizing the settings screens.
-	 * @param string $plugin_file    The full path to the plugin's main file (only for plugins).
 	 */
-	public function __construct( $product_id, $product_name, $text_domain, $plugin_file = '' ) {
-
+	public function __construct() {
 		// Store setup data.
+		$this->plugins = apply_filters( 'sell_media_updater_register', array() );
 		$this->prefix = 'sell_media_ms';
-		$this->transient_name =  $this->prefix .'-' . $product_id . '_license_cache';
+		$this->transient_name =  $this->prefix . '_license_cache';
 		$this->home = 'https://graphpaperpress.com';
 		$this->api_endpoint = $this->home . '/api/license-manager/v1/';
-		$this->product_id = $product_id;
-		$this->product_name = $product_name;
-		$this->text_domain = $text_domain;
-		$this->type = 'plugin';
-		$this->plugin_file = $plugin_file;
 
 		if ( is_network_admin() ) {
 			// Add the menu screen for inserting license information.
@@ -138,6 +105,9 @@ class SellMediaUpdater {
 	 * Creates the network settings items for entering license information (email + license key).
 	 */
 	public function ms_settings_page() {
+		if( empty( $this->plugins ) )
+			return;
+
 		$title = __( 'Sell Media License', $this->text_domain );
 		add_submenu_page(
 			'settings.php',
@@ -240,9 +210,7 @@ class SellMediaUpdater {
 
 		if (
 			isset( $_POST[ $settings_field_name ]['email'] ) &&
-			'' !== $_POST[ $settings_field_name ]['email'] &&
-			isset( $_POST[ $settings_field_name ]['license_key'] ) &&
-			'' !== $_POST[ $settings_field_name ]['license_key']
+			isset( $_POST[ $settings_field_name ]['license_key'] )
 		) {
 			$this->delete_transients();
 			$options['email'] = sanitize_email( $_POST[ $settings_field_name ]['email'] );
@@ -354,6 +322,9 @@ class SellMediaUpdater {
 	 * @return void
 	 */
 	function register_settings() {
+		if( empty( $this->plugins ) )
+			return;
+
 		$setting_fields = sell_media_get_plugin_option_parameters();
 		if( isset($setting_fields['sell_media_ms_license_email']))
 			return;
@@ -408,6 +379,9 @@ class SellMediaUpdater {
 	 * If the license has not been configured properly, display an admin notice.
 	 */
 	public function show_admin_notices() {
+		if( empty( $this->plugins ) )
+			return;
+
 		$options = $this->get_license_key();
 		$status = $this->get_license_info();
 		if ( ! $options ) : ?>
@@ -454,17 +428,20 @@ class SellMediaUpdater {
 		if ( empty( $transient->checked ) ) {
 			return $transient;
 		}
+		if( !empty( $this->plugins ) ){
+			foreach ($this->plugins as $key => $plugin) {
+				$info = $this->is_update_available( $plugin );
+				if ( false !== $info ) {
+					// Plugin update.
+					$plugin_slug = plugin_basename( $plugin['plugin_file'] );
 
-		$info = $this->is_update_available();
-		if ( false !== $info ) {
-			// Plugin update.
-			$plugin_slug = plugin_basename( $this->plugin_file );
-
-			$transient->response[ $plugin_slug ] = (object) array(
-				'new_version' => $info->version,
-				'package'     => $info->package_url,
-				'slug'        => $this->product_id,
-			);
+					$transient->response[ $plugin_slug ] = (object) array(
+						'new_version' => $info->version,
+						'package'     => $info->package_url,
+						'slug'        => $this->product_id,
+					);
+				}			
+			}
 		}
 		return $transient;
 	}
@@ -475,15 +452,15 @@ class SellMediaUpdater {
 	 * @return object|bool    If there is an update, returns the license information.
 	 *                      Otherwise returns false.
 	 */
-	public function is_update_available() {
+	public function is_update_available( $plugin ) {
 		$license_info = $this->get_license_info();
 
 		if ( $this->is_api_error( $license_info ) ) {
 			return false;
 		}
 
-		if ( version_compare( $license_info->version, $this->get_local_version(), '>' ) ) {
-			return $license_info;
+		if ( version_compare( $license_info->{$plugin['product_id']}->version, $this->get_local_version( $plugin ), '>' ) ) {
+			return $license_info->{$plugin['product_id']};
 		}
 
 		return false;
@@ -495,51 +472,68 @@ class SellMediaUpdater {
 	 * @return object|bool   The product data, or false if API call fails.
 	 */
 	public function get_license_info() {
+		$transient_name = $this->prefix . '_license_cache';
+		$information = new stdClass();
+		if( !empty( $this->plugins ) ){
+			foreach ($this->plugins as $key => $plugin) {
+				if ( is_network_admin() ) {
+					// Get from transient cache.
+					$_information = get_site_transient( $transient_name );
+					if ( !isset( $_information->{ $plugin['product_id'] } ) ) {
+						$license = $this->get_license_key();
 
-		if ( is_network_admin() ) {
-			// Get from transient cache.
-			if ( ( $info = get_site_transient( $this->transient_name ) ) === false ) {
-				$license = $this->get_license_key();
+						if ( ! $license ) {
+							return false;
+						}
 
-				if ( ! $license ) {
-					return false;
+						$info = $this->call_api(
+							'info',
+							array(
+								'p' => $plugin['product_id'],
+								'e' => $license['email'],
+								'l' => $license['key'],
+							)
+						);
+						if( !empty( $info ) && isset( $info->name ) ){
+							$information->{$info->name} =  $info;
+						}
+						set_site_transient( $transient_name, $information, 3600 );
+					}
+					else{
+						$information = $_information;
+					}
+				} else {
+
+					// Get from transient cache.
+					$_information = get_transient( $transient_name );
+					if ( !isset( $_information->{ $plugin['product_id'] } ) ) {
+						$license = $this->get_license_key();
+
+						if ( ! $license ) {
+							return false;
+						}
+
+						$info = $this->call_api(
+							'info',
+							array(
+								'p' => $plugin['product_id'],
+								'e' => $license['email'],
+								'l' => $license['key'],
+							)
+						);
+						if( !empty( $info ) && isset( $info->name ) ){
+							$information->{$info->name} =  $info;
+						}
+						set_transient( $transient_name, $information, 3600 );
+					}
+					else{
+						$information = $_information;
+					}
 				}
-
-				$info = $this->call_api(
-					'info',
-					array(
-						'p' => $this->product_id,
-						'e' => $license['email'],
-						'l' => $license['key'],
-					)
-				);
-
-				set_site_transient( $this->transient_name, $info, 3600 );
 			}
-		} else {
+		} 		
 
-			// Get from transient cache.
-			if ( ( $info = get_transient( $this->transient_name ) ) === false ) {
-				$license = $this->get_license_key();
-
-				if ( ! $license ) {
-					return false;
-				}
-
-				$info = $this->call_api(
-					'info',
-					array(
-						'p' => $this->product_id,
-						'e' => $license['email'],
-						'l' => $license['key'],
-					)
-				);
-
-				set_transient( $this->transient_name, $info, 3600 );
-			}
-		}
-
-		return $info;
+		return $information;
 	}
 
 	/**
@@ -557,8 +551,9 @@ class SellMediaUpdater {
 		if ( 'plugin_information' === $action  ) {
 
 			// If the request is for this plugin, respond to it.
-			if ( isset( $args->slug ) && $args->slug === plugin_basename( $this->plugin_file ) ) {
-				$info = $this->get_license_info();
+			if ( isset( $args->slug ) && array_key_exists( $args->slug, $this->plugins ) ) {
+				$plugins_info = $this->get_license_info();
+				$info = $plugins_info->{$args->slug};
 
 				$res = (object) array(
 					'name'          => isset( $info->name ) ? $info->name : '',
@@ -616,9 +611,9 @@ class SellMediaUpdater {
 	 *
 	 * @return string   The plugin version of the local installation.
 	 */
-	private function get_local_version() {
+	private function get_local_version( $plugin ) {
 
-		$plugin_data = get_plugin_data( $this->plugin_file, false );
+		$plugin_data = get_plugin_data( $plugin['plugin_file'], false );
 
 		return $plugin_data['Version'];
 	}
@@ -642,7 +637,6 @@ class SellMediaUpdater {
 			if ( is_network_admin() ) {
 				$settings_field_name = $this->get_settings_field_name();
 				$settings = get_site_option( $settings_field_name );
-				// print_r( $settings );
 				if (
 					! empty( $settings )
 					&& isset( $settings['email'] )
@@ -721,6 +715,12 @@ class SellMediaUpdater {
 			return true;
 		}
 
+		$_response = (array)$response;
+
+		if ( empty( $_response ) ) {
+			return true;
+		}
+
 		if ( ! is_object( $response ) ) {
 			return true;
 		}
@@ -752,3 +752,12 @@ class SellMediaUpdater {
 		return $msg;
 	}
 }
+
+/**
+ * Init Updater
+ */
+function sell_media_init_updater(){
+	$updater = new SellMediaUpdater();
+}
+
+add_action( 'init', 'sell_media_init_updater' );
