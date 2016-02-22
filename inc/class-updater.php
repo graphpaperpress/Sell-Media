@@ -77,6 +77,7 @@ class SellMediaUpdater {
 
 		// Store setup data.
 		$this->prefix = 'sell_media_ms';
+		$this->transient_name =  $this->prefix .'-' . $product_id . '_license_cache';
 		$this->home = 'https://graphpaperpress.com';
 		$this->api_endpoint = $this->home . '/api/license-manager/v1/';
 		$this->product_id = $product_id;
@@ -339,9 +340,11 @@ class SellMediaUpdater {
 	private function delete_transients() {
 		if ( is_multisite() ) {
 			delete_site_transient( $this->prefix . '_license_cache' );
+			delete_site_transient( $this->transient_name );
 			delete_site_transient( 'update_plugins' );
 		} else {
 			delete_transient( $this->prefix . '_license_cache' );
+			delete_transient( $this->transient_name );
 			delete_transient( 'update_plugins' );
 		}
 	}
@@ -351,6 +354,9 @@ class SellMediaUpdater {
 	 * @return void
 	 */
 	function register_settings() {
+		$setting_fields = sell_media_get_plugin_option_parameters();
+		if( isset($setting_fields['sell_media_ms_license_email']))
+			return;
 
 		// Updater Tab.
 		$updater_settings_tab = array(
@@ -490,10 +496,9 @@ class SellMediaUpdater {
 	 */
 	public function get_license_info() {
 
-		$transient = $this->prefix . '_license_cache';
 		if ( is_network_admin() ) {
 			// Get from transient cache.
-			if ( ( $info = get_site_transient( $transient ) ) === false ) {
+			if ( ( $info = get_site_transient( $this->transient_name ) ) === false ) {
 				$license = $this->get_license_key();
 
 				if ( ! $license ) {
@@ -509,12 +514,12 @@ class SellMediaUpdater {
 					)
 				);
 
-				set_site_transient( $transient, $info, 3600 );
+				set_site_transient( $this->transient_name, $info, 3600 );
 			}
 		} else {
 
 			// Get from transient cache.
-			if ( ( $info = get_transient( $transient ) ) === false ) {
+			if ( ( $info = get_transient( $this->transient_name ) ) === false ) {
 				$license = $this->get_license_key();
 
 				if ( ! $license ) {
@@ -530,7 +535,7 @@ class SellMediaUpdater {
 					)
 				);
 
-				set_transient( $transient, $info, 3600 );
+				set_transient( $this->transient_name, $info, 3600 );
 			}
 		}
 
