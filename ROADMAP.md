@@ -1,31 +1,5 @@
 ## Sell Media Roadmap
 
-**Feb 2016**
+The roadmap for Sell Media can be found on [this public board at Trello](https://trello.com/b/3p0uPSnB/sell-media-roadmap). Feel free to vote for your favorite features. If you have a feature request that you'd like us to consider adding to our roadmap, please submit it to [the issue tracker here at GitHub](https://github.com/graphpaperpress/Sell-Media/issues).
 
-* Lightbox gallery
-* New cart class using sessions + db
-* Improve gallery layout
-* Use core term meta for price groups
-* Simplify activation w/ automatic page generation
-* Search improvements
-* New text filters
-* Stability bug fixes
-
-**March 2016**
-
-* Mobile-first checkout experience
-* Add guest checkout options
-* Email receipt improvements
-
-**April 2016**
-
-* Price groups UI
-* Print vendors (extension)
-
-**Planned**
-* Lightroom export (lightroom plugin)
-* Volume discounts (extension)
-
-**Ideas**
-
-If you have a feature request that you'd like us to consider adding to our roadmap, please email us at support@graphpaperpress.com.
+Thank you!
