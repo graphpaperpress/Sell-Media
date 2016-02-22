@@ -438,7 +438,7 @@ class SellMediaUpdater {
 					$transient->response[ $plugin_slug ] = (object) array(
 						'new_version' => $info->version,
 						'package'     => $info->package_url,
-						'slug'        => $this->product_id,
+						'slug'        => $this->plugins['product_id'],
 					);
 				}			
 			}
@@ -754,7 +754,7 @@ class SellMediaUpdater {
 }
 
 /**
- * Init Updater
+ * Init Updater.
  */
 function sell_media_init_updater(){
 	$updater = new SellMediaUpdater();
