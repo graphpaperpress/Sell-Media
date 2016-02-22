@@ -438,7 +438,7 @@ class SellMediaUpdater {
 					$transient->response[ $plugin_slug ] = (object) array(
 						'new_version' => $info->version,
 						'package'     => $info->package_url,
-						'slug'        => $this->plugins['product_id'],
+						'slug'        => $plugin['product_id'],
 					);
 				}			
 			}
