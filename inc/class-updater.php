@@ -459,7 +459,21 @@ class SellMediaUpdater {
 			return false;
 		}
 
-		if ( version_compare( $license_info->{$plugin['product_id']}->version, $this->get_local_version( $plugin ), '>' ) ) {
+		$transient_name = 'gpp_development_versions';
+		$endpoint = 'http://demo.graphpaperpress.com/wp-content/plugins/gpp-deployment/products.json';
+
+		if( is_multisite() && FALSE === ( $versions = get_site_transient( $transient_name ) ) ){
+			$versions = $this->call_api( '', array(), $endpoint );
+			set_site_transient( $transient_name, $versions, 3600 );
+		}
+		else if( FALSE === ( $versions = get_transient( $transient_name ) ) ){
+			$versions = $this->call_api( '', array(), $endpoint );
+			set_transient( $transient_name, $versions, 3600 );
+		}
+
+		$plugin_basename = plugin_basename( $plugin['plugin_file'] );
+		if ( version_compare( $versions[$plugin_basename], $this->get_local_version( $plugin ), '>' ) ) {
+			$license_info->{$plugin['product_id']}->version = $versions[$plugin_basename];
 			return $license_info->{$plugin['product_id']};
 		}
 
@@ -489,7 +503,7 @@ class SellMediaUpdater {
 						$info = $this->call_api(
 							'info',
 							array(
-								'p' => plugin_basename( $plugin['plugin_file'] ),
+								'p' => $plugin['product_id'] ,
 								'e' => $license['email'],
 								'l' => $license['key'],
 							)
@@ -516,7 +530,7 @@ class SellMediaUpdater {
 						$info = $this->call_api(
 							'info',
 							array(
-								'p' => plugin_basename( $plugin['plugin_file'] ),
+								'p' => $plugin['product_id'],
 								'e' => $license['email'],
 								'l' => $license['key'],
 							)
@@ -685,8 +699,12 @@ class SellMediaUpdater {
 	 *
 	 * @return          array   The API response.
 	 */
-	private function call_api( $action, $params ) {
+	private function call_api( $action, $params, $endpoint = FALSE ) {
 		$url = $this->api_endpoint . $action;
+
+		if( false !== $endpoint ){
+			$url = $endpoint . $action;
+		}
 
 		// Append parameters for GET request.
 		$url .= '?' . http_build_query( $params );
@@ -698,7 +716,13 @@ class SellMediaUpdater {
 		}
 
 		$response_body = wp_remote_retrieve_body( $response );
-		$result = json_decode( $response_body );
+
+		if( is_serialized( $response_body ) ){
+			$result = unserialize( $response_body );
+		}
+		else{
+			$result = json_decode( $response_body );
+		}
 
 		return $result;
 	}
