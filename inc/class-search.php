@@ -179,20 +179,6 @@ Class SellMediaSearch {
 			if ( ! empty( $searchSlug ) )
 				$search = " OR ({$searchSlug}) ";
 
-			// Building search query for categories description.
-			$searchand = '';
-			$searchDesc = '';
-			foreach ( $search_terms as $term ) {
-				$term = addslashes_gpc( $term );
-				$searchDesc .= "{$searchand}(ttax.description LIKE '{$n}{$term}{$n}')";
-				$searchand = ' AND ';
-			}
-			$sentence_term = esc_sql( $s );
-			if ( count( $search_terms ) > 1 && $search_terms[0] != $sentence_term ) {
-				$searchDesc = "($searchDesc) OR (ttax.description LIKE '{$n}{$sentence_term}{$n}')";
-			}
-			if ( ! empty( $searchDesc ) )
-				$search = $search." OR ({$searchDesc}) ";
 		}
 		return $search;
 	}
