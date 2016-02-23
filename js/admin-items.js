@@ -82,16 +82,14 @@ jQuery( document ).ready(function( $ ){
     /**
      * Remove from file list
      */
-    $('.sell-media-delete').on('click', function( event ){
-        event.preventDefault();
-
+    $(document).on('click', '.sell-media-delete', function( event ){
         // Remove the file
         var id = $(this).data('id');
         $('.sell-media-attachment[data-post_id="' + id +'"]').remove();
 
         // Update the file list hidden field
         update_files();
-
+        return false;
     });
 
     /**
