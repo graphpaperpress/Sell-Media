@@ -228,7 +228,7 @@ function sell_media_gallery_navigation( $post_id ) {
  */
 function sell_media_content_loop( $post_id, $i ){
 	$class = ( $i %3 == 0 ) ? ' end' : '';
-	if( !sell_media_has_multiple_attachments( $post_id ) )
+	if ( ! sell_media_has_multiple_attachments( $post_id ) )
 		$class .= ' sell-media-grid-single-item';
 
 	$html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid-item' . $class . '">';
@@ -238,7 +238,7 @@ function sell_media_content_loop( $post_id, $i ){
 		$attachment_id = sell_media_get_attachment_id( $post_id );
 		$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
 	}
-	else{
+	else {
 		$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
 	}
 	$html .= '</a>';
