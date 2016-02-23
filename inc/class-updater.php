@@ -511,6 +511,9 @@ class SellMediaUpdater {
 		}
 
 		$plugin_basename = plugin_basename( $plugin['plugin_file'] );
+		if( !isset( $versions[$plugin_basename] ) )
+			return false;
+		
 		if ( version_compare( $versions[$plugin_basename], $this->get_local_version( $plugin ), '>' ) ) {
 			$license_info->{$plugin['product_id']}->version = $versions[$plugin_basename];
 			return $license_info->{$plugin['product_id']};
