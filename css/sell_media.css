@@ -390,7 +390,9 @@ input[type="submit"].sell-media-button,
     display: block;
     margin: 0 auto; }
   .sell-media-grid a .sell-media-quick-view,
-  .sell-media-grid-item a .sell-media-quick-view {
+  .sell-media-grid a .sell-media-view-gallery,
+  .sell-media-grid-item a .sell-media-quick-view,
+  .sell-media-grid-item a .sell-media-view-gallery {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12px;
     letter-spacing: 1px;
@@ -412,13 +414,17 @@ input[type="submit"].sell-media-button,
     transition: all 0.1s ease;
     z-index: 1; }
     .sell-media-grid a .sell-media-quick-view:hover,
-    .sell-media-grid-item a .sell-media-quick-view:hover {
+    .sell-media-grid a .sell-media-view-gallery:hover,
+    .sell-media-grid-item a .sell-media-quick-view:hover,
+    .sell-media-grid-item a .sell-media-view-gallery:hover {
       background: #000; }
   .sell-media-grid a:hover img,
   .sell-media-grid-item a:hover img {
     opacity: 1; }
   .sell-media-grid a:hover .sell-media-quick-view,
-  .sell-media-grid-item a:hover .sell-media-quick-view {
+  .sell-media-grid a:hover .sell-media-view-gallery,
+  .sell-media-grid-item a:hover .sell-media-quick-view,
+  .sell-media-grid-item a:hover .sell-media-view-gallery {
     margin-bottom: 0; }
 
 /*= Overlays

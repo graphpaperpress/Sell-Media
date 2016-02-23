@@ -514,7 +514,8 @@ input[type="submit"].sell-media-button,
 			margin: 0 auto;
 		}
 
-		.sell-media-quick-view {
+		.sell-media-quick-view, 
+		.sell-media-view-gallery {
 			font-family: $font-sans-serif;
 			font-size: $font-size * .75;
 			letter-spacing: 1px;
@@ -547,7 +548,8 @@ input[type="submit"].sell-media-button,
 				opacity: 1;
 			}
 
-			.sell-media-quick-view {
+			.sell-media-quick-view,
+			.sell-media-view-gallery {
 				margin-bottom: 0;
 			}
 
