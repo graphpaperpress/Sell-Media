@@ -489,13 +489,13 @@ class SellMediaUpdater {
 						$info = $this->call_api(
 							'info',
 							array(
-								'p' => $plugin['product_id'],
+								'p' => plugin_basename( $plugin['plugin_file'] ),
 								'e' => $license['email'],
 								'l' => $license['key'],
 							)
 						);
 						if( !empty( $info ) && isset( $info->name ) ){
-							$information->{$info->name} =  $info;
+							$information->{$plugin['product_id']} =  $info;
 						}
 						set_site_transient( $transient_name, $information, 3600 );
 					}
@@ -516,13 +516,13 @@ class SellMediaUpdater {
 						$info = $this->call_api(
 							'info',
 							array(
-								'p' => $plugin['product_id'],
+								'p' => plugin_basename( $plugin['plugin_file'] ),
 								'e' => $license['email'],
 								'l' => $license['key'],
 							)
 						);
 						if( !empty( $info ) && isset( $info->name ) ){
-							$information->{$info->name} =  $info;
+							$information->{$plugin['product_id']} =  $info;
 						}
 						set_transient( $transient_name, $information, 3600 );
 					}
@@ -556,7 +556,7 @@ class SellMediaUpdater {
 				$info = $plugins_info->{$args->slug};
 
 				$res = (object) array(
-					'name'          => isset( $info->name ) ? $info->name : '',
+					'name'          => isset( $info->slug ) ? $info->slug : '',
 					'version'       => $info->version,
 					'slug'          => $args->slug,
 					'download_link' => $info->package_url,
