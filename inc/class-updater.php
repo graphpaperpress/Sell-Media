@@ -54,6 +54,7 @@ class SellMediaUpdater {
 		$this->api_endpoint = $this->home . '/api/license-manager/v1/';
 
 		if ( is_network_admin() ) {
+
 			// Add the menu screen for inserting license information.
 			add_action( 'network_admin_menu', array( $this, 'ms_settings_page' ) );
 
@@ -98,6 +99,29 @@ class SellMediaUpdater {
 		}
 	}
 
+	/**
+	 * Get extensions
+	 *
+	 * If users have old extensions, but a new version of Sell Media
+	 * the updater won't show since old extensions didn't filter
+	 * sell_media_updater_register(). This method applies backwards
+	 * compatibility by loosely checking installed plugins,
+	 * checking if we are the author, and then adding their names
+	 * to the array of plugins.
+	 * 
+	 * @return array
+	 */
+	public function get_sm_plugins() {
+		$plugins = array();
+		foreach( get_plugins() as $key => $value ) {
+	        if ( $value['Author'] == 'Graph Paper Press' ) {
+	            $plugin = sanitize_title_with_dashes( $value['Name'] );
+	        	$plugins[] = $plugin;
+	        }
+	    }
+	    return $plugins;
+	}
+
 	//
 	// NETWORK SETTING METHODS START.
 	//
@@ -105,7 +129,7 @@ class SellMediaUpdater {
 	 * Creates the network settings items for entering license information (email + license key).
 	 */
 	public function ms_settings_page() {
-		if( empty( $this->plugins ) )
+		if ( empty( $this->plugins ) )
 			return;
 
 		$title = __( 'Sell Media License', 'sell_media' );
