@@ -47,7 +47,7 @@ class SellMediaUpdater {
 	 */
 	public function __construct() {
 		// Store setup data.
-		$this->plugins = apply_filters( 'sell_media_updater_register', array() );
+		$this->plugins = apply_filters( 'sell_media_updater_register', $this->get_sm_plugins() );
 		$this->prefix = 'sell_media_ms';
 		$this->transient_name =  $this->prefix . '_license_cache';
 		$this->home = 'https://graphpaperpress.com';
@@ -113,12 +113,27 @@ class SellMediaUpdater {
 	 */
 	public function get_sm_plugins() {
 		$plugins = array();
-		foreach( get_plugins() as $key => $value ) {
-	        if ( $value['Author'] == 'Graph Paper Press' ) {
-	            $plugin = sanitize_title_with_dashes( $value['Name'] );
-	        	$plugins[] = $plugin;
-	        }
-	    }
+
+		// If function do not exit then include plugin.php.
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$installed_plugins = get_plugins();
+		if( !empty( $installed_plugins ) ){
+			foreach( $installed_plugins as $key => $value ) {
+				$search_prefix = preg_match('/^sell-media-/im', $key);
+		        if ( $value['Author'] == 'Graph Paper Press' && FALSE != $search_prefix ) {
+		            $plugin_basename = dirname( $key );
+		        	$plugins[$plugin_basename]['product_id'] = $plugin_basename;
+		        	$plugins[$plugin_basename]['product_name'] = $value['Name'];
+		        	$plugins[$plugin_basename]['text_domain'] = $value['TextDomain'];
+		        	$plugins[$plugin_basename]['plugin_file'] = $key;
+		        	$plugins[$plugin_basename]['version'] = $value['Version'];
+
+		        }
+		    }			
+		}
 	    return $plugins;
 	}
 
@@ -650,10 +665,7 @@ class SellMediaUpdater {
 	 * @return string   The plugin version of the local installation.
 	 */
 	private function get_local_version( $plugin ) {
-
-		$plugin_data = get_plugin_data( $plugin['plugin_file'], false );
-
-		return $plugin_data['Version'];
+		return $plugin['version'];
 	}
 
 	/**
