@@ -4,8 +4,8 @@ Contributors: endortrails
 Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
-Tested up to: 4.3
-Stable tag: 2.1.1
+Tested up to: 4.4
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -211,6 +211,15 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.1.2 =
+* New Feature: Automatic updates for extensions.
+* Tweak: Multisite custom taxonomy support.
+* Tweak: Don't search term descriptions.
+* Tweak: Show "View Gallery" text.
+* Tweak: Use core WP term meta.
+* Tweak: Migrate custom taxonomy meta tables into core term meta tables.
+* Fix: Notices on thanks page, updater.
 
 = 2.1.1 =
 * Tweak: Multisite support

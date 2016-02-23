@@ -120,7 +120,7 @@ class SellMediaUpdater {
 		}
 
 		$installed_plugins = get_plugins();
-		if( !empty( $installed_plugins ) ){
+		if ( ! empty( $installed_plugins ) ) {
 			foreach( $installed_plugins as $key => $value ) {
 				$search_prefix = preg_match('/^sell-media-/im', $key);
 		        if ( $value['Author'] == 'Graph Paper Press' && FALSE != $search_prefix ) {
@@ -361,11 +361,11 @@ class SellMediaUpdater {
 	 * @return void
 	 */
 	function register_settings() {
-		if( empty( $this->plugins ) )
+		if ( empty( $this->plugins ) )
 			return;
 
 		$setting_fields = sell_media_get_plugin_option_parameters();
-		if( isset($setting_fields['sell_media_ms_license_email']))
+		if ( isset( $setting_fields['sell_media_ms_license_email'] ) )
 			return;
 
 		// Updater Tab.
@@ -418,7 +418,7 @@ class SellMediaUpdater {
 	 * If the license has not been configured properly, display an admin notice.
 	 */
 	public function show_admin_notices() {
-		if( empty( $this->plugins ) )
+		if ( empty( $this->plugins ) )
 			return;
 
 		$options = $this->get_license_key();
@@ -467,7 +467,7 @@ class SellMediaUpdater {
 		if ( empty( $transient->checked ) ) {
 			return $transient;
 		}
-		if( !empty( $this->plugins ) ){
+		if ( ! empty( $this->plugins ) ) {
 			foreach ($this->plugins as $key => $plugin) {
 				$info = $this->is_update_available( $plugin );
 				if ( false !== $info ) {
@@ -501,17 +501,17 @@ class SellMediaUpdater {
 		$transient_name = 'gpp_development_versions';
 		$endpoint = 'http://demo.graphpaperpress.com/wp-content/plugins/gpp-deployment/products.json';
 
-		if( is_multisite() && FALSE === ( $versions = get_site_transient( $transient_name ) ) ){
+		if ( is_multisite() && FALSE === ( $versions = get_site_transient( $transient_name ) ) ) {
 			$versions = $this->call_api( '', array(), $endpoint );
 			set_site_transient( $transient_name, $versions, 3600 );
 		}
-		else if( FALSE === ( $versions = get_transient( $transient_name ) ) ){
+		else if ( FALSE === ( $versions = get_transient( $transient_name ) ) ) {
 			$versions = $this->call_api( '', array(), $endpoint );
 			set_transient( $transient_name, $versions, 3600 );
 		}
 
 		$plugin_basename = plugin_basename( $plugin['plugin_file'] );
-		if( !isset( $versions[$plugin_basename] ) )
+		if ( ! isset( $versions[$plugin_basename] ) )
 			return false;
 
 		if ( version_compare( $versions[$plugin_basename], $this->get_local_version( $plugin ), '>' ) ) {
@@ -530,7 +530,7 @@ class SellMediaUpdater {
 	public function get_license_info() {
 		$transient_name = $this->prefix . '_license_cache';
 		$information = new stdClass();
-		if( !empty( $this->plugins ) ){
+		if ( ! empty( $this->plugins ) ) {
 			foreach ($this->plugins as $key => $plugin) {
 				if ( is_network_admin() ) {
 					// Get from transient cache.
@@ -550,12 +550,12 @@ class SellMediaUpdater {
 								'l' => $license['key'],
 							)
 						);
-						if( !empty( $info ) && isset( $info->name ) ){
+						if ( ! empty( $info ) && isset( $info->name ) ) {
 							$information->{$plugin['product_id']} =  $info;
 						}
 						set_site_transient( $transient_name, $information, 3600 );
 					}
-					else{
+					else {
 						$information = $_information;
 					}
 				} else {
@@ -577,12 +577,12 @@ class SellMediaUpdater {
 								'l' => $license['key'],
 							)
 						);
-						if( !empty( $info ) && isset( $info->name ) ){
+						if ( !empty( $info ) && isset( $info->name ) ) {
 							$information->{$plugin['product_id']} =  $info;
 						}
 						set_transient( $transient_name, $information, 3600 );
 					}
-					else{
+					else {
 						$information = $_information;
 					}
 				}
@@ -668,7 +668,7 @@ class SellMediaUpdater {
 	 * @return string   The plugin version of the local installation.
 	 */
 	private function get_local_version( $plugin ) {
-		if( isset( $plugin['version'] ) )
+		if ( isset( $plugin['version'] ) )
 			return $plugin['version'];
 
 		return false;
@@ -744,7 +744,7 @@ class SellMediaUpdater {
 	private function call_api( $action, $params, $endpoint = FALSE ) {
 		$url = $this->api_endpoint . $action;
 
-		if( false !== $endpoint ){
+		if ( false !== $endpoint ) {
 			$url = $endpoint . $action;
 		}
 
@@ -759,10 +759,10 @@ class SellMediaUpdater {
 
 		$response_body = wp_remote_retrieve_body( $response );
 
-		if( is_serialized( $response_body ) ){
+		if ( is_serialized( $response_body ) ){
 			$result = unserialize( $response_body );
 		}
-		else{
+		else {
 			$result = json_decode( $response_body );
 		}
 
