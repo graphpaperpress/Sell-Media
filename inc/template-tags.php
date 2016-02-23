@@ -238,6 +238,9 @@ function sell_media_content_loop( $post_id, $i ){
 		$attachment_id = sell_media_get_attachment_id( $post_id );
 		$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
 	}
+	else{
+		$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
+	}
 	$html .= '</a>';
 	$html .= '</div>';
 
