@@ -411,7 +411,6 @@ input[type="submit"].sell-media-button,
 .sell-media-item {
   box-shadow: none !important;
   position: relative;
-  overflow: hidden;
   display: block;
   font-weight: normal;
   margin-bottom: 32px; }
@@ -431,7 +430,6 @@ input[type="submit"].sell-media-button,
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: -42px;
     color: #fff;
     background: rgba(0, 0, 0, 0.5);
     line-height: 1;
@@ -440,8 +438,9 @@ input[type="submit"].sell-media-button,
     padding: 10px 0;
     width: 100%;
     display: table;
-    transition: all 0.1s ease;
-    z-index: 1; }
+    transition: all 0.5s ease;
+    z-index: 1;
+    opacity: 0; }
     .sell-media-item .sell-media-quick-view:hover,
     .sell-media-item .sell-media-view-gallery:hover {
       background: #000; }
@@ -449,7 +448,8 @@ input[type="submit"].sell-media-button,
     opacity: 1; }
   .sell-media-item:hover .sell-media-quick-view,
   .sell-media-item:hover .sell-media-view-gallery {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    opacity: 1; }
 
 /*= Overlays
 -------------------------------------------------------------- */

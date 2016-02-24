@@ -547,7 +547,6 @@ input[type="submit"].sell-media-button,
 .sell-media-item {
 	box-shadow: none !important; // box-shadow on images is nasty
 	position: relative;
-	overflow: hidden;
 	display: block;
 	font-weight: normal;
 	margin-bottom: $margin;
@@ -572,7 +571,6 @@ input[type="submit"].sell-media-button,
 		right: 0;
 		margin-left: auto;
 		margin-right: auto;
-		margin-bottom: -42px;
 		color: $white-color;
 		background: $dark-opaque;
 		line-height: 1;
@@ -581,8 +579,9 @@ input[type="submit"].sell-media-button,
 		padding: 10px 0;
 		width: 100%;
 		display: table;
-		transition: all 0.1s ease;
+		transition: all 0.5s ease;
 		z-index: 1;
+		opacity: 0;
 
 		&:hover {
 			background: $black-color;
@@ -598,6 +597,7 @@ input[type="submit"].sell-media-button,
 		.sell-media-quick-view,
 		.sell-media-view-gallery {
 			margin-bottom: 0;
+			opacity: 1;
 		}
 
 	}
