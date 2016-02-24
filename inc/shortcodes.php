@@ -393,7 +393,7 @@ add_shortcode( 'sell_media_price_group', 'sell_media_price_group_shortcode' );
 function sell_media_list_all_collections_shortcode( $atts ) {
 
     extract( shortcode_atts( array(
-        'details' => 'false',
+        'details' => 'true',
         'thumbs' => 'true'
         ), $atts )
     );
