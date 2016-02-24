@@ -540,8 +540,7 @@ input[type="submit"].sell-media-button,
 	position: relative;
 }
 
-.sell-media-grid,
-.sell-media-grid-item {
+.sell-media-grid {
 	@extend .sell-media-three-col;
 }
 
