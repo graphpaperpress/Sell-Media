@@ -238,8 +238,8 @@ function sell_media_init_settings(){
 		"layout" => array(
 			"tab" => "sell_media_general_settings",
 			"name" => "layout",
-			"title" => __("Layout","sell_media"),
-			"description" => __("Select your layout preference for single Sell Media entries. If your theme already has a sidebar, you probably want to select the 'Single column' option.", "sell_media" ),
+			"title" => __("Page Layout","sell_media"),
+			"description" => __("Select your layout preference for single Sell Media entries. If your theme already has a sidebar, you probably want to select the 'One column' option.", "sell_media" ),
 			"section" => "general_plugin_section_1",
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",
@@ -248,12 +248,70 @@ function sell_media_init_settings(){
 			"valid_options" => array(
 				"two_col" => array(
 					"name" => "sell-media-single-two-col",
-					"title" => "Two columns",
+					"title" => __( "Two columns", "sell_media" ),
 				),
 				"one_col" => array(
 					"name" => "sell-media-single-one-col",
-					"title" => "One column",
+					"title" => __( "One column", "sell_media" ),
 				)
+			)
+		),
+		"thumbnail_crop" => array(
+			"tab" => "sell_media_general_settings",
+			"name" => "thumbnail_crop",
+			"title" => __("Thumbnail Crop","sell_media"),
+			"description" => __("Select the crop for thumbnails appearing on archives and galleries.", "sell_media" ),
+			"section" => "general_plugin_section_1",
+			"since" => "2.1.2",
+			"id" => "general_plugin_section_1",
+			"type" => "select",
+			"default" => "medium",
+			"valid_options" => array(
+				"medium" => array(
+					"name" => "medium",
+					"title" => __( "No Crop", "sell_media" ),
+				),
+				"sell_media_square" => array(
+					"name" => "sell_media_square",
+					"title" => __( "Square Crop", "sell_media" ),
+				)
+			)
+		),
+		"thumbnail_layout" => array(
+			"tab" => "sell_media_general_settings",
+			"name" => "thumbnail_layout",
+			"title" => __("Thumbnail Layout","sell_media"),
+			"description" => __("Select the layout preferences for thumbnails appearing on archives and in galleries.", "sell_media" ),
+			"section" => "general_plugin_section_1",
+			"since" => "2.1.2",
+			"id" => "general_plugin_section_1",
+			"type" => "select",
+			"default" => "sell-media-three-col",
+			"valid_options" => array(
+				"sell-media-one-col" => array(
+					"name" => "sell-media-one-col",
+					"title" => __( "One Column", "sell_media" ),
+				),
+				"sell-media-two-col" => array(
+					"name" => "sell-media-two-col",
+					"title" => __( "Two Columns", "sell_media" ),
+				),
+				"sell-media-three-col" => array(
+					"name" => "sell-media-three-col",
+					"title" => __( "Three Columns", "sell_media" ),
+				),
+				"sell-media-four-col" => array(
+					"name" => "sell-media-four-col",
+					"title" => __( "Four Columns", "sell_media" ),
+				),
+				"sell-media-five-col" => array(
+					"name" => "sell-media-five-col",
+					"title" => __( "Five Columns", "sell_media" ),
+				),
+				"sell-media-masonry" => array(
+					"name" => "sell-media-masonry",
+					"title" => __( "Masonry Layout", "sell_media" ),
+				),
 			)
 		),
 		"breadcrumbs" => array(

@@ -43,7 +43,7 @@ $settings = sell_media_get_plugin_options();
 
             <?php do_action( 'sell_media_below_archive_header_content' ); ?>
 
-            <div class="sell-media-grid-item-container">
+            <div class="<?php echo apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ); ?>">
 
             <?php
             // check if this term has child terms, if so, show terms
@@ -80,7 +80,7 @@ $settings = sell_media_get_plugin_options();
 
                         if ( $post_count != 0 ) : $i++; ?>
 
-                            <div class="sell-media-grid-item<?php if ( $i %3 == 0 ) echo ' end'; ?>">
+                            <div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' ); ?>">
                                 <div class="sell-media-item-wrap sell-media-collection">
                                     <a href="<?php echo get_term_link( $child ); ?>" class="collection">
 

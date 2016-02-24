@@ -69,6 +69,17 @@ a:focus {
 	}
 }
 
+.sell-media-five-col {
+	margin: 0 2% 2% 0;
+	width: 18%;
+	&:nth-child(5n) {
+		margin-right: 0;
+	}
+	&:nth-child(5n+1) {
+		clear: left;
+	}
+}
+
 .sell-media-main-col {
 	clear: left;
 	margin-right: 5%; // Legacy themes have conflicting margins. Let's make theme consistent.
@@ -82,6 +93,7 @@ a:focus {
 .sell-media-two-col,
 .sell-media-three-col,
 .sell-media-four-col,
+.sell-media-five-col,
 .sell-media-main-col,
 .sell-media-side-col {
 	float: left;
@@ -92,6 +104,35 @@ a:focus {
 		margin: 0 0 $margin;
 		width: 100%;
 	}
+}
+
+.sell-media-grid-item-masonry-container {
+	overflow: hidden;
+	-webkit-column-count: 3;
+	-moz-column-count: 3;
+	column-count: 3;
+
+	@media only screen and (max-width: 767px) {
+		-webkit-column-count: auto;
+		-moz-column-count: auto;
+		column-count: auto;
+	}
+}
+
+.sell-media-masonry {
+	max-height: 100%;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 20px;
+
+    @media only screen and (max-width: 767px) {
+    	width: auto;
+    	height: auto;
+    	margin: 0 auto $margin;
+    	display: block;
+    	text-align: center;
+    }
+
 }
 
 /*= Checkout Page
@@ -502,58 +543,64 @@ input[type="submit"].sell-media-button,
 .sell-media-grid,
 .sell-media-grid-item {
 	@extend .sell-media-three-col;
+}
 
-	a {
-		position: relative;
-		overflow: hidden;
+.sell-media-item {
+	box-shadow: none !important; // box-shadow on images is nasty
+	position: relative;
+	overflow: hidden;
+	display: block;
+	font-weight: normal;
+	margin-bottom: $margin;
+
+	.sell-media-masonry & {
+		margin-bottom: 0;
+	}
+
+	img {
 		display: block;
-		font-weight: normal;
+		margin: 0 auto;
+	}
 
-		img {
-			display: block;
-			margin: 0 auto;
-		}
-
-		.sell-media-quick-view, 
-		.sell-media-view-gallery {
-			font-family: $font-sans-serif;
-			font-size: $font-size * .75;
-			letter-spacing: 1px;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			margin-left: auto;
-			margin-right: auto;
-			margin-bottom: -42px;
-			color: $white-color;
-			background: $dark-opaque;
-			line-height: 1;
-			text-align: center;
-			text-transform: uppercase;
-			padding: 10px 0;
-			width: 100%;
-			display: table;
-			transition: all 0.1s ease;
-			z-index: 1;
-
-			&:hover {
-				background: $black-color;
-			}
-		}
+	.sell-media-quick-view, 
+	.sell-media-view-gallery {
+		font-family: $font-sans-serif;
+		font-size: $font-size * .75;
+		letter-spacing: 1px;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: -42px;
+		color: $white-color;
+		background: $dark-opaque;
+		line-height: 1;
+		text-align: center;
+		text-transform: uppercase;
+		padding: 10px 0;
+		width: 100%;
+		display: table;
+		transition: all 0.1s ease;
+		z-index: 1;
 
 		&:hover {
-
-			img {
-				opacity: 1;
-			}
-
-			.sell-media-quick-view,
-			.sell-media-view-gallery {
-				margin-bottom: 0;
-			}
-
+			background: $black-color;
 		}
+	}
+
+	&:hover {
+
+		img {
+			opacity: 1;
+		}
+
+		.sell-media-quick-view,
+		.sell-media-view-gallery {
+			margin-bottom: 0;
+		}
+
 	}
 }
 
@@ -841,10 +888,10 @@ input[type="submit"].sell-media-button,
 				}
 
 				span {
-			    	font-size: 35px;
+					font-size: 35px;
 					height: 40px;
 					width: 40px;
-			    }
+				}
 			}
 
 			.sell-media-dialog-box-prev {
@@ -1328,8 +1375,8 @@ input.sell-media-search-text[type=text] {
 	.theme-rowling &,
 	.theme-hitchcock &,
 	.theme-iwata & {
-    	width: 90%;
-    	margin: 50px auto;
+		width: 90%;
+		margin: 50px auto;
 	}
 
 	.theme-twenty-fourteen & {
@@ -1342,7 +1389,7 @@ input.sell-media-search-text[type=text] {
 
 	.theme-garfunkel & {
 		z-index: 100;
-    	position: relative;
+		position: relative;
 	}
 }
 

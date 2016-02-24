@@ -155,7 +155,7 @@ function sell_media_all_items_shortcode( $atts ){
     if ( $wp_query->have_posts() ) :
 
         $html = '<div class="sell-media">';
-        $html .= '<div class="sell-media-grid-item-container">';
+        $html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 
         while ( $wp_query->have_posts() ) : $wp_query->the_post(); $i++;
             $html .= apply_filters( 'sell_media_content_loop', get_the_id(), $i );
@@ -436,7 +436,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
         $html = null;
         $html .= '<div class="sell-media-collections-shortcode sell-media">';
-        $html .= '<div class="sell-media-grid-item-container">';
+        $html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 
         $taxonomy = 'collection';
         $term_ids = array();
@@ -477,7 +477,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
             if ( $post_count != 0 ) :
 
-                $html .= '<div class="sell-media-grid-item third">';
+                $html .= '<div class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' ) . '">';
                 $html .= '<div class="sell-media-item-wrap sell-media-collection">';
                     $args = array(
                             'posts_per_page' => 1,

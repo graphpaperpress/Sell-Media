@@ -36,7 +36,7 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
  * @return (string) url to product image or feature image
  */
 function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
-	$size = 'medium';
+	$size = apply_filters( 'sell_media_thumbnail', 'medium' );
 
 	/**
 	 * The $attachment_id might be empty if product doesn't have a featured image
@@ -177,14 +177,16 @@ function sell_media_gallery( $post_id ) {
 		 */
 		else {
 			$attachment_ids = sell_media_get_attachments ( $post_id );
-			$html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery">';
+			$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
+			$html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery '. $container_class .'">';
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 				$attr = array(
 					'class' => 'sell-media-image sell_media_image sell_media_watermark'
 				);
-				$html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid-item sell-media-grid-single-item">';
-				$html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '">';
-				$html .= wp_get_attachment_image( $attachment_id, 'medium', '', $attr );
+				$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' );
+				$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item">';
+				$html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '" class="sell-media-item">';
+				$html .= wp_get_attachment_image( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), '', $attr );
 				$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ) ) . '</div>';
 				$html .= '</a>';
 				$html .= '</div>';
@@ -227,11 +229,11 @@ function sell_media_gallery_navigation( $post_id ) {
  * @return string html
  */
 function sell_media_content_loop( $post_id, $i ){
-	$class = ( $i %3 == 0 ) ? ' end' : '';
+	$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' );
 	if ( ! sell_media_has_multiple_attachments( $post_id ) )
 		$class .= ' sell-media-grid-single-item';
 
-	$html  = '<div id="sell-media-' . $post_id . '" class="sell-media-grid-item' . $class . '">';
+	$html  = '<div id="sell-media-' . $post_id . '" class="' . $class . '">';
 	$html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 	$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 	if ( ! sell_media_has_multiple_attachments( $post_id ) ) {

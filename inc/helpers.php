@@ -244,27 +244,27 @@ function sell_media_build_options( $taxonomy = null ) {
 	}
 
 	?>
-    <?php if ( $terms ) : ?>
-        <?php do_action( 'sell_media_build_options_before' ); ?>
-        <?php foreach ( $terms as $term ) : ?>
-            <?php $price = str_replace( '%', '', get_term_meta( $term->term_id, 'markup', true ) ); ?>
-            <option
-                value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
-                class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
-                data-value="<?php echo $term->slug; ?>"
-                data-taxonomy="<?php echo $taxonomy; ?>"
-                data-name="<?php echo $term->name; ?>"
-                data-price="<?php echo $price; ?>"
-                id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
-                title="<?php echo $term->description; ?>"
-                name="<?php echo $taxonomy; ?>"
-                >
-            <?php echo $term->name; ?>
-        </option>
-        <?php endforeach; ?>
-        </optgroup>
-        <?php do_action( 'sell_media_build_options_after' ); ?>
-    <?php endif; ?>
+	<?php if ( $terms ) : ?>
+		<?php do_action( 'sell_media_build_options_before' ); ?>
+		<?php foreach ( $terms as $term ) : ?>
+			<?php $price = str_replace( '%', '', get_term_meta( $term->term_id, 'markup', true ) ); ?>
+			<option
+				value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
+				class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
+				data-value="<?php echo $term->slug; ?>"
+				data-taxonomy="<?php echo $taxonomy; ?>"
+				data-name="<?php echo $term->name; ?>"
+				data-price="<?php echo $price; ?>"
+				id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
+				title="<?php echo $term->description; ?>"
+				name="<?php echo $taxonomy; ?>"
+				>
+			<?php echo $term->name; ?>
+		</option>
+		<?php endforeach; ?>
+		</optgroup>
+		<?php do_action( 'sell_media_build_options_after' ); ?>
+	<?php endif; ?>
 <?php }
 
 
@@ -310,25 +310,25 @@ function sell_media_build_input( $taxonomy = null ) {
 	}
 
 	?>
-    <?php if ( $terms ) : ?>
-        <?php do_action( 'sell_media_build_input_before' ); ?>
-        <?php foreach ( $terms as $term ) : ?>
-            <?php $price = get_term_meta( $term->term_id, 'markup', true ); ?>
-            <input
-                value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
-                class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
-                data-value="<?php echo $term->slug; ?>"
-                data-taxonomy="<?php echo $taxonomy; ?>"
-                data-name="<?php echo $term->name; ?>"
-                data-price="<?php echo $price; ?>"
-                id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
-                name="<?php echo $taxonomy; ?>"
-                type="<?php echo $type; ?>"
-                />
-            <?php echo $term->name; ?> <?php if ( $price ) : ?>+<?php echo $price; ?>%<?php endif; ?><br />
-        <?php endforeach; ?>
-        <?php do_action( 'sell_media_build_input_after' ); ?>
-    <?php endif; ?>
+	<?php if ( $terms ) : ?>
+		<?php do_action( 'sell_media_build_input_before' ); ?>
+		<?php foreach ( $terms as $term ) : ?>
+			<?php $price = get_term_meta( $term->term_id, 'markup', true ); ?>
+			<input
+				value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
+				class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
+				data-value="<?php echo $term->slug; ?>"
+				data-taxonomy="<?php echo $taxonomy; ?>"
+				data-name="<?php echo $term->name; ?>"
+				data-price="<?php echo $price; ?>"
+				id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
+				name="<?php echo $taxonomy; ?>"
+				type="<?php echo $type; ?>"
+				/>
+			<?php echo $term->name; ?> <?php if ( $price ) : ?>+<?php echo $price; ?>%<?php endif; ?><br />
+		<?php endforeach; ?>
+		<?php do_action( 'sell_media_build_input_after' ); ?>
+	<?php endif; ?>
 <?php }
 
 
@@ -748,12 +748,12 @@ function sell_media_build_select( $items = array(), $args = array() ) {
 	if ( empty( $current ) ) {
 		$current = null; }
 	?>
-    <select id="<?php print $name; ?>" class="sell_media_form_control" name="<?php print $name; ?>" <?php print $required; ?>>
-        <option></option>
-        <?php foreach ( $items as $key => $value ) : ?>
-            <option value="<?php print $key; ?>" <?php selected( $key, $current ); ?>><?php print $value; ?></option>
-        <?php endforeach; ?>
-    </select>
+	<select id="<?php print $name; ?>" class="sell_media_form_control" name="<?php print $name; ?>" <?php print $required; ?>>
+		<option></option>
+		<?php foreach ( $items as $key => $value ) : ?>
+			<option value="<?php print $key; ?>" <?php selected( $key, $current ); ?>><?php print $value; ?></option>
+		<?php endforeach; ?>
+	</select>
 <?php }
 
 
@@ -959,6 +959,40 @@ function sell_media_nocache() {
 	}
 }
 add_action( 'init', 'sell_media_nocache', 0 );
+
+function sell_media_grid_item_container_class() {
+	$class = 'sell-media-grid-item-container';
+	$settings = sell_media_get_plugin_options();
+	if ( 'sell-media-masonry' == $settings->thumbnail_layout ) {
+		$class = 'sell-media-grid-item-masonry-container';
+	}
+	return $class;
+}
+add_filter( 'sell_media_grid_item_container_class', 'sell_media_grid_item_container_class', 10, 1 );
+
+
+function sell_media_grid_item_class() {
+	$settings = sell_media_get_plugin_options();
+	if ( $settings->thumbnail_layout ) {
+		return $settings->thumbnail_layout;
+	}
+}
+add_filter( 'sell_media_grid_item_class', 'sell_media_grid_item_class', 10, 1 );
+
+/**
+ * Filters the default thumbnail size requested on archives and galleries
+ *
+ * @since 2.1.3
+ * 
+ * @return String           thumbnail size.
+ */
+function sell_media_thumbnail_crop() {
+	$settings = sell_media_get_plugin_options();
+	if ( $settings->thumbnail_crop ) {
+		return $settings->thumbnail_crop;
+	}
+}
+add_filter( 'sell_media_thumbnail', 'sell_media_thumbnail_crop', 10, 1 );
 
 
 /**
