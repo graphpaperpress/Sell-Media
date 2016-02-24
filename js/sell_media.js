@@ -375,7 +375,7 @@ jQuery(document).ready(function($){
 		var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
 
 		if ( emptied ) {
-			$('.sell-media-grid-item-container').remove();
+			$('#sell-media-grid-item-container').remove();
 			$(this).text($(this).data('empty-text'));
 			$(this).removeClass('empty-lightbox');
 			$('.lightbox-counter').text(0);
