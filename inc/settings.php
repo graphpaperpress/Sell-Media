@@ -260,7 +260,7 @@ function sell_media_init_settings(){
 			"tab" => "sell_media_general_settings",
 			"name" => "thumbnail_crop",
 			"title" => __("Thumbnail Crop","sell_media"),
-			"description" => __("Select the crop for thumbnails appearing on archives and galleries.", "sell_media" ),
+			"description" => __("Select the crop for thumbnails appearing on archives and galleries. If you select 'Square Crop,' you might need to use the Regenerate Thumbnails plugin to resize previously uploaded images.", "sell_media" ),
 			"section" => "general_plugin_section_1",
 			"since" => "2.1.2",
 			"id" => "general_plugin_section_1",
