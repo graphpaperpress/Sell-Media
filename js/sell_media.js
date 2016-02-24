@@ -46,6 +46,26 @@ jQuery(document).ready(function($){
 			"template": "cart.php",
 		};
 		var final_data = $.extend( old_data, new_data );
+
+		// Check current item.
+		var current_item = $('.sell-media-grid-single-item.sell-media-active-popup-item');
+		var last_index = parseInt( $('.sell-media-grid-single-item').length ) -1 ;
+		if( $('.sell-media-grid-single-item').index(current_item) == last_index ){
+			console.log('0')
+			$('.sell-media-dialog-box-next').hide();
+			$('.sell-media-dialog-box-prev').show();
+		}
+		else if( $('.sell-media-grid-single-item').index(current_item) === 0 ){
+			console.log('1')
+			$('.sell-media-dialog-box-prev').hide();
+			$('.sell-media-dialog-box-next').show();
+		}
+		else{
+			console.log('2')
+			$('.sell-media-dialog-box-prev').show();
+			$('.sell-media-dialog-box-next').show();
+		}
+
 		// send ajax request for product in shopping cart
 		$.ajax({
 			type: "POST",
