@@ -960,6 +960,14 @@ function sell_media_nocache() {
 }
 add_action( 'init', 'sell_media_nocache', 0 );
 
+/**
+ * Filter the item container class
+ * Needed to create the masonry layout
+ *
+ * @since  2.1.3
+ * 
+ * @return string css class
+ */
 function sell_media_grid_item_container_class() {
 	$class = 'sell-media-grid-item-container';
 	$settings = sell_media_get_plugin_options();
@@ -970,10 +978,17 @@ function sell_media_grid_item_container_class() {
 }
 add_filter( 'sell_media_grid_item_container_class', 'sell_media_grid_item_container_class', 10, 1 );
 
-
+/**
+ * Filter the grid item class
+ * Creates a 1, 2, 3, 4, 5 column or masonry layout
+ *
+ * @since  2.1.3
+ * 
+ * @return string css class
+ */
 function sell_media_grid_item_class() {
 	$settings = sell_media_get_plugin_options();
-	if ( $settings->thumbnail_layout ) {
+	if ( ! empty( $settings->thumbnail_layout ) ) {
 		return $settings->thumbnail_layout;
 	}
 }
@@ -984,7 +999,7 @@ add_filter( 'sell_media_grid_item_class', 'sell_media_grid_item_class', 10, 1 );
  *
  * @since 2.1.3
  * 
- * @return String           thumbnail size.
+ * @return string thumbnail size param
  */
 function sell_media_thumbnail_crop() {
 	$settings = sell_media_get_plugin_options();
