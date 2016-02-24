@@ -30,19 +30,16 @@ a:focus {
 
 .sell-media-three-col, .sell-media-cart-items li .item-image,
 .sell-media-cart-items li .item-details,
-.sell-media-cart-items li .item-qty-total, .sell-media-grid,
-.sell-media-grid-item, .sell-media-widget-item-wrap {
+.sell-media-cart-items li .item-qty-total, .sell-media-grid, .sell-media-widget-item-wrap {
   margin: 0 5% 5% 0;
   width: 30%; }
   .sell-media-three-col:nth-child(3n), .sell-media-cart-items li .item-image:nth-child(3n),
   .sell-media-cart-items li .item-details:nth-child(3n),
-  .sell-media-cart-items li .item-qty-total:nth-child(3n), .sell-media-grid:nth-child(3n),
-  .sell-media-grid-item:nth-child(3n), .sell-media-widget-item-wrap:nth-child(3n) {
+  .sell-media-cart-items li .item-qty-total:nth-child(3n), .sell-media-grid:nth-child(3n), .sell-media-widget-item-wrap:nth-child(3n) {
     margin-right: 0; }
   .sell-media-three-col:nth-child(3n+1), .sell-media-cart-items li .item-image:nth-child(3n+1),
   .sell-media-cart-items li .item-details:nth-child(3n+1),
-  .sell-media-cart-items li .item-qty-total:nth-child(3n+1), .sell-media-grid:nth-child(3n+1),
-  .sell-media-grid-item:nth-child(3n+1), .sell-media-widget-item-wrap:nth-child(3n+1) {
+  .sell-media-cart-items li .item-qty-total:nth-child(3n+1), .sell-media-grid:nth-child(3n+1), .sell-media-widget-item-wrap:nth-child(3n+1) {
     clear: left; }
 
 .sell-media-four-col {
@@ -75,7 +72,6 @@ a:focus {
 .sell-media-cart-items li .item-details,
 .sell-media-cart-items li .item-qty-total,
 .sell-media-grid,
-.sell-media-grid-item,
 .sell-media-widget-item-wrap,
 .sell-media-four-col,
 .sell-media-five-col,
@@ -93,7 +89,6 @@ a:focus {
     .sell-media-cart-items li .item-details,
     .sell-media-cart-items li .item-qty-total,
     .sell-media-grid,
-    .sell-media-grid-item,
     .sell-media-widget-item-wrap,
     .sell-media-four-col,
     .sell-media-five-col,
