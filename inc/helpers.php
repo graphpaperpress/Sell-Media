@@ -986,10 +986,10 @@ add_filter( 'sell_media_grid_item_container_class', 'sell_media_grid_item_contai
  * 
  * @return string css class
  */
-function sell_media_grid_item_class() {
+function sell_media_grid_item_class( $class ) {
 	$settings = sell_media_get_plugin_options();
 	if ( ! empty( $settings->thumbnail_layout ) ) {
-		return $settings->thumbnail_layout;
+		return $class . ' ' . $settings->thumbnail_layout;
 	}
 }
 add_filter( 'sell_media_grid_item_class', 'sell_media_grid_item_class', 10, 1 );
