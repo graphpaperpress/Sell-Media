@@ -328,6 +328,14 @@ function sell_media_plugin_field_text( $value, $attr ) { ?>
 <?php
 }
 
+function sell_media_plugin_field_number( $value, $attr ) { 
+    $min = isset( $attr['min_number'])?$attr['min_number']:"";
+    $max = isset( $attr['max_number'])?$attr['max_number']:"";
+?>
+    <input type="number" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" value="<?php echo esc_attr( $value ); ?>" min="<?php echo $min; ?>" max="<?php echo $max; ?>">
+<?php
+}
+
 function sell_media_plugin_field_password( $value, $attr ) { ?>
     <input type="password" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" value="<?php echo esc_attr( $value ); ?>">
 <?php
