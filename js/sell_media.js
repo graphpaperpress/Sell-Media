@@ -528,6 +528,11 @@ function sm_calculate_shipping(){
 		}
 	});
 
+	// Show print items are on cart.
+	if( total_print_qty > 0 ){
+		jQuery('.sell-media-totals div.shipping').show();
+	}
+
 	// Check if shipping is on total rate.
 	if( 'shippingTotalRate' == sell_media_reprints.reprints_shipping && '' !== sell_media_reprints.reprints_shipping_flat_rate ){
 		var total_shipping = parseFloat( subtotal ) * parseFloat( sell_media_reprints.reprints_shipping_flat_rate );
@@ -559,6 +564,9 @@ function sm_update_cart_totals(){
 		total_shipping = 0,
 		total_qty = 0;
 
+	// Hide Shipping cost.
+	jQuery('.sell-media-totals div.shipping').hide();
+	
 	// Get price of all items.
 	items.each( function(){
 		var price = jQuery(this).attr('data-price');
