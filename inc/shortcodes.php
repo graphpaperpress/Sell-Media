@@ -193,7 +193,7 @@ function sell_media_checkout_shortcode(){
             <?php 
             $cart_index = 0;
             foreach( $cart_items as $key => $item ): ?>
-                <li class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo number_format( $item['price'], 2 ); ?>">
+                <li class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
                     <div class="item-image">
                         <?php if ( ! empty( $item['item_image'] ) ) : ?>
                             <img src="<?php echo esc_url( $item['item_image'] ); ?>">
