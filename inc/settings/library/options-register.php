@@ -262,6 +262,11 @@ function sell_media_plugin_setting_callback( $option ) {
         echo '<span class="option-description">' . $option['description'] . '</span>';
         break;
 
+        //Render Number Input
+        case 'number': sell_media_plugin_field_number( $value, $attr );
+        echo '<span class="option-description">' . $option['description'] . '</span>';
+        break;
+
         //Render Password Input
         case 'password': sell_media_plugin_field_password( $value, $attr );
         echo '<span class="option-description">' . $option['description'] . '</span>';
