@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.4.2
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -211,6 +211,13 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.1.4 =
+* Tweak: Price group UI fix.
+* Fix: Prices over $1,000 on checkout.
+* Fix: If cart only contains downloadables, no shipping.
+* Tweak: Number input case statement.
+* Tweak: Only load css on sell_media_item admin pages.
 
 = 2.1.3 =
 * New Feature: Thumbnail Gallery Layouts
