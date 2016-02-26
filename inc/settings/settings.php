@@ -47,9 +47,9 @@ function sell_media_get_current_plugin_id() {
 * Enqueue CSS and Javascripts
 */
 function sell_media_enqueue_plugin_scripts_styles() {
-    global $post_type;
+    $current_screen = get_current_screen();
 
-    if ( 'sell_media_item' != $post_type ) 
+    if ( 'sell_media_item' != $current_screen->post_type ) 
         return;
 
     wp_enqueue_style( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . 'inc/settings/css/sell-media-framework.css' );

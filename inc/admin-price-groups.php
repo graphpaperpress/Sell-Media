@@ -315,16 +315,20 @@ Class SellMediaNavStyleUI {
             <input type="hidden" value="<?php echo $this->taxonomy; ?>" name="taxonomy" id="smtaxonomy" />
             <div id="menu-management">
 
-                <div class="nav-tabs-nav">
-                    <div class="nav-tabs-wrapper">
-                        <div class="nav-tabs">
-                            <?php foreach( $final['menu'] as $menu ) : ?>
-                                <?php echo $menu['html']; ?>
-                            <?php endforeach; ?>
+                <?php if ( ! empty( $parent_terms ) ) : ?>
+
+                    <div class="nav-tab-nav">
+                        <div class="nav-tab-wrapper">
+                            <div class="nav-tabs">
+                                <?php foreach( $final['menu'] as $menu ) : ?>
+                                    <?php echo $menu['html']; ?>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Nav menu -->
+                    <!-- Nav menu -->
+
+                <?php endif; ?>
 
                 <div class="menu-edit">
 
