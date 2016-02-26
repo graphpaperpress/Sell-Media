@@ -47,8 +47,12 @@ function sell_media_get_current_plugin_id() {
 * Enqueue CSS and Javascripts
 */
 function sell_media_enqueue_plugin_scripts_styles() {
+    global $post_type;
 
-    wp_enqueue_style( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . '/inc/settings/css/sell-media-framework.css' );
+    if ( 'sell_media_item' != $post_type ) 
+        return;
+
+    wp_enqueue_style( 'sell-media-framework', SELL_MEDIA_PLUGIN_URL . 'inc/settings/css/sell-media-framework.css' );
 
 }
 add_action( 'admin_enqueue_scripts', 'sell_media_enqueue_plugin_scripts_styles', 40 );
