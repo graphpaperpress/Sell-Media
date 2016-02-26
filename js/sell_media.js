@@ -1,3 +1,15 @@
+// Number format.
+Number.prototype.formatMoney = function(c, d, t){
+var n = this, 
+    c = isNaN(c = Math.abs(c)) ? 2 : c, 
+    d = d == undefined ? "." : d, 
+    t = t == undefined ? "," : t, 
+    s = n < 0 ? "-" : "", 
+    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", 
+    j = (j = i.length) > 3 ? j % 3 : 0;
+   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+ };
+
 jQuery(document).ready(function($){
 
 	/** 
@@ -560,7 +572,7 @@ function sm_update_cart_totals(){
 	jQuery('.checkout-counter').text( total_qty );
 
 	// Update menu subtotal
-	jQuery('.checkout-price').text( subtotal.toFixed( 2 ) );
+	jQuery('.checkout-price').text( subtotal.formatMoney( 2, '.', ',' ) );
 
 	// Set grand total.
 	var grand_total = subtotal;
@@ -578,16 +590,16 @@ function sm_update_cart_totals(){
 	}
 	
 	// Show subtotal.
-	jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal.toFixed( 2 ) );
+	jQuery( '.sell-media-totals .sell-media-cart-total' ).html( currency_symbol + subtotal.formatMoney( 2, '.', ',' ) );
 
 	// Show tax.
-	jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + tax.toFixed( 2 ) );
+	jQuery( '.sell-media-totals .sell-media-cart-tax' ).html( currency_symbol + tax.formatMoney( 2, '.', ',' ) );
 
 	// Show shipping.
-	jQuery( '.sell-media-totals .sell-media-cart-shipping' ).html( currency_symbol + total_shipping.toFixed( 2 ) );
+	jQuery( '.sell-media-totals .sell-media-cart-shipping' ).html( currency_symbol + total_shipping.formatMoney( 2, '.', ',' ) );
 
 	// Show Grand total.
-	jQuery( '.sell-media-totals .sell-media-cart-grand-total' ).html( currency_symbol + grand_total.toFixed( 2 ) );
+	jQuery( '.sell-media-totals .sell-media-cart-grand-total' ).html( currency_symbol + grand_total.formatMoney( 2, '.', ',' ) );
 
 }
 
@@ -615,7 +627,7 @@ function sm_update_cart_item( el, type ){
 	parent.find( '.item-quantity .count' ).text( updated_qty );
 
 	// Update item total.
-	parent.find( '.item-total' ).html( currency_symbol + updated_price.toFixed( 2 ) );
+	parent.find( '.item-total' ).html( currency_symbol + updated_price.formatMoney( 2, '.', ',' ) );
 
 	// Hide if qty is less than 1.
 	if( updated_qty < 1 ){
