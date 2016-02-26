@@ -110,7 +110,7 @@ function sell_media_plugin_options_validate( $input ) {
                 $valid_input[ $setting ] = ( array_key_exists( $setting, $valid_options ) ? $input[ $setting ] : $valid_input[ $setting ] );
             }
             // Validate text input and textarea fields
-            else if ( ( 'text' == $optiondetails['type'] || 'textarea' == $optiondetails['type'] ) ) {
+            else if ( ( 'text' == $optiondetails['type'] || 'textarea' == $optiondetails['type'] || 'number' == $optiondetails['type'] ) ) {
                 // Validate no-HTML content
                 if ( 'nohtml' == $optiondetails['sanitize'] ) {
                     // Pass input data through the wp_filter_nohtml_kses filter
