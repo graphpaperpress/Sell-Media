@@ -507,7 +507,9 @@ input[type="submit"].sell-media-button,
   .item-inner a,
   .sell-media-item-wrap a {
     font-weight: normal;
-    text-decoration: none; }
+    text-decoration: none;
+    display: block;
+    line-height: 0; }
   .item-inner img,
   .sell-media-item-wrap img {
     opacity: 1;

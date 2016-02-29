@@ -646,6 +646,8 @@ input[type="submit"].sell-media-button,
 	a {
 		font-weight: normal;
 		text-decoration: none;
+		display: block;
+		line-height: 0;
 	}
 
 	img {
