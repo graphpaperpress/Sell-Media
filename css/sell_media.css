@@ -1054,6 +1054,9 @@ input.sell-media-search-text[type=text] {
   .sell-media-widget-thumb-wrap img {
     float: left; }
 
+.sell-media-recent-widget {
+  overflow: hidden; }
+
 /*= Themes
 -------------------------------------------------------------- */
 .theme-twenty-thirteen .sell-media, .theme-photolog .sell-media, .theme-awesome .sell-media, .theme-twenty-fourteen .sell-media, .theme-hemingway .sell-media, .theme-radcliffe .sell-media, .theme-garfunkel .sell-media, .theme-fukasawa .sell-media, .theme-lovecraft .sell-media, .theme-rowling .sell-media, .theme-hitchcock .sell-media, .theme-iwata .sell-media {
