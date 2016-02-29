@@ -14,17 +14,23 @@ Class SellMediaSearch {
 
 	private $query_instance;
 
+	private $settings;
 	/**
 	 * Init
 	 */
 	public function __construct(){
+		$this->settings = sell_media_get_plugin_options();
+		
 		add_filter( 'posts_join', array( &$this, 'terms_join' ) );
 		add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
-		add_filter( 'posts_request', array( &$this, 'distinct' ) );
-		add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
-		add_filter( 'attachment_link', array( &$this, 'the_search_attachment_link' ), 10, 2 );
-		add_filter( 'the_excerpt', array( &$this, 'the_search_excerpt' ) );
-		add_filter( 'posts_where' , array( &$this, 'posts_where' ));       
+
+		if( !isset( $this->settings->search_keywords_only[0] ) || 'yes' !== $this->settings->search_keywords_only[0] ){
+			add_filter( 'posts_request', array( &$this, 'distinct' ) );
+			add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
+			add_filter( 'attachment_link', array( &$this, 'the_search_attachment_link' ), 10, 2 );
+			add_filter( 'the_excerpt', array( &$this, 'the_search_excerpt' ) );
+			add_filter( 'posts_where' , array( &$this, 'posts_where' ));       
+		}
 	}
 
 	/**
@@ -51,7 +57,11 @@ Class SellMediaSearch {
 		if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
 
 			// searching custom taxonomies
-			$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
+			$taxonomies = array( 'keywords' );
+			if( !isset( $this->settings->search_keywords_only[0] ) || 'yes' !== $this->settings->search_keywords_only[0] ){
+				$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
+			}
+
 			foreach ( $taxonomies as $taxonomy ) {
 				$on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
 			}
