@@ -766,7 +766,7 @@ function sell_media_cart_dialog(){
 	$shortcode = false;
 	if ( ! empty( $post->post_content ) ) {
 		$content = $post->post_content;
-		if ( has_shortcode( $content, 'sell_media_all_items' ) || has_shortcode( $content, 'sell_media_lightbox' ) || is_search() ) {
+		if ( has_shortcode( $content, 'sell_media_item' ) || has_shortcode( $content, 'sell_media_all_items' ) || has_shortcode( $content, 'sell_media_lightbox' ) || is_search() ) {
 			$shortcode = true;
 		}
 	}
