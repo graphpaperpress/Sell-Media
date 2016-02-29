@@ -1002,8 +1002,10 @@ add_filter( 'sell_media_grid_item_class', 'sell_media_grid_item_class', 10, 1 );
  * @return string thumbnail size param
  */
 function sell_media_thumbnail_crop() {	
-	// Add square crop.
-	return 'sell_media_square';
+	$settings = sell_media_get_plugin_options();
+	if ( $settings->thumbnail_crop ) {
+		return $settings->thumbnail_crop;
+	}
 
 }
 add_filter( 'sell_media_thumbnail', 'sell_media_thumbnail_crop', 10, 1 );

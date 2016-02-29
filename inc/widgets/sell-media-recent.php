@@ -32,7 +32,7 @@
 			<div class="sell-media-widget-item-wrap sell-media-grid-item">
 				<div class="sell-media-widget-thumb-wrap">
 					<a href="<?php echo get_permalink(); ?>">
-						<?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'thumbnail' ) ); ?>
+						<?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_widget_thumbnail', 'sell_media_square' ) ); ?>
 					</a>
 				</div>
 			</div> <!--  .sell-media-widget-item-wrap  -->
