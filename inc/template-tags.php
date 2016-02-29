@@ -30,6 +30,35 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
 		return $html;
 }
 
+function sell_media_item_add_to_cart_button( $post_id=null, $attachment_id=null, $button=null, $text=null, $echo=true ) {
+
+	if( is_null( $text ) ){
+		$text = __( 'Add to cart', 'sell_media' );
+	}
+
+	$attachment_id = ( empty( $attachment_id ) ) ? sell_media_get_attachment_id( $post_id ) : $attachment_id;
+	// check if is package
+    $is_package = Sell_Media()->products->is_package( $post_id );
+    // check if has assigned price group
+    $has_price_group = Sell_Media()->products->has_price_group( $post_id );
+	$text = apply_filters('sell_media_add_to_cart_text', $text, $post_id );
+	$disable = ( ! $is_package && $has_price_group ) ? "disable":"";
+
+	$classes[] = 'item_add';
+	$classes[] = 'sell-media-button';
+	if( !is_null( $button ) )
+		$classes[] = 'sell-media-' . $button;
+
+	$classes = implode( ' ', $classes );
+
+	$html = '<button class="' . $classes . '" '.$disable.'>' . $text . '</button>';
+	$html = apply_filters( 'sell_media_item_add_to_cart_button', $html, $post_id, $attachment_id, $button, $text, $echo );
+
+	if ( $echo )
+		echo $html;
+	else
+		return $html;
+}
 
 /**
  * Determines the image source for a product
