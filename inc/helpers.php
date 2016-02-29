@@ -1029,6 +1029,7 @@ function sell_media_free_download_button_text( $text, $post_id ) {
 }
 
 add_filter( 'sell_media_purchase_text', 'sell_media_free_download_button_text', 10, 2 );
+add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text', 10, 2 );
 
 /**
  * Change button html.
@@ -1050,12 +1051,19 @@ function sell_media_free_download_button_button( $html, $post_id, $attachment_id
 	if ( $price > 0 || $value ) {
 		return $html; }
 
+	$classes[] = 'item_add';
+	$classes[] = 'sell-media-button';
+	if( !is_null( $button ) )
+		$classes[] = 'sell-media-' . $button;
+	$classes = implode( ' ', $classes );
+	
 	$link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id );
-	$html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
+	$html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="' . $classes . '">' . $text . '</a>';
 	return $html;
 }
 
 add_filter( 'sell_media_item_buy_button', 'sell_media_free_download_button_button', 10, 6 );
+add_filter( 'sell_media_item_add_to_cart_button', 'sell_media_free_download_button_button', 10, 6 );
 
 /**
  * Forces the file to be downloaded for free.
