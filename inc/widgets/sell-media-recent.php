@@ -35,7 +35,7 @@
 						<?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'thumbnail' ) ); ?>
 					</a>
 				</div>
-			</div> <!--  .sell-media-widget-item-warp  -->
+			</div> <!--  .sell-media-widget-item-wrap  -->
 
 			<?php endwhile; wp_reset_postdata(); ?>
 
