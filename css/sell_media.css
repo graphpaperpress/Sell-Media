@@ -349,7 +349,7 @@ input[type="submit"].sell-media-button,
   font-size: 12px;
   line-height: 1.5; }
   .sell-media-meta .sell-media-button {
-    display: block;
+    display: inline-block;
     text-align: center; }
     .sell-media-single-two-col .sell-media-meta .sell-media-button {
       width: 100%; }
