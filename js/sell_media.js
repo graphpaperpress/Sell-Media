@@ -283,8 +283,10 @@ jQuery(document).ready(function($){
 	 * Show search options when user clicks inside the search field
 	 */
 	$('.sell-media-search-query').on('click', function(){
-		$('.sell-media-search-hidden, .sell-media-search-close').show();
-		$('.sell-media-search-form').addClass('active');
+		var parent = $(this).parents( 'div.sell-media-search' );
+
+		parent.find('.sell-media-search-hidden, .sell-media-search-close').show();
+		parent.find('.sell-media-search-form').addClass('active');
 	});
 
 	/**
