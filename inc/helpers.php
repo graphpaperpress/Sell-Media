@@ -1180,3 +1180,161 @@ function sell_media_update_option( $option, $value, $autoload = null ) {
 
 	return update_option( $option, $value, $deprecated, $autoload );
 }
+
+
+function sell_media_modify_search_form(){
+
+	$settings = sell_media_get_plugin_options();
+
+	$search_keywords_only = false;
+
+	if( ( !isset( $settings->search_everything[0] ) || 'yes' !== $settings->search_everything[0] ) && ( isset( $settings->search_page ) && '' !== $settings->search_page ) ){
+		$search_keywords_only = true;
+	}
+
+	$action_url = esc_url( site_url() );
+	$search_input_name = 's';
+
+	if( $search_keywords_only ){
+		$action_url = esc_url( get_permalink( (int) $settings->search_page ) );
+		$search_input_name = 'keyword';
+	}
+
+	$query = ( get_search_query() ) ? get_search_query() : '';
+
+	if( $search_keywords_only ){
+		$query = ( isset( $_GET['keyword'] ) && '' != $_GET['keyword'] ) ? esc_html( $_GET['keyword'] ) : '';
+	}
+
+	$html = '';
+	$html .= '<div class="sell-media-search">';
+	$html .= '<form role="search" method="get" id="sell-media-search-form" class="sell-media-search-form" action="' . $action_url . '">';
+	$html .= '<div class="sell-media-search-inner cf">';
+
+	// Visible search options wrapper
+	$html .= '<div id="sell-media-search-visible" class="sell-media-search-visible cf">';
+
+	// Input field
+	$html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
+	$html .= '<input type="text" value="' . $query . '" name="' .$search_input_name. '" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
+	$html .= '</div>';
+
+	// Submit button
+	$html .= '<div id="sell-media-search-submit" class="sell-media-search-field sell-media-search-submit">';
+
+	if( !$search_keywords_only ){
+		$html .= '<input type="hidden" name="post_type" value="sell_media_item" />';
+	}
+
+	$html .= '<input type="submit" id="sell-media-search-submit-button" class="sell-media-search-submit-button" value="' . apply_filters( 'sell_media_search_button', __( 'Search', 'sell_media' ) ) . '" />';
+	$html .= '</div>';
+
+	$html .= '</div>';
+
+	// Hidden search options wrapper
+	$html .= '<div id="sell-media-search-hidden" class="sell-media-search-hidden cf">';
+
+	if( !$search_keywords_only ){
+		// Exact match field
+		$html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-exact-match">';
+		$html .= '<label for="sentence" id="sell-media-search-exact-match-desc" class="sell-media-search-exact-match-desc sell-media-tooltip" data-tooltip="Check to limit search results to exact phrase matches. Without exact phrase match checked, a search for \'New York Yankees\' would return results containing any of the three words \'New\', \'York\' and \'Yankees\'.">' . __( 'Exact phrase match (?)', 'sell_media' ) . '</label>';
+		$html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
+		$html .= '</div>';
+	}
+	// Collection field
+	$html .= '<div id="sell-media-search-collection" class="sell-media-search-field sell-media-search-collection">';
+	$html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . '</label>';
+	$html .= '<select name="collection">';
+	$html .= '<option value="">' . esc_attr( __( 'All', 'sell_media' ) ) . '</option>';
+
+	$categories = get_categories( 'taxonomy=collection' );
+	foreach ( $categories as $category ) {
+		$html .= '<option value="' . $category->category_nicename . '">';
+		$html .= $category->cat_name;
+		$html .= '</option>';
+	}
+	$html .= '</select>';
+	$html .= '</div>';
+
+	// Hidden search options wrapper
+	$html .= '</div>';
+
+	// Close button
+	$html .= '<a href="javascript:void(0);" class="sell-media-search-close">&times;</a>';
+
+	$html .= '</div>';
+	$html .= '</form>';
+	$html .= '</div>';
+
+	return $html;
+
+}
+
+function sell_media_search_form( $search_form ){
+	$search_form = sell_media_modify_search_form();
+	return $search_form;
+}
+
+add_filter( 'sell_media_searchform_filter', 'sell_media_search_form', 1, 1 );
+
+function sell_media_search_results( $content ){
+	global $post;
+	$settings = sell_media_get_plugin_options();
+
+	if( !isset( $settings->search_page ) || $post->ID != $settings->search_page ){
+		return $content;
+	}
+
+	if( !isset( $_GET['keyword'] ) || '' == $_GET['keyword'] ){
+		return $content;
+	}
+
+	$keyword = esc_html( $_GET['keyword'] );
+
+	$args['post_type'] = 'sell_media_item';
+	$args['post_status'] = array( 'published' );
+	$args['tax_query'][] = 	array(
+								'taxonomy' => 'keywords',
+								'field'    => 'slug',
+								'terms'    => $keyword,
+							);
+	
+	if( isset( $_GET['collection'] ) && '' != $_GET['collection'] ){
+		$collection = esc_html( $_GET['collection'] );
+		$args['tax_query'][] = 	array(
+								'taxonomy' => 'collection',
+								'field'    => 'slug',
+								'terms'    => $collection,
+							);
+	
+	}
+
+	$search_query = new WP_Query( $args );
+
+	$content .= '<div id="sell-media-archive" class="sell-media">';
+    $content .= '    <div id="content" role="main">';
+	if( $search_query->have_posts() ):
+		$i = 0;
+		$content .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+		while( $search_query->have_posts() ):
+			$search_query->the_post();
+			$i++;
+			$content .= apply_filters( 'sell_media_content_loop', $post->ID, $i );
+
+		endwhile;
+
+		$content . sell_media_pagination_filter( $search_query->max_num_pages );
+		$content .= '</div>';
+		wp_reset_postdata();
+	else:
+		$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
+        $content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
+	endif;
+
+	$content .= '    </div>';
+	$content .= '</div>';
+	return $content;
+
+}
+
+add_filter( 'the_content', 'sell_media_search_results' );
