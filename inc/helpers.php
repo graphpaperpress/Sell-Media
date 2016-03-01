@@ -1275,7 +1275,7 @@ function sell_media_search_form( $search_form ){
 	return $search_form;
 }
 
-add_filter( 'sell_media_searchform_filter', 'sell_media_search_form', 1, 1 );
+add_filter( 'sell_media_searchform_filter', 'sell_media_search_form' );
 
 function sell_media_search_results( $content ){
 	global $post;
@@ -1290,8 +1290,10 @@ function sell_media_search_results( $content ){
 	}
 
 	$keyword = esc_html( $_GET['keyword'] );
+	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 
 	$args['post_type'] = 'sell_media_item';
+	$args['paged'] = $paged;
 	$args['post_status'] = array( 'published' );
 	$args['tax_query'][] = 	array(
 								'taxonomy' => 'keywords',
@@ -1323,8 +1325,8 @@ function sell_media_search_results( $content ){
 
 		endwhile;
 
-		$content . sell_media_pagination_filter( $search_query->max_num_pages );
-		$content .= '</div>';
+		$content .= '</div><!-- .sell-media-grid-item-container -->';
+		$content .= sell_media_pagination_filter( $search_query->max_num_pages );
 		wp_reset_postdata();
 	else:
 		$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
