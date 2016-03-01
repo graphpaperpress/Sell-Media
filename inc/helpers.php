@@ -1355,3 +1355,21 @@ function sell_media_search_results( $content ){
 }
 
 add_filter( 'the_content', 'sell_media_search_results' );
+
+/**
+ * Change the placeholder.
+ * @param  string $placeholder Default placeholder.
+ * @return string              Modified placeholder.
+ */
+function sell_media_search_placeholder( $placeholder ){
+	$settings = sell_media_get_plugin_options();
+
+	if( ( !isset( $settings->search_everything[0] ) || 'yes' !== $settings->search_everything[0] ) && ( isset( $settings->search_page ) && '' !== $settings->search_page ) ){
+		
+		return __( 'Search for Keywords', 'sell_media' );
+	}	
+
+	return $placeholder;
+}
+
+add_filter( 'sell_media_search_placeholder', 'sell_media_search_placeholder' );
