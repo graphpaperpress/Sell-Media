@@ -1237,13 +1237,18 @@ function sell_media_modify_search_form(){
 	// Hidden search options wrapper
 	$html .= '<div id="sell-media-search-hidden" class="sell-media-search-hidden cf">';
 
-	if( !$search_keywords_only ){
-		// Exact match field
-		$html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-exact-match">';
-		$html .= '<label for="sentence" id="sell-media-search-exact-match-desc" class="sell-media-search-exact-match-desc sell-media-tooltip" data-tooltip="Check to limit search results to exact phrase matches. Without exact phrase match checked, a search for \'New York Yankees\' would return results containing any of the three words \'New\', \'York\' and \'Yankees\'.">' . __( 'Exact phrase match (?)', 'sell_media' ) . '</label>';
-		$html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
-		$html .= '</div>';
-	}
+
+	// Exact match field
+	$html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-exact-match">';
+	$html .= '<label for="sentence" id="sell-media-search-exact-match-desc" class="sell-media-search-exact-match-desc sell-media-tooltip" data-tooltip="Check to limit search results to exact phrase matches. Without exact phrase match checked, a search for \'New York Yankees\' would return results containing any of the three words \'New\', \'York\' and \'Yankees\'.">' . __( 'Exact phrase match (?)', 'sell_media' ) . '</label>';
+	$html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
+	$html .= '</div>';
+
+	$html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-everything">';
+	$html .= '<label for="sentence" id="sell-media-search-everything-desc" class="sell-media-search-everything-desc sell-media-tooltip" data-tooltip="' . __( 'Search titles, descriptions, captions, and keywords.', 'sell_media' ) . '">' . __( 'Search Everything (?)', 'sell_media' ) . '</label>';
+	$html .= '<input type="checkbox" value="1" name="search_everything" id="search_everything" />';
+	$html .= '</div>';
+
 	// Collection field
 	$html .= '<div id="sell-media-search-collection" class="sell-media-search-field sell-media-search-collection">';
 	$html .= '<label for="collection">' . __( 'Collection', 'sell_media' ) . '</label>';
@@ -1310,11 +1315,30 @@ function sell_media_search_results( $content ){
 	$args['post_type'] = 'sell_media_item';
 	$args['paged'] = $paged;
 	$args['post_status'] = array( 'published' );
-	$args['tax_query'][] = 	array(
+	$args['search_type'] = 'sell_media_search';
+	
+
+	if( isset( $_GET['search_everything'] ) && 1 == $_GET['search_everything'] ){
+		// $args['s'] = 	$keyword;
+		$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
+		if( !empty( $taxonomies ) ){
+			$args['tax_query']['relation'] = 'OR';
+			foreach ($taxonomies as $key => $taxonomy) {
+				$args['tax_query'][] = 	array(
+									'taxonomy' => $taxonomy,
+									'field'    => 'slug',
+									'terms'    => $keyword
+								);
+			}
+		}
+	}
+	else{
+		$args['tax_query'][] = 	array(
 								'taxonomy' => 'keywords',
 								'field'    => 'slug',
 								'terms'    => $keyword,
 							);
+	}
 	
 	if( isset( $_GET['collection'] ) && '' != $_GET['collection'] ){
 		$collection = esc_html( $_GET['collection'] );
@@ -1327,7 +1351,6 @@ function sell_media_search_results( $content ){
 	}
 
 	$search_query = new WP_Query( $args );
-
 	$content .= '<div id="sell-media-archive" class="sell-media">';
     $content .= '    <div id="content" role="main">';
 	if( $search_query->have_posts() ):
@@ -1373,3 +1396,17 @@ function sell_media_search_placeholder( $placeholder ){
 }
 
 add_filter( 'sell_media_search_placeholder', 'sell_media_search_placeholder' );
+
+add_filter( 'posts_where', 'sell_media_posts_where', 10, 2 );
+function sell_media_posts_where( $where, &$wp_query )
+{
+    global $wpdb;
+    if( !isset( $wp_query->query['search_type'] ) || 'sell_media_search' != $wp_query->query['search_type'] )
+    	return $where;
+	if( !isset( $_GET['keyword'] ) || !isset( $_GET['search_everything'] ) )
+		return $where;
+
+    $where .= ' AND ' . $wpdb->posts . '.post_status = \'publish\' OR ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql( $wpdb->esc_like( $_GET['keyword'] ) ) . '%\'';
+
+    return $where;
+}
