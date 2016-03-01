@@ -19,18 +19,15 @@ Class SellMediaSearch {
 	 * Init
 	 */
 	public function __construct(){
-		$this->settings = sell_media_get_plugin_options();
 		
 		add_filter( 'posts_join', array( &$this, 'terms_join' ) );
 		add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
-
-		if( !isset( $this->settings->search_keywords_only[0] ) || 'yes' !== $this->settings->search_keywords_only[0] ){
-			add_filter( 'posts_request', array( &$this, 'distinct' ) );
-			add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
-			add_filter( 'attachment_link', array( &$this, 'the_search_attachment_link' ), 10, 2 );
-			add_filter( 'the_excerpt', array( &$this, 'the_search_excerpt' ) );
-			add_filter( 'posts_where' , array( &$this, 'posts_where' ));       
-		}
+		add_filter( 'posts_request', array( &$this, 'distinct' ) );
+		add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
+		add_filter( 'attachment_link', array( &$this, 'the_search_attachment_link' ), 10, 2 );
+		add_filter( 'the_excerpt', array( &$this, 'the_search_excerpt' ) );
+		add_filter( 'posts_where' , array( &$this, 'posts_where' ));       
+		add_filter( 'posts_search', array( &$this, 'exact_search' ), 20, 2 );
 	}
 
 	/**
@@ -57,10 +54,7 @@ Class SellMediaSearch {
 		if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
 
 			// searching custom taxonomies
-			$taxonomies = array( 'keywords' );
-			if( !isset( $this->settings->search_keywords_only[0] ) || 'yes' !== $this->settings->search_keywords_only[0] ){
-				$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
-			}
+			$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
 
 			foreach ( $taxonomies as $taxonomy ) {
 				$on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
@@ -248,7 +242,11 @@ Class SellMediaSearch {
 
 			$query->set( 'post_status', $post_status );
 
-
+			// Add exact search flag
+			$sentence = ( isset( $_GET['sentence'] ) && 1 == $_GET['sentence'] ) ? true : false;
+			if ( $sentence ) {
+		        $query->set( 'exact', true );
+		    }
 
 			/*y
 			 * Exclude password protected collections from search query
@@ -276,6 +274,43 @@ Class SellMediaSearch {
 
 		}
 
+	}
+
+	/**
+	 * Match exact word on search.
+	 * @param  string $search   Sql part.
+	 * @param  object $wp_query Query object.
+	 * @return string           Modifed sql.
+	 */
+	function exact_search( $search, $wp_query ) {
+	    global $wpdb;
+
+	    if ( empty( $search ) )
+	        return $search;
+
+	    $q = $wp_query->query_vars;
+
+	    if( !isset( $q['exact'] ) || !$q['exact'] )
+	    	return $search;
+	    $n = !empty( $q['exact'] ) ? '' : '%';
+
+	    $search = $searchand = '';
+
+	    foreach ( (array) $q['search_terms'] as $term ) {
+	        $term = esc_sql( $wpdb->esc_like( $term ) );
+
+	        $search .= "{$searchand}($wpdb->posts.post_title REGEXP '[[:<:]]{$term}[[:>:]]') OR ($wpdb->posts.post_content REGEXP '[[:<:]]{$term}[[:>:]]')";
+
+	        $searchand = ' AND ';
+	    }
+
+	    if ( ! empty( $search ) ) {
+	        $search = " AND ({$search}) ";
+	        if ( ! is_user_logged_in() )
+	            $search .= " AND ($wpdb->posts.post_password = '') ";
+	    }
+
+	    return $search;
 	}
 
 	/**
