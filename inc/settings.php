@@ -459,11 +459,11 @@ function sell_media_init_settings(){
 					)
 				)
 		),
-		"search_keywords_only" => array(
+		"search_everything" => array(
 			"tab" => "sell_media_general_settings",
-			"name" => "search_keywords_only",
-			"title" => __("Search keywords only","sell_media"),
-			"description" => __( "Check if you want to search only keywords.", "sell_media" ),
+			"name" => "search_everything",
+			"title" => __("Search everything","sell_media"),
+			"description" => __( "Check if you want to search everything.", "sell_media" ),
 			"section" => "general_plugin_section_1",
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",
@@ -472,7 +472,7 @@ function sell_media_init_settings(){
 			"valid_options" => array(
 				"yes" => array(
 					"name" => "yes",
-					"title" => __( 'Yes, keyword search only.', 'sell_media' )
+					"title" => __( 'Yes, Search everything.', 'sell_media' )
 					),
 				)
 		),
