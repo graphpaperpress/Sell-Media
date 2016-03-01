@@ -353,6 +353,8 @@ Class SellMediaSearch {
 
 		$settings = sell_media_get_plugin_options();
 
+		$html = '';
+
 		// only use this method if it hasn't already been used on the page
 		static $used;
 		if ( ! isset( $used ) ) {
@@ -360,7 +362,6 @@ Class SellMediaSearch {
 
 			$query = ( get_search_query() ) ? get_search_query() : '';
 
-			$html = '';
 			$html .= '<div class="sell-media-search">';
 			$html .= '<form role="search" method="get" id="sell-media-search-form" class="sell-media-search-form" action="' . site_url() . '">';
 			$html .= '<div class="sell-media-search-inner cf">';
@@ -415,8 +416,9 @@ Class SellMediaSearch {
 			$html .= '</form>';
 			$html .= '</div>';
 
-			echo apply_filters( 'sell_media_searchform_filter', $html );
 		}
+		
+		echo apply_filters( 'sell_media_searchform_filter', $html );
 	}
 
 }
