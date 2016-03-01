@@ -19,6 +19,8 @@ Class SellMediaSearch {
 	 * Init
 	 */
 	public function __construct(){
+		if( isset( $_GET['keyword'] ) )
+			return;
 		
 		add_filter( 'posts_join', array( &$this, 'terms_join' ) );
 		add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
