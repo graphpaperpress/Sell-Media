@@ -1181,7 +1181,10 @@ function sell_media_update_option( $option, $value, $autoload = null ) {
 	return update_option( $option, $value, $deprecated, $autoload );
 }
 
-
+/**
+ * Modify the search form for keyword search.
+ * @return string Modifed search form.
+ */
 function sell_media_modify_search_form(){
 
 	$settings = sell_media_get_plugin_options();
@@ -1270,13 +1273,25 @@ function sell_media_modify_search_form(){
 
 }
 
+/**
+ * Hook search form.
+ * @param  string $search_form Search form.
+ * @return string              Modifed search form.
+ */
 function sell_media_search_form( $search_form ){
-	$search_form = sell_media_modify_search_form();
+	if( !is_search() ){
+		$search_form = sell_media_modify_search_form();
+	}
 	return $search_form;
 }
 
 add_filter( 'sell_media_searchform_filter', 'sell_media_search_form' );
 
+/**
+ * Custom search result.
+ * @param  string $content Page Content.
+ * @return string          Modified page content.
+ */
 function sell_media_search_results( $content ){
 	global $post;
 	$settings = sell_media_get_plugin_options();
