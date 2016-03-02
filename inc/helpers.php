@@ -116,7 +116,7 @@ function sell_media_body_class( $classes ) {
 	}
 
 	// All Sell Media pages
-	if ( 'sell_media_item' == get_post_type( $post->ID ) ) {
+	if ( ! empty( $post->ID ) && 'sell_media_item' == get_post_type( $post->ID ) ) {
 		$classes[] = 'sell-media-page';
 	}
 
@@ -1219,7 +1219,7 @@ function sell_media_modify_search_form(){
 
 	// Input field
 	$html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
-	$html .= '<input type="text" value="' . $query . '" name="' .$search_input_name. '" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
+	$html .= '<input type="text" value="' . $query . '" name="' . $search_input_name . '" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
 	$html .= '</div>';
 
 	// Submit button
@@ -1237,16 +1237,22 @@ function sell_media_modify_search_form(){
 	// Hidden search options wrapper
 	$html .= '<div id="sell-media-search-hidden" class="sell-media-search-hidden cf">';
 
+	$html .= '<p id="sell-media-search-help" class="sell-media-search-field sell-media-search-help">';
+	$html .= __( 'Search for multiple keywords by seperating them with a comma.', 'sell_media' );
+	$html .= '</p>';
 
-	// Exact match field
-	$html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-exact-match">';
-	$html .= '<label for="sentence" id="sell-media-search-exact-match-desc" class="sell-media-search-exact-match-desc sell-media-tooltip" data-tooltip="Check to limit search results to exact phrase matches. Without exact phrase match checked, a search for \'New York Yankees\' would return results containing any of the three words \'New\', \'York\' and \'Yankees\'.">' . __( 'Exact phrase match (?)', 'sell_media' ) . '</label>';
-	$html .= '<input type="checkbox" value="1" name="sentence" id="sentence" />';
+	// Search everything
+	$checked_se = ( isset( $_GET['search_everything'] ) ) ? 'checked' : '';
+	$html .= '<div id="sell-media-search-everything" class="sell-media-search-field sell-media-search-everything">';
+	$html .= '<label for="search_everything" id="sell-media-search-everything-desc" class="sell-media-search-everything-desc sell-media-tooltip" data-tooltip="' . __( 'Search titles, descriptions, captions, and keywords.', 'sell_media' ) . '">' . __( 'Search everything (?)', 'sell_media' ) . '</label>';
+	$html .= '<input type="checkbox" value="1" name="search_everything" id="search_everything" ' . $checked_se . '/>';
 	$html .= '</div>';
 
-	$html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-everything">';
-	$html .= '<label for="sentence" id="sell-media-search-everything-desc" class="sell-media-search-everything-desc sell-media-tooltip" data-tooltip="' . __( 'Search titles, descriptions, captions, and keywords.', 'sell_media' ) . '">' . __( 'Search Everything (?)', 'sell_media' ) . '</label>';
-	$html .= '<input type="checkbox" value="1" name="search_everything" id="search_everything" />';
+	// Exact match field
+	$checked_em = ( isset( $_GET['sentence'] ) ) ? 'checked' : '';
+	$html .= '<div id="sell-media-search-exact-match" class="sell-media-search-field sell-media-search-exact-match">';
+	$html .= '<label for="sentence" id="sell-media-search-exact-match-desc" class="sell-media-search-exact-match-desc sell-media-tooltip" data-tooltip="Check to limit search results to exact phrase matches. Without exact phrase match checked, a search for \'New York Yankees\' would return results containing any of the three words \'New\', \'York\' and \'Yankees\'.">' . __( 'Exact phrase match (?)', 'sell_media' ) . '</label>';
+	$html .= '<input type="checkbox" value="1" name="sentence" id="sentence" ' . $checked_em . '/>';
 	$html .= '</div>';
 
 	// Collection field
@@ -1257,7 +1263,8 @@ function sell_media_modify_search_form(){
 
 	$categories = get_categories( 'taxonomy=collection' );
 	foreach ( $categories as $category ) {
-		$html .= '<option value="' . $category->category_nicename . '">';
+		$selected = ( ! empty( $_GET['collection'] ) && $category->category_nicename == $_GET['collection'] ) ? 'selected="selected"' : '';
+		$html .= '<option value="' . $category->category_nicename . '" '. $selected . '>';
 		$html .= $category->cat_name;
 		$html .= '</option>';
 	}
@@ -1313,6 +1320,11 @@ function sell_media_search_results( $content ){
 
 	// Get keyword.
 	$keyword = esc_sql( $_GET['keyword'] );
+
+	// There could be multiple keywords, so explode them if exact match isn't set
+	if ( ! isset( $_GET['sentence'] ) ) {
+		$keyword = explode( ',', $keyword );
+	}
 
 	// Current pagination.
 	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;

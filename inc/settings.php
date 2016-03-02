@@ -459,24 +459,7 @@ function sell_media_init_settings(){
 					)
 				)
 		),
-		"search_everything" => array(
-			"tab" => "sell_media_general_settings",
-			"name" => "search_everything",
-			"title" => __("Search everything","sell_media"),
-			"description" => __( "Check if you want to search everything.", "sell_media" ),
-			"section" => "general_plugin_section_1",
-			"since" => "1.0",
-			"id" => "general_plugin_section_1",
-			"type" => "checkbox",
-			"default" => '',
-			"valid_options" => array(
-				"yes" => array(
-					"name" => "yes",
-					"title" => __( 'Yes, Search everything.', 'sell_media' )
-					),
-				)
-		),
-
+		
 		// Size & Price
 		"default_price" => array(
 			"tab" => "sell_media_size_settings",
