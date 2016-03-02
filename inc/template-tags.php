@@ -775,7 +775,7 @@ function sell_media_cart_dialog(){
 	$sell_media_taxonomies = get_object_taxonomies( $post_type );
 
 	// Only inject markup on specific pages
-	if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode ) {
+	if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode || is_page( $settings->search_page ) ) {
 		$popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
 
 		if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
