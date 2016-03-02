@@ -848,7 +848,8 @@ input.sell-media-search-text[type=text] {
   display: inline-block;
   font-size: 12px;
   margin-right: 10px;
-  padding: 0; }
+  padding: 0;
+  width: 150px; }
 .sell-media-search-field select {
   border: 1px solid gray;
   display: inline-block;
@@ -858,6 +859,11 @@ input.sell-media-search-text[type=text] {
 .sell-media-search-hidden {
   display: none;
   margin-top: 10px; }
+
+.sell-media-search-help {
+  color: gray;
+  font-size: 12px;
+  margin-bottom: 16px; }
 
 .sell-media-search-close {
   color: black;

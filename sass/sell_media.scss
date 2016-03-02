@@ -1110,6 +1110,7 @@ input.sell-media-search-text[type=text] {
 		font-size: $font-size * .75;
 		margin-right: 10px;
 		padding: 0;
+		width: 150px;
 	}
 
 	select {
@@ -1123,6 +1124,12 @@ input.sell-media-search-text[type=text] {
 .sell-media-search-hidden {
 	display: none;
 	margin-top: 10px;
+}
+
+.sell-media-search-help {
+	color: $default-color;
+	font-size: $font-size * .75;
+	margin-bottom: $font-size;
 }
 
 .sell-media-search-close {
