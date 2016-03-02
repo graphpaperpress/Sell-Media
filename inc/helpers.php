@@ -1301,62 +1301,60 @@ function sell_media_search_results( $content ){
 	global $post;
 	$settings = sell_media_get_plugin_options();
 
+	// Check search page is set or current page is search page.
 	if( !isset( $settings->search_page ) || $post->ID != $settings->search_page ){
 		return $content;
 	}
 
+	// Check if keyword is set.
 	if( !isset( $_GET['keyword'] ) || '' == $_GET['keyword'] ){
 		return $content;
 	}
 
-	$keyword = esc_html( $_GET['keyword'] );
+	// Get keyword.
+	$keyword = esc_sql( $_GET['keyword'] );
+
+	// Current pagination.
 	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 
 	$args['post_type'] = 'sell_media_item';
 	$args['paged'] = $paged;
-	$args['post_status'] = array( 'published' );
+	$args['post_status'] = array( 'publish' );
 	$args['search_type'] = 'sell_media_search';
 	
 
 	if( isset( $_GET['search_everything'] ) && 1 == $_GET['search_everything'] ){
-		// $args['s'] = 	$keyword;
-		$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
-		if( !empty( $taxonomies ) ){
-			$args['tax_query']['relation'] = 'OR';
-			foreach ($taxonomies as $key => $taxonomy) {
-				$args['tax_query'][] = 	array(
-									'taxonomy' => $taxonomy,
-									'field'    => 'slug',
-									'terms'    => $keyword
-								);
-			}
-		}
+		$args['s'] = 	$keyword;
 	}
 	else{
 		$args['tax_query'][] = 	array(
-								'taxonomy' => 'keywords',
-								'field'    => 'slug',
-								'terms'    => $keyword,
-							);
+				'taxonomy' => 'keywords',
+				'field'    => 'slug',
+				'terms'    => $keyword,
+			);
 	}
-	
+
 	if( isset( $_GET['collection'] ) && '' != $_GET['collection'] ){
 		$collection = esc_html( $_GET['collection'] );
 		$args['tax_query'][] = 	array(
-								'taxonomy' => 'collection',
-								'field'    => 'slug',
-								'terms'    => $collection,
-							);
-	
+			'taxonomy' => 'collection',
+			'field'    => 'slug',
+			'terms'    => $collection,
+		);
+
 	}
 
 	$search_query = new WP_Query( $args );
+
 	$content .= '<div id="sell-media-archive" class="sell-media">';
-    $content .= '    <div id="content" role="main">';
+	$content .= '    <div id="content" role="main">';
+
 	if( $search_query->have_posts() ):
 		$i = 0;
 		$content .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+
 		while( $search_query->have_posts() ):
+
 			$search_query->the_post();
 			$i++;
 			$content .= apply_filters( 'sell_media_content_loop', $post->ID, $i );
@@ -1365,14 +1363,17 @@ function sell_media_search_results( $content ){
 
 		$content .= '</div><!-- .sell-media-grid-item-container -->';
 		$content .= sell_media_pagination_filter( $search_query->max_num_pages );
+
 		wp_reset_postdata();
+
 	else:
-		$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
-        $content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
+			$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
+			$content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
 	endif;
 
 	$content .= '    </div>';
 	$content .= '</div>';
+
 	return $content;
 
 }
@@ -1396,17 +1397,3 @@ function sell_media_search_placeholder( $placeholder ){
 }
 
 add_filter( 'sell_media_search_placeholder', 'sell_media_search_placeholder' );
-
-add_filter( 'posts_where', 'sell_media_posts_where', 10, 2 );
-function sell_media_posts_where( $where, &$wp_query )
-{
-    global $wpdb;
-    if( !isset( $wp_query->query['search_type'] ) || 'sell_media_search' != $wp_query->query['search_type'] )
-    	return $where;
-	if( !isset( $_GET['keyword'] ) || !isset( $_GET['search_everything'] ) )
-		return $where;
-
-    $where .= ' AND ' . $wpdb->posts . '.post_status = \'publish\' OR ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql( $wpdb->esc_like( $_GET['keyword'] ) ) . '%\'';
-
-    return $where;
-}
