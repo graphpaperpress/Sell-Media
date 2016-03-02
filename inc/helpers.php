@@ -1238,7 +1238,7 @@ function sell_media_modify_search_form(){
 	$html .= '<div id="sell-media-search-hidden" class="sell-media-search-hidden cf">';
 
 	$html .= '<p id="sell-media-search-help" class="sell-media-search-field sell-media-search-help">';
-	$html .= __( 'Search for multiple keywords by seperating them with a comma.', 'sell_media' );
+	$html .= __( 'Use a comma to separate keywords.', 'sell_media' );
 	$html .= '</p>';
 
 	// Search everything
