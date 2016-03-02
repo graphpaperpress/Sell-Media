@@ -19,17 +19,28 @@ Class SellMediaSearch {
 	 * Init
 	 */
 	public function __construct(){
-		if( isset( $_GET['keyword'] ) )
+
+		// Restrict in admin area.
+		if( is_admin() )
 			return;
-		
-		add_filter( 'posts_join', array( &$this, 'terms_join' ) );
+
+		add_action( 'pre_get_posts', array( &$this, 'set_query_param' ) );
+		add_filter( 'posts_join', array( &$this, 'terms_join' ), 10, 2 );
 		add_filter( 'posts_search', array( &$this, 'search_where' ), 10, 2 );
 		add_filter( 'posts_request', array( &$this, 'distinct' ) );
 		add_filter( 'pre_get_posts', array( &$this, 'search_query' ) );
-		add_filter( 'attachment_link', array( &$this, 'the_search_attachment_link' ), 10, 2 );
-		add_filter( 'the_excerpt', array( &$this, 'the_search_excerpt' ) );
-		add_filter( 'posts_where' , array( &$this, 'posts_where' ));       
 		add_filter( 'posts_search', array( &$this, 'exact_search' ), 20, 2 );
+	}
+
+	/**
+	 * Set flag for search.
+	 * @param object $query Query object.
+	 */
+	function set_query_param( $query ){
+		if( !isset( $query->query['search_type'] ) )
+			return $query;
+
+		$query->set( 'search_type', 'sell_media_search' );
 	}
 
 	/**
@@ -37,12 +48,14 @@ Class SellMediaSearch {
 	 *
 	 * @since 2.0.7
 	 */
-	public function posts_where( $where ) {
-
+	public function posts_where( $where, $wp_query ) {
 		global $wpdb;
-		if ( is_search() ) {
-			$where .= ' AND ( post_type = \'sell_media_item\' OR ( post_type = \'attachment\' AND post_parent != 0 AND ID IN ( SELECT meta_value FROM '.$wpdb->postmeta.' WHERE meta_key = \'_sell_media_attachment_id\' ) ) )';
-		}
+
+		if( !isset( $wp_query->query['search_type'] ) )
+			return $where;
+
+		$where .= ' AND ( post_type = \'sell_media_item\' OR ( post_type = \'attachment\' AND post_parent != 0 AND ID IN ( SELECT meta_value FROM '.$wpdb->postmeta.' WHERE meta_key = \'_sell_media_attachment_id\' ) ) )';
+
 		return $where;
 	}
 
@@ -50,22 +63,24 @@ Class SellMediaSearch {
 	 *
 	 * @since 1.8.7
 	 */
-	public function terms_join( $join ) {
+	public function terms_join( $join, &$wp_query ) {
 		global $wpdb;
 
-		if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
+		if( !isset( $wp_query->query['search_type'] ) )
+			return $join;
 
-			// searching custom taxonomies
-			$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
 
-			foreach ( $taxonomies as $taxonomy ) {
-				$on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
-			}
+		// searching custom taxonomies
+		$taxonomies = get_object_taxonomies( array( 'sell_media_item', 'attachment' ) );
 
-			// build our final string
-			$on = ' ( ' . implode( ' OR ', $on ) . ' ) ';
-			$join .= " LEFT JOIN $wpdb->term_relationships AS trel ON ($wpdb->posts.ID = trel.object_id) LEFT JOIN $wpdb->term_taxonomy AS ttax ON ( " . $on . " AND trel.term_taxonomy_id = ttax.term_taxonomy_id) LEFT JOIN $wpdb->terms AS tter ON (ttax.term_id = tter.term_id) ";
+		foreach ( $taxonomies as $taxonomy ) {
+			$on[] = "ttax.taxonomy = '" . addslashes( $taxonomy )."'";
 		}
+
+		// build our final string
+		$on = ' ( ' . implode( ' OR ', $on ) . ' ) ';
+		$join .= " LEFT JOIN $wpdb->term_relationships AS trel ON ($wpdb->posts.ID = trel.object_id) LEFT JOIN $wpdb->term_taxonomy AS ttax ON ( " . $on . " AND trel.term_taxonomy_id = ttax.term_taxonomy_id) LEFT JOIN $wpdb->terms AS tter ON (ttax.term_id = tter.term_id) ";
+
 		return $join;
 	}
 
@@ -101,6 +116,9 @@ Class SellMediaSearch {
 	 * @since 1.8.7
 	 */
 	public function search_where( $where, $wp_query ) {
+
+		if( !isset( $wp_query->query['search_type'] ) )
+			return $where;
 
 		$this->query_instance = &$wp_query;
 		global $wpdb;
@@ -196,6 +214,10 @@ Class SellMediaSearch {
 	 * @since 1.8.7
 	 */
 	public function distinct( $query ) {
+		
+		if( !isset( $this->query_instance->query['search_type'] ) )
+			return $query;
+
 		global $wpdb;
 		if ( ! empty( $this->query_instance->query_vars['s'] ) ) {
 			if ( strstr( $query, 'DISTINCT' ) ) {}
@@ -214,7 +236,7 @@ Class SellMediaSearch {
 	 */
 	public function search_query( $query ) {
 
-		if ( ! $query->is_search )
+		if( !isset( $query->query['search_type'] ) )
 			return $query;
 
 		/**
@@ -250,8 +272,8 @@ Class SellMediaSearch {
 		        $query->set( 'exact', true );
 		    }
 
-			/*y
-			 * Exclude password protected collections from search query
+			/*
+			 * Exclude password protected collections from search query.
 			 */
 			foreach( get_terms('collection') as $term_obj ){
 				$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
@@ -287,6 +309,9 @@ Class SellMediaSearch {
 	function exact_search( $search, $wp_query ) {
 	    global $wpdb;
 
+	    if( !isset( $wp_query->query['search_type'] ) )
+			return $search;
+
 	    if ( empty( $search ) )
 	        return $search;
 
@@ -298,10 +323,12 @@ Class SellMediaSearch {
 
 	    $search = $searchand = '';
 
-	    foreach ( (array) $q['search_terms'] as $term ) {
+	    $search_terms = array( implode( ' ', $q['search_terms'] ) );
+
+	    foreach ( (array) $search_terms as $term ) {
 	        $term = esc_sql( $wpdb->esc_like( $term ) );
 
-	        $search .= "{$searchand}($wpdb->posts.post_title REGEXP '[[:<:]]{$term}[[:>:]]') OR ($wpdb->posts.post_content REGEXP '[[:<:]]{$term}[[:>:]]')";
+	        $search .= "{$searchand}($wpdb->posts.post_title = '{$term}') OR ($wpdb->posts.post_content REGEXP '[[:<:]]{$term}[[:>:]]')";
 
 	        $searchand = ' AND ';
 	    }
