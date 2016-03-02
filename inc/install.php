@@ -30,6 +30,12 @@ function sell_media_install() {
 	if ( $version && $version > SELL_MEDIA_VERSION )
 		return;
 
+	// Check compatible version.
+	if ( !sell_media_compatible_version() ) {
+        deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
+        wp_die( __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) );
+    }
+
 	// Register Custom Post Types
 	sell_media_register_post_types();
 
@@ -92,8 +98,48 @@ function sell_media_install() {
 }
 register_activation_hook( SELL_MEDIA_PLUGIN_FILE, 'sell_media_install' );
 
+// Check version.
+add_action( 'admin_init', 'sell_media_check_version' );
+
 /**
- * Delete options on plugin deactivation
+ * Check WordPress version and disable if incompatible
+ * @return void 
+ */
+function sell_media_check_version() {
+    if ( ! sell_media_compatible_version() ) {
+        if ( is_plugin_active( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) ) ) {
+            deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
+            add_action( 'admin_notices', 'sell_media_disabled_notice' );
+            if ( isset( $_GET['activate'] ) ) {
+                unset( $_GET['activate'] );
+            }
+        }
+    }
+}
+
+/**
+ * Plugin disable notice.
+ * @return string Disable notice.
+ */
+function sell_media_disabled_notice() {
+	echo '<div class="update-nag">' . esc_html__( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) . '</div>';
+} 
+
+/**
+ * Check WordPress version.
+ * @return boolean
+ */
+function sell_media_compatible_version() {
+    if ( version_compare( $GLOBALS['wp_version'], '4.4', '<' ) ) {
+         return false;
+     }
+
+    // Add sanity checks for other version requirements here.
+    return true;
+}
+
+/**
+ * Delete options on plugin deactivation.
  */
 function sell_media_deactivate(){
 	delete_option( 'sell_media_options' );
