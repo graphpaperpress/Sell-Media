@@ -263,7 +263,16 @@ function sell_media_content_loop( $post_id, $i ){
 		$class .= ' sell-media-grid-single-item';
 
 	$html  = '<div id="sell-media-' . $post_id . '" class="' . $class . '">';
-	$html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
+	// if there is a post parent, change link to gallery
+	$parent_id = wp_get_post_parent_id( $post_id );
+	if ( $parent_id ) {
+		$link = add_query_arg( array(
+			'id' => $post_id
+		), get_permalink( $parent_id ) );
+	} else {
+		$link = get_permalink( $post_id );
+	}
+	$html .= '<a href="' . esc_url( $link ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 	$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 	if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
 		$attachment_id = sell_media_get_attachment_id( $post_id );

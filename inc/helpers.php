@@ -1324,7 +1324,7 @@ function sell_media_search_results( $content ){
 	// Current pagination.
 	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 
-	$args['post_type'] = 'sell_media_item';
+	$args['post_type'] = array( 'sell_media_item', 'attachment' );
 	$args['paged'] = $paged;
 	$args['post_status'] = array( 'publish' );
 	$args['search_type'] = 'sell_media_search';
