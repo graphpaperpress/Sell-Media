@@ -121,3 +121,14 @@ function sell_media_cart_menu(){
 }
 add_action( 'wp_ajax_sell_media_cart_menu', 'sell_media_cart_menu' );
 add_action( 'wp_ajax_nopriv_sell_media_cart_menu', 'sell_media_cart_menu' );
+
+
+/**
+ * Ajax filter search function.
+ */
+function sell_media_ajax_filter_search(){
+	print_pre( $_POST );
+	die;
+}
+add_action( 'wp_ajax_sell_media_ajax_filter', 'sell_media_ajax_filter_search' );
+add_action( 'wp_ajax_nopriv_sell_media_ajax_filter', 'sell_media_ajax_filter_search' );
