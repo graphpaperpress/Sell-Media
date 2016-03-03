@@ -1332,13 +1332,14 @@ function sell_media_search_results( $content ){
 
 	$args['post_type'] = array( 'sell_media_item' );
 	$args['paged'] = $paged;
-	$args['post_status'] = array( 'publish', 'inherit' );
+	$args['post_status'] = array( 'publish' );
 	$args['search_type'] = 'sell_media_search';
 	
 
 	if( isset( $_GET['search_everything'] ) && 1 == $_GET['search_everything'] ){
 		$args['s'] = $keyword;
 		$args['post_type'][] = 'attachment';
+		$args['post_status'][] = 'inherit';
 	}
 	else{
 
@@ -1365,7 +1366,6 @@ function sell_media_search_results( $content ){
 	}
 
 	$search_query = new WP_Query( $args );
-	// print_pre( $search_query->request );
 	$content .= '<div id="sell-media-archive" class="sell-media">';
 	$content .= '    <div id="content" role="main">';
 
