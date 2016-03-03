@@ -1365,7 +1365,7 @@ function sell_media_search_results( $content ){
 	}
 
 	$search_query = new WP_Query( $args );
-	print_pre( $search_query->request );
+	// print_pre( $search_query->request );
 	$content .= '<div id="sell-media-archive" class="sell-media">';
 	$content .= '    <div id="content" role="main">';
 
