@@ -1250,7 +1250,7 @@ function sell_media_modify_search_form(){
 	// Search everything
 	$checked_se = ( isset( $_GET['search_everything'] ) ) ? 'checked' : '';
 	$html .= '<div id="sell-media-search-everything" class="sell-media-search-field sell-media-search-everything">';
-	$html .= '<label for="search_everything" id="sell-media-search-everything-desc" class="sell-media-search-everything-desc sell-media-tooltip" data-tooltip="' . __( 'Search everywhere including titles, descriptions, captions, and keywords. Search for one word at a time.', 'sell_media' ) . '">' . __( 'Search everything (?)', 'sell_media' ) . '</label>';
+	$html .= '<label for="search_everything" id="sell-media-search-everything-desc" class="sell-media-search-everything-desc sell-media-tooltip" data-tooltip="' . __( 'Search everywhere including titles, descriptions, captions, and keywords. If you use this option, only search for one word at a time.', 'sell_media' ) . '">' . __( 'Search everything (?)', 'sell_media' ) . '</label>';
 	$html .= '<input type="checkbox" value="1" name="search_everything" id="search_everything" ' . $checked_se . '/>';
 	$html .= '</div>';
 
