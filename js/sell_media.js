@@ -492,6 +492,29 @@ jQuery(document).ready(function($){
 		if( 'paypal' == selected_payment.val() )
 			$("#sell_media_payment_gateway").submit();
 	});
+
+	// Event for the ajax filters.
+	$( document ).on( 'click', '#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item', function(){
+		
+		if( $(this).hasClass( 'stop-click' ) )
+			return false;
+
+		var tab_selected = $(this).attr( 'id' );
+		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass( 'selected-tab' ).addClass('stop-click');
+		$(this).addClass( 'selected-tab' );
+
+		// Do ajax.
+		var post_data = {
+			'action' : 'sell_media_ajax_filter',
+			'tab'	 : tab_selected
+		};
+
+		$.post( sell_media.ajaxurl, post_data, function( response ){
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( response );
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass('stop-click');
+		} );
+	});
+
 });
 
 /**
