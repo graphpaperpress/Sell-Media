@@ -264,11 +264,12 @@ function sell_media_content_loop( $post_id, $i ){
 
 	$html  = '<div id="sell-media-' . $post_id . '" class="' . $class . '">';
 	// if there is a post parent, change link to gallery
-	$parent_id = wp_get_post_parent_id( $post_id );
-	if ( $parent_id ) {
+	$parent = sell_media_attachment_parent_post( $post_id );
+	if ( $parent ) {
 		$link = add_query_arg( array(
 			'id' => $post_id
-		), get_permalink( $parent_id ) );
+		), get_permalink( $parent->ID ) );
+		$post_id = $parent->ID;
 	} else {
 		$link = get_permalink( $post_id );
 	}
