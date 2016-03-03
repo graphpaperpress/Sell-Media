@@ -559,3 +559,67 @@ function sell_media_login_form_shortcode(){
 }
 add_shortcode( 'sell_media_login_form', 'sell_media_login_form_shortcode' );
 add_shortcode( 'sell_media_login', 'sell_media_login_form_shortcode' );
+
+/**
+ * Ajax item filter shortcode.
+ * @param  mixed $atts Attributes for shortcode.
+ * @return string      Shortcode output
+ *
+ * @since 2.1.4 
+ */
+function sell_media_ajax_filter( $atts ){
+
+    $atts = shortcode_atts( array(
+        'filters' => 'all',
+    ), $atts );
+
+    $filter_tabs = $choosen_tabs = array(
+            array( 
+                'title' => 'Newest',
+                'slug' => 'newest' 
+            ),
+            array( 
+                'title' => 'Most Popular',
+                'slug' => 'most-popular' 
+            ),
+            array( 
+                'title' => 'Collections',
+                'slug'   => 'collections' 
+            ),
+            array( 
+                'title' => 'Keywords',
+                'slug' => 'keywords' 
+            )
+        );
+
+    if( 'all' !== $atts['filters'] ){
+        $choosen_tab_ids = explode( ',', $atts['filters'] );
+        $choosen_tabs = array();
+        if( !empty( $choosen_tab_ids ) ){
+            foreach ($choosen_tab_ids as $key => $tab_id) {
+                $_tab_id = trim( $tab_id ) - 1;
+                if( isset( $filter_tabs[$_tab_id] ) ){
+                    $choosen_tabs[] =  $filter_tabs[$_tab_id];                    
+                }
+            }
+        }
+    }
+
+    if( empty( $choosen_tabs ) ){
+        return false;
+    }
+
+    $output = '<div id="sell-media-ajax-filter-container">';
+        $output .= '<ul class="sell-media-ajax-filter-tabs">';
+        foreach ($choosen_tabs as $tab_key => $tab) {
+            $tab_item_class = 'sell-media-ajax-filter-tab-item' . ( ( 0 == $tab_key )? ' selected-tab' : '' );
+            $output .= '<li><a href="javascript:void(0);" id="' . $tab['slug'] . '" class="' . $tab_item_class . '">' . $tab['title'] . '</a></li>';
+        }
+        $output .= '</ul>';
+
+        $output .= '<div class="sell-media-ajax-filter-result"></div>';
+    $output .= '</div>';
+    return $output;
+}
+add_shortcode( 'sell_media_filters', 'sell_media_ajax_filter' );
+add_shortcode( 'sell_media_filter', 'sell_media_ajax_filter' );
