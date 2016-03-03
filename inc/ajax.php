@@ -127,7 +127,76 @@ add_action( 'wp_ajax_nopriv_sell_media_cart_menu', 'sell_media_cart_menu' );
  * Ajax filter search function.
  */
 function sell_media_ajax_filter_search(){
-	print_pre( $_POST );
+	if( empty( $_POST ) )
+		return false;
+
+	$args['post_type'] = "sell_media_item";
+	$args['post_status'] = "publish";
+
+	if( 'newest' == $_POST['tab'] ){
+		$args['order'] = 'DESC';
+		$args['orderby'] = 'date';
+	}
+	else if( 'most-popular' == $_POST['tab'] ){
+		$args['order'] = 'DESC';
+		$args['meta_key'] = '_sell_media_post_views_count';
+		$args['orderby'] = 'meta_value_num';
+	}
+	else if( 'most-popular' == $_POST['tab'] ){
+		$args['order'] = 'DESC';
+		$args['meta_key'] = '_sell_media_post_views_count';
+		$args['orderby'] = 'meta_value_num';
+	}
+	else if( 'keywords' == $_POST['tab'] ){
+		$args['tax_query'] = array(
+							array(
+								'taxonomy'     => 'keywords',
+								'field'    => 'id',
+								'terms'   => absint( $_POST['term']),
+							),
+						);
+	}
+	else if( 'collections' == $_POST['tab'] ){
+		$args['tax_query'] = array(
+							array(
+								'taxonomy'     => 'collection',
+								'field'    => 'id',
+								'terms'   => absint( $_POST['term']),
+							),
+						);
+	}
+	$content = "";
+	$search_query = new WP_Query( $args );
+
+	$content .= '<div id="sell-media-archive" class="sell-media">';
+	$content .= '    <div id="content" role="main">';
+
+	if( $search_query->have_posts() ):
+		$i = 0;
+		$content .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+
+		while( $search_query->have_posts() ):
+
+			$search_query->the_post();
+			$i++;
+			$content .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
+
+		endwhile;
+
+		$content .= '</div><!-- .sell-media-grid-item-container -->';
+		$content .= sell_media_pagination_filter( $search_query->max_num_pages );
+
+		wp_reset_postdata();
+
+	else:
+			$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
+			$content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
+	endif;
+
+	$content .= '    </div>';
+	$content .= '</div>';
+
+	echo $content;
 	die;
 }
 add_action( 'wp_ajax_sell_media_ajax_filter', 'sell_media_ajax_filter_search' );
