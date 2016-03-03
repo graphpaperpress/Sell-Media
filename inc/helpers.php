@@ -16,13 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  */
 function sell_media_template_redirect( $original_template ) {
 
-	$sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
+	$post_type = 'sell_media_item';
+	$sell_media_taxonomies = get_object_taxonomies( $post_type );
 
 	/**
 	 * Archive -- Check if this is an archive page AND post type is sell media
 	 */
-	if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
-		$template = plugin_dir_path( dirname( __FILE__ ) ) . 'themes/archive.php';
+	if ( is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) ) {
+		// allow users to override SM archive template by adding their own to their theme
+		if ( $overridden_template = locate_template( 'archive-sell-media.php' ) ) {
+			$template = $overridden_template;
+		} else {
+			$template = SELL_MEDIA_PLUGIN_DIR . '/themes/archive.php';
+		}
 	} else {
 		$template = $original_template;
 	}
