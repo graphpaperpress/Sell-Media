@@ -493,26 +493,84 @@ jQuery(document).ready(function($){
 			$("#sell_media_payment_gateway").submit();
 	});
 
+	function sell_media_ajax_filter_request( new_data ){
+		var old_data = {
+			"action": "sell_media_ajax_filter"
+		};
+		var final_data = $.extend( old_data, new_data );
+
+		$.post( sell_media.ajaxurl, final_data, function( response ){
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( response );
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass('stop-click');
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a' ).removeClass('stop-click');
+		} );
+	}
+
 	// Event for the ajax filters.
 	$( document ).on( 'click', '#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item', function(){
+		
+		if( $(this).hasClass( 'stop-click' ) || $(this).hasClass( 'selected-tab' )  )
+			return false;
+
+
+		var tab_selected = $(this).attr( 'id' );
+		
+		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass( 'selected-tab' ).addClass('stop-click');
+		$(this).addClass( 'selected-tab' );
+
+
+		if( 'keywords' == tab_selected ){
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-keyword-terms').slideDown( 'slow' );
+		}
+		else{
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-keyword-terms').slideUp( 'slow' );	
+		}
+
+		if( 'collections' == tab_selected ){
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-collection-terms').slideDown( 'slow' );
+		}
+		else{
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-collection-terms').slideUp( 'slow' );	
+		}
+
+
+		if( 'keywords' == tab_selected || 'collections' == tab_selected ){
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass('stop-click');
+			return false;
+		}
+
+		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( 'Loading...' );
+
+		// Do ajax.
+		var post_data = {
+			'tab'	 : tab_selected
+		};
+
+		sell_media_ajax_filter_request( post_data );
+
+	});
+
+	// Ajax keyword filter
+	$( document ).on( 'click', '#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a', function(){
 		
 		if( $(this).hasClass( 'stop-click' ) )
 			return false;
 
-		var tab_selected = $(this).attr( 'id' );
-		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass( 'selected-tab' ).addClass('stop-click');
-		$(this).addClass( 'selected-tab' );
+		var tab_selected = $('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item.selected-tab').attr( 'id' );
+		var term_selected = $(this).attr('data-termid');
+
+		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a' ).addClass('stop-click');
+		
+		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( 'Loading...' );
 
 		// Do ajax.
 		var post_data = {
-			'action' : 'sell_media_ajax_filter',
-			'tab'	 : tab_selected
+			'tab'	 : tab_selected,
+			'term'	 : term_selected
 		};
 
-		$.post( sell_media.ajaxurl, post_data, function( response ){
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( response );
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass('stop-click');
-		} );
+		sell_media_ajax_filter_request( post_data );
+
 	});
 
 });
