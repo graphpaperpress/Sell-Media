@@ -611,11 +611,42 @@ function sell_media_ajax_filter( $atts ){
 
     $output = '<div id="sell-media-ajax-filter-container">';
         $output .= '<ul class="sell-media-ajax-filter-tabs">';
+        $have_keywords = false;
+        $have_collections = false;
         foreach ($choosen_tabs as $tab_key => $tab) {
             $tab_item_class = 'sell-media-ajax-filter-tab-item' . ( ( 0 == $tab_key )? ' selected-tab' : '' );
             $output .= '<li><a href="javascript:void(0);" id="' . $tab['slug'] . '" class="' . $tab_item_class . '">' . $tab['title'] . '</a></li>';
+
+            if( 'keywords' == $tab['slug'] ){
+                $have_keywords = true;
+            }
+            if( 'keywords' == $tab['slug'] ){
+                $have_collections = true;
+            }
         }
         $output .= '</ul>';
+
+        if( $have_keywords ){
+            $keywords = get_terms( 'keywords' );
+            if( !empty( $keywords ) ){
+                $output .= '<ul class="sell-media-ajax-filter-terms sell-media-ajax-filter-keyword-terms hide">';
+                foreach ($keywords as $key => $keyword) {
+                    $output .= '<li><a href="javascript:void(0);" id="' . $keyword->slug . '" data-termid="'.$keyword->term_id.'" class="sell-media-filter-keyword-term">' . $keyword->name . '</a></li>';
+                }                
+                $output .= '</ul>';
+            }
+        }
+
+        if( $have_collections ){
+            $collections = get_terms( 'collection' );
+            if( !empty( $collections ) ){
+                $output .= '<ul class="sell-media-ajax-filter-terms sell-media-ajax-filter-collection-terms hide">';
+                foreach ($collections as $key => $collection) {
+                    $output .= '<li><a href="javascript:void(0);" id="' . $collection->slug . '" data-termid="'.$collection->term_id.'" class="sell-media-filter-collection-term">' . $collection->name . '</a></li>';
+                }                
+                $output .= '</ul>';
+            }
+        }
 
         $output .= '<div class="sell-media-ajax-filter-result"></div>';
     $output .= '</div>';
