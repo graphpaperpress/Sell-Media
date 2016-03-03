@@ -1330,14 +1330,15 @@ function sell_media_search_results( $content ){
 	// Current pagination.
 	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 
-	$args['post_type'] = array( 'sell_media_item', 'attachment' );
+	$args['post_type'] = array( 'sell_media_item' );
 	$args['paged'] = $paged;
-	$args['post_status'] = array( 'publish' );
+	$args['post_status'] = array( 'publish', 'inherit' );
 	$args['search_type'] = 'sell_media_search';
 	
 
 	if( isset( $_GET['search_everything'] ) && 1 == $_GET['search_everything'] ){
 		$args['s'] = $keyword;
+		$args['post_type'][] = 'attachment';
 	}
 	else{
 
@@ -1364,7 +1365,7 @@ function sell_media_search_results( $content ){
 	}
 
 	$search_query = new WP_Query( $args );
-
+	print_pre( $search_query->request );
 	$content .= '<div id="sell-media-archive" class="sell-media">';
 	$content .= '    <div id="content" role="main">';
 
@@ -1416,3 +1417,29 @@ function sell_media_search_placeholder( $placeholder ){
 }
 
 add_filter( 'sell_media_search_placeholder', 'sell_media_search_placeholder' );
+
+/**
+ * Search for the attachment parent post.
+ * @param  int  $post_id attachment post id
+ * @param  boolean $single  Return single value or array
+ * @return mixed           Returns parent.
+ */
+function sell_media_attachment_parent_post( $post_id, $single = true ){
+	$args['post_type'] = "sell_media_item";
+	$args['meta_query'] = array(
+			array(
+				'key'     => '_sell_media_attachment_id',
+				'value'   => $post_id,
+				'compare' => 'LIKE'
+			),
+		);
+
+	$items = get_posts( $args );
+	if( empty( $items ) )
+		return false;
+
+	if( $single )
+		return $items[0];
+
+	return $items;
+}
