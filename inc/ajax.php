@@ -122,58 +122,74 @@ function sell_media_cart_menu(){
 add_action( 'wp_ajax_sell_media_cart_menu', 'sell_media_cart_menu' );
 add_action( 'wp_ajax_nopriv_sell_media_cart_menu', 'sell_media_cart_menu' );
 
-
 /**
  * Ajax filter search function.
+ * @param  array   $param Parameters.
+ * @param  boolean $echo  Echo the value or return.
+ * @return array         Content and load button.
  */
-function sell_media_ajax_filter_search(){
-	if( empty( $_POST ) )
-		return false;
+function sell_media_ajax_filter_search( $param = array(), $echo = true ){
+	// Check if post is empty.
+	if( !empty( $_POST ) ) {
+		$param = $_POST;
+	}
 
+	// Check if parameters are empty.
+	if( empty( $param ) ){
+		return false;
+	}
+
+	// Next pagination.
+	$paged = ( isset( $_POST['paged'] ) and 1 <= $param['paged'] ) ? absint( $param['paged'] )+1 : 1;
+
+	// Arguments for query.
 	$args['post_type'] = "sell_media_item";
 	$args['post_status'] = "publish";
+	$args['paged'] = $paged;
 
-	if( 'newest' == $_POST['tab'] ){
+	if( 'newest' == $param['tab'] ){
 		$args['order'] = 'DESC';
 		$args['orderby'] = 'date';
 	}
-	else if( 'most-popular' == $_POST['tab'] ){
+	else if( 'most-popular' == $param['tab'] ){
 		$args['order'] = 'DESC';
 		$args['meta_key'] = '_sell_media_post_views_count';
 		$args['orderby'] = 'meta_value_num';
 	}
-	else if( 'most-popular' == $_POST['tab'] ){
+	else if( 'most-popular' == $param['tab'] ){
 		$args['order'] = 'DESC';
 		$args['meta_key'] = '_sell_media_post_views_count';
 		$args['orderby'] = 'meta_value_num';
 	}
-	else if( 'keywords' == $_POST['tab'] ){
+	else if( 'keywords' == $param['tab'] ){
 		$args['tax_query'] = array(
 							array(
 								'taxonomy'     => 'keywords',
 								'field'    => 'id',
-								'terms'   => absint( $_POST['term']),
+								'terms'   => absint( $param['term']),
 							),
 						);
 	}
-	else if( 'collections' == $_POST['tab'] ){
+	else if( 'collections' == $param['tab'] ){
 		$args['tax_query'] = array(
 							array(
 								'taxonomy'     => 'collection',
 								'field'    => 'id',
-								'terms'   => absint( $_POST['term']),
+								'terms'   => absint( $param['term']),
 							),
 						);
 	}
+	
 	$content = "";
 	$search_query = new WP_Query( $args );
 
-	$content .= '<div id="sell-media-archive" class="sell-media">';
-	$content .= '    <div id="content" role="main">';
-
 	if( $search_query->have_posts() ):
 		$i = 0;
-		$content .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+
+		// If its first result show container.
+		if( $paged == 1 ){
+			$content .= '<div class="sell_media_ajax_filter_items_container ' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+		}
 
 		while( $search_query->have_posts() ):
 
@@ -183,21 +199,36 @@ function sell_media_ajax_filter_search(){
 
 		endwhile;
 
-		$content .= '</div><!-- .sell-media-grid-item-container -->';
-		$content .= sell_media_pagination_filter( $search_query->max_num_pages );
+		// If its first result end container.
+		if( $paged == 1 ){
+			$content .= '</div><!-- .sell-media-grid-item-container -->';
+		}
+
+
+		$load_more = '';
+		// If result is at end hide load button.
+		if( $paged != $search_query->max_num_pages ){
+			$load_more = '<div class="load-more-button"><a href="javascript:void(0);" data-currentpage="'.$paged.'">'.__( 'Load more', 'sell_media' ).'</a></div>';
+		}
 
 		wp_reset_postdata();
 
 	else:
-			$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
-			$content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
+		// No result found message.
+		$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
+		$content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
 	endif;
 
-	$content .= '    </div>';
-	$content .= '</div>';
+	// Final response.
+	$response = array( 'content' => $content, 'load_more' => $load_more );
 
-	echo $content;
-	die;
+	if( !$echo ){
+		return $response;
+	}
+
+	echo wp_send_json( $response );
 }
+
+// Add ajax callback.
 add_action( 'wp_ajax_sell_media_ajax_filter', 'sell_media_ajax_filter_search' );
 add_action( 'wp_ajax_nopriv_sell_media_ajax_filter', 'sell_media_ajax_filter_search' );
