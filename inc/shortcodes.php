@@ -575,19 +575,19 @@ function sell_media_ajax_filter( $atts ){
 
     $filter_tabs = $choosen_tabs = array(
             array( 
-                'title' => 'Newest',
+                'title' => __( 'Newest', 'sell_media' ),
                 'slug' => 'newest' 
             ),
             array( 
-                'title' => 'Most Popular',
+                'title' => __( 'Most Popular', 'sell_media' ),
                 'slug' => 'most-popular' 
             ),
             array( 
-                'title' => 'Collections',
+                'title' => __( 'Collections', 'sell_media' ),
                 'slug'   => 'collections' 
             ),
             array( 
-                'title' => 'Keywords',
+                'title' => __( 'Keywords', 'sell_media' ),
                 'slug' => 'keywords' 
             )
         );
@@ -613,9 +613,15 @@ function sell_media_ajax_filter( $atts ){
         $output .= '<ul class="sell-media-ajax-filter-tabs">';
         $have_keywords = false;
         $have_collections = false;
+        $first_tab = false;
+        $first_term = false;
         foreach ($choosen_tabs as $tab_key => $tab) {
             $tab_item_class = 'sell-media-ajax-filter-tab-item' . ( ( 0 == $tab_key )? ' selected-tab' : '' );
             $output .= '<li><a href="javascript:void(0);" id="' . $tab['slug'] . '" class="' . $tab_item_class . '">' . $tab['title'] . '</a></li>';
+
+            if( 0 == $tab_key ){
+                $first_tab = $tab['slug'];
+            }
 
             if( 'keywords' == $tab['slug'] ){
                 $have_keywords = true;
@@ -629,9 +635,21 @@ function sell_media_ajax_filter( $atts ){
         if( $have_keywords ){
             $keywords = get_terms( 'keywords' );
             if( !empty( $keywords ) ){
-                $output .= '<ul class="sell-media-ajax-filter-terms sell-media-ajax-filter-keyword-terms hide">';
-                foreach ($keywords as $key => $keyword) {
-                    $output .= '<li><a href="javascript:void(0);" id="' . $keyword->slug . '" data-termid="'.$keyword->term_id.'" class="sell-media-filter-keyword-term">' . $keyword->name . '</a></li>';
+                $keywords_terms_class = 'sell-media-ajax-filter-terms sell-media-ajax-filter-keyword-terms';
+                if( 'keywords' !== $first_tab ){
+                    $keywords_terms_class .= ' hide';
+                }
+                $output .= '<ul class="'.$keywords_terms_class.'">';
+                foreach ($keywords as $key_index => $keyword) {
+                    $keywords_class = 'sell-media-filter-keyword-term';
+                    if( 'keywords' == $first_tab && 0 == $key_index ){
+                        $first_term = $keyword->term_id;
+                        $keywords_class .= ' selected-term';
+                    }
+
+                    $output .= '<li><a href="javascript:void(0);" id="' . $keyword->slug . '" data-termid="'.$keyword->term_id.'" class="'.$keywords_class.'">' . $keyword->name . '</a></li>';
+
+                    if( 15 <= $key_index ) break;
                 }                
                 $output .= '</ul>';
             }
@@ -640,15 +658,35 @@ function sell_media_ajax_filter( $atts ){
         if( $have_collections ){
             $collections = get_terms( 'collection' );
             if( !empty( $collections ) ){
-                $output .= '<ul class="sell-media-ajax-filter-terms sell-media-ajax-filter-collection-terms hide">';
-                foreach ($collections as $key => $collection) {
-                    $output .= '<li><a href="javascript:void(0);" id="' . $collection->slug . '" data-termid="'.$collection->term_id.'" class="sell-media-filter-collection-term">' . $collection->name . '</a></li>';
+                $collection_terms_class = 'sell-media-ajax-filter-terms sell-media-ajax-filter-collection-terms';
+                if( 'collections' !== $first_tab ){
+                    $collection_terms_class .= ' hide';
+                }
+                $output .= '<ul class="'.$collection_terms_class.'">';
+                foreach ($collections as $col_index => $collection) {
+                    $collection_class = 'sell-media-filter-collection-term';
+                    if( 'collections' == $first_tab && 0 == $col_index ){
+                        $first_term = $collection->term_id;
+                        $collection_class .= ' selected-term';
+                    }
+                    $output .= '<li><a href="javascript:void(0);" id="' . $collection->slug . '" data-termid="'.$collection->term_id.'" class="'.$collection_class.'">' . $collection->name . '</a></li>';
+
+                    if( 15 <= $col_index ) break;
                 }                
                 $output .= '</ul>';
             }
         }
 
-        $output .= '<div class="sell-media-ajax-filter-result"></div>';
+        $output .= '<div class="sell-media-ajax-filter-result">';
+            $output .= '<div id="sell-media-archive" class="sell-media">';
+                $output .= '    <div id="content" role="main">';
+                    $pram = array( 'tab' => $first_tab, 'term' => $first_term );
+                    $response = sell_media_ajax_filter_search( $pram, false );
+                    $output .= $response['content'];
+                    $output .= $response['load_more'];
+                $output .= '</div>';
+            $output .= '</div>';
+        $output .= '</div>';
     $output .= '</div>';
     return $output;
 }
