@@ -1093,8 +1093,9 @@ input.sell-media-search-text[type=text] {
   clear: both;
   font-size: 16px; }
   #sell-media-ajax-filter-container > ul {
-    margin: 0;
     background: #4d4d4d;
+    margin: 0;
+    padding: 0;
     text-align: center; }
     #sell-media-ajax-filter-container > ul li {
       display: inline-block;

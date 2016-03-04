@@ -1431,8 +1431,9 @@ input.sell-media-search-text[type=text] {
 	font-size: $font-size;
 
 	> ul {
-		margin: 0;
 		background: darken( $default-color, 20% );
+		margin: 0;
+		padding: 0;
 		text-align: center;
 
 		li {
