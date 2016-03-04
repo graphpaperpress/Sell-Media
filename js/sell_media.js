@@ -518,7 +518,7 @@ jQuery(document).ready(function($){
 		$.post( sell_media.ajaxurl, final_data, function( response ){
 			if( '' == response )
 				return false;
-			
+
 			var content = $.parseHTML( response.content  )
 			if( !append ){
 				$(content).find( '.sell-media-grid-item').addClass('hide');
@@ -635,6 +635,38 @@ jQuery(document).ready(function($){
 
 	});
 
+	$(document).on('click', '.term-pagination span.next', function(){
+		var pagination_wrap = $(this).parent();
+		var parent = $(this).parent().parent();
+		var current_group = parent.find('ul.current-term-group');
+		var next_group = current_group.next();
+		parent.find('ul').removeClass('current-term-group').addClass('hide');
+		next_group.removeClass('hide').addClass('current-term-group');
+		
+		pagination_wrap.find('span.prev').show();
+		if( parent.find('ul').index(next_group) == (parseInt(parent.find('ul').length ) - 1) ){
+			pagination_wrap.find('span.next').hide();
+		}
+		else{
+			pagination_wrap.find('span.next').show();	
+		}
+	});
+
+	$(document).on('click', '.term-pagination span.prev', function(){
+		var pagination_wrap = $(this).parent();
+		var parent = $(this).parent().parent();
+		var current_group = parent.find('ul.current-term-group');
+		var prev_group = current_group.prev();
+		parent.find('ul').removeClass('current-term-group').addClass('hide');
+		prev_group.removeClass('hide').addClass('current-term-group');
+		pagination_wrap.find('span.next').show();
+		if( 0 == parent.find('ul').index(prev_group) ){
+			pagination_wrap.find('span.prev').hide();
+		}
+		else{
+			pagination_wrap.find('span.next').show();	
+		}
+	});
 });
 
 /**
