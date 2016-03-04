@@ -164,18 +164,18 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 	else if( 'keywords' == $param['tab'] ){
 		$args['tax_query'] = array(
 							array(
-								'taxonomy'     => 'keywords',
+								'taxonomy' => 'keywords',
 								'field'    => 'id',
-								'terms'   => absint( $param['term']),
+								'terms'    => absint( $param['term']),
 							),
 						);
 	}
 	else if( 'collections' == $param['tab'] ){
 		$args['tax_query'] = array(
 							array(
-								'taxonomy'     => 'collection',
+								'taxonomy' => 'collection',
 								'field'    => 'id',
-								'terms'   => absint( $param['term']),
+								'terms'    => absint( $param['term']),
 							),
 						);
 	}
@@ -208,7 +208,7 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 		$load_more = '';
 		// If result is at end hide load button.
 		if( $paged != $search_query->max_num_pages ){
-			$load_more = '<div class="load-more-button"><a href="javascript:void(0);" data-currentpage="'.$paged.'">'.__( 'Load more', 'sell_media' ).'</a></div>';
+			$load_more = '<div class="load-more-button"><a href="javascript:void(0);" data-currentpage="' . $paged . '">' . __( 'Load more', 'sell_media' ) . '</a></div>';
 		}
 
 		wp_reset_postdata();
@@ -217,6 +217,8 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 		// No result found message.
 		$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
 		$content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
+		// Nothing more to load
+		$load_more = '';
 	endif;
 
 	// Final response.
