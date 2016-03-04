@@ -785,7 +785,7 @@ function sell_media_cart_dialog(){
 	$sell_media_taxonomies = get_object_taxonomies( $post_type );
 
 	// Only inject markup on specific pages
-	if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode || is_page( $settings->search_page ) ) {
+	// if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode || is_page( $settings->search_page ) ) {
 		$popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
 
 		if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
@@ -799,7 +799,7 @@ function sell_media_cart_dialog(){
 				<span class="close">&times;</span>
 			</div>
 		<?php endif; 
-	}
+	// }
 	if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ){ ?>
 		<div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms">
 			<div id="sell-media-dialog-box-target">
