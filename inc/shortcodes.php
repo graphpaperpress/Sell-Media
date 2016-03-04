@@ -645,7 +645,8 @@ function sell_media_ajax_filter( $atts ){
                 }
                 $output .= '<div class="'.$keywords_terms_class.'">';
                     $output .= '<div class="drop-down-close-button"></div>';
-                    $output .= '<ul class="">';
+                    $output .= '<ul class="current-term-group">';
+                    $term_pagination = false;
                     foreach ($keywords as $key_index => $keyword) {
                         $keywords_class = 'sell-media-filter-keyword-term';
                         if( 'keywords' == $first_tab && 0 == $key_index ){
@@ -655,9 +656,19 @@ function sell_media_ajax_filter( $atts ){
 
                         $output .= '<li><a href="javascript:void(0);" id="' . $keyword->slug . '" data-termid="'.$keyword->term_id.'" class="'.$keywords_class.'">' . $keyword->name . '</a></li>';
 
-                        if( 15 <= $key_index ) break;
+                        if( 0 != $key_index && $key_index%15 == 0 ){
+                            $output .= '</ul><!--end1-->';
+                            $output .= '<ul class="hide">';
+                            $term_pagination = true;
+                        } 
                     }                
-                    $output .= '</ul>';
+                    $output .= '</ul><!--end All-->';
+                    if( $term_pagination ){
+                        $output .= '<div class="term-pagination">';
+                        $output .= '<span class="prev" style="display:none;"> &laquo; '. __('Prev', 'sell_media' ) . '</span>';
+                        $output .= '<span class="next">'. __('Next', 'sell_media' ) . ' &raquo;</span>';
+                        $output .= '</div>';
+                    }
                 $output .= '</div>';
             }
         }
@@ -671,7 +682,8 @@ function sell_media_ajax_filter( $atts ){
                 }
                 $output .= '<div class="'.$collection_terms_class.'">';
                     $output .= '<div class="drop-down-close-button"></div>';
-                $output .= '<ul class="">';
+                $output .= '<ul class="current-term-group">';
+                $term_pagination = false;
                 foreach ($collections as $col_index => $collection) {
                     $collection_class = 'sell-media-filter-collection-term';
                     if( 'collections' == $first_tab && 0 == $col_index ){
@@ -680,9 +692,19 @@ function sell_media_ajax_filter( $atts ){
                     }
                     $output .= '<li><a href="javascript:void(0);" id="' . $collection->slug . '" data-termid="'.$collection->term_id.'" class="'.$collection_class.'">' . $collection->name . '</a></li>';
 
-                    if( 15 <= $col_index ) break;
+                    if( 0 != $col_index && $col_index%15 == 0 ){
+                        $output .= '</ul><!--end1-->';
+                        $output .= '<ul class="hide">';
+                        $term_pagination = true;
+                    } 
                 }                
-                $output .= '</ul>';
+                $output .= '</ul><!--end All-->';
+                if( $term_pagination ){
+                    $output .= '<div class="term-pagination">';
+                    $output .= '<span class="prev" style="display:none;"> &laquo; '. __('Prev', 'sell_media' ) . '</span>';
+                    $output .= '<span class="next">'. __('Next', 'sell_media' ) . ' &raquo;</span>';
+                    $output .= '</div>';
+                }
                 $output .= '</div>';
             }
         }
