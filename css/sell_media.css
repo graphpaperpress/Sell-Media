@@ -1156,6 +1156,8 @@ input.sell-media-search-text[type=text] {
       #sell-media-ajax-filter-container .sell-media-ajax-filter-terms ul li {
         display: inline-block;
         list-style: none;
+        margin: 0;
+        padding: 0;
         text-align: left;
         width: 25%; }
         @media only screen and (max-width: 1023px) {
