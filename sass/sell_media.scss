@@ -1587,6 +1587,12 @@ input.sell-media-search-text[type=text] {
 	.sell-media-ajax-filter-result {
 		padding: 40px 0;
 
+		/* theme compatibility */
+		.sell-media {
+			width: 100%;
+			padding: 0;
+		}
+
 		h2,
 		p {
 			color: $white-color;

@@ -1198,7 +1198,11 @@ input.sell-media-search-text[type=text] {
         #sell-media-ajax-filter-container .sell-media-ajax-filter-terms .term-pagination span.prev {
           float: left; }
   #sell-media-ajax-filter-container .sell-media-ajax-filter-result {
-    padding: 40px 0; }
+    padding: 40px 0;
+    /* theme compatibility */ }
+    #sell-media-ajax-filter-container .sell-media-ajax-filter-result .sell-media {
+      width: 100%;
+      padding: 0; }
     #sell-media-ajax-filter-container .sell-media-ajax-filter-result h2,
     #sell-media-ajax-filter-container .sell-media-ajax-filter-result p {
       color: #fff; }
