@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.4.2
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,7 @@ Shortcodes are small snippets of code that when added to a Post, Page or Widget 
 * **Download list shortcode** - (OPTIONAL) List logged in users downloads: `[sell_media_download_list]`
 * **Lightbox shortcode** - (OPTIONAL) Displays a page containing all items that visitors have added to their lightbox: `[sell_media_lightbox]`
 * **Login shortcode** – (OPTIONAL) Used to show a custom login form for your customers: `[sell_media_login_form]`
+* **Filters shortcode** – (OPTIONAL) Used to show a page with Latest, Most Popular, Collections, and Keywords as filters: `[sell_media_filters filters="all"]` You can also pass 1, 2, 3, 4 into the filters shortcode parameter to only show specific tabs Latest (1), Most Popular (2), Collections (3),  or Keywords (4). For example, if you only wanted to show the Latest and Keywords tabs, you would use this shortcode: `[sell_media_filters filters="1,4"]`
 
 = How do I show my checkout cart? =
 
@@ -211,6 +212,17 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.1.5 =
+* New Feature: Filter Shortcode. Usage: `[sell_media_filters filters="all"]`. See instructions for additional parameters.
+* New Feature: Add "Search Everywhere" checkbox as optional search parameter.
+* Tweak: Default search to keywords only. This helps site owners optimize search results.
+* Tweak: Retain searched options on page load.
+* Tweak: Add archive page template override back into theme. Usage: Copy sell-media/themes/archive.php into your active theme folder and rename it to archive-sell-media.php
+* Tweak: Always use square images in widgets.
+* Tweak: Collection shortcode overlay design fix.
+* Tweak: Free download button text filter.
+* Tweak: Require WordPress 4.4 on activation.
 
 = 2.1.4 =
 * Tweak: Price group UI fix.
