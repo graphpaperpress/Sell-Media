@@ -498,7 +498,7 @@ jQuery(document).ready(function($){
 
 		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .sell-media-grid-item.hide').each(function(){
 			$(this).fadeIn('slow').delay();
-			$(this).animate({'opacity':1},1000);
+			$(this).removeClass('hide');
 		});
 
 	}
@@ -518,10 +518,10 @@ jQuery(document).ready(function($){
 		$.post( sell_media.ajaxurl, final_data, function( response ){
 			if( '' == response )
 				return false;
-
+			
 			var content = $.parseHTML( response.content  )
 			if( !append ){
-				$(content).find( '.sell-media-grid-item').css({'opacity':0});
+				$(content).find( '.sell-media-grid-item').addClass('hide');
 				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html( content );
 				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').append( response.load_more );
 			}
