@@ -576,19 +576,23 @@ function sell_media_ajax_filter( $atts ){
     $filter_tabs = $choosen_tabs = array(
             array( 
                 'title' => __( 'Newest', 'sell_media' ),
-                'slug' => 'newest' 
+                'slug' => 'newest',
+                'icon' => 'dashicons dashicons-clock'
             ),
             array( 
                 'title' => __( 'Most Popular', 'sell_media' ),
-                'slug' => 'most-popular' 
+                'slug' => 'most-popular',
+                'icon' => 'dashicons dashicons-visibility'
             ),
             array( 
                 'title' => __( 'Collections', 'sell_media' ),
-                'slug'   => 'collections' 
+                'slug'   => 'collections',
+                'icon' => 'dashicons dashicons-screenoptions'
             ),
             array( 
                 'title' => __( 'Keywords', 'sell_media' ),
-                'slug' => 'keywords' 
+                'slug' => 'keywords',
+                'icon' => 'dashicons dashicons-editor-ul'
             )
         );
 
@@ -617,7 +621,7 @@ function sell_media_ajax_filter( $atts ){
         $first_term = false;
         foreach ($choosen_tabs as $tab_key => $tab) {
             $tab_item_class = 'sell-media-ajax-filter-tab-item' . ( ( 0 == $tab_key )? ' selected-tab' : '' );
-            $output .= '<li><a href="javascript:void(0);" id="' . $tab['slug'] . '" class="' . $tab_item_class . '">' . $tab['title'] . '</a></li>';
+            $output .= '<li><a href="javascript:void(0);" id="' . $tab['slug'] . '" class="' . $tab_item_class . '"><span class="'.$tab['icon'].'"></span>' . $tab['title'] . '</a></li>';
 
             if( 0 == $tab_key ){
                 $first_tab = $tab['slug'];
@@ -639,19 +643,22 @@ function sell_media_ajax_filter( $atts ){
                 if( 'keywords' !== $first_tab ){
                     $keywords_terms_class .= ' hide';
                 }
-                $output .= '<ul class="'.$keywords_terms_class.'">';
-                foreach ($keywords as $key_index => $keyword) {
-                    $keywords_class = 'sell-media-filter-keyword-term';
-                    if( 'keywords' == $first_tab && 0 == $key_index ){
-                        $first_term = $keyword->term_id;
-                        $keywords_class .= ' selected-term';
-                    }
+                $output .= '<div class="'.$keywords_terms_class.'">';
+                    $output .= '<div class="drop-down-close-button"></div>';
+                    $output .= '<ul class="">';
+                    foreach ($keywords as $key_index => $keyword) {
+                        $keywords_class = 'sell-media-filter-keyword-term';
+                        if( 'keywords' == $first_tab && 0 == $key_index ){
+                            $first_term = $keyword->term_id;
+                            $keywords_class .= ' selected-term';
+                        }
 
-                    $output .= '<li><a href="javascript:void(0);" id="' . $keyword->slug . '" data-termid="'.$keyword->term_id.'" class="'.$keywords_class.'">' . $keyword->name . '</a></li>';
+                        $output .= '<li><a href="javascript:void(0);" id="' . $keyword->slug . '" data-termid="'.$keyword->term_id.'" class="'.$keywords_class.'">' . $keyword->name . '</a></li>';
 
-                    if( 15 <= $key_index ) break;
-                }                
-                $output .= '</ul>';
+                        if( 15 <= $key_index ) break;
+                    }                
+                    $output .= '</ul>';
+                $output .= '</div>';
             }
         }
 
@@ -662,7 +669,9 @@ function sell_media_ajax_filter( $atts ){
                 if( 'collections' !== $first_tab ){
                     $collection_terms_class .= ' hide';
                 }
-                $output .= '<ul class="'.$collection_terms_class.'">';
+                $output .= '<div class="'.$collection_terms_class.'">';
+                    $output .= '<div class="drop-down-close-button"></div>';
+                $output .= '<ul class="">';
                 foreach ($collections as $col_index => $collection) {
                     $collection_class = 'sell-media-filter-collection-term';
                     if( 'collections' == $first_tab && 0 == $col_index ){
@@ -674,6 +683,7 @@ function sell_media_ajax_filter( $atts ){
                     if( 15 <= $col_index ) break;
                 }                
                 $output .= '</ul>';
+                $output .= '</div>';
             }
         }
 
