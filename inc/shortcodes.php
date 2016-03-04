@@ -582,7 +582,7 @@ function sell_media_ajax_filter( $atts ){
             array( 
                 'title' => __( 'Most Popular', 'sell_media' ),
                 'slug' => 'most-popular',
-                'icon' => 'dashicons dashicons-visibility'
+                'icon' => 'dashicons dashicons-chart-bar'
             ),
             array( 
                 'title' => __( 'Collections', 'sell_media' ),
@@ -592,7 +592,7 @@ function sell_media_ajax_filter( $atts ){
             array( 
                 'title' => __( 'Keywords', 'sell_media' ),
                 'slug' => 'keywords',
-                'icon' => 'dashicons dashicons-editor-ul'
+                'icon' => 'dashicons dashicons-tag'
             )
         );
 
