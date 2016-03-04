@@ -1157,6 +1157,13 @@ input.sell-media-search-text[type=text] {
   @media only screen and (max-width: 1023px) {
     #sell-media-ajax-filter-container .sell-media-ajax-filter-terms ul li {
       width: 33.333%; } }
+  #sell-media-ajax-filter-container .sell-media-ajax-filter-terms .term-pagination span {
+    color: #fff;
+    cursor: pointer; }
+  #sell-media-ajax-filter-container .sell-media-ajax-filter-terms .term-pagination span.next {
+    float: right; }
+  #sell-media-ajax-filter-container .sell-media-ajax-filter-terms .term-pagination span.prev {
+    float: left; }
 @media only screen and (max-width: 1023px) {
   #sell-media-ajax-filter-container .sell-media-ajax-filter-terms {
     padding: 30px; } }

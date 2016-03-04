@@ -1538,6 +1538,18 @@ input.sell-media-search-text[type=text] {
 			}
 		}
 
+		.term-pagination{
+			span{
+				color: #fff;
+				cursor: pointer;
+			}
+			span.next{
+				float: right;
+			}
+			span.prev{
+				float: left;
+			}
+		}
 	}
 
 	@media only screen and (max-width:1023px){
