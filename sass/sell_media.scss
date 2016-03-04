@@ -1423,3 +1423,86 @@ input.sell-media-search-text[type=text] {
 		width: 100%;
 	}
 }
+
+/*= Ajax Filters
+-------------------------------------------------------------- */
+
+#sell-media-ajax-filter-container{
+	ul{
+		li {
+		    display: inline-block;
+		    list-style: none;
+			
+			&:hover,
+			.selected-tab {
+			    background: #333333;
+			}
+		}
+
+	}
+	.sell-media-ajax-filter-tabs {
+	    margin: 0;
+	    background: #616161;
+	    text-align: center;
+
+	    li a{
+		    box-shadow: none;
+		    color:#c5c3c8;
+		    display: inline-block;
+		    padding: 15px;
+		    text-decoration: none;
+		}
+
+	} 
+
+	.sell-media-ajax-filter-terms {
+		background: #333333;
+	    border-top: 2px solid #333333;
+	    margin: 0;
+	    padding: 30px 60px;
+
+	    li{
+
+	    	text-align: left;
+    		width: 25%;
+
+	    	a{
+			    box-shadow: none;
+			    color:#fff;
+			    padding: 0;
+
+			    &:hover,
+				.selected-term{
+					color:#c5c3c8;
+				}
+			}
+			a.selected-term{
+				color:#c5c3c8;
+			}
+	    } 
+	}
+
+	.sell-media-ajax-filter-result {
+	    padding: 40px;
+
+	    h2,
+		p {
+		    color: #fff;
+		}
+
+		.load-more-button {
+			width:100%;
+			text-align: center;
+		    a{
+				display: inline-block;
+				padding: 10px 15px;
+				box-shadow: none;
+				background: #616161;
+				color: #ffffff;
+				&:hover{
+					background: #000000;
+				}
+		    }
+		}
+	}
+}
