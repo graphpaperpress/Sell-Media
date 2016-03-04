@@ -493,6 +493,16 @@ jQuery(document).ready(function($){
 			$("#sell_media_payment_gateway").submit();
 	});
 
+
+	function sell_media_ajax_filter_show_items(){
+
+		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .sell-media-grid-item.hide').each(function(){
+			$(this).fadeIn('slow').delay();
+			$(this).animate({'opacity':1},1000);
+		});
+
+	}
+
 	function sell_media_ajax_filter_request( new_data, append ){
 		var old_data = {
 			"action": "sell_media_ajax_filter"
@@ -502,24 +512,30 @@ jQuery(document).ready(function($){
 		if( !append )
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html('').addClass('sell-media-ajax-loader ');
 		else{
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content div.load-more-button').remove();
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .load-more-button').html('').addClass('sell-media-ajax-loader ');
+			
 		}
 		$.post( sell_media.ajaxurl, final_data, function( response ){
 			if( '' == response )
 				return false;
-			
+
+			var content = $.parseHTML( response.content  )
 			if( !append ){
-				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html( response.content );
+				$(content).find( '.sell-media-grid-item').css({'opacity':0});
+				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html( content );
 				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').append( response.load_more );
 			}
 			else{
-				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .sell_media_ajax_filter_items_container').append( response.content );
+				$(content).addClass('hide');
+				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content div.load-more-button').remove();
+				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .sell_media_ajax_filter_items_container').append( content );
 				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').append( response.load_more );
 			}
-
+			sell_media_ajax_filter_show_items();
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass('stop-click');
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a' ).removeClass('stop-click');
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').removeClass('sell-media-ajax-loader ');
+
 		} );
 	}
 
@@ -608,6 +624,14 @@ jQuery(document).ready(function($){
 		};
 
 		sell_media_ajax_filter_request( post_data, true );
+
+	});
+
+	$(document).on( 'click', '.drop-down-close-button', function(){
+
+		$(this).parent().slideUp('slow');
+
+		$('.sell-media-ajax-filter-tabs a').removeClass( 'selected-tab');
 
 	});
 
