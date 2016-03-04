@@ -493,10 +493,12 @@ jQuery(document).ready(function($){
 			$("#sell_media_payment_gateway").submit();
 	});
 
-
+	/**
+	 * Filters Shortcode
+	 */
 	function sell_media_ajax_filter_show_items(){
 
-		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .sell-media-grid-item.hide').each(function(){
+		$('#sell-media-ajax-filter-content .sell-media-grid-item.hide').each(function(){
 			$(this).fadeIn('slow').delay();
 			$(this).removeClass('hide');
 		});
@@ -510,9 +512,9 @@ jQuery(document).ready(function($){
 		var final_data = $.extend( old_data, new_data );
 
 		if( !append )
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html('').addClass('sell-media-ajax-loader ');
+			$('#sell-media-ajax-filter-content').html('').addClass('sell-media-ajax-loader ');
 		else{
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .load-more-button').html('').addClass('sell-media-ajax-loader ');
+			$('#sell-media-ajax-filter-content .load-more-button').html('').addClass('sell-media-ajax-loader ');
 			
 		}
 		$.post( sell_media.ajaxurl, final_data, function( response ){
@@ -522,19 +524,19 @@ jQuery(document).ready(function($){
 			var content = $.parseHTML( response.content  )
 			if( !append ){
 				$(content).find( '.sell-media-grid-item').addClass('hide');
-				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html( content );
-				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').append( response.load_more );
+				$('#sell-media-ajax-filter-content').html( content );
+				$('#sell-media-ajax-filter-content').append( response.load_more );
 			}
 			else{
 				$(content).addClass('hide');
-				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content div.load-more-button').remove();
-				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .sell_media_ajax_filter_items_container').append( content );
-				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').append( response.load_more );
+				$('#sell-media-ajax-filter-content div.load-more-button').remove();
+				$('#sell-media-ajax-filter-content .sell_media_ajax_filter_items_container').append( content );
+				$('#sell-media-ajax-filter-content').append( response.load_more );
 			}
 			sell_media_ajax_filter_show_items();
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass('stop-click');
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a' ).removeClass('stop-click');
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').removeClass('sell-media-ajax-loader ');
+			$('#sell-media-ajax-filter-content').removeClass('sell-media-ajax-loader ');
 
 		} );
 	}
