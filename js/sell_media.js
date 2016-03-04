@@ -553,17 +553,17 @@ jQuery(document).ready(function($){
 
 
 		if( 'keywords' == tab_selected ){
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-keyword-terms').slideDown( 'slow' );
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-keyword-terms').show();
 		}
 		else{
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-keyword-terms').slideUp( 'slow' );	
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-keyword-terms').hide();	
 		}
 
 		if( 'collections' == tab_selected ){
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-collection-terms').slideDown( 'slow' );
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-collection-terms').show();
 		}
 		else{
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-collection-terms').slideUp( 'slow' );	
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-collection-terms').hide();	
 		}
 
 
@@ -629,7 +629,7 @@ jQuery(document).ready(function($){
 
 	$(document).on( 'click', '.drop-down-close-button', function(){
 
-		$(this).parent().slideUp('slow');
+		$(this).parent().hide();
 
 		$('.sell-media-ajax-filter-tabs a').removeClass( 'selected-tab');
 
