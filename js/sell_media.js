@@ -582,7 +582,9 @@ jQuery(document).ready(function($){
 	});
 
 	// Ajax keyword filter
-	$( document ).on( 'click', '#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a', function(){
+	$( document ).on( 'click', '#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a', function( event ){
+		
+		event.preventDefault();
 		
 		if( $(this).hasClass( 'stop-click' ) )
 			return false;
@@ -641,7 +643,7 @@ jQuery(document).ready(function($){
 		var current_group = parent.find('ul.current-term-group');
 		var next_group = current_group.next();
 		parent.find('ul').removeClass('current-term-group').addClass('hide');
-		next_group.removeClass('hide').addClass('current-term-group');
+		next_group.removeClass('hide').addClass('current-term-group').show();
 		
 		pagination_wrap.find('span.prev').show();
 		if( parent.find('ul').index(next_group) == (parseInt(parent.find('ul').length ) - 1) ){

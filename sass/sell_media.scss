@@ -1427,7 +1427,8 @@ input.sell-media-search-text[type=text] {
 /*= Ajax Filters
 -------------------------------------------------------------- */
 #sell-media-ajax-filter-container {
-	font-size: $font-size * .8;
+	clear: both;
+	font-size: $font-size;
 
 	> ul {
 		margin: 0;
@@ -1437,17 +1438,20 @@ input.sell-media-search-text[type=text] {
 		li {
 			display: inline-block;
 			list-style: none;
+			margin: 0;
+    		padding: 0;
 
 			a {
 				box-shadow: none;
+				border: 0;
 				color: lighten( $default-color, 30% );
 				display: inline-block;
-				padding: 15px;
+				padding: 15px 30px;
 				text-decoration: none;
 
 				span.dashicons {
 					vertical-align: middle;
-					font-size: 15px;
+					font-size: $font-size;
 					margin-right: 5px;
 				}
 
@@ -1464,7 +1468,7 @@ input.sell-media-search-text[type=text] {
 		background-color: darken( $default-color, 30% );
 		border-top: 2px solid darken( $default-color, 30% );
 		margin: 0;
-		padding: 30px 60px 40px;
+		padding: 30px 60px 36px;
 		position: relative;
 
 		@media only screen and (max-width:1023px){
@@ -1506,6 +1510,8 @@ input.sell-media-search-text[type=text] {
 
 		ul {
 			clear: both;
+			padding: 0;
+			margin: 0 0 24px 0;
 
 			li {
 
@@ -1523,6 +1529,7 @@ input.sell-media-search-text[type=text] {
 				}
 
 				a {
+					border: 0;
 					box-shadow: none;
 					color: $light-color;
 					padding: 0;
@@ -1547,17 +1554,22 @@ input.sell-media-search-text[type=text] {
 			width: 100%;
 
 			span {
+				box-sizing: border-box;
 				color: lighten( $default-color, 20% );
 				cursor: pointer;
-				font-size: $font-size * .6;
+				font-size: $font-size * .8;
 				display: inline-block;
 				text-align: center;
 				text-transform: uppercase;
 				width: 50%;
 				padding: 10px;
 
+				&:last-child {
+					border-left: 1px solid darken( $default-color, 20% );
+				}
+
 				&:hover {
-					background-color: $black-color;
+					background-color: darken( $default-color, 35% );
 					color: $white-color;
 				}
 
@@ -1566,7 +1578,6 @@ input.sell-media-search-text[type=text] {
 				}
 
 				&.prev {
-					border-right: 1px solid darken( $default-color, 20% );
 					float: left;
 				}
 			}
@@ -1587,10 +1598,11 @@ input.sell-media-search-text[type=text] {
 			margin: 10px 0;
 			
 			a {
+				border: 0;
 				display: inline-block;
 				padding: 10px 15px;
 				box-shadow: none;
-				background: $dark-color;
+				background: darken( $default-color, 30% );
 				color: $light-color;
 
 				&:hover {
