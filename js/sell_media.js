@@ -493,16 +493,33 @@ jQuery(document).ready(function($){
 			$("#sell_media_payment_gateway").submit();
 	});
 
-	function sell_media_ajax_filter_request( new_data ){
+	function sell_media_ajax_filter_request( new_data, append ){
 		var old_data = {
 			"action": "sell_media_ajax_filter"
 		};
 		var final_data = $.extend( old_data, new_data );
 
+		if( !append )
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html('').addClass('sell-media-ajax-loader ');
+		else{
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content div.load-more-button').remove();
+		}
 		$.post( sell_media.ajaxurl, final_data, function( response ){
-			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( response );
+			if( '' == response )
+				return false;
+			
+			if( !append ){
+				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').html( response.content );
+				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').append( response.load_more );
+			}
+			else{
+				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content .sell_media_ajax_filter_items_container').append( response.content );
+				$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').append( response.load_more );
+			}
+
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item').removeClass('stop-click');
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a' ).removeClass('stop-click');
+			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result #content').removeClass('sell-media-ajax-loader ');
 		} );
 	}
 
@@ -539,14 +556,12 @@ jQuery(document).ready(function($){
 			return false;
 		}
 
-		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( 'Loading...' );
-
 		// Do ajax.
 		var post_data = {
 			'tab'	 : tab_selected
 		};
 
-		sell_media_ajax_filter_request( post_data );
+		sell_media_ajax_filter_request( post_data, false );
 
 	});
 
@@ -558,10 +573,11 @@ jQuery(document).ready(function($){
 
 		var tab_selected = $('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item.selected-tab').attr( 'id' );
 		var term_selected = $(this).attr('data-termid');
+		
+		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a').removeClass('selected-term');
+		$(this).addClass('selected-term');
 
 		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a' ).addClass('stop-click');
-		
-		$('#sell-media-ajax-filter-container .sell-media-ajax-filter-result').html( 'Loading...' );
 
 		// Do ajax.
 		var post_data = {
@@ -569,7 +585,29 @@ jQuery(document).ready(function($){
 			'term'	 : term_selected
 		};
 
-		sell_media_ajax_filter_request( post_data );
+		sell_media_ajax_filter_request( post_data, false );
+
+	});
+
+	// Filter load more.
+	$( document ).on( 'click', '.load-more-button a', function(){
+		
+		if( $(this).hasClass( 'stop-click' ) )
+			return false;
+
+		$(this).addClass( 'stop-click' );
+
+		var tab_selected = $('#sell-media-ajax-filter-container .sell-media-ajax-filter-tabs .sell-media-ajax-filter-tab-item.selected-tab').attr( 'id' );
+		var term_selected = $('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a.selected-term').attr('data-termid');
+		var currentpage = $(this).attr('data-currentpage');
+		// Do ajax.
+		var post_data = {
+			'tab'	 : tab_selected,
+			'term'	 : term_selected,
+			'paged'	 : currentpage
+		};
+
+		sell_media_ajax_filter_request( post_data, true );
 
 	});
 
