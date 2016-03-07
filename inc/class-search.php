@@ -482,7 +482,7 @@ Class SellMediaSearch {
 
 		}
 		
-		echo apply_filters( 'sell_media_searchform_filter', $html );
+		return apply_filters( 'sell_media_searchform_filter', $html );
 	}
 
 }
