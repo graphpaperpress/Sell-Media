@@ -1153,6 +1153,9 @@ input.sell-media-search-text[type=text] {
       clear: both;
       padding: 0;
       margin: 0 0 24px 0; }
+      #sell-media-ajax-filter-container .sell-media-ajax-filter-terms ul.hide {
+        display: none !important;
+        /* override themes */ }
       #sell-media-ajax-filter-container .sell-media-ajax-filter-terms ul li {
         display: inline-block;
         list-style: none;

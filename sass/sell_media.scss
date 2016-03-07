@@ -1516,6 +1516,10 @@ input.sell-media-search-text[type=text] {
 			padding: 0;
 			margin: 0 0 24px 0;
 
+			&.hide {
+				display: none !important; /* override themes */
+			}
+
 			li {
 
 				display: inline-block;
