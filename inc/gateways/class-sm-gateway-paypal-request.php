@@ -33,6 +33,10 @@ class SM_Gateway_Paypal_Request {
 	}
 
 	function process(){
+
+        // Before payment process action.
+        do_action( 'sell_media_before_payment_process' );
+
 		// Check if paypal is selected.
 		if( !isset( $_POST['gateway'] ) || 'paypal' !== $_POST['gateway'] ){
 			return;
