@@ -213,7 +213,7 @@ function sell_media_save_custom_meta( $post_id ) {
                 $old = get_post_meta( $post_id, $field, true );
                 $new = $_POST[ $field ];
 
-                if ( $new && $new != $old ) {
+                if ( 0 <= $new && $new != $old ) {
 
                     // Sanitize price
                     if ( $field == 'sell_media_price' ) {
