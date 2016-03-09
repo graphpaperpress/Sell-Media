@@ -1067,8 +1067,10 @@ function sell_media_free_download_button_button( $html, $post_id, $attachment_id
 
 	$classes[] = 'item_add';
 	$classes[] = 'sell-media-button';
-	if( !is_null( $button ) )
+	if( !is_null( $button ) ){
 		$classes[] = 'sell-media-' . $button;
+	}
+	$classes[] = 'sell-media-download-button';
 	$classes = implode( ' ', $classes );
 	
 	$link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id );
