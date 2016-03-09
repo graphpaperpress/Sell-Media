@@ -234,3 +234,32 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 // Add ajax callback.
 add_action( 'wp_ajax_sell_media_ajax_filter', 'sell_media_ajax_filter_search' );
 add_action( 'wp_ajax_nopriv_sell_media_ajax_filter', 'sell_media_ajax_filter_search' );
+
+/**
+ * Ajax add to cart button.
+ * @param  int $id            Item id.
+ * @param  int $attachment_id Attachment id.
+ * @param  string $type          Type of item.
+ * @return string                Add to cart button.
+ */
+function sell_media_ajax_add_to_cart_button( $id = NULL, $attachment_id = NULL, $type = 'download' ){
+	
+	if( isset( $_POST['id'] ) ){
+		$id = absint( $_POST['id'] );
+	}
+
+	if( isset( $_POST['id'] ) ){
+		$attachment_id = absint( $_POST['attachment_id'] );
+	}
+
+	if( isset( $_POST['type'] ) ){
+		$type = $_POST['type'];
+	}
+
+	sell_media_item_add_to_cart_button( $id, $attachment_id, null, null, true, $type );
+	exit;
+}
+
+// Add ajax callback.
+add_action( 'wp_ajax_sell_media_ajax_add_to_cart_button', 'sell_media_ajax_add_to_cart_button' );
+add_action( 'wp_ajax_nopriv_sell_media_ajax_add_to_cart_button', 'sell_media_ajax_add_to_cart_button' );
