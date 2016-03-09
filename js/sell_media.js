@@ -671,7 +671,22 @@ jQuery(document).ready(function($){
 			pagination_wrap.find('span.next').show();	
 		}
 	});
-});
+
+	$(document).on('click', '#sell_media_product_type input[name="type"]', function(){
+		var data = {
+			'id' : $('#sell-media-cart-items .item_number').val(),
+			'attachment_id' : $('#sell-media-cart-items .item_attachment').val(),
+			'type' : $(this).val(),
+			'action' : 'sell_media_ajax_add_to_cart_button',
+		};
+
+		$.post( sell_media.ajaxurl, data, function(res){
+			$('.button-container #sell-media-add-to-cart').html( '' );
+			$('.button-container #sell-media-add-to-cart').html( res );
+		});
+	});
+
+}); // End jQuery document ready.
 
 /**
  * Update the menu cart with Qty and Subtotal
