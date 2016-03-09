@@ -30,7 +30,7 @@ function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button
 		return $html;
 }
 
-function sell_media_item_add_to_cart_button( $post_id=null, $attachment_id=null, $button=null, $text=null, $echo=true ) {
+function sell_media_item_add_to_cart_button( $post_id=null, $attachment_id=null, $button=null, $text=null, $echo=true, $type = 'download' ) {
 
 	if( is_null( $text ) ){
 		$text = __( 'Add to cart', 'sell_media' );
@@ -41,8 +41,8 @@ function sell_media_item_add_to_cart_button( $post_id=null, $attachment_id=null,
     $is_package = Sell_Media()->products->is_package( $post_id );
     // check if has assigned price group
     $has_price_group = Sell_Media()->products->has_price_group( $post_id );
-	$text = apply_filters('sell_media_add_to_cart_text', $text, $post_id );
-	$disable = ( ! $is_package && $has_price_group ) ? "disable":"";
+	$text = apply_filters('sell_media_add_to_cart_text', $text, $post_id, $attachment_id, $type );
+	$disable = ( ! $is_package && $has_price_group ) ? "disabled":"";
 
 	$classes[] = 'item_add';
 	$classes[] = 'sell-media-button';
@@ -52,7 +52,7 @@ function sell_media_item_add_to_cart_button( $post_id=null, $attachment_id=null,
 	$classes = implode( ' ', $classes );
 
 	$html = '<button class="' . $classes . '" '.$disable.'>' . $text . '</button>';
-	$html = apply_filters( 'sell_media_item_add_to_cart_button', $html, $post_id, $attachment_id, $button, $text, $echo );
+	$html = apply_filters( 'sell_media_item_add_to_cart_button', $html, $post_id, $attachment_id, $button, $text, $echo, $type );
 
 	if ( $echo )
 		echo $html;
