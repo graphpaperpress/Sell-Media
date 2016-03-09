@@ -1026,7 +1026,11 @@ add_filter( 'sell_media_thumbnail', 'sell_media_thumbnail_crop', 10, 1 );
  * @param  int    $post_id  Id of post.
  * @return String           Button Text.
  */
-function sell_media_free_download_button_text( $text, $post_id ) {
+function sell_media_free_download_button_text( $text, $post_id, $attachment_id, $type ) {
+	if( 'download' != $type ){
+		return $text;
+	}
+
 	$price = get_post_meta( $post_id, 'sell_media_price', true );
 	if ( $price <= 0 ) {
 		 $text = __( 'Download', 'sell_media' ); }
@@ -1034,8 +1038,8 @@ function sell_media_free_download_button_text( $text, $post_id ) {
 	return $text;
 }
 
-add_filter( 'sell_media_purchase_text', 'sell_media_free_download_button_text', 10, 2 );
-add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text', 10, 2 );
+add_filter( 'sell_media_purchase_text', 'sell_media_free_download_button_text', 10, 4 );
+add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text', 10, 4 );
 
 /**
  * Change button html.
@@ -1050,7 +1054,11 @@ add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text
  * @param  boolean $echo             Echo output or return.
  * @return string                    Html output of button.
  */
-function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo ) {
+function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo, $type ) {
+
+	if( 'download' != $type ){
+		return $html;
+	}
 
 	$price = get_post_meta( $post_id, 'sell_media_price', true );
 	$value = get_post_meta( $post_id, 'sell_media_free_downloads', true );
@@ -1068,8 +1076,8 @@ function sell_media_free_download_button_button( $html, $post_id, $attachment_id
 	return $html;
 }
 
-add_filter( 'sell_media_item_buy_button', 'sell_media_free_download_button_button', 10, 6 );
-add_filter( 'sell_media_item_add_to_cart_button', 'sell_media_free_download_button_button', 10, 6 );
+add_filter( 'sell_media_item_buy_button', 'sell_media_free_download_button_button', 10, 7 );
+add_filter( 'sell_media_item_add_to_cart_button', 'sell_media_free_download_button_button', 10, 7 );
 
 /**
  * Forces the file to be downloaded for free.
