@@ -237,7 +237,8 @@ input[type="submit"].sell-media-button,
   text-transform: none !important;
   text-decoration: none !important;
   text-shadow: none;
-  font-size: 16px; }
+  font-size: 16px;
+  line-height: 1; }
   input[type="submit"].sell-media-button:hover, input[type="submit"].sell-media-button:focus,
   .sell-media-button:hover,
   .sell-media-button:focus,
@@ -251,6 +252,12 @@ input[type="submit"].sell-media-button,
   .sell-media-button:disabled,
   #sell-media-submit:disabled {
     background: #b3b3b3; }
+
+#sell-media-add-to-cart .sell-media-download-button {
+  color: #fff;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 700; }
 
 .sell-media-item-links {
   font-size: 11px; }

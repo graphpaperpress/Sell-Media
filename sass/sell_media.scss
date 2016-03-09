@@ -296,6 +296,7 @@ input[type="submit"].sell-media-button,
 	text-decoration: none !important;
 	text-shadow: none;
 	font-size: $font-size;
+	line-height: 1;
 
 	&:hover,
 	&:focus {
@@ -309,6 +310,15 @@ input[type="submit"].sell-media-button,
 		background: $light-color;
 	}
 
+}
+
+#sell-media-add-to-cart{
+	.sell-media-download-button{
+		color: $white-color;
+		border-radius: 2px;
+		font-size: 16px;
+		font-weight: 700;
+	}	
 }
 
 .sell-media-item-links {
