@@ -680,8 +680,8 @@ jQuery(document).ready(function($){
 			'action' : 'sell_media_ajax_add_to_cart_button',
 		};
 
+		$('.button-container #sell-media-add-to-cart').html( '' );
 		$.post( sell_media.ajaxurl, data, function(res){
-			$('.button-container #sell-media-add-to-cart').html( '' );
 			$('.button-container #sell-media-add-to-cart').html( res );
 		});
 	});
