@@ -13,14 +13,16 @@ function sell_media_add_to_cart_fields( $post_id=null, $attachment_id=null ) {
     // assign price
     $price = ( $has_price_group ) ? 0 : Sell_Media()->products->get_original_price( $post_id );
     // assign licenses
-    $licenses = wp_get_post_terms( $post_id, 'licenses' ); ?>
+    $licenses = wp_get_post_terms( $post_id, 'licenses' );
+    // assign type
+    $type = ( $is_package )? 'download':apply_filters( 'sell_media_set_product_type', 'download' ); ?>
 
     <div class="sell-media-add-to-cart-fields">
 
         <form id="sell-media-cart-items" class="hide">
             <input class="item_number" name="item_number" type="text" value="<?php echo $post_id; ?>" />
             <input class="item_name" name="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
-            <input class="item_type" name="item_type" type="text" value="<?php if ( $is_package ) echo 'download'; else echo apply_filters( 'sell_media_set_product_type', 'download' ); ?>" />
+            <input class="item_type" name="item_type" type="text" value="<?php echo $type; ?>" />
             <input class="item_image" name="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
             <input class="item_pgroup" name="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
             <input class="item_size" name="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
@@ -86,7 +88,7 @@ function sell_media_add_to_cart_fields( $post_id=null, $attachment_id=null ) {
         </div>
 
         <div class="button-container cf">
-            <p id="sell-media-add-to-cart"><?php echo sell_media_item_add_to_cart_button( $post_id, $attachment_id ); ?></p>
+            <p id="sell-media-add-to-cart"><?php echo sell_media_item_add_to_cart_button( $post_id, $attachment_id, null, null, true, $type ); ?></p>
             <p id="sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id ); ?></p>
         </div>
 
