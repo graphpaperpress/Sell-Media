@@ -65,18 +65,21 @@ add_action( 'save_post_sell_media_item', 'sell_media_set_default_terms', 100, 3 
  * @since 0.1
  */
 function sell_media_get_default_terms(){
-    global $wpdb;
-
-    $query = "SELECT * FROM {$wpdb->prefix}termmeta WHERE `meta_value` LIKE 'on'";
-    $terms_meta = $wpdb->get_results( $query );
-
+    $args['hide_empty'] = false;
+    $args['meta_query'] = array(
+                array(
+                    'key' => 'default',
+                    'value' => 'on',
+                )
+            );
+    $default_licenses = get_terms ( 'licenses', $args  );
     $term_ids = array();
-    $default_terms = array();
 
-    foreach( $terms_meta as $meta ) {
-        $term_ids[] = $meta->taxonomy_id;
+    if( !is_wp_error( $default_licenses ) ){
+        foreach( $default_licenses as $meta ) {
+            $term_ids[] = $meta->term_id;
+        }
     }
-
     return $term_ids;
 }
 
