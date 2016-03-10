@@ -303,7 +303,7 @@ class SellMediaImages extends SellMediaProducts {
          * Since multiple images can be assigned, taxonomy terms (keywords)
          * should be assigned to the attachments, not the post.
          */
-        if ( ! sell_media_has_multiple_attachments( $post->ID )  && ( defined( 'DOING_AJAX' ) && !DOING_AJAX ) ) {
+        if ( isset( $post->ID ) && ! sell_media_has_multiple_attachments( $post->ID )  && ( defined( 'DOING_AJAX' ) && !DOING_AJAX ) ) {
             $attachment_id = $post->ID;
         }
 
