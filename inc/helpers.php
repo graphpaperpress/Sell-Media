@@ -1287,6 +1287,13 @@ function sell_media_modify_search_form(){
 	$html .= '</select>';
 	$html .= '</div>';
 
+	// Check if permalink is set to deafult.
+	$permalink_structure = get_option( 'permalink_structure' );
+
+	if( '' == $permalink_structure && isset( $settings->search_page  ) ){
+		$html .= '<input type="hidden" name="page_id" value="' . $settings->search_page  . '" />';
+	}
+
 	// Hidden search options wrapper
 	$html .= '</div>';
 
