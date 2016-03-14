@@ -229,16 +229,16 @@ jQuery(document).ready(function($){
 			$('.item_add').prop('disabled', false);
 		}
 
-		var required = $('.sell-media-add-to-cart-fields [required]');
+		var required = '.sell-media-add-to-cart-fields [required]';
 		// bind change for all your just click and keyup for all text fields
-		required.bind('change keyup', function() {
+		$(document).on('change keyup', required, function() {
 			var flag = 0;
 			// check every el in collection
-			required.each(function() {
+			$(required).each(function() {
 				if ( $(this).val() != '' ) flag++;
 			});
 			// number of nonempty (nonchecked) fields == nubmer of required fields
-			if ( flag == required.length )
+			if ( flag == $(required).length )
 				$('.item_add').prop('disabled',false);
 			else
 				$('.item_add').prop('disabled', true);
