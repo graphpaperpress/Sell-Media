@@ -413,8 +413,7 @@ jQuery(document).ready(function($){
 
 		if ( emptied ) {
 			$('#sell-media-grid-item-container').remove();
-			$(this).text($(this).data('empty-text'));
-			$(this).removeClass('empty-lightbox');
+			$('#sell-media-lightbox-content').html($(this).data('empty-text'));
 			$('.lightbox-counter').text(0);
 		}
 	});
