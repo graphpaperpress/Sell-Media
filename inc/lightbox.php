@@ -81,11 +81,17 @@ function sell_media_lightbox_shortcode() {
     if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
          echo '<p class="empty-lightbox" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove all from lightbox', 'sell_media' ) . '</p>';
     }
+
+    do_action( 'sell_media_bofore_lightbox_item_container' );
+
     echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
     echo sell_media_lightbox_query();
     echo '</div>';
-    echo '</div>';
+
+    do_action( 'sell_media_after_lightbox_item_container' );
     
+    echo '</div>';
+
     $html = ob_get_contents();
     ob_end_clean();
     return apply_filters( 'sell_media_lightbox', $html );
