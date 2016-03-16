@@ -263,8 +263,14 @@ function sell_media_content_loop( $post_id, $i ){
 		$class .= ' sell-media-grid-single-item';
 
 	$html  = '<div id="sell-media-' . $post_id . '" class="' . $class . '">';
-	// if there is a post parent, change link to gallery
-	$parent = sell_media_attachment_parent_post( $post_id );
+
+	$parent = false;
+
+	if( !is_archive() ){
+		// if there is a post parent, change link to gallery
+		$parent = sell_media_attachment_parent_post( $post_id );		
+	}
+	
 	if ( $parent ) {
 		$link = add_query_arg( array(
 			'id' => $post_id
