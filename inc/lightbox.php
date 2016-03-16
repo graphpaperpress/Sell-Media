@@ -76,16 +76,18 @@ function sell_media_get_lightbox_state( $item ) {
  * @since 1.9.2
  */
 function sell_media_lightbox_shortcode() {
-
-    $html  = '<div id="sell-media-lightbox-content" class="sell-media">';
+    ob_start();
+    echo '<div id="sell-media-lightbox-content" class="sell-media">';
     if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
-         $html .= '<p class="empty-lightbox" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove all from lightbox', 'sell_media' ) . '</p>';
+         echo '<p class="empty-lightbox" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove all from lightbox', 'sell_media' ) . '</p>';
     }
-    $html .= '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
-    $html .= sell_media_lightbox_query();
-    $html .= '</div>';
-    $html .= '</div>';
-
+    echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+    echo sell_media_lightbox_query();
+    echo '</div>';
+    echo '</div>';
+    
+    $html = ob_get_contents();
+    ob_end_clean();
     return apply_filters( 'sell_media_lightbox', $html );
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
