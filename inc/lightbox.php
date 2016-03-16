@@ -78,9 +78,6 @@ function sell_media_get_lightbox_state( $item ) {
 function sell_media_lightbox_shortcode() {
     ob_start();
     echo '<div id="sell-media-lightbox-content" class="sell-media">';
-    if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
-         echo '<p class="empty-lightbox" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove all from lightbox', 'sell_media' ) . '</p>';
-    }
 
     do_action( 'sell_media_bofore_lightbox_item_container' );
 
@@ -89,7 +86,7 @@ function sell_media_lightbox_shortcode() {
     echo '</div>';
 
     do_action( 'sell_media_after_lightbox_item_container' );
-    
+
     echo '</div>';
 
     $html = ob_get_contents();
@@ -98,6 +95,16 @@ function sell_media_lightbox_shortcode() {
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
 
+/**
+ * Added html to remove lightbox items before lightbox container.
+ */
+function sell_media_lightbox_remove_items(){
+    if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
+         echo '<p class="empty-lightbox" title="' . __( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove All', 'sell_media' ) . '</p>';
+    }
+}
+
+add_action( 'sell_media_bofore_lightbox_item_container', 'sell_media_lightbox_remove_items' );
 
 /**
  * Query lightbox items
