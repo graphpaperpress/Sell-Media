@@ -1460,3 +1460,44 @@ function sell_media_attachment_parent_post( $post_id, $single = true ){
 
 	return $items;
 }
+
+
+function sell_media_update_attachment_metadata1( $data, $post_id ){
+	if( !isset( $data['sizes']['large'] ) || !isset( $data['file'] ) ){
+		return $data;
+	}
+	$uploads = wp_upload_dir();
+	$sm_file = trailingslashit( $uploads['basedir'] ) . 'sell_media/' . $data['file'];
+	if( !file_exists( $sm_file ) )
+		return $data;
+
+	$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
+	$filename = basename( $data['file'] );
+	$upload_folder = trailingslashit( dirname( $main_file ) );
+	$copy = copy($sm_file, $main_file);
+
+	if( $copy ){
+		$metadata = wp_generate_attachment_metadata( $post_id, $main_file );
+		
+		$date_folder = dirname( $data['file'] );
+		$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
+		$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
+
+
+		if( file_exists( $large_file ) ){
+			$copy = copy( $large_file, $main_file );
+			if( $copy ){
+
+				$data['width'] = $metadata['sizes']['large']['width'];
+				$data['height'] = $metadata['sizes']['large']['height'];
+				$data['sizes']['large']['width'] = $metadata['sizes']['large']['width'];
+				$data['sizes']['large']['height'] = $metadata['sizes']['large']['height'];
+				$data['sizes']['large']['file'] = $metadata['sizes']['large']['file'];
+				$data['sizes']['large']['mime-type'] = $metadata['sizes']['large']['mime-type'];
+			}
+		}
+	}
+	return $data;
+}
+
+add_filter( 'wp_update_attachment_metadata', 'sell_media_update_attachment_metadata1', 10, 2 );
