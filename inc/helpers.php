@@ -1501,3 +1501,155 @@ function sell_media_update_attachment_metadata1( $data, $post_id ){
 }
 
 add_filter( 'wp_update_attachment_metadata', 'sell_media_update_attachment_metadata1', 10, 2 );
+
+/**
+ * Regenerate thumbnails if original image is found in sell media upload folder.
+ * @param  array $data          Meta data array.
+ * @param  int 	 $attachment_id 	Attachment id.
+ * @return array                Updated meta data array.
+ */
+function sell_media_generate_attachment_metadata( $data, $attachment_id) {
+
+	$uploads = wp_upload_dir();
+	$sm_file = trailingslashit( $uploads['basedir'] ) . 'sell_media/' . $data['file'];
+	if( !file_exists( $sm_file ) )
+		return $data;
+
+	$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
+	$filename = basename( $data['file'] );
+	$upload_folder = trailingslashit( dirname( $main_file ) );
+	$copy = copy($sm_file, $main_file);
+
+	if( !$copy )
+		return $data;
+
+	$file = $main_file;
+
+	// Core Start
+	$attachment = get_post( $attachment_id );
+
+	$metadata = array();
+	$support = false;
+	if ( preg_match('!^image/!', get_post_mime_type( $attachment )) && file_is_displayable_image($file) ) {
+		$imagesize = getimagesize( $file );
+		$metadata['width'] = $imagesize[0];
+		$metadata['height'] = $imagesize[1];
+
+		// Make the file path relative to the upload dir.
+		$metadata['file'] = _wp_relative_upload_path($file);
+
+		// Make thumbnails and other intermediate sizes.
+		global $_wp_additional_image_sizes;
+
+		$sizes = array();
+		foreach ( get_intermediate_image_sizes() as $s ) {
+			$sizes[$s] = array( 'width' => '', 'height' => '', 'crop' => false );
+			if ( isset( $_wp_additional_image_sizes[$s]['width'] ) )
+				$sizes[$s]['width'] = intval( $_wp_additional_image_sizes[$s]['width'] ); // For theme-added sizes
+			else
+				$sizes[$s]['width'] = get_option( "{$s}_size_w" ); // For default sizes set in options
+			if ( isset( $_wp_additional_image_sizes[$s]['height'] ) )
+				$sizes[$s]['height'] = intval( $_wp_additional_image_sizes[$s]['height'] ); // For theme-added sizes
+			else
+				$sizes[$s]['height'] = get_option( "{$s}_size_h" ); // For default sizes set in options
+			if ( isset( $_wp_additional_image_sizes[$s]['crop'] ) )
+				$sizes[$s]['crop'] = $_wp_additional_image_sizes[$s]['crop']; // For theme-added sizes
+			else
+				$sizes[$s]['crop'] = get_option( "{$s}_crop" ); // For default sizes set in options
+		}
+
+		$sizes = apply_filters( 'intermediate_image_sizes_advanced', $sizes, $metadata );
+
+		if ( $sizes ) {
+			$editor = wp_get_image_editor( $file );
+
+			if ( ! is_wp_error( $editor ) )
+				$metadata['sizes'] = $editor->multi_resize( $sizes );
+		} else {
+			$metadata['sizes'] = array();
+		}
+
+		// Fetch additional metadata from EXIF/IPTC.
+		$image_meta = wp_read_image_metadata( $file );
+		if ( $image_meta )
+			$metadata['image_meta'] = $image_meta;
+
+	} elseif ( wp_attachment_is( 'video', $attachment ) ) {
+		$metadata = wp_read_video_metadata( $file );
+		$support = current_theme_supports( 'post-thumbnails', 'attachment:video' ) || post_type_supports( 'attachment:video', 'thumbnail' );
+	} elseif ( wp_attachment_is( 'audio', $attachment ) ) {
+		$metadata = wp_read_audio_metadata( $file );
+		$support = current_theme_supports( 'post-thumbnails', 'attachment:audio' ) || post_type_supports( 'attachment:audio', 'thumbnail' );
+	}
+
+	if ( $support && ! empty( $metadata['image']['data'] ) ) {
+		// Check for existing cover.
+		$hash = md5( $metadata['image']['data'] );
+		$posts = get_posts( array(
+			'fields' => 'ids',
+			'post_type' => 'attachment',
+			'post_mime_type' => $metadata['image']['mime'],
+			'post_status' => 'inherit',
+			'posts_per_page' => 1,
+			'meta_key' => '_cover_hash',
+			'meta_value' => $hash
+		) );
+		$exists = reset( $posts );
+
+		if ( ! empty( $exists ) ) {
+			update_post_meta( $attachment_id, '_thumbnail_id', $exists );
+		} else {
+			$ext = '.jpg';
+			switch ( $metadata['image']['mime'] ) {
+			case 'image/gif':
+				$ext = '.gif';
+				break;
+			case 'image/png':
+				$ext = '.png';
+				break;
+			}
+			$basename = str_replace( '.', '-', basename( $file ) ) . '-image' . $ext;
+			$uploaded = wp_upload_bits( $basename, '', $metadata['image']['data'] );
+			if ( false === $uploaded['error'] ) {
+				$image_attachment = array(
+					'post_mime_type' => $metadata['image']['mime'],
+					'post_type' => 'attachment',
+					'post_content' => '',
+				);
+
+				$image_attachment = apply_filters( 'attachment_thumbnail_args', $image_attachment, $metadata, $uploaded );
+
+				$sub_attachment_id = wp_insert_attachment( $image_attachment, $uploaded['file'] );
+				add_post_meta( $sub_attachment_id, '_cover_hash', $hash );
+				$attach_data = wp_generate_attachment_metadata( $sub_attachment_id, $uploaded['file'] );
+				wp_update_attachment_metadata( $sub_attachment_id, $attach_data );
+				update_post_meta( $attachment_id, '_thumbnail_id', $sub_attachment_id );
+			}
+		}
+	}
+
+	
+	// Remove the blob of binary data from the array.
+	if ( $metadata ) {
+		unset( $metadata['image']['data'] );
+	}
+
+	// Core END
+	$date_folder = dirname( $data['file'] );
+	$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
+	$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
+
+
+	if( file_exists( $large_file ) ){
+		$copy = copy( $large_file, $main_file );
+		if( $copy ){
+
+			$metadata['width'] = $metadata['sizes']['large']['width'];
+			$metadata['height'] = $metadata['sizes']['large']['height'];
+		}
+	}
+
+	return $metadata;
+}
+
+add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_metadata', 10, 2 );
