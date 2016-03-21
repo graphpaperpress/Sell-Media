@@ -465,8 +465,17 @@ jQuery(document).ready(function($){
 
 		// Add cart item in session.
 		$.post( ajaxurl, data, function( response ){
+			var message = sell_media.added_to_cart;
+
 			$('.sell-media-added').remove();
-			$('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + sell_media.added_to_cart + '</p>' );
+			var res = jQuery.parseJSON( response );
+			if( typeof res =='object' && '0' == res.code )
+			{
+			  var message = res.message;
+			}
+
+			$('#sell-media-add-to-cart').after( '<p class="sell-media-added">' + message + '</p>' );				
+
 			sm_update_cart_menu();
 		});
 
