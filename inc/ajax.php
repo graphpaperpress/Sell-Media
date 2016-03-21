@@ -59,6 +59,8 @@ function sell_media_add_to_cart(){
 		if( '' != $item_number ){
 			$price = floatval( $_GET['price'] );
 
+			do_action( 'sell_media_before_add_to_cart', $item_number, $price, $qty, $attrs );
+
 			// Add item to session.
 			echo $sm_cart->add( $item_number, $price, $qty, $attrs );
 		}
