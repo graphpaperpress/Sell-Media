@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.4.2
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -212,6 +212,15 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.1.6 =
+* Tweak: Integration with Limited Edition Prints.
+* Tweak: Integration with Manual Purchases extension.
+* Tweak: Integration with Download Lightbox extension.
+* Tweak: Regenerate Thumbnails integration.
+* Tweak: German language files update.
+* Bugfix: Rare free purchases and reprints conflict.
+* Bugfix: Collection archives showing attachments.
 
 = 2.1.5 =
 * New Feature: Filter Shortcode. Usage: `[sell_media_filters filters="all"]`. See instructions for additional parameters.
