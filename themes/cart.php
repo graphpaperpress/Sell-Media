@@ -12,7 +12,7 @@ $image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachm
 ob_start();
 ?>
 <div class="sell-media-quick-view-container">
-
+    <?php if( post_password_required() ): ?>
     <div class="sell-media-quick-view-image">
         <?php sell_media_item_icon( $image_id, 'large' ); ?>
     </div>
@@ -26,7 +26,11 @@ ob_start();
 
         </div><!-- .sell-media-quick-view-content-inner -->
     </div><!-- .sell-media-quick-view-content -->
-
+    <?php else: ?>
+        <p>
+            <?php printf( __( 'This item is password protected. %s Click here to enter password. %s', 'sell_media' ), '<a href="'.esc_url( get_permalink( $post_id ) ).'">', '</a>' ); ?>
+        </p>
+    <?php endif; ?>
     <?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id, $location ); ?>
 
 </div><!-- .sell-media-quick-view-container -->
