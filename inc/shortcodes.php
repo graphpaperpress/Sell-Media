@@ -78,7 +78,7 @@ add_shortcode( 'sell_media_search', 'sell_media_search_shortcode' );
  * @since 0.1
  */
 function sell_media_item_shortcode( $atts ) {
-
+    $html = "";
     extract( shortcode_atts( array(
         'style' => 'default',
         'color' => 'blue',
@@ -111,6 +111,7 @@ add_shortcode( 'sell_media_item', 'sell_media_item_shortcode' );
  * @since 1.0.4
  */
 function sell_media_all_items_shortcode( $atts ){
+    $html = "";
     $settings = sell_media_get_plugin_options();
 
     global $paged;
