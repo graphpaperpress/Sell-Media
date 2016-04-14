@@ -12,7 +12,7 @@ $image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachm
 ob_start();
 ?>
 <div class="sell-media-quick-view-container">
-    <?php if( post_password_required() ): ?>
+    <?php if( !post_password_required( $post_id ) ): ?>
     <div class="sell-media-quick-view-image">
         <?php sell_media_item_icon( $image_id, 'large' ); ?>
     </div>
