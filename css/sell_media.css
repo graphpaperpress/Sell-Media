@@ -562,7 +562,7 @@ input[type="submit"].sell-media-button,
     opacity: .5 !important; }
   .item-inner:hover h3,
   .sell-media-item-wrap:hover h3 {
-    opacity: 0; }
+    opacity: 1; }
 
 /*= Lightbox
 -------------------------------------------------------------- */
