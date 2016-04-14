@@ -1026,7 +1026,7 @@ add_filter( 'sell_media_thumbnail', 'sell_media_thumbnail_crop', 10, 1 );
  * @param  int    $post_id  Id of post.
  * @return String           Button Text.
  */
-function sell_media_free_download_button_text( $text, $post_id, $attachment_id, $type ) {
+function sell_media_free_download_button_text( $text, $post_id, $attachment_id = NULL, $type = 'download' ) {
 	if( 'download' != $type ){
 		return $text;
 	}
@@ -1054,7 +1054,7 @@ add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text
  * @param  boolean $echo             Echo output or return.
  * @return string                    Html output of button.
  */
-function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo, $type ) {
+function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo, $type = 'download' ) {
 
 	if( 'download' != $type ){
 		return $html;
