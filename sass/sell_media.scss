@@ -936,6 +936,7 @@ input[type="submit"].sell-media-button,
 	#sell-media-dialog-box-target {
 		max-height: 500px;
 		width: 500px; 
+		overflow-y: scroll;
 
 		.content{
 			padding: 5px 10px;
