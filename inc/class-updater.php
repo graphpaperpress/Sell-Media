@@ -418,7 +418,7 @@ class SellMediaUpdater {
 	 * If the license has not been configured properly, display an admin notice.
 	 */
 	public function show_admin_notices() {
-		if ( empty( $this->plugins ) )
+		if ( empty( $this->plugins ) || !current_user_can( 'manage_options' ) )
 			return;
 
 		$options = $this->get_license_key();
