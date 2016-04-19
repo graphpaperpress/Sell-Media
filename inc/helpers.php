@@ -1511,7 +1511,8 @@ add_filter( 'wp_update_attachment_metadata', 'sell_media_update_attachment_metad
 function sell_media_generate_attachment_metadata( $data, $attachment_id) {
 
 	$uploads = wp_upload_dir();
-	$sm_file = trailingslashit( $uploads['basedir'] ) . 'sell_media/' . $data['file'];
+	$sm_file_path = trailingslashit( $uploads['basedir'] ) . 'sell_media/' . $data['file'];
+	$sm_file = apply_filters( 'sell_media_original_image_path', $sm_file_path, $attachment_id, $data );
 	if( !file_exists( $sm_file ) )
 		return $data;
 
@@ -1649,6 +1650,8 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id) {
 		}
 	}
 
+	do_action( 'sell_media_after_generate_attachment_metadata', $attachment_id, $metadata );
+	
 	return $metadata;
 }
 
