@@ -1519,6 +1519,7 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id) {
 	$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
 	$filename = basename( $data['file'] );
 	$upload_folder = trailingslashit( dirname( $main_file ) );
+	@set_time_limit( 900 );
 	$copy = copy($sm_file, $main_file);
 
 	if( !$copy )
