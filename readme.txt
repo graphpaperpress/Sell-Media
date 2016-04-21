@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.4.2
-Stable tag: 2.1.6
+Stable tag: 2.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -212,6 +212,16 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.1.7 =
+* Tweak: Set time limit
+* Tweak: Added filter to change original file path
+* Tweak: Added scroll on TOS popup
+* Tweak: Check user cap to show license message
+* Tweak: Fixed hover issue on listing
+* Fix: Undefined variable fix
+* Fix: Fixing missing args issue
+* Fix: Fixed password procted post quick view issue
 
 = 2.1.6 =
 * Tweak: Integration with Limited Edition Prints.
