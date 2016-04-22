@@ -793,9 +793,12 @@ function sm_update_cart_totals(){
 	var grand_total = subtotal;
 
 	// Add tax if tax is set.
-	if( sell_media.tax > 0 ){
+	if( sell_media.tax > 0 && sell_media.tax_per_item != 1 ){
 		tax = parseFloat( subtotal ) * parseFloat( sell_media.tax );
 		grand_total = subtotal  + tax ;
+	}
+	else{
+		jQuery( '.sell-media-totals-table div.tax' ).hide();
 	}
 
 	// Add shipping cost.
