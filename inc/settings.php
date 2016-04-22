@@ -572,6 +572,23 @@ function sell_media_init_settings(){
 				)
 			)
 		),
+		"per_item_tax" => array(
+			"tab" => "sell_media_payment_settings",
+			"name" => "per_item_tax",
+			"title" => __("Tax per item","sell_media"),
+			"description" => "Check to charge tax per item. You must set your tax rates below.",
+			"section" => "payment_section_1",
+			"since" => "1.0",
+			"id" => "payment_section_1",
+			"default" => "",
+			"type" => "checkbox",
+			"valid_options" => array(
+				"yes_tax_per_item" => array(
+					"name" => "yes_tax_per_item",
+					"title" => __("Yes, charge tax per item.","sell_media")
+				)
+			)
+		),
 		"tax_rate" => array(
 			"tab" => "sell_media_payment_settings",
 			"name" => "tax_rate",
