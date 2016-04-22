@@ -1336,77 +1336,82 @@ function sell_media_search_results( $content ){
 		return $content;
 	}
 
-	// Check if keyword is set.
-	if( !isset( $_GET['keyword'] ) || '' == $_GET['keyword'] ){
-		return $content;
-	}
-
-	// Get keyword.
-	$keyword = esc_sql( $_GET['keyword'] );
-
-	// Current pagination.
-	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
-
-	$args['post_type'] = array( 'sell_media_item' );
-	$args['paged'] = $paged;
-	$args['post_status'] = array( 'publish' );
-	$args['search_type'] = 'sell_media_search';
 	
 
-	if( isset( $_GET['search_everything'] ) && 1 == $_GET['search_everything'] ){
-		$args['s'] = $keyword;
-		$args['post_type'][] = 'attachment';
-		$args['post_status'][] = 'inherit';
-	}
-	else{
-
-		// There could be multiple keywords, so explode them if exact match isn't set
-		if ( ! isset( $_GET['sentence'] ) ) {
-			$keyword = explode( ',', $keyword );
-		}
-		
-		$args['tax_query'][] = 	array(
-				'taxonomy' => 'keywords',
-				'field'    => 'slug',
-				'terms'    => $keyword,
-			);
-	}
-
-	if( isset( $_GET['collection'] ) && '' != $_GET['collection'] ){
-		$collection = esc_html( $_GET['collection'] );
-		$args['tax_query'][] = 	array(
-			'taxonomy' => 'collection',
-			'field'    => 'slug',
-			'terms'    => $collection,
-		);
-
-	}
-
-	$search_query = new WP_Query( $args );
 	$content .= '<div id="sell-media-archive" class="sell-media">';
 	$content .= '    <div id="content" role="main">';
+	// Check if keyword is set.
+	if( !isset( $_GET['keyword'] ) || '' == $_GET['keyword'] ){
+		$content .= '<h2>' . __( 'No keyword found', 'sell_media' ) . '</h2>';
+		$content .= '<p>' . __( 'Please enter keyword to search.', 'sell_media' ) . '</p>';
+	}
+	else{
+		// Get keyword.
+		$keyword = esc_sql( $_GET['keyword'] );
 
-	if( $search_query->have_posts() ):
-		$i = 0;
-		$content .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+		// Current pagination.
+		$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 
-		while( $search_query->have_posts() ):
+		$args['post_type'] = array( 'sell_media_item' );
+		$args['paged'] = $paged;
+		$args['post_status'] = array( 'publish' );
+		$args['search_type'] = 'sell_media_search';
+		
 
-			$search_query->the_post();
-			$i++;
-			$content .= apply_filters( 'sell_media_content_loop', $post->ID, $i );
+		if( isset( $_GET['search_everything'] ) && 1 == $_GET['search_everything'] ){
+			$args['s'] = $keyword;
+			$args['post_type'][] = 'attachment';
+			$args['post_status'][] = 'inherit';
+		}
+		else{
 
-		endwhile;
+			// There could be multiple keywords, so explode them if exact match isn't set
+			if ( ! isset( $_GET['sentence'] ) ) {
+				$keyword = explode( ',', $keyword );
+			}
+			
+			$args['tax_query'][] = 	array(
+					'taxonomy' => 'keywords',
+					'field'    => 'slug',
+					'terms'    => $keyword,
+				);
+		}
 
-		$content .= '</div><!-- .sell-media-grid-item-container -->';
-		$content .= sell_media_pagination_filter( $search_query->max_num_pages );
+		if( isset( $_GET['collection'] ) && '' != $_GET['collection'] ){
+			$collection = esc_html( $_GET['collection'] );
+			$args['tax_query'][] = 	array(
+				'taxonomy' => 'collection',
+				'field'    => 'slug',
+				'terms'    => $collection,
+			);
 
-		wp_reset_postdata();
+		}
 
-	else:
-			$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
-			$content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
-	endif;
+		$search_query = new WP_Query( $args );
+
+		if( $search_query->have_posts() ):
+			$i = 0;
+			$content .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+
+			while( $search_query->have_posts() ):
+
+				$search_query->the_post();
+				$i++;
+				$content .= apply_filters( 'sell_media_content_loop', $post->ID, $i );
+
+			endwhile;
+
+			$content .= '</div><!-- .sell-media-grid-item-container -->';
+			$content .= sell_media_pagination_filter( $search_query->max_num_pages );
+
+			wp_reset_postdata();
+
+		else:
+				$content .= '<h2>' . __( 'Nothing Found', 'sell_media' ) . '</h2>';
+				$content .= '<p>' . __( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ) . '</p>';
+		endif;
+	}
+	
 
 	$content .= '    </div>';
 	$content .= '</div>';
