@@ -18,6 +18,18 @@ Class SellMediaProducts {
         $this->settings = sell_media_get_plugin_options();
     }
 
+    function maybe_add_tax_per_item( $price ){
+        if( 
+            isset( $this->settings->tax[0] ) && 
+            'yes' == $this->settings->tax[0] && 
+            isset( $this->settings->per_item_tax[0] ) && 
+            'yes_tax_per_item' == $this->settings->per_item_tax[0] 
+        ){
+            $price = $price + ( $price * $this->settings->tax_rate );
+        }
+        return $price;
+    }
+
     /**
      * Verify prices of products
      *
@@ -40,7 +52,7 @@ Class SellMediaProducts {
             $settings = sell_media_get_plugin_options();
             $price = $settings->default_price;
         }
-        return $price;
+        return $this->maybe_add_tax_per_item( $price );
     }
 
 
@@ -82,7 +94,7 @@ Class SellMediaProducts {
                     $prices[$i]['id'] = $term->term_id;
                     $prices[$i]['name'] = $term->name;
                     $prices[$i]['description'] = $term->description;
-                    $prices[$i]['price'] = get_term_meta( $term->term_id, 'price', true );
+                    $prices[$i]['price'] = $this->maybe_add_tax_per_item( get_term_meta( $term->term_id, 'price', true ) );
                     $prices[$i]['width'] = get_term_meta( $term->term_id, 'width', true );
                     $prices[$i]['height'] = get_term_meta( $term->term_id, 'height', true );
                 }
@@ -109,7 +121,7 @@ Class SellMediaProducts {
         $original_price = get_post_meta( $product_id, 'sell_media_price', true );
 
         if ( ! empty( $original_price ) && ! empty( $price_id ) && $price_id == 'original' ){
-            $final_price = $original_price;
+            $final_price = $this->maybe_add_tax_per_item( $original_price );
         }
 
         // Use price group price
@@ -123,7 +135,7 @@ Class SellMediaProducts {
 
         // Use original price from settings
         else {
-            $final_price = $this->settings->default_price;
+            $final_price = $this->maybe_add_tax_per_item( $this->settings->default_price );
         }
 
         $final_price = sprintf( '%0.2f', $final_price );
@@ -139,8 +151,9 @@ Class SellMediaProducts {
      * @return string (int)
      */
     public function get_original_price( $post_id=null ){
-
-        $price = sprintf( '%0.2f', ( float ) get_post_meta( $post_id, 'sell_media_price', true ) );
+        // May be add tax on price.
+        $price = $this->maybe_add_tax_per_item( get_post_meta( $post_id, 'sell_media_price', true ) );
+        $price = sprintf( '%0.2f', ( float ) $price );
         if ( $price )
             return $price;
     }
