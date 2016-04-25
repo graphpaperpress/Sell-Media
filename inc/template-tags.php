@@ -660,6 +660,7 @@ function sell_media_show_file_info(){
 	$meta = wp_get_attachment_metadata( $attachment_id );
 	$filename = basename( get_attached_file( $attachment_id ) );
 	$postguid = get_the_guid( $attachment_id );
+	$image_size_info = getimagesize( Sell_Media()->products->get_protected_file( $post->ID, $attachment_id ) );
 
 	echo '<h2 class="widget-title sell-media-item-details-title">' . __( 'Details', 'sell_media' ) . '</h2>';
 	echo '<ul class="sell-media-item-details">';
@@ -668,8 +669,8 @@ function sell_media_show_file_info(){
 	preg_match('/^.*?\.(\w+)$/',$filename,$ext);
 	echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . esc_html( strtoupper( $ext[1] ) ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>';
 	echo '<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post->ID, $attachment_id ) . '</li>';
-	if ( isset( $meta['width'], $meta['height'] ) ) {
-		echo '<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $meta['width']. ' x '. $meta['height'] .'</li>';
+	if ( isset( $image_size_info[0], $image_size_info[1] ) ) {
+		echo '<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $image_size_info[0]. ' x '. $image_size_info[1] .'</li>';
 	}
 	if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
 		echo '<li class="collections"><span class="title">' . __( 'Collections', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'collection' ) . '</li>';
