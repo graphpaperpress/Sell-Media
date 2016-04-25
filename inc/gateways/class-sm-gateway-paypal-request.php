@@ -80,7 +80,7 @@ class SM_Gateway_Paypal_Request {
         $args['currency_code'] = sanitize_text_field( $settings->currency );
         $args['business']      = sanitize_email( $paypal_email );
         $args['rm']            = "2";
-        $args['tax_cart']      = ( isset( $settings->tax ) && !empty( $settings->tax ) && ( !isset( $settings->per_item_tax ) || empty( $settings->per_item_tax ) ) )? number_format( $subtotal * $settings->tax_rate, 2 ) : 0;
+        $args['tax_cart']      = ( isset( $settings->tax ) && !empty( $settings->tax ) && ( 'exclusive' == $settings->tax_display || empty( $settings->tax_display ) ) )? number_format( $subtotal * $settings->tax_rate, 2 ) : 0;
 
         if( isset( $settings->shipping ) )
             $shipping = $settings->shipping;

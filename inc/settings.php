@@ -572,20 +572,24 @@ function sell_media_init_settings(){
 				)
 			)
 		),
-		"per_item_tax" => array(
+		"tax_display" => array(
 			"tab" => "sell_media_payment_settings",
-			"name" => "per_item_tax",
-			"title" => __("Tax per item","sell_media"),
-			"description" => "Check to charge tax per item. You must set your tax rates below.",
+			"name" => "tax_display",
+			"title" => __( "Tax Display", "sell_media" ),
+			"description" => __( "Select how you want to display taxes. Most users can leave this set to \"Exclusive\". Tax laws in certain countries, like Austrailia, require that prices of items are displayed with taxes included. If this scenerio applies to you, then select \"Inclusive\".", "sell_media" ),
 			"section" => "payment_section_1",
 			"since" => "1.0",
 			"id" => "payment_section_1",
-			"default" => "",
-			"type" => "checkbox",
+			"type" => "select",
+			"default" => "exclusive",
 			"valid_options" => array(
-				"yes_tax_per_item" => array(
-					"name" => "yes_tax_per_item",
-					"title" => __("Yes, charge tax per item.","sell_media")
+				"exclusive" => array(
+					"name" => "exclusive",
+					"title" => __( "Exclusive - Added at checkout", "sell_media" )
+				),
+				"inclusive" => array(
+					"name" => "inclusive",
+					"title" => __( "Inclusive - Added to item prices", "sell_media" )
 				)
 			)
 		),

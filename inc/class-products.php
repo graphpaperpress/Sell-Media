@@ -22,8 +22,8 @@ Class SellMediaProducts {
         if( 
             isset( $this->settings->tax[0] ) && 
             'yes' == $this->settings->tax[0] && 
-            isset( $this->settings->per_item_tax[0] ) && 
-            'yes_tax_per_item' == $this->settings->per_item_tax[0] 
+            isset( $this->settings->tax_display ) && 
+            'inclusive' == $this->settings->tax_display 
         ){
             $price = $price + ( $price * $this->settings->tax_rate );
         }

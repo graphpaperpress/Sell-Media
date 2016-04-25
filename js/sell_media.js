@@ -793,7 +793,7 @@ function sm_update_cart_totals(){
 	var grand_total = subtotal;
 
 	// Add tax if tax is set.
-	if( sell_media.tax > 0 && sell_media.tax_per_item != 1 ){
+	if( sell_media.tax > 0 && sell_media.tax_display == 'exclusive' ){
 		tax = parseFloat( subtotal ) * parseFloat( sell_media.tax );
 		grand_total = subtotal  + tax ;
 	}
