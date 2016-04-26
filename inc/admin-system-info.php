@@ -10,7 +10,7 @@ function sell_media_system_info_callback_fn(){ ?>
     <div class="wrap">
         <?php screen_icon(); ?>
         <h2><?php _e( 'System Info', 'sell_media' ); ?></h2>
-        <textarea readonly="readonly" onclick="this.focus(); this.select()" id="system-info-textarea" name="sell-media-sysinfo" title="To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).">
+        <textarea readonly="readonly" onclick="this.focus(); this.select()" id="system-info-textarea" style="width:100%;height:100%;min-height:450px;" name="sell-media-sysinfo" title="To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).">
             <?php echo sell_media_get_system_info(); ?>
         </textarea>
 
