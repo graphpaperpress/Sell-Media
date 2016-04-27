@@ -65,7 +65,7 @@ Class SellMediaProducts {
         $i = 0;
 
         if ( $this->settings->hide_original_price !== 'yes' ){
-            $original_size = Sell_Media()->images->get_original_image_size( $attachment_id );
+            $original_size = Sell_Media()->images->get_original_image_size( $post_id, $attachment_id );
             $prices[$i]['id'] = 'original';
             $prices[$i]['name'] = __( 'Original', 'sell_media' );
             $prices[$i]['description'] = __( 'The original high resolution source file', 'sell_media' );

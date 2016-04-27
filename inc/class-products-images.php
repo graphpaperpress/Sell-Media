@@ -122,14 +122,17 @@ class SellMediaImages extends SellMediaProducts {
     * @param (int)$post_id The post_id to the sell media item
     * @since 1.2.4
     */
-    public function get_original_image_size( $attachment_id=null ){
+    public function get_original_image_size( $post_id=null, $attachment_id=null ){
+        
+        $original_protected_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+
         // check if attachment is an image
         if ( wp_attachment_is_image( $attachment_id ) ) {
-            $original_size = wp_get_attachment_image_src( $attachment_id, 'full' );
+            list( $width, $height, $type, $attr ) = getimagesize( $original_protected_file );
             return array(
                 'original'=> array(
-                    'height' => $original_size[2],
-                    'width' => $original_size[1]
+                    'height' => $height,
+                    'width' => $width
                 )
             );
         }
@@ -157,7 +160,7 @@ class SellMediaImages extends SellMediaProducts {
         $size_groups = sell_media_get_price_groups( $post_id, 'price-group' );
         if ( ! empty( $size_groups ) ){
 
-            $image = $this->get_original_image_size( $attachment_id );
+            $image = $this->get_original_image_size( $post_id, $attachment_id );
 
             foreach( $size_groups as $size ){
 
