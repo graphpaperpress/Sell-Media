@@ -3,9 +3,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Sell Media 2.1.5\n"
+"Project-Id-Version: Sell Media 2.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sell-media\n"
-"POT-Creation-Date: 2016-05-03 17:40-0400\n"
+"POT-Creation-Date: 2016-05-03 18:07-0400\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1651,6 +1651,16 @@ msgstr ""
 msgid "License Key"
 msgstr ""
 
+#: sell-media/inc/class-updater.php:429
+msgid ""
+"Please enter your email and license key to enable updates to plugins from "
+"Graph Paper Press."
+msgstr ""
+
+#: sell-media/inc/class-updater.php:431
+msgid "Complete the setup now."
+msgstr ""
+
 #: sell-media/inc/class-updater.php:441
 #, php-format
 msgid ""
@@ -1722,7 +1732,7 @@ msgstr ""
 msgid "Search for Keywords"
 msgstr ""
 
-#: sell-media/inc/install.php:36
+#: sell-media/inc/install.php:36 sell-media/inc/install.php:125
 msgid "Sell Media requires WordPress 4.4 or higher!"
 msgstr ""
 
