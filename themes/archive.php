@@ -80,7 +80,7 @@ $settings = sell_media_get_plugin_options();
 
                         if ( $post_count != 0 ) : $i++; ?>
 
-                            <div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' ); ?>">
+                            <div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ); ?>">
                                 <div class="sell-media-item-wrap sell-media-collection">
                                     <a href="<?php echo get_term_link( $child ); ?>" class="collection">
 

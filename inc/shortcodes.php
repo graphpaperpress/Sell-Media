@@ -478,7 +478,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
             if ( $post_count != 0 ) :
 
-                $html .= '<div class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' ) . '">';
+                $html .= '<div class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ) . '">';
                 $html .= '<div class="sell-media-item-wrap sell-media-collection">';
                     $args = array(
                             'posts_per_page' => 1,

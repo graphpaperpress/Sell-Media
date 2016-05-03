@@ -132,7 +132,7 @@ function sell_media_lightbox_query() {
             $permalink      = ( ! empty( $item['attachment_id'] ) ) ? add_query_arg( 'id', $attachment_id, get_permalink( $post_id ) ) : get_permalink( $attachment_id );
 
             $i++;
-            $class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' );
+            $class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
 
             $html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid-single-item ' . $class . '">';
             $html .= '<a href="' . esc_url( $permalink ) . '" class="sell-media-item">';
