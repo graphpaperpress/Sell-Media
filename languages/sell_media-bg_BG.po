@@ -1,1852 +1,207 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sell Media\n"
-"POT-Creation-Date: 2014-11-04 15:30-0500\n"
-"PO-Revision-Date: 2015-05-22 15:37+0200\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sell-media\n"
+"POT-Creation-Date: 2016-05-03 17:43-0400\n"
+"PO-Revision-Date: 2016-05-03 17:43-0400\n"
 "Last-Translator: Thad Allender <support@graphpaperpress.com>\n"
 "Language-Team: Thad Allender <support@graphpaperpress.com>\n"
+"Language: bg_BG\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: bg_BG\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: inc/admin-items-bulk.php:16
-msgid ""
-"Add Bulk allows you to add many single items at once. Please note: Bulk "
-"uploading is a server-intensive process. The capability of this feature is "
-"dependent on the performance of your server. Upload in small batches to "
-"ensure all items uploaded are published correctly. You can modify the prices "
-"and licenses of each item after doing the bulk upload."
+#: sell-media-access-control/sell-media-access-control.php:98
+msgid "Free Access Control"
 msgstr ""
-"Добави Bulk ви позволява да добавяте много единични бройки наведнъж. Моля, "
-"обърнете внимание: Bulk качването е процес сървър-интензивно. Способността "
-"на тази функция зависи от работата на вашия сървър. Качване на малки "
-"партиди, за да гарантира, че всички елементи, качени са публикувани "
-"правилно. Можете да променяте цените и лицензите на всяка позиция, след "
-"извършване на масово качване."
 
-#: inc/admin-items-bulk.php:17 inc/admin-items.php:276
-msgid "Upload"
-msgstr "Качване"
-
-#: inc/admin-items-bulk.php:18
-msgid "Loading items..."
-msgstr "Зареждане…"
-
-#: inc/admin-items-bulk.php:26
-msgid "Choose a Price Group"
-msgstr "Изберете ценова група"
-
-#: inc/admin-items-bulk.php:31 inc/admin-items-bulk.php:44
-#: inc/admin-items-bulk.php:55 inc/admin-items-package.php:75
-#: inc/settings/library/helpers.php:242
-#: sell-media-free-downloads/sell-media-free-downloads.php:125
-#: sell-media-mailchimp/sell-media-mailchimp.php:41
+#: sell-media-access-control/sell-media-access-control.php:100
+#: sell-media-add-bulk/sell-media-add-bulk.php:151
+#: sell-media-add-bulk/sell-media-add-bulk.php:161
+#: sell-media-add-bulk/sell-media-add-bulk.php:169
+#: sell-media-free-downloads/sell-media-free-downloads.php:127
+#: sell-media-mailchimp/sell-media-mailchimp.php:42
+#: sell-media/inc/admin-items.php:121
+#: sell-media/inc/settings/library/helpers.php:267
 msgid "None"
 msgstr "Няма"
 
-#: inc/admin-items-bulk.php:39
-msgid "Choose a License"
-msgstr "Изберете Лиценз"
+#: sell-media-access-control/sell-media-access-control.php:101
+msgid "Everyone"
+msgstr ""
 
-#: inc/admin-items-bulk.php:50
-msgid "Choose a Collection"
-msgstr "Изберете колекция"
+#: sell-media-access-control/sell-media-access-control.php:102
+msgid "Clients with a valid password"
+msgstr ""
 
-#: inc/admin-items-bulk.php:63 inc/admin-items-package.php:83
-#: inc/class-search.php:178 inc/scripts.php:81
-#: themes/archive-sell_media_item.php:109 themes/single-sell_media_item.php:24
-msgid "Save"
-msgstr "Запази"
-
-#: inc/admin-items-bulk.php:153
-#: sell-media-discount-codes/inc/all-discount-code.php:96
-msgid "Edit"
-msgstr "Редактирай"
-
-#: inc/admin-items-package.php:22
+#: sell-media-access-control/sell-media-access-control.php:104
 msgid ""
-"Packages are groups of large files that you want to sell as one product "
-"(Example: You photograph an event and want to sell all images in one "
-"package). To sell a package, you must:"
-msgstr ""
-"Пакетите са групи от големи файлове, които искате да продадете като един "
-"продукт (Пример: Вие снимате събитие и искате да продадете всички "
-"изображения в един пакет). За да продаде пакет, трябва да:"
-
-#: inc/admin-items-package.php:25
-msgid "ZIP up the folder full of files on your computer."
-msgstr "Архивирайте папка пълна с файлове на вашия компютър."
-
-#: inc/admin-items-package.php:26
-#, php-format
-msgid "Using FTP, upload the ZIP file to your website into the %1$s folder."
-msgstr ""
-"Използване на FTP, качване на ZIP файл на вашия уеб сайт в папката %1$s."
-
-#: inc/admin-items-package.php:27
-msgid "Select the package filename from the list below."
-msgstr "Изберете името на пакета от списъка по-долу."
-
-#: inc/admin-items-package.php:37
-msgid "Choose a package"
-msgstr "Изберете пакет"
-
-#: inc/admin-items-package.php:44 inc/admin-items.php:319
-msgid "Select a package"
-msgstr "Изберете пакет"
-
-#: inc/admin-items-package.php:54 inc/admin-payments.php:67
-#: inc/admin-payments.php:113 inc/class-payments.php:444 inc/scripts.php:67
-#: sell-media-discount-codes/inc/add-discount-code.php:75
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:556
-msgid "Name"
-msgstr "Име"
-
-#: inc/admin-items-package.php:62 inc/admin-items.php:108
-#: inc/admin-items.php:127 inc/admin-price-groups.php:251
-#: inc/admin-price-groups.php:298 inc/class-payments.php:613
-#: inc/scripts.php:70
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:629
-msgid "Price"
-msgstr "Цена"
-
-#: inc/admin-items-package.php:70
-msgid "Collection (optional)"
-msgstr "Колекция (опционално)"
-
-#: inc/admin-items-package.php:84
-msgid "Edit Package"
-msgstr "Редактирай пакет"
-
-#: inc/admin-items.php:33 inc/admin-items.php:38 inc/install.php:100
-#: inc/install.php:101 inc/install.php:104 inc/install.php:112
-msgid "Sell Media"
+"<strong>Note:</strong> You must password protect this post if \"Clients\" is "
+"selected."
 msgstr ""
 
-#: inc/admin-items.php:44
-msgid "Add Single"
-msgstr "Добави един"
-
-#: inc/admin-items.php:45 inc/admin-menu.php:26
-msgid "Add Bulk"
-msgstr "Добави много"
-
-#: inc/admin-items.php:46 inc/admin-menu.php:27
-msgid "Add Package"
-msgstr "Добави пакет"
-
-#: inc/admin-items.php:102
-msgid "Package File"
-msgstr "Файлът пакет"
-
-#: inc/admin-items.php:121
-msgid "File"
-msgstr "Файл"
-
-#: inc/admin-items.php:122
-msgid "A description for the field."
-msgstr "Описание за полето."
-
-#: inc/admin-items.php:135
-msgid "Price Group"
-msgstr "Ценова група"
-
-#: inc/admin-items.php:136
-msgid ""
-"If you want to sell additional image sizes, select a Price Group or <a href="
-"\""
-msgstr ""
-"Ако искате да продават допълнителни размери изображения, изберете ценова "
-"група или < href = \""
-
-#: inc/admin-items.php:198
-msgid ""
-"This product is a package. Show customers what is included in this package "
-"by adding some images (preferably a gallery of images) to the Post Editor "
-"below. The Featured Image will be used to represent this package on archive "
-"pages."
-msgstr ""
-"Този продукт е пакет. Покажете на клиентите какво е включено в този пакет, "
-"чрез добавяне на някои изображения (за предпочитане галерия от изображения) "
-"в пост редактора, по-долу. Избраните изображения ще се използват за "
-"представяне на този пакет в Архивните страници."
-
-#: inc/admin-items.php:262
-msgid "Choose Image"
-msgstr "Изберете изображение"
-
-#: inc/admin-items.php:263
-msgid " Remove Image"
-msgstr "Премахване на изображение"
-
-#: inc/admin-items.php:303 sell-media-reprints/admin-tags.php:101
-msgid "Select a price group"
-msgstr "Изберете ценова група"
-
-#: inc/admin-items.php:556
-msgid "No price set"
-msgstr "Няма определена цена"
-
-#: inc/admin-items.php:592
-msgid "No sales so far."
-msgstr "Досега няма продажби."
-
-#: inc/admin-menu.php:28
-msgid "Reports"
-msgstr "Отчети"
-
-#: inc/admin-menu.php:29
-msgid "Upgrades"
-msgstr "Ъпгрейди"
-
-#: inc/admin-payments.php:14
-msgid "Purchase Details"
-msgstr "Подробни данни за покупката"
-
-#: inc/admin-payments.php:21
-msgid "Additional Purchase Details"
-msgstr "Детайли за допълнително закупуване "
-
-#: inc/admin-payments.php:35
-msgid "Payment Gateway Details"
-msgstr "Подробни данни за покупката"
-
-#: inc/admin-payments.php:68 inc/class-payments.php:745 inc/settings.php:63
-msgid "Email"
-msgstr ""
-
-#: inc/admin-payments.php:69 inc/shortcodes.php:186 themes/cart.php:128
-msgid "Total"
-msgstr "Общо"
-
-#: inc/admin-payments.php:96
-msgid "This is the additional payment data stored with the purchase."
-msgstr "Това са допълнителните данни за плащането, съхранени с покупката."
-
-#: inc/admin-payments.php:109
-msgid "Product"
-msgstr "Продукт"
-
-#: inc/admin-payments.php:116 inc/class-payments.php:443
-msgid "ID"
-msgstr ""
-
-#: inc/admin-payments.php:119
-#: sell-media-discount-codes/inc/add-discount-code.php:93
-msgid "Type"
-msgstr "Тип"
-
-#: inc/admin-payments.php:122 inc/class-payments.php:445
-#: inc/class-payments.php:612 inc/scripts.php:68
-msgid "Size"
-msgstr "Размер"
-
-#: inc/admin-payments.php:125 inc/class-payments.php:446
-#: inc/class-payments.php:615 inc/install.php:270 inc/scripts.php:69
-msgid "License"
-msgstr "Лиценз"
-
-#: inc/admin-payments.php:128 inc/class-payments.php:447 inc/scripts.php:71
-msgid "Qty"
-msgstr "Количество"
-
-#: inc/admin-payments.php:131 inc/class-payments.php:449 inc/scripts.php:72
-#: inc/shortcodes.php:173
-msgid "Subtotal"
-msgstr "Междинна сума"
-
-#: inc/admin-payments.php:141
-msgid "This payment has no additional payment details"
-msgstr "Това плащане няма допълнителни детайли"
-
-#: inc/admin-payments.php:164 inc/settings/library/helpers.php:266
-#: sell-media-stripe/sell-media-stripe.php:204
-msgid "PayPal"
-msgstr ""
-
-#: inc/admin-payments.php:167
-msgid "Stripe"
-msgstr ""
-
-#: inc/admin-payments.php:169
-msgid "This is the data that was sent from "
-msgstr "Това са данни, които са били изпратени от"
-
-#: inc/admin-payments.php:169
-msgid " at time of purchase. Use this for debugging, if needed."
-msgstr ""
-"по време на покупката. Използвайте това за отстраняване на грешки, ако е "
-"необходимо."
-
-#: inc/admin-payments.php:188
-msgid "Earnings Report"
-msgstr "Доклад за приходите"
-
-#: inc/admin-payments.php:190
-msgid "Total Earnings To Date:"
-msgstr "Общата печалба до момента:"
-
-#: inc/admin-payments.php:191
-msgid ""
-"Below is a breakdown of earnings per day, month and year. Want to increase "
-"your sales?"
-msgstr ""
-"По-долу е разбивка на приходите на ден, месец и година. Искате ли да "
-"увеличите продажбите си?"
-
-#: inc/admin-payments.php:191
-msgid "Download new Sell Media extensions"
-msgstr "Изтегли нови разширения за Sell Media"
-
-#: inc/admin-payments.php:204
-msgid "Day"
-msgstr "Ден"
-
-#: inc/admin-payments.php:205 inc/admin-payments.php:245
-#: inc/admin-payments.php:278
-msgid "Earnings"
-msgstr "Приходи"
-
-#: inc/admin-payments.php:225
-msgid "Earnings per day"
-msgstr "Доходи на ден"
-
-#: inc/admin-payments.php:244
-msgid "Month"
-msgstr "Месец"
-
-#: inc/admin-payments.php:258
-msgid "Earnings per month"
-msgstr "Доходи на месец"
-
-#: inc/admin-payments.php:277
-msgid "Year"
-msgstr "Година"
-
-#: inc/admin-payments.php:294
-msgid "Earnings per year"
-msgstr "Доходи на година"
-
-#: inc/admin-price-groups.php:208
-msgid "Create Price Group"
-msgstr "Създайте ценова група"
-
-#: inc/admin-price-groups.php:213
-msgid "Are you sure you want to delete the price group:"
-msgstr "Наистина ли искате да изтриете ценовата група:"
-
-#: inc/admin-price-groups.php:213
-msgid "This will delete the price group and ALL its prices associated with it."
-msgstr "Това ще изтрие ценовата група и цените свързани с нея."
-
-#: inc/admin-price-groups.php:214
-msgid "Delete Group"
-msgstr "Изтрий групата"
-
-#: inc/admin-price-groups.php:218
-msgid "Enter price group name here"
-msgstr "Въведете име на ценовата група тук"
-
-#: inc/admin-price-groups.php:233 inc/admin-price-groups.php:285
-msgid "Name (shown to buyer, so be descriptive)"
-msgstr "Име (показано на купувача, така че бъдете описателни)"
-
-#: inc/admin-price-groups.php:241 inc/admin-price-groups.php:290
-msgid "Max width (pixels)"
-msgstr "Max ширина (пиксели)"
-
-#: inc/admin-price-groups.php:246
-msgid "Max Height (pixels)"
-msgstr "Макс височина (пиксели)"
-
-#: inc/admin-price-groups.php:257
-msgid "Are you sure you want to delete the price"
-msgstr "Сигурни ли сте, че искате да изтриете цената"
-
-#: inc/admin-price-groups.php:294
-msgid "Max height (pixels)"
-msgstr "Max височина (пиксели)"
-
-#: inc/admin-price-groups.php:303
-msgid ""
-"The sizes listed below determine the maximum dimensions in pixels. Price "
-"Groups only apply to images."
-msgstr ""
-"Размерите изброени по-долу определят максималните размери в пиксели. "
-"Ценовите групи прилагат само за изображения."
-
-#: inc/admin-price-groups.php:304
-msgid "Create a price group to add prices to."
-msgstr "Създайте ценова група за да добавите цени."
-
-#: inc/admin-price-groups.php:363
-msgid "Add New Price"
-msgstr "Добави нова цена"
-
-#: inc/admin-price-groups.php:371
-msgid "Save Price Group"
-msgstr "Запишете ценова група"
-
-#: inc/class-customer.php:65
-msgid "Account registration at"
-msgstr "Регистрация на сметка в"
-
-#: inc/class-customer.php:66
-msgid "Welcome"
-msgstr "Добре дошли"
-
-#: inc/class-customer.php:67
-msgid "Here are your login credentials"
-msgstr "Вашите данни за вход"
-
-#: inc/class-customer.php:68 inc/shortcodes.php:458
-msgid "Username"
-msgstr "Потребителско име"
-
-#: inc/class-customer.php:69
-msgid ""
-"Create a password if you want to login to our dashboard to download any of "
-"your purchases in the future."
-msgstr ""
-"Създайте парола, ако искате да влезете в нашето табло за да изтеглите някоя "
-"от вашите покупки в бъдеще."
-
-#: inc/class-customer.php:71
-msgid "Any purchases your make will be available on your account dashboard."
-msgstr ""
-"Всички покупки, които направите ще бъдат достъпни във вашето профил табло."
-
-#: inc/class-customer.php:73
-msgid "Thanks"
-msgstr "Благодарим!"
-
-#: inc/class-downloads.php:66
-msgid "You do not have permission to download this file"
-msgstr "Нямате разрешение да свалите този файл"
-
-#: inc/class-downloads.php:66
-#: sell-media-free-downloads/sell-media-free-downloads.php:404
-#: sell-media-free-downloads/sell-media-free-downloads.php:409
-msgid "Purchase Verification Failed"
-msgstr "Грешка при проверка на покупката"
-
-#: inc/class-payments.php:385
-msgid "PRODUCT"
-msgstr "Продукт"
-
-#: inc/class-payments.php:387
-msgid "SIZE"
-msgstr "Размер"
-
-#: inc/class-payments.php:389
-msgid "LICENSE"
-msgstr "Лиценз"
-
-#: inc/class-payments.php:391
-msgid "LICENSE DESCRIPTION"
-msgstr "ОПИСАНИЕ НА ЛИЦЕНЗА"
-
-#: inc/class-payments.php:393
-msgid "QTY"
-msgstr "Количество"
-
-#: inc/class-payments.php:395
-msgid "TYPE"
-msgstr "Тип"
-
-#: inc/class-payments.php:397
-msgid "SUBTOTAL"
-msgstr "МЕЖДИННА СУМА"
-
-#: inc/class-payments.php:399
-msgid "DOWNLOAD LINK"
-msgstr "Връзка за изтегляне"
-
-#: inc/class-payments.php:401
-msgid "DELIVERY"
-msgstr "ДОСТАВКА"
-
-#: inc/class-payments.php:409 inc/class-payments.php:497
-msgid "DISCOUNT"
-msgstr "ОТСТЪПКА"
-
-#: inc/class-payments.php:412 inc/class-payments.php:500
-msgid "TAX"
-msgstr "Данък"
-
-#: inc/class-payments.php:415 inc/class-payments.php:503
-msgid "SHIPPING"
-msgstr "ДОСТАВКА"
-
-#: inc/class-payments.php:417 inc/class-payments.php:506
-msgid "TOTAL"
-msgstr "Общо"
-
-#: inc/class-payments.php:448
-msgid "Delivery"
-msgstr "Доставка"
-
-#: inc/class-payments.php:474
-#: sell-media-free-downloads/sell-media-free-downloads.php:271
+#: sell-media-access-control/sell-media-access-control.php:135
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:123
+#: sell-media-free-downloads/sell-media-free-downloads.php:307
+#: sell-media/inc/class-payments.php:446 sell-media/inc/helpers.php:1036
 msgid "Download"
 msgstr "Изтегляне"
 
-#: inc/class-payments.php:611
-#: sell-media-commissions/sell-media-commissions.php:46
-#: sell-media-commissions/sell-media-commissions.php:56
-msgid "Item"
-msgstr "Артикул"
+#: sell-media-add-bulk/sell-media-add-bulk.php:95
+#: sell-media-add-bulk/sell-media-add-bulk.php:136
+msgid "Add Bulk"
+msgstr "Добави много"
 
-#: inc/class-payments.php:614
-msgid "Quantity"
-msgstr "Количество"
-
-#: inc/class-payments.php:694
-#: sell-media-commissions/sell-media-commissions.php:36
-msgid "Paid"
-msgstr "Платен"
-
-#: inc/class-payments.php:741
-msgid "New sale notification"
-msgstr "Уведомяване за нова продажба"
-
-#: inc/class-payments.php:743
-msgid "Customer"
-msgstr "Потребител"
-
-#: inc/class-payments.php:744
-msgid "Address"
-msgstr "Адрес"
-
-#: inc/class-products.php:51
-msgid "Original"
-msgstr "Оригинал"
-
-#: inc/class-products.php:52
-msgid "The original high resolution source file"
-msgstr "Оригиналния файл с висока разделителна способност"
-
-#: inc/class-search.php:94
-msgid "Example: 100"
-msgstr "Пример: 100"
-
-#: inc/class-search.php:98
-msgid "X"
+#: sell-media-add-bulk/sell-media-add-bulk.php:138
+msgid ""
+"Upload many single products at once that share the same selling preferences. "
+"Please note: Bulk uploading is a server-intensive process. The capability of "
+"this feature is dependent on the capabilities of your server. Upload in "
+"small batches to ensure all items uploaded are published correctly. You can "
+"modify the prices and licenses of each item after uploading."
 msgstr ""
 
-#: inc/class-search.php:167
-msgid "Displaying results "
-msgstr "Показване на резултати"
+#: sell-media-add-bulk/sell-media-add-bulk.php:139
+#: sell-media/inc/admin-items.php:57
+msgid "Upload"
+msgstr "Качване"
 
-#: inc/class-search.php:167
-msgid " of "
-msgstr "на"
+#: sell-media-add-bulk/sell-media-add-bulk.php:140
+msgid "Uploading..."
+msgstr ""
 
-#: inc/class-search.php:179 inc/lightbox.php:45 inc/shortcodes.php:142
-#: sell-media-stripe/sell-media-stripe.php:57
-#: themes/archive-sell_media_item.php:110 themes/single-sell_media_item.php:23
-msgid "Buy"
-msgstr "Купи"
+#: sell-media-add-bulk/sell-media-add-bulk.php:149
+msgid "Price Group"
+msgstr "Ценова група"
 
-#: inc/collections.php:76
-msgid "This item is password protected"
-msgstr "Този елемент е защитен с парола"
+#: sell-media-add-bulk/sell-media-add-bulk.php:159
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:295
+#: sell-media/inc/admin-payments.php:132 sell-media/inc/class-payments.php:421
+#: sell-media/inc/class-payments.php:608 sell-media/inc/class-updater.php:374
+#: sell-media/inc/class-updater.php:378 sell-media/inc/fields.php:75
+#: sell-media/inc/install.php:344 sell-media/inc/scripts.php:58
+msgid "License"
+msgstr "Лиценз"
 
-#: inc/install.php:102
-msgid "All Products"
-msgstr "Всички продукти"
-
-#: inc/install.php:103 inc/install.php:145
-#: sell-media-discount-codes/sell-media-discount-codes.php:133
-msgid "Add New"
-msgstr "Добави нов"
-
-#: inc/install.php:105
-msgid "Edit Product"
-msgstr "Редактирай продукт"
-
-#: inc/install.php:106
-msgid "New Product"
-msgstr "Нов продукт"
-
-#: inc/install.php:107
-msgid "View Product"
-msgstr "Виж продукта"
-
-#: inc/install.php:108
-msgid "Search Products"
-msgstr "търсене на продукти"
-
-#: inc/install.php:109
-msgid "No products found"
-msgstr "Няма намерени продукти"
-
-#: inc/install.php:110
-msgid "No products found in Trash"
-msgstr "Няма продукти в кошчето"
-
-#: inc/install.php:111
-msgid "Parent Product:"
-msgstr "Родител продукт:"
-
-#: inc/install.php:143 inc/install.php:154
-msgid "Payments"
-msgstr "Плащания"
-
-#: inc/install.php:144 inc/settings.php:48 inc/settings.php:52
-msgid "Payment"
-msgstr "Плащане"
-
-#: inc/install.php:146
-msgid "Add New Payment"
-msgstr "Добави ново плащане"
-
-#: inc/install.php:147
-msgid "Edit Payment"
-msgstr "Редактирай плащането"
-
-#: inc/install.php:148
-msgid "New Payment"
-msgstr "Ново плащане"
-
-#: inc/install.php:149
-msgid "View Payment"
-msgstr "Преглед на плащане"
-
-#: inc/install.php:150
-msgid "Search Payments"
-msgstr "Търсене на плащания"
-
-#: inc/install.php:151
-msgid "No payments found"
-msgstr "Не са открити плащания"
-
-#: inc/install.php:152
-msgid "No payments found in Trash"
-msgstr "Няма плащания в кошчето"
-
-#: inc/install.php:153
-msgid "Parent Payment:"
-msgstr "Главно плащане"
-
-#: inc/install.php:200 inc/install.php:201 inc/install.php:214
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:274
-msgid "Price Groups"
-msgstr "Ценови групи"
-
-#: inc/install.php:202
-msgid "Search Price Groups"
-msgstr "Търсене на ценови групи"
-
-#: inc/install.php:203
-msgid "Popular Price Groups"
-msgstr "Популярни ценови групи"
-
-#: inc/install.php:204
-msgid "All Price Groups"
-msgstr "Всички ценови групи"
-
-#: inc/install.php:205
-msgid "Parent Price Groups"
-msgstr "Основни ценови групи"
-
-#: inc/install.php:206
-msgid "Parent Price Groups:"
-msgstr "Ценови подгрупи"
-
-#: inc/install.php:207
-msgid "Edit Price Group"
-msgstr "Редактирай ценова група"
-
-#: inc/install.php:208
-msgid "Update Price Group"
-msgstr "Актуализация на ценова група"
-
-#: inc/install.php:209
-msgid "Add New Price Group"
-msgstr "Добави нова ценова група"
-
-#: inc/install.php:210
-msgid "New Price Group"
-msgstr "Нова ценова група"
-
-#: inc/install.php:211
-msgid "Separate Price Groups with commas"
-msgstr "Разделете със запетаи ценовите групи"
-
-#: inc/install.php:212
-msgid "Add or remove Price Groups"
-msgstr "Добавяне или премахване на ценови групи"
-
-#: inc/install.php:213
-msgid "Choose from most used Price Groups"
-msgstr "Изберете от най-използваните ценови групи"
-
-#: inc/install.php:234
-msgid "Product Collections"
-msgstr "Колекции от продукти"
-
-#: inc/install.php:235
+#: sell-media-add-bulk/sell-media-add-bulk.php:167
+#: sell-media/inc/class-search.php:460 sell-media/inc/helpers.php:1276
+#: sell-media/inc/install.php:309
 msgid "Collection"
 msgstr "Колекция"
 
-#: inc/install.php:236
-msgid "Search Collection"
-msgstr "Търсене на колекция"
-
-#: inc/install.php:237
-msgid "Popular Collection"
-msgstr "Популярни колекции"
-
-#: inc/install.php:238 inc/widgets/sell-media-featured.php:95
-msgid "All Collections"
-msgstr "Всички Колекции"
-
-#: inc/install.php:239
-msgid "Parent Collection"
-msgstr "Основна Колекция"
-
-#: inc/install.php:240
-msgid "Parent Collection:"
-msgstr "Основна Колекция:"
-
-#: inc/install.php:241
-msgid "Edit Collection"
-msgstr "Редакция на колекция"
-
-#: inc/install.php:242
-msgid "Update Collection"
-msgstr "Актуализация на Колекция"
-
-#: inc/install.php:243
-msgid "Add New Collection"
-msgstr "Добави нова Колекция"
-
-#: inc/install.php:244
-msgid "New Collection"
-msgstr "Нова Колекция"
-
-#: inc/install.php:245
-msgid "Separate collection with commas"
-msgstr "Разделете със запетаи Колекцийте"
-
-#: inc/install.php:246
-msgid "Add or remove Collection"
-msgstr "Добавяне или премахване на Колекция"
-
-#: inc/install.php:247
-msgid "Choose from most used Collection"
-msgstr "Изберете от най-използваната Колекция"
-
-#: inc/install.php:248 themes/archive-sell_media_item.php:27
-#: themes/single-sell_media_item.php:31
-msgid "Collections"
-msgstr "Колекции"
-
-#: inc/install.php:269 inc/install.php:283
-msgid "Licenses"
-msgstr "Лицензи"
-
-#: inc/install.php:271
-msgid "Search Licenses"
-msgstr "Търсене на лицензи"
-
-#: inc/install.php:272
-msgid "Popular Licenses"
-msgstr "Популярните лицензи"
-
-#: inc/install.php:273
-msgid "All Licenses"
-msgstr "Всички лицензи"
-
-#: inc/install.php:274
-msgid "Parent License"
-msgstr "Основен лиценз"
-
-#: inc/install.php:275
-msgid "Parent License:"
-msgstr "Основен лиценз:"
-
-#: inc/install.php:276
-msgid "Edit License"
-msgstr "Редактиране на лиценз"
-
-#: inc/install.php:277
-msgid "Update License"
-msgstr "Актуализиране на лиценза"
-
-#: inc/install.php:278
-msgid "Add New License"
-msgstr "Добавяне на нов лиценз"
-
-#: inc/install.php:279
-msgid "New License"
-msgstr "Нов лиценз"
-
-#: inc/install.php:280
-msgid "Separate licenses with commas"
-msgstr "Отделни лицензите със запетаи"
-
-#: inc/install.php:281
-msgid "Add or remove Licenses"
-msgstr "Добавяне или премахване на лицензи"
-
-#: inc/install.php:282
-msgid "Choose from most used Licenses"
-msgstr "Изберете от най-използваните лицензи"
-
-#: inc/install.php:304 inc/install.php:318
-#: inc/widgets/sell-media-keywords.php:49 themes/single-sell_media_item.php:34
-msgid "Keywords"
-msgstr "Ключови думи"
-
-#: inc/install.php:305 inc/install.php:374 inc/install.php:408
-msgid "Keyword"
-msgstr "Ключова дума"
-
-#: inc/install.php:306
-msgid "Search Keywords"
-msgstr "Ключови думи за търсене"
-
-#: inc/install.php:307
-msgid "Popular Keywords"
-msgstr "Популярни ключови думи"
-
-#: inc/install.php:308
-msgid "All Keywords"
-msgstr "Всички ключови думи"
-
-#: inc/install.php:309 inc/install.php:378 inc/install.php:412
-msgid "Parent Keyword"
-msgstr "Главни ключови думи"
-
-#: inc/install.php:310 inc/install.php:379 inc/install.php:413
-msgid "Parent Keyword:"
-msgstr "Главни ключови думи:"
-
-#: inc/install.php:311 inc/install.php:380 inc/install.php:414
-msgid "Edit Keyword"
-msgstr "Редактирай ключова дума"
-
-#: inc/install.php:312 inc/install.php:381 inc/install.php:415
-msgid "Update Keyword"
-msgstr "Актуализация на ключова дума"
-
-#: inc/install.php:313 inc/install.php:382 inc/install.php:416
-msgid "Add New Keyword"
-msgstr "Добави нова ключова дума"
-
-#: inc/install.php:314 inc/install.php:383 inc/install.php:417
-msgid "New Keyword"
-msgstr "Нова ключова дума"
-
-#: inc/install.php:315
-msgid "Separate keywords with commas"
-msgstr "Разделете със запетаи ключовите думи"
-
-#: inc/install.php:316
-msgid "Add or remove Keywords"
-msgstr "Добавяне или премахване на ключови думи"
-
-#: inc/install.php:317
-msgid "Choose from most used Keywords"
-msgstr "Изберете от най-използваните ключови думи"
-
-#: inc/install.php:339 inc/install.php:353
-msgid "Creators"
-msgstr "Автори"
-
-#: inc/install.php:340
-msgid "Creator"
-msgstr "Автор"
-
-#: inc/install.php:341
-msgid "Search Creator"
-msgstr "Търсене на автор"
-
-#: inc/install.php:342
-msgid "Popular Creator"
-msgstr "Популярни автори"
-
-#: inc/install.php:343
-msgid "All Creator"
-msgstr "Всички автори"
-
-#: inc/install.php:344
-msgid "Parent Creator"
-msgstr "Главен автор"
-
-#: inc/install.php:345
-msgid "Parent Creator:"
-msgstr "Главен автор:"
-
-#: inc/install.php:346
-msgid "Edit Creator"
-msgstr "Редактирай автор"
-
-#: inc/install.php:347
-msgid "Update Creator"
-msgstr "Актуализация на Автор"
-
-#: inc/install.php:348
-msgid "Add New Creator"
-msgstr "Добави нов автор"
-
-#: inc/install.php:349
-msgid "New Creator"
-msgstr "Нов Автор"
-
-#: inc/install.php:350
-msgid "Separate creator with commas"
-msgstr "Разделете със запетаи авторите"
-
-#: inc/install.php:351
-msgid "Add or remove Creator"
-msgstr "Добавяне или премахване на Автор"
-
-#: inc/install.php:352
-msgid "Choose from most used Creator"
-msgstr "Изберете от най-използваните Автори"
-
-#: inc/install.php:373 inc/install.php:387
-msgid "City"
-msgstr "Град"
-
-#: inc/install.php:375
-msgid "Search City"
-msgstr "Търси град"
-
-#: inc/install.php:376
-msgid "Popular City"
-msgstr "Популярни градове"
-
-#: inc/install.php:377
-msgid "All City"
-msgstr "Всички градове"
-
-#: inc/install.php:384
-msgid "Separate city with commas"
-msgstr "Разделете градовете със запетаи"
-
-#: inc/install.php:385
-msgid "Add or remove City"
-msgstr "Добавяне или премахване на Град"
-
-#: inc/install.php:386
-msgid "Choose from most used City"
-msgstr "Изберете от най-използваните Градове"
-
-#: inc/install.php:407 inc/install.php:421
-msgid "State"
-msgstr "Щат"
-
-#: inc/install.php:409
-msgid "Search State"
-msgstr "Търсене на Щат"
-
-#: inc/install.php:410
-msgid "Popular State"
-msgstr "Популярни Щати"
-
-#: inc/install.php:411
-msgid "All State"
-msgstr "Всички Щати"
-
-#: inc/install.php:418
-msgid "Separate state with commas"
-msgstr "Разделете Щатите със запетаи"
-
-#: inc/install.php:419
-msgid "Add or remove State"
-msgstr "Добавяне или премахване на Щат"
-
-#: inc/install.php:420
-msgid "Choose from most used State"
-msgstr "Изберете от най-използваните Щати"
-
-#: inc/lightbox.php:16
-msgid "Loading..."
-msgstr "Зареждане…"
-
-#: inc/lightbox.php:44 inc/scripts.php:80 inc/settings/settings.php:449
-#: inc/settings/settings.php:544
-msgid "Remove"
-msgstr "Премахни"
-
-#: inc/lightbox.php:55
-msgid "No items"
-msgstr "Няма елементи"
-
-#: inc/scripts.php:54
-msgid "Sorry that email already exists or is invalid"
-msgstr "Съжаляваме, но електронната поща вече съществува или е невалидна"
-
-#: inc/scripts.php:64
-msgid "Added"
-msgstr "Добавена"
-
-#: inc/scripts.php:65
-msgid "Checkout now"
-msgstr "Плати сега"
-
-#: inc/scripts.php:77
-msgid ""
-"There was an error loading the cart data. Please contact the site owner."
-msgstr ""
-"Възникна грешка при зареждането на данни в кошницата. Моля, свържете се със "
-"собственика на сайта."
-
-#: inc/scripts.php:78 inc/shortcodes.php:193
-msgid "Checkout Now"
-msgstr "Плати сега"
-
-#: inc/scripts.php:79
-msgid "Please wait..."
-msgstr "Моля, изчакайте..."
-
-#: inc/search/wpas-field.php:141
-msgid "Select"
-msgstr "Изберете"
-
-#: inc/settings.php:18 inc/settings.php:22
-msgid "General"
-msgstr "Главни"
-
-#: inc/settings.php:33 inc/settings.php:37
-msgid "Pricing"
-msgstr "Ценообразуване"
-
-#: inc/settings.php:67
-msgid "Email Settings"
-msgstr "Email настройки"
-
-#: inc/settings.php:78 inc/settings.php:82
-msgid "Misc"
-msgstr "Разни"
-
-#: inc/settings.php:99
-msgid "Mode"
-msgstr "Режим"
-
-#: inc/settings.php:100
-#, php-format
-msgid ""
-"Select Live Mode to accept real transactions. Select Test Mode to accept "
-"test transactions (%s)."
-msgstr ""
-"Изберете режим на живо за да приемате реални сделки. Изберете тестов режим "
-"за да приемате тестови сделки (%s)."
-
-#: inc/settings.php:120
-msgid "Checkout Page"
-msgstr "Страница за плащане"
-
-#: inc/settings.php:121
-msgid ""
-"Select the page that contains the checkout shortcode "
-"<code>[sell_media_checkout]</code>"
-msgstr ""
-"Изберете страницата, която съдържа кода за разплащане "
-"<code>[sell_media_checkout]</code>"
-
-#: inc/settings.php:132
-msgid "Thanks Page"
-msgstr "Страница за благодарности"
-
-#: inc/settings.php:133
-msgid ""
-"Select the page that contains the thanks shortcode "
-"<code>[sell_media_thanks]</code>"
-msgstr ""
-"Изберете страницата, която съдържа кода за благодарности "
-"<code>[sell_media_thanks]</code>"
-
-#: inc/settings.php:144
-msgid "Dashboard Page"
-msgstr "Табло"
-
-#: inc/settings.php:145
-msgid ""
-"Select the page that contains the dashboard "
-"shortcode<code>[sell_media_download_list]</code>"
-msgstr ""
-"Изберете страницата, която съдържа краткия код за таблото "
-"<code>[sell_media_download_list]</code>"
-
-#: inc/settings.php:156
-msgid "Login Page"
-msgstr "Страница за Вход"
-
-#: inc/settings.php:157
-msgid ""
-"Select the page that contains the login shortcode "
-"<code>[sell_media_login_form]</code>"
-msgstr ""
-"Изберете страницата, която съдържа кратък код за вход "
-"<code>[sell_media_login_form]</code>"
-
-#: inc/settings.php:168
-msgid "Search Page"
-msgstr "Страница за търсене"
-
-#: inc/settings.php:169
-msgid ""
-"Select the page that contains the search shortcode "
-"<code>[sell_media_searchform]</code>"
-msgstr ""
-"Изберете страницата, която съдържа кратък код за търсене "
-"<code>[sell_media_searchform]</code>"
-
-#: inc/settings.php:180
-msgid "Customer Notification"
-msgstr "Уведомление за Потребителя"
-
-#: inc/settings.php:181
-msgid "Notify the customer of their site registration."
-msgstr "Уведоми потребителя за регистрацията в сайта."
-
-#: inc/settings.php:190 inc/settings.php:232 inc/settings.php:349
-msgid "No"
-msgstr "Не"
-
-#: inc/settings.php:194 inc/settings.php:236 inc/settings.php:353
-msgid "Yes"
-msgstr "Да"
-
-#: inc/settings.php:201
-msgid "Style"
-msgstr "Стил"
-
-#: inc/settings.php:202
-msgid ""
-"Choose the style of your theme. Sell Media will load styles to match your "
-"theme."
-msgstr ""
-"Изберете стила на вашата тема. Sell Media ще зарежда стилове, за да "
-"съответстват на вашата тема."
-
-#: inc/settings.php:211
-msgid "Dark"
-msgstr "Тъмен"
-
-#: inc/settings.php:215
-msgid "Light"
-msgstr "Светъл"
-
-#: inc/settings.php:222
-msgid "Plugin Credit"
-msgstr ""
-
-#: inc/settings.php:223
-msgid "Let your site visitors know you are using the Sell Media plugin?"
-msgstr ""
-"Дали посетителите на сайта да знаят, че Вие използвате Sell Media плъгин?"
-
-#: inc/settings.php:243
-msgid "Post Type Slug"
-msgstr ""
-
-#: inc/settings.php:244
-msgid ""
-"You can change the post type slug to: &quot;photos&quot; or &quot;"
-"downloads&quot;. The default slug is &quot;items&quot;."
-msgstr ""
-"Можете да промените пост тип заготовка: &quot;снимки&quot; или &quot;"
-"сваляне&quot;. Заготовката по подразбиране е &quot;елементи&quot;."
-
-#: inc/settings.php:255
-msgid "Order By"
-msgstr "Подреди по..."
-
-#: inc/settings.php:256
-msgid "Choose the order of items for the archive pages."
-msgstr "Изберете реда на артикули за архивни страници."
-
-#: inc/settings.php:284
-msgid "Terms and Conditions"
-msgstr "Правила и условия"
-
-#: inc/settings.php:285
-msgid ""
-"These &quot;Terms and Conditions&quot; will show up on the checkout page. "
-"Users must agree to these terms before completing their purchase."
-msgstr ""
-"Тези &quot;Правил и Условия&quot; ще се появят на страницата за плащане. "
-"Потребителите трябва да са съгласни с тези условия преди завършване на "
-"тяхната покупка."
-
-#: inc/settings.php:296
-msgid "Show Columns"
-msgstr "Покажи Колони"
-
-#: inc/settings.php:297
-msgid ""
-"Select the columns to show on the admin page &quot;All Products&quot; page."
-msgstr ""
-"Изберете колоните, които да се показват на административната страницата "
-"&quot;Всички продукти&quot;."
-
-#: inc/settings.php:327
-msgid "Original Price"
-msgstr "Първоначална цена"
-
-#: inc/settings.php:328
-msgid ""
-"The original price of new items and bulk uploads. You can set unique prices "
-"by editing each individual item."
-msgstr ""
-"Първоначалната цена на нови елементи и насипни качвания. Можете да настроите "
-"уникални цени, като редактирате отделните елементи."
-
-#: inc/settings.php:339
-msgid "Hide Original Price"
-msgstr "Скриване на първоначалната цена"
-
-#: inc/settings.php:340
-msgid ""
-"Select 'Yes' to hide the original price above and rely solely on Price "
-"Groups (See below. Price Groups can only be used when selling images). "
-"Select 'No' if you're selling single file downloads or if you want to list "
-"the original price for each product. You can override this setting on a per-"
-"item basis."
-msgstr ""
-"Изберете &#39;Да&#39; за да се скрие от първоначалната цена по-горе и да "
-"разчитате единствено на ценови групи (Виж по-долу. Ценови групи може да се "
-"използват само при продажба на изображения). Изберете &quot;Не&quot;, ако ще "
-"продавате единични файлове, или ако искате да се изброи първоначалната цена "
-"за всеки продукт. Можете да замените тази настройка на база за артикул."
-
-#: inc/settings.php:360
-msgid "Default Image Price Group"
-msgstr "Ценова група по подразбиране за изображенията"
-
-#: inc/settings.php:371
-msgid "Image Price Groups"
-msgstr "Ценови групи за изображения"
-
-#: inc/settings.php:384
-msgid "PayPal Email Address"
-msgstr ""
-
-#: inc/settings.php:385
-#, php-format
-msgid ""
-"Add the email address associated with your PayPal account above. %1$s %2$s. "
-"Your listener URL is %3$s (you will need this when completing PayPal setup)"
-msgstr ""
-"Добавяне на E-mail адреса, свързан с вашата PayPal сметка по-горе. %1$s "
-"%2$s. Вашият слушател URL е%3$s (ще ви трябва това при попълването на PayPal "
-"настройката)"
-
-#: inc/settings.php:385
-msgid "REQUIRED ACTIONS"
-msgstr "Необходими действия"
-
-#: inc/settings.php:397
-msgid "Currency"
-msgstr "Валута"
-
-#: inc/settings.php:398
-msgid "The currency in which you accept payment."
-msgstr "Валутата, в която приемате заплащане."
-
-#: inc/settings.php:409
-msgid "PayPal Additional Test Emails"
-msgstr "PayPal допълнителни тестови E-mail -и"
-
-#: inc/settings.php:410
-msgid ""
-"This is useful when debugging PayPal. Enter a comma separated list of "
-"emails, and when a purchase is made the same email that is sent to the buyer "
-"will be sent to the recipients in the above list."
-msgstr ""
-"Това е полезно, когато отстранявате PayPal грешки. Въведете разделени със "
-"запетая списък с E-mail-и, а когато покупката е направена, същия E-mail "
-"който е изпратен на купувача ще бъде изпратен до получателите в горния "
-"списък."
-
-#: inc/settings.php:421 inc/shortcodes.php:178
-msgid "Tax"
-msgstr "Данък"
-
-#: inc/settings.php:431
-msgid "Yes, charge tax"
-msgstr "Да, добави данък"
-
-#: inc/settings.php:438
-msgid "Tax Rate"
-msgstr "Данъчна ставка"
-
-#: inc/settings.php:452
-msgid "From Name"
-msgstr "От име"
-
-#: inc/settings.php:453
-msgid "The name associated with all outgoing email."
-msgstr "Името свързано с цялата изходяща поща."
-
-#: inc/settings.php:464
-msgid "From Email"
-msgstr "От Email"
-
-#: inc/settings.php:465
-msgid "The email address used for all outgoing email."
-msgstr "Имейл адреса, използван за цялата изходяща поща."
-
-#: inc/settings.php:476
-msgid "Email Subject"
-msgstr "Email Тема"
-
-#: inc/settings.php:477
-msgid "The email subject on successful purchase emails."
-msgstr "Е-mail тема на всички E-mail-и за успешни плащания"
-
-#: inc/settings.php:483
-msgid "Your Purchase"
-msgstr "Вашата Покупка"
-
-#: inc/settings.php:488
-msgid "Email Body"
-msgstr "E-mail текст"
-
-#: inc/settings.php:489
-msgid ""
-"This e-mail message is sent to your customers in case of successful and "
-"cleared payment. You can use the following email tags: {first_name}, "
-"{last_name}, {payer_email}, {download_links}, {payment_id}. These tags are "
-"replaced with the real data associated with each payment. Be sure to include "
-"the {download_links} tag, otherwise your buyers won't receive their download "
-"purchases. The {payment_id} tag can be used to display an invoice number."
-msgstr ""
-"Този е-мейл се изпраща до клиентите в случай на успешно и изчистено плащане. "
-"Можете да използвате следните е-мейл етикети: {first_name}, {LAST_NAME}, "
-"{payer_email} {download_links} {payment_id}. Тези маркери се заменят с "
-"реалните данни, свързани с всяко плащане. Не забравяйте да включите  "
-"{download_links} таг, в противен случай вашите купувачи, няма да получат "
-"своите линкове за сваляне. The {payment_id} маркер може да се използва за "
-"показване на номер на фактура."
-
-#: inc/settings.php:503
-msgid "Settings for Extensions are shown below."
-msgstr "Настройки за Разширенията са показани по-долу."
-
-#: inc/settings.php:510
-msgid "Download Extensions for Sell Media"
-msgstr "Изтегли нови разширения за Sell Media"
-
-#: inc/settings/library/helpers.php:16
-msgid "-- Choose One --"
-msgstr "- Изберете Един -"
-
-#: inc/settings/library/helpers.php:133
-msgid "US Dollars (&#36;)"
-msgstr "Щатски долара ($)"
-
-#: inc/settings/library/helpers.php:137
-msgid "Euros (&euro;)"
-msgstr "Евро (€)"
-
-#: inc/settings/library/helpers.php:141
-msgid "Pounds Sterling (&pound;)"
-msgstr "Лири стерлинги (£)"
-
-#: inc/settings/library/helpers.php:145
-msgid "Australian Dollars (&#36;)"
-msgstr "Австралийски долари ($)"
-
-#: inc/settings/library/helpers.php:149
-msgid "Brazilian Real (R&#36;)"
-msgstr "Бразилски реал (R $)"
-
-#: inc/settings/library/helpers.php:153
-msgid "Canadian Dollars (&#36;)"
-msgstr "Канадски долари ($)"
-
-#: inc/settings/library/helpers.php:157
-msgid "Czech Koruna (&#75;&#269;)"
-msgstr "Чешка крона (Kč)"
-
-#: inc/settings/library/helpers.php:161
-msgid "Danish Krone"
-msgstr "Датска крона"
-
-#: inc/settings/library/helpers.php:165
-msgid "Hong Kong Dollar (&#36;)"
-msgstr "Hong Kong Dollar ($)"
-
-#: inc/settings/library/helpers.php:169
-msgid "Hungarian Forint"
-msgstr "Унгарски форинт"
-
-#: inc/settings/library/helpers.php:173
-msgid "Israeli Shekel"
-msgstr "Израелски шекел"
-
-#: inc/settings/library/helpers.php:177
-msgid "Japanese Yen (&yen;)"
-msgstr "Японска йена (¥)"
-
-#: inc/settings/library/helpers.php:181
-msgid "Malaysian Ringgits"
-msgstr "Малайзийски Ringgits"
-
-#: inc/settings/library/helpers.php:185
-msgid "Mexican Peso (&#36;)"
-msgstr "Мексикански песо ($)"
-
-#: inc/settings/library/helpers.php:189
-msgid "New Zealand Dollar (&#36;)"
-msgstr "Нова Зеландия долар ($)"
-
-#: inc/settings/library/helpers.php:193
-msgid "Norwegian Krone"
-msgstr "Норвежка крона"
-
-#: inc/settings/library/helpers.php:197
-msgid "Philippine Pesos"
-msgstr "Филипински песос"
-
-#: inc/settings/library/helpers.php:201
-msgid "Polish Zloty"
-msgstr "Полската злота"
-
-#: inc/settings/library/helpers.php:205
-msgid "Singapore Dollar (&#36;)"
-msgstr "Сингапурски долар ($)"
-
-#: inc/settings/library/helpers.php:209
-msgid "Swedish Krona"
-msgstr "Шведска крона"
-
-#: inc/settings/library/helpers.php:213
-msgid "Swiss Franc"
-msgstr "Швейцарски франк"
-
-#: inc/settings/library/helpers.php:217
-msgid "Taiwan New Dollars"
-msgstr "Тайвански нови долари"
-
-#: inc/settings/library/helpers.php:221
-msgid "Thai Baht"
-msgstr "Тайландски бат"
-
-#: inc/settings/library/helpers.php:225
-msgid "Turkish Lira (TL)"
-msgstr "Турска лира (TL)"
-
-#: inc/settings/library/helpers.php:229
-msgid "South African rand (R)"
-msgstr "Южноафрикански ранд (R)"
-
-#: inc/settings/settings.php:78 inc/settings/settings.php:80
-msgid "Settings"
-msgstr "Настройки"
-
-#: inc/settings/settings.php:114
-msgid " settings updated successfully."
-msgstr "настройките са успешно обновени."
-
-#: inc/settings/settings.php:127
-msgid "Save Settings"
-msgstr "Запази настройките"
-
-#: inc/settings/settings.php:128
-msgid "Reset Defaults"
-msgstr "Върни настройки по подразбиране"
-
-#: inc/settings/settings.php:326 inc/settings/settings.php:346
-#: inc/settings/settings.php:365
-msgid ""
-"This option has no valid options. Please create valid options as an array "
-"inside the settings."
-msgstr ""
-"Този вариант все още няма валидни опции. Моля, създайте валидни опции като "
-"масив вътре настройките."
-
-#: inc/settings/settings.php:448 inc/term-meta.php:360
-msgid "Upload or Select Image"
-msgstr "Качете или Изберете Изображение"
-
-#: inc/settings/settings.php:543
-msgid "Upload or Select Images"
-msgstr "Качете или Изберете Изображениq"
-
-#: inc/settings/settings.php:590
-msgid "Version: "
-msgstr "Версия:"
-
-#: inc/settings/settings.php:591
-msgid "Documentation"
-msgstr "Документация"
-
-#: inc/settings/settings.php:605
-msgid "Upgrades Available"
-msgstr "Налични Ъпгрейди"
-
-#: inc/settings/settings.php:607
-msgid ""
-"Sell prints, create discount codes, watermark images, accept credit cards "
-"and much more when you activate the Business Bundle extension pack for Sell "
-"Media."
-msgstr ""
-"Продавай картини, създай кодове за отстъпка, воден знак на изображения, "
-"приемай кредитни карти и още много други, когато активирате разширения пакет "
-"Business Bundle за Sell Media."
-
-#: inc/settings/settings.php:608 inc/settings/settings.php:615
-msgid "Order Now"
-msgstr "Поръчай Сега"
-
-#: inc/settings/settings.php:612
-msgid "Need Help?"
-msgstr "Имате нужда от помощ?"
-
-#: inc/settings/settings.php:614
-msgid ""
-"Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one "
-"consultation over live chat. If we can't fix your problem, we'll refund your "
-"order."
-msgstr ""
-"Имате ли проблеми при настройване на Sell Media? Наеми под наем консултация "
-"за 30 минути, чат на живо. Ако не можем да разрешим вашия проблем, ние ще "
-"възстановим Вашата поръчка."
-
-#: inc/settings/settings.php:619
-msgid "Reviews"
-msgstr "Отзиви"
-
-#: inc/settings/settings.php:621
-msgid "Great plugin with great support. Includes tons of features."
-msgstr "Много-хубав плъгин с голяма подкрепа. Включва много функции."
-
-#: inc/settings/settings.php:624
-msgid ""
-"A young product with massive potential! You can expect great support from "
-"Graph Paper Press."
-msgstr ""
-"Млад продукт с голям потенциал! Можете да очаквате голяма подкрепа от Graph "
-"Paper Press."
-
-#: inc/settings/settings.php:627
-msgid "We'd love for you to leave a review if you've found this plugin useful."
-msgstr ""
-"Ще се радваме да можете да оставите коментар, ако сте намерили този плъгин "
-"полезен."
-
-#: inc/settings/settings.php:628
-msgid "Leave a review"
-msgstr "Оставете коментар"
-
-#: inc/shortcodes.php:182
-msgid "Shipping"
-msgstr "Доставка"
-
-#: inc/shortcodes.php:195
-#, php-format
-msgid "or %s"
-msgstr "или %s"
-
-#: inc/shortcodes.php:207
-#, php-format
-msgid "Your cart is empty. %s"
-msgstr "Кошницата е празна. %s"
-
-#: inc/shortcodes.php:229
-msgid "Your Purchase History"
-msgstr "Вашата История на покупките"
-
-#: inc/shortcodes.php:235
-msgid "Purchase ID"
-msgstr "Покупка ID"
-
-#: inc/shortcodes.php:265
-msgid "Description"
-msgstr "Описание"
-
-#: inc/shortcodes.php:266
-msgid "width (px)"
-msgstr "ширина (px)"
-
-#: inc/shortcodes.php:267
-msgid "height (px)"
-msgstr "височина (px)"
-
-#: inc/shortcodes.php:268
-msgid "price"
-msgstr "Цена"
-
-#: inc/shortcodes.php:411 themes/archive-sell_media_item.php:86
-msgid " images in "
-msgstr "изображения в"
-
-#: inc/shortcodes.php:411 themes/archive-sell_media_item.php:86
-msgid " collection"
-msgstr "колекция"
-
-#: inc/shortcodes.php:414
-msgid "Starting at "
-msgstr "Започва от"
-
-#: inc/shortcodes.php:449
-#, php-format
-msgid "You are logged in. %1$s or %2$s."
-msgstr "В момента сте влезли като %1$s или %2$s"
-
-#: inc/shortcodes.php:453
-msgid "Login failed"
-msgstr "Неуспешно влизане."
-
-#: inc/shortcodes.php:459 inc/term-meta.php:399 inc/term-meta.php:444
-msgid "Password"
-msgstr "Парола"
-
-#: inc/shortcodes.php:460
-msgid "Remember Me"
-msgstr "Запомни ме"
-
-#: inc/shortcodes.php:461
-msgid "Log In"
-msgstr "Вход"
-
-#: inc/shortcodes.php:465
-msgid "Forgot Password"
-msgstr "Забравили сте паролата?"
-
-#: inc/template-tags.php:161
-msgid "Shopping cart by "
-msgstr "Количка за пазаруване"
-
-#: inc/term-meta.php:84
-msgid ""
-"When a buyer decides to purchase a item from your site, they must choose a "
-"license which most closely identifies their intended use of the item. We "
-"have included some default license types, grouped into two \"parent\" "
-"categories: Personal and Commercial. Each of these two categories have "
-"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
-"Commercial) and \"Website\" (a child of Personal). You can create as many "
-"parent and child licenses as you want."
-msgstr ""
-"Когато купувачът реши да закупи един елемент от вашия сайт, той трябва да "
-"избере лиценз, който най-точно определя начина на ползване на елемента. Ние "
-"сме включили някои типове лицензи по подразбиране , групирани в две , "
-"\"основни\" категории: Лични и Комерсиални. Всяка от тези две категории имат "
-"специфични \"под\" лицензи, като \"Печатна реклама\" (под лиценз на "
-"търговски) и \"Уебсайт\" (под лиценз на Лични). Можете да създадете колкото "
-"искате основни и под лицензи."
-
-#: inc/term-meta.php:101 inc/term-meta.php:119
-msgid "Markup"
-msgstr "Надценка"
-
-#: inc/term-meta.php:195
-msgid ""
-"Increase the price of a item if a buyer selects this license by dragging the "
-"slider above."
-msgstr ""
-"Увеличава цената на един елемент, ако купувач избере този лиценз, като "
-"премести плъзгача горе."
-
-#: inc/term-meta.php:205
-msgid "you have not set a default price"
-msgstr "не сте настроили цена по подразбиране"
-
-#: inc/term-meta.php:209
-#, php-format
-msgid " The %1$s of %2$s with %3$s markup is %4$s"
-msgstr "%1$s от %2$s с %3$s надценка е %4$s"
-
-#: inc/term-meta.php:229
-msgid ""
-"Check to add this as a default license option for all newly created items."
-msgstr ""
-"Проверете, за да добавите като опция лиценз подразбиране за всички "
-"новосъздадени артикули."
-
-#: inc/term-meta.php:233
-msgid "Add as default license?"
-msgstr "Добави като лиценз по подразбиране?"
-
-#: inc/term-meta.php:336 inc/term-meta.php:377 inc/term-meta.php:485
-msgid "Icon"
-msgstr "Икона"
-
-#: inc/term-meta.php:364
-msgid ""
-"The icon is not prominent by default; however, some themes may show it. If "
-"no icon is used the featured image to the most recent post will be displayed"
-msgstr ""
-"Иконата не е известен по подразбиране; Въпреки това, някои теми може да я "
-"покажат. Ако няма икона  ще бъде показано избрано изображение на най-"
-"последната публикация ."
-
-#: inc/term-meta.php:401
-msgid "This will password protect all items in this collection."
-msgstr "Това ще защити с парола всички елементи от тази колекция."
-
-#: inc/term-meta.php:421
-msgid "Password protect all items in this collection"
-msgstr "Защита с парола на всички обекти в тази колекция"
-
-#: inc/term-meta.php:438
-msgid "This collection will inherit the password of the parent collection:"
-msgstr "Тази колекция ще наследи паролата на колекцията майка:"
-
-#: inc/term-meta.php:462
-msgid "Enable Client Proofing"
-msgstr "Активиране удостоверяване на клиента"
-
-#: inc/term-meta.php:464
-msgid ""
-"Check this to allow clients with password access to download items in this "
-"collecton as proofs. Clients must add an item to their Lightbox in order to "
-"download proofs. A record of which images were downloaded will be sent to "
-"both the site admin and the client via email."
-msgstr ""
-"Изберете това за да се даде възможност на клиентите с парола за достъп, да "
-"свалят артикули в тази колекция като доказателства. Клиентите трябва да "
-"добавят артикул в тяхната Lightbox, за да свалят доказателства. Списък на "
-"изображенията, които са били изтеглени, ще бъдат изпратени на администратора "
-"на сайта и клиента по електронна поща."
-
-#: inc/term-meta.php:489
-msgid "Media"
-msgstr "Медия"
-
-#: inc/term-meta.php:494
-msgid "Protected"
-msgstr "Защитен"
-
-#: inc/term-meta.php:497
-msgid "Proofing"
-msgstr "Доказателство"
-
-#: inc/widgets.php:21
-msgid "Sell Media Below Single Item"
-msgstr "Sell Media под отделен елемент"
-
-#: inc/widgets.php:30
-msgid "Sell Media Below Single Sidebar"
-msgstr "Sell Media - странична лента (Sidebar)"
-
-#: inc/widgets/sell-media-exif.php:8
-msgid ""
-"Displays image exif data (shutter speed, aperture, ISO, etc). Only use this "
-"on Single Sidebar Widgetized areas."
-msgstr ""
-"Показва снимка Exif данни (скорост на затвора, бленда, ISO и др.) "
-"Използвайте само на Single Sidebar Widgetized райони."
-
-#: inc/widgets/sell-media-exif.php:31
-msgid "Camera "
-msgstr "Фотоапарат"
-
-#: inc/widgets/sell-media-exif.php:36
-msgid "Aperture "
-msgstr "Бленда"
-
-#: inc/widgets/sell-media-exif.php:41
-msgid "Focal Length "
-msgstr "фокусно разстояние"
-
-#: inc/widgets/sell-media-exif.php:46
-msgid "Shutter Speed "
-msgstr "Скорост на затвора"
-
-#: inc/widgets/sell-media-exif.php:64
-msgid "ISO "
-msgstr ""
-
-#: inc/widgets/sell-media-exif.php:68
-msgid "Credit "
-msgstr "Кредит"
-
-#: inc/widgets/sell-media-exif.php:73
-msgid "Date "
-msgstr "Дата"
-
-#: inc/widgets/sell-media-exif.php:78 inc/widgets/sell-media-exif.php:80
-msgid "Copyright "
-msgstr "Авторско право"
-
-#: inc/widgets/sell-media-exif.php:80
-msgid "by "
-msgstr "от"
-
-#: inc/widgets/sell-media-exif.php:104
-msgid "Camera Info"
-msgstr "Фотоапарат"
-
-#: inc/widgets/sell-media-featured.php:93
-msgid " Select Collection"
-msgstr "Изберете колекция"
-
-#: sell-media-commissions/sell-media-commissions.php:34
+#: sell-media-add-bulk/sell-media-add-bulk.php:176
+msgid "Save"
+msgstr "Запази"
+
+#: sell-media-commissions/sell-media-commissions.php:49
 msgid "Sell Media Commissions"
 msgstr "Sell Media Комисионни"
 
-#: sell-media-commissions/sell-media-commissions.php:36
+#: sell-media-commissions/sell-media-commissions.php:51
 #: sell-media-discount-codes/inc/all-discount-code.php:413
+#: sell-media/inc/class-search.php:462 sell-media/inc/helpers.php:1278
 msgid "All"
 msgstr "Всички"
 
-#: sell-media-commissions/sell-media-commissions.php:36
+#: sell-media-commissions/sell-media-commissions.php:51
+#: sell-media/inc/class-payments.php:681
+msgid "Paid"
+msgstr "Платен"
+
+#: sell-media-commissions/sell-media-commissions.php:51
 msgid "Unpaid"
 msgstr "Неплатено"
 
-#: sell-media-commissions/sell-media-commissions.php:45
-#: sell-media-commissions/sell-media-commissions.php:55
+#: sell-media-commissions/sell-media-commissions.php:54
+msgid "All the unpaid commissions will be changed to paid!"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:54
+msgid "Download Mass Payment File"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:60
+#: sell-media-commissions/sell-media-commissions.php:70
 msgid "User"
 msgstr "Потребител"
 
-#: sell-media-commissions/sell-media-commissions.php:47
-#: sell-media-commissions/sell-media-commissions.php:57
+#: sell-media-commissions/sell-media-commissions.php:61
+#: sell-media-commissions/sell-media-commissions.php:71
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:840
+#: sell-media/inc/class-payments.php:604
+msgid "Item"
+msgstr "Артикул"
+
+#: sell-media-commissions/sell-media-commissions.php:62
+#: sell-media-commissions/sell-media-commissions.php:72
 msgid "Commission %"
 msgstr "Комисионна %"
 
-#: sell-media-commissions/sell-media-commissions.php:48
-#: sell-media-commissions/sell-media-commissions.php:58
+#: sell-media-commissions/sell-media-commissions.php:63
+#: sell-media-commissions/sell-media-commissions.php:73
 msgid "Commission Amount"
 msgstr "Размер на Комисионната"
 
-#: sell-media-commissions/sell-media-commissions.php:49
-#: sell-media-commissions/sell-media-commissions.php:59
+#: sell-media-commissions/sell-media-commissions.php:64
+#: sell-media-commissions/sell-media-commissions.php:74
 msgid "Date"
 msgstr "Дата"
 
-#: sell-media-commissions/sell-media-commissions.php:50
-#: sell-media-commissions/sell-media-commissions.php:60
+#: sell-media-commissions/sell-media-commissions.php:65
+#: sell-media-commissions/sell-media-commissions.php:75
 #: sell-media-discount-codes/inc/all-discount-code.php:150
 msgid "Status"
 msgstr "Състояние"
 
-#: sell-media-commissions/sell-media-commissions.php:189
-msgid "Commission Details:"
-msgstr "Детайли на Комисионната:"
+#: sell-media-commissions/sell-media-commissions.php:223
+msgid "Default commission rate"
+msgstr ""
 
-#: sell-media-commissions/sell-media-commissions.php:192
-msgid "User:"
-msgstr "Потребител:"
+#: sell-media-commissions/sell-media-commissions.php:228
+msgid "Commission recipient"
+msgstr ""
 
-#: sell-media-commissions/sell-media-commissions.php:200
-msgid "Commissions (%):"
-msgstr "Комисионни (%):"
+#: sell-media-commissions/sell-media-commissions.php:239
+#: sell-media-commissions/sell-media-commissions.php:380
+#: sell-media-commissions/sell-media-commissions.php:420
+msgid "Commission rate (%)"
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:241
+#: sell-media-commissions/sell-media-commissions.php:381
+#: sell-media-commissions/sell-media-commissions.php:424
+msgid "The percentage of the total cost of the cart for commission."
+msgstr ""
+
+#: sell-media-commissions/sell-media-commissions.php:415
+#: sell-media/inc/install.php:161 sell-media/inc/install.php:162
+#: sell-media/inc/install.php:165 sell-media/inc/install.php:173
+msgid "Sell Media"
+msgstr ""
 
 #: sell-media-discount-codes/inc/add-discount-code.php:69
+#: sell-media-discount-codes/sell-media-discount-codes.php:97
 msgid "Add New Discount Code"
 msgstr "Добави нов код за отстъпка"
 
 #: sell-media-discount-codes/inc/add-discount-code.php:69
 msgid "Go Back"
 msgstr "Върни се"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:75
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:584
+#: sell-media/inc/admin-payments.php:74 sell-media/inc/admin-payments.php:120
+#: sell-media/inc/scripts.php:56
+msgid "Name"
+msgstr "Име"
 
 #: sell-media-discount-codes/inc/add-discount-code.php:79
 msgid "The name of this discount code"
@@ -1859,6 +214,11 @@ msgstr "Код"
 #: sell-media-discount-codes/inc/add-discount-code.php:88
 msgid "Enter a code for this discount, such as 10PERCENT"
 msgstr "Въведете код за тази отстъпка, като 10PERCENT"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:93
+#: sell-media/inc/admin-payments.php:126
+msgid "Type"
+msgstr "Тип"
 
 #: sell-media-discount-codes/inc/add-discount-code.php:97
 msgid "Percentage"
@@ -1932,15 +292,22 @@ msgid "Add Discount Code"
 msgstr "Добави код за отстъпка"
 
 #: sell-media-discount-codes/inc/all-discount-code.php:38
-#: sell-media-discount-codes/sell-media-discount-codes.php:166
+#: sell-media-discount-codes/sell-media-discount-codes.php:95
+#: sell-media-discount-codes/sell-media-discount-codes.php:201
 msgid "Discount Code"
 msgstr "Код за отстъпка"
 
 #: sell-media-discount-codes/inc/all-discount-code.php:39
-#: sell-media-discount-codes/sell-media-discount-codes.php:96
-#: sell-media-discount-codes/sell-media-discount-codes.php:131
+#: sell-media-discount-codes/sell-media-discount-codes.php:94
+#: sell-media-discount-codes/sell-media-discount-codes.php:105
+#: sell-media-discount-codes/sell-media-discount-codes.php:129
+#: sell-media-discount-codes/sell-media-discount-codes.php:164
 msgid "Discount Codes"
 msgstr "Кодове за отстъпка"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:96
+msgid "Edit"
+msgstr "Редактирай"
 
 #: sell-media-discount-codes/inc/all-discount-code.php:99
 msgid "Deactive"
@@ -1975,136 +342,140 @@ msgid "Unlimited"
 msgstr "Неограничен"
 
 #: sell-media-discount-codes/inc/all-discount-code.php:414
+#: sell-media-discount-codes/sell-media-discount-codes.php:389
 msgid "Active"
 msgstr "Активен"
 
 #: sell-media-discount-codes/inc/all-discount-code.php:415
+#: sell-media-discount-codes/sell-media-discount-codes.php:396
 msgid "Inactive"
 msgstr "Неактивен"
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:61
-#: sell-media-discount-codes/sell-media-discount-codes.php:72
-msgctxt ""
-msgid "Discount Codes"
-msgstr "Кодове за отстъпка [ ]"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:62
-msgctxt ""
-msgid "Discount Code"
-msgstr "Код за отстъпка [ ]"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:63
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:96
+#: sell-media-discount-codes/sell-media-discount-codes.php:167
+#: sell-media/inc/install.php:164 sell-media/inc/install.php:206
 msgid "Add New"
-msgstr "Добави нов [ ]"
+msgstr "Добави нов"
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:64
-msgctxt ""
-msgid "Add New Discount Code"
-msgstr "Добави нов код за отстъпка [ ]"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:65
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:98
 msgid "Edit Discount Code"
-msgstr "Редактирай код за отстъпка [ ]"
+msgstr ""
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:66
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:99
 msgid "New Discount Code"
-msgstr "Нов код за отстъпка [ ]"
+msgstr ""
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:67
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:100
 msgid "View Discount Code"
-msgstr "Виж Код за отстъпка [ ]"
+msgstr ""
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:68
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:101
 msgid "Search Discount Codes"
-msgstr "Търсене на Кодове за отстъпка [ ]"
+msgstr ""
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:69
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:102
 msgid "No discount found"
-msgstr "Не е открита отстъпка [ ]"
+msgstr ""
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:70
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:103
 msgid "No discount codes found in Trash"
-msgstr "Няма кодове за отстъпка, намиращи се в кошчето [ ]"
+msgstr ""
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:71
-msgctxt ""
+#: sell-media-discount-codes/sell-media-discount-codes.php:104
 msgid "Parent Discount Code:"
-msgstr "Основен Код за отстъпка [ ]"
+msgstr ""
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:169
+#: sell-media-discount-codes/sell-media-discount-codes.php:206
 msgid "Apply"
 msgstr "Приложи"
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:170
+#: sell-media-discount-codes/sell-media-discount-codes.php:207
 msgid "Verifying..."
 msgstr "Проверка на ..."
 
-#: sell-media-discount-codes/sell-media-discount-codes.php:175
-msgid "Discount:"
-msgstr "Отстъпка:"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:198
-msgid "Sorry, this discount code is invalid."
-msgstr "Съжаляваме, тoзи код za отстъпка е невалиден."
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:230
-msgid "Sorry, this discount code has expired."
-msgstr "За съжаление, този код за отстъпка е изтекъл."
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:242
-msgid "Valid code"
-msgstr "Валиден код"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:306
-msgid "Discount Code updated successfully!"
-msgstr "Кода за отстъпка е актуализиран успешно!"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:308
-msgid "Discount Code added successfully!"
-msgstr "Кода за отстъпка е добавен успешно!"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:310
-msgid "Discount Code deleted successfully!"
-msgstr "Кода за отстъпка е изтрит успешно!"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:329
-msgctxt "Active discount code status"
-msgid "Active"
-msgstr "Активен"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:336
-msgctxt "Inactive discount code status"
-msgid "Inactive"
-msgstr "Неактивен"
-
-#: sell-media-discount-codes/sell-media-discount-codes.php:358
+#: sell-media-discount-codes/sell-media-discount-codes.php:213
+#: sell-media-discount-codes/sell-media-discount-codes.php:418
 msgid "Discount"
 msgstr "Отстъпка"
 
-#: sell-media-free-downloads/cart.php:25
+#: sell-media-discount-codes/sell-media-discount-codes.php:246
+msgid "Invalid code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:278
+msgid "Expired code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:290
+msgid "Valid code"
+msgstr "Валиден код"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:366
+msgid "Discount Code updated successfully!"
+msgstr "Кода за отстъпка е актуализиран успешно!"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:368
+msgid "Discount Code added successfully!"
+msgstr "Кода за отстъпка е добавен успешно!"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:370
+msgid "Discount Code deleted successfully!"
+msgstr "Кода за отстъпка е изтрит успешно!"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:83
+msgid "Download Lightbox Passcode"
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:84
+msgid "Password to enable downloading of all images in lightbox."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:105
+msgid "Download All"
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:122
+msgid "Enter password"
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:160
+msgid "Sorry, your nonce did not verify."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:167
+msgid "Incorrect password."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:171
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:177
+msgid "No items found on lightbox."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:190
+msgid "Error: Failed to create zip file."
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:36
 msgid "First Name:"
 msgstr "Име:"
 
-#: sell-media-free-downloads/cart.php:31
+#: sell-media-free-downloads/cart.php:42
 msgid "Last Name:"
 msgstr "Фамилия:"
 
-#: sell-media-free-downloads/cart.php:37
+#: sell-media-free-downloads/cart.php:48
 msgid "Email Address:"
 msgstr ""
 
-#: sell-media-free-downloads/cart.php:49
+#: sell-media-free-downloads/cart.php:61
+msgid "Request could not be processed due to some error."
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:69
 msgid "Download Now"
 msgstr "Изтегли Сега"
 
-#: sell-media-free-downloads/cart.php:53
+#: sell-media-free-downloads/cart.php:73
 msgid ""
 "You are already registered. You can download all free items by visiting our "
 msgstr ""
@@ -2112,100 +483,338 @@ msgstr ""
 "като посетите нашия"
 
 #: sell-media-free-downloads/sell-media-free-downloads.php:51
-#: sell-media-mailchimp/sell-media-mailchimp.php:147
+#: sell-media-mailchimp/sell-media-mailchimp.php:149
 msgid "API Key"
 msgstr ""
 
 #: sell-media-free-downloads/sell-media-free-downloads.php:52
-#: sell-media-mailchimp/sell-media-mailchimp.php:148
+#: sell-media-mailchimp/sell-media-mailchimp.php:150
 msgid "Insert your MailChimp API Key."
 msgstr "Поставете MailChimp API Key."
 
 #: sell-media-free-downloads/sell-media-free-downloads.php:63
-#: sell-media-mailchimp/sell-media-mailchimp.php:159
+#: sell-media-mailchimp/sell-media-mailchimp.php:161
 msgid "Newsletter List"
 msgstr "Бюлетин списък"
 
 #: sell-media-free-downloads/sell-media-free-downloads.php:64
-#: sell-media-mailchimp/sell-media-mailchimp.php:160
+#: sell-media-mailchimp/sell-media-mailchimp.php:162
 msgid "Choose the list to sign users up to."
 msgstr "Изберете списъка, за да подпише потребители до."
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:85
+#: sell-media-free-downloads/sell-media-free-downloads.php:86
 msgid "Free Downloads - Mailchimp Settings"
 msgstr "Безплатни изтегляния -  MailChimp настройки"
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:197
+#: sell-media-free-downloads/sell-media-free-downloads.php:201
+#: sell-media-free-downloads/sell-media-free-downloads.php:216
 msgid "Free Download"
 msgstr "Безплатно изтегляне"
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:198
+#: sell-media-free-downloads/sell-media-free-downloads.php:203
 msgid ""
-"Check this to allow visitors to download this for free in exchange for "
-"signing up for your newsletter."
+"Offer as free download in exchange for newsletter signup. All pricing will "
+"be ignored."
 msgstr ""
-"Изберете това за да се даде възможност на посетителите да изтеглят тази "
-"безплатно в замяна на абониране за вашия бюлетин."
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:243
-#: sell-media-mailchimp/sell-media-mailchimp.php:111
+#: sell-media-free-downloads/sell-media-free-downloads.php:218
+msgid ""
+"Check to allow visitors to download this for free in exchange for signing up "
+"for your newsletter"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:280
+#: sell-media-mailchimp/sell-media-mailchimp.php:113
 msgid "MailChimp"
 msgstr ""
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:306
+#: sell-media-free-downloads/sell-media-free-downloads.php:347
 msgid "Hi "
 msgstr "Здравей"
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:365
+#: sell-media-free-downloads/sell-media-free-downloads.php:407
 msgid "Free Downloads"
 msgstr "Безплатни Изтегляния"
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:404
+#: sell-media-free-downloads/sell-media-free-downloads.php:456
+#: sell-media/inc/helpers.php:1102
 msgid "Nice try, but this file is not a free download."
 msgstr "Добър опит, но този файл не е безплатен даунлоуд."
 
-#: sell-media-free-downloads/sell-media-free-downloads.php:409
+#: sell-media-free-downloads/sell-media-free-downloads.php:456
+#: sell-media-free-downloads/sell-media-free-downloads.php:461
+#: sell-media/inc/class-downloads.php:91 sell-media/inc/helpers.php:1102
+msgid "Purchase Verification Failed"
+msgstr "Грешка при проверка на покупката"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:461
 msgid "Sorry, but the download url you provided is not valid."
 msgstr "Съжаляваме, но url адреса за изтегляне не е валидeн."
 
-#: sell-media-mailchimp/sell-media-mailchimp.php:96
+#: sell-media-light-gallery/sell-media-light-gallery.php:120
+#: sell-media/inc/template-tags.php:289
+msgid "View Gallery"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:227
+#: sell-media/inc/lightbox.php:30
+msgid "Go to lightbox"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:227
+#: sell-media/inc/lightbox.php:30
+msgid "lightbox"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:233
+#: sell-media/inc/lightbox.php:36
+#, php-format
+msgid "This item was saved to your %1$s."
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:236
+#: sell-media/inc/template-tags.php:665
+msgid "Details"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:238
+#: sell-media/inc/template-tags.php:668
+msgid "File ID"
+msgstr "Файл ID"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:239
+#: sell-media/inc/template-tags.php:670
+msgid "File Type"
+msgstr "Тип файл"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:240
+#: sell-media/inc/template-tags.php:671
+msgid "File Size"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:241
+#: sell-media/inc/install.php:322 sell-media/inc/shortcodes.php:589
+#: sell-media/inc/template-tags.php:676
+msgid "Collections"
+msgstr "Колекции"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:242
+#: sell-media/inc/install.php:378 sell-media/inc/install.php:392
+#: sell-media/inc/shortcodes.php:594 sell-media/inc/template-tags.php:679
+#: sell-media/inc/widgets/sell-media-keywords.php:49
+msgid "Keywords"
+msgstr "Ключови думи"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:274
+msgid "Popup type"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:275
+msgid "Choose the type of popup to view product detail."
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:284
+msgid "Light gallery"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:288
+msgid "Quick view"
+msgstr ""
+
+#: sell-media-mailchimp/sell-media-mailchimp.php:98
 msgid "Sign up for our newsletter"
 msgstr "Абонирайте се за нашия бюлетин"
 
-#: sell-media-mailchimp/sell-media-mailchimp.php:181
+#: sell-media-mailchimp/sell-media-mailchimp.php:183
 msgid "MailChimp Settings"
 msgstr "MailChimp Настройки"
 
-#: sell-media-reprints/admin-tags.php:82
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:86
+msgid "Manual Purchase"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:88
+msgid ""
+"Please fill out the fields below to arrange a manual purchase with the "
+"seller."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:89
+msgid "Your email"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:90
+msgid "Your name"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:91
+msgid "Your message"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:91
+msgid "Type your message to the seller here and click Checkout Now."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:112
+msgid "Please enter your email address."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:116
+msgid "Please enter your full name."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:143
+msgid ""
+"Thank you for your interest. We have received your purchase information. We "
+"will contact you soon."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:163
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:203
+msgid "New sale notification (Manual)"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:168
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:208
+#: sell-media/inc/class-payments.php:728
+msgid "Customer"
+msgstr "Потребител"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:171
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:211
+#: sell-media/inc/admin-payments.php:75 sell-media/inc/class-payments.php:730
+#: sell-media/inc/settings.php:70
+msgid "Email"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:175
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:215
+msgid "Note"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:293
+#: sell-media/inc/admin-payments.php:116 sell-media/inc/class-payments.php:419
+msgid "Product"
+msgstr "Продукт"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:294
+#: sell-media/inc/admin-payments.php:129 sell-media/inc/class-payments.php:420
+#: sell-media/inc/class-payments.php:605 sell-media/inc/fields.php:45
+#: sell-media/inc/scripts.php:57
+msgid "Size"
+msgstr "Размер"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:296
+#: sell-media/inc/admin-payments.php:135 sell-media/inc/class-payments.php:422
+#: sell-media/inc/scripts.php:60
+msgid "Qty"
+msgstr "Количество"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:297
+#: sell-media/inc/admin-payments.php:138 sell-media/inc/class-payments.php:423
+#: sell-media/inc/scripts.php:61 sell-media/inc/shortcodes.php:249
+msgid "Subtotal"
+msgstr "Междинна сума"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:383
+#: sell-media/inc/class-payments.php:492
+msgid "TAX"
+msgstr "Данък"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:388
+#: sell-media/inc/class-payments.php:495
+msgid "SHIPPING"
+msgstr "ДОСТАВКА"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:392
+#: sell-media/inc/class-payments.php:489
+msgid "DISCOUNT"
+msgstr "ОТСТЪПКА"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:397
+#: sell-media/inc/class-payments.php:498
+msgid "TOTAL"
+msgstr "Общо"
+
+#: sell-media-model-release/sell-media-model-release.php:98
+msgid "Model release"
+msgstr ""
+
+#: sell-media-model-release/sell-media-model-release.php:99
+msgid "Choose"
+msgstr ""
+
+#: sell-media-model-release/sell-media-model-release.php:101
+msgid "Remove model release"
+msgstr ""
+
+#: sell-media-model-release/sell-media-model-release.php:101
+#: sell-media/inc/settings/settings.php:488
+#: sell-media/inc/settings/settings.php:583
+msgid "Remove"
+msgstr "Премахни"
+
+#: sell-media-model-release/sell-media-model-release.php:160
+msgid "Model Release"
+msgstr ""
+
+#: sell-media-model-release/sell-media-model-release.php:160
+#: sell-media/inc/settings.php:213 sell-media/inc/settings.php:334
+#: sell-media/inc/settings.php:355 sell-media/inc/settings.php:376
+#: sell-media/inc/settings.php:493
+msgid "Yes"
+msgstr "Да"
+
+#: sell-media-reprints/admin-tags.php:27
+msgid "Price group for"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:27 sell-media-reprints/admin-tags.php:58
+msgid "prints"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:30
+msgid "Select a price group"
+msgstr "Изберете ценова група"
+
+#: sell-media-reprints/admin-tags.php:43 sell-media/inc/admin-items.php:134
+#, php-format
+msgid "<a href=\"%1$s\">Create new price group</a>"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:55
+msgid "Selling preferences"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:57
 msgid "Sell both"
 msgstr "Продавай двете"
 
-#: sell-media-reprints/admin-tags.php:86
-msgid "Sell print"
-msgstr "Купи картина"
+#: sell-media-reprints/admin-tags.php:58
+msgid "Sell"
+msgstr ""
 
-#: sell-media-reprints/admin-tags.php:90
-msgid "Sell download"
-msgstr "Продавай файл"
+#: sell-media-reprints/admin-tags.php:59
+msgid "Sell downloads"
+msgstr ""
 
-#: sell-media-reprints/admin-tags.php:96
-msgid "Price Group for Prints"
-msgstr "Ценова група за разпечатки"
+#: sell-media-reprints/admin-tags.php:67
+msgid "Limited edition"
+msgstr ""
 
-#: sell-media-reprints/admin-tags.php:109
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:164
-msgid "Selling Options"
-msgstr "Опции за продажба"
+#: sell-media-reprints/admin-tags.php:77
+msgid "Quantity limit"
+msgstr ""
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:26
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:61
 msgid "Download size"
 msgstr "Размер за изтегляне"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:36
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:71
 msgid "Download license"
 msgstr "Лиценз за изтегляне"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:82
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:117
 msgid ""
 "If you sold a print, be sure to print and ship the order to the address "
 "listed above. If the order contained downloadable products, no further "
@@ -2215,31 +824,33 @@ msgstr ""
 "посочен по-горе. Ако поръчката съдържа продукти за сваляне, не се изисква по-"
 "нататъшни действия. Това са данните за плащането:"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:93
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:128
 msgid "Download or Print"
 msgstr "Купи картина"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:124
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:159
 msgid "Ship to:"
 msgstr "Изпрати на:"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:141
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:176
 msgid ""
-"If you purchased prints, they will be shipped to the address you supplied "
-"during checkout. This address is shown below."
+"If you purchased print products, they will be shipped to the address you "
+"supplied during checkout. This address is shown below."
 msgstr ""
-"Ако сте закупили картини, те ще бъдат изпратени на адреса, който сте "
-"предоставили при плащането. Този адрес е показан по-долу."
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:174
-msgid "Only sell prints"
-msgstr "Продавай само картини"
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:199
+msgid "Selling Options"
+msgstr "Опции за продажба"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:181
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:209
+msgid "Only sell print products"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:216
 msgid "Shipping Rates"
 msgstr "Цени за доставка"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:182
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:217
 msgid ""
 "You have three options for calculating shipping rates: Flat Rate, Quantity "
 "Rate, Total Rate. Use Flat Rate to set a basic flat rate shipping to all "
@@ -2257,45 +868,43 @@ msgstr ""
 "ако искате стойност на пратката, която е процент от общата стойност на "
 "количката за пазаруване."
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:191
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:226
 msgid "Flat Rate"
 msgstr "Фиксирана ставка"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:195
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:230
 msgid "Quantity Rate"
 msgstr "Количествена ставка"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:199
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:234
 msgid "Total Rate"
 msgstr "Обща ставка"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:206
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:241
 msgid "Shipping - Flat Rate"
 msgstr "Доставка - фиксирана цена"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:207
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:242
 msgid ""
 "The flat rate shipping price applied once to all orders (i.e. 1, 5, 10)."
 msgstr ""
 "Фиксираната ставка се прилага веднъж за всички поръчки (т.е. 1, 5, 10)."
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:218
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:253
 msgid "Shipping - Quantity Rate"
 msgstr "Доставка - цена за количество"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:219
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:254
 msgid ""
-"The shipping price applied individually to all prints in the cart (i.e. 1, "
-"5, 10)."
+"The shipping price applied individually to all print products in the cart (i."
+"e. 1, 5, 10)."
 msgstr ""
-"Цената на доставката прилага индивидуално за всички разпечатки в пазарската "
-"количка (т.е. 1, 5, 10)."
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:230
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:265
 msgid "Shipping - Total Rate"
 msgstr "Доставка - общо цена"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:231
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:266
 msgid ""
 "The percentage of the total cost of the cart for shipping (use .05 for 5 "
 "percent, .10 for 10 percent, etc)"
@@ -2303,167 +912,284 @@ msgstr ""
 "Процентът от общата стойност на количката за пазаруване (използване 0.05 за "
 "5 на сто, 0,10 за 10 на сто, и т.н.)"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:242
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:277
 msgid "Unit of Measurement"
 msgstr "Мерна единица"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:243
-msgid "The unit of measurement in which prints are sold."
-msgstr "Мерната единица, в която се продават картините."
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:278
+msgid "The unit of measurement in which print products are sold."
+msgstr ""
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:252
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:287
 msgid "Centimeters (cm)"
 msgstr "Сантиметра (cm)"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:256
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:291
 msgid "Inches (in)"
 msgstr "Инча (in)"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:263
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:298
 msgid "Select Default Price Group"
 msgstr "Изберете ценова група по подразбиране"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:299
-msgid "Prints"
-msgstr "Картини"
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:309
+msgid "Default Quantity"
+msgstr ""
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:318
-msgid "This plugin requires Sell Media to function properly"
-msgstr "Този плъгин изисква Sell Media за да функционира правилно"
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:320
+#: sell-media/inc/install.php:273 sell-media/inc/install.php:274
+#: sell-media/inc/install.php:287
+msgid "Price Groups"
+msgstr "Ценови групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:443
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:457
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:345
+msgid "Print Products"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:471
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:485
 msgid "Print Price Group"
 msgstr "Печат Ценова група"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:444
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:472
 msgid "Print Group"
 msgstr "Печат на Група"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:445
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:473
 msgid "Search Print Group"
 msgstr "Търсене Print групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:446
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:474
 msgid "Popular Print Group"
 msgstr "Популярни Print групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:447
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:475
 msgid "All Print Group"
 msgstr "Всички Print групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:448
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:476
 msgid "Parent Print Group"
 msgstr "Главни Print групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:449
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:477
 msgid "Parent Print  Group:"
 msgstr "Главни Print групи:"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:450
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:478
 msgid "Edit Print Group"
 msgstr "Редактирай Print група"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:451
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:479
 msgid "Update Print Group"
 msgstr "Актуализация на Print група"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:452
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:480
 msgid "Add New Print Group"
 msgstr "Добави нова Print група"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:453
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:481
 msgid "New Print Group"
 msgstr "Нова Print група"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:454
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:482
 msgid "Separate Print Group with commas"
 msgstr "Разделете със запетаи Print групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:455
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:483
 msgid "Add or remove Print Group"
 msgstr "Добавяне или премахване на Print групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:456
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:484
 msgid "Choose from most used Print Group"
 msgstr "Изберете от най-използваните Print групи"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:515
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:543
 msgid "Add print sizes and prices below."
 msgstr "Добави размери за печат и цени по-долу."
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:529
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:557
 msgid "Create a price group, then define specific print sizes and prices."
 msgstr "Създайте ценова група, след което дефинирайте размери за печат и цени."
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:620
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:648
 msgid "Max Width"
 msgstr "Макс ширина"
 
-#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:624
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:652
 msgid "Max Height"
 msgstr "Max Височина"
 
-#: sell-media-reprints/template-tags.php:22
-msgid "Buy a print"
-msgstr "Купи картина"
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:657
+#: sell-media/inc/admin-items.php:110 sell-media/inc/admin-price-groups.php:258
+#: sell-media/inc/admin-price-groups.php:305
+#: sell-media/inc/class-payments.php:606 sell-media/inc/scripts.php:59
+msgid "Price"
+msgstr "Цена"
 
-#: sell-media-reprints/template-tags.php:25
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:774
+msgid "Limit exceeded."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:842
+msgid "has limit upto"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:850
+msgid "Goto checkout page to fix it."
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:59
+msgid "Buy a"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:59
+msgid "print"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:62
 msgid "Buy a download"
 msgstr "Купи файл"
 
-#: sell-media-reprints/template-tags.php:46
-msgid "Print size"
-msgstr "Размер за печат"
+#: sell-media-reprints/template-tags.php:71
+msgid "Print"
+msgstr ""
 
-#: sell-media-reprints/template-tags.php:46
-msgid "All print sizes are listed in "
-msgstr "Всички размери за печат, са изброени в"
+#: sell-media-reprints/template-tags.php:71
+msgid "size"
+msgstr ""
 
-#: sell-media-reprints/template-tags.php:46 themes/cart.php:109
-msgid "(see details)"
-msgstr "(вж. подробности)"
+#: sell-media-reprints/template-tags.php:71
+msgid "All sizes are listed in "
+msgstr ""
 
-#: sell-media-reprints/template-tags.php:48 themes/cart.php:82
+#: sell-media-reprints/template-tags.php:71
+msgid "(?)"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:73 sell-media/inc/fields.php:47
 msgid "Select a size"
 msgstr "Изберете размер"
 
-#: sell-media-reprints/template-tags.php:52
+#: sell-media-reprints/template-tags.php:77
 msgid "This item is not currently assigned a price group."
 msgstr "Към тази позиция в момента не е добавена на ценова група."
 
-#: sell-media-stripe/sell-media-stripe.php:58
+#: sell-media-reprints/template-tags.php:132
+msgid "Limited Edition: "
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:136
+#, php-format
+msgid "%d remaining"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:141
+msgid "Sold out."
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:162
+msgid "Amazon S3 Access Key"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:163
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Access Key</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:174
+msgid "Amazon S3 Secret Key"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:175
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Secret Key</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:186
+msgid "Amazon S3 Bucket Name"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:188
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Bucket Name</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:200
+msgid "Amazon S3 Host"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:201
+msgid ""
+"Enter Amazon S3 host. Defaults to s3.amazonaws.com. Don't change this unless "
+"you know what you're doing"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:212
+msgid "Deactivate S3 plugin"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:213
+msgid "We assume that you have safely copied all files from S3 to your server."
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:223
+msgid "Check to show deactivate option."
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:236
+msgid "Deactivate"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:251
+msgid "Amazon S3"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:351
+#, php-format
+msgid "Error uploading %s to S3: %s"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:541
+msgid "There was an error attempting to access the file system"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:77
+#: sell-media/inc/template-tags.php:623
+msgid "Buy"
+msgstr "Купи"
+
+#: sell-media-stripe/sell-media-stripe.php:78
 msgid "items"
 msgstr "Артикули"
 
-#: sell-media-stripe/sell-media-stripe.php:125
+#: sell-media-stripe/sell-media-stripe.php:145
 msgid "Stripe Test Secret Key"
 msgstr "Stripe Test таен ключ"
 
-#: sell-media-stripe/sell-media-stripe.php:126
-#: sell-media-stripe/sell-media-stripe.php:138
-#: sell-media-stripe/sell-media-stripe.php:150
-#: sell-media-stripe/sell-media-stripe.php:162
+#: sell-media-stripe/sell-media-stripe.php:146
+#: sell-media-stripe/sell-media-stripe.php:158
+#: sell-media-stripe/sell-media-stripe.php:170
+#: sell-media-stripe/sell-media-stripe.php:182
 msgid " "
 msgstr ""
 
-#: sell-media-stripe/sell-media-stripe.php:137
+#: sell-media-stripe/sell-media-stripe.php:157
 msgid "Stripe Test Publishable Key"
 msgstr "Stripe Test публичен ключ"
 
-#: sell-media-stripe/sell-media-stripe.php:149
+#: sell-media-stripe/sell-media-stripe.php:169
 msgid "Stripe Live Secret Key"
 msgstr "Stripe Live таен ключ"
 
-#: sell-media-stripe/sell-media-stripe.php:161
+#: sell-media-stripe/sell-media-stripe.php:181
 msgid "Stripe Live Publishable Key"
 msgstr "Stripe Live публичен ключ"
 
-#: sell-media-stripe/sell-media-stripe.php:183
+#: sell-media-stripe/sell-media-stripe.php:203
 msgid "Stripe Settings"
 msgstr "Настройки Stripe"
 
-#: sell-media-stripe/sell-media-stripe.php:185
+#: sell-media-stripe/sell-media-stripe.php:205
 msgid ""
 "You must add your <a href=\"https://manage.stripe.com/account/apikeys\" "
 "target=\"_blank\">Stripe API Keys</a> to process transactions."
@@ -2471,15 +1197,15 @@ msgstr ""
 "Трябва да добавите вашите <a href=\"https://manage.stripe.com/account/apikeys"
 "\" target=\"_blank\">Stripe API Keys</a> да обработва транзакции."
 
-#: sell-media-stripe/sell-media-stripe.php:203
+#: sell-media-stripe/sell-media-stripe.php:221
 msgid "Credit Card"
 msgstr "Кредитна карта"
 
-#: sell-media-stripe/sell-media-stripe.php:463
+#: sell-media-stripe/sell-media-stripe.php:598
 msgid "Stripe not supported, please enable <code>cURL</code>."
 msgstr "Stripe не се поддържа, моля разрешете <code>cURL</code> ."
 
-#: sell-media-stripe/sell-media-stripe.php:468
+#: sell-media-stripe/sell-media-stripe.php:603
 #, php-format
 msgid ""
 "Your currency, %s is not supported. Please configure your %s account to use "
@@ -2488,22 +1214,22 @@ msgstr ""
 "Вашата валута,%s не се поддържа. Моля изберете вашия %s акаунт за използване "
 "на правилната валута."
 
-#: sell-media-stripe/sell-media-stripe.php:475
+#: sell-media-stripe/sell-media-stripe.php:610
 #, php-format
 msgid "Please update your Sell Media %s to contain your Stripe keys"
 msgstr "Моля, актуализирайте Sell Media %s да съдържа Вашите Stripe ключове"
 
-#: sell-media-watermark/sell-media-watermark.php:36
+#: sell-media-watermark/sell-media-watermark.php:51
 msgid ""
 " requires the Sell Media plugin to work properly. Please activate Sell Media."
 msgstr ""
 "изисква Sell Media плъгин да работи правилно. Моля активирайте Sell Media."
 
-#: sell-media-watermark/sell-media-watermark.php:127
+#: sell-media-watermark/sell-media-watermark.php:144
 msgid "Watermark Image"
 msgstr "Воден знак на изображение"
 
-#: sell-media-watermark/sell-media-watermark.php:128
+#: sell-media-watermark/sell-media-watermark.php:145
 msgid ""
 "For best results, use a transparent PNG cropped to approximately 200 pixels "
 "wide."
@@ -2511,11 +1237,11 @@ msgstr ""
 "За най-добри резултати, използвайте прозрачен PNG оразмерен до приблизително "
 "200 пиксела."
 
-#: sell-media-watermark/sell-media-watermark.php:138
+#: sell-media-watermark/sell-media-watermark.php:155
 msgid "Watermark Everything"
 msgstr "Воден знак на всичко"
 
-#: sell-media-watermark/sell-media-watermark.php:148
+#: sell-media-watermark/sell-media-watermark.php:165
 msgid ""
 "Watermarks are applied to all Sell Media images when you activate this "
 "extension. You can optionally watermark all images on your site, including "
@@ -2526,55 +1252,467 @@ msgstr ""
 "снимки на вашия сайт, включително и тези, посочени в публикации и страници, "
 "чрез ако изберете това поле."
 
-#: sell-media-watermark/sell-media-watermark.php:155
+#: sell-media-watermark/sell-media-watermark.php:172
 msgid "Watermark Opacity"
 msgstr "Прозрачност на водния знак"
 
-#: sell-media-watermark/sell-media-watermark.php:156
+#: sell-media-watermark/sell-media-watermark.php:173
 msgid "The opacity of your watermark."
 msgstr "Прозрачността на вашия воден знак."
 
-#: sell-media-watermark/sell-media-watermark.php:209
-msgid "Watermark Scale"
-msgstr "Мащабиране на Воден знак"
-
-#: sell-media-watermark/sell-media-watermark.php:210
-msgid "The scale of your watermark with respect to the image"
-msgstr "Мащабът на вашия воден знак по отношение на изображението"
-
-#: sell-media-watermark/sell-media-watermark.php:262
+#: sell-media-watermark/sell-media-watermark.php:225
 msgid "Watermark Position"
 msgstr "Позиция на водния знак"
 
-#: sell-media-watermark/sell-media-watermark.php:263
+#: sell-media-watermark/sell-media-watermark.php:226
 msgid "The position of your watermak."
 msgstr "Позицията на вашия воден знак."
 
-#: sell-media-watermark/sell-media-watermark.php:307
+#: sell-media-watermark/sell-media-watermark.php:270
+msgid "Watermark Margin"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:271
+msgid "The distance in pixels of your watermark from the edge of the image."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:294
 msgid "Watermark"
 msgstr "Воден знак"
 
-#: sell-media.php:138 sell-media.php:150
-msgid "Cheatin&#8217; huh?"
-msgstr "Измама&#8217; а?"
+#: sell-media/inc/admin-items.php:58
+msgid ""
+"Upload one file to create a single product or many files to create a gallery."
+msgstr ""
 
-#: themes/archive-sell_media_item.php:34
-msgid "Archive"
-msgstr "Архив"
+#: sell-media/inc/admin-items.php:59
+msgid "Importing Options"
+msgstr ""
 
-#: themes/archive-sell_media_item.php:87
-msgid "Starting at"
-msgstr "Започва от"
+#: sell-media/inc/admin-items.php:63
+msgid "Importing"
+msgstr ""
 
-#: themes/archive-sell_media_item.php:118
+#: sell-media/inc/admin-items.php:64
+#, php-format
+msgid ""
+"Quickly import folders of images using this option. Use FTP or <a href=\"%1$s"
+"\" target=\"_blank\">export directly from Lightroom</a> and place new "
+"folders into the server path listed below. Then, select the folder below to "
+"import into WordPress."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:65
+msgid "Server Path"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:67
+msgid "Select a folder"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:74
+msgid "Add more files"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:74
+msgid "Importing files..."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:74
+msgid "Add files"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:80
+msgid "Packages"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:81
+msgid ""
+"This feature was retired in version 2.0 because product galleries can now be "
+"created. Your old package file will still be available for sale and is "
+"listed below."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:113
+msgid "The price of each original, high-resolution file."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:118
+msgid "Price group for downloads"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:150
+msgid "Views"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:151
+msgid "Sales"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:329
+#, php-format
+msgid "Sorry, %1$s could't be added."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:452
+msgid "No price set"
+msgstr "Няма определена цена"
+
+#: sell-media/inc/admin-items.php:488
+msgid "No sales so far."
+msgstr "Досега няма продажби."
+
+#: sell-media/inc/admin-menu.php:24
+msgid "Reports"
+msgstr "Отчети"
+
+#: sell-media/inc/admin-menu.php:25
+msgid "Upgrades"
+msgstr "Ъпгрейди"
+
+#: sell-media/inc/admin-menu.php:27 sell-media/inc/admin-system-info.php:12
+#: sell-media/inc/settings/settings.php:631
+msgid "System Info"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:21
+msgid "Purchase Details"
+msgstr "Подробни данни за покупката"
+
+#: sell-media/inc/admin-payments.php:28
+msgid "Additional Purchase Details"
+msgstr "Детайли за допълнително закупуване "
+
+#: sell-media/inc/admin-payments.php:42
+msgid "Payment Gateway Details"
+msgstr "Подробни данни за покупката"
+
+#: sell-media/inc/admin-payments.php:76 sell-media/inc/fields.php:87
+#: sell-media/inc/shortcodes.php:263
+msgid "Total"
+msgstr "Общо"
+
+#: sell-media/inc/admin-payments.php:103
+msgid "This is the additional payment data stored with the purchase."
+msgstr "Това са допълнителните данни за плащането, съхранени с покупката."
+
+#: sell-media/inc/admin-payments.php:123
+msgid "ID"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:148
+msgid "This payment has no additional payment details"
+msgstr "Това плащане няма допълнителни детайли"
+
+#: sell-media/inc/admin-payments.php:171
+#: sell-media/inc/gateways/class-sm-gateway-paypal-request.php:30
+#: sell-media/inc/settings/library/helpers.php:291
+msgid "PayPal"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:174
+msgid "Stripe"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:176
+msgid "This is the data that was sent from "
+msgstr "Това са данни, които са били изпратени от"
+
+#: sell-media/inc/admin-payments.php:176
+msgid " at time of purchase. Use this for debugging, if needed."
+msgstr ""
+"по време на покупката. Използвайте това за отстраняване на грешки, ако е "
+"необходимо."
+
+#: sell-media/inc/admin-payments.php:197
+msgid "Earnings Report"
+msgstr "Доклад за приходите"
+
+#: sell-media/inc/admin-payments.php:199
+msgid "Total Earnings To Date:"
+msgstr "Общата печалба до момента:"
+
+#: sell-media/inc/admin-payments.php:200
+msgid ""
+"Below is a breakdown of earnings per day, month and year. Want to increase "
+"your sales?"
+msgstr ""
+"По-долу е разбивка на приходите на ден, месец и година. Искате ли да "
+"увеличите продажбите си?"
+
+#: sell-media/inc/admin-payments.php:200
+msgid "Download new Sell Media extensions"
+msgstr "Изтегли нови разширения за Sell Media"
+
+#: sell-media/inc/admin-payments.php:213
+msgid "Day"
+msgstr "Ден"
+
+#: sell-media/inc/admin-payments.php:214 sell-media/inc/admin-payments.php:254
+#: sell-media/inc/admin-payments.php:287
+msgid "Earnings"
+msgstr "Приходи"
+
+#: sell-media/inc/admin-payments.php:234
+msgid "Earnings per day"
+msgstr "Доходи на ден"
+
+#: sell-media/inc/admin-payments.php:253
+msgid "Month"
+msgstr "Месец"
+
+#: sell-media/inc/admin-payments.php:267
+msgid "Earnings per month"
+msgstr "Доходи на месец"
+
+#: sell-media/inc/admin-payments.php:286
+msgid "Year"
+msgstr "Година"
+
+#: sell-media/inc/admin-payments.php:303
+msgid "Earnings per year"
+msgstr "Доходи на година"
+
+#: sell-media/inc/admin-price-groups.php:214
+msgid "Create Price Group"
+msgstr "Създайте ценова група"
+
+#: sell-media/inc/admin-price-groups.php:219
+msgid "Are you sure you want to delete the price group:"
+msgstr "Наистина ли искате да изтриете ценовата група:"
+
+#: sell-media/inc/admin-price-groups.php:219
+msgid "This will delete the price group and ALL its prices associated with it."
+msgstr "Това ще изтрие ценовата група и цените свързани с нея."
+
+#: sell-media/inc/admin-price-groups.php:220
+msgid "Delete Group"
+msgstr "Изтрий групата"
+
+#: sell-media/inc/admin-price-groups.php:224
+msgid "Enter price group name here"
+msgstr "Въведете име на ценовата група тук"
+
+#: sell-media/inc/admin-price-groups.php:240
+#: sell-media/inc/admin-price-groups.php:292
+msgid "Name (shown to buyer, so be descriptive)"
+msgstr "Име (показано на купувача, така че бъдете описателни)"
+
+#: sell-media/inc/admin-price-groups.php:248
+#: sell-media/inc/admin-price-groups.php:297
+msgid "Max width (pixels)"
+msgstr "Max ширина (пиксели)"
+
+#: sell-media/inc/admin-price-groups.php:253
+msgid "Max Height (pixels)"
+msgstr "Макс височина (пиксели)"
+
+#: sell-media/inc/admin-price-groups.php:264
+msgid "Are you sure you want to delete the price"
+msgstr "Сигурни ли сте, че искате да изтриете цената"
+
+#: sell-media/inc/admin-price-groups.php:301
+msgid "Max height (pixels)"
+msgstr "Max височина (пиксели)"
+
+#: sell-media/inc/admin-price-groups.php:310
+msgid ""
+"The sizes listed below determine the maximum dimensions in pixels. Price "
+"Groups only apply to images."
+msgstr ""
+"Размерите изброени по-долу определят максималните размери в пиксели. "
+"Ценовите групи прилагат само за изображения."
+
+#: sell-media/inc/admin-price-groups.php:311
+msgid "Create a price group to add prices to."
+msgstr "Създайте ценова група за да добавите цени."
+
+#: sell-media/inc/admin-price-groups.php:374
+msgid "Add New Price"
+msgstr "Добави нова цена"
+
+#: sell-media/inc/admin-price-groups.php:382
+msgid "Save Price Group"
+msgstr "Запишете ценова група"
+
+#: sell-media/inc/ajax.php:213
+msgid "Load more"
+msgstr ""
+
+#: sell-media/inc/ajax.php:220 sell-media/inc/helpers.php:1410
+#: sell-media/themes/archive.php:130
 msgid "Nothing Found"
 msgstr "Не са открити резултати"
 
-#: themes/cart.php:75
+#: sell-media/inc/ajax.php:221 sell-media/inc/helpers.php:1411
+#: sell-media/themes/archive.php:131
+msgid "Sorry, but we couldn't find anything that matches your search query."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:49
+#, php-format
+msgid "Your site is currently in <a href=\"%1$s\">test mode</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:59
+#, php-format
+msgid ""
+"Please create a checkout page using the <code>[sell_media_checkout]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:69
+#, php-format
+msgid ""
+"Please create a thanks page using the <code>[sell_media_thanks]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:79
+#, php-format
+msgid ""
+"Please set a PayPal email in your <a href=\"%1$s\">payment settings</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:89
+#, php-format
+msgid ""
+"Important updates are now available for %1$s. <a href=\"%2$s\" target="
+"\"_blank\">Learn more</a>."
+msgstr ""
+
+#: sell-media/inc/class-customer.php:72
+msgid "Account registration at"
+msgstr "Регистрация на сметка в"
+
+#: sell-media/inc/class-customer.php:73
+msgid "Welcome"
+msgstr "Добре дошли"
+
+#: sell-media/inc/class-customer.php:74
+msgid "Here are your login credentials"
+msgstr "Вашите данни за вход"
+
+#: sell-media/inc/class-customer.php:75 sell-media/inc/shortcodes.php:549
+msgid "Username"
+msgstr "Потребителско име"
+
+#: sell-media/inc/class-customer.php:76
+msgid ""
+"Create a password if you want to login to our dashboard to download any of "
+"your purchases in the future."
+msgstr ""
+"Създайте парола, ако искате да влезете в нашето табло за да изтеглите някоя "
+"от вашите покупки в бъдеще."
+
+#: sell-media/inc/class-customer.php:78
+msgid "Any purchases your make will be available on your account dashboard."
+msgstr ""
+"Всички покупки, които направите ще бъдат достъпни във вашето профил табло."
+
+#: sell-media/inc/class-customer.php:80
+msgid "Thanks"
+msgstr "Благодарим!"
+
+#: sell-media/inc/class-downloads.php:47
+#, php-format
+msgid "The original high resolution file doesn't exist here: %1$s"
+msgstr ""
+
+#: sell-media/inc/class-downloads.php:91
+msgid "You do not have permission to download this file"
+msgstr "Нямате разрешение да свалите този файл"
+
+#: sell-media/inc/class-payments.php:229
+msgid "sales totaling"
+msgstr ""
+
+#: sell-media/inc/class-payments.php:607
+msgid "Quantity"
+msgstr "Количество"
+
+#: sell-media/inc/class-payments.php:726
+msgid "New sale notification"
+msgstr "Уведомяване за нова продажба"
+
+#: sell-media/inc/class-payments.php:729
+msgid "Address"
+msgstr "Адрес"
+
+#: sell-media/inc/class-products.php:70
+msgid "Original"
+msgstr "Оригинал"
+
+#: sell-media/inc/class-products.php:71
+msgid "The original high resolution source file"
+msgstr "Оригиналния файл с висока разделителна способност"
+
+#: sell-media/inc/class-search.php:438 sell-media/inc/helpers.php:1238
+#, php-format
+msgid "Search for %1$s"
+msgstr ""
+
+#: sell-media/inc/class-search.php:444 sell-media/inc/helpers.php:1248
+#: sell-media/inc/widgets/sell-media-search.php:68
+msgid "Search"
+msgstr ""
+
+#: sell-media/inc/class-search.php:454 sell-media/inc/helpers.php:1270
+msgid "Exact phrase match (?)"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:150 sell-media/inc/class-updater.php:222
+msgid "Sell Media License"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:176
+msgid "Add Your License"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:183 sell-media/inc/class-updater.php:390
+msgid "License E-mail Address"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:191 sell-media/inc/class-updater.php:402
+msgid "License Key"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:441
+#, php-format
+msgid ""
+"Your <a href=\"%1$s\">license key</a> for Graph Paper Press plugins has "
+"expired or is invalid. Please <a href=\"%2$s\" target=\"_blank\">renew your "
+"license</a> to re-enable automatic updates."
+msgstr ""
+
+#: sell-media/inc/class-updater.php:807
+#, php-format
+msgid ""
+"<a href=\"%s\" target=\"_blank\">Get your license keys here</a> and paste "
+"them below to enable automatic updates."
+msgstr ""
+
+#: sell-media/inc/class-updater.php:813
+#, php-format
+msgid ""
+"Your license key for Graph Paper Press plugins has expired or is invalid. "
+"Please <a href=\"%s\" target=\"_blank\">renew your license</a> to re-enable "
+"automatic updates."
+msgstr ""
+
+#: sell-media/inc/class-updater.php:815
+msgid "Your license is valid and your account is active."
+msgstr ""
+
+#: sell-media/inc/collections.php:74
+msgid "This item is password protected"
+msgstr "Този елемент е защитен с парола"
+
+#: sell-media/inc/fields.php:39
 msgid "Learn more"
 msgstr "Научете повече..."
 
-#: themes/cart.php:109 themes/cart.php:111
+#: sell-media/inc/fields.php:75 sell-media/inc/fields.php:77
 msgid ""
 "Select a license that most closely describes the intended use of this item. "
 "Additional license details will be displayed here after selecting a license."
@@ -2583,30 +1721,1820 @@ msgstr ""
 "Допълнителни подробности за лицензии ще бъдат показани тук, след като "
 "изберете лиценз."
 
-#: themes/cart.php:111
+#: sell-media/inc/fields.php:77
 msgid "Select a license"
 msgstr "Изберете лиценз"
 
-#: themes/cart.php:131
+#: sell-media/inc/helpers.php:1257
+msgid "Use a comma to separate keywords."
+msgstr ""
+
+#: sell-media/inc/helpers.php:1263
+msgid ""
+"Search everywhere including titles, descriptions, captions, and keywords. "
+"For best results, only include one keyword per search."
+msgstr ""
+
+#: sell-media/inc/helpers.php:1263
+msgid "Search everything (?)"
+msgstr ""
+
+#: sell-media/inc/helpers.php:1345
+msgid "No keyword found"
+msgstr ""
+
+#: sell-media/inc/helpers.php:1346
+msgid "Please enter keyword to search."
+msgstr ""
+
+#: sell-media/inc/helpers.php:1435
+msgid "Search for Keywords"
+msgstr ""
+
+#: sell-media/inc/install.php:36
+msgid "Sell Media requires WordPress 4.4 or higher!"
+msgstr ""
+
+#: sell-media/inc/install.php:163
+msgid "All Products"
+msgstr "Всички продукти"
+
+#: sell-media/inc/install.php:166
+msgid "Edit Product"
+msgstr "Редактирай продукт"
+
+#: sell-media/inc/install.php:167
+msgid "New Product"
+msgstr "Нов продукт"
+
+#: sell-media/inc/install.php:168
+msgid "View Product"
+msgstr "Виж продукта"
+
+#: sell-media/inc/install.php:169
+msgid "Search Products"
+msgstr "търсене на продукти"
+
+#: sell-media/inc/install.php:170
+msgid "No products found"
+msgstr "Няма намерени продукти"
+
+#: sell-media/inc/install.php:171
+msgid "No products found in Trash"
+msgstr "Няма продукти в кошчето"
+
+#: sell-media/inc/install.php:172
+msgid "Parent Product:"
+msgstr "Родител продукт:"
+
+#: sell-media/inc/install.php:204 sell-media/inc/install.php:215
+msgid "Payments"
+msgstr "Плащания"
+
+#: sell-media/inc/install.php:205 sell-media/inc/settings.php:55
+#: sell-media/inc/settings.php:59
+msgid "Payment"
+msgstr "Плащане"
+
+#: sell-media/inc/install.php:207
+msgid "Add New Payment"
+msgstr "Добави ново плащане"
+
+#: sell-media/inc/install.php:208
+msgid "Edit Payment"
+msgstr "Редактирай плащането"
+
+#: sell-media/inc/install.php:209
+msgid "New Payment"
+msgstr "Ново плащане"
+
+#: sell-media/inc/install.php:210
+msgid "View Payment"
+msgstr "Преглед на плащане"
+
+#: sell-media/inc/install.php:211
+msgid "Search Payments"
+msgstr "Търсене на плащания"
+
+#: sell-media/inc/install.php:212
+msgid "No payments found"
+msgstr "Не са открити плащания"
+
+#: sell-media/inc/install.php:213
+msgid "No payments found in Trash"
+msgstr "Няма плащания в кошчето"
+
+#: sell-media/inc/install.php:214
+msgid "Parent Payment:"
+msgstr "Главно плащане"
+
+#: sell-media/inc/install.php:275
+msgid "Search Price Groups"
+msgstr "Търсене на ценови групи"
+
+#: sell-media/inc/install.php:276
+msgid "Popular Price Groups"
+msgstr "Популярни ценови групи"
+
+#: sell-media/inc/install.php:277
+msgid "All Price Groups"
+msgstr "Всички ценови групи"
+
+#: sell-media/inc/install.php:278
+msgid "Parent Price Groups"
+msgstr "Основни ценови групи"
+
+#: sell-media/inc/install.php:279
+msgid "Parent Price Groups:"
+msgstr "Ценови подгрупи"
+
+#: sell-media/inc/install.php:280
+msgid "Edit Price Group"
+msgstr "Редактирай ценова група"
+
+#: sell-media/inc/install.php:281
+msgid "Update Price Group"
+msgstr "Актуализация на ценова група"
+
+#: sell-media/inc/install.php:282
+msgid "Add New Price Group"
+msgstr "Добави нова ценова група"
+
+#: sell-media/inc/install.php:283
+msgid "New Price Group"
+msgstr "Нова ценова група"
+
+#: sell-media/inc/install.php:284
+msgid "Separate Price Groups with commas"
+msgstr "Разделете със запетаи ценовите групи"
+
+#: sell-media/inc/install.php:285
+msgid "Add or remove Price Groups"
+msgstr "Добавяне или премахване на ценови групи"
+
+#: sell-media/inc/install.php:286
+msgid "Choose from most used Price Groups"
+msgstr "Изберете от най-използваните ценови групи"
+
+#: sell-media/inc/install.php:308
+msgid "Product Collections"
+msgstr "Колекции от продукти"
+
+#: sell-media/inc/install.php:310
+msgid "Search Collection"
+msgstr "Търсене на колекция"
+
+#: sell-media/inc/install.php:311
+msgid "Popular Collection"
+msgstr "Популярни колекции"
+
+#: sell-media/inc/install.php:312
+#: sell-media/inc/widgets/sell-media-featured.php:95
+msgid "All Collections"
+msgstr "Всички Колекции"
+
+#: sell-media/inc/install.php:313
+msgid "Parent Collection"
+msgstr "Основна Колекция"
+
+#: sell-media/inc/install.php:314
+msgid "Parent Collection:"
+msgstr "Основна Колекция:"
+
+#: sell-media/inc/install.php:315
+msgid "Edit Collection"
+msgstr "Редакция на колекция"
+
+#: sell-media/inc/install.php:316
+msgid "Update Collection"
+msgstr "Актуализация на Колекция"
+
+#: sell-media/inc/install.php:317
+msgid "Add New Collection"
+msgstr "Добави нова Колекция"
+
+#: sell-media/inc/install.php:318
+msgid "New Collection"
+msgstr "Нова Колекция"
+
+#: sell-media/inc/install.php:319
+msgid "Separate collection with commas"
+msgstr "Разделете със запетаи Колекцийте"
+
+#: sell-media/inc/install.php:320
+msgid "Add or remove Collection"
+msgstr "Добавяне или премахване на Колекция"
+
+#: sell-media/inc/install.php:321
+msgid "Choose from most used Collection"
+msgstr "Изберете от най-използваната Колекция"
+
+#: sell-media/inc/install.php:343 sell-media/inc/install.php:357
+msgid "Licenses"
+msgstr "Лицензи"
+
+#: sell-media/inc/install.php:345
+msgid "Search Licenses"
+msgstr "Търсене на лицензи"
+
+#: sell-media/inc/install.php:346
+msgid "Popular Licenses"
+msgstr "Популярните лицензи"
+
+#: sell-media/inc/install.php:347
+msgid "All Licenses"
+msgstr "Всички лицензи"
+
+#: sell-media/inc/install.php:348
+msgid "Parent License"
+msgstr "Основен лиценз"
+
+#: sell-media/inc/install.php:349
+msgid "Parent License:"
+msgstr "Основен лиценз:"
+
+#: sell-media/inc/install.php:350
+msgid "Edit License"
+msgstr "Редактиране на лиценз"
+
+#: sell-media/inc/install.php:351
+msgid "Update License"
+msgstr "Актуализиране на лиценза"
+
+#: sell-media/inc/install.php:352
+msgid "Add New License"
+msgstr "Добавяне на нов лиценз"
+
+#: sell-media/inc/install.php:353
+msgid "New License"
+msgstr "Нов лиценз"
+
+#: sell-media/inc/install.php:354
+msgid "Separate licenses with commas"
+msgstr "Отделни лицензите със запетаи"
+
+#: sell-media/inc/install.php:355
+msgid "Add or remove Licenses"
+msgstr "Добавяне или премахване на лицензи"
+
+#: sell-media/inc/install.php:356
+msgid "Choose from most used Licenses"
+msgstr "Изберете от най-използваните лицензи"
+
+#: sell-media/inc/install.php:379 sell-media/inc/install.php:448
+#: sell-media/inc/install.php:482
+msgid "Keyword"
+msgstr "Ключова дума"
+
+#: sell-media/inc/install.php:380
+msgid "Search Keywords"
+msgstr "Ключови думи за търсене"
+
+#: sell-media/inc/install.php:381
+msgid "Popular Keywords"
+msgstr "Популярни ключови думи"
+
+#: sell-media/inc/install.php:382
+msgid "All Keywords"
+msgstr "Всички ключови думи"
+
+#: sell-media/inc/install.php:383 sell-media/inc/install.php:452
+#: sell-media/inc/install.php:486
+msgid "Parent Keyword"
+msgstr "Главни ключови думи"
+
+#: sell-media/inc/install.php:384 sell-media/inc/install.php:453
+#: sell-media/inc/install.php:487
+msgid "Parent Keyword:"
+msgstr "Главни ключови думи:"
+
+#: sell-media/inc/install.php:385 sell-media/inc/install.php:454
+#: sell-media/inc/install.php:488
+msgid "Edit Keyword"
+msgstr "Редактирай ключова дума"
+
+#: sell-media/inc/install.php:386 sell-media/inc/install.php:455
+#: sell-media/inc/install.php:489
+msgid "Update Keyword"
+msgstr "Актуализация на ключова дума"
+
+#: sell-media/inc/install.php:387 sell-media/inc/install.php:456
+#: sell-media/inc/install.php:490
+msgid "Add New Keyword"
+msgstr "Добави нова ключова дума"
+
+#: sell-media/inc/install.php:388 sell-media/inc/install.php:457
+#: sell-media/inc/install.php:491
+msgid "New Keyword"
+msgstr "Нова ключова дума"
+
+#: sell-media/inc/install.php:389
+msgid "Separate keywords with commas"
+msgstr "Разделете със запетаи ключовите думи"
+
+#: sell-media/inc/install.php:390
+msgid "Add or remove Keywords"
+msgstr "Добавяне или премахване на ключови думи"
+
+#: sell-media/inc/install.php:391
+msgid "Choose from most used Keywords"
+msgstr "Изберете от най-използваните ключови думи"
+
+#: sell-media/inc/install.php:413 sell-media/inc/install.php:427
+msgid "Creators"
+msgstr "Автори"
+
+#: sell-media/inc/install.php:414
+msgid "Creator"
+msgstr "Автор"
+
+#: sell-media/inc/install.php:415
+msgid "Search Creator"
+msgstr "Търсене на автор"
+
+#: sell-media/inc/install.php:416
+msgid "Popular Creator"
+msgstr "Популярни автори"
+
+#: sell-media/inc/install.php:417
+msgid "All Creator"
+msgstr "Всички автори"
+
+#: sell-media/inc/install.php:418
+msgid "Parent Creator"
+msgstr "Главен автор"
+
+#: sell-media/inc/install.php:419
+msgid "Parent Creator:"
+msgstr "Главен автор:"
+
+#: sell-media/inc/install.php:420
+msgid "Edit Creator"
+msgstr "Редактирай автор"
+
+#: sell-media/inc/install.php:421
+msgid "Update Creator"
+msgstr "Актуализация на Автор"
+
+#: sell-media/inc/install.php:422
+msgid "Add New Creator"
+msgstr "Добави нов автор"
+
+#: sell-media/inc/install.php:423
+msgid "New Creator"
+msgstr "Нов Автор"
+
+#: sell-media/inc/install.php:424
+msgid "Separate creator with commas"
+msgstr "Разделете със запетаи авторите"
+
+#: sell-media/inc/install.php:425
+msgid "Add or remove Creator"
+msgstr "Добавяне или премахване на Автор"
+
+#: sell-media/inc/install.php:426
+msgid "Choose from most used Creator"
+msgstr "Изберете от най-използваните Автори"
+
+#: sell-media/inc/install.php:447 sell-media/inc/install.php:461
+msgid "City"
+msgstr "Град"
+
+#: sell-media/inc/install.php:449
+msgid "Search City"
+msgstr "Търси град"
+
+#: sell-media/inc/install.php:450
+msgid "Popular City"
+msgstr "Популярни градове"
+
+#: sell-media/inc/install.php:451
+msgid "All City"
+msgstr "Всички градове"
+
+#: sell-media/inc/install.php:458
+msgid "Separate city with commas"
+msgstr "Разделете градовете със запетаи"
+
+#: sell-media/inc/install.php:459
+msgid "Add or remove City"
+msgstr "Добавяне или премахване на Град"
+
+#: sell-media/inc/install.php:460
+msgid "Choose from most used City"
+msgstr "Изберете от най-използваните Градове"
+
+#: sell-media/inc/install.php:481 sell-media/inc/install.php:495
+msgid "State"
+msgstr "Щат"
+
+#: sell-media/inc/install.php:483
+msgid "Search State"
+msgstr "Търсене на Щат"
+
+#: sell-media/inc/install.php:484
+msgid "Popular State"
+msgstr "Популярни Щати"
+
+#: sell-media/inc/install.php:485
+msgid "All State"
+msgstr "Всички Щати"
+
+#: sell-media/inc/install.php:492
+msgid "Separate state with commas"
+msgstr "Разделете Щатите със запетаи"
+
+#: sell-media/inc/install.php:493
+msgid "Add or remove State"
+msgstr "Добавяне или премахване на Щат"
+
+#: sell-media/inc/install.php:494
+msgid "Choose from most used State"
+msgstr "Изберете от най-използваните Щати"
+
+#: sell-media/inc/lightbox.php:46 sell-media/inc/lightbox.php:177
+#: sell-media/inc/lightbox.php:188
+msgid "Remove from lightbox"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:46 sell-media/inc/lightbox.php:182
+#: sell-media/inc/scripts.php:71
+msgid "Save to Lightbox"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:103
+msgid "Remove all from lightbox"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:103 sell-media/inc/lightbox.php:148
+msgid "Your lightbox is empty."
+msgstr ""
+
+#: sell-media/inc/lightbox.php:103
+msgid "Remove All"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:140 sell-media/inc/template-tags.php:219
+#: sell-media/inc/template-tags.php:286
+msgid "Quick View"
+msgstr ""
+
+#: sell-media/inc/scripts.php:45
+msgid "Sorry that email already exists or is invalid"
+msgstr "Съжаляваме, но електронната поща вече съществува или е невалидна"
+
+#: sell-media/inc/scripts.php:53
+msgid "Added"
+msgstr "Добавена"
+
+#: sell-media/inc/scripts.php:54
+msgid "Checkout now"
+msgstr "Плати сега"
+
+#: sell-media/inc/scripts.php:67
+msgid ""
+"There was an error loading the cart data. Please contact the site owner."
+msgstr ""
+"Възникна грешка при зареждането на данни в кошницата. Моля, свържете се със "
+"собственика на сайта."
+
+#: sell-media/inc/scripts.php:68 sell-media/inc/shortcodes.php:272
+msgid "Checkout Now"
+msgstr "Плати сега"
+
+#: sell-media/inc/scripts.php:69
+msgid "Please wait..."
+msgstr "Моля, изчакайте..."
+
+#: sell-media/inc/scripts.php:70
+msgid "Remove from Lightbox"
+msgstr ""
+
+#: sell-media/inc/settings.php:25 sell-media/inc/settings.php:29
+msgid "General"
+msgstr "Главни"
+
+#: sell-media/inc/settings.php:40 sell-media/inc/settings.php:44
+msgid "Pricing"
+msgstr "Ценообразуване"
+
+#: sell-media/inc/settings.php:74
+msgid "Email Settings"
+msgstr "Email настройки"
+
+#: sell-media/inc/settings.php:85 sell-media/inc/settings.php:89
+msgid "Misc"
+msgstr "Разни"
+
+#: sell-media/inc/settings.php:106
+msgid "Mode"
+msgstr "Режим"
+
+#: sell-media/inc/settings.php:107
+#, php-format
+msgid ""
+"Select Live Mode to accept real transactions. Select Test Mode to accept "
+"test transactions (%s)."
+msgstr ""
+"Изберете режим на живо за да приемате реални сделки. Изберете тестов режим "
+"за да приемате тестови сделки (%s)."
+
+#: sell-media/inc/settings.php:116
+msgid "Test Mode"
+msgstr ""
+
+#: sell-media/inc/settings.php:120
+msgid "Live Mode"
+msgstr ""
+
+#: sell-media/inc/settings.php:127
+msgid "Checkout Page"
+msgstr "Страница за плащане"
+
+#: sell-media/inc/settings.php:128
+msgid ""
+"Select the page that contains the checkout shortcode "
+"<code>[sell_media_checkout]</code>"
+msgstr ""
+"Изберете страницата, която съдържа кода за разплащане "
+"<code>[sell_media_checkout]</code>"
+
+#: sell-media/inc/settings.php:139
+msgid "Thanks Page"
+msgstr "Страница за благодарности"
+
+#: sell-media/inc/settings.php:140
+msgid ""
+"Select the page that contains the thanks shortcode "
+"<code>[sell_media_thanks]</code>"
+msgstr ""
+"Изберете страницата, която съдържа кода за благодарности "
+"<code>[sell_media_thanks]</code>"
+
+#: sell-media/inc/settings.php:151
+msgid "Dashboard Page"
+msgstr "Табло"
+
+#: sell-media/inc/settings.php:152
+msgid ""
+"Select the page that contains the dashboard "
+"shortcode<code>[sell_media_download_list]</code>"
+msgstr ""
+"Изберете страницата, която съдържа краткия код за таблото "
+"<code>[sell_media_download_list]</code>"
+
+#: sell-media/inc/settings.php:163
+msgid "Login Page"
+msgstr "Страница за Вход"
+
+#: sell-media/inc/settings.php:164
+msgid ""
+"Select the page that contains the login shortcode "
+"<code>[sell_media_login_form]</code>"
+msgstr ""
+"Изберете страницата, която съдържа кратък код за вход "
+"<code>[sell_media_login_form]</code>"
+
+#: sell-media/inc/settings.php:175
+msgid "Search Page"
+msgstr "Страница за търсене"
+
+#: sell-media/inc/settings.php:176
+msgid ""
+"Select the page that contains the search shortcode "
+"<code>[sell_media_searchform]</code>"
+msgstr ""
+"Изберете страницата, която съдържа кратък код за търсене "
+"<code>[sell_media_searchform]</code>"
+
+#: sell-media/inc/settings.php:187
+msgid "Lightbox Page"
+msgstr ""
+
+#: sell-media/inc/settings.php:188
+msgid ""
+"Select the page that contains the lightbox shortcode "
+"<code>[sell_media_lightbox]</code>"
+msgstr ""
+
+#: sell-media/inc/settings.php:199
+msgid "Customer Notification"
+msgstr "Уведомление за Потребителя"
+
+#: sell-media/inc/settings.php:200
+msgid "Notify the customer of their site registration."
+msgstr "Уведоми потребителя за регистрацията в сайта."
+
+#: sell-media/inc/settings.php:209 sell-media/inc/settings.php:330
+#: sell-media/inc/settings.php:351 sell-media/inc/settings.php:372
+#: sell-media/inc/settings.php:489
+msgid "No"
+msgstr "Не"
+
+#: sell-media/inc/settings.php:220
+msgid "Style"
+msgstr "Стил"
+
+#: sell-media/inc/settings.php:221
+msgid ""
+"Choose the style of your theme. Sell Media will load styles to match your "
+"theme."
+msgstr ""
+"Изберете стила на вашата тема. Sell Media ще зарежда стилове, за да "
+"съответстват на вашата тема."
+
+#: sell-media/inc/settings.php:230
+msgid "Dark"
+msgstr "Тъмен"
+
+#: sell-media/inc/settings.php:234
+msgid "Light"
+msgstr "Светъл"
+
+#: sell-media/inc/settings.php:241
+msgid "Page Layout"
+msgstr ""
+
+#: sell-media/inc/settings.php:242
+msgid ""
+"Select your layout preference for single Sell Media entries. If your theme "
+"already has a sidebar, you probably want to select the 'One column' option."
+msgstr ""
+
+#: sell-media/inc/settings.php:251
+msgid "Two columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:255
+msgid "One column"
+msgstr ""
+
+#: sell-media/inc/settings.php:262
+msgid "Thumbnail Crop"
+msgstr ""
+
+#: sell-media/inc/settings.php:263
+msgid ""
+"Select the crop for thumbnails appearing on archives and galleries. If you "
+"select 'Square Crop,' you might need to use the Regenerate Thumbnails plugin "
+"to resize previously uploaded images."
+msgstr ""
+
+#: sell-media/inc/settings.php:272
+msgid "No Crop"
+msgstr ""
+
+#: sell-media/inc/settings.php:276
+msgid "Square Crop"
+msgstr ""
+
+#: sell-media/inc/settings.php:283
+msgid "Thumbnail Layout"
+msgstr ""
+
+#: sell-media/inc/settings.php:284
+msgid ""
+"Select the layout preferences for thumbnails appearing on archives and in "
+"galleries."
+msgstr ""
+
+#: sell-media/inc/settings.php:293
+msgid "One Column"
+msgstr ""
+
+#: sell-media/inc/settings.php:297
+msgid "Two Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:301
+msgid "Three Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:305
+msgid "Four Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:309
+msgid "Five Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:313
+msgid "Masonry Layout"
+msgstr ""
+
+#: sell-media/inc/settings.php:320
+msgid "Breadcrumbs"
+msgstr ""
+
+#: sell-media/inc/settings.php:321
+msgid "Show breadcrumb navigation on single entries."
+msgstr ""
+
+#: sell-media/inc/settings.php:341
+msgid "File Info"
+msgstr ""
+
+#: sell-media/inc/settings.php:342
+msgid ""
+"Show file information (file size, file type, dimensions, keywords, etc.) on "
+"single entries."
+msgstr ""
+
+#: sell-media/inc/settings.php:362
+msgid "Plugin Credit"
+msgstr ""
+
+#: sell-media/inc/settings.php:363
+msgid "Let your site visitors know you are using the Sell Media plugin?"
+msgstr ""
+"Дали посетителите на сайта да знаят, че Вие използвате Sell Media плъгин?"
+
+#: sell-media/inc/settings.php:383
+msgid "Post Type Slug"
+msgstr ""
+
+#: sell-media/inc/settings.php:384
+msgid ""
+"You can change the post type slug to: &quot;photos&quot; or &quot;"
+"downloads&quot;. The default slug is &quot;items&quot;."
+msgstr ""
+"Можете да промените пост тип заготовка: &quot;снимки&quot; или &quot;"
+"сваляне&quot;. Заготовката по подразбиране е &quot;елементи&quot;."
+
+#: sell-media/inc/settings.php:395
+msgid "Order By"
+msgstr "Подреди по..."
+
+#: sell-media/inc/settings.php:396
+msgid "Choose the order of items for the archive pages."
+msgstr "Изберете реда на артикули за архивни страници."
+
+#: sell-media/inc/settings.php:424
+msgid "Terms and Conditions"
+msgstr "Правила и условия"
+
+#: sell-media/inc/settings.php:425
+msgid ""
+"These &quot;Terms and Conditions&quot; will show up on the checkout page. "
+"Users must agree to these terms before completing their purchase."
+msgstr ""
+"Тези &quot;Правил и Условия&quot; ще се появят на страницата за плащане. "
+"Потребителите трябва да са съгласни с тези условия преди завършване на "
+"тяхната покупка."
+
+#: sell-media/inc/settings.php:436
+msgid "Show Columns"
+msgstr "Покажи Колони"
+
+#: sell-media/inc/settings.php:437
+msgid ""
+"Select the columns to show on the admin page &quot;All Products&quot; page."
+msgstr ""
+"Изберете колоните, които да се показват на административната страницата "
+"&quot;Всички продукти&quot;."
+
+#: sell-media/inc/settings.php:467
+msgid "Original Price"
+msgstr "Първоначална цена"
+
+#: sell-media/inc/settings.php:468
+msgid ""
+"The original price of new items and bulk uploads. You can set unique prices "
+"by editing each individual item."
+msgstr ""
+"Първоначалната цена на нови елементи и насипни качвания. Можете да настроите "
+"уникални цени, като редактирате отделните елементи."
+
+#: sell-media/inc/settings.php:479
+msgid "Hide Original Price"
+msgstr "Скриване на първоначалната цена"
+
+#: sell-media/inc/settings.php:480
+msgid ""
+"Select 'Yes' to hide the original price above and rely solely on Price "
+"Groups (See below. Price Groups can only be used when selling images). "
+"Select 'No' if you're selling single file downloads or if you want to list "
+"the original price for each product. You can override this setting on a per-"
+"item basis."
+msgstr ""
+"Изберете &#39;Да&#39; за да се скрие от първоначалната цена по-горе и да "
+"разчитате единствено на ценови групи (Виж по-долу. Ценови групи може да се "
+"използват само при продажба на изображения). Изберете &quot;Не&quot;, ако ще "
+"продавате единични файлове, или ако искате да се изброи първоначалната цена "
+"за всеки продукт. Можете да замените тази настройка на база за артикул."
+
+#: sell-media/inc/settings.php:500
+msgid "Default Image Price Group"
+msgstr "Ценова група по подразбиране за изображенията"
+
+#: sell-media/inc/settings.php:511
+msgid "Image Price Groups"
+msgstr "Ценови групи за изображения"
+
+#: sell-media/inc/settings.php:524
+msgid "PayPal Email Address"
+msgstr ""
+
+#: sell-media/inc/settings.php:525
+msgid "Add the email address associated with your PayPal account above."
+msgstr ""
+
+#: sell-media/inc/settings.php:537
+msgid "Currency"
+msgstr "Валута"
+
+#: sell-media/inc/settings.php:538
+msgid "The currency in which you accept payment."
+msgstr "Валутата, в която приемате заплащане."
+
+#: sell-media/inc/settings.php:549
+msgid "PayPal Additional Test Emails"
+msgstr "PayPal допълнителни тестови E-mail -и"
+
+#: sell-media/inc/settings.php:550
+msgid ""
+"This is useful when debugging PayPal. Enter a comma separated list of "
+"emails, and when a purchase is made the same email that is sent to the buyer "
+"will be sent to the recipients in the above list."
+msgstr ""
+"Това е полезно, когато отстранявате PayPal грешки. Въведете разделени със "
+"запетая списък с E-mail-и, а когато покупката е направена, същия E-mail "
+"който е изпратен на купувача ще бъде изпратен до получателите в горния "
+"списък."
+
+#: sell-media/inc/settings.php:561 sell-media/inc/shortcodes.php:254
+msgid "Tax"
+msgstr "Данък"
+
+#: sell-media/inc/settings.php:571
+msgid "Yes, charge tax"
+msgstr "Да, добави данък"
+
+#: sell-media/inc/settings.php:578
+msgid "Tax Display"
+msgstr ""
+
+#: sell-media/inc/settings.php:579
+msgid ""
+"Select how you want to display taxes. Most users can leave this set to "
+"\"Exclusive\". Tax laws in certain countries, like Austrailia, require that "
+"prices of items are displayed with taxes included. If this scenerio applies "
+"to you, then select \"Inclusive\"."
+msgstr ""
+
+#: sell-media/inc/settings.php:588
+msgid "Exclusive - Added at checkout"
+msgstr ""
+
+#: sell-media/inc/settings.php:592
+msgid "Inclusive - Added to item prices"
+msgstr ""
+
+#: sell-media/inc/settings.php:599
+msgid "Tax Rate"
+msgstr "Данъчна ставка"
+
+#: sell-media/inc/settings.php:613
+msgid "From Name"
+msgstr "От име"
+
+#: sell-media/inc/settings.php:614
+msgid "The name associated with all outgoing email."
+msgstr "Името свързано с цялата изходяща поща."
+
+#: sell-media/inc/settings.php:625
+msgid "From Email"
+msgstr "От Email"
+
+#: sell-media/inc/settings.php:626
+msgid "The email address used for all outgoing email."
+msgstr "Имейл адреса, използван за цялата изходяща поща."
+
+#: sell-media/inc/settings.php:637
+msgid "Email Subject"
+msgstr "Email Тема"
+
+#: sell-media/inc/settings.php:638
+msgid "The email subject on successful purchase emails."
+msgstr "Е-mail тема на всички E-mail-и за успешни плащания"
+
+#: sell-media/inc/settings.php:644
+msgid "Your Purchase"
+msgstr "Вашата Покупка"
+
+#: sell-media/inc/settings.php:649
+msgid "Email Body"
+msgstr "E-mail текст"
+
+#: sell-media/inc/settings.php:650
+msgid ""
+"This e-mail message is sent to your customers in case of successful and "
+"cleared payment. You can use the following email tags: {first_name}, "
+"{last_name}, {payer_email}, {download_links}, {payment_id}. These tags are "
+"replaced with the real data associated with each payment. Be sure to include "
+"the {download_links} tag, otherwise your buyers won't receive their download "
+"purchases. The {payment_id} tag can be used to display an invoice number."
+msgstr ""
+"Този е-мейл се изпраща до клиентите в случай на успешно и изчистено плащане. "
+"Можете да използвате следните е-мейл етикети: {first_name}, {LAST_NAME}, "
+"{payer_email} {download_links} {payment_id}. Тези маркери се заменят с "
+"реалните данни, свързани с всяко плащане. Не забравяйте да включите  "
+"{download_links} таг, в противен случай вашите купувачи, няма да получат "
+"своите линкове за сваляне. The {payment_id} маркер може да се използва за "
+"показване на номер на фактура."
+
+#: sell-media/inc/settings.php:664
+msgid "Miscellaneous Settings"
+msgstr ""
+
+#: sell-media/inc/settings.php:665
+#, php-format
+msgid "Settings for some of our %s will be shown here if active."
+msgstr ""
+
+#: sell-media/inc/settings/library/helpers.php:16
+msgid "-- Choose One --"
+msgstr "- Изберете Един -"
+
+#: sell-media/inc/settings/library/helpers.php:133
+msgid "US Dollars (&#36;)"
+msgstr "Щатски долара ($)"
+
+#: sell-media/inc/settings/library/helpers.php:138
+msgid "Euros (&euro;)"
+msgstr "Евро (€)"
+
+#: sell-media/inc/settings/library/helpers.php:143
+msgid "Pounds Sterling (&pound;)"
+msgstr "Лири стерлинги (£)"
+
+#: sell-media/inc/settings/library/helpers.php:148
+msgid "Australian Dollars (&#36;)"
+msgstr "Австралийски долари ($)"
+
+#: sell-media/inc/settings/library/helpers.php:153
+msgid "Brazilian Real (R&#36;)"
+msgstr "Бразилски реал (R $)"
+
+#: sell-media/inc/settings/library/helpers.php:158
+msgid "Canadian Dollars (&#36;)"
+msgstr "Канадски долари ($)"
+
+#: sell-media/inc/settings/library/helpers.php:163
+msgid "Czech Koruna (&#75;&#269;)"
+msgstr "Чешка крона (Kč)"
+
+#: sell-media/inc/settings/library/helpers.php:168
+msgid "Danish Krone"
+msgstr "Датска крона"
+
+#: sell-media/inc/settings/library/helpers.php:173
+msgid "Hong Kong Dollar (&#36;)"
+msgstr "Hong Kong Dollar ($)"
+
+#: sell-media/inc/settings/library/helpers.php:178
+msgid "Hungarian Forint"
+msgstr "Унгарски форинт"
+
+#: sell-media/inc/settings/library/helpers.php:183
+msgid "Israeli Shekel"
+msgstr "Израелски шекел"
+
+#: sell-media/inc/settings/library/helpers.php:188
+msgid "Japanese Yen (&yen;)"
+msgstr "Японска йена (¥)"
+
+#: sell-media/inc/settings/library/helpers.php:193
+msgid "Malaysian Ringgits"
+msgstr "Малайзийски Ringgits"
+
+#: sell-media/inc/settings/library/helpers.php:198
+msgid "Mexican Peso (&#36;)"
+msgstr "Мексикански песо ($)"
+
+#: sell-media/inc/settings/library/helpers.php:203
+msgid "New Zealand Dollar (&#36;)"
+msgstr "Нова Зеландия долар ($)"
+
+#: sell-media/inc/settings/library/helpers.php:208
+msgid "Norwegian Krone"
+msgstr "Норвежка крона"
+
+#: sell-media/inc/settings/library/helpers.php:213
+msgid "Philippine Pesos"
+msgstr "Филипински песос"
+
+#: sell-media/inc/settings/library/helpers.php:218
+msgid "Polish Zloty"
+msgstr "Полската злота"
+
+#: sell-media/inc/settings/library/helpers.php:223
+msgid "Singapore Dollar (&#36;)"
+msgstr "Сингапурски долар ($)"
+
+#: sell-media/inc/settings/library/helpers.php:228
+msgid "Swedish Krona"
+msgstr "Шведска крона"
+
+#: sell-media/inc/settings/library/helpers.php:233
+msgid "Swiss Franc"
+msgstr "Швейцарски франк"
+
+#: sell-media/inc/settings/library/helpers.php:238
+msgid "Taiwan New Dollars"
+msgstr "Тайвански нови долари"
+
+#: sell-media/inc/settings/library/helpers.php:243
+msgid "Thai Baht"
+msgstr "Тайландски бат"
+
+#: sell-media/inc/settings/library/helpers.php:248
+msgid "Turkish Lira (TL)"
+msgstr "Турска лира (TL)"
+
+#: sell-media/inc/settings/library/helpers.php:253
+msgid "South African rand (R)"
+msgstr "Южноафрикански ранд (R)"
+
+#: sell-media/inc/settings/settings.php:88
+#: sell-media/inc/settings/settings.php:90
+msgid "Settings"
+msgstr "Настройки"
+
+#: sell-media/inc/settings/settings.php:124
+msgid " settings updated successfully."
+msgstr "настройките са успешно обновени."
+
+#: sell-media/inc/settings/settings.php:137
+msgid "Save Settings"
+msgstr "Запази настройките"
+
+#: sell-media/inc/settings/settings.php:138
+msgid "Reset Defaults"
+msgstr "Върни настройки по подразбиране"
+
+#: sell-media/inc/settings/settings.php:365
+#: sell-media/inc/settings/settings.php:385
+#: sell-media/inc/settings/settings.php:404
+msgid ""
+"This option has no valid options. Please create valid options as an array "
+"inside the settings."
+msgstr ""
+"Този вариант все още няма валидни опции. Моля, създайте валидни опции като "
+"масив вътре настройките."
+
+#: sell-media/inc/settings/settings.php:487 sell-media/inc/term-meta.php:370
+msgid "Upload or Select Image"
+msgstr "Качете или Изберете Изображение"
+
+#: sell-media/inc/settings/settings.php:582
+msgid "Upload or Select Images"
+msgstr "Качете или Изберете Изображениq"
+
+#: sell-media/inc/settings/settings.php:629
+msgid "Version: "
+msgstr "Версия:"
+
+#: sell-media/inc/settings/settings.php:630
+msgid "Documentation"
+msgstr "Документация"
+
+#: sell-media/inc/settings/settings.php:645
+msgid "Upgrades Available"
+msgstr "Налични Ъпгрейди"
+
+#: sell-media/inc/settings/settings.php:647
+msgid ""
+"Sell prints, create discount codes, watermark images, accept credit cards "
+"and much more with extensions for Sell Media."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:648
+#: sell-media/inc/settings/settings.php:655
+msgid "Order Now"
+msgstr "Поръчай Сега"
+
+#: sell-media/inc/settings/settings.php:652
+msgid "Need Help?"
+msgstr "Имате нужда от помощ?"
+
+#: sell-media/inc/settings/settings.php:654
+msgid ""
+"Having trouble setting up Sell Media? Hire one of our affiliated developers."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:659
+msgid "Reviews"
+msgstr "Отзиви"
+
+#: sell-media/inc/settings/settings.php:661
+msgid "Great plugin with great support. Includes tons of features."
+msgstr "Много-хубав плъгин с голяма подкрепа. Включва много функции."
+
+#: sell-media/inc/settings/settings.php:664
+msgid ""
+"A young product with massive potential! You can expect great support from "
+"Graph Paper Press."
+msgstr ""
+"Млад продукт с голям потенциал! Можете да очаквате голяма подкрепа от Graph "
+"Paper Press."
+
+#: sell-media/inc/settings/settings.php:667
+msgid "We'd love for you to leave a review if you've found this plugin useful."
+msgstr ""
+"Ще се радваме да можете да оставите коментар, ако сте намерили този плъгин "
+"полезен."
+
+#: sell-media/inc/settings/settings.php:668
+msgid "Leave a review"
+msgstr "Оставете коментар"
+
+#: sell-media/inc/shortcodes.php:41
+msgid ""
+"We've received your payment and are processing your order. <a href=\"\" "
+"class=\"reload\">Refresh this page</a> to check your order status. If you "
+"continue to see this message, please contact us."
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:258
+msgid "Shipping"
+msgstr "Доставка"
+
+#: sell-media/inc/shortcodes.php:275
+msgid "or"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:277
+msgid "continue shopping &raquo;"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:285
+msgid ""
+"By clicking \"Checkout Now\", you are agreeing to our <a href=\"javascript:"
+"void(0);\" class=\"sell-media-empty-dialog-trigger\">terms of service</a>."
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:298
+#, php-format
+msgid "Your cart is empty. %s"
+msgstr "Кошницата е празна. %s"
+
+#: sell-media/inc/shortcodes.php:298
+msgid "Continue shopping"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:323
+msgid "Your Purchase History"
+msgstr "Вашата История на покупките"
+
+#: sell-media/inc/shortcodes.php:329
+msgid "Purchase ID"
+msgstr "Покупка ID"
+
+#: sell-media/inc/shortcodes.php:356
+msgid "Description"
+msgstr "Описание"
+
+#: sell-media/inc/shortcodes.php:357
+msgid "width (px)"
+msgstr "ширина (px)"
+
+#: sell-media/inc/shortcodes.php:358
+msgid "height (px)"
+msgstr "височина (px)"
+
+#: sell-media/inc/shortcodes.php:359
+msgid "price"
+msgstr "Цена"
+
+#: sell-media/inc/shortcodes.php:502 sell-media/themes/archive.php:90
+msgid " images in "
+msgstr "изображения в"
+
+#: sell-media/inc/shortcodes.php:502 sell-media/themes/archive.php:90
+msgid " collection"
+msgstr "колекция"
+
+#: sell-media/inc/shortcodes.php:505
+msgid "Starting at "
+msgstr "Започва от"
+
+#: sell-media/inc/shortcodes.php:540
+#, php-format
+msgid "You are logged in. %1$s or %2$s."
+msgstr "В момента сте влезли като %1$s или %2$s"
+
+#: sell-media/inc/shortcodes.php:540
+msgid "Logout"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:540
+msgid "continue shopping"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:544
+msgid "Login failed"
+msgstr "Неуспешно влизане."
+
+#: sell-media/inc/shortcodes.php:550 sell-media/inc/term-meta.php:409
+#: sell-media/inc/term-meta.php:454
+msgid "Password"
+msgstr "Парола"
+
+#: sell-media/inc/shortcodes.php:551
+msgid "Remember Me"
+msgstr "Запомни ме"
+
+#: sell-media/inc/shortcodes.php:552
+msgid "Log In"
+msgstr "Вход"
+
+#: sell-media/inc/shortcodes.php:556
+msgid "Forgot Password"
+msgstr "Забравили сте паролата?"
+
+#: sell-media/inc/shortcodes.php:579
+msgid "Newest"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:584
+msgid "Most Popular"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:669 sell-media/inc/shortcodes.php:705
+msgid "Prev"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:670 sell-media/inc/shortcodes.php:706
+msgid "Next"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:36
 msgid "Add to cart"
 msgstr "Добави в количката"
 
-#: themes/collection-password.php:13
+#: sell-media/inc/template-tags.php:245
+msgid "Back to Thumbnails"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:247
+msgid "Previous Image"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:249
+msgid "Next Image"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:333
+#, php-format
+msgid ""
+"<span id=\"sell-media-credit\" class=\"sell-media-credit\">Powered by <a "
+"href=\"%1$s\" title=\"Sell Media\">%2$s</a></span>"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:442
+msgid "Home"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:623
+msgid "More"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:667
+msgid "File Name"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:673
+msgid "Dimensions"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:683
+msgid "Length"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:684
+msgid "Bitrate"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:94
+msgid ""
+"When a buyer decides to purchase a item from your site, they must choose a "
+"license which most closely identifies their intended use of the item. We "
+"have included some default license types, grouped into two \"parent\" "
+"categories: Personal and Commercial. Each of these two categories have "
+"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
+"Commercial) and \"Website\" (a child of Personal). You can create as many "
+"parent and child licenses as you want."
+msgstr ""
+"Когато купувачът реши да закупи един елемент от вашия сайт, той трябва да "
+"избере лиценз, който най-точно определя начина на ползване на елемента. Ние "
+"сме включили някои типове лицензи по подразбиране , групирани в две , "
+"\"основни\" категории: Лични и Комерсиални. Всяка от тези две категории имат "
+"специфични \"под\" лицензи, като \"Печатна реклама\" (под лиценз на "
+"търговски) и \"Уебсайт\" (под лиценз на Лични). Можете да създадете колкото "
+"искате основни и под лицензи."
+
+#: sell-media/inc/term-meta.php:111 sell-media/inc/term-meta.php:129
+msgid "Markup"
+msgstr "Надценка"
+
+#: sell-media/inc/term-meta.php:205
+msgid ""
+"Increase the price of a item if a buyer selects this license by dragging the "
+"slider above."
+msgstr ""
+"Увеличава цената на един елемент, ако купувач избере този лиценз, като "
+"премести плъзгача горе."
+
+#: sell-media/inc/term-meta.php:215
+msgid "you have not set a default price"
+msgstr "не сте настроили цена по подразбиране"
+
+#: sell-media/inc/term-meta.php:219
+#, php-format
+msgid " The %1$s of %2$s with %3$s markup is %4$s"
+msgstr "%1$s от %2$s с %3$s надценка е %4$s"
+
+#: sell-media/inc/term-meta.php:239
+msgid ""
+"Check to add this as a default license option for all newly created items."
+msgstr ""
+"Проверете, за да добавите като опция лиценз подразбиране за всички "
+"новосъздадени артикули."
+
+#: sell-media/inc/term-meta.php:243
+msgid "Add as default license?"
+msgstr "Добави като лиценз по подразбиране?"
+
+#: sell-media/inc/term-meta.php:346 sell-media/inc/term-meta.php:387
+#: sell-media/inc/term-meta.php:479
+msgid "Icon"
+msgstr "Икона"
+
+#: sell-media/inc/term-meta.php:374
+msgid ""
+"The icon is not prominent by default; however, some themes may show it. If "
+"no icon is used the featured image to the most recent post will be displayed"
+msgstr ""
+"Иконата не е известен по подразбиране; Въпреки това, някои теми може да я "
+"покажат. Ако няма икона  ще бъде показано избрано изображение на най-"
+"последната публикация ."
+
+#: sell-media/inc/term-meta.php:411
+msgid "This will password protect all items in this collection."
+msgstr "Това ще защити с парола всички елементи от тази колекция."
+
+#: sell-media/inc/term-meta.php:431
+msgid "Password protect all items in this collection"
+msgstr "Защита с парола на всички обекти в тази колекция"
+
+#: sell-media/inc/term-meta.php:448
+msgid "This collection will inherit the password of the parent collection:"
+msgstr "Тази колекция ще наследи паролата на колекцията майка:"
+
+#: sell-media/inc/term-meta.php:483
+msgid "Media"
+msgstr "Медия"
+
+#: sell-media/inc/term-meta.php:488
+msgid "Protected"
+msgstr "Защитен"
+
+#: sell-media/inc/widgets.php:28
+msgid "Sell Media Below Single Content"
+msgstr ""
+
+#: sell-media/inc/widgets.php:37
+msgid "Sell Media Below Single Sidebar"
+msgstr "Sell Media - странична лента (Sidebar)"
+
+#: sell-media/inc/widgets/sell-media-exif.php:8
+msgid ""
+"Displays image exif data (shutter speed, aperture, ISO, etc). Only use this "
+"on Single Sidebar Widgetized areas."
+msgstr ""
+"Показва снимка Exif данни (скорост на затвора, бленда, ISO и др.) "
+"Използвайте само на Single Sidebar Widgetized райони."
+
+#: sell-media/inc/widgets/sell-media-exif.php:31
+msgid "Camera "
+msgstr "Фотоапарат"
+
+#: sell-media/inc/widgets/sell-media-exif.php:36
+msgid "Aperture "
+msgstr "Бленда"
+
+#: sell-media/inc/widgets/sell-media-exif.php:41
+msgid "Focal Length "
+msgstr "фокусно разстояние"
+
+#: sell-media/inc/widgets/sell-media-exif.php:46
+msgid "Shutter Speed "
+msgstr "Скорост на затвора"
+
+#: sell-media/inc/widgets/sell-media-exif.php:64
+msgid "ISO "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:68
+msgid "Credit "
+msgstr "Кредит"
+
+#: sell-media/inc/widgets/sell-media-exif.php:73
+msgid "Date "
+msgstr "Дата"
+
+#: sell-media/inc/widgets/sell-media-exif.php:78
+#: sell-media/inc/widgets/sell-media-exif.php:80
+msgid "Copyright "
+msgstr "Авторско право"
+
+#: sell-media/inc/widgets/sell-media-exif.php:80
+msgid "by "
+msgstr "от"
+
+#: sell-media/inc/widgets/sell-media-exif.php:104
+msgid "Camera Info"
+msgstr "Фотоапарат"
+
+#: sell-media/inc/widgets/sell-media-featured.php:93
+msgid " Select Collection"
+msgstr "Изберете колекция"
+
+#: sell-media/inc/widgets/sell-media-search.php:34
+msgid "Sell Media Search"
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-search.php:35
+msgid "Adds a search form for searching Sell Media items"
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-search.php:72
+msgid "Title:"
+msgstr ""
+
+#: sell-media/sell-media.php:147 sell-media/sell-media.php:159
+msgid "Cheatin&#8217; huh?"
+msgstr "Измама&#8217; а?"
+
+#: sell-media/themes/archive.php:26
+#, php-format
+msgid "Search results for: %1$s"
+msgstr ""
+
+#: sell-media/themes/archive.php:91
+msgid "Starting at"
+msgstr "Започва от"
+
+#: sell-media/themes/cart.php:31
+#, php-format
+msgid "This item is password protected. %s Click here to enter password. %s"
+msgstr ""
+
+#: sell-media/themes/collection-password.php:13
 msgid "This collection is password protected."
 msgstr "Тази колекция е защитена с парола."
 
-#: themes/collection-password.php:15
+#: sell-media/themes/collection-password.php:15
 msgid "Submit"
 msgstr "Изпрати"
 
-#: themes/single-sell_media_item.php:24
-msgid "Lightbox"
-msgstr ""
+#~ msgid ""
+#~ "Add Bulk allows you to add many single items at once. Please note: Bulk "
+#~ "uploading is a server-intensive process. The capability of this feature "
+#~ "is dependent on the performance of your server. Upload in small batches "
+#~ "to ensure all items uploaded are published correctly. You can modify the "
+#~ "prices and licenses of each item after doing the bulk upload."
+#~ msgstr ""
+#~ "Добави Bulk ви позволява да добавяте много единични бройки наведнъж. "
+#~ "Моля, обърнете внимание: Bulk качването е процес сървър-интензивно. "
+#~ "Способността на тази функция зависи от работата на вашия сървър. Качване "
+#~ "на малки партиди, за да гарантира, че всички елементи, качени са "
+#~ "публикувани правилно. Можете да променяте цените и лицензите на всяка "
+#~ "позиция, след извършване на масово качване."
 
-#: themes/single-sell_media_item.php:27
-msgid "File ID"
-msgstr "Файл ID"
+#~ msgid "Loading items..."
+#~ msgstr "Зареждане…"
 
-#: themes/single-sell_media_item.php:28
-msgid "File Type"
-msgstr "Тип файл"
+#~ msgid "Choose a Price Group"
+#~ msgstr "Изберете ценова група"
+
+#~ msgid "Choose a License"
+#~ msgstr "Изберете Лиценз"
+
+#~ msgid "Choose a Collection"
+#~ msgstr "Изберете колекция"
+
+#~ msgid ""
+#~ "Packages are groups of large files that you want to sell as one product "
+#~ "(Example: You photograph an event and want to sell all images in one "
+#~ "package). To sell a package, you must:"
+#~ msgstr ""
+#~ "Пакетите са групи от големи файлове, които искате да продадете като един "
+#~ "продукт (Пример: Вие снимате събитие и искате да продадете всички "
+#~ "изображения в един пакет). За да продаде пакет, трябва да:"
+
+#~ msgid "ZIP up the folder full of files on your computer."
+#~ msgstr "Архивирайте папка пълна с файлове на вашия компютър."
+
+#~ msgid "Using FTP, upload the ZIP file to your website into the %1$s folder."
+#~ msgstr ""
+#~ "Използване на FTP, качване на ZIP файл на вашия уеб сайт в папката %1$s."
+
+#~ msgid "Select the package filename from the list below."
+#~ msgstr "Изберете името на пакета от списъка по-долу."
+
+#~ msgid "Choose a package"
+#~ msgstr "Изберете пакет"
+
+#~ msgid "Select a package"
+#~ msgstr "Изберете пакет"
+
+#~ msgid "Collection (optional)"
+#~ msgstr "Колекция (опционално)"
+
+#~ msgid "Edit Package"
+#~ msgstr "Редактирай пакет"
+
+#~ msgid "Add Single"
+#~ msgstr "Добави един"
+
+#~ msgid "Add Package"
+#~ msgstr "Добави пакет"
+
+#~ msgid "Package File"
+#~ msgstr "Файлът пакет"
+
+#~ msgid "File"
+#~ msgstr "Файл"
+
+#~ msgid "A description for the field."
+#~ msgstr "Описание за полето."
+
+#~ msgid ""
+#~ "If you want to sell additional image sizes, select a Price Group or <a "
+#~ "href=\""
+#~ msgstr ""
+#~ "Ако искате да продават допълнителни размери изображения, изберете ценова "
+#~ "група или < href = \""
+
+#~ msgid ""
+#~ "This product is a package. Show customers what is included in this "
+#~ "package by adding some images (preferably a gallery of images) to the "
+#~ "Post Editor below. The Featured Image will be used to represent this "
+#~ "package on archive pages."
+#~ msgstr ""
+#~ "Този продукт е пакет. Покажете на клиентите какво е включено в този "
+#~ "пакет, чрез добавяне на някои изображения (за предпочитане галерия от "
+#~ "изображения) в пост редактора, по-долу. Избраните изображения ще се "
+#~ "използват за представяне на този пакет в Архивните страници."
+
+#~ msgid "Choose Image"
+#~ msgstr "Изберете изображение"
+
+#~ msgid " Remove Image"
+#~ msgstr "Премахване на изображение"
+
+#~ msgid "PRODUCT"
+#~ msgstr "Продукт"
+
+#~ msgid "SIZE"
+#~ msgstr "Размер"
+
+#~ msgid "LICENSE"
+#~ msgstr "Лиценз"
+
+#~ msgid "LICENSE DESCRIPTION"
+#~ msgstr "ОПИСАНИЕ НА ЛИЦЕНЗА"
+
+#~ msgid "QTY"
+#~ msgstr "Количество"
+
+#~ msgid "TYPE"
+#~ msgstr "Тип"
+
+#~ msgid "SUBTOTAL"
+#~ msgstr "МЕЖДИННА СУМА"
+
+#~ msgid "DOWNLOAD LINK"
+#~ msgstr "Връзка за изтегляне"
+
+#~ msgid "DELIVERY"
+#~ msgstr "ДОСТАВКА"
+
+#~ msgid "Delivery"
+#~ msgstr "Доставка"
+
+#~ msgid "Example: 100"
+#~ msgstr "Пример: 100"
+
+#~ msgid "Displaying results "
+#~ msgstr "Показване на резултати"
+
+#~ msgid " of "
+#~ msgstr "на"
+
+#~ msgid "Loading..."
+#~ msgstr "Зареждане…"
+
+#~ msgid "No items"
+#~ msgstr "Няма елементи"
+
+#~ msgid "Select"
+#~ msgstr "Изберете"
+
+#~ msgid ""
+#~ "Add the email address associated with your PayPal account above. %1$s "
+#~ "%2$s. Your listener URL is %3$s (you will need this when completing "
+#~ "PayPal setup)"
+#~ msgstr ""
+#~ "Добавяне на E-mail адреса, свързан с вашата PayPal сметка по-горе. %1$s "
+#~ "%2$s. Вашият слушател URL е%3$s (ще ви трябва това при попълването на "
+#~ "PayPal настройката)"
+
+#~ msgid "REQUIRED ACTIONS"
+#~ msgstr "Необходими действия"
+
+#~ msgid "Settings for Extensions are shown below."
+#~ msgstr "Настройки за Разширенията са показани по-долу."
+
+#~ msgid "Download Extensions for Sell Media"
+#~ msgstr "Изтегли нови разширения за Sell Media"
+
+#~ msgid ""
+#~ "Sell prints, create discount codes, watermark images, accept credit cards "
+#~ "and much more when you activate the Business Bundle extension pack for "
+#~ "Sell Media."
+#~ msgstr ""
+#~ "Продавай картини, създай кодове за отстъпка, воден знак на изображения, "
+#~ "приемай кредитни карти и още много други, когато активирате разширения "
+#~ "пакет Business Bundle за Sell Media."
+
+#~ msgid ""
+#~ "Having trouble setting up Sell Media? Hire us for a 30 minute, one-on-one "
+#~ "consultation over live chat. If we can't fix your problem, we'll refund "
+#~ "your order."
+#~ msgstr ""
+#~ "Имате ли проблеми при настройване на Sell Media? Наеми под наем "
+#~ "консултация за 30 минути, чат на живо. Ако не можем да разрешим вашия "
+#~ "проблем, ние ще възстановим Вашата поръчка."
+
+#~ msgid "or %s"
+#~ msgstr "или %s"
+
+#~ msgid "Shopping cart by "
+#~ msgstr "Количка за пазаруване"
+
+#~ msgid "Enable Client Proofing"
+#~ msgstr "Активиране удостоверяване на клиента"
+
+#~ msgid ""
+#~ "Check this to allow clients with password access to download items in "
+#~ "this collecton as proofs. Clients must add an item to their Lightbox in "
+#~ "order to download proofs. A record of which images were downloaded will "
+#~ "be sent to both the site admin and the client via email."
+#~ msgstr ""
+#~ "Изберете това за да се даде възможност на клиентите с парола за достъп, "
+#~ "да свалят артикули в тази колекция като доказателства. Клиентите трябва "
+#~ "да добавят артикул в тяхната Lightbox, за да свалят доказателства. Списък "
+#~ "на изображенията, които са били изтеглени, ще бъдат изпратени на "
+#~ "администратора на сайта и клиента по електронна поща."
+
+#~ msgid "Proofing"
+#~ msgstr "Доказателство"
+
+#~ msgid "Sell Media Below Single Item"
+#~ msgstr "Sell Media под отделен елемент"
+
+#~ msgid "Commission Details:"
+#~ msgstr "Детайли на Комисионната:"
+
+#~ msgid "User:"
+#~ msgstr "Потребител:"
+
+#~ msgid "Commissions (%):"
+#~ msgstr "Комисионни (%):"
+
+#~ msgctxt ""
+#~ msgid "Discount Codes"
+#~ msgstr "Кодове за отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "Discount Code"
+#~ msgstr "Код за отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "Add New"
+#~ msgstr "Добави нов [ ]"
+
+#~ msgctxt ""
+#~ msgid "Add New Discount Code"
+#~ msgstr "Добави нов код за отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "Edit Discount Code"
+#~ msgstr "Редактирай код за отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "New Discount Code"
+#~ msgstr "Нов код за отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "View Discount Code"
+#~ msgstr "Виж Код за отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "Search Discount Codes"
+#~ msgstr "Търсене на Кодове за отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "No discount found"
+#~ msgstr "Не е открита отстъпка [ ]"
+
+#~ msgctxt ""
+#~ msgid "No discount codes found in Trash"
+#~ msgstr "Няма кодове за отстъпка, намиращи се в кошчето [ ]"
+
+#~ msgctxt ""
+#~ msgid "Parent Discount Code:"
+#~ msgstr "Основен Код за отстъпка [ ]"
+
+#~ msgid "Discount:"
+#~ msgstr "Отстъпка:"
+
+#~ msgid "Sorry, this discount code is invalid."
+#~ msgstr "Съжаляваме, тoзи код za отстъпка е невалиден."
+
+#~ msgid "Sorry, this discount code has expired."
+#~ msgstr "За съжаление, този код за отстъпка е изтекъл."
+
+#~ msgctxt "Active discount code status"
+#~ msgid "Active"
+#~ msgstr "Активен"
+
+#~ msgctxt "Inactive discount code status"
+#~ msgid "Inactive"
+#~ msgstr "Неактивен"
+
+#~ msgid ""
+#~ "Check this to allow visitors to download this for free in exchange for "
+#~ "signing up for your newsletter."
+#~ msgstr ""
+#~ "Изберете това за да се даде възможност на посетителите да изтеглят тази "
+#~ "безплатно в замяна на абониране за вашия бюлетин."
+
+#~ msgid "Sell print"
+#~ msgstr "Купи картина"
+
+#~ msgid "Sell download"
+#~ msgstr "Продавай файл"
+
+#~ msgid "Price Group for Prints"
+#~ msgstr "Ценова група за разпечатки"
+
+#~ msgid ""
+#~ "If you purchased prints, they will be shipped to the address you supplied "
+#~ "during checkout. This address is shown below."
+#~ msgstr ""
+#~ "Ако сте закупили картини, те ще бъдат изпратени на адреса, който сте "
+#~ "предоставили при плащането. Този адрес е показан по-долу."
+
+#~ msgid "Only sell prints"
+#~ msgstr "Продавай само картини"
+
+#~ msgid ""
+#~ "The shipping price applied individually to all prints in the cart (i.e. "
+#~ "1, 5, 10)."
+#~ msgstr ""
+#~ "Цената на доставката прилага индивидуално за всички разпечатки в "
+#~ "пазарската количка (т.е. 1, 5, 10)."
+
+#~ msgid "The unit of measurement in which prints are sold."
+#~ msgstr "Мерната единица, в която се продават картините."
+
+#~ msgid "Prints"
+#~ msgstr "Картини"
+
+#~ msgid "This plugin requires Sell Media to function properly"
+#~ msgstr "Този плъгин изисква Sell Media за да функционира правилно"
+
+#~ msgid "Buy a print"
+#~ msgstr "Купи картина"
+
+#~ msgid "Print size"
+#~ msgstr "Размер за печат"
+
+#~ msgid "All print sizes are listed in "
+#~ msgstr "Всички размери за печат, са изброени в"
+
+#~ msgid "(see details)"
+#~ msgstr "(вж. подробности)"
+
+#~ msgid "Watermark Scale"
+#~ msgstr "Мащабиране на Воден знак"
+
+#~ msgid "The scale of your watermark with respect to the image"
+#~ msgstr "Мащабът на вашия воден знак по отношение на изображението"
+
+#~ msgid "Archive"
+#~ msgstr "Архив"

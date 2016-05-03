@@ -3,1547 +3,4022 @@
 # https://wpml.org
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
-"POT-Creation-Date: \n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sell-media\n"
+"POT-Creation-Date: 2016-05-03 17:43-0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
-
-# 
-# 
-# 
-# wpml-name: ff7211500a6bc613f2e3b57448765789
-msgid "Your cart is empty. %s"
-msgstr "Ihr Einkaufswagen ist leer. %s"
-
-# 
-# 
-# 
-# wpml-name: a9c3981abee009a1e190b7a0bcacc85d
-msgid "or %s"
-msgstr "oder %s"
-
-# 
-# 
-# 
-# wpml-name: 96b0141273eabab320119c467cdcaf17
-msgid "Total"
-msgstr "Total"
-
-# 
-# 
-# 
-# wpml-name: ea9cf7e47ff33b2be14e6dd07cbcefc6
-msgid "Shipping"
-msgstr "Versand"
-
-# 
-# 
-# 
-# wpml-name: c9cc8cce247e49bae79f15173ce97354
-msgid "Save"
-msgstr "Speichern"
-
-# 
-# 
-# 
-# wpml-name: 1063e38cb53d94d386f21227fcd84717
-msgid "Remove"
-msgstr "Löschen"
-
-# 
-# 
-# 
-# wpml-name: 25e8f2fd2871c8423bbe4e254066cd98
-msgid "Please wait..."
-msgstr "Bitte warten..."
-
-# 
-# 
-# 
-# wpml-name: 9cfdfa56f0e0d9e5ddaf3c10de2bd399
-msgid "Checkout Now"
-msgstr "Zur Kasse"
-
-# 
-# 
-# 
-# wpml-name: a95f42686de48456b919e617a2d3395a
-msgid "There was an error loading the cart data. Please contact the site owner."
-msgstr "Beim Laden des Warenkorbs ist ein Datenfehler aufgetreten. Bitte kontaktieren Sie den Website-Eigentümer."
-
-# 
-# 
-# 
-# wpml-name: 2194aaec8cc7086ab0e93f74547e5f53
-msgid "Subtotal"
-msgstr "Zwischensumme"
-
-# 
-# 
-# 
-# wpml-name: 03ab340b3f99e03cff9e84314ead38c0
-msgid "Qty"
-msgstr "Anz."
-
-# 
-# 
-# 
-# wpml-name: 6f6cb72d544962fa333e2e34ce64f719
-msgid "Size"
-msgstr "Größe"
-
-# 
-# 
-# 
-# wpml-name: 49ee3087348e8d44e1feda1917443987
-msgid "Name"
-msgstr "Name"
-
-# 
-# 
-# 
-# wpml-name: 190a76c985d9c0c5b0f6d53f12bbd52a
-msgid "Checkout now"
-msgstr "Zur Kasse"
-
-# 
-# 
-# 
-# wpml-name: f29ddbfb905eb2593fdcdfb243f9af85
-msgid "Added"
-msgstr "Hinzugefügt"
-
-# 
-# 
-# 
-# wpml-name: edf5ea9b7f21c0fefe7b85c19ec0e632
-msgid "Sorry that email already exists or is invalid"
-msgstr "Es tut uns leid, die E-Mail existiert bereits oder ist ungültig"
-
-# 
-# 
-# 
-# wpml-name: 24dc9bd0af4d093371f2e8eeee1ad575
-msgid "Download Extensions for Sell Media"
-msgstr "Erweiterungen für Sell Media herunterladen"
-
-# 
-# 
-# 
-# wpml-name: b76b9d1e9867c0996da3979979d09909
-msgid "Settings for Extensions are shown below."
-msgstr "Die Einstellungen für die Erweiterung finden Sie weiter unten."
-
-# 
-# 
-# 
-# wpml-name: c0c9ac59a083028b7e2bbbd1988e3546
-msgid "This e-mail message is sent to your customers in case of successful and cleared payment. You can use the following email tags: {first_name}, {last_name}, {payer_email}, {download_links}, {payment_id}. These tags are replaced with the real data associated with each payment. Be sure to include the {download_links} tag, otherwise your buyers won't receive their download purchases. The {payment_id} tag can be used to display an invoice number."
-msgstr "Diese Email wird an Ihre Kunden gesendet, wenn die Bezahlung erfolgreich abgewickelt wurde. Sie können folgende Email Tags verwenden: {first_name}, {last_name}, {payer_email}, {download_links}, {payment_id}. 
-Diese Tags werden mit durch die realen Daten einer jeden Zahlung ersetzt.  Stellen Sie sicher, dass Sie den  {download_links} Tag nicht vergessen, sonst können Ihre Kunden die Bestellung nicht herunterladen. Das {payment_id} Tag kann zum erstellen von Rechnungsnummern gebraucht werden."
-
-# 
-# 
-# 
-# wpml-name: 1b394670c01ca90b098c272deb3bf880
-msgid "Email Body"
-msgstr "Email Inhalt"
-
-# 
-# 
-# 
-# wpml-name: 564edf260dd3827e38605f73c3c47e3d
-msgid "Your Purchase"
-msgstr "Ihr Einkauf"
-
-# 
-# 
-# 
-# wpml-name: 9df894de183267becbaef872c4bd9cfe
-msgid "The email subject on successful purchase emails."
-msgstr "Der E-mail Betreff bei erfolgreichem Kauf."
-
-# 
-# 
-# 
-# wpml-name: e3868f7e6e90b6b55f60ac7d71dcb8ce
-msgid "Email Subject"
-msgstr "E-mail Betreff"
-
-# 
-# 
-# 
-# wpml-name: ed164e4570027582f06ec825d85d74ab
-msgid "The email address used for all outgoing email."
-msgstr "Die E-Mail-Adresse für alle ausgehenden E-Mails."
-
-# 
-# 
-# 
-# wpml-name: 4ca679a383343ab3d4ca1cd7c91b43f7
-msgid "From Email"
-msgstr "Absender Email"
-
-# 
-# 
-# 
-# wpml-name: ef8b987a6f6940dfede55ecc2ed4773f
-msgid "The name associated with all outgoing email."
-msgstr "Der assoziierte Name aller ausgehenden Mails."
-
-# 
-# 
-# 
-# wpml-name: 4a4a8fe0c6dfb6bd2a41755d15eb6f0b
-msgid "From Name"
-msgstr "Absender Name"
-
-# 
-# 
-# 
-# wpml-name: 8fe77c2601e54f1aaef28cfde997bbad
-msgid "Tax Rate"
-msgstr "Steuersatz"
-
-# 
-# 
-# 
-# wpml-name: e5aebf9ffb369ed36ba8e3df46282b0f
-msgid "Yes, charge tax"
-msgstr "Ja, Steuern hinzufügen"
-
-# 
-# 
-# 
-# wpml-name: 4b78ac8eb158840e9638a3aeb26c4a9d
-msgid "Tax"
-msgstr "Steuer"
-
-# 
-# 
-# 
-# wpml-name: 8c8894baa436c438fbe0f73e3e5eaa3c
-msgid "This is useful when debugging PayPal. Enter a comma separated list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list."
-msgstr "Dies ist nützlich bei der Fehlersuche in PayPal. 
-Geben Sie eine durch Kommata getrennte Liste von E-Mails ein. 
-Sobald ein Kauf erfolgt, wird die gleiche E-Mail, die an den Käufer gesendet wird, auch an die Empfänger in der obigen Liste gesendet."
-
-# 
-# 
-# 
-# wpml-name: 1f1e4e94372cc59fc3e9dd0b1bd64791
-msgid "PayPal Additional Test Emails"
-msgstr "Zusätzliche Test E-mails PayPal"
-
-# 
-# 
-# 
-# wpml-name: f33dcb496dffc1d8c26c402142d0bcc7
-msgid "South African rand (R)"
-msgstr "Südafrikanischer Rand (R)"
-
-# 
-# 
-# 
-# wpml-name: b827acd0bae864f7bad7fd98aaa849d9
-msgid "Turkish Lira (TL)"
-msgstr "Türkische Lire (TL)"
-
-# 
-# 
-# 
-# wpml-name: e91203579f334586b5de2bb59479c7e0
-msgid "Thai Baht"
-msgstr "Thai Baht"
-
-# 
-# 
-# 
-# wpml-name: 1f421920c8316dc5befb5e3494fd3b8d
-msgid "Taiwan New Dollars"
-msgstr "Taiwan Neue Dollar"
-
-# 
-# 
-# 
-# wpml-name: 74086e9575acbfc9716ce2022d71a172
-msgid "Swiss Franc"
-msgstr "Schweizer Franken"
-
-# 
-# 
-# 
-# wpml-name: 33ee712c3451768da98c4e7114dc19d3
-msgid "Swedish Krona"
-msgstr "Swedish Krone"
-
-# 
-# 
-# 
-# wpml-name: a53a9eee6bc5c4a1592cda429c46629e
-msgid "Singapore Dollar (&#36;)"
-msgstr "Singapur Dollar ($)"
-
-# 
-# 
-# 
-# wpml-name: 521458528f5faf39e1d25c32098d5c0c
-msgid "Polish Zloty"
-msgstr "Polischer Zloty"
-
-# 
-# 
-# 
-# wpml-name: f85d362d66c67bffad884a3ae04822ee
-msgid "Philippine Pesos"
-msgstr "Philippinischer Peso"
-
-# 
-# 
-# 
-# wpml-name: 0224fbdf63721a050759cd59a8a9fddd
-msgid "Norwegian Krone"
-msgstr "Norwegische Krone"
-
-# 
-# 
-# 
-# wpml-name: 6a4674d81e3ddfd8c82a2873c1803edd
-msgid "New Zealand Dollar (&#36;)"
-msgstr "Neuseeländischer Dollar ($)"
-
-# 
-# 
-# 
-# wpml-name: 0141733f3d275f9a8238b2300b16a44f
-msgid "Mexican Peso (&#36;)"
-msgstr "Mexikanischer Peso ($)"
-
-# 
-# 
-# 
-# wpml-name: c7fdb91690b0965b3ac4638b1c6d238e
-msgid "Malaysian Ringgits"
-msgstr "Malayischer Ringgit"
-
-# 
-# 
-# 
-# wpml-name: 6f36daa6939ccc59aab455d10e9dc11e
-msgid "Japanese Yen (&yen;)"
-msgstr "Japanischer Yen (¥)"
-
-# 
-# 
-# 
-# wpml-name: c937e3c4ea0b5fea4bd954a2ef90b70d
-msgid "Israeli Shekel"
-msgstr "Israelischer Shekel"
-
-# 
-# 
-# 
-# wpml-name: a4f21bb2aa5dbc7a52e15b3d47a0735b
-msgid "Hungarian Forint"
-msgstr "Ungarischer Forint"
-
-# 
-# 
-# 
-# wpml-name: 4455b36a96566f8329293920a7d9be1a
-msgid "Hong Kong Dollar (&#36;)"
-msgstr "Hong Kong Dollar ($)"
-
-# 
-# 
-# 
-# wpml-name: 2110b2d4ab2fe4ef4180b413cc8947e8
-msgid "Danish Krone"
-msgstr "Dänische Krone"
-
-# 
-# 
-# 
-# wpml-name: ff35c674c7d60fdf234a6c63ad296fb1
-msgid "Czech Koruna (&#75;&#269;)"
-msgstr "Tschechische Krone (Kč)"
-
-# 
-# 
-# 
-# wpml-name: 1accb50a6db0f696251e9096d5e6729e
-msgid "Canadian Dollars (&#36;)"
-msgstr "Canadischer Dollar ($)"
-
-# 
-# 
-# 
-# wpml-name: 282076105aabd6d9d66ddd0989187f36
-msgid "Brazilian Real (R&#36;)"
-msgstr "Brasilianischer Real (R$)"
-
-# 
-# 
-# 
-# wpml-name: b102a15cc0323fdec245d59b0d70bb78
-msgid "Australian Dollars (&#36;)"
-msgstr "Australischer Dollar ($)"
-
-# 
-# 
-# 
-# wpml-name: 5f9dc8a88da0da0251d8e712bb2ad08e
-msgid "Pounds Sterling (&pound;)"
-msgstr "Pfund Sterling (£)"
-
-# 
-# 
-# 
-# wpml-name: 1125f0b0518ed009593702d3b8e1945b
-msgid "Euros (&euro;)"
-msgstr "Euros (€)"
-
-# 
-# 
-# 
-# wpml-name: d18be781fadf0823cd434014f3efb6d8
-msgid "US Dollars (&#36;)"
-msgstr "US Dollars ($)"
-
-# 
-# 
-# 
-# wpml-name: bed1e294d65891b2da671fede1666823
-msgid "The currency in which you accept payment."
-msgstr "Die Währung, in der Sie die Zahlung akzeptieren."
-
-# 
-# 
-# 
-# wpml-name: 386c339d37e737a436499d423a77df0c
-msgid "Currency"
-msgstr "Währung"
-
-# 
-# 
-# 
-# wpml-name: 857c575cce924f396181ab303acfbd43
-msgid "REQUIRED ACTIONS"
-msgstr "ERFORDERLICHE MASSNAHMEN"
-
-# 
-# 
-# 
-# wpml-name: 0a9de33e9d3f87cb3162682d0d138936
-msgid "Add the email address associated with your PayPal account above. %1$s %2$s. Your listener URL is %3$s (you will need this when completing PayPal setup)"
-msgstr "Fügen Sie die mit Ihrem PayPal Konto verbunde E-mail Adresse hinzu. %1$s %2$s. Ihre URL %3$s (Sie werden diese Information gebrauchen, um die PayPal Installation abzuschließen)"
-
-# 
-# 
-# 
-# wpml-name: 83c61ee6fd0abc77ab7271b8ab771b9d
-msgid "PayPal Email Address"
-msgstr "PayPal E-mail Adresse"
-
-# 
-# 
-# 
-# wpml-name: 19661162109faf6e50ce5f310355acac
-msgid "Create a price group to add prices to."
-msgstr "Generieren Sie eine Preisgruppe um Preise hinzuzufügen."
-
-# 
-# 
-# 
-# wpml-name: a6a708ee49faac31a7a0c0791bd0c9e1
-msgid "The sizes listed below determine the maximum dimensions in pixels. Price Groups only apply to images."
-msgstr "Die unten aufgeführten Größen zu bestimmen, die maximalen Abmessungen in Pixel. Preisgruppen werden nur auf Bilder angewendet."
-
-# 
-# 
-# 
-# wpml-name: 3601146c4e948c32b6424d2c0a7f0118
-msgid "Price"
-msgstr "Preis"
-
-# 
-# 
-# 
-# wpml-name: ca97dc49c458a4a584d9e7c6c816f942
-msgid "Max height (pixels)"
-msgstr "Maximale Höhe (Pixel)"
-
-# 
-# 
-# 
-# wpml-name: 22f8420ffc34fa31d43ead30ffd4be70
-msgid "Max width (pixels)"
-msgstr "Max Breite (Pixel)"
-
-# 
-# 
-# 
-# wpml-name: e45529f1f206372b89118844fe65dbcc
-msgid "Name (shown to buyer, so be descriptive)"
-msgstr "Name (wird dem Käufer angezeigt - gute Beschreibung bitte)"
-
-# 
-# 
-# 
-# wpml-name: b621bad73c3b806708abe543fd1d0fce
-msgid "Enter price group name here"
-msgstr "Geben Sie den Namen der Preisgruppe an"
-
-# 
-# 
-# 
-# wpml-name: d455ac76c84d7014d0b57711bfbdf09c
-msgid "Create Price Group"
-msgstr "Kreieren Sie eine Preisgruppe"
-
-# 
-# 
-# 
-# wpml-name: c833e197ead7e72e95fba26bc016ff1c
-msgid "Image Price Groups"
-msgstr "Preisgruppen Bilder"
-
-# 
-# 
-# 
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+
+#: sell-media-access-control/sell-media-access-control.php:98
+msgid "Free Access Control"
+msgstr ""
+
+#
+#
+#
 # wpml-name: 6adf97f83acf6453d4a6a4b1070f3754
+#: sell-media-access-control/sell-media-access-control.php:100
+#: sell-media-add-bulk/sell-media-add-bulk.php:151
+#: sell-media-add-bulk/sell-media-add-bulk.php:161
+#: sell-media-add-bulk/sell-media-add-bulk.php:169
+#: sell-media-free-downloads/sell-media-free-downloads.php:127
+#: sell-media-mailchimp/sell-media-mailchimp.php:42
+#: sell-media/inc/admin-items.php:121
+#: sell-media/inc/settings/library/helpers.php:267
 msgid "None"
 msgstr "Keiner"
 
-# 
-# 
-# 
-# wpml-name: a0ff944e09a5b85a906163a71d1b7d23
-msgid "Default Image Price Group"
-msgstr "Standard Preisgruppe für Bilder"
-
-# 
-# 
-# 
-# wpml-name: 80b42b5f0ed3f25fa744391cd6202281
-msgid "Select 'Yes' to hide the original price above and rely solely on Price Groups (See below. Price Groups can only be used when selling images). Select 'No' if you're selling single file downloads or if you want to list the original price for each product. You can override this setting on a per-item basis."
-msgstr "Wählen Sie \"Ja\", um den Ausgangspreis oben zu verstecken und verlassen sich ausschließlich auf Preisgruppen (Siehe unten. Preisgruppen können nur beim Verkauf von Bildern verwendet werden). Wählen Sie \"Nein\", wenn Sie einzelne Datei-Downloads verkaufen oder wenn der Ausgangspreis für jedes Produkt angezeigt werden soll. Sie können diese Einstellung auf einer Pro-Einheit Basis überschreiben."
-
-# 
-# 
-# 
-# wpml-name: b4f109ef22421a8451e1e41d6fe9b013
-msgid "Hide Original Price"
-msgstr "Ausgangspreis verstecken"
-
-# 
-# 
-# 
-# wpml-name: 0f9abd7edf96802d83d364560448196a
-msgid "The original price of new items and bulk uploads. You can set unique prices by editing each individual item."
-msgstr "Der Ausgangspreis von neuen Produkten und Bulk-Uploads. Sie können Preise in jedem einzelnen Element festlegen."
-
-# 
-# 
-# 
-# wpml-name: 8bd19c0aa5f1ae664fb70fe04705fd48
-msgid "Original Price"
-msgstr "Ausgangspreis"
-
-# 
-# 
-# 
-# wpml-name: 954a9d43843c0a3f33b3a5df7b8482ce
-msgid "Select the columns to show on the admin page &quot;All Products&quot; page."
-msgstr "Wählen Sie die Spalten aus um auf der Admin-Seite \"Alle Produkte\" anzuzeigen."
-
-# 
-# 
-# 
-# wpml-name: 9ae9d47d6b548369c1e7e5fe3e28c476
-msgid "Show Columns"
-msgstr "Spalten anzeigen"
-
-# 
-# 
-# 
-# wpml-name: 1a37a963844f982f9122492f15ae41a2
-msgid "These &quot;Terms and Conditions&quot; will show up on the checkout page. Users must agree to these terms before completing their purchase."
-msgstr "Diese \"Allgemeinen Geschäftsbedingungen\" erscheinen auf der Zahlungsseite. Benutzer müssen diese akzeptieren bevor Sie ihren Kauf abschließen."
-
-# 
-# 
-# 
-# wpml-name: 97abaa921b2270031573362f57aad4a4
-msgid "Terms and Conditions"
-msgstr "Allgemeine Geschäftsbedingunen"
-
-# 
-# 
-# 
-# wpml-name: f0be2e04b99663d4d7c44d1e061faede
-msgid "Choose the order of items for the archive pages."
-msgstr "Wählen Sie die Reihenfolge der Elemente für die Archiv-Seiten."
-
-# 
-# 
-# 
-# wpml-name: 801322095c363689f7620e0147e3fd14
-msgid "Order By"
-msgstr "Reihenfolge nach"
-
-# 
-# 
-# 
-# wpml-name: 977185fd392dd534e03ca4f1182a1779
-msgid "You can change the post type slug to: &quot;photos&quot; or &quot;downloads&quot;. The default slug is &quot;items&quot;."
-msgstr "Sie können den post type slug \"in \"Fotos oder Downloads\" umändern. Der Standard post type slug ist Elemente."
-
-# 
-# 
-# 
-# wpml-name: 32cb24ee0b41a16e86e5c933bbcac67e
-msgid "Post Type Slug"
-msgstr "Post Type Slug"
-
-# 
-# 
-# 
-# wpml-name: 817a15663b0aca1ef5d348c83d4b2895
-msgid "Let your site visitors know you are using the Sell Media plugin?"
-msgstr "Lassen Sie Ihre Kunden wissen, dass Sie Sell Media Plugin verwenden?"
-
-# 
-# 
-# 
-# wpml-name: f3d44020cfb152a6d82e252fcf76b5eb
-msgid "Plugin Credit"
-msgstr "Plugin Namensnennung"
-
-# 
-# 
-# 
-# wpml-name: 9914a0ce04a7b7b6a8e39bec55064b82
-msgid "Light"
-msgstr "Hell"
-
-# 
-# 
-# 
-# wpml-name: a18366b217ebf811ad1886e4f4f865b2
-msgid "Dark"
-msgstr "Dunkel"
-
-# 
-# 
-# 
-# wpml-name: 5ad0e4e70f41e2287d70e3e9484601f0
-msgid "Choose the style of your theme. Sell Media will load styles to match your theme."
-msgstr "Wählen Sie den Stil Ihres Templates. Sell Media wird Stile, die auf Ihr Thema abgestimmt sind laden."
-
-# 
-# 
-# 
-# wpml-name: ae284f900f9d6e21ba69144cfc91e41b
-msgid "Style"
-msgstr "Stil"
-
-# 
-# 
-# 
-# wpml-name: 93cba07454f06a4a960172bbd6e2a435
-msgid "Yes"
-msgstr "Ja"
-
-# 
-# 
-# 
-# wpml-name: bafd7322c6e97d25b6299b5d6fe8920b
-msgid "No"
-msgstr "Nein"
-
-# 
-# 
-# 
-# wpml-name: 4ca56e7240826ebbed4171ddfbff95f7
-msgid "Notify the customer of their site registration."
-msgstr "Benachrichtigen Sie den Kunden über seine Website-Registrierung."
-
-# 
-# 
-# 
-# wpml-name: 1dedc13c821073d6699c9f40c3c0edd6
-msgid "Customer Notification"
-msgstr "Benachrichtigung des Kunden"
-
-# 
-# 
-# 
-# wpml-name: 2cb25345db6b170da7483498d2019e98
-msgid "Select the page that contains the search shortcode <code>[sell_media_searchform]</code>"
-msgstr "Wählen Sie die Seite, die den Such-Shortcode <code> [sell_media_searchform] </ code> enthält ."
-
-# 
-# 
-# 
-# wpml-name: 78effccfd6de5c4d01325ef863c4069c
-msgid "Search Page"
-msgstr "Seite suchen"
-
-# 
-# 
-# 
-# wpml-name: df2259477d41d0f4fb342107714f28d8
-msgid "Select the page that contains the login shortcode <code>[sell_media_login_form]</code>"
-msgstr "Wählen Sie die Seite, die den Login-Shortcode enthält <code> [sell_media_login_form] </ code>"
-
-# 
-# 
-# 
-# wpml-name: 4b57a7151ff7f3951defad2e80eac338
-msgid "Login Page"
-msgstr "Anmeldeseite"
-
-# 
-# 
-# 
-# wpml-name: 1fd0060dcdda1bcb80488863a9c8cbef
-msgid "Select the page that contains the dashboard shortcode<code>[sell_media_download_list]</code>"
-msgstr "Wählen Sie die Seite, die den Systemsteuerungs Shortcode enthält <code> [sell_media_download_list] </ code>"
-
-# 
-# 
-# 
-# wpml-name: 4d6721be382830a59b755f7fd77957ad
-msgid "Dashboard Page"
-msgstr "Systemsteuerungs Seite"
-
-# 
-# 
-# 
-# wpml-name: 0347d67a20b4dd4854cd43f16862b5c5
-msgid "Select the page that contains the thanks shortcode <code>[sell_media_thanks]</code>"
-msgstr "Wählen Sie die Seite, die den Danke Shortcode enthält <code>[sell_media_thanks]</code>"
-
-# 
-# 
-# 
-# wpml-name: 4eb6df4ee2764dd032abb12b7defdff8
-msgid "Thanks Page"
-msgstr "Danke Seite"
-
-# 
-# 
-# 
-# wpml-name: e212eb028c964502870f29f4f9825be1
-msgid "Select the page that contains the checkout shortcode <code>[sell_media_checkout]</code>"
-msgstr "Wählen Sie die Seite, die den Zahlungsseiten Shortcode enthält <code>[sell_media_checkout]</code>"
-
-# 
-# 
-# 
-# wpml-name: 2a2d5fc32f72dd7e5c3464c670fee48d
-msgid "Checkout Page"
-msgstr "Zahlungsseite"
-
-# 
-# 
-# 
-# wpml-name: ad30b63a9b0356c362091008bbab0b56
-msgid "Select Live Mode to accept real transactions. Select Test Mode to accept test transactions (%s)."
-msgstr "Wählen Sie den Live-Modus um tatsächliche Transaktionen zu akzeptieren. Wählen Sie den Testmodus um Testtransaktionen zu akzeptieren (%s)."
-
-# 
-# 
-# 
-# wpml-name: 650be61892bf690026089544abbd9d26
-msgid "Mode"
-msgstr "Modus"
-
-# 
-# 
-# 
-# wpml-name: 74248c725e00bf9fe04df4e35b249a19
-msgid "Misc"
-msgstr "Sonstiges"
-
-# 
-# 
-# 
-# wpml-name: 9070b35e0d637593ce9e85705889aea2
-msgid "Email Settings"
-msgstr "E-Mail-Einstellungen"
-
-# 
-# 
-# 
-# wpml-name: ce8ae9da5b7cd6c3df2929543a9af92d
-msgid "Email"
-msgstr "E-Mail"
-
-# 
-# 
-# 
-# wpml-name: e22ac25b066b201473de7aa700ef5d92
-msgid "Pricing"
-msgstr "Preisgestaltung"
-
-# 
-# 
-# 
-# wpml-name: 0db377921f4ce762c62526131097968f
-msgid "General"
-msgstr "Allgemein"
-
-# 
-# 
-# 
-# wpml-name: 2e9a4f1c673597da7d64426f0fd7cd97
-msgid "Sell Media Below Single Sidebar"
-msgstr "Sell Media unter dem Single Sidebar"
-
-# 
-# 
-# 
-# wpml-name: 49345114b0c6c33d2f2f83aae1a8c9fc
-msgid "Sell Media Below Single Item"
-msgstr "Sell Media unter einzelnem Element"
-
-# 
-# 
-# 
-# wpml-name: 4074869961cfe2ca0f407b024bdb98f4
-msgid "Displays image exif data (shutter speed, aperture, ISO, etc). Only use this on Single Sidebar Widgetized areas."
-msgstr "Zeigt die Bild EXIF-Daten an (Verschlusszeit, Blende, ISO, etc.). Fügen Sie diese nur einem Single Sidebar Widget hinzu."
-
-# 
-# 
-# 
-# wpml-name: 6c9f91a71b7e801e207e5953dd57f8b7
-msgid "Choose from most used State"
-msgstr "Wählen Sie den am häufigsten verwendeten Staat"
-
-# 
-# 
-# 
-# wpml-name: 97c199a365df453c5c27c7fab3baf885
-msgid "Add or remove State"
-msgstr "Region hinzufügen oder entfernen"
-
-# 
-# 
-# 
-# wpml-name: 991f180fd91d548cb8ffa5da22f012be
-msgid "Separate state with commas"
-msgstr "Region mit Kommas trennen"
-
-# 
-# 
-# 
-# wpml-name: 1665ae23115fb00b82589b5e755cb181
-msgid "All State"
-msgstr "Alle Regionen"
-
-# 
-# 
-# 
-# wpml-name: 5798b6df30c266017737d213bb3c1cbe
-msgid "Popular State"
-msgstr "Beliebte Region"
-
-# 
-# 
-# 
-# wpml-name: f7dc3a05160146cbb4558cc298ebd6a0
-msgid "Search State"
-msgstr "Region Suchen"
-
-# 
-# 
-# 
-# wpml-name: 46a2a41cc6e552044816a2d04634545d
-msgid "State"
-msgstr "Region"
-
-# 
-# 
-# 
-# wpml-name: 40ccd821fefe0580dec758e738be638a
-msgid "Choose from most used City"
-msgstr "Wählen Sie die am häufigsten verwendete Stadt"
-
-# 
-# 
-# 
-# wpml-name: 39c50caf353e8eccb2087b20bc19ce8a
-msgid "Add or remove City"
-msgstr "Stadt hinzufügen oder entfernen"
-
-# 
-# 
-# 
-# wpml-name: 8eaa218465d2a96330f1a2d9f2948f89
-msgid "Separate city with commas"
-msgstr "Städte mit Kommas trennen"
-
-# 
-# 
-# 
-# wpml-name: 05754f8c1e8dc68393a8b5c4a06b92d1
-msgid "All City"
-msgstr "Alle Städte"
-
-# 
-# 
-# 
-# wpml-name: 6a37868099b2237869e5ea3d92e62da0
-msgid "Popular City"
-msgstr "Beliebte Stadt"
-
-# 
-# 
-# 
-# wpml-name: 90fd8a29b37d805cf75af6a3809bca87
-msgid "Search City"
-msgstr "Stadt Suchen"
-
-# 
-# 
-# 
-# wpml-name: 57d056ed0984166336b7879c2af3657f
-msgid "City"
-msgstr "Stadt"
-
-# 
-# 
-# 
-# wpml-name: fba24684ed763d26086845badf33ad40
-msgid "Choose from most used Creator"
-msgstr "Wählen Sie den am häufigsten verwendeten Urheber"
-
-# 
-# 
-# 
-# wpml-name: cc41e54182e51ee21cca530eb89df3f3
-msgid "Add or remove Creator"
-msgstr "Urheber hinzufügen oder entfernen"
-
-# 
-# 
-# 
-# wpml-name: 6f3f77dd6fd94073071228da4d1602f5
-msgid "Separate creator with commas"
-msgstr "Urheber mit Komma trennen"
-
-# 
-# 
-# 
-# wpml-name: 7649c1fbd038be27ee2c3c3b2ffcefd1
-msgid "New Creator"
-msgstr "Neuer Urheber"
-
-# 
-# 
-# 
-# wpml-name: 578b6413f0ed4d16d2b111cea13ec0a3
-msgid "Add New Creator"
-msgstr "Neuer Urheber hinzufügen"
-
-# 
-# 
-# 
-# wpml-name: 805ed881e5e64e4e4de466a26e441a32
-msgid "Update Creator"
-msgstr "Urheber aktualisieren"
-
-# 
-# 
-# 
-# wpml-name: 2f40dc80f0f0ab9b59d303c94cbc7ba1
-msgid "Edit Creator"
-msgstr "Urheber bearbeiten"
-
-# 
-# 
-# 
-# wpml-name: 93af047be5036d1c8edc428217a8cfff
-msgid "Parent Creator:"
-msgstr "Haupturheber:"
-
-# 
-# 
-# 
-# wpml-name: 41c031f43aedc3767fbc196a8f51c3c2
-msgid "Parent Creator"
-msgstr "Haupturheber"
-
-# 
-# 
-# 
-# wpml-name: 9ba34e903dd6b8b98cf16005139e4ec2
-msgid "All Creator"
-msgstr "Alle Urheber"
-
-# 
-# 
-# 
-# wpml-name: bf07dbfece30337b3e73dd1891c6e8f8
-msgid "Popular Creator"
-msgstr "Beliebte Urheber"
-
-# 
-# 
-# 
-# wpml-name: f70944a6c86db85d26a6ba276ca0b10c
-msgid "Search Creator"
-msgstr "Suche Urheber"
-
-# 
-# 
-# 
-# wpml-name: ef1d00d8a237a1bbe431e1091f5715fb
-msgid "Creator"
-msgstr "Urheber"
-
-# 
-# 
-# 
-# wpml-name: d6ab9e3e0af68d85bef320ebd22bcb05
-msgid "Creators"
-msgstr "Urheber"
-
-# 
-# 
-# 
-# wpml-name: 07904c901ed2b05068ce2ee550ae8fe2
-msgid "Choose from most used Keywords"
-msgstr "Wählen Sie die meist benutzten Keywords"
-
-# 
-# 
-# 
-# wpml-name: 6d1dfe86220a746dc067f6b677a6eca2
-msgid "Add or remove Keywords"
-msgstr "Keywords hinzufügen oder löschen"
-
-# 
-# 
-# 
-# wpml-name: 83bf7ae1ab8cc2067cd84a96dd78b0b3
-msgid "Separate keywords with commas"
-msgstr "Trennen Sie Keywords mit Kommas"
-
-# 
-# 
-# 
-# wpml-name: fab246233e56a7a6dd25768fda1f95f3
-msgid "New Keyword"
-msgstr "Neues Keyword"
-
-# 
-# 
-# 
-# wpml-name: aae29e01941574decd94a26e211e1e8d
-msgid "Add New Keyword"
-msgstr "Neues Keyword hinzufügen"
-
-# 
-# 
-# 
-# wpml-name: 6fa70c3ed5d4630b3f8058420b01b2ef
-msgid "Update Keyword"
-msgstr "Keyword aktualisieren"
-
-# 
-# 
-# 
-# wpml-name: 8bd48fe4fd93b0cc98ff55f60e16347b
-msgid "Edit Keyword"
-msgstr "Keyword bearbeiten"
-
-# 
-# 
-# 
-# wpml-name: 6eedd1398ec44b48a9e9de7009b6e532
-msgid "Parent Keyword:"
-msgstr "Haupt Keyword:"
-
-# 
-# 
-# 
-# wpml-name: d45b0cf8856a8b9b0ffca82b29e5172f
-msgid "Parent Keyword"
-msgstr "Haupt Keyword"
-
-# 
-# 
-# 
-# wpml-name: d570dbef67776fb573ab91479c99e6b4
-msgid "All Keywords"
-msgstr "Alle Keywörter"
-
-# 
-# 
-# 
-# wpml-name: 66339a55ab88b10ac4995a4c63a16efc
-msgid "Popular Keywords"
-msgstr "Beliebte Keywords"
-
-# 
-# 
-# 
-# wpml-name: 862f2547c95e1e52d05e6f2fddab88c2
-msgid "Search Keywords"
-msgstr "Keywörter suchen"
-
-# 
-# 
-# 
-# wpml-name: 220f3d3750583b9db48568a0b5b9a5f1
-msgid "Keyword"
-msgstr "Keyword"
-
-# 
-# 
-# 
-# wpml-name: 867343577fa1f33caa632a19543bd252
-msgid "Keywords"
-msgstr "Keywords"
-
-# 
-# 
-# 
-# wpml-name: fce220884c257f2baa70fc70570650e4
-msgid "Choose from most used Licenses"
-msgstr "Wählen Sie die beliebtesten Lizenzen"
-
-# 
-# 
-# 
-# wpml-name: ade5ce26156058f53d2301b74f3fff0a
-msgid "Add or remove Licenses"
-msgstr "Lizenzen hinzufügen oder löschen"
-
-# 
-# 
-# 
-# wpml-name: 63a03b75f005365170a9febeca4cf848
-msgid "Separate licenses with commas"
-msgstr "Lizenzen mit Komma trennen"
-
-# 
-# 
-# 
-# wpml-name: 4f2b2667cf764346f0813d7857f565b8
-msgid "New License"
-msgstr "Neue Lizenz"
-
-# 
-# 
-# 
-# wpml-name: 68f1f2d1a357240bbf1079daab6c7a54
-msgid "Add New License"
-msgstr "Neue Lizenz hinzufügen"
-
-# 
-# 
-# 
-# wpml-name: 5f6adb74e72b3f0679f816135e51449d
-msgid "Update License"
-msgstr "Lizenzen aktualisieren"
-
-# 
-# 
-# 
-# wpml-name: 5ee09bcd3fa9d0f21d93200ed817d247
-msgid "Edit License"
-msgstr "Lizenz bearbeiten"
-
-# 
-# 
-# 
-# wpml-name: 5cf711afb899da911d8102b9203c699b
-msgid "Parent License:"
-msgstr "Hauptlizenz:"
-
-# 
-# 
-# 
-# wpml-name: 59014debc3e10938a9b25d444fbb75ce
-msgid "Parent License"
-msgstr "Hauptlizenz"
-
-# 
-# 
-# 
-# wpml-name: f209b5e7a4b09e85094f85a75c9ed04c
-msgid "All Licenses"
-msgstr "Alle Lizenzen"
-
-# 
-# 
-# 
-# wpml-name: 3bc6d06af91850deab3a3fda05a39d16
-msgid "Popular Licenses"
-msgstr "Beliebte Lizenzen"
-
-# 
-# 
-# 
-# wpml-name: 8b7fedc72184d8c146d0f93663b8448a
-msgid "Search Licenses"
-msgstr "Lizenzen suchen"
-
-# 
-# 
-# 
+#: sell-media-access-control/sell-media-access-control.php:101
+msgid "Everyone"
+msgstr ""
+
+#: sell-media-access-control/sell-media-access-control.php:102
+msgid "Clients with a valid password"
+msgstr ""
+
+#: sell-media-access-control/sell-media-access-control.php:104
+msgid ""
+"<strong>Note:</strong> You must password protect this post if \"Clients\" is "
+"selected."
+msgstr ""
+
+#: sell-media-access-control/sell-media-access-control.php:135
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:123
+#: sell-media-free-downloads/sell-media-free-downloads.php:307
+#: sell-media/inc/class-payments.php:446 sell-media/inc/helpers.php:1036
+msgid "Download"
+msgstr ""
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:95
+#: sell-media-add-bulk/sell-media-add-bulk.php:136
+msgid "Add Bulk"
+msgstr ""
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:138
+msgid ""
+"Upload many single products at once that share the same selling preferences. "
+"Please note: Bulk uploading is a server-intensive process. The capability of "
+"this feature is dependent on the capabilities of your server. Upload in "
+"small batches to ensure all items uploaded are published correctly. You can "
+"modify the prices and licenses of each item after uploading."
+msgstr ""
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:139
+#: sell-media/inc/admin-items.php:57
+msgid "Upload"
+msgstr ""
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:140
+msgid "Uploading..."
+msgstr ""
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:149
+msgid "Price Group"
+msgstr ""
+
+#
+#
+#
 # wpml-name: 794df3791a8c800841516007427a2aa3
+#: sell-media-add-bulk/sell-media-add-bulk.php:159
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:295
+#: sell-media/inc/admin-payments.php:132 sell-media/inc/class-payments.php:421
+#: sell-media/inc/class-payments.php:608 sell-media/inc/class-updater.php:374
+#: sell-media/inc/class-updater.php:378 sell-media/inc/fields.php:75
+#: sell-media/inc/install.php:344 sell-media/inc/scripts.php:58
 msgid "License"
 msgstr "Lizenz"
 
-# 
-# 
-# 
-# wpml-name: f6aca2dcfee051b254bbcb878dc70d09
-msgid "Licenses"
-msgstr "Lizenzen"
-
-# 
-# 
-# 
-# wpml-name: a9fc91939a389c7c73e7a3f3cbf411cd
-msgid "Collections"
-msgstr "Kollektionen"
-
-# 
-# 
-# 
-# wpml-name: a6985a0bcbed05e69cff57c8e9fbbb7b
-msgid "Choose from most used Collection"
-msgstr "Wählen Sie aus den beliebtesten Kollektionen"
-
-# 
-# 
-# 
-# wpml-name: 14f19c3f4bf3f73971c7f4a7b99107d1
-msgid "Add or remove Collection"
-msgstr "Kollektion hinzufügen oder löschen"
-
-# 
-# 
-# 
-# wpml-name: ef1c6b1a58db3135e77e20b697a6279a
-msgid "Separate collection with commas"
-msgstr "Kollektionen mit Kommas trennen"
-
-# 
-# 
-# 
-# wpml-name: 2903226e131442c2af1a9a4f1b27c3b4
-msgid "New Collection"
-msgstr "Neue Kollektion"
-
-# 
-# 
-# 
-# wpml-name: 23aec21cd63c3507cb1ee7314e1a8c15
-msgid "Add New Collection"
-msgstr "Neue Kollektion hinzufügen"
-
-# 
-# 
-# 
-# wpml-name: e44071ada48808b0a7a94d244ac0297f
-msgid "Update Collection"
-msgstr "Kollektion aktualisieren"
-
-# 
-# 
-# 
-# wpml-name: bcc40d0f321165f8d57c4185fc0357df
-msgid "Edit Collection"
-msgstr "Kollektion bearbeiten"
-
-# 
-# 
-# 
-# wpml-name: 6d9c1412d6f2369a5408333395248c63
-msgid "Parent Collection:"
-msgstr "Hauptkollektion:"
-
-# 
-# 
-# 
-# wpml-name: 409763217bc05a5bee9bcc1f8ab0ad9c
-msgid "Parent Collection"
-msgstr "Hauptkollektion"
-
-# 
-# 
-# 
-# wpml-name: a1eb7ba55240939aeb3beefc642428a9
-msgid "All Collections"
-msgstr "Alle Kollektionen"
-
-# 
-# 
-# 
-# wpml-name: 5f24a9293f545151d0563be01118b3ab
-msgid "Popular Collection"
-msgstr "Beliebte Kollektion"
-
-# 
-# 
-# 
-# wpml-name: e9b281f5485a5bbd4fccd08bf98dc1fc
-msgid "Search Collection"
-msgstr "Kollektion suchen"
-
-# 
-# 
-# 
+#
+#
+#
 # wpml-name: d15b505cce09406de9f918cb1f8c641c
+#: sell-media-add-bulk/sell-media-add-bulk.php:167
+#: sell-media/inc/class-search.php:460 sell-media/inc/helpers.php:1276
+#: sell-media/inc/install.php:309
 msgid "Collection"
 msgstr "Kollektion"
 
-# 
-# 
-# 
-# wpml-name: 99d17c414456d2e560cdda96d30e5f5e
-msgid "Product Collections"
-msgstr "Produkt Kollektionen"
+#
+#
+#
+# wpml-name: c9cc8cce247e49bae79f15173ce97354
+#: sell-media-add-bulk/sell-media-add-bulk.php:176
+msgid "Save"
+msgstr "Speichern"
 
-# 
-# 
-# 
-# wpml-name: cf29f1ae5c04b1da34914a957ab83d15
-msgid "Choose from most used Price Groups"
-msgstr "Suchen Sie aus den beliebtesten Preisgruppen"
+#: sell-media-commissions/sell-media-commissions.php:49
+msgid "Sell Media Commissions"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: c5634a10de56ed5ece5c4b5c17cc658e
-msgid "Add or remove Price Groups"
-msgstr "Preisgruppen hinzufügen oder löschen"
+#: sell-media-commissions/sell-media-commissions.php:51
+#: sell-media-discount-codes/inc/all-discount-code.php:413
+#: sell-media/inc/class-search.php:462 sell-media/inc/helpers.php:1278
+msgid "All"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 860de330b3fc5b46b45d78f0625e512d
-msgid "Separate Price Groups with commas"
-msgstr "Preisgruppen mit Kommas trennen"
+#: sell-media-commissions/sell-media-commissions.php:51
+#: sell-media/inc/class-payments.php:681
+msgid "Paid"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: b18411e23b5187e569059e176e7a6178
-msgid "New Price Group"
-msgstr "Neue Preisgruppe"
+#: sell-media-commissions/sell-media-commissions.php:51
+msgid "Unpaid"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 3c034e8db1e7b75b6cd55d58b97ae9ee
-msgid "Add New Price Group"
-msgstr "Neue Preisgruppe hinzufügen"
+#: sell-media-commissions/sell-media-commissions.php:54
+msgid "All the unpaid commissions will be changed to paid!"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: a603f77a96a417ed1f9ff9121244390e
-msgid "Update Price Group"
-msgstr "Preisgruppe aktualisieren"
+#: sell-media-commissions/sell-media-commissions.php:54
+msgid "Download Mass Payment File"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 0b9b44662f0bc47cbf9ae5491fcef866
-msgid "Edit Price Group"
-msgstr "Preisgruppe bearbeiten"
+#: sell-media-commissions/sell-media-commissions.php:60
+#: sell-media-commissions/sell-media-commissions.php:70
+msgid "User"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 0aaab79ad5013c4d31817821ddb64050
-msgid "Parent Price Groups:"
-msgstr "Hauptpreisgruppe:"
+#: sell-media-commissions/sell-media-commissions.php:61
+#: sell-media-commissions/sell-media-commissions.php:71
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:840
+#: sell-media/inc/class-payments.php:604
+msgid "Item"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: cc79d0895177828e4f42a333cabd8591
-msgid "Parent Price Groups"
-msgstr "Hauptpreisgruppe"
+#: sell-media-commissions/sell-media-commissions.php:62
+#: sell-media-commissions/sell-media-commissions.php:72
+msgid "Commission %"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 11e98f57ada1731bb3d0d5bfec7d9247
-msgid "All Price Groups"
-msgstr "Alle Preisgruppen"
+#: sell-media-commissions/sell-media-commissions.php:63
+#: sell-media-commissions/sell-media-commissions.php:73
+msgid "Commission Amount"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 1c7c735d8444353d2b525ac12f286ff9
-msgid "Popular Price Groups"
-msgstr "Beliebte Preisgruppen"
+#: sell-media-commissions/sell-media-commissions.php:64
+#: sell-media-commissions/sell-media-commissions.php:74
+msgid "Date"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: ebfb3b1b5106831df66b7f5192f96651
-msgid "Search Price Groups"
-msgstr "Preisgruppen suchen"
+#: sell-media-commissions/sell-media-commissions.php:65
+#: sell-media-commissions/sell-media-commissions.php:75
+#: sell-media-discount-codes/inc/all-discount-code.php:150
+msgid "Status"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 6b1b146deb51129e43feb27908dfc9ab
-msgid "Price Groups"
-msgstr "Preisgruppen"
+#: sell-media-commissions/sell-media-commissions.php:223
+msgid "Default commission rate"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 65a6f516a3ba90a6062cd65536db9b30
-msgid "Parent Payment:"
-msgstr "Haupt Bezahlung:"
+#: sell-media-commissions/sell-media-commissions.php:228
+msgid "Commission recipient"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 9aca03e63a8cfd10319b33c634c4d6fb
-msgid "No payments found in Trash"
-msgstr "Keine Zahlungen im Papierkorb gefunden"
+#: sell-media-commissions/sell-media-commissions.php:239
+#: sell-media-commissions/sell-media-commissions.php:380
+#: sell-media-commissions/sell-media-commissions.php:420
+msgid "Commission rate (%)"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 2eea44863604ec26204ae5b4d55f5ec3
-msgid "No payments found"
-msgstr "Keine Zahlungen gefunden"
+#: sell-media-commissions/sell-media-commissions.php:241
+#: sell-media-commissions/sell-media-commissions.php:381
+#: sell-media-commissions/sell-media-commissions.php:424
+msgid "The percentage of the total cost of the cart for commission."
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 25bd90190d5a2e64263c91be3a4ccac5
-msgid "Search Payments"
-msgstr "Zahlungen suchen"
+#
+#
+#
+# wpml-name: 0984151a18d791282bc25f3f1040a34a
+#: sell-media-commissions/sell-media-commissions.php:415
+#: sell-media/inc/install.php:161 sell-media/inc/install.php:162
+#: sell-media/inc/install.php:165 sell-media/inc/install.php:173
+msgid "Sell Media"
+msgstr "Sell Media"
 
-# 
-# 
-# 
-# wpml-name: fefb44ab22ecb092c9ee3bbbf8c091f1
-msgid "View Payment"
-msgstr "Zahlungen ansehen"
+#: sell-media-discount-codes/inc/add-discount-code.php:69
+#: sell-media-discount-codes/sell-media-discount-codes.php:97
+msgid "Add New Discount Code"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: e6455d85c8d140b8734bc6a38433684a
-msgid "New Payment"
-msgstr "Neue Zahlung"
+#: sell-media-discount-codes/inc/add-discount-code.php:69
+msgid "Go Back"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: de90e1aab0a041eea8018b96446034b1
-msgid "Edit Payment"
-msgstr "Zahlung bearbeiten"
+#
+#
+#
+# wpml-name: 49ee3087348e8d44e1feda1917443987
+#: sell-media-discount-codes/inc/add-discount-code.php:75
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:584
+#: sell-media/inc/admin-payments.php:74 sell-media/inc/admin-payments.php:120
+#: sell-media/inc/scripts.php:56
+msgid "Name"
+msgstr "Name"
 
-# 
-# 
-# 
-# wpml-name: 4ea38e3d48a5e2feae76c1e347aafda5
-msgid "Add New Payment"
-msgstr "Neue Zahlung hinzufügen"
+#: sell-media-discount-codes/inc/add-discount-code.php:79
+msgid "The name of this discount code"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: c453a4b8e8d98e82f35b67f433e3b4da
-msgid "Payment"
-msgstr "Zahlung"
+#: sell-media-discount-codes/inc/add-discount-code.php:84
+msgid "Code"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: daef64964ee3b9b904f5d467586e217f
-msgid "Payments"
-msgstr "Zahlungen"
+#: sell-media-discount-codes/inc/add-discount-code.php:88
+msgid "Enter a code for this discount, such as 10PERCENT"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: d9f747157e5994ccc5e623afa1bc5340
-msgid "Parent Product:"
-msgstr "Hauptprodukt"
+#: sell-media-discount-codes/inc/add-discount-code.php:93
+#: sell-media/inc/admin-payments.php:126
+msgid "Type"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 21202fcf3a96cee2f10c67a1f14e08b5
-msgid "No products found in Trash"
-msgstr "Keine Produkte im Papierkorb gefunden"
+#: sell-media-discount-codes/inc/add-discount-code.php:97
+msgid "Percentage"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: b9af8635591dc44009ccd8e5389722ec
-msgid "No products found"
-msgstr "Keine Produkte gefunden"
+#: sell-media-discount-codes/inc/add-discount-code.php:98
+msgid "Flat amount"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 489cc11935236b2fcc374dea5f50f90f
-msgid "Search Products"
-msgstr "Produkte suchen"
+#: sell-media-discount-codes/inc/add-discount-code.php:100
+msgid "The kind of discount to apply for this discount."
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 727b632b862ad3c1a414540f699f0aa7
-msgid "View Product"
-msgstr "Produkte ansehen"
+#: sell-media-discount-codes/inc/add-discount-code.php:105
+#: sell-media-discount-codes/inc/all-discount-code.php:146
+msgid "Amount"
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 39c5dfa61825808dbc015048fb878457
-msgid "New Product"
-msgstr "Neues Produkt"
+#: sell-media-discount-codes/inc/add-discount-code.php:109
+msgid "The amount of this discount code."
+msgstr ""
 
-# 
-# 
-# 
-# wpml-name: 7177e0adfaf14e129e27bd06b55a10e6
-msgid "Edit Product"
-msgstr "Produkt bearbeiten"
+#: sell-media-discount-codes/inc/add-discount-code.php:114
+msgid "Start date"
+msgstr ""
 
-# 
-# 
-# 
+#: sell-media-discount-codes/inc/add-discount-code.php:118
+msgid ""
+"Enter the start date for this discount code in the format of mm/dd/yyyy. For "
+"no start date, leave blank."
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:123
+msgid "Expiration date"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:127
+msgid ""
+"Enter the expiration date for this discount code in the format of mm/dd/"
+"yyyy. For no expiration, leave blank."
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:132
+msgid "Max Uses"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:136
+msgid ""
+"The maximum number of times this discount can be used. Leave blank for "
+"unlimited."
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:144
+msgid "Update Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:145
+#: sell-media-discount-codes/inc/all-discount-code.php:104
+#: sell-media-discount-codes/inc/all-discount-code.php:209
+msgid "Delete"
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:147
+msgid "Add Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:38
+#: sell-media-discount-codes/sell-media-discount-codes.php:95
+#: sell-media-discount-codes/sell-media-discount-codes.php:201
+msgid "Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:39
+#: sell-media-discount-codes/sell-media-discount-codes.php:94
+#: sell-media-discount-codes/sell-media-discount-codes.php:105
+#: sell-media-discount-codes/sell-media-discount-codes.php:129
+#: sell-media-discount-codes/sell-media-discount-codes.php:164
+msgid "Discount Codes"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:96
+msgid "Edit"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:99
+msgid "Deactive"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:101
+msgid "Activate"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:144
+msgid "Title"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:145
+msgid "Coupon"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:147
+msgid "Uses"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:148
+msgid "Start Date"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:149
+msgid "End Date"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:374
+msgid "Unlimited"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:414
+#: sell-media-discount-codes/sell-media-discount-codes.php:389
+msgid "Active"
+msgstr ""
+
+#: sell-media-discount-codes/inc/all-discount-code.php:415
+#: sell-media-discount-codes/sell-media-discount-codes.php:396
+msgid "Inactive"
+msgstr ""
+
+#
+#
+#
 # wpml-name: de9ced9bf5e9829de4a93ad8c9d7a170
+#: sell-media-discount-codes/sell-media-discount-codes.php:96
+#: sell-media-discount-codes/sell-media-discount-codes.php:167
+#: sell-media/inc/install.php:164 sell-media/inc/install.php:206
 msgid "Add New"
 msgstr "Neu hinzufügen"
 
-# 
-# 
-# 
+#: sell-media-discount-codes/sell-media-discount-codes.php:98
+msgid "Edit Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:99
+msgid "New Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:100
+msgid "View Discount Code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:101
+msgid "Search Discount Codes"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:102
+msgid "No discount found"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:103
+msgid "No discount codes found in Trash"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:104
+msgid "Parent Discount Code:"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:206
+msgid "Apply"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:207
+msgid "Verifying..."
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:213
+#: sell-media-discount-codes/sell-media-discount-codes.php:418
+msgid "Discount"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:246
+msgid "Invalid code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:278
+msgid "Expired code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:290
+msgid "Valid code"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:366
+msgid "Discount Code updated successfully!"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:368
+msgid "Discount Code added successfully!"
+msgstr ""
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:370
+msgid "Discount Code deleted successfully!"
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:83
+msgid "Download Lightbox Passcode"
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:84
+msgid "Password to enable downloading of all images in lightbox."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:105
+msgid "Download All"
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:122
+msgid "Enter password"
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:160
+msgid "Sorry, your nonce did not verify."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:167
+msgid "Incorrect password."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:171
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:177
+msgid "No items found on lightbox."
+msgstr ""
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:190
+msgid "Error: Failed to create zip file."
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:36
+msgid "First Name:"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:42
+msgid "Last Name:"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:48
+msgid "Email Address:"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:61
+msgid "Request could not be processed due to some error."
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:69
+msgid "Download Now"
+msgstr ""
+
+#: sell-media-free-downloads/cart.php:73
+msgid ""
+"You are already registered. You can download all free items by visiting our "
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:51
+#: sell-media-mailchimp/sell-media-mailchimp.php:149
+msgid "API Key"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:52
+#: sell-media-mailchimp/sell-media-mailchimp.php:150
+msgid "Insert your MailChimp API Key."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:63
+#: sell-media-mailchimp/sell-media-mailchimp.php:161
+msgid "Newsletter List"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:64
+#: sell-media-mailchimp/sell-media-mailchimp.php:162
+msgid "Choose the list to sign users up to."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:86
+msgid "Free Downloads - Mailchimp Settings"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:201
+#: sell-media-free-downloads/sell-media-free-downloads.php:216
+msgid "Free Download"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:203
+msgid ""
+"Offer as free download in exchange for newsletter signup. All pricing will "
+"be ignored."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:218
+msgid ""
+"Check to allow visitors to download this for free in exchange for signing up "
+"for your newsletter"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:280
+#: sell-media-mailchimp/sell-media-mailchimp.php:113
+msgid "MailChimp"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:347
+msgid "Hi "
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:407
+msgid "Free Downloads"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:456
+#: sell-media/inc/helpers.php:1102
+msgid "Nice try, but this file is not a free download."
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:456
+#: sell-media-free-downloads/sell-media-free-downloads.php:461
+#: sell-media/inc/class-downloads.php:91 sell-media/inc/helpers.php:1102
+msgid "Purchase Verification Failed"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:461
+msgid "Sorry, but the download url you provided is not valid."
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:120
+#: sell-media/inc/template-tags.php:289
+msgid "View Gallery"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:227
+#: sell-media/inc/lightbox.php:30
+msgid "Go to lightbox"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:227
+#: sell-media/inc/lightbox.php:30
+msgid "lightbox"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:233
+#: sell-media/inc/lightbox.php:36
+#, php-format
+msgid "This item was saved to your %1$s."
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:236
+#: sell-media/inc/template-tags.php:665
+msgid "Details"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:238
+#: sell-media/inc/template-tags.php:668
+msgid "File ID"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:239
+#: sell-media/inc/template-tags.php:670
+msgid "File Type"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:240
+#: sell-media/inc/template-tags.php:671
+msgid "File Size"
+msgstr ""
+
+#
+#
+#
+# wpml-name: a9fc91939a389c7c73e7a3f3cbf411cd
+#: sell-media-light-gallery/sell-media-light-gallery.php:241
+#: sell-media/inc/install.php:322 sell-media/inc/shortcodes.php:589
+#: sell-media/inc/template-tags.php:676
+msgid "Collections"
+msgstr "Kollektionen"
+
+#
+#
+#
+# wpml-name: 867343577fa1f33caa632a19543bd252
+#: sell-media-light-gallery/sell-media-light-gallery.php:242
+#: sell-media/inc/install.php:378 sell-media/inc/install.php:392
+#: sell-media/inc/shortcodes.php:594 sell-media/inc/template-tags.php:679
+#: sell-media/inc/widgets/sell-media-keywords.php:49
+msgid "Keywords"
+msgstr "Keywords"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:274
+msgid "Popup type"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:275
+msgid "Choose the type of popup to view product detail."
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:284
+msgid "Light gallery"
+msgstr ""
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:288
+msgid "Quick view"
+msgstr ""
+
+#: sell-media-mailchimp/sell-media-mailchimp.php:98
+msgid "Sign up for our newsletter"
+msgstr ""
+
+#: sell-media-mailchimp/sell-media-mailchimp.php:183
+msgid "MailChimp Settings"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:86
+msgid "Manual Purchase"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:88
+msgid ""
+"Please fill out the fields below to arrange a manual purchase with the "
+"seller."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:89
+msgid "Your email"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:90
+msgid "Your name"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:91
+msgid "Your message"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:91
+msgid "Type your message to the seller here and click Checkout Now."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:112
+msgid "Please enter your email address."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:116
+msgid "Please enter your full name."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:143
+msgid ""
+"Thank you for your interest. We have received your purchase information. We "
+"will contact you soon."
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:163
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:203
+msgid "New sale notification (Manual)"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:168
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:208
+#: sell-media/inc/class-payments.php:728
+msgid "Customer"
+msgstr ""
+
+#
+#
+#
+# wpml-name: ce8ae9da5b7cd6c3df2929543a9af92d
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:171
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:211
+#: sell-media/inc/admin-payments.php:75 sell-media/inc/class-payments.php:730
+#: sell-media/inc/settings.php:70
+msgid "Email"
+msgstr "E-Mail"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:175
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:215
+msgid "Note"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:293
+#: sell-media/inc/admin-payments.php:116 sell-media/inc/class-payments.php:419
+msgid "Product"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 6f6cb72d544962fa333e2e34ce64f719
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:294
+#: sell-media/inc/admin-payments.php:129 sell-media/inc/class-payments.php:420
+#: sell-media/inc/class-payments.php:605 sell-media/inc/fields.php:45
+#: sell-media/inc/scripts.php:57
+msgid "Size"
+msgstr "Größe"
+
+#
+#
+#
+# wpml-name: 03ab340b3f99e03cff9e84314ead38c0
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:296
+#: sell-media/inc/admin-payments.php:135 sell-media/inc/class-payments.php:422
+#: sell-media/inc/scripts.php:60
+msgid "Qty"
+msgstr "Anz."
+
+#
+#
+#
+# wpml-name: 2194aaec8cc7086ab0e93f74547e5f53
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:297
+#: sell-media/inc/admin-payments.php:138 sell-media/inc/class-payments.php:423
+#: sell-media/inc/scripts.php:61 sell-media/inc/shortcodes.php:249
+msgid "Subtotal"
+msgstr "Zwischensumme"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:383
+#: sell-media/inc/class-payments.php:492
+msgid "TAX"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:388
+#: sell-media/inc/class-payments.php:495
+msgid "SHIPPING"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:392
+#: sell-media/inc/class-payments.php:489
+msgid "DISCOUNT"
+msgstr ""
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:397
+#: sell-media/inc/class-payments.php:498
+msgid "TOTAL"
+msgstr ""
+
+#: sell-media-model-release/sell-media-model-release.php:98
+msgid "Model release"
+msgstr ""
+
+#: sell-media-model-release/sell-media-model-release.php:99
+msgid "Choose"
+msgstr ""
+
+#: sell-media-model-release/sell-media-model-release.php:101
+msgid "Remove model release"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 1063e38cb53d94d386f21227fcd84717
+#: sell-media-model-release/sell-media-model-release.php:101
+#: sell-media/inc/settings/settings.php:488
+#: sell-media/inc/settings/settings.php:583
+msgid "Remove"
+msgstr "Löschen"
+
+#: sell-media-model-release/sell-media-model-release.php:160
+msgid "Model Release"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 93cba07454f06a4a960172bbd6e2a435
+#: sell-media-model-release/sell-media-model-release.php:160
+#: sell-media/inc/settings.php:213 sell-media/inc/settings.php:334
+#: sell-media/inc/settings.php:355 sell-media/inc/settings.php:376
+#: sell-media/inc/settings.php:493
+msgid "Yes"
+msgstr "Ja"
+
+#: sell-media-reprints/admin-tags.php:27
+msgid "Price group for"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:27 sell-media-reprints/admin-tags.php:58
+msgid "prints"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:30
+msgid "Select a price group"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:43 sell-media/inc/admin-items.php:134
+#, php-format
+msgid "<a href=\"%1$s\">Create new price group</a>"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:55
+msgid "Selling preferences"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:57
+msgid "Sell both"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:58
+msgid "Sell"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:59
+msgid "Sell downloads"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:67
+msgid "Limited edition"
+msgstr ""
+
+#: sell-media-reprints/admin-tags.php:77
+msgid "Quantity limit"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:61
+msgid "Download size"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:71
+msgid "Download license"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:117
+msgid ""
+"If you sold a print, be sure to print and ship the order to the address "
+"listed above. If the order contained downloadable products, no further "
+"action is required. Here are the payment details:"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:128
+msgid "Download or Print"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:159
+msgid "Ship to:"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:176
+msgid ""
+"If you purchased print products, they will be shipped to the address you "
+"supplied during checkout. This address is shown below."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:199
+msgid "Selling Options"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:209
+msgid "Only sell print products"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:216
+msgid "Shipping Rates"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:217
+msgid ""
+"You have three options for calculating shipping rates: Flat Rate, Quantity "
+"Rate, Total Rate. Use Flat Rate to set a basic flat rate shipping to all "
+"cart orders containing prints. Use Quantity Rate to charge a flat rate per "
+"print sold (i.e. 3 prints that cost $10 each with quantity rate shipping of "
+"$1 per print would cost a total of $33). Use Total Rate you want a shipping "
+"rate that is a percentage of the total cost of the cart."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:226
+msgid "Flat Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:230
+msgid "Quantity Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:234
+msgid "Total Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:241
+msgid "Shipping - Flat Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:242
+msgid ""
+"The flat rate shipping price applied once to all orders (i.e. 1, 5, 10)."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:253
+msgid "Shipping - Quantity Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:254
+msgid ""
+"The shipping price applied individually to all print products in the cart (i."
+"e. 1, 5, 10)."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:265
+msgid "Shipping - Total Rate"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:266
+msgid ""
+"The percentage of the total cost of the cart for shipping (use .05 for 5 "
+"percent, .10 for 10 percent, etc)"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:277
+msgid "Unit of Measurement"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:278
+msgid "The unit of measurement in which print products are sold."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:287
+msgid "Centimeters (cm)"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:291
+msgid "Inches (in)"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:298
+msgid "Select Default Price Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:309
+msgid "Default Quantity"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 6b1b146deb51129e43feb27908dfc9ab
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:320
+#: sell-media/inc/install.php:273 sell-media/inc/install.php:274
+#: sell-media/inc/install.php:287
+msgid "Price Groups"
+msgstr "Preisgruppen"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:345
+msgid "Print Products"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:471
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:485
+msgid "Print Price Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:472
+msgid "Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:473
+msgid "Search Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:474
+msgid "Popular Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:475
+msgid "All Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:476
+msgid "Parent Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:477
+msgid "Parent Print  Group:"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:478
+msgid "Edit Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:479
+msgid "Update Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:480
+msgid "Add New Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:481
+msgid "New Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:482
+msgid "Separate Print Group with commas"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:483
+msgid "Add or remove Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:484
+msgid "Choose from most used Print Group"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:543
+msgid "Add print sizes and prices below."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:557
+msgid "Create a price group, then define specific print sizes and prices."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:648
+msgid "Max Width"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:652
+msgid "Max Height"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 3601146c4e948c32b6424d2c0a7f0118
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:657
+#: sell-media/inc/admin-items.php:110 sell-media/inc/admin-price-groups.php:258
+#: sell-media/inc/admin-price-groups.php:305
+#: sell-media/inc/class-payments.php:606 sell-media/inc/scripts.php:59
+msgid "Price"
+msgstr "Preis"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:774
+msgid "Limit exceeded."
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:842
+msgid "has limit upto"
+msgstr ""
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:850
+msgid "Goto checkout page to fix it."
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:59
+msgid "Buy a"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:59
+msgid "print"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:62
+msgid "Buy a download"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:71
+msgid "Print"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:71
+msgid "size"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:71
+msgid "All sizes are listed in "
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:71
+msgid "(?)"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:73 sell-media/inc/fields.php:47
+msgid "Select a size"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:77
+msgid "This item is not currently assigned a price group."
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:132
+msgid "Limited Edition: "
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:136
+#, php-format
+msgid "%d remaining"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:141
+msgid "Sold out."
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:162
+msgid "Amazon S3 Access Key"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:163
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Access Key</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:174
+msgid "Amazon S3 Secret Key"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:175
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Secret Key</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:186
+msgid "Amazon S3 Bucket Name"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:188
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Bucket Name</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:200
+msgid "Amazon S3 Host"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:201
+msgid ""
+"Enter Amazon S3 host. Defaults to s3.amazonaws.com. Don't change this unless "
+"you know what you're doing"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:212
+msgid "Deactivate S3 plugin"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:213
+msgid "We assume that you have safely copied all files from S3 to your server."
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:223
+msgid "Check to show deactivate option."
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:236
+msgid "Deactivate"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:251
+msgid "Amazon S3"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:351
+#, php-format
+msgid "Error uploading %s to S3: %s"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:541
+msgid "There was an error attempting to access the file system"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:77
+#: sell-media/inc/template-tags.php:623
+msgid "Buy"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:78
+msgid "items"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:145
+msgid "Stripe Test Secret Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:146
+#: sell-media-stripe/sell-media-stripe.php:158
+#: sell-media-stripe/sell-media-stripe.php:170
+#: sell-media-stripe/sell-media-stripe.php:182
+msgid " "
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:157
+msgid "Stripe Test Publishable Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:169
+msgid "Stripe Live Secret Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:181
+msgid "Stripe Live Publishable Key"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:203
+msgid "Stripe Settings"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:205
+msgid ""
+"You must add your <a href=\"https://manage.stripe.com/account/apikeys\" "
+"target=\"_blank\">Stripe API Keys</a> to process transactions."
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:221
+msgid "Credit Card"
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:598
+msgid "Stripe not supported, please enable <code>cURL</code>."
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:603
+#, php-format
+msgid ""
+"Your currency, %s is not supported. Please configure your %s account to use "
+"the correct currency."
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:610
+#, php-format
+msgid "Please update your Sell Media %s to contain your Stripe keys"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:51
+msgid ""
+" requires the Sell Media plugin to work properly. Please activate Sell Media."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:144
+msgid "Watermark Image"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:145
+msgid ""
+"For best results, use a transparent PNG cropped to approximately 200 pixels "
+"wide."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:155
+msgid "Watermark Everything"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:165
+msgid ""
+"Watermarks are applied to all Sell Media images when you activate this "
+"extension. You can optionally watermark all images on your site, including "
+"those appearing in Posts and Pages, by checking this box."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:172
+msgid "Watermark Opacity"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:173
+msgid "The opacity of your watermark."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:225
+msgid "Watermark Position"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:226
+msgid "The position of your watermak."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:270
+msgid "Watermark Margin"
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:271
+msgid "The distance in pixels of your watermark from the edge of the image."
+msgstr ""
+
+#: sell-media-watermark/sell-media-watermark.php:294
+msgid "Watermark"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:58
+msgid ""
+"Upload one file to create a single product or many files to create a gallery."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:59
+msgid "Importing Options"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:63
+msgid "Importing"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:64
+#, php-format
+msgid ""
+"Quickly import folders of images using this option. Use FTP or <a href=\"%1$s"
+"\" target=\"_blank\">export directly from Lightroom</a> and place new "
+"folders into the server path listed below. Then, select the folder below to "
+"import into WordPress."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:65
+msgid "Server Path"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:67
+msgid "Select a folder"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:74
+msgid "Add more files"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:74
+msgid "Importing files..."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:74
+msgid "Add files"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:80
+msgid "Packages"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:81
+msgid ""
+"This feature was retired in version 2.0 because product galleries can now be "
+"created. Your old package file will still be available for sale and is "
+"listed below."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:113
+msgid "The price of each original, high-resolution file."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:118
+msgid "Price group for downloads"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:150
+msgid "Views"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:151
+msgid "Sales"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:329
+#, php-format
+msgid "Sorry, %1$s could't be added."
+msgstr ""
+
+#: sell-media/inc/admin-items.php:452
+msgid "No price set"
+msgstr ""
+
+#: sell-media/inc/admin-items.php:488
+msgid "No sales so far."
+msgstr ""
+
+#: sell-media/inc/admin-menu.php:24
+msgid "Reports"
+msgstr ""
+
+#: sell-media/inc/admin-menu.php:25
+msgid "Upgrades"
+msgstr ""
+
+#: sell-media/inc/admin-menu.php:27 sell-media/inc/admin-system-info.php:12
+#: sell-media/inc/settings/settings.php:631
+msgid "System Info"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:21
+msgid "Purchase Details"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:28
+msgid "Additional Purchase Details"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:42
+msgid "Payment Gateway Details"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 96b0141273eabab320119c467cdcaf17
+#: sell-media/inc/admin-payments.php:76 sell-media/inc/fields.php:87
+#: sell-media/inc/shortcodes.php:263
+msgid "Total"
+msgstr "Total"
+
+#: sell-media/inc/admin-payments.php:103
+msgid "This is the additional payment data stored with the purchase."
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:123
+msgid "ID"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:148
+msgid "This payment has no additional payment details"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:171
+#: sell-media/inc/gateways/class-sm-gateway-paypal-request.php:30
+#: sell-media/inc/settings/library/helpers.php:291
+msgid "PayPal"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:174
+msgid "Stripe"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:176
+msgid "This is the data that was sent from "
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:176
+msgid " at time of purchase. Use this for debugging, if needed."
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:197
+msgid "Earnings Report"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:199
+msgid "Total Earnings To Date:"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:200
+msgid ""
+"Below is a breakdown of earnings per day, month and year. Want to increase "
+"your sales?"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:200
+msgid "Download new Sell Media extensions"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:213
+msgid "Day"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:214 sell-media/inc/admin-payments.php:254
+#: sell-media/inc/admin-payments.php:287
+msgid "Earnings"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:234
+msgid "Earnings per day"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:253
+msgid "Month"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:267
+msgid "Earnings per month"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:286
+msgid "Year"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:303
+msgid "Earnings per year"
+msgstr ""
+
+#
+#
+#
+# wpml-name: d455ac76c84d7014d0b57711bfbdf09c
+#: sell-media/inc/admin-price-groups.php:214
+msgid "Create Price Group"
+msgstr "Kreieren Sie eine Preisgruppe"
+
+#: sell-media/inc/admin-price-groups.php:219
+msgid "Are you sure you want to delete the price group:"
+msgstr ""
+
+#: sell-media/inc/admin-price-groups.php:219
+msgid "This will delete the price group and ALL its prices associated with it."
+msgstr ""
+
+#: sell-media/inc/admin-price-groups.php:220
+msgid "Delete Group"
+msgstr ""
+
+#
+#
+#
+# wpml-name: b621bad73c3b806708abe543fd1d0fce
+#: sell-media/inc/admin-price-groups.php:224
+msgid "Enter price group name here"
+msgstr "Geben Sie den Namen der Preisgruppe an"
+
+#
+#
+#
+# wpml-name: e45529f1f206372b89118844fe65dbcc
+#: sell-media/inc/admin-price-groups.php:240
+#: sell-media/inc/admin-price-groups.php:292
+msgid "Name (shown to buyer, so be descriptive)"
+msgstr "Name (wird dem Käufer angezeigt - gute Beschreibung bitte)"
+
+#
+#
+#
+# wpml-name: 22f8420ffc34fa31d43ead30ffd4be70
+#: sell-media/inc/admin-price-groups.php:248
+#: sell-media/inc/admin-price-groups.php:297
+msgid "Max width (pixels)"
+msgstr "Max Breite (Pixel)"
+
+#: sell-media/inc/admin-price-groups.php:253
+msgid "Max Height (pixels)"
+msgstr ""
+
+#: sell-media/inc/admin-price-groups.php:264
+msgid "Are you sure you want to delete the price"
+msgstr ""
+
+#
+#
+#
+# wpml-name: ca97dc49c458a4a584d9e7c6c816f942
+#: sell-media/inc/admin-price-groups.php:301
+msgid "Max height (pixels)"
+msgstr "Maximale Höhe (Pixel)"
+
+#
+#
+#
+# wpml-name: a6a708ee49faac31a7a0c0791bd0c9e1
+#: sell-media/inc/admin-price-groups.php:310
+msgid ""
+"The sizes listed below determine the maximum dimensions in pixels. Price "
+"Groups only apply to images."
+msgstr ""
+"Die unten aufgeführten Größen zu bestimmen, die maximalen Abmessungen in "
+"Pixel. Preisgruppen werden nur auf Bilder angewendet."
+
+#
+#
+#
+# wpml-name: 19661162109faf6e50ce5f310355acac
+#: sell-media/inc/admin-price-groups.php:311
+msgid "Create a price group to add prices to."
+msgstr "Generieren Sie eine Preisgruppe um Preise hinzuzufügen."
+
+#: sell-media/inc/admin-price-groups.php:374
+msgid "Add New Price"
+msgstr ""
+
+#: sell-media/inc/admin-price-groups.php:382
+msgid "Save Price Group"
+msgstr ""
+
+#: sell-media/inc/ajax.php:213
+msgid "Load more"
+msgstr ""
+
+#: sell-media/inc/ajax.php:220 sell-media/inc/helpers.php:1410
+#: sell-media/themes/archive.php:130
+msgid "Nothing Found"
+msgstr ""
+
+#: sell-media/inc/ajax.php:221 sell-media/inc/helpers.php:1411
+#: sell-media/themes/archive.php:131
+msgid "Sorry, but we couldn't find anything that matches your search query."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:49
+#, php-format
+msgid "Your site is currently in <a href=\"%1$s\">test mode</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:59
+#, php-format
+msgid ""
+"Please create a checkout page using the <code>[sell_media_checkout]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:69
+#, php-format
+msgid ""
+"Please create a thanks page using the <code>[sell_media_thanks]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:79
+#, php-format
+msgid ""
+"Please set a PayPal email in your <a href=\"%1$s\">payment settings</a>."
+msgstr ""
+
+#: sell-media/inc/class-admin-notices.php:89
+#, php-format
+msgid ""
+"Important updates are now available for %1$s. <a href=\"%2$s\" target="
+"\"_blank\">Learn more</a>."
+msgstr ""
+
+#: sell-media/inc/class-customer.php:72
+msgid "Account registration at"
+msgstr ""
+
+#: sell-media/inc/class-customer.php:73
+msgid "Welcome"
+msgstr ""
+
+#: sell-media/inc/class-customer.php:74
+msgid "Here are your login credentials"
+msgstr ""
+
+#: sell-media/inc/class-customer.php:75 sell-media/inc/shortcodes.php:549
+msgid "Username"
+msgstr ""
+
+#: sell-media/inc/class-customer.php:76
+msgid ""
+"Create a password if you want to login to our dashboard to download any of "
+"your purchases in the future."
+msgstr ""
+
+#: sell-media/inc/class-customer.php:78
+msgid "Any purchases your make will be available on your account dashboard."
+msgstr ""
+
+#: sell-media/inc/class-customer.php:80
+msgid "Thanks"
+msgstr ""
+
+#: sell-media/inc/class-downloads.php:47
+#, php-format
+msgid "The original high resolution file doesn't exist here: %1$s"
+msgstr ""
+
+#: sell-media/inc/class-downloads.php:91
+msgid "You do not have permission to download this file"
+msgstr ""
+
+#: sell-media/inc/class-payments.php:229
+msgid "sales totaling"
+msgstr ""
+
+#: sell-media/inc/class-payments.php:607
+msgid "Quantity"
+msgstr ""
+
+#: sell-media/inc/class-payments.php:726
+msgid "New sale notification"
+msgstr ""
+
+#: sell-media/inc/class-payments.php:729
+msgid "Address"
+msgstr ""
+
+#: sell-media/inc/class-products.php:70
+msgid "Original"
+msgstr ""
+
+#: sell-media/inc/class-products.php:71
+msgid "The original high resolution source file"
+msgstr ""
+
+#: sell-media/inc/class-search.php:438 sell-media/inc/helpers.php:1238
+#, php-format
+msgid "Search for %1$s"
+msgstr ""
+
+#: sell-media/inc/class-search.php:444 sell-media/inc/helpers.php:1248
+#: sell-media/inc/widgets/sell-media-search.php:68
+msgid "Search"
+msgstr ""
+
+#: sell-media/inc/class-search.php:454 sell-media/inc/helpers.php:1270
+msgid "Exact phrase match (?)"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:150 sell-media/inc/class-updater.php:222
+msgid "Sell Media License"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:176
+msgid "Add Your License"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:183 sell-media/inc/class-updater.php:390
+msgid "License E-mail Address"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:191 sell-media/inc/class-updater.php:402
+msgid "License Key"
+msgstr ""
+
+#: sell-media/inc/class-updater.php:441
+#, php-format
+msgid ""
+"Your <a href=\"%1$s\">license key</a> for Graph Paper Press plugins has "
+"expired or is invalid. Please <a href=\"%2$s\" target=\"_blank\">renew your "
+"license</a> to re-enable automatic updates."
+msgstr ""
+
+#: sell-media/inc/class-updater.php:807
+#, php-format
+msgid ""
+"<a href=\"%s\" target=\"_blank\">Get your license keys here</a> and paste "
+"them below to enable automatic updates."
+msgstr ""
+
+#: sell-media/inc/class-updater.php:813
+#, php-format
+msgid ""
+"Your license key for Graph Paper Press plugins has expired or is invalid. "
+"Please <a href=\"%s\" target=\"_blank\">renew your license</a> to re-enable "
+"automatic updates."
+msgstr ""
+
+#: sell-media/inc/class-updater.php:815
+msgid "Your license is valid and your account is active."
+msgstr ""
+
+#: sell-media/inc/collections.php:74
+msgid "This item is password protected"
+msgstr ""
+
+#: sell-media/inc/fields.php:39
+msgid "Learn more"
+msgstr ""
+
+#: sell-media/inc/fields.php:75 sell-media/inc/fields.php:77
+msgid ""
+"Select a license that most closely describes the intended use of this item. "
+"Additional license details will be displayed here after selecting a license."
+msgstr ""
+
+#: sell-media/inc/fields.php:77
+msgid "Select a license"
+msgstr ""
+
+#: sell-media/inc/helpers.php:1257
+msgid "Use a comma to separate keywords."
+msgstr ""
+
+#: sell-media/inc/helpers.php:1263
+msgid ""
+"Search everywhere including titles, descriptions, captions, and keywords. "
+"For best results, only include one keyword per search."
+msgstr ""
+
+#: sell-media/inc/helpers.php:1263
+msgid "Search everything (?)"
+msgstr ""
+
+#: sell-media/inc/helpers.php:1345
+msgid "No keyword found"
+msgstr ""
+
+#: sell-media/inc/helpers.php:1346
+msgid "Please enter keyword to search."
+msgstr ""
+
+#: sell-media/inc/helpers.php:1435
+msgid "Search for Keywords"
+msgstr ""
+
+#: sell-media/inc/install.php:36
+msgid "Sell Media requires WordPress 4.4 or higher!"
+msgstr ""
+
+#
+#
+#
 # wpml-name: a40de094ebb292b72fa2a4f3a1cf1209
+#: sell-media/inc/install.php:163
 msgid "All Products"
 msgstr "Alle Produkte"
 
-# 
-# 
-# 
-# wpml-name: 0984151a18d791282bc25f3f1040a34a
-msgid "Sell Media"
-msgstr "Sell Media"
+#
+#
+#
+# wpml-name: 7177e0adfaf14e129e27bd06b55a10e6
+#: sell-media/inc/install.php:166
+msgid "Edit Product"
+msgstr "Produkt bearbeiten"
+
+#
+#
+#
+# wpml-name: 39c5dfa61825808dbc015048fb878457
+#: sell-media/inc/install.php:167
+msgid "New Product"
+msgstr "Neues Produkt"
+
+#
+#
+#
+# wpml-name: 727b632b862ad3c1a414540f699f0aa7
+#: sell-media/inc/install.php:168
+msgid "View Product"
+msgstr "Produkte ansehen"
+
+#
+#
+#
+# wpml-name: 489cc11935236b2fcc374dea5f50f90f
+#: sell-media/inc/install.php:169
+msgid "Search Products"
+msgstr "Produkte suchen"
+
+#
+#
+#
+# wpml-name: b9af8635591dc44009ccd8e5389722ec
+#: sell-media/inc/install.php:170
+msgid "No products found"
+msgstr "Keine Produkte gefunden"
+
+#
+#
+#
+# wpml-name: 21202fcf3a96cee2f10c67a1f14e08b5
+#: sell-media/inc/install.php:171
+msgid "No products found in Trash"
+msgstr "Keine Produkte im Papierkorb gefunden"
+
+#
+#
+#
+# wpml-name: d9f747157e5994ccc5e623afa1bc5340
+#: sell-media/inc/install.php:172
+msgid "Parent Product:"
+msgstr "Hauptprodukt"
+
+#
+#
+#
+# wpml-name: daef64964ee3b9b904f5d467586e217f
+#: sell-media/inc/install.php:204 sell-media/inc/install.php:215
+msgid "Payments"
+msgstr "Zahlungen"
+
+#
+#
+#
+# wpml-name: c453a4b8e8d98e82f35b67f433e3b4da
+#: sell-media/inc/install.php:205 sell-media/inc/settings.php:55
+#: sell-media/inc/settings.php:59
+msgid "Payment"
+msgstr "Zahlung"
+
+#
+#
+#
+# wpml-name: 4ea38e3d48a5e2feae76c1e347aafda5
+#: sell-media/inc/install.php:207
+msgid "Add New Payment"
+msgstr "Neue Zahlung hinzufügen"
+
+#
+#
+#
+# wpml-name: de90e1aab0a041eea8018b96446034b1
+#: sell-media/inc/install.php:208
+msgid "Edit Payment"
+msgstr "Zahlung bearbeiten"
+
+#
+#
+#
+# wpml-name: e6455d85c8d140b8734bc6a38433684a
+#: sell-media/inc/install.php:209
+msgid "New Payment"
+msgstr "Neue Zahlung"
+
+#
+#
+#
+# wpml-name: fefb44ab22ecb092c9ee3bbbf8c091f1
+#: sell-media/inc/install.php:210
+msgid "View Payment"
+msgstr "Zahlungen ansehen"
+
+#
+#
+#
+# wpml-name: 25bd90190d5a2e64263c91be3a4ccac5
+#: sell-media/inc/install.php:211
+msgid "Search Payments"
+msgstr "Zahlungen suchen"
+
+#
+#
+#
+# wpml-name: 2eea44863604ec26204ae5b4d55f5ec3
+#: sell-media/inc/install.php:212
+msgid "No payments found"
+msgstr "Keine Zahlungen gefunden"
+
+#
+#
+#
+# wpml-name: 9aca03e63a8cfd10319b33c634c4d6fb
+#: sell-media/inc/install.php:213
+msgid "No payments found in Trash"
+msgstr "Keine Zahlungen im Papierkorb gefunden"
+
+#
+#
+#
+# wpml-name: 65a6f516a3ba90a6062cd65536db9b30
+#: sell-media/inc/install.php:214
+msgid "Parent Payment:"
+msgstr "Haupt Bezahlung:"
+
+#
+#
+#
+# wpml-name: ebfb3b1b5106831df66b7f5192f96651
+#: sell-media/inc/install.php:275
+msgid "Search Price Groups"
+msgstr "Preisgruppen suchen"
+
+#
+#
+#
+# wpml-name: 1c7c735d8444353d2b525ac12f286ff9
+#: sell-media/inc/install.php:276
+msgid "Popular Price Groups"
+msgstr "Beliebte Preisgruppen"
+
+#
+#
+#
+# wpml-name: 11e98f57ada1731bb3d0d5bfec7d9247
+#: sell-media/inc/install.php:277
+msgid "All Price Groups"
+msgstr "Alle Preisgruppen"
+
+#
+#
+#
+# wpml-name: cc79d0895177828e4f42a333cabd8591
+#: sell-media/inc/install.php:278
+msgid "Parent Price Groups"
+msgstr "Hauptpreisgruppe"
+
+#
+#
+#
+# wpml-name: 0aaab79ad5013c4d31817821ddb64050
+#: sell-media/inc/install.php:279
+msgid "Parent Price Groups:"
+msgstr "Hauptpreisgruppe:"
+
+#
+#
+#
+# wpml-name: 0b9b44662f0bc47cbf9ae5491fcef866
+#: sell-media/inc/install.php:280
+msgid "Edit Price Group"
+msgstr "Preisgruppe bearbeiten"
+
+#
+#
+#
+# wpml-name: a603f77a96a417ed1f9ff9121244390e
+#: sell-media/inc/install.php:281
+msgid "Update Price Group"
+msgstr "Preisgruppe aktualisieren"
+
+#
+#
+#
+# wpml-name: 3c034e8db1e7b75b6cd55d58b97ae9ee
+#: sell-media/inc/install.php:282
+msgid "Add New Price Group"
+msgstr "Neue Preisgruppe hinzufügen"
+
+#
+#
+#
+# wpml-name: b18411e23b5187e569059e176e7a6178
+#: sell-media/inc/install.php:283
+msgid "New Price Group"
+msgstr "Neue Preisgruppe"
+
+#
+#
+#
+# wpml-name: 860de330b3fc5b46b45d78f0625e512d
+#: sell-media/inc/install.php:284
+msgid "Separate Price Groups with commas"
+msgstr "Preisgruppen mit Kommas trennen"
+
+#
+#
+#
+# wpml-name: c5634a10de56ed5ece5c4b5c17cc658e
+#: sell-media/inc/install.php:285
+msgid "Add or remove Price Groups"
+msgstr "Preisgruppen hinzufügen oder löschen"
+
+#
+#
+#
+# wpml-name: cf29f1ae5c04b1da34914a957ab83d15
+#: sell-media/inc/install.php:286
+msgid "Choose from most used Price Groups"
+msgstr "Suchen Sie aus den beliebtesten Preisgruppen"
+
+#
+#
+#
+# wpml-name: 99d17c414456d2e560cdda96d30e5f5e
+#: sell-media/inc/install.php:308
+msgid "Product Collections"
+msgstr "Produkt Kollektionen"
+
+#
+#
+#
+# wpml-name: e9b281f5485a5bbd4fccd08bf98dc1fc
+#: sell-media/inc/install.php:310
+msgid "Search Collection"
+msgstr "Kollektion suchen"
+
+#
+#
+#
+# wpml-name: 5f24a9293f545151d0563be01118b3ab
+#: sell-media/inc/install.php:311
+msgid "Popular Collection"
+msgstr "Beliebte Kollektion"
+
+#
+#
+#
+# wpml-name: a1eb7ba55240939aeb3beefc642428a9
+#: sell-media/inc/install.php:312
+#: sell-media/inc/widgets/sell-media-featured.php:95
+msgid "All Collections"
+msgstr "Alle Kollektionen"
+
+#
+#
+#
+# wpml-name: 409763217bc05a5bee9bcc1f8ab0ad9c
+#: sell-media/inc/install.php:313
+msgid "Parent Collection"
+msgstr "Hauptkollektion"
+
+#
+#
+#
+# wpml-name: 6d9c1412d6f2369a5408333395248c63
+#: sell-media/inc/install.php:314
+msgid "Parent Collection:"
+msgstr "Hauptkollektion:"
+
+#
+#
+#
+# wpml-name: bcc40d0f321165f8d57c4185fc0357df
+#: sell-media/inc/install.php:315
+msgid "Edit Collection"
+msgstr "Kollektion bearbeiten"
+
+#
+#
+#
+# wpml-name: e44071ada48808b0a7a94d244ac0297f
+#: sell-media/inc/install.php:316
+msgid "Update Collection"
+msgstr "Kollektion aktualisieren"
+
+#
+#
+#
+# wpml-name: 23aec21cd63c3507cb1ee7314e1a8c15
+#: sell-media/inc/install.php:317
+msgid "Add New Collection"
+msgstr "Neue Kollektion hinzufügen"
+
+#
+#
+#
+# wpml-name: 2903226e131442c2af1a9a4f1b27c3b4
+#: sell-media/inc/install.php:318
+msgid "New Collection"
+msgstr "Neue Kollektion"
+
+#
+#
+#
+# wpml-name: ef1c6b1a58db3135e77e20b697a6279a
+#: sell-media/inc/install.php:319
+msgid "Separate collection with commas"
+msgstr "Kollektionen mit Kommas trennen"
+
+#
+#
+#
+# wpml-name: 14f19c3f4bf3f73971c7f4a7b99107d1
+#: sell-media/inc/install.php:320
+msgid "Add or remove Collection"
+msgstr "Kollektion hinzufügen oder löschen"
+
+#
+#
+#
+# wpml-name: a6985a0bcbed05e69cff57c8e9fbbb7b
+#: sell-media/inc/install.php:321
+msgid "Choose from most used Collection"
+msgstr "Wählen Sie aus den beliebtesten Kollektionen"
+
+#
+#
+#
+# wpml-name: f6aca2dcfee051b254bbcb878dc70d09
+#: sell-media/inc/install.php:343 sell-media/inc/install.php:357
+msgid "Licenses"
+msgstr "Lizenzen"
+
+#
+#
+#
+# wpml-name: 8b7fedc72184d8c146d0f93663b8448a
+#: sell-media/inc/install.php:345
+msgid "Search Licenses"
+msgstr "Lizenzen suchen"
+
+#
+#
+#
+# wpml-name: 3bc6d06af91850deab3a3fda05a39d16
+#: sell-media/inc/install.php:346
+msgid "Popular Licenses"
+msgstr "Beliebte Lizenzen"
+
+#
+#
+#
+# wpml-name: f209b5e7a4b09e85094f85a75c9ed04c
+#: sell-media/inc/install.php:347
+msgid "All Licenses"
+msgstr "Alle Lizenzen"
+
+#
+#
+#
+# wpml-name: 59014debc3e10938a9b25d444fbb75ce
+#: sell-media/inc/install.php:348
+msgid "Parent License"
+msgstr "Hauptlizenz"
+
+#
+#
+#
+# wpml-name: 5cf711afb899da911d8102b9203c699b
+#: sell-media/inc/install.php:349
+msgid "Parent License:"
+msgstr "Hauptlizenz:"
+
+#
+#
+#
+# wpml-name: 5ee09bcd3fa9d0f21d93200ed817d247
+#: sell-media/inc/install.php:350
+msgid "Edit License"
+msgstr "Lizenz bearbeiten"
+
+#
+#
+#
+# wpml-name: 5f6adb74e72b3f0679f816135e51449d
+#: sell-media/inc/install.php:351
+msgid "Update License"
+msgstr "Lizenzen aktualisieren"
+
+#
+#
+#
+# wpml-name: 68f1f2d1a357240bbf1079daab6c7a54
+#: sell-media/inc/install.php:352
+msgid "Add New License"
+msgstr "Neue Lizenz hinzufügen"
+
+#
+#
+#
+# wpml-name: 4f2b2667cf764346f0813d7857f565b8
+#: sell-media/inc/install.php:353
+msgid "New License"
+msgstr "Neue Lizenz"
+
+#
+#
+#
+# wpml-name: 63a03b75f005365170a9febeca4cf848
+#: sell-media/inc/install.php:354
+msgid "Separate licenses with commas"
+msgstr "Lizenzen mit Komma trennen"
+
+#
+#
+#
+# wpml-name: ade5ce26156058f53d2301b74f3fff0a
+#: sell-media/inc/install.php:355
+msgid "Add or remove Licenses"
+msgstr "Lizenzen hinzufügen oder löschen"
+
+#
+#
+#
+# wpml-name: fce220884c257f2baa70fc70570650e4
+#: sell-media/inc/install.php:356
+msgid "Choose from most used Licenses"
+msgstr "Wählen Sie die beliebtesten Lizenzen"
+
+#
+#
+#
+# wpml-name: 220f3d3750583b9db48568a0b5b9a5f1
+#: sell-media/inc/install.php:379 sell-media/inc/install.php:448
+#: sell-media/inc/install.php:482
+msgid "Keyword"
+msgstr "Keyword"
+
+#
+#
+#
+# wpml-name: 862f2547c95e1e52d05e6f2fddab88c2
+#: sell-media/inc/install.php:380
+msgid "Search Keywords"
+msgstr "Keywörter suchen"
+
+#
+#
+#
+# wpml-name: 66339a55ab88b10ac4995a4c63a16efc
+#: sell-media/inc/install.php:381
+msgid "Popular Keywords"
+msgstr "Beliebte Keywords"
+
+#
+#
+#
+# wpml-name: d570dbef67776fb573ab91479c99e6b4
+#: sell-media/inc/install.php:382
+msgid "All Keywords"
+msgstr "Alle Keywörter"
+
+#
+#
+#
+# wpml-name: d45b0cf8856a8b9b0ffca82b29e5172f
+#: sell-media/inc/install.php:383 sell-media/inc/install.php:452
+#: sell-media/inc/install.php:486
+msgid "Parent Keyword"
+msgstr "Haupt Keyword"
+
+#
+#
+#
+# wpml-name: 6eedd1398ec44b48a9e9de7009b6e532
+#: sell-media/inc/install.php:384 sell-media/inc/install.php:453
+#: sell-media/inc/install.php:487
+msgid "Parent Keyword:"
+msgstr "Haupt Keyword:"
+
+#
+#
+#
+# wpml-name: 8bd48fe4fd93b0cc98ff55f60e16347b
+#: sell-media/inc/install.php:385 sell-media/inc/install.php:454
+#: sell-media/inc/install.php:488
+msgid "Edit Keyword"
+msgstr "Keyword bearbeiten"
+
+#
+#
+#
+# wpml-name: 6fa70c3ed5d4630b3f8058420b01b2ef
+#: sell-media/inc/install.php:386 sell-media/inc/install.php:455
+#: sell-media/inc/install.php:489
+msgid "Update Keyword"
+msgstr "Keyword aktualisieren"
+
+#
+#
+#
+# wpml-name: aae29e01941574decd94a26e211e1e8d
+#: sell-media/inc/install.php:387 sell-media/inc/install.php:456
+#: sell-media/inc/install.php:490
+msgid "Add New Keyword"
+msgstr "Neues Keyword hinzufügen"
+
+#
+#
+#
+# wpml-name: fab246233e56a7a6dd25768fda1f95f3
+#: sell-media/inc/install.php:388 sell-media/inc/install.php:457
+#: sell-media/inc/install.php:491
+msgid "New Keyword"
+msgstr "Neues Keyword"
+
+#
+#
+#
+# wpml-name: 83bf7ae1ab8cc2067cd84a96dd78b0b3
+#: sell-media/inc/install.php:389
+msgid "Separate keywords with commas"
+msgstr "Trennen Sie Keywords mit Kommas"
+
+#
+#
+#
+# wpml-name: 6d1dfe86220a746dc067f6b677a6eca2
+#: sell-media/inc/install.php:390
+msgid "Add or remove Keywords"
+msgstr "Keywords hinzufügen oder löschen"
+
+#
+#
+#
+# wpml-name: 07904c901ed2b05068ce2ee550ae8fe2
+#: sell-media/inc/install.php:391
+msgid "Choose from most used Keywords"
+msgstr "Wählen Sie die meist benutzten Keywords"
+
+#
+#
+#
+# wpml-name: d6ab9e3e0af68d85bef320ebd22bcb05
+#: sell-media/inc/install.php:413 sell-media/inc/install.php:427
+msgid "Creators"
+msgstr "Urheber"
+
+#
+#
+#
+# wpml-name: ef1d00d8a237a1bbe431e1091f5715fb
+#: sell-media/inc/install.php:414
+msgid "Creator"
+msgstr "Urheber"
+
+#
+#
+#
+# wpml-name: f70944a6c86db85d26a6ba276ca0b10c
+#: sell-media/inc/install.php:415
+msgid "Search Creator"
+msgstr "Suche Urheber"
+
+#
+#
+#
+# wpml-name: bf07dbfece30337b3e73dd1891c6e8f8
+#: sell-media/inc/install.php:416
+msgid "Popular Creator"
+msgstr "Beliebte Urheber"
+
+#
+#
+#
+# wpml-name: 9ba34e903dd6b8b98cf16005139e4ec2
+#: sell-media/inc/install.php:417
+msgid "All Creator"
+msgstr "Alle Urheber"
+
+#
+#
+#
+# wpml-name: 41c031f43aedc3767fbc196a8f51c3c2
+#: sell-media/inc/install.php:418
+msgid "Parent Creator"
+msgstr "Haupturheber"
+
+#
+#
+#
+# wpml-name: 93af047be5036d1c8edc428217a8cfff
+#: sell-media/inc/install.php:419
+msgid "Parent Creator:"
+msgstr "Haupturheber:"
+
+#
+#
+#
+# wpml-name: 2f40dc80f0f0ab9b59d303c94cbc7ba1
+#: sell-media/inc/install.php:420
+msgid "Edit Creator"
+msgstr "Urheber bearbeiten"
+
+#
+#
+#
+# wpml-name: 805ed881e5e64e4e4de466a26e441a32
+#: sell-media/inc/install.php:421
+msgid "Update Creator"
+msgstr "Urheber aktualisieren"
+
+#
+#
+#
+# wpml-name: 578b6413f0ed4d16d2b111cea13ec0a3
+#: sell-media/inc/install.php:422
+msgid "Add New Creator"
+msgstr "Neuer Urheber hinzufügen"
+
+#
+#
+#
+# wpml-name: 7649c1fbd038be27ee2c3c3b2ffcefd1
+#: sell-media/inc/install.php:423
+msgid "New Creator"
+msgstr "Neuer Urheber"
+
+#
+#
+#
+# wpml-name: 6f3f77dd6fd94073071228da4d1602f5
+#: sell-media/inc/install.php:424
+msgid "Separate creator with commas"
+msgstr "Urheber mit Komma trennen"
+
+#
+#
+#
+# wpml-name: cc41e54182e51ee21cca530eb89df3f3
+#: sell-media/inc/install.php:425
+msgid "Add or remove Creator"
+msgstr "Urheber hinzufügen oder entfernen"
+
+#
+#
+#
+# wpml-name: fba24684ed763d26086845badf33ad40
+#: sell-media/inc/install.php:426
+msgid "Choose from most used Creator"
+msgstr "Wählen Sie den am häufigsten verwendeten Urheber"
+
+#
+#
+#
+# wpml-name: 57d056ed0984166336b7879c2af3657f
+#: sell-media/inc/install.php:447 sell-media/inc/install.php:461
+msgid "City"
+msgstr "Stadt"
+
+#
+#
+#
+# wpml-name: 90fd8a29b37d805cf75af6a3809bca87
+#: sell-media/inc/install.php:449
+msgid "Search City"
+msgstr "Stadt Suchen"
+
+#
+#
+#
+# wpml-name: 6a37868099b2237869e5ea3d92e62da0
+#: sell-media/inc/install.php:450
+msgid "Popular City"
+msgstr "Beliebte Stadt"
+
+#
+#
+#
+# wpml-name: 05754f8c1e8dc68393a8b5c4a06b92d1
+#: sell-media/inc/install.php:451
+msgid "All City"
+msgstr "Alle Städte"
+
+#
+#
+#
+# wpml-name: 8eaa218465d2a96330f1a2d9f2948f89
+#: sell-media/inc/install.php:458
+msgid "Separate city with commas"
+msgstr "Städte mit Kommas trennen"
+
+#
+#
+#
+# wpml-name: 39c50caf353e8eccb2087b20bc19ce8a
+#: sell-media/inc/install.php:459
+msgid "Add or remove City"
+msgstr "Stadt hinzufügen oder entfernen"
+
+#
+#
+#
+# wpml-name: 40ccd821fefe0580dec758e738be638a
+#: sell-media/inc/install.php:460
+msgid "Choose from most used City"
+msgstr "Wählen Sie die am häufigsten verwendete Stadt"
+
+#
+#
+#
+# wpml-name: 46a2a41cc6e552044816a2d04634545d
+#: sell-media/inc/install.php:481 sell-media/inc/install.php:495
+msgid "State"
+msgstr "Region"
+
+#
+#
+#
+# wpml-name: f7dc3a05160146cbb4558cc298ebd6a0
+#: sell-media/inc/install.php:483
+msgid "Search State"
+msgstr "Region Suchen"
+
+#
+#
+#
+# wpml-name: 5798b6df30c266017737d213bb3c1cbe
+#: sell-media/inc/install.php:484
+msgid "Popular State"
+msgstr "Beliebte Region"
+
+#
+#
+#
+# wpml-name: 1665ae23115fb00b82589b5e755cb181
+#: sell-media/inc/install.php:485
+msgid "All State"
+msgstr "Alle Regionen"
+
+#
+#
+#
+# wpml-name: 991f180fd91d548cb8ffa5da22f012be
+#: sell-media/inc/install.php:492
+msgid "Separate state with commas"
+msgstr "Region mit Kommas trennen"
+
+#
+#
+#
+# wpml-name: 97c199a365df453c5c27c7fab3baf885
+#: sell-media/inc/install.php:493
+msgid "Add or remove State"
+msgstr "Region hinzufügen oder entfernen"
+
+#
+#
+#
+# wpml-name: 6c9f91a71b7e801e207e5953dd57f8b7
+#: sell-media/inc/install.php:494
+msgid "Choose from most used State"
+msgstr "Wählen Sie den am häufigsten verwendeten Staat"
+
+#: sell-media/inc/lightbox.php:46 sell-media/inc/lightbox.php:177
+#: sell-media/inc/lightbox.php:188
+msgid "Remove from lightbox"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:46 sell-media/inc/lightbox.php:182
+#: sell-media/inc/scripts.php:71
+msgid "Save to Lightbox"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:103
+msgid "Remove all from lightbox"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:103 sell-media/inc/lightbox.php:148
+msgid "Your lightbox is empty."
+msgstr ""
+
+#: sell-media/inc/lightbox.php:103
+msgid "Remove All"
+msgstr ""
+
+#: sell-media/inc/lightbox.php:140 sell-media/inc/template-tags.php:219
+#: sell-media/inc/template-tags.php:286
+msgid "Quick View"
+msgstr ""
+
+#
+#
+#
+# wpml-name: edf5ea9b7f21c0fefe7b85c19ec0e632
+#: sell-media/inc/scripts.php:45
+msgid "Sorry that email already exists or is invalid"
+msgstr "Es tut uns leid, die E-Mail existiert bereits oder ist ungültig"
+
+#
+#
+#
+# wpml-name: f29ddbfb905eb2593fdcdfb243f9af85
+#: sell-media/inc/scripts.php:53
+msgid "Added"
+msgstr "Hinzugefügt"
+
+#
+#
+#
+# wpml-name: 190a76c985d9c0c5b0f6d53f12bbd52a
+#: sell-media/inc/scripts.php:54
+msgid "Checkout now"
+msgstr "Zur Kasse"
+
+#
+#
+#
+# wpml-name: a95f42686de48456b919e617a2d3395a
+#: sell-media/inc/scripts.php:67
+msgid ""
+"There was an error loading the cart data. Please contact the site owner."
+msgstr ""
+"Beim Laden des Warenkorbs ist ein Datenfehler aufgetreten. Bitte "
+"kontaktieren Sie den Website-Eigentümer."
+
+#
+#
+#
+# wpml-name: 9cfdfa56f0e0d9e5ddaf3c10de2bd399
+#: sell-media/inc/scripts.php:68 sell-media/inc/shortcodes.php:272
+msgid "Checkout Now"
+msgstr "Zur Kasse"
+
+#
+#
+#
+# wpml-name: 25e8f2fd2871c8423bbe4e254066cd98
+#: sell-media/inc/scripts.php:69
+msgid "Please wait..."
+msgstr "Bitte warten..."
+
+#: sell-media/inc/scripts.php:70
+msgid "Remove from Lightbox"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 0db377921f4ce762c62526131097968f
+#: sell-media/inc/settings.php:25 sell-media/inc/settings.php:29
+msgid "General"
+msgstr "Allgemein"
+
+#
+#
+#
+# wpml-name: e22ac25b066b201473de7aa700ef5d92
+#: sell-media/inc/settings.php:40 sell-media/inc/settings.php:44
+msgid "Pricing"
+msgstr "Preisgestaltung"
+
+#
+#
+#
+# wpml-name: 9070b35e0d637593ce9e85705889aea2
+#: sell-media/inc/settings.php:74
+msgid "Email Settings"
+msgstr "E-Mail-Einstellungen"
+
+#
+#
+#
+# wpml-name: 74248c725e00bf9fe04df4e35b249a19
+#: sell-media/inc/settings.php:85 sell-media/inc/settings.php:89
+msgid "Misc"
+msgstr "Sonstiges"
+
+#
+#
+#
+# wpml-name: 650be61892bf690026089544abbd9d26
+#: sell-media/inc/settings.php:106
+msgid "Mode"
+msgstr "Modus"
+
+#
+#
+#
+# wpml-name: ad30b63a9b0356c362091008bbab0b56
+#: sell-media/inc/settings.php:107
+#, php-format
+msgid ""
+"Select Live Mode to accept real transactions. Select Test Mode to accept "
+"test transactions (%s)."
+msgstr ""
+"Wählen Sie den Live-Modus um tatsächliche Transaktionen zu akzeptieren. "
+"Wählen Sie den Testmodus um Testtransaktionen zu akzeptieren (%s)."
+
+#: sell-media/inc/settings.php:116
+msgid "Test Mode"
+msgstr ""
+
+#: sell-media/inc/settings.php:120
+msgid "Live Mode"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 2a2d5fc32f72dd7e5c3464c670fee48d
+#: sell-media/inc/settings.php:127
+msgid "Checkout Page"
+msgstr "Zahlungsseite"
+
+#
+#
+#
+# wpml-name: e212eb028c964502870f29f4f9825be1
+#: sell-media/inc/settings.php:128
+msgid ""
+"Select the page that contains the checkout shortcode "
+"<code>[sell_media_checkout]</code>"
+msgstr ""
+"Wählen Sie die Seite, die den Zahlungsseiten Shortcode enthält "
+"<code>[sell_media_checkout]</code>"
+
+#
+#
+#
+# wpml-name: 4eb6df4ee2764dd032abb12b7defdff8
+#: sell-media/inc/settings.php:139
+msgid "Thanks Page"
+msgstr "Danke Seite"
+
+#
+#
+#
+# wpml-name: 0347d67a20b4dd4854cd43f16862b5c5
+#: sell-media/inc/settings.php:140
+msgid ""
+"Select the page that contains the thanks shortcode "
+"<code>[sell_media_thanks]</code>"
+msgstr ""
+"Wählen Sie die Seite, die den Danke Shortcode enthält "
+"<code>[sell_media_thanks]</code>"
+
+#
+#
+#
+# wpml-name: 4d6721be382830a59b755f7fd77957ad
+#: sell-media/inc/settings.php:151
+msgid "Dashboard Page"
+msgstr "Systemsteuerungs Seite"
+
+#
+#
+#
+# wpml-name: 1fd0060dcdda1bcb80488863a9c8cbef
+#: sell-media/inc/settings.php:152
+msgid ""
+"Select the page that contains the dashboard "
+"shortcode<code>[sell_media_download_list]</code>"
+msgstr ""
+"Wählen Sie die Seite, die den Systemsteuerungs Shortcode enthält <code> "
+"[sell_media_download_list] </ code>"
+
+#
+#
+#
+# wpml-name: 4b57a7151ff7f3951defad2e80eac338
+#: sell-media/inc/settings.php:163
+msgid "Login Page"
+msgstr "Anmeldeseite"
+
+#
+#
+#
+# wpml-name: df2259477d41d0f4fb342107714f28d8
+#: sell-media/inc/settings.php:164
+msgid ""
+"Select the page that contains the login shortcode "
+"<code>[sell_media_login_form]</code>"
+msgstr ""
+"Wählen Sie die Seite, die den Login-Shortcode enthält <code> "
+"[sell_media_login_form] </ code>"
+
+#
+#
+#
+# wpml-name: 78effccfd6de5c4d01325ef863c4069c
+#: sell-media/inc/settings.php:175
+msgid "Search Page"
+msgstr "Seite suchen"
+
+#
+#
+#
+# wpml-name: 2cb25345db6b170da7483498d2019e98
+#: sell-media/inc/settings.php:176
+msgid ""
+"Select the page that contains the search shortcode "
+"<code>[sell_media_searchform]</code>"
+msgstr ""
+"Wählen Sie die Seite, die den Such-Shortcode <code> [sell_media_searchform] "
+"</ code> enthält ."
+
+#: sell-media/inc/settings.php:187
+msgid "Lightbox Page"
+msgstr ""
+
+#: sell-media/inc/settings.php:188
+msgid ""
+"Select the page that contains the lightbox shortcode "
+"<code>[sell_media_lightbox]</code>"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 1dedc13c821073d6699c9f40c3c0edd6
+#: sell-media/inc/settings.php:199
+msgid "Customer Notification"
+msgstr "Benachrichtigung des Kunden"
+
+#
+#
+#
+# wpml-name: 4ca56e7240826ebbed4171ddfbff95f7
+#: sell-media/inc/settings.php:200
+msgid "Notify the customer of their site registration."
+msgstr "Benachrichtigen Sie den Kunden über seine Website-Registrierung."
+
+#
+#
+#
+# wpml-name: bafd7322c6e97d25b6299b5d6fe8920b
+#: sell-media/inc/settings.php:209 sell-media/inc/settings.php:330
+#: sell-media/inc/settings.php:351 sell-media/inc/settings.php:372
+#: sell-media/inc/settings.php:489
+msgid "No"
+msgstr "Nein"
+
+#
+#
+#
+# wpml-name: ae284f900f9d6e21ba69144cfc91e41b
+#: sell-media/inc/settings.php:220
+msgid "Style"
+msgstr "Stil"
+
+#
+#
+#
+# wpml-name: 5ad0e4e70f41e2287d70e3e9484601f0
+#: sell-media/inc/settings.php:221
+msgid ""
+"Choose the style of your theme. Sell Media will load styles to match your "
+"theme."
+msgstr ""
+"Wählen Sie den Stil Ihres Templates. Sell Media wird Stile, die auf Ihr "
+"Thema abgestimmt sind laden."
+
+#
+#
+#
+# wpml-name: a18366b217ebf811ad1886e4f4f865b2
+#: sell-media/inc/settings.php:230
+msgid "Dark"
+msgstr "Dunkel"
+
+#
+#
+#
+# wpml-name: 9914a0ce04a7b7b6a8e39bec55064b82
+#: sell-media/inc/settings.php:234
+msgid "Light"
+msgstr "Hell"
+
+#: sell-media/inc/settings.php:241
+msgid "Page Layout"
+msgstr ""
+
+#: sell-media/inc/settings.php:242
+msgid ""
+"Select your layout preference for single Sell Media entries. If your theme "
+"already has a sidebar, you probably want to select the 'One column' option."
+msgstr ""
+
+#: sell-media/inc/settings.php:251
+msgid "Two columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:255
+msgid "One column"
+msgstr ""
+
+#: sell-media/inc/settings.php:262
+msgid "Thumbnail Crop"
+msgstr ""
+
+#: sell-media/inc/settings.php:263
+msgid ""
+"Select the crop for thumbnails appearing on archives and galleries. If you "
+"select 'Square Crop,' you might need to use the Regenerate Thumbnails plugin "
+"to resize previously uploaded images."
+msgstr ""
+
+#: sell-media/inc/settings.php:272
+msgid "No Crop"
+msgstr ""
+
+#: sell-media/inc/settings.php:276
+msgid "Square Crop"
+msgstr ""
+
+#: sell-media/inc/settings.php:283
+msgid "Thumbnail Layout"
+msgstr ""
+
+#: sell-media/inc/settings.php:284
+msgid ""
+"Select the layout preferences for thumbnails appearing on archives and in "
+"galleries."
+msgstr ""
+
+#: sell-media/inc/settings.php:293
+msgid "One Column"
+msgstr ""
+
+#: sell-media/inc/settings.php:297
+msgid "Two Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:301
+msgid "Three Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:305
+msgid "Four Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:309
+msgid "Five Columns"
+msgstr ""
+
+#: sell-media/inc/settings.php:313
+msgid "Masonry Layout"
+msgstr ""
+
+#: sell-media/inc/settings.php:320
+msgid "Breadcrumbs"
+msgstr ""
+
+#: sell-media/inc/settings.php:321
+msgid "Show breadcrumb navigation on single entries."
+msgstr ""
+
+#: sell-media/inc/settings.php:341
+msgid "File Info"
+msgstr ""
+
+#: sell-media/inc/settings.php:342
+msgid ""
+"Show file information (file size, file type, dimensions, keywords, etc.) on "
+"single entries."
+msgstr ""
+
+#
+#
+#
+# wpml-name: f3d44020cfb152a6d82e252fcf76b5eb
+#: sell-media/inc/settings.php:362
+msgid "Plugin Credit"
+msgstr "Plugin Namensnennung"
+
+#
+#
+#
+# wpml-name: 817a15663b0aca1ef5d348c83d4b2895
+#: sell-media/inc/settings.php:363
+msgid "Let your site visitors know you are using the Sell Media plugin?"
+msgstr "Lassen Sie Ihre Kunden wissen, dass Sie Sell Media Plugin verwenden?"
+
+#
+#
+#
+# wpml-name: 32cb24ee0b41a16e86e5c933bbcac67e
+#: sell-media/inc/settings.php:383
+msgid "Post Type Slug"
+msgstr "Post Type Slug"
+
+#
+#
+#
+# wpml-name: 977185fd392dd534e03ca4f1182a1779
+#: sell-media/inc/settings.php:384
+msgid ""
+"You can change the post type slug to: &quot;photos&quot; or &quot;"
+"downloads&quot;. The default slug is &quot;items&quot;."
+msgstr ""
+"Sie können den post type slug \"in \"Fotos oder Downloads\" umändern. Der "
+"Standard post type slug ist Elemente."
+
+#
+#
+#
+# wpml-name: 801322095c363689f7620e0147e3fd14
+#: sell-media/inc/settings.php:395
+msgid "Order By"
+msgstr "Reihenfolge nach"
+
+#
+#
+#
+# wpml-name: f0be2e04b99663d4d7c44d1e061faede
+#: sell-media/inc/settings.php:396
+msgid "Choose the order of items for the archive pages."
+msgstr "Wählen Sie die Reihenfolge der Elemente für die Archiv-Seiten."
+
+#
+#
+#
+# wpml-name: 97abaa921b2270031573362f57aad4a4
+#: sell-media/inc/settings.php:424
+msgid "Terms and Conditions"
+msgstr "Allgemeine Geschäftsbedingunen"
+
+#
+#
+#
+# wpml-name: 1a37a963844f982f9122492f15ae41a2
+#: sell-media/inc/settings.php:425
+msgid ""
+"These &quot;Terms and Conditions&quot; will show up on the checkout page. "
+"Users must agree to these terms before completing their purchase."
+msgstr ""
+"Diese \"Allgemeinen Geschäftsbedingungen\" erscheinen auf der Zahlungsseite. "
+"Benutzer müssen diese akzeptieren bevor Sie ihren Kauf abschließen."
+
+#
+#
+#
+# wpml-name: 9ae9d47d6b548369c1e7e5fe3e28c476
+#: sell-media/inc/settings.php:436
+msgid "Show Columns"
+msgstr "Spalten anzeigen"
+
+#
+#
+#
+# wpml-name: 954a9d43843c0a3f33b3a5df7b8482ce
+#: sell-media/inc/settings.php:437
+msgid ""
+"Select the columns to show on the admin page &quot;All Products&quot; page."
+msgstr ""
+"Wählen Sie die Spalten aus um auf der Admin-Seite \"Alle Produkte\" "
+"anzuzeigen."
+
+#
+#
+#
+# wpml-name: 8bd19c0aa5f1ae664fb70fe04705fd48
+#: sell-media/inc/settings.php:467
+msgid "Original Price"
+msgstr "Ausgangspreis"
+
+#
+#
+#
+# wpml-name: 0f9abd7edf96802d83d364560448196a
+#: sell-media/inc/settings.php:468
+msgid ""
+"The original price of new items and bulk uploads. You can set unique prices "
+"by editing each individual item."
+msgstr ""
+"Der Ausgangspreis von neuen Produkten und Bulk-Uploads. Sie können Preise in "
+"jedem einzelnen Element festlegen."
+
+#
+#
+#
+# wpml-name: b4f109ef22421a8451e1e41d6fe9b013
+#: sell-media/inc/settings.php:479
+msgid "Hide Original Price"
+msgstr "Ausgangspreis verstecken"
+
+#
+#
+#
+# wpml-name: 80b42b5f0ed3f25fa744391cd6202281
+#: sell-media/inc/settings.php:480
+msgid ""
+"Select 'Yes' to hide the original price above and rely solely on Price "
+"Groups (See below. Price Groups can only be used when selling images). "
+"Select 'No' if you're selling single file downloads or if you want to list "
+"the original price for each product. You can override this setting on a per-"
+"item basis."
+msgstr ""
+"Wählen Sie \"Ja\", um den Ausgangspreis oben zu verstecken und verlassen "
+"sich ausschließlich auf Preisgruppen (Siehe unten. Preisgruppen können nur "
+"beim Verkauf von Bildern verwendet werden). Wählen Sie \"Nein\", wenn Sie "
+"einzelne Datei-Downloads verkaufen oder wenn der Ausgangspreis für jedes "
+"Produkt angezeigt werden soll. Sie können diese Einstellung auf einer Pro-"
+"Einheit Basis überschreiben."
+
+#
+#
+#
+# wpml-name: a0ff944e09a5b85a906163a71d1b7d23
+#: sell-media/inc/settings.php:500
+msgid "Default Image Price Group"
+msgstr "Standard Preisgruppe für Bilder"
+
+#
+#
+#
+# wpml-name: c833e197ead7e72e95fba26bc016ff1c
+#: sell-media/inc/settings.php:511
+msgid "Image Price Groups"
+msgstr "Preisgruppen Bilder"
+
+#
+#
+#
+# wpml-name: 83c61ee6fd0abc77ab7271b8ab771b9d
+#: sell-media/inc/settings.php:524
+msgid "PayPal Email Address"
+msgstr "PayPal E-mail Adresse"
+
+#: sell-media/inc/settings.php:525
+msgid "Add the email address associated with your PayPal account above."
+msgstr ""
+
+#
+#
+#
+# wpml-name: 386c339d37e737a436499d423a77df0c
+#: sell-media/inc/settings.php:537
+msgid "Currency"
+msgstr "Währung"
+
+#
+#
+#
+# wpml-name: bed1e294d65891b2da671fede1666823
+#: sell-media/inc/settings.php:538
+msgid "The currency in which you accept payment."
+msgstr "Die Währung, in der Sie die Zahlung akzeptieren."
+
+#
+#
+#
+# wpml-name: 1f1e4e94372cc59fc3e9dd0b1bd64791
+#: sell-media/inc/settings.php:549
+msgid "PayPal Additional Test Emails"
+msgstr "Zusätzliche Test E-mails PayPal"
+
+#
+#
+#
+# wpml-name: 8c8894baa436c438fbe0f73e3e5eaa3c
+#: sell-media/inc/settings.php:550
+msgid ""
+"This is useful when debugging PayPal. Enter a comma separated list of "
+"emails, and when a purchase is made the same email that is sent to the buyer "
+"will be sent to the recipients in the above list."
+msgstr "Dies ist nützlich bei der Fehlersuche in PayPal"
+
+#
+#
+#
+# wpml-name: 4b78ac8eb158840e9638a3aeb26c4a9d
+#: sell-media/inc/settings.php:561 sell-media/inc/shortcodes.php:254
+msgid "Tax"
+msgstr "Steuer"
+
+#
+#
+#
+# wpml-name: e5aebf9ffb369ed36ba8e3df46282b0f
+#: sell-media/inc/settings.php:571
+msgid "Yes, charge tax"
+msgstr "Ja, Steuern hinzufügen"
+
+#: sell-media/inc/settings.php:578
+msgid "Tax Display"
+msgstr ""
+
+#: sell-media/inc/settings.php:579
+msgid ""
+"Select how you want to display taxes. Most users can leave this set to "
+"\"Exclusive\". Tax laws in certain countries, like Austrailia, require that "
+"prices of items are displayed with taxes included. If this scenerio applies "
+"to you, then select \"Inclusive\"."
+msgstr ""
+
+#: sell-media/inc/settings.php:588
+msgid "Exclusive - Added at checkout"
+msgstr ""
+
+#: sell-media/inc/settings.php:592
+msgid "Inclusive - Added to item prices"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 8fe77c2601e54f1aaef28cfde997bbad
+#: sell-media/inc/settings.php:599
+msgid "Tax Rate"
+msgstr "Steuersatz"
+
+#
+#
+#
+# wpml-name: 4a4a8fe0c6dfb6bd2a41755d15eb6f0b
+#: sell-media/inc/settings.php:613
+msgid "From Name"
+msgstr "Absender Name"
+
+#
+#
+#
+# wpml-name: ef8b987a6f6940dfede55ecc2ed4773f
+#: sell-media/inc/settings.php:614
+msgid "The name associated with all outgoing email."
+msgstr "Der assoziierte Name aller ausgehenden Mails."
+
+#
+#
+#
+# wpml-name: 4ca679a383343ab3d4ca1cd7c91b43f7
+#: sell-media/inc/settings.php:625
+msgid "From Email"
+msgstr "Absender Email"
+
+#
+#
+#
+# wpml-name: ed164e4570027582f06ec825d85d74ab
+#: sell-media/inc/settings.php:626
+msgid "The email address used for all outgoing email."
+msgstr "Die E-Mail-Adresse für alle ausgehenden E-Mails."
+
+#
+#
+#
+# wpml-name: e3868f7e6e90b6b55f60ac7d71dcb8ce
+#: sell-media/inc/settings.php:637
+msgid "Email Subject"
+msgstr "E-mail Betreff"
+
+#
+#
+#
+# wpml-name: 9df894de183267becbaef872c4bd9cfe
+#: sell-media/inc/settings.php:638
+msgid "The email subject on successful purchase emails."
+msgstr "Der E-mail Betreff bei erfolgreichem Kauf."
+
+#
+#
+#
+# wpml-name: 564edf260dd3827e38605f73c3c47e3d
+#: sell-media/inc/settings.php:644
+msgid "Your Purchase"
+msgstr "Ihr Einkauf"
+
+#
+#
+#
+# wpml-name: 1b394670c01ca90b098c272deb3bf880
+#: sell-media/inc/settings.php:649
+msgid "Email Body"
+msgstr "Email Inhalt"
+
+#
+#
+#
+# wpml-name: c0c9ac59a083028b7e2bbbd1988e3546
+#: sell-media/inc/settings.php:650
+msgid ""
+"This e-mail message is sent to your customers in case of successful and "
+"cleared payment. You can use the following email tags: {first_name}, "
+"{last_name}, {payer_email}, {download_links}, {payment_id}. These tags are "
+"replaced with the real data associated with each payment. Be sure to include "
+"the {download_links} tag, otherwise your buyers won't receive their download "
+"purchases. The {payment_id} tag can be used to display an invoice number."
+msgstr ""
+"Diese Email wird an Ihre Kunden gesendet, wenn die Bezahlung erfolgreich "
+"abgewickelt wurde. Sie können folgende Email Tags verwenden: {first_name}, "
+"{last_name}, {payer_email}, {download_links}, {payment_id}"
+
+#: sell-media/inc/settings.php:664
+msgid "Miscellaneous Settings"
+msgstr ""
+
+#: sell-media/inc/settings.php:665
+#, php-format
+msgid "Settings for some of our %s will be shown here if active."
+msgstr ""
+
+#: sell-media/inc/settings/library/helpers.php:16
+msgid "-- Choose One --"
+msgstr ""
+
+#
+#
+#
+# wpml-name: d18be781fadf0823cd434014f3efb6d8
+#: sell-media/inc/settings/library/helpers.php:133
+msgid "US Dollars (&#36;)"
+msgstr "US Dollars ($)"
+
+#
+#
+#
+# wpml-name: 1125f0b0518ed009593702d3b8e1945b
+#: sell-media/inc/settings/library/helpers.php:138
+msgid "Euros (&euro;)"
+msgstr "Euros (€)"
+
+#
+#
+#
+# wpml-name: 5f9dc8a88da0da0251d8e712bb2ad08e
+#: sell-media/inc/settings/library/helpers.php:143
+msgid "Pounds Sterling (&pound;)"
+msgstr "Pfund Sterling (£)"
+
+#
+#
+#
+# wpml-name: b102a15cc0323fdec245d59b0d70bb78
+#: sell-media/inc/settings/library/helpers.php:148
+msgid "Australian Dollars (&#36;)"
+msgstr "Australischer Dollar ($)"
+
+#
+#
+#
+# wpml-name: 282076105aabd6d9d66ddd0989187f36
+#: sell-media/inc/settings/library/helpers.php:153
+msgid "Brazilian Real (R&#36;)"
+msgstr "Brasilianischer Real (R$)"
+
+#
+#
+#
+# wpml-name: 1accb50a6db0f696251e9096d5e6729e
+#: sell-media/inc/settings/library/helpers.php:158
+msgid "Canadian Dollars (&#36;)"
+msgstr "Canadischer Dollar ($)"
+
+#
+#
+#
+# wpml-name: ff35c674c7d60fdf234a6c63ad296fb1
+#: sell-media/inc/settings/library/helpers.php:163
+msgid "Czech Koruna (&#75;&#269;)"
+msgstr "Tschechische Krone (Kč)"
+
+#
+#
+#
+# wpml-name: 2110b2d4ab2fe4ef4180b413cc8947e8
+#: sell-media/inc/settings/library/helpers.php:168
+msgid "Danish Krone"
+msgstr "Dänische Krone"
+
+#
+#
+#
+# wpml-name: 4455b36a96566f8329293920a7d9be1a
+#: sell-media/inc/settings/library/helpers.php:173
+msgid "Hong Kong Dollar (&#36;)"
+msgstr "Hong Kong Dollar ($)"
+
+#
+#
+#
+# wpml-name: a4f21bb2aa5dbc7a52e15b3d47a0735b
+#: sell-media/inc/settings/library/helpers.php:178
+msgid "Hungarian Forint"
+msgstr "Ungarischer Forint"
+
+#
+#
+#
+# wpml-name: c937e3c4ea0b5fea4bd954a2ef90b70d
+#: sell-media/inc/settings/library/helpers.php:183
+msgid "Israeli Shekel"
+msgstr "Israelischer Shekel"
+
+#
+#
+#
+# wpml-name: 6f36daa6939ccc59aab455d10e9dc11e
+#: sell-media/inc/settings/library/helpers.php:188
+msgid "Japanese Yen (&yen;)"
+msgstr "Japanischer Yen (¥)"
+
+#
+#
+#
+# wpml-name: c7fdb91690b0965b3ac4638b1c6d238e
+#: sell-media/inc/settings/library/helpers.php:193
+msgid "Malaysian Ringgits"
+msgstr "Malayischer Ringgit"
+
+#
+#
+#
+# wpml-name: 0141733f3d275f9a8238b2300b16a44f
+#: sell-media/inc/settings/library/helpers.php:198
+msgid "Mexican Peso (&#36;)"
+msgstr "Mexikanischer Peso ($)"
+
+#
+#
+#
+# wpml-name: 6a4674d81e3ddfd8c82a2873c1803edd
+#: sell-media/inc/settings/library/helpers.php:203
+msgid "New Zealand Dollar (&#36;)"
+msgstr "Neuseeländischer Dollar ($)"
+
+#
+#
+#
+# wpml-name: 0224fbdf63721a050759cd59a8a9fddd
+#: sell-media/inc/settings/library/helpers.php:208
+msgid "Norwegian Krone"
+msgstr "Norwegische Krone"
+
+#
+#
+#
+# wpml-name: f85d362d66c67bffad884a3ae04822ee
+#: sell-media/inc/settings/library/helpers.php:213
+msgid "Philippine Pesos"
+msgstr "Philippinischer Peso"
+
+#
+#
+#
+# wpml-name: 521458528f5faf39e1d25c32098d5c0c
+#: sell-media/inc/settings/library/helpers.php:218
+msgid "Polish Zloty"
+msgstr "Polischer Zloty"
+
+#
+#
+#
+# wpml-name: a53a9eee6bc5c4a1592cda429c46629e
+#: sell-media/inc/settings/library/helpers.php:223
+msgid "Singapore Dollar (&#36;)"
+msgstr "Singapur Dollar ($)"
+
+#
+#
+#
+# wpml-name: 33ee712c3451768da98c4e7114dc19d3
+#: sell-media/inc/settings/library/helpers.php:228
+msgid "Swedish Krona"
+msgstr "Swedish Krone"
+
+#
+#
+#
+# wpml-name: 74086e9575acbfc9716ce2022d71a172
+#: sell-media/inc/settings/library/helpers.php:233
+msgid "Swiss Franc"
+msgstr "Schweizer Franken"
+
+#
+#
+#
+# wpml-name: 1f421920c8316dc5befb5e3494fd3b8d
+#: sell-media/inc/settings/library/helpers.php:238
+msgid "Taiwan New Dollars"
+msgstr "Taiwan Neue Dollar"
+
+#
+#
+#
+# wpml-name: e91203579f334586b5de2bb59479c7e0
+#: sell-media/inc/settings/library/helpers.php:243
+msgid "Thai Baht"
+msgstr "Thai Baht"
+
+#
+#
+#
+# wpml-name: b827acd0bae864f7bad7fd98aaa849d9
+#: sell-media/inc/settings/library/helpers.php:248
+msgid "Turkish Lira (TL)"
+msgstr "Türkische Lire (TL)"
+
+#
+#
+#
+# wpml-name: f33dcb496dffc1d8c26c402142d0bcc7
+#: sell-media/inc/settings/library/helpers.php:253
+msgid "South African rand (R)"
+msgstr "Südafrikanischer Rand (R)"
+
+#: sell-media/inc/settings/settings.php:88
+#: sell-media/inc/settings/settings.php:90
+msgid "Settings"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:124
+msgid " settings updated successfully."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:137
+msgid "Save Settings"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:138
+msgid "Reset Defaults"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:365
+#: sell-media/inc/settings/settings.php:385
+#: sell-media/inc/settings/settings.php:404
+msgid ""
+"This option has no valid options. Please create valid options as an array "
+"inside the settings."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:487 sell-media/inc/term-meta.php:370
+msgid "Upload or Select Image"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:582
+msgid "Upload or Select Images"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:629
+msgid "Version: "
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:630
+msgid "Documentation"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:645
+msgid "Upgrades Available"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:647
+msgid ""
+"Sell prints, create discount codes, watermark images, accept credit cards "
+"and much more with extensions for Sell Media."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:648
+#: sell-media/inc/settings/settings.php:655
+msgid "Order Now"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:652
+msgid "Need Help?"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:654
+msgid ""
+"Having trouble setting up Sell Media? Hire one of our affiliated developers."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:659
+msgid "Reviews"
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:661
+msgid "Great plugin with great support. Includes tons of features."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:664
+msgid ""
+"A young product with massive potential! You can expect great support from "
+"Graph Paper Press."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:667
+msgid "We'd love for you to leave a review if you've found this plugin useful."
+msgstr ""
+
+#: sell-media/inc/settings/settings.php:668
+msgid "Leave a review"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:41
+msgid ""
+"We've received your payment and are processing your order. <a href=\"\" "
+"class=\"reload\">Refresh this page</a> to check your order status. If you "
+"continue to see this message, please contact us."
+msgstr ""
+
+#
+#
+#
+# wpml-name: ea9cf7e47ff33b2be14e6dd07cbcefc6
+#: sell-media/inc/shortcodes.php:258
+msgid "Shipping"
+msgstr "Versand"
+
+#: sell-media/inc/shortcodes.php:275
+msgid "or"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:277
+msgid "continue shopping &raquo;"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:285
+msgid ""
+"By clicking \"Checkout Now\", you are agreeing to our <a href=\"javascript:"
+"void(0);\" class=\"sell-media-empty-dialog-trigger\">terms of service</a>."
+msgstr ""
+
+#
+#
+#
+# wpml-name: ff7211500a6bc613f2e3b57448765789
+#: sell-media/inc/shortcodes.php:298
+#, php-format
+msgid "Your cart is empty. %s"
+msgstr "Ihr Einkaufswagen ist leer. %s"
+
+#: sell-media/inc/shortcodes.php:298
+msgid "Continue shopping"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:323
+msgid "Your Purchase History"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:329
+msgid "Purchase ID"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:356
+msgid "Description"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:357
+msgid "width (px)"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:358
+msgid "height (px)"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:359
+msgid "price"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:502 sell-media/themes/archive.php:90
+msgid " images in "
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:502 sell-media/themes/archive.php:90
+msgid " collection"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:505
+msgid "Starting at "
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:540
+#, php-format
+msgid "You are logged in. %1$s or %2$s."
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:540
+msgid "Logout"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:540
+msgid "continue shopping"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:544
+msgid "Login failed"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:550 sell-media/inc/term-meta.php:409
+#: sell-media/inc/term-meta.php:454
+msgid "Password"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:551
+msgid "Remember Me"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:552
+msgid "Log In"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:556
+msgid "Forgot Password"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:579
+msgid "Newest"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:584
+msgid "Most Popular"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:669 sell-media/inc/shortcodes.php:705
+msgid "Prev"
+msgstr ""
+
+#: sell-media/inc/shortcodes.php:670 sell-media/inc/shortcodes.php:706
+msgid "Next"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:36
+msgid "Add to cart"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:245
+msgid "Back to Thumbnails"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:247
+msgid "Previous Image"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:249
+msgid "Next Image"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:333
+#, php-format
+msgid ""
+"<span id=\"sell-media-credit\" class=\"sell-media-credit\">Powered by <a "
+"href=\"%1$s\" title=\"Sell Media\">%2$s</a></span>"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:442
+msgid "Home"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:623
+msgid "More"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:667
+msgid "File Name"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:673
+msgid "Dimensions"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:683
+msgid "Length"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:684
+msgid "Bitrate"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:94
+msgid ""
+"When a buyer decides to purchase a item from your site, they must choose a "
+"license which most closely identifies their intended use of the item. We "
+"have included some default license types, grouped into two \"parent\" "
+"categories: Personal and Commercial. Each of these two categories have "
+"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
+"Commercial) and \"Website\" (a child of Personal). You can create as many "
+"parent and child licenses as you want."
+msgstr ""
+
+#: sell-media/inc/term-meta.php:111 sell-media/inc/term-meta.php:129
+msgid "Markup"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:205
+msgid ""
+"Increase the price of a item if a buyer selects this license by dragging the "
+"slider above."
+msgstr ""
+
+#: sell-media/inc/term-meta.php:215
+msgid "you have not set a default price"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:219
+#, php-format
+msgid " The %1$s of %2$s with %3$s markup is %4$s"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:239
+msgid ""
+"Check to add this as a default license option for all newly created items."
+msgstr ""
+
+#: sell-media/inc/term-meta.php:243
+msgid "Add as default license?"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:346 sell-media/inc/term-meta.php:387
+#: sell-media/inc/term-meta.php:479
+msgid "Icon"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:374
+msgid ""
+"The icon is not prominent by default; however, some themes may show it. If "
+"no icon is used the featured image to the most recent post will be displayed"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:411
+msgid "This will password protect all items in this collection."
+msgstr ""
+
+#: sell-media/inc/term-meta.php:431
+msgid "Password protect all items in this collection"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:448
+msgid "This collection will inherit the password of the parent collection:"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:483
+msgid "Media"
+msgstr ""
+
+#: sell-media/inc/term-meta.php:488
+msgid "Protected"
+msgstr ""
+
+#: sell-media/inc/widgets.php:28
+msgid "Sell Media Below Single Content"
+msgstr ""
+
+#
+#
+#
+# wpml-name: 2e9a4f1c673597da7d64426f0fd7cd97
+#: sell-media/inc/widgets.php:37
+msgid "Sell Media Below Single Sidebar"
+msgstr "Sell Media unter dem Single Sidebar"
+
+#
+#
+#
+# wpml-name: 4074869961cfe2ca0f407b024bdb98f4
+#: sell-media/inc/widgets/sell-media-exif.php:8
+msgid ""
+"Displays image exif data (shutter speed, aperture, ISO, etc). Only use this "
+"on Single Sidebar Widgetized areas."
+msgstr ""
+"Zeigt die Bild EXIF-Daten an (Verschlusszeit, Blende, ISO, etc.). Fügen Sie "
+"diese nur einem Single Sidebar Widget hinzu."
+
+#: sell-media/inc/widgets/sell-media-exif.php:31
+msgid "Camera "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:36
+msgid "Aperture "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:41
+msgid "Focal Length "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:46
+msgid "Shutter Speed "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:64
+msgid "ISO "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:68
+msgid "Credit "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:73
+msgid "Date "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:78
+#: sell-media/inc/widgets/sell-media-exif.php:80
+msgid "Copyright "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:80
+msgid "by "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:104
+msgid "Camera Info"
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-featured.php:93
+msgid " Select Collection"
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-search.php:34
+msgid "Sell Media Search"
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-search.php:35
+msgid "Adds a search form for searching Sell Media items"
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-search.php:72
+msgid "Title:"
+msgstr ""
+
+#: sell-media/sell-media.php:147 sell-media/sell-media.php:159
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: sell-media/themes/archive.php:26
+#, php-format
+msgid "Search results for: %1$s"
+msgstr ""
+
+#: sell-media/themes/archive.php:91
+msgid "Starting at"
+msgstr ""
+
+#: sell-media/themes/cart.php:31
+#, php-format
+msgid "This item is password protected. %s Click here to enter password. %s"
+msgstr ""
+
+#: sell-media/themes/collection-password.php:13
+msgid "This collection is password protected."
+msgstr ""
+
+#: sell-media/themes/collection-password.php:15
+msgid "Submit"
+msgstr ""
+
+#
+#
+#
+# wpml-name: a9c3981abee009a1e190b7a0bcacc85d
+#~ msgid "or %s"
+#~ msgstr "oder %s"
+
+#
+#
+#
+# wpml-name: 24dc9bd0af4d093371f2e8eeee1ad575
+#~ msgid "Download Extensions for Sell Media"
+#~ msgstr "Erweiterungen für Sell Media herunterladen"
+
+#
+#
+#
+# wpml-name: b76b9d1e9867c0996da3979979d09909
+#~ msgid "Settings for Extensions are shown below."
+#~ msgstr "Die Einstellungen für die Erweiterung finden Sie weiter unten."
+
+#
+#
+#
+# wpml-name: 857c575cce924f396181ab303acfbd43
+#~ msgid "REQUIRED ACTIONS"
+#~ msgstr "ERFORDERLICHE MASSNAHMEN"
+
+#
+#
+#
+# wpml-name: 0a9de33e9d3f87cb3162682d0d138936
+#~ msgid ""
+#~ "Add the email address associated with your PayPal account above. %1$s "
+#~ "%2$s. Your listener URL is %3$s (you will need this when completing "
+#~ "PayPal setup)"
+#~ msgstr ""
+#~ "Fügen Sie die mit Ihrem PayPal Konto verbunde E-mail Adresse hinzu. %1$s "
+#~ "%2$s. Ihre URL %3$s (Sie werden diese Information gebrauchen, um die "
+#~ "PayPal Installation abzuschließen)"
+
+#
+#
+#
+# wpml-name: 49345114b0c6c33d2f2f83aae1a8c9fc
+#~ msgid "Sell Media Below Single Item"
+#~ msgstr "Sell Media unter einzelnem Element"
