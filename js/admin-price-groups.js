@@ -126,7 +126,7 @@ jQuery( document ).ready(function( $ ){
             html += '<p class="description">Price&nbsp;<span class="description">('+sell_media_price_groups.currency_symbol+')</span></p>';
         html += '</td>';
         html += '<td>';
-            html += '<a href="#" class="sell-media-xit sell-media-price-group-repeater-remove" data-type="price">×</a>';
+            html += '<a href="#" class="sell-media-xit sell-media-price-group-repeater-remove" data-type="price">x</a>';
         html += '</td>';
         html += '</tr>';
 
