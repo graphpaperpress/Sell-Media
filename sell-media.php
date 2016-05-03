@@ -223,6 +223,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-payments.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-images.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-audio-videos.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/collections.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/deprecated.php';
