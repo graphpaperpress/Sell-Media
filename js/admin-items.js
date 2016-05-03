@@ -93,6 +93,26 @@ jQuery( document ).ready(function( $ ){
     });
 
     /**
+     * Check if attachment is audio or video.
+     */
+    function sell_media_is_attachment_audio_video( attachment_ids ){
+        var attachment_ids = attachment_ids.split( ',' );
+        var data = {
+            'action' : 'check_attachment_is_audio_video',
+            'attachment_id' : attachment_ids[0]
+        }
+        $.post( ajaxurl, data, function( res ){
+            if( 'true' == res ){
+                $('#sell-media-embed-link-field').show();
+            }
+        }  );
+    }
+
+    // On load check item type.
+    var attachment_ids = $('input#sell-media-attachment-id').val();
+    sell_media_is_attachment_audio_video( attachment_ids );
+
+    /**
      * Update the file list hidden field
      */
     function update_files(){
@@ -104,6 +124,9 @@ jQuery( document ).ready(function( $ ){
 
         // Set the new value
         $('#sell-media-attachment-id').val(new_array);
+
+        // On files update check fields.
+        sell_media_is_attachment_audio_video( new_array );
     }
 
     /**
