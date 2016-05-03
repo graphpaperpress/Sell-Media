@@ -1160,7 +1160,8 @@ input.sell-media-search-text[type=text] {
     #sell-media-ajax-filter-container .sell-media-ajax-filter-terms ul {
       clear: both;
       padding: 0;
-      margin: 0 0 24px 0; }
+      margin: 0 0 24px 0;
+      overflow: hidden; }
       #sell-media-ajax-filter-container .sell-media-ajax-filter-terms ul.hide {
         display: none !important;
         /* override themes */ }
@@ -1170,7 +1171,8 @@ input.sell-media-search-text[type=text] {
         margin: 0;
         padding: 0;
         text-align: left;
-        width: 25%; }
+        width: 25%;
+        float: left; }
         @media only screen and (max-width: 1023px) {
           #sell-media-ajax-filter-container .sell-media-ajax-filter-terms ul li {
             width: 33.333%; } }
