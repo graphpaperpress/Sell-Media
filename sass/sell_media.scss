@@ -124,9 +124,9 @@ a:focus {
 	width: 100%;
 	display: inline-block;
 	padding-bottom: 20px;
-	-webkit-column-break-inside: avoid; /* Chrome, Safari, Opera /
-	page-break-inside: avoid; / Firefox /
-	break-inside: avoid; / IE 10+ */
+	-webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+	page-break-inside: avoid; /* Firefox */
+	break-inside: avoid; /* IE 10+ */
 
 	@media only screen and (max-width: 767px) {
 		width: auto;
