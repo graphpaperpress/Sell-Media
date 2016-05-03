@@ -46,7 +46,7 @@ class SellMediaAudioVideos extends SellMediaProducts {
      * @return string          Embed video/ audio.
      */
     function get_preview( $post_id ){
-        if( $this->is_video_item( $post_id ) || $this->is_audio_item( $post_id ) ){
+        if( self::is_video_item( $post_id ) || self::is_audio_item( $post_id ) ){
 
             $url = get_post_meta( $post_id, 'sell_media_embed_link', true );
             if( '' != $url ){
@@ -95,8 +95,8 @@ class SellMediaAudioVideos extends SellMediaProducts {
 
         $attachment_id = absint( $_POST['attachment_id'] );
 
-        $is_audio = $this->is_attachment_audio( $attachment_id );
-        $is_video = $this->is_attachment_video( $attachment_id );
+        $is_audio = self::is_attachment_audio( $attachment_id );
+        $is_video = self::is_attachment_video( $attachment_id );
 
         if( $is_video || $is_audio ){
             echo 'true';
@@ -222,6 +222,13 @@ class SellMediaAudioVideos extends SellMediaProducts {
         return $classes;
     }
 
+    /**
+     * Replace quick view text with preview.
+     * @param  string $text          Quick view text.
+     * @param  int $post_id       ID of post.
+     * @param  int $attachment_id Attachment id.
+     * @return string                Modified string.
+     */
     function preview_text( $text, $post_id, $attachment_id ){
         if( self::is_video_item( $post_id ) || self::is_audio_item( $post_id ) )
             return __( 'Preview', 'sell_media' );
