@@ -130,29 +130,11 @@ class SellMediaAudioVideos extends SellMediaProducts {
      * @param  int  $post_id ID of post.
      * @return boolean          True if type is video.
      */
-    function is_video_item( $post_id ){
+    public static function is_video_item( $post_id ){
         $attachment_ids = sell_media_get_attachments ( $post_id );
         if( !empty( $attachment_ids ) ){
             foreach ($attachment_ids as $key => $attachment_id) {
-                $type = get_post_mime_type($attachment_id);
-                switch ($type) {
-                    case 'video/x-ms-asf' :
-                    case 'video/x-ms-wmv' :
-                    case 'video/x-ms-wmx' :
-                    case 'video/x-ms-wm' :
-                    case 'video/avi' :
-                    case 'video/divx' :
-                    case 'video/x-flv' :
-                    case 'video/quicktime' :
-                    case 'video/mpeg' :
-                    case 'video/mp4' :
-                    case 'video/ogg' :
-                    case 'video/webm' :
-                    case 'video/x-matroska' :
-                      return true; break;
-                    default:
-                      return false;
-                }
+                return self::is_attachment_video( $attachment_id );
             }
         }
     }
@@ -162,7 +144,7 @@ class SellMediaAudioVideos extends SellMediaProducts {
      * @param  int  $attachment_id ID of attachment.
      * @return boolean                True if is video.
      */
-    function is_attachment_video( $attachment_id ){
+    public static function is_attachment_video( $attachment_id ){
         $type = get_post_mime_type($attachment_id);
         switch ($type) {
             case 'video/x-ms-asf' :
@@ -189,24 +171,11 @@ class SellMediaAudioVideos extends SellMediaProducts {
      * @param  int  $post_id ID of post.
      * @return boolean          True if type is audio.
      */
-    function is_audio_item( $post_id ){
+    public static function is_audio_item( $post_id ){
         $attachment_ids = sell_media_get_attachments ( $post_id );
         if( !empty( $attachment_ids ) ){
             foreach ($attachment_ids as $key => $attachment_id) {
-                $type = get_post_mime_type($attachment_id);
-                switch ($type) {
-                    case 'audio/mpeg' :
-                    case 'audio/x-realaudio' :
-                    case 'audio/wav' :
-                    case 'audio/ogg' :
-                    case 'audio/midi' :
-                    case 'audio/x-ms-wma' :
-                    case 'audio/x-ms-wax' :
-                    case 'audio/x-matroska' :
-                      return true; break;
-                    default:
-                      return false;
-                }
+                return self::is_attachment_audio( $attachment_id );
             }
         }
     }
@@ -216,7 +185,7 @@ class SellMediaAudioVideos extends SellMediaProducts {
      * @param  int  $attachment_id ID of attachment.
      * @return boolean                True if is audio.
      */
-    function is_attachment_audio( $attachment_id ){
+    public static function is_attachment_audio( $attachment_id ){
         $type = get_post_mime_type($attachment_id);
         switch ($type) {
             case 'audio/mpeg' :
@@ -242,11 +211,11 @@ class SellMediaAudioVideos extends SellMediaProducts {
             return $classes;
         }
         
-        if( $this->is_video_item( $post_id ) ){
+        if( self::is_video_item( $post_id ) ){
             return $classes . ' sell-media-grid-single-video-item';
         }
 
-        if( $this->is_audio_item( $post_id ) ){
+        if( self::is_audio_item( $post_id ) ){
             return $classes . ' sell-media-grid-single-audio-item';
         }
 
@@ -254,7 +223,7 @@ class SellMediaAudioVideos extends SellMediaProducts {
     }
 
     function preview_text( $text, $post_id, $attachment_id ){
-        if( $this->is_video_item( $post_id ) || $this->is_audio_item( $post_id ) )
+        if( self::is_video_item( $post_id ) || self::is_audio_item( $post_id ) )
             return __( 'Preview', 'sell_media' );
         return $text;
     }
