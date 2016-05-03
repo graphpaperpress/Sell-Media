@@ -246,6 +246,10 @@ class SellMediaAudioVideos extends SellMediaProducts {
             return $classes . ' sell-media-grid-single-video-item';
         }
 
+        if( $this->is_audio_item( $post_id ) ){
+            return $classes . ' sell-media-grid-single-audio-item';
+        }
+
         return $classes;
     }
 
