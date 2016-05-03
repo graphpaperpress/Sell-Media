@@ -21,6 +21,8 @@ class SellMediaAudioVideos extends SellMediaProducts {
 
         add_action( 'sell_media_extra_meta_save', array( $this, 'save_meta_fields' ) );
         add_action( 'wp_ajax_check_attachment_is_audio_video', array( $this, 'check_attachment_is_audio_video' ) );
+
+        add_filter( 'sell_media_quick_view_text', array( $this, 'preview_text' ), 10, 3 );
     }
 
     /**
@@ -182,6 +184,33 @@ class SellMediaAudioVideos extends SellMediaProducts {
     }
 
     /**
+     * Check if item is audio type or not.
+     * @param  int  $post_id ID of post.
+     * @return boolean          True if type is audio.
+     */
+    function is_audio_item( $post_id ){
+        $attachment_ids = sell_media_get_attachments ( $post_id );
+        if( !empty( $attachment_ids ) ){
+            foreach ($attachment_ids as $key => $attachment_id) {
+                $type = get_post_mime_type($attachment_id);
+                switch ($type) {
+                    case 'audio/mpeg' :
+                    case 'audio/x-realaudio' :
+                    case 'audio/wav' :
+                    case 'audio/ogg' :
+                    case 'audio/midi' :
+                    case 'audio/x-ms-wma' :
+                    case 'audio/x-ms-wax' :
+                    case 'audio/x-matroska' :
+                      return true; break;
+                    default:
+                      return false;
+                }
+            }
+        }
+    }
+
+    /**
      * Check if attachment is audio.
      * @param  int  $attachment_id ID of attachment.
      * @return boolean                True if is audio.
@@ -217,6 +246,12 @@ class SellMediaAudioVideos extends SellMediaProducts {
         }
 
         return $classes;
+    }
+
+    function preview_text( $text, $post_id, $attachment_id ){
+        if( $this->is_video_item( $post_id ) || $this->is_audio_item( $post_id ) )
+            return __( 'Preview', 'sell_media' );
+        return $text;
     }
 
 }
