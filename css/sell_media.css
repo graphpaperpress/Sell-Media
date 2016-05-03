@@ -119,7 +119,10 @@ a:focus {
   width: 100%;
   display: inline-block;
   padding-bottom: 20px;
-  break-inside: avoid; }
+  -webkit-column-break-inside: avoid;
+                                    /* Chrome, Safari, Opera /
+page-break-inside: avoid; / Firefox /
+break-inside: avoid; / IE 10+ */ }
   @media only screen and (max-width: 767px) {
     .sell-media-masonry {
       width: auto;
