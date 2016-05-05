@@ -23,6 +23,9 @@ class SellMediaAudioVideos extends SellMediaProducts {
         add_action( 'wp_ajax_check_attachment_is_audio_video', array( $this, 'check_attachment_is_audio_video' ) );
 
         add_filter( 'sell_media_quick_view_text', array( $this, 'preview_text' ), 10, 3 );
+
+        add_filter('wp_get_attachment_url', array( $this, 'change_attachment_url' ), 9, 2 );
+        add_action( 'init', array( $this, 'read_protected_file' ) );
     }
 
     /**
@@ -235,6 +238,90 @@ class SellMediaAudioVideos extends SellMediaProducts {
         return $text;
     }
 
+    /**
+     * Function to give custom url to protected files.
+     * URL is visible only to the admins who can manage options.
+     * @param  string $url           Default attachment url.
+     * @param  int $attachment_id    ID of attachment.
+     * @return string                Modified url.
+     */
+    function change_attachment_url( $url, $attachment_id ){
+        // Check if user who can manage options is logged in admin section. 
+        if( !is_admin() || !is_user_logged_in() || !current_user_can( 'manage_options' ) ){
+            return $url;
+        }
+
+        if ( self::is_attachment_video( $attachment_id ) || self::is_attachment_audio( $attachment_id ) ){
+
+            $upload_dir = wp_upload_dir();
+            $file_path = str_replace( $upload_dir['baseurl'], '', $url );
+            $file = $upload_dir['basedir'] . $file_path;
+
+            // Check if file exits in default uploads folder.
+            if( !file_exists( $file ) ){
+                $url =  htmlspecialchars_decode( wp_nonce_url( home_url( '/?sell_media_id='.$attachment_id ), 'sell_media_attachment_nonce_action', 'sell_media_attachment_nonce'  ));
+            }
+        }
+
+
+        return $url;
+    }
+
+    /**
+     * Read protected file and render it in browser.
+     */
+    function read_protected_file(){
+        if( isset( $_GET['sell_media_id'] ) &&  '' != $_GET['sell_media_id'] && is_user_logged_in() && isset( $_GET['sell_media_attachment_nonce'] ) && current_user_can( 'manage_options' ) ){
+
+            // Verfiy nonce.
+            if ( !wp_verify_nonce($_GET['sell_media_attachment_nonce'], 'sell_media_attachment_nonce_action')) {
+                return;
+            }
+
+            $attachment_id = absint( $_GET['sell_media_id'] );
+            $upload_dir = wp_upload_dir();
+            $unprotected_file = get_attached_file( $attachment_id );
+            $file_path = str_replace( $upload_dir['basedir'], '', $unprotected_file );
+            $file = $upload_dir['basedir'] . '/sell_media'. $file_path;
+            
+            // Check if attachment is video or audio.
+            if ( self::is_attachment_video( $attachment_id ) || self::is_attachment_audio( $attachment_id ) ){
+
+                // Check if file exits.
+                if ( ! file_exists( $file ) ) {
+                    wp_die( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $file );
+                    exit();
+                }
+
+                $file_type = wp_check_filetype( $file );
+
+                if ( ! ini_get( 'safe_mode' ) ){
+                    set_time_limit( 0 );
+                }
+
+                if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
+                    set_magic_quotes_runtime(0);
+                }
+
+                if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
+                @ini_set( 'zlib.output_compression', 'Off' );
+
+                nocache_headers();
+                header( "Robots: none" );
+                header( "Content-Type: " . $file_type['type'] . "" );
+                header( "Content-Description: File Transfer" );
+                header("Content-Disposition: inline;");
+                header("Content-Transfer-Encoding: binary\n");
+                header('Connection: close');
+
+                if ( !wp_attachment_is_image( $attachment_id ) ){                    
+                    Sell_Media()->download->download_file( $file );
+                }
+                exit;
+            }
+
+        }
+    }
 }
 
 new SellMediaAudioVideos();
