@@ -1515,6 +1515,9 @@ add_filter( 'wp_update_attachment_metadata', 'sell_media_update_attachment_metad
  */
 function sell_media_generate_attachment_metadata( $data, $attachment_id) {
 
+	if ( empty( $data['file'] ) )
+		return;
+
 	$uploads = wp_upload_dir();
 	$sm_file_path = trailingslashit( $uploads['basedir'] ) . 'sell_media/' . $data['file'];
 	$sm_file = apply_filters( 'sell_media_original_image_path', $sm_file_path, $attachment_id, $data );
@@ -1680,19 +1683,22 @@ function sell_media_regenerate_missing_files( $post_id, $attachment_id ) {
 		/**
 		 * Unlike photos, video and audio files aren't copied to public directory.
 		 * This means $file_meta['file'] will be empty.
-		 * So we check if attachment is an image and proceed if so.
+		 * So we only proceed if the file parameter exists.
 		 */
-		$is_image =  wp_attachment_is_image( $post_id );
+		if ( ! empty( $file_meta['file'] ) ) {
 
-		if ( $is_image ) {
-		// get the original protected file.
-		$original_file_path = sell_media_get_upload_dir() . '/' . $file_meta['file'];
+			// build the public file path.
+			$upload_dir = wp_upload_dir();
+			$public_file_path = $upload_dir['basedir'] . '/' . $file_meta['file'];
+
+			// get the original protected file.
+			$original_file_path = sell_media_get_upload_dir() . '/' . $file_meta['file'];
 
 			// check if the original protected file exists
 			if ( file_exists( $original_file_path ) ) {
-				copy( $original_file_path, $attached_file );
+				copy( $original_file_path, $public_file_path );
 				@set_time_limit( 900 );
-				include( ABSPATH . 'wp-admin/includes/image.php' );
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
 				$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
 				if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
 					wp_update_attachment_metadata( $attachment_id, $metadata );
