@@ -1677,19 +1677,28 @@ function sell_media_regenerate_missing_files( $post_id, $attachment_id ) {
 	// Check if attachment file path exits.
 	if ( ! file_exists( $attached_file ) ) {
 		$file_meta = wp_get_attachment_metadata( $attachment_id );
+		/**
+		 * Unlike photos, video and audio files aren't copied to public directory.
+		 * This means $file_meta['file'] will be empty.
+		 * So we check if attachment is an image and proceed if so.
+		 */
+		$is_image =  wp_attachment_is_image( $post_id );
+
+		if ( $is_image ) {
 		// get the original protected file.
 		$original_file_path = sell_media_get_upload_dir() . '/' . $file_meta['file'];
 
-		// check if the original protected file exists
-		if ( file_exists( $original_file_path ) ) {
-			copy( $original_file_path, $attached_file );
-			@set_time_limit( 900 );
-			include( ABSPATH . 'wp-admin/includes/image.php' );
-			$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
-			if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
-				wp_update_attachment_metadata( $attachment_id, $metadata );
-			}
-   		}
+			// check if the original protected file exists
+			if ( file_exists( $original_file_path ) ) {
+				copy( $original_file_path, $attached_file );
+				@set_time_limit( 900 );
+				include( ABSPATH . 'wp-admin/includes/image.php' );
+				$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
+				if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
+					wp_update_attachment_metadata( $attachment_id, $metadata );
+				}
+	   		}
+	   	}
     }
 }
 add_action( 'sell_media_before_item_icon', 'sell_media_regenerate_missing_files', 10, 2 );
