@@ -1668,42 +1668,27 @@ add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_m
  * Regenerate missing attachment files
  * If for some reason the file is missing in public uploads
  * we should attempt to regenerate the thumbnails from the private source file
- * and generate a new attachment ID.
+ * and generate a new thumbnails.
  */
 function sell_media_regenerate_missing_files( $post_id, $attachment_id ) {
-	
-	// check if the file exists
+	// Retrieve attached file path based on attachment ID.
 	$attached_file = get_attached_file( $attachment_id );
-	if ( ! file_exists( $attached_file ) ) {
 
-		// get the original protected file
-		$original_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
-		$original_file_path = sell_media_get_upload_dir() . '/' . $original_file;
+	// Check if attachment file path exits.
+	if ( ! file_exists( $attached_file ) ) {
+		$file_meta = wp_get_attachment_metadata( $attachment_id );
+		// get the original protected file.
+		$original_file_path = sell_media_get_upload_dir() . '/' . $file_meta['file'];
 
 		// check if the original protected file exists
 		if ( file_exists( $original_file_path ) ) {
-
-			$wp_filetype = wp_check_filetype( basename( $original_file ), null );
-	        $wp_upload_dir = wp_upload_dir();
-	        $attachment = array(
-	           'guid' => $wp_upload_dir['url'] . '/' . basename( $original_file ),
-	           'post_mime_type' => $wp_filetype['type'],
-	           'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $original_file ) ),
-	           'post_content' => '',
-	           'post_status' => 'inherit'
-	        );
-	        
-	        // insert attachment
-	        $attach_id = wp_insert_attachment( $attachment, $original_file_path );
-	        // required since we're not in admin
-	        require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	        $attach_data = wp_generate_attachment_metadata( $attach_id, $original_file_path );
-	        wp_update_attachment_metadata( $attach_id, $attach_data );
-	        set_post_thumbnail( $post_id, $attach_id );
-
-	        // using the old attachment_id will cause downloads to fail
-	        // so, let's update the attachment_id on the post
-   			update_post_meta( $post_id, '_sell_media_attachment_id', $attach_id );
+			copy( $original_file_path, $attached_file );
+			@set_time_limit( 900 );
+			include( ABSPATH . 'wp-admin/includes/image.php' );
+			$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
+			if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
+				wp_update_attachment_metadata( $attachment_id, $metadata );
+			}
    		}
     }
 }
