@@ -26,6 +26,7 @@ class SellMediaAudioVideos extends SellMediaProducts {
 
         add_filter('wp_get_attachment_url', array( $this, 'change_attachment_url' ), 9, 2 );
         add_action( 'init', array( $this, 'read_protected_file' ) );
+        add_action( 'sell_media_before_content', array( $this, 'before_content' ) );
     }
 
     /**
@@ -320,6 +321,13 @@ class SellMediaAudioVideos extends SellMediaProducts {
                 exit;
             }
 
+        }
+    }
+
+    function before_content( $post_id ) {
+        $preview_url =  $this->get_preview( $post_id );
+        if( $preview_url ){
+            echo $preview_url;
         }
     }
 }
