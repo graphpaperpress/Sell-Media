@@ -1488,7 +1488,6 @@ function sell_media_update_attachment_metadata1( $data, $post_id ){
 		$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
 		$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
 
-
 		if( file_exists( $large_file ) ){
 			$copy = copy( $large_file, $main_file );
 			if( $copy ){
@@ -1504,7 +1503,6 @@ function sell_media_update_attachment_metadata1( $data, $post_id ){
 	}
 	return $data;
 }
-
 add_filter( 'wp_update_attachment_metadata', 'sell_media_update_attachment_metadata1', 10, 2 );
 
 /**
@@ -1517,26 +1515,24 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 	
 	/**
 	 * If $data['file'] isn't set, the files are missing.
-	 * So, let's derive $data['file'] from post meta.
+	 * So, let's derive $data['file'] from the missing public filepath.
 	 */
-	global $post;
 	if ( empty( $data['file'] ) ) {
-		$data['file'] = get_post_meta( $post->ID, '_sell_media_attached_file', true );
+		$data['file'] = sell_media_get_public_filepath( $attachment_id );
 	}
 
 	$uploads = wp_upload_dir();
 	$sm_file_path = trailingslashit( $uploads['basedir'] ) . 'sell_media/' . $data['file'];
 	$sm_file = apply_filters( 'sell_media_original_image_path', $sm_file_path, $attachment_id, $data );
-	if( !file_exists( $sm_file ) )
+	if ( ! file_exists( $sm_file ) )
 		return $data;
 
 	$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
-	$filename = basename( $data['file'] );
-	$upload_folder = trailingslashit( dirname( $main_file ) );
+	
 	@set_time_limit( 900 );
-	$copy = copy($sm_file, $main_file);
+	$copy = copy( $sm_file, $main_file );
 
-	if( !$copy )
+	if ( ! $copy )
 		return $data;
 
 	$file = $main_file;
@@ -1644,24 +1640,28 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 		}
 	}
 
-	
 	// Remove the blob of binary data from the array.
 	if ( $metadata ) {
 		unset( $metadata['image']['data'] );
 	}
 
 	// Core END
-	$date_folder = dirname( $data['file'] );
-	$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
-	$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
 
+	// Sometimes the original source file is smaller than the large size
+	// this causes the copy to fail
+	if ( array_key_exists( 'large', $metadata['sizes'] ) ) {
 
-	if( file_exists( $large_file ) ){
-		$copy = copy( $large_file, $main_file );
-		if( $copy ){
+		$date_folder = dirname( $data['file'] );
+		$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
+		$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
 
-			$metadata['width'] = $metadata['sizes']['large']['width'];
-			$metadata['height'] = $metadata['sizes']['large']['height'];
+		if ( file_exists( $large_file ) ){
+			$copy = copy( $large_file, $main_file );
+			if ( $copy ) {
+
+				$metadata['width'] = $metadata['sizes']['large']['width'];
+				$metadata['height'] = $metadata['sizes']['large']['height'];
+			}
 		}
 	}
 
@@ -1669,7 +1669,6 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 	
 	return $metadata;
 }
-
 add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_metadata', 10, 2 );
 
 
@@ -1680,37 +1679,60 @@ add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_m
  * and generate a new thumbnails.
  */
 function sell_media_regenerate_missing_files( $post_id, $attachment_id ) {
+
 	// Retrieve attached file path based on attachment ID.
 	$attached_file = get_attached_file( $attachment_id );
 
-	// Check if attachment file path exits.
-	if ( ! file_exists( $attached_file ) ) {
-		$file_meta = wp_get_attachment_metadata( $attachment_id );
-		/**
-		 * Unlike photos, video and audio files aren't copied to public directory.
-		 * This means $file_meta['file'] will be empty.
-		 * So we only proceed if the file parameter exists.
-		 */
-		if ( ! empty( $file_meta['file'] ) ) {
+	// File exists, so bail
+	if ( file_exists( $attached_file ) ) {
+		return false;
+	}
 
-			// build the public file path.
-			$upload_dir = wp_upload_dir();
-			$public_file_path = $upload_dir['basedir'] . '/' . $file_meta['file'];
+	/**
+	 * Unlike photos, video and audio files aren't copied to public directory.
+	 * This means $attachment_meta['file'] will be empty.
+	 * So we only proceed if the file parameter exists.
+	 */
+	$attachment_metadata = wp_get_attachment_metadata( $attachment_id );
+	// build url from public attachment url
+	if ( empty( $attachment_metadata['file'] ) ) {
+		$attachment_metadata['file'] = sell_media_get_public_filepath( $attachment_id );
+	}
 
-			// get the original protected file.
-			$original_file_path = sell_media_get_upload_dir() . '/' . $file_meta['file'];
+	if ( ! empty( $attachment_metadata['file'] ) ) {
 
-			// check if the original protected file exists
-			if ( file_exists( $original_file_path ) ) {
-				copy( $original_file_path, $public_file_path );
-				@set_time_limit( 900 );
-				require_once( ABSPATH . 'wp-admin/includes/image.php' );
-				$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
-				if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
-					wp_update_attachment_metadata( $attachment_id, $metadata );
-				}
-	   		}
-	   	}
-    }
+		// build the public file path.
+		$upload_dir = wp_upload_dir();
+		$public_file_path = $upload_dir['basedir'] . '/' . $attachment_metadata['file'];
+
+		// get the original protected file.
+		$original_file_path = sell_media_get_upload_dir() . '/' . $attachment_metadata['file'];
+
+		// check if the original protected file exists
+		if ( file_exists( $original_file_path ) ) {
+			copy( $original_file_path, $public_file_path );
+			@set_time_limit( 900 );
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
+			if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
+				wp_update_attachment_metadata( $attachment_id, $metadata );
+			}
+   		}
+   	}
 }
 add_action( 'sell_media_before_item_icon', 'sell_media_regenerate_missing_files', 10, 2 );
+
+
+/**
+ * Gets the public filepath for an attachment
+ * 
+ * @param  int $attachment_id the attachment id
+ * @return string returns something like 2016/02/image.jpg
+ */
+function sell_media_get_public_filepath( $attachment_id ){
+	$public_file = wp_get_attachment_url( $attachment_id );
+	$string = '/uploads/';
+	if ( ( $pos = strpos( $public_file, $string ) ) !== FALSE ) { 
+		return substr( $public_file, strpos( $public_file, $string ) + strlen( $string ) );
+	}
+}
