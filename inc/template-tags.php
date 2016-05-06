@@ -128,6 +128,8 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 		$attachment_id = $post_id;
 	}
 
+	do_action( 'sell_media_before_item_icon', $post_id, $attachment_id );
+
 	// check if featured image exists
 	if ( '' != get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
@@ -137,7 +139,8 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
-	// use default WP icons
+
+	// icon
 	} else {
 		$mime_type = get_post_mime_type( $attachment_id );
 		switch ( $mime_type ) {

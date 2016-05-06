@@ -1662,3 +1662,49 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id) {
 }
 
 add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_metadata', 10, 2 );
+
+
+/*
+ * Regenerate missing attachment files
+ * If for some reason the file is missing in public uploads
+ * we should attempt to regenerate the thumbnails from the private source file
+ * and generate a new attachment ID.
+ */
+function sell_media_regenerate_missing_files( $post_id, $attachment_id ) {
+	
+	// check if the file exists
+	$attached_file = get_attached_file( $attachment_id );
+	if ( ! file_exists( $attached_file ) ) {
+
+		// get the original protected file
+		$original_file = get_post_meta( $post_id, '_sell_media_attached_file', true );
+		$original_file_path = sell_media_get_upload_dir() . '/' . $original_file;
+
+		// check if the original protected file exists
+		if ( file_exists( $original_file_path ) ) {
+
+			$wp_filetype = wp_check_filetype( basename( $original_file ), null );
+	        $wp_upload_dir = wp_upload_dir();
+	        $attachment = array(
+	           'guid' => $wp_upload_dir['url'] . '/' . basename( $original_file ),
+	           'post_mime_type' => $wp_filetype['type'],
+	           'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $original_file ) ),
+	           'post_content' => '',
+	           'post_status' => 'inherit'
+	        );
+	        
+	        // insert attachment
+	        $attach_id = wp_insert_attachment( $attachment, $original_file_path );
+	        // required since we're not in admin
+	        require_once( ABSPATH . 'wp-admin/includes/image.php' );
+	        $attach_data = wp_generate_attachment_metadata( $attach_id, $original_file_path );
+	        wp_update_attachment_metadata( $attach_id, $attach_data );
+	        set_post_thumbnail( $post_id, $attach_id );
+
+	        // using the old attachment_id will cause downloads to fail
+	        // so, let's update the attachment_id on the post
+   			update_post_meta( $post_id, '_sell_media_attachment_id', $attach_id );
+   		}
+    }
+}
+add_action( 'sell_media_before_item_icon', 'sell_media_regenerate_missing_files', 10, 2 );
