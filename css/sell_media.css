@@ -421,6 +421,17 @@ input[type="submit"].sell-media-button,
   margin: 25.6px 0;
   position: relative; }
 
+.sell-media-grid-single-video-item div.sell-media-quick-view:before,
+.sell-media-grid-single-audio-item div.sell-media-quick-view:before {
+  font-family: dashicons;
+  content: "\f522";
+  float: left;
+  font-size: 25px;
+  margin: 1px 0 0 5px;
+  position: absolute;
+  top: 3px;
+  left: 0px; }
+
 .sell-media-item {
   box-shadow: none !important;
   position: relative;
