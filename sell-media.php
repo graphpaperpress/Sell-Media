@@ -223,7 +223,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-payments.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-images.php';
-			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-audio-videos.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-audio-video.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/collections.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/deprecated.php';
@@ -244,7 +244,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-updater.php';
 
 			// Load files if is front end.
-			if( self::$instance->is_request( 'frontend' ) ){
+			if ( self::$instance->is_request( 'frontend' ) ){
 
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-phpsessions.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-cart.php';

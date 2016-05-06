@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class SellMediaAudioVideos extends SellMediaProducts {
+class SellMediaAudioVideo extends SellMediaProducts {
 
     function __construct(){
         add_filter( 'sell_media_quick_view_post_thumbnail', array( $this, 'quick_view_thumbnail' ), 10, 2 );
@@ -332,4 +332,4 @@ class SellMediaAudioVideos extends SellMediaProducts {
     }
 }
 
-new SellMediaAudioVideos();
+new SellMediaAudioVideo();

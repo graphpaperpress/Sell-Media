@@ -194,7 +194,7 @@ function sell_media_gallery( $post_id ) {
 		$attachment_id = get_query_var( 'id' );
 		if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
 			do_action( 'sell_media_above_gallery', $post_id );
-			if( SellMediaAudioVideos::is_video_item( $post_id ) || SellMediaAudioVideos::is_audio_item( $post_id ) ){
+			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ){
  				return false;
  			}
 			$html .= sell_media_item_icon( $attachment_id, 'large', false );
@@ -557,7 +557,7 @@ function sell_media_append_media( $post_id ) {
 		if ( sell_media_has_multiple_attachments( $post_id ) ) {
 			$html .= sell_media_gallery( $post_id );
 		} else {
-			if( SellMediaAudioVideos::is_video_item( $post_id ) || SellMediaAudioVideos::is_audio_item( $post_id ) ){
+			if( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ){
  				return false;
  			}
 			sell_media_item_icon( $post_id, 'large' );
