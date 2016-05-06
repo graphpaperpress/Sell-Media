@@ -1513,10 +1513,16 @@ add_filter( 'wp_update_attachment_metadata', 'sell_media_update_attachment_metad
  * @param  int 	 $attachment_id 	Attachment id.
  * @return array                Updated meta data array.
  */
-function sell_media_generate_attachment_metadata( $data, $attachment_id) {
-
-	if ( empty( $data['file'] ) )
-		return;
+function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
+	
+	/**
+	 * If $data['file'] isn't set, the files are missing.
+	 * So, let's derive $data['file'] from post meta.
+	 */
+	global $post;
+	if ( empty( $data['file'] ) ) {
+		$data['file'] = get_post_meta( $post->ID, '_sell_media_attached_file', true );
+	}
 
 	$uploads = wp_upload_dir();
 	$sm_file_path = trailingslashit( $uploads['basedir'] ) . 'sell_media/' . $data['file'];
