@@ -16,6 +16,12 @@
  */
 function sell_media_lightbox_link( $post_id=null, $attachment_id=null ) {
 
+    $settings = sell_media_get_plugin_options();
+    // Disables lightbox link
+    if ( empty( $settings->lightbox_page ) ) {
+        return false;
+    }
+    
     $item                   = array();
     $item['post_id']        = $post_id;
     $item['attachment_id']  = ( ! empty( $attachment_id ) ) ? $attachment_id : sell_media_get_attachment_id( $post_id );
@@ -24,7 +30,6 @@ function sell_media_lightbox_link( $post_id=null, $attachment_id=null ) {
 
     // display lightbox notice on single posts
     if ( is_single() ) {
-        $settings = sell_media_get_plugin_options();
 
         // show a link if lightbox page is assigned in settings
         $link = ( ! empty( $settings->lightbox_page ) ) ? '<a href="' . get_the_permalink( $settings->lightbox_page ) . '" title="' . __( 'Go to lightbox', 'sell_media' ) . '">' . __( 'lightbox', 'sell_media' ) . '</a>' : __( 'lightbox', 'sell_media' );
