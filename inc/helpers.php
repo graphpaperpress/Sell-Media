@@ -1738,7 +1738,7 @@ function sell_media_regenerate_missing_files( $post_id ) {
 	   	}
 	}
 }
-add_action( 'sell_media_before_item_icon', 'sell_media_regenerate_missing_files', 10, 2 );
+add_action( 'save_post', 'sell_media_regenerate_missing_files' );
 
 
 /**

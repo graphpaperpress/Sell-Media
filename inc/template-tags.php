@@ -128,8 +128,6 @@ function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
 		$attachment_id = $post_id;
 	}
 
-	do_action( 'sell_media_before_item_icon', $post_id );
-
 	// check if featured image exists
 	if ( '' != get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
