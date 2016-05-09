@@ -35,10 +35,9 @@ class SellMediaImages extends SellMediaProducts {
 
             // Assign the FULL PATH to our destination file.
             $wp_upload_dir = wp_upload_dir();
-
-            $destination_file = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
-            $destination_dir  = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/';
-
+            //$destination_file = sell_media_get_upload_dir() . $wp_upload_dir['subdir'] . '/' . basename( $original_file );
+            $protected_dir = sell_media_get_upload_dir();
+            $destination_file = str_replace( $wp_upload_dir['basedir'], $protected_dir, $original_file );
 
             // Check if the destination directory exists, i.e.
             // wp-content/uploads/sell_media/YYYY/MM if not we create it.

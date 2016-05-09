@@ -51,26 +51,6 @@ Class SellMediaAdminNotices {
             }
 
             /**
-             * Checkout
-             */
-            if ( isset( $this->settings->checkout_page ) && $this->settings->checkout_page == 1 || empty( $this->settings->checkout_page ) ){
-                $notices[] = array(
-                    'slug' => 'checkout-page',
-                    'message' => sprintf( __( 'Please create a checkout page using the <code>[sell_media_checkout]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
-                );
-            }
-
-            /**
-             * Thanks
-             */
-            if ( isset( $this->settings->thanks_page ) && $this->settings->thanks_page == 1 || empty( $this->settings->thanks_page ) ){
-                $notices[] = array(
-                    'slug' => 'thanks-page',
-                    'message' => sprintf( __( 'Please create a thanks page using the <code>[sell_media_thanks]</code> shortcode and assign it in your <a href="%1$s">settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options' ) ) )
-                );
-            }
-
-            /**
              * PayPal email
              */
             if ( empty( $this->settings->paypal_email ) ){

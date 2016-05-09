@@ -496,45 +496,30 @@ function sell_media_sales_stats(){
  *
  * @since 1.0.4
  */
-function sell_media_before_delete_post( $postid, $attachment_id=null ){
+function sell_media_before_delete_post( $post_id, $attachment_id=null ){
 
-    $post_type = get_post_type( $postid );
+    $post_type = get_post_type( $post_id );
 
     if ( $post_type != 'sell_media_item' ) return;
+    $wp_upload_dir = wp_upload_dir();
 
     /**
-     * Get the attachment/thumbnail file so we can replace the "original", i.e.
-     * lower quality "original" with the file in the protected area.
+     * Get and format the attachment ids
      */
-    $attached_file = get_post_meta( $postid, '_sell_media_attached_file', true );
-    if ( empty( $attachment_id ) ){
-        $attachment_id = get_post_meta( $postid, '_sell_media_attachment_id', true );
-    } else {
-        delete_post_meta( $attachment_id, '_sell_media_for_sale_product_id' );
-    }
-
-
-    delete_post_meta( $attachment_id, '_sell_media_for_sale_product_id' );
-
-    $attached_file_path = sell_media_get_upload_dir() . '/' . $attached_file;
-
-    // Delete the file stored in sell_media
-    if ( file_exists( $attached_file_path ) ) {
-
-        /**
-         * Due to how WordPress handles attachments that are NOT
-         * images we check if the "_wp_attached_file" is in fact
-         * stored in the sell_media/ directory, i.e. there's only
-         * "one" copy of the attachment.
-         */
-        $pos = strpos( $attached_file, 'sell_media/' );
-        if ( $pos !== false ){
-            $attached_file = str_replace( 'sell_media/', '', $attached_file );
+    $attachment_ids = ( sell_media_has_multiple_attachments( $post_id ) ) ? sell_media_get_attachments( $post_id ) : array( get_post_meta( $post_id, '_sell_media_attachment_id', true ) );
+    
+    if ( $attachment_ids ) foreach( $attachment_ids as $attachment_id ) {
+        
+        $attached_file = sell_media_get_public_filepath( $attachment_id );
+        $attached_file_protected = sell_media_get_upload_dir() . '/' . $attached_file;
+        $attached_file_unprotected = $wp_upload_dir['basedir'] . '/' . $attached_file;
+        
+        // Delete the file stored in sell_media
+        if ( file_exists( $attached_file_protected ) ) {
+            // Copy our "original" back
+            @copy( $attached_file_protected, $attached_file_unprotected );
+            @unlink( $attached_file_protected );
         }
-
-        // Copy our "original" back
-        @copy( $attached_file_path, $wp_upload_dir['basedir'] . '/' . $attached_file );
-        @unlink( $attached_file_path );
 
     }
     return;

@@ -1738,7 +1738,7 @@ function sell_media_regenerate_missing_files( $post_id ) {
 	   	}
 	}
 }
-add_action( 'save_post', 'sell_media_regenerate_missing_files' );
+add_action( 'sell_media_before_content', 'sell_media_regenerate_missing_files' );
 
 
 /**
@@ -1754,6 +1754,7 @@ function sell_media_get_public_filepath( $attachment_id ){
 		return substr( $public_file, strpos( $public_file, $string ) + strlen( $string ) );
 	}
 }
+
 
 /**
  * Clear cart after payment is completed.
