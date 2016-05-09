@@ -1736,3 +1736,17 @@ function sell_media_get_public_filepath( $attachment_id ){
 		return substr( $public_file, strpos( $public_file, $string ) + strlen( $string ) );
 	}
 }
+
+/**
+ * Clear cart after payment is completed.
+ * @return void 
+ */
+function sell_media_clear_cart_after_payment(){
+	if ( !isset( $_GET['tx'] ) || empty( $_GET['tx'] ) ) {
+        return false;
+    }
+    global $sm_cart;
+    $sm_cart->clear();
+}
+
+add_action( 'init', 'sell_media_clear_cart_after_payment' );
