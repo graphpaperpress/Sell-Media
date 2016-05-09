@@ -1678,51 +1678,61 @@ add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_m
  * we should attempt to regenerate the thumbnails from the private source file
  * and generate a new thumbnails.
  */
-function sell_media_regenerate_missing_files( $post_id, $attachment_id ) {
-	
-	// Check if attachment is image.
-	if( !wp_attachment_is_image( $attachment_id ) )
-		return false;
+function sell_media_regenerate_missing_files( $post_id ) {
 
-	// Retrieve attached file path based on attachment ID.
-	$attached_file = get_attached_file( $attachment_id );
-
-	// File exists, so bail
-	if ( file_exists( $attached_file ) ) {
-		return false;
+	if ( sell_media_has_multiple_attachments( $post_id ) ) {
+		$attachment_ids = sell_media_get_attachments( $post_id );
+	} else {
+		$attachment_ids = array( get_post_meta( $post_id, '_sell_media_attachment_id', true ) );
 	}
 
-	/**
-	 * Unlike photos, video and audio files aren't copied to public directory.
-	 * This means $attachment_meta['file'] will be empty.
-	 * So we only proceed if the file parameter exists.
-	 */
-	$attachment_metadata = wp_get_attachment_metadata( $attachment_id );
-	// build url from public attachment url
-	if ( empty( $attachment_metadata['file'] ) ) {
-		$attachment_metadata['file'] = sell_media_get_public_filepath( $attachment_id );
+	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+		
+		// Check if attachment is image.
+		if ( ! wp_attachment_is_image( $attachment_id ) )
+			return false;
+
+		// Retrieve attached file path based on attachment ID.
+		$attached_file = get_attached_file( $attachment_id );
+
+		// File exists, so bail
+		if ( file_exists( $attached_file ) ) {
+			return false;
+		}
+
+		/**
+		 * Unlike photos, video and audio files aren't copied to public directory.
+		 * This means $attachment_meta['file'] will be empty.
+		 * So we only proceed if the file parameter exists.
+		 */
+		$attachment_metadata = wp_get_attachment_metadata( $attachment_id );
+
+		// build url from public attachment url
+		if ( empty( $attachment_metadata['file'] ) ) {
+			$attachment_metadata['file'] = sell_media_get_public_filepath( $attachment_id );
+		}
+
+		if ( ! empty( $attachment_metadata['file'] ) ) {
+
+			// build the public file path.
+			$upload_dir = wp_upload_dir();
+			$public_file_path = $upload_dir['basedir'] . '/' . $attachment_metadata['file'];
+
+			// get the original protected file.
+			$original_file_path = sell_media_get_upload_dir() . '/' . $attachment_metadata['file'];
+
+			// check if the original protected file exists
+			if ( file_exists( $original_file_path ) ) {
+				copy( $original_file_path, $public_file_path );
+				@set_time_limit( 900 );
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+				$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
+				if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
+					wp_update_attachment_metadata( $attachment_id, $metadata );
+				}
+	   		}
+	   	}
 	}
-
-	if ( ! empty( $attachment_metadata['file'] ) ) {
-
-		// build the public file path.
-		$upload_dir = wp_upload_dir();
-		$public_file_path = $upload_dir['basedir'] . '/' . $attachment_metadata['file'];
-
-		// get the original protected file.
-		$original_file_path = sell_media_get_upload_dir() . '/' . $attachment_metadata['file'];
-
-		// check if the original protected file exists
-		if ( file_exists( $original_file_path ) ) {
-			copy( $original_file_path, $public_file_path );
-			@set_time_limit( 900 );
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			$metadata = wp_generate_attachment_metadata( $attachment_id, $attached_file );
-			if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
-				wp_update_attachment_metadata( $attachment_id, $metadata );
-			}
-   		}
-   	}
 }
 add_action( 'sell_media_before_item_icon', 'sell_media_regenerate_missing_files', 10, 2 );
 
