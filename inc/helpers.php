@@ -1679,6 +1679,10 @@ add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_m
  * and generate a new thumbnails.
  */
 function sell_media_regenerate_missing_files( $post_id, $attachment_id ) {
+	
+	// Check if attachment is image.
+	if( !wp_attachment_is_image( $attachment_id ) )
+		return false;
 
 	// Retrieve attached file path based on attachment ID.
 	$attached_file = get_attached_file( $attachment_id );
