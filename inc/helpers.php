@@ -1720,6 +1720,10 @@ function sell_media_regenerate_missing_files( $post_id ) {
 
 			// get the original protected file.
 			$original_file_path = sell_media_get_upload_dir() . '/' . $attachment_metadata['file'];
+			
+			/**
+			 * @todo Imported files are saved to filepath for sell_media_item publish date
+			 */
 
 			// check if the original protected file exists
 			if ( file_exists( $original_file_path ) ) {
