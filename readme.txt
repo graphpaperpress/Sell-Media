@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.4.2
-Stable tag: 2.1.8
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -212,6 +212,17 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.2 =
+* Feature: New Video & Audio class. Improves selling options for both.
+* Feature: Regenerate missing files
+* Tweak: Disable lightbox if no page set
+* Tweak: Show file dimensions of original, protected file
+* Tweak: Delete and move protected files when user deletes sell_media_item
+* Fix: Clear cart after payment
+* Fix: Update all translation files
+* Fix: Masonry layout issue
+* Fix: Filter tax layout issue
 
 = 2.1.8 =
 * Feature: Tax display setting (inclusive/exclusive)
