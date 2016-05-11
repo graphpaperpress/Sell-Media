@@ -4,8 +4,8 @@ Contributors: endortrails
 Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
-Tested up to: 4.4.2
-Stable tag: 2.2
+Tested up to: 4.5.2
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -212,6 +212,9 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.2.1 =
+* Fix: JS conflict fix for non SM pages.
 
 = 2.2 =
 * Feature: New Video & Audio class. Improves selling options for both.

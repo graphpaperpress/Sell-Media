@@ -96,6 +96,9 @@ jQuery( document ).ready(function( $ ){
      * Check if attachment is audio or video.
      */
     function sell_media_is_attachment_audio_video( attachment_ids ){
+        if (attachment_ids === undefined)
+            return false;
+        
         var attachment_ids = attachment_ids.split( ',' );
         var data = {
             'action' : 'check_attachment_is_audio_video',
