@@ -79,6 +79,7 @@ class SM_Gateway_Paypal_Request {
         $args['upload']        = "1";
         $args['currency_code'] = sanitize_text_field( $settings->currency );
         $args['business']      = sanitize_email( $paypal_email );
+        $args['bn']            = "GraphPaperPress_SP";
         $args['rm']            = "2";
         $args['tax_cart']      = ( isset( $settings->tax ) && !empty( $settings->tax ) && ( 'exclusive' == $settings->tax_display || empty( $settings->tax_display ) ) )? number_format( $subtotal * $settings->tax_rate, 2 ) : 0;
 
