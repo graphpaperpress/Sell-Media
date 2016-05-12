@@ -37,8 +37,10 @@ class SellMediaAudioVideo extends SellMediaProducts {
      */
     function quick_view_thumbnail( $html, $post_id ){
         $preview_url =  $this->get_preview( $post_id );
-        if( $preview_url ){
-            return $preview_url;
+        if ( $preview_url ) {
+            $html  = '<div class="sell-media-iframe-container">';
+            $html .= $preview_url;
+            $html .= '</div>';
         }
 
         return $html;
@@ -121,7 +123,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         if ( $post && $post->post_content ) {
             $content = do_shortcode( apply_filters( 'the_content', $post->post_content ) );
             $videos =  get_media_embedded_in_content( $content ) ;
-            if( !empty( $videos ) ){
+            if ( ! empty( $videos ) ) {
                 return $videos[0];
             }
         }
@@ -325,9 +327,11 @@ class SellMediaAudioVideo extends SellMediaProducts {
     }
 
     function before_content( $post_id ) {
-        $preview_url =  $this->get_preview( $post_id );
-        if( $preview_url ){
+        $preview_url = $this->get_preview( $post_id );
+        if ( $preview_url ){
+            echo '<div class="sell-media-iframe-container">';
             echo $preview_url;
+            echo '</div>';
         }
     }
 }
