@@ -62,7 +62,6 @@ jQuery(document).ready(function($){
 		// Check current item.
 		var current_item = $('.sell-media-grid-single-item.sell-media-active-popup-item');
 		var last_index = parseInt( $('.sell-media-grid-single-item').length ) -1 ;
-		console.log( $('.sell-media-grid-single-item').index(current_item) );
 
 		$('.sell-media-dialog-box-prev').show();
 		$('.sell-media-dialog-box-next').show();
