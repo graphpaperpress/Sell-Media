@@ -4,7 +4,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 
 	class Sell_Media_Image_Exif_Widget extends WP_Widget {
 
-		function Sell_Media_Image_Exif_Widget(){
+		function __construct(){
 			$widget_ops = array( 'description' => __( 'Displays image exif data (shutter speed, aperture, ISO, etc). Only use this on Single Sidebar Widgetized areas.', 'sell_media' ) );
 			$control_ops = array( 'width' => 200, 'height' => 200 );
 			parent::__construct( false, $name='Sell Media Exif', $widget_ops, $control_ops );
