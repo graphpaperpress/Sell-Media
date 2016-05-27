@@ -499,7 +499,10 @@ function sell_media_before_content( $content ) {
 		} else {
 			$new_content .= sell_media_breadcrumbs();
 			$new_content .= sell_media_gallery_navigation( $post->ID );
-			$new_content .= '<div class="sell-media-content">';
+			$classes[] = 'sell-media-content';
+			$classes[] = 'sell-media-single-item-feature-image';
+			$class_merge = implode( ' ', apply_filters( 'sell_media_single_item_feature_image_class', $classes, $post->ID ) );
+			$new_content .= '<div class="'.$class_merge.'">';
 			$new_content .= ob_get_clean() . $content;
 			if ( sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == true ) {
 				$new_content .= sell_media_below_content_widgets();
