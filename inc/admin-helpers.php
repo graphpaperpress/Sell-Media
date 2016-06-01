@@ -27,6 +27,8 @@ function sell_media_move_file( $attachment_id ){
         $attached_file = get_attached_file( $attachment_id );
         sell_media_default_move( $attached_file );
     }
+
+    do_action( 'sell_media_after_move_file', $attachment_id );
 }
 
 /**
