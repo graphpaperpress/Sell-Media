@@ -35,7 +35,7 @@ $settings = sell_media_get_plugin_options();
                 <?php
                     $term_description = term_description();
                     if ( ! empty( $term_description ) ) {
-                        echo '<h2 class="collection_description>">' . $term_description . '</h2>';
+                        echo '<h2 class="collection_description">' . $term_description . '</h2>';
                     }
                 ?>
                 <?php echo do_shortcode( '[sell_media_searchform]' ); ?>
