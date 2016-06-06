@@ -88,6 +88,15 @@ function sell_media_install() {
 		require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-upgrade.php';
 	}
 
+	// Restrict ipn log files.
+	$htaccess_file = ABSPATH . ".htaccess";
+	$file_content = "\n\n# BEGIN Sell Media\n";
+	$file_content .= '<FilesMatch "ipn_errors\.log|ipn_success\.log">' . "\n";
+	$file_content .= "\t Require all denied\n";
+	$file_content .= "</FilesMatch>\n";
+	$file_content .= "# END Sell Media\n";
+	file_put_contents( $htaccess_file, $file_content, FILE_APPEND | LOCK_EX );
+
 	// Migrate old tax meta.
 	$tax_meta_migrate = new SellMediaTaxMetaMigrate();
 	$tax_meta_migrate->run();
