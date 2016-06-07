@@ -79,25 +79,34 @@
 
 /* Payments
 -------------------------------------------------------------- */
-.total-revenue { float: left; }
+.total-revenue {
+    float: left;
+}
 
 .sell-media-admin-payments td.media-icon {
     width: 50px;
     padding-bottom: 5px;
-    }
+}
+
+.sell-media-admin-payments td.media-icon img {
+    max-width: 100%;
+    height: auto;
+}
 
 .sell-media-admin-payments input[type="text"]{
     width: 100%;
     margin: 5px 0 0 0;
-    }
+}
 
 .sell-media-admin-payments .wp-list-table {
     margin: 0 0 15px;
-    }
+}
 
 /* Payments Report
 -------------------------------------------------------------- */
-.earnings_chart { margin-bottom: 40px; }
+.earnings_chart {
+    margin-bottom: 40px;
+}
 
 
 /* Media attachment edit page
