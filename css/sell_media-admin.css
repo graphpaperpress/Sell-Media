@@ -3,7 +3,7 @@
 #adminmenu div.wp-menu-image {
     overflow: hidden;
 }
-#adminmenu div.wp-menu-image img{
+#adminmenu div.wp-menu-image img {
     display: none;
 }
 #product_meta_box input[type="file"] {
@@ -100,6 +100,10 @@
 
 .sell-media-admin-payments .wp-list-table {
     margin: 0 0 15px;
+}
+
+.post-type-sell_media_payment .postbox .inside {
+    overflow: scroll;
 }
 
 /* Payments Report
