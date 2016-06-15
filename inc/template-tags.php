@@ -666,6 +666,9 @@ function sell_media_show_file_info(){
 
 	$post = get_post();
 	$attachment_id = sell_media_get_attachment_id( $post->ID );
+	if( '' == $attachment_id )
+		return;
+	
 	$media_dims = '';
 	$meta = wp_get_attachment_metadata( $attachment_id );
 	$filename = basename( get_attached_file( $attachment_id ) );
