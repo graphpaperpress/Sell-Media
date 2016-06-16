@@ -88,7 +88,7 @@ class SM_Gateway_Paypal_Request {
         else
             $shipping = 0;
 
-        $args['charset']       = "utf-8";
+        $args['charset']       = get_bloginfo( 'charset' );
         $args['cbt']           = get_bloginfo( 'name' );
         $args['return'] = esc_url( get_permalink( $settings->thanks_page ) );
         $args['cancel'] = empty( $settings->checkout_page ) ? null : esc_url( get_permalink( $settings->checkout_page ) );
