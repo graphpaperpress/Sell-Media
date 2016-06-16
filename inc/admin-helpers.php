@@ -21,6 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return [null]
  */
 function sell_media_move_file( $attachment_id ){
+    
+    do_action( 'sell_media_before_move_file', $attachment_id );
+
     if ( wp_attachment_is_image( $attachment_id ) ) {
         Sell_Media()->images->move_image_from_attachment( $attachment_id );
     } else {
