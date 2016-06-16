@@ -113,7 +113,7 @@ function sell_media_process_paypal_ipn() {
          *
          * Create a new payment, send customer an email and empty the cart
          */
-        if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' && isset( $_POST['payer_status'] ) && 'verified' == $_POST['payer_status'] ) {
+        if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ) {
 
             // Return if this IPN doesn't contain a Sell Media item
             if ( empty( $_POST['option_selection1_1'] ) && ( $_POST['option_selection1_1'] != 'print' || $_POST['option_selection1_1'] != 'download' ) )

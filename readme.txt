@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.5.2
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -212,6 +212,13 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.2.2 =
+* Feature: Responsive videos
+* Feature: New hooks for images and downloads
+* Fix: Remove extra character in markup
+* Fix: PayPal args use WP charset
+* Fix: Unserialize serialized payment data
 
 = 2.2.1 =
 * Fix: JS conflict fix for non SM pages.
