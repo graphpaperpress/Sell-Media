@@ -20,11 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function sell_media_thanks_shortcode( $tx=null ) {
 
     do_action( 'sell_media_thanks_hook' );
-
     if ( ! empty( $_GET['tx'] ) ) {
         $tx = $_GET['tx'];
         $gateway = 'PayPal';
-    } elseif ( ! empty( $_POST['stripeToken'] ) ) {
+    }
+    else if( isset( $_POST['txn_id'] ) && '' != $_POST['txn_id'] ){
+        $tx = $_POST['txn_id'];
+        $gateway = 'PayPal';
+    }
+     elseif ( ! empty( $_POST['stripeToken'] ) ) {
         $tx = $_POST['stripeToken'];
         $gateway = 'Stripe';
     } else {
@@ -38,14 +42,16 @@ function sell_media_thanks_shortcode( $tx=null ) {
         if ( $post_id ) {
             $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
         } else {
-            $html .= __( 'We\'ve received your payment and are processing your order. <a href="" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' );
+            $settings = sell_media_get_plugin_options();
+            $refresh_url = isset( $settings->thanks_page ) ? get_permalink( $settings->thanks_page ) : home_url( );
+            $html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg( array( 'tx' => $tx ), $refresh_url ) ) );
             // wp_mail( get_option( 'admin_email' ), __( 'Unable to retrieve transaction ID', 'sell_media' ), sprintf( __( 'We have some good news and bad news. First the good news: Somebody just purchased from your store! The bad news: Your website was unable to retrieve transaction ID from %1$s. This is typically easy to fix. Please see these tips for resolving this issue: %2$s' ), $gateway, 'https://github.com/graphpaperpress/Sell-Media/issues/670#issuecomment-89428248' ) );
         }
         
         // Clear cart item.
         global $sm_cart;
         @$sm_cart->clear();
-
+        setcookie ("sm_cart_info", array(), time() -604800, '/' );
         $html .= '</p>';
         return apply_filters( 'sell_media_thanks_filter_below', $html );
     }
