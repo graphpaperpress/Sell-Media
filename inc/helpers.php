@@ -1761,9 +1761,17 @@ function sell_media_get_public_filepath( $attachment_id ){
  * @return void 
  */
 function sell_media_clear_cart_after_payment(){
-	if ( !isset( $_GET['tx'] ) || empty( $_GET['tx'] ) ) {
-        return false;
-    }
+	$clear = false;
+	
+	if( isset( $_GET['tx'] ) && !empty( $_GET['tx'] ) ){
+		$clear = true;
+	}
+	else if( isset( $_POST['txn_id'] ) && !empty( $_POST['txn_id'] ) ){
+		$clear = true;
+	}
+	if( !$clear )
+		return false;
+
     global $sm_cart;
     $sm_cart->clear();
 }
