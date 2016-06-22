@@ -77,8 +77,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 						if ( $imgdata['image_meta']['copyright'] ) { ?>
 							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php echo $imgdata['image_meta']['copyright']; ?></li>
 						<?php } else { ?>
-							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php the_time('Y '); _e( 'by ', 'sell_media' ); bloginfo( 'name' ); ?><?php echo $imgdata['image_meta']['copyright']; ?></li>
-						<?php } ?>
+							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php the_time('Y '); _e( 'by ', 'sell_media' ); $author = get_the_author(); echo $author." / "; bloginfo( 'name' ); ?><?php echo $imgdata['image_meta']['copyright']; ?></li>						<?php } ?>
 
 					</ul>
 
