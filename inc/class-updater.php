@@ -338,7 +338,7 @@ class SellMediaUpdater {
 		$settings->{ $email_name } = '';
 		$settings->{ $key_name } = '';
 
-		sell_media_update_option( $settings );
+		sell_media_update_option( sell_media_get_current_plugin_id() . '_options', (array) $settings );
 	}
 
 	/**
