@@ -1194,7 +1194,7 @@ function sell_media_update_option( $option, $value, $autoload = null ) {
 		return update_blog_option( get_current_blog_id(), $option, $value );
 	}
 
-	return update_option( $option, $value, $deprecated, $autoload );
+	return update_option( $option, $value, $autoload );
 }
 
 /**
