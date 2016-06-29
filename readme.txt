@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.5.2
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -212,6 +212,12 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.2.3 =
+* Fix: Show license descriptions
+* Fix: Remove deprecated param
+* Fix: Button sizing CSS fix
+* Fix: Clear cookie after purchase
 
 = 2.2.2 =
 * Feature: Responsive videos
