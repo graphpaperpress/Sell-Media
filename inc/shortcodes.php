@@ -51,7 +51,7 @@ function sell_media_thanks_shortcode( $tx=null ) {
         // Clear cart item.
         global $sm_cart;
         @$sm_cart->clear();
-        setcookie ("sm_cart_info", array(), time() -604800, '/' );
+        setcookie ( 'sm_cart_info', '', time() -604800, '/' );
         $html .= '</p>';
         return apply_filters( 'sell_media_thanks_filter_below', $html );
     }
