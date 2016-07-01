@@ -1387,7 +1387,7 @@ function sell_media_search_results( $content ){
 
 		}
 
-		$search_query = new WP_Query( $args );
+		$search_query = new WP_Query( apply_filters( 'sell_media_search_query_arguments', $args ) );
 
 		if( $search_query->have_posts() ):
 			$i = 0;
