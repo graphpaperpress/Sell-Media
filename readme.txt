@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.5.2
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,7 @@ Sell photos, prints, videos and pdf's online through WordPress in seconds. Every
 
 [Sell Media](http://graphpaperpress.com/plugins/sell-media/) is a WordPress plugin that allows you to sell, license and protect images, videos, audio and pdf's on your self-hosted WordPress site.
 
+* [PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf)
 * [Documentation](http://graphpaperpress.com/docs/sell-media/)
 * [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
 * [Github Code Repository](https://github.com/graphpaperpress/sell-media)
@@ -59,7 +60,7 @@ Take Sell Media to the next level with these powerful extensions:
 
 = Configuration =
 
-Visit the official plugin [Documentation](http://graphpaperpress.com/docs/sell-media/) to learn how to setup and customize Sell Media
+[Download our Free PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf) for detailed instructions and screenshots or visit the official plugin [Documentation](http://graphpaperpress.com/docs/sell-media/) to learn how to setup and customize Sell Media.
 
 == Frequently Asked Questions ==
 
@@ -171,8 +172,9 @@ Please disable your plugins and see if you still have the issue. Some plugins (o
 4. Collection Archive
 5. Checkout
 6. Add New Item
-7. [Optional Premium Extensions](http://graphpaperpress.com/downloads/category/extensions/)
-8. [Optional Premium Themes](https://graphpaperpress.com/wordpress-themes/sell-media/)
+7. [Filters - See Usage](https://graphpaperpress.com/blog/sell-media-filters/)
+8. [Optional Premium Extensions](https://graphpaperpress.com/extensions/sell-media/)
+9. [Optional Premium Themes](https://graphpaperpress.com/wordpress-themes/sell-media/)
 
 == Developers ==
 
@@ -212,6 +214,9 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.2.5 =
+* Fix: Send customer login email
 
 = 2.2.4 =
 * Fix: Cookie notice on thanks page
