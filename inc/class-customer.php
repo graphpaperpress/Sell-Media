@@ -35,20 +35,25 @@ Class SellMediaCustomer {
                 'user_email'    => $email,
                 'first_name'    => $first_name,
                 'last_name'     => $last_name,
-                'role'          => 'sell_media_customer'
+                'role'          => 'sell_media_customer',
+                'user_pass'     => NULL // When creating an user, `user_pass` is expected.
             );
 
             // add the user
             $user_id = wp_insert_user( $userdata );
 
             // email the user their account registration details
-            $this->email_details( $user_id );
+            if ( ! is_wp_error( $user_id ) ) {
+                $this->email_details( $user_id );
 
-            // log the user in automatically
-            // $this->signon( $email, $password );
+                // log the user in automatically
+                // $this->signon( $email, $password );
 
-            // hook for when new users are created
-            do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
+                // hook for when new users are created
+                do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
+            } else {
+                die( $user_id );
+            }
 
             return false;
         }
