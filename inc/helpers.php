@@ -1482,6 +1482,10 @@ function sell_media_update_attachment_metadata1( $data, $post_id ){
 	$copy = copy($sm_file, $main_file);
 
 	if( $copy ){
+		// If function do not exits include function file.
+		if( !function_exists( 'wp_generate_attachment_metadata' ) ){
+			include( ABSPATH . 'wp-admin/includes/image.php' );
+		}
 		$metadata = wp_generate_attachment_metadata( $post_id, $main_file );
 		
 		$date_folder = dirname( $data['file'] );
