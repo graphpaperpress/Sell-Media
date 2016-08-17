@@ -193,8 +193,10 @@ Class SellMediaProducts {
         $taxonomies = array( 'price-group', 'reprints-price-group' );
 
         foreach ( $taxonomies as $taxonomy ) {
-            if ( has_term( '', $taxonomy, $post_id ) ) {
-                return true;
+            if( taxonomy_exists( $taxonomy ) ){
+                if ( has_term( '', $taxonomy, $post_id ) ) {
+                    return true;
+                }                
             }
         }
     }
