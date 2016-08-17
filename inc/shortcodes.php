@@ -201,9 +201,11 @@ function sell_media_checkout_shortcode(){
             foreach( $cart_items as $key => $item ): ?>
                 <li class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
                     <div class="item-image">
-                        <?php if ( ! empty( $item['item_image'] ) ) : ?>
-                            <img src="<?php echo esc_url( $item['item_image'] ); ?>">
-                        <?php endif; ?>
+                        <?php 
+                        if ( ! empty( $item['item_attachment'] ) ){
+                            echo sell_media_item_icon( $item['item_attachment'] );
+                        }
+                        ?>
                     </div>
                     <div class="item-details">
                         <div class="item-name">
