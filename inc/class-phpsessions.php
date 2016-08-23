@@ -76,7 +76,7 @@ class SellMediaPhpSessions {
 	public function write( $id, $data ) {
 		if ( ! $this->wpdb ) {
 			return null; }
-		return $this->wpdb->query( $this->wpdb->prepare( "REPLACE INTO `{$this->table}` VALUES ( %s, %s, %d );", $id, $data, time() ) );
+		return (bool) $this->wpdb->query( $this->wpdb->prepare( "REPLACE INTO `{$this->table}` VALUES ( %s, %s, %d );", $id, $data, time() ) );
 	}
 	/**
 	 * Destroy a session.
