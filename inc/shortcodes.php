@@ -34,10 +34,9 @@ function sell_media_thanks_shortcode( $tx=null ) {
     } else {
         $tx = null;
     }
-
+    $html = '';
     if ( $tx ) {
         $post_id = Sell_Media()->payments->get_id_from_tx( $tx );
-        $html  = null;
         $html .='<p class="sell-media-thanks-message">';
         if ( $post_id ) {
             $html .= Sell_Media()->payments->get_payment_products_formatted( $post_id );
@@ -52,8 +51,10 @@ function sell_media_thanks_shortcode( $tx=null ) {
         global $sm_cart;
         @$sm_cart->clear();
         $html .= '</p>';
-        return apply_filters( 'sell_media_thanks_filter_below', $html );
+        $html =  apply_filters( 'sell_media_thanks_filter_below', $html );
     }
+    
+    return apply_filters( 'sell_media_thanks', $html );
 
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_thanks_shortcode' );
