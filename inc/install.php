@@ -153,14 +153,6 @@ function sell_media_compatible_version() {
 }
 
 /**
- * Delete options on plugin deactivation.
- */
-function sell_media_deactivate(){
-	delete_option( 'sell_media_options' );
-}
-register_deactivation_hook( SELL_MEDIA_PLUGIN_FILE, 'sell_media_deactivate' );
-
-/**
  * Register Custom Post Types
  * @since 1.8.5
  */
