@@ -42,8 +42,11 @@ function sell_media_install() {
 	// Register Taxonomies
 	sell_media_register_taxonomies();
 
-	// Add default settings
-	sell_media_register_default_settings();
+	// Add default settings if sell media options is not set.
+	$sell_media_options = get_option( 'sell_media_options' ); 
+	if( false ===  $sell_media_options || empty( $sell_media_options ) ){
+		sell_media_register_default_settings();
+	}
 
 	// Autocreate Pages
 	sell_media_autocreate_pages();
