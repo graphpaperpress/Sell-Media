@@ -1,6 +1,6 @@
 <?php class Sell_Media_Similar_Widget extends WP_Widget
 {
-	function Sell_Media_Similar_Widget(){
+	function __construct(){
 		$widget_ops = array( 'description' => 'Displays similar items' );
 		$control_ops = array( 'width' => 200, 'height' => 200 );
 		parent::__construct( false, $name='Sell Media Similar Items', $widget_ops, $control_ops );

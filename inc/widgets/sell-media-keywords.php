@@ -1,6 +1,6 @@
 <?php class Sell_Media_Keywords_Widget extends WP_Widget
 {
-	function Sell_Media_Keywords_Widget(){
+	function __construct(){
 		$widget_ops = array('description' => 'Displays Sell Media keywords');
 		$control_ops = array('width' => 200, 'height' => 200);
 		parent::__construct( false, $name='Sell Media Keywords', $widget_ops, $control_ops );
