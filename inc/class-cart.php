@@ -241,7 +241,7 @@ class SellMediaCart {
 	 * 
 	 * @return int
 	 */
-	public function getSubtotal( $formated = true ){
+	public function getSubtotal( $formatted = true ){
 		$items = $this->items;
 		if( empty( $items ) )
 			return 0;
@@ -249,7 +249,7 @@ class SellMediaCart {
 		foreach ( $items as $key => $item ) {
 			$subtotal += $item['price'] * $item['qty'];
 		}
-		if( $formated ){
+		if( $formatted ){
 			return number_format( $subtotal, 2 );
 		}
 
