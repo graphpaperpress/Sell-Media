@@ -645,7 +645,7 @@ Class SellMediaPayments {
             $payment_meta = get_post_meta( $post_id, '_sell_media_payment_meta' );
             if ( ! $payment_meta ) return;
 
-            $products_legacy = maybe_unserialize( $payment_meta['products'] );
+            $products_legacy = isset( $payment_meta['products'] )? maybe_unserialize( $payment_meta['products'] ) : array();
 
             if ( $products_legacy ) foreach ( $products as $product ) {
 
