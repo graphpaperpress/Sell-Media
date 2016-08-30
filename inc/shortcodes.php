@@ -322,8 +322,7 @@ function sell_media_download_shortcode( $atts ) {
     $html = do_shortcode( '[sell_media_login_form]' );
 
     if ( is_user_logged_in() ) {
-        global $current_user;
-        get_currentuserinfo();
+        $current_user = wp_get_current_user();
 
         $purchases = Sell_Media()->payments->get_user_payments( $current_user->user_email );
 
