@@ -713,7 +713,7 @@ add_filter( 'sell_media_pagination_filter', 'sell_media_pagination_filter', 10, 
  */
 function sell_media_is_reports_page() {
 
-	if ( 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] ) {
+	if ( isset( $_SERVER['QUERY_STRING'] ) && 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] ) {
 		return true;
 	} else { 		return false; }
 }
