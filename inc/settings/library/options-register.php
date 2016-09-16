@@ -70,7 +70,9 @@ function sell_media_plugin_options_validate( $input ) {
         }
     }
     // Get settings by tab
-    $tabsettings = $settingsbytab[ $submittab ];
+    $tabsettings = isset( $settingsbytab[ $submittab ] ) ? $settingsbytab[ $submittab ] : array();
+    if( empty( $tabsettings ) )
+        return $input;
 
     // Loop through each tab setting
     foreach ( $tabsettings as $setting ) {
