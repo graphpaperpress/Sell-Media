@@ -732,3 +732,79 @@ function sell_media_ajax_filter( $atts ){
 }
 add_shortcode( 'sell_media_filters', 'sell_media_ajax_filter' );
 add_shortcode( 'sell_media_filter', 'sell_media_ajax_filter' );
+
+/**
+ * Taxonomy shortcode
+ *
+ * Displays the most recent entry from each custom taxonomy
+ * 
+ * @param  $atts the taxonomy
+ * @return html
+ */
+function sell_media_taxonomies_shortcode( $atts ) {
+
+    $atts = shortcode_atts(
+        array(
+            'taxonomy' => 'collection'
+        ), $atts, 'sell_media_taxonomies' );
+
+    $args = array(
+        'taxonomy' => $atts['taxonomy']
+    );
+
+    $do_not_duplicate = array();
+    $terms = get_terms( $args ); 
+     
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        ob_start();
+        foreach ( $terms as $term ) {
+            $args = array(
+                'post_type' => 'sell_media_item',
+                'posts_per_page' => '1',
+                'post__not_in' => $do_not_duplicate,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => $atts['taxonomy'],
+                        'field'    => 'term_id',
+                        'terms'    => $term->term_id,
+                    ),
+                ),
+            );
+
+            $query = new WP_Query( $args );
+ 
+            if ( $query->have_posts() ) { ?>
+             
+                <div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ); ?> <?php echo esc_attr( $term->slug ); ?>">
+             
+                    <?php while ( $query->have_posts() ) {
+             
+                        $query->the_post();
+                        $do_not_duplicate[] = get_the_ID();
+                        ?>
+             
+                        <article id="post-<?php the_ID(); ?>" <?php post_class( $term->slug . '-listing' ); ?>>
+                            <a href="<?php echo get_term_link( $term->term_id, $atts['taxonomy'] ); ?>">
+                                <?php echo sell_media_item_icon( get_the_ID(), 'sell_media_item' ); ?>
+                            </a>
+                            <h2 class="entry-title">
+                                <a href="<?php echo get_term_link( $term->term_id, $atts['taxonomy'] ); ?>">
+                                    <?php echo $term->name; ?>
+                                </a>
+                            </h2>
+                        </article>
+             
+                    <?php } // end while ?>
+             
+                </div>
+
+            <?php } // end if
+         
+        // Use reset to restore original query.
+        wp_reset_postdata();
+     
+        }
+        return ob_get_clean();
+    }
+}
+add_shortcode( 'sell_media_taxonomies', 'sell_media_taxonomies_shortcode' );
