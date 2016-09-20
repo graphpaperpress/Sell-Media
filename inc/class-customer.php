@@ -51,10 +51,13 @@ Class SellMediaCustomer {
 
 				// hook for when new users are created
 				do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
+
+				return true;
 			}
 
-			return false;
 		}
+		
+		return false;
 	}
 
 	/**
