@@ -47,7 +47,7 @@ Class SellMediaCustomer {
 				wp_new_user_notification( $user_id, null, $notify = 'both' );
 
 				// log the user in automatically
-				// $this->signon( $email, $password );
+				// $this->signon( $email );
 
 				// hook for when new users are created
 				do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
@@ -68,23 +68,13 @@ Class SellMediaCustomer {
 	* @todo get password, automatically log user in
 	*
 	*/
-	public function signon( $email=null, $password=null ){
+	public function signon( $email=null ){
 
 		if ( ! is_user_logged_in() && email_exists( $email ) ) {
-
-			$creds = array();
-			$creds['user_login'] = $email;
-			$creds['user_password'] = $password;
-			$creds['remember'] = true;
-			$user = wp_signon( $creds, false );
-
-			if ( is_wp_error( $user  ) ) {
-				return;
-			} else {
-				wp_set_current_user( $user->ID, $user->user_login );
-				wp_set_auth_cookie( $user->ID, true, false );
-				do_action( 'wp_login', $user->user_login );
-			}
+			$user = get_user_by( 'email', $email );
+			wp_set_auth_cookie( $user->ID, true );
+			wp_set_current_user( $user->ID, $user->user_login );
+			do_action( 'wp_login', $user->user_login, $user );
 		}
 	}
 
