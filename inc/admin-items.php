@@ -570,6 +570,12 @@ function sell_media_add_quick_edit($column_name, $post_type) {
             wp_nonce_field( '_sell_media_quick_edit_nonce', 'sell_media_quick_edit_nonce' );
             ?>
         </div>
+        <div class="inline-edit-col">
+            <span class="title"><?php _e( 'Price', 'sell_media' ); ?></span>
+            <span class="input-text-wrap">
+                <input name="sell_media_price" id="sell-media-price" class="inline-edit-password-input" type="number" step="0.01" min="0" />
+            </span>
+        </div>
     </fieldset>
     <?php
 }
@@ -588,9 +594,13 @@ function sell_media_save_quick_edit_custom_meta( $post_id ) {
     if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
     if ( wp_is_post_revision( $post_id ) ) return;
-
     if ( isset( $_POST['sell_media_price_group'] ) ) {
         wp_set_post_terms( $post_id, $_POST['sell_media_price_group'], 'price-group' );
+    }
+
+    if ( isset( $_POST['sell_media_price'] ) ) {
+        $sell_media_price = sprintf( '%0.2f', ( float ) $_POST['sell_media_price'] );
+        update_post_meta( $post_id, 'sell_media_price', $sell_media_price );
     }
 }
 
@@ -603,11 +613,16 @@ function sell_media_save_bulk_edit() {
     if ( ! isset( $_POST['sell_media_quick_edit_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_quick_edit_nonce'], '_sell_media_quick_edit_nonce' ) ) return;
     $post_ids = ( ! empty( $_POST[ 'post_ids' ] ) ) ? $_POST[ 'post_ids' ] : array();
     $sell_media_price_group  = ( ! empty( $_POST[ 'sell_media_price_group' ] ) ) ? $_POST[ 'sell_media_price_group' ] : null;
+    $sell_media_price  = ( ! empty( $_POST[ 'sell_media_price' ] ) ) ? $_POST[ 'sell_media_price' ] : null;
 
     if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
         foreach( $post_ids as $post_id ) {
             if ( isset( $sell_media_price_group ) ) {
                 wp_set_post_terms( $post_id, $sell_media_price_group, 'price-group' );
+            }
+            if ( isset( $sell_media_price ) ) {
+                $sell_media_price = sprintf( '%0.2f', ( float ) $sell_media_price );
+                update_post_meta( $post_id, 'sell_media_price', $sell_media_price );
             }
         }
     }
@@ -615,4 +630,4 @@ function sell_media_save_bulk_edit() {
     die();
 }
 
-add_action( 'wp_ajax_save_bulk_edit_book', 'sell_media_save_bulk_edit' );
+add_action( 'wp_ajax_sell_media_save_bulk_edit', 'sell_media_save_bulk_edit' );
