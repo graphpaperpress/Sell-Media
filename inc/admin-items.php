@@ -526,7 +526,6 @@ function sell_media_before_delete_post( $post_id, $attachment_id=null ){
 }
 add_action( 'before_delete_post', 'sell_media_before_delete_post' );
 
-
 /**
  * Redirect to custom url after move to trash in payments
  *
@@ -543,3 +542,77 @@ function sell_media_trash_payment_redirect() {
     }
 }
 add_action( 'load-edit.php', 'sell_media_trash_payment_redirect' );
+
+/**
+ * Add quick/ bulk edit custom fields.
+ * @param  string $column_name Column name
+ * @param  string $post_type   Post type name.
+ */
+function sell_media_add_quick_edit($column_name, $post_type) {
+    if ( 'taxonomy-price-group' != $column_name ) return;
+    ?>
+    <fieldset class="inline-edit-col-left">
+        <div class="inline-edit-col">
+            <span class="title"><?php _e( 'Price Group', 'sell_media' ); ?></span>
+            <?php 
+            $args = array(
+                'show_option_none' => __( 'None', 'sell_media' ),
+                'option_none_value' => 0,
+                'name' => 'sell_media_price_group',
+                'id' => 'sell-media-price-group',
+                'class' => 'sell-media-price-group',
+                'taxonomy' => 'price-group',
+                'hierarchical' => true,
+                'depth' => 1,
+                'hide_empty' => false
+            );
+            wp_dropdown_categories( $args ); 
+            wp_nonce_field( '_sell_media_quick_edit_nonce', 'sell_media_quick_edit_nonce' );
+            ?>
+        </div>
+    </fieldset>
+    <?php
+}
+
+add_action( 'quick_edit_custom_box', 'sell_media_add_quick_edit', 10, 2 );
+add_action( 'bulk_edit_custom_box', 'sell_media_add_quick_edit', 10, 2 );
+
+/**
+ * Save quick edit values.
+ * @param  int $post_id Post Id.
+ */
+function sell_media_save_quick_edit_custom_meta( $post_id ) {
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! isset( $_POST['sell_media_quick_edit_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_quick_edit_nonce'], '_sell_media_quick_edit_nonce' ) ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+    if ( wp_is_post_revision( $post_id ) ) return;
+
+    if ( isset( $_POST['sell_media_price_group'] ) ) {
+        wp_set_post_terms( $post_id, $_POST['sell_media_price_group'], 'price-group' );
+    }
+}
+
+add_action( 'save_post', 'sell_media_save_quick_edit_custom_meta' );
+
+/**
+ * Save bulk edit values.
+ */
+function sell_media_save_bulk_edit() {
+    if ( ! isset( $_POST['sell_media_quick_edit_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_quick_edit_nonce'], '_sell_media_quick_edit_nonce' ) ) return;
+    $post_ids = ( ! empty( $_POST[ 'post_ids' ] ) ) ? $_POST[ 'post_ids' ] : array();
+    $sell_media_price_group  = ( ! empty( $_POST[ 'sell_media_price_group' ] ) ) ? $_POST[ 'sell_media_price_group' ] : null;
+
+    if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+        foreach( $post_ids as $post_id ) {
+            if ( isset( $sell_media_price_group ) ) {
+                wp_set_post_terms( $post_id, $sell_media_price_group, 'price-group' );
+            }
+        }
+    }
+
+    die();
+}
+
+add_action( 'wp_ajax_save_bulk_edit_book', 'sell_media_save_bulk_edit' );
