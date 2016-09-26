@@ -247,5 +247,36 @@ jQuery( document ).ready(function( $ ){
 
     });
 
+    /**
+     * Send ajax data for bulk edit.
+     */
+    $( document ).on( 'click', '#bulk_edit', function() {
+        // Define the bulk edit row.
+        var $bulk_row = $( '#bulk-edit' );
+
+        // Get the selected post ids that are being edited.
+        var $post_ids = new Array();
+        $bulk_row.find( '#bulk-titles' ).children().each( function() {
+            $post_ids.push( $( this ).attr( 'id' ).replace( /^(ttle)/i, '' ) );
+        });
+
+        // Get the data.
+        var sell_media_price_group = $bulk_row.find( 'select[name="sell_media_price_group"]' ).val();
+        var nonce = $bulk_row.find( 'select[name="sell_media_quick_edit_nonce"]' ).val();
+
+        // Save the data.
+        $.ajax({
+            url: ajaxurl, // This is a variable that WordPress has already defined for us.
+            type: 'POST',
+            async: false,
+            cache: false,
+            data: {
+                action: 'save_bulk_edit_book', // This is the name of our WP AJAX function that we'll set up next.
+                post_ids: $post_ids, // And these are the 2 parameters we're passing to our function.
+                sell_media_price_group: sell_media_price_group,
+                sell_media_quick_edit_nonce: nonce
+            }
+        });
+    });
 });
 
