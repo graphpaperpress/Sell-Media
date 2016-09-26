@@ -247,6 +247,37 @@ jQuery( document ).ready(function( $ ){
 
     });
 
+    // We create a copy of the WP inline edit post function.
+    var $wp_inline_edit = inlineEditPost.edit;
+    // And then we overwrite the function with our own code.
+    inlineEditPost.edit = function( id ) {
+        // "call" the original WP edit function.
+        // Prevent WordPress hanging.
+        $wp_inline_edit.apply( this, arguments );
+
+        // Now we take care of our business.
+
+        // Get the post ID.
+        var $post_id = 0;
+        if ( typeof( id ) == 'object' )
+            $post_id = parseInt( this.getId( id ) );
+
+        if ( $post_id > 0 ) {
+            // Define the edit row.
+            var $edit_row = $( '#edit-' + $post_id );
+            var $post_row = $( '#post-' + $post_id );
+            // Get the data.
+            var $sell_media_price = $post_row.find( 'td.column-sell_media_price' ).html();
+            var $sell_media_price_group = $post_row.find( 'td.column-taxonomy-price-group a' ).text();
+            // Populate the data.
+            $( ':input[name="sell_media_price"]', $edit_row ).val(  $sell_media_price.replace(/^\D+/g, "") );
+
+             $( 'select[name="sell_media_price_group"] option', $edit_row ).filter(function() {
+                return $(this).text() == $sell_media_price_group; 
+            }).attr('selected', true);
+        }
+    };
+
     /**
      * Send ajax data for bulk edit.
      */
@@ -262,7 +293,8 @@ jQuery( document ).ready(function( $ ){
 
         // Get the data.
         var sell_media_price_group = $bulk_row.find( 'select[name="sell_media_price_group"]' ).val();
-        var nonce = $bulk_row.find( 'select[name="sell_media_quick_edit_nonce"]' ).val();
+        var sell_media_price = $bulk_row.find( 'input[name="sell_media_price"]' ).val();
+        var nonce = $bulk_row.find( 'input[name="sell_media_quick_edit_nonce"]' ).val();
 
         // Save the data.
         $.ajax({
@@ -271,9 +303,10 @@ jQuery( document ).ready(function( $ ){
             async: false,
             cache: false,
             data: {
-                action: 'save_bulk_edit_book', // This is the name of our WP AJAX function that we'll set up next.
+                action: 'sell_media_save_bulk_edit', // This is the name of our WP AJAX function that we'll set up next.
                 post_ids: $post_ids, // And these are the 2 parameters we're passing to our function.
                 sell_media_price_group: sell_media_price_group,
+                sell_media_price: sell_media_price,
                 sell_media_quick_edit_nonce: nonce
             }
         });
