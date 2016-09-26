@@ -25,7 +25,7 @@ function sell_media_admin_scripts( $hook ) {
 
     if ( sell_media_is_sell_media_post_type_page() || 'post.php' == $hook || 'post-new.php' == $hook ) {
         wp_enqueue_style( 'sell_media-admin', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-admin.css', array( 'thickbox' ), SELL_MEDIA_VERSION );
-        wp_enqueue_script( 'sell_media-admin-items', SELL_MEDIA_PLUGIN_URL . 'js/admin-items.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+        wp_enqueue_script( 'sell_media-admin-items', SELL_MEDIA_PLUGIN_URL . 'js/admin-items.js', array( 'jquery', 'inline-edit-post' ), SELL_MEDIA_VERSION );
 
         if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
             wp_enqueue_script( 'jquery-ui-slider' );
