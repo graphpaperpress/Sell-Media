@@ -215,6 +215,15 @@ Action hooks available:
 
 == Changelog ==
 
+= 2.2.7 =
+* New: Bulk/ Quick edit on backend item listing.
+* New: 'sell_media_taxonomies' shortcode to displays recent entry from each custom taxonomy.
+* New: 'sell_media_thanks' filter in 'sell_media_thanks' shortcode.
+* Fix: Keep data on plugin deactivation.
+* Fix: Signup issue on registration.
+* Fix: Fix session errors.
+* Fix: Other minor bug fixings.
+
 = 2.2.6 =
 * Fix: Error if not selling prints fixed
 
