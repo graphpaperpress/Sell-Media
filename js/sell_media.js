@@ -292,12 +292,14 @@ jQuery(document).ready(function($){
 	});
 
 	/**
-	 * Hide search options when user clicks close
+	 * Hide search options when user clicks outside
 	 */
-	$('.sell-media-search-close').on('click', function(){
-		$('.sell-media-search-hidden, .sell-media-search-close').hide();
-		$('.sell-media-search-form').removeClass('active');
-	});
+	$( document ).on( 'click', function( event ) {
+		if ( !$( event.target ).closest( '#sell-media-search-form' ).length ) {
+			$( '.sell-media-search-hidden' ).hide();
+			$( '.sell-media-search-form' ).removeClass( 'active' );
+		}
+	} );
 
 	/**
 	 * Terms of service checkbox
