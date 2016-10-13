@@ -27,8 +27,10 @@ function sell_media_install() {
 
 	$version = get_option( 'sell_media_version' );
 
-	if ( $version && $version > SELL_MEDIA_VERSION )
+	// Bail if saved version is higher than plugin version
+	if ( $version && $version > SELL_MEDIA_VERSION ) {
 		return;
+	}
 
 	// Check compatible version.
 	if ( !sell_media_compatible_version() ) {
@@ -44,7 +46,7 @@ function sell_media_install() {
 
 	// Add default settings if sell media options is not set.
 	$sell_media_options = get_option( 'sell_media_options' ); 
-	if( false ===  $sell_media_options || empty( $sell_media_options ) ){
+	if ( false ===  $sell_media_options || empty( $sell_media_options ) ){
 		sell_media_register_default_settings();
 	}
 
@@ -91,7 +93,7 @@ function sell_media_install() {
 		require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-upgrade.php';
 	}
 
-	if( $version < SELL_MEDIA_VERSION ){
+	if ( $version < SELL_MEDIA_VERSION ){
 		// Restrict ipn log files.
 		$htaccess_file = ABSPATH . ".htaccess";
 		$file_content = "\n\n# BEGIN Sell Media\n";

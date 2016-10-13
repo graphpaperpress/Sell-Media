@@ -1300,9 +1300,6 @@ function sell_media_modify_search_form(){
 	// Hidden search options wrapper
 	$html .= '</div>';
 
-	// Close button
-	$html .= '<a href="javascript:void(0);" class="sell-media-search-close">&times;</a>';
-
 	$html .= '</div>';
 	$html .= '</form>';
 	$html .= '</div>';
