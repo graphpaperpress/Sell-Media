@@ -45,7 +45,7 @@ add_filter( 'template_include', 'sell_media_template_redirect', 6 );
  */
 function sell_media_get_search_form( $form ) {
 	// Change the default WP search form if is Sell Media search
-	if ( is_search() && 'sell_media_item' == get_query_var( 'post_type' ) ) {
+	if ( is_search() && 'attachment' == get_query_var( 'post_type' ) ) {
 		$form = Sell_Media()->search->form();
 	}
 	return $form;
@@ -1208,7 +1208,7 @@ function sell_media_modify_search_form(){
 
 	$settings = sell_media_get_plugin_options();
 
-	$search_keywords_only = false;
+	$search_keywords_only = true;
 
 	if( ( !isset( $settings->search_everything[0] ) || 'yes' !== $settings->search_everything[0] ) && ( isset( $settings->search_page ) && '' !== $settings->search_page ) ){
 		$search_keywords_only = true;
@@ -1320,7 +1320,7 @@ function sell_media_search_form( $search_form ){
 	return $search_form;
 }
 
-add_filter( 'sell_media_searchform_filter', 'sell_media_search_form' );
+//add_filter( 'sell_media_searchform_filter', 'sell_media_search_form' );
 
 /**
  * Custom search result.
@@ -1420,7 +1420,7 @@ function sell_media_search_results( $content ){
 
 }
 
-add_filter( 'the_content', 'sell_media_search_results' );
+//add_filter( 'the_content', 'sell_media_search_results' );
 
 /**
  * Change the placeholder.
@@ -1438,7 +1438,7 @@ function sell_media_search_placeholder( $placeholder ){
 	return $placeholder;
 }
 
-add_filter( 'sell_media_search_placeholder', 'sell_media_search_placeholder' );
+//add_filter( 'sell_media_search_placeholder', 'sell_media_search_placeholder' );
 
 /**
  * Search for the attachment parent post.

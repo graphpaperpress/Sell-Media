@@ -227,7 +227,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-images.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products-audio-video.php';
-			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search-new.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/collections.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/deprecated.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/fields.php';
