@@ -403,7 +403,9 @@ function sell_media_is_sell_media_post_type_page() {
 
 	if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
 		return true;
-	} else { 		return false; }
+	} else { 
+		return false;
+	}
 }
 
 
@@ -1419,7 +1421,6 @@ function sell_media_search_results( $content ){
 	return $content;
 
 }
-
 //add_filter( 'the_content', 'sell_media_search_results' );
 
 /**
@@ -1437,7 +1438,6 @@ function sell_media_search_placeholder( $placeholder ){
 
 	return $placeholder;
 }
-
 //add_filter( 'sell_media_search_placeholder', 'sell_media_search_placeholder' );
 
 /**
