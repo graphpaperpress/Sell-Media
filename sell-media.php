@@ -34,6 +34,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 	/**
 	 * Main SellMedia Class (singleton).
+	 *
 	 * @since 1.8.5
 	 */
 	final class SellMedia {
@@ -123,14 +124,13 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				self::$instance->products       = new SellMediaProducts();
 				self::$instance->search         = new SellMediaSearch();
 
-
 				if ( self::$instance->is_request( 'admin' ) ) {
 					self::$instance->notices        = new SellMediaAdminNotices();
 					self::$instance->admin_search   = new SellMediaAdminSearch();
 				}
 
 				// Set cart global variable.
-				if( self::$instance->is_request( 'frontend' ) ){
+				if ( self::$instance->is_request( 'frontend' ) ) {
 					$GLOBALS['sm_cart'] = new SellMediaCart();
 				}
 			}
@@ -247,7 +247,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-updater.php';
 
 			// Load files if is front end.
-			if ( self::$instance->is_request( 'frontend' ) ){
+			if ( self::$instance->is_request( 'frontend' ) ) {
 
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-phpsessions.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-cart.php';
