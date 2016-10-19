@@ -8,7 +8,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Template Redirect
@@ -76,60 +78,6 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 
 /**
- * Add specific CSS classes to the body_class
- *
- * @since 1.9.2
- */
-function sell_media_body_class( $classes ) {
-	global $post;
-
-	if ( empty( $post ) ) {
-		return; }
-
-	$settings = sell_media_get_plugin_options();
-
-	// Pages assigned with shortcode
-	$pages = sell_media_get_pages_array();
-	foreach ( $pages as $page ) {
-		$setting = $page . '_page';
-		if ( isset( $settings->$setting ) && $post->ID == $settings->$setting ) {
-			$classes[] = 'sell-media-page';
-			$classes[] = 'sell-media-' . str_replace( '_', '-', $setting );
-		}
-	}
-
-	// Shortcodes
-	$shortcodes = array( 'sell_media_thanks', 'sell_media_searchform', 'sell_media_item', 'sell_media_all_items', 'sell_media_checkout', 'sell_media_download_list', 'sell_media_price_group', 'sell_media_list_all_collections', 'sell_media_login_form' );
-	foreach ( $shortcodes as $shortcode ) {
-		if ( isset( $post->post_content ) && has_shortcode( $post->post_content, $shortcode ) ) {
-			$classes[] = 'sell-media-page';
-		}
-	}
-
-	// All Sell Media pages
-	if ( ! empty( $post->ID ) && 'sell_media_item' == get_post_type( $post->ID ) ) {
-		$classes[] = 'sell-media-page';
-	}
-
-	// Layout
-	if ( isset( $settings->layout ) ) {
-		$classes[] = $settings->layout;
-	}
-
-	// Gallery
-	if ( sell_media_is_gallery_page() ) {
-		$classes[] = 'sell-media-gallery-page';
-	}
-
-	// Theme
-	$theme = wp_get_theme();
-	$classes[] = 'theme-' . sanitize_title_with_dashes( $theme->get( 'Name' ) );
-
-	return $classes;
-}
-add_filter( 'body_class', 'sell_media_body_class' );
-
-/**
  * An array of pages required for plugin setup.
  * No need to define this in multiple places.
  *
@@ -169,29 +117,6 @@ function sell_media_is_gallery_page() {
 	if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == false ) {
 		return true; }
 }
-
-/**
- * Add custom class to nav menu items
- */
-function sell_media_nav_menu_css_class( $classes, $item ) {
-	$settings = sell_media_get_plugin_options();
-
-	if ( $item->object == 'page' ) {
-		if ( $item->object_id == $settings->lightbox_page ) {
-			$classes[] = 'lightbox-menu';
-		}
-		if ( $item->object_id == $settings->checkout_page ) {
-			if ( in_array( 'total', $item->classes ) ) {
-				$classes[] = 'checkout-total';
-			} else {
-				$classes[] = 'checkout-qty';
-			}
-		}
-	}
-
-	return $classes;
-}
-add_filter( 'nav_menu_css_class', 'sell_media_nav_menu_css_class', 10, 2 );
 
 /**
  * Builds html select field
@@ -418,9 +343,11 @@ function sell_media_is_license_page() {
  */
 function sell_media_is_license_term_page() {
 
-	if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' && isset( $_GET['taxonomy'] ) && $_GET['taxonomy'] == 'licenses' ) {
+	if ( isset( $_GET['post_type'] ) && 'sell_media_item' === $_GET['post_type'] && isset( $_GET['taxonomy'] ) && 'licenses' === $_GET['taxonomy'] ) {
 		return true;
-	} else { 		return false; }
+	} else {
+		return false;
+	}
 }
 
 
@@ -627,7 +554,8 @@ function sell_media_order_by( $orderby_statement ) {
 	return $order_by;
 }
 if ( ! is_admin() ) {
-	add_filter( 'posts_orderby', 'sell_media_order_by' ); }
+	add_filter( 'posts_orderby', 'sell_media_order_by' );
+}
 
 
 /**
@@ -956,48 +884,15 @@ function sell_media_nocache() {
 }
 add_action( 'init', 'sell_media_nocache', 0 );
 
-/**
- * Filter the item container class
- * Needed to create the masonry layout
- *
- * @since  2.1.3
- * 
- * @return string css class
- */
-function sell_media_grid_item_container_class() {
-	$class = 'sell-media-grid-item-container';
-	$settings = sell_media_get_plugin_options();
-	if ( 'sell-media-masonry' == $settings->thumbnail_layout ) {
-		$class = 'sell-media-grid-item-masonry-container';
-	}
-	return $class;
-}
-add_filter( 'sell_media_grid_item_container_class', 'sell_media_grid_item_container_class', 10, 1 );
-
-/**
- * Filter the grid item class
- * Creates a 1, 2, 3, 4, 5 column or masonry layout
- *
- * @since  2.1.3
- * 
- * @return string css class
- */
-function sell_media_grid_item_class( $class ) {
-	$settings = sell_media_get_plugin_options();
-	if ( ! empty( $settings->thumbnail_layout ) ) {
-		return $class . ' ' . $settings->thumbnail_layout;
-	}
-}
-add_filter( 'sell_media_grid_item_class', 'sell_media_grid_item_class', 10, 1 );
 
 /**
  * Filters the default thumbnail size requested on archives and galleries
  *
  * @since 2.1.3
- * 
+ *
  * @return string thumbnail size param
  */
-function sell_media_thumbnail_crop() {	
+function sell_media_thumbnail_crop() {
 	$settings = sell_media_get_plugin_options();
 	if ( $settings->thumbnail_crop ) {
 		return $settings->thumbnail_crop;

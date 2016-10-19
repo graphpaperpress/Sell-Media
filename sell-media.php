@@ -119,6 +119,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				self::$instance->customer       = new SellMediaCustomer();
 				self::$instance->download       = new SellMediaDownload();
 				self::$instance->images         = new SellMediaImages();
+				self::$instance->layouts        = new SellMediaLayouts();
 				self::$instance->mail         	= new SellMediaMail();
 				self::$instance->payments       = new SellMediaPayments();
 				self::$instance->products       = new SellMediaProducts();
@@ -222,6 +223,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-customer.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-downloads.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-layouts.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-mail.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-payments.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-products.php';

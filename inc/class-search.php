@@ -55,7 +55,10 @@ class SellMediaSearch {
 	 */
 	public function __construct() {
 
-		// Media Search filters
+		// Search attachments for sale
+		add_filter( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+
+		// Search filters
 		add_filter( 'posts_clauses', array( $this, 'posts_clauses' ), 20 );
 
 		// Add a media search form shortcode
@@ -93,6 +96,20 @@ class SellMediaSearch {
 	}
 
 	/**
+	 * Only show attachments on search page that are attached to a Sell Media item.
+	 *
+	 * @since 0.0.1
+	 */
+	public function pre_get_posts( $query ) {
+
+		if ( is_admin() || ! $query->is_main_query() || ! isset( $query->query['search_type'] ) ) {
+			return;
+		}
+
+		$query->set( 'search_type', 'sell_media_search' );
+	}
+
+	/**
 	 * Set query clauses in the SQL statement
 	 *
 	 * @return array
@@ -109,8 +126,9 @@ class SellMediaSearch {
 		}
 
 		// Rewrite the where clause
-		if ( ! empty( $vars['s'] ) && ( ( isset( $_REQUEST['action'] ) && 'query-attachments' == $_REQUEST['action'] ) || 'attachment' == $vars['post_type'] ) ) {
-			$pieces['where'] = " AND $wpdb->posts.post_type = 'attachment' AND ($wpdb->posts.post_status = 'inherit' OR $wpdb->posts.post_status = 'private')";
+		if ( ! empty( $vars['s'] ) && ( ( isset( $_REQUEST['action'] ) && 'query-attachments' === $_REQUEST['action'] ) || 'attachment' === $vars['post_type'] ) ) {
+
+			$pieces['where'] = " AND $wpdb->posts.post_type = 'attachment' AND ($wpdb->posts.post_status = 'inherit' OR $wpdb->posts.post_status = 'private') AND ID IN ( SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_sell_media_attachment_id' )";
 
 			if ( class_exists( 'WPML_Media' ) ) {
 				global $sitepress;
@@ -121,9 +139,6 @@ class SellMediaSearch {
 
 			if ( ! empty( $vars['post_parent'] ) ) {
 				$pieces['where'] .= " AND $wpdb->posts.post_parent = " . $vars['post_parent'];
-			} elseif ( 0 === $vars['post_parent'] ) {
-				// Get unattached attachments
-				$pieces['where'] .= " AND $wpdb->posts.post_parent = 0";
 			}
 
 			if ( ! empty( $vars['post_mime_type'] ) ) {
@@ -221,32 +236,26 @@ class SellMediaSearch {
 		global $post;
 
 		if ( ! is_admin() && is_search() && 'attachment' === $post->post_type ) {
-			$params = array(
-				'attachment_id' => $post->ID,
-				'size' => apply_filters( 'sell_media_thumbnail', 'medium' ),
-				'icon' => false,
-				'attr' => array(),
-				);
-			$params = apply_filters( 'sell_media_get_attachment_image_params', $params );
-			extract( $params );
+
+			$parent_post_obj = sell_media_attachment_parent_post( $post->ID );
+			$post_id = $parent_post_obj->ID;
+			$attachment_id = $post->ID;
+
+			if ( sell_media_has_multiple_attachments( $post_id ) ) {
+				$link = add_query_arg( array(
+					'id' => $attachment_id,
+				), get_permalink( $post_id ) );
+			} else {
+				$link = get_permalink( $post_id );
+			}
 
 			$html = '';
-			$clickable = apply_filters( 'sell_media_is_image_clickable', true );
-			if ( $clickable ) {
-				$html .= '<a href="' . get_attachment_link( $attachment_id ) . '"';
-				$attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $post, $size );
-				$attr = array_map( 'esc_attr', $attr );
-				foreach ( $attr as $name => $value ) {
-					$html .= " $name=" . '"' . $value . '"';
-				}
-				$html .= '>';
-			}
+			$html .= '<a href="' . esc_url( $link ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
+			$html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 
-			$html .= wp_get_attachment_image( $attachment_id, $size, $icon, $attr );
+			$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
 
-			if ( $clickable ) {
-				$html .= '</a>';
-			}
+			$html .= '</a>';
 
 			$excerpt .= $html;
 		}
