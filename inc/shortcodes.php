@@ -59,25 +59,6 @@ function sell_media_thanks_shortcode( $tx=null ) {
 }
 add_shortcode( 'sell_media_thanks', 'sell_media_thanks_shortcode' );
 
-
-/**
- * Search form shortcode [sell_media_searchform]
- *
- * @since 0.1
- */
-function sell_media_search_shortcode( $atts, $content = null ) {
-
-    $html = null;
-    $html .= Sell_Media()->search->form();
-
-    return $html;
-
-}
-add_shortcode( 'sell_media_searchform', 'sell_media_search_shortcode' );
-add_shortcode( 'sell_media_search', 'sell_media_search_shortcode' );
-
-
-
 /**
  * Adds the 'sell_media' short code to the editor. [sell_media_item]
  *

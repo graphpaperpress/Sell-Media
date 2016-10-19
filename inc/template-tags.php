@@ -8,7 +8,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Print the buy button
@@ -17,54 +19,57 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since       0.1
  * @return      html
  */
-function sell_media_item_buy_button( $post_id=null, $attachment_id=null, $button=null, $text=null, $echo=true ) {
+function sell_media_item_buy_button( $post_id = null, $attachment_id = null, $button = null, $text = null, $echo = true ) {
 
 	$attachment_id = ( empty( $attachment_id ) ) ? sell_media_get_attachment_id( $post_id ) : $attachment_id;
-	$text = apply_filters('sell_media_purchase_text', $text, $post_id );
-	$html = '<a href="' . esc_url( get_permalink( $post_id ) ). '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
+	$text = apply_filters( 'sell_media_purchase_text', $text, $post_id );
+	$html = '<a href="' . esc_url( get_permalink( $post_id ) ) . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
 	$html = apply_filters( 'sell_media_item_buy_button', $html, $post_id, $attachment_id, $button, $text, $echo );
 
-	if ( $echo )
+	if ( $echo ) {
 		echo $html;
-	else
+	} else {
 		return $html;
+	}
 }
 
-function sell_media_item_add_to_cart_button( $post_id=null, $attachment_id=null, $button=null, $text=null, $echo=true, $type = 'download' ) {
+function sell_media_item_add_to_cart_button( $post_id = null, $attachment_id = null, $button = null, $text = null, $echo = true, $type = 'download' ) {
 
-	if( is_null( $text ) ){
+	if ( is_null( $text ) ) {
 		$text = __( 'Add to cart', 'sell_media' );
 	}
 
 	$attachment_id = ( empty( $attachment_id ) ) ? sell_media_get_attachment_id( $post_id ) : $attachment_id;
 	// check if is package
-    $is_package = Sell_Media()->products->is_package( $post_id );
-    // check if has assigned price group
-    $has_price_group = Sell_Media()->products->has_price_group( $post_id );
-	$text = apply_filters('sell_media_add_to_cart_text', $text, $post_id, $attachment_id, $type );
-	$disable = ( ! $is_package && $has_price_group ) ? "disabled":"";
+	$is_package = Sell_Media()->products->is_package( $post_id );
+	// check if has assigned price group
+	$has_price_group = Sell_Media()->products->has_price_group( $post_id );
+	$text = apply_filters( 'sell_media_add_to_cart_text', $text, $post_id, $attachment_id, $type );
+	$disable = ( ! $is_package && $has_price_group ) ? 'disabled' : '';
 
 	$classes[] = 'item_add';
 	$classes[] = 'sell-media-button';
-	if( !is_null( $button ) )
+	if ( ! is_null( $button ) ) {
 		$classes[] = 'sell-media-' . $button;
+	}
 
 	$classes = implode( ' ', $classes );
 
-	$html = '<button class="' . $classes . '" '.$disable.'>' . $text . '</button>';
+	$html = '<button class="' . $classes . '" ' . $disable . '>' . $text . '</button>';
 	$html = apply_filters( 'sell_media_item_add_to_cart_button', $html, $post_id, $attachment_id, $button, $text, $echo, $type );
 
-	if ( $echo )
+	if ( $echo ) {
 		echo $html;
-	else
+	} else {
 		return $html;
+	}
 }
 
 /**
  * Determines the image source for a product
  * @return (string) url to product image or feature image
  */
-function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
+function sell_media_item_image_src( $post_id = null, $attachment_id = null ) {
 	$size = apply_filters( 'sell_media_thumbnail', 'medium' );
 
 	/**
@@ -79,14 +84,14 @@ function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
 	 * Otherwise, get the attributes of the featured image,
 	 * or finally the attached image.
 	 */
-	
+
 	// is gallery
 	if ( sell_media_has_multiple_attachments( $post_id ) ) {
 		$image_attributes = wp_get_attachment_image_src( $attachment_id, $size, true );
-	// has a featured image
-	} elseif ( '' != get_the_post_thumbnail( $post_id ) ) {
+		// has a featured image
+	} elseif ( '' !== get_the_post_thumbnail( $post_id ) ) {
 		$image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size );
-	// no featured image, so get the attachment src from the attached file
+		// no featured image, so get the attachment src from the attached file
 	} else {
 		$image_attributes = wp_get_attachment_image_src( $attachment_id, $size );
 	}
@@ -105,7 +110,7 @@ function sell_media_item_image_src( $post_id=null, $attachment_id=null ) {
  * Returns the file extension of the product file
  * @return (string) file extension
  */
-function sell_media_get_filetype( $post_id=null ){
+function sell_media_get_filetype( $post_id = null ) {
 	$filetype = wp_check_filetype( get_post_meta( $post_id, '_sell_media_attached_file', true ) );
 	return $filetype['ext'];
 }
@@ -117,55 +122,60 @@ function sell_media_get_filetype( $post_id=null ){
  *
  * @return (string) an image tag
  */
-function sell_media_item_icon( $post_id=null, $size='medium', $echo=true ){
+function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true ) {
 
 	$attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
 	// legacy function passed the $attachment_id into sell_media_item_icon
 	// that means the above get_post_meta wouldn't exist
 	// if that's the case, than we assume the $post_id is actually the $attachment_id
-	if ( empty( $attachment_id ) ){
+	if ( empty( $attachment_id ) ) {
 		$attachment_id = $post_id;
 	}
 
 	// check if featured image exists
-	if ( '' != get_the_post_thumbnail( $post_id ) ) {
+	if ( '' !== get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
 
-	// check if attachment thumbnail exists
-	} elseif ( '' != wp_get_attachment_image_src( $attachment_id, $size ) ) {
+		// check if attachment thumbnail exists
+	} elseif ( '' !== wp_get_attachment_image_src( $attachment_id, $size ) ) {
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
 
-	// icon
+		// icon
 	} else {
 		$mime_type = get_post_mime_type( $attachment_id );
 		switch ( $mime_type ) {
 			case 'image/jpeg':
 			case 'image/png':
 			case 'image/gif':
-				$src = wp_mime_type_icon( 'image/jpeg' ); break;
+				$src = wp_mime_type_icon( 'image/jpeg' );
+				break;
 			case 'video/mpeg':
 			case 'video/mp4':
 			case 'video/quicktime':
-				$src = wp_mime_type_icon( 'video/mpeg' ); break;
+				$src = wp_mime_type_icon( 'video/mpeg' );
+				break;
 			case 'text/csv':
 			case 'text/pdf':
 			case 'text/plain':
 			case 'text/xml':
-				$src = wp_mime_type_icon( 'application/pdf' ); break;
+				$src = wp_mime_type_icon( 'application/pdf' );
+				break;
 			default:
-				$src = wp_mime_type_icon(); break;
+				$src = wp_mime_type_icon();
+				break;
 		}
 
-		$image =  '<img src="' . $src . '" class="'. apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . $src . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+		$image = '<img src="' . $src . '" class="' . apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . $src . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
 	}
 
-	if ( $echo )
+	if ( $echo ) {
 		echo $image;
-	else
+	} else {
 		return $image;
+	}
 }
 
 /**
@@ -192,9 +202,9 @@ function sell_media_gallery( $post_id ) {
 		$attachment_id = get_query_var( 'id' );
 		if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
 			do_action( 'sell_media_above_gallery', $post_id );
-			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ){
- 				return false;
- 			}
+			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ) {
+				return false;
+			}
 			$html .= sell_media_item_icon( $attachment_id, 'large', false );
 			$html .= '<p class="sell-media-caption">';
 			$html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span>';
@@ -203,15 +213,12 @@ function sell_media_gallery( $post_id ) {
 				$html .= sell_media_get_attachment_meta( $post_id, 'caption' );
 			}
 			$html .= '</p>';
-		}
-		/**
-		 * If the query var doesn't exist,
-		 * show the gallery grid view
-		 */
-		else {
-			$attachment_ids = sell_media_get_attachments ( $post_id );
+
+			// If the query var doesn't exist, show the gallery grid view.
+		} else {
+			$attachment_ids = sell_media_get_attachments( $post_id );
 			$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
-			$html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery '. $container_class .'">';
+			$html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery ' . $container_class . '">';
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 				$attr = array(
 					'class' => 'sell-media-image sell_media_image sell_media_watermark'
