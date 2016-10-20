@@ -73,9 +73,11 @@ class SellMediaLayouts {
 	 *
 	 * @return    html
 	 */
-	public function loop_start() {
-		$class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
-		echo '<div class="' . esc_attr( $class ) . '">';
+	public function loop_start( $query ) {
+		if ( $query->is_main_query() ) {
+			$class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
+			echo '<div class="' . esc_attr( $class ) . '">';
+		}
 	}
 
 	/**
@@ -87,8 +89,10 @@ class SellMediaLayouts {
 	 *
 	 * @return    html
 	 */
-	public function loop_end() {
-		echo '</div>';
+	public function loop_end( $query ) {
+		if ( $query->is_main_query() ) {
+			echo '</div>';
+		}
 	}
 
 	/**
