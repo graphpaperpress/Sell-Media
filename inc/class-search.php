@@ -141,8 +141,6 @@ class SellMediaSearch {
 			$html .= '</form>';
 			$html .= '</div>';
 
-			return $html;
-
 		}
 
 		// The search terms
