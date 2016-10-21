@@ -103,6 +103,10 @@ a:focus {
       margin: 0 0 32px;
       width: 100%; } }
 
+.sell-media-grid-item img {
+  max-width: 100%;
+  height: auto; }
+
 .sell-media-grid-item-masonry-container {
   overflow: hidden;
   -webkit-column-count: 3;
@@ -260,6 +264,7 @@ input[type="submit"].sell-media-button,
     background: #b3b3b3; }
 
 #sell-media-add-to-cart .sell-media-download-button {
+  box-sizing: border-box;
   color: #fff;
   border-radius: 2px;
   font-size: 16px;

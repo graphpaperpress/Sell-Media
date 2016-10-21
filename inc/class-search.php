@@ -1,65 +1,37 @@
 <?php
-/**
- * Sell Media Search.
- *
- * @package   SellMedia
- * @author    Thad Allender <support@graphpaperpress.com>
- * @license   GPL-2.0+
- * @link      http://graphpaperpress.com/plugins/sell-media/
- * @copyright 2016 Graph Paper Press
- */
-
 
 /**
- * Class conflict with plugin with similar sql queries
+ * Search Class
  *
- * @package SellMedia
- * @author  Thad Allender <support@graphpaperpress.com>
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
  */
-if ( class_exists( 'Media_Search_Enhanced' ) ) {
-	return;
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-/**
- * Plugin class. This class should ideally be used to work with the
- * public-facing side of the WordPress site.
- *
- * @package SellMedia
- * @author  Thad Allender <support@graphpaperpress.com>
- */
 class SellMediaSearch {
 
-	/**
-	 * Plugin version, used for cache-busting of style and script file references.
-	 *
-	 * @since   0.0.1
-	 *
-	 * @var     string
-	 */
-	const VERSION = '0.0.1';
+	private $query_instance;
 
+	private $settings;
 	/**
-	 * Instance of this class.
-	 *
-	 * @since    0.0.1
-	 *
-	 * @var      object
-	 */
-	protected static $instance = null;
-
-	/**
-	 * Initialize the plugin by setting localization and loading public scripts
-	 * and styles.
-	 *
-	 * @since     0.0.1
+	 * Init
 	 */
 	public function __construct() {
 
-		// Search attachments for sale
-		add_filter( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+		// Restrict in admin area.
+		if ( is_admin() ) {
+			return;
+		}
 
-		// Search filters
-		add_filter( 'posts_clauses', array( $this, 'posts_clauses' ), 20 );
+		// tbd
+		//add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+
+		// tbd
+		add_action( 'parse_query', array( $this, 'parse_query' ) );
 
 		// Add a media search form shortcode
 		add_shortcode( 'sell_media_search', array( $this, 'form' ) );
@@ -67,236 +39,178 @@ class SellMediaSearch {
 		// Legacy add a media search form shortcode
 		add_shortcode( 'sell_media_searchform', array( $this, 'form' ) );
 
-		// Hook the image into the_excerpt
-		add_filter( 'the_excerpt', array( $this, 'get_the_image' ) );
-
-		// Change the permalinks at media search results page
-		add_filter( 'attachment_link', array( $this, 'get_the_url' ), 10, 2 );
-
-		// Filter the search form on search page to add post_type hidden field
-		add_filter( 'get_search_form', array( $this, 'search_form_on_search' ) );
-
 	}
 
 	/**
-	 * Return an instance of this class.
-	 *
-	 * @since     0.0.1
-	 *
-	 * @return    object    A single instance of this class.
-	 */
-	public static function get_instance() {
-
-		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance ) {
-			self::$instance = new self;
-		}
-
-		return self::$instance;
-	}
-
-	/**
-	 * Only show attachments on search page that are attached to a Sell Media item.
-	 *
-	 * @since 0.0.1
+	 * Set flag for search.
+	 * @param object $query Query object.
 	 */
 	public function pre_get_posts( $query ) {
-
-		if ( is_admin() || ! $query->is_main_query() || ! isset( $query->query['search_type'] ) ) {
+		if ( is_admin() || ! $query->is_main_query() ) {
 			return;
 		}
 
-		$query->set( 'search_type', 'sell_media_search' );
+		// edit the query only when post type is 'attachment'
+		// if it isn't, return
+		if ( ! is_post_type_archive( 'attachment' ) ) {
+			return;
+		}
+	}
+
+	public function parse_query() {
+		global $wp_query;
+
+		// When inside a custom taxonomy archive include attachments
+		if ( is_tax( 'keywords' ) ) {
+			$wp_query->query_vars['post_type'] = array( 'attachment' );
+			$wp_query->query_vars['post_status'] = array( null );
+
+			return $wp_query;
+		}
 	}
 
 	/**
-	 * Set query clauses in the SQL statement
+	 * Search form
 	 *
-	 * @return array
-	 *
-	 * @since    0.0.1
+	 * @since 1.8.7
 	 */
-	public static function posts_clauses( $pieces ) {
+	public function form( $url = null, $used = null ) {
 
-		global $wp_query, $wpdb;
+		$settings = sell_media_get_plugin_options();
+		$html = '';
 
-		$vars = $wp_query->query_vars;
-		if ( empty( $vars ) ) {
-			$vars = ( isset( $_REQUEST['query'] ) ) ? $_REQUEST['query'] : array();
+		// Show a message to admins if they don't have search page set in settings.
+		if ( current_user_can( 'administrator' ) && empty( $settings->search_page ) ) {
+			$html .= esc_html__( 'For searching to work, you must sssign your Search Page in Sell Media -> Settings.', 'sell_media' );
+			return $html;
 		}
 
-		// Rewrite the where clause
-		if ( ! empty( $vars['s'] ) && ( ( isset( $_REQUEST['action'] ) && 'query-attachments' === $_REQUEST['action'] ) || 'attachment' === $vars['post_type'] ) ) {
+		// Get the search term
+		$search_term = ( $_GET['keyword'] ) ? $_GET['keyword'] : '';
 
-			$pieces['where'] = " AND $wpdb->posts.post_type = 'attachment' AND ($wpdb->posts.post_status = 'inherit' OR $wpdb->posts.post_status = 'private') AND ID IN ( SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_sell_media_attachment_id' )";
+		// Get the file type
+		$type = ( $_GET['type'] ) ? $_GET['type'] : '';
 
-			if ( class_exists( 'WPML_Media' ) ) {
-				global $sitepress;
-				//get current language
-				$lang = $sitepress->get_current_language();
-				$pieces['where'] .= $wpdb->prepare( " AND t.element_type='post_attachment' AND t.language_code = %s", $lang );
+		// only use this method if it hasn't already been used on the page
+		static $used;
+		if ( ! isset( $used ) ) {
+			$used = true;
+
+			$html .= '<div class="sell-media-search">';
+			$html .= '<form role="search" method="get" id="sell-media-search-form" class="sell-media-search-form" action="' . esc_url( get_permalink( $settings->search_page ) ) . '">';
+			$html .= '<div class="sell-media-search-inner cf">';
+
+			// Visible search options wrapper
+			$html .= '<div id="sell-media-search-visible" class="sell-media-search-visible cf">';
+
+			// Input field
+			$html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
+			$html .= '<input type="text" value="' . $search_term . '" name="keyword" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
+			$html .= '</div>';
+
+			// Submit button
+			$html .= '<div id="sell-media-search-submit" class="sell-media-search-field sell-media-search-submit">';
+			$html .= '<input type="submit" id="sell-media-search-submit-button" class="sell-media-search-submit-button" value="' . apply_filters( 'sell_media_search_button', __( 'Search', 'sell_media' ) ) . '" />';
+			$html .= '</div>';
+
+			$html .= '</div>';
+
+			// Hidden search options wrapper
+			$html .= '<div id="sell-media-search-hidden" class="sell-media-search-hidden cf">';
+
+			// File type field
+			$html .= '<div id="sell-media-search-file-type" class="sell-media-search-field sell-media-search-file-type">';
+			$html .= '<label for="type">' . esc_html__( 'File Type', 'sell_media' ) . '</label>';
+			$html .= '<select name="type">';
+			$html .= '<option value="">' . esc_html__( 'All', 'sell_media' ) . '</option>';
+			$mimes = array( 'image', 'video', 'audio' );
+			foreach ( $mimes as $mime ) {
+				$selected = ( $type === $mime ) ? 'selected' : '';
+				$html .= '<option value="' . $mime . '" '.  $selected . '>';
+				$html .= ucfirst( esc_html__( $mime, 'sell_media' ) );
+				$html .= '</option>';
 			}
 
-			if ( ! empty( $vars['post_parent'] ) ) {
-				$pieces['where'] .= " AND $wpdb->posts.post_parent = " . $vars['post_parent'];
-			}
+			$html .= '</select>';
+			$html .= '</div>';
 
-			if ( ! empty( $vars['post_mime_type'] ) ) {
-				// Use esc_like to escape slash
-				$like = '%' . $wpdb->esc_like( $vars['post_mime_type'] ) . '%';
-				$pieces['where'] .= $wpdb->prepare( " AND $wpdb->posts.post_mime_type LIKE %s", $like );
-			}
+			// Hidden search options wrapper
+			$html .= '</div>';
 
-			if ( ! empty( $vars['m'] ) ) {
-				$year = substr( $vars['m'], 0, 4 );
-				$monthnum = substr( $vars['m'], 4 );
-				$pieces['where'] .= $wpdb->prepare( " AND YEAR($wpdb->posts.post_date) = %d AND MONTH($wpdb->posts.post_date) = %d", $year, $monthnum );
-			} else {
-				if ( ! empty( $vars['year'] ) && 'false' != $vars['year'] ) {
-					$pieces['where'] .= $wpdb->prepare( " AND YEAR($wpdb->posts.post_date) = %d", $vars['year'] );
+			$html .= '</div>';
+			$html .= '</form>';
+			$html .= '</div>';
+
+			return $html;
+
+		}
+
+		// The search terms
+		$search_terms = str_getcsv( $search_term, ' ' );
+
+		// The file type
+		$mime_type = $this->get_mimetype( $type );
+
+		// The Query
+		$args = array(
+			'post_type' => 'attachment',
+			'post_status' => array( 'publish', 'inherit' ),
+			'post_mime_type' => $mime_type,
+			'tax_query' => array(
+				'relation' => 'OR',
+				array(
+					'taxonomy' => 'keywords',
+					'field'    => 'name',
+					'terms'    => $search_terms,
+				),
+			),
+		);
+		$search_query = new WP_Query( $args );
+		$i = 0;
+
+		$html .= '<div id="sell-media-archive" class="sell-media">';
+		$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+
+		// The Loop
+		if ( $search_query->have_posts() ) {
+			while ( $search_query->have_posts() ) {
+				$search_query->the_post();
+				$parent_post_type = get_post_type( wp_get_post_parent_id( get_the_ID() ) );
+				if ( 'sell_media_item' === $parent_post_type ) {
+					$i++;
+					$html .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
 				}
-
-				if ( ! empty( $vars['monthnum'] ) && 'false' != $vars['monthnum'] ) {
-					$pieces['where'] .= $wpdb->prepare( " AND MONTH($wpdb->posts.post_date) = %d", $vars['monthnum'] );
-				}
 			}
-
-			// search for keyword "s"
-			$like = '%' . $wpdb->esc_like( $vars['s'] ) . '%';
-			$pieces['where'] .= $wpdb->prepare( " AND ( ($wpdb->posts.ID LIKE %s) OR ($wpdb->posts.post_title LIKE %s) OR ($wpdb->posts.guid LIKE %s) OR ($wpdb->posts.post_content LIKE %s) OR ($wpdb->posts.post_excerpt LIKE %s)", $like, $like, $like, $like, $like );
-			$pieces['where'] .= $wpdb->prepare( " OR ($wpdb->postmeta.meta_key = '_wp_attachment_image_alt' AND $wpdb->postmeta.meta_value LIKE %s)", $like );
-			$pieces['where'] .= $wpdb->prepare( " OR ($wpdb->postmeta.meta_key = '_wp_attached_file' AND $wpdb->postmeta.meta_value LIKE %s)", $like );
-
-			// Get taxes for attachements
-			$taxes = get_object_taxonomies( 'attachment' );
-			if ( ! empty( $taxes ) ) {
-				$pieces['where'] .= $wpdb->prepare( " OR (tter.slug LIKE %s) OR (ttax.description LIKE %s) OR (tter.name LIKE %s)", $like, $like, $like );
-			}
-
-			$pieces['where'] .= " )";
-
-			$pieces['join'] .= " LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id";
-
-			// Get taxes for attachements
-			$taxes = get_object_taxonomies( 'attachment' );
-			if ( ! empty( $taxes ) ) {
-				$on = array();
-				foreach ( $taxes as $tax ) {
-					$on[] = "ttax.taxonomy = '$tax'";
-				}
-				$on = '( ' . implode( ' OR ', $on ) . ' )';
-
-				$pieces['join'] .= " LEFT JOIN $wpdb->term_relationships AS trel ON ($wpdb->posts.ID = trel.object_id) LEFT JOIN $wpdb->term_taxonomy AS ttax ON (" . $on . " AND trel.term_taxonomy_id = ttax.term_taxonomy_id) LEFT JOIN $wpdb->terms AS tter ON (ttax.term_id = tter.term_id) ";
-			}
-
-			$pieces['distinct'] = 'DISTINCT';
-
-			$pieces['orderby'] = "$wpdb->posts.post_date DESC";
 		}
 
-		return $pieces;
+		$html .= '</div>';
+		$html .= '</div>';
+
+		/* Restore original Post Data */
+		wp_reset_postdata();
+		$i = 0;
+
+		return $html;
 	}
 
 	/**
-	 * Create search form
-	 *
-	 * @return string Media search form
-	 *
-	 * @since 0.0.1
+	 * Get the select value of the filetype field and conver it into a WP mimtype for WP_Query
+	 * 
+	 * @param  string 		The filetype (image, video, audio)
+	 * @return array 		The WP mimetype format for each filetype
 	 */
-	public function form( $form = '' ) {
-
-		$s = get_query_var( 's' );
-
-		$placeholder = ( empty( $s ) ) ? apply_filters( 'sell_media_search_form_placeholder', __( 'Search Media...', 'sell_media' ) ) : $s;
-
-		if ( empty( $form ) )
-			$form = get_search_form( false );
-
-		$form = preg_replace( "/(form.*class=\")(.\S*)\"/", '$1$2 ' . apply_filters( 'sell_media_search_form_class', 'sell_media-search-form' ) . '"', $form );
-		$form = preg_replace( "/placeholder=\"(.\S)*\"/", 'placeholder="' . $placeholder . '"', $form );
-		$form = str_replace( '</form>', '<input type="hidden" name="post_type" value="attachment" /></form>', $form );
-
-		$result = apply_filters( 'sell_media_search_form', $form );
-
-		return $result;
-
-	}
-
-	/**
-	 * Get the attachment image and hook into the_excerpt
-	 *
-	 * @param  string $excerpt The excerpt HTML
-	 * @return string          The hooked excerpt HTML
-	 *
-	 * @since  0.0.1
-	 */
-	public function get_the_image( $excerpt ) {
-
-		global $post;
-
-		if ( ! is_admin() && is_search() && 'attachment' === $post->post_type ) {
-
-			$parent_post_obj = sell_media_attachment_parent_post( $post->ID );
-			$post_id = $parent_post_obj->ID;
-			$attachment_id = $post->ID;
-
-			if ( sell_media_has_multiple_attachments( $post_id ) ) {
-				$link = add_query_arg( array(
-					'id' => $attachment_id,
-				), get_permalink( $post_id ) );
-			} else {
-				$link = get_permalink( $post_id );
-			}
-
-			$html = '';
-			$html .= '<a href="' . esc_url( $link ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
-			$html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
-
-			$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
-
-			$html .= '</a>';
-
-			$excerpt .= $html;
+	private function get_mimetype( $filetype ) {
+		if ( 'image' === $filetype ) {
+			$mime = array( 'image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/tiff', 'image/x-icon' );
+		} elseif ( 'video' === $filetype ) {
+			$mime = array( 'video/x-ms-asf', 'video/x-ms-wmv', 'video/x-ms-wmx', 'video/x-ms-wm', 'video/avi', 'video/divx', 'video/x-flv', 'video/quicktime', 'video/mpeg', 'video/mp4', 'video/ogg', 'video/webm', 'video/x-matroska' );
+		} elseif ( 'audio' === $filetype ) {
+			$mime = array( 'audio/mpeg', 'audio/x-realaudio', 'audio/wav', 'audio/ogg', 'audio/midi', 'audio/x-ms-wma', 'audio/x-ms-wax', 'audio/x-matroska' );
+		} else {
+			$mime = '';
 		}
 
-		return $excerpt;
-
-	}
-
-	/**
-	 * Add filter to hook into the attachment URL
-	 *
-	 * @param  string $link    The attachment's permalink.
-	 * @param  int $post_id Attachment ID.
-	 * @return string          The attachment's permalink.
-	 *
-	 * @since 0.0.1
-	 */
-	public function get_the_url( $link, $post_id ) {
-
-		if ( ! is_admin() && is_search() ) {
-			$link = apply_filters( 'sell_media_get_attachment_url', $link, $post_id );
-		}
-
-		return $link;
-	}
-
-	/**
-	 * Filter the search form on search page to add post_type hidden field
-	 *
-	 * @param  string $form The search form.
-	 * @return string The filtered search form
-	 *
-	 * @since 0.0.1
-	 */
-	public function search_form_on_search( $form ) {
-
-		if ( is_search() && is_main_query() && isset( $_GET['post_type'] ) && 'attachment' === $_GET['post_type'] ) {
-			$form = $this->form( $form );
-		}
-
-		return $form;
+		return $mime;
 	}
 
 }
