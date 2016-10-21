@@ -74,7 +74,7 @@ class SellMediaLayouts {
 	 * @return    html
 	 */
 	public function loop_start( $query ) {
-		if ( $query->is_main_query() ) {
+		if ( sell_media_is_search() ) {
 			$class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
 			echo '<div class="' . esc_attr( $class ) . '">';
 		}
@@ -90,7 +90,7 @@ class SellMediaLayouts {
 	 * @return    html
 	 */
 	public function loop_end( $query ) {
-		if ( $query->is_main_query() ) {
+		if ( sell_media_is_search() ) {
 			echo '</div>';
 		}
 	}
@@ -106,7 +106,7 @@ class SellMediaLayouts {
 	public function post_class( $classes ) {
 		global $post;
 		if ( is_post_type_archive( 'sell_media_item' )
-			|| ( is_search() && $_GET['post_type'] && 'attachment' === $_GET['post_type'] ) ) {
+			|| sell_media_is_search() ) {
 			$classes[] = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', null );
 		}
 

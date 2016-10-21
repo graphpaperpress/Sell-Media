@@ -859,6 +859,16 @@ function sell_media_theme_support() {
 add_action( 'after_setup_theme', 'sell_media_theme_support', 999 );
 
 /**
+ * Check if on Sell Media search page
+ * @return  boolean true if on search, false otherwise
+ */
+function sell_media_is_search() {
+	if ( is_search() && is_main_query() && $_GET['post_type'] && 'attachment' === $_GET['post_type'] ) {
+		return true;
+	}
+}
+
+/**
  * Get the number of post views
  * Shown in admin on add/edit post screen
  *

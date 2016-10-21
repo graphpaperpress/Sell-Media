@@ -8,7 +8,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Install
@@ -33,10 +35,10 @@ function sell_media_install() {
 	}
 
 	// Check compatible version.
-	if ( !sell_media_compatible_version() ) {
-        deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
-        wp_die( __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) );
-    }
+	if ( ! sell_media_compatible_version() ) {
+		deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
+		wp_die( __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) );
+	}
 
 	// Register Custom Post Types
 	sell_media_register_post_types();
@@ -45,8 +47,8 @@ function sell_media_install() {
 	sell_media_register_taxonomies();
 
 	// Add default settings if sell media options is not set.
-	$sell_media_options = get_option( 'sell_media_options' ); 
-	if ( false ===  $sell_media_options || empty( $sell_media_options ) ){
+	$sell_media_options = get_option( 'sell_media_options' );
+	if ( false === $sell_media_options || empty( $sell_media_options ) ) {
 		sell_media_register_default_settings();
 	}
 
@@ -74,26 +76,26 @@ function sell_media_install() {
 	// Install protected folder for uploading files and prevent hotlinking
 	$downloads_url = sell_media_get_upload_dir();
 
-	if ( wp_mkdir_p( $downloads_url ) && ! file_exists( $downloads_url.'/.htaccess' ) ) {
-	  if ( $file_handle = @fopen( $downloads_url . '/.htaccess', 'w' ) ) {
-		fwrite( $file_handle, 'deny from all' );
-		fclose( $file_handle );
-	  }
+	if ( wp_mkdir_p( $downloads_url ) && ! file_exists( $downloads_url . '/.htaccess' ) ) {
+		if ( $file_handle = @fopen( $downloads_url . '/.htaccess', 'w' ) ) {
+			fwrite( $file_handle, 'deny from all' );
+			fclose( $file_handle );
+		}
 	}
 
 	// Add a new Customer role
 	add_role( 'sell_media_customer', 'Customer', array( 'read' => true ) );
 
 	// This is a new install so add the defaults to the options table
-	if ( empty( $version ) ){
+	if ( empty( $version ) ) {
 		$defaults = sell_media_get_plugin_option_defaults();
-		update_option( sell_media_get_current_plugin_id() . "_options" , $defaults );
-	// A version number exists, so run upgrades
+		update_option( sell_media_get_current_plugin_id() . '_options', $defaults );
+		// A version number exists, so run upgrades.
 	} else {
 		require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-upgrade.php';
 	}
 
-	if ( $version < SELL_MEDIA_VERSION ){
+	if ( $version < SELL_MEDIA_VERSION ) {
 		// Restrict ipn log files.
 		$htaccess_file = ABSPATH . ".htaccess";
 		$file_content = "\n\n# BEGIN Sell Media\n";
@@ -119,18 +121,18 @@ add_action( 'admin_init', 'sell_media_check_version' );
 
 /**
  * Check WordPress version and disable if incompatible
- * @return void 
+ * @return void
  */
 function sell_media_check_version() {
-    if ( ! sell_media_compatible_version() ) {
-        if ( is_plugin_active( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) ) ) {
-            deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
-            add_action( 'admin_notices', 'sell_media_disabled_notice' );
-            if ( isset( $_GET['activate'] ) ) {
-                unset( $_GET['activate'] );
-            }
-        }
-    }
+	if ( ! sell_media_compatible_version() ) {
+		if ( is_plugin_active( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) ) ) {
+			deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
+			add_action( 'admin_notices', 'sell_media_disabled_notice' );
+			if ( isset( $_GET['activate'] ) ) {
+				unset( $_GET['activate'] );
+			}
+		}
+	}
 }
 
 /**
@@ -139,26 +141,26 @@ function sell_media_check_version() {
  */
 function sell_media_disabled_notice() {
 	echo '<div class="update-nag">' . esc_html__( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) . '</div>';
-} 
+}
 
 /**
  * Check WordPress version.
  * @return boolean
  */
 function sell_media_compatible_version() {
-    if ( version_compare( $GLOBALS['wp_version'], '4.4', '<' ) ) {
-         return false;
-     }
+	if ( version_compare( $GLOBALS['wp_version'], '4.4', '<' ) ) {
+		 return false;
+	}
 
-    // Add sanity checks for other version requirements here.
-    return true;
+	// Add sanity checks for other version requirements here.
+	return true;
 }
 
 /**
  * Register Custom Post Types
  * @since 1.8.5
  */
-function sell_media_register_post_types(){
+function sell_media_register_post_types() {
 
 	$settings = sell_media_get_plugin_options();
 
@@ -197,10 +199,11 @@ function sell_media_register_post_types(){
 		'has_archive' => apply_filters( 'sell_media_filter_has_archive', true ),
 		'query_var' => true,
 		'can_export' => true,
-		'rewrite' => array (
+		'rewrite' => array(
 			'slug' => empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug,
-			'feeds' => true ),
-		'capability_type' => 'post'
+			'feeds' => true,
+		),
+		'capability_type' => 'post',
 	);
 
 	register_post_type( 'sell_media_item', $item_args );
@@ -243,9 +246,9 @@ function sell_media_register_post_types(){
 			'edit_posts' => 'update_core',
 			'edit_others_posts' => 'update_core',
 			'publish_posts' => 'update_core',
-			'read_private_posts' => 'update_core'
+			'read_private_posts' => 'update_core',
 		),
-		'map_meta_cap' => true // Allow users to edit/remove existing payments
+		'map_meta_cap' => true, // Allow users to edit/remove existing payments
 	);
 
 	register_post_type( 'sell_media_payment', $payment_args );
@@ -269,7 +272,7 @@ add_action( 'after_setup_theme', 'sell_media_after_setup_theme' );
  * Register Custom Taxonomies
  * @since 1.8.5
  */
-function sell_media_register_taxonomies(){
+function sell_media_register_taxonomies() {
 
 	$settings = sell_media_get_plugin_options();
 	$admin_columns = empty( $settings->admin_columns ) ? null : $settings->admin_columns;
@@ -304,7 +307,7 @@ function sell_media_register_taxonomies(){
 		'show_ui' => false,
 		'hierarchical' => true,
 		'rewrite' => true,
-		'query_var' => true
+		'query_var' => true,
 	);
 
 	register_taxonomy( 'price-group', array( 'sell_media_item' ), $price_group_args );
@@ -339,7 +342,7 @@ function sell_media_register_taxonomies(){
 		'show_tagcloud' => true,
 		'hierarchical' => true,
 		'rewrite' => array( 'hierarchical' => true ),
-		'query_var' => true
+		'query_var' => true,
 	);
 
 	register_taxonomy( 'collection', array( 'sell_media_item' ), $collection_args );
@@ -374,7 +377,7 @@ function sell_media_register_taxonomies(){
 		'show_tagcloud' => true,
 		'hierarchical' => true,
 		'rewrite' => true,
-		'query_var' => true
+		'query_var' => true,
 	);
 
 	register_taxonomy( 'licenses', array( 'sell_media_item' ), $licenses_args );
@@ -409,7 +412,7 @@ function sell_media_register_taxonomies(){
 		'show_tagcloud' => true,
 		'hierarchical' => false,
 		'rewrite' => true,
-		'query_var' => true
+		'query_var' => true,
 	);
 
 	register_taxonomy( 'keywords', array( 'sell_media_item', 'attachment' ), $keywords_args );
@@ -443,7 +446,7 @@ function sell_media_register_taxonomies(){
 		'show_tagcloud' => true,
 		'hierarchical' => false,
 		'rewrite' => true,
-		'query_var' => true
+		'query_var' => true,
 	);
 
 	register_taxonomy( 'creator', array( 'sell_media_item', 'attachment' ), $creator_args );
@@ -477,7 +480,7 @@ function sell_media_register_taxonomies(){
 		'show_tagcloud' => true,
 		'hierarchical' => false,
 		'rewrite' => true,
-		'query_var' => true
+		'query_var' => true,
 	);
 
 	register_taxonomy( 'city', array( 'sell_media_item', 'attachment' ), $city_args );
@@ -511,7 +514,7 @@ function sell_media_register_taxonomies(){
 		'show_tagcloud' => true,
 		'hierarchical' => false,
 		'rewrite' => true,
-		'query_var' => true
+		'query_var' => true,
 	);
 
 	register_taxonomy( 'state', array( 'sell_media_item', 'attachment' ), $state_args );
@@ -526,7 +529,7 @@ add_action( 'init', 'sell_media_register_taxonomies', 1 );
 function sell_media_register_default_settings() {
 
 	if ( false === ( $options = get_transient( 'sell_media_options' ) ) ) {
-	
+
 		$defaults = array(
 			'test_mode' => 1,
 			'customer_notification' => 1,
@@ -554,9 +557,9 @@ function sell_media_register_default_settings() {
 			'from_email' => get_option( 'admin_email' ),
 			'success_email_subject' => 'Your Purchase',
 			'success_email_body' => "Hi {first_name} {last_name},\n\nThanks for purchasing from my site. Here are your download links:\n\n{download_links}\n\nThanks!",
-			'misc' => ''
+			'misc' => '',
 		);
-		
+
 		$options = wp_parse_args( update_option( 'sell_media_options', $defaults ) );
 	}
 }
@@ -568,7 +571,7 @@ function sell_media_register_default_settings() {
 function sell_media_autocreate_pages() {
 
 	$settings = sell_media_get_plugin_options();
-	$settings = ( array ) $settings;
+	$settings = (array) $settings;
 	$pages = sell_media_get_pages_array();
 
 	foreach ( $pages as $page ) {
@@ -579,20 +582,20 @@ function sell_media_autocreate_pages() {
 		// Check if this page already exists, with shortcode
 		$existing_page = get_page_by_title( $title );
 		if ( ! empty( $existing_page ) && 'page' === $existing_page->post_type && has_shortcode( $existing_page->post_content, 'sell_media_' . $page ) ) {
-			$settings[$setting] = $existing_page->ID;
+			$settings[ $setting ] = $existing_page->ID;
 		} else {
 			// If the page doesn't exist, create it
 			$new_page = array(
 				'post_title'    => $title,
 				'post_content'  => $shortcode,
 				'post_status'   => 'publish',
-				'post_type'     => 'page'
+				'post_type'     => 'page',
 			);
 
 			$post_id = wp_insert_post( $new_page );
 
 			if ( $post_id ) {
-				$settings[$setting] = $post_id;
+				$settings[ $setting ] = $post_id;
 			}
 		}
 	}
@@ -600,7 +603,7 @@ function sell_media_autocreate_pages() {
 	// update the option if it already exists
 	if ( get_option( 'sell_media_options' ) !== false ) {
 		update_option( 'sell_media_options', $settings );
-	// otherwise, we need to create the option
+		// otherwise, we need to create the option
 	} else {
 		add_option( 'sell_media_options', $settings );
 	}
