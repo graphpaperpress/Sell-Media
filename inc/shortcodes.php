@@ -610,7 +610,7 @@ function sell_media_ajax_filter( $atts ){
         $first_term = false;
         foreach ($choosen_tabs as $tab_key => $tab) {
             $tab_item_class = 'sell-media-ajax-filter-tab-item' . ( ( 0 == $tab_key )? ' selected-tab' : '' );
-            $output .= '<li><a href="javascript:void(0);" id="' . $tab['slug'] . '" class="' . $tab_item_class . '"><span class="'.$tab['icon'].'"></span>' . $tab['title'] . '</a></li>';
+            $output .= '<li id="' . $tab['slug'] . '" class="' . $tab_item_class . '"><a href="javascript:void(0);"><span class="'.$tab['icon'].'"></span>' . $tab['title'] . '</a></li>';
 
             if( 0 == $tab_key ){
                 $first_tab = $tab['slug'];
