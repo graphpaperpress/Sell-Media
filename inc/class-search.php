@@ -31,7 +31,7 @@ class SellMediaSearch {
 		//add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
 		// tbd
-		add_action( 'parse_query', array( $this, 'parse_query' ) );
+		//add_action( 'parse_query', array( $this, 'parse_query' ) );
 
 		// Add a media search form shortcode
 		add_shortcode( 'sell_media_search', array( $this, 'form' ) );
@@ -86,10 +86,10 @@ class SellMediaSearch {
 		}
 
 		// Get the search term
-		$search_term = ( $_GET['keyword'] ) ? $_GET['keyword'] : '';
+		$search_term = ( isset( $_GET['keyword'] ) ) ? $_GET['keyword'] : '';
 
 		// Get the file type
-		$type = ( $_GET['type'] ) ? $_GET['type'] : '';
+		$type = ( isset( $_GET['type'] ) ) ? $_GET['type'] : '';
 
 		// only use this method if it hasn't already been used on the page
 		static $used;
@@ -143,50 +143,59 @@ class SellMediaSearch {
 
 		}
 
-		// The search terms
-		$search_terms = str_getcsv( $search_term, ' ' );
+		// only run the query on the actual search results page.
+		if ( is_page( $settings->search_page ) && did_action( 'the_post' ) === 1 ) {
 
-		// The file type
-		$mime_type = $this->get_mimetype( $type );
+			// The search terms
+			$search_terms = str_getcsv( $search_term, ' ' );
 
-		// The Query
-		$args = array(
-			'post_type' => 'attachment',
-			'post_status' => array( 'publish', 'inherit' ),
-			'post_mime_type' => $mime_type,
-			'tax_query' => array(
-				'relation' => 'OR',
-				array(
-					'taxonomy' => 'keywords',
-					'field'    => 'name',
-					'terms'    => $search_terms,
+			// The file type
+			$mime_type = $this->get_mimetype( $type );
+
+			// The Query
+			$args = array(
+				'post_type' => 'attachment',
+				'post_status' => array( 'publish', 'inherit' ),
+				'post_mime_type' => $mime_type,
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'keywords',
+						'field'    => 'name',
+						'terms'    => $search_terms,
+					),
 				),
-			),
-		);
-		$search_query = new WP_Query( $args );
-		$i = 0;
+			);
+			$search_query = new WP_Query( $args );
+			$i = 0;
 
-		$html .= '<div id="sell-media-archive" class="sell-media">';
-		$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+			// The Loop
+			if ( $search_query->have_posts() ) {
 
-		// The Loop
-		if ( $search_query->have_posts() ) {
-			while ( $search_query->have_posts() ) {
-				$search_query->the_post();
-				$parent_post_type = get_post_type( wp_get_post_parent_id( get_the_ID() ) );
-				if ( 'sell_media_item' === $parent_post_type ) {
-					$i++;
-					$html .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
+				$html .= '<div id="sell-media-archive" class="sell-media">';
+			$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+
+				while ( $search_query->have_posts() ) {
+					$search_query->the_post();
+					$parent_post_type = get_post_type( wp_get_post_parent_id( get_the_ID() ) );
+					if ( 'sell_media_item' === $parent_post_type ) {
+						$i++;
+						$html .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
+					}
 				}
+
+				$html .= '</div>';
+				$html .= '</div>';
+
+			} else {
+				$html .= '<p class="sell-media-no-results">' . esc_html__( 'Sorry, no results. Explore related products below.', 'sell_media' ) . '</p>';
+				$html .= do_shortcode( '[sell_media_filters]' );
 			}
-		}
 
-		$html .= '</div>';
-		$html .= '</div>';
+			/* Restore original Post Data */
+			wp_reset_postdata();
+			$i = 0;
 
-		/* Restore original Post Data */
-		wp_reset_postdata();
-		$i = 0;
+		} // end search results page check
 
 		return $html;
 	}
