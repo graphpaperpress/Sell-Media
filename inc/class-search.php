@@ -187,7 +187,12 @@ class SellMediaSearch {
 				$html .= '</div>';
 
 			} else {
-				$html .= '<p class="sell-media-no-results">' . esc_html__( 'Sorry, no results. Explore related products below.', 'sell_media' ) . '</p>';
+				if ( $search_term ) {
+					$text = esc_html__( 'Sorry, no results. Explore related products below.', 'sell_media' );
+				} else {
+					$text = esc_html__( 'Search for keywords above or explore our featured products below.', 'sell_media' );
+				}
+				$html .= '<p class="sell-media-no-results">' . $text . '</p>';
 				$html .= do_shortcode( '[sell_media_filters]' );
 			}
 

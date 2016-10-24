@@ -449,10 +449,6 @@ function sell_media_init_settings(){
 					"name" => "show_license",
 					"title" => "Licenses"
 					),
-				"show_keywords" => array(
-					"name" => "show_keywords",
-					"title" => "Keywords"
-					),
 				"show_creators" => array(
 					"name" => "show_creators",
 					"title" => "Creators"

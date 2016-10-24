@@ -1156,7 +1156,7 @@ input.sell-media-search-text[type=text] {
         border: 0;
         color: gray;
         display: inline-block;
-        padding: 15px 30px;
+        padding: 10px 20px;
         text-decoration: none;
         text-shadow: none; }
         #sell-media-ajax-filter-container > ul li a span.dashicons {
@@ -1166,6 +1166,7 @@ input.sell-media-search-text[type=text] {
   #sell-media-ajax-filter-container .sell-media-ajax-filter-terms {
     background-color: #fff;
     border: 1px solid #eee;
+    border-bottom: 0;
     margin: 0;
     padding: 30px 60px 36px;
     position: relative; }

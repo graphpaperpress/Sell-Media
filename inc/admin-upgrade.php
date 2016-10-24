@@ -33,7 +33,7 @@ if ( $version <= '1.6.5' ) {
 					 * new settings API, we update the format and take some time
 					 * to prefix our options.
 					 */
-					if ( in_array( $k, array( 'show_collection', 'show_license', 'show_keywords', 'show_creators' ), true ) ) {
+					if ( in_array( $k, array( 'show_collection', 'show_license', 'show_creators' ), true ) ) {
 						$new_settings['admin_columns'][] = $k;
 					} elseif ( 'image_url' === $k ) {
 						unset( $k );
