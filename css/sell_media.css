@@ -918,6 +918,10 @@ input.sell-media-search-text[type=text] {
   .sell-media-search-close:hover {
     cursor: pointer; }
 
+.sell-media-no-results {
+  font-size: 24px;
+  margin: 48px 0; }
+
 /*= Shortcodes
 -------------------------------------------------------------- */
 /*  sell_media_shortcode_all */

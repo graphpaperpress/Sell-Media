@@ -408,7 +408,7 @@ function sell_media_register_taxonomies() {
 		'public' => true,
 		'show_in_nav_menus' => true,
 		'show_admin_column' => ( is_admin() && isset( $_GET['post_type'] ) && 'sell_media_item' === $_GET['post_type'] ) ? false : true,
-		'show_ui' => true,
+		'show_ui' => ( is_admin() && isset( $_GET['post_type'] ) && 'sell_media_item' === $_GET['post_type'] ) ? false : true,
 		'show_tagcloud' => true,
 		'hierarchical' => false,
 		'rewrite' => true,
