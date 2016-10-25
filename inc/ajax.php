@@ -199,7 +199,7 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 
 			$search_query->the_post();
 			if ( 'keywords' == $param['tab'] ) {
-				$parent_id = wp_get_post_parent_id( get_the_ID() );
+				$parent_id = sell_media_get_attachment_parent_id( get_the_ID() );
 				if ( $parent_id && 'sell_media_item' === get_post_type( wp_get_post_parent_id( get_the_ID() ) ) ) {
 					$i++;
 					$content .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );

@@ -176,7 +176,8 @@ class SellMediaSearch {
 
 				while ( $search_query->have_posts() ) {
 					$search_query->the_post();
-					$parent_post_type = get_post_type( wp_get_post_parent_id( get_the_ID() ) );
+
+					$parent_post_type = get_post_type( sell_media_get_attachment_parent_id( get_the_ID() ) );
 					if ( 'sell_media_item' === $parent_post_type ) {
 						$i++;
 						$html .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );

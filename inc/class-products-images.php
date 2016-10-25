@@ -17,9 +17,13 @@ class SellMediaImages extends SellMediaProducts {
 	 */
 	function __construct() {
 
+		// the IPTC arrays is quite long, so it deserves to be in a separate file
+		require_once  ( dirname(__FILE__) . '/libraries/iptc.php' );
+
 		// fires when an attachment post is created
 		add_action( 'add_attachment', array( $this, 'add_attachment' ) );
 	}
+
 
 	/**
 	 * The add_attachment hook gets triggered when the attachment post is created.
@@ -41,6 +45,98 @@ class SellMediaImages extends SellMediaProducts {
 
 		wp_update_post( $post );
 	}
+
+	/**
+	 * Extracts image metadata from the image specified by its path.
+	 * 
+	 * @return structured array with all available metadata
+	 */
+	public function parse_iptc_info( $original_file, $post_id ) {
+		
+		$this->metadata = array();
+				
+		// extract metadata from file
+		//  the $meta variable will be populated with it
+		$size = getimagesize( $original_file, $meta );
+		
+		// extract pathinfo and merge with size
+		$this->metadata['Image'] = array_merge( $size, pathinfo( $name ) );
+		
+		// remove index 'dirname'
+		unset( $this->metadata['Image']['dirname'] );
+		
+		// parse iptc
+		//  IPTC is stored in the APP13 key of the extracted metadata
+		$iptc = null;
+		if ( isset( $meta['APP13'] ) ) {
+			$iptc = iptcparse( $meta['APP13'] );
+		}
+		
+		if ( $iptc ) {
+			
+			// add named copies to all found IPTC items
+			foreach ( $iptc as $key => $value ) {
+				if ( isset( $this->IPTC_MAPPING[ $key ] ) ) {
+
+					// save IPTC in meta 
+					$name = $this->IPTC_MAPPING[ $key ];
+					add_post_meta( $post_id, $name, $value, true ) or update_post_meta( $post_id, $name, $value );
+
+					// save keywords as terms in a custom taxonomy
+					if ( '2#025' === $key ) {
+						$this->set_terms( $post_id, $value, 'keywords' );
+					}
+
+					// save creator as terms in a custom taxonomy
+					if ( '2#080' === $key ) {
+						$this->set_terms( $post_id, $value, 'creator' );
+					}
+
+					// save city as terms in a custom taxonomy
+					if ( '2#090' === $key ) {
+						$this->set_terms( $post_id, $value, 'city' );
+					}
+
+					// save region as terms in a custom taxonomy
+					if ( '2#095' === $key ) {
+						$this->set_terms( $post_id, $value, 'region' );
+					}
+
+					// save country as terms in a custom taxonomy
+					if ( '2#101' === $key ) {
+						$this->set_terms( $post_id, $value, 'country' );
+					}
+				}
+			}
+		}
+		
+		if ( $iptc ) {
+			$this->metadata['IPTC'] = $iptc;
+		}
+
+		// no need for return but good for testing
+		return $this->metadata;
+	}
+
+	/**
+	 * Update/Saves iptc info as term. Does not check for valid iptc keys!
+	 *
+	 * @param $post_id, the post_id (the attachment_id)
+	 * @param  $terms the keywords or terms
+	 * @param  $taxonomy the custom taxonomy
+	 * @since 0.1
+	 */
+	private function set_terms( $post_id = null, $terms = null, $taxonomy = null ) {
+		if ( is_null( $taxonomy ) ) {
+			return false;
+		}
+
+		foreach ( $terms as $term ) {
+			$result = wp_set_post_terms( $post_id, $terms, $taxonomy, true );
+		}
+		return;
+	}
+
 
 	/**
 	 * Move the uploaded file into the protected area
@@ -312,34 +408,6 @@ class SellMediaImages extends SellMediaProducts {
 		return $sizes;
 	}
 
-
-	/**
-	 * Extract IPTC info from original source image
-	 * Save IPTC data as custom taxonomy terms
-	 */
-	public function parse_iptc_info( $original_file = null, $attachment_id = null ) {
-
-		// Extract IPTC meta info from the uploaded image.
-		$city = sell_media_iptc_parser( 'city', $original_file );
-		$state = sell_media_iptc_parser( 'state', $original_file );
-		$creator = sell_media_iptc_parser( 'creator', $original_file );
-		$keywords = sell_media_iptc_parser( 'keywords', $original_file );
-
-		// Save IPTC info as taxonomies
-		if ( ! empty( $attachment_id ) ) {
-			if ( $city )
-				sell_media_iptc_save( 'city', $city, $attachment_id );
-
-			if ( $state )
-				sell_media_iptc_save( 'state', $state, $attachment_id );
-
-			if ( $creator )
-				sell_media_iptc_save( 'creator', $creator, $attachment_id );
-
-			if ( $keywords )
-				sell_media_iptc_save( 'keywords', $keywords, $attachment_id );
-		}
-	}
 
 	/**
 	 * Determines orientation of an image

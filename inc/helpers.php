@@ -249,71 +249,6 @@ function sell_media_build_input( $taxonomy = null ) {
 
 
 /**
- * Parse the iptc info and retrieve the given value.
- *
- * @since 0.1
- */
-function sell_media_iptc_parser( $value = null, $image = null ) {
-
-	$size = getimagesize( $image, $info );
-
-	if ( ! isset( $info['APP13'] ) ) {
-		return; }
-
-	$iptc = iptcparse( $info['APP13'] );
-
-	switch ( $value ) {
-		case 'keywords' :
-		if ( isset( $iptc['2#025'] ) ) {
-			return $iptc['2#025'];
-		}
-
-		case 'city' :
-		if ( isset( $iptc['2#090'] ) ) {
-			return $iptc['2#090'];
-		}
-
-		case 'region' :
-		if ( isset( $iptc['2#095'] ) ) {
-			return $iptc['2#095'];
-		}
-
-		case 'country' :
-		if ( isset( $iptc['2#101'] ) ) {
-			return $iptc['2#101'];
-		}
-
-		case 'creator' :
-		if ( isset( $iptc['2#080'] ) ) {
-			return $iptc['2#080'];
-		}
-
-		default :
-			return false;
-	}
-}
-
-
-/**
- * Update/Saves iptc info as term. Does not check for valid iptc keys!
- *
- * @param $key 'string', see list of values in sell_media_iptc_parser();
- * @param $values the value that is lifted from sell_media_iptc_parser();
- * @param $post_id, duh, the post_id, NOT the attachment_id
- * @since 0.1
- */
-function sell_media_iptc_save( $keys = null, $values = null, $post_id = null ) {
-	if ( is_null( $keys ) ) {
-		return false; }
-
-	foreach ( $values as $value ) {
-		$result = wp_set_post_terms( $post_id, $value, $keys, true );
-	}
-	return;
-}
-
-
-/**
  * Determine if we're on a Sell Media page in the admin
  *
  * @since 0.1
@@ -439,6 +374,22 @@ function sell_media_get_attachment_meta( $post_id = null, $field = 'id' ) {
 	$attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
 
 	return $attachment_meta[ $field ];
+}
+
+
+/**
+ * Get the parent id of an attachment.
+ * This is used in search and ajax requests for [sell_media_filters]
+ * So that we can return only relevant attachments that are for sale
+ * And have keywords.
+ * 
+ * @param  attachment_id the attachment id
+ * @return integer the parent id
+ */
+function sell_media_get_attachment_parent_id( $attachment_id = null ) {
+	$parent_id = ( wp_get_post_parent_id( $attachment_id ) ) ? wp_get_post_parent_id( $attachment_id ) : get_post_meta( $$attachment_id, '_sell_media_for_sale_product_id', true );
+
+	return $parent_id;
 }
 
 
