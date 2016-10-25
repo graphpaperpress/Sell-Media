@@ -263,23 +263,32 @@ function sell_media_iptc_parser( $value = null, $image = null ) {
 	$iptc = iptcparse( $info['APP13'] );
 
 	switch ( $value ) {
-		case 'keywords':
-			if ( isset( $iptc['2#025'] ) ) {
-				return $iptc['2#025']; }
+		case 'keywords' :
+		if ( isset( $iptc['2#025'] ) ) {
+			return $iptc['2#025'];
+		}
 
-			case 'city':
-				if ( isset( $iptc['2#090'] ) ) {
-					return $iptc['2#090']; }
+		case 'city' :
+		if ( isset( $iptc['2#090'] ) ) {
+			return $iptc['2#090'];
+		}
 
-				case 'region':
-					if ( isset( $iptc['2#095'] ) ) {
-						return $iptc['2#095']; }
+		case 'region' :
+		if ( isset( $iptc['2#095'] ) ) {
+			return $iptc['2#095'];
+		}
 
-					case 'country':
-						if ( isset( $iptc['2#101'] ) ) {
-							return $iptc['2#101']; }
+		case 'country' :
+		if ( isset( $iptc['2#101'] ) ) {
+			return $iptc['2#101'];
+		}
 
-						default:
+		case 'creator' :
+		if ( isset( $iptc['2#080'] ) ) {
+			return $iptc['2#080'];
+		}
+
+		default :
 			return false;
 	}
 }
