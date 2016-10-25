@@ -1153,7 +1153,9 @@ input.sell-media-search-text[type=text] {
       padding: 0; }
       #sell-media-ajax-filter-container > ul li:hover, #sell-media-ajax-filter-container > ul li.selected-tab {
         color: #fff;
-        border-bottom-color: #fff; }
+        border-bottom-color: #fff;
+        position: relative;
+        z-index: 2; }
       #sell-media-ajax-filter-container > ul li a {
         background-image: none;
         box-shadow: none;
@@ -1268,7 +1270,7 @@ input.sell-media-search-text[type=text] {
       padding: 0; }
     #sell-media-ajax-filter-container .sell-media-ajax-filter-result h2,
     #sell-media-ajax-filter-container .sell-media-ajax-filter-result p {
-      color: #fff; }
+      color: #000; }
     #sell-media-ajax-filter-container .sell-media-ajax-filter-result .load-more-button {
       width: 100%;
       text-align: center;

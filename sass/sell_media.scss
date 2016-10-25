@@ -1503,6 +1503,8 @@ input.sell-media-search-text[type=text] {
 			&.selected-tab {
 				color: $white-color;
 				border-bottom-color: $white-color;
+				position:relative; 
+				z-index: 2;
 			}
 
 			a {
@@ -1667,7 +1669,7 @@ input.sell-media-search-text[type=text] {
 
 		h2,
 		p {
-			color: $white-color;
+			color: $black-color;
 		}
 
 		.load-more-button {
