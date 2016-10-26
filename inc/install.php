@@ -415,7 +415,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'keywords', array( 'sell_media_item', 'attachment' ), $keywords_args );
+	register_taxonomy( 'keywords', array( 'attachment' ), $keywords_args );
 
 	/**
 	 * Register Creator

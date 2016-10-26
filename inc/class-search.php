@@ -105,7 +105,7 @@ class SellMediaSearch {
 
 			// Input field
 			$html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
-			$html .= '<input type="text" value="' . $search_term . '" name="keyword" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug ) ) . '"/>';
+			$html .= '<input type="text" value="' . $search_term . '" name="keyword" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'keywords' : $settings->post_type_slug ) ) . '"/>';
 			$html .= '</div>';
 
 			// Submit button
@@ -171,29 +171,31 @@ class SellMediaSearch {
 			// The Loop
 			if ( $search_query->have_posts() ) {
 
+				$html .= '<p class="sell-media-search-results-text">' . sprintf( esc_html__( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->post_count, $search_term ) . '</p>';
+
 				$html .= '<div id="sell-media-archive" class="sell-media">';
-			$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+
+				$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 
 				while ( $search_query->have_posts() ) {
 					$search_query->the_post();
-
-					$parent_post_type = get_post_type( sell_media_get_attachment_parent_id( get_the_ID() ) );
-					if ( 'sell_media_item' === $parent_post_type ) {
-						$i++;
-						$html .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
-					}
+					$i++;
+					$html .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
 				}
 
 				$html .= '</div>';
 				$html .= '</div>';
+				$text = esc_html__( 'Explore more from our store', 'sell_media' );
+				$html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
+				$html .= do_shortcode( '[sell_media_filters]' );
 
 			} else {
 				if ( $search_term ) {
-					$text = esc_html__( 'Sorry, no results. Explore related products below.', 'sell_media' );
+					$text = esc_html__( 'Sorry, no results. Explore more from our store below.', 'sell_media' );
 				} else {
-					$text = esc_html__( 'Search for keywords above or explore our featured products below.', 'sell_media' );
+					$text = esc_html__( 'Search for keywords above or explore more from our store below.', 'sell_media' );
 				}
-				$html .= '<p class="sell-media-no-results">' . $text . '</p>';
+				$html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
 				$html .= do_shortcode( '[sell_media_filters]' );
 			}
 
