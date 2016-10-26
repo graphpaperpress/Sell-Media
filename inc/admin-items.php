@@ -496,11 +496,13 @@ function sell_media_sales_stats(){
  *
  * @since 1.0.4
  */
-function sell_media_before_delete_post( $post_id, $attachment_id=null ){
+function sell_media_before_delete_post( $post_id, $attachment_id = null ) {
 
     $post_type = get_post_type( $post_id );
 
-    if ( $post_type != 'sell_media_item' ) return;
+    if ( '' != $post_type  ) {
+        return;
+    }
     $wp_upload_dir = wp_upload_dir();
 
     /**
@@ -509,6 +511,8 @@ function sell_media_before_delete_post( $post_id, $attachment_id=null ){
     $attachment_ids = ( sell_media_has_multiple_attachments( $post_id ) ) ? sell_media_get_attachments( $post_id ) : array( get_post_meta( $post_id, '_sell_media_attachment_id', true ) );
     
     if ( $attachment_ids ) foreach( $attachment_ids as $attachment_id ) {
+
+        wp_delete_post( $attachment_id );
         
         $attached_file = sell_media_get_public_filepath( $attachment_id );
         $attached_file_protected = sell_media_get_upload_dir() . '/' . $attached_file;
@@ -548,7 +552,7 @@ add_action( 'load-edit.php', 'sell_media_trash_payment_redirect' );
  * @param  string $column_name Column name
  * @param  string $post_type   Post type name.
  */
-function sell_media_add_quick_edit($column_name, $post_type) {
+function sell_media_add_quick_edit( $column_name, $post_type ) {
     if ( 'taxonomy-price-group' != $column_name ) return;
     ?>
     <fieldset class="inline-edit-col-left">

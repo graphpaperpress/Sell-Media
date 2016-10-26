@@ -27,12 +27,6 @@ class SellMediaSearch {
 			return;
 		}
 
-		// tbd
-		//add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
-
-		// tbd
-		//add_action( 'parse_query', array( $this, 'parse_query' ) );
-
 		// Add a media search form shortcode
 		add_shortcode( 'sell_media_search', array( $this, 'form' ) );
 
@@ -41,33 +35,6 @@ class SellMediaSearch {
 
 	}
 
-	/**
-	 * Set flag for search.
-	 * @param object $query Query object.
-	 */
-	public function pre_get_posts( $query ) {
-		if ( is_admin() || ! $query->is_main_query() ) {
-			return;
-		}
-
-		// edit the query only when post type is 'attachment'
-		// if it isn't, return
-		if ( ! is_post_type_archive( 'attachment' ) ) {
-			return;
-		}
-	}
-
-	public function parse_query() {
-		global $wp_query;
-
-		// When inside a custom taxonomy archive include attachments
-		if ( is_tax( 'keywords' ) ) {
-			$wp_query->query_vars['post_type'] = array( 'attachment' );
-			$wp_query->query_vars['post_status'] = array( null );
-
-			return $wp_query;
-		}
-	}
 
 	/**
 	 * Search form
@@ -81,7 +48,7 @@ class SellMediaSearch {
 
 		// Show a message to admins if they don't have search page set in settings.
 		if ( current_user_can( 'administrator' ) && empty( $settings->search_page ) ) {
-			$html .= esc_html__( 'For searching to work, you must sssign your Search Page in Sell Media -> Settings.', 'sell_media' );
+			$html .= esc_html__( 'For search to work, you must assign your Search Page in Sell Media -> Settings.', 'sell_media' );
 			return $html;
 		}
 
@@ -164,6 +131,12 @@ class SellMediaSearch {
 						'terms'    => $search_terms,
 					),
 				),
+				'meta_query' => array(
+					 array(
+						'key' => '_sell_media_for_sale_product_id',
+						'compare' => 'EXISTS',
+					),
+				),
 			);
 			$search_query = new WP_Query( $args );
 			$i = 0;
@@ -174,7 +147,6 @@ class SellMediaSearch {
 				$html .= '<p class="sell-media-search-results-text">' . sprintf( esc_html__( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->post_count, $search_term ) . '</p>';
 
 				$html .= '<div id="sell-media-archive" class="sell-media">';
-
 				$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 
 				while ( $search_query->have_posts() ) {

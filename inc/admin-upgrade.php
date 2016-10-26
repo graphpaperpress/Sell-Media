@@ -105,25 +105,15 @@ if ( $version <= '2.2.6' ) {
 			$the_query->the_post();
 			$attachments = sell_media_get_attachments( get_the_ID() );
 
-			// In theory, this should loop over all sell media attachments
-			// and parse/save iptc data as both post meta and custom taxonomy terms.
-			// if ( $attachments ) foreach ( $attachments as $attachment ) {
-			// 	$original_file = get_attached_file( $attachment );
-			// 	if ( file_exists( $original_file ) ) {
-			// 		$image_products->parse_iptc_info( $original_file, $attachment );
-			// 	}
-			// }
-
-			$count = count( $attachments );
-
 			// if there are more than one attachments, the attachments will already have keywords assigned
 			// in that case, let's skip them
-			if ( 1 === $count ) {
-				// get the ids of keywords assigned to this post
-				$keyword_ids = wp_get_post_terms( get_the_ID(), 'keywords', array( 'fields' => 'ids' ) );
-				// make sure keywords exist
-				if ( ! is_wp_error( $keyword_ids ) ) {
-					wp_set_object_terms( $attachments[0], $keyword_ids, 'keywords', true );
+			// get the ids of keywords assigned to this post
+			$keyword_ids = wp_get_post_terms( get_the_ID(), 'keywords', array( 'fields' => 'ids' ) );
+			// make sure keywords exist
+			if ( ! is_wp_error( $keyword_ids ) ) {
+				if ( $attachments ) foreach ( $attachments as $attachment ) {
+					wp_set_object_terms( $attachment, $keyword_ids, 'keywords', true );
+					update_post_meta( $attachment, '_sell_media_for_sale_product_id', get_the_ID() );
 				}
 			}
 		}

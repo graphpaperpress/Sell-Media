@@ -57,7 +57,7 @@ function sell_media_migrate(){
 		wp_reset_postdata();
 	}
 }
-add_action( 'init', 'sell_media_migrate' );
+//add_action( 'init', 'sell_media_migrate' );
 
 /**
  * Template Redirect
@@ -434,7 +434,17 @@ function sell_media_get_attachment_meta( $post_id = null, $field = 'id' ) {
  * @return integer the parent id
  */
 function sell_media_get_attachment_parent_id( $attachment_id = null ) {
-	$parent_id = ( wp_get_post_parent_id( $attachment_id ) ) ? wp_get_post_parent_id( $attachment_id ) : get_post_meta( $$attachment_id, '_sell_media_for_sale_product_id', true );
+
+	if ( wp_get_post_parent_id( $attachment_id ) ) {
+		$parent_id = wp_get_post_parent_id( $attachment_id );
+	} elseif ( get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true ) ) {
+		$parent_id = get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true );
+		if ( false === get_post_status( $parent_id ) ) {
+			$parent_id = '';
+		}
+	} else {
+		$parent_id = '';
+	}
 
 	return $parent_id;
 }
