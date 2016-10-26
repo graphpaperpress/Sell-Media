@@ -113,7 +113,7 @@ if ( $version <= '2.2.6' ) {
 				$keyword_ids = wp_get_post_terms( get_the_ID(), 'keywords', array( 'fields' => 'ids' ) );
 				// make sure keywords exist
 				if ( ! is_wp_error( $keyword_ids ) ) {
-					wp_set_object_terms( $attachments[0], $keyword_ids, 'keywords' );
+					wp_set_object_terms( $attachments[0], $keyword_ids, 'keywords', true );
 				}
 			}
 		}
