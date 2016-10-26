@@ -12,6 +12,53 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function sell_media_migrate(){
+
+	// Query args
+	$args = array(
+		'post_type' => 'sell_media_item',
+		'posts_per_page' => -1,
+	);
+
+	// Query all sell_media_items
+	$the_query = new WP_Query( $args );
+
+	$image_products = new SellMediaImages();
+
+	// The Loop
+	if ( $the_query->have_posts() ) {
+		while ( $the_query->have_posts() ) {
+			$the_query->the_post();
+			$attachments = sell_media_get_attachments( get_the_ID() );
+
+			// In theory, this should loop over all sell media attachments
+			// and parse/save iptc data as both post meta and custom taxonomy terms.
+			// if ( $attachments ) foreach ( $attachments as $attachment ) {
+			// 	$original_file = get_attached_file( $attachment );
+			// 	if ( file_exists( $original_file ) ) {
+			// 		$image_products->parse_iptc_info( $original_file, $attachment );
+			// 	}
+			// }
+
+			$count = count( $attachments );
+
+			// if there are more than one attachments, the attachments will already have keywords assigned
+			// in that case, let's skip them
+			if ( 1 === $count ) {
+				// get the ids of keywords assigned to this post
+				$keyword_ids = wp_get_post_terms( get_the_ID(), 'keywords', array( 'fields' => 'ids' ) );
+				// make sure keywords exist
+				if ( ! is_wp_error( $keyword_ids ) ) {
+					wp_set_object_terms( $attachments[0], $keyword_ids, 'keywords', true );
+				}
+			}
+		}
+		// restore original post data
+		wp_reset_postdata();
+	}
+}
+add_action( 'init', 'sell_media_migrate' );
+
 /**
  * Template Redirect
  * @since 1.0.4

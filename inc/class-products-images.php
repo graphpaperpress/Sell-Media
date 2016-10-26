@@ -39,7 +39,7 @@ class SellMediaImages extends SellMediaProducts {
 		// original file path
 		$original_file = get_attached_file( $post_id );
 
-		if ( file_exists( $original_file ) ) {
+		if ( file_exists( $original_file ) && wp_attachment_is_image( $post_id ) ) {
 			$this->parse_iptc_info( $original_file, $post_id );
 		}
 
@@ -48,22 +48,22 @@ class SellMediaImages extends SellMediaProducts {
 
 	/**
 	 * Extracts image metadata from the image specified by its path.
-	 * 
+	 *
+	 * @param  $original_file the original file path
+	 * @param  $post_id the attachment id
 	 * @return structured array with all available metadata
 	 */
-	public function parse_iptc_info( $original_file, $post_id ) {
+	public function parse_iptc_info( $original_file = null, $post_id = null ) {
+
+		// Check if attachment is image.
+		if ( ! wp_attachment_is_image( $post_id ) )
+			return false;
 		
 		$this->metadata = array();
 				
 		// extract metadata from file
 		//  the $meta variable will be populated with it
-		$size = getimagesize( $original_file, $meta );
-		
-		// extract pathinfo and merge with size
-		$this->metadata['Image'] = array_merge( $size, pathinfo( $name ) );
-		
-		// remove index 'dirname'
-		unset( $this->metadata['Image']['dirname'] );
+		getimagesize( $original_file, $meta );
 		
 		// parse iptc
 		//  IPTC is stored in the APP13 key of the extracted metadata
@@ -80,7 +80,7 @@ class SellMediaImages extends SellMediaProducts {
 
 					// save IPTC in meta 
 					$name = $this->IPTC_MAPPING[ $key ];
-					add_post_meta( $post_id, $name, $value, true ) or update_post_meta( $post_id, $name, $value );
+					$iptc[$name] = $value;
 
 					// save keywords as terms in a custom taxonomy
 					if ( '2#025' === $key ) {
@@ -112,6 +112,7 @@ class SellMediaImages extends SellMediaProducts {
 		
 		if ( $iptc ) {
 			$this->metadata['IPTC'] = $iptc;
+			add_post_meta( $post_id, '_sell_media_iptc', $this->metadata['IPTC'], true ) or update_post_meta( $post_id, '_sell_media_iptc', $this->metadata['IPTC'] );
 		}
 
 		// no need for return but good for testing
@@ -126,7 +127,7 @@ class SellMediaImages extends SellMediaProducts {
 	 * @param  $taxonomy the custom taxonomy
 	 * @since 0.1
 	 */
-	private function set_terms( $post_id = null, $terms = null, $taxonomy = null ) {
+	public function set_terms( $post_id = null, $terms = null, $taxonomy = null ) {
 		if ( is_null( $taxonomy ) ) {
 			return false;
 		}
