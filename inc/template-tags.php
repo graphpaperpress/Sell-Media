@@ -270,6 +270,8 @@ function sell_media_gallery_navigation( $post_id ) {
  * @return string html
  */
 function sell_media_content_loop( $post_id, $i ) {
+
+	$settings = sell_media_get_plugin_options();
 	$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
 	if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
 		$class .= ' sell-media-grid-single-item';
@@ -279,7 +281,9 @@ function sell_media_content_loop( $post_id, $i ) {
 
 	$parent = false;
 
-	if ( ! is_archive() ) {
+	// This loop runs on both archives and single galleries.
+	// Let's set query params everywhere except archive and search if the item is an attachment.
+	if ( ! is_archive() && isset( $settings->search_page ) && ! is_page( $settings->search_page ) ) {
 		// if there is a post parent, change link to gallery
 		$parent = sell_media_attachment_parent_post( $post_id );
 	}
