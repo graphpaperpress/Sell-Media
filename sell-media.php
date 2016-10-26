@@ -130,6 +130,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				if ( self::$instance->is_request( 'admin' ) ) {
 					self::$instance->notices        = new SellMediaAdminNotices();
 					self::$instance->admin_search   = new SellMediaAdminSearch();
+					self::$instance->admin_upgrades = new SellMediaAdminUpgrades();
 				}
 
 				// Set cart global variable.
@@ -175,7 +176,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			// Plugin version.
 			if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-				define( 'SELL_MEDIA_VERSION', '2.2.6' );
+				define( 'SELL_MEDIA_VERSION', '2.2.7' );
 			}
 
 			// Plugin Folder Path.

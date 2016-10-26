@@ -30,7 +30,7 @@ class SellMediaAdminUpgrades {
 	/**
 	 * Handles version comparisons and upgrades
 	 */
-	private function upgrades( $version ) {
+	public function upgrades( $version ) {
 
 		/**
 		 * This script pulls the current settings for Sell Media and extensions, then grooms them as needed
@@ -103,7 +103,7 @@ class SellMediaAdminUpgrades {
 			 * Schedule an event that fires every minute to repair attachments in chunks
 			 */
 			if ( ! wp_next_scheduled ( 'sell_media_fix_attachments_event' ) ) {
-				wp_schedule_event( time(), '5minutes', 'sell_media_fix_attachments_event' );
+				wp_schedule_event( time(), 'minute', 'sell_media_fix_attachments_event' );
 			}
 		}
 	}
@@ -123,7 +123,7 @@ class SellMediaAdminUpgrades {
 	 *
 	 * Now, searching is simplified and we can search attachment post types for keywords.
 	 */
-	private function fix_attachments() {
+	public function fix_attachments() {
 
 		// Create an option to hold the current offset value
 		// This value gets increased by 10 every time this events runs
@@ -197,15 +197,15 @@ class SellMediaAdminUpgrades {
 	/**
 	 * Add new cron schedules
 	 * WP only includes a few cron schedules
-	 * We need to add a new one for every 5 minutes to run our upgrades quickly
+	 * We need to add a new one for every minute to run our upgrades quickly
 	 * 
 	 * @param  array $array existing cron event array
 	 * @return array $array our new cron events
 	 */
 	public function cron_schedules( $array ) {
-		$array['5minutes'] = array(
-				'interval' => 300,
-				'display' => 'Once every 5 minute',
+		$array['minute'] = array(
+				'interval' => 60,
+				'display' => 'Once every minute',
 		);
 		return $array;
 	}
