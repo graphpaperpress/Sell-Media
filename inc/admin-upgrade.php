@@ -116,6 +116,17 @@ if ( $version <= '2.2.6' ) {
 					update_post_meta( $attachment, '_sell_media_for_sale_product_id', get_the_ID() );
 				}
 			}
+
+			// Possible future addition.
+			// Loop over all sell media attachments and parse/save iptc data
+			// as both post meta and custom taxonomy terms.
+			// if ( $attachments ) foreach ( $attachments as $attachment ) {
+			// 	$original_file = get_attached_file( $attachment );
+			// 	if ( file_exists( $original_file ) ) {
+			// 		$image_products->parse_iptc_info( $original_file, $attachment );
+			// 	}
+			// }
+
 		}
 		// restore original post data
 		wp_reset_postdata();
