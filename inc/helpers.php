@@ -33,12 +33,12 @@ function sell_media_migrate(){
 
 			// In theory, this should loop over all sell media attachments
 			// and parse/save iptc data as both post meta and custom taxonomy terms.
-			// if ( $attachments ) foreach ( $attachments as $attachment ) {
-			// 	$original_file = get_attached_file( $attachment );
-			// 	if ( file_exists( $original_file ) ) {
-			// 		$image_products->parse_iptc_info( $original_file, $attachment );
-			// 	}
-			// }
+			if ( $attachments ) foreach ( $attachments as $attachment ) {
+				$original_file = get_attached_file( $attachment );
+				if ( file_exists( $original_file ) ) {
+					$image_products->parse_iptc_info( $original_file, $attachment );
+				}
+			}
 
 			$count = count( $attachments );
 

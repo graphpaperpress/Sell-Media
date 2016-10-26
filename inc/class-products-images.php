@@ -73,7 +73,9 @@ class SellMediaImages extends SellMediaProducts {
 		}
 		
 		if ( $iptc ) {
-			
+			if ( !isset( $this->IPTC_MAPPING ) || empty( $this->IPTC_MAPPING ) ) {
+				include  ( dirname(__FILE__) . '/libraries/iptc.php' );
+			}
 			// add named copies to all found IPTC items
 			foreach ( $iptc as $key => $value ) {
 				if ( isset( $this->IPTC_MAPPING[ $key ] ) ) {
