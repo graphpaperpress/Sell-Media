@@ -8,7 +8,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class SellMediaImages extends SellMediaProducts {
 
@@ -18,7 +20,7 @@ class SellMediaImages extends SellMediaProducts {
 	function __construct() {
 
 		// the IPTC arrays is quite long, so it deserves to be in a separate file
-		require_once  ( dirname(__FILE__) . '/libraries/iptc.php' );
+		require_once( dirname( __FILE__ ) . '/libraries/iptc.php' );
 
 		// fires when an attachment post is created
 		add_action( 'add_attachment', array( $this, 'add_attachment' ) );
@@ -56,25 +58,26 @@ class SellMediaImages extends SellMediaProducts {
 	public function parse_iptc_info( $original_file = null, $post_id = null ) {
 
 		// Check if attachment is image.
-		if ( ! wp_attachment_is_image( $post_id ) )
+		if ( ! wp_attachment_is_image( $post_id ) ) {
 			return false;
-		
+		}
+
 		$this->metadata = array();
-				
+
 		// extract metadata from file
 		//  the $meta variable will be populated with it
 		getimagesize( $original_file, $meta );
-		
+
 		// parse iptc
 		//  IPTC is stored in the APP13 key of the extracted metadata
 		$iptc = null;
 		if ( isset( $meta['APP13'] ) ) {
 			$iptc = iptcparse( $meta['APP13'] );
 		}
-		
+
 		if ( $iptc ) {
-			if ( !isset( $this->IPTC_MAPPING ) || empty( $this->IPTC_MAPPING ) ) {
-				include  ( dirname(__FILE__) . '/libraries/iptc.php' );
+			if ( ! isset( $this->IPTC_MAPPING ) || empty( $this->IPTC_MAPPING ) ) {
+				include( dirname( __FILE__ ) . '/libraries/iptc.php' );
 			}
 			// add named copies to all found IPTC items
 			foreach ( $iptc as $key => $value ) {
@@ -82,7 +85,7 @@ class SellMediaImages extends SellMediaProducts {
 
 					// save IPTC in meta 
 					$name = $this->IPTC_MAPPING[ $key ];
-					$iptc[$name] = $value;
+					$iptc[ $name ] = $value;
 
 					// save keywords as terms in a custom taxonomy
 					if ( '2#025' === $key ) {
@@ -111,7 +114,7 @@ class SellMediaImages extends SellMediaProducts {
 				}
 			}
 		}
-		
+
 		if ( $iptc ) {
 			$this->metadata['IPTC'] = $iptc;
 			add_post_meta( $post_id, '_sell_media_iptc', $this->metadata['IPTC'], true ) or update_post_meta( $post_id, '_sell_media_iptc', $this->metadata['IPTC'] );
@@ -154,7 +157,7 @@ class SellMediaImages extends SellMediaProducts {
 	 * "_wp_attached_file", i.e., YYYY/MM/file-name.ext
 	 * @since 1.0.1
 	 */
-	public function move_image_from_attachment( $attachment_id=null ){
+	public function move_image_from_attachment( $attachment_id = null ) {
 
 		$original_file = get_attached_file( $attachment_id );
 
@@ -168,10 +171,9 @@ class SellMediaImages extends SellMediaProducts {
 
 			// Check if the destination directory exists, i.e.
 			// wp-content/uploads/sell_media/YYYY/MM if not we create it.
-			if ( ! file_exists( dirname( $destination_file ) ) ){
+			if ( ! file_exists( dirname( $destination_file ) ) ) {
 				wp_mkdir_p( dirname( $destination_file ) );
 			}
-
 
 			/**
 			 * Resize original file down to the largest size set in the Media Settings
@@ -182,8 +184,7 @@ class SellMediaImages extends SellMediaProducts {
 			 * functions that are in trunk and not in 3.4
 			 */
 			global $wp_version;
-			if ( version_compare( $wp_version, '3.5', '>=' ) ){
-
+			if ( version_compare( $wp_version, '3.5', '>=' ) ) {
 
 				/**
 				 * Resize the "original" to our largest size set in the Media Settings.
@@ -196,12 +197,11 @@ class SellMediaImages extends SellMediaProducts {
 				 */
 				$image_new_size = image_make_intermediate_size( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false );
 
-
 				/**
 				 * If for some reason the image resize fails we just fall back to the original image.
 				 * Example, the image the user is trying to sell is smaller than our "max width".
 				 */
-				if ( empty( $image_new_size ) ){
+				if ( empty( $image_new_size ) ) {
 					$resized_image = $original_file;
 					$keep_original = true;
 				} else {
@@ -209,14 +209,15 @@ class SellMediaImages extends SellMediaProducts {
 					$resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
 				}
 
-
-				if ( ! file_exists( $destination_file ) ){
+				if ( ! file_exists( $destination_file ) ) {
 
 					/**
 					 * Move our originally upload file into the protected area
 					 */
 					copy( $original_file, $destination_file );
-					if ( ! $keep_original ) unlink( $original_file );
+					if ( ! $keep_original ) {
+						unlink( $original_file );
+					}
 
 					/**
 					 * We rename our resize original file i.e., "filename-[width]x[height].jpg" located in our uploads directory
@@ -230,7 +231,7 @@ class SellMediaImages extends SellMediaProducts {
 			} else {
 
 				$resized_image = image_resize( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false, null, $wp_upload_dir['path'], 90 );
-				if ( ! file_exists( $destination_file ) ){
+				if ( ! file_exists( $destination_file ) ) {
 					// Copy original to our protected area
 					@copy( $original_file, $destination_file );
 
@@ -248,7 +249,7 @@ class SellMediaImages extends SellMediaProducts {
 	* @param (int)$post_id The post_id to the sell media item
 	* @since 1.2.4
 	*/
-	public function get_original_image_size( $post_id=null, $attachment_id=null ){
+	public function get_original_image_size( $post_id = null, $attachment_id = null ) {
 		
 		$original_protected_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
 
@@ -256,10 +257,10 @@ class SellMediaImages extends SellMediaProducts {
 		if ( wp_attachment_is_image( $attachment_id ) ) {
 			list( $width, $height, $type, $attr ) = getimagesize( $original_protected_file );
 			return array(
-				'original'=> array(
+				'original' => array(
 					'height' => $height,
-					'width' => $width
-				)
+					'width' => $width,
+				),
 			);
 		}
 	}
@@ -272,7 +273,7 @@ class SellMediaImages extends SellMediaProducts {
 	 *
 	 * @return Array of downloadable sizes or single size if $term_id is present
 	 */
-	public function get_downloadable_size( $post_id=null, $attachment_id=null, $term_id=null, $size_not_available=false ){
+	public function get_downloadable_size( $post_id = null, $attachment_id = null, $term_id = null, $size_not_available = false ) {
 
 		$null = null;
 		$download_sizes = array();
@@ -284,16 +285,16 @@ class SellMediaImages extends SellMediaProducts {
 		 * sizes that are not downloadable.
 		 */
 		$size_groups = sell_media_get_price_groups( $post_id, 'price-group' );
-		if ( ! empty( $size_groups ) ){
+		if ( ! empty( $size_groups ) ) {
 
 			$image = $this->get_original_image_size( $post_id, $attachment_id );
 
-			foreach( $size_groups as $size ){
+			foreach ( $size_groups as $size ) {
 
 				/**
 				 * Check for children only
 				 */
-				if ( $size->parent > 0 ){
+				if ( $size->parent > 0 ) {
 
 					/**
 					 * Retrieve the height and width for our price group
@@ -306,9 +307,8 @@ class SellMediaImages extends SellMediaProducts {
 					 * are calculated later and added to this array
 					 */
 					$download_sizes[ $size->term_id ] = array(
-						'name' => $size->name
-						);
-
+						'name' => $size->name,
+					);
 
 					/**
 					 * Calculate dimensions and coordinates for a resized image that fits
@@ -330,8 +330,8 @@ class SellMediaImages extends SellMediaProducts {
 							$image['original']['height'],
 							$pg_width,
 							$pg_height,
-							$crop=false
-							);
+							$crop = false
+						);
 
 					/**
 					 * If no width/height can be determined we remove it from our array of
@@ -341,11 +341,10 @@ class SellMediaImages extends SellMediaProducts {
 						$unavailable_size[ $size->term_id ] = array(
 							'name' => $download_sizes[ $size->term_id ]['name'],
 							'height' => $pg_height,
-							'width' => $pg_width
+							'width' => $pg_width,
 							);
 						unset( $download_sizes[ $size->term_id ] );
 					}
-
 
 					/**
 					 * Check for portraits and if the available download size is larger than
@@ -353,9 +352,9 @@ class SellMediaImages extends SellMediaProducts {
 					 */
 					$terms = wp_get_post_terms( $post_id, 'price-group' );
 					$heights[] = '';
-					if ( ! empty( $terms ) ){
-						foreach( $terms as $term ){
-							if ( $term->parent != 0 ){
+					if ( ! empty( $terms ) ) {
+						foreach ( $terms as $term ) {
+							if ( 0 !== $term->parent ) {
 								$height = get_term_meta( $term->term_id, 'height', true );
 								$heights[] = $height;
 							}
@@ -363,19 +362,18 @@ class SellMediaImages extends SellMediaProducts {
 					}
 					$smallest_height = min( $heights );
 
-
 					/**
 					 * Compare the original image size with our array of images sizes from
 					 * Price Groups array, removing items that are not available.
 					 */
 					if ( $image['original']['height'] >= $image['original']['width']
 						&& isset( $download_sizes[ $size->term_id ] )
-						&& $download_sizes[ $size->term_id ]['height'] <= $smallest_height ){
+						&& $download_sizes[ $size->term_id ]['height'] <= $smallest_height ) {
 							$unavailable_size[ $size->term_id ] = array(
 								'name' => $download_sizes[ $size->term_id ]['name'],
 								'price' => $download_sizes[ $size->term_id ]['price'],
 								'height' => $pg_height,
-								'width' => $pg_width
+								'width' => $pg_width,
 								);
 							unset( $download_sizes[ $price->term_id ] );
 					}
@@ -384,20 +382,16 @@ class SellMediaImages extends SellMediaProducts {
 		}
 
 		// Returns an array of available and unavailable sizes
-		if ( $size_not_available ){
+		if ( $size_not_available ) {
 			$sizes = array(
 				'available' => $download_sizes,
-				'unavailable' => empty( $unavailable_size ) ? null : $unavailable_size
+				'unavailable' => empty( $unavailable_size ) ? null : $unavailable_size,
 				);
-		}
-
-		// return all available sizes
-		elseif ( empty( $term_id ) ) {
+		} elseif ( empty( $term_id ) ) {
+			// return all available sizes
 			$sizes = $download_sizes;
-		}
-
-		// return available size for a given product
-		else {
+		} else {
+			// return available size for a given product
 			// Since we no longer check if the image sold is available in the download sizes
 			// we allow the buyer to download the original image if the size they purchased
 			// is larger than the original image i.e., they can purchase a size they can never
@@ -420,22 +414,22 @@ class SellMediaImages extends SellMediaProducts {
 	 *
 	 * @return (bool) true/false
 	 */
-	public function get_orientation( $post_id=null, $orientation=null ){
+	public function get_orientation( $post_id = null, $orientation = null ) {
 
 		$attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 		$meta = wp_get_attachment_metadata( $attachment_id, true );
 
-		if ( ! empty( $meta ) ){
+		if ( ! empty( $meta ) ) {
 
-			if ( empty( $orientation ) || $orientation == 'any' ){
+			if ( empty( $orientation ) || 'any' == $orientation ) {
 				return true;
 			}
 
-			if ( $orientation == 'landscape' && $meta['height'] < $meta['width'] ){
+			if ( 'landscape' == $orientation && $meta['height'] < $meta['width'] ) {
 				return true;
 			}
 
-			if ( $orientation == 'portrait' && $meta['height'] > $meta['width'] ){
+			if ( 'portrait' == $orientation && $meta['height'] > $meta['width'] ) {
 				return true;
 			}
 		}

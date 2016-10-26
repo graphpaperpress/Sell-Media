@@ -92,7 +92,7 @@ function sell_media_install() {
 		update_option( sell_media_get_current_plugin_id() . '_options', $defaults );
 		// A version number exists, so run upgrades.
 	} else {
-		require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-upgrade.php';
+		do_action( 'sell_media_upgrades', $version );
 	}
 
 	if ( $version < SELL_MEDIA_VERSION ) {

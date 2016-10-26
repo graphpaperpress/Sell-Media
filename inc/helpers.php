@@ -921,8 +921,8 @@ add_filter( 'sell_media_thumbnail', 'sell_media_thumbnail_crop', 10, 1 );
  * @param  int    $post_id  Id of post.
  * @return String           Button Text.
  */
-function sell_media_free_download_button_text( $text, $post_id, $attachment_id = NULL, $type = 'download' ) {
-	if( 'download' != $type ){
+function sell_media_free_download_button_text( $text, $post_id, $attachment_id = null, $type = 'download' ) {
+	if ( 'download' != $type ) {
 		return $text;
 	}
 
@@ -951,7 +951,7 @@ add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text
  */
 function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo, $type = 'download' ) {
 
-	if( 'download' != $type ){
+	if ( 'download' != $type ) {
 		return $html;
 	}
 
@@ -962,12 +962,12 @@ function sell_media_free_download_button_button( $html, $post_id, $attachment_id
 
 	$classes[] = 'item_add';
 	$classes[] = 'sell-media-button';
-	if( !is_null( $button ) ){
+	if ( ! is_null( $button ) ) {
 		$classes[] = 'sell-media-' . $button;
 	}
 	$classes[] = 'sell-media-download-button';
 	$classes = implode( ' ', $classes );
-	
+
 	$link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id );
 	$html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="' . $classes . '">' . $text . '</a>';
 	return $html;

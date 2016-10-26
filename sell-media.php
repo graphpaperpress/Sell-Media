@@ -28,7 +28,9 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'SellMedia' ) ) :
 
@@ -266,9 +268,9 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-scripts.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-system-info.php';
-
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-notices.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-search.php';
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-upgrades.php';
 
 			}
 
