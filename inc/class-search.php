@@ -14,9 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class SellMediaSearch {
 
-	private $query_instance;
-
 	private $settings;
+
 	/**
 	 * Init
 	 */
@@ -26,6 +25,8 @@ class SellMediaSearch {
 		if ( is_admin() ) {
 			return;
 		}
+
+		$this->settings = sell_media_get_plugin_options();
 
 		// Add a media search form shortcode
 		add_shortcode( 'sell_media_search', array( $this, 'form' ) );
@@ -111,7 +112,7 @@ class SellMediaSearch {
 		}
 
 		// only run the query on the actual search results page.
-		if ( is_page( $settings->search_page ) && did_action( 'the_post' ) === 1 ) {
+		if ( is_page( $settings->search_page ) && 1 === did_action( 'the_post' ) ) {
 
 			// The search terms
 			$search_terms = str_getcsv( $search_term, ' ' );
@@ -124,6 +125,7 @@ class SellMediaSearch {
 				'post_type' => 'attachment',
 				'post_status' => array( 'publish', 'inherit' ),
 				'post_mime_type' => $mime_type,
+				'post_parent__in' => sell_media_ids(),
 				'tax_query' => array(
 					array(
 						'taxonomy' => 'keywords',
@@ -131,12 +133,12 @@ class SellMediaSearch {
 						'terms'    => $search_terms,
 					),
 				),
-				'meta_query' => array(
-					 array(
-						'key' => '_sell_media_for_sale_product_id',
-						'compare' => 'EXISTS',
-					),
-				),
+				// 'meta_query' => array(
+				// 	 array(
+				// 		'key' => '_sell_media_for_sale_product_id',
+				// 		'compare' => 'EXISTS',
+				// 	),
+				// ),
 			);
 			$search_query = new WP_Query( $args );
 			$i = 0;

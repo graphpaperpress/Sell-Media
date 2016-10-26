@@ -392,7 +392,7 @@ function sell_media_get_attachment_parent_id( $attachment_id = null ) {
 		$parent_id = wp_get_post_parent_id( $attachment_id );
 	} elseif ( get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true ) ) {
 		$parent_id = get_post_meta( $attachment_id, '_sell_media_for_sale_product_id', true );
-		if ( false === get_post_status( $parent_id ) ) {
+		if ( false === sell_media_post_exists( $parent_id ) ) {
 			$parent_id = '';
 		}
 	} else {
@@ -414,6 +414,46 @@ function sell_media_get_attachment_parent_id( $attachment_id = null ) {
 function sell_media_post_exists( $id ) {
 	return is_string( get_post_status( $id ) );
 }
+
+
+/**
+ * Get all sell media post ids
+ * This is an expensive query, so let's cache it using transients.
+ * This function is used in search queries to check if an attachment
+ * has a post parent of one of the sell media entry ids.
+ */
+function sell_media_ids() {
+
+	if ( false === ( $cached_ids = get_transient( 'sell_media_cached_ids' ) ) ) {
+
+		$ids = get_posts(
+			array(
+				'post_type' => 'sell_media_item',
+				'posts_per_page' => -1,
+			)
+		);
+
+		$cached_ids = wp_list_pluck( $ids, 'ID' );
+
+		set_transient( 'sell_media_cached_ids', $cached_ids, 12 * HOUR_IN_SECONDS );
+
+	}
+
+	return $cached_ids;
+}
+
+
+/**
+ * If a new sell media entry is added, delete the cached ids transient.
+ */
+function sell_media_delete_cached_ids( $post_id ) {
+
+	if ( 'sell_media_item' === get_post_type( $post_id ) ) {
+		delete_transient( 'sell_media_cached_ids' );
+	}
+
+}
+add_action( 'save_post', 'sell_media_delete_cached_ids' );
 
 
 /**

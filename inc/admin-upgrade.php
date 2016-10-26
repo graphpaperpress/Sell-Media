@@ -103,18 +103,29 @@ if ( $version <= '2.2.6' ) {
 	if ( $the_query->have_posts() ) {
 		while ( $the_query->have_posts() ) {
 			$the_query->the_post();
-			$attachments = sell_media_get_attachments( get_the_ID() );
 
-			// if there are more than one attachments, the attachments will already have keywords assigned
-			// in that case, let's skip them
-			// get the ids of keywords assigned to this post
+			// the keywords assigned to the single sell_media_item entry
 			$keyword_ids = wp_get_post_terms( get_the_ID(), 'keywords', array( 'fields' => 'ids' ) );
-			// make sure keywords exist
-			if ( ! is_wp_error( $keyword_ids ) ) {
-				if ( $attachments ) foreach ( $attachments as $attachment ) {
+			
+			// loop over all attachments saved to the single sell_media_item entry
+			$attachments = sell_media_get_attachments( get_the_ID() );
+			if ( $attachments ) foreach ( $attachments as $attachment ) {
+
+				// make sure keywords exist
+				if ( ! is_wp_error( $keyword_ids ) ) {
 					wp_set_object_terms( $attachment, $keyword_ids, 'keywords', true );
-					update_post_meta( $attachment, '_sell_media_for_sale_product_id', get_the_ID() );
 				}
+				
+				// update the attachments post meta key with the sell_media_item id
+				update_post_meta( $attachment, '_sell_media_for_sale_product_id', get_the_ID() );
+				
+				// Old attachments didn't have the post_parent of the sell_media_item set
+				// so let's update it now since we check post_parent for search.
+				$attachment_update = array(
+					'ID' => $attachment,
+					'post_parent' => get_the_ID(),
+				);
+				wp_update_post( $attachment_update );
 			}
 
 			// Possible future addition.
