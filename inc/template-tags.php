@@ -284,7 +284,10 @@ function sell_media_content_loop( $post_id, $i ) {
 	// This loop runs on both archives and single galleries.
 	// Let's set query params everywhere except archive and search if the item is an attachment.
 	if ( ! is_archive() && isset( $settings->search_page ) && ! is_page( $settings->search_page ) ) {
-		// if there is a post parent, change link to gallery
+		// If there is a post parent, change link to gallery.
+		$parent = sell_media_attachment_parent_post( $post_id );
+	} else if ( ! is_archive() && isset( $settings->search_page ) && is_page( $settings->search_page ) ) {
+		// If there is a post parent, change link to gallery.
 		$parent = sell_media_attachment_parent_post( $post_id );
 	}
 
