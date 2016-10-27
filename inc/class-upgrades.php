@@ -227,7 +227,6 @@ class SellMediaUpgrades {
 			wp_reset_postdata();
 		} else {
 			// no more entries, so let's clean up
-			wp_clear_scheduled_hook( 'sell_media_fix_attachments' );
 			wp_clear_scheduled_hook( 'sell_media_upgrade_events' );
 			delete_option( $option_name );
 			delete_option( $pagination_option_name );
