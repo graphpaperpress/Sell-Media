@@ -126,11 +126,11 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				self::$instance->payments       = new SellMediaPayments();
 				self::$instance->products       = new SellMediaProducts();
 				self::$instance->search         = new SellMediaSearch();
+				self::$instance->admin_upgrades = new SellMediaAdminUpgrades();
 
 				if ( self::$instance->is_request( 'admin' ) ) {
 					self::$instance->notices        = new SellMediaAdminNotices();
 					self::$instance->admin_search   = new SellMediaAdminSearch();
-					self::$instance->admin_upgrades = new SellMediaAdminUpgrades();
 				}
 
 				// Set cart global variable.
@@ -271,10 +271,10 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-system-info.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-notices.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-search.php';
-				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-upgrades.php';
 
 			}
 
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-upgrades.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/install.php';
 
 		}
