@@ -92,7 +92,7 @@ function sell_media_install() {
 		update_option( sell_media_get_current_plugin_id() . '_options', $defaults );
 		// A version number exists, so run upgrades.
 	} else {
-		do_action( 'sell_media_upgrades', $version );
+		Sell_Media()->admin_upgrades->upgrades( $version );
 	}
 
 	if ( $version < SELL_MEDIA_VERSION ) {
@@ -110,14 +110,18 @@ function sell_media_install() {
 	$tax_meta_migrate = new SellMediaTaxMetaMigrate();
 	$tax_meta_migrate->run();
 
+	/**
+	 * Schedule cron events for upgrades
+	 */
+	if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
+		wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
+	}
+
 	// Update the version number
 	update_option( 'sell_media_version', SELL_MEDIA_VERSION );
 
 }
 register_activation_hook( SELL_MEDIA_PLUGIN_FILE, 'sell_media_install' );
-
-// Check version.
-add_action( 'admin_init', 'sell_media_check_version' );
 
 /**
  * Check WordPress version and disable if incompatible
@@ -134,6 +138,7 @@ function sell_media_check_version() {
 		}
 	}
 }
+add_action( 'admin_init', 'sell_media_check_version' );
 
 /**
  * Plugin disable notice.

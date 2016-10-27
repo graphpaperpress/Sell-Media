@@ -8,21 +8,23 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
-Class SellMediaTaxMetaMigrate {
+class SellMediaTaxMetaMigrate {
 
     /**
      * Class constructer
      */
-    public function __construct(){
+    public function __construct() {
         
     }
 
     /**
      * Run migration process
      */
-    public function run(){
+    public function run() {
         $version = sell_media_version();
 
         if ( $version && $version > SELL_MEDIA_VERSION )

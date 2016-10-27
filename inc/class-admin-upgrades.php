@@ -7,7 +7,9 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class SellMediaAdminUpgrades {
 
@@ -16,15 +18,32 @@ class SellMediaAdminUpgrades {
 	 */
 	public function __construct() {
 
-		// fires on plugin activation in install.php
-		add_action( 'sell_media_upgrades', array( $this, 'upgrades' ), 10, 1 );
-
-		// fix attachments hook
-		add_action( 'sell_media_fix_attachments_event', array( $this, 'fix_attachments' ) );
-
-		// Add new cron schedules
+		add_action( 'sell_media_upgrade_events', array( $this, 'scheduled_events' ) );
 		add_filter( 'cron_schedules', array( $this, 'cron_schedules' ) );
 
+	}
+
+	/**
+	 * All scheduled cron events
+	 */
+	public function scheduled_events() {
+		$this->fix_attachments();
+	}
+
+	/**
+	 * Add new cron schedules
+	 * WP only includes a few cron schedules
+	 * We need to add a new one for every minute to run our upgrades quickly
+	 * 
+	 * @param  array $array existing cron event array
+	 * @return array $array our new cron events
+	 */
+	public function cron_schedules( $array ) {
+		$array['minute'] = array(
+				'interval' => 60,
+				'display' => __( 'Once every minute', 'sell_media' ),
+		);
+		return $array;
 	}
 
 	/**
@@ -99,12 +118,13 @@ class SellMediaAdminUpgrades {
 		}
 
 		if ( $version <= '2.2.6' ) {
-			/**
-			 * Schedule an event that fires every minute to repair attachments in chunks
-			 */
-			if ( ! wp_next_scheduled ( 'sell_media_fix_attachments_event' ) ) {
-				wp_schedule_event( time(), 'minute', 'sell_media_fix_attachments_event' );
-			}
+
+			// /**
+			//  * Schedule an event that fires every minute to repair attachments in chunks
+			//  */
+			// if ( ! wp_next_scheduled( 'sell_media_fix_attachments_event' ) ) {
+			// 	wp_schedule_event( time(), 'minute', 'sell_media_fix_attachments_event' );
+			// }
 		}
 	}
 
@@ -165,6 +185,7 @@ class SellMediaAdminUpgrades {
 						// as both post meta and custom taxonomy terms.
 						$original_file = get_attached_file( $attachment );
 						if ( file_exists( $original_file ) ) {
+							$image_products = new SellMediaImages;
 							$image_products->parse_iptc_info( $original_file, $attachment );
 						}
 
@@ -191,23 +212,6 @@ class SellMediaAdminUpgrades {
 		}
 
 		set_option( $option_name, $offset + 10 );
-	}
-
-
-	/**
-	 * Add new cron schedules
-	 * WP only includes a few cron schedules
-	 * We need to add a new one for every minute to run our upgrades quickly
-	 * 
-	 * @param  array $array existing cron event array
-	 * @return array $array our new cron events
-	 */
-	public function cron_schedules( $array ) {
-		$array['minute'] = array(
-				'interval' => 60,
-				'display' => 'Once every minute',
-		);
-		return $array;
 	}
 
 }
