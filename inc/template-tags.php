@@ -301,7 +301,7 @@ function sell_media_content_loop( $post_id, $i ) {
 	}
 	$html .= '<a href="' . esc_url( $link ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 	$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
-	if ( sell_media_has_multiple_attachments( $post_id ) ) {
+	if ( sell_media_has_multiple_attachments( $post_id ) && isset( $settings->search_page ) && ! is_page( $settings->search_page ) ) {
 		$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
 		
 	} else {

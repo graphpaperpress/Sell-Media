@@ -18,8 +18,13 @@ class SellMediaUpgrades {
 	 */
 	public function __construct() {
 
+		// run possible upgrades if a version of sell media exists
 		add_action( 'sell_media_run_upgrades', array( $this, 'upgrades' ), 10, 1 );
+		
+		// schedules events as a "cron job"
 		add_action( 'sell_media_upgrade_events', array( $this, 'scheduled_events' ) );
+
+		// add new cron shedules
 		add_filter( 'cron_schedules', array( $this, 'cron_schedules' ) );
 
 	}
@@ -129,8 +134,8 @@ class SellMediaUpgrades {
 		if ( $version <= '2.2.6' ) {
 
 			// Schedule an event that fires every minute to repair attachments in chunks.
-			if ( ! wp_next_scheduled( 'sell_media_fix_attachments_event' ) ) {
-				wp_schedule_event( time(), 'minute', 'sell_media_fix_attachments_event' );
+			if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
+				wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
 			}
 		}
 	}
