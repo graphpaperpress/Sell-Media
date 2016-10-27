@@ -149,18 +149,26 @@ class SellMediaAdminUpgrades {
 		// This value gets increased by 10 every time this events runs
 		// Until no more entries are found.
 		$option_name = 'sell_media_fix_attachments';
+		$pagination_option_name = 'sell_media_fix_attachments_page';
 		$offset = get_option( $option_name, 0 );
+		$page = get_option( $pagination_option_name, 1 );
 
 		// Query args
+		$display_count = 10;
+		$offset = ( $page - 1 ) * $display_count;
 		$args = array(
-			'post_type' => 'sell_media_item',
-			'posts_per_page' => -1,
-			'offset' => $offset,
-		);
+					'post_type' => 'sell_media_item',
+					'paged' => $page,
+					'post_status' => array( 'publish', 'draft' ),
+					'posts_per_page'     =>  $display_count,
+					'offset' => $offset
+				);
 
 		// Query all sell_media_items
 		$the_query = new WP_Query( $args );
 
+		update_option( $option_name, $offset + $display_count );
+		update_option( $pagination_option_name, $page + 1 );
 		// The Loop
 		if ( $the_query->have_posts() ) {
 			while ( $the_query->have_posts() ) {
@@ -208,10 +216,10 @@ class SellMediaAdminUpgrades {
 		} else {
 			// no more entries, so let's clean up
 			wp_clear_scheduled_hook( 'sell_media_fix_attachments' );
+			wp_clear_scheduled_hook( 'sell_media_upgrade_events' );
 			delete_option( $option_name );
+			delete_option( $pagination_option_name );
 		}
-
-		set_option( $option_name, $offset + 10 );
 	}
 
 }
