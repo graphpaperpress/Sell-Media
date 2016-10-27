@@ -28,6 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sell_media_install() {
 
 	$version = get_option( 'sell_media_version' );
+	$settings = get_option( 'sell_media_options' );
 
 	// Bail if saved version is higher than plugin version
 	if ( $version && $version > SELL_MEDIA_VERSION ) {
@@ -40,38 +41,22 @@ function sell_media_install() {
 		wp_die( __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) );
 	}
 
+	// Add default settings if sell media options is not set.
+	if ( false === $settings || empty( $settings ) ) {
+		sell_media_register_default_settings();
+	}
+
 	// Register Custom Post Types
 	sell_media_register_post_types();
 
 	// Register Taxonomies
 	sell_media_register_taxonomies();
 
-	// Add default settings if sell media options is not set.
-	$sell_media_options = get_option( 'sell_media_options' );
-	if ( false === $sell_media_options || empty( $sell_media_options ) ) {
-		sell_media_register_default_settings();
-	}
-
 	// Autocreate Pages
 	sell_media_autocreate_pages();
 
 	// Flush the permalinks
 	flush_rewrite_rules();
-
-	// Don't forget registration hook is called
-	// BEFORE! taxonomies are registered! therefore
-	// these terms and taxonomies are NOT derived from our object!
-	$settings = sell_media_get_plugin_options();
-	$admin_columns = empty( $settings->admin_columns ) ? null : $settings->admin_columns;
-
-	// Install new table for term meta
-	$taxonomy_metadata = new SellMediaTaxonomyMetadata;
-	$taxonomy_metadata->activate();
-	$taxonomy = 'licenses';
-
-	// Add Personal and Commerical default license terms
-	$r_personal = wp_insert_term( 'Personal', $taxonomy, array( 'slug' => 'personal' ) );
-	$r_commercial = wp_insert_term( 'Commercial', $taxonomy, array( 'slug' => 'commercial' ) );
 
 	// Install protected folder for uploading files and prevent hotlinking
 	$downloads_url = sell_media_get_upload_dir();
@@ -89,10 +74,10 @@ function sell_media_install() {
 	// This is a new install so add the defaults to the options table
 	if ( empty( $version ) ) {
 		$defaults = sell_media_get_plugin_option_defaults();
-		update_option( sell_media_get_current_plugin_id() . '_options', $defaults );
+		update_option( 'sell_media_options', $defaults );
 		// A version number exists, so run upgrades.
 	} else {
-		Sell_Media()->admin_upgrades->upgrades( $version );
+		do_action( 'sell_media_run_upgrades', $version );
 	}
 
 	if ( $version < SELL_MEDIA_VERSION ) {
@@ -104,17 +89,6 @@ function sell_media_install() {
 		$file_content .= "</FilesMatch>\n";
 		$file_content .= "# END Sell Media\n";
 		file_put_contents( $htaccess_file, $file_content, FILE_APPEND | LOCK_EX );
-	}
-
-	// Migrate old tax meta.
-	$tax_meta_migrate = new SellMediaTaxMetaMigrate();
-	$tax_meta_migrate->run();
-
-	/**
-	 * Schedule cron events for upgrades
-	 */
-	if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
-		wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
 	}
 
 	// Update the version number

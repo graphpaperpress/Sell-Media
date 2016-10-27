@@ -11,13 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class SellMediaAdminUpgrades {
+class SellMediaUpgrades {
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 
+		add_action( 'sell_media_run_upgrades', array( $this, 'upgrades' ), 10, 1 );
 		add_action( 'sell_media_upgrade_events', array( $this, 'scheduled_events' ) );
 		add_filter( 'cron_schedules', array( $this, 'cron_schedules' ) );
 
@@ -117,14 +118,20 @@ class SellMediaAdminUpgrades {
 			$update_option_result = update_option( 'sell_media_options', $new_settings );
 		}
 
+		if ( $version <= '2.1' ) {
+
+			// Migrate old tax meta.
+			$tax_meta_migrate = new SellMediaTaxMetaMigrate();
+			$tax_meta_migrate->run();
+
+		}
+
 		if ( $version <= '2.2.6' ) {
 
-			// /**
-			//  * Schedule an event that fires every minute to repair attachments in chunks
-			//  */
-			// if ( ! wp_next_scheduled( 'sell_media_fix_attachments_event' ) ) {
-			// 	wp_schedule_event( time(), 'minute', 'sell_media_fix_attachments_event' );
-			// }
+			// Schedule an event that fires every minute to repair attachments in chunks.
+			if ( ! wp_next_scheduled( 'sell_media_fix_attachments_event' ) ) {
+				wp_schedule_event( time(), 'minute', 'sell_media_fix_attachments_event' );
+			}
 		}
 	}
 
