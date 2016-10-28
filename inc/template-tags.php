@@ -333,15 +333,11 @@ function sell_media_taxonomy_breadcrumb() {
  */
 function sell_media_breadcrumbs() {
 	global $post;
-	$post_type = 'sell_media_item';
-
-	if (  get_post_type( $post->ID ) !== $post_type || is_post_type_archive( $post_type ) || is_search() ) {
-		return;
-	}
 
 	$settings = sell_media_get_plugin_options();
 
 	if ( isset( $settings->breadcrumbs ) && $settings->breadcrumbs ) {
+
 		$obj = get_post_type_object( 'sell_media_item' );
 
 		$html = '<div class="sell-media-breadcrumbs">';
@@ -349,6 +345,10 @@ function sell_media_breadcrumbs() {
 		$html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '" title="' . $obj->rewrite['slug'] . '">' . $obj->rewrite['slug'] . '</a>';
 		if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
 			$html .= sell_media_get_taxonomy_terms( 'collection' );
+		}
+		if ( sell_media_attachment( $post->ID ) ) {
+			$product_id = get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id', true );
+			$html .= '<a href="' . esc_url( get_permalink( $product_id ) ) . '" title="' . esc_html__( 'Back to Gallery', 'sell_media' ) . '">' . esc_html__( 'Back to Gallery', 'sell_media' ) . '</a>';
 		}
 		$html .= '</div>';
 

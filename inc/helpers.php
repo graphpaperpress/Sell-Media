@@ -90,32 +90,21 @@ function sell_media_get_pages_array() {
 }
 
 /**
- * Adds a custom query var for gallery links
- *
- * @param  $vars Existing query vars
- * @return $vars Updated query vars
- * @since 2.0.1
- */
-function sell_media_add_query_vars_filter( $vars ) {
-	$vars[] = 'id';
-	return $vars;
-}
-add_filter( 'query_vars', 'sell_media_add_query_vars_filter' );
-
-/**
  * Checks if on sell media gallery page
  *
  * @return boolean true/false
  * @since 2.0.1
  */
-function sell_media_is_gallery_page() {
+function sell_media_page() {
 	global $post;
 
-	if ( ! $post ) {
-		return false;
-	}
-
-	if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && false === get_query_var( 'id' ) ) {
+	if ( $post
+	or 'sell_media_item' === get_post_type( $post->ID )
+	or sell_media_attachment( $post->ID )
+	or is_tax( 'collection' )
+	or is_tax( 'keywords' )
+	or is_tax( 'creator' )
+	or ( isset( $settings->search_page ) && is_page( $settings->search_page ) ) ) {
 		return true;
 	}
 }
@@ -128,7 +117,9 @@ function sell_media_is_gallery_page() {
  */
 function sell_media_attachment( $post_id = null ) {
 
-	if ( is_singular( 'attachment' ) && ! empty( get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id' ) ) ) {
+	global $post;
+
+	if ( is_singular( 'attachment' ) && ! empty( get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id' ) ) ) {
 		return true;
 	}
 }
@@ -327,10 +318,9 @@ function sell_media_get_attachments( $post_id ) {
 
 
 /**
- * Get Attachment
+ * Get Attachment ID
  *
- * If the item has multiple attachments,
- * set the attachment_id to the query variable.
+ * If the ID is an attachment, the $post_id is the $attachment_id.
  * Otherwise, get the attachments and assign
  * the first as the $attachment_id.
  *
@@ -340,8 +330,8 @@ function sell_media_get_attachments( $post_id ) {
  */
 function sell_media_get_attachment_id( $post_id = null ) {
 
-	if ( sell_media_has_multiple_attachments( $post_id ) ) {
-		$attachment_id = get_query_var( 'id' );
+	if ( 'attachment' === get_post_type( $post_id ) ) {
+		$attachment_id = $post_id;
 	} else {
 		$attachments = sell_media_get_attachments( $post_id );
 		$attachment_id = $attachments[0];

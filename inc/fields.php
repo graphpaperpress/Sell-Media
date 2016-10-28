@@ -21,8 +21,8 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 
 		<form id="sell-media-cart-items" class="hide">
 			<input class="item_number" name="item_number" type="text" value="<?php echo absint( $post_id ); ?>" />
-			<input class="item_name" name="item_name" type="text" value="<?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
-			<input class="item_type" name="item_type" type="text" value="<?php echo $type; ?>" />
+			<input class="item_name" name="item_name" type="text" value="<?php the_title_attribute( 'post=' . $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
+			<input class="item_type" name="item_type" type="text" value="<?php echo esc_attr( $type ); ?>" />
 			<input class="item_image" name="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
 			<input class="item_pgroup" name="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
 			<input class="item_size" name="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />

@@ -333,7 +333,7 @@ input[type="submit"].sell-media-button,
 .sell-media-breadcrumbs {
   font-size: 13px;
   text-transform: uppercase;
-  margin: 0 0 20px;
+  margin: 20px 0;
   letter-spacing: 1px;
   display: block;
   line-height: 1; }
@@ -400,27 +400,8 @@ input[type="submit"].sell-media-button,
   margin: 0;
   width: 100%; }
 
-.sell-media-gallery-nav {
-  font-size: 12px;
-  text-align: right;
-  margin-bottom: 10px;
-  float: right; }
-  @media only screen and (max-width: 767px) {
-    .sell-media-gallery-nav {
-      text-align: center;
-      float: none; }
-      .sell-media-gallery-nav .sell-media-gallery-index {
-        display: block;
-        margin: 16px auto; } }
-  .sell-media-gallery-nav a {
-    margin-right: 20px;
-    text-decoration: none !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    width: auto !important; }
-    .sell-media-gallery-nav a:last-child {
-      margin-right: 0; }
+.single-sell_media_item .wp-caption-text {
+  display: none; }
 
 /*= Embeds
 -------------------------------------------------------------- */

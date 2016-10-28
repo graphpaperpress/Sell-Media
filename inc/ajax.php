@@ -164,8 +164,9 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 		$args['orderby'] = 'meta_value_num';
 	}
 	else if( 'keywords' == $param['tab'] ){
-		$args['post_type'] = "attachment";
-		$args['post_status'] = array( "publish", "inherit" );
+		$args['post_type'] = 'attachment';
+		$args['post_status'] = array( 'publish', 'inherit' );
+		$args['post_parent__in'] = sell_media_ids();
 		$args['tax_query'] = array(
 							array(
 								'taxonomy' => 'keywords',
@@ -195,24 +196,16 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 			$content .= '<div class="sell_media_ajax_filter_items_container ' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 		}
 
-		while( $search_query->have_posts() ):
+		while ( $search_query->have_posts() ) :
 
 			$search_query->the_post();
-			if ( 'keywords' == $param['tab'] ) {
-				$parent_id = sell_media_get_attachment_parent_id( get_the_ID() );
-				if ( $parent_id && 'sell_media_item' === get_post_type( wp_get_post_parent_id( get_the_ID() ) ) ) {
-					$i++;
-					$content .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
-				}
-			} else {
-				$i++;
-				$content .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
-			}
+			$i++;
+			$content .= apply_filters( 'sell_media_content_loop', get_the_ID(), $i );
 
 		endwhile;
 
 		// If its first result end container.
-		if( $paged == 1 ){
+		if ( $paged == 1 ) {
 			$content .= '</div><!-- .sell-media-grid-item-container -->';
 		}
 

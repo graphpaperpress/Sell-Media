@@ -25,19 +25,18 @@ class SellMediaQueries {
 	/**
 	 * Show attachments on taxonomy archives
 	 * By default, WordPress doesn't show attachments on archives.
-	 * 
 	 * @return object the $wp_query object
 	 */
 	public function parse_query() {
 
-    	global $wp_query;
+		global $wp_query;
 
-	    // When inside a custom taxonomy archive include attachments
-	    if ( is_tax( 'keywords' ) OR is_tax( 'creator' ) ) {
-	        $wp_query->query_vars['post_type'] =  array( 'attachment' );
-	        $wp_query->query_vars['post_status'] =  array( null );
+		// When inside a custom taxonomy archive include attachments
+		if ( is_tax( 'keywords' ) or is_tax( 'creator' ) ) {
+			$wp_query->query_vars['post_type'] = array( 'attachment' );
+			$wp_query->query_vars['post_status'] = array( null );
 
-	        return $wp_query;
-	    }
+			return $wp_query;
+		}
 	}
 }
