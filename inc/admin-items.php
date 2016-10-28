@@ -227,8 +227,45 @@ function sell_media_save_custom_meta( $post_id ) {
 
 					// Loop over attachment ids and move files into protected directory
 					if ( $field == '_sell_media_attachment_id' ) {
+						global $wpdb;
+						// Remove attachment marked as sell media item.
+						$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sell_media_for_sale_product_id', 'meta_value' => $post_id ), array( '%s', '%d' ) );
+
 						$attachment_ids = explode( ',', $_POST[ $field ] );
+
+						// Arguments to get attachment linked to post.
+						$args = array(
+							'post_parent' => $post_id,
+							'post_type'   => 'attachment', 
+							'numberposts' => -1,
+							'post_status' => 'any' 
+						);
+
+						// Get post attachments.
+						$childrens = get_children( $args );
+
+						if ( ! empty( $childrens ) ) {
+							foreach ( $childrens as $key => $child ) {
+								// If attachment still linked to post do not remove.
+								if( ! in_array( $key, $attachment_ids ) ){
+									$post_data['ID'] = $key;
+									$post_data['post_parent'] = 0;
+									wp_update_post( $post_data );
+								}
+							}
+						}
+
 						if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+
+							// Update attachment parent to post.
+							$attachment_update = array(
+								'ID' => $attachment_id,
+								'post_parent' => $post_id,
+							);
+							wp_update_post( $attachment_update );
+
+							// Mark attachment as sell media item.
+							update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', $post_id );
 							sell_media_move_file( $attachment_id );
 						}
 					}
