@@ -241,10 +241,17 @@ class SellMediaLayouts {
 			return $content;
 		}
 
-		$new_content  = '<div class="sell-media-content">';
+		// only wrap content if single item
+		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+			$new_content  = '<div class="sell-media-content">';
+		}
 		$new_content .= sell_media_breadcrumbs();
 		$new_content .= sell_media_get_media() . $content;
-		$new_content .= '</div>';
+
+		// only wrap content if single item
+		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+			$new_content .= '</div>';
+		}
 
 		return apply_filters( 'sell_media_content', $new_content );
 
