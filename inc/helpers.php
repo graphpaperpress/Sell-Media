@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function sell_media_template_redirect( $original_template ) {
 
-	$post_type = 'sell_media_item';
+	$post_type = array( 'sell_media_item', 'attachment' );
 	$sell_media_taxonomies = get_object_taxonomies( $post_type );
 
 	/**
@@ -112,10 +112,25 @@ function sell_media_is_gallery_page() {
 	global $post;
 
 	if ( ! $post ) {
-		return false; }
+		return false;
+	}
 
-	if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && get_query_var( 'id' ) == false ) {
-		return true; }
+	if ( $post->ID && sell_media_has_multiple_attachments( $post->ID ) && false === get_query_var( 'id' ) ) {
+		return true;
+	}
+}
+
+/**
+ * Checks if attachment is for sale
+ *
+ * @var  $post_id the post or attachment id
+ * @return  boolean true if has post meta (the product id)
+ */
+function sell_media_attachment( $post_id = null ) {
+
+	if ( is_singular( 'attachment' ) && ! empty( get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id' ) ) ) {
+		return true;
+	}
 }
 
 /**

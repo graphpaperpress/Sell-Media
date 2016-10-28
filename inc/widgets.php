@@ -57,10 +57,10 @@ function sell_media_below_content_widgets() {
 	if ( is_active_sidebar( 'sell-media-below-single-content' ) ) {
 
 		ob_start(); ?>
-        <div id="sell-media-below-single-content" class="sell-media-widget-area">
-        <?php dynamic_sidebar( 'sell-media-below-single-content' ); ?>
-        </div>
-        <?php $html = ob_get_clean();
+		<div id="sell-media-below-single-content" class="sell-media-widget-area">
+		<?php dynamic_sidebar( 'sell-media-below-single-content' ); ?>
+		</div>
+		<?php $html = ob_get_clean();
 		return $html;
 	}
 }
@@ -71,11 +71,11 @@ function sell_media_below_content_widgets() {
 function sell_media_widgets_below_single_sidebar() {
 	?>
 
-    <?php if ( is_active_sidebar( 'sell-media-below-single-sidebar' ) ) : ?>
-        <section id="sell-media-below-single-sidebar" class="sell-media-widget-area" role="complementary">
-            <?php dynamic_sidebar( 'sell-media-below-single-sidebar' ); ?>
-        </section>
-    <?php endif; ?>
+	<?php if ( is_active_sidebar( 'sell-media-below-single-sidebar' ) ) : ?>
+		<section id="sell-media-below-single-sidebar" class="sell-media-widget-area" role="complementary">
+			<?php dynamic_sidebar( 'sell-media-below-single-sidebar' ); ?>
+		</section>
+	<?php endif; ?>
 
 <?php
 

@@ -106,6 +106,9 @@ a:focus {
 	}
 }
 
+.sell-media-grid-item h2 {
+	font-size: $font-size;
+}
 .sell-media-grid-item img {
 	max-width: 100%;
 	height: auto;
@@ -416,13 +419,12 @@ input[type="submit"].sell-media-button,
 /*= Breadcrumbs
 -------------------------------------------------------------- */
 .sell-media-breadcrumbs {
-	font-size: 10px;
+	font-size: $font-size;
 	text-transform: uppercase;
-	margin: 0 0 10px;
+	margin: 0 0 20px;
 	letter-spacing: 1px;
 	display: block;
 	line-height: 1;
-	float: left;
 
 	@media only screen and (max-width: 767px) {
 		float: none;

@@ -179,90 +179,23 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true )
 	}
 }
 
+
 /**
- * Gallery
- *
- * If a user has uploaded multiple attachments to the post
- * we display them in a three column gallery. We then add
- * a query variable to all image links which act as both
- * our gallery navigation and a way to conditionally
- * show the large, single photo layout.
- *
- * @param $post_id
- * @return html the gallery html with filter
- * @since 2.0.1
+ * Get the media files
+ * @return $html the media shown for sale.
  */
-function sell_media_gallery( $post_id ) {
+function sell_media_get_media( $post_id = null ) {
+	global $post;
+	$post_id = ( $post_id ) ? $post_id : $post->ID;
 	$html = '';
+
 	if ( sell_media_has_multiple_attachments( $post_id ) ) {
-
-		/**
-		 * We pass the attachment id as a query var
-		 * So if it exists, we show the attachment image
-		 */
-		$attachment_id = get_query_var( 'id' );
-		if ( ! empty( $attachment_id ) && sell_media_post_exists( $attachment_id ) ) {
-			do_action( 'sell_media_above_gallery', $post_id );
-			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ) {
-				return false;
-			}
-			$html .= sell_media_item_icon( $attachment_id, 'large', false );
-			$html .= '<p class="sell-media-caption">';
-			$html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span>';
-			if ( sell_media_get_attachment_meta( $post_id, 'caption' ) ) {
-				$html .= ' &mdash; ';
-				$html .= sell_media_get_attachment_meta( $post_id, 'caption' );
-			}
-			$html .= '</p>';
-
-			// If the query var doesn't exist, show the gallery grid view.
-		} else {
-			$attachment_ids = sell_media_get_attachments( $post_id );
-			$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
-			$html .= '<div id="sell-media-gallery-' . $post_id . '" class="sell-media-gallery ' . $container_class . '">';
-			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				$attr = array(
-					'class' => 'sell-media-image sell_media_image sell_media_watermark'
-				);
-				$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
-				$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item">';
-				$html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_id, get_permalink() ) ) . '" class="sell-media-item">';
-				$html .= wp_get_attachment_image( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), '', $attr );
-				$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
-				$html .= '</a>';
-				$html .= '</div>';
-			}
-			$html .= '</div>';
-		}
+		$html .= do_shortcode( '[gallery id="' . intval( $post_id ) . '" size="medium" columns="3"]' );
+	} else {
+		$html .= sell_media_item_icon( $post_id, 'large', false );
 	}
-	return apply_filters( 'sell_media_gallery', $html, $post_id );
-}
 
-/**
- * Display Gallery Image Navigation
- *
- * @param $attachment_id
- * @return html the previous image / next image links
- * @since 2.0.1
- */
-function sell_media_gallery_navigation( $post_id ) {
-
-	if ( sell_media_has_multiple_attachments( $post_id ) && get_query_var( 'id' ) == true ) {
-
-		$attachment_id  = get_query_var( 'id' );
-		$attachment_ids = sell_media_get_attachments( $post_id );
-		$current_image  = array_search( $attachment_id, $attachment_ids );
-
-		$html = '<div class="sell-media-gallery-nav">';
-		$html .= '<a href="' . esc_url( get_permalink() ) . '"class="sell-media-gallery-index" title="' . __( 'Back to Thumbnails', 'sell_media' ) . '">' . __( 'Back to Thumbnails', 'sell_media' ) . '</a>';
-		if ( array_key_exists( $current_image - 1, $attachment_ids ) )
-			$html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image - 1], get_permalink() ) ) . '" class="sell-media-gallery-prev" title="' . __( 'Previous Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-left-alt2"></span></a>';
-		if ( array_key_exists( $current_image + 1, $attachment_ids ) )
-			$html .= '<a href="' . esc_url( add_query_arg( 'id', $attachment_ids[$current_image + 1], get_permalink() ) ) . '"class="sell-media-gallery-next" title="' . __( 'Next Image', 'sell_media' ) . '"><span class="dashicons dashicons-arrow-right-alt2"></span></a>';
-		$html .= '</div>';
-
-		return $html;
-	}
+	return $html;
 }
 
 /**
@@ -299,11 +232,14 @@ function sell_media_content_loop( $post_id, $i ) {
 	} else {
 		$link = get_permalink( $post_id );
 	}
+
 	$html .= '<a href="' . esc_url( $link ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 	$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
-	if ( sell_media_has_multiple_attachments( $post_id ) && isset( $settings->search_page ) && ! is_page( $settings->search_page ) ) {
+	if ( isset( $settings->search_page ) && is_page( $settings->search_page ) ) {
+		$html .= wp_get_attachment_image( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ) );
+		$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $post_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $post_id ) . '</div>';
+	} elseif ( sell_media_has_multiple_attachments( $post_id ) ) {
 		$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
-		
 	} else {
 		$attachment_id = sell_media_get_attachment_id( $post_id );
 		$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
@@ -322,7 +258,7 @@ add_filter( 'sell_media_content_loop', 'sell_media_content_loop', 10, 2 );
  * @param $post_id (int) The post_id, must be a post type of "sell_media_item"
  * @return Lowest price of an item
  */
-function sell_media_item_min_price( $post_id = null ) {
+function sell_media_item_min_price( $post_id = null, $attachmet_id = null ) {
 	$value = get_post_meta( $post_id, 'sell_media_free_downloads', true );
 	$price = Sell_Media()->products->get_lowest_price( $post_id );
 	if ( empty( $price ) ) {
@@ -494,70 +430,6 @@ function sell_media_get_cat_post_count( $category_id, $taxonomy = 'collection' )
 	return $count;
 }
 
-/**
- * Filter the_content for sell_media_item post types
- * and add an action before the content so we can do stuff.
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $content The the_content field of the sell_media_item object
- * @return string the content with any additional data attached
- */
-function sell_media_before_content( $content ) {
-	global $post;
-	$new_content = '';
-	$sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
-
-	if ( $post && 'sell_media_item' === $post->post_type && is_main_query() && ! post_password_required() ) {
-		ob_start();
-		$new_content .= do_action( 'sell_media_before_content', $post->ID );
-		if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) ) {
-			$new_content .= '<div class="sell-media-content">';
-			$new_content .= ob_get_clean() . $content;
-			$new_content .= '</div>';
-		} else {
-			$new_content .= sell_media_breadcrumbs();
-			$new_content .= sell_media_gallery_navigation( $post->ID );
-			$classes[] = 'sell-media-content';
-			$classes[] = 'sell-media-single-item-feature-image';
-			$class_merge = implode( ' ', apply_filters( 'sell_media_single_item_feature_image_class', $classes, $post->ID ) );
-			$new_content .= '<div class="' . $class_merge . '">';
-			$new_content .= ob_get_clean() . $content;
-			if ( sell_media_has_multiple_attachments( $post->ID ) && true === get_query_var( 'id' ) ) {
-				$new_content .= sell_media_below_content_widgets();
-			}
-			$new_content .= '</div>';
-		}
-		$content = $new_content;
-	}
-
-	return $content;
-}
-add_filter( 'the_content', 'sell_media_before_content' );
-
-/**
- * Filter the_content on single templates for sell_media_item post types
- * and add an action after the content so we can do stuff.
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $content The the_content field of the download object
- * @return string the content with any additional data attached
- */
-function sell_media_after_content( $content ) {
-	global $post;
-
-	if ( $post && 'sell_media_item' === $post->post_type && is_main_query() && ! post_password_required() ) {
-		ob_start();
-		do_action( 'sell_media_after_content', $post->ID );
-		$content .= ob_get_clean();
-	}
-
-	return $content;
-}
-add_filter( 'the_content', 'sell_media_after_content' );
 
 /**
  * Add media (featured image, etc) before the_content
@@ -593,53 +465,7 @@ function sell_media_append_media( $post_id ) {
 	}
 	echo apply_filters( 'sell_media_append_media_filter', $html, $post_id );
 }
-add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
-
-/**
- * Append meta data
- *
- * Append buy button and add action to append more stuff (lightbox, keywords, etc)
- *
- * @since 1.9.2
- * @param int $post_id Item ID
- * @return void
- */
-function sell_media_append_meta( $post_id ) {
-	$sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
-
-	// We're on gallery page, so return
-	if ( sell_media_is_gallery_page() ) {
-		return;
-	}
-
-	if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
-		echo sell_media_item_links( $post_id );
-	} elseif ( is_singular( 'sell_media_item' ) ) {
-
-		$location = '';
-
-		if ( isset( $_GET['id'] ) && '' !== $_GET['id'] ) {
-			$attachment_id = absint( $_GET['id'] );
-		} else {
-			$attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-		}
-
-		ob_start();
-
-		echo '<div class="sell-media-meta">';
-		do_action( 'sell_media_above_buy_button', $post_id );
-		do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
-		do_action( 'sell_media_below_buy_button', $post_id );
-		sell_media_plugin_credit();
-		echo '</div>';
-
-		$cart_markup = ob_get_contents();
-		ob_end_clean();
-
-		echo apply_filters( 'sell_media_cart_output', $cart_markup, $post_id, $attachment_id, $location );
-	}
-}
-add_action( 'sell_media_after_content', 'sell_media_append_meta', 20 );
+//add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
 
 /**
  * Show item links
@@ -685,17 +511,17 @@ function sell_media_show_file_info() {
 		return;
 	}
 
-	$post = get_post();
-	$attachment_id = sell_media_get_attachment_id( $post->ID );
+	$post_obj = get_post();
+	$attachment_id = sell_media_get_attachment_id( $post_obj->ID );
 	if ( '' == $attachment_id ) {
 		return;
 	}
-	
+
 	$media_dims = '';
 	$meta = wp_get_attachment_metadata( $attachment_id );
 	$filename = basename( get_attached_file( $attachment_id ) );
-	$postguid = get_the_guid( $attachment_id );
-	$image_size_info = getimagesize( Sell_Media()->products->get_protected_file( $post->ID, $attachment_id ) );
+	$post_guid = get_the_guid( $attachment_id );
+	$image_size_info = getimagesize( Sell_Media()->products->get_protected_file( $post_obj->ID, $attachment_id ) );
 
 	echo '<h2 class="widget-title sell-media-item-details-title">' . __( 'Details', 'sell_media' ) . '</h2>';
 	echo '<ul class="sell-media-item-details">';
@@ -703,14 +529,14 @@ function sell_media_show_file_info() {
 	echo '<li class="fileid"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>';
 	preg_match('/^.*?\.(\w+)$/',$filename,$ext);
 	echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . esc_html( strtoupper( $ext[1] ) ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>';
-	echo '<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post->ID, $attachment_id ) . '</li>';
+	echo '<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post_obj->ID, $attachment_id ) . '</li>';
 	if ( isset( $image_size_info[0], $image_size_info[1] ) ) {
 		echo '<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $image_size_info[0]. ' x '. $image_size_info[1] .'</li>';
 	}
-	if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
+	if ( wp_get_post_terms( $post_obj->ID, 'collection' ) ) {
 		echo '<li class="collections"><span class="title">' . __( 'Collections', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'collection' ) . '</li>';
 	}
-	if ( wp_get_post_terms( $post->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
+	if ( wp_get_post_terms( $post_obj->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
 		echo '<li class="keywords"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>';
 	}
 
@@ -718,7 +544,7 @@ function sell_media_show_file_info() {
 		echo '<li class="length"><span class="title">' . __( 'Length', 'sell_media' ) . ':</span> ' . $meta['length_formatted'] . '</li>';
 		echo '<li class="bitrate"><span class="title">' . __( 'Bitrate', 'sell_media' ) . ':</span> ' . round( $meta['bitrate'] / 1000 ) . 'kb/s</li>';
 	}
-	echo do_action( 'sell_media_additional_list_items', $post->ID );
+	echo do_action( 'sell_media_additional_list_items', $post_obj->ID );
 	echo '</ul>';
 
 }
@@ -872,7 +698,9 @@ add_action( 'after_setup_theme', 'sell_media_theme_support', 999 );
  * @return  boolean true if on search, false otherwise
  */
 function sell_media_is_search() {
-	if ( is_search() && is_main_query() && $_GET['post_type'] && 'attachment' === $_GET['post_type'] ) {
+
+	$settings = sell_media_get_plugin_options();
+	if ( isset( $settings->search_page ) && is_page( $settings->search_page ) ) {
 		return true;
 	}
 }

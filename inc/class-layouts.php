@@ -42,10 +42,10 @@ class SellMediaLayouts {
 		$this->settings = sell_media_get_plugin_options();
 
 		// Loop start action
-		add_action( 'loop_start', array( $this, 'loop_start' ) );
+		//add_action( 'loop_start', array( $this, 'loop_start' ) );
 
 		// Loop end action
-		add_action( 'loop_start', array( $this, 'loop_start' ) );
+		//add_action( 'loop_end', array( $this, 'loop_end' ) );
 
 		// Post class filter
 		add_filter( 'post_class', array( $this, 'post_class' ) );
@@ -62,6 +62,12 @@ class SellMediaLayouts {
 		// Grid item class
 		add_filter( 'sell_media_grid_item_class', array( $this, 'grid_class' ), 10, 1 );
 
+		// Before the content
+		add_filter( 'the_content', array( $this, 'before_content' ) );
+
+		// After the content
+		add_filter( 'the_content', array( $this, 'after_content' ) );
+
 	}
 
 	/**
@@ -74,14 +80,13 @@ class SellMediaLayouts {
 	 * @return    html
 	 */
 	public function loop_start( $query ) {
-		if ( sell_media_is_search() ) {
-			$class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
-			echo '<div class="' . esc_attr( $class ) . '">';
+		if ( is_singular( array( 'sell_media_item', 'attachment' ) ) ) {
+			echo '<p>loop_start</p>';
 		}
 	}
 
 	/**
-	 * Loop start action hook.
+	 * Loop end action hook.
 	 * Adds markup before looping over posts so we can
 	 * add a wrapper div for creating grids layouts.
 	 *
@@ -90,8 +95,8 @@ class SellMediaLayouts {
 	 * @return    html
 	 */
 	public function loop_end( $query ) {
-		if ( sell_media_is_search() ) {
-			echo '</div>';
+		if ( is_singular( array( 'sell_media_item', 'attachment' ) ) ) {
+			echo '<p>loop_end</p>';
 		}
 	}
 
@@ -105,8 +110,7 @@ class SellMediaLayouts {
 	 */
 	public function post_class( $classes ) {
 		global $post;
-		if ( is_post_type_archive( 'sell_media_item' )
-			|| sell_media_is_search() ) {
+		if ( is_post_type_archive( 'sell_media_item' ) ) {
 			$classes[] = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', null );
 		}
 
@@ -219,10 +223,70 @@ class SellMediaLayouts {
 	 * @since  2.1.3
 	 * @return string css class
 	 */
-	function grid_class( $class ) {
+	public function grid_class( $class ) {
 		if ( ! empty( $this->settings->thumbnail_layout ) ) {
 			return $class . ' ' . $this->settings->thumbnail_layout;
 		}
 	}
 
+	/**
+	 * Before the content on sell media and attachment pages
+	 */
+	public function before_content( $content ) {
+
+		global $post;
+		$post_id = $post->ID;
+
+		if ( sell_media_attachment( $post_id ) ) {
+			return $content;
+		}
+
+		$new_content  = '<div class="sell-media-content">';
+		$new_content .= sell_media_breadcrumbs();
+		$new_content .= sell_media_get_media() . $content;
+		$new_content .= '</div>';
+
+		return apply_filters( 'sell_media_content', $new_content );
+
+	}
+
+	/**
+	 * After content filter
+	 *
+	 * Append buy button and add action to append more stuff (lightbox, keywords, etc)
+	 *
+	 * @since 1.9.2
+	 * @param int $post_id Item ID
+	 * @return void
+	 */
+	public function after_content( $content ) {
+
+		global $post;
+		$post_id = $post->ID;
+
+		// only show on single sell media and attachment pages
+		if ( is_singular( 'sell_media_item' ) && ! sell_media_has_multiple_attachments( $post_id ) || sell_media_attachment( $post_id ) ) {
+
+			if ( is_singular( 'attachment' ) ) {
+				$attachment_id = $post_id;
+				$post_id = get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true );
+			} else {
+				$attachment_id = sell_media_get_attachment_id( $post_id );
+			}
+
+			ob_start();
+
+			echo '<div class="sell-media-meta">';
+			do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
+			do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
+			do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
+			sell_media_plugin_credit();
+			echo '</div>';
+
+			$content .= ob_get_contents();
+			ob_end_clean();
+		}
+
+		return $content;
+	}
 }

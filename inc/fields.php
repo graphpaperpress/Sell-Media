@@ -15,7 +15,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 	// assign licenses
 	$licenses = wp_get_post_terms( $post_id, 'licenses' );
 	// assign type
-	$type = ( $is_package )? 'download':apply_filters( 'sell_media_set_product_type', 'download' ); ?>
+	$type = ( $is_package ) ? 'download' : apply_filters( 'sell_media_set_product_type', 'download' ); ?>
 
 	<div class="sell-media-add-to-cart-fields">
 

@@ -250,7 +250,7 @@ class SellMediaImages extends SellMediaProducts {
 	* @since 1.2.4
 	*/
 	public function get_original_image_size( $post_id = null, $attachment_id = null ) {
-		
+
 		$original_protected_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
 
 		// check if attachment is an image

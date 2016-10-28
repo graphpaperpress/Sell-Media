@@ -103,6 +103,9 @@ a:focus {
       margin: 0 0 32px;
       width: 100%; } }
 
+.sell-media-grid-item h2 {
+  font-size: 16px; }
+
 .sell-media-grid-item img {
   max-width: 100%;
   height: auto; }
@@ -328,13 +331,12 @@ input[type="submit"].sell-media-button,
 /*= Breadcrumbs
 -------------------------------------------------------------- */
 .sell-media-breadcrumbs {
-  font-size: 10px;
+  font-size: 16px;
   text-transform: uppercase;
-  margin: 0 0 10px;
+  margin: 0 0 20px;
   letter-spacing: 1px;
   display: block;
-  line-height: 1;
-  float: left; }
+  line-height: 1; }
   @media only screen and (max-width: 767px) {
     .sell-media-breadcrumbs {
       float: none;
