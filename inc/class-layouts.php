@@ -68,6 +68,9 @@ class SellMediaLayouts {
 		// After the content
 		add_filter( 'the_content', array( $this, 'after_content' ) );
 
+		// Content loop
+		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 2 );
+
 	}
 
 	/**
@@ -159,8 +162,8 @@ class SellMediaLayouts {
 		}
 
 		// Layout
-		if ( isset( $settings->layout ) ) {
-			$classes[] = $settings->layout;
+		if ( isset( $this->settings->layout ) ) {
+			$classes[] = $this->settings->layout;
 		}
 
 		// Gallery
@@ -237,23 +240,27 @@ class SellMediaLayouts {
 		global $post;
 		$post_id = $post->ID;
 
-		if ( sell_media_attachment( $post_id ) ) {
-			return $content;
+		// only show on single sell media and attachment pages
+		if ( is_singular( 'sell_media_item' ) && ! sell_media_has_multiple_attachments( $post_id ) || ! sell_media_attachment( $post_id ) ) {
+
+			$new_content = '';
+
+			// only wrap content if single item
+			if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+				$new_content .= '<div class="sell-media-content">';
+			}
+			$new_content .= sell_media_breadcrumbs();
+			$new_content .= sell_media_get_media() . $content;
+
+			// only wrap content if single item
+			if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+				$new_content .= '</div>';
+			}
+
+			$content = $new_content;
 		}
 
-		// only wrap content if single item
-		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
-			$new_content  = '<div class="sell-media-content">';
-		}
-		$new_content .= sell_media_breadcrumbs();
-		$new_content .= sell_media_get_media() . $content;
-
-		// only wrap content if single item
-		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
-			$new_content .= '</div>';
-		}
-
-		return apply_filters( 'sell_media_content', $new_content );
+		return apply_filters( 'sell_media_content', $content );
 
 	}
 
@@ -296,4 +303,56 @@ class SellMediaLayouts {
 
 		return $content;
 	}
+
+	/**
+	 * Main content loop used in all themes
+	 * @return string html
+	 */
+	function content_loop( $post_id, $i ) {
+
+		$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
+		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
+			$class .= ' sell-media-grid-single-item';
+		}
+
+		$html  = '<div id="sell-media-' . $post_id . '" class="' . $class . '">';
+
+		$parent = false;
+
+		// This loop runs on both archives and single galleries.
+		// Let's set query params everywhere except archive and search if the item is an attachment.
+		if ( ! is_archive() && isset( $this->settings->search_page ) && ! is_page( $this->settings->search_page ) ) {
+			// If there is a post parent, change link to gallery.
+			$parent = sell_media_attachment_parent_post( $post_id );
+		} elseif ( ! is_archive() && isset( $this->settings->search_page ) && is_page( $this->settings->search_page ) ) {
+			// If there is a post parent, change link to gallery.
+			$parent = sell_media_attachment_parent_post( $post_id );
+		}
+
+		if ( $parent ) {
+			$link = add_query_arg( array(
+				'id' => $post_id,
+			), get_permalink( $parent->ID ) );
+			$post_id = $parent->ID;
+		} else {
+			$link = get_permalink( $post_id );
+		}
+
+		$html .= '<a href="' . esc_url( $link ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
+		$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
+		if ( isset( $this->settings->search_page ) && is_page( $this->settings->search_page ) ) {
+			$html .= wp_get_attachment_image( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ) );
+			$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $post_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $post_id ) . '</div>';
+		} elseif ( sell_media_has_multiple_attachments( $post_id ) ) {
+			$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
+		} else {
+			$attachment_id = sell_media_get_attachment_id( $post_id );
+			$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
+		}
+		$html .= '</a>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
 }
