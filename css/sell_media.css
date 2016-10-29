@@ -281,6 +281,12 @@ input[type="submit"].sell-media-button,
 .sell-media-title {
   font-weight: 700; }
 
+.sell-media-entry-title {
+  font-size: 16px;
+  text-decoration: none;
+  border: none;
+  margin-bottom: 6px; }
+
 .sell-media-caption {
   font-style: italic;
   text-align: center;

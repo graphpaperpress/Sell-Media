@@ -344,6 +344,13 @@ input[type="submit"].sell-media-button,
 	font-weight: 700;
 }
 
+.sell-media-entry-title {
+	font-size: $font-size;
+	text-decoration: none;
+	border: none;
+	margin-bottom: 6px;
+}
+
 .sell-media-caption {
 	font-style: italic;
 	text-align: center;

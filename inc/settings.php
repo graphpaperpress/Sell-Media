@@ -314,6 +314,27 @@ function sell_media_init_settings(){
 				),
 			)
 		),
+		"titles" => array(
+			"tab" => "sell_media_general_settings",
+			"name" => "titles",
+			"title" => __("Titles","sell_media"),
+			"description" => __( "Show product titles on archives.", "sell_media" ),
+			"section" => "general_plugin_section_1",
+			"since" => "1.0",
+			"id" => "general_plugin_section_1",
+			"type" => "select",
+			"default" => 0,
+			"valid_options" => array(
+				0 => array(
+					"name" => 0,
+					"title" => __("No","sell_media")
+					),
+				1 => array(
+					"name" => 1,
+					"title" => __("Yes","sell_media"),
+					)
+			)
+		),
 		"breadcrumbs" => array(
 			"tab" => "sell_media_general_settings",
 			"name" => "breadcrumbs",

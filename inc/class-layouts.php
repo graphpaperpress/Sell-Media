@@ -296,6 +296,12 @@ class SellMediaLayouts {
 		$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '">';
 
 		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
+
+		// Show titles?
+		if ( ! empty( $this->settings->titles ) ) {
+			$html .= '<h2 class="sell-media-entry-title">' . get_the_title( $original_id ) . '</h2>';
+		}
+
 		$html .= sell_media_item_icon( $original_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 
 		if ( sell_media_has_multiple_attachments( $post_id ) && ( is_tax( array( 'collection' ) ) || is_post_type_archive( 'sell_media_item' ) ) ) {
