@@ -458,6 +458,8 @@ input[type="submit"].sell-media-button,
 		display: block;
 		float: none;
 		margin: auto;
+		max-width: 100%;
+		height: auto;
 	}
 
 	.sell-media-single-one-col & {
@@ -768,7 +770,7 @@ input[type="submit"].sell-media-button,
 .sell-media-gallery-thumbnail {
 
 	display: inline-block;
-  	width: 100%;
+	width: 100%;
 	margin: 0 0 1em;
 	padding: 0;
 	position: relative;
@@ -1541,9 +1543,9 @@ input.sell-media-search-text[type=text] {
 			display: inline-block;
 			list-style: none;
 			margin: 0 4px -1px;
-    		padding: 0;
+			padding: 0;
 
-    		&:hover,
+			&:hover,
 			&.selected-tab {
 				color: $white-color;
 				border-bottom-color: $white-color;

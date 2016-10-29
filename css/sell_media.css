@@ -359,7 +359,9 @@ input[type="submit"].sell-media-button,
   .sell-media-content .wp-post-image {
     display: block;
     float: none;
-    margin: auto; }
+    margin: auto;
+    max-width: 100%;
+    height: auto; }
   .sell-media-single-one-col .sell-media-content {
     float: none;
     margin: 0 0 1.5em 0;
