@@ -23,12 +23,10 @@ function sell_media_thanks_shortcode( $tx=null ) {
 	if ( ! empty( $_GET['tx'] ) ) {
 		$tx = $_GET['tx'];
 		$gateway = 'PayPal';
-	}
-	else if( isset( $_POST['txn_id'] ) && '' != $_POST['txn_id'] ){
+	} else if( isset( $_POST['txn_id'] ) && '' != $_POST['txn_id'] ){
 		$tx = $_POST['txn_id'];
 		$gateway = 'PayPal';
-	}
-	 elseif ( ! empty( $_POST['stripeToken'] ) ) {
+	} elseif ( ! empty( $_POST['stripeToken'] ) ) {
 		$tx = $_POST['stripeToken'];
 		$gateway = 'Stripe';
 	} else {
@@ -73,16 +71,19 @@ function sell_media_item_shortcode( $atts ) {
 			'id' => '',
 			'attachment' => '',
 			'text' => 'BUY',
-			'size' => 'medium',
+			'size' => 'large',
 			'align' => 'center',
 		), $atts )
 	);
 
-	$image = sell_media_item_icon( $id, $size, false );
-	$text = apply_filters( 'sell_media_purchase_text', $text, $id );
-	$button = sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
-
-	$html = sell_media_get_media( $id );
+	if ( sell_media_has_multiple_attachments( $id ) ) {
+		$html .= sell_media_gallery( $id );
+	} else {
+		$html .= sell_media_item_icon( $id, $size, false );
+		$html .= '<br />';
+		$text  = apply_filters( 'sell_media_purchase_text', $text, $id );
+		$html .= sell_media_item_buy_button( $id, $attachment, 'button', $text, false );
+	}
 
 	return $html;
 }

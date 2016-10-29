@@ -610,6 +610,52 @@ input[type="submit"].sell-media-button,
   .sell-media-pagination-container .page-numbers {
     padding: 0 3px; }
 
+/*= Enlarge
+-------------------------------------------------------------- */
+.sell-media-gallery-thumbnail {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 1em;
+  padding: 0;
+  position: relative;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  transition: all .5s ease; }
+  .sell-media-gallery-thumbnail:before {
+    font-family: "Dashicons";
+    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    content: "\f179";
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    line-height: 1;
+    opacity: 0;
+    transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -webkit-transition: all .25s ease-in-out;
+    z-index: 10; }
+  .sell-media-gallery-thumbnail img {
+    float: left;
+    opacity: 1;
+    -webkit-backface-visibility: hidden;
+    transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -webkit-transition: all .25s ease-in-out; }
+  .sell-media-gallery-thumbnail:hover:before {
+    opacity: .6; }
+  .sell-media-gallery-thumbnail:hover img {
+    opacity: .8; }
+
 /*= Quick View Dialog
 -------------------------------------------------------------- */
 .sell-media-dialog-box {
@@ -703,6 +749,7 @@ input[type="submit"].sell-media-button,
     position: relative;
     max-width: 1000px;
     width: 80%;
+    height: 80vh;
     margin: 4em auto; }
   .sell-media-dialog-box.is-visible {
     opacity: 1;

@@ -18,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function sell_media_template_redirect( $original_template ) {
 
+	global $post;
+
 	$post_type = array( 'sell_media_item', 'attachment' );
 	$sell_media_taxonomies = get_object_taxonomies( $post_type );
 
@@ -31,6 +33,11 @@ function sell_media_template_redirect( $original_template ) {
 		} else {
 			$template = SELL_MEDIA_PLUGIN_DIR . '/themes/archive.php';
 		}
+	} elseif ( sell_media_attachment( $post->ID ) ) {
+		// sell media attachments should use single.php, not attachment.php
+		// not all attachment.php templates contain the_content
+		// which we modify heavily using filters.
+		$template = locate_template( 'single.php' );
 	} else {
 		$template = $original_template;
 	}
@@ -99,12 +106,12 @@ function sell_media_page() {
 	global $post;
 
 	if ( $post
-	or 'sell_media_item' === get_post_type( $post->ID )
+	&& ( 'sell_media_item' === get_post_type( $post->ID )
 	or sell_media_attachment( $post->ID )
 	or is_tax( 'collection' )
 	or is_tax( 'keywords' )
 	or is_tax( 'creator' )
-	or ( isset( $settings->search_page ) && is_page( $settings->search_page ) ) ) {
+	or ( isset( $settings->search_page ) && is_page( $settings->search_page ) ) ) ) {
 		return true;
 	}
 }

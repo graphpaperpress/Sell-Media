@@ -7,20 +7,22 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Add item to cart.
  */
-function sell_media_add_to_cart(){
+function sell_media_add_to_cart() {
 	global $sm_cart;
 
 	// Check if item number is there.
-	if( !empty( $_POST ) && isset( $_POST['item_number'] ) ){
-		
+	if ( ! empty( $_POST ) && isset( $_POST['item_number'] ) ) {
+
 		$qty = 1;
 		$attrs = array();
-		$item_number = absint($_POST['item_number']);
+		$item_number = absint( $_POST['item_number'] );
 
 		if( isset( $_POST['item_name'] ) && '' != $_POST['item_name'] ){
 			$attrs['item_name'] = sanitize_text_field( $_POST['item_name'] );

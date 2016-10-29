@@ -68,6 +68,9 @@ class SellMediaLayouts {
 		// After the content
 		add_filter( 'the_content', array( $this, 'after_content' ) );
 
+		// After the excerpt
+		add_filter( 'the_excerpt', array( $this, 'after_content' ) );
+
 		// Content loop
 		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 2 );
 
@@ -161,7 +164,7 @@ class SellMediaLayouts {
 		}
 
 		// Gallery
-		if ( sell_media_attachment( $post->ID ) ) {
+		if ( is_singular( 'sell_media_item' ) && sell_media_has_multiple_attachments( $post->ID ) ) {
 			$classes[] = 'sell-media-gallery-page';
 		}
 
@@ -241,16 +244,11 @@ class SellMediaLayouts {
 		$has_multiple_attachments = sell_media_has_multiple_attachments( $post_id );
 		$new_content = '';
 
-		// show on sell media attachment pages
-		if ( sell_media_attachment( $post->ID ) ) {
-			$new_content .= sell_media_breadcrumbs();
-		}
-
 		// show on single sell media pages
-		if ( is_singular( 'sell_media_item' ) ) {
+		if ( is_singular( 'sell_media_item' ) || sell_media_attachment( $post_id ) ) {
 
-			// only wrap content if single item
-			if ( ! $has_multiple_attachments ) {
+			// only wrap content if a single image/media is being viewed
+			if ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) {
 				$new_content .= '<div class="sell-media-content">';
 			}
 
@@ -258,8 +256,8 @@ class SellMediaLayouts {
 			$new_content .= sell_media_get_media();
 			$new_content .= $content;
 
-			// only wrap content if single item
-			if ( ! $has_multiple_attachments ) {
+			// only wrap content if a single image/media is being viewed
+			if ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) {
 				$new_content .= '</div>';
 			}
 		}
@@ -280,24 +278,23 @@ class SellMediaLayouts {
 	public function after_content( $content ) {
 
 		global $post;
-		$post_id = $post->ID;
 
 		// only show on single sell media and attachment pages
-		if ( is_singular( 'sell_media_item' ) && ! sell_media_has_multiple_attachments( $post_id ) || sell_media_attachment( $post_id ) ) {
+		if ( is_main_query() && is_singular( 'sell_media_item' ) && ! sell_media_has_multiple_attachments( $post->ID ) || sell_media_attachment( $post->ID ) ) {
 
 			if ( is_singular( 'attachment' ) ) {
-				$attachment_id = $post_id;
-				$post_id = get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true );
+				$attachment_id = $post->ID;
+				$post->ID = get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id', true );
 			} else {
-				$attachment_id = sell_media_get_attachment_id( $post_id );
+				$attachment_id = sell_media_get_attachment_id( $post->ID );
 			}
 
 			ob_start();
 
 			echo '<div class="sell-media-meta">';
-			do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
-			do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
-			do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
+			do_action( 'sell_media_above_buy_button', $post->ID, $attachment_id );
+			do_action( 'sell_media_add_to_cart_fields', $post->ID, $attachment_id );
+			do_action( 'sell_media_below_buy_button', $post->ID, $attachment_id );
 			sell_media_plugin_credit();
 			echo '</div>';
 
@@ -333,7 +330,7 @@ class SellMediaLayouts {
 		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
 		$html .= sell_media_item_icon( $original_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 
-		if ( sell_media_has_multiple_attachments( $post_id ) ) {
+		if ( sell_media_has_multiple_attachments( $post_id ) || isset( $this->settings->search_page ) && '' === is_page( $this->settings->search_page ) ) {
 			$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
 		} else {
 			$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';

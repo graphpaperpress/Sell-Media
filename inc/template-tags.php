@@ -190,10 +190,41 @@ function sell_media_get_media( $post_id = null ) {
 	$html = '';
 
 	if ( sell_media_has_multiple_attachments( $post_id ) ) {
-		$html .= do_shortcode( '[gallery id="' . intval( $post_id ) . '" size="medium" columns="3"]' );
+
+		$html .= sell_media_gallery( $post_id );
+
+		//$html .= do_shortcode( '[gallery id="' . intval( $post_id ) . '" size="medium" columns="3"]' );
 	} else {
 		$html .= sell_media_item_icon( $post_id, 'large', false );
 	}
+
+	return $html;
+}
+
+/**
+ * Gallery
+ * @param  integer $post_id the post id
+ * @return html the full gallery markup
+ */
+function sell_media_gallery( $post_id ) {
+
+	$html = '';
+
+	$attachment_ids = sell_media_get_attachments( $post_id );
+	$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
+	$html .= '<div id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
+	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+		$attr = array(
+			'class' => 'sell-media-image sell_media_image sell_media_watermark',
+		);
+		$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
+		$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item">';
+		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" class="sell-media-quick-view sell-media-gallery-thumbnail" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">';
+		$html .= wp_get_attachment_image( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), '', $attr );
+		$html .= '</a>';
+		$html .= '</div>';
+	}
+	$html .= '</div>';
 
 	return $html;
 }
