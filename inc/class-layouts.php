@@ -41,12 +41,6 @@ class SellMediaLayouts {
 		// Settings
 		$this->settings = sell_media_get_plugin_options();
 
-		// Loop start action
-		//add_action( 'loop_start', array( $this, 'loop_start' ) );
-
-		// Loop end action
-		//add_action( 'loop_end', array( $this, 'loop_end' ) );
-
 		// Post class filter
 		add_filter( 'post_class', array( $this, 'post_class' ) );
 
@@ -68,36 +62,9 @@ class SellMediaLayouts {
 		// After the content
 		add_filter( 'the_content', array( $this, 'after_content' ) );
 
-		// After the excerpt
-		add_filter( 'the_excerpt', array( $this, 'after_content' ) );
-
 		// Content loop
 		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 2 );
 
-	}
-
-	/**
-	 * Loop start action hook.
-	 * Adds markup before looping over posts so we can
-	 * add a wrapper div for creating grids layouts.
-	 *
-	 * @since    0.0.1
-	 *
-	 * @return    html
-	 */
-	public function loop_start( $query ) {
-	}
-
-	/**
-	 * Loop end action hook.
-	 * Adds markup before looping over posts so we can
-	 * add a wrapper div for creating grids layouts.
-	 *
-	 * @since    0.0.1
-	 *
-	 * @return    html
-	 */
-	public function loop_end( $query ) {
 	}
 
 	/**
