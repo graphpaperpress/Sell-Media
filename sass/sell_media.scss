@@ -868,6 +868,7 @@ input[type="submit"].sell-media-button,
 
 	.sell-media-quick-view-container {
 		@extend .cf;
+		background-color: $white-color;
 		padding: $margin;
 
 		@media only screen and (max-width : 768px) {

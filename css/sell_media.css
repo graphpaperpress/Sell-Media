@@ -689,6 +689,7 @@ input[type="submit"].sell-media-button,
   .sell-media-dialog-box img {
     float: left; }
   .sell-media-dialog-box .sell-media-quick-view-container {
+    background-color: #fff;
     padding: 32px; }
     @media only screen and (max-width: 768px) {
       .sell-media-dialog-box .sell-media-quick-view-container {
