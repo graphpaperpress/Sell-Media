@@ -2,6 +2,7 @@
 -------------------------------------------------------------- */
 $font-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-size: 16px;
+$font-size-small: 13px;
 $line-height: $font-size * 1.6;
 $margin: $font-size * 2;
 $default-color: gray;
@@ -1559,7 +1560,8 @@ input.sell-media-search-text[type=text] {
 				border: 0;
 				color: $default-color;
 				display: inline-block;
-				padding: 10px 20px;
+				font-size: $font-size-small;
+				padding: 6px 12px;
 				text-decoration: none;
 				text-shadow: none;
 

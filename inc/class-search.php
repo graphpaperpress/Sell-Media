@@ -142,7 +142,7 @@ class SellMediaSearch {
 
 				$html .= '<p class="sell-media-search-results-text">' . sprintf( esc_html__( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->post_count, $search_term ) . '</p>';
 
-				$html .= '<div id="sell-media-archive" class="sell-media">';
+				$html .= '<div id="sell-media-search-results" class="sell-media">';
 				$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 
 				while ( $search_query->have_posts() ) {

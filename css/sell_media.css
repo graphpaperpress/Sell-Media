@@ -1199,7 +1199,8 @@ input.sell-media-search-text[type=text] {
         border: 0;
         color: gray;
         display: inline-block;
-        padding: 10px 20px;
+        font-size: 13px;
+        padding: 6px 12px;
         text-decoration: none;
         text-shadow: none; }
         #sell-media-ajax-filter-container > ul li a span.dashicons {
