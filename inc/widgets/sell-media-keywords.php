@@ -16,7 +16,7 @@
 		if ( $title )
 			echo $before_title . $title . $after_title;
 ?>
-		<div class="sell-media-keywords-widget">
+		<div class="sell-media-keywords-widget sell-media-keywords-widget">
 
 			<?php
 			$keywords = get_terms('keywords');

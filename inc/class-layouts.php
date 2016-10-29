@@ -262,8 +262,9 @@ class SellMediaLayouts {
 			do_action( 'sell_media_above_buy_button', $post->ID, $attachment_id );
 			do_action( 'sell_media_add_to_cart_fields', $post->ID, $attachment_id );
 			do_action( 'sell_media_below_buy_button', $post->ID, $attachment_id );
-			sell_media_plugin_credit();
 			echo '</div>';
+
+			echo do_action( 'sell_media_below_content', $post->ID, $attachment_id );
 
 			$content .= ob_get_contents();
 			ob_end_clean();
@@ -297,7 +298,7 @@ class SellMediaLayouts {
 		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
 		$html .= sell_media_item_icon( $original_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 
-		if ( sell_media_has_multiple_attachments( $post_id ) || isset( $this->settings->search_page ) && '' === is_page( $this->settings->search_page ) ) {
+		if ( sell_media_has_multiple_attachments( $post_id ) && ( is_tax( array( 'collection' ) ) || is_post_type_archive( 'sell_media_item' ) ) ) {
 			$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
 		} else {
 			$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';

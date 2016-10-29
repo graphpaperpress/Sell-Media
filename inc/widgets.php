@@ -54,16 +54,15 @@ add_action( 'widgets_init', 'sell_media_widgets_init', 20 );
  */
 function sell_media_below_content_widgets() {
 
-	if ( is_active_sidebar( 'sell-media-below-single-content' ) ) {
+	if ( is_active_sidebar( 'sell-media-below-single-content' ) ) : ?>
 
-		ob_start(); ?>
 		<div id="sell-media-below-single-content" class="sell-media-widget-area">
 		<?php dynamic_sidebar( 'sell-media-below-single-content' ); ?>
 		</div>
-		<?php $html = ob_get_clean();
-		return $html;
-	}
+
+	<?php endif;
 }
+add_action( 'sell_media_below_content', 'sell_media_below_content_widgets', 20 );
 
 /**
  * Display Widget Below Single Sidebar
@@ -80,4 +79,4 @@ function sell_media_widgets_below_single_sidebar() {
 <?php
 
 }
-add_action( 'sell_media_additional_list_items', 'sell_media_widgets_below_single_sidebar' );
+add_action( 'sell_media_below_buy_button', 'sell_media_widgets_below_single_sidebar', 20 );

@@ -687,7 +687,18 @@ input[type="submit"].sell-media-button,
   .sell-media-dialog-box p {
     margin: 0 0 16px; }
   .sell-media-dialog-box img {
-    float: left; }
+    width: auto !important;
+    height: auto !important;
+    max-width: 100%;
+    max-height: 100vh; }
+  .sell-media-dialog-box #sell-media-dialog-box-target {
+    background-color: #fff;
+    position: relative;
+    max-width: 1000px;
+    max-width: 80vw;
+    width: 80%;
+    max-height: 80vh;
+    margin: 4em auto; }
   .sell-media-dialog-box .sell-media-quick-view-container {
     background-color: #fff;
     padding: 32px; }
@@ -745,13 +756,6 @@ input[type="submit"].sell-media-button,
     .sell-media-dialog-box .sell-media-credit a {
       color: #fff;
       text-decoration: none; }
-  .sell-media-dialog-box #sell-media-dialog-box-target {
-    background-color: #fff;
-    position: relative;
-    max-width: 1000px;
-    width: 80%;
-    height: 80vh;
-    margin: 4em auto; }
   .sell-media-dialog-box.is-visible {
     opacity: 1;
     visibility: visible; }

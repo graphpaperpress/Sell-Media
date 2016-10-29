@@ -32,7 +32,7 @@
 			$args['post_type'] = 'sell_media_item';
 		} ?>
 
-		<div class="sell-media-featured-widget sell-media">
+		<div class="sell-media-featured-widget sell-media-widget">
 
 			<?php
 			$type_posts = new WP_Query ( $args );

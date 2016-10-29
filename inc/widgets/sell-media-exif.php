@@ -23,7 +23,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 				if ( $title )
 					echo $before_title . $title . $after_title;
 				?>
-				<div class="sell-media-exif-widget">
+				<div class="sell-media-exif-widget sell-media-widget">
 					<ul class="exif-info">
 
 						<?php

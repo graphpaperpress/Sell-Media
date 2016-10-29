@@ -38,7 +38,7 @@
 			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => '6' );
 		} ?>
 
-		<div class="sell-media-similar-widget sell-media">
+		<div class="sell-media-similar-widget sell-media-widget">
 
 			<?php
 			// Get available image sizes

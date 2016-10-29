@@ -219,8 +219,9 @@ function sell_media_gallery( $post_id ) {
 		);
 		$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
 		$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item">';
-		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" class="sell-media-quick-view sell-media-gallery-thumbnail" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">';
+		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
 		$html .= wp_get_attachment_image( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), '', $attr );
+		$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
 		$html .= '</a>';
 		$html .= '</div>';
 	}
@@ -263,9 +264,10 @@ function sell_media_plugin_credit() {
 	$settings = sell_media_get_plugin_options();
 
 	if ( $settings->plugin_credit ) {
-		printf( esc_html__( '<span id="sell-media-credit" class="sell-media-credit">Powered by <a href="%1$s" title="Sell Media">%2$s</a></span>', 'sell_media' ), 'http://graphpaperpress.com/plugins/sell-media/', 'Sell Media' );
+		printf( __( '<span id="sell-media-credit" class="sell-media-credit">Powered by <a href="%1$s" title="Sell Media">%2$s</a></span>', 'sell_media' ), 'http://graphpaperpress.com/plugins/sell-media/', 'Sell Media' );
 	}
 }
+add_action( 'sell_media_below_buy_button', 'sell_media_plugin_credit', 90 );
 
 
 /**

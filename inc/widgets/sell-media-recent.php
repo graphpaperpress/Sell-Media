@@ -16,7 +16,7 @@
 		if ( $title )
 			echo $before_title . $title . $after_title;
 ?>
-		<div class="sell-media-recent-widget sell-media">
+		<div class="sell-media-recent-widget sell-media-widget">
 			<?php
 			// Get available image sizes
 			$image_sizes = get_intermediate_image_sizes(); ?>
