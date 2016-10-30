@@ -448,7 +448,8 @@ input[type="submit"].sell-media-button,
   position: relative;
   display: block;
   font-weight: normal;
-  margin-bottom: 32px; }
+  margin-bottom: 32px;
+  text-decoration: none; }
   .sell-media-masonry .sell-media-item {
     margin-bottom: 0; }
   .sell-media-item img {
@@ -1172,6 +1173,11 @@ input.sell-media-search-text[type=text] {
 .theme-base #content, .theme-twenty-ten #content {
   margin: 0 auto;
   width: 100%; }
+
+.theme-sell-photos #sell-media-ajax-filter-container > ul li:hover, .theme-sell-photos #sell-media-ajax-filter-container > ul li.selected-tab {
+  border-bottom-color: #f5f5f5; }
+.theme-sell-photos #sell-media-ajax-filter-container .sell-media-ajax-filter-terms {
+  background-color: #f5f5f5; }
 
 /*= Overrides
 -------------------------------------------------------------- */

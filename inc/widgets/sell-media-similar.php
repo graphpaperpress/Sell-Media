@@ -3,7 +3,7 @@
 	function __construct(){
 		$widget_ops = array( 'description' => 'Displays similar items' );
 		$control_ops = array( 'width' => 200, 'height' => 200 );
-		parent::__construct( false, $name='Sell Media Similar Items', $widget_ops, $control_ops );
+		parent::__construct( false, $name = 'Sell Media Similar Items', $widget_ops, $control_ops );
 	}
 
 	/* Displays the Widget in the front-end */
@@ -13,8 +13,9 @@
 		extract( $args );
 		echo $before_widget;
 
-		if ( $title )
+		if ( $title ) {
 			echo $before_title . $title . $after_title;
+		}
 
 		global $post;
 		//Returns Array of Term Names for "collection"
@@ -27,15 +28,20 @@
 					array(
 						'taxonomy' => 'collection',
 						'field' => 'slug',
-						'terms' => $terms
-					)
+						'terms' => $terms,
+					),
 				),
 				'posts_per_page' => '6',
-				'orderby' => 'rand'
+				'orderby' => 'rand',
 			);
 
 		} else {
-			$args = array( 'post_type' => 'sell_media_item', 'field'=>'slug', 'orderby' => 'rand', 'posts_per_page' => '6' );
+			$args = array(
+				'post_type' => 'sell_media_item',
+				'field' => 'slug',
+				'orderby' => 'rand',
+				'posts_per_page' => '6',
+			);
 		} ?>
 
 		<div class="sell-media-similar-widget sell-media-widget">
@@ -45,22 +51,18 @@
 			$image_sizes = get_intermediate_image_sizes(); ?>
 
 			<?php
-			$type_posts = new WP_Query ( $args );
+			$type_posts = new WP_Query( $args );
+			$i = 0;
 			?>
 			<?php while ( $type_posts->have_posts() ) : $type_posts->the_post();
 
 			global $post;
+			$i++;
 			?>
 
-			<div class="sell-media-widget-item-wrap sell-media-grid-item">
-				<div class="sell-media-widget-thumb-wrap">
-					<a href="<?php echo get_permalink(); ?>">
-						<?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'thumbnail' ) ); ?>
-					</a>
-				</div>
-			</div> <!--  .sell-media-widget-item-wrap  -->
+			<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i ); ?>
 
-	<?php endwhile; wp_reset_postdata(); ?>
+	<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
 </div><!-- .sell-media-recent -->
 

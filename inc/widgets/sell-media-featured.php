@@ -35,23 +35,19 @@
 		<div class="sell-media-featured-widget sell-media-widget">
 
 			<?php
-			$type_posts = new WP_Query ( $args );
+			$type_posts = new WP_Query( $args );
+			$i = 0;
 			?>
 			<?php
 			while ( $type_posts->have_posts() ) : $type_posts->the_post();
 
 				global $post;
+				$i++;
 			?>
 
-				<div class="sell-media-widget-item-wrap sell-media-grid-item">
-					<div class="sell-media-widget-thumb-wrap">
-						<a href="<?php echo get_permalink(); ?>">
-							<?php sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'thumbnail' ) ); ?>
-						</a>
-					</div>
-				</div> <!--  .sell-media-widget-item-wrap  -->
+				<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i ); ?>
 
-				<?php endwhile; wp_reset_postdata(); ?>
+				<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
 			</div><!-- .sell-media-featured -->
 

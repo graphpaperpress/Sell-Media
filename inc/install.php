@@ -518,6 +518,7 @@ function sell_media_register_default_settings() {
 			'thumbnail_layout' => 'sell-media-three-col',
 			'titles' => 0,
 			'breadcrumbs' => 1,
+			'quick_view' => 1,
 			'file_info' => 0,
 			'plugin_credit' => 0,
 			'post_type_slug' => '',

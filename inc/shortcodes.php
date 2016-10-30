@@ -145,7 +145,9 @@ function sell_media_all_items_shortcode( $atts ) {
 
 		while ( $wp_query->have_posts() ) : $wp_query->the_post(); $i++;
 			$html .= apply_filters( 'sell_media_content_loop', get_the_id(), $i );
-		endwhile; wp_reset_query(); $i = 0;
+		endwhile;
+		wp_reset_query();
+		$i = 0;
 
 		$html .= '</div><!-- .sell-media-grid-item-container -->';
 		if ( ! is_front_page() && is_main_query() )

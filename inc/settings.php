@@ -356,6 +356,27 @@ function sell_media_init_settings(){
 					)
 			)
 		),
+		"quick_view" => array(
+			"tab" => "sell_media_general_settings",
+			"name" => "quick_view",
+			"title" => __("Quick View","sell_media"),
+			"description" => __( "Show a quick view link on archives.", "sell_media" ),
+			"section" => "general_plugin_section_1",
+			"since" => "1.0",
+			"id" => "general_plugin_section_1",
+			"type" => "select",
+			"default" => 1,
+			"valid_options" => array(
+				0 => array(
+					"name" => 0,
+					"title" => __("No","sell_media")
+					),
+				1 => array(
+					"name" => 1,
+					"title" => __("Yes","sell_media"),
+					)
+			)
+		),
 		"file_info" => array(
 			"tab" => "sell_media_general_settings",
 			"name" => "file_info",
