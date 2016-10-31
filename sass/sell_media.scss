@@ -586,11 +586,10 @@ input[type="submit"].sell-media-button,
 	position: relative;
 	display: block;
 	font-weight: normal;
-	margin-bottom: $margin;
 	text-decoration: none;
 
-	.sell-media-masonry & {
-		margin-bottom: 0;
+	.sell-media-one-col & {
+		margin-bottom: $margin;
 	}
 
 	img {

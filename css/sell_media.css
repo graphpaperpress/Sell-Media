@@ -448,10 +448,9 @@ input[type="submit"].sell-media-button,
   position: relative;
   display: block;
   font-weight: normal;
-  margin-bottom: 32px;
   text-decoration: none; }
-  .sell-media-masonry .sell-media-item {
-    margin-bottom: 0; }
+  .sell-media-one-col .sell-media-item {
+    margin-bottom: 32px; }
   .sell-media-item img {
     display: block;
     margin: 0 auto; }
