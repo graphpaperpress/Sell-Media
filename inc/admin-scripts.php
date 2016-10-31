@@ -23,19 +23,19 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 function sell_media_admin_scripts( $hook ) {
 
-    if ( sell_media_is_sell_media_post_type_page() || 'post.php' == $hook || 'post-new.php' == $hook ) {
-        wp_enqueue_style( 'sell_media-admin', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-admin.css', array( 'thickbox' ), SELL_MEDIA_VERSION );
-        wp_enqueue_script( 'sell_media-admin-items', SELL_MEDIA_PLUGIN_URL . 'js/admin-items.js', array( 'jquery', 'inline-edit-post' ), SELL_MEDIA_VERSION );
+	if ( sell_media_is_sell_media_post_type_page() || 'post.php' == $hook || 'post-new.php' == $hook ) {
+		wp_enqueue_style( 'sell_media-admin', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-admin.css', array( 'thickbox' ), SELL_MEDIA_VERSION );
+		wp_enqueue_script( 'sell_media-admin-items', SELL_MEDIA_PLUGIN_URL . 'js/admin-items.js', array( 'jquery', 'inline-edit-post' ), SELL_MEDIA_VERSION );
 
-        if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
-            wp_enqueue_script( 'jquery-ui-slider' );
-        }
-    }
+		if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
+			wp_enqueue_script( 'jquery-ui-slider' );
+		}
+	}
 
-    if ( sell_media_is_reports_page() ) {
-        wp_enqueue_script( 'google_charts', 'https://www.google.com/jsapi', array( 'jquery' ), SELL_MEDIA_VERSION );
-    }
+	if ( sell_media_is_reports_page() ) {
+		wp_enqueue_script( 'google_charts', 'https://www.google.com/jsapi', array( 'jquery' ), SELL_MEDIA_VERSION );
+	}
 
-    do_action( 'sell_media_admin_scripts_hook' );
+	do_action( 'sell_media_admin_scripts_hook' );
 }
 add_action( 'admin_enqueue_scripts', 'sell_media_admin_scripts' );
