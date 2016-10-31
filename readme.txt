@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.5.2
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -216,13 +216,19 @@ Action hooks available:
 == Changelog ==
 
 = 2.2.7 =
+* New: Keywords for attachments.
+* New: Search filters.
 * New: Bulk/ Quick edit on backend item listing.
 * New: 'sell_media_taxonomies' shortcode to displays recent entry from each custom taxonomy.
 * New: 'sell_media_thanks' filter in 'sell_media_thanks' shortcode.
+* New: Title and Quick View optional display (new settings).
+* New: Layouts, Query, Search, Upgrades classes.
 * Fix: Keep data on plugin deactivation.
 * Fix: Signup issue on registration.
 * Fix: Fix session errors.
 * Fix: Other minor bug fixings.
+* Fix: Varios coding standards.
+* Fix: Remove legacy code for taxonomy metadata.
 
 = 2.2.6 =
 * Fix: Error if not selling prints fixed
