@@ -298,14 +298,14 @@ class SellMediaLayouts {
 		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
 
 		// Show titles?
-		if ( isset( $this->settings->titles ) && 0 != $this->settings->titles ) {
+		if ( isset( $this->settings->titles ) && 0 != $this->settings->titles && is_main_query() ) {
 			$html .= '<h2 class="sell-media-entry-title">' . get_the_title( $original_id ) . '</h2>';
 		}
 
 		$html .= sell_media_item_icon( $original_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 
 		// Show quick view?
-		if ( isset( $this->settings->quick_view ) && 0 != $this->settings->quick_view ) {
+		if ( isset( $this->settings->quick_view ) && 0 != $this->settings->quick_view && is_main_query() ) {
 			if ( sell_media_has_multiple_attachments( $post_id ) && ( is_tax( array( 'collection' ) ) || is_post_type_archive( 'sell_media_item' ) ) ) {
 				$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
 			} else {
