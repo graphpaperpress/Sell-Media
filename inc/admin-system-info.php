@@ -109,6 +109,9 @@ function sell_media_get_system_info() {
             $return .= $k . ': ';
             $vv_array = array();
             foreach ( $v as $kk => $vv ) {
+                if ( is_array( $vv ) ) {
+                    $vv = implode( ' ', $vv );
+                }
                 $vv_array[] .= $vv;
             }
             $return .= implode( ', ', $vv_array );
