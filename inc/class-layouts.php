@@ -201,13 +201,14 @@ class SellMediaLayouts {
 	 */
 	public function before_content( $content ) {
 
+		global $post;
+		$post_id = $post->ID;
+
 		// Bail if we not viewing a sell media page
-		if ( ! sell_media_page() ) {
+		if ( ! sell_media_page() || post_password_required( $post ) || ( isset( $post->post_parent ) && post_password_required( $post->post_parent ) ) ) {
 			return $content;
 		}
 
-		global $post;
-		$post_id = $post->ID;
 		$has_multiple_attachments = sell_media_has_multiple_attachments( $post_id );
 		$new_content = '';
 
@@ -245,6 +246,10 @@ class SellMediaLayouts {
 	public function after_content( $content ) {
 
 		global $post;
+
+		if ( post_password_required( $post ) || ( isset( $post->post_parent ) && post_password_required( $post->post_parent ) ) ) {
+			return $content;
+		}
 
 		// only show on single sell media and attachment pages
 		if ( is_main_query() && is_singular( 'sell_media_item' ) && ! sell_media_has_multiple_attachments( $post->ID ) || sell_media_attachment( $post->ID ) ) {
