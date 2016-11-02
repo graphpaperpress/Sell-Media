@@ -45,7 +45,7 @@ Take Sell Media to the next level with these powerful extensions:
 
 = Server Requirements =
 
-1. PHP 5.4 or higher
+1. PHP 5.6 or higher
 2. CURL PHP extension
 3. GD PHP extension
 4. Original file uploads are protected automatically on Apache servers using .htaccess. If you are using an NGINX server, you'll need to add this to your sites configuration file:
