@@ -125,8 +125,8 @@ function sell_media_page() {
 function sell_media_attachment( $post_id = null ) {
 
 	global $post;
-
-	if ( is_singular( 'attachment' ) && ! empty( get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id' ) ) ) {
+	$sale_product_id = get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id' );
+	if ( is_singular( 'attachment' ) && ! empty( $sale_product_id ) ) {
 		return true;
 	}
 }
