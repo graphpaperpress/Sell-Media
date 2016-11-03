@@ -216,8 +216,9 @@ Action hooks available:
 == Changelog ==
 
 = 2.2.9 =
-* Fix: Migration cron issue.
-* Fix: Layout issue on widgets.
+* Fix: Keyword migration cron workaround.
+* Fix: Widget layout fixes.
+* Fix: Don't show current item in Similar or New Widgets.
 
 = 2.2.8 =
 * Fix: PHP 5.4 issue
