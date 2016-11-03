@@ -43,14 +43,9 @@
 				'posts_per_page' => '6',
 			);
 		}
-		$settings = sell_media_get_plugin_options();
-		$class = ""; 
-		if ( 'sell-media-masonry' === $settings->thumbnail_layout ) {
-			$class = 'sell-media-masonry-layout-widget';
-		}
 		?>
 
-		<div class="sell-media-similar-widget sell-media-widget <?php echo $class; ?>">
+		<div class="sell-media-similar-widget sell-media-widget">
 
 			<?php
 			// Get available image sizes
