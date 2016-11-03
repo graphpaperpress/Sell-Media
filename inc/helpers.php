@@ -1456,7 +1456,7 @@ add_action( 'init', 'sell_media_clear_cart_after_payment' );
  */
 function sell_media_migration_cron_event() {
 	$migrated = get_option( 'sell_media_keywords_migrated' );
-	if ( true !== $migrated ) {
+	if ( ! $migrated ) {
 		// Schedule an event that fires every minute to repair attachments in chunks.
 		do_action( 'sell_media_migrate_keywords' );
 	}
