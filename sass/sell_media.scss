@@ -1465,6 +1465,14 @@ input.sell-media-search-text[type=text] {
 	}
 }
 
+.sell-media-widget{
+	&.sell-media-masonry-layout-widget {
+	  -webkit-column-count: 3; /* Chrome, Safari, Opera */
+	    -moz-column-count: 3; /* Firefox */
+	    column-count: 3;
+	}
+}
+
 .sell-media-widget-item-wrap {
 	@extend .sell-media-three-col;
 }

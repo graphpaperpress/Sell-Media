@@ -1146,6 +1146,13 @@ input.sell-media-search-text[type=text] {
     width: 100%;
     margin-right: 0; }
 
+.sell-media-widget.sell-media-masonry-layout-widget {
+  -webkit-column-count: 3;
+  /* Chrome, Safari, Opera */
+  -moz-column-count: 3;
+  /* Firefox */
+  column-count: 3; }
+
 .sell-media-widget-thumb-wrap {
   float: left;
   max-width: 100%; }

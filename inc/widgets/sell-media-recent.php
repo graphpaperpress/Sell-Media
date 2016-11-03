@@ -35,8 +35,9 @@
 			<?php while ( $type_posts->have_posts() ) : $type_posts->the_post();
 			global $post;
 			$i++;
+			$loop_args['context'] = "widget";
 			?>
-			<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i ); ?>
+			<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ); ?>
 
 			<?php
 			endwhile;

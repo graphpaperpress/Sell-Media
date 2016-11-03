@@ -30,7 +30,8 @@
 			$args['term'] = $categoryNumber;
 		} else {
 			$args['post_type'] = 'sell_media_item';
-		} ?>
+		}
+		?>
 
 		<div class="sell-media-featured-widget sell-media-widget">
 
@@ -43,9 +44,10 @@
 
 				global $post;
 				$i++;
+				$loop_args['context'] = "widget";
 			?>
 
-				<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i ); ?>
+				<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ); ?>
 
 				<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
