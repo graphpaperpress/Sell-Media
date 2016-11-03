@@ -15,8 +15,14 @@
 
 		if ( $title )
 			echo $before_title . $title . $after_title;
+
+		$settings = sell_media_get_plugin_options();
+		$class = "dd1"; 
+		if ( 'sell-media-masonry' === $settings->thumbnail_layout ) {
+			$class = 'sell-media-masonry-layout-widget';
+		}
 ?>
-		<div class="sell-media-recent-widget sell-media-widget">
+		<div class="sell-media-recent-widget sell-media-widget <?php echo $class; ?>">
 			<?php
 			// Get available image sizes
 			$image_sizes = get_intermediate_image_sizes(); ?>

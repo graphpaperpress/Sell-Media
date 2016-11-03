@@ -30,9 +30,16 @@
 			$args['term'] = $categoryNumber;
 		} else {
 			$args['post_type'] = 'sell_media_item';
-		} ?>
+		}
+		
+		$settings = sell_media_get_plugin_options();
+		$class = ""; 
+		if ( 'sell-media-masonry' === $settings->thumbnail_layout ) {
+			$class = 'sell-media-masonry-layout-widget';
+		}
+		?>
 
-		<div class="sell-media-featured-widget sell-media-widget">
+		<div class="sell-media-featured-widget sell-media-widget <?php echo $class; ?>">
 
 			<?php
 			$type_posts = new WP_Query( $args );
