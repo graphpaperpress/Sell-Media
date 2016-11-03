@@ -1461,4 +1461,4 @@ function sell_media_migration_cron_event() {
 		do_action( 'sell_media_migrate_keywords' );
 	}
 }
-//add_action( 'init', 'sell_media_migration_cron_event' );
+add_action( 'init', 'sell_media_migration_cron_event' );
