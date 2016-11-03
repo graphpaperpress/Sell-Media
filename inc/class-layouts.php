@@ -54,7 +54,7 @@ class SellMediaLayouts {
 		add_filter( 'sell_media_grid_item_container_class', array( $this, 'grid_container_class' ), 10, 1 );
 
 		// Grid item class
-		add_filter( 'sell_media_grid_item_class', array( $this, 'grid_class' ), 10, 1 );
+		add_filter( 'sell_media_grid_item_class', array( $this, 'grid_class' ), 10, 3 );
 
 		// Before the content
 		add_filter( 'the_content', array( $this, 'before_content' ) );
@@ -63,7 +63,7 @@ class SellMediaLayouts {
 		add_filter( 'the_content', array( $this, 'after_content' ) );
 
 		// Content loop
-		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 2 );
+		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 3 );
 
 	}
 
@@ -190,7 +190,11 @@ class SellMediaLayouts {
 	 * @since  2.1.3
 	 * @return string css class
 	 */
-	public function grid_class( $class ) {
+	public function grid_class( $class, $post_id, $args ) {
+		if( isset( $args['context'] ) && 'widget' == $args['context'] ) {
+			return $class . ' sell-media-three-col';
+		}
+
 		if ( ! empty( $this->settings->thumbnail_layout ) ) {
 			return $class . ' ' . $this->settings->thumbnail_layout;
 		}
@@ -282,7 +286,7 @@ class SellMediaLayouts {
 	 * Main content loop used in all themes
 	 * @return string html
 	 */
-	function content_loop( $post_id, $i ) {
+	function content_loop( $post_id, $i, $args = array() ) {
 
 		$original_id = $post_id;
 
@@ -293,7 +297,7 @@ class SellMediaLayouts {
 			$attachment_id = sell_media_get_attachment_id( $post_id ); // always an attachment
 		}
 
-		$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
+		$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id, $args );
 		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
 			$class .= ' sell-media-grid-single-item';
 		}
