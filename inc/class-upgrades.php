@@ -18,10 +18,11 @@ class SellMediaUpgrades {
 	 */
 	public function __construct() {
 
-		add_action( 'sell_media_migrate_keywords', array( $this, 'cron_check' ) );
-
 		// run possible upgrades if a version of sell media exists
 		add_action( 'sell_media_run_upgrades', array( $this, 'upgrades' ), 10, 1 );
+
+		// migrate keywords
+		add_action( 'sell_media_migrate_keywords', array( $this, 'cron_check' ) );
 
 		// schedules events as a "cron job"
 		add_action( 'sell_media_upgrade_events', array( $this, 'scheduled_events' ) );
@@ -37,6 +38,7 @@ class SellMediaUpgrades {
 	public function cron_check() {
 		if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
 			wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
+			register_taxonomy( 'keywords', 'sell_media_item' );
 		}
 	}
 
@@ -245,6 +247,9 @@ class SellMediaUpgrades {
 
 			// set an option so Sell Media knows keywords have been migrated
 			update_option( $migrated_name, true );
+
+			// unregister the temporary keyword tax on sell_media_item
+			unregister_taxonomy( 'keywords' );
 		}
 	}
 
