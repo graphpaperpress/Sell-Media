@@ -20,17 +20,18 @@
 		global $post;
 
 		$args = array(
+			'post_type' => 'sell_media_item',
 			'posts_per_page' => 6,
 			'field' => 'slug',
-			'orderby' => 'rand'
+			'orderby' => 'rand',
+			'post__not_in' => array( $post->ID ),
 			);
 
 		if ( ! empty( $categoryNumber ) ) {
 			$args['taxonomy'] = 'collection';
 			$args['term'] = $categoryNumber;
-		} else {
-			$args['post_type'] = 'sell_media_item';
 		}
+
 		?>
 
 		<div class="sell-media-featured-widget sell-media-widget">

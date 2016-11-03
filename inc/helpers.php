@@ -1404,8 +1404,8 @@ function sell_media_regenerate_missing_files( $post_id ) {
 				if ( !is_wp_error( $metadata ) && !empty( $metadata )  ){
 					wp_update_attachment_metadata( $attachment_id, $metadata );
 				}
-	   		}
-	   	}
+			}
+		}
 	}
 }
 add_action( 'sell_media_before_content', 'sell_media_regenerate_missing_files' );
@@ -1413,14 +1413,13 @@ add_action( 'sell_media_before_content', 'sell_media_regenerate_missing_files' )
 
 /**
  * Gets the public filepath for an attachment
- * 
  * @param  int $attachment_id the attachment id
  * @return string returns something like 2016/02/image.jpg
  */
-function sell_media_get_public_filepath( $attachment_id ){
+function sell_media_get_public_filepath( $attachment_id ) {
 	$public_file = wp_get_attachment_url( $attachment_id );
 	$string = '/uploads/';
-	if ( ( $pos = strpos( $public_file, $string ) ) !== FALSE ) { 
+	if ( ( $pos = strpos( $public_file, $string ) ) !== FALSE ) {
 		return substr( $public_file, strpos( $public_file, $string ) + strlen( $string ) );
 	}
 }
@@ -1430,35 +1429,36 @@ function sell_media_get_public_filepath( $attachment_id ){
  * Clear cart after payment is completed.
  * @return void 
  */
-function sell_media_clear_cart_after_payment(){
+function sell_media_clear_cart_after_payment() {
 	$clear = false;
-	
-	if( isset( $_GET['tx'] ) && !empty( $_GET['tx'] ) ){
-		$clear = true;
-	}
-	else if( isset( $_POST['txn_id'] ) && !empty( $_POST['txn_id'] ) ){
-		$clear = true;
-	}
-	if( !$clear )
-		return false;
 
-    global $sm_cart;
-    $sm_cart->clear();
+	if ( isset( $_GET['tx'] ) && !empty( $_GET['tx'] ) ) {
+		$clear = true;
+	} else if ( isset( $_POST['txn_id'] ) && ! empty( $_POST['txn_id'] ) ) {
+		$clear = true;
+	}
+	if ( ! $clear ) {
+		return false;
+	}
+
+	global $sm_cart;
+	$sm_cart->clear();
 }
 
 add_action( 'init', 'sell_media_clear_cart_after_payment' );
 
 /**
  * Add migration cron event.
+ * This is essentially the same code that fires during
+ * plugin activation hook. For some reasons, the upgrade
+ * event wasn't working. In case the user upgraded
  * @return void
  */
-function sell_media_migration_cron_event(){
-	$version = get_option( 'sell_media_version' );
-	if ( $version <= '2.2.6' ) {
+function sell_media_migration_cron_event() {
+	$migrated = get_option( 'sell_media_keywords_migrated' );
+	if ( true !== $migrated ) {
 		// Schedule an event that fires every minute to repair attachments in chunks.
-		if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
-			wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
-		}
+		do_action( 'sell_media_migrate_keywords' );
 	}
 }
 add_action( 'init', 'sell_media_migration_cron_event' );

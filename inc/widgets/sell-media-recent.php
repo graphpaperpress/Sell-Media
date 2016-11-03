@@ -8,6 +8,7 @@
 
 	/* Displays the Widget in the front-end */
 	function widget($args, $instance){
+		global $post;
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		extract($args);
@@ -18,16 +19,14 @@
 ?>
 		<div class="sell-media-recent-widget sell-media-widget">
 			<?php
-			// Get available image sizes
-			$image_sizes = get_intermediate_image_sizes(); ?>
 
-			<?php
 			$args = array(
 				'post_type' => 'sell_media_item',
 				'field' => 'slug',
 				'orderby' => 'ASC',
 				'posts_per_page' => '6',
 			);
+			$args['post__not_in'] = array( $post->ID );
 			$type_posts = new WP_Query ( $args );
 			$i = 0;
 			?>

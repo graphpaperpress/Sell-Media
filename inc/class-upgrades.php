@@ -18,6 +18,8 @@ class SellMediaUpgrades {
 	 */
 	public function __construct() {
 
+		add_action( 'sell_media_migrate_keywords', array( $this, 'cron_check' ) );
+
 		// run possible upgrades if a version of sell media exists
 		add_action( 'sell_media_run_upgrades', array( $this, 'upgrades' ), 10, 1 );
 
@@ -27,6 +29,15 @@ class SellMediaUpgrades {
 		// add new cron shedules
 		add_filter( 'cron_schedules', array( $this, 'cron_schedules' ) );
 
+	}
+
+	/**
+	 * Check cron events
+	 */
+	public function cron_check() {
+		if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
+			wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
+		}
 	}
 
 	/**
@@ -133,9 +144,7 @@ class SellMediaUpgrades {
 		if ( $version <= '2.2.6' ) {
 
 			// Schedule an event that fires every minute to repair attachments in chunks.
-			if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
-				wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
-			}
+			do_action( 'sell_media_migrate_keywords' );
 		}
 	}
 
@@ -159,10 +168,14 @@ class SellMediaUpgrades {
 		// Create an option to hold the current offset value
 		// This value gets increased by 10 every time this events runs
 		// Until no more entries are found.
+		// Finally, we set an option so Sell Media knows keywords have been migrated.
 		$option_name = 'sell_media_fix_attachments';
 		$pagination_option_name = 'sell_media_fix_attachments_page';
+		$migrated_name = 'sell_media_keywords_migrated';
+
 		$offset = get_option( $option_name, 0 );
 		$page = get_option( $pagination_option_name, 1 );
+		$migrated = get_option( $migrated_name, 0 );
 
 		// Query args
 		$display_count = 10;
@@ -229,6 +242,9 @@ class SellMediaUpgrades {
 			wp_clear_scheduled_hook( 'sell_media_upgrade_events' );
 			delete_option( $option_name );
 			delete_option( $pagination_option_name );
+
+			// set an option so Sell Media knows keywords have been migrated
+			update_option( $migrated_name, true );
 		}
 	}
 

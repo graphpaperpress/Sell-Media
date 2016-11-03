@@ -78,7 +78,7 @@ class SellMediaLayouts {
 	public function post_class( $classes ) {
 		global $post;
 		if ( is_post_type_archive( 'sell_media_item' ) ) {
-			$classes[] = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', null );
+			$classes[] = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' );
 		}
 
 		foreach ( ( get_the_category( $post->ID ) ) as $category ) {
@@ -190,8 +190,8 @@ class SellMediaLayouts {
 	 * @since  2.1.3
 	 * @return string css class
 	 */
-	public function grid_class( $class, $post_id, $args ) {
-		if( isset( $args['context'] ) && 'widget' == $args['context'] ) {
+	public function grid_class( $class = '', $post_id = '', $args = '' ) {
+		if ( isset( $args['context'] ) && 'widget' == $args['context'] ) {
 			return $class . ' sell-media-three-col';
 		}
 

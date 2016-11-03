@@ -43,6 +43,8 @@
 				'posts_per_page' => '6',
 			);
 		}
+
+		$args['post__not_in'] = array( $post->ID );
 		?>
 
 		<div class="sell-media-similar-widget sell-media-widget">
