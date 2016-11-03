@@ -216,7 +216,8 @@ Action hooks available:
 == Changelog ==
 
 = 2.2.8 =
-* Fix: Small bug fixings.
+* Fix: PHP 5.4 issue
+* Fix: Password protected entries and media
 
 = 2.2.7 =
 * New: Keywords for attachments.

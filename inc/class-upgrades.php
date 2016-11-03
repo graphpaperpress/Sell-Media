@@ -20,7 +20,7 @@ class SellMediaUpgrades {
 
 		// run possible upgrades if a version of sell media exists
 		add_action( 'sell_media_run_upgrades', array( $this, 'upgrades' ), 10, 1 );
-		
+
 		// schedules events as a "cron job"
 		add_action( 'sell_media_upgrade_events', array( $this, 'scheduled_events' ) );
 
@@ -40,7 +40,6 @@ class SellMediaUpgrades {
 	 * Add new cron schedules
 	 * WP only includes a few cron schedules
 	 * We need to add a new one for every minute to run our upgrades quickly
-	 * 
 	 * @param  array $array existing cron event array
 	 * @return array $array our new cron events
 	 */
@@ -172,8 +171,8 @@ class SellMediaUpgrades {
 					'post_type' => 'sell_media_item',
 					'paged' => $page,
 					'post_status' => array( 'publish', 'draft' ),
-					'posts_per_page'     =>  $display_count,
-					'offset' => $offset
+					'posts_per_page' => $display_count,
+					'offset' => $offset,
 				);
 
 		// Query all sell_media_items
