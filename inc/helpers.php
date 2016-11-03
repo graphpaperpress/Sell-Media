@@ -1447,3 +1447,18 @@ function sell_media_clear_cart_after_payment(){
 }
 
 add_action( 'init', 'sell_media_clear_cart_after_payment' );
+
+/**
+ * Add migration cron event.
+ * @return void
+ */
+function sell_media_migration_cron_event(){
+	$version = get_option( 'sell_media_version' );
+	if ( $version <= '2.2.6' ) {
+		// Schedule an event that fires every minute to repair attachments in chunks.
+		if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
+			wp_schedule_event( time(), 'minute', 'sell_media_upgrade_events' );
+		}
+	}
+}
+add_action( 'init', 'sell_media_migration_cron_event' );
