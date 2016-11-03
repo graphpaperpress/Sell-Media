@@ -78,7 +78,7 @@ class SellMediaLayouts {
 	public function post_class( $classes ) {
 		global $post;
 		if ( is_post_type_archive( 'sell_media_item' ) ) {
-			$classes[] = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item' );
+			$classes[] = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post->ID );
 		}
 
 		foreach ( ( get_the_category( $post->ID ) ) as $category ) {
