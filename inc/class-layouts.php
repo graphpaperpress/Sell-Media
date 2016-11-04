@@ -250,30 +250,30 @@ class SellMediaLayouts {
 	public function after_content( $content ) {
 
 		global $post;
-
+        $post_id = $post->ID;
 		if ( post_password_required( $post ) || ( isset( $post->post_parent ) && post_password_required( $post->post_parent ) ) ) {
 			return $content;
 		}
 
 		// only show on single sell media and attachment pages
-		if ( is_main_query() && is_singular( 'sell_media_item' ) && ! sell_media_has_multiple_attachments( $post->ID ) || sell_media_attachment( $post->ID ) ) {
+		if ( is_main_query() && is_singular( 'sell_media_item' ) && ! sell_media_has_multiple_attachments( $post_id ) || sell_media_attachment( $post_id ) ) {
 
 			if ( is_singular( 'attachment' ) ) {
-				$attachment_id = $post->ID;
-				$post->ID = get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id', true );
+				$attachment_id = $post_id;
+				$post_id = get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true );
 			} else {
-				$attachment_id = sell_media_get_attachment_id( $post->ID );
+				$attachment_id = sell_media_get_attachment_id( $post_id );
 			}
 
 			ob_start();
 
 			echo '<div class="sell-media-meta">';
-			do_action( 'sell_media_above_buy_button', $post->ID, $attachment_id );
-			do_action( 'sell_media_add_to_cart_fields', $post->ID, $attachment_id );
-			do_action( 'sell_media_below_buy_button', $post->ID, $attachment_id );
+			do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
+			do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
+			do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
 			echo '</div>';
 
-			echo do_action( 'sell_media_below_content', $post->ID, $attachment_id );
+			echo do_action( 'sell_media_below_content', $post_id, $attachment_id );
 
 			$content .= ob_get_contents();
 			ob_end_clean();
