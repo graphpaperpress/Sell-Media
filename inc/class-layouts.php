@@ -260,7 +260,7 @@ class SellMediaLayouts {
 
 			if ( is_singular( 'attachment' ) ) {
 				$attachment_id = $post_id;
-				$post_id = get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true );
+				$post_id = get_post_meta( $post_id, '_sell_media_for_sale_product_id', true );
 			} else {
 				$attachment_id = sell_media_get_attachment_id( $post_id );
 			}
