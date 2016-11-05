@@ -215,6 +215,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 2.2.9.1 =
+* Fix: JetPack $post->ID conflict fix.
+
 = 2.2.9 =
 * Fix: Keyword migration cron workaround.
 * Fix: Widget layout fixes.
