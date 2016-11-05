@@ -232,6 +232,9 @@ class SellMediaLayouts {
 			if ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) {
 				$new_content .= '</div>';
 			}
+
+			// set the post views, used for popular query
+			sell_media_set_post_views( $post_id );
 		}
 
 		return apply_filters( 'sell_media_content', $new_content );

@@ -194,14 +194,10 @@ function sell_media_get_media( $post_id = null ) {
 		$embed_url = get_post_meta( $post_id, 'sell_media_embed_link', true );
 		$html .= wp_oembed_get( $embed_url, array( 'width' => $width ) );
 	} elseif ( sell_media_has_multiple_attachments( $post_id ) ) {
-
 		$html .= sell_media_gallery( $post_id );
-
-		//$html .= do_shortcode( '[gallery id="' . intval( $post_id ) . '" size="medium" columns="3"]' );
 	} else {
 		$html .= sell_media_item_icon( $post_id, 'large', false );
 		$html .= sell_media_caption( $post_id );
-
 	}
 
 	return $html;
@@ -431,43 +427,6 @@ function sell_media_get_cat_post_count( $category_id, $taxonomy = 'collection' )
 
 	return $count;
 }
-
-
-/**
- * Add media (featured image, etc) before the_content
- *
- * @since 1.9.2
- * @global $post
- *
- * @param $content The the_content field of the item object
- * @return string the content with any additional data attached
- */
-function sell_media_append_media( $post_id ) {
-	$html = '';
-	$sell_media_taxonomies = get_object_taxonomies( 'sell_media_item' );
-	if ( is_post_type_archive( 'sell_media_item' ) || is_tax( $sell_media_taxonomies ) || is_search() ) {
-		$html .= '<a href="' . get_permalink( $post_id ) . '" ' . sell_media_link_attributes( $post_id ) . '>' . sell_media_item_icon( $post_id, 'large', false ) . '</a>';
-	} elseif ( is_singular( 'sell_media_item' ) ) {
-		sell_media_set_post_views( $post_id );
-		if ( sell_media_has_multiple_attachments( $post_id ) ) {
-			$html .= sell_media_gallery( $post_id );
-		} else {
-			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ) {
-				return false;
-			}
-			sell_media_item_icon( $post_id, 'large' );
-			$html .= '<p class="sell-media-caption">';
-			$html .= '<span class="sell-media-title">' . sell_media_get_attachment_meta( $post_id, 'title' ) . '</span>';
-			if ( sell_media_get_attachment_meta( $post_id, 'caption' ) ) {
-				$html .= ' &mdash; ';
-				$html .= sell_media_get_attachment_meta( $post_id, 'caption' );
-			}
-			$html .= '</p>';
-		}
-	}
-	echo apply_filters( 'sell_media_append_media_filter', $html, $post_id );
-}
-//add_action( 'sell_media_before_content', 'sell_media_append_media', 10 );
 
 /**
  * Show item links
@@ -727,7 +686,6 @@ function sell_media_get_post_views( $post_id = null ) {
 
 	return $count;
 }
-
 
 /**
  * Set the number of post views
