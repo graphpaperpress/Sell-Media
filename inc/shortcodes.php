@@ -184,8 +184,13 @@ function sell_media_checkout_shortcode(){
 				<li class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
 					<div class="item-image">
 						<?php 
-						if ( ! empty( $item['item_attachment'] ) ){
-							echo sell_media_item_icon( $item['item_attachment'] );
+						if ( ! empty( $item['item_attachment'] ) ) {
+							// if selling video or audio, show the post_id thumbnail
+							if ( SellMediaAudioVideo::is_video_item( $item['item_id'] ) || SellMediaAudioVideo::is_audio_item( $item['item_id'] ) ) {
+								echo sell_media_item_icon( $item['item_id'] );
+							} else {
+								echo sell_media_item_icon( $item['item_attachment'] );
+							}
 						}
 						?>
 					</div>
