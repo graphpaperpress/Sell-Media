@@ -250,7 +250,8 @@ class SellMediaLayouts {
 	public function after_content( $content ) {
 
 		global $post;
-        $post_id = $post->ID;
+		$post_id = $post->ID;
+
 		if ( post_password_required( $post ) || ( isset( $post->post_parent ) && post_password_required( $post->post_parent ) ) ) {
 			return $content;
 		}

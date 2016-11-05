@@ -185,17 +185,23 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true )
  * @return $html the media shown for sale.
  */
 function sell_media_get_media( $post_id = null ) {
-	global $post;
+	global $post, $content_width;
+	$width = get_option( 'medium_size_w', $content_width );
 	$post_id = ( $post_id ) ? $post_id : $post->ID;
 	$html = '';
 
-	if ( sell_media_has_multiple_attachments( $post_id ) ) {
+	if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ) {
+		$embed_url = get_post_meta( $post_id, 'sell_media_embed_link', true );
+		$html .= wp_oembed_get( $embed_url, array( 'width' => $width ) );
+	} elseif ( sell_media_has_multiple_attachments( $post_id ) ) {
 
 		$html .= sell_media_gallery( $post_id );
 
 		//$html .= do_shortcode( '[gallery id="' . intval( $post_id ) . '" size="medium" columns="3"]' );
 	} else {
 		$html .= sell_media_item_icon( $post_id, 'large', false );
+		$html .= sell_media_caption( $post_id );
+
 	}
 
 	return $html;
@@ -226,6 +232,23 @@ function sell_media_gallery( $post_id ) {
 		$html .= '</div>';
 	}
 	$html .= '</div>';
+
+	return $html;
+}
+
+/**
+ * The attachment caption
+ * @param  $attachment_id the attachment id
+ * @return  $html the title and caption of the attachment
+ **/
+function sell_media_caption( $attachment_id ) {
+
+	$html = '';
+	$caption = sell_media_get_attachment_meta( $attachment_id, 'caption' );
+
+	if ( $caption ) {
+		$html .= '<p class="sell-media-caption">' . $caption . '</p>';
+	}
 
 	return $html;
 }
