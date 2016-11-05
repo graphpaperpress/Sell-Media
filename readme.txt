@@ -215,7 +215,7 @@ Action hooks available:
 
 == Changelog ==
 
-= 2.2.9.1 =
+= 2.2.10 =
 * Fix: JetPack $post->ID conflict fix.
 
 = 2.2.9 =
