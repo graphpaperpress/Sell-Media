@@ -217,6 +217,9 @@ Action hooks available:
 
 = 2.2.10 =
 * Fix: JetPack $post->ID conflict fix.
+* Fix: Count post views
+* Fix: Display captions
+* Fix: Display video embeds
 
 = 2.2.9 =
 * Fix: Keyword migration cron workaround.
