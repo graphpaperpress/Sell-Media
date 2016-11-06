@@ -403,7 +403,7 @@ function sell_media_payment_content( $column, $post_id ){
 			$products = Sell_Media()->payments->get_products( $post_id );
 			if ( $products ) foreach ( $products as $product ) {
 				$type = ( ! empty( $product['type'] ) ) ? ' (' . $product['type'] . ') ' : '';
-				echo $product['name'] . $type . '<br />';
+				echo apply_filters( 'sell_media_payment_products_column', $product['name'] . $type, $post_id ) . '<br />';
 			}
 			break;
 		case "customer":
