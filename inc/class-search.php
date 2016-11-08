@@ -112,7 +112,7 @@ class SellMediaSearch {
 		}
 
 		// only run the query on the actual search results page.
-		if ( is_page( $settings->search_page ) && 1 === did_action( 'the_post' ) ) {
+		if ( is_page( $settings->search_page ) ) {
 
 			// The search terms
 			$search_terms = str_getcsv( $search_term, ' ' );
