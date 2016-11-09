@@ -62,6 +62,9 @@ class SellMediaLayouts {
 		// After the content
 		add_filter( 'the_content', array( $this, 'after_content' ) );
 
+		// Remove prepended attachment from attachment template in core WP
+		add_filter( 'prepend_attachment', array( $this, 'remove_prepend_attachment' ) );
+
 		// Content loop
 		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 3 );
 
@@ -284,6 +287,22 @@ class SellMediaLayouts {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Remove the prepended attachment from WordPress core attachment template
+	 * since we're already appending it via the_content filter
+	 * @return
+	 */
+	function remove_prepend_attachment( $p ) {
+
+		global $post;
+
+		if ( sell_media_attachment( $post->ID ) ) {
+			$p = '';
+		}
+
+		return $p;
 	}
 
 	/**

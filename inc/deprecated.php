@@ -34,3 +34,13 @@ function sell_media_us_states_list( $current = null, $req = false ) {
 function sell_media_collections() {
 	sell_media_get_taxonomy_terms( 'collection' );
 }
+
+/**
+ * Sell Media content loop. 
+ *
+ * @deprecated 2.2.6 Use sell_media_content_loop filter.
+ */
+function sell_media_content_loop( $post_id, $index ) {
+	_deprecated_function( __FUNCTION__, '2.2.6', 'sell_media_content_loop filter' );
+	return apply_filters( 'sell_media_content_loop', $post_id, $index );
+}

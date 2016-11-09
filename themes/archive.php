@@ -22,21 +22,21 @@ $settings = sell_media_get_plugin_options();
 			<header class="sell-media-page-header">
 				<h1 class="sell-media-page-title">
 					<?php
-						if ( is_search() ) {
-							printf( __( 'Search results for: %1$s', 'sell_media' ), get_search_query() );
-						} elseif ( is_post_type_archive( 'sell_media_item' ) ) {
-							$obj = get_post_type_object( 'sell_media_item' );
-							echo esc_attr( ucfirst( $obj->rewrite['slug'] ) );
-						} else {
-							the_archive_title();
-						}
+					if ( is_search() ) {
+						printf( __( 'Search results for: %1$s', 'sell_media' ), get_search_query() );
+					} elseif ( is_post_type_archive( 'sell_media_item' ) ) {
+						$obj = get_post_type_object( 'sell_media_item' );
+						echo esc_attr( ucfirst( $obj->rewrite['slug'] ) );
+					} else {
+						the_archive_title();
+					}
 					?>
 				</h1>
 				<?php
-					$term_description = term_description();
-					if ( ! empty( $term_description ) ) {
-						echo '<h2 class="collection_description">' . $term_description . '</h2>';
-					}
+				$term_description = term_description();
+				if ( ! empty( $term_description ) ) {
+					echo '<h2 class="collection_description">' . $term_description . '</h2>';
+				}
 				?>
 				<?php echo do_shortcode( '[sell_media_searchform]' ); ?>
 			</header>
@@ -47,8 +47,8 @@ $settings = sell_media_get_plugin_options();
 
 			<?php
 			// check if this term has child terms, if so, show terms
-			$term_ID = $wp_query->get_queried_object_id();
-			$children = get_term_children( $term_ID, 'collection' );
+			$term_id = $wp_query->get_queried_object_id();
+			$children = get_term_children( $term_id, 'collection' );
 
 			if ( $children ) :
 
@@ -57,7 +57,7 @@ $settings = sell_media_get_plugin_options();
 				$args = array(
 					'orderby' => 'name',
 					'hide_empty' => false,
-					'parent' => $term_ID
+					'parent' => $term_id,
 				);
 
 				$terms = get_terms( $taxonomy_name, $args );
@@ -72,13 +72,14 @@ $settings = sell_media_get_plugin_options();
 							'post_status' => 'publish',
 							'taxonomy' => 'collection',
 							'field' => 'slug',
-							'term' => $child->slug
+							'term' => $child->slug,
 						);
 						$posts = New WP_Query( $args );
 						$post_count = 0;
 						$post_count = $posts->found_posts;
 
-						if ( $post_count != 0 ) : $i++; ?>
+						if ( $post_count != 0 ) :
+							$i++; ?>
 
 							<div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ); ?>">
 								<div class="sell-media-item-wrap sell-media-collection">
@@ -136,8 +137,8 @@ $settings = sell_media_get_plugin_options();
 
 			</div><!-- .sell-media-grid-item-container -->
 			<?php 
-			if( !$children ){
-				echo sell_media_pagination_filter( $wp_query->max_num_pages ); 
+			if ( ! $children ) {
+				echo sell_media_pagination_filter( $wp_query->max_num_pages );
 			}
 			?>
 		</div><!-- #content -->

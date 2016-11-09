@@ -22,6 +22,7 @@ function sell_media_template_redirect( $original_template ) {
 
 	$post_type = array( 'sell_media_item', 'attachment' );
 	$sell_media_taxonomies = get_object_taxonomies( $post_type );
+	$sm_archive_template = SELL_MEDIA_PLUGIN_DIR . '/themes/archive.php';
 
 	/**
 	 * Archive -- Check if this is an archive page AND post type is sell media
@@ -30,8 +31,10 @@ function sell_media_template_redirect( $original_template ) {
 		// allow users to override SM archive template by adding their own to their theme
 		if ( $overridden_template = locate_template( 'archive-sell-media.php' ) ) {
 			$template = $overridden_template;
+		} elseif ( file_exists( $sm_archive_template ) ) {
+			$template = $sm_archive_template;
 		} else {
-			$template = SELL_MEDIA_PLUGIN_DIR . '/themes/archive.php';
+			$template = $original_template;
 		}
 	} elseif ( sell_media_attachment( $post->ID ) ) {
 		// sell media attachments should use single.php, not attachment.php
