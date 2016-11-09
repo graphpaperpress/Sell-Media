@@ -127,7 +127,7 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true )
 	if ( ( is_singular( 'sell_media_item' ) || is_singular( 'attachment' ) ) && in_the_loop() && 0 < did_action( 'end_fetch_post_thumbnail_html' ) ) {
 		return;
 	}
-	
+
 	$attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
 	// legacy function passed the $attachment_id into sell_media_item_icon

@@ -65,9 +65,6 @@ class SellMediaLayouts {
 		// Remove prepended attachment from attachment template in core WP
 		add_filter( 'prepend_attachment', array( $this, 'remove_prepend_attachment' ) );
 
-		// Remove prepended post thumbnail from singel sell media item pages
-		add_filter( 'post_thumbnail_html', array( $this, 'remove_post_thumbnail' ), 10, 2 );
-
 		// Content loop
 		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 3 );
 
@@ -295,7 +292,7 @@ class SellMediaLayouts {
 	/**
 	 * Remove the prepended attachment from WordPress core attachment template
 	 * since we're already appending it via the_content filter
-	 * @return  null
+	 * @return
 	 */
 	function remove_prepend_attachment( $p ) {
 
@@ -306,22 +303,6 @@ class SellMediaLayouts {
 		}
 
 		return $p;
-	}
-
-	/**
-	 * Remove the post thumbnail from themes that have hard-coded the_post_thumbnail
-	 * calls in single template. Since Sell Media prepends the sell_media_item function
-	 * @param  [type] $html    [description]
-	 * @param  [type] $post_id [description]
-	 * @return [type]          [description]
-	 */
-	function remove_post_thumbnail( $html, $post_id ) {
-
-		if ( in_the_loop() && is_single( 'sell_media_item' ) ) {
-			$html = '';
-		}
-
-		return $html;
 	}
 
 	/**
