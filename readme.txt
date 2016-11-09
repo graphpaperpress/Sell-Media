@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.5.2
-Stable tag: 2.2.9
+Stable tag: 2.2.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -214,6 +214,12 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.2.11 =
+* Fix: Double featured images in some themes
+* Fix: SEO plugin conflict
+* Fix: Add sell_media_content_loop function in deprecated list
+* New: Add products column filter
 
 = 2.2.10 =
 * Fix: JetPack $post->ID conflict fix.
