@@ -317,7 +317,7 @@ class SellMediaLayouts {
 	 */
 	function remove_post_thumbnail( $html, $post_id ) {
 
-		if ( in_the_loop() && is_singular( 'sell_media_item' ) ) {
+		if ( in_the_loop() && is_single( 'sell_media_item' ) ) {
 			$html = '';
 		}
 
