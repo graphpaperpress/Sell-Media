@@ -153,7 +153,11 @@ class SellMediaSearch {
 
 					$html .= '<div id="sell-media-' . $post_id . '" class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id ) . ' sell-media-grid-single-item">';
 					$html .= '<a href="' . esc_url( get_permalink() ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
-					$html .= '<h2 class="entry-title">' . get_the_title() . '</h2>';
+
+					if ( ! empty( $settings->titles ) ) {
+						$html .= '<h2 class="entry-title">' . get_the_title() . '</h2>';
+					}
+
 					$html .= wp_get_attachment_image( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ) );
 					$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $parent_id ) . '" data-attachment-id="' . esc_attr( $post_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $parent_id, $post_id ) . '</div>';
 					$html .= '</a>';
