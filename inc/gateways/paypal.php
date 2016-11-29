@@ -105,7 +105,6 @@ function sell_media_process_paypal_ipn() {
             update_post_meta( $_POST['custom'], 'txn_id', $_POST['txn_id'] );
         } else {
             $message .= "\nThis payment was already processed\n";
-            return;
         }
 
         /**
