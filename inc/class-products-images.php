@@ -254,7 +254,7 @@ class SellMediaImages extends SellMediaProducts {
 		$original_protected_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
 
 		// check if attachment is an image
-		if ( wp_attachment_is_image( $attachment_id ) ) {
+		if ( wp_attachment_is_image( $attachment_id ) && '' != $original_protected_file ) {
 			list( $width, $height, $type, $attr ) = getimagesize( $original_protected_file );
 			return array(
 				'original' => array(
