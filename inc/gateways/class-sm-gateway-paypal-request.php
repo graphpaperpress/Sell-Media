@@ -68,7 +68,7 @@ class SM_Gateway_Paypal_Request {
         }
 
         $paypal_email = sanitize_email( $settings->paypal_email );
-        $subtotal = apply_filters( 'sell_media_paypal_subtotal', $sm_cart->getSubtotal() );
+        $subtotal = apply_filters( 'sell_media_paypal_subtotal', $sm_cart->getSubtotal( false ) );
         $item_args = $this->get_item_args();
 
         if( !$item_args ){
