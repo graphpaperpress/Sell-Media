@@ -536,6 +536,7 @@ class SellMediaPayments {
 			'number_products' => 'num_cart_items',
 			'transaction_id' => 'txn_id',
 			'gateway' => 'PayPal',
+			'discount' => 'custom',
 		);
 
 
