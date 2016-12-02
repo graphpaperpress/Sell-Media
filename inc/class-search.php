@@ -117,6 +117,10 @@ class SellMediaSearch {
 			// The search terms
 			$search_terms = str_getcsv( $search_term, ' ' );
 
+			// Add original full keyword to the search terms array
+			// This ensures that multiple word keyword search works
+			$search_terms[] .= $search_term;
+
 			// The file type
 			$mime_type = $this->get_mimetype( $type );
 
