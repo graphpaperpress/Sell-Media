@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.5.2
-Stable tag: 2.2.11
+Stable tag: 2.2.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Sell photos, prints, videos and pdf's online through WordPress in seconds. Every
 
 == Description ==
 
-[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is a WordPress plugin that allows you to sell, license and protect images, videos, audio and pdf's on your self-hosted WordPress site.
+[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is a WordPress plugin that allows you to sell photos, videos, audio and pdf's on your self-hosted WordPress site.
 
 * [PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf)
 * [Documentation](http://graphpaperpress.com/docs/sell-media/)
@@ -35,6 +35,7 @@ These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/
 Take Sell Media to the next level with these powerful extensions:
 
 * [Sell photo prints](http://graphpaperpress.com/plugins/sell-media-reprints)
+* [Sell Subscription Plans](https://graphpaperpress.com/plugins/sell-media-subscription/)
 * [Cloud Backups](http://graphpaperpress.com/plugins/sell-media-s3)
 * [Watermark your images](http://graphpaperpress.com/plugins/sell-media-watermark)
 * [Newsletter integration with Mailchimp](http://graphpaperpress.com/plugins/sell-media-mailchimp)
@@ -214,6 +215,11 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.2.12 =
+* Fix: Search multiple word keywords
+* Fix: Discount codes
+* Fix: Download url checks
 
 = 2.2.11 =
 * Fix: Double featured images in some themes
