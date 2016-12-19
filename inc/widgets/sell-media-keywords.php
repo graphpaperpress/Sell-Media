@@ -1,9 +1,10 @@
 <?php class Sell_Media_Keywords_Widget extends WP_Widget
 {
 	function __construct(){
-		$widget_ops = array('description' => 'Displays Sell Media keywords');
+		$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
+		$widget_ops = array('description' => 'Displays keywords of the product');
 		$control_ops = array('width' => 200, 'height' => 200);
-		parent::__construct( false, $name = sell_media_cpt_name() . ' Keywords', $widget_ops, $control_ops );
+		parent::__construct( false, $plugin_name . ': Keywords', $widget_ops, $control_ops );
 	}
 
 	/* Displays the Widget in the front-end */

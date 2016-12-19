@@ -1,9 +1,10 @@
 <?php class Sell_Media_Similar_Widget extends WP_Widget
 {
 	function __construct(){
+		$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
 		$widget_ops = array( 'description' => 'Displays similar products.' );
 		$control_ops = array( 'width' => 200, 'height' => 200 );
-		parent::__construct( false, $name = sell_media_cpt_name() . ' Similar Products', $widget_ops, $control_ops );
+		parent::__construct( false, $plugin_name . ': Similar Products', $widget_ops, $control_ops );
 	}
 
 	/* Displays the Widget in the front-end */

@@ -29,9 +29,10 @@ class Sell_Media_Search_Widget extends WP_Widget {
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
+		$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
 		parent::__construct(
 			'Sell_Media_Search_Widget', // Base ID
-			sell_media_cpt_name() . ' ' . __( 'Search', 'sell_media' ), // Name
+			$plugin_name . ': ' . __( 'Search', 'sell_media' ), // Name
 			array( 'description' => __( 'Adds a search form for product search.', 'sell_media' ) ) // Args
 		);
 	}
