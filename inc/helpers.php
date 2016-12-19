@@ -324,10 +324,14 @@ function sell_media_is_license_term_page() {
 function sell_media_get_attachments( $post_id ) {
 	$meta = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 	if ( ! empty( $meta ) ) {
-		if ( maybe_serialize( $meta ) ) {
+		if ( is_array( $meta ) ) {
 			return $meta;
 		}
-		return explode( ',', $meta );
+		$meta = explode( ',', $meta );
+		if ( ! is_array( $meta ) ) {
+			return array( $meta );
+		}
+		return $meta;
 	}
 	return false;
 }
