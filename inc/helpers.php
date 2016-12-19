@@ -273,7 +273,7 @@ function sell_media_is_sell_media_post_type_page() {
 
 	if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'sell_media_item' ) {
 		return true;
-	} else { 
+	} else {
 		return false;
 	}
 }
@@ -323,7 +323,13 @@ function sell_media_is_license_term_page() {
  */
 function sell_media_get_attachments( $post_id ) {
 	$meta = get_post_meta( $post_id, '_sell_media_attachment_id', true );
-	return ( ! empty( $meta ) ) ? explode( ',', $meta ) : false;
+	if ( ! empty( $meta ) ) {
+		if ( maybe_serialize( $meta ) ) {
+			return $meta;
+		}
+		return explode( ',', $meta );
+	}
+	return false;
 }
 
 
@@ -397,7 +403,7 @@ function sell_media_get_attachment_meta( $post_id = null, $field = 'id' ) {
  * This is used in search and ajax requests for [sell_media_filters]
  * So that we can return only relevant attachments that are for sale
  * And have keywords.
- * 
+ *
  * @param  attachment_id the attachment id
  * @return integer the parent id
  */
@@ -655,9 +661,9 @@ function sell_media_is_reports_page() {
 
 	if ( isset( $_SERVER['QUERY_STRING'] ) && 'post_type=sell_media_item&page=sell_media_reports' == $_SERVER['QUERY_STRING'] ) {
 		return true;
-	} 
-	else { 		
-		return false; 
+	}
+	else {
+		return false;
 	}
 }
 
@@ -1154,9 +1160,9 @@ function sell_media_update_attachment_metadata1( $data, $post_id ){
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
 			include( ABSPATH . 'wp-admin/includes/image.php' );
 		}
-		
+
 		$metadata = wp_generate_attachment_metadata( $post_id, $main_file );
-		
+
 		$date_folder = dirname( $data['file'] );
 		$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
 		$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
@@ -1185,7 +1191,7 @@ add_filter( 'wp_update_attachment_metadata', 'sell_media_update_attachment_metad
  * @return array                Updated meta data array.
  */
 function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
-	
+
 	/**
 	 * If $data['file'] isn't set, the files are missing.
 	 * So, let's derive $data['file'] from the missing public filepath.
@@ -1201,7 +1207,7 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 		return $data;
 
 	$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
-	
+
 	@set_time_limit( 900 );
 	$copy = copy( $sm_file, $main_file );
 
@@ -1339,7 +1345,7 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 	}
 
 	do_action( 'sell_media_after_generate_attachment_metadata', $attachment_id, $metadata );
-	
+
 	return $metadata;
 }
 add_filter( 'wp_generate_attachment_metadata', 'sell_media_generate_attachment_metadata', 10, 2 );
@@ -1360,7 +1366,7 @@ function sell_media_regenerate_missing_files( $post_id ) {
 	}
 
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-		
+
 		// Check if attachment is image.
 		if ( ! wp_attachment_is_image( $attachment_id ) )
 			return false;
@@ -1393,7 +1399,7 @@ function sell_media_regenerate_missing_files( $post_id ) {
 
 			// get the original protected file.
 			$original_file_path = sell_media_get_upload_dir() . '/' . $attachment_metadata['file'];
-			
+
 			/**
 			 * @todo Imported files are saved to filepath for sell_media_item publish date
 			 */
@@ -1430,7 +1436,7 @@ function sell_media_get_public_filepath( $attachment_id ) {
 
 /**
  * Clear cart after payment is completed.
- * @return void 
+ * @return void
  */
 function sell_media_clear_cart_after_payment() {
 	$clear = false;
