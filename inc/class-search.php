@@ -124,9 +124,13 @@ class SellMediaSearch {
 			// The file type
 			$mime_type = $this->get_mimetype( $type );
 
+			// Current pagination.
+			$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+
 			// The Query
 			$args = array(
 				'post_type' => 'attachment',
+				'paged'		=> $paged,
 				'post_status' => array( 'publish', 'inherit' ),
 				'post_mime_type' => $mime_type,
 				'post_parent__in' => sell_media_ids(),
@@ -167,9 +171,9 @@ class SellMediaSearch {
 					$html .= '</a>';
 					$html .= '</div>';
 				}
-
 				$html .= '</div>';
 				$html .= '</div>';
+				$html .= sell_media_pagination_filter( $search_query->max_num_pages );
 				$text = esc_html__( 'Explore more from our store', 'sell_media' );
 				$html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
 				$html .= do_shortcode( '[sell_media_filters]' );

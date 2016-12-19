@@ -232,13 +232,13 @@ function sell_media_save_custom_meta( $post_id ) {
 						$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sell_media_for_sale_product_id', 'meta_value' => $post_id ), array( '%s', '%d' ) );
 
 						$attachment_ids = explode( ',', $_POST[ $field ] );
-
+						update_post_meta( $post_id, $field, $attachment_ids );
 						// Arguments to get attachment linked to post.
 						$args = array(
 							'post_parent' => $post_id,
-							'post_type'   => 'attachment', 
+							'post_type'   => 'attachment',
 							'numberposts' => -1,
-							'post_status' => 'any' 
+							'post_status' => 'any'
 						);
 
 						// Get post attachments.
@@ -548,15 +548,15 @@ function sell_media_before_delete_post( $post_id, $attachment_id = null ) {
 	 * Get and format the attachment ids
 	 */
 	$attachment_ids = ( sell_media_has_multiple_attachments( $post_id ) ) ? sell_media_get_attachments( $post_id ) : array( get_post_meta( $post_id, '_sell_media_attachment_id', true ) );
-	
+
 	if ( $attachment_ids ) foreach( $attachment_ids as $attachment_id ) {
 
 		wp_delete_post( $attachment_id );
-		
+
 		$attached_file = sell_media_get_public_filepath( $attachment_id );
 		$attached_file_protected = sell_media_get_upload_dir() . '/' . $attached_file;
 		$attached_file_unprotected = $wp_upload_dir['basedir'] . '/' . $attached_file;
-		
+
 		// Delete the file stored in sell_media
 		if ( file_exists( $attached_file_protected ) ) {
 			// Copy our "original" back
@@ -597,7 +597,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 	<fieldset class="inline-edit-col-left">
 		<div class="inline-edit-col">
 			<span class="title"><?php _e( 'Price Group', 'sell_media' ); ?></span>
-			<?php 
+			<?php
 			$args = array(
 				'show_option_none' => __( 'None', 'sell_media' ),
 				'option_none_value' => 0,
@@ -609,7 +609,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 				'depth' => 1,
 				'hide_empty' => false
 			);
-			wp_dropdown_categories( $args ); 
+			wp_dropdown_categories( $args );
 			wp_nonce_field( '_sell_media_quick_edit_nonce', 'sell_media_quick_edit_nonce' );
 			?>
 		</div>
