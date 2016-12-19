@@ -1465,13 +1465,3 @@ function sell_media_migration_cron_event() {
 	}
 }
 add_action( 'init', 'sell_media_migration_cron_event' );
-
-/**
- * Return the name of the Sell Media post type.
- */
-function sell_media_cpt_name() {
-
-	$obj = get_post_type_object( 'sell_media_item' );
-	return 'Store';
-
-}
