@@ -5,9 +5,9 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 	class Sell_Media_Image_Exif_Widget extends WP_Widget {
 
 		function __construct(){
-			$widget_ops = array( 'description' => __( 'Displays image exif data (shutter speed, aperture, ISO, etc). Only use this on Single Sidebar Widgetized areas.', 'sell_media' ) );
+			$widget_ops = array( 'description' => __( 'Displays image exif data (shutter speed, aperture, ISO, etc) of current product.', 'sell_media' ) );
 			$control_ops = array( 'width' => 200, 'height' => 200 );
-			parent::__construct( false, $name='Sell Media Exif', $widget_ops, $control_ops );
+			parent::__construct( false, $name = sell_media_cpt_name() . ' Exif', $widget_ops, $control_ops );
 		}
 
 		/* Displays the Widget in the front-end */

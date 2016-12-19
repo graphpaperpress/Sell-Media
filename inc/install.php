@@ -142,16 +142,16 @@ function sell_media_compatible_version() {
 function sell_media_register_post_types() {
 
 	$settings = sell_media_get_plugin_options();
-
+	$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
 	/**
 	 * Register Item Custom Post Type
 	 */
 	$item_labels = array(
-		'name' => __( 'Sell Media', 'sell_media' ),
-		'singular_name' => __( 'Sell Media', 'sell_media' ),
+		'name' => $plugin_name,
+		'singular_name' => $plugin_name,
 		'all_items' => __( 'All Products', 'sell_media' ),
 		'add_new' => __( 'Add New', 'sell_media' ),
-		'add_new_item' => __( 'Sell Media', 'sell_media' ),
+		'add_new_item' => $plugin_name,
 		'edit_item' => __( 'Edit Product', 'sell_media' ),
 		'new_item' => __( 'New Product', 'sell_media' ),
 		'view_item' => __( 'View Product', 'sell_media' ),
@@ -159,7 +159,7 @@ function sell_media_register_post_types() {
 		'not_found' => __( 'No products found', 'sell_media' ),
 		'not_found_in_trash' => __( 'No products found in Trash', 'sell_media' ),
 		'parent_item_colon' => __( 'Parent Product:', 'sell_media' ),
-		'menu_name' => __( 'Sell Media', 'sell_media' ),
+		'menu_name' => $plugin_name,
 	);
 
 	$item_args = array(
@@ -283,7 +283,7 @@ function sell_media_register_taxonomies() {
 		'show_in_nav_menus' => true,
 		'show_tagcloud' => true,
 		'show_admin_column' => true,
-		'show_ui' => false,
+		'show_ui' => true,
 		'hierarchical' => true,
 		'rewrite' => true,
 		'query_var' => true,

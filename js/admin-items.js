@@ -36,7 +36,6 @@ jQuery( document ).ready(function( $ ){
         file_frame.on( 'select', function() {
 
             var attachments = file_frame.state().get('selection').toJSON();
-
             /**
              * Since we only want id, title, description and url, we build a new JSON object
              * the current one (attachments) is bloated and causing the bulk updater to fail

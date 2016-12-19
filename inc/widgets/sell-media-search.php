@@ -31,8 +31,8 @@ class Sell_Media_Search_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'Sell_Media_Search_Widget', // Base ID
-			__( 'Sell Media Search', 'sell_media' ), // Name
-			array( 'description' => __( 'Adds a search form for searching Sell Media items', 'sell_media' ), ) // Args
+			sell_media_cpt_name() . ' ' . __( 'Search', 'sell_media' ), // Name
+			array( 'description' => __( 'Adds a search form for product search.', 'sell_media' ) ) // Args
 		);
 	}
 

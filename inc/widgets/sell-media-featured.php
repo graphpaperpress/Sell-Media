@@ -1,9 +1,9 @@
 <?php class Sell_Media_Featured_Widget extends WP_Widget
 {
 	function __construct(){
-		$widget_ops = array('description' => 'Displays featured items');
+		$widget_ops = array('description' => 'Displays featured products.');
 		$control_ops = array('width' => 200, 'height' => 200);
-		parent::__construct( false, $name='Sell Media Featured Items', $widget_ops, $control_ops );
+		parent::__construct( false, $name = sell_media_cpt_name() . ' Featured Products', $widget_ops, $control_ops );
 	}
 
 	/* Displays the Widget in the front-end */
