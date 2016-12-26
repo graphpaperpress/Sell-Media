@@ -30,7 +30,7 @@ class Sell_Media_Price_Listings_Tabs {
 	}
 
 	function run( $current_tab ) {
-		if ( $this->taxonomy !== $current_tab ) {
+		if ( $this->taxonomy !== $current_tab || is_network_admin() ) {
 			return;
 		}
 		$parent_terms = $this->get_terms();
