@@ -1,0 +1,26 @@
+#sell-media-price-table{
+	width: 90%;
+	td{
+		padding: 5px 10px;
+	}
+}
+.price-group-term-information{
+	margin: 10px 0;
+}
+.sell-media-sub-tab{
+	border: none!important;
+	margin: 10px 0 !important;
+}
+.sell-media-sub-tab .nav-tab{
+	border: none;
+	border-bottom: 2px solid #f1f1f1;
+	background: none;
+}
+.sell-media-sub-tab .nav-tab:hover{
+	border-bottom: 2px solid #444444;
+	background: none;
+}
+.sell-media-sub-tab .nav-tab-active{
+	border-bottom: 2px solid #444444;
+	background: none;
+}
