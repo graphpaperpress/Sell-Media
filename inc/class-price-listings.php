@@ -71,6 +71,8 @@ class Sell_Media_Price_Listings {
 		wp_enqueue_script( 'sell-media-price-listings', plugins_url( 'js/sell-media-price-listings.js' , dirname( __FILE__ ) ), array( 'jquery', 'wp-util' ), false, true );
 		$translation_array = apply_filters( 'sell_media_price_listings_localize_data', array() );
 		wp_localize_script( 'sell-media-price-listings', 'sell_media_price_listings', $translation_array );
+
+		wp_enqueue_style( 'sell-media-price-listings', plugins_url( 'css/sell_media_price_listings.css', dirname( __FILE__ ) ) );
 	}
 	/**
 	 * Content for setting page.
