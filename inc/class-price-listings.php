@@ -34,8 +34,6 @@ class Sell_Media_Price_Listings {
 	 * Constructor method.
 	 */
 	function __construct() {
-		$tabs = $this->get_tabs();
-		$this->current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : key( $tabs );
 		add_action( 'init', array( $this, 'init' ) );
 	}
 
@@ -45,6 +43,8 @@ class Sell_Media_Price_Listings {
 	 * @return void
 	 */
 	function init() {
+		$tabs = $this->get_tabs();
+		$this->current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : key( $tabs );
 		do_action( 'sell_media_price_listings_run', $this->current_tab );
 		add_action( 'admin_menu', array( $this, 'add_submenu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
