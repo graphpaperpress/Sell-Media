@@ -175,6 +175,7 @@ class Sell_Media_Price_Listings_Tabs {
 				$term_id = (int) $term_id;
 				wp_update_term( $term_id, $this->taxonomy, array(
 					'name' => $data['name'],
+					'description' => $data['description'],
 				));
 				update_term_meta( $term_id, 'width', $data['width'] );
 				update_term_meta( $term_id, 'height', $data['height'] );
@@ -186,6 +187,7 @@ class Sell_Media_Price_Listings_Tabs {
 			foreach ( $_POST['new_children'] as $term_id => $data ) {
 				$term = wp_insert_term( $data['name'], $this->taxonomy, array(
 				    'parent' => $parent_term_id,
+						'description' => $data['description'],
 					)
 				);
 				update_term_meta( $term['term_id'], 'width', $data['width'] );
