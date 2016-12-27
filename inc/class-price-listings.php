@@ -107,7 +107,7 @@ class Sell_Media_Price_Listings {
 					wp_nonce_field( 'sell-media-price-list-page' );
 					if ( isset( $current_screen->parent_file ) && $this->parent_slug === $current_screen->parent_file && $_GET['page'] === $this->menu_slug ) {
 						if ( isset( $tabs[ $this->current_tab ]['content_callback'] ) ) {
-							call_user_func( $tabs[ $this->current_tab ]['content_callback'] );
+							call_user_func( $tabs[ $this->current_tab ]['content_callback'], $this->current_tab );
 						}
 					}
 					?>
