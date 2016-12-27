@@ -58,7 +58,7 @@ class Sell_Media_Price_Listings_Tabs {
 	 *
 	 * @return void
 	 */
-	function tab_content() {
+	function tab_content( $current_tab ) {
 		include sprintf( '%s/themes/price-listings-tabs-content.php', SELL_MEDIA_PLUGIN_DIR );
 	}
 
