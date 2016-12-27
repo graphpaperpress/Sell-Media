@@ -81,4 +81,9 @@
     } );
     sell_media_price_listing.init( defualt_listing_args );
   }
+
+  $( '.tab-price-lists select' ).change( function(){
+    var link = $(this).val();
+    window.location = link;
+  });
 })(jQuery);
