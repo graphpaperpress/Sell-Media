@@ -119,6 +119,7 @@ class Sell_Media_Price_Listings_Tabs {
 				_.each ( data, function( value ){
 					var term_id = typeof(value.term_id)!== 'undefined' ?  value.term_id : 'new';
 					var title = typeof(value.name)!== 'undefined' ?  value.name : '';
+					var description = typeof(value.description)!== 'undefined' ?  value.description : '';
 					var field_name = '' !== title ?  'terms_children['+term_id+']' : 'new_children['+value.index+']';
 					var width = '';
 					var height = '';
@@ -133,19 +134,18 @@ class Sell_Media_Price_Listings_Tabs {
 				<tr id="_row-data-{{value.index}}" data-index="{{value.index}}">
 					<td>
 						<input type="text" class="" name="{{field_name}}[name]" size="24" value="{{title}}">
-						<p class="description"><?php _e( 'Name (shown to buyer, so be descriptive)', 'sell_media' ); ?></p>
+					</td>
+					<td>
+						<input type="text" class="" name="{{field_name}}[description]" size="24" value="{{description}}">
 					</td>
 					<td>
 						<input type="text" class="small-text" name="{{field_name}}[width]" value="{{width}}">
-						<p class="description"><?php _e( 'Max width (pixels)', 'sell_media' ); ?></p>
 					</td>
 					<td>
 						<input type="text" class="small-text" name="{{field_name}}[height]" value="{{height}}">
-						<p class="description"><?php _e( 'Max Height (pixels)', 'sell_media' ); ?></p>
 					</td>
 					<td>
 						<input type="text" class="small-text" name="{{field_name}}[price]" value="{{price}}">
-						<p class="description"><?php printf( __( 'Price (%s)', 'sell_media' ), sell_media_get_currency_symbol() ); ?></p>
 					</td>
 					<td>
 						<a href="#" class="sell-media-xit sell-media-price-group-delete-term" data-taxonomy="price-group" data-termid="{{term_id}}" data-type="price" data-message="{{alert_message}}"  data-index="{{value.index}}">×</a>
