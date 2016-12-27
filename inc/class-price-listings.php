@@ -83,7 +83,7 @@ class Sell_Media_Price_Listings {
 		$current_screen = get_current_screen();
 		?>
 
-		<div class="wrap">
+		<div class="wrap sell-media-price-listings-wrap">
 			<h2><?php _e( 'Price Lists', 'sell_media' ); ?></h2>
 			<?php
 			$tabs = $this->get_tabs();
