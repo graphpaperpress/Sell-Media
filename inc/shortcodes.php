@@ -44,14 +44,14 @@ function sell_media_thanks_shortcode( $tx=null ) {
 			$html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg( array( 'tx' => $tx ), $refresh_url ) ) );
 			// wp_mail( get_option( 'admin_email' ), __( 'Unable to retrieve transaction ID', 'sell_media' ), sprintf( __( 'We have some good news and bad news. First the good news: Somebody just purchased from your store! The bad news: Your website was unable to retrieve transaction ID from %1$s. This is typically easy to fix. Please see these tips for resolving this issue: %2$s' ), $gateway, 'https://github.com/graphpaperpress/Sell-Media/issues/670#issuecomment-89428248' ) );
 		}
-		
+
 		// Clear cart item.
 		global $sm_cart;
 		@$sm_cart->clear();
 		$html .= '</p>';
 		$html =  apply_filters( 'sell_media_thanks_filter_below', $html );
 	}
-	
+
 	return apply_filters( 'sell_media_thanks', $html );
 
 }
@@ -171,19 +171,19 @@ function sell_media_checkout_shortcode(){
 	$settings = sell_media_get_plugin_options();
 	ob_start(); ?>
 	<?php do_action( 'sell_media_checkout_before_cart' ); ?>
-	<?php 
+	<?php
 	global $sm_cart;
 	$cart_items = $sm_cart->getItems();
 	if ( ! empty( $cart_items ) ) :
 	?>
 	<div id="sell-media-checkout-cart">
 		<ul class="sell-media-cart-items">
-			<?php 
+			<?php
 			$cart_index = 0;
 			foreach( $cart_items as $key => $item ): ?>
 				<li class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
 					<div class="item-image">
-						<?php 
+						<?php
 						if ( ! empty( $item['item_attachment'] ) ) {
 							// if selling video or audio, show the post_id thumbnail
 							if ( SellMediaAudioVideo::is_video_item( $item['item_id'] ) || SellMediaAudioVideo::is_audio_item( $item['item_id'] ) ) {
@@ -230,13 +230,13 @@ function sell_media_checkout_shortcode(){
 						</div>
 					</div>
 				</li>
-			<?php 
+			<?php
 			$cart_index++;
-			endforeach; ?> 
+			endforeach; ?>
 		</ul>
 
 		<?php do_action( 'sell_media_checkout_after_cart' ); ?>
-		
+
 		<div class="sell-media-totals group">
 			<div id="sell-media-totals-table" class="sell-media-totals-table cf">
 				<div class="subtotal cf">
@@ -258,9 +258,9 @@ function sell_media_checkout_shortcode(){
 					<div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
 				</div>
 			</div>
-			
+
 			<?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
-			
+
 			<div class="sell-media-checkout-button group">
 				<?php do_action( 'sell_media_above_checkout_button' ); ?>
 				<p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
@@ -285,7 +285,7 @@ function sell_media_checkout_shortcode(){
 		<?php do_action( 'sell_media_below_registration_form' ); ?>
 
 	</div><!-- #sell-media-checkout-cart -->
-	
+
 	<?php endif; ?>
 
 	<p id="sell-media-empty-cart-message" class="<?php echo ( !empty( $cart_items ) ) ? 'hide' : ''?>">
@@ -326,7 +326,7 @@ function sell_media_download_shortcode( $atts ) {
 			$html .= '</div>';
 		}
 	}
-	
+
 	return $html;
 }
 add_shortcode( 'sell_media_download_list', 'sell_media_download_shortcode' );
@@ -559,7 +559,7 @@ add_shortcode( 'sell_media_login', 'sell_media_login_form_shortcode' );
  * @param  mixed $atts Attributes for shortcode.
  * @return string      Shortcode output
  *
- * @since 2.1.4 
+ * @since 2.1.4
  */
 function sell_media_ajax_filter( $atts ){
 
@@ -568,22 +568,22 @@ function sell_media_ajax_filter( $atts ){
 	), $atts );
 
 	$filter_tabs = $choosen_tabs = array(
-			array( 
+			array(
 				'title' => __( 'Newest', 'sell_media' ),
 				'slug' => 'newest',
 				'icon' => 'dashicons dashicons-clock'
 			),
-			array( 
+			array(
 				'title' => __( 'Most Popular', 'sell_media' ),
 				'slug' => 'most-popular',
 				'icon' => 'dashicons dashicons-chart-bar'
 			),
-			array( 
+			array(
 				'title' => __( 'Collections', 'sell_media' ),
 				'slug'   => 'collections',
 				'icon' => 'dashicons dashicons-screenoptions'
 			),
-			array( 
+			array(
 				'title' => __( 'Keywords', 'sell_media' ),
 				'slug' => 'keywords',
 				'icon' => 'dashicons dashicons-tag'
@@ -597,7 +597,7 @@ function sell_media_ajax_filter( $atts ){
 			foreach ($choosen_tab_ids as $key => $tab_id) {
 				$_tab_id = trim( $tab_id ) - 1;
 				if( isset( $filter_tabs[$_tab_id] ) ){
-					$choosen_tabs[] =  $filter_tabs[$_tab_id];                    
+					$choosen_tabs[] =  $filter_tabs[$_tab_id];
 				}
 			}
 		}
@@ -634,10 +634,11 @@ function sell_media_ajax_filter( $atts ){
 			$keywords = get_terms( 'keywords' );
 			if( !empty( $keywords ) ){
 				$keywords_terms_class = 'sell-media-ajax-filter-terms sell-media-ajax-filter-keyword-terms';
-				if( 'keywords' !== $first_tab ){
-					$keywords_terms_class .= ' hide';
+				$inline_style = '';
+				if ( 'keywords' !== $first_tab ) {
+					$inline_style = ' display:none;';
 				}
-				$output .= '<div class="'.$keywords_terms_class.'">';
+				$output .= '<div class="'.$keywords_terms_class.'" style="' . $inline_style . '">';
 					$output .= '<div class="drop-down-close-button"></div>';
 					$output .= '<ul class="current-term-group">';
 					$term_pagination = false;
@@ -654,8 +655,8 @@ function sell_media_ajax_filter( $atts ){
 							$output .= '</ul><!--end1-->';
 							$output .= '<ul class="hide">';
 							$term_pagination = true;
-						} 
-					}                
+						}
+					}
 					$output .= '</ul><!--end All-->';
 					if( $term_pagination ){
 						$output .= '<div class="term-pagination">';
@@ -671,10 +672,11 @@ function sell_media_ajax_filter( $atts ){
 			$collections = get_terms( 'collection' );
 			if( !empty( $collections ) ){
 				$collection_terms_class = 'sell-media-ajax-filter-terms sell-media-ajax-filter-collection-terms';
+				$inline_style = '';
 				if( 'collections' !== $first_tab ){
-					$collection_terms_class .= ' hide';
+					$inline_style = ' display:none;';
 				}
-				$output .= '<div class="'.$collection_terms_class.'">';
+				$output .= '<div class="'.$collection_terms_class.'" style="' . $inline_style . '">';
 					$output .= '<div class="drop-down-close-button"></div>';
 				$output .= '<ul class="current-term-group">';
 				$term_pagination = false;
@@ -690,8 +692,8 @@ function sell_media_ajax_filter( $atts ){
 						$output .= '</ul><!--end1-->';
 						$output .= '<ul class="hide">';
 						$term_pagination = true;
-					} 
-				}                
+					}
+				}
 				$output .= '</ul><!--end All-->';
 				if( $term_pagination ){
 					$output .= '<div class="term-pagination">';
@@ -723,7 +725,7 @@ add_shortcode( 'sell_media_filter', 'sell_media_ajax_filter' );
  * Taxonomy shortcode
  *
  * Displays the most recent entry from each custom taxonomy
- * 
+ *
  * @param  $atts the taxonomy
  * @return html
  */
@@ -739,8 +741,8 @@ function sell_media_taxonomies_shortcode( $atts ) {
 	);
 
 	$do_not_duplicate = array();
-	$terms = get_terms( $args ); 
-	 
+	$terms = get_terms( $args );
+
 	if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
 		ob_start();
 		foreach ( $terms as $term ) {
@@ -758,17 +760,17 @@ function sell_media_taxonomies_shortcode( $atts ) {
 			);
 
 			$query = new WP_Query( $args );
- 
+
 			if ( $query->have_posts() ) { ?>
-			 
+
 				<div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ); ?> <?php echo esc_attr( $term->slug ); ?>">
-			 
+
 					<?php while ( $query->have_posts() ) {
-			 
+
 						$query->the_post();
 						$do_not_duplicate[] = get_the_ID();
 						?>
-			 
+
 						<article id="post-<?php the_ID(); ?>" <?php post_class( $term->slug . '-listing' ); ?>>
 							<a href="<?php echo get_term_link( $term->term_id, $atts['taxonomy'] ); ?>">
 								<?php echo sell_media_item_icon( get_the_ID(), 'sell_media_item' ); ?>
@@ -779,16 +781,16 @@ function sell_media_taxonomies_shortcode( $atts ) {
 								</a>
 							</h2>
 						</article>
-			 
+
 					<?php } // end while ?>
-			 
+
 				</div>
 
 			<?php } // end if
-		 
+
 		// Use reset to restore original query.
 		wp_reset_postdata();
-	 
+
 		}
 		return ob_get_clean();
 	}
