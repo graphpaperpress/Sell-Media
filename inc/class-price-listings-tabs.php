@@ -128,21 +128,44 @@ class Sell_Media_Price_Listings_Tabs {
 						var width = typeof(value.meta.width)!== 'undefined' ?  value.meta.width : '';
 						var height = typeof(value.meta.height)!== 'undefined' ?  value.meta.height : '';
 						var price = typeof(value.meta.price)!== 'undefined' ?  value.meta.price : '';
+						var is_default = ( typeof(value.meta.default)!== 'undefined' && 1 == value.meta.default )  ?  true : false;
 					}
 					var alert_message = '' !== title ?  "<?php _e( 'Are you sure you want to delete the price: ', 'sell_media' ); ?>" + value.name + '?' : '<?php _e( 'Are you sure you want to delete this price? ', 'sell_media' ); ?>';
 				#>
 				<tr id="_row-data-{{value.index}}" data-index="{{value.index}}">
 					<td>
-						<input type="text" class="" name="{{field_name}}[name]" size="24" value="{{title}}">
+						<#
+						var input_type = 'text';
+						if( true === is_default ){
+							var input_type = 'hidden';
+						#>
+						{{title}}
+						<# } #>
+						<input type="{{input_type}}" class="" name="{{field_name}}[name]" size="24" value="{{title}}">
 					</td>
 					<td>
-						<input type="text" class="" name="{{field_name}}[description]" size="24" value="{{description}}">
+						<#
+						if( true === is_default ){
+						#>
+						{{description}}
+						<# } #>
+						<input type="{{input_type}}" class="" name="{{field_name}}[description]" size="24" value="{{description}}">
 					</td>
 					<td>
-						<input type="text" class="small-text" name="{{field_name}}[width]" value="{{width}}">
+						<#
+						if( true === is_default ){
+						#>
+						{{width}}
+						<# } #>
+						<input type="{{input_type}}" class="small-text" name="{{field_name}}[width]" value="{{width}}">
 					</td>
 					<td>
-						<input type="text" class="small-text" name="{{field_name}}[height]" value="{{height}}">
+						<#
+						if( true === is_default ){
+						#>
+						{{height}}
+						<# } #>
+						<input type="{{input_type}}" class="small-text" name="{{field_name}}[height]" value="{{height}}">
 					</td>
 					<td>
 						<input type="text" class="small-text" name="{{field_name}}[price]" value="{{price}}">
@@ -236,3 +259,128 @@ function sell_media_init_price_listings_tabs() {
 }
 
 add_action( 'init', 'sell_media_init_price_listings_tabs', 9 );
+
+/**
+ * Default pricelists.
+ *
+ * @return array Default Price lists.
+ */
+function sell_media_get_default_pricelists() {
+	$pricelists = array(
+		'sm-download-default' => array(
+			'title' => __( 'Default', 'sell_media' ),
+			'taxonomy' => 'price-group',
+			'childrens' => array(
+				'sm-download-default-small' => array(
+					'title' => __( 'Small', 'sell_media' ),
+					'description' => __( '1000 pixels max size', 'sell_media' ),
+					'meta' => array(
+						'width' => 1000,
+						'height' => 1000,
+						'price' => '10.00',
+					),
+				),
+				'sm-download-default-medium' => array(
+					'title' => __( 'Medium', 'sell_media' ),
+					'description' => __( '2000 pixels max size', 'sell_media' ),
+					'meta' => array(
+						'width' => 2000,
+						'height' => 2000,
+						'price' => '20.00',
+					),
+				),
+				'sm-download-default-large' => array(
+					'title' => __( 'Large', 'sell_media' ),
+					'description' => __( '4000 pixels max size', 'sell_media' ),
+					'meta' => array(
+						'width' => 4000,
+						'height' => 4000,
+						'price' => '40.00',
+					),
+				),
+			),
+		),
+
+		// Reprint.
+		'sm-reprints-default' => array(
+			'title' => __( 'Default', 'sell_media' ),
+			'taxonomy' => 'reprints-price-group',
+			'childrens' => array(
+				'sm-reprint-default-4-6' => array(
+					'title' => __( '4x6', 'sell_media' ),
+					'description' => __( 'Color 4x6 print', 'sell_media' ),
+					'meta' => array(
+						'width' => 1200, // 4 inch * 300 dpi
+						'height' => 1800, // 6 inch * 300 dpi
+						'price' => '10.00',
+					),
+				),
+				'sm-reprint-default-8-12' => array(
+					'title' => __( '8x12', 'sell_media' ),
+					'description' => __( 'Color 8x12 print', 'sell_media' ),
+					'meta' => array(
+						'width' => 2400, // 8 inch * 300 dpi
+						'height' => 3600, // 12 inch * 300 dpi
+						'price' => '20.00',
+					),
+				),
+				'sm-reprint-default-16-24' => array(
+					'title' => __( '16x24', 'sell_media' ),
+					'description' => __( 'Color 16x24 print', 'sell_media' ),
+					'meta' => array(
+						'width' => 4800, // 16 inch * 300 dpi
+						'height' => 7200, // 24 inch * 300 dpi
+						'price' => '40.00',
+					),
+				),
+			),
+		),
+	);
+	return $pricelists;
+}
+
+/**
+ * Default pricelist set function.
+ *
+ * @param array $pricelists Default pricelists.
+ */
+function sell_media_set_default_pricelist( $pricelists ) {
+	if ( ! empty( $pricelists ) ) {
+		foreach ( $pricelists as $key => $value ) {
+			$check_if_default_exists = get_option( 'sell_media_default_pricelists_saved_' . $value['taxonomy'] );
+			if ( taxonomy_exists( $value['taxonomy'] ) && false === $check_if_default_exists  ) {
+				$term = term_exists( $key, $value['taxonomy'] );
+				if ( ! $term ) {
+					$term_insert = wp_insert_term( $value['title'],  $value['taxonomy'], array(
+						'slug' => $key,
+					));
+					if ( ! empty( $value['childrens'] ) ) {
+						foreach ( $value['childrens'] as $children_key => $children ) {
+							$children_term_insert = wp_insert_term( $children['title'],  $value['taxonomy'], array(
+								'slug' => $children_key,
+								'description' => $children['description'],
+								'parent' => $term_insert['term_id'],
+							));
+							$data = $children['meta'];
+							update_term_meta( $children_term_insert['term_id'], 'width', $data['width'] );
+							update_term_meta( $children_term_insert['term_id'], 'height', $data['height'] );
+							update_term_meta( $children_term_insert['term_id'], 'price', $data['price'] );
+							update_term_meta( $children_term_insert['term_id'], 'default', true );
+						}
+					}
+				}
+				update_option( 'sell_media_default_pricelists_saved_' . $value['taxonomy'], true );
+			}
+		}
+	}
+}
+
+/**
+ * Set default pricelists.
+ */
+function sell_media_set_default_pricelists() {
+	$pricelists = sell_media_get_default_pricelists();
+	sell_media_set_default_pricelist( $pricelists );
+}
+
+add_action( 'init', 'sell_media_set_default_pricelists', 11 );
