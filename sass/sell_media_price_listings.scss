@@ -2,11 +2,24 @@
 	#poststuff {
 		h2.tab-title{
 			padding: 8px 0;
+			position: relative;
 
 			span{
 				padding: 4px 0px;
 				position: relative;
 				top: -3px;
+			}
+
+			.sell-media-add-new-pricelist-popup{
+				border: 1px solid #ccc;
+				background: #fff;
+				width: 235px;
+				padding: 20px;
+				position: absolute;
+				top: 29px;
+				left: 174px;
+				border-radius: 3px;
+				display: none;
 			}
 		}
 		.tab-price-lists{
