@@ -7,6 +7,10 @@ $url = home_url( add_query_arg( array( 'term_parent' => 'new' ) ) );
 <h2 class="tab-title">
 	<span><?php echo __( 'Pricelists for ', 'sell_media' ) . ' ' . $tab['tab_title']; ?></span>
 	<a class="page-title-action tab-create-new-list" href="javascript:void(0);"><?php _e( 'Add New Pricelist', 'sell_media' ); ?> </a>
+	<div class="sell-media-add-new-pricelist-popup">
+		<input type="text" name="new_term_name" />
+		<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php _e( 'Add', 'sell_media' ); ?>" />
+	</div>
 </h2>
 <div class="tab-price-lists">
 	<select>
