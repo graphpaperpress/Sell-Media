@@ -86,4 +86,8 @@
     var link = $(this).val();
     window.location = link;
   });
+
+  $( '.tab-title a' ).click( function(){
+    $(this).next().toggle();
+  })
 })(jQuery);
