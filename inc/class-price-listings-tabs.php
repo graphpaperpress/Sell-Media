@@ -194,29 +194,31 @@ class Sell_Media_Price_Listings_Tabs {
 		}
 
 		if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
-			foreach ( $_POST['terms_children'] as $term_id => $data ){
+			foreach ( $_POST['terms_children'] as $term_id => $data ) {
 				$term_id = (int) $term_id;
-				wp_update_term( $term_id, $this->taxonomy, array(
-					'name' => $data['name'],
-					'description' => $data['description'],
-				));
-				update_term_meta( $term_id, 'width', $data['width'] );
-				update_term_meta( $term_id, 'height', $data['height'] );
-				update_term_meta( $term_id, 'price', $data['price'] );
+				if ( '' !== $data['name'] ) {
+					wp_update_term( $term_id, $this->taxonomy, array(
+						'name' => $data['name'],
+						'description' => $data['description'],
+					));
+					update_term_meta( $term_id, 'width', $data['width'] );
+					update_term_meta( $term_id, 'height', $data['height'] );
+					update_term_meta( $term_id, 'price', $data['price'] );
+				}
 			}
 		}
 
 		if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
 			foreach ( $_POST['new_children'] as $term_id => $data ) {
-				if( '' !== $data['name'] ){
+				if ( '' !== $data['name'] ) {
 					$term = wp_insert_term( $data['name'], $this->taxonomy, array(
-						'parent' => $parent_term_id,
-						'description' => $data['description'],
-					)
-				);
-				update_term_meta( $term['term_id'], 'width', $data['width'] );
-				update_term_meta( $term['term_id'], 'height', $data['height'] );
-				update_term_meta( $term['term_id'], 'price', $data['price'] );
+							'parent' => $parent_term_id,
+							'description' => $data['description'],
+						)
+					);
+					update_term_meta( $term['term_id'], 'width', $data['width'] );
+					update_term_meta( $term['term_id'], 'height', $data['height'] );
+					update_term_meta( $term['term_id'], 'price', $data['price'] );
 				}
 			}
 		}
