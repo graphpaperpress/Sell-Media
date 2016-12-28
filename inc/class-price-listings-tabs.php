@@ -208,14 +208,16 @@ class Sell_Media_Price_Listings_Tabs {
 
 		if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
 			foreach ( $_POST['new_children'] as $term_id => $data ) {
-				$term = wp_insert_term( $data['name'], $this->taxonomy, array(
-				    'parent' => $parent_term_id,
+				if( '' !== $data['name'] ){
+					$term = wp_insert_term( $data['name'], $this->taxonomy, array(
+						'parent' => $parent_term_id,
 						'description' => $data['description'],
 					)
 				);
 				update_term_meta( $term['term_id'], 'width', $data['width'] );
 				update_term_meta( $term['term_id'], 'height', $data['height'] );
 				update_term_meta( $term['term_id'], 'price', $data['price'] );
+				}
 			}
 		}
 
