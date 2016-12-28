@@ -42,9 +42,9 @@ if ( ! isset( $_GET['term_parent'] ) || 'new' !== $_GET['term_parent'] ) {
 	<tbody>
 	</tbody>
 </table>
-<p class="submit" style="clear: both;">
-	<input type="button" name="Submit" id="sell-media-add-button"  class="button-primary" value="<?php _e( '+ Add New', 'sell_media' ); ?>" />
-	<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php _e( 'Save All', 'sell_media' ); ?>" />
+<p class="submit sell-media-pricelisting-form-buttons" style="clear: both;">
+	<a href="javascript:void(0);" id="sell-media-add-button" ><?php _e( '+ Add New', 'sell_media' ); ?> </a>
+	<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php _e( 'Save', 'sell_media' ); ?>" />
 	<input type="hidden" name="sell-media-price-list-submit" value="true" />
 </p>
 <?php
