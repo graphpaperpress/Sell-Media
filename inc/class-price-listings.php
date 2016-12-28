@@ -21,7 +21,7 @@ class Sell_Media_Price_Listings {
 	 *
 	 * @var string
 	 */
-	private $menu_slug = 'price_lists';
+	private $menu_slug = 'pricelists';
 
 	/**
 	 * Current tab.
@@ -54,7 +54,7 @@ class Sell_Media_Price_Listings {
 	 * Add submenu for price list.
 	 */
 	function add_submenu() {
-		$settings_page = add_submenu_page( $this->parent_slug, __( 'Price Group', 'sell_media' ), __( 'Price Groups', 'sell_media' ), 'manage_options', $this->menu_slug, array( $this, 'settings_page' ) );
+		$settings_page = add_submenu_page( $this->parent_slug, __( 'Pricelists', 'sell_media' ), __( 'Pricelists', 'sell_media' ), 'manage_options', $this->menu_slug, array( $this, 'settings_page' ) );
 		add_action( "load-{$settings_page}", array( $this, 'load_settings_page' ) );
 	}
 
