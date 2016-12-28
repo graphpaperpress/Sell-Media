@@ -84,7 +84,7 @@ class Sell_Media_Price_Listings {
 		?>
 
 		<div class="wrap sell-media-price-listings-wrap">
-			<h2><?php _e( 'Price Lists', 'sell_media' ); ?></h2>
+			<h2><?php _e( 'Pricelists', 'sell_media' ); ?></h2>
 			<?php
 			$tabs = $this->get_tabs();
 			if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
