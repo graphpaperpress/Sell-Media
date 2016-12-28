@@ -192,6 +192,9 @@ class Sell_Media_Price_Listings_Tabs {
 				$parent_term_id = $term['term_id'];
 			}
 		}
+		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
+			$term =wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
+		}
 
 		if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
 			foreach ( $_POST['terms_children'] as $term_id => $data ) {
