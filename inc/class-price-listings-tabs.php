@@ -141,7 +141,7 @@ class Sell_Media_Price_Listings_Tabs {
 						#>
 						{{title}}
 						<# } #>
-						<input type="{{input_type}}" class="" name="{{field_name}}[name]" size="24" value="{{title}}">
+						<input type="{{input_type}}" class="" name="{{field_name}}[name]" size="24" value="{{title}}" required>
 					</td>
 					<td>
 						<#
@@ -157,7 +157,7 @@ class Sell_Media_Price_Listings_Tabs {
 						#>
 						{{width}}
 						<# } #>
-						<input type="{{input_type}}" class="small-text" name="{{field_name}}[width]" value="{{width}}">
+						<input type="{{input_type}}" class="small-text" name="{{field_name}}[width]" value="{{width}}" data-parsley-type="number" required>
 					</td>
 					<td>
 						<#
@@ -165,10 +165,10 @@ class Sell_Media_Price_Listings_Tabs {
 						#>
 						{{height}}
 						<# } #>
-						<input type="{{input_type}}" class="small-text" name="{{field_name}}[height]" value="{{height}}">
+						<input type="{{input_type}}" class="small-text" name="{{field_name}}[height]" value="{{height}}" data-parsley-type="number" required>
 					</td>
 					<td>
-						<input type="text" class="small-text" name="{{field_name}}[price]" value="{{price}}">
+						<input type="text" class="small-text" name="{{field_name}}[price]" value="{{price}}" required>
 					</td>
 					<td>
 						<a href="#" class="sell-media-xit sell-media-price-group-delete-term" data-taxonomy="price-group" data-termid="{{term_id}}" data-type="price" data-message="{{alert_message}}"  data-index="{{value.index}}">×</a>
