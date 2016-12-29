@@ -9,7 +9,7 @@ $url = home_url( add_query_arg( array( 'term_parent' => 'new' ) ) );
 	<a class="page-title-action tab-create-new-list" href="javascript:void(0);"><?php _e( 'Add New Pricelist', 'sell_media' ); ?> </a>
 	<div class="sell-media-add-new-pricelist-popup">
 		<input type="text" name="new_term_name" />
-		<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php _e( 'Add', 'sell_media' ); ?>" />
+		<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add', 'sell_media' ); ?>" />
 	</div>
 </h2>
 <div class="tab-price-lists">
