@@ -79,6 +79,7 @@ class Sell_Media_Price_Listings_Tabs {
 				<div class="sell-media-add-new-pricelist-popup">
 					<input type="text" name="new_term_name" required />
 					<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add', 'sell_media' ); ?>" />
+					<input type="hidden" name="sell-media-price-list-submit" value="true" />
 				</div>
 			</h2>
 		</form>
