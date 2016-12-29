@@ -38,7 +38,7 @@
 				}
 
 				input.small-text{
-					width: 80px;
+					width: 100px;
 				}
 			}
 		}
@@ -68,6 +68,13 @@
 			#sell-media-save-button{
 				float: right;
 			}
+		}
+		.parsley-error{
+			border: 1px solid red;
+		}
+
+		ul.parsley-errors-list{
+			display: none;
 		}
 	}
 }

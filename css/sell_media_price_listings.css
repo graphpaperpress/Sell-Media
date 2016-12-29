@@ -26,7 +26,7 @@
     .sell-media-price-listings-wrap #poststuff #sell-media-price-table td input[type=text] {
       width: 80%; }
     .sell-media-price-listings-wrap #poststuff #sell-media-price-table td input.small-text {
-      width: 80px; }
+      width: 100px; }
 .sell-media-price-listings-wrap #poststuff .price-group-term-information {
   margin: 10px 0; }
 .sell-media-price-listings-wrap #poststuff .sell-media-sub-tab {
@@ -46,5 +46,9 @@
   width: 90%; }
   .sell-media-price-listings-wrap #poststuff .sell-media-pricelisting-form-buttons #sell-media-save-button {
     float: right; }
+.sell-media-price-listings-wrap #poststuff .parsley-error {
+  border: 1px solid red; }
+.sell-media-price-listings-wrap #poststuff ul.parsley-errors-list {
+  display: none; }
 
 /*# sourceMappingURL=sell_media_price_listings.css.map */
