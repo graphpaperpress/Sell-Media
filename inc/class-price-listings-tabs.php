@@ -40,6 +40,7 @@ class Sell_Media_Price_Listings_Tabs {
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
 		add_action( 'admin_head', array( $this, 'js_template' ), 25 );
 		add_action( 'sell_media_price_listing_save', array( $this, 'save_data' ) );
+		add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
 	}
 
 	/**
@@ -62,6 +63,27 @@ class Sell_Media_Price_Listings_Tabs {
 		include sprintf( '%s/themes/price-listings-tabs-content.php', SELL_MEDIA_PLUGIN_DIR );
 	}
 
+	/**
+	 * Form for new pricelist.
+	 *
+	 * @param string $current_tab Current tab.
+	 * @param string $url         Form url.
+	 */
+	function add_pricelist_form( $current_tab, $url ) {
+		?>
+		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
+			<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
+			<h2 class="tab-title">
+				<span><?php echo __( 'Pricelists for ', 'sell_media' ) . ' ' . $this->tab['tab_title']; ?></span>
+				<a class="page-title-action tab-create-new-list" href="javascript:void(0);"><?php _e( 'Add New Pricelist', 'sell_media' ); ?> </a>
+				<div class="sell-media-add-new-pricelist-popup">
+					<input type="text" name="new_term_name" required />
+					<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add', 'sell_media' ); ?>" />
+				</div>
+			</h2>
+		</form>
+		<?php
+	}
 	/**
 	 * Create data for javascript.
 	 *
