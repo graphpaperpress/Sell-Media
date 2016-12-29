@@ -156,10 +156,10 @@ class SellMediaLayouts {
 	public function nav_menu_css_class( $classes, $item ) {
 
 		if ( 'page' === $item->object ) {
-			if ( $this->settings->lightbox_page === $item->object_id ) {
+			if ( isset( $this->settings->lightbox_page ) && $this->settings->lightbox_page === $item->object_id ) {
 				$classes[] = 'lightbox-menu';
 			}
-			if ( $this->settings->checkout_page === $item->object_id ) {
+			if ( isset( $this->settings->checkout_page ) && $this->settings->checkout_page === $item->object_id ) {
 				if ( in_array( 'total', $item->classes, true ) ) {
 					$classes[] = 'checkout-total';
 				} else {
