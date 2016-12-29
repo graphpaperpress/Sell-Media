@@ -168,7 +168,7 @@ class Sell_Media_Price_Listings_Tabs {
 						<input type="{{input_type}}" class="small-text" name="{{field_name}}[height]" value="{{height}}" data-parsley-type="number" required>
 					</td>
 					<td>
-						<input type="text" class="small-text" name="{{field_name}}[price]" value="{{price}}" required>
+						<input type="number" class="small-text" name="{{field_name}}[price]" value="{{price}}" required step="0.01" min="0" placeholder="0.00">
 					</td>
 					<td>
 						<a href="#" class="sell-media-xit sell-media-price-group-delete-term" data-taxonomy="price-group" data-termid="{{term_id}}" data-type="price" data-message="{{alert_message}}"  data-index="{{value.index}}">×</a>
