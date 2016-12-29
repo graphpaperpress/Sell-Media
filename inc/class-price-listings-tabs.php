@@ -180,58 +180,57 @@ class Sell_Media_Price_Listings_Tabs {
 	<?php }
 
 	function save_data( $redirect_url ) {
-		$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
-		if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
-			if( 0 !== $parent_term_id ){
-				wp_update_term( $parent_term_id, $this->taxonomy, array(
-					'name' => $_POST['term_name'],
-				));
-			}
-			if ( 0 === $parent_term_id ) {
-				$term =wp_insert_term( $_POST['term_name'], $this->taxonomy );
-				$parent_term_id = $term['term_id'];
-			}
-		}
+		// Save new pricelist.
 		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
-			$term =wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
-		}
-
-		if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
-			foreach ( $_POST['terms_children'] as $term_id => $data ) {
-				$term_id = (int) $term_id;
-				if ( '' !== $data['name'] ) {
-					wp_update_term( $term_id, $this->taxonomy, array(
-						'name' => $data['name'],
-						'description' => $data['description'],
+			$term = wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
+			$parent_term_id = $term['term_id'];
+		} else {
+			// Update pricelists.
+			$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
+			if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
+				if ( 0 !== $parent_term_id ) {
+					wp_update_term( $parent_term_id, $this->taxonomy, array(
+						'name' => $_POST['term_name'],
 					));
-					update_term_meta( $term_id, 'width', $data['width'] );
-					update_term_meta( $term_id, 'height', $data['height'] );
-					update_term_meta( $term_id, 'price', $data['price'] );
 				}
 			}
-		}
 
-		if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
-			foreach ( $_POST['new_children'] as $term_id => $data ) {
-				if ( '' !== $data['name'] ) {
-					$term = wp_insert_term( $data['name'], $this->taxonomy, array(
+			if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
+				foreach ( $_POST['terms_children'] as $term_id => $data ) {
+					$term_id = (int) $term_id;
+					if ( '' !== $data['name'] ) {
+						wp_update_term( $term_id, $this->taxonomy, array(
+							'name' => $data['name'],
+							'description' => $data['description'],
+						));
+						update_term_meta( $term_id, 'width', $data['width'] );
+						update_term_meta( $term_id, 'height', $data['height'] );
+						update_term_meta( $term_id, 'price', $data['price'] );
+					}
+				}
+			}
+
+			if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
+				foreach ( $_POST['new_children'] as $term_id => $data ) {
+					if ( '' !== $data['name'] ) {
+						$term = wp_insert_term( $data['name'], $this->taxonomy, array(
 							'parent' => $parent_term_id,
 							'description' => $data['description'],
-						)
-					);
-					update_term_meta( $term['term_id'], 'width', $data['width'] );
-					update_term_meta( $term['term_id'], 'height', $data['height'] );
-					update_term_meta( $term['term_id'], 'price', $data['price'] );
+						) );
+						update_term_meta( $term['term_id'], 'width', $data['width'] );
+						update_term_meta( $term['term_id'], 'height', $data['height'] );
+						update_term_meta( $term['term_id'], 'price', $data['price'] );
+					}
 				}
 			}
-		}
 
-		if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
-			$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
-			if ( ! empty( $deleted_term_ids ) ) {
-				foreach ( $deleted_term_ids as $key => $term_id ) {
-					if ( 'new' !== $term_id ) {
-						wp_delete_term( (int) $term_id, $this->taxonomy );
+			if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
+				$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
+				if ( ! empty( $deleted_term_ids ) ) {
+					foreach ( $deleted_term_ids as $key => $term_id ) {
+						if ( 'new' !== $term_id ) {
+							wp_delete_term( (int) $term_id, $this->taxonomy );
+						}
 					}
 				}
 			}
