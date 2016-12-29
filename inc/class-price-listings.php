@@ -103,7 +103,7 @@ class Sell_Media_Price_Listings {
 			$url = add_query_arg( $url_parameters, $url );
 			?>
 			<div id="poststuff">
-				<form method="post" action="<?php echo esc_url( $url ); ?>">
+				<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-pricelist-form">
 					<?php
 					wp_nonce_field( 'sell-media-price-list-page' );
 					if ( isset( $current_screen->parent_file ) && $this->parent_slug === $current_screen->parent_file && $_GET['page'] === $this->menu_slug ) {
