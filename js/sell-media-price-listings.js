@@ -90,10 +90,12 @@
   $( '.tab-title a' ).click( function(){
     $(this).next().toggle();
   });
-  
+
   $("form input[type=submit]").click(function() {
     if( $(this).is( '#sell-media-save-button' )  ){
       $( 'input[name=new_term_name]' ).val( '' );
     }
   });
+
+  $('#sell-media-pricelist-form').parsley();
 })(jQuery);
