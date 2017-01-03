@@ -55,9 +55,32 @@ function sell_media_files_meta_box( $post ) {
 
 	<div id="sell-media-upload-field" class="sell-media-field">
 		<p><input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" /></p>
-		<p class="description"><?php _e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
-		<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
 	</div>
+
+	<?php do_action( 'sell_media_after_file_uploader', $post ); ?>
+
+	<ul class="attachments sell-media-upload-list">
+		<?php
+			$attachment_ids = sell_media_get_attachments( $post->ID );
+			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+				echo sell_media_list_uploads( $attachment_id );
+			}
+		?>
+	</ul>
+
+	<?php do_action( 'sell_media_after_files_meta_box', $post ); ?>
+	<!-- This hidden field holds all attached file ids -->
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
+<?php }
+
+/**
+ * After file uploader
+ */
+function sell_media_after_file_uploader( $post ) {
+	?>
+
+	<p class="description"><?php _e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
+	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
 
 	<div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
 		<h4><?php _e( 'Importing', 'sell_media' ); ?></h4>
@@ -82,20 +105,9 @@ function sell_media_files_meta_box( $post ) {
 			<p><strong><?php echo get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?></strong></p>
 		</div>
 	<?php endif; ?>
-
-	<ul class="attachments sell-media-upload-list">
-		<?php
-			$attachment_ids = sell_media_get_attachments( $post->ID );
-			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				echo sell_media_list_uploads( $attachment_id );
-			}
-		?>
-	</ul>
-
-	<?php do_action( 'sell_media_after_files_meta_box', $post ); ?>
-	<!-- This hidden field holds all attached file ids -->
-	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
-<?php }
+	<?php
+}
+add_action( 'sell_media_after_file_uploader', 'sell_media_after_file_uploader' );
 
 /**
  * Options meta box
