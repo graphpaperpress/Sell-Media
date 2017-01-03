@@ -54,8 +54,9 @@ function sell_media_submenu_order( $menu_ord ) {
 		'2'     => 'Add New',
 		'3'     => 'Collections',
 		'4'     => 'Licenses',
-		'5'     => 'Payments',
-		'6'     => 'Reports',
+		'5'     => 'Pricelists',
+		'6'     => 'Payments',
+		'7'     => 'Reports',
 		'97'    => 'Settings',
 		'99'    => 'Upgrades'
 	);
