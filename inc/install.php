@@ -142,16 +142,16 @@ function sell_media_compatible_version() {
 function sell_media_register_post_types() {
 
 	$settings = sell_media_get_plugin_options();
-	$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
+
 	/**
 	 * Register Item Custom Post Type
 	 */
 	$item_labels = array(
-		'name' => $plugin_name,
-		'singular_name' => $plugin_name,
+		'name' => __( 'Sell Media', 'sell_media' ),
+		'singular_name' => __( 'Sell Media', 'sell_media' ),
 		'all_items' => __( 'All Products', 'sell_media' ),
 		'add_new' => __( 'Add New', 'sell_media' ),
-		'add_new_item' => $plugin_name,
+		'add_new_item' => __( 'Sell Media', 'sell_media' ),
 		'edit_item' => __( 'Edit Product', 'sell_media' ),
 		'new_item' => __( 'New Product', 'sell_media' ),
 		'view_item' => __( 'View Product', 'sell_media' ),
@@ -159,7 +159,7 @@ function sell_media_register_post_types() {
 		'not_found' => __( 'No products found', 'sell_media' ),
 		'not_found_in_trash' => __( 'No products found in Trash', 'sell_media' ),
 		'parent_item_colon' => __( 'Parent Product:', 'sell_media' ),
-		'menu_name' => $plugin_name,
+		'menu_name' => __( 'Sell Media', 'sell_media' ),
 	);
 
 	$item_args = array(
@@ -185,7 +185,7 @@ function sell_media_register_post_types() {
 		'capability_type' => 'post',
 	);
 
-	register_post_type( 'sell_media_item', $item_args );
+	register_post_type( 'sell_media_item', apply_filters( 'sell_media_filter_post_type_registration_args', $item_args ) );
 
 	/**
 	 * Register Payment Custom Post Type
@@ -230,7 +230,7 @@ function sell_media_register_post_types() {
 		'map_meta_cap' => true, // Allow users to edit/remove existing payments
 	);
 
-	register_post_type( 'sell_media_payment', $payment_args );
+	register_post_type( 'sell_media_payment', apply_filters( 'sell_media_payment_filter_post_type_registration_args', $payment_args ) );
 
 }
 add_action( 'init', 'sell_media_register_post_types', 1 );
@@ -289,7 +289,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'price-group', array( 'sell_media_item' ), $price_group_args );
+	register_taxonomy( 'price-group', array( 'sell_media_item' ), apply_filters( 'sell_media_price_group_tax_registration_args', $price_group_args ) );
 
 	/**
 	 * Register Collection
@@ -324,7 +324,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'collection', array( 'sell_media_item' ), $collection_args );
+	register_taxonomy( 'collection', array( 'sell_media_item' ), apply_filters( 'sell_media_collection_tax_registration_args', $collection_args ) );
 
 	/**
 	 * Register Licenses
@@ -359,7 +359,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'licenses', array( 'sell_media_item' ), $licenses_args );
+	register_taxonomy( 'licenses', array( 'sell_media_item' ), apply_filters( 'sell_media_licenses_tax_registration_args', $licenses_args ) );
 
 	/**
 	 * Register Keywords
@@ -394,7 +394,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'keywords', array( 'attachment' ), $keywords_args );
+	register_taxonomy( 'keywords', array( 'attachment' ), apply_filters( 'sell_media_keyword_tax_registration_args', $keywords_args ) );
 
 	/**
 	 * Register Creator
@@ -428,7 +428,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'creator', array( 'sell_media_item', 'attachment' ), $creator_args );
+	register_taxonomy( 'creator', array( 'sell_media_item', 'attachment' ), apply_filters( 'sell_media_creator_tax_registration_args', $creator_args ) );
 
 	/**
 	 * Register City
@@ -462,7 +462,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'city', array( 'sell_media_item', 'attachment' ), $city_args );
+	register_taxonomy( 'city', array( 'sell_media_item', 'attachment' ), apply_filters( 'sell_media_city_tax_registration_args', $city_args ) );
 
 	/**
 	 * Register State
@@ -496,7 +496,7 @@ function sell_media_register_taxonomies() {
 		'query_var' => true,
 	);
 
-	register_taxonomy( 'state', array( 'sell_media_item', 'attachment' ), $state_args );
+	register_taxonomy( 'state', array( 'sell_media_item', 'attachment' ), apply_filters( 'sell_media_state_tax_registration_args', $state_args ) );
 
 }
 add_action( 'init', 'sell_media_register_taxonomies', 1 );
