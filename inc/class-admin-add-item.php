@@ -35,6 +35,9 @@ class SellMediaAdminAddItem {
 		remove_meta_box( 'files_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'stats_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'options_meta_box', 'sell_media_item', 'normal' );
+		remove_meta_box( 'licensesdiv', 'sell_media_item', 'side' );
+		remove_meta_box( 'collectiondiv', 'sell_media_item', 'side' );
+		remove_meta_box( 'postimagediv', 'sell_media_item', 'side' );
 		remove_meta_box( 'authordiv', 'sell_media_item', 'normal' );
 		remove_action( 'edit_form_advanced', 'sell_media_editor' );
 	}
