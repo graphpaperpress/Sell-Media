@@ -6,7 +6,7 @@
  */
 
 ?>
-<div class="sell-medin-add-item-main-container-wrap">
+<div class="sell-media-add-item-main-container-wrap">
 	<ul class="main-container-tabs-nav">
 		<li><a href="#sell-media-file-upload" class="sell-media-tab-nav-active"><?php esc_html_e( 'File Upload', 'sell_media' ); ?></a></li>
 		<li><a href="#sell-media-settings"><?php esc_html_e( 'Settings', 'sell_media' ); ?></a></li>

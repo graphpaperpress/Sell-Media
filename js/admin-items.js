@@ -314,7 +314,7 @@ jQuery( document ).ready(function( $ ){
     /*
      * Tab js.
      */
-    $('.sell-medin-add-item-main-container-wrap').tabs({
+    $('.sell-media-add-item-main-container-wrap').tabs({
   	  activate: function( event, ui ) {
   			$(ui.newPanel).css({display:'table'})
   		},

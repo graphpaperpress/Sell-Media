@@ -339,7 +339,7 @@ div#sell-media-main-container h2.hndle{
   margin: 0;
   padding: 0;
 }
-.sell-medin-add-item-main-container-wrap{
+.sell-media-add-item-main-container-wrap{
   border: none;
   background: none;
   border-radius: 0;
@@ -413,7 +413,7 @@ div#sell-media-main-container .main-container-tabs-contents{
   border-left: 1px solid #ddd;
 }
 
-.sell-medin-add-item-main-container-wrap .main-container-tabs-contents div.sell-media-tab-content{
+.sell-media-add-item-main-container-wrap .main-container-tabs-contents div.sell-media-tab-content{
   display: none;
   border-radius: 0;
   border: none;
