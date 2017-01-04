@@ -320,3 +320,107 @@
 .sell-media-price-groups-container td:first-child {
     width: 20%;
     }
+
+/* Add item tab ui*/
+div#sell-media-main-container {
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+div#sell-media-main-container button.handlediv.button-link{
+  display: none;
+}
+
+div#sell-media-main-container h2.hndle{
+  display: none;
+}
+
+#poststuff div#sell-media-main-container .inside{
+  margin: 0;
+  padding: 0;
+}
+.sell-medin-add-item-main-container-wrap{
+  border: none;
+  background: none;
+  border-radius: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+div#sell-media-main-container ul.main-container-tabs-nav{
+  width: 160px;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid #ddd;
+  border-radius: 0;
+  background: none;
+  border: none;
+}
+
+div#sell-media-main-container ul.main-container-tabs-nav li{
+  float: left;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
+  outline: 0;
+}
+
+div#sell-media-main-container ul.main-container-tabs-nav li a{
+  float: left;
+  width: 161px;
+  margin: 0px 0 0 0;
+  padding: 20px 20px 20px 20px;
+  text-decoration: none;
+  color: #999;
+  border-bottom: 1px solid #ddd;
+  background-position: left center;
+  background-repeat: no-repeat;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: none;
+  -webkit-transition: none;
+  outline: 0;
+}
+
+div#sell-media-main-container ul.main-container-tabs-nav li.ui-state-active a,
+div#sell-media-main-container ul.main-container-tabs-nav li a:hover{
+  width: 161px;
+  margin: -1px 0 0 0;
+  padding: 20px 20px 20px 20px;
+  text-decoration: none;
+  color: #444;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ffffff;
+  background-color: #ffffff;
+  background-position: 20px center;
+}
+
+div#sell-media-main-container ul.main-container-tabs-nav li:last-child a,
+div#sell-media-main-container ul.main-container-tabs-nav li:last-child a:hover{
+  border-bottom: none;
+}
+div#sell-media-main-container .main-container-tabs-contents{
+  margin: 0 0 0 160px;
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-left: 1px solid #ddd;
+}
+
+.sell-medin-add-item-main-container-wrap .main-container-tabs-contents div.sell-media-tab-content{
+  display: none;
+  border-radius: 0;
+  border: none;
+}
+
+.main-container-tabs-contents:after{
+  content: "";
+  display: table;
+  clear: both;
+}
