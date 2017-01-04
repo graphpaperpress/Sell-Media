@@ -28,7 +28,9 @@
 			<?php sell_media_editor(); ?>
 		</div>
 		<div id="sell-media-advanced" class="sell-media-tab-content">
-			<?php echo sell_media_options_meta_box( $post ); ?>
+			<?php post_categories_meta_box( $post, array('args' =>array( 'taxonomy' => 'collection' )) ); ?>
+			<?php post_categories_meta_box( $post, array('args' =>array( 'taxonomy' => 'licenses' )) ); ?>
+			<?php post_tags_meta_box( $post, array('args' =>array( 'taxonomy' => 'creator' )) ); ?>
 		</div>
 	</div>
 </div>
