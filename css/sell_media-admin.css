@@ -424,3 +424,7 @@ div#sell-media-main-container .main-container-tabs-contents{
   display: table;
   clear: both;
 }
+
+.post-type-sell_media_item #tagsdiv-creator{
+  display: none;
+}
