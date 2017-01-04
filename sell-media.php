@@ -133,6 +133,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 					self::$instance->notices        = new SellMediaAdminNotices();
 					self::$instance->admin_search   = new SellMediaAdminSearch();
 					self::$instance->price_listings   = new Sell_Media_Price_Listings();
+					self::$instance->admin_add_item   = new SellMediaAdminAddItem();
 				}
 
 				// Set cart global variable.
@@ -276,6 +277,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-search.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-price-listings.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-price-listings-tabs.php';
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-add-item.php';
 
 			}
 
