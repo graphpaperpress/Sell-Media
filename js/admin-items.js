@@ -97,7 +97,7 @@ jQuery( document ).ready(function( $ ){
     function sell_media_is_attachment_audio_video( attachment_ids ){
         if (attachment_ids === undefined)
             return false;
-        
+
         var attachment_ids = attachment_ids.split( ',' );
         var data = {
             'action' : 'check_attachment_is_audio_video',
@@ -272,7 +272,7 @@ jQuery( document ).ready(function( $ ){
             $( ':input[name="sell_media_price"]', $edit_row ).val(  $sell_media_price.replace(/^\D+/g, "") );
 
              $( 'select[name="sell_media_price_group"] option', $edit_row ).filter(function() {
-                return $(this).text() == $sell_media_price_group; 
+                return $(this).text() == $sell_media_price_group;
             }).attr('selected', true);
         }
     };
@@ -310,5 +310,16 @@ jQuery( document ).ready(function( $ ){
             }
         });
     });
-});
 
+    /*
+     * Tab js.
+     */
+    $('.sell-medin-add-item-main-container-wrap').tabs({
+  	  activate: function( event, ui ) {
+  			$(ui.newPanel).css({display:'table'})
+  		},
+  		create: function( event, ui ) {
+  			$(ui.panel).css({display:'table'})
+  		}
+  	});
+});
