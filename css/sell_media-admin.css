@@ -411,6 +411,38 @@ div#sell-media-main-container ul.main-container-tabs-nav li:last-child a,
 div#sell-media-main-container ul.main-container-tabs-nav li:last-child a:hover{
   border-bottom: none;
 }
+
+/* Tab Icons */
+.sell-media-add-item-main-container-wrap .ui-tabs-nav li a:before {
+	font-family: 'Dashicons';
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+	margin-right: 10px;
+	display: inline-block;
+	line-height: 1;
+}
+
+.sell-media-add-item-main-container-wrap .ui-tabs-nav li#sell-media-tab-file_upload a:before {
+	content: "\f317";
+}
+
+.sell-media-add-item-main-container-wrap .ui-tabs-nav li#sell-media-tab-settings a:before {
+	content: "\f111";
+}
+
+.sell-media-add-item-main-container-wrap .ui-tabs-nav li#sell-media-tab-stats a:before {
+	content: "\f348";
+}
+
+.sell-media-add-item-main-container-wrap .ui-tabs-nav li#sell-media-tab-seo a:before {
+	content: "\f185";
+}
+
+.sell-media-add-item-main-container-wrap .ui-tabs-nav li#sell-media-tab-advanced a:before {
+	content: "\f108";
+}
+
 div#sell-media-main-container .main-container-tabs-contents{
   margin: 0 0 0 160px;
   padding: 20px;

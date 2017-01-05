@@ -79,7 +79,7 @@ class SellMediaAdminAddItem {
 			'content_callback' => array( $this, 'settings_callback' ),
 		);
 
-		$tabs['stat'] = array(
+		$tabs['stats'] = array(
 			'tab_label' => __( 'Stats', 'sell_media' ),
 			'content_title' => __( 'Stats', 'sell_media' ),
 			'content_callback' => array( $this, 'stats_callback' ),

@@ -18,7 +18,7 @@ if ( empty( $tabs ) ) {
 		foreach ( $tabs as $key => $tab ) :
 			$class = ( 0 === $i ) ? 'sell-media-tab-nav-active' : '';
 		?>
-		<li><a href="#sell-media-<?php echo $key; ?>" class="<?php echo $class; ?>"><?php echo esc_attr( $tab['tab_label'] ); ?></a></li>
+		<li id="sell-media-tab-<?php echo esc_attr( $key ); ?>"><a href="#sell-media-<?php echo esc_attr( $key ); ?>" class="<?php echo esc_attr( $class ); ?>"><?php echo esc_attr( $tab['tab_label'] ); ?></a></li>
 		<?php endforeach; ?>
 	</ul>
 	<div class="main-container-tabs-contents">
