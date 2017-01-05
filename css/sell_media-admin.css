@@ -1,16 +1,16 @@
 /* Global
 -------------------------------------------------------------- */
 #adminmenu div.wp-menu-image {
-    overflow: hidden;
+	overflow: hidden;
 }
 #adminmenu div.wp-menu-image img {
-    display: none;
+	display: none;
 }
 #product_meta_box input[type="file"] {
-    padding: 0px;
-    border: 0;
-    background: transparent;
-    margin: 1em 0;
+	padding: 0px;
+	border: 0;
+	background: transparent;
+	margin: 1em 0;
 }
 
 /* jQuery UI Slider
@@ -80,61 +80,61 @@
 /* Payments
 -------------------------------------------------------------- */
 .total-revenue {
-    float: left;
+	float: left;
 }
 
 .sell-media-admin-payments td.media-icon {
-    width: 50px;
-    padding-bottom: 5px;
+	width: 50px;
+	padding-bottom: 5px;
 }
 
 .sell-media-admin-payments td.media-icon img {
-    max-width: 100%;
-    height: auto;
+	max-width: 100%;
+	height: auto;
 }
 
 .sell-media-admin-payments input[type="text"]{
-    width: 100%;
-    margin: 5px 0 0 0;
+	width: 100%;
+	margin: 5px 0 0 0;
 }
 
 .sell-media-admin-payments .wp-list-table {
-    margin: 0 0 15px;
+	margin: 0 0 15px;
 }
 
 .post-type-sell_media_payment .postbox .inside {
-    overflow: scroll;
+	overflow: scroll;
 }
 
 /* Payments Report
 -------------------------------------------------------------- */
 .earnings_chart {
-    margin-bottom: 40px;
+	margin-bottom: 40px;
 }
 
 
 /* Media attachment edit page
 -------------------------------------------------------------- */
 .field-has-button {
-    margin-right: 10px;
-    float: left;
+	margin-right: 10px;
+	float: left;
 }
 .sell-media-image {
-    margin: 1em 0 0;
+	margin: 1em 0 0;
 }
 .compat-field-sell th {
-    padding: 0 5px 0 0;
+	padding: 0 5px 0 0;
 }
 .compat-field-sell input[type="checkbox"] {
-    width: auto;
+	width: auto;
 }
 .sell-media-item-table .sell-media-upload-trigger {
-    cursor: pointer;
-    float: left;
+	cursor: pointer;
+	float: left;
 }
 .sell_media_item_page_sell_media_add_bulk .media-sidebar .compat-field-sell,
 .media-sidebar .compat-field-sell {
-    display: none;
+	display: none;
 }
 
 /* Settings Page
@@ -151,175 +151,183 @@
 /* Item meta section
 -------------------------------------------------------------- */
 .sell-media-upload-list:after {
-    content: "";
-    display: table;
-    clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 .sell-media-field {
-    display: block;
-    padding: 10px 0;
+	display: block;
+	padding: 10px 0;
 }
 .sell-media-field label {
-    width: 30%;
-    float: left;
+	width: 30%;
+	float: left;
 }
 .sell-media-field label,
 .sell-media-field input,
 .sell-media-field select,
 .sell-media-field textarea {
-    display: inline-block;
+	display: inline-block;
 }
 .sell-media-field select {
    width: 100px;
 }
 .sell-media-field .desc {
-    color: #666;
-    font-style: italic;
-    margin-left: 10px;
+	color: #666;
+	font-style: italic;
+	margin-left: 10px;
 }
 .sell-media-upload-options {
-    vertical-align: -webkit-baseline-middle;
-    text-decoration: none;
+	vertical-align: -webkit-baseline-middle;
+	text-decoration: none;
 }
 .sell-media-upload-options .dashicons {
-    width: 13px;
-    height: 13px;
-    font-size: 13px;
-    vertical-align: baseline;
+	width: 13px;
+	height: 13px;
+	font-size: 13px;
+	vertical-align: baseline;
 }
 .sell-media-attachment:nth-child(4n+1){
-    clear: left;
+	clear: left;
 }
 .sell-media-attachment img {
-    opacity: 1;
-    -webkit-transition: opacity 0.25s ease;
-    -moz-transition: opacity 0.25s ease;
-    -o-transition: opacity 0.25s ease;
-    transition: opacity 0.25s ease;
-    /* prevents flickering */
-    -webkit-backface-visibility: hidden;
+	opacity: 1;
+	-webkit-transition: opacity 0.25s ease;
+	-moz-transition: opacity 0.25s ease;
+	-o-transition: opacity 0.25s ease;
+	transition: opacity 0.25s ease;
+	/* prevents flickering */
+	-webkit-backface-visibility: hidden;
 }
 .sell-media-attachment:hover img {
-    opacity: 0.75;
+	opacity: 0.75;
 }
 .sell-media-attachment .sell-media-edit,
 .sell-media-attachment .sell-media-delete {
-    display: none;
-    position: absolute;
-    text-decoration: none;
-    color: rgba(255,255,255,.5);
-    background: rgba(0,0,0,.5);
-    z-index: 10;
+	display: none;
+	position: absolute;
+	text-decoration: none;
+	color: rgba(255,255,255,.5);
+	background: rgba(0,0,0,.5);
+	z-index: 10;
 }
+
+#sell-media-main-container .ui-state-active a.sell-media-edit,
+#sell-media-main-container .ui-state-active a.sell-media-edit:link,
+#sell-media-main-container .ui-state-active a.sell-media-edit:visited {
+	color: rgba(255,255,255,.5);
+}
+
 .sell-media-attachment .sell-media-edit {
-    bottom: 20px;
-    left: 14px;
+	bottom: 20px;
+	left: 14px;
 }
 .sell-media-attachment .sell-media-delete {
-    bottom: 20px;
-    left: 44px;
+	bottom: 20px;
+	left: 44px;
 }
 .sell-media-attachment .sell-media-edit:hover,
-.sell-media-attachment .sell-media-delete:hover {
-    color: #fff;
-    background: #000;
+.sell-media-attachment .sell-media-delete:hover,
+#sell-media-main-container .ui-state-active a.sell-media-edit:hover {
+	color: #fff;
+	background: #000;
 }
 .sell-media-attachment:hover .sell-media-edit,
 .sell-media-attachment:hover .sell-media-delete {
-    display: inline-block;
+	display: inline-block;
 }
 
 /* Term meta
 -------------------------------------------------------------- */
 .collection-icon input[type="button"] {
-    width: auto;
-    }
+	width: auto;
+	}
 
 .collection-icon input[type="text"] {
-    width: 115px;
-    }
+	width: 115px;
+	}
 
 .upload_image_preview img {
-    margin-top: 10px;
-    }
+	margin-top: 10px;
+	}
 
 .sell-media-collection-form-field input[type="button"]{
-    width: auto;
-    }
+	width: auto;
+	}
 
 .sell-media-collection-form-field input[type="text"]{
-    width: 50%;
-    }
+	width: 50%;
+	}
 
 .fixed .column-slug {
-    width: 15%;
-    }
+	width: 15%;
+	}
 
 .fixed .num {
-    width: 15%
-    }
+	width: 15%
+	}
 
 /* Price Group
 -------------------------------------------------------------- */
 .sell-media-price-groups-container #post-body-content {
-    position: relative;
-    float: none;
-    }
+	position: relative;
+	float: none;
+	}
 
 
 .sell-media-price-groups-container #nav-menu-header,
 .sell-media-price-groups-container .nav-menu-footer {
-    padding: 10px;
-    }
+	padding: 10px;
+	}
 
 .sell-media-price-groups-container #nav-menu-header input[type="text"]{
-    width: 16em;
+	width: 16em;
 }
 
 .sell-media-price-groups-container .nav-menu-footer {
-    border-top: 1px solid #dfdfdf;
-    margin: 10px 0 0;
-    background: #F1F1F1;
-    background-image: -webkit-gradient(linear,left bottom,left top,from(#ECECEC),to(#F9F9F9));
-    background-image: -webkit-linear-gradient(bottom,#ECECEC,#F9F9F9);
-    background-image: -moz-linear-gradient(bottom,#ECECEC,#F9F9F9);
-    background-image: -o-linear-gradient(bottom,#ECECEC,#F9F9F9);
-    background-image: linear-gradient(to top,#ECECEC,#F9F9F9);
-    }
+	border-top: 1px solid #dfdfdf;
+	margin: 10px 0 0;
+	background: #F1F1F1;
+	background-image: -webkit-gradient(linear,left bottom,left top,from(#ECECEC),to(#F9F9F9));
+	background-image: -webkit-linear-gradient(bottom,#ECECEC,#F9F9F9);
+	background-image: -moz-linear-gradient(bottom,#ECECEC,#F9F9F9);
+	background-image: -o-linear-gradient(bottom,#ECECEC,#F9F9F9);
+	background-image: linear-gradient(to top,#ECECEC,#F9F9F9);
+	}
 
 .sell-media-price-groups-container .sell-media-xit {
-    float: left;
-    margin: -20px 0 0 -10px;
-    }
+	float: left;
+	margin: -20px 0 0 -10px;
+	}
 
 .sell-media-price-groups-container .submitdelete {
-    color: #F00;
-    border-bottom: 1px solid #F00;
-    float: right;
-    text-decoration: none;
-    padding: 1px 2px;
-    }
+	color: #F00;
+	border-bottom: 1px solid #F00;
+	float: right;
+	text-decoration: none;
+	padding: 1px 2px;
+	}
 
 .sell-media-price-groups-container .submitdelete:hover {
-    background: #f00;
-    color: #fff;
-    }
+	background: #f00;
+	color: #fff;
+	}
 
 .sell-media-price-groups-container .menu-management {
-    position: relative;
-    margin-right: 20px;
-    margin-top: -3px;
-    width: 100%;
-    }
+	position: relative;
+	margin-right: 20px;
+	margin-top: -3px;
+	width: 100%;
+	}
 
 .sell-media-price-groups-container .description {
-    font-size: 10px;
-    margin: 0;
-    }
+	font-size: 10px;
+	margin: 0;
+	}
 
 .sell-media-price-groups-container td:first-child {
-    width: 20%;
-    }
+	width: 20%;
+	}
 
 /* Add item tab ui*/
 div#sell-media-main-container {
