@@ -148,22 +148,27 @@ class SellMediaAdminAddItem {
 	 */
 	function advanced_options_callback( $post ) {
 
+		$obj = get_post_type_object( 'sell_media_item' );
+
 		echo '<div id="sell-media-advanced-options-container">';
 
 			echo '<div id="sell-media-tax-collections" class="sell-media-tax-wrap">';
 				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Collections', 'sell_media' ) );
-				printf( '<p class="tax-description desc">%s</p>', esc_html__( 'Collections', 'sell_media' ) );
+				printf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_html__( 'Assign this', 'sell_media' ), strtolower( $obj->labels->singular_name ), esc_html__( 'to a collection', 'sell_media' ) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
+				printf( '<p class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></p>', esc_html__( 'Edit All Collections', 'sell_media' ) );
 			echo '</div>';
 
 			echo '<div id="sell-media-tax-licenses" class="sell-media-tax-wrap">';
 				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Licenses', 'sell_media' ) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
+				printf( '<p class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=licenses&post_type=sell_media_item' ) ) . '">%s</a></p>', esc_html__( 'Edit All Licenses', 'sell_media' ) );
 			echo '</div>';
 
 			echo '<div id="sell-media-tax-creators" class="sell-media-tax-wrap">';
 				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Creaters', 'sell_media' ) );
 				post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
+				printf( '<p class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></p>', esc_html__( 'Edit All Creators', 'sell_media' ) );
 			echo '</div>';
 
 		echo '</div>';

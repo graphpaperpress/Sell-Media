@@ -295,7 +295,7 @@ function sell_media_register_taxonomies() {
 	 * Register Collection
 	 */
 	$collection_labels = array(
-		'name' => __( 'Product Collections', 'sell_media' ),
+		'name' => __( 'Collections', 'sell_media' ),
 		'singular_name' => __( 'Collection', 'sell_media' ),
 		'search_items' => __( 'Search Collection', 'sell_media' ),
 		'popular_items' => __( 'Popular Collection', 'sell_media' ),

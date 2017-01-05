@@ -506,6 +506,17 @@ div#sell-media-main-container .main-container-tabs-contents{
 	margin-bottom: 20px;
 }
 
+.sell-media-tax-wrap .tax-edit {
+	margin: 10px 0;
+    font-weight: 600;
+}
+
+.sell-media-tax-wrap .tax-edit:before {
+	font-family: "Dashicons";
+	content: "\f464";
+	margin-right: 5px;
+}
+
 .sell-media-tab-content p.hide-if-no-js{
   display: none;
 }
