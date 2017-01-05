@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Sell Media add item tabs.
+ */
 class SellMediaAdminAddItem {
 
 	/**
@@ -30,6 +33,11 @@ class SellMediaAdminAddItem {
 		add_action( 'add_meta_boxes', array( $this, 'register_metaboxes' ), 999 );
 	}
 
+	/**
+	 * Register new metaboxes.
+	 *
+	 * @return void
+	 */
 	public function register_metaboxes() {
 		add_meta_box( 'sell-media-main-container', __( 'My Meta Box', 'sell_media' ), array( $this, 'main_container' ), 'sell_media_item', 'normal', 'high' );
 		remove_meta_box( 'files_meta_box', 'sell_media_item', 'normal' );
@@ -42,9 +50,108 @@ class SellMediaAdminAddItem {
 		remove_action( 'edit_form_advanced', 'sell_media_editor' );
 	}
 
+	/**
+	 * Main container call back.
+	 *
+	 * @return void
+	 */
 	public function main_container() {
 		global $post;
 		wp_enqueue_script( 'jquery-ui-tabs' );
 		include sprintf( '%s/themes/admin-add-item-main-container.php', untrailingslashit( plugin_dir_path( dirname(__FILE__) ) ) );
+	}
+
+	/**
+	 * Tabs for add item page.
+	 *
+	 * @return array Tabs array.
+	 */
+	public function get_tabs() {
+		$tabs['file_upload'] = array(
+			'tab_label' => __( 'File Upload', 'sell_media' ),
+			'content_title' => __( 'File Upload', 'sell_media' ),
+			'content_callback' => array( $this, 'file_upload_callback' ),
+		);
+
+		$tabs['settings'] = array(
+			'tab_label' => __( 'Settings', 'sell_media' ),
+			'content_title' => __( 'Settings', 'sell_media' ),
+			'content_callback' => array( $this, 'settings_callback' ),
+		);
+
+		$tabs['stat'] = array(
+			'tab_label' => __( 'Stat', 'sell_media' ),
+			'content_title' => __( 'Stat', 'sell_media' ),
+			'content_callback' => array( $this, 'stat_callback' ),
+		);
+
+		$tabs['seo'] = array(
+			'tab_label' => __( 'SEO', 'sell_media' ),
+			'content_title' => __( 'SEO', 'sell_media' ),
+			'content_callback' => array( $this, 'seo_callback' ),
+		);
+
+		$tabs['advanced'] = array(
+			'tab_label' => __( 'Advanced Options', 'sell_media' ),
+			'content_title' => __( 'Advanced Options', 'sell_media' ),
+			'content_callback' => array( $this, 'advance_options_callback' ),
+		);
+
+		return apply_filters( 'sell_media_admin_new_item_tabs', $tabs );
+	}
+
+	/**
+	 * File upload tab content.
+	 *
+	 * @param  object $post Post object.
+	 * @return void
+	 */
+	function file_upload_callback( $post ) {
+		sell_media_files_meta_box( $post );
+	}
+
+	/**
+	 * Setting tab content.
+	 *
+	 * @param  object $post Post object.
+	 * @return void
+	 */
+	function settings_callback( $post ) {
+		sell_media_options_meta_box( $post );
+	}
+
+	/**
+	 * Stat tab content.
+	 *
+	 * @param  object $post Post object.
+	 * @return void
+	 */
+	function stat_callback( $post ) {
+		sell_media_stats_meta_box( $post );
+	}
+
+	/**
+	 * SEO tab content.
+	 *
+	 * @param  object $post Post object.
+	 * @return void
+	 */
+	function seo_callback( $post ) {
+		sell_media_editor( $post );
+	}
+
+	/**
+	 * Advance options tab content.
+	 *
+	 * @param  object $post Post object.
+	 * @return void
+	 */
+	function advance_options_callback( $post ) {
+		printf( '<h3 class="tax-title">%s</h3>', __( 'Collections', 'sell_media' ) );
+		post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
+		printf( '<h3 class="tax-title">%s</h3>', __( 'Licenses', 'sell_media' ) );
+		post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
+		printf( '<h3 class="tax-title">%s</h3>', __( 'Creaters', 'sell_media' ) );
+		post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
 	}
 }
