@@ -5,32 +5,30 @@
  * @package Sell Media
  */
 
+global $post;
+$tabs = $this->get_tabs();
+if ( empty( $tabs ) ) {
+	return false;
+}
 ?>
 <div class="sell-media-add-item-main-container-wrap">
 	<ul class="main-container-tabs-nav">
-		<li><a href="#sell-media-file-upload" class="sell-media-tab-nav-active"><?php esc_html_e( 'File Upload', 'sell_media' ); ?></a></li>
-		<li><a href="#sell-media-settings"><?php esc_html_e( 'Settings', 'sell_media' ); ?></a></li>
-		<li><a href="#sell-media-stats"><?php esc_html_e( 'Stats', 'sell_media' ); ?></a></li>
-		<li><a href="#sell-media-seo"><?php esc_html_e( 'SEO', 'sell_media' ); ?></a></li>
-		<li><a href="#sell-media-advanced"><?php esc_html_e( 'Advanced Options', 'sell_media' ); ?></a></li>
+		<?php
+		foreach ( $tabs as $key => $tab ) :
+			$class = ( 0 === $i ) ? 'sell-media-tab-nav-active' : '';
+		?>
+		<li><a href="#sell-media-<?php echo $key; ?>" class="<?php echo $class; ?>"><?php echo esc_attr( $tab['tab_label'] ); ?></a></li>
+		<?php endforeach; ?>
 	</ul>
 	<div class="main-container-tabs-contents">
-		<div id="sell-media-file-upload" class="ui-state-active sell-media-tab-content">
-			<?php echo sell_media_files_meta_box( $post ); ?>
+		<?php
+		foreach ( $tabs as $key => $tab ) :
+		?>
+		<div id="sell-media-<?php echo $key; ?>" class="ui-state-active sell-media-tab-content">
+			<h3 class="sell-media-tab-content-title"><?php echo esc_attr( $tab['content_title'] ); ?></h3>
+			<?php
+			call_user_func( $tab['content_callback'], $post ); ?>
 		</div>
-		<div id="sell-media-settings" class="sell-media-tab-content">
-			<?php echo sell_media_options_meta_box( $post ); ?>
-		</div>
-		<div id="sell-media-stats" class="sell-media-tab-content">
-			<?php echo sell_media_stats_meta_box( $post ); ?>
-		</div>
-		<div id="sell-media-seo" class="sell-media-tab-content">
-			<?php sell_media_editor(); ?>
-		</div>
-		<div id="sell-media-advanced" class="sell-media-tab-content">
-			<?php post_categories_meta_box( $post, array('args' =>array( 'taxonomy' => 'collection' )) ); ?>
-			<?php post_categories_meta_box( $post, array('args' =>array( 'taxonomy' => 'licenses' )) ); ?>
-			<?php post_tags_meta_box( $post, array('args' =>array( 'taxonomy' => 'creator' )) ); ?>
-		</div>
+		<?php endforeach; ?>
 	</div>
 </div>
