@@ -25,7 +25,7 @@ if ( empty( $tabs ) ) {
 		<?php
 		foreach ( $tabs as $key => $tab ) :
 		?>
-		<div id="sell-media-<?php echo $key; ?>" class="ui-state-active sell-media-tab-content">
+		<div id="sell-media-<?php echo esc_attr( $key ); ?>" class="ui-state-active sell-media-tab-content">
 			<h3 class="sell-media-tab-content-title"><?php echo esc_attr( $tab['content_title'] ); ?></h3>
 			<?php
 			call_user_func( $tab['content_callback'], $post ); ?>
