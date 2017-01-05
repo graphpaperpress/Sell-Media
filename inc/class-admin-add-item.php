@@ -73,6 +73,12 @@ class SellMediaAdminAddItem {
 			'content_callback' => array( $this, 'file_upload_callback' ),
 		);
 
+		$tabs['description'] = array(
+			'tab_label' => __( 'Description', 'sell_media' ),
+			'content_title' => __( 'Description', 'sell_media' ),
+			'content_callback' => array( $this, 'description_callback' ),
+		);
+
 		$tabs['settings'] = array(
 			'tab_label' => __( 'Settings', 'sell_media' ),
 			'content_title' => __( 'Settings', 'sell_media' ),
@@ -83,12 +89,6 @@ class SellMediaAdminAddItem {
 			'tab_label' => __( 'Stats', 'sell_media' ),
 			'content_title' => __( 'Stats', 'sell_media' ),
 			'content_callback' => array( $this, 'stats_callback' ),
-		);
-
-		$tabs['seo'] = array(
-			'tab_label' => __( 'SEO', 'sell_media' ),
-			'content_title' => __( 'SEO', 'sell_media' ),
-			'content_callback' => array( $this, 'seo_callback' ),
 		);
 
 		$tabs['advanced'] = array(
@@ -108,6 +108,16 @@ class SellMediaAdminAddItem {
 	 */
 	function file_upload_callback( $post ) {
 		sell_media_files_meta_box( $post );
+	}
+
+	/**
+	 * Description tab content.
+	 *
+	 * @param  object $post Post object.
+	 * @return void
+	 */
+	function description_callback( $post ) {
+		sell_media_editor( $post );
 	}
 
 	/**
@@ -131,27 +141,31 @@ class SellMediaAdminAddItem {
 	}
 
 	/**
-	 * SEO tab content.
-	 *
-	 * @param  object $post Post object.
-	 * @return void
-	 */
-	function seo_callback( $post ) {
-		sell_media_editor( $post );
-	}
-
-	/**
 	 * Advance options tab content.
 	 *
 	 * @param  object $post Post object.
 	 * @return void
 	 */
 	function advanced_options_callback( $post ) {
-		printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Collections', 'sell_media' ) );
-		post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
-		printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Licenses', 'sell_media' ) );
-		post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
-		printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Creaters', 'sell_media' ) );
-		post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
+
+		echo '<div id="sell-media-advanced-options-container">';
+
+			echo '<div id="sell-media-tax-collections" class="sell-media-tax-wrap">';
+				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Collections', 'sell_media' ) );
+				printf( '<p class="tax-description desc">%s</p>', esc_html__( 'Collections', 'sell_media' ) );
+				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
+			echo '</div>';
+
+			echo '<div id="sell-media-tax-licenses" class="sell-media-tax-wrap">';
+				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Licenses', 'sell_media' ) );
+				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
+			echo '</div>';
+
+			echo '<div id="sell-media-tax-creators" class="sell-media-tax-wrap">';
+				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Creaters', 'sell_media' ) );
+				post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
+			echo '</div>';
+
+		echo '</div>';
 	}
 }
