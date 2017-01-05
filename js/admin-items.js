@@ -314,12 +314,14 @@ jQuery( document ).ready(function( $ ){
     /*
      * Tab js.
      */
-    $('.sell-media-add-item-main-container-wrap').tabs({
-  	  activate: function( event, ui ) {
-  			$(ui.newPanel).css({display:'table'})
-  		},
-  		create: function( event, ui ) {
-  			$(ui.panel).css({display:'table'})
-  		}
-  	});
+    if ( $.fn.tabs ) {
+      $('.sell-media-add-item-main-container-wrap').tabs({
+    	  activate: function( event, ui ) {
+    			$(ui.newPanel).css({display:'table'})
+    		},
+    		create: function( event, ui ) {
+    			$(ui.panel).css({display:'table'})
+    		}
+    	});
+    }
 });
