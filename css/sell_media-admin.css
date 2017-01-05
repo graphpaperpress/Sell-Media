@@ -418,8 +418,9 @@ div#sell-media-main-container ul.main-container-tabs-nav li:last-child a:hover{
 	width: 20px;
 	height: 20px;
 	font-size: 20px;
-	margin-right: 10px;
+	margin: 0 10px 5px 0;
 	display: inline-block;
+	vertical-align: middle;
 	line-height: 1;
 }
 
