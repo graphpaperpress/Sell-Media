@@ -127,7 +127,7 @@ function sell_media_options_meta_box( $post ) {
 	</div>
 
 	<div id="sell-media-price-group-field" class="sell-media-field">
-		<label for="sell-media-price-group"><?php _e( 'Price group for downloads', 'sell_media' ); ?></label>
+		<label for="sell-media-price-group"><?php _e( 'Pricelist for downloads', 'sell_media' ); ?></label>
 		<?php
 			$args = array(
 				'show_option_none' => __( 'None', 'sell_media' ),
@@ -143,7 +143,7 @@ function sell_media_options_meta_box( $post ) {
 			);
 			wp_dropdown_categories( $args );
 		?>
-		<span class="desc"><?php printf( __( '<a href="%1$s">Create new price group</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' ); ?></span>
+		<span class="desc"><?php printf( __( '<a href="%1$s">Create new pricelist</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ); ?></span>
 	</div>
 
 	<?php do_action( 'sell_media_after_options_meta_box', $post->ID );

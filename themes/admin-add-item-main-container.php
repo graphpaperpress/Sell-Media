@@ -6,6 +6,7 @@
  */
 
 global $post;
+$i = 0;
 $tabs = $this->get_tabs();
 if ( empty( $tabs ) ) {
 	return false;

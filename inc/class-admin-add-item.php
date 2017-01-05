@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Notices
+ * Add New Items Admin Page
  *
  * @package Sell Media
  * @author Thad Allender <support@graphpaperpress.com>
@@ -58,7 +58,7 @@ class SellMediaAdminAddItem {
 	public function main_container() {
 		global $post;
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		include sprintf( '%s/themes/admin-add-item-main-container.php', untrailingslashit( plugin_dir_path( dirname(__FILE__) ) ) );
+		include sprintf( '%s/themes/admin-add-item-main-container.php', untrailingslashit( plugin_dir_path( dirname( __FILE__ ) ) ) );
 	}
 
 	/**
@@ -80,9 +80,9 @@ class SellMediaAdminAddItem {
 		);
 
 		$tabs['stat'] = array(
-			'tab_label' => __( 'Stat', 'sell_media' ),
-			'content_title' => __( 'Stat', 'sell_media' ),
-			'content_callback' => array( $this, 'stat_callback' ),
+			'tab_label' => __( 'Stats', 'sell_media' ),
+			'content_title' => __( 'Stats', 'sell_media' ),
+			'content_callback' => array( $this, 'stats_callback' ),
 		);
 
 		$tabs['seo'] = array(
@@ -94,7 +94,7 @@ class SellMediaAdminAddItem {
 		$tabs['advanced'] = array(
 			'tab_label' => __( 'Advanced Options', 'sell_media' ),
 			'content_title' => __( 'Advanced Options', 'sell_media' ),
-			'content_callback' => array( $this, 'advance_options_callback' ),
+			'content_callback' => array( $this, 'advanced_options_callback' ),
 		);
 
 		return apply_filters( 'sell_media_admin_new_item_tabs', $tabs );
@@ -126,7 +126,7 @@ class SellMediaAdminAddItem {
 	 * @param  object $post Post object.
 	 * @return void
 	 */
-	function stat_callback( $post ) {
+	function stats_callback( $post ) {
 		sell_media_stats_meta_box( $post );
 	}
 
@@ -146,12 +146,12 @@ class SellMediaAdminAddItem {
 	 * @param  object $post Post object.
 	 * @return void
 	 */
-	function advance_options_callback( $post ) {
-		printf( '<h3 class="tax-title">%s</h3>', __( 'Collections', 'sell_media' ) );
+	function advanced_options_callback( $post ) {
+		printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Collections', 'sell_media' ) );
 		post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
-		printf( '<h3 class="tax-title">%s</h3>', __( 'Licenses', 'sell_media' ) );
+		printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Licenses', 'sell_media' ) );
 		post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
-		printf( '<h3 class="tax-title">%s</h3>', __( 'Creaters', 'sell_media' ) );
+		printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Creaters', 'sell_media' ) );
 		post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
 	}
 }
