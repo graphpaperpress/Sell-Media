@@ -92,7 +92,7 @@ class SellMediaAdminAddItem {
 		);
 
 		$tabs['advanced'] = array(
-			'tab_label' => __( 'Advanced Options', 'sell_media' ),
+			'tab_label' => __( 'Advanced', 'sell_media' ),
 			'content_title' => __( 'Advanced Options', 'sell_media' ),
 			'content_callback' => array( $this, 'advanced_options_callback' ),
 		);
