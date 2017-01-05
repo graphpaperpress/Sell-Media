@@ -364,7 +364,6 @@ div#sell-media-main-container ul.main-container-tabs-nav li{
   border: none;
   background: none;
   border-radius: 0;
-  outline: 0;
 }
 
 div#sell-media-main-container ul.main-container-tabs-nav li a{
@@ -382,11 +381,11 @@ div#sell-media-main-container ul.main-container-tabs-nav li a{
   box-sizing: border-box;
   transition: none;
   -webkit-transition: none;
-  outline: 0;
 }
 
 div#sell-media-main-container ul.main-container-tabs-nav li.ui-state-active a,
-div#sell-media-main-container ul.main-container-tabs-nav li a:hover{
+div#sell-media-main-container ul.main-container-tabs-nav li a:hover,
+div#sell-media-main-container ul.main-container-tabs-nav li a:focus{
   width: 161px;
   margin: -1px 0 0 0;
   padding: 20px 20px 20px 20px;
@@ -397,6 +396,7 @@ div#sell-media-main-container ul.main-container-tabs-nav li a:hover{
   border-right: 1px solid #ffffff;
   background-color: #ffffff;
   background-position: 20px center;
+  box-shadow: none;
 }
 
 div#sell-media-main-container ul.main-container-tabs-nav li:last-child a,
@@ -417,14 +417,59 @@ div#sell-media-main-container .main-container-tabs-contents{
   display: none;
   border-radius: 0;
   border: none;
+  width: 100%;
 }
 
-.main-container-tabs-contents:after{
+.sell-media-add-item-main-container-wrap .main-container-tabs-contents:after{
   content: "";
   display: table;
   clear: both;
 }
 
 .post-type-sell_media_item #tagsdiv-creator{
+  display: none;
+}
+
+.sell-media-add-item-main-container-wrap .sell-media-tab-content-title{
+  margin: 0 0 25px 0;
+  padding: 0 0 16px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  font-weight: 700;
+}
+/* File upload */
+.sell-media-add-item-main-container-wrap #sell-media-upload-field{
+  text-align: center;
+  border: 1px dashed #f1f1f1;
+  margin-bottom: 15px;
+}
+
+.sell-media-add-item-main-container-wrap #sell-media-upload-field p{
+  margin: 0;
+  padding: 0;
+}
+
+/* Stat tab */
+.sell-media-tab-content .sell-media-field{
+  padding: none;
+}
+
+/* Advance option tab*/
+.sell-media-tab-content .tax-title{
+  border: 1px solid #f1f1f1;
+  margin: 0 0 0px 0;
+  border-bottom: none;
+  padding: 10px 10px 10px 20px;
+}
+
+.sell-media-tab-content .categorydiv, .sell-media-tab-content .tagsdiv{
+  border: 1px solid #f1f1f1;
+  margin-bottom: 40px;
+  padding: 0 20px 10px 20px;
+  border-top: none;
+  overflow: hidden;
+}
+
+.sell-media-tab-content p.hide-if-no-js{
   display: none;
 }
