@@ -107,7 +107,8 @@ class SellMediaAdminAddItem {
 	 * @return void
 	 */
 	function file_upload_callback( $post ) {
-		sell_media_files_meta_box( $post );
+		echo '<div id="sell-media-upload-error"></div>';
+		media_upload_form();
 	}
 
 	/**
