@@ -200,7 +200,7 @@ class SellMediaAdminAddItem {
 			echo '<div id="sell-media-tax-creators" class="sell-media-tax-wrap">';
 				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Creators', 'sell_media' ) );
 				printf( '<p class="tax-description description">%s.</p>', esc_html__( 'Assign a creator (optional). Creators are also automatically imported from the "Credit" IPCT metadata field in the files that you upload. Archive pages are then automatically created for each creator and can be accessed by adding /creator/name-of-creator/ to the end of your website url (replace "name-of-creator" with the url-friendly name)', 'sell_media' ) );
-				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
+				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
 				post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
 				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_html__( 'Edit All Creators', 'sell_media' ) );
 			echo '</div>';
