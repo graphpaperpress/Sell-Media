@@ -73,6 +73,34 @@ function sell_media_files_meta_box( $post ) {
 	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
 <?php }
 
+function sell_media_uploader_meta_box( $post ) {
+	wp_nonce_field( '_sell_media_meta_box_nonce', 'sell_media_meta_box_nonce' );
+	do_action( 'sell_media_before_uploader_meta_box', $post ); ?>
+
+	<div class="sell-media-uploader-wrap">
+		<div id="sell-media-upload-error"></div>
+		<?php media_upload_form(); ?>
+	</div>
+	<script type="text/javascript">
+			var post_id = <?php echo $post->ID; ?>, shortform = 3;
+	</script>
+
+	<?php do_action( 'sell_media_after_file_uploader', $post ); ?>
+
+	<ul class="attachments sell-media-upload-list">
+		<?php
+			$attachment_ids = sell_media_get_attachments( $post->ID );
+			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+				echo sell_media_list_uploads( $attachment_id );
+			}
+		?>
+	</ul>
+
+	<?php do_action( 'sell_media_after_uploader_meta_box', $post ); ?>
+	<!-- This hidden field holds all attached file ids -->
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
+<?php }
+
 /**
  * After file uploader
  */
