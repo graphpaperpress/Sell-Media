@@ -12,6 +12,7 @@
  * @since 1.8.5
  */
 function sell_media_init_settings() {
+	$settings = sell_media_get_plugin_options();
 
 	/**
 	 * Define the Tabs appearing on the Theme Options page
@@ -498,9 +499,10 @@ function sell_media_init_settings() {
 					)
 				)
 		),
-		
-		// Size & Price
-		"default_price" => array(
+	);
+	
+	if ( isset( $settings->default_price ) && false !== $settings->default_price ) :
+		$options['default_price'] = array(
 			"tab" => "sell_media_size_settings",
 			"name" => "default_price",
 			"title" => __("Original Price","sell_media"),
@@ -511,8 +513,9 @@ function sell_media_init_settings() {
 			"default" => "1",
 			"sanitize" => "html",
 			"type" => "text"
-			),
-		"hide_original_price" => array(
+		);
+
+		$options['hide_original_price'] = array(
 			"tab" => "sell_media_size_settings",
 			"name" => "hide_original_price",
 			"title" => __("Hide Original Price","sell_media"),
@@ -532,7 +535,9 @@ function sell_media_init_settings() {
 					"title" => __("Yes","sell_media"),
 					)
 			)
-		),
+		);
+	endif;
+	$other_options = array(
 		"default_price_group" => array(
 			"tab" => "sell_media_size_settings",
 			"name" => "default_price_group",
@@ -710,6 +715,7 @@ function sell_media_init_settings() {
 			"valid_options" => ''
 		)
 	);
+	$options = wp_parse_args( $other_options, $options );
 	sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
 
 }
