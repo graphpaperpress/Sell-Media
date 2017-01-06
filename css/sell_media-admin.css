@@ -520,3 +520,44 @@ div#sell-media-main-container .main-container-tabs-contents{
 .sell-media-tab-content p.hide-if-no-js{
   display: none;
 }
+
+
+/*Upload area*/
+.sell-media-uploader-wrap #plupload-upload-ui.drag-drop #drag-drop-area {
+  border: 4px dashed #b4b9be;
+  height: 200px; }
+  .sell-media-uploader-wrap #plupload-upload-ui.drag-drop #drag-drop-area .drag-drop-inside {
+    margin: 38px auto 0;
+    width: 500px; }
+.sell-media-uploader-wrap #plupload-upload-ui p.upload-flash-bypass {
+  display: none; }
+.sell-media-uploader-wrap #plupload-upload-ui .sell-media-upload-progress-bar {
+  display: none;
+  width: 100%;
+  position: relative;
+  height: 10px;
+  width: 100%;
+  margin: 10px auto;
+  border-radius: 10px;
+  background: #dfdfdf;
+  background: rgba(0, 0, 0, 0.1); }
+  .sell-media-uploader-wrap #plupload-upload-ui .sell-media-upload-progress-bar .sell-media-upload-progress-bar-inner {
+    height: 10px;
+    min-width: 20px;
+    width: 0;
+    background: #aaa;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    -webkit-transition: width 300ms;
+    -moz-transition: width 300ms;
+    -ms-transition: width 300ms;
+    -o-transition: width 300ms;
+    transition: width 300ms; }
+  .sell-media-uploader-wrap #plupload-upload-ui .sell-media-upload-progress-bar .sell-media-upload-progress-bar-status {
+    clear: both;
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 30px;
+    margin: 12px 0 0 0;
+    text-align: right; }
