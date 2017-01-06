@@ -143,9 +143,13 @@ add_action( 'sell_media_after_file_uploader', 'sell_media_after_file_uploader' )
 function sell_media_options_meta_box( $post ) {
 
 	$settings = sell_media_get_plugin_options();
-	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : sprintf( '%0.2f', $settings->default_price );
+	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : false;
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
+	<?php
+	// Hide price field if not aready set.
+	if ( $price ) :
+	?>
 	<div id="sell-media-price-field" class="sell-media-field">
 		<label for="sell-media-price"><?php _e( 'Price', 'sell_media' ); ?> (<?php echo sell_media_get_currency_symbol(); ?>)</label>
 		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo $price; ?>" />
@@ -153,6 +157,7 @@ function sell_media_options_meta_box( $post ) {
 			<span class="desc"><?php _e( 'The price of each original, high-resolution file.', 'sell_media' ); ?></span>
 		<?php } ?>
 	</div>
+	<?php endif; ?>
 
 	<div id="sell-media-price-group-field" class="sell-media-field">
 		<label for="sell-media-price-group"><?php _e( 'Pricelist for downloads', 'sell_media' ); ?></label>
