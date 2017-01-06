@@ -31,6 +31,10 @@ class SellMediaAdminAddItem {
 		$this->settings = sell_media_get_plugin_options();
 
 		add_action( 'add_meta_boxes', array( $this, 'register_metaboxes' ), 999 );
+
+		add_action( 'post-plupload-upload-ui', array( $this, 'append_media_upload_form' )  , 1 );
+		add_action( 'post-html-upload-ui', array( $this, 'append_media_upload_form' )  , 1 );
+		add_action( 'wp_ajax_sell_media_upload_gallery_load_image', array( $this, 'gallery_load_image' ) );
 	}
 
 	/**
@@ -107,8 +111,34 @@ class SellMediaAdminAddItem {
 	 * @return void
 	 */
 	function file_upload_callback( $post ) {
-		echo '<div id="sell-media-upload-error"></div>';
-		media_upload_form();
+		sell_media_uploader_meta_box( $post );
+	}
+
+	function append_media_upload_form() {
+		?>
+		<!-- Progress Bar -->
+		<div class="sell-media-upload-progress-bar">
+				<div class="sell-media-upload-progress-bar-inner"></div>
+				<div class="sell-media-upload-progress-bar-status">
+						<span class="uploading">
+							<?php _e( 'Uploading Image', 'sell_media' ); ?>
+							<span class="current">1</span>
+							<?php _e( 'of', 'sell_media' ); ?>
+							<span class="total">3</span>
+						</span>
+						<span class="done"><?php _e( 'All images uploaded.', 'sell_media' ); ?></span>
+				</div>
+		</div>
+		<?php
+	}
+
+	function gallery_load_image() {
+		// Run a security check first.
+		check_ajax_referer( 'sell-media-drag-drop-nonce', 'nonce' );
+		// Prepare variables.
+		$id  = absint( $_POST['id'] );
+		echo sell_media_list_uploads( $id );
+		exit;
 	}
 
 	/**
