@@ -500,7 +500,7 @@ function sell_media_init_settings() {
 				)
 		),
 	);
-	
+
 	if ( isset( $settings->default_price ) && false !== $settings->default_price ) :
 		$options['default_price'] = array(
 			"tab" => "sell_media_size_settings",
@@ -549,18 +549,6 @@ function sell_media_init_settings() {
 			"default" => "",
 			"valid_options" => sell_media_settings_price_group('price-group')
 			),
-		"price_group" => array(
-			"tab" => "sell_media_size_settings",
-			"name" => "price_group",
-			"title" => __("Image Price Groups","sell_media"),
-			"default" => "",
-			"description" => "",
-			"id" => "size_price_plugin_section_1",
-			"section" => "size_price_plugin_section_1",
-			"type" => "html",
-			"valid_options" => sell_media_price_group_ui()
-			),
-
 		// Payment Tab
 		"paypal_email" => array(
 			"tab" => "sell_media_payment_settings",
