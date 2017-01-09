@@ -1,6 +1,30 @@
 (function( $ ) {
     $(function() {
 
+      /**
+       * Update the file list hidden field.
+       */
+      function update_files(){
+          var array = [];
+          $('.sell-media-upload-list li').each(function(){
+              array.push($(this).data('post_id'));
+          });
+          var new_array = array.join(',');
+
+          // Set the new value
+          $('#sell-media-attachment-id').val(new_array);
+
+          // On files update check fields.
+          sell_media_is_attachment_audio_video( new_array );
+      }
+
+      // Make gallery sortable.
+      $( '.sell-media-upload-list' ).sortable({
+        update: function(){
+          update_files();
+        }
+      });
+
         if ( typeof uploader !== 'undefined' ) {
 
             // Set a custom progress bar
@@ -69,23 +93,6 @@
 									);
 								}
             });
-
-						/**
-				     * Update the file list hidden field
-				     */
-				    function update_files(){
-				        var array = [];
-				        $('.sell-media-upload-list li').each(function(){
-				            array.push($(this).data('post_id'));
-				        });
-				        var new_array = array.join(',');
-
-				        // Set the new value
-				        $('#sell-media-attachment-id').val(new_array);
-
-				        // On files update check fields.
-				        sell_media_is_attachment_audio_video( new_array );
-				    }
 
 						/**
 				     * Check if attachment is audio or video.
