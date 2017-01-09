@@ -324,4 +324,17 @@ jQuery( document ).ready(function( $ ){
     		}
     	});
     }
+
+    /**
+     * Display Price lists in item add/ edit.
+     */
+    $( 'select#sell-media-price-group' ).on( 'change', function(){
+      var groupParentId = $(this).val();
+      $.post( ajaxurl, { action: 'sell_media_load_pricelists', parent_id : groupParentId }, function( res ) {
+        $("#sell-media-display-pricelists").remove();
+        if( '0' != res  ){
+          $("#sell-media-price-group-field").append( res );
+        }
+      } );
+    });
 });
