@@ -561,3 +561,22 @@ div#sell-media-main-container .main-container-tabs-contents{
     height: 30px;
     margin: 12px 0 0 0;
     text-align: right; }
+
+/* Add/ Edit item pricelist table*/
+#sell-media-display-pricelists{
+	    margin: 20px 0 0 0;
+}
+#sell-media-display-pricelists table.form-table,
+#sell-media-display-pricelists table.form-table td,
+#sell-media-display-pricelists table.form-table th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+#sell-media-display-pricelists table.form-table{
+	border-collapse: collapse;
+	width: 100%;
+}
+#sell-media-display-pricelists table.form-table tr td,
+#sell-media-display-pricelists table.form-table tr th{
+	padding: 7px;
+}
