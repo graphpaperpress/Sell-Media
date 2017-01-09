@@ -44,13 +44,13 @@ class SellMediaAdminAddItem {
 	 * @return void
 	 */
 	public function register_metaboxes() {
-		add_meta_box( 'sell-media-main-container', __( 'My Meta Box', 'sell_media' ), array( $this, 'main_container' ), 'sell_media_item', 'normal', 'high' );
+		add_meta_box( 'sell-media-main-container', __( 'Sell Media', 'sell_media' ), array( $this, 'main_container' ), 'sell_media_item', 'normal', 'high' );
 		remove_meta_box( 'files_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'stats_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'options_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'licensesdiv', 'sell_media_item', 'side' );
 		remove_meta_box( 'collectiondiv', 'sell_media_item', 'side' );
-		remove_meta_box( 'postimagediv', 'sell_media_item', 'side' );
+		// remove_meta_box( 'postimagediv', 'sell_media_item', 'side' );
 		remove_meta_box( 'authordiv', 'sell_media_item', 'normal' );
 		remove_action( 'edit_form_advanced', 'sell_media_editor' );
 	}
@@ -121,13 +121,13 @@ class SellMediaAdminAddItem {
 		<div class="sell-media-upload-progress-bar">
 				<div class="sell-media-upload-progress-bar-inner"></div>
 				<div class="sell-media-upload-progress-bar-status">
-						<span class="uploading">
-							<?php _e( 'Uploading Image', 'sell_media' ); ?>
-							<span class="current">1</span>
-							<?php _e( 'of', 'sell_media' ); ?>
-							<span class="total">3</span>
-						</span>
-						<span class="done"><?php _e( 'All images uploaded.', 'sell_media' ); ?></span>
+					<span class="uploading">
+						<?php esc_html_e( 'Uploading Image', 'sell_media' ); ?>
+						<span class="current">1</span>
+						<?php esc_html_e( 'of', 'sell_media' ); ?>
+						<span class="total">3</span>
+					</span>
+					<span class="done"><?php esc_html_e( 'All images uploaded.', 'sell_media' ); ?></span>
 				</div>
 		</div>
 		<?php
