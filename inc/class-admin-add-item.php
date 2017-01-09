@@ -35,6 +35,7 @@ class SellMediaAdminAddItem {
 		add_action( 'post-plupload-upload-ui', array( $this, 'append_media_upload_form' )  , 1 );
 		add_action( 'post-html-upload-ui', array( $this, 'append_media_upload_form' )  , 1 );
 		add_action( 'wp_ajax_sell_media_upload_gallery_load_image', array( $this, 'gallery_load_image' ) );
+		add_action( 'wp_ajax_sell_media_load_pricelists', array( $this, 'load_pricelists' ) );
 	}
 
 	/**
@@ -206,5 +207,55 @@ class SellMediaAdminAddItem {
 			echo '</div>';
 
 		echo '</div>';
+	}
+
+	/**
+	 * Load pricelist on add/ edit item.
+	 *
+	 * @return void
+	 */
+	function load_pricelists() {
+		$id = ( isset( $_POST['parent_id'] ) && '' !== $_POST['parent_id'] ) ? absint( $_POST['parent_id'] ) :  false;
+		if ( ! $id ) {
+			echo 0;
+			exit;
+		}
+
+		$terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $id ) );
+		echo '<div id="sell-media-display-pricelists">';
+		if ( $terms ) {
+			$parent_term = get_term( $id );
+			echo '<strong>' . sprintf( __( 'Pricelists for: %s' ), $parent_term->name ) . '</strong>';
+			echo '<table class="form-table">';
+			echo '<tr>';
+				echo '<th>' . __( 'Name', 'sell_media' ) . '</th>';
+				echo '<th>' . __( 'Width', 'sell_media' ) . '</th>';
+				echo '<th>' . __( 'Height', 'sell_media' ) . '</th>';
+				echo '<th>' . __( 'Price', 'sell_media' ) . '</th>';
+			echo '</tr>';
+			foreach ( $terms as $key => $term ) {
+				$term_meta = get_term_meta( $term->term_id );
+				echo '<tr>';
+					echo '<td>';
+						echo $term->name;
+					echo '</td>';
+					echo '<td>';
+						echo ( isset( $term_meta['width'][0] ) ? $term_meta['width'][0] : ''  );
+					echo '</td>';
+					echo '<td>';
+						echo ( isset( $term_meta['height'][0] ) ? $term_meta['height'][0] : ''  );
+					echo '</td>';
+					echo '<td>';
+						echo ( isset( $term_meta['price'][0] ) ? sell_media_get_currency_symbol() . $term_meta['price'][0] : ''  );
+					echo '</td>';
+				echo '</tr>';
+			}
+			echo '</table>';
+		}
+		else{
+			echo '<span class="desc">' . __( 'No Pricelist found.', 'sell_media' ) . '</span>';
+		}
+		echo '</div>';
+		exit;
 	}
 }
