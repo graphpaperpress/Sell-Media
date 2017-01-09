@@ -1,13 +1,13 @@
 <?php
 $current_term = get_term( (int) $this->current_term, $current_tab );
 $download_parents = $this->get_terms();
-$url = home_url( add_query_arg( array( 'term_parent' => 'new' ) ) );
+$url = add_query_arg( array( 'term_parent' => 'new' ), admin_url( 'edit.php?' . $_SERVER['QUERY_STRING'] ) );
 ?>
 <div class="tab-price-lists">
 	<select>
 		<?php
 		foreach ( $download_parents as $slug => $term ) {
-			$url = home_url( add_query_arg( array( 'term_parent' => $term->term_id ) ) );
+			$url = add_query_arg( array( 'term_parent' => $term->term_id ), admin_url( 'edit.php?' . $_SERVER['QUERY_STRING'] ) );
 			echo "<option value='$url' " . selected( (int) $this->current_term, $term->term_id, false ) . ">" . $term->name . '</option>';
 		}
 		?>
