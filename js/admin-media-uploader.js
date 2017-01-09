@@ -19,11 +19,13 @@
       }
 
       // Make gallery sortable.
-      $( '.sell-media-upload-list' ).sortable({
-        update: function(){
-          update_files();
-        }
-      });
+      if ( $.isFunction( 'sortable' ) ) {
+        $( '.sell-media-upload-list' ).sortable({
+          update: function(){
+            update_files();
+          }
+        });
+      }
 
         if ( typeof uploader !== 'undefined' ) {
 
