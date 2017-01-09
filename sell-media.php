@@ -270,7 +270,6 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-menu.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';
-				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-scripts.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-system-info.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-notices.php';
