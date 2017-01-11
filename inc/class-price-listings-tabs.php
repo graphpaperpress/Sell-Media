@@ -35,7 +35,7 @@ class Sell_Media_Price_Listings_Tabs {
 		}
 		$parent_terms = $this->get_terms();
 		$array_values = array_values( $parent_terms );
-		$first  = array_shift( $array_values );
+		$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
 		$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first->term_id;
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
 		add_action( 'admin_head', array( $this, 'js_template' ), 25 );
