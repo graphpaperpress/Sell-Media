@@ -118,6 +118,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				self::$instance->constants();
 				self::$instance->includes();
 				self::$instance->textdomain();
+				self::$instance->session       = new SellMediaSession();
 				self::$instance->customer       = new SellMediaCustomer();
 				self::$instance->download       = new SellMediaDownload();
 				self::$instance->images         = new SellMediaImages();
@@ -227,6 +228,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 		 */
 		private function includes() {
 
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-session.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-customer.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-downloads.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-layouts.php';

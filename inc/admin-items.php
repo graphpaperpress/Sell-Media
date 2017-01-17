@@ -530,7 +530,7 @@ function sell_media_item_content( $column, $post_id ){
 			$settings = sell_media_get_plugin_options();
 			if ( $price ) {
 				echo sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' );
-			} elseif ( $settings->default_price ) {
+			} elseif ( isset( $settings->default_price ) && '' !== $settings->default_price ) {
 				echo sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' );
 			} else {
 				echo __( 'No price set', 'sell_media' );

@@ -115,35 +115,39 @@ function sell_media_get_filetype( $post_id = null ) {
 	return $filetype['ext'];
 }
 
-
 /**
  * Determines the image used to represent an item for sale. If an
  * image mime type is detected than the attachment image is used.
  *
- * @return (string) an image tag
+ * @param  int     $post_id Post ID.
+ * @param  string  $size    Size of icon.
+ * @param  boolean $echo    Return/ Display.
+ * @return string           An image tag.
  */
 function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true ) {
 
-	$attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+	$attachment_id = sell_media_get_attachments( $post_id );
 
-	// legacy function passed the $attachment_id into sell_media_item_icon
-	// that means the above get_post_meta wouldn't exist
-	// if that's the case, than we assume the $post_id is actually the $attachment_id
-	if ( empty( $attachment_id ) ) {
-		$attachment_id = $post_id;
-	}
+	/**
+	 * Legacy function passed the $attachment_id into sell_media_item_icon.
+	 * That means the above get_post_meta wouldn't exist.
+	 * If that's the case, than we assume the $post_id is actually the $attachment_id.
+	 *
+	 * @var int
+	 */
+	$attachment_id = ! empty( $attachment_id ) ? $attachment_id[0] : $post_id;
 
-	// check if featured image exists
+	// Check if featured image exists.
 	if ( '' !== get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
 
-		// check if attachment thumbnail exists
+		// Check if attachment thumbnail exists.
 	} elseif ( '' !== wp_get_attachment_image_src( $attachment_id, $size ) ) {
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
 
-		// icon
+		// Icon.
 	} else {
 		$mime_type = get_post_mime_type( $attachment_id );
 		switch ( $mime_type ) {
@@ -627,7 +631,7 @@ function sell_media_cart_dialog() {
 				</div>
 				<span class="close">&times;</span>
 			</div>
-		<?php endif; 
+		<?php endif;
 	// }
 	if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) { ?>
 		<div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms">
