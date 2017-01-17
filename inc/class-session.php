@@ -35,6 +35,10 @@ class SellMediaSession {
 			include sprintf( '%s/inc/libraries/wp-session/class-recursive-arrayaccess.php', plugin_dir_path( dirname( __FILE__ ) ) );
 		}
 
+		if ( ! class_exists( 'WP_Session_Utils' ) ) {
+			include sprintf( '%s/inc/libraries/wp-session/class-wp-session-utils.php', plugin_dir_path( dirname( __FILE__ ) ) );
+		}
+
 		if ( ! class_exists( 'WP_Session' ) ) {
 			include sprintf( '%s/inc/libraries/wp-session/class-wp-session.php', plugin_dir_path( dirname( __FILE__ ) ) );
 			include sprintf( '%s/inc/libraries/wp-session/wp-session.php', plugin_dir_path( dirname( __FILE__ ) ) );
