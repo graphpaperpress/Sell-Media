@@ -328,13 +328,19 @@ jQuery( document ).ready(function( $ ){
     /**
      * Display Price lists in item add/ edit.
      */
+    function sellMediaDisplayPricelistTable( priceListId ) {
+     $.post( ajaxurl, { action: 'sell_media_load_pricelists', parent_id : priceListId }, function( res ) {
+       $("#sell-media-display-pricelists").remove();
+       if( '0' != res  ){
+         $("#sell-media-price-group-field").append( res );
+       }
+     } );
+    }
+
+    var selectedPriceList = $( 'select#sell-media-price-group' ).val();
+    sellMediaDisplayPricelistTable( selectedPriceList );
     $( 'select#sell-media-price-group' ).on( 'change', function(){
       var groupParentId = $(this).val();
-      $.post( ajaxurl, { action: 'sell_media_load_pricelists', parent_id : groupParentId }, function( res ) {
-        $("#sell-media-display-pricelists").remove();
-        if( '0' != res  ){
-          $("#sell-media-price-group-field").append( res );
-        }
-      } );
+      sellMediaDisplayPricelistTable( groupParentId );
     });
 });
