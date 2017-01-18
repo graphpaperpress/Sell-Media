@@ -501,7 +501,6 @@ function sell_media_init_settings() {
 		),
 	);
 
-	if ( isset( $settings->default_price ) && false !== $settings->default_price ) :
 		$options['default_price'] = array(
 			"tab" => "sell_media_size_settings",
 			"name" => "default_price",
@@ -536,7 +535,7 @@ function sell_media_init_settings() {
 					)
 			)
 		);
-	endif;
+
 	$other_options = array(
 		"default_price_group" => array(
 			"tab" => "sell_media_size_settings",
