@@ -332,7 +332,13 @@ jQuery( document ).ready(function( $ ){
      $.post( ajaxurl, { action: 'sell_media_load_pricelists', parent_id : priceListId }, function( res ) {
        $("#sell-media-display-pricelists").remove();
        if( '0' != res  ){
-         $("#sell-media-price-group-field").append( res );
+        var url = $("#sell-media-edit-pricelist-link-wrap a").data('href');
+        $("#sell-media-edit-pricelist-link-wrap a").attr('href', url + priceListId ).show();
+        $("#sell-media-edit-pricelist-link-wrap").show();
+        $("#sell-media-price-group-field").append( res );
+       }
+       else{
+        $("#sell-media-edit-pricelist-link-wrap").hide();
        }
      } );
     }
