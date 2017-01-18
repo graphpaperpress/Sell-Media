@@ -176,7 +176,11 @@ function sell_media_options_meta_box( $post ) {
 			);
 			wp_dropdown_categories( $args );
 		?>
-		<span class="desc"><?php printf( __( '<a href="%1$s">Create new pricelist</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ); ?></span>
+		<span class="desc">
+			<span id="sell-media-edit-pricelist-link-wrap">
+				<?php printf( __( '<a data-href="%1$s" id="">Edit</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists&term_parent=' ); ?> |
+			</span>
+			<?php printf( __( '<a href="%1$s">Add New</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ); ?></span>
 	</div>
 
 	<?php do_action( 'sell_media_after_options_meta_box', $post->ID );
