@@ -225,7 +225,6 @@ class SellMediaAdminAddItem {
 		echo '<div id="sell-media-display-pricelists">';
 		if ( $terms ) {
 			$parent_term = get_term( $id );
-			echo '<strong>' . sprintf( __( 'Pricelists for: %s' ), $parent_term->name ) . '</strong>';
 			echo '<table class="form-table">';
 			echo '<tr>';
 				echo '<th>' . __( 'Name', 'sell_media' ) . '</th>';
