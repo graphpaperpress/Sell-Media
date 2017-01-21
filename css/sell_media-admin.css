@@ -501,6 +501,29 @@
 	display: inline-block;
 }
 
+.sell-media-currency-field {
+	border: 1px solid #ddd;
+	-webkit-box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.07 );
+	box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.07 );
+	background-color: #fff;
+	color: #32373c;
+	outline: none;
+	-webkit-transition: 0.05s border-color ease-in-out;
+	transition: 0.05s border-color ease-in-out;
+	height: 28px;
+	line-height: 1;
+	padding: 1px 1px 1px 4px;
+	margin-right: 4px;
+	display: inline-block;
+}
+
+.sell-media-currency-field input[type="number"] {
+	border: 0;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	padding: 0;
+}
+
 /* Term meta
 -------------------------------------------------------------- */
 .collection-icon input[type="button"] {

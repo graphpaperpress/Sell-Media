@@ -15,9 +15,6 @@ $url = add_query_arg( array( 'term_parent' => 'new' ), admin_url( 'edit.php?' . 
 	<input type="hidden" value="<?php echo !empty( $current_term ) ? $current_term->term_id: 'new'; ?>" name="term_id" />
 	<input type="hidden" value="" name="deleted_term_ids" />
 </div>
-<h2 class="tab-price-list-edit-title">
-	<?php echo sprintf( __( 'Edit Pricelist - %s', 'sell_media' ), $current_term->name ); ?>
-</h2>
 <hr/>
 <?php
 if ( ! isset( $_GET['term_parent'] ) || 'new' !== $_GET['term_parent'] ) {
@@ -38,9 +35,9 @@ if ( ! isset( $_GET['term_parent'] ) || 'new' !== $_GET['term_parent'] ) {
 	</tbody>
 </table>
 <p class="submit sell-media-pricelisting-form-buttons" style="clear: both;">
-	<a href="javascript:void(0);" id="sell-media-add-button" ><?php _e( '+ Add New', 'sell_media' ); ?> </a>
-	<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php _e( 'Save', 'sell_media' ); ?>" />
+	<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php _e( 'Save Pricelist', 'sell_media' ); ?>" />
 	<input type="hidden" name="sell-media-price-list-submit" value="true" />
+	<a href="javascript:void(0);" id="sell-media-add-button" class="button-secondary"><?php _e( '+ Add New', 'sell_media' ); ?></a>
 </p>
 <?php
 }
