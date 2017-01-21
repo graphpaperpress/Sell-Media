@@ -51,6 +51,7 @@ class Sell_Media_Price_Listings {
 		$this->current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : key( $tabs );
 		do_action( 'sell_media_price_listings_run', $this->current_tab );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'sell_media_after_options_meta_box', array( $this, 'editor_fields' ), 10, 1 );
 	}
 
 	/**
@@ -175,4 +176,37 @@ class Sell_Media_Price_Listings {
 	function get_tabs() {
 		return apply_filters( 'sell_media_price_listing_tabs', array() );
 	}
+
+	/**
+	 * The fields shown on the add new item page
+	 *
+	 * @return html
+	 */
+	function editor_fields( $post_id ) {
+		?>
+
+		<div id="sell-media-price-group-field" class="sell-media-field">
+			<label for="sell-media-price-group"><?php _e( 'Pricelist for downloads', 'sell_media' ); ?></label>
+			<?php
+				$args = array(
+					'show_option_none' => __( 'None', 'sell_media' ),
+					'option_none_value' => 0,
+					'name' => 'sell_media_price_group',
+					'id' => 'sell-media-price-group',
+					'class' => 'sell-media-price-group',
+					'taxonomy' => 'price-group',
+					'hierarchical' => true,
+					'depth' => 1,
+					'hide_empty' => false,
+					'selected' => sell_media_get_item_price_group( $post_id, 'price-group' )
+				);
+				wp_dropdown_categories( $args );
+			?>
+			<span class="desc">
+				<span id="sell-media-edit-pricelist-link-wrap">
+					<?php printf( __( '<a data-href="%1$s" id="">Edit</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists&term_parent=' ); ?> |
+				</span>
+				<?php printf( __( '<a href="%1$s">Add New</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ); ?></span>
+		</div>
+	<?php }
 }
