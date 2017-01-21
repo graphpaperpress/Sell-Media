@@ -84,10 +84,10 @@ class SellMediaAdminAddItem {
 			'content_callback' => array( $this, 'description_callback' ),
 		);
 
-		$tabs['settings'] = array(
-			'tab_label' => __( 'Settings', 'sell_media' ),
-			'content_title' => __( 'Settings', 'sell_media' ),
-			'content_callback' => array( $this, 'settings_callback' ),
+		$tabs['price'] = array(
+			'tab_label' => __( 'Price', 'sell_media' ),
+			'content_title' => __( 'Price', 'sell_media' ),
+			'content_callback' => array( $this, 'price_callback' ),
 		);
 
 		$tabs['stats'] = array(
@@ -153,12 +153,12 @@ class SellMediaAdminAddItem {
 	}
 
 	/**
-	 * Setting tab content.
+	 * Price tab content.
 	 *
 	 * @param  object $post Post object.
 	 * @return void
 	 */
-	function settings_callback( $post ) {
+	function price_callback( $post ) {
 		sell_media_options_meta_box( $post );
 	}
 
