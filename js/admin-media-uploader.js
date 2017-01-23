@@ -19,7 +19,7 @@
       }
 
       // Make gallery sortable.
-      if ( $.isFunction( 'sortable' ) ) {
+      if ( $.isFunction( $.fn.sortable ) ) {
         $( '.sell-media-upload-list' ).sortable({
           update: function(){
             update_files();
