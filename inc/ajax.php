@@ -43,7 +43,7 @@ function sell_media_add_to_cart() {
 		if( isset( $_POST['item_size'] ) && '' != $_POST['item_size'] ){
 			$attrs['item_size'] = sanitize_text_field( $_POST['item_size'] );
 		}
-		
+
 		if( isset( $_POST['item_usage'] ) && '' != $_POST['item_usage'] ){
 			$attrs['item_usage'] = sanitize_text_field( $_POST['item_usage'] );
 		}
@@ -68,7 +68,7 @@ function sell_media_add_to_cart() {
 		}
 		else{
 			echo '0';
-		}	
+		}
 
 	}
 	else{
@@ -88,7 +88,7 @@ function sell_media_update_cart(){
 
 	// Check if cart item id is there.
 	if( !empty( $_POST ) && isset( $_POST['cart_item_id'] ) ){
-		
+
 		$qty = intval($_POST['qty']);
 		$cart_item_id = sanitize_text_field( $_POST['cart_item_id'] );
 
@@ -100,7 +100,7 @@ function sell_media_update_cart(){
 		}
 		else{
 			echo '0';
-		}	
+		}
 
 	}
 	else{
@@ -151,6 +151,11 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 	$args['post_status'] = "publish";
 	$args['paged'] = $paged;
 
+	// Check if tab is set.
+	if ( ! isset( $param['tab'] ) ) {
+		$param['tab'] = 'newest';
+	}
+
 	if( 'newest' == $param['tab'] ){
 		$args['order'] = 'DESC';
 		$args['orderby'] = 'date';
@@ -186,7 +191,7 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 							),
 						);
 	}
-	
+
 	$content = "";
 	$search_query = new WP_Query( $args );
 
@@ -250,7 +255,7 @@ add_action( 'wp_ajax_nopriv_sell_media_ajax_filter', 'sell_media_ajax_filter_sea
  * @return string                Add to cart button.
  */
 function sell_media_ajax_add_to_cart_button( $id = NULL, $attachment_id = NULL, $type = 'download' ){
-	
+
 	if( isset( $_POST['id'] ) ){
 		$id = absint( $_POST['id'] );
 	}
