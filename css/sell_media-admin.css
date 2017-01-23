@@ -818,7 +818,7 @@ div#sell-media-main-container .main-container-tabs-contents {
 
 .sell-media-uploader-wrap #plupload-upload-ui.drag-drop #drag-drop-area .drag-drop-inside {
 	margin: 38px auto 0;
-	width: 500px;
+	width: 100%;
 }
 
 .sell-media-uploader-wrap #plupload-upload-ui p.upload-flash-bypass {
