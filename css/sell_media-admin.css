@@ -767,6 +767,16 @@ div#sell-media-main-container .main-container-tabs-contents {
 	font-weight: 700;
 }
 
+.sell-media-tab-content-section {
+	border: 1px solid #f1f1f1;
+	margin: 20px 0;
+	padding: 20px;
+}
+
+.sell-media-tab-content-section h3{
+	margin: 0 0 10px 0;
+}
+
 /* File upload */
 .sell-media-add-item-main-container-wrap #sell-media-upload-field {
 	text-align: center;
