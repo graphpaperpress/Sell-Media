@@ -143,7 +143,7 @@ add_action( 'sell_media_after_file_uploader', 'sell_media_after_file_uploader' )
 function sell_media_options_meta_box( $post ) {
 
 	$settings = sell_media_get_plugin_options();
-	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : false;
+	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : $settings->default_price;
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
 	<div id="sell-media-price-field" class="sell-media-field">
