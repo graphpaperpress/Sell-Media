@@ -200,7 +200,7 @@ function sell_media_get_media( $post_id = null ) {
 	} elseif ( sell_media_has_multiple_attachments( $post_id ) ) {
 		$html .= sell_media_gallery( $post_id );
 	} else {
-		$html .= sell_media_item_icon( $post_id, 'large', false );
+		$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_large_item_size', 'large' ), false );
 		$html .= sell_media_caption( $post_id );
 	}
 
