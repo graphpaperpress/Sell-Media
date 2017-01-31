@@ -2,7 +2,7 @@
 
 Contributors: endortrails, racase
 Donate link: http://graphpaperpress.com/plugins/sell-media/
-Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
+Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
 Tested up to: 4.7.2
 Stable tag: 2.3.0
