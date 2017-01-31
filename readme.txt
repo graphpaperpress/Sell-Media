@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos
 Requires at least: 3.4
 Tested up to: 4.5.2
-Stable tag: 2.2.12
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,11 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.3.0 =
+* New: UI for Add New page
+* New: WP Cookie-based sessions. Replaces use of $_SESSION.
+* New: Pricelist UI improvements
 
 = 2.2.12 =
 * Fix: Search multiple word keywords
