@@ -218,6 +218,11 @@ function sell_media_currencies(){
         'title' => __('Polish Zloty','sell_media'),
         'symbol' => "PLN"
         ),
+    "RUB" => array(
+        'name' => 'RUB',
+        'title' => __('Russian Ruble (&#x20bd;)','sell_media'),
+        'symbol' => '&#x20bd;'
+    ),
     "SGD" => array(
         'name' => 'SGD',
         'title' => __('Singapore Dollar (&#36;)','sell_media'),
