@@ -135,6 +135,8 @@ class Sell_Media_Price_Listings {
 	 * @return void
 	 */
 	function load_pricelists_page() {
+		$redirect_url = admin_url( $this->parent_slug );
+		do_action( 'sell_meida_load_pricelists_page', $redirect_url );
 		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === $_POST["sell-media-price-list-submit"] ) {
 			check_admin_referer( 'sell-media-price-list-page' );
 			$url_parameters['page'] = $this->menu_slug;
@@ -142,7 +144,6 @@ class Sell_Media_Price_Listings {
 			if ( isset( $_GET['tab'] ) ) {
 				$url_parameters['tab'] = $_GET['tab'];
 			}
-			$redirect_url = admin_url( $this->parent_slug );
 			$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 			do_action( 'sell_media_price_listing_save', $redirect_url );
 			wp_redirect( $redirect_url );
