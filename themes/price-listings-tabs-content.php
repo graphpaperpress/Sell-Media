@@ -19,7 +19,7 @@ $current_url = false;
 	<input type="hidden" value="<?php echo !empty( $current_term ) ? $current_term->term_id: 'new'; ?>" name="term_id" />
 	<input type="hidden" value="" name="deleted_term_ids" />
 	<?php
-	$delete_url = add_query_arg( $current_url, array( 'delete' => true ) );
+	$delete_url = add_query_arg( array( 'delete' => true ), $current_url );
 	$delete_url = wp_nonce_url( $delete_url, 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' ); ?>
 	<a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_html_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term->name ); ?>"><?php esc_html_e( 'Delete', 'sell_media' ); ?></a>
 </div>
