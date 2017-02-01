@@ -36,7 +36,7 @@ function sell_media_template_redirect( $original_template ) {
 		} else {
 			$template = $original_template;
 		}
-	} elseif ( sell_media_attachment( $post->ID ) ) {
+	} elseif ( ! empty( $post ) && sell_media_attachment( $post->ID ) ) {
 		// sell media attachments should use single.php, not attachment.php
 		// not all attachment.php templates contain the_content
 		// which we modify heavily using filters.
