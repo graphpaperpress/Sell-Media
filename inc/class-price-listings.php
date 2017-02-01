@@ -34,32 +34,37 @@ class Sell_Media_Price_Listings {
 	 * Constructor method.
 	 */
 	function __construct() {
-		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'admin_menu', array( $this, 'add_submenu' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'sell_media_after_options_meta_box', array( $this, 'editor_fields' ), 10, 1 );
+		add_action( 'current_screen', array( $this, 'current_screen' ) );
 	}
 
 	/**
-	 * Initialize the functionality.
+	 * Check the current screen and set tabs
 	 *
 	 * @return void
 	 */
-	function init() {
-		add_action( 'admin_menu', array( $this, 'add_submenu' ) );
-		if ( ( ! isset( $_GET['post_type'] ) || 'sell_media_item' !== $_GET['post_type'] ) || ( ! isset( $_GET['post_type'] ) && 'pricelists' !== $_GET['page'] ) ) {
-			return;
+	function current_screen() {
+		global $pricelists_page;
+		$screen = get_current_screen();
+
+		// only load tabs on pricelists page and sell_media_item add/edit pages
+		if ( $screen->id === $pricelists_page || $screen->id === 'sell_media_item' ) {
+			$tabs = $this->get_tabs();
+			$this->current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : key( $tabs );
+			do_action( 'sell_media_price_listings_run', $this->current_tab );
 		}
-		$tabs = $this->get_tabs();
-		$this->current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : key( $tabs );
-		do_action( 'sell_media_price_listings_run', $this->current_tab );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'sell_media_after_options_meta_box', array( $this, 'editor_fields' ), 10, 1 );
 	}
 
 	/**
 	 * Add submenu for price list.
 	 */
 	function add_submenu() {
-		$settings_page = add_submenu_page( $this->parent_slug, __( 'Pricelists', 'sell_media' ), __( 'Pricelists', 'sell_media' ), 'manage_options', $this->menu_slug, array( $this, 'settings_page' ) );
-		add_action( "load-{$settings_page}", array( $this, 'load_settings_page' ) );
+		global $pricelists_page;
+
+		$pricelists_page = add_submenu_page( $this->parent_slug, __( 'Pricelists', 'sell_media' ), __( 'Pricelists', 'sell_media' ), 'manage_options', $this->menu_slug, array( $this, 'pricelists_page' ) );
+		add_action( "load-{$pricelists_page}", array( $this, 'load_pricelists_page' ) );
 	}
 
 	/**
@@ -80,11 +85,11 @@ class Sell_Media_Price_Listings {
 		wp_enqueue_style( 'sell-media-price-listings', plugins_url( 'css/sell_media_price_listings.css', dirname( __FILE__ ) ) );
 	}
 	/**
-	 * Content for setting page.
+	 * Content for pricelists page.
 	 *
 	 * @return void
 	 */
-	function settings_page() {
+	function pricelists_page() {
 		$current_screen = get_current_screen();
 		?>
 
@@ -125,11 +130,11 @@ class Sell_Media_Price_Listings {
 	}
 
 	/**
-	 * Load settings page.
+	 * Load pricelists page.
 	 *
 	 * @return void
 	 */
-	function load_settings_page() {
+	function load_pricelists_page() {
 		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === $_POST["sell-media-price-list-submit"] ) {
 			check_admin_referer( 'sell-media-price-list-page' );
 			$url_parameters['page'] = $this->menu_slug;
