@@ -276,7 +276,7 @@ class Sell_Media_Price_Listings_Tabs {
 		check_admin_referer( 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 
 		$term_parent = absint( $_GET['term_parent'] );
-		$taxonomy = esc_attr( $_GET['tab'] );
+		$taxonomy = ( isset( $_GET['tab'] ) && '' !== $_GET['tab'] ) ? esc_attr( $_GET['tab'] ) : $this->taxonomy;
 		$child_terms = get_term_children( $term_parent, $taxonomy );
 		wp_delete_term( (int) $term_parent, $taxonomy );
 
@@ -287,7 +287,7 @@ class Sell_Media_Price_Listings_Tabs {
 			}
 		}
 
-		$redirect_url = add_query_arg( array( 'page' =>$_GET['page'], 'tab' => $_GET['tab'] ), $redirect_url );
+		$redirect_url = add_query_arg( array( 'page' =>$_GET['page'], 'tab' => $taxonomy ), $redirect_url );
 		wp_redirect( $redirect_url );
 		exit;
 	}
