@@ -32,8 +32,9 @@
 			});
 		},
     add_new_row : function() {
+      var index = $( this.options.wrapper_element ).children().last().data('index');
       var data = {
-        index : $( this.options.wrapper_element ).children().last().data('index') + 1,
+        index : (typeof index == 'undefined' ) ? 0 : index + 1,
       }
       data = [$.extend({},data,this.options.blank_data)];
       this.append( data );
