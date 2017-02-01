@@ -1,3 +1,5 @@
+$delete-button-color: #f00;
+
 .sell-media-price-listings-wrap{
 	#poststuff {
 		h2.tab-title{
@@ -22,9 +24,16 @@
 				display: none;
 			}
 		}
-		.tab-price-lists{
+
+		.tab-price-lists {
 			margin: 15px 0;
 		}
+
+		.deletion {
+			color: $delete-button-color;
+			margin: 0 10px;
+		}
+
 		.tab-price-list-edit-title{
 			padding: 8px 0;
 		}

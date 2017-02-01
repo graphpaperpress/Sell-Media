@@ -17,6 +17,9 @@
     display: none; }
 .sell-media-price-listings-wrap #poststuff .tab-price-lists {
   margin: 15px 0; }
+.sell-media-price-listings-wrap #poststuff .deletion {
+  color: #f00;
+  margin: 0 10px; }
 .sell-media-price-listings-wrap #poststuff .tab-price-list-edit-title {
   padding: 8px 0; }
 .sell-media-price-listings-wrap #poststuff #sell-media-price-table {
