@@ -142,6 +142,7 @@ class SellMediaSearch {
 					),
 				),
 			);
+			$args = apply_filters( 'sell_media_search_args', $args );
 			$search_query = new WP_Query( $args );
 			$i = 0;
 
@@ -199,7 +200,7 @@ class SellMediaSearch {
 
 	/**
 	 * Get the select value of the filetype field and conver it into a WP mimtype for WP_Query
-	 * 
+	 *
 	 * @param  string 		The filetype (image, video, audio)
 	 * @return array 		The WP mimetype format for each filetype
 	 */

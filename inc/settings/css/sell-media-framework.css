@@ -139,9 +139,6 @@ img {
 #menu-posts-sell_media_item ul li:last-child a {
     color: #2EA2CC;
 }
-.sell-media-price-groups-container #menu-management {
-    background: transparent;
-}
 @media only screen and (max-width: 960px) {
     .sell-media-settings-content,
     .sell-media-settings-sidebar {

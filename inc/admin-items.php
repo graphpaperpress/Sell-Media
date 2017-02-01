@@ -55,9 +55,60 @@ function sell_media_files_meta_box( $post ) {
 
 	<div id="sell-media-upload-field" class="sell-media-field">
 		<p><input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" /></p>
-		<p class="description"><?php _e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
-		<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
 	</div>
+
+	<?php do_action( 'sell_media_after_file_uploader', $post ); ?>
+
+	<ul class="attachments sell-media-upload-list">
+		<?php
+			$attachment_ids = sell_media_get_attachments( $post->ID );
+			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+				echo sell_media_list_uploads( $attachment_id );
+			}
+		?>
+	</ul>
+
+	<?php do_action( 'sell_media_after_files_meta_box', $post ); ?>
+	<!-- This hidden field holds all attached file ids -->
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
+<?php }
+
+function sell_media_uploader_meta_box( $post ) {
+	wp_nonce_field( '_sell_media_meta_box_nonce', 'sell_media_meta_box_nonce' );
+	do_action( 'sell_media_before_uploader_meta_box', $post ); ?>
+
+	<div class="sell-media-uploader-wrap">
+		<div id="sell-media-upload-error"></div>
+		<?php media_upload_form(); ?>
+	</div>
+	<script type="text/javascript">
+			var post_id = <?php echo $post->ID; ?>, shortform = 3;
+	</script>
+
+	<?php do_action( 'sell_media_after_file_uploader', $post ); ?>
+
+	<ul class="attachments sell-media-upload-list">
+		<?php
+			$attachment_ids = sell_media_get_attachments( $post->ID );
+			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+				echo sell_media_list_uploads( $attachment_id );
+			}
+		?>
+	</ul>
+
+	<?php do_action( 'sell_media_after_uploader_meta_box', $post ); ?>
+	<!-- This hidden field holds all attached file ids -->
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
+<?php }
+
+/**
+ * After file uploader
+ */
+function sell_media_after_file_uploader( $post ) {
+	?>
+
+	<p class="description"><?php _e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
+	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
 
 	<div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
 		<h4><?php _e( 'Importing', 'sell_media' ); ?></h4>
@@ -82,20 +133,9 @@ function sell_media_files_meta_box( $post ) {
 			<p><strong><?php echo get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?></strong></p>
 		</div>
 	<?php endif; ?>
-
-	<ul class="attachments sell-media-upload-list">
-		<?php
-			$attachment_ids = sell_media_get_attachments( $post->ID );
-			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				echo sell_media_list_uploads( $attachment_id );
-			}
-		?>
-	</ul>
-
-	<?php do_action( 'sell_media_after_files_meta_box', $post ); ?>
-	<!-- This hidden field holds all attached file ids -->
-	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
-<?php }
+	<?php
+}
+add_action( 'sell_media_after_file_uploader', 'sell_media_after_file_uploader' );
 
 /**
  * Options meta box
@@ -103,35 +143,16 @@ function sell_media_files_meta_box( $post ) {
 function sell_media_options_meta_box( $post ) {
 
 	$settings = sell_media_get_plugin_options();
-	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : sprintf( '%0.2f', $settings->default_price );
+	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : $settings->default_price;
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
 	<div id="sell-media-price-field" class="sell-media-field">
-		<label for="sell-media-price"><?php _e( 'Price', 'sell_media' ); ?> (<?php echo sell_media_get_currency_symbol(); ?>)</label>
-		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo $price; ?>" />
+		<label for="sell-media-price"><?php _e( 'Price', 'sell_media' ); ?></label>
+		<span class="sell-media-currency-field"><?php echo sell_media_get_currency_symbol(); ?>
+		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo $price; ?>" /></span>
 		<?php if ( sell_media_has_multiple_attachments( $post->ID ) ) { ?>
-			<span class="desc"><?php _e( 'The price of each original, high-resolution file.', 'sell_media' ); ?></span>
+			<span class="desc"><?php _e( 'The price of each original source file.', 'sell_media' ); ?></span>
 		<?php } ?>
-	</div>
-
-	<div id="sell-media-price-group-field" class="sell-media-field">
-		<label for="sell-media-price-group"><?php _e( 'Price group for downloads', 'sell_media' ); ?></label>
-		<?php
-			$args = array(
-				'show_option_none' => __( 'None', 'sell_media' ),
-				'option_none_value' => 0,
-				'name' => 'sell_media_price_group',
-				'id' => 'sell-media-price-group',
-				'class' => 'sell-media-price-group',
-				'taxonomy' => 'price-group',
-				'hierarchical' => true,
-				'depth' => 1,
-				'hide_empty' => false,
-				'selected' => sell_media_get_item_price_group( $post->ID, 'price-group' )
-			);
-			wp_dropdown_categories( $args );
-		?>
-		<span class="desc"><?php printf( __( '<a href="%1$s">Create new price group</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_size_settings' ); ?></span>
 	</div>
 
 	<?php do_action( 'sell_media_after_options_meta_box', $post->ID );
@@ -485,7 +506,7 @@ function sell_media_item_content( $column, $post_id ){
 			$settings = sell_media_get_plugin_options();
 			if ( $price ) {
 				echo sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' );
-			} elseif ( $settings->default_price ) {
+			} elseif ( isset( $settings->default_price ) && '' !== $settings->default_price ) {
 				echo sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' );
 			} else {
 				echo __( 'No price set', 'sell_media' );

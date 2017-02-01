@@ -185,8 +185,11 @@ function sell_media_checkout_shortcode(){
 					<div class="item-image">
 						<?php
 						if ( ! empty( $item['item_attachment'] ) ) {
+							// $item['item_id'] is the featured image id
+							// $item['attachment'] is the source file id
+							$mime_type = get_post_mime_type( $item['item_attachment'] );
 							// if selling video or audio, show the post_id thumbnail
-							if ( SellMediaAudioVideo::is_video_item( $item['item_id'] ) || SellMediaAudioVideo::is_audio_item( $item['item_id'] ) ) {
+							if ( SellMediaAudioVideo::is_video_item( $item['item_id'] ) || SellMediaAudioVideo::is_audio_item( $item['item_id'] ) || 'application/pdf' === $mime_type ) {
 								echo sell_media_item_icon( $item['item_id'] );
 							} else {
 								echo sell_media_item_icon( $item['item_attachment'] );

@@ -218,6 +218,11 @@ function sell_media_currencies(){
         'title' => __('Polish Zloty','sell_media'),
         'symbol' => "PLN"
         ),
+    "RUB" => array(
+        'name' => 'RUB',
+        'title' => __('Russian Ruble (&#x20bd;)','sell_media'),
+        'symbol' => '&#x20bd;'
+    ),
     "SGD" => array(
         'name' => 'SGD',
         'title' => __('Singapore Dollar (&#36;)','sell_media'),
@@ -293,20 +298,4 @@ function sell_media_settings_payment_gateway(){
         );
 
     return apply_filters('sell_media_payment_gateway', $gateways);
-}
-
-/**
- * Price Groups
- */
-function sell_media_price_group_ui(){
-    include_once( SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php' );
-    // Since the nav style ui prints output we suppress it and
-    // assign it to a variable.
-    ob_start();
-    $price_group = New SellMediaNavStyleUI();
-    $price_group->taxonomy = 'price-group';
-    $price_group->setting_ui();
-    $price_group_ui = ob_get_contents();
-    ob_end_clean();
-    return $price_group_ui;
 }

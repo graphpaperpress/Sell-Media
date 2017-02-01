@@ -1125,7 +1125,7 @@ input.sell-media-search-text[type=text] {
 .checkout-counter,
 .checkout-counter-wrap {
   display: inline;
-  padding: 2px 5px;
+  padding: 2px 4px;
   font-size: 9px;
   line-height: 1;
   color: #fff;
@@ -1133,7 +1133,8 @@ input.sell-media-search-text[type=text] {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: 2px; }
+  border-radius: 2px;
+  display: inline-block; }
 
 /*= Widgets
 -------------------------------------------------------------- */

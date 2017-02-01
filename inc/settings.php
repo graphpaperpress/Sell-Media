@@ -12,6 +12,7 @@
  * @since 1.8.5
  */
 function sell_media_init_settings() {
+	$settings = sell_media_get_plugin_options();
 
 	/**
 	 * Define the Tabs appearing on the Theme Options page
@@ -498,9 +499,9 @@ function sell_media_init_settings() {
 					)
 				)
 		),
-		
-		// Size & Price
-		"default_price" => array(
+	);
+
+		$options['default_price'] = array(
 			"tab" => "sell_media_size_settings",
 			"name" => "default_price",
 			"title" => __("Original Price","sell_media"),
@@ -511,12 +512,13 @@ function sell_media_init_settings() {
 			"default" => "1",
 			"sanitize" => "html",
 			"type" => "text"
-			),
-		"hide_original_price" => array(
+		);
+
+		$options['hide_original_price'] = array(
 			"tab" => "sell_media_size_settings",
 			"name" => "hide_original_price",
 			"title" => __("Hide Original Price","sell_media"),
-			"description" => __( "Select 'Yes' to hide the original price above and rely solely on Price Groups (See below. Price Groups can only be used when selling images). Select 'No' if you're selling single file downloads or if you want to list the original price for each product. You can override this setting on a per-item basis.", "sell_media" ),
+			"description" => __( "Select 'Yes' to hide the original price above and rely solely on Pricelists (See below. Pricelists can only be used when selling images). Select 'No' if you're selling single file downloads or if you want to list the original price for each product. You can override this setting on a per-item basis.", "sell_media" ),
 			"section" => "size_price_plugin_section_1",
 			"since" => "1.0",
 			"id" => "size_price_plugin_section_1",
@@ -532,30 +534,20 @@ function sell_media_init_settings() {
 					"title" => __("Yes","sell_media"),
 					)
 			)
-		),
+		);
+
+	$other_options = array(
 		"default_price_group" => array(
 			"tab" => "sell_media_size_settings",
 			"name" => "default_price_group",
-			"title" => __("Default Image Price Group", "sell_media"),
-			"description" => "This is the default price group that will be assigned to all newly uploaded images for sale. You can override this setting on a per-item basis.",
+			"title" => __("Default Image Pricelist", "sell_media"),
+			"description" => "This is the default pricelist that will be assigned to all new uploads for sale. You can override this setting on a per-item basis.",
 			"id" => "size_price_plugin_section_1",
 			"section" => "size_price_plugin_section_1",
 			"type" => "select",
 			"default" => "",
 			"valid_options" => sell_media_settings_price_group('price-group')
 			),
-		"price_group" => array(
-			"tab" => "sell_media_size_settings",
-			"name" => "price_group",
-			"title" => __("Image Price Groups","sell_media"),
-			"default" => "",
-			"description" => "",
-			"id" => "size_price_plugin_section_1",
-			"section" => "size_price_plugin_section_1",
-			"type" => "html",
-			"valid_options" => sell_media_price_group_ui()
-			),
-
 		// Payment Tab
 		"paypal_email" => array(
 			"tab" => "sell_media_payment_settings",
@@ -710,6 +702,7 @@ function sell_media_init_settings() {
 			"valid_options" => ''
 		)
 	);
+	$options = wp_parse_args( $other_options, $options );
 	sell_media_register_plugin_options( apply_filters( 'sell_media_options', $options ) );
 
 }

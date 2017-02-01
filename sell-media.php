@@ -3,7 +3,7 @@
  * Plugin Name: Sell Media
  * Plugin URI: http://graphpaperpress.com/plugins/sell-media/
  * Description: A plugin for selling photos, prints and other downloads.
- * Version: 2.2.12
+ * Version: 2.3.0
  * Author: Graph Paper Press
  * Author URI: http://graphpaperpress.com
  * Author Email: support@graphpaperpress.com
@@ -24,7 +24,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 2.2.12
+ * @version 2.3.0
  */
 
 // Exit if accessed directly.
@@ -118,6 +118,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				self::$instance->constants();
 				self::$instance->includes();
 				self::$instance->textdomain();
+				self::$instance->session        = new SellMediaSession();
 				self::$instance->customer       = new SellMediaCustomer();
 				self::$instance->download       = new SellMediaDownload();
 				self::$instance->images         = new SellMediaImages();
@@ -132,6 +133,8 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				if ( self::$instance->is_request( 'admin' ) ) {
 					self::$instance->notices        = new SellMediaAdminNotices();
 					self::$instance->admin_search   = new SellMediaAdminSearch();
+					self::$instance->price_listings = new Sell_Media_Price_Listings();
+					self::$instance->admin_add_item = new SellMediaAdminAddItem();
 				}
 
 				// Set cart global variable.
@@ -177,7 +180,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			// Plugin version.
 			if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-				define( 'SELL_MEDIA_VERSION', '2.2.12' );
+				define( 'SELL_MEDIA_VERSION', '2.3.0' );
 			}
 
 			// Plugin Folder Path.
@@ -225,6 +228,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 		 */
 		private function includes() {
 
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-session.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-customer.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-downloads.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-layouts.php';
@@ -256,7 +260,6 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			// Load files if is front end.
 			if ( self::$instance->is_request( 'frontend' ) ) {
 
-				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-phpsessions.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-cart.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/ajax.php';
 
@@ -268,11 +271,13 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-items.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-menu.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-payments.php';
-				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-price-groups.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-scripts.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/admin-system-info.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-notices.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-search.php';
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-price-listings.php';
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-price-listings-tabs.php';
+				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-add-item.php';
 
 			}
 

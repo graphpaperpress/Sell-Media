@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 * Paypal payment request.
 */
 class SM_Gateway_Paypal_Request {
-	
+
 	function __construct() {
-		
+
 		add_action( 'sell_media_above_checkout_button', array( $this, 'form' ) );
 		add_action( 'init', array( $this, 'process' ) );
 
@@ -42,7 +42,7 @@ class SM_Gateway_Paypal_Request {
 			return;
 		}
 
-		$args = $this->get_args();        
+		$args = $this->get_args();
 
 		$redirect_uri = esc_url( home_url( '/' ) );
 

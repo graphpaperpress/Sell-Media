@@ -347,7 +347,7 @@ function sell_media_get_attachment_id( $post_id = null ) {
 		$attachment_id = $post_id;
 	} else {
 		$attachments = sell_media_get_attachments( $post_id );
-		$attachment_id = $attachments[0];
+		$attachment_id = isset( $attachments[0] ) ? $attachments[0] : $post_id;
 	}
 
 	return $attachment_id;

@@ -97,7 +97,7 @@ jQuery( document ).ready(function( $ ){
     function sell_media_is_attachment_audio_video( attachment_ids ){
         if (attachment_ids === undefined)
             return false;
-        
+
         var attachment_ids = attachment_ids.split( ',' );
         var data = {
             'action' : 'check_attachment_is_audio_video',
@@ -272,7 +272,7 @@ jQuery( document ).ready(function( $ ){
             $( ':input[name="sell_media_price"]', $edit_row ).val(  $sell_media_price.replace(/^\D+/g, "") );
 
              $( 'select[name="sell_media_price_group"] option', $edit_row ).filter(function() {
-                return $(this).text() == $sell_media_price_group; 
+                return $(this).text() == $sell_media_price_group;
             }).attr('selected', true);
         }
     };
@@ -310,5 +310,43 @@ jQuery( document ).ready(function( $ ){
             }
         });
     });
-});
 
+    /*
+     * Tab js.
+     */
+    if ( $.fn.tabs ) {
+      $('.sell-media-add-item-main-container-wrap').tabs({
+    	  activate: function( event, ui ) {
+    			$(ui.newPanel).css({display:'table'})
+    		},
+    		create: function( event, ui ) {
+    			$(ui.panel).css({display:'table'})
+    		}
+    	});
+    }
+
+    /**
+     * Display Price lists in item add/ edit.
+     */
+    function sellMediaDisplayPricelistTable( priceListId ) {
+     $.post( ajaxurl, { action: 'sell_media_load_pricelists', parent_id : priceListId }, function( res ) {
+       $("#sell-media-display-pricelists").remove();
+       if( '0' != res  ){
+        var url = $("#sell-media-edit-pricelist-link-wrap a").data('href');
+        $("#sell-media-edit-pricelist-link-wrap a").attr('href', url + priceListId ).show();
+        $("#sell-media-edit-pricelist-link-wrap").show();
+        $("#sell-media-price-group-field").append( res );
+       }
+       else{
+        $("#sell-media-edit-pricelist-link-wrap").hide();
+       }
+     } );
+    }
+
+    var selectedPriceList = $( 'select#sell-media-price-group' ).val();
+    sellMediaDisplayPricelistTable( selectedPriceList );
+    $( 'select#sell-media-price-group' ).on( 'change', function(){
+      var groupParentId = $(this).val();
+      sellMediaDisplayPricelistTable( groupParentId );
+    });
+});

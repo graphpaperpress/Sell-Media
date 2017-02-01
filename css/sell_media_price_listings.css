@@ -1,0 +1,54 @@
+.sell-media-price-listings-wrap #poststuff h2.tab-title {
+  padding: 8px 0;
+  position: relative; }
+  .sell-media-price-listings-wrap #poststuff h2.tab-title span {
+    padding: 4px 0px;
+    position: relative;
+    top: -3px; }
+  .sell-media-price-listings-wrap #poststuff h2.tab-title .sell-media-add-new-pricelist-popup {
+    border: 1px solid #ccc;
+    background: #fff;
+    width: 235px;
+    padding: 20px;
+    position: absolute;
+    top: 29px;
+    left: 174px;
+    border-radius: 3px;
+    display: none; }
+.sell-media-price-listings-wrap #poststuff .tab-price-lists {
+  margin: 15px 0; }
+.sell-media-price-listings-wrap #poststuff .tab-price-list-edit-title {
+  padding: 8px 0; }
+.sell-media-price-listings-wrap #poststuff #sell-media-price-table {
+  width: 90%; }
+  .sell-media-price-listings-wrap #poststuff #sell-media-price-table td {
+    padding: 7px 0px; }
+    .sell-media-price-listings-wrap #poststuff #sell-media-price-table td input[type=text] {
+      width: 80%; }
+    .sell-media-price-listings-wrap #poststuff #sell-media-price-table td input.small-text {
+      width: 100px; }
+.sell-media-price-listings-wrap #poststuff .price-group-term-information {
+  margin: 10px 0; }
+.sell-media-price-listings-wrap #poststuff .sell-media-sub-tab {
+  border: none !important;
+  margin: 10px 0 !important; }
+.sell-media-price-listings-wrap #poststuff .sell-media-sub-tab .nav-tab {
+  border: none;
+  border-bottom: 2px solid #f1f1f1;
+  background: none; }
+.sell-media-price-listings-wrap #poststuff .sell-media-sub-tab .nav-tab:hover {
+  border-bottom: 2px solid #444444;
+  background: none; }
+.sell-media-price-listings-wrap #poststuff .sell-media-sub-tab .nav-tab-active {
+  border-bottom: 2px solid #444444;
+  background: none; }
+.sell-media-price-listings-wrap #poststuff .sell-media-pricelisting-form-buttons {
+  width: 90%; }
+  .sell-media-price-listings-wrap #poststuff .sell-media-pricelisting-form-buttons #sell-media-add-button {
+    float: right; }
+.sell-media-price-listings-wrap #poststuff .parsley-error {
+  border: 1px solid red; }
+.sell-media-price-listings-wrap #poststuff ul.parsley-errors-list {
+  display: none; }
+
+/*# sourceMappingURL=sell_media_price_listings.css.map */
