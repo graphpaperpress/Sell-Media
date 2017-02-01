@@ -40,6 +40,7 @@ class Sell_Media_Price_Listings_Tabs {
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
 		add_action( 'admin_head', array( $this, 'js_template' ), 25 );
 		add_action( 'sell_media_price_listing_save', array( $this, 'save_data' ) );
+		add_action( 'sell_meida_load_pricelists_page', array( $this, 'delete_pricelist' ) );
 		add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
 	}
 
@@ -263,6 +264,32 @@ class Sell_Media_Price_Listings_Tabs {
 		$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 		wp_redirect( $redirect_url );
 		exit();
+	}
+
+	function delete_pricelist( $redirect_url ) {
+		// Check if request is for delete and parent term is set.
+		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] ) {
+			return;
+		}
+
+		// Check valid nonce.
+		check_admin_referer( 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
+
+		$term_parent = absint( $_GET['term_parent'] );
+		$taxonomy = esc_attr( $_GET['tab'] );
+		$child_terms = get_term_children( $term_parent, $taxonomy );
+		wp_delete_term( (int) $term_parent, $taxonomy );
+
+		// Delete its child terms.
+		if ( ! empty( $child_terms ) ) {
+			foreach ( $child_terms as $key => $term_id ) {
+				wp_delete_term( (int) $term_id, $taxonomy );
+			}
+		}
+
+		$redirect_url = add_query_arg( array( 'page' =>$_GET['page'], 'tab' => $_GET['tab'] ), $redirect_url );
+		wp_redirect( $redirect_url );
+		exit;
 	}
 }
 
