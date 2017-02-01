@@ -92,4 +92,15 @@
   });
 
   $('#sell-media-pricelist-form, #sell-media-new-pricelist-form').parsley();
+
+  // Delete Pricelist.
+  $(document).on( 'click', '.tab-price-lists .deletion', function(e){
+   var href = $(this).data('href');
+   var message = $(this).data('message');
+   if(!confirm( message ) ){
+    return false;
+   }
+   window.location = href;
+   return false;
+  });
 })(jQuery);
