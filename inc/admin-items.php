@@ -287,6 +287,22 @@ function sell_media_save_custom_meta( $post_id ) {
 
 							// Mark attachment as sell media item.
 							update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', $post_id );
+							$post_views_count = get_post_meta( $attachment_id, '_sell_media_post_views_count', true );
+							if ( false === $post_views_count || '' === $post_views_count ) {
+								update_post_meta( $attachment_id, '_sell_media_post_views_count', '0' );
+							}
+							// Store orientation.
+							$orientation = get_post_meta( $attachment_id, '_sell_media_attachment_orientation', true );
+							if ( false === $orientation || '' === $orientation ) {
+								$meta = get_post_meta( $attachment_id, '_wp_attachment_metadata', true );
+								if ( $meta['height'] < $meta['width'] ) {
+									update_post_meta( $attachment_id, '_sell_media_attachment_orientation', 'landscape' );
+								}
+
+								if ( $meta['height'] > $meta['width'] ) {
+									update_post_meta( $attachment_id, '_sell_media_attachment_orientation', 'portrait' );
+								}
+							}
 							sell_media_move_file( $attachment_id );
 						}
 					}
