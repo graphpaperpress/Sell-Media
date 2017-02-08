@@ -168,6 +168,10 @@ add_shortcode( 'sell_media_all_items', 'sell_media_all_items_shortcode' );
  * @since 2.0
  */
 function sell_media_checkout_shortcode(){
+	$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true );
+	if ( ! $enable_ecommerce ) {
+		return false;
+	}
 	$settings = sell_media_get_plugin_options();
 	ob_start(); ?>
 	<?php do_action( 'sell_media_checkout_before_cart' ); ?>
