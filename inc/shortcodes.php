@@ -167,8 +167,8 @@ add_shortcode( 'sell_media_all_items', 'sell_media_all_items_shortcode' );
  *
  * @since 2.0
  */
-function sell_media_checkout_shortcode(){
-	$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true );
+function sell_media_checkout_shortcode() {
+	$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, null, null );
 	if ( ! $enable_ecommerce ) {
 		return false;
 	}
@@ -282,7 +282,7 @@ function sell_media_checkout_shortcode(){
 				</p>
 				<?php
 				$settings = sell_media_get_plugin_options();
-				if ( ! empty ( $settings->terms_and_conditions ) ) : ?>
+				if ( ! empty( $settings->terms_and_conditions ) ) : ?>
 					<p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
 				<?php endif; ?>
 			</div><!-- .sell-media-checkout-button -->

@@ -273,7 +273,7 @@ class SellMediaLayouts {
 			}
 
 			ob_start();
-			$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true );
+			$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, $post_id, $attachment_id );
 			if ( $enable_ecommerce ) {
 				echo '<div class="sell-media-meta">';
 				do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
@@ -338,7 +338,7 @@ class SellMediaLayouts {
 
 		$html .= sell_media_item_icon( $original_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 
-		$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true );
+		$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, $post_id, $attachment_id );
 		if ( $enable_ecommerce ) {
 
 			// Show quick view?
