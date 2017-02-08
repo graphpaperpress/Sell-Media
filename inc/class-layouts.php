@@ -273,12 +273,14 @@ class SellMediaLayouts {
 			}
 
 			ob_start();
-
-			echo '<div class="sell-media-meta">';
-			do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
-			do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
-			do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
-			echo '</div>';
+			$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true );
+			if ( $enable_ecommerce ) {
+				echo '<div class="sell-media-meta">';
+				do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
+				do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
+				do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
+				echo '</div>';
+			}
 
 			echo do_action( 'sell_media_below_content', $post_id, $attachment_id );
 
@@ -336,12 +338,16 @@ class SellMediaLayouts {
 
 		$html .= sell_media_item_icon( $original_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 
-		// Show quick view?
-		if ( isset( $this->settings->quick_view ) && 0 != $this->settings->quick_view && is_main_query() ) {
-			if ( sell_media_has_multiple_attachments( $post_id ) && ( is_tax( array( 'collection' ) ) || is_post_type_archive( 'sell_media_item' ) ) ) {
-				$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
-			} else {
-				$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
+		$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true );
+		if ( $enable_ecommerce ) {
+
+			// Show quick view?
+			if ( isset( $this->settings->quick_view ) && 0 != $this->settings->quick_view && is_main_query() ) {
+				if ( sell_media_has_multiple_attachments( $post_id ) && ( is_tax( array( 'collection' ) ) || is_post_type_archive( 'sell_media_item' ) ) ) {
+					$html .= '<div class="sell-media-view-gallery">' . apply_filters( 'sell_media_view_gallery_text', __( 'View Gallery', 'sell_media' ) ) . '</div>';
+				} else {
+					$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
+				}
 			}
 		}
 		$html .= '</a>';
