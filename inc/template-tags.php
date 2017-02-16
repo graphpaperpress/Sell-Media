@@ -220,11 +220,12 @@ function sell_media_gallery( $post_id ) {
 	$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
 	$html .= '<div id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+		$attachment_attributes = wp_get_attachment_image_src( $attachment_id, 'large' );
 		$attr = array(
 			'class' => 'sell-media-image sell_media_image sell_media_watermark',
 		);
 		$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
-		$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item">';
+		$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item" data-src="' . esc_url( $attachment_attributes[0] ) . '">';
 		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
 		$html .= wp_get_attachment_image( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), '', $attr );
 
