@@ -214,6 +214,8 @@ function sell_media_get_media( $post_id = null ) {
  */
 function sell_media_gallery( $post_id ) {
 
+	do_action( 'sell_media_before_gallery', $post_id );
+
 	$html = '';
 
 	$attachment_ids = sell_media_get_attachments( $post_id );
