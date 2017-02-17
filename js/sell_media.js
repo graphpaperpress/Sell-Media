@@ -31,6 +31,7 @@ jQuery(document).ready(function($){
 	 * Popup resize
 	 */
 	function popup_resize(){
+  $('.sell-media-dialog-box').width(0).height(0);
 		// assign values to the overlay and dialog box and show overlay and dialog
 		var width = $(window).width();
 		var height = $(document).height();
