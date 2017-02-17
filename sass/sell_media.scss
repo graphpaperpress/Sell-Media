@@ -132,7 +132,7 @@ a:focus {
 	max-height: 100%;
 	width: 100%;
 	display: inline-block;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 	-webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
 	page-break-inside: avoid; /* Firefox */
 	break-inside: avoid; /* IE 10+ */
@@ -153,7 +153,7 @@ a:focus {
 	list-style: none;
 	margin: 0 0 2em;
 	padding: 0;
-	
+
 	li {
 		display: block;
 		margin: 1em 0;
@@ -331,7 +331,7 @@ input[type="submit"].sell-media-button,
 		border-radius: 2px;
 		font-size: 16px;
 		font-weight: 700;
-	}	
+	}
 }
 
 .sell-media-item-links {
@@ -371,7 +371,7 @@ input[type="submit"].sell-media-button,
 	td {
 		padding: 5px;
 	}
-	
+
 	td.sell-media-product-total,
 	th.sell-media-product-subtotal,
 	td.sell-media-products-grandtotal {
@@ -438,7 +438,7 @@ input[type="submit"].sell-media-button,
 		float: none;
 		text-align: center;
 	}
-	
+
 	a {
 		display: inline-block;
 		margin-right: 10px;
@@ -501,7 +501,7 @@ input[type="submit"].sell-media-button,
 		list-style: none;
 		margin: 0 0 1.5em 0;
 		padding: 0;
-		
+
 		li {
 			margin-bottom: .5em;
 
@@ -597,7 +597,7 @@ input[type="submit"].sell-media-button,
 		margin: 0 auto;
 	}
 
-	.sell-media-quick-view, 
+	.sell-media-quick-view,
 	.sell-media-view-gallery {
 		font-family: $font-sans-serif;
 		font-size: $font-size * .75;
@@ -722,7 +722,7 @@ input[type="submit"].sell-media-button,
 		.sell-media-item-details {
 			opacity: 1;
 		}
-		
+
 		img {
 			opacity: .5 !important;
 		}
@@ -747,7 +747,7 @@ input[type="submit"].sell-media-button,
 		display: none;
 		margin: 1em 0;
 	}
-	
+
 	.lightbox-notice.in-lightbox {
 		display: block;
 		margin: 1em 0;
@@ -766,7 +766,7 @@ input[type="submit"].sell-media-button,
 	clear: both;
 	margin: 3em auto;
 	text-align: center;
-	
+
 	.page-numbers {
 		padding: 0 3px;
 	}
@@ -903,7 +903,7 @@ input[type="submit"].sell-media-button,
 		@extend .sell-media-main-col;
 		margin-bottom: 0 !important; // override grid margins
 	}
-	
+
 	.sell-media-quick-view-content {
 		@extend .sell-media-side-col;
 		margin-bottom: 0 !important; // override grid margins
@@ -978,7 +978,7 @@ input[type="submit"].sell-media-button,
 	&.is-visible {
 		opacity: 1;
 		visibility: visible;
-		
+
 		#sell-media-dialog-box-target {
 
 			.sell-media-dialog-box-arrow {
@@ -1021,8 +1021,8 @@ input[type="submit"].sell-media-button,
 
 	@media only screen and (min-width: 1170px) {
 		#sell-media-dialog-box-target {
-			margin: 8em auto; 
-		} 
+			margin: 8em auto;
+		}
 	}
 }
 
@@ -1030,7 +1030,7 @@ input[type="submit"].sell-media-button,
 	overflow: scroll;
 	#sell-media-dialog-box-target {
 		max-height: 500px;
-		width: 500px; 
+		width: 500px;
 		overflow-y: scroll;
 
 		.content{
@@ -1043,7 +1043,7 @@ input[type="submit"].sell-media-button,
 		overflow: scroll;
 		#sell-media-dialog-box-target {
 			max-height: 500px;
-			width: 302px; 
+			width: 302px;
 		}
 
 	}
@@ -1136,7 +1136,7 @@ input[type="submit"].sell-media-button,
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	
+
 	&.active {
 		box-shadow: 0 0 10px rgba(0,0,0,.2);
 	}
@@ -1273,7 +1273,7 @@ input.sell-media-search-text[type=text] {
 .downloads {
 	margin: 1em 0;
 	clear:both;
-	
+
 	.download {
 		display: block;
 		clear: both;
@@ -1331,7 +1331,7 @@ input.sell-media-search-text[type=text] {
 	position: relative;
 	cursor: help;
 	font-size: 11px;
-	
+
 	&:hover:after {
 		background: #333;
 		background: rgba(0,0,0,.8);
@@ -1380,7 +1380,7 @@ input.sell-media-search-text[type=text] {
 	box-shadow: 0 0 40px $black-color;
 	padding: 25px;
 	line-height: 1.5em;
-	
+
 	.close {
 		cursor: pointer;
 		font-size: 20px;
@@ -1458,7 +1458,7 @@ input.sell-media-search-text[type=text] {
 	float: left;
 	width: 100%;
 	margin-top: 1em;
-	
+
 	.widget {
 		float: left;
 		width: 100%;
@@ -1582,7 +1582,7 @@ input.sell-media-search-text[type=text] {
 			&.selected-tab {
 				color: $white-color;
 				border-bottom-color: $white-color;
-				position:relative; 
+				position:relative;
 				z-index: 2;
 			}
 
@@ -1697,7 +1697,7 @@ input.sell-media-search-text[type=text] {
 					color: darken( $default-color, 30% );
 				}
 			}
-		}	
+		}
 
 		.term-pagination {
 			border-top: 1px solid $border-color;
@@ -1756,7 +1756,7 @@ input.sell-media-search-text[type=text] {
 			width: 100%;
 			text-align: center;
 			margin: 10px 0;
-			
+
 			a {
 				background-image: none;
 				border: 0;
