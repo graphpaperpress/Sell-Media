@@ -314,6 +314,10 @@ function sell_media_init_settings() {
 					"name" => "sell-media-masonry",
 					"title" => __( "Masonry Layout", "sell_media" ),
 				),
+				"horizontal-masonry" => array(
+					"name" => "horizontal-masonry",
+					"title" => __( "Horizontal Masonry", "sell_media" ),
+				),
 			)
 		),
 		"titles" => array(
