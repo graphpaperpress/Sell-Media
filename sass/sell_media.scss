@@ -147,6 +147,26 @@ a:focus {
 
 }
 
+.horizontal-masonry-container {
+	display: flex;
+	flex-wrap: wrap;
+
+	.sell-media-grid-item {
+		margin-right: 15px;
+		margin-bottom: 15px;
+
+		img {
+			height: 200px;
+			width: auto;
+
+			@media only screen and (max-width: 767px) {
+				height: auto;
+				width: 100%;
+			}
+		}
+	}
+}
+
 /*= Checkout Page
 -------------------------------------------------------------- */
 .sell-media-cart-items {

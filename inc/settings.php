@@ -316,7 +316,7 @@ function sell_media_init_settings() {
 				),
 				"horizontal-masonry" => array(
 					"name" => "horizontal-masonry",
-					"title" => __( "Horizontal Masonry", "sell_media" ),
+					"title" => __( "Horizontal Masonry Layout", "sell_media" ),
 				),
 			)
 		),
