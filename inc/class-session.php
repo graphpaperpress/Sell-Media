@@ -28,7 +28,7 @@ class SellMediaSession {
 	public function __construct() {
 		// Let users change the session cookie name.
 		if ( ! defined( 'WP_SESSION_COOKIE' ) ) {
-			define( 'WP_SESSION_COOKIE', '_sell_media_session' );
+			define( 'WP_SESSION_COOKIE', 'sell_media_session' );
 		}
 
 		if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {

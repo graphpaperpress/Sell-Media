@@ -399,10 +399,10 @@ class SellMediaCart {
 
 		$cart_attributes = Sell_Media()->session->set( $cart_attributes_session_name, rtrim( $attributes, ';' ) );
 
-		$sm_cart_info['qty'] = $total_cart_qty;
-		$sm_cart_info['subtotal'] = $this->getSubtotal();
+		$sell_media_cart_info['qty'] = $total_cart_qty;
+		$sell_media_cart_info['subtotal'] = $this->getSubtotal();
 
 		// Cookie data to enable data info in js.
-		setcookie( 'sm_cart_info', wp_json_encode( $sm_cart_info ), time() + 604800, '/' );
+		setcookie( 'sell_media_cart_info', wp_json_encode( $sell_media_cart_info ), time() + 604800, '/' );
 	}
 }

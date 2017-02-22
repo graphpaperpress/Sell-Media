@@ -35,8 +35,7 @@ jQuery(document).ready(function($){
 		// assign values to the overlay and dialog box and show overlay and dialog
 		var width = $(window).width();
 		var height = $(document).height();
-
-		$('.sell-media-dialog-box').width(width).height(height)
+		$('.sell-media-dialog-box').width(width).height(height);
 	}
 
 	/**
@@ -702,10 +701,10 @@ jQuery(document).ready(function($){
  * Update the menu cart with Qty and Subtotal
  */
 function sm_update_cart_menu(){
-	var sm_cart_info = jQuery.parseJSON( jQuery.cookie('sm_cart_info') );
-	if( sm_cart_info != null ){
-		jQuery('.checkout-price').text( sm_cart_info.subtotal );
-		jQuery('.checkout-counter').text( sm_cart_info.qty );
+	var sell_media_cart_info = jQuery.parseJSON( jQuery.cookie('sell_media_cart_info') );
+	if( sell_media_cart_info != null ){
+		jQuery('.checkout-price').text( sell_media_cart_info.subtotal );
+		jQuery('.checkout-counter').text( sell_media_cart_info.qty );
 	}
 }
 
