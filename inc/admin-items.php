@@ -144,9 +144,15 @@ function sell_media_options_meta_box( $post ) {
 
 	$settings = sell_media_get_plugin_options();
 	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : $settings->default_price;
+	$sell_media_enable_ecommerce = get_post_meta( $post->ID, 'sell_media_enable_ecommerce', true );
+	$sell_media_enable_ecommerce = ( empty( $sell_media_enable_ecommerce ) ) ? 0 : 1;
+	$style= '';
+	if ( 0 == $sell_media_enable_ecommerce ) {
+		$style= 'display:none;';
+	}
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
-	<div id="sell-media-price-field" class="sell-media-field">
+	<div id="sell-media-price-field" class="sell-media-field" style="<?php echo $style; ?>">
 		<label for="sell-media-price"><?php _e( 'Price', 'sell_media' ); ?></label>
 		<span class="sell-media-currency-field"><?php echo sell_media_get_currency_symbol(); ?>
 		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo $price; ?>" /></span>
@@ -518,14 +524,20 @@ function sell_media_item_content( $column, $post_id ){
 			echo $html;
 			break;
 		case "sell_media_price":
-			$price = get_post_meta( $post_id, 'sell_media_price', true );
-			$settings = sell_media_get_plugin_options();
-			if ( $price ) {
-				echo sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' );
-			} elseif ( isset( $settings->default_price ) && '' !== $settings->default_price ) {
-				echo sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' );
-			} else {
-				echo __( 'No price set', 'sell_media' );
+			$sell_media_enable_ecommerce = get_post_meta( $post_id, 'sell_media_enable_ecommerce', true );
+			$sell_media_enable_ecommerce = ( empty( $sell_media_enable_ecommerce ) ) ? 0 : 1;
+
+			if ( 1 == $sell_media_enable_ecommerce ) {
+
+				$price = get_post_meta( $post_id, 'sell_media_price', true );
+				$settings = sell_media_get_plugin_options();
+				if ( $price ) {
+					echo sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' );
+				} elseif ( isset( $settings->default_price ) && '' !== $settings->default_price ) {
+					echo sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' );
+				} else {
+					echo __( 'No price set', 'sell_media' );
+				}
 			}
 			break;
 		default:
