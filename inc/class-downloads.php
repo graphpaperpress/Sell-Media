@@ -39,7 +39,21 @@ Class SellMediaDownload {
 
             $verified = apply_filters( 'sell_media_verify_download', $this->verify( $transaction_id, $payment_id ), $product_id );
 
-            if ( $verified ) {
+            if ( $verified ) {               
+                // If S3 extension, then get attachment url
+                if ( class_exists( 'SellMediaS3' ) ) {
+                    // With S3 enabled, we don't need or want to use get_protected_file
+                    $file = wp_get_attachment_url( $attachment_id );
+
+	                nocache_headers();
+                    header( "Robots: none" );
+                    header( "Content-Description: File Transfer" );
+                    header( "Content-Disposition: attachment; filename=".array_shift(explode('?', basename($file))));
+	                readfile($file);
+
+	                do_action( 'sell_media_after_successful_download', $product_id );
+                    exit();
+                } else {
 
                 $file = Sell_Media()->products->get_protected_file( $product_id, $attachment_id );
 
