@@ -25,8 +25,8 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 			<input class="item_type" name="item_type" type="text" value="<?php echo esc_attr( $type ); ?>" />
 			<input class="item_image" name="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
 			<input class="item_pgroup" name="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
-			<input class="item_size" name="item_size" type="text" value="<?php if ( ! $has_price_group ) echo 'Original'; ?>" />
-			<input class="item_usage" name="item_usage" type="text" value="No license" />
+			<input class="item_size" name="item_size" type="text" value="<?php if ( ! $has_price_group ) _e( 'Original', 'sell_media' ); ?>" />
+			<input class="item_usage" name="item_usage" type="text" value="<?php _e( 'No license', 'sell_media' ); ?>" />
 			<input class="item_license" name="item_license" type="text" value="0" />
 			<input class="item_attachment" name="item_attachment" type="text" value="<?php echo $attachment_id; ?>" />
 		</form>
