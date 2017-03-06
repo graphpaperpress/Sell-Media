@@ -15,6 +15,12 @@ class Sell_Media_Price_Listings_Tabs {
 	 * @var string
 	 */
 	var $taxonomy;
+	/**
+	 * Current term name.
+	 *
+	 * @var string
+	 */
+	var $current_term;
 
 	/**
 	 * Class Constructor.
@@ -34,14 +40,18 @@ class Sell_Media_Price_Listings_Tabs {
 			return;
 		}
 		$parent_terms = $this->get_terms();
-		$array_values = array_values( $parent_terms );
-		$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
-		$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first->term_id;
+
+		if ( ! isset( $parent_terms->errors ) ) {
+
+			$array_values = array_values( $parent_terms );
+			$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
+			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first->term_id;
+			add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
+		}		
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
 		add_action( 'admin_head', array( $this, 'js_template' ), 25 );
 		add_action( 'sell_media_price_listing_save', array( $this, 'save_data' ) );
-		add_action( 'sell_meida_load_pricelists_page', array( $this, 'delete_pricelist' ) );
-		add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
+		add_action( 'sell_meida_load_pricelists_page', array( $this, 'delete_pricelist' ) );		
 	}
 
 	/**
@@ -100,7 +110,7 @@ class Sell_Media_Price_Listings_Tabs {
 			$index = 0;
 			if ( ! empty( $download_parents ) ) {
 				foreach ( $download_parents as $key => $value ) {
-					if ( (int) $this->current_term === $value->parent ) {
+					if ( is_object( $value ) && (int) $this->current_term === $value->parent ) {
 						$_terms[ $index ] = $value;
 						$_terms[ $index ]->index = $index;
 						$_terms[ $index ]->meta = get_term_meta( $value->term_id, '', true );
