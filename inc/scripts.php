@@ -25,9 +25,12 @@ function sell_media_scripts( $hook ) {
 	$settings = sell_media_get_plugin_options();
 
 	// enqueue
-	wp_enqueue_script( 'sell_media_masonry', SELL_MEDIA_PLUGIN_URL . 'js/macy.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+
+	if ( isset( $settings->thumbnail_layout ) && 'sell-media-masonry' == $settings->thumbnail_layout ) {
+		wp_enqueue_script( 'sell_media_masonry', SELL_MEDIA_PLUGIN_URL . 'js/macy.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+	}
 	wp_enqueue_script( 'sell_media_jquery_cookie', SELL_MEDIA_PLUGIN_URL . 'js/jquery.cookie.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery', 'sell_media_jquery_cookie', 'sell_media_masonry' ), SELL_MEDIA_VERSION );
+	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery', 'sell_media_jquery_cookie' ), SELL_MEDIA_VERSION );
 	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
 
 	if ( isset( $settings->style ) && '' !== $settings->style ) {
