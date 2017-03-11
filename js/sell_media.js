@@ -695,6 +695,20 @@ jQuery(document).ready(function($){
 		});
 	});
 
+	/* Masonry Layout Call */
+	Macy.init({
+		container: '.sell-media-grid-item-masonry-container',
+		trueOrder: false,
+		waitForImages: false,
+		margin: 10,
+		columns: 4,
+		breakAt: {
+			940: 3,
+			768: 2,
+			420: 1
+		}
+	});
+
 }); // End jQuery document ready.
 
 /**
