@@ -314,8 +314,8 @@ function sell_media_init_settings() {
 					"name" => "sell-media-masonry",
 					"title" => __( "Masonry Layout", "sell_media" ),
 				),
-				"horizontal-masonry" => array(
-					"name" => "horizontal-masonry",
+				"sell-media-horizontal-masonry" => array(
+					"name" => "sell-media-horizontal-masonry",
 					"title" => __( "Horizontal Masonry Layout", "sell_media" ),
 				),
 			)
@@ -522,7 +522,7 @@ function sell_media_init_settings() {
 			"tab" => "sell_media_size_settings",
 			"name" => "hide_original_price",
 			"title" => __("Hide Original Price","sell_media"),
-			"description" => __( "Select 'Yes' to hide the original price above and rely solely on Pricelists (See below. Pricelists can only be used when selling images). Select 'No' if you're selling single file downloads or if you want to list the original price for each product. You can override this setting on a per-item basis.", "sell_media" ),
+			"description" => __( "Select 'Yes' to hide the original price above and rely solely on Price Groups (See below. Price Groups can only be used when selling images). Select 'No' if you're selling single file downloads or if you want to list the original price for each product. You can override this setting on a per-item basis.", "sell_media" ),
 			"section" => "size_price_plugin_section_1",
 			"since" => "1.0",
 			"id" => "size_price_plugin_section_1",
@@ -544,8 +544,8 @@ function sell_media_init_settings() {
 		"default_price_group" => array(
 			"tab" => "sell_media_size_settings",
 			"name" => "default_price_group",
-			"title" => __("Default Image Pricelist", "sell_media"),
-			"description" => "This is the default pricelist that will be assigned to all new uploads for sale. You can override this setting on a per-item basis.",
+			"title" => __("Default Image Price Group", "sell_media"),
+			"description" => "This is the default price group that will be assigned to all newly uploaded images for sale. You can override this setting on a per-item basis.",
 			"id" => "size_price_plugin_section_1",
 			"section" => "size_price_plugin_section_1",
 			"type" => "select",

@@ -31,7 +31,7 @@ jQuery(document).ready(function($){
 	 * Popup resize
 	 */
 	function popup_resize(){
-  $('.sell-media-dialog-box').width(0).height(0);
+  	$('.sell-media-dialog-box').width(0).height(0);
 		// assign values to the overlay and dialog box and show overlay and dialog
 		var width = $(window).width();
 		var height = $(document).height();
@@ -694,21 +694,6 @@ jQuery(document).ready(function($){
 			$('.button-container #sell-media-add-to-cart').html( res );
 		});
 	});
-
-	/* Masonry Layout Call */
-	Macy.init({
-		container: '.sell-media-grid-item-masonry-container',
-		trueOrder: false,
-		waitForImages: false,
-		margin: 10,
-		columns: 4,
-		breakAt: {
-			940: 3,
-			768: 2,
-			420: 1
-		}
-	});
-
 }); // End jQuery document ready.
 
 /**

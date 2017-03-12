@@ -180,13 +180,13 @@ class SellMediaLayouts {
 	 */
 	public function grid_container_class() {
 		$class = 'sell-media-grid-item-container';
-		
+
 		if ( 'sell-media-masonry' === $this->settings->thumbnail_layout ) {
 			$class = 'sell-media-grid-item-masonry-container';
 		}
 
-		if ( 'horizontal-masonry' === $this->settings->thumbnail_layout ) {
-			$class = 'horizontal-masonry-container';
+		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
+			$class = 'sell-media-grid-item-horizontal-masonry-container';
 		}
 
 		return $class;
