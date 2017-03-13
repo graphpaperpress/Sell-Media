@@ -250,8 +250,10 @@ class SellMediaProducts {
 		$protected_dir      = $wp_upload_dir['basedir'] . '/sell_media';
 		$protected_file     = str_replace( $wp_upload_dir['basedir'], $protected_dir, $unprotected_file );
 
-		// Check if this item is a package and change the file location
-		if ( $this->is_package( $post_id ) ) {
+		// S3 changes native WP paths, so use that path
+		if ( class_exists( 'SellMediaS3' ) ) {
+			$file = wp_get_attachment_url( $attachment_id );
+		} elseif ( $this->is_package( $post_id ) ) {
 			$file = $this->get_package_file( $post_id );
 		} elseif ( file_exists( $protected_file ) ) {
 			$file = $protected_file;
@@ -259,7 +261,7 @@ class SellMediaProducts {
 			$file = $unprotected_file;
 		}
 
-		return apply_filters( 'sell_media_get_original_protected_file', $file );
+		return apply_filters( 'sell_media_get_original_protected_file', $file, $attachment_id );
 	}
 
 	/**
