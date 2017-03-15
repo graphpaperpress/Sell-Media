@@ -259,7 +259,7 @@ function sell_media_currencies(){
         'symbol' => "R"
         )
     );
-    return $currencies;
+    return apply_filters( 'sell_media_currencies', $currencies );
 }
 
 
