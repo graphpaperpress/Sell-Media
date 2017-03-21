@@ -72,9 +72,12 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 
 			<?php if ( count( $licenses ) > 0 ) : ?>
 				<fieldset id="sell_media_download_license_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-license-fieldset">
-					<label for="sell_media_item_license"><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span class="sell-media-tooltip license-info" id="license_desc" data-tooltip="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>">(?)</span></label>
+					<?php $sell_media_license_tooltip_text = 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.';
+						$tooltip_text = apply_filters( 'sell_media_license_tooltip_text', $sell_media_license_tooltip_text );
+					 ?>
+					<label for="sell_media_item_license"><?php echo apply_filters( 'sell_media_download_license_text', __( 'License', 'sell_media' ) ); ?> <span class="sell-media-tooltip license-info" id="license_desc" data-tooltip="<?php _e( $tooltip_text, 'sell_media' ); ?>">(?)</span></label>
 					<select id="sell_media_item_license" class="sum" required>
-						<option selected="selected" value="" data-id="" data-price="0" title="<?php _e( 'Select a license that most closely describes the intended use of this item. Additional license details will be displayed here after selecting a license.', 'sell_media' ); ?>"><?php _e( 'Select a license', 'sell_media'); ?></option>
+						<option selected="selected" value="" data-id="" data-price="0" title="<?php _e( $tooltip_text, 'sell_media' ); ?>"><?php _e( 'Select a license', 'sell_media'); ?></option>
 						<?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => 'licenses', 'type'=>'select' ) ); ?>
 					</select>
 				</fieldset>

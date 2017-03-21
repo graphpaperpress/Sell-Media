@@ -1443,6 +1443,9 @@ function sell_media_clear_cart_after_payment() {
 	} else if ( isset( $_POST['txn_id'] ) && ! empty( $_POST['txn_id'] ) ) {
 		$clear = true;
 	}
+
+	$clear = apply_filters( 'sell_media_clear_cart_after_payment', $clear );
+
 	if ( ! $clear ) {
 		return false;
 	}
