@@ -308,6 +308,9 @@ input[type="submit"].sell-media-button,
     text-align: right; }
   .sell-media-products .text-center {
     text-align: center; }
+  .sell-media-products img {
+    max-width: 100px;
+    height: auto; }
 
 /*= Layouts
 -------------------------------------------------------------- */
