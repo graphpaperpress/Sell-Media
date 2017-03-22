@@ -70,6 +70,8 @@ Class SellMediaAdminNotices {
                 );
             }
 
+            $notices = apply_filters( 'sell_media_admin_notices', $notices );
+
             foreach( $notices as $notice ){
                 add_settings_error( 'sell-media-notices', 'sell-media-notice-' . $notice['slug'], $notice['message'], 'updated' );
             }
