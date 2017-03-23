@@ -184,6 +184,8 @@ class SellMediaAdminAddItem {
 
 		echo '<div id="sell-media-advanced-options-container">';
 
+		do_action( 'sell_media_add_item_tab_before_content_callback', 'advanced', $post );
+
 			echo '<div id="sell-media-tax-collections" class="sell-media-tax-wrap">';
 				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Collections', 'sell_media' ) );
 				printf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_html__( 'Assign this', 'sell_media' ), strtolower( $obj->labels->singular_name ), esc_html__( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) );

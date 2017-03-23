@@ -328,11 +328,26 @@ function sell_media_plugin_field_text( $value, $attr ) { ?>
 <?php
 }
 
-function sell_media_plugin_field_number( $value, $attr ) { 
+function sell_media_plugin_field_number( $value, $attr ) {
     $min = isset( $attr['min_number'])?$attr['min_number']:"";
     $max = isset( $attr['max_number'])?$attr['max_number']:"";
 ?>
     <input type="number" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" value="<?php echo esc_attr( $value ); ?>" min="<?php echo $min; ?>" max="<?php echo $max; ?>">
+<?php
+}
+
+function sell_media_plugin_field_range( $value, $attr ) {
+    $min = isset( $attr['min_number'])?$attr['min_number']:"";
+    $max = isset( $attr['max_number'])?$attr['max_number']:"";
+    $step = isset( $attr['step_number'])?$attr['step_number']:"1";
+?>
+    <input type="range" min="<?php echo $min; ?>" max="<?php echo $max; ?>" value="<?php echo esc_attr( $value ); ?>" id="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" step="<?php echo $step; ?>" oninput="outputUpdate(value)" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]">
+    <output for="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo $attr['name']; ?>]" id="<?php echo $attr['name']; ?>-result"><?php echo esc_attr( $value ); ?>%</output>
+    <script type="text/javascript">
+        function outputUpdate(val) {
+            document.querySelector('#<?php echo $attr['name']; ?>-result').value = val + '%';
+        }
+    </script>
 <?php
 }
 
