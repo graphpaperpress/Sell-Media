@@ -124,7 +124,7 @@ function sell_media_get_filetype( $post_id = null ) {
  * @param  boolean $echo    Return/ Display.
  * @return string           An image tag.
  */
-function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true ) {
+function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, $has_collection_icon=false ) {
 
 	$attachment_id = sell_media_get_attachments( $post_id );
 
@@ -136,6 +136,17 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true )
 	 * @var int
 	 */
 	$attachment_id = ! empty( $attachment_id ) ? $attachment_id[0] : $post_id;
+
+	if ( $has_collection_icon ) {
+		$term = get_the_terms( $post_id, 'collection' );
+
+		if ( isset( $term[0]->term_id ) ) {
+			$icon_attachment_id = get_term_meta( $term[0]->term_id, 'collection_icon_id', true );
+			if ( $icon_attachment_id ) {
+				$attachment_id = $icon_attachment_id;
+			}
+		}
+	}
 
 	// Check if featured image exists.
 	if ( '' !== get_the_post_thumbnail( $post_id ) ) {
