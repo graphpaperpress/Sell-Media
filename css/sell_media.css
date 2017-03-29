@@ -161,6 +161,7 @@ a:focus {
         .sell-media-cart-items li .item-qty-total .item-quantity:last-child {
           margin-right: 0; }
       .sell-media-cart-items li .item-qty-total .dashicons {
+        color: black;
         display: inline;
         font-size: 12px;
         width: 12px;
@@ -702,6 +703,11 @@ input[type="submit"].sell-media-button,
     height: auto !important;
     max-width: 100%;
     max-height: 100vh; }
+  .sell-media-dialog-box fieldset {
+    background-color: #fff; }
+  .sell-media-dialog-box select {
+    background-color: #e6e6e6;
+    color: black; }
   .sell-media-dialog-box #sell-media-dialog-box-target {
     background-color: #fff;
     position: relative;
@@ -753,8 +759,12 @@ input[type="submit"].sell-media-button,
     .sell-media-dialog-box .close:hover {
       color: #fff; }
   .sell-media-dialog-box .sell-media-button {
+    background-color: #333333;
+    color: #fff;
     display: block;
     width: 100%; }
+    .sell-media-dialog-box .sell-media-button:hover {
+      background-color: black; }
   .sell-media-dialog-box .sell-media-credit {
     color: #fff;
     font-size: 11px;
@@ -813,12 +823,17 @@ input[type="submit"].sell-media-button,
 
 /*= Cart Fields
 -------------------------------------------------------------- */
+.colors-dark .sell-media-meta .sell-media-add-to-cart-fields,
+.colors-dark .sell-media-meta .sell-media-add-to-cart-fields fieldset {
+  border-color: #333; }
+
 .sell-media-add-to-cart-fields {
   border-top: 1px solid #eee; }
   .sell-media-add-to-cart-fields fieldset {
     padding: 12px 0;
     border: 0;
-    border-bottom: 1px solid #eee; }
+    border-bottom: 1px solid #eee;
+    background-color: transparent; }
   .sell-media-add-to-cart-fields label {
     display: inline-block;
     font-weight: normal;
@@ -1055,10 +1070,14 @@ input.sell-media-search-text[type=text] {
 /*= Notifications
 -----------------------------------------------------------------------*/
 .sell-media-added {
+  color: black;
   margin: 25.6px 0;
   padding: 16px;
   background: #FFFCDD;
   text-align: center; }
+  .sell-media-added a,
+  .sell-media-added a:hover {
+    color: black; }
 
 /*= Terms and Conditions
 -----------------------------------------------------------------------*/

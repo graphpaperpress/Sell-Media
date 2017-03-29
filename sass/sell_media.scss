@@ -14,6 +14,7 @@ $dark-opaque: rgba(black, .5);
 $light-opaque: rgba(white, .8);
 $border-color: #eee;
 $yellow-color: #FFFCDD;
+$green-color: #8fbc8f;
 
 /*= Global
 -------------------------------------------------------------- */
@@ -189,6 +190,7 @@ a:focus {
 			}
 
 			.dashicons {
+				color: $dark-color;
 				display: inline;
 				font-size: $font-size * .75;
 				width: $font-size * .75;
@@ -890,6 +892,15 @@ input[type="submit"].sell-media-button,
 		max-height: 100vh;
 	}
 
+	fieldset {
+		background-color: $white-color;
+	}
+
+	select {
+		background-color: lighten( $light-color, 20% );
+		color: $dark-color;
+	}
+
 	#sell-media-dialog-box-target {
 		background-color: $white-color;
 		position: relative;
@@ -966,8 +977,14 @@ input[type="submit"].sell-media-button,
 	}
 
 	.sell-media-button {
+		background-color: lighten( $dark-color, 20% );
+		color: $white-color;
 		display: block;
 		width: 100%;
+
+		&:hover {
+			background-color: $dark-color;
+		}
 	}
 
 	.sell-media-credit {
@@ -1065,6 +1082,11 @@ input[type="submit"].sell-media-button,
 
 /*= Cart Fields
 -------------------------------------------------------------- */
+.colors-dark .sell-media-meta .sell-media-add-to-cart-fields,
+.colors-dark .sell-media-meta .sell-media-add-to-cart-fields fieldset {
+	border-color: #333;
+}
+
 .sell-media-add-to-cart-fields {
 	border-top: 1px solid $border-color;
 
@@ -1073,6 +1095,7 @@ input[type="submit"].sell-media-button,
 		padding: $font-size * .75 0;
 		border: 0;
 		border-bottom: 1px solid $border-color;
+		background-color: transparent;
 	}
 
 	label {
@@ -1374,10 +1397,16 @@ input.sell-media-search-text[type=text] {
 /*= Notifications
 -----------------------------------------------------------------------*/
 .sell-media-added {
+	color: $dark-color;
 	margin: $line-height 0;
 	padding: $font-size;
 	background: $yellow-color;
 	text-align: center;
+
+	a,
+	a:hover {
+		color: $dark-color;
+	}
 }
 
 /*= Terms and Conditions
