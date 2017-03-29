@@ -22,10 +22,10 @@ class SellMediaProducts {
 
 	function maybe_add_tax_per_item( $price ) {
 		if (
-			isset( $this->settings->tax[0] ) && 
-			'yes' == $this->settings->tax[0] && 
-			isset( $this->settings->tax_display ) && 
-			'inclusive' == $this->settings->tax_display 
+			isset( $this->settings->tax[0] ) &&
+			'yes' == $this->settings->tax[0] &&
+			isset( $this->settings->tax_display ) &&
+			'inclusive' == $this->settings->tax_display
 		) {
 			$price = $price + ( $price * $this->settings->tax_rate );
 		}
