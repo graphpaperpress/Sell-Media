@@ -42,8 +42,13 @@ Class SellMediaDownload {
 			if ( $verified ) {
 
 				$file = Sell_Media()->products->get_protected_file( $product_id, $attachment_id );
+				$file_exists = file_exists( $file );
+				$has_s3_url = get_post_meta( $attachment_id, '_sell_media_s3_file', true );
+				if ( '' !== $has_s3_url ) {
+					$file_exists = $this->is_file_url_valid( $file );
+				}
 
-				if ( ! file_exists( $file ) ) {
+				if ( ! $file_exists ) {
 					wp_die( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $file );
 					exit();
 				}
@@ -60,12 +65,12 @@ Class SellMediaDownload {
 
 				if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
 				@ini_set( 'zlib.output_compression', 'Off' );
-
+				$file_url = strtok($file, '?');
 				nocache_headers();
 				header( "Robots: none" );
 				header( "Content-Type: " . $file_type['type'] . "" );
 				header( "Content-Description: File Transfer" );
-				header( "Content-Disposition: attachment; filename=\"" . basename( $file ) . "\"" );
+				header( "Content-Disposition: attachment; filename=\"" . basename( $file_url ) . "\"" );
 				header( "Content-Transfer-Encoding: binary" );
 
 				// If image, generate the image sizes purchased and create a download
@@ -102,6 +107,28 @@ Class SellMediaDownload {
 		}
 	}
 
+	/**
+	 * Check if file url is valid.
+	 *
+	 * @param  string  $url URL of file.
+	 */
+	function is_file_url_valid( $url ) {
+		$is_valid = false;
+		$handle = curl_init($url);
+		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+		/* Get the HTML or whatever is linked in $url. */
+		$response = curl_exec($handle);
+		/* Check for 404 (file not found). */
+		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+		if($httpCode == 200 ) {
+			$is_valid = true;
+		}
+
+		curl_close($handle);
+
+		return $is_valid;
+	}
 
 	/**
 	 * Verifies a download purchase by checking if the post status is set to 'publish' for a
