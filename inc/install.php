@@ -179,7 +179,7 @@ function sell_media_register_post_types() {
 		'query_var' => true,
 		'can_export' => true,
 		'rewrite' => array(
-			'slug' => empty( $settings->post_type_slug ) ? 'items' : $settings->post_type_slug,
+			'slug' => empty( $settings->post_type_slug ) ? _x( 'items', 'URL slug', 'sell_media' ) : $settings->post_type_slug,
 			'feeds' => true,
 		),
 		'capability_type' => 'post',
