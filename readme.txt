@@ -4,8 +4,8 @@ Contributors: endortrails, racase
 Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
-Tested up to: 4.7.2
-Stable tag: 2.3.1
+Tested up to: 4.7.3
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,18 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.3.2 =
+* New: Macy.js Masonry gallery layout
+* New: Horizontal Masonry gallery layout
+* New: UI range slider
+* New: Filter admin notices
+* New: Currency hooks
+* Fix: S3 Download location fix
+* Fix: Constrain image sizes on thanks page
+* Fix: Orientation
+* Fix: Collection icon fix
+* Fix: Quick View style improvements
 
 = 2.3.1 =
 * New: Delete Pricelists
