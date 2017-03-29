@@ -301,12 +301,14 @@ function sell_media_save_custom_meta( $post_id ) {
 							$orientation = get_post_meta( $attachment_id, '_sell_media_attachment_orientation', true );
 							if ( false === $orientation || '' === $orientation ) {
 								$meta = get_post_meta( $attachment_id, '_wp_attachment_metadata', true );
-								if ( $meta['height'] < $meta['width'] ) {
-									update_post_meta( $attachment_id, '_sell_media_attachment_orientation', 'landscape' );
-								}
+								if ( isset( $meta['height'] ) && isset( $meta['width'] ) ) {									
+									if ( $meta['height'] < $meta['width'] ) {
+										update_post_meta( $attachment_id, '_sell_media_attachment_orientation', 'landscape' );
+									}
 
-								if ( $meta['height'] > $meta['width'] ) {
-									update_post_meta( $attachment_id, '_sell_media_attachment_orientation', 'portrait' );
+									if ( $meta['height'] > $meta['width'] ) {
+										update_post_meta( $attachment_id, '_sell_media_attachment_orientation', 'portrait' );
+									}
 								}
 							}
 							sell_media_move_file( $attachment_id );
