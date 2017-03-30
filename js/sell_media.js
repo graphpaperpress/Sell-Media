@@ -547,6 +547,8 @@ jQuery(document).ready(function($){
 			$('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a' ).removeClass('stop-click');
 			$('#sell-media-ajax-filter-content').removeClass('sell-media-ajax-loader ');
 
+			macy_init();
+
 		} );
 	}
 
@@ -861,4 +863,22 @@ function sm_update_cart_item( el, type ){
 
 	// Update cart item in session.
 	jQuery.post( sell_media.ajaxurl, { action: 'sm_update_cart', cart_item_id: id, qty:updated_qty });
+}
+
+/**
+ * After ajax call, init Macy.js again so masonry layouts work on Filters shortcodes
+ */
+function macy_init() {
+	Macy.init({
+		container: ".sell-media-grid-item-masonry-container",
+		trueOrder: false,
+		waitForImages: false,
+		margin: 10,
+		columns: 4,
+		breakAt: {
+			940: 3,
+			768: 2,
+			420: 1
+		}
+	});
 }
