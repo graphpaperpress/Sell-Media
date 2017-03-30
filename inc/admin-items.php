@@ -146,9 +146,9 @@ function sell_media_options_meta_box( $post ) {
 	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : $settings->default_price;
 	$sell_media_enable_ecommerce = get_post_meta( $post->ID, 'sell_media_enable_ecommerce', true );
 	$sell_media_enable_ecommerce = ( empty( $sell_media_enable_ecommerce ) ) ? 0 : 1;
-	$style= '';
-	if ( 0 == $sell_media_enable_ecommerce ) {
-		$style= 'display:none;';
+	$style = '';
+	if ( class_exists( 'VS_Platform' ) && 0 === $sell_media_enable_ecommerce ) {
+		$style = 'display:none;';
 	}
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
