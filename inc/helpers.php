@@ -1471,3 +1471,15 @@ function sell_media_migration_cron_event() {
 	}
 }
 add_action( 'init', 'sell_media_migration_cron_event' );
+
+/**
+ * Check if e-commerce is enabled.
+ */
+function sell_media_ecommerce_enabled( $post_id ) {
+	$status = true;
+	$meta = get_post_meta( $post_id, 'sell_media_enable_ecommerce', true );
+	if ( class_exists( 'VS_Platform' ) && 0 === $meta ) {
+		$status = false;
+	}
+	return $status;
+}

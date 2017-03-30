@@ -144,11 +144,10 @@ function sell_media_options_meta_box( $post ) {
 
 	$settings = sell_media_get_plugin_options();
 	$price = ( get_post_meta( $post->ID, 'sell_media_price', true ) ) ? get_post_meta( $post->ID, 'sell_media_price', true ) : $settings->default_price;
-	$sell_media_enable_ecommerce = get_post_meta( $post->ID, 'sell_media_enable_ecommerce', true );
-	$sell_media_enable_ecommerce = ( empty( $sell_media_enable_ecommerce ) ) ? 0 : 1;
-	$style = '';
-	if ( class_exists( 'VS_Platform' ) && 0 === $sell_media_enable_ecommerce ) {
-		$style = 'display:none;';
+	$ecommerce_enabled = sell_media_ecommerce_enabled( $post->ID );
+	$style = 'display:none;';
+	if ( $ecommerce_enabled ) {
+		$style = 'display:block;';
 	}
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
@@ -526,10 +525,9 @@ function sell_media_item_content( $column, $post_id ){
 			echo $html;
 			break;
 		case "sell_media_price":
-			$sell_media_enable_ecommerce = get_post_meta( $post_id, 'sell_media_enable_ecommerce', true );
-			$sell_media_enable_ecommerce = ( empty( $sell_media_enable_ecommerce ) ) ? 0 : 1;
+			$ecommerce_enabled = sell_media_ecommerce_enabled( $post_id );
 
-			if ( 1 == $sell_media_enable_ecommerce ) {
+			if ( $ecommerce_enabled ) {
 
 				$price = get_post_meta( $post_id, 'sell_media_price', true );
 				$settings = sell_media_get_plugin_options();
