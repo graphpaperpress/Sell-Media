@@ -5,7 +5,7 @@ Donate link: http://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,12 +13,7 @@ Sell photos, prints, videos and pdf's online through WordPress in seconds. Every
 
 == Description ==
 
-[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is a WordPress plugin that allows you to sell photos, videos, audio and pdf's on your self-hosted WordPress site.
-
-* [PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf)
-* [Documentation](http://graphpaperpress.com/docs/sell-media/)
-* [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
-* [Github Code Repository](https://github.com/graphpaperpress/sell-media)
+[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is finely tailored e-commerce solution for selling photos, prints, and videos through your self-hosted WordPress site. Photographers love it for it's flexibly gallery layouts and powerful [extensions](https://graphpaperpress.com/extensions/sell-media/).
 
 Using Sell Media, you can:
 
@@ -27,6 +22,14 @@ Using Sell Media, you can:
 *   Charge licensing fees for commercial, editorial, or personal usages.
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
+
+= Getting Started =
+
+We've created a robust
+* [Beginners's PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf)
+* [Documentation](http://graphpaperpress.com/docs/sell-media/)
+* [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
+* [Github Code Repository](https://github.com/graphpaperpress/sell-media)
 
 = Theme Integration =
 
@@ -65,21 +68,17 @@ Take Sell Media to the next level with these powerful extensions:
 
 == Frequently Asked Questions ==
 
-= Payments aren't showing up in Sell Media. Why? =
+= Can you help me set up this plugin? =
 
-Please visit the Add Media -> Settings -> Payments page and double check all of your settings.
+We offer a hosted version of Sell Media through our [VisualSociety.com](https://visualsociety.com) platform. There are many additional features found at VisualSociety.com.
 
-If you're still having issues, [check these tips in the PayPal section](https://graphpaperpress.com/docs/sell-media/#paypal).
+= Can I sell photo prints in addition to downloads? =
+
+Yes, there are two ways to do this: 1) [VisualSociety.com](https://visualsociety.com) includes print fulfillment by the world's best photo printers. 2) The [Reprints extension](https://graphpaperpress.com/plugins/sell-media-reprints/) allows you to sell prints, but you are responsible for fulfilling the order. Both you and the customer will receive an email when an order is placed.
 
 = I have 5k+ photos I would like to sell, can Sell Media handle this? =
 
 Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. That said, the number of images that can be bulk uploaded at once is largely related to server performance. If you are using a cheap, shared web host, then you will need to contact them and ask them to change [PHP settings] (http://php.net/manual/en/function.set-time-limit.php).
-
-= My file is 500MB+ in size but users cannot download the file after purchasing? =
-
-Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
-
-We do offer an Amazon S3 extension which offloads to storage of all uploads, which might be useful: [View the extensions](http://graphpaperpress.com/downloads/category/extensions/).
 
 = What are shortcodes and how do I use them? =
 
@@ -115,7 +114,6 @@ Yes and you have two options:
 1. Simply upload more than one image on the Sell Media -> Add New page. The price listed below is for each image in the gallery. In the near future, we will be releasing an extension for selling the entire gallery of images for one price.
 2. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
 
-
 = How do I password protect an item? =
 
 The Password Protection option is located in the Publish box when editing a Sell Media item. Click the Visibility - Public - Edit link, select Password Protected, type in a password and click Save.
@@ -127,6 +125,18 @@ Click Sell Media -> Collections -> Click "Edit" next to the Collection you want 
 = How do I hide a collection from being listed on archive pages? =
 
 Click Sell Media -> Collections -> Add New and check the "Hide" option.
+
+= Payments aren't showing up in Sell Media. Why? =
+
+Please visit the Add Media -> Settings -> Payments page and double check all of your settings.
+
+If you're still having issues, [check these tips in the PayPal section](https://graphpaperpress.com/docs/sell-media/#paypal).
+
+= My file is 500MB+ in size but users cannot download the file after purchasing? =
+
+Check with your hosting provide on your download limits. Sell Media does not provide any type of file splitting service.
+
+We do offer an Amazon S3 extension which offloads to storage of all uploads, which might be useful: [View the extensions](http://graphpaperpress.com/downloads/category/extensions/).
 
 = How do I increase the maximum upload size in WordPress? =
 
@@ -159,7 +169,7 @@ The Sell Media plugin helps you to create and assign different licenses and pric
 
 = Does the plugin work for a WordPress Network =
 
-It only works on the primary blog. While it will work on other blogs, file uploads will not be protected. Why? Because WordPress stores uploads in a "virtual" directory of blogs.dir, server side file protection using .htaccess doesn't work on virtual directories.
+Yes.
 
 = My customer is receiving their confirmation email X many times? =
 
@@ -215,6 +225,11 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.3.3 =
+* Update: French translations
+* Fix: Reinit Macy.js in Filters ajax
+* Fix: Check if e-commerce is enabled to show price metabox
 
 = 2.3.2 =
 * New: Macy.js Masonry gallery layout
