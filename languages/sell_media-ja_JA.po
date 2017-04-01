@@ -1,0 +1,3253 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sell Media\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sell-media\n"
+"POT-Creation-Date: 2016-05-03 17:44-0400\n"
+"PO-Revision-Date: 2017-02-21 18:54+0900\n"
+"Last-Translator: Thad Allender <support@graphpaperpress.com>\n"
+"Language-Team: Thad Allender <support@graphpaperpress.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: sell-media-access-control/sell-media-access-control.php:98
+msgid "Free Access Control"
+msgstr "フリーアクセスコントロール"
+
+#: sell-media-access-control/sell-media-access-control.php:100
+#: sell-media-add-bulk/sell-media-add-bulk.php:151
+#: sell-media-add-bulk/sell-media-add-bulk.php:161
+#: sell-media-add-bulk/sell-media-add-bulk.php:169
+#: sell-media-free-downloads/sell-media-free-downloads.php:127
+#: sell-media-mailchimp/sell-media-mailchimp.php:42
+#: sell-media/inc/admin-items.php:121
+#: sell-media/inc/settings/library/helpers.php:267
+msgid "None"
+msgstr ""
+
+#: sell-media-access-control/sell-media-access-control.php:101
+msgid "Everyone"
+msgstr "みんな"
+
+#: sell-media-access-control/sell-media-access-control.php:102
+msgid "Clients with a valid password"
+msgstr "有効なパスワードを持つクライアント"
+
+#: sell-media-access-control/sell-media-access-control.php:104
+msgid ""
+"<strong>Note:</strong> You must password protect this post if \"Clients\" is "
+"selected."
+msgstr ""
+"<strong>注意:</strong> \"Clients\"が選択されている場合は、この投稿をパスワー"
+"ドで保護する必要があります。"
+
+#: sell-media-access-control/sell-media-access-control.php:135
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:123
+#: sell-media-free-downloads/sell-media-free-downloads.php:307
+#: sell-media/inc/class-payments.php:446 sell-media/inc/helpers.php:1036
+msgid "Download"
+msgstr "ダウンロード"
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:95
+#: sell-media-add-bulk/sell-media-add-bulk.php:136
+msgid "Add Bulk"
+msgstr "バルクを追加"
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:138
+msgid ""
+"Upload many single products at once that share the same selling preferences. "
+"Please note: Bulk uploading is a server-intensive process. The capability of "
+"this feature is dependent on the capabilities of your server. Upload in "
+"small batches to ensure all items uploaded are published correctly. You can "
+"modify the prices and licenses of each item after uploading."
+msgstr ""
+"一度に多数の単一の商品をアップロードし、同じ販売設定を共有します。 注：一括"
+"アップロードはサーバーを大量に使用するプロセスです。 この機能の機能は、サー"
+"バーの機能に依存します。 小さなバッチでアップロードして、アップロードされたす"
+"べてのアイテムが正しく公開されるようにします。 アップロード後、各アイテムの価"
+"格とライセンスを変更することができます。"
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:139
+#: sell-media/inc/admin-items.php:57
+msgid "Upload"
+msgstr "アップロード"
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:140
+msgid "Uploading..."
+msgstr "アップロード中..."
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:149
+msgid "Price Group"
+msgstr "価格グループ"
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:159
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:295
+#: sell-media/inc/admin-payments.php:132 sell-media/inc/class-payments.php:421
+#: sell-media/inc/class-payments.php:608 sell-media/inc/class-updater.php:374
+#: sell-media/inc/class-updater.php:378 sell-media/inc/fields.php:75
+#: sell-media/inc/install.php:344 sell-media/inc/scripts.php:58
+msgid "License"
+msgstr "ライセンス（用途）"
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:167
+#: sell-media/inc/class-search.php:460 sell-media/inc/helpers.php:1276
+#: sell-media/inc/install.php:309
+msgid "Collection"
+msgstr "コレクション"
+
+#: sell-media-add-bulk/sell-media-add-bulk.php:176
+msgid "Save"
+msgstr "保存"
+
+#: sell-media-commissions/sell-media-commissions.php:49
+msgid "Sell Media Commissions"
+msgstr "販売コミッション"
+
+#: sell-media-commissions/sell-media-commissions.php:51
+#: sell-media-discount-codes/inc/all-discount-code.php:413
+#: sell-media/inc/class-search.php:462 sell-media/inc/helpers.php:1278
+msgid "All"
+msgstr "すべて"
+
+#: sell-media-commissions/sell-media-commissions.php:51
+#: sell-media/inc/class-payments.php:681
+msgid "Paid"
+msgstr "支払い"
+
+#: sell-media-commissions/sell-media-commissions.php:51
+msgid "Unpaid"
+msgstr "未払い"
+
+#: sell-media-commissions/sell-media-commissions.php:54
+msgid "All the unpaid commissions will be changed to paid!"
+msgstr "未払いの手数料はすべて支払い済みに変更されます！"
+
+#: sell-media-commissions/sell-media-commissions.php:54
+msgid "Download Mass Payment File"
+msgstr "一括払いファイルをダウンロードする"
+
+#: sell-media-commissions/sell-media-commissions.php:60
+#: sell-media-commissions/sell-media-commissions.php:70
+msgid "User"
+msgstr "ユーザー"
+
+#: sell-media-commissions/sell-media-commissions.php:61
+#: sell-media-commissions/sell-media-commissions.php:71
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:840
+#: sell-media/inc/class-payments.php:604
+msgid "Item"
+msgstr "アイテム（作品）"
+
+#: sell-media-commissions/sell-media-commissions.php:62
+#: sell-media-commissions/sell-media-commissions.php:72
+msgid "Commission %"
+msgstr "コミッション %"
+
+#: sell-media-commissions/sell-media-commissions.php:63
+#: sell-media-commissions/sell-media-commissions.php:73
+msgid "Commission Amount"
+msgstr "手数料額"
+
+#: sell-media-commissions/sell-media-commissions.php:64
+#: sell-media-commissions/sell-media-commissions.php:74
+msgid "Date"
+msgstr "日付"
+
+#: sell-media-commissions/sell-media-commissions.php:65
+#: sell-media-commissions/sell-media-commissions.php:75
+#: sell-media-discount-codes/inc/all-discount-code.php:150
+msgid "Status"
+msgstr "現在の状況"
+
+#: sell-media-commissions/sell-media-commissions.php:223
+msgid "Default commission rate"
+msgstr "デフォルト手数料率"
+
+#: sell-media-commissions/sell-media-commissions.php:228
+msgid "Commission recipient"
+msgstr "コミッション受領者"
+
+#: sell-media-commissions/sell-media-commissions.php:239
+#: sell-media-commissions/sell-media-commissions.php:380
+#: sell-media-commissions/sell-media-commissions.php:420
+msgid "Commission rate (%)"
+msgstr "手数料率 (%)"
+
+#: sell-media-commissions/sell-media-commissions.php:241
+#: sell-media-commissions/sell-media-commissions.php:381
+#: sell-media-commissions/sell-media-commissions.php:424
+msgid "The percentage of the total cost of the cart for commission."
+msgstr "カート内総額の手数料の割合。"
+
+#: sell-media-commissions/sell-media-commissions.php:415
+#: sell-media/inc/install.php:161 sell-media/inc/install.php:162
+#: sell-media/inc/install.php:165 sell-media/inc/install.php:173
+msgid "Sell Media"
+msgstr "販売作品"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:69
+#: sell-media-discount-codes/sell-media-discount-codes.php:97
+msgid "Add New Discount Code"
+msgstr "新しい割引コードを追加する"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:69
+msgid "Go Back"
+msgstr "戻る"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:75
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:584
+#: sell-media/inc/admin-payments.php:74 sell-media/inc/admin-payments.php:120
+#: sell-media/inc/scripts.php:56
+msgid "Name"
+msgstr "名前"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:79
+msgid "The name of this discount code"
+msgstr "この割引コードの名前"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:84
+msgid "Code"
+msgstr "コード"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:88
+msgid "Enter a code for this discount, such as 10PERCENT"
+msgstr "この割引のコードを入力します（10PERCENTなど）。"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:93
+#: sell-media/inc/admin-payments.php:126
+msgid "Type"
+msgstr "タイプ"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:97
+msgid "Percentage"
+msgstr "パーセント"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:98
+msgid "Flat amount"
+msgstr "均一金額"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:100
+msgid "The kind of discount to apply for this discount."
+msgstr "このディスカウントに適用するディスカウントの種類。"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:105
+#: sell-media-discount-codes/inc/all-discount-code.php:146
+msgid "Amount"
+msgstr "価格"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:109
+msgid "The amount of this discount code."
+msgstr "この割引コードの金額。"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:114
+msgid "Start date"
+msgstr "開始日"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:118
+msgid ""
+"Enter the start date for this discount code in the format of mm/dd/yyyy. For "
+"no start date, leave blank."
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:123
+msgid "Expiration date"
+msgstr "有効期限"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:127
+msgid ""
+"Enter the expiration date for this discount code in the format of mm/dd/"
+"yyyy. For no expiration, leave blank."
+msgstr ""
+
+#: sell-media-discount-codes/inc/add-discount-code.php:132
+msgid "Max Uses"
+msgstr "最大使用数"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:136
+msgid ""
+"The maximum number of times this discount can be used. Leave blank for "
+"unlimited."
+msgstr "この割引を使用できる最大回数。 無制限の場合は空白のままにします。"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:144
+msgid "Update Discount Code"
+msgstr "割引コードを更新"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:145
+#: sell-media-discount-codes/inc/all-discount-code.php:104
+#: sell-media-discount-codes/inc/all-discount-code.php:209
+msgid "Delete"
+msgstr "消去"
+
+#: sell-media-discount-codes/inc/add-discount-code.php:147
+msgid "Add Discount Code"
+msgstr "割引コードを追加"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:38
+#: sell-media-discount-codes/sell-media-discount-codes.php:95
+#: sell-media-discount-codes/sell-media-discount-codes.php:201
+msgid "Discount Code"
+msgstr "ディスカウントコード"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:39
+#: sell-media-discount-codes/sell-media-discount-codes.php:94
+#: sell-media-discount-codes/sell-media-discount-codes.php:105
+#: sell-media-discount-codes/sell-media-discount-codes.php:129
+#: sell-media-discount-codes/sell-media-discount-codes.php:164
+msgid "Discount Codes"
+msgstr "ディスカウントコード"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:96
+msgid "Edit"
+msgstr "編集"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:99
+msgid "Deactive"
+msgstr "非アクティブ"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:101
+msgid "Activate"
+msgstr "アクティブ"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:144
+msgid "Title"
+msgstr "タイトル"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:145
+msgid "Coupon"
+msgstr "クーポン"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:147
+msgid "Uses"
+msgstr "用途"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:148
+msgid "Start Date"
+msgstr "開始日"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:149
+msgid "End Date"
+msgstr "終了日"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:374
+msgid "Unlimited"
+msgstr "無制限"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:414
+#: sell-media-discount-codes/sell-media-discount-codes.php:389
+msgid "Active"
+msgstr "アクティブ"
+
+#: sell-media-discount-codes/inc/all-discount-code.php:415
+#: sell-media-discount-codes/sell-media-discount-codes.php:396
+msgid "Inactive"
+msgstr "非アクティブ"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:96
+#: sell-media-discount-codes/sell-media-discount-codes.php:167
+#: sell-media/inc/install.php:164 sell-media/inc/install.php:206
+msgid "Add New"
+msgstr "新しく追加する"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:98
+msgid "Edit Discount Code"
+msgstr "割引コードを編集する"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:99
+msgid "New Discount Code"
+msgstr "新しいディスカウントコード"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:100
+msgid "View Discount Code"
+msgstr "ディスカウントコードを表示する"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:101
+msgid "Search Discount Codes"
+msgstr "検索割引コード"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:102
+msgid "No discount found"
+msgstr "割引は見つかりませんでした"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:103
+msgid "No discount codes found in Trash"
+msgstr "ゴミ箱にディスカウントコードが見つかりません"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:104
+msgid "Parent Discount Code:"
+msgstr "親割引コード："
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:206
+msgid "Apply"
+msgstr "適用"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:207
+msgid "Verifying..."
+msgstr "確認中..."
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:213
+#: sell-media-discount-codes/sell-media-discount-codes.php:418
+msgid "Discount"
+msgstr "ディスカウント"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:246
+msgid "Invalid code"
+msgstr "無効なコード"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:278
+msgid "Expired code"
+msgstr "期限切れコード"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:290
+msgid "Valid code"
+msgstr "有効なコード"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:366
+msgid "Discount Code updated successfully!"
+msgstr "割引コードが正常に更新されました！"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:368
+msgid "Discount Code added successfully!"
+msgstr "割引コードが正常に追加されました！"
+
+#: sell-media-discount-codes/sell-media-discount-codes.php:370
+msgid "Discount Code deleted successfully!"
+msgstr "割引コードが正常に削除されました！"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:83
+msgid "Download Lightbox Passcode"
+msgstr "ライトボックス・パスコードをダウンロード"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:84
+msgid "Password to enable downloading of all images in lightbox."
+msgstr ""
+"ライトボックス内のすべてのイメージのダウンロードを可能にするパスワード。"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:105
+msgid "Download All"
+msgstr "すべてをダウンロード"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:122
+msgid "Enter password"
+msgstr "パスワードを入力する"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:160
+msgid "Sorry, your nonce did not verify."
+msgstr "申し訳ありませんが、送信内容は確認されませんでした。"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:167
+msgid "Incorrect password."
+msgstr "パスワードが間違っています。"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:171
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:177
+msgid "No items found on lightbox."
+msgstr "ライトボックスに商品が見つかりません。"
+
+#: sell-media-download-lightbox/sell-media-download-lightbox.php:190
+msgid "Error: Failed to create zip file."
+msgstr "エラー：zipファイルの作成に失敗しました。"
+
+#: sell-media-free-downloads/cart.php:36
+msgid "First Name:"
+msgstr "ファーストネーム："
+
+#: sell-media-free-downloads/cart.php:42
+msgid "Last Name:"
+msgstr "苗字："
+
+#: sell-media-free-downloads/cart.php:48
+msgid "Email Address:"
+msgstr "Ｅメールアドレス："
+
+#: sell-media-free-downloads/cart.php:61
+msgid "Request could not be processed due to some error."
+msgstr "何らかのエラーが原因でリクエストを処理できませんでした。"
+
+#: sell-media-free-downloads/cart.php:69
+msgid "Download Now"
+msgstr "ダウンロード中"
+
+#: sell-media-free-downloads/cart.php:73
+msgid ""
+"You are already registered. You can download all free items by visiting our "
+msgstr ""
+"あなたはすでに登録されています。 無料のアイテムをすべてダウンロードするには、"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:51
+#: sell-media-mailchimp/sell-media-mailchimp.php:149
+msgid "API Key"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:52
+#: sell-media-mailchimp/sell-media-mailchimp.php:150
+msgid "Insert your MailChimp API Key."
+msgstr "MailChimp APIキーを挿入します。"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:63
+#: sell-media-mailchimp/sell-media-mailchimp.php:161
+msgid "Newsletter List"
+msgstr "ニュースレターリスト"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:64
+#: sell-media-mailchimp/sell-media-mailchimp.php:162
+msgid "Choose the list to sign users up to."
+msgstr "ユーザーにサインアップするリストを選択します。"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:86
+msgid "Free Downloads - Mailchimp Settings"
+msgstr "無料ダウンロード - Mailchimp設定"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:201
+#: sell-media-free-downloads/sell-media-free-downloads.php:216
+msgid "Free Download"
+msgstr "無料ダウンロード"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:203
+msgid ""
+"Offer as free download in exchange for newsletter signup. All pricing will "
+"be ignored."
+msgstr ""
+"ニュースレターのサインアップと引き換えに無料でダウンロードできます。 すべての"
+"価格は無視されます。"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:218
+msgid ""
+"Check to allow visitors to download this for free in exchange for signing up "
+"for your newsletter"
+msgstr ""
+"あなたのニュースレターにサインアップするのと引き換えに、訪問者がこれを無料で"
+"ダウンロードできるようにする"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:280
+#: sell-media-mailchimp/sell-media-mailchimp.php:113
+msgid "MailChimp"
+msgstr ""
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:347
+msgid "Hi "
+msgstr "こんにちは"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:407
+msgid "Free Downloads"
+msgstr "無料ダウンロード"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:456
+#: sell-media/inc/helpers.php:1102
+msgid "Nice try, but this file is not a free download."
+msgstr "試みますが、このファイルは無料でダウンロードすることはできません。"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:456
+#: sell-media-free-downloads/sell-media-free-downloads.php:461
+#: sell-media/inc/class-downloads.php:91 sell-media/inc/helpers.php:1102
+msgid "Purchase Verification Failed"
+msgstr "購入の確認に失敗しました"
+
+#: sell-media-free-downloads/sell-media-free-downloads.php:461
+msgid "Sorry, but the download url you provided is not valid."
+msgstr "申し訳ありませんが、あなたが指定したダウンロードURLは無効です。"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:120
+#: sell-media/inc/template-tags.php:289
+msgid "View Gallery"
+msgstr "ギャラリーを見る"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:227
+#: sell-media/inc/lightbox.php:30
+msgid "Go to lightbox"
+msgstr "ライトボックスに移動"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:227
+#: sell-media/inc/lightbox.php:30
+msgid "lightbox"
+msgstr "ライトボックス"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:233
+#: sell-media/inc/lightbox.php:36
+#, php-format
+msgid "This item was saved to your %1$s."
+msgstr "このアイテムは%1$sに保存されました。"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:236
+#: sell-media/inc/template-tags.php:665
+msgid "Details"
+msgstr "詳細"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:238
+#: sell-media/inc/template-tags.php:668
+msgid "File ID"
+msgstr "ファイル ID"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:239
+#: sell-media/inc/template-tags.php:670
+msgid "File Type"
+msgstr "ファイルタイプ"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:240
+#: sell-media/inc/template-tags.php:671
+msgid "File Size"
+msgstr "ファイルサイズ"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:241
+#: sell-media/inc/install.php:322 sell-media/inc/shortcodes.php:589
+#: sell-media/inc/template-tags.php:676
+msgid "Collections"
+msgstr "コレクション"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:242
+#: sell-media/inc/install.php:378 sell-media/inc/install.php:392
+#: sell-media/inc/shortcodes.php:594 sell-media/inc/template-tags.php:679
+#: sell-media/inc/widgets/sell-media-keywords.php:49
+msgid "Keywords"
+msgstr "キーワード"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:274
+msgid "Popup type"
+msgstr "ポップアップの種類"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:275
+msgid "Choose the type of popup to view product detail."
+msgstr "製品の詳細を表示するポップアップの種類を選択します。"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:284
+msgid "Light gallery"
+msgstr "ライトギャラリー"
+
+#: sell-media-light-gallery/sell-media-light-gallery.php:288
+msgid "Quick view"
+msgstr "クイックビュー"
+
+#: sell-media-mailchimp/sell-media-mailchimp.php:98
+msgid "Sign up for our newsletter"
+msgstr "ニュースレターに登録する"
+
+#: sell-media-mailchimp/sell-media-mailchimp.php:183
+msgid "MailChimp Settings"
+msgstr "MailChimpの設定"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:86
+msgid "Manual Purchase"
+msgstr "手動購入"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:88
+msgid ""
+"Please fill out the fields below to arrange a manual purchase with the "
+"seller."
+msgstr "売り手との手動購入を手配するには、以下のフィールドに記入してください。"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:89
+msgid "Your email"
+msgstr "あなたのＥメール"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:90
+msgid "Your name"
+msgstr "あなたの名前"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:91
+msgid "Your message"
+msgstr "あなたのメッセージ"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:91
+msgid "Type your message to the seller here and click Checkout Now."
+msgstr ""
+"ここに作者宛のあなたのメッセージを入力して、「購入する」をクリックしてくださ"
+"い。"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:112
+msgid "Please enter your email address."
+msgstr "メールアドレスを入力してください。"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:116
+msgid "Please enter your full name."
+msgstr "フルネームを入力してください。"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:143
+msgid ""
+"Thank you for your interest. We have received your purchase information. We "
+"will contact you soon."
+msgstr ""
+"ご関心をお寄せいただきありがとうございます。 私はあなたの購入情報を受け取りま"
+"した。 のちほどご連絡させていただきます。"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:163
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:203
+msgid "New sale notification (Manual)"
+msgstr "新しい販売通知（マニュアル）"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:168
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:208
+#: sell-media/inc/class-payments.php:728
+msgid "Customer"
+msgstr "顧客"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:171
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:211
+#: sell-media/inc/admin-payments.php:75 sell-media/inc/class-payments.php:730
+#: sell-media/inc/settings.php:70
+msgid "Email"
+msgstr "Ｅメール"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:175
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:215
+msgid "Note"
+msgstr "注意"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:293
+#: sell-media/inc/admin-payments.php:116 sell-media/inc/class-payments.php:419
+msgid "Product"
+msgstr "作品"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:294
+#: sell-media/inc/admin-payments.php:129 sell-media/inc/class-payments.php:420
+#: sell-media/inc/class-payments.php:605 sell-media/inc/fields.php:45
+#: sell-media/inc/scripts.php:57
+msgid "Size"
+msgstr "サイズ（ヨコ×タテ px）"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:296
+#: sell-media/inc/admin-payments.php:135 sell-media/inc/class-payments.php:422
+#: sell-media/inc/scripts.php:60
+msgid "Qty"
+msgstr "数量"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:297
+#: sell-media/inc/admin-payments.php:138 sell-media/inc/class-payments.php:423
+#: sell-media/inc/scripts.php:61 sell-media/inc/shortcodes.php:249
+msgid "Subtotal"
+msgstr "小計"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:383
+#: sell-media/inc/class-payments.php:492
+msgid "TAX"
+msgstr "税"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:388
+#: sell-media/inc/class-payments.php:495
+msgid "SHIPPING"
+msgstr "運送費"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:392
+#: sell-media/inc/class-payments.php:489
+msgid "DISCOUNT"
+msgstr "ディスカウント"
+
+#: sell-media-manual-purchases/sell-media-manual-purchases.php:397
+#: sell-media/inc/class-payments.php:498
+msgid "TOTAL"
+msgstr "合計"
+
+#: sell-media-model-release/sell-media-model-release.php:98
+msgid "Model release"
+msgstr "モデルリリース"
+
+#: sell-media-model-release/sell-media-model-release.php:99
+msgid "Choose"
+msgstr "選択する"
+
+#: sell-media-model-release/sell-media-model-release.php:101
+msgid "Remove model release"
+msgstr "モデルリリースを削除"
+
+#: sell-media-model-release/sell-media-model-release.php:101
+#: sell-media/inc/settings/settings.php:488
+#: sell-media/inc/settings/settings.php:583
+msgid "Remove"
+msgstr "削除する"
+
+#: sell-media-model-release/sell-media-model-release.php:160
+msgid "Model Release"
+msgstr "モデルリリース"
+
+#: sell-media-model-release/sell-media-model-release.php:160
+#: sell-media/inc/settings.php:213 sell-media/inc/settings.php:334
+#: sell-media/inc/settings.php:355 sell-media/inc/settings.php:376
+#: sell-media/inc/settings.php:493
+msgid "Yes"
+msgstr "はい"
+
+#: sell-media-reprints/admin-tags.php:27
+msgid "Price group for"
+msgstr "の価格グループ"
+
+#: sell-media-reprints/admin-tags.php:27 sell-media-reprints/admin-tags.php:58
+msgid "prints"
+msgstr "プリント"
+
+#: sell-media-reprints/admin-tags.php:30
+msgid "Select a price group"
+msgstr "価格グループを選択"
+
+#: sell-media-reprints/admin-tags.php:43 sell-media/inc/admin-items.php:134
+#, php-format
+msgid "<a href=\"%1$s\">Create new price group</a>"
+msgstr "<a href=\"%1$s\">新しい価格グループを作成する</a>"
+
+#: sell-media-reprints/admin-tags.php:55
+msgid "Selling preferences"
+msgstr "販売設定"
+
+#: sell-media-reprints/admin-tags.php:57
+msgid "Sell both"
+msgstr "両方を売る"
+
+#: sell-media-reprints/admin-tags.php:58
+msgid "Sell"
+msgstr "販売"
+
+#: sell-media-reprints/admin-tags.php:59
+msgid "Sell downloads"
+msgstr "ダウンロード販売"
+
+#: sell-media-reprints/admin-tags.php:67
+msgid "Limited edition"
+msgstr "限定版"
+
+#: sell-media-reprints/admin-tags.php:77
+msgid "Quantity limit"
+msgstr "数量制限"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:61
+msgid "Download size"
+msgstr "ダウンロードサイズ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:71
+msgid "Download license"
+msgstr "ダウンロードするライセンス"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:117
+msgid ""
+"If you sold a print, be sure to print and ship the order to the address "
+"listed above. If the order contained downloadable products, no further "
+"action is required. Here are the payment details:"
+msgstr ""
+"印刷物を販売した場合は、印刷して上記の住所に注文書を発送してください。 注文書"
+"にダウンロード可能な製品が含まれている場合、それ以上の措置は必要ありません。 "
+"支払いの詳細は次のとおりです。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:128
+msgid "Download or Print"
+msgstr "ダウンロードまたは印刷"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:159
+msgid "Ship to:"
+msgstr "送り先："
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:176
+msgid ""
+"If you purchased print products, they will be shipped to the address you "
+"supplied during checkout. This address is shown below."
+msgstr ""
+"プリント製品を購入した場合、チェックアウト時に指定した住所に出荷されます。 こ"
+"のアドレスを以下に示します。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:199
+msgid "Selling Options"
+msgstr "販売オプション"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:209
+msgid "Only sell print products"
+msgstr "プリント製品のみを販売する"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:216
+msgid "Shipping Rates"
+msgstr "配送料金"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:217
+msgid ""
+"You have three options for calculating shipping rates: Flat Rate, Quantity "
+"Rate, Total Rate. Use Flat Rate to set a basic flat rate shipping to all "
+"cart orders containing prints. Use Quantity Rate to charge a flat rate per "
+"print sold (i.e. 3 prints that cost $10 each with quantity rate shipping of "
+"$1 per print would cost a total of $33). Use Total Rate you want a shipping "
+"rate that is a percentage of the total cost of the cart."
+msgstr ""
+"送料率の計算には、定額料金、数量料金、合計料金の3つのオプションがあります。 "
+"フラットレートを使用して、プリントを含むすべてのカート注文に出荷する基本定額"
+"料金を設定します。 数量料金を使用して、1枚の印刷物あたりの定額料金を請求しま"
+"す。つまり、1枚あたり1ドルの数量の送料で合計10ドルの3枚の印刷物には合計33ドル"
+"がかかります。 あなたがカートの総コストのパーセンテージである出荷率を望む合計"
+"料金を使用してください。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:226
+msgid "Flat Rate"
+msgstr "定額制料金"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:230
+msgid "Quantity Rate"
+msgstr "数量率"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:234
+msgid "Total Rate"
+msgstr "合計レート"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:241
+msgid "Shipping - Flat Rate"
+msgstr "送料 - 定額料金"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:242
+msgid ""
+"The flat rate shipping price applied once to all orders (i.e. 1, 5, 10)."
+msgstr "すべてのオーダーに一度適用される定額制の送料価格（1,5,10など）。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:253
+msgid "Shipping - Quantity Rate"
+msgstr "出荷 - 数量率"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:254
+msgid ""
+"The shipping price applied individually to all print products in the cart (i."
+"e. 1, 5, 10)."
+msgstr "送料は、カート内のすべての印刷物に個別に適用されます（1,5,10など）。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:265
+msgid "Shipping - Total Rate"
+msgstr "配送 - 合計料金"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:266
+msgid ""
+"The percentage of the total cost of the cart for shipping (use .05 for 5 "
+"percent, .10 for 10 percent, etc)"
+msgstr "出荷のためのカートの総費用の割合（5％は0.05％、10％は10％など）"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:277
+msgid "Unit of Measurement"
+msgstr "ユニットの単位"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:278
+msgid "The unit of measurement in which print products are sold."
+msgstr "印刷物が販売されるユニット単位。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:287
+msgid "Centimeters (cm)"
+msgstr "センチメートル（cm）"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:291
+msgid "Inches (in)"
+msgstr "インチ（in）"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:298
+msgid "Select Default Price Group"
+msgstr "デフォルトプライスグループを選択"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:309
+msgid "Default Quantity"
+msgstr "デフォルト数量"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:320
+#: sell-media/inc/install.php:273 sell-media/inc/install.php:274
+#: sell-media/inc/install.php:287
+msgid "Price Groups"
+msgstr "価格グループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:345
+msgid "Print Products"
+msgstr "印刷物"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:471
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:485
+msgid "Print Price Group"
+msgstr "プリント価格グループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:472
+msgid "Print Group"
+msgstr "プリントグループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:473
+msgid "Search Print Group"
+msgstr "プリントグループを検索"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:474
+msgid "Popular Print Group"
+msgstr "人気プリントグループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:475
+msgid "All Print Group"
+msgstr "すべてのプリントグループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:476
+msgid "Parent Print Group"
+msgstr "親プリントグループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:477
+msgid "Parent Print  Group:"
+msgstr "親プリントグループ："
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:478
+msgid "Edit Print Group"
+msgstr "プリントグループの編集"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:479
+msgid "Update Print Group"
+msgstr "プリントグループの更新"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:480
+msgid "Add New Print Group"
+msgstr "新しいプリントグループを追加"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:481
+msgid "New Print Group"
+msgstr "新しいプリントグループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:482
+msgid "Separate Print Group with commas"
+msgstr "コンマで区切られたプリントグループ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:483
+msgid "Add or remove Print Group"
+msgstr "プリントグループの追加または削除"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:484
+msgid "Choose from most used Print Group"
+msgstr "最も使用されているプリントグループから選択"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:543
+msgid "Add print sizes and prices below."
+msgstr "プリントサイズと価格を下に追加してください。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:557
+msgid "Create a price group, then define specific print sizes and prices."
+msgstr "価格グループを作成し、特定のプリントサイズと価格を定義します。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:648
+msgid "Max Width"
+msgstr "最大幅"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:652
+msgid "Max Height"
+msgstr "最大高さ"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:657
+#: sell-media/inc/admin-items.php:110
+#: sell-media/inc/admin-price-groups.php:258
+#: sell-media/inc/admin-price-groups.php:305
+#: sell-media/inc/class-payments.php:606 sell-media/inc/scripts.php:59
+msgid "Price"
+msgstr "価格"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:774
+msgid "Limit exceeded."
+msgstr "限界を超えました。"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:842
+msgid "has limit upto"
+msgstr "制限があります"
+
+#: sell-media-reprints/sell-media-reprints-self-fulfillment.php:850
+msgid "Goto checkout page to fix it."
+msgstr "チェックアウトページに移動して修正してください。"
+
+#: sell-media-reprints/template-tags.php:59
+msgid "Buy a"
+msgstr "購入する"
+
+#: sell-media-reprints/template-tags.php:59
+msgid "print"
+msgstr "プリント"
+
+#: sell-media-reprints/template-tags.php:62
+msgid "Buy a download"
+msgstr "ダウンロードを購入する"
+
+#: sell-media-reprints/template-tags.php:71
+msgid "Print"
+msgstr "プリント"
+
+#: sell-media-reprints/template-tags.php:71
+msgid "size"
+msgstr "サイズ（ヨコ×タテ px）"
+
+#: sell-media-reprints/template-tags.php:71
+msgid "All sizes are listed in "
+msgstr "すべてのサイズは"
+
+#: sell-media-reprints/template-tags.php:71
+msgid "(?)"
+msgstr ""
+
+#: sell-media-reprints/template-tags.php:73 sell-media/inc/fields.php:47
+msgid "Select a size"
+msgstr "サイズを選択"
+
+#: sell-media-reprints/template-tags.php:77
+msgid "This item is not currently assigned a price group."
+msgstr "この商品は現在価格グループに割り当てられていません。"
+
+#: sell-media-reprints/template-tags.php:132
+msgid "Limited Edition: "
+msgstr "限定版："
+
+#: sell-media-reprints/template-tags.php:136
+#, php-format
+msgid "%d remaining"
+msgstr "%d 残り"
+
+#: sell-media-reprints/template-tags.php:141
+msgid "Sold out."
+msgstr "完売。"
+
+#: sell-media-s3/sell-media-s3.php:162
+msgid "Amazon S3 Access Key"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:163
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Access Key</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:174
+msgid "Amazon S3 Secret Key"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:175
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Secret Key</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:186
+msgid "Amazon S3 Bucket Name"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:188
+#, php-format
+msgid "Enter your <a href=\"%s\" target=\"_blank\">Amazon S3 Bucket Name</a>"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:200
+msgid "Amazon S3 Host"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:201
+msgid ""
+"Enter Amazon S3 host. Defaults to s3.amazonaws.com. Don't change this unless "
+"you know what you're doing"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:212
+msgid "Deactivate S3 plugin"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:213
+msgid "We assume that you have safely copied all files from S3 to your server."
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:223
+msgid "Check to show deactivate option."
+msgstr "オンにすると、非アクティブ化オプションが表示されます。"
+
+#: sell-media-s3/sell-media-s3.php:236
+msgid "Deactivate"
+msgstr "無効化する"
+
+#: sell-media-s3/sell-media-s3.php:251
+msgid "Amazon S3"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:351
+#, php-format
+msgid "Error uploading %s to S3: %s"
+msgstr ""
+
+#: sell-media-s3/sell-media-s3.php:541
+msgid "There was an error attempting to access the file system"
+msgstr "ファイルシステムにアクセスしようとしてエラーが発生しました"
+
+#: sell-media-stripe/sell-media-stripe.php:77
+#: sell-media/inc/template-tags.php:623
+msgid "Buy"
+msgstr "購入"
+
+#: sell-media-stripe/sell-media-stripe.php:78
+msgid "items"
+msgstr "アイテム"
+
+#: sell-media-stripe/sell-media-stripe.php:145
+msgid "Stripe Test Secret Key"
+msgstr "ストライプテスト・シークレット・キー"
+
+#: sell-media-stripe/sell-media-stripe.php:146
+#: sell-media-stripe/sell-media-stripe.php:158
+#: sell-media-stripe/sell-media-stripe.php:170
+#: sell-media-stripe/sell-media-stripe.php:182
+msgid " "
+msgstr ""
+
+#: sell-media-stripe/sell-media-stripe.php:157
+msgid "Stripe Test Publishable Key"
+msgstr "ストライプテストパブリッシュ可能キー"
+
+#: sell-media-stripe/sell-media-stripe.php:169
+msgid "Stripe Live Secret Key"
+msgstr "ストライプライブ・シークレット・キー"
+
+#: sell-media-stripe/sell-media-stripe.php:181
+msgid "Stripe Live Publishable Key"
+msgstr "ストライプライブパブリッシュ可能キー"
+
+#: sell-media-stripe/sell-media-stripe.php:203
+msgid "Stripe Settings"
+msgstr "ストライプ設定"
+
+#: sell-media-stripe/sell-media-stripe.php:205
+msgid ""
+"You must add your <a href=\"https://manage.stripe.com/account/apikeys\" "
+"target=\"_blank\">Stripe API Keys</a> to process transactions."
+msgstr ""
+"トランザクションを処理するには、<a href=\"https://manage.stripe.com/account/"
+"apikeys\" target=\"_blank\">ストライプAPIキー</a>を追加する必要があります。"
+
+#: sell-media-stripe/sell-media-stripe.php:221
+msgid "Credit Card"
+msgstr "クレジットカード"
+
+#: sell-media-stripe/sell-media-stripe.php:598
+msgid "Stripe not supported, please enable <code>cURL</code>."
+msgstr ""
+"ストライプはサポートされていません。<code>cURL</code>を有効にしてください。"
+
+#: sell-media-stripe/sell-media-stripe.php:603
+#, php-format
+msgid ""
+"Your currency, %s is not supported. Please configure your %s account to use "
+"the correct currency."
+msgstr ""
+"あなたの通貨、%sはサポートされていません。 正しい通貨を使用するように%sアカウ"
+"ントを設定してください。"
+
+#: sell-media-stripe/sell-media-stripe.php:610
+#, php-format
+msgid "Please update your Sell Media %s to contain your Stripe keys"
+msgstr "ストライプキーを含めるには、販売メディア%sを更新してください"
+
+#: sell-media-watermark/sell-media-watermark.php:51
+msgid ""
+" requires the Sell Media plugin to work properly. Please activate Sell Media."
+msgstr ""
+"Sell Mediaプラグインが正常に動作する必要があります。 メディアの販売を有効にし"
+"てください。"
+
+#: sell-media-watermark/sell-media-watermark.php:144
+msgid "Watermark Image"
+msgstr "ウォーターマーク画像"
+
+#: sell-media-watermark/sell-media-watermark.php:145
+msgid ""
+"For best results, use a transparent PNG cropped to approximately 200 pixels "
+"wide."
+msgstr ""
+"最善の結果を得るには、約200ピクセル幅にクロップされた透明なPNGを使用します。"
+
+#: sell-media-watermark/sell-media-watermark.php:155
+msgid "Watermark Everything"
+msgstr "すべてのウォーターマーク"
+
+#: sell-media-watermark/sell-media-watermark.php:165
+msgid ""
+"Watermarks are applied to all Sell Media images when you activate this "
+"extension. You can optionally watermark all images on your site, including "
+"those appearing in Posts and Pages, by checking this box."
+msgstr ""
+"この拡張機能を有効にすると、ウォーターマークがすべての販売メディアイメージに"
+"適用されます。 必要に応じて、このボックスにチェックを入れて、投稿とページに表"
+"示される画像を含め、サイトのすべての画像にウォーターマークを付けることができ"
+"ます。"
+
+#: sell-media-watermark/sell-media-watermark.php:172
+msgid "Watermark Opacity"
+msgstr "ウォーターマークの不透明度"
+
+#: sell-media-watermark/sell-media-watermark.php:173
+msgid "The opacity of your watermark."
+msgstr "ウォーターマークの不透明度。"
+
+#: sell-media-watermark/sell-media-watermark.php:225
+msgid "Watermark Position"
+msgstr "ウォーターマークの位置"
+
+#: sell-media-watermark/sell-media-watermark.php:226
+msgid "The position of your watermak."
+msgstr "あなたのウォーターマークの位置。"
+
+#: sell-media-watermark/sell-media-watermark.php:270
+msgid "Watermark Margin"
+msgstr "ウォーターマークのマージン"
+
+#: sell-media-watermark/sell-media-watermark.php:271
+msgid "The distance in pixels of your watermark from the edge of the image."
+msgstr "ウォーターマークの画像の端からの距離（ピクセル単位）。"
+
+#: sell-media-watermark/sell-media-watermark.php:294
+msgid "Watermark"
+msgstr "ウォーターマーク"
+
+#: sell-media/inc/admin-items.php:58
+msgid ""
+"Upload one file to create a single product or many files to create a gallery."
+msgstr ""
+"1つのファイルをアップロードして1つの製品を作成するか、複数のファイルを作成し"
+"てギャラリーを作成します。"
+
+#: sell-media/inc/admin-items.php:59
+msgid "Importing Options"
+msgstr "オプションのインポート"
+
+#: sell-media/inc/admin-items.php:63
+msgid "Importing"
+msgstr "インポート"
+
+#: sell-media/inc/admin-items.php:64
+#, php-format
+msgid ""
+"Quickly import folders of images using this option. Use FTP or <a href=\"%1$s"
+"\" target=\"_blank\">export directly from Lightroom</a> and place new "
+"folders into the server path listed below. Then, select the folder below to "
+"import into WordPress."
+msgstr ""
+"このオプションを使用して、画像のフォルダをすばやくインポートします。 FTPまた"
+"は<a href=\"%1$s\" target=\"_blank\"> Lightroomから直接エクスポート</a>して、"
+"新しいフォルダを以下のサーバーパスに配置します。 次に、下のフォルダを選択して"
+"WordPressにインポートします。"
+
+#: sell-media/inc/admin-items.php:65
+msgid "Server Path"
+msgstr "サーバーパス"
+
+#: sell-media/inc/admin-items.php:67
+msgid "Select a folder"
+msgstr "フォルダを選択"
+
+#: sell-media/inc/admin-items.php:74
+msgid "Add more files"
+msgstr "ファイルを追加する"
+
+#: sell-media/inc/admin-items.php:74
+msgid "Importing files..."
+msgstr "ファイルのインポート中..."
+
+#: sell-media/inc/admin-items.php:74
+msgid "Add files"
+msgstr "追加ファイル"
+
+#: sell-media/inc/admin-items.php:80
+msgid "Packages"
+msgstr "パッケージ"
+
+#: sell-media/inc/admin-items.php:81
+msgid ""
+"This feature was retired in version 2.0 because product galleries can now be "
+"created. Your old package file will still be available for sale and is "
+"listed below."
+msgstr ""
+"この機能は、製品ギャラリーを作成できるようになり、バージョン2.0で廃止されまし"
+"た。 あなたの古いパッケージファイルは引き続き販売され、以下にリストされていま"
+"す。"
+
+#: sell-media/inc/admin-items.php:113
+msgid "The price of each original, high-resolution file."
+msgstr "各オリジナルの高解像度ファイルの価格。"
+
+#: sell-media/inc/admin-items.php:118
+msgid "Price group for downloads"
+msgstr "ダウンロードの価格グループ"
+
+#: sell-media/inc/admin-items.php:150
+msgid "Views"
+msgstr "ビュー"
+
+#: sell-media/inc/admin-items.php:151
+msgid "Sales"
+msgstr "販売"
+
+#: sell-media/inc/admin-items.php:329
+#, php-format
+msgid "Sorry, %1$s could't be added."
+msgstr "%1$sを追加できませんでした。"
+
+#: sell-media/inc/admin-items.php:452
+msgid "No price set"
+msgstr "価格設定なし"
+
+#: sell-media/inc/admin-items.php:488
+msgid "No sales so far."
+msgstr "これまでの販売はありません。"
+
+#: sell-media/inc/admin-menu.php:24
+msgid "Reports"
+msgstr "レポート"
+
+#: sell-media/inc/admin-menu.php:25
+msgid "Upgrades"
+msgstr "アップグレード"
+
+#: sell-media/inc/admin-menu.php:27 sell-media/inc/admin-system-info.php:12
+#: sell-media/inc/settings/settings.php:631
+msgid "System Info"
+msgstr "システム情報"
+
+#: sell-media/inc/admin-payments.php:21
+msgid "Purchase Details"
+msgstr "購入の詳細"
+
+#: sell-media/inc/admin-payments.php:28
+msgid "Additional Purchase Details"
+msgstr "追加購入の詳細"
+
+#: sell-media/inc/admin-payments.php:42
+msgid "Payment Gateway Details"
+msgstr "Payment Gatewayの詳細"
+
+#: sell-media/inc/admin-payments.php:76 sell-media/inc/fields.php:87
+#: sell-media/inc/shortcodes.php:263
+msgid "Total"
+msgstr "合計"
+
+#: sell-media/inc/admin-payments.php:103
+msgid "This is the additional payment data stored with the purchase."
+msgstr "これは購入時に保存された追加支払いデータです。"
+
+#: sell-media/inc/admin-payments.php:123
+msgid "ID"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:148
+msgid "This payment has no additional payment details"
+msgstr "この支払いには追加の支払い詳細はありません"
+
+#: sell-media/inc/admin-payments.php:171
+#: sell-media/inc/gateways/class-sm-gateway-paypal-request.php:30
+#: sell-media/inc/settings/library/helpers.php:291
+msgid "PayPal"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:174
+msgid "Stripe"
+msgstr ""
+
+#: sell-media/inc/admin-payments.php:176
+msgid "This is the data that was sent from "
+msgstr "これは、送信されたデータです。"
+
+#: sell-media/inc/admin-payments.php:176
+msgid " at time of purchase. Use this for debugging, if needed."
+msgstr "購入時に 必要に応じてデバッグに使用します。"
+
+#: sell-media/inc/admin-payments.php:197
+msgid "Earnings Report"
+msgstr "収益レポート"
+
+#: sell-media/inc/admin-payments.php:199
+msgid "Total Earnings To Date:"
+msgstr "合計収益額："
+
+#: sell-media/inc/admin-payments.php:200
+msgid ""
+"Below is a breakdown of earnings per day, month and year. Want to increase "
+"your sales?"
+msgstr ""
+"以下は、1日、1ヶ月、1年あたりの収益の内訳です。 あなたの販売を増やしたいです"
+"か？"
+
+#: sell-media/inc/admin-payments.php:200
+msgid "Download new Sell Media extensions"
+msgstr "新しいSell Media拡張機能をダウンロード"
+
+#: sell-media/inc/admin-payments.php:213
+msgid "Day"
+msgstr "日"
+
+#: sell-media/inc/admin-payments.php:214 sell-media/inc/admin-payments.php:254
+#: sell-media/inc/admin-payments.php:287
+msgid "Earnings"
+msgstr "収益"
+
+#: sell-media/inc/admin-payments.php:234
+msgid "Earnings per day"
+msgstr "1日あたりの収益"
+
+#: sell-media/inc/admin-payments.php:253
+msgid "Month"
+msgstr "月"
+
+#: sell-media/inc/admin-payments.php:267
+msgid "Earnings per month"
+msgstr "1か月あたりの収益"
+
+#: sell-media/inc/admin-payments.php:286
+msgid "Year"
+msgstr "年"
+
+#: sell-media/inc/admin-payments.php:303
+msgid "Earnings per year"
+msgstr "年間収益"
+
+#: sell-media/inc/admin-price-groups.php:214
+msgid "Create Price Group"
+msgstr "価格グループの登録"
+
+#: sell-media/inc/admin-price-groups.php:219
+msgid "Are you sure you want to delete the price group:"
+msgstr "価格グループを削除してもよろしいですか？"
+
+#: sell-media/inc/admin-price-groups.php:219
+msgid "This will delete the price group and ALL its prices associated with it."
+msgstr "これにより、価格グループとそれに関連するすべての価格が削除されます。"
+
+#: sell-media/inc/admin-price-groups.php:220
+msgid "Delete Group"
+msgstr "グループの削除"
+
+#: sell-media/inc/admin-price-groups.php:224
+msgid "Enter price group name here"
+msgstr "価格グループ名をここに入力してください"
+
+#: sell-media/inc/admin-price-groups.php:240
+#: sell-media/inc/admin-price-groups.php:292
+msgid "Name (shown to buyer, so be descriptive)"
+msgstr "名前（バイヤーに示されているので説明的なもの）"
+
+#: sell-media/inc/admin-price-groups.php:248
+#: sell-media/inc/admin-price-groups.php:297
+msgid "Max width (pixels)"
+msgstr "最大幅（ピクセル）"
+
+#: sell-media/inc/admin-price-groups.php:253
+msgid "Max Height (pixels)"
+msgstr "最大高さ（ピクセル）"
+
+#: sell-media/inc/admin-price-groups.php:264
+msgid "Are you sure you want to delete the price"
+msgstr "価格を削除してもよろしいですか？"
+
+#: sell-media/inc/admin-price-groups.php:301
+msgid "Max height (pixels)"
+msgstr "最大高さ（ピクセル）"
+
+#: sell-media/inc/admin-price-groups.php:310
+msgid ""
+"The sizes listed below determine the maximum dimensions in pixels. Price "
+"Groups only apply to images."
+msgstr ""
+"下に記載されているサイズは、ピクセル単位の最大寸法を決定します。 価格グループ"
+"は画像にのみ適用されます。"
+
+#: sell-media/inc/admin-price-groups.php:311
+msgid "Create a price group to add prices to."
+msgstr "価格を追加する価格グループを作成します。"
+
+#: sell-media/inc/admin-price-groups.php:374
+msgid "Add New Price"
+msgstr "新しい価格を追加"
+
+#: sell-media/inc/admin-price-groups.php:382
+msgid "Save Price Group"
+msgstr "価格グループを保存"
+
+#: sell-media/inc/ajax.php:213
+msgid "Load more"
+msgstr "もっと読み込む"
+
+#: sell-media/inc/ajax.php:220 sell-media/inc/helpers.php:1410
+#: sell-media/themes/archive.php:130
+msgid "Nothing Found"
+msgstr "何も見つかりません"
+
+#: sell-media/inc/ajax.php:221 sell-media/inc/helpers.php:1411
+#: sell-media/themes/archive.php:131
+msgid "Sorry, but we couldn't find anything that matches your search query."
+msgstr "申し訳ありませんが、検索クエリに一致するものは見つかりませんでした。"
+
+#: sell-media/inc/class-admin-notices.php:49
+#, php-format
+msgid "Your site is currently in <a href=\"%1$s\">test mode</a>."
+msgstr "サイトは現在<a href=\"%1$s\">テストモード</a>になっています。"
+
+#: sell-media/inc/class-admin-notices.php:59
+#, php-format
+msgid ""
+"Please create a checkout page using the <code>[sell_media_checkout]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+"<code>[sell_media_checkout]</code>ショートコードを使用してチェックアウトペー"
+"ジを作成し、<a href=\"%1$s\">設定</a>に割り当ててください。"
+
+#: sell-media/inc/class-admin-notices.php:69
+#, php-format
+msgid ""
+"Please create a thanks page using the <code>[sell_media_thanks]</code> "
+"shortcode and assign it in your <a href=\"%1$s\">settings</a>."
+msgstr ""
+"<code>[sell_media_thanks]</code>ショートコードを使用して感謝のページを作成"
+"し、<a href=\"%1$s\">設定</a>に割り当ててください。"
+
+#: sell-media/inc/class-admin-notices.php:79
+#, php-format
+msgid ""
+"Please set a PayPal email in your <a href=\"%1$s\">payment settings</a>."
+msgstr "<a href=\"%1$s\"支払い設定</a>でPayPalのEメールを設定してください。"
+
+#: sell-media/inc/class-admin-notices.php:89
+#, php-format
+msgid ""
+"Important updates are now available for %1$s. <a href=\"%2$s\" target="
+"\"_blank\">Learn more</a>."
+msgstr ""
+"重要な更新は%1$sで利用可能になりました。 <a href=\"%2$s\" target=\"_blank\">"
+"詳細</a>。"
+
+#: sell-media/inc/class-customer.php:72
+msgid "Account registration at"
+msgstr "アカウントの登録"
+
+#: sell-media/inc/class-customer.php:73
+msgid "Welcome"
+msgstr "ようこそ"
+
+#: sell-media/inc/class-customer.php:74
+msgid "Here are your login credentials"
+msgstr "あなたのログイン情報"
+
+#: sell-media/inc/class-customer.php:75 sell-media/inc/shortcodes.php:549
+msgid "Username"
+msgstr "ユーザー名"
+
+#: sell-media/inc/class-customer.php:76
+msgid ""
+"Create a password if you want to login to our dashboard to download any of "
+"your purchases in the future."
+msgstr ""
+"ダッシュボードにログインして、今後購入するものをダウンロードする場合は、パス"
+"ワードを作成してください。"
+
+#: sell-media/inc/class-customer.php:78
+msgid "Any purchases your make will be available on your account dashboard."
+msgstr "購入したものはアカウントダッシュボードで利用できます。"
+
+#: sell-media/inc/class-customer.php:80
+msgid "Thanks"
+msgstr "ありがとうございました。"
+
+#: sell-media/inc/class-downloads.php:47
+#, php-format
+msgid "The original high resolution file doesn't exist here: %1$s"
+msgstr "元の高解像度ファイルはここには存在しません：%1$s"
+
+#: sell-media/inc/class-downloads.php:91
+msgid "You do not have permission to download this file"
+msgstr "このファイルをダウンロードする権限がありません"
+
+#: sell-media/inc/class-payments.php:229
+msgid "sales totaling"
+msgstr "総売上"
+
+#: sell-media/inc/class-payments.php:607
+msgid "Quantity"
+msgstr "量"
+
+#: sell-media/inc/class-payments.php:726
+msgid "New sale notification"
+msgstr "新しい販売通知"
+
+#: sell-media/inc/class-payments.php:729
+msgid "Address"
+msgstr "住所"
+
+#: sell-media/inc/class-products.php:70
+msgid "Original"
+msgstr "オリジナル"
+
+#: sell-media/inc/class-products.php:71
+msgid "The original high resolution source file"
+msgstr "オリジナルの高解像度ソースファイル"
+
+#: sell-media/inc/class-search.php:438 sell-media/inc/helpers.php:1238
+#, php-format
+msgid "Search for %1$s"
+msgstr "%1$sを検索する"
+
+#: sell-media/inc/class-search.php:444 sell-media/inc/helpers.php:1248
+#: sell-media/inc/widgets/sell-media-search.php:68
+msgid "Search"
+msgstr "検索"
+
+#: sell-media/inc/class-search.php:454 sell-media/inc/helpers.php:1270
+msgid "Exact phrase match (?)"
+msgstr "完全一致(?)"
+
+#: sell-media/inc/class-updater.php:150 sell-media/inc/class-updater.php:222
+msgid "Sell Media License"
+msgstr "販売ライセンス"
+
+#: sell-media/inc/class-updater.php:176
+msgid "Add Your License"
+msgstr "ライセンスを追加する"
+
+#: sell-media/inc/class-updater.php:183 sell-media/inc/class-updater.php:390
+msgid "License E-mail Address"
+msgstr "ライセンスEメールアドレス"
+
+#: sell-media/inc/class-updater.php:191 sell-media/inc/class-updater.php:402
+msgid "License Key"
+msgstr "ライセンスキー"
+
+#: sell-media/inc/class-updater.php:441
+#, php-format
+msgid ""
+"Your <a href=\"%1$s\">license key</a> for Graph Paper Press plugins has "
+"expired or is invalid. Please <a href=\"%2$s\" target=\"_blank\">renew your "
+"license</a> to re-enable automatic updates."
+msgstr ""
+"Graph Paper Pressプラグインの<a href=\"%1$s\">ライセンスキー</a>が期限切れま"
+"たは無効です。 自動更新を再度有効にするには、<a href=\"%2$s\" target=\"_blank"
+"\">ライセンスを更新</a>してください。"
+
+#: sell-media/inc/class-updater.php:807
+#, php-format
+msgid ""
+"<a href=\"%s\" target=\"_blank\">Get your license keys here</a> and paste "
+"them below to enable automatic updates."
+msgstr ""
+"<a href=\"%s\" target=\"_blank\">ここでライセンスキーを取得</a>し、下に貼り付"
+"けて自動更新を有効にします。"
+
+#: sell-media/inc/class-updater.php:813
+#, php-format
+msgid ""
+"Your license key for Graph Paper Press plugins has expired or is invalid. "
+"Please <a href=\"%s\" target=\"_blank\">renew your license</a> to re-enable "
+"automatic updates."
+msgstr ""
+"Graph Paper Pressプラグインのライセンスキーが期限切れまたは無効です。 自動更"
+"新を再度有効にするには、<a href=\"%s\" target=\"_blank\">ライセンスを更新</a>"
+"してください。"
+
+#: sell-media/inc/class-updater.php:815
+msgid "Your license is valid and your account is active."
+msgstr "あなたのライセンスは有効であり、あなたのアカウントは有効です。"
+
+#: sell-media/inc/collections.php:74
+msgid "This item is password protected"
+msgstr "このアイテムはパスワードで保護されています"
+
+#: sell-media/inc/fields.php:39
+msgid "Learn more"
+msgstr "もっと詳しく知る"
+
+#: sell-media/inc/fields.php:75 sell-media/inc/fields.php:77
+msgid ""
+"Select a license that most closely describes the intended use of this item. "
+"Additional license details will be displayed here after selecting a license."
+msgstr ""
+"このアイテムの意図された使用法を最もよく説明するライセンスを選択してくださ"
+"い。 ライセンスを選択すると、ここに追加のライセンスの詳細が表示されます。"
+
+#: sell-media/inc/fields.php:77
+msgid "Select a license"
+msgstr "ライセンスを選択する"
+
+#: sell-media/inc/helpers.php:1257
+msgid "Use a comma to separate keywords."
+msgstr "コンマを使用してキーワードを区切ります。"
+
+#: sell-media/inc/helpers.php:1263
+msgid ""
+"Search everywhere including titles, descriptions, captions, and keywords. "
+"For best results, only include one keyword per search."
+msgstr ""
+"タイトル、説明、キャプション、キーワードなど、どこからでも検索できます。 最良"
+"の結果を得るには、検索ごとに1つのキーワードのみを含めるようにしてください。"
+
+#: sell-media/inc/helpers.php:1263
+msgid "Search everything (?)"
+msgstr "すべてを検索する(?)"
+
+#: sell-media/inc/helpers.php:1345
+msgid "No keyword found"
+msgstr "キーワードが見つかりません"
+
+#: sell-media/inc/helpers.php:1346
+msgid "Please enter keyword to search."
+msgstr "検索するキーワードを入力してください。"
+
+#: sell-media/inc/helpers.php:1435
+msgid "Search for Keywords"
+msgstr "キーワードを検索"
+
+#: sell-media/inc/install.php:36
+msgid "Sell Media requires WordPress 4.4 or higher!"
+msgstr "メディアを販売するには、WordPress 4.4以上が必要です。"
+
+#: sell-media/inc/install.php:163
+msgid "All Products"
+msgstr "すべての作品"
+
+#: sell-media/inc/install.php:166
+msgid "Edit Product"
+msgstr "作品の編集"
+
+#: sell-media/inc/install.php:167
+msgid "New Product"
+msgstr "新しい作品"
+
+#: sell-media/inc/install.php:168
+msgid "View Product"
+msgstr "作品を見る"
+
+#: sell-media/inc/install.php:169
+msgid "Search Products"
+msgstr "作品を探す"
+
+#: sell-media/inc/install.php:170
+msgid "No products found"
+msgstr "作品が見つかりません"
+
+#: sell-media/inc/install.php:171
+msgid "No products found in Trash"
+msgstr "ゴミ箱に作品が見つかりません"
+
+#: sell-media/inc/install.php:172
+msgid "Parent Product:"
+msgstr "元となる作品："
+
+#: sell-media/inc/install.php:204 sell-media/inc/install.php:215
+msgid "Payments"
+msgstr "支払い"
+
+#: sell-media/inc/install.php:205 sell-media/inc/settings.php:55
+#: sell-media/inc/settings.php:59
+msgid "Payment"
+msgstr "支払い"
+
+#: sell-media/inc/install.php:207
+msgid "Add New Payment"
+msgstr "新しい支払いを追加"
+
+#: sell-media/inc/install.php:208
+msgid "Edit Payment"
+msgstr "支払いの編集"
+
+#: sell-media/inc/install.php:209
+msgid "New Payment"
+msgstr "新しい支払い"
+
+#: sell-media/inc/install.php:210
+msgid "View Payment"
+msgstr "支払いの表示"
+
+#: sell-media/inc/install.php:211
+msgid "Search Payments"
+msgstr "支払いの検索"
+
+#: sell-media/inc/install.php:212
+msgid "No payments found"
+msgstr "支払いが見つかりません"
+
+#: sell-media/inc/install.php:213
+msgid "No payments found in Trash"
+msgstr "ゴミ箱で支払いが見つかりません"
+
+#: sell-media/inc/install.php:214
+msgid "Parent Payment:"
+msgstr "元のお支払い："
+
+#: sell-media/inc/install.php:275
+msgid "Search Price Groups"
+msgstr "検索価格グループ"
+
+#: sell-media/inc/install.php:276
+msgid "Popular Price Groups"
+msgstr "人気価格グループ"
+
+#: sell-media/inc/install.php:277
+msgid "All Price Groups"
+msgstr "すべての価格グループ"
+
+#: sell-media/inc/install.php:278
+msgid "Parent Price Groups"
+msgstr "元となる価格グループ"
+
+#: sell-media/inc/install.php:279
+msgid "Parent Price Groups:"
+msgstr "元となる価格グループ"
+
+#: sell-media/inc/install.php:280
+msgid "Edit Price Group"
+msgstr "価格グループの編集"
+
+#: sell-media/inc/install.php:281
+msgid "Update Price Group"
+msgstr "価格グループの更新"
+
+#: sell-media/inc/install.php:282
+msgid "Add New Price Group"
+msgstr "新しい価格グループを追加"
+
+#: sell-media/inc/install.php:283
+msgid "New Price Group"
+msgstr "新しい価格グループ"
+
+#: sell-media/inc/install.php:284
+msgid "Separate Price Groups with commas"
+msgstr "カンマで区切られた価格グループ"
+
+#: sell-media/inc/install.php:285
+msgid "Add or remove Price Groups"
+msgstr "価格グループの追加または削除"
+
+#: sell-media/inc/install.php:286
+msgid "Choose from most used Price Groups"
+msgstr "最もよく使われる中古価格グループから選択"
+
+#: sell-media/inc/install.php:308
+msgid "Product Collections"
+msgstr "作品コレクション"
+
+#: sell-media/inc/install.php:310
+msgid "Search Collection"
+msgstr "コレクションを検索"
+
+#: sell-media/inc/install.php:311
+msgid "Popular Collection"
+msgstr "人気のコレクション"
+
+#: sell-media/inc/install.php:312
+#: sell-media/inc/widgets/sell-media-featured.php:95
+msgid "All Collections"
+msgstr "すべてのコレクション"
+
+#: sell-media/inc/install.php:313
+msgid "Parent Collection"
+msgstr "元となるコレクション"
+
+#: sell-media/inc/install.php:314
+msgid "Parent Collection:"
+msgstr "元となるコレクション: "
+
+#: sell-media/inc/install.php:315
+msgid "Edit Collection"
+msgstr "コレクションを編集"
+
+#: sell-media/inc/install.php:316
+msgid "Update Collection"
+msgstr "コレクションを更新"
+
+#: sell-media/inc/install.php:317
+msgid "Add New Collection"
+msgstr "新しいコレクションを追加"
+
+#: sell-media/inc/install.php:318
+msgid "New Collection"
+msgstr "新しいコレクション"
+
+#: sell-media/inc/install.php:319
+msgid "Separate collection with commas"
+msgstr "コレクションをコンマで区切り"
+
+#: sell-media/inc/install.php:320
+msgid "Add or remove Collection"
+msgstr "コレクションを追加または削除する"
+
+#: sell-media/inc/install.php:321
+msgid "Choose from most used Collection"
+msgstr "最もよく使われるコレクションから選択する"
+
+#: sell-media/inc/install.php:343 sell-media/inc/install.php:357
+msgid "Licenses"
+msgstr "ライセンス（用途）"
+
+#: sell-media/inc/install.php:345
+msgid "Search Licenses"
+msgstr "ライセンスを検索"
+
+#: sell-media/inc/install.php:346
+msgid "Popular Licenses"
+msgstr "人気のライセンス"
+
+#: sell-media/inc/install.php:347
+msgid "All Licenses"
+msgstr "すべてのライセンス"
+
+#: sell-media/inc/install.php:348
+msgid "Parent License"
+msgstr "元となるライセンス"
+
+#: sell-media/inc/install.php:349
+msgid "Parent License:"
+msgstr "元となるライセンス: "
+
+#: sell-media/inc/install.php:350
+msgid "Edit License"
+msgstr "ライセンスを編集"
+
+#: sell-media/inc/install.php:351
+msgid "Update License"
+msgstr "ライセンスを更新"
+
+#: sell-media/inc/install.php:352
+msgid "Add New License"
+msgstr "新しいライセンスを追加する"
+
+#: sell-media/inc/install.php:353
+msgid "New License"
+msgstr "新しいライセンス"
+
+#: sell-media/inc/install.php:354
+msgid "Separate licenses with commas"
+msgstr "ライセンスをコンマで区切る"
+
+#: sell-media/inc/install.php:355
+msgid "Add or remove Licenses"
+msgstr "ライセンスの追加または削除"
+
+#: sell-media/inc/install.php:356
+msgid "Choose from most used Licenses"
+msgstr "最もよく使用されるライセンスから選択"
+
+#: sell-media/inc/install.php:379 sell-media/inc/install.php:448
+#: sell-media/inc/install.php:482
+msgid "Keyword"
+msgstr "キーワード"
+
+#: sell-media/inc/install.php:380
+msgid "Search Keywords"
+msgstr "キーワードを検索"
+
+#: sell-media/inc/install.php:381
+msgid "Popular Keywords"
+msgstr "人気のキーワード"
+
+#: sell-media/inc/install.php:382
+msgid "All Keywords"
+msgstr "すべてのキーワード"
+
+#: sell-media/inc/install.php:383 sell-media/inc/install.php:452
+#: sell-media/inc/install.php:486
+msgid "Parent Keyword"
+msgstr "元となるキーワード"
+
+#: sell-media/inc/install.php:384 sell-media/inc/install.php:453
+#: sell-media/inc/install.php:487
+msgid "Parent Keyword:"
+msgstr "元となるキーワード: "
+
+#: sell-media/inc/install.php:385 sell-media/inc/install.php:454
+#: sell-media/inc/install.php:488
+msgid "Edit Keyword"
+msgstr "キーワードを編集"
+
+#: sell-media/inc/install.php:386 sell-media/inc/install.php:455
+#: sell-media/inc/install.php:489
+msgid "Update Keyword"
+msgstr "キーワードを更新"
+
+#: sell-media/inc/install.php:387 sell-media/inc/install.php:456
+#: sell-media/inc/install.php:490
+msgid "Add New Keyword"
+msgstr "新しいキーワードを追加する"
+
+#: sell-media/inc/install.php:388 sell-media/inc/install.php:457
+#: sell-media/inc/install.php:491
+msgid "New Keyword"
+msgstr "新しいキーワード"
+
+#: sell-media/inc/install.php:389
+msgid "Separate keywords with commas"
+msgstr "キーワードをコンマで区切る"
+
+#: sell-media/inc/install.php:390
+msgid "Add or remove Keywords"
+msgstr "キーワードを追加または削除する"
+
+#: sell-media/inc/install.php:391
+msgid "Choose from most used Keywords"
+msgstr "最もよく使用されるキーワードから選択する"
+
+#: sell-media/inc/install.php:413 sell-media/inc/install.php:427
+msgid "Creators"
+msgstr "クリエイター"
+
+#: sell-media/inc/install.php:414
+msgid "Creator"
+msgstr "クリエイター"
+
+#: sell-media/inc/install.php:415
+msgid "Search Creator"
+msgstr "クリエイターを検索"
+
+#: sell-media/inc/install.php:416
+msgid "Popular Creator"
+msgstr "人気のクリエイター"
+
+#: sell-media/inc/install.php:417
+msgid "All Creator"
+msgstr "すべてのクリエイター"
+
+#: sell-media/inc/install.php:418
+msgid "Parent Creator"
+msgstr "元となるクリエイター"
+
+#: sell-media/inc/install.php:419
+msgid "Parent Creator:"
+msgstr "元となるクリエイター: "
+
+#: sell-media/inc/install.php:420
+msgid "Edit Creator"
+msgstr "クリエイターを編集"
+
+#: sell-media/inc/install.php:421
+msgid "Update Creator"
+msgstr "クリエイターを更新"
+
+#: sell-media/inc/install.php:422
+msgid "Add New Creator"
+msgstr "新しいクリエイターを追加"
+
+#: sell-media/inc/install.php:423
+msgid "New Creator"
+msgstr "新しいクリエイター"
+
+#: sell-media/inc/install.php:424
+msgid "Separate creator with commas"
+msgstr "クリエーターをコンマで区切る"
+
+#: sell-media/inc/install.php:425
+msgid "Add or remove Creator"
+msgstr "クリエイターを追加または削除する"
+
+#: sell-media/inc/install.php:426
+msgid "Choose from most used Creator"
+msgstr "最もよく使用されるクリエイターから選択する"
+
+#: sell-media/inc/install.php:447 sell-media/inc/install.php:461
+msgid "City"
+msgstr "市（都市）"
+
+#: sell-media/inc/install.php:449
+msgid "Search City"
+msgstr "市（都市）を検索"
+
+#: sell-media/inc/install.php:450
+msgid "Popular City"
+msgstr "人気の市（都市）"
+
+#: sell-media/inc/install.php:451
+msgid "All City"
+msgstr "すべての市（都市）"
+
+#: sell-media/inc/install.php:458
+msgid "Separate city with commas"
+msgstr "市（都市）をカンマで区切る"
+
+#: sell-media/inc/install.php:459
+msgid "Add or remove City"
+msgstr "市（都市）の追加または削除"
+
+#: sell-media/inc/install.php:460
+msgid "Choose from most used City"
+msgstr "最も使用されている市（都市）から選択"
+
+#: sell-media/inc/install.php:481 sell-media/inc/install.php:495
+msgid "State"
+msgstr "州"
+
+#: sell-media/inc/install.php:483
+msgid "Search State"
+msgstr "州を検索"
+
+#: sell-media/inc/install.php:484
+msgid "Popular State"
+msgstr "人気の州"
+
+#: sell-media/inc/install.php:485
+msgid "All State"
+msgstr "すべての州"
+
+#: sell-media/inc/install.php:492
+msgid "Separate state with commas"
+msgstr "州をカンマで区切る"
+
+#: sell-media/inc/install.php:493
+msgid "Add or remove State"
+msgstr "州の追加または削除"
+
+#: sell-media/inc/install.php:494
+msgid "Choose from most used State"
+msgstr "最も使用されている州から選択"
+
+#: sell-media/inc/lightbox.php:46 sell-media/inc/lightbox.php:177
+#: sell-media/inc/lightbox.php:188
+msgid "Remove from lightbox"
+msgstr "ライトボックスから削除"
+
+#: sell-media/inc/lightbox.php:46 sell-media/inc/lightbox.php:182
+#: sell-media/inc/scripts.php:71
+msgid "Save to Lightbox"
+msgstr "ライトボックスに保存"
+
+#: sell-media/inc/lightbox.php:103
+msgid "Remove all from lightbox"
+msgstr "ライトボックスからすべて削除"
+
+#: sell-media/inc/lightbox.php:103 sell-media/inc/lightbox.php:148
+msgid "Your lightbox is empty."
+msgstr "あなたのライトボックスは空です。"
+
+#: sell-media/inc/lightbox.php:103
+msgid "Remove All"
+msgstr "すべて削除する"
+
+#: sell-media/inc/lightbox.php:140 sell-media/inc/template-tags.php:219
+#: sell-media/inc/template-tags.php:286
+msgid "Quick View"
+msgstr "詳細を見る"
+
+#: sell-media/inc/scripts.php:45
+msgid "Sorry that email already exists or is invalid"
+msgstr "申し訳ありませんが、電子メールが既に存在するか無効です"
+
+#: sell-media/inc/scripts.php:53
+msgid "Added"
+msgstr "追加された"
+
+#: sell-media/inc/scripts.php:54
+msgid "Checkout now"
+msgstr "今すぐ会計する"
+
+#: sell-media/inc/scripts.php:67
+msgid ""
+"There was an error loading the cart data. Please contact the site owner."
+msgstr ""
+"カートのデータを読み込む際にエラーが発生しました。 サイトの所有者に連絡してく"
+"ださい。"
+
+#: sell-media/inc/scripts.php:68 sell-media/inc/shortcodes.php:272
+msgid "Checkout Now"
+msgstr "今すぐ会計する"
+
+#: sell-media/inc/scripts.php:69
+msgid "Please wait..."
+msgstr "お待ちください..."
+
+#: sell-media/inc/scripts.php:70
+msgid "Remove from Lightbox"
+msgstr "ライトボックスから削除"
+
+#: sell-media/inc/settings.php:25 sell-media/inc/settings.php:29
+msgid "General"
+msgstr "一般"
+
+#: sell-media/inc/settings.php:40 sell-media/inc/settings.php:44
+msgid "Pricing"
+msgstr "価格設定"
+
+#: sell-media/inc/settings.php:74
+msgid "Email Settings"
+msgstr "メール設定"
+
+#: sell-media/inc/settings.php:85 sell-media/inc/settings.php:89
+msgid "Misc"
+msgstr "その他"
+
+#: sell-media/inc/settings.php:106
+msgid "Mode"
+msgstr "モード"
+
+#: sell-media/inc/settings.php:107
+#, php-format
+msgid ""
+"Select Live Mode to accept real transactions. Select Test Mode to accept "
+"test transactions (%s)."
+msgstr ""
+"実際の取引を受け入れるには、ライブモードを選択します。 テストトランザクション"
+"(%s)を受け入れるには、テストモードを選択します。"
+
+#: sell-media/inc/settings.php:116
+msgid "Test Mode"
+msgstr "テストモード"
+
+#: sell-media/inc/settings.php:120
+msgid "Live Mode"
+msgstr "ライブモード"
+
+#: sell-media/inc/settings.php:127
+msgid "Checkout Page"
+msgstr "会計ページ"
+
+#: sell-media/inc/settings.php:128
+msgid ""
+"Select the page that contains the checkout shortcode <code>"
+"[sell_media_checkout]</code>"
+msgstr ""
+"チェックアウトショートコード<code>[sell_media_checkout]</code>を含むページを"
+"選択します。"
+
+#: sell-media/inc/settings.php:139
+msgid "Thanks Page"
+msgstr "サンクスページ"
+
+#: sell-media/inc/settings.php:140
+msgid ""
+"Select the page that contains the thanks shortcode <code>[sell_media_thanks]"
+"</code>"
+msgstr ""
+"感謝のショートコード<code>[sell_media_thanks]</code>を含むページを選択してく"
+"ださい。"
+
+#: sell-media/inc/settings.php:151
+msgid "Dashboard Page"
+msgstr "ダッシュボードページ"
+
+#: sell-media/inc/settings.php:152
+msgid ""
+"Select the page that contains the dashboard shortcode<code>"
+"[sell_media_download_list]</code>"
+msgstr ""
+"ダッシュボードのショートコードを含むページを選択します。<code>"
+"[sell_media_download_list]</code>"
+
+#: sell-media/inc/settings.php:163
+msgid "Login Page"
+msgstr "ログインページ"
+
+#: sell-media/inc/settings.php:164
+msgid ""
+"Select the page that contains the login shortcode <code>"
+"[sell_media_login_form]</code>"
+msgstr ""
+"ログインショートコード<code>[sell_media_login_form]</code>を含むページを選択"
+"します。"
+
+#: sell-media/inc/settings.php:175
+msgid "Search Page"
+msgstr "検索ページ"
+
+#: sell-media/inc/settings.php:176
+msgid ""
+"Select the page that contains the search shortcode <code>"
+"[sell_media_searchform]</code>"
+msgstr ""
+"検索ショートコード<code>[sell_media_searchform]</code>を含むページを選択しま"
+"す。"
+
+#: sell-media/inc/settings.php:187
+msgid "Lightbox Page"
+msgstr "ライトボックスページ"
+
+#: sell-media/inc/settings.php:188
+msgid ""
+"Select the page that contains the lightbox shortcode <code>"
+"[sell_media_lightbox]</code>"
+msgstr ""
+"ライトボックスショートコード<code>[sell_media_lightbox]</code>を含むページを"
+"選択します。"
+
+#: sell-media/inc/settings.php:199
+msgid "Customer Notification"
+msgstr "顧客通知"
+
+#: sell-media/inc/settings.php:200
+msgid "Notify the customer of their site registration."
+msgstr "顧客にサイト登録を通知します。"
+
+#: sell-media/inc/settings.php:209 sell-media/inc/settings.php:330
+#: sell-media/inc/settings.php:351 sell-media/inc/settings.php:372
+#: sell-media/inc/settings.php:489
+msgid "No"
+msgstr ""
+
+#: sell-media/inc/settings.php:220
+msgid "Style"
+msgstr "スタイル"
+
+#: sell-media/inc/settings.php:221
+msgid ""
+"Choose the style of your theme. Sell Media will load styles to match your "
+"theme."
+msgstr ""
+"テーマのスタイルを選択します。 メディアを売ると、テーマに合わせてスタイルが読"
+"み込まれます。"
+
+#: sell-media/inc/settings.php:230
+msgid "Dark"
+msgstr ""
+
+#: sell-media/inc/settings.php:234
+msgid "Light"
+msgstr ""
+
+#: sell-media/inc/settings.php:241
+msgid "Page Layout"
+msgstr "ページレイアウト"
+
+#: sell-media/inc/settings.php:242
+msgid ""
+"Select your layout preference for single Sell Media entries. If your theme "
+"already has a sidebar, you probably want to select the 'One column' option."
+msgstr ""
+"シングル販売メディアエントリのレイアウト設定を選択します。 テーマに既にサイド"
+"バーがある場合は、[1列]オプションを選択します。"
+
+#: sell-media/inc/settings.php:251
+msgid "Two columns"
+msgstr "２コラム"
+
+#: sell-media/inc/settings.php:255
+msgid "One column"
+msgstr "１コラム"
+
+#: sell-media/inc/settings.php:262
+msgid "Thumbnail Crop"
+msgstr "サムネイルトリミング"
+
+#: sell-media/inc/settings.php:263
+msgid ""
+"Select the crop for thumbnails appearing on archives and galleries. If you "
+"select 'Square Crop,' you might need to use the Regenerate Thumbnails plugin "
+"to resize previously uploaded images."
+msgstr ""
+"アーカイブとギャラリーに表示されるサムネイルの作物を選択します。 「四角い切り"
+"抜き」を選択した場合は、以前にアップロードした画像のサイズを変更するために、"
+"サムネールを再生成するプラグインを使用する必要があります。"
+
+#: sell-media/inc/settings.php:272
+msgid "No Crop"
+msgstr "トリミングなし"
+
+#: sell-media/inc/settings.php:276
+msgid "Square Crop"
+msgstr "正方形トリミング"
+
+#: sell-media/inc/settings.php:283
+msgid "Thumbnail Layout"
+msgstr "サムネイルレイアウト"
+
+#: sell-media/inc/settings.php:284
+msgid ""
+"Select the layout preferences for thumbnails appearing on archives and in "
+"galleries."
+msgstr ""
+"アーカイブやギャラリーに表示されるサムネイルのレイアウト設定を選択します。"
+
+#: sell-media/inc/settings.php:293
+msgid "One Column"
+msgstr "１コラム"
+
+#: sell-media/inc/settings.php:297
+msgid "Two Columns"
+msgstr "２コラム"
+
+#: sell-media/inc/settings.php:301
+msgid "Three Columns"
+msgstr "３コラム"
+
+#: sell-media/inc/settings.php:305
+msgid "Four Columns"
+msgstr "４コラム"
+
+#: sell-media/inc/settings.php:309
+msgid "Five Columns"
+msgstr "５コラム"
+
+#: sell-media/inc/settings.php:313
+msgid "Masonry Layout"
+msgstr "石積みのレイアウト"
+
+#: sell-media/inc/settings.php:320
+msgid "Breadcrumbs"
+msgstr "パンくず"
+
+#: sell-media/inc/settings.php:321
+msgid "Show breadcrumb navigation on single entries."
+msgstr "1つのエントリ上のパンくずナビゲーションを表示します。"
+
+#: sell-media/inc/settings.php:341
+msgid "File Info"
+msgstr "ファイル情報"
+
+#: sell-media/inc/settings.php:342
+msgid ""
+"Show file information (file size, file type, dimensions, keywords, etc.) on "
+"single entries."
+msgstr ""
+"単一のエントリにファイル情報（ファイルサイズ、ファイルタイプ、サイズ、キー"
+"ワードなど）を表示します。"
+
+#: sell-media/inc/settings.php:362
+msgid "Plugin Credit"
+msgstr "プラグインのクレジット"
+
+#: sell-media/inc/settings.php:363
+msgid "Let your site visitors know you are using the Sell Media plugin?"
+msgstr ""
+"あなたのサイトの訪問者に、あなたはSell Mediaプラグインを使用していることを知"
+"らせますか？"
+
+#: sell-media/inc/settings.php:383
+msgid "Post Type Slug"
+msgstr "ポストタイプスラグ"
+
+#: sell-media/inc/settings.php:384
+msgid ""
+"You can change the post type slug to: &quot;photos&quot; or &quot;"
+"downloads&quot;. The default slug is &quot;items&quot;."
+msgstr ""
+"ポストタイプのスラッグを次のように変更することができます：&quot;photos&quot; "
+"または&quot;downloads&quot; を選択することができる。 デフォルトのスラッグは"
+"&quot;items&quot;です。"
+
+#: sell-media/inc/settings.php:395
+msgid "Order By"
+msgstr "注文する"
+
+#: sell-media/inc/settings.php:396
+msgid "Choose the order of items for the archive pages."
+msgstr "アーカイブページの項目の順序を選択します。"
+
+#: sell-media/inc/settings.php:424
+msgid "Terms and Conditions"
+msgstr "規約と条件"
+
+#: sell-media/inc/settings.php:425
+msgid ""
+"These &quot;Terms and Conditions&quot; will show up on the checkout page. "
+"Users must agree to these terms before completing their purchase."
+msgstr ""
+"これらの&quot;利用規約&quot;は、 チェックアウトページに表示されます。 ユー"
+"ザーは、購入を完了する前にこれらの条件に同意する必要があります。"
+
+#: sell-media/inc/settings.php:436
+msgid "Show Columns"
+msgstr "列（コラム）を表示する"
+
+#: sell-media/inc/settings.php:437
+msgid ""
+"Select the columns to show on the admin page &quot;All Products&quot; page."
+msgstr ""
+"管理ページに表示する列を選択してください。 &quot;すべての商品&quot; ページ。"
+
+#: sell-media/inc/settings.php:467
+msgid "Original Price"
+msgstr "オリジナル（元画像）価格"
+
+#: sell-media/inc/settings.php:468
+msgid ""
+"The original price of new items and bulk uploads. You can set unique prices "
+"by editing each individual item."
+msgstr ""
+"新しい商品や一括アップロードのオリジナル価格。 独自のアイテムを編集すること"
+"で、独自の価格を設定することができます。"
+
+#: sell-media/inc/settings.php:479
+msgid "Hide Original Price"
+msgstr "オリジナル価格を隠す"
+
+#: sell-media/inc/settings.php:480
+msgid ""
+"Select 'Yes' to hide the original price above and rely solely on Price "
+"Groups (See below. Price Groups can only be used when selling images). "
+"Select 'No' if you're selling single file downloads or if you want to list "
+"the original price for each product. You can override this setting on a per-"
+"item basis."
+msgstr ""
+"上記の元の価格を表示しないようにするには「はい」を選択し、価格グループのみに"
+"依存してください（下記の価格グループは画像の販売時にのみ使用できます）。 1つ"
+"のファイルのダウンロードを販売する場合、または各製品の元の価格を表示する場合"
+"は、[いいえ]を選択します。 この設定は、アイテムごとにオーバーライドできます。"
+
+#: sell-media/inc/settings.php:500
+msgid "Default Image Price Group"
+msgstr "デフォルト画像価格グループ"
+
+#: sell-media/inc/settings.php:511
+msgid "Image Price Groups"
+msgstr "イメージ価格グループ"
+
+#: sell-media/inc/settings.php:524
+msgid "PayPal Email Address"
+msgstr "PayPalのメールアドレス"
+
+#: sell-media/inc/settings.php:525
+msgid "Add the email address associated with your PayPal account above."
+msgstr ""
+"上記のPayPalアカウントに関連付けられたメールアドレスを追加してください。"
+
+#: sell-media/inc/settings.php:537
+msgid "Currency"
+msgstr "通貨"
+
+#: sell-media/inc/settings.php:538
+msgid "The currency in which you accept payment."
+msgstr "支払いを受け入れる通貨。"
+
+#: sell-media/inc/settings.php:549
+msgid "PayPal Additional Test Emails"
+msgstr "PayPalの追加テストメール"
+
+#: sell-media/inc/settings.php:550
+msgid ""
+"This is useful when debugging PayPal. Enter a comma separated list of "
+"emails, and when a purchase is made the same email that is sent to the buyer "
+"will be sent to the recipients in the above list."
+msgstr ""
+"これはPayPalをデバッグするときに便利です。 カンマで区切った電子メールのリスト"
+"を入力します。購入が行われると、バイヤーに送信されたものと同じ電子メールが上"
+"記リストの受信者に送信されます。"
+
+#: sell-media/inc/settings.php:561 sell-media/inc/shortcodes.php:254
+msgid "Tax"
+msgstr "税"
+
+#: sell-media/inc/settings.php:571
+msgid "Yes, charge tax"
+msgstr "はい、課税します"
+
+#: sell-media/inc/settings.php:578
+msgid "Tax Display"
+msgstr "税額表示"
+
+#: sell-media/inc/settings.php:579
+msgid ""
+"Select how you want to display taxes. Most users can leave this set to "
+"\"Exclusive\". Tax laws in certain countries, like Austrailia, require that "
+"prices of items are displayed with taxes included. If this scenerio applies "
+"to you, then select \"Inclusive\"."
+msgstr ""
+"税金の表示方法を選択します。 ほとんどのユーザーはこの設定を \"Exclusive\"にす"
+"ることができます。 Austrailiaのような特定の国の税法では、品目の価格に税金が含"
+"まれていることが必要です。 このシナリオが適用される場合は、 \"Inclusive\"を選"
+"択します。"
+
+#: sell-media/inc/settings.php:588
+msgid "Exclusive - Added at checkout"
+msgstr "外税- チェックアウト時に追加"
+
+#: sell-media/inc/settings.php:592
+msgid "Inclusive - Added to item prices"
+msgstr "税込み - 商品価格に追加されました"
+
+#: sell-media/inc/settings.php:599
+msgid "Tax Rate"
+msgstr "税率"
+
+#: sell-media/inc/settings.php:613
+msgid "From Name"
+msgstr "名前から"
+
+#: sell-media/inc/settings.php:614
+msgid "The name associated with all outgoing email."
+msgstr "すべての送信メールに関連付けられている名前。"
+
+#: sell-media/inc/settings.php:625
+msgid "From Email"
+msgstr "電子メールから"
+
+#: sell-media/inc/settings.php:626
+msgid "The email address used for all outgoing email."
+msgstr "すべての送信メールに使用されたメールアドレス。"
+
+#: sell-media/inc/settings.php:637
+msgid "Email Subject"
+msgstr "メールの件名"
+
+#: sell-media/inc/settings.php:638
+msgid "The email subject on successful purchase emails."
+msgstr "購入後のＥメールの件名"
+
+#: sell-media/inc/settings.php:644
+msgid "Your Purchase"
+msgstr "あなたの購入"
+
+#: sell-media/inc/settings.php:649
+msgid "Email Body"
+msgstr "メール本文"
+
+#: sell-media/inc/settings.php:650
+msgid ""
+"This e-mail message is sent to your customers in case of successful and "
+"cleared payment. You can use the following email tags: {first_name}, "
+"{last_name}, {payer_email}, {download_links}, {payment_id}. These tags are "
+"replaced with the real data associated with each payment. Be sure to include "
+"the {download_links} tag, otherwise your buyers won't receive their download "
+"purchases. The {payment_id} tag can be used to display an invoice number."
+msgstr ""
+"この電子メールメッセージは、決済が成功し、決済された場合にお客様に送信されま"
+"す。{first_name}, {last_name}, {payer_email}, {download_links}, {payment_id} "
+"の電子メールタグを使用できます。 これらのタグは、各支払いに関連付けられた実際"
+"のデータに置き換えられます。 {download_links}タグを必ず含めてください。そうし"
+"ないと、購入者はダウンロード購入を受け取ることができません。 {payment_id} タ"
+"グを使用すると、請求書番号を表示できます。"
+
+#: sell-media/inc/settings.php:664
+msgid "Miscellaneous Settings"
+msgstr "その他の設定"
+
+#: sell-media/inc/settings.php:665
+#, php-format
+msgid "Settings for some of our %s will be shown here if active."
+msgstr "アクティブな場合、%s のいくつかの設定がここに表示されます。"
+
+#: sell-media/inc/settings/library/helpers.php:16
+msgid "-- Choose One --"
+msgstr "-- 一つを選択 --"
+
+#: sell-media/inc/settings/library/helpers.php:133
+msgid "US Dollars (&#36;)"
+msgstr "US ドル (&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:138
+msgid "Euros (&euro;)"
+msgstr "ユーロ (&euro;)"
+
+#: sell-media/inc/settings/library/helpers.php:143
+msgid "Pounds Sterling (&pound;)"
+msgstr "ポンド (&pound;)"
+
+#: sell-media/inc/settings/library/helpers.php:148
+msgid "Australian Dollars (&#36;)"
+msgstr "オーストラリア・ドル (&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:153
+msgid "Brazilian Real (R&#36;)"
+msgstr "ブラジル・レアル (R&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:158
+msgid "Canadian Dollars (&#36;)"
+msgstr "カナダ・ドル (&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:163
+msgid "Czech Koruna (&#75;&#269;)"
+msgstr "チェコ・コルナ (&#75;&#269;)"
+
+#: sell-media/inc/settings/library/helpers.php:168
+msgid "Danish Krone"
+msgstr "デンマーク・クローネ"
+
+#: sell-media/inc/settings/library/helpers.php:173
+msgid "Hong Kong Dollar (&#36;)"
+msgstr "香港ドル (&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:178
+msgid "Hungarian Forint"
+msgstr "ハンガリー・フォリント"
+
+#: sell-media/inc/settings/library/helpers.php:183
+msgid "Israeli Shekel"
+msgstr "イスラエル・シェケル"
+
+#: sell-media/inc/settings/library/helpers.php:188
+msgid "Japanese Yen (&yen;)"
+msgstr "日本円 (&yen;)"
+
+#: sell-media/inc/settings/library/helpers.php:193
+msgid "Malaysian Ringgits"
+msgstr "マレーシア・リンギ"
+
+#: sell-media/inc/settings/library/helpers.php:198
+msgid "Mexican Peso (&#36;)"
+msgstr "メキシコ・ペソ (&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:203
+msgid "New Zealand Dollar (&#36;)"
+msgstr "ニュージーランド・ドル (&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:208
+msgid "Norwegian Krone"
+msgstr "ノルウェー・クローネ"
+
+#: sell-media/inc/settings/library/helpers.php:213
+msgid "Philippine Pesos"
+msgstr "フィリピン・ペソ"
+
+#: sell-media/inc/settings/library/helpers.php:218
+msgid "Polish Zloty"
+msgstr "ポーランド・ズローティ"
+
+#: sell-media/inc/settings/library/helpers.php:223
+msgid "Singapore Dollar (&#36;)"
+msgstr "シンガポール・ドル (&#36;)"
+
+#: sell-media/inc/settings/library/helpers.php:228
+msgid "Swedish Krona"
+msgstr "スウェーデン・クローナ"
+
+#: sell-media/inc/settings/library/helpers.php:233
+msgid "Swiss Franc"
+msgstr "スイス・フラン"
+
+#: sell-media/inc/settings/library/helpers.php:238
+msgid "Taiwan New Dollars"
+msgstr "台湾新ドル"
+
+#: sell-media/inc/settings/library/helpers.php:243
+msgid "Thai Baht"
+msgstr "タイ・バーツ"
+
+#: sell-media/inc/settings/library/helpers.php:248
+msgid "Turkish Lira (TL)"
+msgstr "トルコ・リラ (TL)"
+
+#: sell-media/inc/settings/library/helpers.php:253
+msgid "South African rand (R)"
+msgstr "南アフリカ・ランド (R)"
+
+#: sell-media/inc/settings/settings.php:88
+#: sell-media/inc/settings/settings.php:90
+msgid "Settings"
+msgstr "設定"
+
+#: sell-media/inc/settings/settings.php:124
+msgid " settings updated successfully."
+msgstr "設定が正常に更新されました。"
+
+#: sell-media/inc/settings/settings.php:137
+msgid "Save Settings"
+msgstr "設定を保存する"
+
+#: sell-media/inc/settings/settings.php:138
+msgid "Reset Defaults"
+msgstr "デフォルトにリセットする"
+
+#: sell-media/inc/settings/settings.php:365
+#: sell-media/inc/settings/settings.php:385
+#: sell-media/inc/settings/settings.php:404
+msgid ""
+"This option has no valid options. Please create valid options as an array "
+"inside the settings."
+msgstr ""
+"このオプションには有効なオプションはありません。 有効なオプションを設定内の配"
+"列として作成してください。"
+
+#: sell-media/inc/settings/settings.php:487 sell-media/inc/term-meta.php:370
+msgid "Upload or Select Image"
+msgstr "画像のアップロードまたは選択"
+
+#: sell-media/inc/settings/settings.php:582
+msgid "Upload or Select Images"
+msgstr "画像のアップロードまたは選択"
+
+#: sell-media/inc/settings/settings.php:629
+msgid "Version: "
+msgstr "バージョン："
+
+#: sell-media/inc/settings/settings.php:630
+msgid "Documentation"
+msgstr "ドキュメンテーション"
+
+#: sell-media/inc/settings/settings.php:645
+msgid "Upgrades Available"
+msgstr "利用可能なアップグレード"
+
+#: sell-media/inc/settings/settings.php:647
+msgid ""
+"Sell prints, create discount codes, watermark images, accept credit cards "
+"and much more with extensions for Sell Media."
+msgstr ""
+"プリントを販売し、割引コードを作成し、透かし画像を表示し、クレジットカードを"
+"受け取り、販売メディアの拡張機能を使用します。"
+
+#: sell-media/inc/settings/settings.php:648
+#: sell-media/inc/settings/settings.php:655
+msgid "Order Now"
+msgstr "今すぐ注文"
+
+#: sell-media/inc/settings/settings.php:652
+msgid "Need Help?"
+msgstr "助けが必要ですか？"
+
+#: sell-media/inc/settings/settings.php:654
+msgid ""
+"Having trouble setting up Sell Media? Hire one of our affiliated developers."
+msgstr "販売メディアの設定に問題がありますか？ 私たちには提携開発者がいます。"
+
+#: sell-media/inc/settings/settings.php:659
+msgid "Reviews"
+msgstr "レビュー"
+
+#: sell-media/inc/settings/settings.php:661
+msgid "Great plugin with great support. Includes tons of features."
+msgstr ""
+"素晴らしいサポートを提供する素晴らしいプラグイン。 数多くの機能が含まれていま"
+"す。"
+
+#: sell-media/inc/settings/settings.php:664
+msgid ""
+"A young product with massive potential! You can expect great support from "
+"Graph Paper Press."
+msgstr ""
+"大規模な可能性を持つ若い製品！ Graph Paper Pressの素晴らしいサポートが期待で"
+"きます。"
+
+#: sell-media/inc/settings/settings.php:667
+msgid "We'd love for you to leave a review if you've found this plugin useful."
+msgstr ""
+"このプラグインが有用であると判断した場合は、レビューを残すことをおすすめしま"
+"す。"
+
+#: sell-media/inc/settings/settings.php:668
+msgid "Leave a review"
+msgstr "レビューを残す"
+
+#: sell-media/inc/shortcodes.php:41
+msgid ""
+"We've received your payment and are processing your order. <a href=\"\" "
+"class=\"reload\">Refresh this page</a> to check your order status. If you "
+"continue to see this message, please contact us."
+msgstr ""
+"お支払いを受け取り、注文を処理しています。<a href=\"\" class=\"reload\">この"
+"ページを更新</a>して注文状況を確認してください。 このメッセージが引き続き表示"
+"される場合は、私たちまでご連絡ください。"
+
+#: sell-media/inc/shortcodes.php:258
+msgid "Shipping"
+msgstr "運送"
+
+#: sell-media/inc/shortcodes.php:275
+msgid "or"
+msgstr "または"
+
+#: sell-media/inc/shortcodes.php:277
+msgid "continue shopping &raquo;"
+msgstr "ショッピングを続ける &raquo;"
+
+#: sell-media/inc/shortcodes.php:285
+msgid ""
+"By clicking \"Checkout Now\", you are agreeing to our <a href=\"javascript:"
+"void(0);\" class=\"sell-media-empty-dialog-trigger\">terms of service</a>."
+msgstr ""
+"\"Checkout Now\",をクリックすると、<a href=\"javascript:void(0);\" class="
+"\"sell-media-empty-dialog-trigger\">利用規約に同意したことになります。</a>。"
+
+#: sell-media/inc/shortcodes.php:298
+#, php-format
+msgid "Your cart is empty. %s"
+msgstr "あなたのカートは空です。%s"
+
+#: sell-media/inc/shortcodes.php:298
+msgid "Continue shopping"
+msgstr "ショッピングを続ける"
+
+#: sell-media/inc/shortcodes.php:323
+msgid "Your Purchase History"
+msgstr "購入履歴"
+
+#: sell-media/inc/shortcodes.php:329
+msgid "Purchase ID"
+msgstr "購入ID"
+
+#: sell-media/inc/shortcodes.php:356
+msgid "Description"
+msgstr "説明"
+
+#: sell-media/inc/shortcodes.php:357
+msgid "width (px)"
+msgstr "幅（px）"
+
+#: sell-media/inc/shortcodes.php:358
+msgid "height (px)"
+msgstr "高さ（px）"
+
+#: sell-media/inc/shortcodes.php:359
+msgid "price"
+msgstr "価格"
+
+#: sell-media/inc/shortcodes.php:502 sell-media/themes/archive.php:90
+msgid " images in "
+msgstr "画像は"
+
+#: sell-media/inc/shortcodes.php:502 sell-media/themes/archive.php:90
+msgid " collection"
+msgstr "コレクション"
+
+#: sell-media/inc/shortcodes.php:505
+msgid "Starting at "
+msgstr "スタートは"
+
+#: sell-media/inc/shortcodes.php:540
+#, php-format
+msgid "You are logged in. %1$s or %2$s."
+msgstr "あなたは%1$sしますか？　それとも%2$sために継続しますか。"
+
+#: sell-media/inc/shortcodes.php:540
+msgid "Logout"
+msgstr "ログアウト"
+
+#: sell-media/inc/shortcodes.php:540
+msgid "continue shopping"
+msgstr "ショッピングを続ける"
+
+#: sell-media/inc/shortcodes.php:544
+msgid "Login failed"
+msgstr "ログインに失敗しました"
+
+#: sell-media/inc/shortcodes.php:550 sell-media/inc/term-meta.php:409
+#: sell-media/inc/term-meta.php:454
+msgid "Password"
+msgstr "パスワード"
+
+#: sell-media/inc/shortcodes.php:551
+msgid "Remember Me"
+msgstr "覚えていますか"
+
+#: sell-media/inc/shortcodes.php:552
+msgid "Log In"
+msgstr "ログイン"
+
+#: sell-media/inc/shortcodes.php:556
+msgid "Forgot Password"
+msgstr "パスワードをお忘れですか"
+
+#: sell-media/inc/shortcodes.php:579
+msgid "Newest"
+msgstr "最新順"
+
+#: sell-media/inc/shortcodes.php:584
+msgid "Most Popular"
+msgstr "人気順"
+
+#: sell-media/inc/shortcodes.php:669 sell-media/inc/shortcodes.php:705
+msgid "Prev"
+msgstr "前へ"
+
+#: sell-media/inc/shortcodes.php:670 sell-media/inc/shortcodes.php:706
+msgid "Next"
+msgstr "次へ"
+
+#: sell-media/inc/template-tags.php:36
+msgid "Add to cart"
+msgstr "カートに追加"
+
+#: sell-media/inc/template-tags.php:245
+msgid "Back to Thumbnails"
+msgstr "サムネイルに戻る"
+
+#: sell-media/inc/template-tags.php:247
+msgid "Previous Image"
+msgstr "前の画像"
+
+#: sell-media/inc/template-tags.php:249
+msgid "Next Image"
+msgstr "次の画像"
+
+#: sell-media/inc/template-tags.php:333
+#, php-format
+msgid ""
+"<span id=\"sell-media-credit\" class=\"sell-media-credit\">Powered by <a "
+"href=\"%1$s\" title=\"Sell Media\">%2$s</a></span>"
+msgstr ""
+
+#: sell-media/inc/template-tags.php:442
+msgid "Home"
+msgstr "ホーム"
+
+#: sell-media/inc/template-tags.php:623
+msgid "More"
+msgstr "もっと見る"
+
+#: sell-media/inc/template-tags.php:667
+msgid "File Name"
+msgstr "ファイル名"
+
+#: sell-media/inc/template-tags.php:673
+msgid "Dimensions"
+msgstr "寸法（px）"
+
+#: sell-media/inc/template-tags.php:683
+msgid "Length"
+msgstr "長さ"
+
+#: sell-media/inc/template-tags.php:684
+msgid "Bitrate"
+msgstr "ビットレート"
+
+#: sell-media/inc/term-meta.php:94
+msgid ""
+"When a buyer decides to purchase a item from your site, they must choose a "
+"license which most closely identifies their intended use of the item. We "
+"have included some default license types, grouped into two \"parent\" "
+"categories: Personal and Commercial. Each of these two categories have "
+"specific \"child\" licenses, such as \"Print Advertising\" (a child of "
+"Commercial) and \"Website\" (a child of Personal). You can create as many "
+"parent and child licenses as you want."
+msgstr ""
+"バイヤーがあなたのサイトからアイテムを購入することに決めたとき、彼らはそのア"
+"イテムの意図された使用を最もよく識別するライセンスを選択しなければなりませ"
+"ん。 私たちはいくつかのデフォルトのライセンスタイプを、「個人」と「商業」の2"
+"つの\"parent\"カテゴリに分類しています。 これらの2つのカテゴリのそれぞれに"
+"は、\"Print Advertising\"（商業の子供）と\"Website\"（個人の子供）などの特定"
+"の\"child\"ライセンスがあります。 必要な数の親と子のライセンスを作成できま"
+"す。"
+
+#: sell-media/inc/term-meta.php:111 sell-media/inc/term-meta.php:129
+msgid "Markup"
+msgstr "マークアップ"
+
+#: sell-media/inc/term-meta.php:205
+msgid ""
+"Increase the price of a item if a buyer selects this license by dragging the "
+"slider above."
+msgstr ""
+"購入者が上記のスライダをドラッグしてこのライセンスを選択した場合は、アイテム"
+"の価格を上げてください。"
+
+#: sell-media/inc/term-meta.php:215
+msgid "you have not set a default price"
+msgstr "あなたはデフォルトpriceMarkupを設定していません"
+
+#: sell-media/inc/term-meta.php:219
+#, php-format
+msgid " The %1$s of %2$s with %3$s markup is %4$s"
+msgstr " %3$sマークアップの%2$sの%1$sは%4$sです"
+
+#: sell-media/inc/term-meta.php:239
+msgid ""
+"Check to add this as a default license option for all newly created items."
+msgstr ""
+"これを新しく作成されたすべてのアイテムのデフォルトライセンスオプションとして"
+"追加する場合にオンにします。"
+
+#: sell-media/inc/term-meta.php:243
+msgid "Add as default license?"
+msgstr "デフォルトのライセンスとして追加しますか？"
+
+#: sell-media/inc/term-meta.php:346 sell-media/inc/term-meta.php:387
+#: sell-media/inc/term-meta.php:479
+msgid "Icon"
+msgstr "アイコン"
+
+#: sell-media/inc/term-meta.php:374
+msgid ""
+"The icon is not prominent by default; however, some themes may show it. If "
+"no icon is used the featured image to the most recent post will be displayed"
+msgstr ""
+"アイコンはデフォルトでは目立たない。 しかし、いくつかのテーマがそれを示すかも"
+"しれません。 アイコンが使用されていない場合は、最新の投稿への注目画像が表示さ"
+"れます"
+
+#: sell-media/inc/term-meta.php:411
+msgid "This will password protect all items in this collection."
+msgstr ""
+"これにより、このコレクション内のすべてのアイテムをパスワードで保護します。"
+
+#: sell-media/inc/term-meta.php:431
+msgid "Password protect all items in this collection"
+msgstr "このコレクションのすべてのアイテムをパスワードで保護する"
+
+#: sell-media/inc/term-meta.php:448
+msgid "This collection will inherit the password of the parent collection:"
+msgstr "このコレクションは親コレクションのパスワードを継承します："
+
+#: sell-media/inc/term-meta.php:483
+msgid "Media"
+msgstr "メディア"
+
+#: sell-media/inc/term-meta.php:488
+msgid "Protected"
+msgstr "保護済"
+
+#: sell-media/inc/widgets.php:28
+msgid "Sell Media Below Single Content"
+msgstr "単一のコンテンツ以下のメディアを販売する"
+
+#: sell-media/inc/widgets.php:37
+msgid "Sell Media Below Single Sidebar"
+msgstr "シングルサイドバー以下のメディアを販売する"
+
+#: sell-media/inc/widgets/sell-media-exif.php:8
+msgid ""
+"Displays image exif data (shutter speed, aperture, ISO, etc). Only use this "
+"on Single Sidebar Widgetized areas."
+msgstr ""
+"画像exifデータ（シャッタースピード、絞り、ISOなど）を表示します。 シングルサ"
+"イドバーウィジェットエリアでのみこれを使用してください。"
+
+#: sell-media/inc/widgets/sell-media-exif.php:31
+msgid "Camera "
+msgstr "カメラ：　"
+
+#: sell-media/inc/widgets/sell-media-exif.php:36
+msgid "Aperture "
+msgstr "絞り：　"
+
+#: sell-media/inc/widgets/sell-media-exif.php:41
+msgid "Focal Length "
+msgstr "焦点距離：　"
+
+#: sell-media/inc/widgets/sell-media-exif.php:46
+msgid "Shutter Speed "
+msgstr "シャッター速度：　"
+
+#: sell-media/inc/widgets/sell-media-exif.php:64
+msgid "ISO "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:68
+msgid "Credit "
+msgstr "クレジット：　"
+
+#: sell-media/inc/widgets/sell-media-exif.php:73
+msgid "Date "
+msgstr "日付：　"
+
+#: sell-media/inc/widgets/sell-media-exif.php:78
+#: sell-media/inc/widgets/sell-media-exif.php:80
+msgid "Copyright "
+msgstr "コピーライト：　"
+
+#: sell-media/inc/widgets/sell-media-exif.php:80
+msgid "by "
+msgstr ""
+
+#: sell-media/inc/widgets/sell-media-exif.php:104
+msgid "Camera Info"
+msgstr "カメラ情報"
+
+#: sell-media/inc/widgets/sell-media-featured.php:93
+msgid " Select Collection"
+msgstr "コレクションを選択"
+
+#: sell-media/inc/widgets/sell-media-search.php:34
+msgid "Sell Media Search"
+msgstr "販売作品の検索"
+
+#: sell-media/inc/widgets/sell-media-search.php:35
+msgid "Adds a search form for searching Sell Media items"
+msgstr "販売作品を検索するための検索フォームを追加します"
+
+#: sell-media/inc/widgets/sell-media-search.php:72
+msgid "Title:"
+msgstr "タイトル: "
+
+#: sell-media/sell-media.php:147 sell-media/sell-media.php:159
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: sell-media/themes/archive.php:26
+#, php-format
+msgid "Search results for: %1$s"
+msgstr "検索結果: %1$s"
+
+#: sell-media/themes/archive.php:91
+msgid "Starting at"
+msgstr "スタートは"
+
+#: sell-media/themes/cart.php:31
+#, php-format
+msgid "This item is password protected. %s Click here to enter password. %s"
+msgstr ""
+"このアイテムはパスワードで保護されています。 %s パスワードを入力するには、こ"
+"こをクリックしてください。%s"
+
+#: sell-media/themes/collection-password.php:13
+msgid "This collection is password protected."
+msgstr "このコレクションはパスワードで保護されています。"
+
+#: sell-media/themes/collection-password.php:15
+msgid "Submit"
+msgstr "送信"

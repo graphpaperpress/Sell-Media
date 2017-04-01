@@ -1,8 +1,8 @@
 === Sell Media ===
 
 Contributors: endortrails, racase
-Donate link: http://graphpaperpress.com/plugins/sell-media/
-Tags: photography, photos, sell media, sell photos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
+Donate link: https://graphpaperpress.com/plugins/sell-media/
+Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
 Tested up to: 4.7.3
 Stable tag: 2.3.3
@@ -23,9 +23,8 @@ Using Sell Media, you can:
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
 
-= Getting Started =
+= Resources =
 
-We've created a robust
 * [Beginners's PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf)
 * [Documentation](http://graphpaperpress.com/docs/sell-media/)
 * [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
@@ -33,7 +32,7 @@ We've created a robust
 
 = Theme Integration =
 
-These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/) were designed to enhance the functionality of Sell Media. Sell Media also works with any properly coded WordPress theme, however, some tweaks might be required.
+These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/) were designed to enhance the functionality of Sell Media. Sell Media also works with any properly coded WordPress theme, however, some minor styling tweaks might be required.
 
 Take Sell Media to the next level with these powerful extensions:
 
@@ -44,6 +43,10 @@ Take Sell Media to the next level with these powerful extensions:
 * [Newsletter integration with Mailchimp](http://graphpaperpress.com/plugins/sell-media-mailchimp)
 * [Sales Commissions](http://graphpaperpress.com/plugins/sell-media-commissions)
 * [And many more](https://graphpaperpress.com/extensions/sell-media/)
+
+= Instant Setup =
+
+If you're having difficulties getting Sell Media set up, check out [VisualSociety.com](https://visualsociety.com). Visual Society is our new fully-hosted e-commerce platform powered by Sell Media and WordPress. This new platform also includes automated print fulfillment worldwide!
 
 == Installation ==
 
@@ -70,7 +73,7 @@ Take Sell Media to the next level with these powerful extensions:
 
 = Can you help me set up this plugin? =
 
-We offer a hosted version of Sell Media through our [VisualSociety.com](https://visualsociety.com) platform. There are many additional features found at VisualSociety.com.
+If you're having trouble getting things set up, we offer a hosted version of Sell Media through our [VisualSociety.com](https://visualsociety.com) platform. There are many additional features found at VisualSociety.com.
 
 = Can I sell photo prints in addition to downloads? =
 
