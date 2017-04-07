@@ -49,6 +49,13 @@ function sell_media_add_payment_meta_boxes(){
 }
 add_action( 'add_meta_boxes', 'sell_media_add_payment_meta_boxes' );
 
+/**
+ * Remove the Publish metabox from Payments post type
+ */
+function sell_media_remove_publish_box() {
+	remove_meta_box( 'submitdiv', 'sell_media_payment', 'side' );
+}
+add_action( 'admin_menu', 'sell_media_remove_publish_box' );
 
 /**
  * Our callback for the payment meta fields, this prints out
