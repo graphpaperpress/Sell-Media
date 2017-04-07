@@ -240,6 +240,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-queries.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-search.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/collections.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/emails.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/deprecated.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/fields.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/helpers.php';

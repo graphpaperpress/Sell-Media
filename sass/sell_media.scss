@@ -375,6 +375,10 @@ input[type="submit"].sell-media-button,
 		font-weight: bold;
 	}
 
+	tr {
+		border: 0;
+	}
+
 	th,
 	td {
 		padding: 5px;
@@ -393,6 +397,7 @@ input[type="submit"].sell-media-button,
 	img {
 		max-width: 100px;
 		height: auto;
+		margin: 8px 0;
 	}
 }
 

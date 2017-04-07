@@ -415,7 +415,7 @@ class SellMediaPayments {
 		if ( $products ) {
 
 			$html = null;
-			$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" width="100%" style="border-collapse:collapse">';
+			$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" width="100%" style="border-collapse:collapse;font-size: 10px;">';
 			$html .= '<thead>';
 			$html .= '<tr>';
 			$html .= '<th style="' . $style . '  font-weight: bold;">' . __( 'Product', 'sell_media' ) . '</th>';
@@ -442,39 +442,42 @@ class SellMediaPayments {
 					$filename = wp_get_attachment_image_src( $product['attachment'], 'full' );
 					$filename = basename( $filename[0] );
 					if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
-						$html .= '<p>#' . $product['id'] . ', ' . $product['name'] . ', File name: '. $filename . '</p>';
-						$html .= '<p><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a></p>';
+						$html .= '<div class="sell-media-product-attr sell-media-product-attr-id">' .  $product['id'] . ' — ' . $product['name'] . '</div>';
+						$html .= '<div class="sell-media-product-attr sell-media-product-attr-img" style="max-width: 100px; height: auto; overflow: hidden;"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a></div>';
 						if ( 'download' == $product['type'] ) {
-							$html .= '<p><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center">' . __( 'Download', 'sell_media' ) . '</a></p>';
+							$html .= '<div class="sell-media-product-attr sell-media-product-attr-download"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center" style="color: #444444; text-decoration: none; font-weight: bold;">' . __( 'Download', 'sell_media' ) . '</a></div>';
 						} elseif ( 'print' == $product['type'] ) {
 							$html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
 						}
 					}
 					$html .= '</td>';
 					$html .= '<td class="sell-media-product-size" style="' . $style . '">';
-					if ( isset ( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) {
-						$html .= $product['size']['name'];
+					if ( isset( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) {
+						$html .= '<div class="sell-media-product-attr sell-media-product-attr-size-name">' . __( 'Size ID', 'sell_media' ) . ': ' . $product['size']['name'] . '</div>';
 						$product_width = get_term_meta( (int) $product['size']['id'], 'width', true );
-						if( $product_width ) {
-							$html .= "<p>Width: " . $product_width . "</p>";
+						if ( $product_width ) {
+							$html .= '<div class="sell-media-product-attr sell-media-product-attr-width">' . __( 'Max Width', 'sell_media' ) . ': ' . $product_width . 'px</div>';
 						}
 						$product_height = get_term_meta( (int) $product['size']['id'], 'height', true );
-						if( $product_height) {
-							$html .= "<p>Height: " . $product_height . "</p>";
+						if ( $product_height ) {
+							$html .= '<div class="sell-media-product-attr sell-media-product-attr-height">' . __( 'Max Height', 'sell_media' ) . ': ' . $product_height . 'px</div>';
 						}
 					}
 					$html .= '</td>';
 					$html .= '<td class="sell-media-product-license" style="' . $style . '">';
-					if ( isset ( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) )
-						$html .= $product['license']['name'] . $product['license']['desc'];
+					if ( isset( $product['license']['name'] ) && ! is_array( $product['license']['name'] ) ) {
+						$html .= '<div class="sell-media-product-attr sell-media-product-attr-license">' . $product['license']['name'] . $product['license']['desc'] . '</div>';
+					}
 					$html .= '</td>';
 					$html .= '<td class="sell-media-product-qty text-center" style="' . $style . ' text-align: center;">';
-					if ( isset ( $product['qty'] ) && ! is_array( $product['qty'] ) )
-						$html .= $product['qty'];
+					if ( isset( $product['qty'] ) && ! is_array( $product['qty'] ) ) {
+						$html .= '<div class="sell-media-product-attr sell-media-product-attr-qty">' . $product['qty'] . '</div>';
+					}
 					$html .= '</td>';
 					$html .= '<td class="sell-media-product-total" style="' . $style . ' text-align: right;">';
-					if ( isset ( $product['total'] ) && ! is_array( $product['total'] ) )
-						$html .= sell_media_get_currency_symbol() . sprintf( "%0.2f", $product['total'] );
+					if ( isset( $product['total'] ) && ! is_array( $product['total'] ) ) {
+						$html .= '<div class="sell-media-product-attr sell-media-product-attr-total">' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $product['total'] ) . '</div>';
+					}
 					$html .= '</td>';
 					$html .= '</tr>';
 				}
@@ -486,7 +489,7 @@ class SellMediaPayments {
 			$html .= '<td>&nbsp;</td>';
 			$html .= '<td>&nbsp;</td>';
 			$html .= '<td>&nbsp;</td>';
-			$html .= '<td class="sell-media-products-grandtotal" style="border-bottom: 3px solid #ccc; padding: 0.5rem; text-align: right;">';
+			$html .= '<td class="sell-media-products-grandtotal" style="padding: 0.5rem; text-align: right;">';
 			if ( $discount ) {
 				$html .= '<p>' . __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '</p>';
 			}
@@ -497,7 +500,7 @@ class SellMediaPayments {
 				$html .= '<p>' . __( 'SHIPPING', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $shipping, 2, '.', ',' ) . '</p>';
 			}
 			do_action( 'sell_media_above_products_formatted_table_total', $post_id );
-			$html .= '<strong>' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key = 'total' ), 2, '.', ',' ) . '</strong>';
+			$html .= '<strong style="border-bottom: 3px solid #ccc; padding-bottom: 5px;">' . __( 'TOTAL', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $this->get_meta_key( $post_id, $key = 'total' ), 2, '.', ',' ) . '</strong>';
 			$html .= '</td>';
 			$html .= '</tr>';
 			$html .= '</table>';

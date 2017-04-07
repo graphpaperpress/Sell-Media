@@ -300,6 +300,8 @@ input[type="submit"].sell-media-button,
   width: 100%; }
   .sell-media-products th {
     font-weight: bold; }
+  .sell-media-products tr {
+    border: 0; }
   .sell-media-products th,
   .sell-media-products td {
     padding: 5px; }
@@ -311,7 +313,8 @@ input[type="submit"].sell-media-button,
     text-align: center; }
   .sell-media-products img {
     max-width: 100px;
-    height: auto; }
+    height: auto;
+    margin: 8px 0; }
 
 /*= Layouts
 -------------------------------------------------------------- */

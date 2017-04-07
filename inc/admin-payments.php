@@ -180,7 +180,7 @@ function sell_media_payment_gateway_details( $post ){
 		$arguments = $stripe_args;
 		$gateway = __( 'Stripe', 'sell_media' );
 	}
-	echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase. Use this for debugging, if needed.', 'sell_media' ) . '</p>';
+	echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase.', 'sell_media' ) . '</p>';
 	echo '<ul>';
 	if ( $arguments ) foreach ( $arguments as $k => $v ) {
 		echo '<li><strong>' . $k . ':</strong> ' . ( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : $v ) . '</li>';

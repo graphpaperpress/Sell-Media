@@ -8,13 +8,15 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-Class SellMediaCustomer {
+class SellMediaCustomer {
 
 	private $settings;
 
-	public function __construct(){
+	public function __construct() {
 		$this->settings = sell_media_get_plugin_options();
 	}
 
@@ -27,16 +29,25 @@ Class SellMediaCustomer {
 	* @return $user_id (int)
 	*
 	*/
-	public function insert( $email=null, $first_name=null, $last_name=null ){
+	public function insert( $email = null, $first_name = null, $last_name = null ) {
 
-		if ( $email && email_exists( $email ) == false ) {
+		$email = sanitize_email( $email );
+
+		if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) || username_exists( $email ) || email_exists( $email ) ) {
+			return;
+		}
+
+		if ( $email ) {
+
+			$password = wp_generate_password( 16, false );
+
 			$userdata = array(
 				'user_login'    => $email,
 				'user_email'    => $email,
 				'first_name'    => $first_name,
 				'last_name'     => $last_name,
 				'role'          => 'sell_media_customer',
-				'user_pass'     => NULL // When creating an user, `user_pass` is expected.
+				'user_pass'     => $password, // When creating an user, `user_pass` is expected.
 			);
 
 			// add the user
@@ -44,38 +55,19 @@ Class SellMediaCustomer {
 
 			// email the user with password request
 			if ( ! is_wp_error( $user_id ) ) {
+				$user_info = get_userdata( $user_id );
+				do_action( 'wp_signon', $user_info->user_login );
+				$secure_cookie = ( is_ssl() ) ? true : false;
+				wp_set_auth_cookie( $user_id , true, $secure_cookie );
+				wp_set_current_user( $user_id );
 				wp_new_user_notification( $user_id, null, $notify = 'both' );
-
-				// log the user in automatically
-				// $this->signon( $email );
 
 				// hook for when new users are created
 				do_action( 'sell_media_after_insert_user', $user_id, $email, $first_name, $last_name );
 
 				return true;
 			}
-
 		}
-		
 		return false;
 	}
-
-	/**
-	* Auto login user
-	*
-	* @param $user_id
-	* @return (bool)
-	* @todo get password, automatically log user in
-	*
-	*/
-	public function signon( $email=null ){
-
-		if ( ! is_user_logged_in() && email_exists( $email ) ) {
-			$user = get_user_by( 'email', $email );
-			wp_set_auth_cookie( $user->ID, true );
-			wp_set_current_user( $user->ID, $user->user_login );
-			do_action( 'wp_login', $user->user_login, $user );
-		}
-	}
-
 }
