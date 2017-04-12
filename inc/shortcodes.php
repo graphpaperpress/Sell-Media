@@ -493,6 +493,11 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 
 						$html .= '<a href="'. get_term_link( $term->slug, $taxonomy ) .'" class="collection">';
 						$collection_attachment_id = get_term_meta( $term->term_id, 'collection_icon_id', true );
+							if ( ! empty ( $collection_attachment_id ) ) {
+								$html .= wp_get_attachment_image( $collection_attachment_id, 'sell_media_item' );
+							} else {
+								$html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ), false, true );
+						}
 						$html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ), false, true );
 						if ( 'true' == $details ) {
 							$settings = sell_media_get_plugin_options();
