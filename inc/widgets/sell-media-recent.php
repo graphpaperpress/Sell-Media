@@ -21,12 +21,29 @@
 		<div class="sell-media-recent-widget sell-media-widget">
 			<?php
 
+			$taxonomy = 'collection';
+			$term_ids = array();
+			foreach( get_terms( $taxonomy ) as $term_obj ){
+				$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+				if ( $password ) $term_ids[] = $term_obj->term_id;
+			}
+
 			$args = array(
 				'post_type' => 'sell_media_item',
 				'field' => 'slug',
 				'orderby' => 'ASC',
 				'posts_per_page' => '6',
+				'has_password' => false,
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'collection',
+						'field' => 'id',
+						'terms' => $term_ids,
+						'operator' => 'NOT IN'
+					)
+				)
 			);
+		
 			$args['post__not_in'] = array( $post->ID );
 			$type_posts = new WP_Query ( $args );
 			$i = 0;
