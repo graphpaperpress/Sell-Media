@@ -20,13 +20,29 @@
 
 		global $post;
 
+		$taxonomy = 'collection';
+		$term_ids = array();
+		foreach( get_terms( $taxonomy ) as $term_obj ){
+			$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+			if ( $password ) $term_ids[] = $term_obj->term_id;
+		}
+
 		$args = array(
 			'post_type' => 'sell_media_item',
 			'posts_per_page' => 6,
 			'field' => 'slug',
 			'orderby' => 'rand',
+			'has_password' => false,
 			'post__not_in' => array( $post->ID ),
-			);
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'collection',
+					'field' => 'id',
+					'terms' => $term_ids,
+					'operator' => 'NOT IN'
+				)
+			)
+		);
 
 		if ( ! empty( $categoryNumber ) ) {
 			$args['taxonomy'] = 'collection';
