@@ -33,15 +33,32 @@
 					),
 				),
 				'posts_per_page' => '6',
+				'has_password' => false,
 				'orderby' => 'rand',
 			);
 
 		} else {
+			$taxonomy = 'collection';
+			$term_ids = array();
+			foreach( get_terms( $taxonomy ) as $term_obj ){
+				$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+				if ( $password ) $term_ids[] = $term_obj->term_id;
+			}
+
 			$args = array(
 				'post_type' => 'sell_media_item',
 				'field' => 'slug',
 				'orderby' => 'rand',
 				'posts_per_page' => '6',
+				'has_password' => false,
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'collection',
+						'field' => 'id',
+						'terms' => $term_ids,
+						'operator' => 'NOT IN'
+					)
+				)
 			);
 		}
 
