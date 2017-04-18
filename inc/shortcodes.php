@@ -498,7 +498,6 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 							} else {
 								$html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ), false, true );
 						}
-						$html .= sell_media_item_icon( $post->ID, apply_filters( 'sell_media_thumbnail', 'medium', false ), false, true );
 						if ( 'true' == $details ) {
 							$settings = sell_media_get_plugin_options();
 							$html .= '<div class="sell-media-item-details">';
