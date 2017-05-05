@@ -37,7 +37,7 @@ Class SellMediaDownload {
 			$attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) : sell_media_get_attachment_id( $product_id );
 			$size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : null;
 
-			$verified = apply_filters( 'sell_media_verify_download', $this->verify( $transaction_id, $payment_id ), $product_id );
+			$verified = apply_filters( 'sell_media_verify_download', $this->verify( $transaction_id, $payment_id, $product_id, $attachment_id, $size_id ), $product_id );
 
 			if ( $verified ) {
 
@@ -137,9 +137,19 @@ Class SellMediaDownload {
 	 * @param $download (string) The download hash
 	 * @return boolean
 	 */
-	public function verify( $transaction_id=null, $payment_id=null ) {
-		if ( $transaction_id == Sell_Media()->payments->get_meta_key( $payment_id, 'transaction_id' ) ){
-			return true;
+	public function verify( $transaction_id=null, $payment_id=null, $product_id = null, $attachment_id = null, $size_id = null) {
+		if ( $transaction_id == Sell_Media()->payments->get_meta_key( $payment_id, 'transaction_id' ) ) {
+
+			$products = Sell_Media()->payments->get_products( $payment_id );
+
+			foreach ( $products as $key => $product ) {
+
+				if ( $product['attachment'] == $attachment_id && 'download' === $product['type'] && $size_id == $product['size']['id'] ) {
+					return true;
+				}				
+			}
+
+			return false;
 		} else {
 			return false;
 		}
