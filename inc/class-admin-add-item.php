@@ -184,7 +184,7 @@ class SellMediaAdminAddItem {
 
 		echo '<div id="sell-media-advanced-options-container">';
 
-		do_action( 'sell_media_add_item_tab_before_content_callback', 'advanced', $post );
+		// do_action( 'sell_media_add_item_tab_before_content_callback', 'advanced', $post );
 
 			echo '<div id="sell-media-tax-collections" class="sell-media-tax-wrap">';
 				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Collections', 'sell_media' ) );
