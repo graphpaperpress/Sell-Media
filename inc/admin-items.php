@@ -665,7 +665,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 		<div class="inline-edit-col">
 			<span class="title"><?php _e( 'Price', 'sell_media' ); ?></span>
 			<span class="input-text-wrap">
-				<input name="sell_media_price" id="sell-media-price" class="inline-edit-password-input" type="number" step="0.01" min="0" />
+				<input name="sell_media_price" id="sell-media-price" class="inline-edit-password-input" type="number" step="0.01" min="0" placeholder="<?php esc_html_e( '— No Change —', 'sell_media' ); ?>" />
 			</span>
 		</div>
 	</fieldset>
@@ -709,9 +709,7 @@ function sell_media_save_bulk_edit() {
 
 	if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 		foreach( $post_ids as $post_id ) {
-			if ( isset( $sell_media_price_group ) ) {
-				wp_set_post_terms( $post_id, $sell_media_price_group, 'price-group' );
-			}
+			wp_set_post_terms( $post_id, $sell_media_price_group, 'price-group' );		
 			if ( isset( $sell_media_price ) ) {
 				$sell_media_price = sprintf( '%0.2f', ( float ) $sell_media_price );
 				update_post_meta( $post_id, 'sell_media_price', $sell_media_price );
