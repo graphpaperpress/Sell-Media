@@ -149,7 +149,7 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 	}
 
 	// Check if featured image exists.
-	if ( '' !== get_the_post_thumbnail( $post_id ) ) {
+	if ( '' != get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
 
 		// Check if attachment thumbnail exists.
