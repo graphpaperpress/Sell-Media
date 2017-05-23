@@ -423,7 +423,7 @@ function sell_media_register_taxonomies() {
 		'show_in_nav_menus' => true,
 		'show_admin_column' => ( ! empty( $admin_columns ) && in_array( 'show_creators', $admin_columns ) ) ? true : false,
 		'show_tagcloud' => true,
-		'hierarchical' => false,
+		'hierarchical' => true,
 		'rewrite' => true,
 		'query_var' => true,
 	);
