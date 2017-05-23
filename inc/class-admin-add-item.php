@@ -52,6 +52,7 @@ class SellMediaAdminAddItem {
 		remove_meta_box( 'collectiondiv', 'sell_media_item', 'side' );
 		// remove_meta_box( 'postimagediv', 'sell_media_item', 'side' );
 		remove_meta_box( 'authordiv', 'sell_media_item', 'normal' );
+		remove_meta_box( 'creatordiv', 'sell_media_item', 'side' );
 		remove_action( 'edit_form_advanced', 'sell_media_editor' );
 	}
 
@@ -204,7 +205,7 @@ class SellMediaAdminAddItem {
 				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Creators', 'sell_media' ) );
 				printf( '<p class="tax-description description">%s.</p>', esc_html__( 'Assign a creator (optional). Creators are also automatically imported from the "Credit" IPCT metadata field in the files that you upload. Archive pages are then automatically created for each creator and can be accessed by adding /creator/name-of-creator/ to the end of your website url (replace "name-of-creator" with the url-friendly name)', 'sell_media' ) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
-				post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
+				// post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
 				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_html__( 'Edit All Creators', 'sell_media' ) );
 			echo '</div>';
 
