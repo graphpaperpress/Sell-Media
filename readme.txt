@@ -5,7 +5,7 @@ Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,18 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.3.4 =
+* Update: Japnese translations.
+* New: Auto login customer after purchase.
+* New: Added filter 'sell_media_breadcrumbs' in breadcrumbs.
+* Fix: Removed Update / Publish button in Payment.
+* Fix: Wrong icon in all collections shortcode.
+* Fix: Hide password protected items.
+* Fix: Non-purchased downloads not protected? #807.
+* Fix: Multiple Commission section in advance tab.
+* Fix: Creator never saved #812.
+
 
 = 2.3.3 =
 * Update: French translations
