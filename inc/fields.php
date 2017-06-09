@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Add to cart fields
  */
@@ -14,6 +13,8 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 	$price = ( $has_price_group ) ? 0 : Sell_Media()->products->get_original_price( $post_id );
 	// assign licenses
 	$licenses = wp_get_post_terms( $post_id, 'licenses' );
+	//get original image size
+	$original_image =  Sell_Media()->images->get_original_image_size( $post_id, $attachment_id );
 	// assign type
 	$type = ( $is_package ) ? 'download' : apply_filters( 'sell_media_set_product_type', 'download' ); ?>
 
@@ -49,8 +50,18 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 							$prices = Sell_Media()->products->get_prices( $post_id, $attachment_id );
 							if ( $prices ) foreach ( $prices as $k => $v ) {
 								if ( wp_attachment_is_image( $attachment_id ) ) {
-									$name = $v['name'] . ' (' . $v['width'] . ' x ' . $v['height'] . ')';
-									$dimensions = $v['width'] . ' x ' . $v['height'];
+
+									if ( $v['width'] || $v['height'] ) {
+										if ( $v['width'] >= $v['height'] ) {
+											$max = $v['width'];
+										} else {
+											$max = $v['height'];
+										}
+									list( $new_w, $new_h ) = wp_constrain_dimensions( $original_image['original']['width'], $original_image['original']['height'], $max, $max );
+						            }
+
+									$name = $v['name'] . ' (' . $new_w . ' x ' . $new_h . ')';
+									$dimensions = $new_w . ' x ' . $new_h;
 								} else {
 									$name = $v['name'];
 									$dimensions = 'Original';
