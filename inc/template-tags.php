@@ -250,7 +250,15 @@ function sell_media_gallery( $post_id ) {
 		$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
 		$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item" data-src="' . esc_url( $attachment_attributes[0] ) . '">';
 		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
-		$html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), '', $attr );
+		$mime_type = get_post_mime_type( $attachment_id );
+		// if selling video or audio, show the post_id thumbnail
+		if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
+			$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
+		} else {
+			$html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
+		}
+
+		// $html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), '', $attr );
 
 		$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, $post_id, $attachment_id );
 		if ( $enable_ecommerce ) {
