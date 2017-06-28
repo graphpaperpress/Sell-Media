@@ -141,7 +141,9 @@ function sell_media_lightbox_query() {
 
 			$html .= '<div id="sell-media-' . $attachment_id . '" class="sell-media-grid-single-item ' . $class . '">';
 			$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" class="sell-media-item">';
-			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) ) {
+			$mime_type = get_post_mime_type( $attachment_id );
+			// if selling video or audio, show the post_id thumbnail
+			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
 				$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
 			} else {
 				$html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );
