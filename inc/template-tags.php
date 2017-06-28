@@ -180,9 +180,11 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 				case 'text/pdf':
 				case 'text/plain':
 				case 'text/xml':
-					$src = wp_mime_type_icon( 'application/pdf' );
+				case 'application/pdf':
+					$src = wp_mime_type_icon( 'application/document' );
 					break;
 				case 'application/x-gzip':
+				case 'application/zip':
 					$src = wp_mime_type_icon( 'application/archive' );
 					break;
 				default:
