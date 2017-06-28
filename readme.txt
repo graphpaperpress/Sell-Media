@@ -4,8 +4,8 @@ Contributors: endortrails, racase
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
-Tested up to: 4.7.3
-Stable tag: 2.3.4
+Tested up to: 4.8
+Stable tag: 2.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,16 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.3.5 =
+* Fix: Hide password protected items from archives
+* Fix: Shortcode update
+* Fix: Purchase download links
+* Fix: Breadcrumbs filter
+* Fix: Price group saving
+* Fix: Creator metabox fix
+* Fix: Thumbnail logic for ZIP/PDF
+
 
 = 2.3.4 =
 * Update: Japnese translations.
