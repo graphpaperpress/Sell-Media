@@ -14,7 +14,16 @@ ob_start();
 <div class="sell-media-quick-view-container">
 	<?php if ( ! post_password_required( $post_id ) ) : ?>
 	<div class="sell-media-quick-view-image">
-		<?php echo apply_filters( 'sell_media_quick_view_post_thumbnail', sell_media_item_icon( $image_id, 'large', false ), $post_id ); ?>
+		<?php
+			$mime_type = get_post_mime_type( $attachment_id );
+			// if selling video or audio, show the post_id thumbnail
+			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
+				$image = sell_media_item_icon( $post_id, 'large', false );
+			} else {
+				$image = sell_media_item_icon( $attachment_id, 'large', false );
+			}
+		?>
+		<?php echo apply_filters( 'sell_media_quick_view_post_thumbnail', $image, $post_id ); ?>
 	</div>
 	
 	<div class="sell-media-quick-view-content">
