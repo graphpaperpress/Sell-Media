@@ -216,8 +216,12 @@ class Sell_Media_Price_Listings_Tabs {
 	function save_data( $redirect_url ) {
 		// Save new pricelist.
 		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
-			$term = wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
-			$parent_term_id = $term['term_id'];
+			if ( ! term_exists( $_POST['new_term_name'], $this->taxonomy ) ) {
+				$term = wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
+				$parent_term_id = $term['term_id'];
+			} else {
+				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", $_POST['new_term_name'] ) );
+			}
 		} else {
 			// Update pricelists.
 			$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
@@ -247,13 +251,22 @@ class Sell_Media_Price_Listings_Tabs {
 			if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
 				foreach ( $_POST['new_children'] as $term_id => $data ) {
 					if ( '' !== $data['name'] ) {
-						$term = wp_insert_term( $data['name'], $this->taxonomy, array(
-							'parent' => $parent_term_id,
-							'description' => $data['description'],
-						) );
-						update_term_meta( $term['term_id'], 'width', $data['width'] );
-						update_term_meta( $term['term_id'], 'height', $data['height'] );
-						update_term_meta( $term['term_id'], 'price', $data['price'] );
+
+						if ( term_exists( $data['name'], $this->taxonomy ) ) {
+							$term = get_term_by( 'name', $data['name'], $this->taxonomy );
+							$term_id = $term->term_id;
+
+						} else {
+
+							$term = wp_insert_term( $data['name'], $this->taxonomy, array(
+								'parent' => $parent_term_id,
+								'description' => $data['description'],
+							) );
+							$term_id = $term['term_id'];
+						}
+						update_term_meta( $term_id, 'width', $data['width'] );
+						update_term_meta( $term_id, 'height', $data['height'] );
+						update_term_meta( $term_id, 'price', $data['price'] );
 					}
 				}
 			}
