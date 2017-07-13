@@ -32,6 +32,15 @@ function sell_media_meta_boxes( $post_type ) {
 		'normal', // $context
 		'high' // $priority
 	);
+	// Marketplace
+	add_meta_box(
+		'marketplace_meta_box', // $id
+		'Marketplace', // $title
+		'sell_media_marketplace_meta_box', // $callback
+		'sell_media_item', // $page
+		'normal', // $context
+		'high' // $priority
+	);
 	// Stats
 	add_meta_box(
 		'stats_meta_box', // $id
@@ -162,6 +171,37 @@ function sell_media_options_meta_box( $post ) {
 
 	<?php do_action( 'sell_media_after_options_meta_box', $post->ID );
 
+}
+
+/**
+ * Marketplace meta box
+ */
+function sell_media_marketplace_meta_box( $post ) { ?>
+
+	<?php
+	do_action( 'sell_media_before_marketplace_meta_box', $post->ID );
+	wp_nonce_field( '_sell_media_meta_box_nonce', 'sell_media_meta_box_nonce' );
+
+	$value = get_post_meta( $post->ID, 'sell_media_marketplace', true );
+    $checked = ( $value ) ? ' checked="checked"' : '';
+	?>
+
+	<div id="sell-media-marketplace-field" class="sell-media-field">
+        <label for="sell-media-marketplace"><?php _e( 'Add to Marketplace?', 'sell_media' ); ?></label>
+        <input type="checkbox" name="sell_media_marketplace" id="sell-media-marketplace" value="yes"<?php echo $checked; ?>>
+        <span class="desc"><?php _e( 'Yes, add as free photos to the marketplace.', 'sell_media' ); ?></span>
+	</div>
+
+	<div id="sell-media-marketplace-description" class="sell-media-field">
+		<h4><?php _e( 'What is Marketplace?', 'sell_media' ); ?></h4>
+		<p><?php _e( 'Marketplace helps you and your work get discovered. the world\'s first stock website comprised solely of independent photographers from around the world. Adding your photos to the marketplace helps your photos get discovered and attracts new customers to your own independent web store. You can view the marketplace at VisualSociety.com/marketplace.', 'sell_media' ); ?></p>
+		<h4><?php _e( 'How does it work?', 'sell_media' ); ?></h4>
+		<p><?php _e( 'Check the box below to add your photos to the marketplace. All uploads in this specific gallery will be listed as free downloads in marketplace. A link to similar photos for sale on your website will be displayed below each image that you add to the marketplace.', 'sell_media' ); ?></p>
+		<h4><?php _e( 'How many photos can I add to the Marketplace?', 'sell_media' ); ?></h4>
+		<p><?php _e( 'You can add up to 10 photos. All contributions are curated for quality and accuracy. Once you become an official contributor, your contribution limit will be increased, increasing your visibility in the marketplace.', 'sell_media' ); ?></p>
+	</div>
+
+	<?php do_action( 'sell_media_after_marketplace_meta_box', $post->ID );
 }
 
 /**
@@ -435,7 +475,8 @@ function sell_media_meta_box_fields() {
 	$fields = array(
 		'_sell_media_attachment_id',
 		'sell_media_price',
-		'sell_media_price_group'
+		'sell_media_price_group',
+		'sell_media_marketplace'
 	);
 
 	return apply_filters( 'sell_media_meta_box_fields', $fields );
@@ -471,6 +512,9 @@ function sell_media_item_header( $columns ){
 	if ( ! isset( $columns_local['sell_media_price'] ) )
 		$columns_local['sell_media_price'] = "Price";
 
+	if ( ! isset( $columns_local['sell_media_marketplace'] ) )
+		$columns_local['sell_media_marketplace'] = "Marketplace";
+
 	return array_merge( $columns_local, $columns );
 }
 add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
@@ -483,6 +527,7 @@ add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
  */
 function sell_media_sortable_column( $columns ) {
 	$columns['sell_media_price'] = 'sell_media_price';
+	$columns['sell_media_marketplace'] = 'sell_media_marketplace';
 	$columns['author'] = 'author';
 	return $columns;
 }
@@ -498,6 +543,12 @@ function sell_media_column_orderby( $vars ) {
 	if ( isset( $vars['orderby'] ) && 'sell_media_price' == $vars['orderby'] ) {
 		$vars = array_merge( $vars, array(
 			'meta_key' => 'sell_media_price',
+			'orderby' => 'meta_value_num'
+		) );
+	}
+	if ( isset( $vars['orderby'] ) && 'sell_media_marketplace' == $vars['orderby'] ) {
+		$vars = array_merge( $vars, array(
+			'meta_key' => 'sell_media_marketplace',
 			'orderby' => 'meta_value_num'
 		) );
 	}
@@ -538,6 +589,13 @@ function sell_media_item_content( $column, $post_id ){
 				} else {
 					echo __( 'No price set', 'sell_media' );
 				}
+			}
+			break;
+		case "sell_media_marketplace":
+			$marketplace_enabled = get_post_meta( $post_id, 'sell_media_marketplace', true );
+
+			if ( $marketplace_enabled ) {
+				echo '&#10004;';
 			}
 			break;
 		default:
