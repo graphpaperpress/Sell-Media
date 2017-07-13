@@ -275,7 +275,67 @@ function sell_media_save_custom_meta( $post_id ) {
 					wp_set_post_terms( $post_id, $_POST['sell_media_print_price_group'], 'reprints-price-group' );
 				}
 
-			// post meta fields
+			// marketplace post meta fields
+			} elseif ( $field == 'sell_media_marketplace' ) {
+
+				if ( isset( $_POST['sell_media_marketplace'] ) && isset( $_POST['_sell_media_attachment_id'] ) ) {
+
+					// Global site data to send
+					$settings = sell_media_get_plugin_options();
+
+					$marketplace = array();
+					$marketplace['name'] = get_bloginfo( 'name' );
+					$marketplace['description'] = get_bloginfo( 'description' );
+					$marketplace['url'] = get_bloginfo( 'url' );
+					$marketplace['admin_email'] = get_bloginfo( 'admin_email' );
+					$marketplace['key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
+
+					$attachment_ids = explode( ',', $_POST['_sell_media_attachment_id'] );
+					if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+
+						$attachment_metadata = wp_get_attachment_metadata( $attachment_id );
+						$attachment_keywords = get_the_terms( $attachment_id, 'keywords' );
+                        $keywords = array();
+
+						if ( $attachment_keywords && ! is_wp_error( $attachment_keywords ) ) {
+							foreach ( $attachment_keywords as $attachment_keyword ) {
+        						$keywords[] = $attachment_keyword->name;
+    						}
+						}
+
+						$marketplace['media'] = array(
+								'attachment_id' => $attachment_id,
+								'post_parent' => $post_id,
+								'metadata' => $attachment_metadata,
+								'keywords' => $keywords,
+								'author' => get_post_field( 'post_author', $post_id ),
+							);
+					}
+
+					$url = 'https://visualsociety.com?webhook=marketplace';
+					$response = wp_remote_post( $url, array(
+						'method' => 'POST',
+						'timeout' => 45,
+						'redirection' => 5,
+						'httpversion' => '1.0',
+						'blocking' => true,
+						'headers' => array(),
+						'body' => $marketplace,
+						'cookies' => array()
+					    )
+					);
+
+					if ( is_wp_error( $response ) ) {
+					   $error_message = $response->get_error_message();
+					   echo "Something went wrong: $error_message";
+					} else {
+					   echo 'Response:<pre>';
+					   print_r( $response );
+					   echo '</pre>';
+					}
+
+				}
+			
 			} else {
 
 				$old = get_post_meta( $post_id, $field, true );
@@ -313,7 +373,7 @@ function sell_media_save_custom_meta( $post_id ) {
 						if ( ! empty( $childrens ) ) {
 							foreach ( $childrens as $key => $child ) {
 								// If attachment still linked to post do not remove.
-								if( ! in_array( $key, $attachment_ids ) ){
+								if ( ! in_array( $key, $attachment_ids ) ){
 									$post_data['ID'] = $key;
 									$post_data['post_parent'] = 0;
 									wp_update_post( $post_data );
