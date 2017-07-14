@@ -284,16 +284,18 @@ function sell_media_save_custom_meta( $post_id ) {
 					$settings = sell_media_get_plugin_options();
 
 					$marketplace = array();
-					$marketplace['name'] = get_bloginfo( 'name' );
-					$marketplace['description'] = get_bloginfo( 'description' );
-					$marketplace['url'] = get_bloginfo( 'url' );
-					$marketplace['admin_email'] = get_bloginfo( 'admin_email' );
-					$marketplace['key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
+					$marketplace['site_name'] = get_bloginfo( 'name' );
+					$marketplace['site_description'] = get_bloginfo( 'description' );
+					$marketplace['site_url'] = get_bloginfo( 'url' );
+					$marketplace['site_admin_email'] = get_bloginfo( 'admin_email' );
+					$marketplace['site_key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
+					$marketplace['marketplace_response'] = get_post_meta( $post_id, '_sell_media_marketplace_response', true );
+					$marketplace['media'] = array();
 
 					$attachment_ids = explode( ',', $_POST['_sell_media_attachment_id'] );
 					if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 
-						$attachment_metadata = wp_get_attachment_metadata( $attachment_id );
+						$attachment_metadata = wp_prepare_attachment_for_js( $attachment_id );
 						$attachment_keywords = get_the_terms( $attachment_id, 'keywords' );
                         $keywords = array();
 
@@ -303,16 +305,23 @@ function sell_media_save_custom_meta( $post_id ) {
     						}
 						}
 
-						$marketplace['media'] = array(
+						$marketplace['media'][] = array(
 								'attachment_id' => $attachment_id,
 								'post_parent' => $post_id,
-								'metadata' => $attachment_metadata,
+								'caption' => $attachment_metadata['caption'],
+								'title' => $attachment_metadata['title'],
+								'url' => $attachment_metadata['url'],
+								'link' => $attachment_metadata['link'],
+								'author' => $attachment_metadata['authorName'],
 								'keywords' => $keywords,
-								'author' => get_post_field( 'post_author', $post_id ),
 							);
 					}
 
-					$url = 'https://visualsociety.com?webhook=marketplace';
+					$url = 'http://stripe.thad.ultrahook.com';
+					//$url = 'https://visualsociety.com?webhook=marketplace';
+					// echo 'Response:<pre>';
+					// die( print_r( $marketplace ) );
+					// echo '</pre>';
 					$response = wp_remote_post( $url, array(
 						'method' => 'POST',
 						'timeout' => 45,
@@ -329,9 +338,12 @@ function sell_media_save_custom_meta( $post_id ) {
 					   $error_message = $response->get_error_message();
 					   echo "Something went wrong: $error_message";
 					} else {
-					   echo 'Response:<pre>';
-					   print_r( $response );
-					   echo '</pre>';
+						// store a unique hash as postmeta of the vs_marketplace $post_id entries
+						// this would make updating the posts easier in the future.
+						update_post_meta( $post_id, '_sell_media_marketplace_response', $response );
+						echo 'Response:<pre>';
+						print_r( $response );
+						echo '</pre>';
 					}
 
 				}
