@@ -341,13 +341,14 @@ function sell_media_save_custom_meta( $post_id ) {
 						// store a unique hash as postmeta of the vs_marketplace $post_id entries
 						// this would make updating the posts easier in the future.
 						update_post_meta( $post_id, '_sell_media_marketplace_response', $response );
+						update_post_meta( $post_id, 'sell_media_marketplace', 'yes' );
 						echo 'Response:<pre>';
 						print_r( $response );
 						echo '</pre>';
 					}
 
 				}
-			
+
 			} else {
 
 				$old = get_post_meta( $post_id, $field, true );
@@ -412,7 +413,7 @@ function sell_media_save_custom_meta( $post_id ) {
 							$orientation = get_post_meta( $attachment_id, '_sell_media_attachment_orientation', true );
 							if ( false === $orientation || '' === $orientation ) {
 								$meta = get_post_meta( $attachment_id, '_wp_attachment_metadata', true );
-								if ( isset( $meta['height'] ) && isset( $meta['width'] ) ) {									
+								if ( isset( $meta['height'] ) && isset( $meta['width'] ) ) {
 									if ( $meta['height'] < $meta['width'] ) {
 										update_post_meta( $attachment_id, '_sell_media_attachment_orientation', 'landscape' );
 									}
@@ -839,7 +840,7 @@ function sell_media_save_bulk_edit() {
 
 	if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 		foreach( $post_ids as $post_id ) {
-			wp_set_post_terms( $post_id, $sell_media_price_group, 'price-group' );		
+			wp_set_post_terms( $post_id, $sell_media_price_group, 'price-group' );
 			if ( isset( $sell_media_price ) ) {
 				$sell_media_price = sprintf( '%0.2f', ( float ) $sell_media_price );
 				update_post_meta( $post_id, 'sell_media_price', $sell_media_price );
