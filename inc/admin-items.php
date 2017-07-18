@@ -183,13 +183,13 @@ function sell_media_marketplace_meta_box( $post ) { ?>
 	wp_nonce_field( '_sell_media_meta_box_nonce', 'sell_media_meta_box_nonce' );
 
 	$value = get_post_meta( $post->ID, 'sell_media_marketplace', true );
-    $checked = ( $value ) ? ' checked="checked"' : '';
+	$checked = ( $value ) ? ' checked="checked"' : '';
 	?>
 
 	<div id="sell-media-marketplace-field" class="sell-media-field">
-        <label for="sell-media-marketplace"><?php _e( 'Add to Marketplace?', 'sell_media' ); ?></label>
-        <input type="checkbox" name="sell_media_marketplace" id="sell-media-marketplace" value="yes"<?php echo $checked; ?>>
-        <span class="desc"><?php _e( 'Yes, add as free photos to the marketplace.', 'sell_media' ); ?></span>
+		<label for="sell-media-marketplace"><?php _e( 'Add to Marketplace?', 'sell_media' ); ?></label>
+		<input type="checkbox" name="sell_media_marketplace" id="sell-media-marketplace" value="yes"<?php echo $checked; ?>>
+		<span class="desc"><?php _e( 'Yes, add as free photos to the marketplace.', 'sell_media' ); ?></span>
 	</div>
 
 	<div id="sell-media-marketplace-description" class="sell-media-field">
@@ -297,13 +297,13 @@ function sell_media_save_custom_meta( $post_id ) {
 
 						$attachment_metadata = wp_prepare_attachment_for_js( $attachment_id );
 						$attachment_keywords = get_the_terms( $attachment_id, 'keywords' );
-						$vs_post_is			 = get_post_meta( $attachment_id, 'vs_post_is', true );
-                        $keywords = array();
+						$vs_post_id			 = get_post_meta( $attachment_id, 'vs_post_id', true );
+						$keywords = array();
 
 						if ( $attachment_keywords && ! is_wp_error( $attachment_keywords ) ) {
 							foreach ( $attachment_keywords as $attachment_keyword ) {
-        						$keywords[] = $attachment_keyword->name;
-    						}
+								$keywords[] = $attachment_keyword->name;
+							}
 						}
 
 						$marketplace['media'][] = array(
@@ -315,15 +315,12 @@ function sell_media_save_custom_meta( $post_id ) {
 								'link' => $attachment_metadata['link'],
 								'author' => $attachment_metadata['authorName'],
 								'keywords' => $keywords,
-								'vs_post_is' => $vs_post_is,
+								'vs_post_id' => $vs_post_id,
 							);
 					}
 
 					$url = 'http://stripe.thad.ultrahook.com';
 					// $url = 'http://visualsociety.local?webhook=marketplace';
-					// echo 'Response:<pre>';
-					// die( print_r( $marketplace ) );
-					// echo '</pre>';
 					$response = wp_remote_post( $url, array(
 						'method' => 'POST',
 						'timeout' => 45,
@@ -332,8 +329,8 @@ function sell_media_save_custom_meta( $post_id ) {
 						'blocking' => true,
 						'headers' => array(),
 						'body' => $marketplace,
-						'cookies' => array()
-					    )
+						'cookies' => array(),
+						)
 					);
 
 					if ( is_wp_error( $response ) ) {
@@ -344,18 +341,15 @@ function sell_media_save_custom_meta( $post_id ) {
 						// this would make updating the posts easier in the future.
 						update_post_meta( $post_id, '_sell_media_marketplace_response', $response );
 						update_post_meta( $post_id, 'sell_media_marketplace', 'yes' );
-						
+
 						$marketplace_response = json_decode( $response['body'] );
 
 						if ( is_array( $marketplace_response ) && count( $marketplace_response ) > 0 ) {
 							foreach ( $marketplace_response as $attachment_post ) {
-								update_post_meta( $attachment_post->attachment_id, 'vs_post_is', $attachment_post->vs_post_is );
+								update_post_meta( $attachment_post->attachment_id, 'vs_post_id', $attachment_post->vs_post_id );
 							}
 						}
-
-						
 					}
-
 				}
 
 			} else {
