@@ -297,7 +297,8 @@ function sell_media_save_custom_meta( $post_id ) {
 
 						$attachment_metadata = wp_prepare_attachment_for_js( $attachment_id );
 						$attachment_keywords = get_the_terms( $attachment_id, 'keywords' );
-						$vs_post_id			 = get_post_meta( $attachment_id, 'vs_post_id', true );
+						$marketplace_post_id = get_post_meta( $attachment_id, 'marketplace_post_id', true );
+						$marketplace_post_key = get_post_meta( $attachment_id, 'marketplace_post_key', true );
 						$keywords = array();
 
 						if ( $attachment_keywords && ! is_wp_error( $attachment_keywords ) ) {
@@ -315,12 +316,13 @@ function sell_media_save_custom_meta( $post_id ) {
 								'link' => $attachment_metadata['link'],
 								'author' => $attachment_metadata['authorName'],
 								'keywords' => $keywords,
-								'vs_post_id' => $vs_post_id,
+								'marketplace_post_id' => $marketplace_post_id,
+								'marketplace_post_key' => $marketplace_post_key,
 							);
 					}
 
-					$url = 'http://stripe.thad.ultrahook.com';
-					// $url = 'http://visualsociety.local?webhook=marketplace';
+					// $url = 'http://stripe.thad.ultrahook.com';
+					$url = 'http://visualsociety.local?webhook=marketplace';
 					$response = wp_remote_post( $url, array(
 						'method' => 'POST',
 						'timeout' => 45,
@@ -332,7 +334,7 @@ function sell_media_save_custom_meta( $post_id ) {
 						'cookies' => array(),
 						)
 					);
-
+										
 					if ( is_wp_error( $response ) ) {
 					   $error_message = $response->get_error_message();
 					   echo "Something went wrong: $error_message";
@@ -343,13 +345,25 @@ function sell_media_save_custom_meta( $post_id ) {
 						update_post_meta( $post_id, 'sell_media_marketplace', 'yes' );
 
 						$marketplace_response = json_decode( $response['body'] );
+						
+						$site_detail = $marketplace_response->site_detail;
 
-						if ( is_array( $marketplace_response ) && count( $marketplace_response ) > 0 ) {
-							foreach ( $marketplace_response as $attachment_post ) {
-								update_post_meta( $attachment_post->attachment_id, 'vs_post_id', $attachment_post->vs_post_id );
+						if ( is_array( $site_detail ) && count( $site_detail ) > 0 ) {
+							foreach ( $site_detail as $attachment_post ) {
+								update_post_meta( $attachment_post->attachment_id, 'marketplace_post_id', $attachment_post->marketplace_post_id );
+								update_post_meta( $attachment_post->attachment_id, 'marketplace_post_key', $attachment_post->marketplace_post_key );
 							}
 						}
 					}
+					
+					// update site key
+					// if ( '' == $marketplace['site_key'] ) {
+
+						$settings = get_option( 'sell_media_options' );					
+						$settings['marketplace_api_key'] = $marketplace_response->site_key;	
+						update_option( 'sell_media_options', $settings );
+					// }
+
 				}
 
 			} else {
