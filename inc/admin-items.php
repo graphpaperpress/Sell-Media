@@ -297,7 +297,8 @@ function sell_media_save_custom_meta( $post_id ) {
 
 						$attachment_metadata = wp_prepare_attachment_for_js( $attachment_id );
 						$attachment_keywords = get_the_terms( $attachment_id, 'keywords' );
-						$vs_post_id			 = get_post_meta( $attachment_id, 'vs_post_id', true );
+						$marketplace_post_id = get_post_meta( $attachment_id, '_sell_media_marketplace_post_id', true );
+						$marketplace_post_key = get_post_meta( $attachment_id, '_sell_media_marketplace_post_key', true );
 						$keywords = array();
 
 						if ( $attachment_keywords && ! is_wp_error( $attachment_keywords ) ) {
@@ -315,7 +316,8 @@ function sell_media_save_custom_meta( $post_id ) {
 								'link' => $attachment_metadata['link'],
 								'author' => $attachment_metadata['authorName'],
 								'keywords' => $keywords,
-								'vs_post_id' => $vs_post_id,
+								'marketplace_post_id' => $marketplace_post_id,
+								'marketplace_post_key' => $marketplace_post_key,
 							);
 					}
 
@@ -343,10 +345,12 @@ function sell_media_save_custom_meta( $post_id ) {
 						update_post_meta( $post_id, 'sell_media_marketplace', 'yes' );
 
 						$marketplace_response = json_decode( $response['body'] );
+						file_put_contents( WP_CONTENT_DIR . '/marketplace.log', print_r( $marketplace_response, true ) . PHP_EOL, LOCK_EX | FILE_APPEND );
 
 						if ( is_array( $marketplace_response ) && count( $marketplace_response ) > 0 ) {
 							foreach ( $marketplace_response as $attachment_post ) {
-								update_post_meta( $attachment_post->attachment_id, 'vs_post_id', $attachment_post->vs_post_id );
+								update_post_meta( $attachment_post->attachment_id, '_sell_media_marketplace_post_id', $attachment_post->sell_media_marketplace_post_id );
+								update_post_meta( $attachment_post->attachment_id, '_sell_media_marketplace_post_key', $attachment_post->sell_media_marketplace_post_key );
 							}
 						}
 					}
