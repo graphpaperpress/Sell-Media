@@ -362,14 +362,12 @@ function sell_media_save_custom_meta( $post_id ) {
 
 					// update site key
 					// if ( '' == $marketplace['site_key'] ) {
-						$settings = get_option( 'sell_media_options' );					
+						$settings = get_option( 'sell_media_options' );
 						$settings['marketplace_api_key'] = $marketplace_response->site_key;
 						$settings['marketplace_site_entries'] = $marketplace_response->site_entries;
 						update_option( 'sell_media_options', $settings );
 					// }
-
 				}
-
 			} else {
 
 				$old = get_post_meta( $post_id, $field, true );
