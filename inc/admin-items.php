@@ -194,7 +194,7 @@ function sell_media_marketplace_meta_box( $post ) { ?>
 
 	<div id="sell-media-marketplace-description" class="sell-media-field">
 		<h4><?php _e( 'What is Marketplace?', 'sell_media' ); ?></h4>
-		<p><?php _e( 'Marketplace helps you and your work get discovered. the world\'s first stock website comprised solely of independent photographers from around the world. Adding your photos to the marketplace helps your photos get discovered and attracts new customers to your own independent web store. You can view the marketplace at VisualSociety.com/marketplace.', 'sell_media' ); ?></p>
+		<p><?php _e( 'Marketplace is the world\'s first stock website comprised of independent photographers from around the world. Adding your photos to the marketplace helps your photos get discovered and attracts new customers to your own independent web store. You can view the marketplace at VisualSociety.com/marketplace.', 'sell_media' ); ?></p>
 		<h4><?php _e( 'How does it work?', 'sell_media' ); ?></h4>
 		<p><?php _e( 'Check the box below to add your photos to the marketplace. All uploads in this specific gallery will be listed as free downloads in marketplace. A link to similar photos for sale on your website will be displayed below each image that you add to the marketplace.', 'sell_media' ); ?></p>
 		<h4><?php _e( 'How many photos can I add to the Marketplace?', 'sell_media' ); ?></h4>
@@ -325,8 +325,15 @@ function sell_media_save_custom_meta( $post_id ) {
 							);
 					}
 
-					// $url = 'http://stripe.thad.ultrahook.com';
-					$url = 'http://visualsociety.local?webhook=marketplace';
+					// Marketplace URL
+					//if ( '127.0.0.1' === $_SERVER['SERVER_ADDR'] ) {
+						$url = 'http://visualsociety.local';
+					//} else {
+						//$url = 'https://visualsociety.com';
+					//}
+
+					$url = add_query_arg( 'webhook', 'marketplace', $url );
+
 					$response = wp_remote_post( $url, array(
 						'method' => 'POST',
 						'timeout' => 45,
