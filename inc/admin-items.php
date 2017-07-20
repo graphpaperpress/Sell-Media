@@ -280,7 +280,7 @@ function sell_media_save_custom_meta( $post_id ) {
 
 				if ( isset( $_POST['sell_media_marketplace'] ) && isset( $_POST['_sell_media_attachment_id'] ) ) {
 
-					// Global site data to send
+					// Global site data to send.
 					$settings = sell_media_get_plugin_options();
 
 					$marketplace = array();
@@ -289,6 +289,8 @@ function sell_media_save_custom_meta( $post_id ) {
 					$marketplace['site_url'] = get_bloginfo( 'url' );
 					$marketplace['site_admin_email'] = get_bloginfo( 'admin_email' );
 					$marketplace['site_key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
+					$marketplace['site_entries'] = ( ! empty( $settings->marketplace_site_entries ) ) ? $settings->marketplace_site_entries : '';
+					$marketplace['sell_media_id'] = $post_id;
 					$marketplace['marketplace_response'] = get_post_meta( $post_id, '_sell_media_marketplace_response', true );
 					$marketplace['media'] = array();
 
@@ -361,9 +363,9 @@ function sell_media_save_custom_meta( $post_id ) {
 					
 					// update site key
 					// if ( '' == $marketplace['site_key'] ) {
-
 						$settings = get_option( 'sell_media_options' );					
-						$settings['marketplace_api_key'] = $marketplace_response->site_key;	
+						$settings['marketplace_api_key'] = $marketplace_response->site_key;
+						$settings['marketplace_site_entries'] = $marketplace_response->site_entries;
 						update_option( 'sell_media_options', $settings );
 					// }
 
@@ -457,7 +459,73 @@ function sell_media_save_custom_meta( $post_id ) {
 			}
 		// Checkbox field isn't set, so delete the meta
 		} else {
+			if ( $field == 'sell_media_marketplace' ) {
+				// Delete post from market place if marketplace unchecked.
+				if ( isset( $_POST['_sell_media_attachment_id'] ) ) {
 
+					// Global site data to send.
+					$settings = sell_media_get_plugin_options();
+
+					$marketplace = array();
+					$marketplace['remove_marketplace'] = true; 
+					$marketplace['site_url'] = get_bloginfo( 'url' );					
+					$marketplace['site_key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
+					$marketplace['sell_media_id'] = $post_id;
+					$marketplace['marketplace_response'] = get_post_meta( $post_id, '_sell_media_marketplace_response', true );
+					$marketplace['media'] = array();
+
+					$attachment_ids = explode( ',', $_POST['_sell_media_attachment_id'] );
+					if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+						
+						$marketplace_post_id = get_post_meta( $attachment_id, 'marketplace_post_id', true );
+						$marketplace_post_key = get_post_meta( $attachment_id, 'marketplace_post_key', true );
+
+						delete_post_meta( $attachment_id, 'marketplace_post_id' );
+						delete_post_meta( $attachment_id, 'marketplace_post_key' );
+
+						$marketplace['media'][] = array(
+								'attachment_id' => $attachment_id,								
+								'marketplace_post_id' => $marketplace_post_id,
+								'marketplace_post_key' => $marketplace_post_key,
+							);
+					}
+
+					// $url = 'http://stripe.thad.ultrahook.com';
+					$url = 'http://visualsociety.local?webhook=marketplace';
+					$response = wp_remote_post( $url, array(
+						'method' => 'POST',
+						'timeout' => 45,
+						'redirection' => 5,
+						'httpversion' => '1.0',
+						'blocking' => true,
+						'headers' => array(),
+						'body' => $marketplace,
+						'cookies' => array(),
+						)
+					);					
+									
+					if ( is_wp_error( $response ) ) {
+					   $error_message = $response->get_error_message();
+					   echo "Something went wrong: $error_message";
+					} else {
+						// store a unique hash as postmeta of the vs_marketplace $post_id entries
+						// this would make updating the posts easier in the future.
+						delete_post_meta( $post_id, '_sell_media_marketplace_response' );
+						delete_post_meta( $post_id, 'sell_media_marketplace' );
+
+						$marketplace_response = json_decode( $response['body'] );
+					}
+					
+					// update site key
+					// if ( '' == $marketplace['site_key'] ) {
+						$settings = get_option( 'sell_media_options' );					
+						$settings['marketplace_api_key'] = $marketplace_response->site_key;
+						$settings['marketplace_site_entries'] = $marketplace_response->site_entries;
+						update_option( 'sell_media_options', $settings );
+					// }
+
+				}
+			}
 			delete_post_meta( $post_id, $field );
 
 		}
