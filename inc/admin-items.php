@@ -300,8 +300,8 @@ function sell_media_save_custom_meta( $post_id ) {
 						$attachment_metadata = wp_prepare_attachment_for_js( $attachment_id );
 						$attachment_keywords = get_the_terms( $attachment_id, 'keywords' );
 
-						$marketplace_post_id = get_post_meta( $attachment_id, 'marketplace_post_id', true );
-						$marketplace_post_key = get_post_meta( $attachment_id, 'marketplace_post_key', true );
+						$marketplace_post_id = get_post_meta( $attachment_id, '_sell_media_marketplace_post_id', true );
+						$marketplace_post_key = get_post_meta( $attachment_id, '_sell_media_marketplace_post_key', true );
 
 						$keywords = array();
 
@@ -338,10 +338,10 @@ function sell_media_save_custom_meta( $post_id ) {
 						'cookies' => array(),
 						)
 					);
-										
+
 					if ( is_wp_error( $response ) ) {
-					   $error_message = $response->get_error_message();
-					   echo "Something went wrong: $error_message";
+						$error_message = $response->get_error_message();
+						echo "Something went wrong: $error_message";
 					} else {
 						// store a unique hash as postmeta of the vs_marketplace $post_id entries
 						// this would make updating the posts easier in the future.
@@ -350,17 +350,16 @@ function sell_media_save_custom_meta( $post_id ) {
 
 						$marketplace_response = json_decode( $response['body'] );
 
-						
 						$site_detail = $marketplace_response->site_detail;
 
 						if ( is_array( $site_detail ) && count( $site_detail ) > 0 ) {
 							foreach ( $site_detail as $attachment_post ) {
-								update_post_meta( $attachment_post->attachment_id, 'marketplace_post_id', $attachment_post->marketplace_post_id );
-								update_post_meta( $attachment_post->attachment_id, 'marketplace_post_key', $attachment_post->marketplace_post_key );
+								update_post_meta( $attachment_post->attachment_id, '_sell_media_marketplace_post_id', $attachment_post->marketplace_post_id );
+								update_post_meta( $attachment_post->attachment_id, '_sell_media_marketplace_post_key', $attachment_post->marketplace_post_key );
 							}
 						}
 					}
-					
+
 					// update site key
 					// if ( '' == $marketplace['site_key'] ) {
 						$settings = get_option( 'sell_media_options' );					
