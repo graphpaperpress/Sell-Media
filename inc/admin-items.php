@@ -288,6 +288,8 @@ function sell_media_save_custom_meta( $post_id ) {
 					$marketplace['site_description'] = get_bloginfo( 'description' );
 					$marketplace['site_url'] = get_bloginfo( 'url' );
 					$marketplace['site_admin_email'] = get_bloginfo( 'admin_email' );
+					$user = get_user_by( 'email', get_bloginfo( 'admin_email' ) );
+					$marketplace['site_admin_name'] = $user->display_name;
 					$marketplace['site_key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
 					$marketplace['site_entries'] = ( ! empty( $settings->marketplace_site_entries ) ) ? $settings->marketplace_site_entries : '';
 					$marketplace['sell_media_id'] = $post_id;
@@ -325,14 +327,10 @@ function sell_media_save_custom_meta( $post_id ) {
 							);
 					}
 
-					// Marketplace URL
-					//if ( '127.0.0.1' === $_SERVER['SERVER_ADDR'] ) {
-						$url = 'http://visualsociety.local';
-					//} else {
-						//$url = 'https://visualsociety.com';
-					//}
-
-					$url = add_query_arg( 'webhook', 'marketplace', $url );
+					$url = add_query_arg( array(
+							'webhook' => 'marketplace',
+						),
+					'https://visualsociety.com' );
 
 					$response = wp_remote_post( $url, array(
 						'method' => 'POST',
