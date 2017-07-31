@@ -330,7 +330,8 @@ function sell_media_save_custom_meta( $post_id ) {
 					$url = add_query_arg( array(
 							'webhook' => 'marketplace',
 						),
-					'https://visualsociety.com' );
+						'https://visualsociety.com'
+					);
 
 					$response = wp_remote_post( $url, array(
 						'method' => 'POST',
@@ -354,6 +355,11 @@ function sell_media_save_custom_meta( $post_id ) {
 						update_post_meta( $post_id, 'sell_media_marketplace', 'yes' );
 
 						$marketplace_response = json_decode( $response['body'] );
+
+						// bail if response isn't json
+						if ( ! is_array( $marketplace_response ) ) {
+							return;
+						}
 
 						$site_detail = $marketplace_response->site_detail;
 
