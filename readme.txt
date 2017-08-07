@@ -5,7 +5,7 @@ Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 2.3.5
+Stable tag: 2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,9 @@ Using Sell Media, you can:
 *   Charge licensing fees for commercial, editorial, or personal usages.
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
+
+** Marketplace - New in version 2.4 **
+Version 2.4 of Sell Media allows you to contribute photos to a central searchable marketplace to help you promote your work and generate traffic to your website. To add photos to the marketplace, visit Sell Media -> Add New and click the Marketplace tab.
 
 = Resources =
 
@@ -228,6 +231,9 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.4 =
+* New: Marketplace feature added.
 
 = 2.3.5 =
 * Fix: Hide password protected items from archives
