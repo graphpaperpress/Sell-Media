@@ -5,7 +5,7 @@ Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 2.4
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,9 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.4.1 =
+* Fix: Deleting marketplace items url fix
 
 = 2.4 =
 * New: Marketplace feature added.

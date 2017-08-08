@@ -496,14 +496,17 @@ function sell_media_save_custom_meta( $post_id ) {
 						delete_post_meta( $attachment_id, 'marketplace_post_key' );
 
 						$marketplace['media'][] = array(
-								'attachment_id' => $attachment_id,								
+								'attachment_id' => $attachment_id,
 								'marketplace_post_id' => $marketplace_post_id,
 								'marketplace_post_key' => $marketplace_post_key,
 							);
 					}
 
-					// $url = 'http://stripe.thad.ultrahook.com';
-					$url = 'http://visualsociety.local?webhook=marketplace';
+					$url = add_query_arg( array(
+							'webhook' => 'marketplace',
+						),
+						'https://visualsociety.com'
+					);
 					$response = wp_remote_post( $url, array(
 						'method' => 'POST',
 						'timeout' => 45,
@@ -514,8 +517,8 @@ function sell_media_save_custom_meta( $post_id ) {
 						'body' => $marketplace,
 						'cookies' => array(),
 						)
-					);					
-									
+					);
+
 					if ( is_wp_error( $response ) ) {
 					   $error_message = $response->get_error_message();
 					   echo "Something went wrong: $error_message";
@@ -527,7 +530,7 @@ function sell_media_save_custom_meta( $post_id ) {
 
 						$marketplace_response = json_decode( $response['body'] );
 					}
-					
+
 					// update site key
 					// if ( '' == $marketplace['site_key'] ) {
 						$settings = get_option( 'sell_media_options' );					
