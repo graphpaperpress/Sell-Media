@@ -142,6 +142,15 @@ jQuery( document ).ready(function( $ ){
     });
 
     /**
+     * Generic toggler
+     */
+    $( '.sell-media-toggler' ).on( 'click', function() {
+        $( this ).toggleClass( 'active' );
+        $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up dashicons-arrow-down' );
+        $( this ).next( '.toggle' ).toggle();
+    } );
+
+    /**
      * Remove disabled property when bulk selector changes
      * Used on add/edit item page
      */

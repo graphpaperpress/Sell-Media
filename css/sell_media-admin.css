@@ -728,6 +728,10 @@ div#sell-media-main-container ul.main-container-tabs-nav li:last-child a:hover {
 	content: "\f174";
 }
 
+.sell-media-add-item-main-container-wrap .ui-tabs-nav li#sell-media-tab-marketplace a:before {
+	content: "\f325";
+}
+
 .sell-media-add-item-main-container-wrap .ui-tabs-nav li#sell-media-tab-stats a:before {
 	content: "\f185";
 }

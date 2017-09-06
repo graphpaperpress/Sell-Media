@@ -392,6 +392,7 @@ function sell_media_register_taxonomies() {
 		'hierarchical' => false,
 		'rewrite' => true,
 		'query_var' => true,
+		'update_count_callback' => '_update_generic_term_count',
 	);
 
 	register_taxonomy( 'keywords', array( 'attachment' ), apply_filters( 'sell_media_keyword_tax_registration_args', $keywords_args ) );
