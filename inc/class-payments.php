@@ -442,7 +442,7 @@ class SellMediaPayments {
 					$filename = wp_get_attachment_image_src( $product['attachment'], 'full' );
 					$filename = basename( $filename[0] );
 					if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
-						$html .= '<div class="sell-media-product-attr sell-media-product-attr-id">' .  $product['id'] . ' — ' . $product['name'] . '</div>';
+						$html .= '<div class="sell-media-product-attr sell-media-product-attr-id">' .  $product['id'] . ' — ' . $product['name'] . ', File name: '. $filename . '</div>';
 						$html .= '<div class="sell-media-product-attr sell-media-product-attr-img" style="max-width: 100px; height: auto; overflow: hidden;"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a></div>';
 						if ( 'download' == $product['type'] ) {
 							$html .= '<div class="sell-media-product-attr sell-media-product-attr-download"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center" style="color: #444444; text-decoration: none; font-weight: bold;">' . __( 'Download', 'sell_media' ) . '</a></div>';
