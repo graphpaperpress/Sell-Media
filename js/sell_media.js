@@ -702,7 +702,7 @@ jQuery(document).ready(function($){
  * Update the menu cart with Qty and Subtotal
  */
 function sm_update_cart_menu(){
-	var sell_media_cart_info = jQuery.parseJSON( jQuery.cookie('sell_media_cart_info') );
+	var sell_media_cart_info = jQuery.parseJSON( jQuery.cookie('sell_media_cart_info') || null  );
 	if( sell_media_cart_info != null ){
 		jQuery('.checkout-price').text( sell_media_cart_info.subtotal );
 		jQuery('.checkout-counter').text( sell_media_cart_info.qty );
