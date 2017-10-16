@@ -203,9 +203,12 @@ function sell_media_checkout_shortcode() {
 					</div>
 					<div class="item-details">
 						<div class="item-name">
-						<?php if ( ! empty( $item['item_name'] ) ) : ?>
-							<?php echo esc_attr( $item['item_name'] ); ?>
-						<?php endif; ?>
+						<?php if ( !sell_media_has_multiple_attachments( $item['item_id'] ) ) {
+							echo esc_attr( $item['item_name'] );
+						} else {
+							$image = get_post($item['item_attachment']);
+							echo $image->post_title;
+						} ?>
 						</div>
 						<div class="item-size">
 						<?php if ( ! empty( $item['item_size'] ) ) : ?>

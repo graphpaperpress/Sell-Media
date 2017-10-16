@@ -14,13 +14,29 @@ ob_start();
 <div class="sell-media-quick-view-container">
 	<?php if ( ! post_password_required( $post_id ) ) : ?>
 	<div class="sell-media-quick-view-image">
-		<?php echo apply_filters( 'sell_media_quick_view_post_thumbnail', sell_media_item_icon( $image_id, 'large', false ), $post_id ); ?>
+		<?php
+			$mime_type = get_post_mime_type( $attachment_id );
+			// if selling video or audio, show the post_id thumbnail
+			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
+				$image = sell_media_item_icon( $post_id, 'large', false );
+			} else {
+				$image = sell_media_item_icon( $attachment_id, 'large', false );
+			}
+		?>
+		<?php echo apply_filters( 'sell_media_quick_view_post_thumbnail', $image, $post_id ); ?>
 	</div>
-	
+
 	<div class="sell-media-quick-view-content">
 		<div class="sell-media-quick-view-content-inner">
 
-			<h6><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" <?php echo sell_media_link_attributes( $post_id ); ?>><?php echo get_the_title( $post_id ); ?><?php if ( sell_media_has_multiple_attachments( esc_attr( $post_id ) ) ) echo ', ' . esc_attr( $attachment_id ); ?></a></h6>
+			<h6><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" <?php echo sell_media_link_attributes( $post_id ); ?>>
+				<?php if ( !sell_media_has_multiple_attachments( esc_attr( $post_id ) ) ) {
+					echo get_the_title( $post_id );
+				} else {
+					$image = get_post($attachment_id);
+					echo $image->post_title;
+				} ?>
+			</a></h6>
 			<?php do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id ); ?>
 			<?php sell_media_plugin_credit(); ?>
 
