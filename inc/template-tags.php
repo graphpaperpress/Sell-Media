@@ -374,6 +374,7 @@ function sell_media_get_taxonomy_terms( $taxonomy ) {
 	global $post;
 
 	$terms = wp_get_post_terms( $post->ID, $taxonomy );
+	$terms = array_reverse( $terms );
 
 	if ( empty( $terms ) || is_wp_error( $terms ) ) {
 		return;
