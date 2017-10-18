@@ -101,17 +101,23 @@
 		$productTerms = get_terms( 'collection');
 
 		$i = 0;
-		foreach( $productTerms as $collection ){
-			$password = get_term_meta( $collection->term_id, 'collection_password', true );
-			if ( $password ) unset( $productTerms[ $i ] );
-			$i++;
-		} ?>
+		if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
+			foreach( $productTerms as $collection ){
+				$password = get_term_meta( $collection->term_id, 'collection_password', true );
+				if ( $password ) unset( $productTerms[ $i ] );
+				$i++;
+			}
+		endif;
+		?>
 		<p><label for="<?php echo $this->get_field_id('categoryNumber') ?>"><?php _e( ' Select Collection', 'sell_media'); ?>: </label>
 		<select id="<?php echo $this->get_field_id('categoryNumber'); ?>" name="<?php echo $this->get_field_name('categoryNumber'); ?>" value="<?php echo $categoryNumber; ?>">
 			<option value="" <?php if($categoryNumber == '') echo 'selected="selected"'; ?>><?php _e( 'All Collections', 'sell_media'); ?></option>
-				<?php foreach ($productTerms as $term) : ?>
+				<?php
+				if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
+				 foreach ($productTerms as $term) : ?>
 					<option value="<?php echo $term->slug; ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo $term->name; ?></option>
 				<?php endforeach; ?>
+				<?php endif; ?>
 		</select>
 		</p>
 
