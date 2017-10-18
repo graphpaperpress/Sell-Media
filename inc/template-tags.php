@@ -207,35 +207,40 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 
 /**
  * Get the media files
+ *
+ * This function is pluggable, meaning you can override it.
+ * Just copy the function below, and add it to your theme or plugin.
+ * Modify the bits you need to display the media.
  * @return $html the media shown for sale.
  */
-function sell_media_get_media( $post_id = null ) {
-	global $post, $content_width;
-	$width = get_option( 'medium_size_w', $content_width );
-	$post_id = ( $post_id ) ? $post_id : $post->ID;
-	$html = '';
-	$mime_type = get_post_mime_type( $post_id );
-	
-	$parent = get_post_ancestors( $post_id );
-	if ( isset( $parent[0] ) ) {
-		$parent_id = $parent[0];
-	} else {
-		$parent_id = $post_id;
-	}
+if ( ! function_exists( 'sell_media_get_media' ) ) :
+	function sell_media_get_media( $post_id = null ) {
+		global $post, $content_width;
+		$width = get_option( 'medium_size_w', $content_width );
+		$post_id = ( $post_id ) ? $post_id : $post->ID;
+		$html = '';
+		$mime_type = get_post_mime_type( $post_id );
+		$parent = get_post_ancestors( $post_id );
+		if ( isset( $parent[0] ) ) {
+			$parent_id = $parent[0];
+		} else {
+			$parent_id = $post_id;
+		}
 
-	if ( SellMediaAudioVideo::is_video_item( $parent_id ) || SellMediaAudioVideo::is_audio_item( $parent_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-		// $embed_url = get_post_meta( $post_id, 'sell_media_embed_link', true );
-		// $html .= wp_oembed_get( $embed_url, array( 'width' => $width ) );
-		$html .= sell_media_item_icon( $parent_id, apply_filters( 'sell_media_large_item_size', 'medium' ), false );
-	} elseif ( sell_media_has_multiple_attachments( $post_id ) ) {
-		$html .= sell_media_gallery( $post_id );
-	} else {
-		$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_large_item_size', 'large' ), false );
-		$html .= sell_media_caption( $post_id );
-	}
+		if ( SellMediaAudioVideo::is_video_item( $parent_id ) || SellMediaAudioVideo::is_audio_item( $parent_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
+			// $embed_url = get_post_meta( $post_id, 'sell_media_embed_link', true );
+			// $html .= wp_oembed_get( $embed_url, array( 'width' => $width ) );
+			$html .= sell_media_item_icon( $parent_id, apply_filters( 'sell_media_large_item_size', 'medium' ), false );
+		} elseif ( sell_media_has_multiple_attachments( $post_id ) ) {
+			$html .= sell_media_gallery( $post_id );
+		} else {
+			$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_large_item_size', 'large' ), false );
+			$html .= sell_media_caption( $post_id );
+		}
 
-	return $html;
-}
+		return $html;
+	}
+endif;
 
 /**
  * Gallery
@@ -374,7 +379,6 @@ function sell_media_get_taxonomy_terms( $taxonomy ) {
 	global $post;
 
 	$terms = wp_get_post_terms( $post->ID, $taxonomy );
-	$terms = array_reverse( $terms );
 
 	if ( empty( $terms ) || is_wp_error( $terms ) ) {
 		return;
