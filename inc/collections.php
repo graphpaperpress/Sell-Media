@@ -55,10 +55,13 @@ function sell_media_collection_password_check( $query ) {
 		/**
 		 * build an array of terms that are password protected
 		 */
-		foreach ( get_terms( 'collection' ) as $term_obj ) {
-			$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
-			if ( $password ) {
-				$exclude_term_ids[] = $term_obj->term_id;
+		$collections = get_terms( 'collection' );
+ 		if ( ! is_wp_error( $collections ) && ! empty( $collections ) ) {
+			foreach ( $collections as $term_obj ) {
+				$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+				if ( $password ) {
+					$exclude_term_ids[] = $term_obj->term_id;
+				}
 			}
 		}
 
@@ -95,12 +98,15 @@ function sell_media_collection_password_check( $query ) {
 		) {
 
 		/**
-		 * build an array of terms that are password protected
+		 * Build an array of terms that are password protected.
 		 */
-		foreach ( get_terms( 'collection' ) as $term_obj ) {
-			$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
-			if ( $password ) {
-				$exclude_term_ids[] = $term_obj->term_id;
+		$collections = get_terms( 'collection' );
+		if ( ! is_wp_error( $collections ) && ! empty( $collections ) ) {
+			foreach ( $collections as $term_obj ) {
+				$password = get_term_meta( $term_obj->term_id, 'collection_password', true );
+				if ( $password ) {
+					$exclude_term_ids[] = $term_obj->term_id;
+				}
 			}
 		}
 
@@ -169,7 +175,7 @@ function sell_media_collection_password_check( $query ) {
 				|| ! empty( $_SESSION['sell_media']['collection_password'][$term_id] )
 				&& $_SESSION['sell_media']['collection_password'][$term_id] == $password ) {
 
-				if ( empty( $_SESSION['sell_media']['collection_password'][$term_id] ) ) 
+				if ( empty( $_SESSION['sell_media']['collection_password'][$term_id] ) )
 					$_SESSION['sell_media']['collection_password'][$term_id] = $_POST['collection_password'];
 
 				return $query;
