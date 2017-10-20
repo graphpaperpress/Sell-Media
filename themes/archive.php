@@ -50,7 +50,7 @@ $settings = sell_media_get_plugin_options();
 			$term_id = $wp_query->get_queried_object_id();
 			$children = get_term_children( $term_id, 'collection' );
 
-			if ( $children ) :
+			if ( $children && ! is_wp_error( $children ) ) :
 
 				$taxonomy_name = 'collection';
 				$i = 0;
