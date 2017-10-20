@@ -21,14 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return [null]
  */
 function sell_media_move_file( $attachment_id ) {
-	
+
 	do_action( 'sell_media_before_move_file', $attachment_id );
 
 	if ( wp_attachment_is_image( $attachment_id ) ) {
 		Sell_Media()->images->move_image_from_attachment( $attachment_id );
 	} else {
 		$attached_file = get_attached_file( $attachment_id );
-		sell_media_default_move( $attached_file );
+		sell_media_default_move( $attachment_id, $attached_file );
 	}
 
 	do_action( 'sell_media_after_move_file', $attachment_id );
@@ -41,23 +41,25 @@ function sell_media_move_file( $attachment_id ) {
  * @param $original_file Full path of the file with the file.
  * @since 1.0.1
  */
-function sell_media_default_move( $original_file=null ){
+if ( ! function_exists( 'sell_media_default_move' ) ) :
+	function sell_media_default_move( $attachment_id = null, $original_file = null ) {
 
-	$dir = wp_upload_dir();
-	$protected_dir = $dir['basedir'] . '/sell_media';
-	$destination_file_path = str_replace( $dir['basedir'], $protected_dir, $original_file );
+		$dir = wp_upload_dir();
+		$protected_dir = $dir['basedir'] . '/sell_media';
+		$destination_file_path = str_replace( $dir['basedir'], $protected_dir, $original_file );
 
-	if ( file_exists( $original_file ) ){
+		if ( file_exists( $original_file ) ) {
 
-		if ( ! file_exists( dirname( $destination_file_path ) ) ){
-			wp_mkdir_p( dirname( $destination_file_path ) );
+			if ( ! file_exists( dirname( $destination_file_path ) ) ) {
+				wp_mkdir_p( dirname( $destination_file_path ) );
+			}
+
+			// Copy original to our protected area
+			@copy( $original_file, $destination_file_path );
+			@unlink( $original_file );
 		}
-
-		// Copy original to our protected area
-		@copy( $original_file, $destination_file_path );
-		@unlink( $original_file );
 	}
-}
+endif;
 
 
 /**
