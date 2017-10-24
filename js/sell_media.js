@@ -869,16 +869,24 @@ function sm_update_cart_item( el, type ){
  * After ajax call, init Macy.js again so masonry layouts work on Filters shortcodes
  */
 function macy_init() {
-	Macy.init({
-		container: ".sell-media-grid-item-masonry-container",
+	var galleries = document.querySelectorAll('.sell-media-grid-item-masonry-container');
+	var macyInstances = [];
+	var macyOptions = {
 		trueOrder: false,
-		waitForImages: false,
+		waitForImages: true,
 		margin: 10,
 		columns: 4,
 		breakAt: {
+			1200: 4,
 			940: 3,
-			768: 2,
-			420: 1
+			520: 1
 		}
-	});
+	};
+
+	for (var i = 0; i < galleries.length; i++) {
+		var newId = 'galleryinstance-' + i;
+		galleries[i].id = newId;
+		macyOptions.container = '#' + newId;
+		macyInstances.push(Macy(macyOptions));
+	}
 }
