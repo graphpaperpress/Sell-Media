@@ -436,13 +436,15 @@ jQuery(document).ready(function($){
 
 	// Lightbox menu
 	$('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
-
+	
+	var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
 	// Checkout total menu
-	$('(<span class="sell-media-cart-total checkout-counter-wrap">' + sell_media.currency_symbol + '<span class="checkout-price">0</span></span>)').appendTo('.checkout-total a');
+	$('(<span class="sell-media-cart-total checkout-counter-wrap">' + currency_symbol + '<span class="checkout-price">0</span></span>)').appendTo('.checkout-total a');
 
 	// Checkout qty menu
 	$('(<span class="sell-media-cart-quantity checkout-counter">0</span>)').appendTo('.checkout-qty a:first');
 
+	//console.log(sell_media);
 	/**
 	 * Update menu cart qty and subtotal on load
 	 */
@@ -869,24 +871,16 @@ function sm_update_cart_item( el, type ){
  * After ajax call, init Macy.js again so masonry layouts work on Filters shortcodes
  */
 function macy_init() {
-	var galleries = document.querySelectorAll('.sell-media-grid-item-masonry-container');
-	var macyInstances = [];
-	var macyOptions = {
+	Macy.init({
+		container: ".sell-media-grid-item-masonry-container",
 		trueOrder: false,
-		waitForImages: true,
+		waitForImages: false,
 		margin: 10,
 		columns: 4,
 		breakAt: {
-			1200: 4,
 			940: 3,
-			520: 1
+			768: 2,
+			420: 1
 		}
-	};
-
-	for (var i = 0; i < galleries.length; i++) {
-		var newId = 'galleryinstance-' + i;
-		galleries[i].id = newId;
-		macyOptions.container = '#' + newId;
-		macyInstances.push(Macy(macyOptions));
-	}
+	});
 }
