@@ -168,6 +168,7 @@ function sell_media_register_post_types() {
 		'supports' => array( 'title', 'thumbnail', 'author', 'custom-fields' ),
 		'taxonomies' => array( 'licenses', 'keywords', 'city', 'state', 'creator', 'collection' ),
 		'public' => true,
+		'show_in_rest' => true,
 		'show_ui' => true,
 		'show_in_menu' => true,
 		'menu_position' => apply_filters( 'sell_media_filter_menu_position', 10 ),
@@ -315,6 +316,7 @@ function sell_media_register_taxonomies() {
 	$collection_args = array(
 		'labels' => $collection_labels,
 		'public' => true,
+		'show_in_rest' => true,
 		'show_in_nav_menus' => true,
 		'show_admin_column' => ( ! empty( $admin_columns ) && in_array( 'show_collection', $admin_columns ) ) ? true : false,
 		'show_ui' => true,
@@ -350,6 +352,7 @@ function sell_media_register_taxonomies() {
 	$licenses_args = array(
 		'labels' => $licenses_labels,
 		'public' => true,
+		'show_in_rest' => true,
 		'show_in_nav_menus' => true,
 		'show_admin_column' => ( ! empty( $admin_columns ) && in_array( 'show_license', $admin_columns ) ) ? true : false,
 		'show_ui' => true,
@@ -385,6 +388,7 @@ function sell_media_register_taxonomies() {
 	$keywords_args = array(
 		'labels' => $keywords_labels,
 		'public' => true,
+		'show_in_rest' => true,
 		'show_in_nav_menus' => true,
 		'show_admin_column' => true,
 		'show_ui' => true,
@@ -421,6 +425,7 @@ function sell_media_register_taxonomies() {
 	$creator_args = array(
 		'labels' => $creator_labels,
 		'public' => true,
+		'show_in_rest' => true,
 		'show_in_nav_menus' => true,
 		'show_admin_column' => ( ! empty( $admin_columns ) && in_array( 'show_creators', $admin_columns ) ) ? true : false,
 		'show_tagcloud' => true,
@@ -455,6 +460,7 @@ function sell_media_register_taxonomies() {
 	$city_args = array(
 		'labels' => $city_labels,
 		'public' => true,
+		'show_in_rest' => true,
 		'show_in_nav_menus' => true,
 		'show_ui' => false,
 		'show_tagcloud' => true,
@@ -489,6 +495,7 @@ function sell_media_register_taxonomies() {
 	$state_args = array(
 		'labels' => $state_labels,
 		'public' => true,
+		'show_in_rest' => true,
 		'show_in_nav_menus' => true,
 		'show_ui' => false,
 		'show_tagcloud' => true,
