@@ -531,13 +531,13 @@ function sell_media_save_custom_meta( $post_id ) {
 						$marketplace_response = json_decode( $response['body'] );
 					}
 
-					// update site key
-					// if ( '' == $marketplace['site_key'] ) {
-						$settings = get_option( 'sell_media_options' );					
+					// Update site key.
+					$settings = get_option( 'sell_media_options' );
+					if ( isset( $marketplace_response->site_key ) && isset( $marketplace_response->site_entries ) ) {
 						$settings['marketplace_api_key'] = $marketplace_response->site_key;
 						$settings['marketplace_site_entries'] = $marketplace_response->site_entries;
-						update_option( 'sell_media_options', $settings );
-					// }
+					}
+					update_option( 'sell_media_options', $settings );
 
 				}
 			}
