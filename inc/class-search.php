@@ -73,7 +73,7 @@ class SellMediaSearch {
 
 			// Input field
 			$html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
-			$html .= '<input type="text" value="' . $search_term . '" name="keyword" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s', 'sell_media' ), empty( $settings->post_type_slug ) ? 'keywords' : $settings->post_type_slug ) ) . '"/>';
+			$html .= '<input type="text" value="' . $search_term . '" name="keyword" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s (comma separated)', 'sell_media' ), empty( $settings->post_type_slug ) ? 'keywords' : $settings->post_type_slug ) ) . '"/>';
 			$html .= '</div>';
 
 			// Submit button
@@ -115,7 +115,8 @@ class SellMediaSearch {
 		if ( is_page( $settings->search_page ) && in_the_loop() ) {
 
 			// The search terms
-			$search_terms = str_getcsv( $search_term, ' ' );
+			$search_term_cleaned = preg_replace( '/\s*,\s*/', ',', $search_term );
+			$search_terms = str_getcsv( $search_term_cleaned, ',' );
 
 			// The file type
 			$mime_type = $this->get_mimetype( $type );
@@ -125,14 +126,15 @@ class SellMediaSearch {
 
 			if ( ! empty( $settings->search_relation ) && 'and' === $settings->search_relation ) {
 				$tax_array = array();
-				foreach ( $search_terms as $search_term ) {
+				foreach ( $search_terms as $s ) {
 					$array = array(
 						'taxonomy' => 'keywords',
 						'field'    => 'name',
-						'terms'    => $search_term,
+						'terms'    => $s,
 					);
 					$tax_array[] = $array;
 				}
+
 				$tax_query = array(
 					'relation' => 'AND',
 					$tax_array
@@ -140,8 +142,8 @@ class SellMediaSearch {
 			} else {
 				// Add original full keyword to the search terms array
 				// This ensures that multiple word keyword search works
-				$search_terms[] .= $search_term;
-
+				$one_big_keyword = str_replace( ',', ' ', $search_term );
+				$search_terms[] .= $one_big_keyword;
 				$tax_query = array(
 					array(
 						'taxonomy' => 'keywords',
@@ -203,12 +205,19 @@ class SellMediaSearch {
 				$html .= do_shortcode( '[sell_media_filters]' );
 
 			} else {
-				if ( $search_term ) {
-					$text = esc_html__( 'Sorry, no results. Explore more from our store below.', 'sell_media' );
+				if ( $search_terms ) {
+					$text = sprintf( __( 'Sorry, no results for "%1$s."', 'sell_media' ), $search_term );
 				} else {
 					$text = esc_html__( 'Search for keywords above or explore more from our store below.', 'sell_media' );
 				}
 				$html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
+				$html .= '<div class="sell-media-search-help">';
+				$html .= '<h6>' . esc_html__( 'Search Tips', 'sell_media' ) . '</h6>';
+				$html .= '<ul>';
+				$html .= '<li>' . esc_html__( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
+				$html .= '<li>' . esc_html__( 'Use fewer keywords.', 'sell_media' ) . '</li>';
+				$html .= '</ul>';
+				$html .= '</div>';
 				$html .= do_shortcode( '[sell_media_filters]' );
 			}
 

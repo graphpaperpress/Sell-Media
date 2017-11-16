@@ -407,8 +407,8 @@ function sell_media_init_settings() {
 		"search_relation" => array(
 			"tab" => "sell_media_general_settings",
 			"name" => "search_relation",
-			"title" => __("Search Relationship","sell_media"),
-			"description" => __( "The relationship between search keywords. Choose OR for widest possible results. For example, if visitors search for 'dog cat' all entries containing the keywords 'dog' OR 'cat' OR 'dog cat' will be returned. If you choose AND, search results will only display the entries containing both keywords 'dog' AND 'cat'. The AND option returns fewer, more accurate results.", "sell_media" ),
+			"title" => __("Search Results","sell_media"),
+			"description" => __( "Choose 'Broad Match' to display the most search results. The 'Broad Match' option displays entries containing any of the keywords being searched for. Choose 'Exact Match' to display only those entries containing all of the keywords being searched for. The 'Exact Match' option returns fewer, more accurate results.", "sell_media" ),
 			"section" => "general_plugin_section_1",
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",
@@ -417,11 +417,11 @@ function sell_media_init_settings() {
 			"valid_options" => array(
 				"and" => array(
 					"name" => "and",
-					"title" => __("AND","sell_media")
+					"title" => __("Exact Match","sell_media")
 					),
 				"or" => array(
 					"name" => "or",
-					"title" => __("OR","sell_media"),
+					"title" => __("Broad Match","sell_media"),
 					)
 			)
 		),

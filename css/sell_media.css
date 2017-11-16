@@ -972,7 +972,9 @@ input.sell-media-search-text[type=text] {
 .sell-media-search-help {
   color: gray;
   font-size: 12px;
-  margin-bottom: 16px; }
+  margin-bottom: 32px; }
+  .sell-media-search-help ul {
+    list-style-position: inside; }
 
 .sell-media-search-close {
   color: black;
