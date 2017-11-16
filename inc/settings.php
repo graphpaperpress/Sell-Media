@@ -404,6 +404,27 @@ function sell_media_init_settings() {
 					)
 			)
 		),
+		"search_relation" => array(
+			"tab" => "sell_media_general_settings",
+			"name" => "search_relation",
+			"title" => __("Search Relationship","sell_media"),
+			"description" => __( "The relationship between search keywords. Choose OR for widest possible results. For example, if visitors search for 'dog cat' all entries containing the keywords 'dog' OR 'cat' OR 'dog cat' will be returned. If you choose AND, search results will only display the entries containing both keywords 'dog' AND 'cat'. The AND option returns fewer, more accurate results.", "sell_media" ),
+			"section" => "general_plugin_section_1",
+			"since" => "1.0",
+			"id" => "general_plugin_section_1",
+			"type" => "select",
+			"default" => "or",
+			"valid_options" => array(
+				"and" => array(
+					"name" => "and",
+					"title" => __("AND","sell_media")
+					),
+				"or" => array(
+					"name" => "or",
+					"title" => __("OR","sell_media"),
+					)
+			)
+		),
 		"plugin_credit" => array(
 			"tab" => "sell_media_general_settings",
 			"name" => "plugin_credit",

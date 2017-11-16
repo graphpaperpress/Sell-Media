@@ -117,15 +117,39 @@ class SellMediaSearch {
 			// The search terms
 			$search_terms = str_getcsv( $search_term, ' ' );
 
-			// Add original full keyword to the search terms array
-			// This ensures that multiple word keyword search works
-			$search_terms[] .= $search_term;
-
 			// The file type
 			$mime_type = $this->get_mimetype( $type );
 
 			// Current pagination.
 			$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+
+			if ( ! empty( $settings->search_relation ) && 'and' === $settings->search_relation ) {
+				$tax_array = array();
+				foreach ( $search_terms as $search_term ) {
+					$array = array(
+						'taxonomy' => 'keywords',
+						'field'    => 'name',
+						'terms'    => $search_term,
+					);
+					$tax_array[] = $array;
+				}
+				$tax_query = array(
+					'relation' => 'AND',
+					$tax_array
+				);
+			} else {
+				// Add original full keyword to the search terms array
+				// This ensures that multiple word keyword search works
+				$search_terms[] .= $search_term;
+
+				$tax_query = array(
+					array(
+						'taxonomy' => 'keywords',
+						'field'    => 'name',
+						'terms'    => $search_terms,
+					)
+				);
+			}
 
 			// The Query
 			$args = array(
@@ -134,13 +158,7 @@ class SellMediaSearch {
 				'post_status' => array( 'publish', 'inherit' ),
 				'post_mime_type' => $mime_type,
 				'post_parent__in' => sell_media_ids(),
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'keywords',
-						'field'    => 'name',
-						'terms'    => $search_terms,
-					),
-				),
+				'tax_query' => $tax_query
 			);
 			$args = apply_filters( 'sell_media_search_args', $args );
 			$search_query = new WP_Query( $args );

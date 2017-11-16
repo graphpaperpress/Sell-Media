@@ -146,17 +146,23 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 		}
 	}
 
-	// Check if featured image exists.
+	// Post Thumbnail
 	if ( '' != get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
 
-		// Check if attachment thumbnail exists.
+	// Attachment, so use attachment src
 	} elseif ( '' != wp_get_attachment_image_src( $attachment_id, $size ) ) {
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
 
-		// Icon.
+	// Item, so use first attachment image src
+	} elseif ( wp_attachment_is_image( sell_media_get_attachment_id( $post_id ) ) ) {
+		$attachment_id = sell_media_get_attachment_id( $post_id );
+		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
+		$src = $image_attr[0];
+		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
+
 	} else {
 		$thumbnail = get_the_post_thumbnail( $post_id, $size );
 		if ( '' != $thumbnail ) {
