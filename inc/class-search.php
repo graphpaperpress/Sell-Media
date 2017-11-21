@@ -34,6 +34,20 @@ class SellMediaSearch {
 		// Legacy add a media search form shortcode
 		add_shortcode( 'sell_media_searchform', array( $this, 'form' ) );
 
+		// Add custom search query vars
+		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );
+	}
+
+
+	/**
+	 * Add custom search query vars
+	 *
+	 * @since 2.4.2
+	 */
+	function add_query_vars( $vars ) {
+		$vars[] = 'search_query';
+		$vars[] = 'search_file_type';
+		return $vars;
 	}
 
 
@@ -53,11 +67,11 @@ class SellMediaSearch {
 			return $html;
 		}
 
-		// Get the search term
-		$search_term = ( isset( $_GET['keyword'] ) ) ? $_GET['keyword'] : '';
+		// Get the search term(s)
+		$search_term = get_query_var( 'search_query' );
 
 		// Get the file type
-		$type = ( isset( $_GET['type'] ) ) ? $_GET['type'] : '';
+		$search_file_type = get_query_var( 'search_file_type' );
 
 		// only use this method if it hasn't already been used on the page
 		static $used;
@@ -73,7 +87,7 @@ class SellMediaSearch {
 
 			// Input field
 			$html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
-			$html .= '<input type="text" value="' . $search_term . '" name="keyword" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s (comma separated)', 'sell_media' ), empty( $settings->post_type_slug ) ? 'keywords' : $settings->post_type_slug ) ) . '"/>';
+			$html .= '<input type="text" value="' . $search_term . '" name="search_query" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s (comma separated)', 'sell_media' ), empty( $settings->post_type_slug ) ? 'keywords' : $settings->post_type_slug ) ) . '"/>';
 			$html .= '</div>';
 
 			// Submit button
@@ -88,12 +102,12 @@ class SellMediaSearch {
 
 			// File type field
 			$html .= '<div id="sell-media-search-file-type" class="sell-media-search-field sell-media-search-file-type">';
-			$html .= '<label for="type">' . esc_html__( 'File Type', 'sell_media' ) . '</label>';
-			$html .= '<select name="type">';
+			$html .= '<label for="search_file_type">' . esc_html__( 'File Type', 'sell_media' ) . '</label>';
+			$html .= '<select name="search_file_type">';
 			$html .= '<option value="">' . esc_html__( 'All', 'sell_media' ) . '</option>';
 			$mimes = array( 'image', 'video', 'audio' );
 			foreach ( $mimes as $mime ) {
-				$selected = ( $type === $mime ) ? 'selected' : '';
+				$selected = ( $search_file_type === $mime ) ? 'selected' : '';
 				$html .= '<option value="' . $mime . '" ' . $selected . '>';
 				$html .= ucfirst( $mime );
 				$html .= '</option>';
@@ -114,15 +128,23 @@ class SellMediaSearch {
 		// only run the query on the actual search results page.
 		if ( is_page( $settings->search_page ) && in_the_loop() ) {
 
-			// The search terms
+			// Find comma-separated search terms and format into an array
 			$search_term_cleaned = preg_replace( '/\s*,\s*/', ',', $search_term );
 			$search_terms = str_getcsv( $search_term_cleaned, ',' );
 
-			// The file type
-			$mime_type = $this->get_mimetype( $type );
+			// Exclude negative keywords in search query like "-cow"
+			$negative_search_terms = '';
+			$negative_search_terms = preg_grep( '/\B-[^\B]+/', $search_terms );
+			$negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
 
-			// Current pagination.
-			$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+			// now remove negative search terms from search terms
+			$search_terms = array_diff( $search_terms, $negative_search_terms );
+
+			// Get the file/mimetype
+			$mime_type = $this->get_mimetype( $search_file_type );
+
+			// Current pagination
+			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
 			if ( ! empty( $settings->search_relation ) && 'and' === $settings->search_relation ) {
 				$tax_array = array();
@@ -131,6 +153,15 @@ class SellMediaSearch {
 						'taxonomy' => 'keywords',
 						'field'    => 'name',
 						'terms'    => $s,
+					);
+					$tax_array[] = $array;
+				}
+				foreach ( $negative_search_terms as $n ) {
+					$array = array(
+						'taxonomy' => 'keywords',
+						'field'    => 'name',
+						'terms'    => array( $n ),
+						'operator' => 'NOT IN'
 					);
 					$tax_array[] = $array;
 				}
@@ -215,7 +246,8 @@ class SellMediaSearch {
 				$html .= '<h6>' . esc_html__( 'Search Tips', 'sell_media' ) . '</h6>';
 				$html .= '<ul>';
 				$html .= '<li>' . esc_html__( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
-				$html .= '<li>' . esc_html__( 'Use fewer keywords.', 'sell_media' ) . '</li>';
+				$html .= '<li>' . esc_html__( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
+				$html .= '<li>' . esc_html__( 'Use negative keywords (like -dog) to refine search results.', 'sell_media' ) . '</li>';
 				$html .= '</ul>';
 				$html .= '</div>';
 				$html .= do_shortcode( '[sell_media_filters]' );
