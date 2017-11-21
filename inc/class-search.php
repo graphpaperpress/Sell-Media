@@ -247,7 +247,7 @@ class SellMediaSearch {
 				$html .= '<ul>';
 				$html .= '<li>' . esc_html__( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
 				$html .= '<li>' . esc_html__( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
-				$html .= '<li>' . esc_html__( 'Use negative keywords (like -dog) to refine search results.', 'sell_media' ) . '</li>';
+				$html .= '<li>' . esc_html__( 'Use negative keywords (like -dogs) to exclude dogs from search results.', 'sell_media' ) . '</li>';
 				$html .= '</ul>';
 				$html .= '</div>';
 				$html .= do_shortcode( '[sell_media_filters]' );

@@ -133,7 +133,7 @@ class SellMediaAdminAddItem {
 						<?php esc_html_e( 'Uploading Image', 'sell_media' ); ?>
 						<span class="current">1</span>
 						<?php esc_html_e( 'of', 'sell_media' ); ?>
-						<span class="total">3</span>
+						<span class="total">1</span>
 					</span>
 					<span class="done"><?php esc_html_e( 'All images uploaded.', 'sell_media' ); ?></span>
 				</div>

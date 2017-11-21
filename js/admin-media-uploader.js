@@ -61,6 +61,7 @@
 
                 // Update the status text
                 $( '.uploading .current', $( sell_media_upload_status ) ).text( ( sell_media_upload_file_count - up.total.queued ) + 1 );
+                $( '.uploading .total' ).text( sell_media_upload_file_count );
 
                 // Update the progress bar
                 $( sell_media_upload_progress ).css({
