@@ -141,9 +141,6 @@ class SellMediaSearch {
 			$search_terms = array_diff( $search_terms, $negative_search_terms );
 			$search_terms = array_filter( $search_terms );
 
-			// hook for related keywords, etc.
-			do_action( 'sell_media_above_search_results', $search_terms );
-
 			// Get the file/mimetype
 			$mime_type = $this->get_mimetype( $search_file_type );
 
@@ -206,6 +203,11 @@ class SellMediaSearch {
 
 				$html .= '<p class="sell-media-search-results-text">' . sprintf( esc_html__( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->found_posts, $search_term ) . '</p>';
 
+				// hook for related keywords, etc.
+				$html .= sell_media_format_related_search_results( $search_terms );
+
+				$html .= $this->search_help();
+
 				$html .= '<div id="sell-media-search-results" class="sell-media">';
 				$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 
@@ -240,20 +242,15 @@ class SellMediaSearch {
 				$html .= do_shortcode( '[sell_media_filters]' );
 
 			} else {
+
 				if ( $search_terms ) {
 					$text = sprintf( __( 'Sorry, no results for "%1$s."', 'sell_media' ), $search_term );
+					$html .= $this->search_help();
 				} else {
+					$html .= $this->search_help();
 					$text = esc_html__( 'Search for keywords above or explore more from our store below.', 'sell_media' );
 				}
 				$html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
-				$html .= '<div class="sell-media-search-help">';
-				$html .= '<h6>' . esc_html__( 'Search Tips', 'sell_media' ) . '</h6>';
-				$html .= '<ul>';
-				$html .= '<li>' . esc_html__( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
-				$html .= '<li>' . esc_html__( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
-				$html .= '<li>' . esc_html__( 'Use negative keywords (like -dogs) to exclude dogs from search results.', 'sell_media' ) . '</li>';
-				$html .= '</ul>';
-				$html .= '</div>';
 				$html .= do_shortcode( '[sell_media_filters]' );
 			}
 
@@ -264,6 +261,20 @@ class SellMediaSearch {
 		} // end search results page check
 
 		return apply_filters( 'sell_media_search_results', $html );
+	}
+
+	public function search_help() {
+
+		$html  = '<div class="sell-media-search-help">';
+		$html .= '<h6>' . esc_html__( 'Search Tips', 'sell_media' ) . '</h6>';
+		$html .= '<ul>';
+		$html .= '<li>' . esc_html__( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Use negative keywords (like -dogs) to exclude dogs from search results.', 'sell_media' ) . '</li>';
+		$html .= '</ul>';
+		$html .= '</div>';
+
+		return $html;
 	}
 
 	/**
@@ -285,5 +296,7 @@ class SellMediaSearch {
 
 		return $mime;
 	}
+
+
 
 }

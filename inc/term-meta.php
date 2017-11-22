@@ -487,17 +487,19 @@ function sell_media_get_related_keywords( $terms ) {
 	// loop over terms
 	if ( $terms ) {
 		foreach ( $terms as $term ) {
-			// the terms to check for related terms
-			$term_obj = get_term_by( 'name', $term, 'keywords' );
-			$term_meta = get_term_meta( $term_obj->term_id, 'related_keywords' );
-			if ( $term_meta ) {
-				$term_meta_array = call_user_func_array( 'array_merge', $term_meta );
-				if ( $term_meta_array ) {
-					foreach ( $term_meta_array as $maybe_term ) {
-						$related_term_id = term_exists( $maybe_term );
-						if ( ! empty( $related_term_id ) ) {
-							$related_term_obj = get_term( $related_term_id, 'keywords' );
-							$related_keywords[] = $related_term_obj->name;
+			$term_id = term_exists( $term );
+			if ( ! empty( $term_id ) ) {
+				// the terms to check for related terms
+				$term_meta = get_term_meta( $term_id, 'related_keywords' );
+				if ( $term_meta ) {
+					$term_meta_array = call_user_func_array( 'array_merge', $term_meta );
+					if ( $term_meta_array ) {
+						foreach ( $term_meta_array as $maybe_term ) {
+							$related_term_id = term_exists( $maybe_term );
+							if ( ! empty( $related_term_id ) ) {
+								$related_term_obj = get_term( $related_term_id, 'keywords' );
+								$related_keywords[] = $related_term_obj->name;
+							}
 						}
 					}
 				}
@@ -519,7 +521,7 @@ function sell_media_format_related_search_results( $terms ) {
 
 	if ( $related_terms ) {
 		$html .= '<div class="sell-media-related-keywords">';
-		$html .= '<h3 class="sell-media-related-keywords-title">' . __( 'Related Keywords', 'sell_media' ) . '</h3>';
+		$html .= '<span class="sell-media-related-keywords-title">' . esc_html__( 'Related Keywords', 'sell_media' ) . ':</span>';
 		$html .= '<ul class="sell-media-related-keywords-list">';
 		foreach ( $related_terms as $term ) {
 
@@ -533,6 +535,5 @@ function sell_media_format_related_search_results( $terms ) {
 
 	}
 
-	echo apply_filters( 'sell_media_related_keywords_html', $html );
+	return apply_filters( 'sell_media_related_keywords_html', $html );
 }
-add_action( 'sell_media_above_search_results', 'sell_media_format_related_search_results', 10, 1 );

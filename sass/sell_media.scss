@@ -1275,6 +1275,10 @@ input.sell-media-search-text[type=text] {
 	color: $default-color;
 	font-size: $font-size * .75;
 	margin-bottom: $font-size;
+
+	ul {
+		list-style-position: inside;
+	}
 }
 
 .sell-media-search-close {
@@ -1288,8 +1292,32 @@ input.sell-media-search-text[type=text] {
 }
 
 .sell-media-search-results-text {
-	font-size: 24px;
-	margin: 48px 0;
+	font-size: $font-size * 1.5;
+	font-weight: 900;
+	margin: $font-size * 1.5 0;
+}
+
+.sell-media-related-keywords {
+	margin: 0 0 1em;
+	padding: 1em 0;
+	border-top: 1px solid $border-color;
+	border-bottom: 1px solid $border-color;
+}
+
+.sell-media-related-keywords-title,
+.sell-media-related-keywords ul {
+	display: inline;
+	font-size: 1em;
+}
+
+.sell-media-related-keywords-title {
+	font-weight: 900;
+	margin-right: 1em;
+}
+
+.sell-media-related-keywords li {
+	display: inline-block;
+	margin-right: .5em;
 }
 
 /*= Shortcodes

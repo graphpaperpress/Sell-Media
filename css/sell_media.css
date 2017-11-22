@@ -973,6 +973,8 @@ input.sell-media-search-text[type=text] {
   color: gray;
   font-size: 12px;
   margin-bottom: 16px; }
+  .sell-media-search-help ul {
+    list-style-position: inside; }
 
 .sell-media-search-close {
   color: black;
@@ -984,7 +986,27 @@ input.sell-media-search-text[type=text] {
 
 .sell-media-search-results-text {
   font-size: 24px;
-  margin: 48px 0; }
+  font-weight: 900;
+  margin: 24px 0; }
+
+.sell-media-related-keywords {
+  margin: 0 0 1em;
+  padding: 1em 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee; }
+
+.sell-media-related-keywords-title,
+.sell-media-related-keywords ul {
+  display: inline;
+  font-size: 1em; }
+
+.sell-media-related-keywords-title {
+  font-weight: 900;
+  margin-right: 1em; }
+
+.sell-media-related-keywords li {
+  display: inline-block;
+  margin-right: .5em; }
 
 /*= Shortcodes
 -------------------------------------------------------------- */
