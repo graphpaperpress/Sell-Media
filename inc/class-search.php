@@ -248,7 +248,6 @@ class SellMediaSearch {
 					$html .= $this->search_help();
 				} else {
 					$html .= $this->search_help();
-					$text = esc_html__( 'Search for keywords above or explore more from our store below.', 'sell_media' );
 				}
 				$html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
 				$html .= do_shortcode( '[sell_media_filters]' );
