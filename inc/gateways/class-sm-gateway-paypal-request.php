@@ -7,7 +7,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 
@@ -16,55 +16,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 class SM_Gateway_Paypal_Request {
 
-	function __construct() {
+    function __construct() {
 
-		add_action( 'sell_media_above_checkout_button', array( $this, 'form' ) );
-		add_action( 'init', array( $this, 'process' ) );
+        add_action( 'sell_media_above_checkout_button', array( $this, 'form' ) );
+        add_action( 'init', array( $this, 'process' ) );
 
-	}
+    }
 
-	function form(){
-	?>
-	<form id="sell_media_payment_gateway" style="margin: 20px 0;display:none;" method="post">
-		<?php do_action( 'sell_media_payment_gateway_fields' ); ?>
-		<label for="paypal"><input type="radio" name="gateway" id="paypal" value="paypal" checked><?php _e( 'PayPal', 'sell_media' ); ?></label>
-	</form>
-	<?php
-	}
+    function form(){
+    ?>
+    <form id="sell_media_payment_gateway" style="margin: 20px 0;display:none;" method="post">
+        <?php do_action( 'sell_media_payment_gateway_fields' ); ?>
+        <label for="paypal"><input type="radio" name="gateway" id="paypal" value="paypal" checked><?php _e( 'PayPal', 'sell_media' ); ?></label>
+    </form>
+    <?php
+    }
 
-	function process(){
+    function process(){
 
         // Before payment process action.
         do_action( 'sell_media_before_payment_process' );
 
-		// Check if paypal is selected.
-		if( !isset( $_POST['gateway'] ) || 'paypal' !== $_POST['gateway'] ){
-			return;
-		}
+        // Check if paypal is selected.
+        if( !isset( $_POST['gateway'] ) || 'paypal' !== $_POST['gateway'] ){
+            return;
+        }
 
-		$args = $this->get_args();
+        $args = $this->get_args();
 
-		$redirect_uri = esc_url( home_url( '/' ) );
+        $redirect_uri = esc_url( home_url( '/' ) );
 
-		if( $args ){
-	        $paypal_args = http_build_query( $args, '', '&' );
-	        $redirect_uri = esc_url( sell_media_get_paypal_redirect() ) . '?' . $paypal_args;
-		}
+        if( $args ){
+            $paypal_args = http_build_query( $args, '', '&' );
+            $redirect_uri = esc_url( sell_media_get_paypal_redirect() ) . '?' . $paypal_args;
+        }
 
         wp_redirect( $redirect_uri );
 
         exit;
-	}
+    }
 
-	private function get_args(){
+    private function get_args(){
         global $sm_cart;
 
-		// Get settings.
+        // Get settings.
         $settings = sell_media_get_plugin_options();
 
         // Check if paypal email is set.
         if( !isset( $settings->paypal_email ) || '' === $settings->paypal_email ){
-        	return false;
+            return false;
         }
 
         $paypal_email = sanitize_email( $settings->paypal_email );
@@ -72,10 +72,10 @@ class SM_Gateway_Paypal_Request {
         $item_args = $this->get_item_args();
 
         if( !$item_args ){
-        	return false;
+            return false;
         }
 
-	    $args['cmd'] = "_cart";
+        $args['cmd'] = "_cart";
         $args['upload']        = "1";
         $args['currency_code'] = sanitize_text_field( $settings->currency );
         $args['business']      = sanitize_email( $paypal_email );
@@ -99,18 +99,19 @@ class SM_Gateway_Paypal_Request {
         $args['notify_url'] = esc_url( add_query_arg( 'sell_media-listener', 'IPN', home_url( 'index.php' ) ) );
 
         return apply_filters( 'sell_media_paypal_args', array_merge(
-			$args,
-			$item_args
-		) );
-	}
+            $args,
+            $item_args
+        ) );
+    }
 
-	private function get_item_args(){
-		global $sm_cart;
-		$cart_items = $sm_cart->getItems();
-		if( empty( $cart_items ) )
-			return false;
+    private function get_item_args(){
+        global $sm_cart;
+        $cart_items = $sm_cart->getItems();
+        if ( empty( $cart_items ) )
+            return false;
+        $markups = Sell_Media()->tax_markup->markup_taxonomies();
 
-		$index = 1;
+        $index = 1;
         foreach ( $cart_items as $key => $item ) {
             $args['item_name_' . $index ]   = $item['item_name'];
             $args['quantity_' . $index ]   = $item['qty'];
@@ -123,7 +124,24 @@ class SM_Gateway_Paypal_Request {
             $args["on4_" . $index] = 'usage';
             $args["on5_" . $index] = 'license';
             $args["on6_" . $index] = 'attachment';
-            $args['option_index_0' ] = "7";
+
+            $agrs_index = 7;
+            if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+                <?php foreach ( $markups as $markup ) : ?>
+                    <?php if ( 'licenses' === $markup )  {
+                        continue;
+                    }
+                    $args["on{$agrs_index}_" . $index] = "item_markup_{$markup}";
+                    $args["os{$agrs_index}_" . $index] = $item["item_markup_{$markup}"];
+                    $agrs_index += 1;
+                    $args["on{$agrs_index}_" . $index] = "item_markup_{$markup}_id";
+                    $args["os{$agrs_index}_" . $index] = $item["item_markup_{$markup}_id"];
+
+                    $agrs_index++;
+                    endforeach; ?>
+            <?php endif;
+
+            $args['option_index_0' ] = $agrs_index;
 
             $args["os0_" . $index] = $item['item_type'];
             $args["os1_" . $index] = $item['item_image'];
@@ -134,10 +152,9 @@ class SM_Gateway_Paypal_Request {
             $args["os6_" . $index] = $item['item_attachment'];
             $index++;
         }
-
         return $args;
 
-	}
+    }
 }
 
 new SM_Gateway_Paypal_Request();

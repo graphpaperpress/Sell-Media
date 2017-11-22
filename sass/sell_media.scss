@@ -1274,11 +1274,7 @@ input.sell-media-search-text[type=text] {
 .sell-media-search-help {
 	color: $default-color;
 	font-size: $font-size * .75;
-	margin-bottom: $font-size * 2;
-
-	ul {
-		list-style-position: inside;
-	}
+	margin-bottom: $font-size;
 }
 
 .sell-media-search-close {

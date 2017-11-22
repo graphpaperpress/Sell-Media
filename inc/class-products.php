@@ -282,9 +282,9 @@ class SellMediaProducts {
 	 *
 	 * @return (float) returns the full markup amount without currency symbol
 	 */
-	public function markup_amount( $post_id = null, $price_id = null, $license_id = null ) {
-
-		$license_obj = get_term_by( 'id', $license_id, 'licenses' );
+	public function markup_amount( $post_id = null, $price_id = null, $license_id = null, $taxonomy = null ) {
+		$taxonomy = ( $taxonomy ) ? $taxonomy : 'licenses';
+		$license_obj = get_term_by( 'id', $license_id, $taxonomy );
 
 		if ( empty( $license_obj ) ) {
 			$markup_amount = 0;

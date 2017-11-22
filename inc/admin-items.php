@@ -479,8 +479,8 @@ function sell_media_save_custom_meta( $post_id ) {
 					$settings = sell_media_get_plugin_options();
 
 					$marketplace = array();
-					$marketplace['remove_marketplace'] = true; 
-					$marketplace['site_url'] = get_bloginfo( 'url' );					
+					$marketplace['remove_marketplace'] = true;
+					$marketplace['site_url'] = get_bloginfo( 'url' );
 					$marketplace['site_key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
 					$marketplace['sell_media_id'] = $post_id;
 					$marketplace['marketplace_response'] = get_post_meta( $post_id, '_sell_media_marketplace_response', true );
@@ -488,7 +488,7 @@ function sell_media_save_custom_meta( $post_id ) {
 
 					$attachment_ids = explode( ',', $_POST['_sell_media_attachment_id'] );
 					if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-						
+
 						$marketplace_post_id = get_post_meta( $attachment_id, 'marketplace_post_id', true );
 						$marketplace_post_key = get_post_meta( $attachment_id, 'marketplace_post_key', true );
 

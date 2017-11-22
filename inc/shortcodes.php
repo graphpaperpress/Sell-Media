@@ -212,11 +212,25 @@ function sell_media_checkout_shortcode() {
 							<?php echo $item['item_size']; ?>
 						<?php endif; ?>
 						</div>
-						<div class="item-license">
-						<?php if ( ! empty( $item['item_usage'] ) ) : ?>
-							<?php echo $item['item_usage']; ?>
+						<?php
+						$markups = Sell_Media()->tax_markup->markup_taxonomies();
+						if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+							<?php foreach ( $markups as $markup ) : ?>
+								<?php if ( 'licenses' === $markup ) : ?>
+									<div class="item-license">
+										<?php if ( ! empty( $item['item_usage'] ) ) : ?>
+											<?php echo $item['item_usage']; ?>
+										<?php endif; ?>
+									</div>
+								<?php else : ?>
+									<div class="item-{$markup}">
+										<?php if ( ! empty( $item[ "item_markup_{$markup}" ] ) ) : ?>
+											<?php echo $item[ "item_markup_{$markup}" ]; ?>
+										<?php endif; ?>
+									</div>
+								<?php endif; ?>
+							<?php endforeach; ?>
 						<?php endif; ?>
-						</div>
 					</div>
 					<div class="item-qty-total">
 						<div class="item-decrement">

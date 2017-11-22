@@ -17,7 +17,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
 
         add_filter( 'sell_media_grid_item_class', array( $this, 'add_class' ), 10, 2 );
 
-        add_action( 'sell_media_after_options_meta_box', array( $this, 'add_meta_fields' ), 11 );
+        add_action( 'sell_media_after_uploader_meta_box', array( $this, 'add_meta_fields' ), 11 );
 
         add_action( 'sell_media_extra_meta_save', array( $this, 'save_meta_fields' ) );
         add_action( 'wp_ajax_check_attachment_is_audio_video', array( $this, 'check_attachment_is_audio_video' ) );

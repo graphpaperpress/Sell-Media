@@ -110,50 +110,6 @@ function sell_media_license_description(){
 }
 add_action( 'licenses_pre_add_form', 'sell_media_license_description' );
 
-
-/**
- * Add form fields to add terms page for our custom taxonomies
- *
- * @since 0.1
- */
-function sell_media_add_custom_term_form_fields( $tag ){
-	if ( is_object( $tag ) )
-		$term_id = $tag->term_id;
-	else
-		$term_id = null;
-	?>
-	<div class="form-field">
-		<label for="markup"><?php _e('Markup', 'sell_media'); ?></label>
-		<?php sell_media_the_markup_slider( $tag ); ?>
-	</div>
-	<div class="form-field">
-		<?php sell_media_the_default_checkbox( $term_id ); ?>
-	</div>
-<?php }
-add_action( 'licenses_add_form_fields', 'sell_media_add_custom_term_form_fields' );
-
-
-/**
- * Edit form fields to edit terms page for our custom taxonomies
- *
- * @since 0.1
- */
-function sell_media_edit_custom_term_form_fields( $tag ){ ?>
-	<tr class="form-field sell_media-markup-container">
-		<th scope="row" valign="top">
-			<label for="markup"><?php _e( 'Markup', 'sell_media' ); ?></label>
-		</th>
-		<td>
-			<?php sell_media_the_markup_slider( $tag ); ?>
-		</td>
-	</tr>
-	<tr class="form-field sell_media-markup-container">
-		<td><?php sell_media_the_default_checkbox( $tag->term_id ); ?></td>
-	</tr>
-<?php }
-add_action( 'licenses_edit_form_fields', 'sell_media_edit_custom_term_form_fields' );
-
-
 /**
  * Function for building the slider on Add/Edit License admin page
  *
@@ -263,57 +219,6 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
 		</td>
 	</tr>
 <?php }
-
-
-/**
- * Display Custom License Column Headers in wp-admin
- *
- * @since 0.1
- */
-function sell_media_custom_license_columns_headers( $columns ){
-
-	$columns_local = array();
-
-	if ( isset( $columns['cb'] ) ) {
-		$columns_local['cb'] = $columns['cb'];
-		unset($columns['cb']);
-	}
-
-	if ( isset( $columns['name'] ) ) {
-		$columns_local['name'] = $columns['name'];
-		unset($columns['name']);
-	}
-
-	if (!isset($columns_local['license_term_price']))
-		$columns_local['license_term_price'] = "% Markup";
-
-	// Rename the post column to Images
-	if ( isset( $columns['posts'] ) )
-		$columns['posts'] = "Media";
-
-	 $columns_local = array_merge($columns_local, $columns);
-
-	return array_merge($columns_local, $columns);
-}
-add_filter( 'manage_edit-licenses_columns', 'sell_media_custom_license_columns_headers' );
-
-
-/**
- * Display Custom License Column Content below Headers in wp-admin
- *
- * @since 0.1
- */
-function sell_media_custom_license_columns_content( $row_content, $column_name, $term_id ){
-	switch( $column_name ) {
-		case 'license_term_price':
-			return get_term_meta($term_id, 'markup', true);
-			break;
-		default:
-			break;
-	}
-}
-add_filter( 'manage_licenses_custom_column', 'sell_media_custom_license_columns_content', 10, 3 );
-
 
 /**
  * Save new taxonomy fields
