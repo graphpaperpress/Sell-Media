@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function sell_media_collection_password_check( $query ) {
+	$settings = sell_media_get_plugin_options();
 
 	if ( is_admin() || ! $query->is_main_query() ) {
 		return $query;
@@ -29,7 +30,7 @@ function sell_media_collection_password_check( $query ) {
 		return $query;
 	}
 
-	if ( ! empty( $_GET['sell_media_advanced_search_flag'] ) ) {
+	if ( ! is_page( $settings->search_page ) && ! in_the_loop() ) {
 		return;
 	}
 

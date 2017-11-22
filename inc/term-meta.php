@@ -337,8 +337,16 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 
 		foreach ( $cat_keys as $key ) {
 			if ( ! empty( $_POST['meta_value'][$key] ) ) {
-				$meta_value[$key] = $_POST['meta_value'][$key];
-				update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
+				if ( 'related_keywords' === $key ) {
+					$related_keywords = trim( wp_filter_nohtml_kses( $_POST['meta_value'][$key] ), ',' );
+					$related_keywords = preg_replace( '/\s*,\s*/', ',', $related_keywords );
+					$related_keywords = explode( ',', $related_keywords );
+					$related_keywords = array_filter( $related_keywords );
+					update_term_meta( $term_id, $key, $related_keywords );
+				} else {
+					$meta_value[$key] = $_POST['meta_value'][$key];
+					update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
+				}
 			} else {
 				delete_term_meta( $term_id, $key );
 			}
@@ -349,6 +357,8 @@ add_action( 'edited_licenses', 'sell_media_save_extra_taxonomy_fields' );
 add_action( 'create_licenses', 'sell_media_save_extra_taxonomy_fields' );
 add_action( 'edited_collection', 'sell_media_save_extra_taxonomy_fields' );
 add_action( 'create_collection', 'sell_media_save_extra_taxonomy_fields' );
+add_action( 'edited_keywords', 'sell_media_save_extra_taxonomy_fields' );
+add_action( 'create_keywords', 'sell_media_save_extra_taxonomy_fields' );
 
 
 /**
@@ -470,7 +480,7 @@ function sell_media_edit_collection_password( $tag ){
 		</th>
 		<td>
 			<input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print $password ?>" <?php echo $html_extra; ?> />
-			<p class="description"><?php  echo $description; ?></p>
+			<p class="description"><?php echo $description; ?></p>
 		</td>
 	</tr>
 <?php }
@@ -530,3 +540,94 @@ function sell_media_custom_collection_columns_content( $row_content, $column_nam
 	}
 }
 add_filter( 'manage_collection_custom_column', 'sell_media_custom_collection_columns_content', 10, 3 );
+
+/**
+ * Add related keywords to keywords
+ *
+ * @since 2.1.2
+ */
+function sell_media_add_related_keywords( ) { ?>
+	<div class="form-field sell-media-related-keywords-form-field">
+		<label for="meta_value[related_keywords]"><?php _e( 'Related Keywords', 'sell_media' ); ?></label>
+		<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="" />
+			<p class="description"><?php _e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
+	</div>
+	<?php }
+add_action( 'keywords_add_form_fields', 'sell_media_add_related_keywords' );
+
+/**
+ * Edit related keywords
+ *
+ * @since 2.1.2
+ */
+function sell_media_edit_related_keywords( $tag ) {
+	$term_id = is_object( $tag ) ? $tag->term_id : null;
+	$term_meta_key = 'related_keywords';
+	$term_meta = sell_media_get_term_meta( $term_id, $term_meta_key, true );
+	$terms = implode( ', ', $term_meta ); ?>
+	<tr class="form-field sell-media-related-keywords-form-field">
+		<th scope="row" valign="top">
+			<label for="meta_value[related_keywords]"><?php _e( 'Related Keywords', 'sell_media' ); ?></label>
+		</th>
+		<td>
+			<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="<?php echo $terms; ?>" />
+			<p class="description"><?php _e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
+		</td>
+	</tr>
+<?php }
+add_action( 'keywords_edit_form_fields', 'sell_media_edit_related_keywords' );
+
+function sell_media_get_related_keywords( $terms ) {
+	$related_keywords = array();
+	// loop over terms
+	if ( $terms ) {
+		foreach ( $terms as $term ) {
+			// the terms to check for related terms
+			$term_obj = get_term_by( 'name', $term, 'keywords' );
+			$term_meta = get_term_meta( $term_obj->term_id, 'related_keywords' );
+			if ( $term_meta ) {
+				$term_meta_array = call_user_func_array( 'array_merge', $term_meta );
+				if ( $term_meta_array ) {
+					foreach ( $term_meta_array as $maybe_term ) {
+						$related_term_id = term_exists( $maybe_term );
+						if ( ! empty( $related_term_id ) ) {
+							$related_term_obj = get_term( $related_term_id, 'keywords' );
+							$related_keywords[] = $related_term_obj->name;
+						}
+					}
+				}
+			}
+		}
+	}
+	return $related_keywords;
+}
+
+function sell_media_format_related_search_results( $terms ) {
+
+	if ( empty( $terms ) ) {
+		return;
+	}
+
+	$settings = sell_media_get_plugin_options();
+	$related_terms = sell_media_get_related_keywords( $terms );
+	$html = '';
+
+	if ( $related_terms ) {
+		$html .= '<div class="sell-media-related-keywords">';
+		$html .= '<h3 class="sell-media-related-keywords-title">' . __( 'Related Keywords', 'sell_media' ) . '</h3>';
+		$html .= '<ul class="sell-media-related-keywords-list">';
+		foreach ( $related_terms as $term ) {
+
+			$url = add_query_arg( array(
+				'search_query' => $term,
+				), get_permalink( $settings->search_page ) );
+			$html .= '<li class="sell-media-related-keywords-list-item"><a href="' . esc_url( $url ) . '">' . esc_attr( $term ) . '</a></li>';
+		}
+		$html .= '</ul>';
+		$html .= '</div>';
+
+	}
+
+	echo apply_filters( 'sell_media_related_keywords_html', $html );
+}
+add_action( 'sell_media_above_search_results', 'sell_media_format_related_search_results', 10, 1 );

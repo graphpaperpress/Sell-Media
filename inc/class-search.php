@@ -139,6 +139,10 @@ class SellMediaSearch {
 
 			// now remove negative search terms from search terms
 			$search_terms = array_diff( $search_terms, $negative_search_terms );
+			$search_terms = array_filter( $search_terms );
+
+			// hook for related keywords, etc.
+			do_action( 'sell_media_above_search_results', $search_terms );
 
 			// Get the file/mimetype
 			$mime_type = $this->get_mimetype( $search_file_type );
