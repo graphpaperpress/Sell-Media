@@ -413,6 +413,8 @@ class SellMediaPayments {
 		$style = apply_filters( 'sell_media_products_table_style', $css );
 
 		if ( $products ) {
+			$markup_class = new SellMediaTaxMarkup();
+			$markups = $markup_class->markup_taxonomies();
 
 			$html = null;
 			$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" width="100%" style="border-collapse:collapse;font-size: 10px;">';
@@ -421,6 +423,13 @@ class SellMediaPayments {
 			$html .= '<th style="' . $style . '  font-weight: bold;">' . __( 'Product', 'sell_media' ) . '</th>';
 			$html .= '<th style="' . $style . '  font-weight: bold;">' . __( 'Size', 'sell_media' ) . '</th>';
 			$html .= '<th style="' . $style . '  font-weight: bold;">' . __( 'License', 'sell_media' ) . '</th>';
+			if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+				<?php foreach ( $markups as $markup ) : ?>
+					<?php if ( 'licenses' === $markup )
+						continue;
+						$html .= '<th style="' . $style . '  font-weight: bold;">' . __( $markup, 'sell_media' ) . '</th>';
+					endforeach; ?>
+			<?php endif;
 			$html .= '<th class="text-center" style="' . $style . ' text-align: center; font-weight: bold;">' . __( 'Qty', 'sell_media' ) . '</th>';
 			$html .= '<th class="sell-media-product-subtotal" style="' . $style . ' text-align: right; font-weight: bold;">' . __( 'Subtotal', 'sell_media' ) . '</th>';
 			$html .= '</tr>';
@@ -469,6 +478,17 @@ class SellMediaPayments {
 						$html .= '<div class="sell-media-product-attr sell-media-product-attr-license">' . $product['license']['name'] . $product['license']['desc'] . '</div>';
 					}
 					$html .= '</td>';
+					if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+						<?php foreach ( $markups as $markup ) : ?>
+							<?php
+							if ( 'licenses' === $markup ) {
+								continue;
+							}
+							$html .= '<td class="sell-media-product-' . $markup . ' text-center" style="' . $style . ' text-align: center;">';
+							$html .= '<div class="sell-media-product-attr sell-media-product-attr-' . $markup . '">' . $product[ $markup ]['name'] . $product[ $markup ]['desc'] . '</div>';
+							$html .= '</td>';
+							endforeach; ?>
+					<?php endif;
 					$html .= '<td class="sell-media-product-qty text-center" style="' . $style . ' text-align: center;">';
 					if ( isset( $product['qty'] ) && ! is_array( $product['qty'] ) ) {
 						$html .= '<div class="sell-media-product-attr sell-media-product-attr-qty">' . $product['qty'] . '</div>';
@@ -489,6 +509,15 @@ class SellMediaPayments {
 			$html .= '<td>&nbsp;</td>';
 			$html .= '<td>&nbsp;</td>';
 			$html .= '<td>&nbsp;</td>';
+			if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+				<?php foreach ( $markups as $markup ) : ?>
+					<?php
+					if ( 'licenses' === $markup ) {
+						continue;
+					}
+					$html .= '<td>&nbsp;</td>';
+					endforeach; ?>
+			<?php endif;
 			$html .= '<td class="sell-media-products-grandtotal" style="padding: 0.5rem; text-align: right;">';
 			if ( $discount ) {
 				$html .= '<p>' . __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '</p>';
@@ -522,6 +551,9 @@ class SellMediaPayments {
 
 		$paypal_args = maybe_unserialize( get_post_meta( $post_id, '_paypal_args', true ) );
 		$tmp = array();
+
+		$markup_class = new SellMediaTaxMarkup();
+		$markups = $markup_class->markup_taxonomies();
 
 		$keys = array(
 			'email' => 'payer_email',
@@ -574,6 +606,32 @@ class SellMediaPayments {
 						'handling' => $paypal_args[ 'mc_handling' . $i ],
 						'tax' => $paypal_args[ 'tax' . $i ],
 					);
+
+					if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+					<?php $agrs_index = 8; ?>
+					<?php foreach ( $markups as $markup ) : ?>
+						<?php if ( 'licenses' === $markup )
+							continue;
+							if ( empty( $paypal_args["option_name{$agrs_index}_{$i}"] ) ) {
+								$markup_id   = null;
+								$markup_desc = null;
+								$markup_name = null;
+							} else {
+								$markup_name = $paypal_args["option_selection{$agrs_index}_{$i}"];
+								$agrs_index += 1;
+								$markup_id   = $paypal_args["option_selection{$agrs_index}_{$i}"];
+							}
+
+							$tmp_products[ $markup ] = array(
+								'name'          => $markup_name,
+								'id'            => $markup_id,
+								'description'   => '',
+								'markup'        => empty( $markup_id ) ? null : str_replace( '%', '', get_term_meta( $markup_id, 'markup', true ) ),
+							);
+							$agrs_index++;
+						endforeach;
+					endif;
+
 					$tmp['products'][] = $tmp_products;
 				}
 			}
@@ -602,6 +660,8 @@ class SellMediaPayments {
 	 * @return $html (string) An html table containing the item, size, price, qty, and other usefulness
 	 */
 	public function payment_table( $post_id = null ) {
+		$markup_class = new SellMediaTaxMarkup();
+		$markups = $markup_class->markup_taxonomies();
 
 		$html = null;
 		$html .= '<table class="wp-list-table widefat" cellspacing="0">';
@@ -612,8 +672,19 @@ class SellMediaPayments {
 					<th>' . __( 'Size', 'sell_media' ) . '</th>
 					<th>' . __( 'Price', 'sell_media' ) . '</th>
 					<th>' . __( 'Quantity', 'sell_media' ) . '</th>
-					<th>' . __( 'License', 'sell_media' ) . '</th>
-					<th>' . apply_filters( 'sell_media_download_link_label', 'Download Link' ) . '</th>
+					<th>' . __( 'License', 'sell_media' ) . '</th>';
+
+		if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+			<?php foreach ( $markups as $markup ) : ?>
+				<?php
+				if ( 'licenses' === $markup ) {
+					continue;
+				}
+
+				$html .= '<th>' . esc_html( $markup, 'sell_media' ) . '</th>';
+				endforeach; ?>
+		<?php endif;
+		$html .= '<th>' . apply_filters( 'sell_media_download_link_label', 'Download Link' ) . '</th>
 				</tr>
 			</thead>';
 		$html .= '<tbody>';
@@ -642,6 +713,16 @@ class SellMediaPayments {
 				$html .= '<td>' . sell_media_get_currency_symbol() . $product['size']['amount'] . '</td>';
 				$html .= '<td>' . $product['qty'] . '</td>';
 				$html .= '<td>' . $product['license']['name'] . '</td>';
+				if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
+					<?php foreach ( $markups as $markup ) : ?>
+						<?php
+						if ( 'licenses' === $markup ) {
+							continue;
+						}
+						$html .= '<td>' . $product[ $markup ]['name'] . $product[ $markup ]['desc'] .'</td>';
+						endforeach; ?>
+				<?php endif;
+
 				if ( ! empty( $product['type'] ) && 'print' == $product['type'] ) {
 					$html .= '<td class="title column-title">Sold a print</td>';
 				} else {
