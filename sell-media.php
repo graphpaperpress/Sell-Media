@@ -128,6 +128,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				self::$instance->products       = new SellMediaProducts();
 				self::$instance->queries        = new SellMediaQueries();
 				self::$instance->search         = new SellMediaSearch();
+				self::$instance->tax_markup     = new SellMediaTaxMarkup();
 				self::$instance->upgrades 		= new SellMediaUpgrades();
 
 				if ( self::$instance->is_request( 'admin' ) ) {
@@ -257,6 +258,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/lightbox.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-meta-migrate.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-updater.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-markup.php';
 
 			// Load files if is front end.
 			if ( self::$instance->is_request( 'frontend' ) ) {
