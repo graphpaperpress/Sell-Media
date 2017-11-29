@@ -1,0 +1,19 @@
+{
+  "name"          : "graphpaperpress/sell-media",
+  "description"   : "A WordPress plugin for selling photos, prints and other downloads.",
+  "homepage"      : "https://graphpaperpress.com/plugins/sell-media/",
+  "type"          : "wordpress-plugin",
+  "license"       : "GPL-2.0+",
+  "keywords"      : ["photos","media","ecommerce"],
+  "authors"       : [
+    {
+      "name"    : "Thad Allender",
+      "email"   : "support@graphpaperpress.com",
+      "homepage": "https://graphpaperpress.com",
+      "role"    : "Developer"
+    }
+  ],
+  "require-dev"   : {},
+  "require"       : {},
+  "version"       : "2.4.1"
+}

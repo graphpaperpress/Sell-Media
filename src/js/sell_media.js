@@ -429,7 +429,7 @@ jQuery(document).ready(function($) {
     $('.empty-lightbox').on('click', function(event) {
         event.preventDefault();
 
-        var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
+        //var emptied = $.removeCookie('sell_media_lightbox', { path: '/' });
 
         if (emptied) {
             $('#sell-media-grid-item-container').remove();
@@ -439,22 +439,22 @@ jQuery(document).ready(function($) {
     });
 
     // Count lightbox
-    function count_lightbox() {
-        var cookie = $.cookie('sell_media_lightbox');
-        if (cookie === undefined) {
-            return 0;
-        } else {
-            var data = $.parseJSON(cookie),
-                keys = [];
-            $.each(data, function(key, value) {
-                keys.push(key);
-            });
-            return keys.length;
-        }
-    }
+    // function count_lightbox() {
+    //     var cookie = $.cookie('sell_media_lightbox');
+    //     if (cookie === undefined) {
+    //         return 0;
+    //     } else {
+    //         var data = $.parseJSON(cookie),
+    //             keys = [];
+    //         $.each(data, function(key, value) {
+    //             keys.push(key);
+    //         });
+    //         return keys.length;
+    //     }
+    // }
 
     // Lightbox menu
-    $('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
+    //$('<span class="lightbox-counter">' + count_lightbox() + '</span>').appendTo('.lightbox-menu a');
 
     var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
     // Checkout total menu
@@ -717,11 +717,11 @@ jQuery(document).ready(function($) {
  * Update the menu cart with Qty and Subtotal
  */
 function sm_update_cart_menu() {
-    var sell_media_cart_info = jQuery.parseJSON(jQuery.cookie('sell_media_cart_info'));
-    if (sell_media_cart_info != null) {
-        jQuery('.checkout-price').text(sell_media_cart_info.subtotal);
-        jQuery('.checkout-counter').text(sell_media_cart_info.qty);
-    }
+    //var sell_media_cart_info = jQuery.parseJSON(jQuery.cookie('sell_media_cart_info'));
+    // if (sell_media_cart_info != null) {
+    //     jQuery('.checkout-price').text(sell_media_cart_info.subtotal);
+    //     jQuery('.checkout-counter').text(sell_media_cart_info.qty);
+    // }
 }
 
 /**

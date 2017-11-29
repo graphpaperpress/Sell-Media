@@ -40,9 +40,9 @@ Thumbs.db
 
 # Node and Grunt #
 ##################
-/node_modules/
-/build/
-/grunt/
+npm-debug.log
+node_modules
+vendor/
 
 # SASS #
 ########

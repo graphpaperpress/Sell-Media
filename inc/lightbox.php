@@ -84,7 +84,7 @@ function sell_media_lightbox_shortcode() {
 	ob_start();
 	echo '<div id="sell-media-lightbox-content" class="sell-media">';
 
-	do_action( 'sell_media_bofore_lightbox_item_container' );
+	do_action( 'sell_media_before_lightbox_item_container' );
 
 	echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
 	echo sell_media_lightbox_query();
@@ -104,12 +104,15 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  * Added html to remove lightbox items before lightbox container.
  */
 function sell_media_lightbox_remove_items() {
+	echo '<div id="' . esc_attr( current_action() ) . '"></div>';
 	if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
-		 echo '<p class="empty-lightbox" title="' . __( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove All', 'sell_media' ) . '</p>';
+		 echo '<p v-on:click="emptyLightbox" class="empty-lightbox" title="' . esc_html__( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . esc_html__( 'Your lightbox is empty.', 'sell_media' ) . '">' . esc_html__( 'Remove All', 'sell_media' ) . '</p>';
 	}
 }
 
-add_action( 'sell_media_bofore_lightbox_item_container', 'sell_media_lightbox_remove_items' );
+add_action( 'sell_media_before_lightbox_item_container', function() {
+	echo '<div id="' . esc_attr( current_action() ) . '"><empty-lightbox></empty-lightbox></div>';
+} );
 
 /**
  * Query lightbox items
