@@ -14,25 +14,41 @@ Vue.config.debug = true;
 Vue.config.devTools = true;
 
 // import all vue components
-import FilteredItems from '../components/FilteredItems.vue'
-Vue.component( 'FilteredItems', FilteredItems )
-import EmptyLightbox from '../components/EmptyLightbox.vue'
+// import FilteredItems from './components/FilteredItems.vue'
+// Vue.component( 'FilteredItems', FilteredItems )
+import Lightbox from '../components/Lightbox.vue'
 
-// define routes for vue app
-// ref : http://router.vuejs.org/en/
+//Create main vue component
+const App = Vue.extend( {
+	template: '<main><router-view></router-view></main>',
+	computed: {
+	}
+} );
+
+//Define route for vue app
+//ref : http://router.vuejs.org/en/
 const router = new VueRouter( {
 	mode: 'history',
 	routes: [
 
-		{ path: '/blog/:page(\\d+)?', name: 'Filtered Items', component: FilteredItems },
-		{ path: '/', redirect: '/blog' },
+		{ path: '/sell-media-lightbox', name: 'lightbox', component: Lightbox },
+		// { path: '/blog/:name', name: 'post', component: post },
+		// { path: '/', redirect: '/blog' },
 
 	]
-} )
+} );
 
-// init vue compotent
-var app = new Vue ( {
-	el: '#content',
-	template: '<section><router-view></router-view></section>',
-	router
-} )
+// window.onload = function () {
+// 	// init vue compotent
+// 	new Vue ( {
+// 		el: '#app',
+// 		router
+// 		//render: h => h(Lightbox)
+// 	} )
+// }
+
+window.onload = function () {
+	new App( {
+		router
+	} ).$mount( '#app' );
+}

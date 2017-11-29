@@ -1,7 +1,6 @@
-<template>
-
+<template id="filtered-items">
 	<div class="container">
-		<h3>Search</h3>
+		<h3>{{label_search}}</h3>
 		<input type="text" v-model="search" placeholder="Search title.."/>
 
 		<h3 class="section-title">Newest Additions</h3>
@@ -28,7 +27,7 @@
 		<div class="filtered-content masonry">
 			<article v-for="post in filteredPosts" class="post masonry-brick">
 				<a v-bind:href="post.link" v-bind:title="post.title.rendered">
-					<img v-bind:src="post._embedded['wp:featuredmedia'][0].media_details.sizes.large.source_url">
+					<img v-if="hasImage" v-bind:src="post._embedded['wp:featuredmedia'][0].media_details.sizes.large.source_url">
 					<div class="post-content">
 						<h2>{{ post.title.rendered }}</h2>
 						<small v-for="keyword in post.product_keywords">
@@ -55,11 +54,6 @@
 
 <script>
 export default {
-
-	mounted: function() {
-		this.getProducts(1)
-		this.getCategories()
-	},
 	data: function() {
 		return {
 			posts: [],
@@ -72,57 +66,72 @@ export default {
 			next_page: '',
 			currentPage: '',
 			postPerPage: '20',
+			hasImage: true,
+			// string translations uses wp_localize_script in scripts.php
+			label_search: sell_media.search_labels.search,
+			label_search_no_results: sell_media.search_labels.no_results,
 		}
+	},
+	mounted: function() {
+		const vm = this;
+		vm.getProducts(1)
+		vm.getCategories()
 	},
 	methods: {
 		getProducts: function(pageNumber){
+			const vm = this;
 
-            this.currentPage = pageNumber;
+            vm.currentPage = pageNumber;
 
-			this.$http.get( '/wp-json/wp/v2/sell_media_item', {
-				params: { per_page: this.postPerPage, page: pageNumber, _embed: '' }
+			vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+				params: { per_page: vm.postPerPage, page: pageNumber, _embed: null }
 			} )
 			.then(function(response){
-				this.$set(this, 'posts', response.data);
-				this.makePagination(response);
+				vm.$set(vm, 'posts', response.data);
+				vm.makePagination(response);
 			}, function(error){
 				console.log(error.statusText);
 			});
 		},
 		getCategories: function(){
+			const vm = this;
 
-			this.$http.get('/wp-json/wp/v2/product_type').then(function(response){
-				this.$set(this, 'categories', response.data);
+			vm.$http.get('/wp-json/wp/v2/collection').then(function(response){
+				vm.$set(vm, 'categories', response.data);
 			}, function(error){
 				console.log(error.statusText);
 			});
 		},
 		makePagination: function(data){
-			this.$set(this, 'allPages', data.headers.get('x-wp-totalpages'));
+			const vm = this;
+
+			vm.$set(vm, 'allPages', data.headers.get('x-wp-totalpages'));
 			
 			//Setup prev page
-			if(this.currentPage > 1){
-				this.$set(this, 'prev_page', this.currentPage - 1);
+			if(vm.currentPage > 1){
+				vm.$set(vm, 'prev_page', vm.currentPage - 1);
 			} else {
-				this.$set(this, 'prev_page', null);
+				vm.$set(vm, 'prev_page', null);
 			}
 
 			// Setup next page
-			if(this.currentPage == this.allPages){
-				this.$set(this, 'next_page', null);
+			if(vm.currentPage == vm.allPages){
+				vm.$set(vm, 'next_page', null);
 			} else {
-				this.$set(this, 'next_page', this.currentPage + 1);
+				vm.$set(vm, 'next_page', vm.currentPage + 1);
 			}
 		}
 	},
 	computed: {
 		filteredPosts: function(){
-			return this.posts.filter((post) => {
-				return post.title.rendered.match(this.search)
+			const vm = this;
+
+			return vm.posts.filter((post) => {
+				return post.title.rendered.match(vm.search)
 			})
-			return this.posts.filter((post) => {
-				if ( this.categoryFilter ) {
-					return post.product_type.indexOf(this.categoryFilter) > -1
+			return vm.posts.filter((post) => {
+				if ( vm.categoryFilter ) {
+					return post.product_type.indexOf(vm.categoryFilter) > -1
 				} else {
 					return post
 				}

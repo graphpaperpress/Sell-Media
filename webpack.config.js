@@ -1,10 +1,11 @@
 let webpack = require('webpack');
 let path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
 
-  entry: ['./src/js/main.js', './src/js/sell_media.js', './src/js/sell_media_lightbox.js', './src/js/macy.min.js', './src/sass/sell_media.scss'],
+  entry: ['./src/js/main.js', './src/js/sell_media.js', './src/js/macy.min.js', './src/sass/sell_media.scss'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'js/sell_media.min.js',
@@ -72,7 +73,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
   },
   performance: {
     hints: false
