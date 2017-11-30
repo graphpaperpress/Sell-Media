@@ -10,23 +10,20 @@ Vue.use( VueRouter )
 Vue.use( VueResource )
 Vue.use( VueCookie )
 
-Vue.config.debug = true;
-Vue.config.devTools = true;
-
 // import all vue components
 // import FilteredItems from './components/FilteredItems.vue'
 // Vue.component( 'FilteredItems', FilteredItems )
 import Lightbox from '../components/Lightbox.vue'
 
-//Create main vue component
+// create main vue component
 const App = Vue.extend( {
 	template: '<main><router-view></router-view></main>',
 	computed: {
 	}
 } );
 
-//Define route for vue app
-//ref : http://router.vuejs.org/en/
+// define route for vue app
+// ref : http://router.vuejs.org/en/
 const router = new VueRouter( {
 	mode: 'history',
 	routes: [
@@ -38,17 +35,12 @@ const router = new VueRouter( {
 	]
 } );
 
-// window.onload = function () {
-// 	// init vue compotent
-// 	new Vue ( {
-// 		el: '#app',
-// 		router
-// 		//render: h => h(Lightbox)
-// 	} )
-// }
-
+// Init Vue
 window.onload = function () {
 	new App( {
 		router
 	} ).$mount( '#app' );
 }
+
+Vue.config.debug = true;
+Vue.config.devTools = true;

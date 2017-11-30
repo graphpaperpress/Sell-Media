@@ -133,6 +133,11 @@ class SellMediaLayouts {
 			$classes[] = $this->settings->layout;
 		}
 
+		// Style
+		if ( isset( $this->settings->style ) ) {
+			$classes[] = 'sell-media-style-' . $this->settings->style;
+		}
+
 		// Gallery
 		if ( is_singular( 'sell_media_item' ) && sell_media_has_multiple_attachments( $post->ID ) ) {
 			$classes[] = 'sell-media-gallery-page';

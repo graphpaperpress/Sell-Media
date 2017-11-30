@@ -17,7 +17,8 @@
 	export default {
 
 		mounted: function() {
-			this.getPosts()
+			this.getPosts();
+			this.hasLightbox();
 		},
 
 		data: function() {
@@ -46,6 +47,13 @@
 				}, function(error){
 					console.log(error.statusText);
 				});
+			},
+			hasLightbox: function() {
+				const vm = this;
+				let json = vm.$cookie.get('sell_media_lightbox')
+				if ( ! json ) {
+					vm.$set(vm, 'title', vm.title_empty)
+				}
 			},
 			emptyLightbox: function() {
 				const vm = this;

@@ -57,12 +57,6 @@ function sell_media_scripts( $hook ) {
 		);
 	}
 
-	if ( isset( $settings->style ) && '' !== $settings->style ) {
-		wp_enqueue_style( 'sell_media_style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-' . $settings->style . '.css', array( 'sell_media' ), SELL_MEDIA_VERSION );
-	} else {
-		wp_enqueue_style( 'sell_media_style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-light.css', array( 'sell_media' ), SELL_MEDIA_VERSION );
-	}
-
 	wp_localize_script( 'sell_media', 'sell_media', array(
 		'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
 		'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
