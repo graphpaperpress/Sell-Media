@@ -1,7 +1,6 @@
 let webpack = require('webpack');
 let path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
 
@@ -82,6 +81,9 @@ module.exports = {
   },
   performance: {
     hints: false
+  },
+  externals: {
+    "jquery": "jQuery" // loaded in wp, external to webpack
   },
   devtool: '#eval-source-map'
 }
