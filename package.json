@@ -45,5 +45,10 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --watch",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --watch"
+  },
+  "dependencies": {
+    "bulma": "^0.6.1",
+    "macy": "^2.3.0",
+    "parsleyjs": "^2.8.0"
   }
 }
