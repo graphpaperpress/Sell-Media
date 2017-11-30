@@ -92,7 +92,7 @@
     $(this).next().toggle();
   });
 
-  //$('#sell-media-pricelist-form, #sell-media-new-pricelist-form').parsley();
+  $('#sell-media-pricelist-form, #sell-media-new-pricelist-form').parsley();
 
   // Delete Pricelist.
   $(document).on( 'click', '.tab-price-lists .deletion', function(e){
