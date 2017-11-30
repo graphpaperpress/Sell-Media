@@ -1,14 +1,16 @@
 <template>
-	<div>
+	<div id="sell-media-lightbox">
 		<p v-on:click="emptyLightbox" class="empty-lightbox" v-bind:title="title">{{ title }}</p>
-		<article v-if="posts" v-for="post in posts" class="post">
-			<a v-bind:href="post.link" v-bind:title="post.title.rendered">
-				<img v-bind:src="post.media_details.sizes.medium_large.source_url">
-				<div class="post-content">
-					<h2>{{ post.title.rendered }}</h2>
-				</div>
-			</a>
-		</article>
+		<section>
+			<figure v-if="posts" v-for="post in posts">
+				<a v-bind:href="post.link" v-bind:title="post.title.rendered">
+					<img v-bind:src="post.media_details.sizes.medium_large.source_url">
+					<figcaption>
+						<h2>{{ post.title.rendered }}</h2>
+					</figcaption>
+				</a>
+			</figure>
+		</section>
 	</div>
 </template>
 

@@ -1,4 +1,4 @@
-<template id="filtered-items">
+<template>
 	<div class="container">
 		<h3>{{label_search}}</h3>
 		<input type="text" v-model="search" placeholder="Search title.."/>
