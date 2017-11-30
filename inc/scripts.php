@@ -26,12 +26,11 @@ function sell_media_scripts( $hook ) {
 	$checkout_page = empty( $settings->checkout_page ) ? '' : $settings->checkout_page;
 	$test_mode = empty( $settings->test_mode ) ? false : $settings->test_mode;
 
-	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media.min.js', array( 'jquery' ), SELL_MEDIA_VERSION );
-	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/css/sell_media.min.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
+	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
 
 	// Masonry
 	if ( is_customize_preview() || ( isset( $settings->thumbnail_layout ) && 'sell-media-masonry' === $settings->thumbnail_layout ) ) {
-		wp_enqueue_script( 'sell_media_masonry', SELL_MEDIA_PLUGIN_URL . 'js/macy.min.js', array( 'jquery' ), SELL_MEDIA_VERSION, true );
 		wp_add_inline_script( 'sell_media_masonry', '
 
 			var galleries = document.querySelectorAll(".sell-media-grid-item-masonry-container");

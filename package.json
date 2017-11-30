@@ -52,6 +52,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --watch"
   },
   "dependencies": {
-    "browser-sync": "^2.18.13"
+    "browser-sync": "^2.18.13",
+    "parsleyjs": "^2.8.0"
   }
 }

@@ -77,12 +77,9 @@ class Sell_Media_Price_Listings {
 		if ( ! isset( $current_screen->id ) || 'sell_media_item_page_' . $this->menu_slug !== $current_screen->id ) {
 			return;
 		}
-		wp_enqueue_script( 'sell-media-parsley', plugins_url( 'js/parsley.min.js' , dirname( __FILE__ ) ), array( 'jquery' ), false, true );
-		wp_enqueue_script( 'sell-media-price-listings', plugins_url( 'js/sell-media-price-listings.js' , dirname( __FILE__ ) ), array( 'jquery', 'sell-media-parsley', 'wp-util' ), false, true );
+		wp_enqueue_script( 'sell-media-price-listings', plugins_url( 'dist/js/sell_media_admin_price_listings.js' , dirname( __FILE__ ) ), array( 'jquery', 'wp-util' ), false, true );
 		$translation_array = apply_filters( 'sell_media_price_listings_localize_data', array() );
 		wp_localize_script( 'sell-media-price-listings', 'sell_media_price_listings', $translation_array );
-
-		wp_enqueue_style( 'sell-media-price-listings', plugins_url( 'css/sell_media_price_listings.css', dirname( __FILE__ ) ) );
 	}
 	/**
 	 * Content for pricelists page.

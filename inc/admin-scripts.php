@@ -24,8 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function sell_media_admin_scripts( $hook ) {
 
 	if ( sell_media_is_sell_media_post_type_page() || 'post.php' == $hook || 'post-new.php' == $hook ) {
-		wp_enqueue_style( 'sell_media-admin', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-admin.css', array( 'thickbox' ), SELL_MEDIA_VERSION );
-		wp_enqueue_script( 'sell_media-admin-items', SELL_MEDIA_PLUGIN_URL . 'js/admin-items.js', array( 'jquery', 'inline-edit-post' ), SELL_MEDIA_VERSION );
+		wp_enqueue_style( 'sell_media-admin', SELL_MEDIA_PLUGIN_URL . 'dist/css/sell_media_admin.css', array(), SELL_MEDIA_VERSION );
+		wp_enqueue_script( 'sell_media-admin', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media_admin.js', array( 'jquery', 'inline-edit-post' ), SELL_MEDIA_VERSION );
 
 		wp_register_script( 'sell_media-admin-media-uploader', SELL_MEDIA_PLUGIN_URL . 'js/admin-media-uploader.js', array( 'jquery', 'plupload-handlers' ), SELL_MEDIA_VERSION );
 
@@ -33,8 +33,7 @@ function sell_media_admin_scripts( $hook ) {
 			'ajax' => admin_url( 'admin-ajax.php' ),
 			'drag_drop_nonce' => wp_create_nonce( 'sell-media-drag-drop-nonce' )
 		);
-		wp_localize_script( 'sell_media-admin-media-uploader', 'sell_media_drag_drop_uploader', $translation_array );
-		wp_enqueue_script( 'sell_media-admin-media-uploader' );
+		wp_localize_script( 'sell_media-admin', 'sell_media_drag_drop_uploader', $translation_array );
 
 		if ( sell_media_is_license_page() || sell_media_is_license_term_page() ) {
 			wp_enqueue_script( 'jquery-ui-slider' );

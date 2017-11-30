@@ -57,7 +57,7 @@
 		},
 	}
 
-  var defualt_listing_args = {
+  var default_listing_args = {
 		add_button : '#sell-media-add-button',
 		delete_button: '.sell-media-price-group-delete-term',
 		wp_template : 'sm-download-group-post',
@@ -67,20 +67,20 @@
       $('[name=deleted_term_ids]').val( new_value )
     }
 	}
-  if( 'undefined' !== typeof( sell_media_price_listings['price-group'] ) ){
-    var defualt_listing_args = $.extend( {}, defualt_listing_args, {
+  if( 'undefined' !== typeof( sell_media_price_listings ) && 'undefined' !== typeof( sell_media_price_listings['price-group'] ) ){
+    var default_listing_args = $.extend( {}, default_listing_args, {
       wrapper_element : 'table#sell-media-price-table.tax-price-group tbody',
       data: sell_media_price_listings['price-group'],
     } );
-    sell_media_price_listing.init( defualt_listing_args );
+    sell_media_price_listing.init( default_listing_args );
   }
 
-  if( 'undefined' !== typeof( sell_media_price_listings['reprints-price-group'] ) ){
-    var defualt_listing_args = $.extend( {}, defualt_listing_args, {
+  if( 'undefined' !== typeof( sell_media_price_listings ) && 'undefined' !== typeof( sell_media_price_listings['reprints-price-group'] ) ){
+    var default_listing_args = $.extend( {}, default_listing_args, {
       wrapper_element : 'table#sell-media-price-table.tax-reprints-price-group tbody',
       data: sell_media_price_listings['reprints-price-group'],
     } );
-    sell_media_price_listing.init( defualt_listing_args );
+    sell_media_price_listing.init( default_listing_args );
   }
 
   $( '.tab-price-lists select' ).change( function(){
@@ -92,7 +92,7 @@
     $(this).next().toggle();
   });
 
-  $('#sell-media-pricelist-form, #sell-media-new-pricelist-form').parsley();
+  //$('#sell-media-pricelist-form, #sell-media-new-pricelist-form').parsley();
 
   // Delete Pricelist.
   $(document).on( 'click', '.tab-price-lists .deletion', function(e){

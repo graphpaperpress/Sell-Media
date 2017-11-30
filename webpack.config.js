@@ -5,10 +5,14 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
 
-  entry: ['./src/js/main.js', './src/js/sell_media.js', './src/js/macy.min.js', './src/sass/sell_media.scss'],
+  entry: {
+    sell_media: ['./src/js/main.js', './src/js/public.js', './src/js/public-macy.js', './src/sass/public.scss'],
+    sell_media_admin: ['./src/js/admin.js', './src/js/admin-media-uploader.js', './src/sass/admin.scss', './src/sass/admin-price-listings.scss'],
+    sell_media_admin_price_listings: ['./src/js/admin-parsley.js', './src/js/admin-price-listings.js'],
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'js/sell_media.min.js',
+    filename: 'js/[name].js',
   },
   module: {
     rules: [
@@ -60,7 +64,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: 'css/sell_media.min.css',
+      filename: 'css/[name].css',
       allChunks: true,
     }),
   ],
