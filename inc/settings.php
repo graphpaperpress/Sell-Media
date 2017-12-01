@@ -111,7 +111,7 @@ function sell_media_init_settings() {
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",
 			"type" => "select",
-			"default" => 1,
+			"default" => 0,
 			"valid_options" => array(
 				1 => array(
 					'name' => 1,
