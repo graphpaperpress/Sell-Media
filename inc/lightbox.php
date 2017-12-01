@@ -80,25 +80,31 @@ function sell_media_get_lightbox_state( $item ) {
  *
  * @since 1.9.2
  */
+// function sell_media_lightbox_shortcode() {
+// 	ob_start();
+// 	echo '<div id="sell-media-lightbox-content" class="sell-media">';
+
+// 	do_action( 'sell_media_before_lightbox_item_container' );
+
+// 	echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+// 	echo sell_media_lightbox_query();
+// 	echo '</div>';
+
+// 	do_action( 'sell_media_after_lightbox_item_container' );
+
+// 	echo '</div>';
+
+// 	$html = ob_get_contents();
+// 	ob_end_clean();
+// 	return apply_filters( 'sell_media_lightbox', $html );
+// }
+// add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
+
 function sell_media_lightbox_shortcode() {
-	ob_start();
-	echo '<div id="sell-media-lightbox-content" class="sell-media">';
-
-	do_action( 'sell_media_before_lightbox_item_container' );
-
-	echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
-	echo sell_media_lightbox_query();
-	echo '</div>';
-
-	do_action( 'sell_media_after_lightbox_item_container' );
-
-	echo '</div>';
-
-	$html = ob_get_contents();
-	ob_end_clean();
-	return apply_filters( 'sell_media_lightbox', $html );
+	echo '<div id="app"></div>';
 }
 add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
+
 
 /**
  * Added html to remove lightbox items before lightbox container.

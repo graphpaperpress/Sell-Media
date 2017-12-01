@@ -1,20 +1,17 @@
 <template>
 	<div id="sell-media-lightbox">
 		<p v-on:click="emptyLightbox" class="empty-lightbox" v-bind:title="title">{{ title }}</p>
-		<section>
-			<figure v-if="posts" v-for="post in posts">
-				<a v-bind:href="post.link" v-bind:title="post.title.rendered">
-					<img v-bind:src="post.media_details.sizes.medium_large.source_url">
-					<figcaption>
-						<h2>{{ post.title.rendered }}</h2>
-					</figcaption>
-				</a>
-			</figure>
-		</section>
+		<div>
+		<div class="columns is-multiline">
+			<post v-for="post in posts" v-bind:p="post"></post>
+		</div>
+	</div>
 	</div>
 </template>
 
 <script>
+
+	import Post from './Post.vue';
 
 	export default {
 
@@ -60,5 +57,9 @@
 				vm.$set(vm, 'posts', {})
 			}
 		},
+
+		components: {
+            'post': Post
+        }
 	}
 </script>

@@ -37,9 +37,11 @@ const router = new VueRouter( {
 
 // Init Vue
 window.onload = function () {
-	new App( {
-		router
-	} ).$mount( '#app' );
+	new Vue({
+		el: '#app',
+		router,
+		render: h => h(Lightbox)
+	})
 }
 
 Vue.config.debug = true;
