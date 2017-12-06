@@ -25,8 +25,10 @@ function sell_media_scripts( $hook ) {
 	$settings = sell_media_get_plugin_options();
 	$checkout_page = empty( $settings->checkout_page ) ? '' : $settings->checkout_page;
 	$test_mode = empty( $settings->test_mode ) ? false : $settings->test_mode;
+	$post_type_data = get_post_type_object( 'sell_media_item' );
+	$post_type_slug = $post_type_data->rewrite['slug'];
 
-	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION );
+	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION, true );
 	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
 
 	// Masonry
@@ -61,7 +63,13 @@ function sell_media_scripts( $hook ) {
 		'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
 		'site_name' => esc_html( get_bloginfo( 'name' ) ),
 		'site_url' => esc_url( site_url() ),
-		'checkout_url' => esc_url( get_permalink( $checkout_page ) ),
+		'archive_path' => esc_attr( $post_type_slug ),
+		'checkout_path' => sell_media_get_relative_permalink( $settings->checkout_page ),
+		'thanks_path' => sell_media_get_relative_permalink( $settings->thanks_page ),
+		'dashboard_path' => sell_media_get_relative_permalink( $settings->dashboard_page ),
+		'login_path' => sell_media_get_relative_permalink( $settings->login_page ),
+		'search_path' => sell_media_get_relative_permalink( $settings->search_page ),
+		'lightbox_path' => sell_media_get_relative_permalink( $settings->lightbox_page ),
 		'currency_symbol' => empty( $settings->currency ) ? 'USD' : $settings->currency,
 		'dashboard_page' => empty( $settings->dashboard_page ) ? '' : esc_url( get_permalink( $settings->dashboard_page ) ),
 		'error' => array(

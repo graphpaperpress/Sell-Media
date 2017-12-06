@@ -77,7 +77,12 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    proxy: {
+      "**": "http://sell-media.local"
+    }
   },
   performance: {
     hints: false

@@ -249,7 +249,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/mime-types.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/scripts.php';
-			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/shortcodes.php';
+			//require_once SELL_MEDIA_PLUGIN_DIR . '/inc/shortcodes.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/template-tags.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/term-meta.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/widgets.php';
@@ -259,6 +259,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-meta-migrate.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-updater.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-markup.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/api.php';
 
 			// Load files if is front end.
 			if ( self::$instance->is_request( 'frontend' ) ) {

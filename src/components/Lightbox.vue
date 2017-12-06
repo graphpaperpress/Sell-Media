@@ -1,35 +1,35 @@
 <template>
-	<div id="sell-media-lightbox">
+	<div id="lightbox">
 		<p v-on:click="emptyLightbox" class="empty-lightbox" v-bind:title="title">{{ title }}</p>
 		<div>
-		<div class="columns is-multiline">
-			<post v-for="post in posts" v-bind:p="post"></post>
+			<div class="columns is-multiline">
+				<media v-for="media in medias" v-bind:m="media"></media>
+			</div>
 		</div>
-	</div>
 	</div>
 </template>
 
 <script>
 
-	import Post from './Post.vue';
+	import Media from './Media.vue'
 
 	export default {
 
 		mounted: function() {
-			this.getPosts();
+			this.getMedias()
 		},
 
 		data: function() {
 			return {
-				posts: {},
-				post: '',
+				medias: {},
+				media: '',
 				title: sell_media.lightbox_labels.remove_all,
 				title_empty: sell_media.lightbox_labels.empty,
 			}
 		},
 
 		methods: {
-			getPosts: function() {
+			getMedias: function() {
 				const vm = this;
 				let json = vm.$cookie.get('sell_media_lightbox')
 				if ( ! json ) {
@@ -41,25 +41,30 @@
 						attachment_ids.push(value.attachment_id)
 					}
 					vm.$http.get( '/wp-json/wp/v2/media', {
-						params: { per_page: 100, page: 1, include: attachment_ids }
+						params: {
+							per_page: 100,
+							page: 1,
+							include: attachment_ids
+						}
 					} )
 					.then(function(response){
-						vm.posts = response.data
-					}, function(error){
-						console.log(error.statusText);
-					});
+						vm.medias = response.data
+					})
+					.catch(function(error){
+						console.log(error)
+					})
 				}
 			},
 			emptyLightbox: function() {
 				const vm = this;
 				vm.$cookie.delete('sell_media_lightbox')
 				vm.title = vm.title_empty
-				vm.$set(vm, 'posts', {})
+				vm.$set(vm, 'medias', {})
 			}
 		},
 
 		components: {
-            'post': Post
+            'Media': Media
         }
 	}
 </script>

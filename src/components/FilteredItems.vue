@@ -84,23 +84,30 @@ export default {
             vm.currentPage = pageNumber;
 
 			vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-				params: { per_page: vm.postPerPage, page: pageNumber, _embed: null }
-			} )
+				params: {
+					per_page: vm.postPerPage,
+					page: pageNumber,
+					_embed: null
+				}
+			})
 			.then(function(response){
 				vm.$set(vm, 'posts', response.data);
 				vm.makePagination(response);
-			}, function(error){
-				console.log(error.statusText);
-			});
+			}
+			.catch(function(error){
+				console.log(error)
+			})
 		},
 		getCategories: function(){
 			const vm = this;
 
-			vm.$http.get('/wp-json/wp/v2/collection').then(function(response){
+			vm.$http.get('/wp-json/wp/v2/collection')
+			.then(function(response){
 				vm.$set(vm, 'categories', response.data);
-			}, function(error){
-				console.log(error.statusText);
-			});
+			}
+			.catch(function(error){
+				console.log(error);
+			}
 		},
 		makePagination: function(data){
 			const vm = this;
