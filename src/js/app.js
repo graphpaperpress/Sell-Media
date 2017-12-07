@@ -16,15 +16,17 @@ import App from '../components/App.vue'
 // import AppNav from './components/Nav.vue';
 // Vue.component( 'app-nav', AppNav );
 import Archive from '../components/Archive.vue'
-Vue.component( 'sell-media-archive', Archive )
+Vue.component( 'sm-archive', Archive )
 import Lightbox from '../components/Lightbox.vue'
-Vue.component( 'sell-media-lightbox', Lightbox )
+Vue.component( 'sm-lightbox', Lightbox )
 import Checkout from '../components/Checkout.vue'
-Vue.component( 'sell-media-checkout', Checkout )
+Vue.component( 'sm-checkout', Checkout )
 import Item from '../components/Item.vue'
-Vue.component( 'sell-media-item', Item )
+Vue.component( 'sm-item', Item )
+import Attachment from '../components/Attachment.vue'
+Vue.component( 'sm-attachment', Attachment )
 import NotFound from '../components/NotFound.vue'
-Vue.component( 'sell-media-not-found', NotFound )
+Vue.component( 'sm-not-found', NotFound )
 
 // define routes
 const router = new VueRouter( {
@@ -33,6 +35,7 @@ const router = new VueRouter( {
 
 		{ path: '/' + sell_media.archive_path + '/:page(\\d+)?', name: 'archive', component: Archive },
 		{ path: '/' + sell_media.archive_path + '/:slug', name: 'item', component: Item },
+		{ path: '/' + sell_media.archive_path + '/:prefix/:slug', name: 'attachment', component: Attachment },
 		{ path: '/' + sell_media.checkout_path, name: 'checkout', component: Checkout },
 		{ path: '/' + sell_media.lightbox_path, name: 'lightbox', component: Lightbox },
 		{ path: '*', component: NotFound },

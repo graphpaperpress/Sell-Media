@@ -1,8 +1,10 @@
 <template>
-	<div id="sell-media" >
-		<!-- <app-nav></app-nav> -->
-		<router-view></router-view>
-	</div>
+	<section class="section">
+		<div id="sell-media" class="sell-media container">
+			<!-- <app-nav></app-nav> -->
+			<router-view></router-view>
+		</div>
+	</section>
 </template>
 
 <script>

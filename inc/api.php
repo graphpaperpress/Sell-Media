@@ -97,10 +97,13 @@ function sell_media_api_get_attachments( $object, $field_name, $request ) {
 	foreach ( $attachment_ids as $key => $value ) {
 		$attachment_array[ $key ]['id'] = absint( $value );
 		$attachment_array[ $key ]['title'] = get_the_title( $value );
+		$attachment_array[ $key ]['alt'] = get_post_meta( $value, '_wp_attachment_image_alt', true );
 		$attachment_array[ $key ]['url'] = get_permalink( $value );
 		$attachment_array[ $key ]['slug'] = get_post_field( 'post_name', $value );
 		$attachment_array[ $key ]['type'] = get_post_mime_type( $value );
 		$attachment_array[ $key ]['keywords'] = wp_get_post_terms( $value, 'keywords', array( 'fields' => 'names' ) );
+		$attachment_array[ $key ]['file'] = wp_get_attachment_url( $value );
+		$attachment_array[ $key ]['embed'] = get_post_meta( $object['id'], 'sell_media_embed_link', true ); // we might want to consider setting this meta on attachment instead. Use case: Video galleries.
 
 		// set sizes
 		$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset' );

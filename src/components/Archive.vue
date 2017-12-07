@@ -1,7 +1,7 @@
 <template>
-	<div v-bind:id="name">
+	<div v-bind:id="name" v-bind:class="name">
 		<div class="columns is-multiline" v-if="loaded === true">
-			<grid-item v-for="post in posts" v-bind:key="post.slug" v-bind:p="post"></grid-item>
+			<sm-grid-item v-for="post in posts" v-bind:key="post.slug" v-bind:p="post"></sm-grid-item>
 		</div>
 		<nav class="pagination">
 			<button class="button" v-if="showPrev" v-on:click.prevent="showPrevPage()">Previous</button>
@@ -105,7 +105,7 @@
 		},
 
 		components: {
-			'grid-item': GridItem // grid-item = component html tag, GridItem = component object
+			'sm-grid-item': GridItem // grid-item = component html tag, GridItem = component object
 		}
 	}
 </script>
