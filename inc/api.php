@@ -39,10 +39,10 @@ function sell_media_extend_rest_post_response() {
 		)
 	);
 
-	register_rest_field( 'post',
-		'cat_name', //NAME OF THE NEW FIELD TO BE ADDED - you can call this anything
+	register_rest_field( 'sell_media_item',
+		'sell_media_attachments',
 		array(
-			'get_callback'    => 'rt_get_cat_name',
+			'get_callback'    => 'sell_media_api_get_attachments',
 			'update_callback' => null,
 			'schema'          => null,
 			 )
@@ -86,6 +86,29 @@ function sell_media_api_get_image_src( $object, $field_name, $request ) {
 	}
 
 	return ( is_array( $img_array ) ) ? $img_array : '';
+}
+
+function sell_media_api_get_attachments( $object, $field_name, $request ) {
+	$attachment_ids = get_post_meta( $object['id'], '_sell_media_attachment_id', true );
+	if ( empty( $attachment_ids ) ) {
+		return;
+	}
+
+	foreach ( $attachment_ids as $key => $value ) {
+		$attachment_array[ $key ]['id'] = absint( $value );
+		$attachment_array[ $key ]['title'] = get_the_title( $value );
+		$attachment_array[ $key ]['url'] = get_permalink( $value );
+		$attachment_array[ $key ]['slug'] = get_post_field( 'post_name', $value );
+		$attachment_array[ $key ]['type'] = get_post_mime_type( $value );
+		$attachment_array[ $key ]['keywords'] = wp_get_post_terms( $value, 'keywords', array( 'fields' => 'names' ) );
+
+		// set sizes
+		$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset' );
+		foreach ( $sizes as $size ) {
+			$attachment_array[ $key ]['sizes'][ $size ] = wp_get_attachment_image_src( $value, $size, false );
+		}
+	}
+	return ( is_array( $attachment_array ) ) ? (array) $attachment_array : '';
 }
 
 /**
