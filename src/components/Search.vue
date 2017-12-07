@@ -12,7 +12,7 @@
         methods: {},
         data: function(){
             return {
-                variable: 'I am the checkout page'
+                variable: 'I am the search page'
             }
         },
         components: {}

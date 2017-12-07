@@ -87,7 +87,7 @@ export default {
 				params: {
 					per_page: vm.postPerPage,
 					page: pageNumber,
-					_embed: null
+					_embed: true
 				}
 			})
 			.then(function(response){

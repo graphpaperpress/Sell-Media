@@ -63,6 +63,7 @@ function sell_media_scripts( $hook ) {
 		'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
 		'site_name' => esc_html( get_bloginfo( 'name' ) ),
 		'site_url' => esc_url( site_url() ),
+		'posts_per_page' => get_option( 'posts_per_page', 9 ),
 		'archive_path' => esc_attr( $post_type_slug ),
 		'checkout_path' => sell_media_get_relative_permalink( $settings->checkout_page ),
 		'thanks_path' => sell_media_get_relative_permalink( $settings->thanks_page ),

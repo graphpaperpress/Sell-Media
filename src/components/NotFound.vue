@@ -12,7 +12,7 @@
         methods: {},
         data: function(){
             return {
-                variable: 'I am the thanks page'
+                variable: 'Not found'
             }
         },
         components: {}

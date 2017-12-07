@@ -1,58 +1,110 @@
 <template>
-	<div class="columns is-multiline">
-		<item v-for="item in items" v-bind:i="item"></item>
+	<div v-bind:id="name">
+		<div class="columns is-multiline" v-if="loaded === true">
+			<grid-item v-for="post in posts" v-bind:key="post.slug" v-bind:p="post"></grid-item>
+		</div>
+		<nav class="pagination">
+			<button class="button" v-if="showPrev" v-on:click.prevent="showPrevPage()">Previous</button>
+			<span> {{ currentPage }} / {{ totalPages }} </span>
+			<button class="button" v-if="showNext" v-on:click.prevent="showNextPage()">Next</button>
+		</nav>
 	</div>
 </template>
 
 <script>
 
-	import Item from './Item.vue';
+	import GridItem from './GridItem.vue';
 
 	export default {
 
 		mounted: function() {
-			this.getItems();
+			const vm = this;
+
+			if ( vm.$route.params.page ) {
+				vm.getPosts( vm.$route.params.page );
+			} else {
+				vm.getPosts();
+			}
+
 		},
 
 		data: function() {
 			return {
-				items: {},
-				item: '',
-				page: 1,
-				per_page: 10,
+				posts: {},
+				currentPage: '',
+				prevPage: '',
+				nextPage: '',
+				showNext: true,
+				showPrev: true,
+				postCollection: '',
+				postPerPage: sell_media.posts_per_page,
+				totalPages: '',
+				loaded: false,
+				pageTitle: '',
+				name: this.$options.name // component name
 			}
 		},
 
 		methods: {
-			getItems: function() {
+			getPosts: function( pageNumber = 1 ) {
 				const vm = this;
+				vm.loaded = false;
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
-						per_page: vm.per_page,
-						page: vm.page,
-						_embed: true
+						per_page: vm.postPerPage,
+						page: pageNumber
 					}
 				} )
-				.then(function(response){
-					vm.items = response.data
-					console.log(vm.items)
-				})
-				.catch(function(error){
-					console.log(error)
-				})
+				.then( ( res ) => {
+					vm.posts = res.data;
+					vm.totalPages = res.headers[ 'x-wp-totalpages' ];
+
+					if ( pageNumber <= parseInt( vm.totalPages ) ) {
+						vm.currentPage = parseInt( pageNumber );
+					} else {
+						vm.$router.push( { 'name': 'archive' } );
+						vm.currentPage = 1;
+					}
+
+					vm.loaded = true;
+					vm.pageTitle = 'Archive';
+					vm.$store.commit( 'smChangeTitle', vm.pageTitle );
+
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
 			},
-			nextPage: function() {
-				const vm = this
-				vm.$set(vm, 'page', vm.page + 1)
+			showNextPage: function( event ) {
+				const vm = this;
+
+				if ( vm.currentPage < vm.totalPages ) {
+					showNext: true;
+					vm.currentPage = vm.currentPage + 1;
+					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
+				}
 			},
-			prevPage: function() {
-				const vm = this
-				vm.$set(vm, 'page', vm.page - 1)
+			showPrevPage: function( event ) {
+				const vm = this;
+
+				if ( vm.currentPage != 1 ) {
+					showPrev: true;
+					vm.currentPage = vm.currentPage - 1;
+					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
+				}
+			},
+		},
+
+		watch: {
+
+			'$route'( to, from ) {
+				this.getPosts( this.$route.params.page );
 			}
+
 		},
 
 		components: {
-			'Item': Item
+			'grid-item': GridItem // grid-item = component html tag, GridItem = component object
 		}
 	}
 </script>

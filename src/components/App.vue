@@ -1,7 +1,7 @@
 <template>
-	<div id="sell-media">
+	<div id="sell-media" >
 		<!-- <app-nav></app-nav> -->
-		<main><router-view></router-view></main>
+		<router-view></router-view>
 	</div>
 </template>
 
