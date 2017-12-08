@@ -104,6 +104,7 @@ function sell_media_scripts( $hook ) {
 		'save_text' => esc_html__( 'Save to Lightbox', 'sell_media' ),
 		'text_lightbox_remove_all' => esc_html__( 'Remove all', 'sell_media' ),
 		'text_lightbox_empty' => esc_html__( 'Your lightbox is empty.', 'sell_media' ),
+		'quick_view_label' => esc_html__( 'Quick View', 'sell_media' ),
 		'search_labels' => array(
 			'search' => esc_html__( 'Search', 'sell_media' ),
 			'no_results' => esc_html__( 'No results', 'sell_media' ),

@@ -12,25 +12,25 @@ Vue.use( Vuex )
 Vue.use( VueAxios, axios )
 
 // import and register components
-import App from '../components/App.vue'
+import Main from '../components/Main.vue'
 // import AppNav from './components/Nav.vue';
 // Vue.component( 'app-nav', AppNav );
-import Archive from '../components/Archive.vue'
+import Archive from '../components/pages/Archive.vue'
 Vue.component( 'sm-archive', Archive )
-import Lightbox from '../components/Lightbox.vue'
+import Lightbox from '../components/pages/Lightbox.vue'
 Vue.component( 'sm-lightbox', Lightbox )
-import Checkout from '../components/Checkout.vue'
+import Checkout from '../components/pages/Checkout.vue'
 Vue.component( 'sm-checkout', Checkout )
-import Item from '../components/Item.vue'
+import Item from '../components/pages/Item.vue'
 Vue.component( 'sm-item', Item )
-import Attachment from '../components/Attachment.vue'
+import Attachment from '../components/pages/Attachment.vue'
 Vue.component( 'sm-attachment', Attachment )
-import Modal from '../components/Modal.vue'
-Vue.component( 'sm-modal', Modal )
-import GridItem from '../components/GridItem.vue'
-Vue.component( 'sm-grid-item', GridItem )
-import NotFound from '../components/NotFound.vue'
+import NotFound from '../components/pages/NotFound.vue'
 Vue.component( 'sm-not-found', NotFound )
+import Modal from '../components/parts/Modal.vue'
+Vue.component( 'sm-modal', Modal )
+import GridItem from '../components/parts/GridItem.vue'
+Vue.component( 'sm-grid-item', GridItem )
 
 // define routes
 const router = new VueRouter( {
@@ -70,5 +70,5 @@ new Vue({
 	el: '#sell-media-app',
 	store,
 	router,
-	render: h => h(App)
+	render: h => h(Main)
 })

@@ -8,7 +8,7 @@
 			<span> {{ currentPage }} / {{ totalPages }} </span>
 			<button class="button" v-if="showNext" v-on:click.prevent="showNextPage()">Next</button>
 		</nav>
-		<sm-action-test v-bind:p="post"/>
+		<sm-action v-bind:p="post"></sm-action>
 	</div>
 </template>
 

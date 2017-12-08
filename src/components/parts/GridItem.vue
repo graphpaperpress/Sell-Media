@@ -5,7 +5,7 @@
 		</router-link>	
 		<h2>{{ p.title.rendered }}</h2>
 		<sm-modal v-if="showModal" @closeModal="showModal = false" v-bind:p="p"></sm-modal>
-		<button @click="showModal = true">Open Modal</button>
+		<button class="button" @click="showModal = true">Quick View</button>
 	</div>
 </template>
 
@@ -17,6 +17,7 @@
 		data: function () {
 			return {
 				showModal: false,
+				quick_view_label: sell_media.quick_view_label
 			}
 		}
     }

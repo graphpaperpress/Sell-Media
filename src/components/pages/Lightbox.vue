@@ -11,7 +11,7 @@
 
 <script>
 
-	import Media from './Media.vue'
+	import Media from '../parts/Media.vue'
 
 	export default {
 

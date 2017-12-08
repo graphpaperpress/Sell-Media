@@ -24,7 +24,7 @@
 
 <script>
 
-	import Gallery from './Gallery.vue';
+	import Gallery from '../parts/Gallery.vue';
 
 	export default {
 
