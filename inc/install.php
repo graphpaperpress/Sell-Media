@@ -285,6 +285,7 @@ function sell_media_register_taxonomies() {
 		'show_tagcloud' => true,
 		'show_admin_column' => true,
 		'show_ui' => false,
+		'show_in_rest' => true,
 		'hierarchical' => true,
 		'rewrite' => true,
 		'query_var' => true,

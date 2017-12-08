@@ -114,6 +114,16 @@ function sell_media_scripts( $hook ) {
 			'save'			=> esc_html__( 'Save to Lightbox', 'sell_media' ),
 			'remove' 		=> esc_html__( 'Remove from Lightbox', 'sell_media' ),
 		),
+		'layout' => empty( $settings->layout ) ? 'sell-media-single-one-col' : $settings->layout,
+		'thumbnail_crop' => empty( $settings->thumbnail_crop ) ? 'medium' : $settings->thumbnail_crop,
+		'thumbnail_layout' => empty( $settings->thumbnail_layout ) ? 'sell-media-three-col' : $settings->thumbnail_layout,
+		'title' => empty( $settings->titles ) ? 0 : $settings->titles,
+		'breadcrumbs' => empty( $settings->breadcrumbs ) ? 0 : $settings->breadcrumbs,
+		'quick_view' => empty( $settings->quick_view ) ? 0 : $settings->quick_view,
+		'file_info' => empty( $settings->file_info ) ? 0 : $settings->file_info,
+		'search_relation' => empty( $settings->search_relation ) ? 'or' : $settings->search_relation,
+		'terms_and_conditions' => empty( $settings->terms_and_conditions ) ? '' : $settings->terms_and_conditions,
+		'plugin_credit' => empty( $settings->plugin ) ? 0 : $settings->plugin_credit,
 		'currencies' => sell_media_currencies(),
 	) );
 

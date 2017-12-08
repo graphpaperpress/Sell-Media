@@ -25,6 +25,10 @@ import Item from '../components/Item.vue'
 Vue.component( 'sm-item', Item )
 import Attachment from '../components/Attachment.vue'
 Vue.component( 'sm-attachment', Attachment )
+import Modal from '../components/Modal.vue'
+Vue.component( 'sm-modal', Modal )
+import GridItem from '../components/GridItem.vue'
+Vue.component( 'sm-grid-item', GridItem )
 import NotFound from '../components/NotFound.vue'
 Vue.component( 'sm-not-found', NotFound )
 

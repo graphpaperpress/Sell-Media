@@ -8,12 +8,11 @@
 			<span> {{ currentPage }} / {{ totalPages }} </span>
 			<button class="button" v-if="showNext" v-on:click.prevent="showNextPage()">Next</button>
 		</nav>
+		<sm-action-test v-bind:p="post"/>
 	</div>
 </template>
 
 <script>
-
-	import GridItem from './GridItem.vue';
 
 	export default {
 
@@ -102,10 +101,6 @@
 				this.getPosts( this.$route.params.page );
 			}
 
-		},
-
-		components: {
-			'sm-grid-item': GridItem // grid-item = component html tag, GridItem = component object
 		}
 	}
 </script>

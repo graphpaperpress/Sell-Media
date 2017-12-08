@@ -12,6 +12,7 @@
 			<img
 				:src="post.sell_media_featured_image.sizes.large[0]" 
 				:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
+				:alt="post.sell_media_featured_image.alt" 
 			/>
 		</template>
 

@@ -48,10 +48,10 @@ function sell_media_extend_rest_post_response() {
 			 )
 	);
 
-	register_rest_field( 'post',
-		'tag_name',
+	register_rest_field( 'sell_media_item',
+		'sell_media_pricing',
 		array(
-			'get_callback'    => 'rt_get_tag_name',
+			'get_callback'    => 'sell_media_api_get_pricing',
 			'update_callback' => null,
 			'schema'          => null,
 			)
@@ -112,6 +112,15 @@ function sell_media_api_get_attachments( $object, $field_name, $request ) {
 		}
 	}
 	return ( is_array( $attachment_array ) ) ? (array) $attachment_array : '';
+}
+
+function sell_media_api_get_pricing( $object, $field_name, $request ) {
+	$attachment_id = sell_media_get_attachment_id( $object['id'] );
+	$products = new SellMediaProducts();
+	$pricing = $products->get_prices( $object['id'], $attachment_id );
+	// remove parent containing term
+	unset( $pricing[1] );
+	return $pricing;
 }
 
 /**
