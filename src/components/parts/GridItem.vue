@@ -1,10 +1,10 @@
 <template>
 	<div class="column is-mobile is-one-third">
-		<router-link :to="{ name: 'item', params: { slug:p.slug }}">
-			<img v-if="p.sell_media_featured_image" v-bind:src="p.sell_media_featured_image.sizes.medium[0]" v-bind:alt="p.alt">
+		<router-link :to="{ name: 'item', params: { slug:post.slug }}">
+			<img v-if="post.sell_media_featured_image" v-bind:src="post.sell_media_featured_image.sizes.medium[0]" v-bind:alt="post.alt">
 		</router-link>	
-		<h2>{{ p.title.rendered }}</h2>
-		<sm-modal v-if="showModal" @closeModal="showModal = false" v-bind:p="p"></sm-modal>
+		<h2>{{ post.title.rendered }}</h2>
+		<modal v-if="showModal" @closeModal="showModal = false" :post="post"></modal>
 		<button class="button" @click="showModal = true">Quick View</button>
 	</div>
 </template>
@@ -12,7 +12,7 @@
 <script>
 	export default {
 
-		props: ['p'],
+		props: ['post'],
 
 		data: function () {
 			return {

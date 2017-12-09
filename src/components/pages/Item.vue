@@ -6,7 +6,7 @@
 
 		<template v-if="attachments && attachments.length > 1">
 			<p class="subtitle">This gallery contains <strong>{{ attachments.length }}</strong> images</p>
-			<sm-gallery v-bind:attachments="attachments" v-bind:prefix="post.slug" v-bind:key="post.slug"></sm-gallery>
+			<gallery v-bind:attachments="attachments" v-bind:prefix="post.slug" v-bind:key="post.slug"></gallery>
 		</template>
 		<template v-else>
 			<img
@@ -75,7 +75,7 @@
 		},
 
 		components: {
-			'sm-gallery': Gallery
+			'gallery': Gallery
 		}
 
 	};

@@ -1,6 +1,7 @@
-let webpack = require('webpack');
 let path = require('path');
+let webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
 
@@ -28,14 +29,15 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-
-            'sass': [
-              'vue-style-loader',
-              'css-loader',
-            ],
-
+            scss: ExtractTextPlugin.extract({
+              use: 'css-loader!sass-loader',
+              fallback: 'vue-style-loader'
+            }),
+            sass: ExtractTextPlugin.extract({
+              use: 'css-loader!sass-loader?indentedSyntax',
+              fallback: 'vue-style-loader'
+            })
           },
-
         },
       },
       {
@@ -77,12 +79,6 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-    proxy: {
-      "**": "http://sell-media.local"
-    }
   },
   performance: {
     hints: false
@@ -108,6 +104,8 @@ if (process.env.NODE_ENV === 'production') {
         warnings: false
       }
     }),
+    // Compress extracted CSS and remove duplicated CSS from different components can be deduped.
+    new OptimizeCSSPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })

@@ -1,14 +1,18 @@
 <template>
 	<div v-bind:id="name" v-bind:class="name">
 		<div class="columns is-multiline" v-if="loaded === true">
-			<sm-grid-item v-for="post in posts" v-bind:key="post.slug" v-bind:p="post"></sm-grid-item>
+			<grid-item v-for="post in posts" v-bind:key="post.slug" v-bind:post="post"></grid-item>
 		</div>
 		<nav class="pagination">
 			<button class="button" v-if="showPrev" v-on:click.prevent="showPrevPage()">Previous</button>
 			<span> {{ currentPage }} / {{ totalPages }} </span>
 			<button class="button" v-if="showNext" v-on:click.prevent="showNextPage()">Next</button>
 		</nav>
-		<sm-action v-bind:p="post"></sm-action>
+
+		<div id="child">
+			<child v-bind:message="name"></child>
+		</div>
+
 	</div>
 </template>
 

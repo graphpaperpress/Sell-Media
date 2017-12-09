@@ -64,7 +64,7 @@
 		},
 
 		components: {
-            'Media': Media
+            'media': Media
         }
 	}
 </script>

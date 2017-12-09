@@ -92,6 +92,7 @@ function sell_media_scripts( $hook ) {
 			'price' => esc_html__( 'Price', 'sell_media' ),
 			'qty' => esc_html__( 'Qty', 'sell_media' ),
 			'sub_total' => esc_html__( 'Subtotal', 'sell_media' ),
+			'add_to_cart' => esc_html__( 'Add to cart', 'sell_media' ),
 			),
 		'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
 		'tax' => empty( $settings->tax ) ? 0 : $settings->tax_rate,

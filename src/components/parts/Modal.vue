@@ -6,32 +6,17 @@
 				<div class="column is-two-thirds">
 					<figure class="image">
 						<img
-							:src="p.sell_media_featured_image.sizes.large[0]" 
-							:data-srcset="p.sell_media_featured_image.sizes.srcset[0]"
-							:alt="p.sell_media_featured_image.alt" 
+							:src="post.sell_media_featured_image.sizes.large[0]" 
+							:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
+							:alt="post.sell_media_featured_image.alt" 
 						/>
 					</figure>
 				</div>
 				<div class="column">
 					<div class="box is-shadowless">
-						<p class="title is-5">{{p.title.rendered}}</p>
+						<p class="title is-5">{{post.title.rendered}}</p>
 
-						<div class="field">
-							<div class="control">
-								<label class="radio">
-									<input type="radio" name="question">
-									Yes
-								</label>
-								<label class="radio">
-									<input type="radio" name="question">
-									No
-								</label>
-							</div>
-						</div>
-
-						<sm-select-size v-bind:key="p.slug" v-bind:p="p"></sm-select-size>
-
-						<button class="button is-primary">Add to cart</button>
+						<cart-form :key="post.slug" :post="post"></cart-form>
 
 					</div>
 				</div>
@@ -43,30 +28,26 @@
 
 <script>
 
-import SelectSize from './SelectSize.vue'
-
 	export default {
 
-		props: ['p'],
+		props: ['post'],
 
 		data: function () {
 			return {
 			}
-		},
-
-		components: {
-			'sm-select-size': SelectSize
 		}
 	}
 </script>
 
-<style lang="sass-loader" scoped>
+<style lang="scss" scoped>
+	
+	// Varaibles
+	$white: #fff;
 
-.modal-content {
-	background: #fff;
-	@media print, screen and (min-width: 769px) {
-		width: 940px;
+	.modal-content {
+		background: $white;
+		@media print, screen and (min-width: 769px) {
+			width: 940px;
+		}
 	}
-}
-
 </style>

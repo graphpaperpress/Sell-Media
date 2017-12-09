@@ -4,33 +4,38 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VeeValidate from 'vee-validate'
 
 // use vue plugins
 Vue.use( VueCookie )
 Vue.use( VueRouter )
 Vue.use( Vuex )
 Vue.use( VueAxios, axios )
+Vue.use( VeeValidate )
 
 // import and register components
 import Main from '../components/Main.vue'
-// import AppNav from './components/Nav.vue';
-// Vue.component( 'app-nav', AppNav );
 import Archive from '../components/pages/Archive.vue'
-Vue.component( 'sm-archive', Archive )
-import Lightbox from '../components/pages/Lightbox.vue'
-Vue.component( 'sm-lightbox', Lightbox )
-import Checkout from '../components/pages/Checkout.vue'
-Vue.component( 'sm-checkout', Checkout )
+Vue.component( 'archive', Archive )
 import Item from '../components/pages/Item.vue'
-Vue.component( 'sm-item', Item )
+Vue.component( 'item', Item )
 import Attachment from '../components/pages/Attachment.vue'
-Vue.component( 'sm-attachment', Attachment )
+Vue.component( 'attachment', Attachment )
+import Lightbox from '../components/pages/Lightbox.vue'
+Vue.component( 'lightbox', Lightbox )
+import Checkout from '../components/pages/Checkout.vue'
+Vue.component( 'checkout', Checkout )
 import NotFound from '../components/pages/NotFound.vue'
-Vue.component( 'sm-not-found', NotFound )
+Vue.component( 'not-found', NotFound )
+
 import Modal from '../components/parts/Modal.vue'
-Vue.component( 'sm-modal', Modal )
+Vue.component( 'modal', Modal )
 import GridItem from '../components/parts/GridItem.vue'
-Vue.component( 'sm-grid-item', GridItem )
+Vue.component( 'grid-item', GridItem )
+import CartForm from '../components/parts/CartForm.vue'
+Vue.component( 'cart-form', CartForm )
+import Tabs from '../components/parts/Tabs.vue'
+Vue.component( 'tabs', Tabs )
 
 // define routes
 const router = new VueRouter( {
