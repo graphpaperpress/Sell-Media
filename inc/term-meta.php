@@ -248,6 +248,14 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 					$related_keywords = explode( ',', $related_keywords );
 					$related_keywords = array_filter( $related_keywords );
 					update_term_meta( $term_id, $key, $related_keywords );
+				} elseif ( 'markup' === $key ) {
+					$markup = trim( wp_filter_nohtml_kses( $_POST['meta_value'][ $key ] ) );
+					$pos = strpos( $markup, '%' );
+					if ( false === $pos ) {
+						$markup .= '%';
+					}
+					update_term_meta( $term_id, $key, $markup );
+
 				} else {
 					$meta_value[$key] = $_POST['meta_value'][$key];
 					update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
