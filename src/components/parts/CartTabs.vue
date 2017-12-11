@@ -3,12 +3,10 @@
     <tabs>
         <tab name="Prints" :selected="true">
             <cart-field-print-size :key="post.slug" :post="post"></cart-field-print-size>
-            <button class="button is-primary">{{ labels.add }}</button>
         </tab>
 
         <tab name="Downloads">
             <cart-field-download-size :key="post.slug" :post="post"></cart-field-download-size>
-            <button class="button is-primary">{{ labels.add }}</button>
         </tab>
     </tabs>
 

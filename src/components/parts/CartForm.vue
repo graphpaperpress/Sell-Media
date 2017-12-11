@@ -6,17 +6,25 @@
 
 			<!-- Add check if subscription -->
 
-			<template v-if="post.sell_media_meta.reprints_sell === 'both'">
+			<template v-if="showFields(post)">
 
-				<cart-tabs :key="post.slug" :post="post"></cart-tabs>
+				<div class="tabs">
+					<ul>
+						<li v-for="field in fields" :class="{ 'is-active': (active == field) }">
+							<a href="javascript:void(0);" @click="activeField(field)">{{ field }}</a>
+						</li>
+					</ul>
+				</div>
 
 			</template>
 
-			<template v-else>
+			<div class="content">
 
-				<cart-field-download-size :key="post.slug" :post="post"></cart-field-download-size>
+				<cart-field-select v-for="field in fields" v-if="active == field" :key="field" :post="post" :field="field"></cart-field-select>
 
-			</template>
+				<button class="button is-black">{{ add }}</button>
+
+			</div>
 
 		</form>
 	
@@ -26,8 +34,7 @@
 
 <script>
 
-	import CartTabs from './CartTabs.vue'
-	import CartFieldDownloadSize from './CartFieldDownloadSize.vue'
+	import CartFieldSelect from './CartFieldSelect.vue'
 
 	export default {
 
@@ -36,30 +43,33 @@
 		data: function() {
 			
 			return {
-
-				form: {
-					type: '',
-					size: '',
-				},
-				labels: {
-					size: sell_media.cart_labels.size,
-					add: sell_media.cart_labels.add_to_cart,
-					required: 'Please make a selection',
-					type: 'Select a product type',
-				}
-
+				fields: ['Prints', 'Downloads'],
+				active: 'Prints',
+				total: 0,
+				size: '',
+				currency_symbol: sell_media.currency_symbol,
+				add: sell_media.cart_labels.add_to_cart,
 			}
 		},
 
 		methods: {
+			showFields: function(post) {
+				if ( post.sell_media_meta.reprints_sell === 'both' ) {
+					return true;
+				}
+			},
+
+			activeField(field) {
+				this.active = field
+			},
+
 			validateForm() {
 
 			}
 		},
 
 		components: {
-			'cart-tabs': CartTabs,
-			'cart-field-download-size': CartFieldDownloadSize
+			'cart-field-select': CartFieldSelect
 		}
 
 	}

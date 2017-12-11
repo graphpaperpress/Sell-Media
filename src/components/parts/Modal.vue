@@ -13,7 +13,8 @@
 					</figure>
 				</div>
 				<div class="column">
-					<div class="box is-shadowless">
+					<div class="cart-form">
+
 						<p class="title is-5">{{post.title.rendered}}</p>
 
 						<cart-form :key="post.slug" :post="post"></cart-form>
@@ -49,5 +50,9 @@
 		@media print, screen and (min-width: 769px) {
 			width: 940px;
 		}
+	}
+
+	.cart-form {
+		margin: 2rem 2rem 2rem .5rem;
 	}
 </style>

@@ -1,3 +1,4 @@
+Vue.config.devtools = true
 import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 import VueRouter from 'vue-router'
@@ -34,8 +35,10 @@ import GridItem from '../components/parts/GridItem.vue'
 Vue.component( 'grid-item', GridItem )
 import CartForm from '../components/parts/CartForm.vue'
 Vue.component( 'cart-form', CartForm )
-import Tabs from '../components/parts/Tabs.vue'
-Vue.component( 'tabs', Tabs )
+// import Tabs from '../components/parts/Tabs.vue'
+// Vue.component( 'tabs', Tabs )
+// import Tab from '../components/parts/Tab.vue'
+// Vue.component( 'tab', Tab )
 
 // define routes
 const router = new VueRouter( {

@@ -22,8 +22,6 @@
 
 	export default {
 
-		props: ['post'],
-
 		data: function() {
 			return {
 				tabs: []
@@ -32,13 +30,14 @@
 
 		created() {
 			this.tabs = this.$children;
-	    },
+			console.log(this.$children);
+		},
 
 	    methods: {
 			selectTab(selectedTab) {
 				this.tabs.forEach(tab => {
-					tab.isActive = (tab.href == selectedTab.href);
-				});
+					tab.isActive = (tab === selectedTab)
+				})
 			}
 		}
 	}

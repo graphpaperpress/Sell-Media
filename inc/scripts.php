@@ -24,6 +24,7 @@ function sell_media_scripts( $hook ) {
 
 	$settings = sell_media_get_plugin_options();
 	$checkout_page = empty( $settings->checkout_page ) ? '' : $settings->checkout_page;
+	$currency = empty( $settings->currency ) ? 'USD' : $settings->currency;
 	$test_mode = empty( $settings->test_mode ) ? false : $settings->test_mode;
 	$post_type_data = get_post_type_object( 'sell_media_item' );
 	$post_type_slug = $post_type_data->rewrite['slug'];
@@ -71,7 +72,8 @@ function sell_media_scripts( $hook ) {
 		'login_path' => sell_media_get_relative_permalink( $settings->login_page ),
 		'search_path' => sell_media_get_relative_permalink( $settings->search_page ),
 		'lightbox_path' => sell_media_get_relative_permalink( $settings->lightbox_page ),
-		'currency_symbol' => empty( $settings->currency ) ? 'USD' : $settings->currency,
+		'currency' => $currency,
+		'currency_symbol' => sell_media_get_currency_symbol( $currency ),
 		'dashboard_page' => empty( $settings->dashboard_page ) ? '' : esc_url( get_permalink( $settings->dashboard_page ) ),
 		'error' => array(
 			'email_exists' => esc_html__( 'Sorry that email already exists or is invalid', 'sell_media' ),
@@ -126,7 +128,7 @@ function sell_media_scripts( $hook ) {
 		'search_relation' => empty( $settings->search_relation ) ? 'or' : $settings->search_relation,
 		'terms_and_conditions' => empty( $settings->terms_and_conditions ) ? '' : $settings->terms_and_conditions,
 		'plugin_credit' => empty( $settings->plugin ) ? 0 : $settings->plugin_credit,
-		'currencies' => sell_media_currencies(),
+		//'currencies' => sell_media_currencies(),
 	) );
 
 	do_action( 'sell_media_scripts_hook' );
