@@ -254,7 +254,7 @@ function sell_media_plugin_setting_callback( $option ) {
     $fieldname = sell_media_get_current_plugin_id() . "_options[ { $optionname } ]";
 
     $attr = $option_parameters[ $option['name'] ];
-    $value = $sell_media_options[ $optionname ];
+    $value = isset( $sell_media_options[ $optionname ] ) ? $sell_media_options[ $optionname ] : '';
 
     //Determine the type of input field
     switch ( $fieldtype ) {
