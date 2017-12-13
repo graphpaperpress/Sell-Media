@@ -6,14 +6,15 @@
 			<label class="label">{{ field }} {{ labels.size }}</label>
 			<div class="control">
 				<div class="select">
-					<select v-model="value" v-validate.initial="'required'">
+					<select v-model="value" v-validate.initial="'required'" @change="activateButton">
+						<option disabled value="">Choose</option>
 						<option v-for="size in post.sell_media_pricing" :value="size.price">{{ size.name }} ({{ size.width }} by {{ size.height }} px)</option>
 					</select>
 				</div>
 			</div>
 		</div>
 	
-		<p class="total">{{ labels.price }}: {{ labels.currency_symbol }}{{ value }}</p>
+		<p class="total">{{ labels.price }}: {{ labels.currency_symbol }}{{ value || 0 }}</p>
 
 	</div>
 
@@ -27,7 +28,7 @@
 
 		data: function() {
 			return {
-				value: 0,
+				value: '',
 				labels: {
 					price: 'Price',
 					size: sell_media.cart_labels.size,
@@ -46,6 +47,10 @@
 
 			className: function(field) {
 				return field.toLowerCase().replace(/ /g, '-') + '-field';
+			},
+
+			activateButton: function() {
+				this.$emit('selected', 1);
 			}
 		}
 	}

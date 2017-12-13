@@ -20,9 +20,9 @@
 
 			<div class="content">
 
-				<cart-field-select v-for="field in fields" v-if="active == field" :key="field" :post="post" :field="field"></cart-field-select>
+				<cart-field-select v-for="field in fields" v-if="active == field" :key="field" :post="post" :field="field" v-on:selected="activateButton"></cart-field-select>
 
-				<button class="button is-black">{{ add }}</button>
+				<button class="button is-black" @click="addToCart(post.id)" v-bind:disabled="disabled">{{ add }}</button>
 
 			</div>
 
@@ -49,6 +49,7 @@
 				size: '',
 				currency_symbol: sell_media.currency_symbol,
 				add: sell_media.cart_labels.add_to_cart,
+				disabled: true,
 			}
 		},
 
@@ -59,12 +60,24 @@
 				}
 			},
 
-			activeField(field) {
-				this.active = field
+			activeField: function(field) {
+				this.active = field;
+				this.disabled = true; // disable add to cart button
+			},
+
+			addToCart: function(data) {
+				let cart = JSON.parse(localStorage.getItem('sell_media_cart')) || [];
+				cart.push(data);
+				localStorage.setItem('sell_media_cart', JSON.stringify(cart));
 			},
 
 			validateForm() {
 
+			},
+
+			activateButton: function() {
+				this.disabled = false;
+				console.log('parent message:' + this.disabled );
 			}
 		},
 
