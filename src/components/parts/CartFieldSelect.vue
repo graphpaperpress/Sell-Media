@@ -1,14 +1,14 @@
 <template>
 
-	<div v-if="show(post)" :class="className(field)">
+	<div v-if="field == active" :class="className(field)">
 
-		<div class="field" v-if="Object.keys(post.sell_media_pricing).length > 1">
+		<div class="field" v-if="getPricelist(post,field)">
 			<label class="label">{{ field }} {{ labels.size }}</label>
 			<div class="control">
 				<div class="select">
-					<select v-model="value" v-validate.initial="'required'" @change="activateButton">
-						<option disabled value="">Choose</option>
-						<option v-for="size in post.sell_media_pricing" :value="size.price">{{ size.name }} ({{ size.width }} by {{ size.height }} px)</option>
+					<select v-model="value" v-validate.initial="'required'" @change="change(value)">
+						<option disabled value="">{{ labels.choose }}</option>
+						<option v-for="price in getPricelist(post,field)" :value="price.price">{{ price.name }} ({{ price.description }})</option>
 					</select>
 				</div>
 			</div>
@@ -24,13 +24,14 @@
 
 	export default {
 
-		props: ['post', 'field'],
+		props: ['post', 'field', 'active'],
 
 		data: function() {
 			return {
 				value: '',
 				labels: {
-					price: 'Price',
+					price: sell_media.cart_labels.price,
+					choose: sell_media.cart_labels.choose,
 					size: sell_media.cart_labels.size,
 					required: 'Please make a selection',
 					currency_symbol: sell_media.currency_symbol,
@@ -38,19 +39,29 @@
 			}
 		},
 
+		created: function() {
+			console.log('field: ' + this.field);
+			console.log('active: ' + this.active);
+		},
+
 		methods: {
-			show: function(post) {
-				if ( post.sell_media_meta.reprints_sell === 'both' ||  post.sell_media_meta.reprints_sell === 'prints' ) {
-					return true;
-				}
-			},
 
 			className: function(field) {
 				return field.toLowerCase().replace(/ /g, '-') + '-field';
 			},
 
-			activateButton: function() {
-				this.$emit('selected', 1);
+			getPricelist: function(post,field) {
+				let list = field.toLowerCase();
+				if ( post['sell_media_pricing'][list] ) {
+					return post['sell_media_pricing'][list];
+				} else {
+					this.$emit('selected', true);
+				}
+			},
+
+			change: function(value) {
+				this.$emit('selected', value);
+				console.log(value);
 			}
 		}
 	}

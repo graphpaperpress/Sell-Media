@@ -1,6 +1,6 @@
 <template>
 	<div v-bind:id="name" v-bind:class="name">
-		<div class="columns is-multiline" v-if="loaded === true">
+		<div class="columns is-multiline has-text-centered" v-if="loaded === true">
 			<grid-item v-for="post in posts" v-bind:key="post.slug" v-bind:post="post"></grid-item>
 		</div>
 		<nav class="pagination">

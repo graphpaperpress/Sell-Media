@@ -45,7 +45,7 @@ function sell_media_extend_rest_post_response() {
 			'get_callback'    => 'sell_media_api_get_attachments',
 			'update_callback' => null,
 			'schema'          => null,
-			 )
+		)
 	);
 
 	register_rest_field( 'sell_media_item',
@@ -54,7 +54,16 @@ function sell_media_extend_rest_post_response() {
 			'get_callback'    => 'sell_media_api_get_pricing',
 			'update_callback' => null,
 			'schema'          => null,
-			)
+		)
+	);
+
+	register_rest_field( 'sell_media_item',
+		'sell_media_meta',
+		array(
+			'get_callback'    => 'sell_media_api_get_meta',
+			'update_callback' => null,
+			'schema'          => null,
+		)
 	);
 
 }
@@ -117,10 +126,20 @@ function sell_media_api_get_attachments( $object, $field_name, $request ) {
 function sell_media_api_get_pricing( $object, $field_name, $request ) {
 	$attachment_id = sell_media_get_attachment_id( $object['id'] );
 	$products = new SellMediaProducts();
-	$pricing = $products->get_prices( $object['id'], $attachment_id );
+	$pricing['downloads'] = $products->get_prices( $object['id'], $attachment_id );
+	$pricing['prints'] = $products->get_prices( $object['id'], $attachment_id, 'reprints-price-group' );
 	// remove parent containing term
-	unset( $pricing[1] );
+	unset( $pricing['downloads'][1] );
+	unset( $pricing['prints'][1] );
 	return $pricing;
+}
+
+/**
+ * Add meta to rest api
+ */
+function sell_media_api_get_meta( $object, $field_name, $request ) {
+	$meta['sell'] = array( 'Downloads' );
+	return apply_filters( 'sell_media_filter_api_get_meta', $meta, $object, $field_name, $request );
 }
 
 /**

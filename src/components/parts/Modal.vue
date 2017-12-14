@@ -3,7 +3,7 @@
 		<div class="modal-background" @click="$emit('closeModal')"></div>
 		<div class="modal-content">
 			<div class="columns">
-				<div class="column is-two-thirds">
+				<div class="column is-two-thirds has-text-center">
 					<figure class="image">
 						<img
 							:src="post.sell_media_featured_image.sizes.large[0]" 
@@ -12,7 +12,7 @@
 						/>
 					</figure>
 				</div>
-				<div class="column">
+				<div class="column is-one-third has-text-left">
 					<div class="cart-form">
 
 						<p class="title is-5">{{post.title.rendered}}</p>
@@ -47,8 +47,9 @@
 
 	.modal-content {
 		background: $white;
+		padding: 1rem;
 		@media print, screen and (min-width: 769px) {
-			width: 940px;
+			width: 90%;
 		}
 	}
 
