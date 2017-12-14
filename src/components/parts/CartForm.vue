@@ -71,12 +71,6 @@
 			vm.fields = vm.post.sell_media_meta.sell.reverse();
 			// set active tab to first field and show corresponding price group
 			vm.active = vm.fields[0];
-			
-			// if no price groups, enable button
-			// let list = field.toLowerCase();
-			// if ( vm.post['sell_media_pricing'][list].length <= 1 ) {
-			// 	vm.disabled = false;
-			// }
 		},
 
 		methods: {

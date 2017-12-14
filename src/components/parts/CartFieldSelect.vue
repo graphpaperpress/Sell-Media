@@ -39,11 +39,6 @@
 			}
 		},
 
-		created: function() {
-			console.log('field: ' + this.field);
-			console.log('active: ' + this.active);
-		},
-
 		methods: {
 
 			className: function(field) {
@@ -61,7 +56,7 @@
 
 			change: function(value) {
 				this.$emit('selected', value);
-				console.log(value);
+				//console.log(value);
 			}
 		}
 	}

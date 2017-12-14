@@ -4,13 +4,18 @@
 		<div class="modal-content">
 			<div class="columns">
 				<div class="column is-two-thirds has-text-center">
-					<figure class="image">
-						<img
-							:src="post.sell_media_featured_image.sizes.large[0]" 
-							:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
-							:alt="post.sell_media_featured_image.alt" 
-						/>
-					</figure>
+					<template v-if="multiple">
+						<slideshow :attachments="attachments"></slideshow>
+					</template>
+					<template v-else>
+						<figure class="image">
+							<img
+								:src="post.sell_media_featured_image.sizes.large[0]" 
+								:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
+								:alt="post.sell_media_featured_image.alt" 
+							/>
+						</figure>
+					</template>
 				</div>
 				<div class="column is-one-third has-text-left">
 					<div class="cart-form">
@@ -29,13 +34,27 @@
 
 <script>
 
+import Slideshow from './Slideshow.vue';
+
 	export default {
 
 		props: ['post'],
 
 		data: function () {
 			return {
+				attachments: {},
+				multiple: false,
 			}
+		},
+
+		created: function() {
+			this.attachments = this.post.sell_media_attachments;
+			let count = Object.keys(this.attachments);
+			this.multiple = count.length > 1 ? true : false;
+		},
+
+		components: {
+			'slideshow': Slideshow
 		}
 	}
 </script>
