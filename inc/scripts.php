@@ -98,6 +98,8 @@ function sell_media_scripts( $hook ) {
 			'added_to_cart' => esc_html__( 'Added!', 'sell_media' ),
 			'view_cart' => esc_html__( 'View cart', 'sell_media' ),
 			'choose' => esc_html__( 'Choose', 'sell_media' ),
+			'prev' => esc_html__( 'Previous', 'sell_media' ),
+			'next' => esc_html__( 'Next', 'sell_media' ),
 			),
 		'cart_style' => apply_filters( 'sell_media_cart_style', 'table' ),
 		'tax' => empty( $settings->tax ) ? 0 : $settings->tax_rate,
