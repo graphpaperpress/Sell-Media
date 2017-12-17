@@ -1,16 +1,17 @@
 <template>
-	<div v-bind:id="name" v-bind:class="name">
+	<div :id="name" :class="name">
+
 		<div class="columns is-multiline has-text-centered" v-if="loaded === true">
-			<grid-item v-for="post in posts" v-bind:key="post.slug" v-bind:post="post"></grid-item>
+			<grid-item v-for="post in posts" :key="post.slug" :post="post"></grid-item>
 		</div>
 		<nav class="pagination">
-			<button class="button" v-if="showPrev" v-on:click.prevent="showPrevPage()">Previous</button>
+			<button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
 			<span> {{ currentPage }} / {{ totalPages }} </span>
-			<button class="button" v-if="showNext" v-on:click.prevent="showNextPage()">Next</button>
+			<button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
 		</nav>
 
 		<div id="child">
-			<child v-bind:message="name"></child>
+			<child :message="name"></child>
 		</div>
 
 	</div>

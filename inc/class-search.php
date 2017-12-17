@@ -29,10 +29,10 @@ class SellMediaSearch {
 		$this->settings = sell_media_get_plugin_options();
 
 		// Add a media search form shortcode
-		add_shortcode( 'sell_media_search', array( $this, 'form' ) );
+		//add_shortcode( 'sell_media_search', array( $this, 'form' ) );
 
 		// Legacy add a media search form shortcode
-		add_shortcode( 'sell_media_searchform', array( $this, 'form' ) );
+		//add_shortcode( 'sell_media_searchform', array( $this, 'form' ) );
 
 		// Add custom search query vars
 		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );

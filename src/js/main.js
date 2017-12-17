@@ -26,6 +26,8 @@ import Lightbox from '../components/pages/Lightbox.vue'
 Vue.component( 'lightbox', Lightbox )
 import Checkout from '../components/pages/Checkout.vue'
 Vue.component( 'checkout', Checkout )
+import Search from '../components/pages/Search.vue'
+Vue.component( 'search', Search )
 import NotFound from '../components/pages/NotFound.vue'
 Vue.component( 'not-found', NotFound )
 
@@ -46,6 +48,7 @@ const router = new VueRouter( {
 	routes: [
 
 		{ path: '/' + sell_media.archive_path + '/:page(\\d+)?', name: 'archive', component: Archive },
+		{ path: '/' + sell_media.search_path + '/:page(\\d+)?', name: 'search', component: Search },
 		{ path: '/' + sell_media.archive_path + '/:slug', name: 'item', component: Item },
 		{ path: '/' + sell_media.archive_path + '/:prefix/:slug', name: 'attachment', component: Attachment },
 		{ path: '/' + sell_media.checkout_path, name: 'checkout', component: Checkout },

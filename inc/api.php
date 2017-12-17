@@ -29,6 +29,12 @@ function sell_media_get_relative_permalink( $id ) {
  */
 function sell_media_extend_rest_post_response() {
 
+	register_rest_route( 'sell-media/v2', '/search', array(
+		'methods'  => WP_REST_Server::READABLE,
+		'callback' => 'sell_media_api_search_keywords',
+		'args'     => sell_media_api_get_search_args(),
+	) );
+
 	// Add featured image
 	register_rest_field( 'sell_media_item',
 		'sell_media_featured_image',
@@ -140,6 +146,57 @@ function sell_media_api_get_pricing( $object, $field_name, $request ) {
 function sell_media_api_get_meta( $object, $field_name, $request ) {
 	$meta['sell'] = array( 'Downloads' );
 	return apply_filters( 'sell_media_filter_api_get_meta', $meta, $object, $field_name, $request );
+}
+
+function sell_media_api_search_keywords( $request ) {
+
+	$results = array();
+	$posts   = array();
+
+	if ( isset( $request['s'] ) ) {
+		$page           = empty( $request->get_param( 'page' ) ) ? $request->get_param( 'page' ) : 1;
+		$page           = intval( $page );
+		$posts_per_page = get_option( 'posts_per_page' );
+		$search         = $request->get_param( 's' );
+		$search         = implode( ' ', explode( '+', $search ) );
+		$search         = urldecode( $search );
+
+		$query = new WP_Query();
+		$posts = $query->query( array(
+			'paged'          => $page,
+			'post_type'      => 'sell_media_item',
+			'posts_per_page' => $posts_per_page,
+			's'              => $search,
+		) );
+
+		foreach ( $posts as $post ) {
+			$results[] = [
+				'id'    => $post->ID,
+				'title' => $post->post_title,
+				'link'  => get_permalink( $post->ID ),
+			];
+		}
+	}
+
+	if ( empty( $results ) ) {
+		return new WP_Error( 'sell_media_no_search_results', __( 'No results', 'sell_media' ) );
+	}
+
+	return rest_ensure_response( $results );
+}
+
+function sell_media_api_get_search_args() {
+	$args         = [];
+	$args['s']    = [
+		'description' => esc_html__( 'The search term.', 'sell_media' ),
+		'type'        => 'string',
+	];
+	$args['page'] = [
+		'description' => esc_html__( 'The current page of results.', 'sell_media' ),
+		'type'        => 'integer',
+	];
+
+	return $args;
 }
 
 /**

@@ -2,8 +2,14 @@
 	<div v-bind:id="name" v-bind:class="name" class="modal is-active">
 		<div class="modal-background" @click="$emit('closeModal')"></div>
 		<div class="modal-content">
-			<div class="columns">
-				<div class="column is-two-thirds has-text-center">
+
+			<div class="modal-nav">
+				<a @click="prev" class="modal-nav-prev">{{ prev_label }}</a>
+				<a @click="next" class="modal-nav-next">{{ next_label }}</a>
+			</div>
+
+			<div class="modal-columns">
+				<div class="modal-column-main has-text-center">
 					<template v-if="multiple">
 						<slideshow :attachments="attachments"></slideshow>
 					</template>
@@ -17,7 +23,7 @@
 						</figure>
 					</template>
 				</div>
-				<div class="column is-one-third has-text-left">
+				<div class="modal-column-sidebar has-text-left">
 					<div class="cart-form">
 
 						<p class="title is-5">{{post.title.rendered}}</p>
@@ -44,13 +50,34 @@ import Slideshow from './Slideshow.vue';
 			return {
 				attachments: {},
 				multiple: false,
+				currentModal: 0,
+				prev_label: sell_media.cart_labels.prev,
+				next_label: sell_media.cart_labels.next,
 			}
+		},
+
+		mounted: function() {
+			document.addEventListener("keydown", (e) => {
+				if (e.keyCode == 27) {
+					this.$emit('closeModal');
+				}
+			});
+
 		},
 
 		created: function() {
 			this.attachments = this.post.sell_media_attachments;
 			let count = Object.keys(this.attachments);
 			this.multiple = count.length > 1 ? true : false;
+		},
+
+		methods: {
+			next: function() {
+				this.post += 1
+			},
+			prev: function() {
+				this.post -= 1
+			}
 		},
 
 		components: {
@@ -69,10 +96,22 @@ import Slideshow from './Slideshow.vue';
 		padding: 1rem;
 		@media print, screen and (min-width: 769px) {
 			width: 90%;
-		}
-	}
+			height: calc(100vh - 20%);
 
-	.cart-form {
-		margin: 2rem 2rem 2rem .5rem;
+			.modal-columns {
+				float: left;
+			}
+
+			.modal-column-main {
+				width: 65%;
+				float: left;
+				margin-right: 1rem;
+			}
+
+			.modal-column-sidebar {
+				width: calc(35% - 1rem);
+				float: left;
+			}
+		}
 	}
 </style>
