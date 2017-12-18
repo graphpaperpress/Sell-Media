@@ -1,9 +1,16 @@
 <template>
 	<div :id="name" :class="name">
-
-		<div class="columns is-multiline has-text-centered" v-if="loaded === true">
-			<grid-item v-for="post in posts" :key="post.slug" :post="post"></grid-item>
-		</div>
+		
+		<template v-if="layout === 'sell-media-masonry' || layout === 'sell-media-horizontal-masonry'">
+			<masonry :posts="posts" class="has-text-centered"></masonry>
+		</template>
+		<template v-else>
+			<div class="columns is-multiline has-text-centered" v-if="loaded === true">
+				<div v-for="post in posts" :class="className" class="column is-mobile">
+					<thumbnail :key="post.slug" :post="post"></thumbnail>
+				</div>
+			</div>
+		</template>
 		<nav class="pagination">
 			<button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
 			<span> {{ currentPage }} / {{ totalPages }} </span>
@@ -19,6 +26,8 @@
 
 <script>
 
+import Masonry from '../parts/Masonry.vue';
+
 	export default {
 
 		mounted: function() {
@@ -30,6 +39,7 @@
 				vm.getPosts();
 			}
 
+			vm.columnLayout();
 		},
 
 		data: function() {
@@ -45,7 +55,9 @@
 				totalPages: '',
 				loaded: false,
 				pageTitle: '',
-				name: this.$options.name // component name
+				name: this.$options.name, // component name
+				layout: sell_media.thumbnail_layout,
+				className: '',
 			}
 		},
 
@@ -98,6 +110,22 @@
 					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
 				}
 			},
+			columnLayout: function() {
+				const vm = this;
+
+				if ( 'sell-media-two-col' === vm.layout ) {
+					vm.className = 'is-half';
+				}
+				if ( 'sell-media-three-col' === vm.layout ) {
+					vm.className = 'is-one-third';
+				}
+				if ( 'sell-media-four-col' === vm.layout ) {
+					vm.className = 'is-one-quarter';
+				}
+				if ( 'sell-media-five-col' === vm.layout ) {
+					vm.className = 'is-one-fifth';
+				}
+			}
 		},
 
 		watch: {
@@ -106,6 +134,10 @@
 				this.getPosts( this.$route.params.page );
 			}
 
+		},
+
+		components: {
+			'masonry': Masonry
 		}
 	}
 </script>

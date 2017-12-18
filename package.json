@@ -53,6 +53,7 @@
     "macy": "^2.3.0",
     "parsleyjs": "^2.8.0",
     "vee-validate": "^2.0.0-rc.25",
-    "vue-axios": "^2.0.2"
+    "vue-axios": "^2.0.2",
+    "vue-waterfall": "^1.0.6"
   }
 }

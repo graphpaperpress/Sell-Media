@@ -33,8 +33,8 @@ Vue.component( 'not-found', NotFound )
 
 import Modal from '../components/parts/Modal.vue'
 Vue.component( 'modal', Modal )
-import GridItem from '../components/parts/GridItem.vue'
-Vue.component( 'grid-item', GridItem )
+import Thumbnail from '../components/parts/Thumbnail.vue'
+Vue.component( 'thumbnail', Thumbnail )
 import CartForm from '../components/parts/CartForm.vue'
 Vue.component( 'cart-form', CartForm )
 // import Tabs from '../components/parts/Tabs.vue'

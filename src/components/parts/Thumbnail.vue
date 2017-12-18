@@ -1,8 +1,8 @@
 <template>
-	<div :class="className" class="column is-mobile">
+	<div class="item">
 		<div class="item-link" @mouseover="quickViewVisible = true" @mouseleave="quickViewVisible = false">
 			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
-				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes.medium[0]" :alt="post.alt">
+				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
 			</router-link>
 			<div class="quick-view" v-if="showQuickView && quickViewVisible" @click="showModal = true">{{ quick_view_label }}</div>
 		</div>
@@ -20,41 +20,11 @@
 			return {
 				showModal: false,
 				quick_view_label: sell_media.quick_view_label,
-				layout: sell_media.thumbnail_layout,
-				className: '',
 				showTitles: sell_media.title == 1 ? true : false,
 				showQuickView: sell_media.quick_view == 1 ? true : false,
 				quickViewVisible: false,
+				thumbnailCrop: sell_media.thumbnail_crop,
 			}
-		},
-
-		mounted: function() {
-			this.css();
-		},
-
-		methods: {
-
-			css: function() {
-				if ( 'sell-media-two-col' === this.layout ) {
-					this.className = 'is-half';
-				}
-				if ( 'sell-media-three-col' === this.layout ) {
-					this.className = 'is-one-third';
-				}
-				if ( 'sell-media-four-col' === this.layout ) {
-					this.className = 'is-one-quarter';
-				}
-				if ( 'sell-media-five-col' === this.layout ) {
-					this.className = 'is-one-fifth';
-				}
-				if ( 'sell-media-masonry' === this.layout ) {
-					this.className = 'is-masonry';
-				}
-				if ( 'sell-media-horizontal-masonry' === this.layout ) {
-					this.className = 'is-horizontal-masonry';
-				}
-			}
-
 		}
     }
 </script>

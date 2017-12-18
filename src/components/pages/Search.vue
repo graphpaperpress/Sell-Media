@@ -7,7 +7,7 @@
         </div>
 
         <div class="columns is-multiline has-text-centered" v-if="loaded === true">
-            <grid-item v-for="post in posts" :key="post.slug" :post="post"></grid-item>
+            <thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
         </div>
         <nav class="pagination">
             <button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>

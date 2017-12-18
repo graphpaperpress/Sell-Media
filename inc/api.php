@@ -20,10 +20,6 @@ function sell_media_get_relative_permalink( $id ) {
 	return str_replace( home_url(), '', get_permalink( $id ) );
 }
 
-// add_action( 'init', function() {
-// 	add_rewrite_rule( '\/items\/.*', 'index.php', 'top' );
-// });
-
 /**
  * Extend rest response
  */
@@ -95,7 +91,7 @@ function sell_media_api_get_image_src( $object, $field_name, $request ) {
 	$img_array['alt'] = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
 
 	// set sizes
-	$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset' );
+	$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset', 'sell_media_square' );
 	foreach ( $sizes as $size ) {
 		$img_array['sizes'][ $size ] = wp_get_attachment_image_src( $attachment_id, $size, false );
 	}
@@ -110,18 +106,18 @@ function sell_media_api_get_attachments( $object, $field_name, $request ) {
 	}
 
 	foreach ( $attachment_ids as $key => $value ) {
-		$attachment_array[ $key ]['id'] = absint( $value );
-		$attachment_array[ $key ]['title'] = get_the_title( $value );
-		$attachment_array[ $key ]['alt'] = get_post_meta( $value, '_wp_attachment_image_alt', true );
-		$attachment_array[ $key ]['url'] = get_permalink( $value );
-		$attachment_array[ $key ]['slug'] = get_post_field( 'post_name', $value );
-		$attachment_array[ $key ]['type'] = get_post_mime_type( $value );
+		$attachment_array[ $key ]['id']       = absint( $value );
+		$attachment_array[ $key ]['title']    = get_the_title( $value );
+		$attachment_array[ $key ]['alt']      = get_post_meta( $value, '_wp_attachment_image_alt', true );
+		$attachment_array[ $key ]['url']      = get_permalink( $value );
+		$attachment_array[ $key ]['slug']     = get_post_field( 'post_name', $value );
+		$attachment_array[ $key ]['type']     = get_post_mime_type( $value );
 		$attachment_array[ $key ]['keywords'] = wp_get_post_terms( $value, 'keywords', array( 'fields' => 'names' ) );
-		$attachment_array[ $key ]['file'] = wp_get_attachment_url( $value );
-		$attachment_array[ $key ]['embed'] = get_post_meta( $object['id'], 'sell_media_embed_link', true ); // we might want to consider setting this meta on attachment instead. Use case: Video galleries.
+		$attachment_array[ $key ]['file']     = wp_get_attachment_url( $value );
+		$attachment_array[ $key ]['embed']    = get_post_meta( $object['id'], 'sell_media_embed_link', true ); // we might want to consider setting this meta on attachment instead. Use case: Video galleries.
 
 		// set sizes
-		$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset' );
+		$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset', 'sell_media_square' );
 		foreach ( $sizes as $size ) {
 			$attachment_array[ $key ]['sizes'][ $size ] = wp_get_attachment_image_src( $value, $size, false );
 		}
@@ -130,10 +126,10 @@ function sell_media_api_get_attachments( $object, $field_name, $request ) {
 }
 
 function sell_media_api_get_pricing( $object, $field_name, $request ) {
-	$attachment_id = sell_media_get_attachment_id( $object['id'] );
-	$products = new SellMediaProducts();
+	$attachment_id        = sell_media_get_attachment_id( $object['id'] );
+	$products             = new SellMediaProducts();
 	$pricing['downloads'] = $products->get_prices( $object['id'], $attachment_id );
-	$pricing['prints'] = $products->get_prices( $object['id'], $attachment_id, 'reprints-price-group' );
+	$pricing['prints']    = $products->get_prices( $object['id'], $attachment_id, 'reprints-price-group' );
 	// remove parent containing term
 	unset( $pricing['downloads'][1] );
 	unset( $pricing['prints'][1] );
@@ -148,56 +144,79 @@ function sell_media_api_get_meta( $object, $field_name, $request ) {
 	return apply_filters( 'sell_media_filter_api_get_meta', $meta, $object, $field_name, $request );
 }
 
-function sell_media_api_search_keywords( $request ) {
+/**
+ * Search endpoint for rest api.
+ * This is a pluggable function.
+ * /wp-json/sell-media/v2/search/?s=water&type=image&page=4
+ */
+if ( ! function_exists( 'sell_media_api_search_keywords' ) ) :
 
-	$results = array();
-	$posts   = array();
+	function sell_media_api_search_keywords( $request ) {
 
-	if ( isset( $request['s'] ) ) {
-		$page           = empty( $request->get_param( 'page' ) ) ? $request->get_param( 'page' ) : 1;
-		$page           = intval( $page );
-		$posts_per_page = get_option( 'posts_per_page' );
-		$search         = $request->get_param( 's' );
-		$search         = implode( ' ', explode( '+', $search ) );
-		$search         = urldecode( $search );
+		$results = array();
+		$posts   = array();
 
-		$query = new WP_Query();
-		$posts = $query->query( array(
-			'paged'          => $page,
-			'post_type'      => 'sell_media_item',
-			'posts_per_page' => $posts_per_page,
-			's'              => $search,
-		) );
+		if ( isset( $request['s'] ) ) {
+			$page           = empty( $request->get_param( 'page' ) ) ? $request->get_param( 'page' ) : 1;
+			$page           = intval( $page );
+			$posts_per_page = get_option( 'posts_per_page' );
+			$search         = $request->get_param( 's' );
+			$search         = implode( ' ', explode( '+', $search ) );
+			$search         = urldecode( $search );
 
-		foreach ( $posts as $post ) {
-			$results[] = [
-				'id'    => $post->ID,
-				'title' => $post->post_title,
-				'link'  => get_permalink( $post->ID ),
-			];
+			$query = new WP_Query();
+			$posts = $query->query( array(
+				'paged'          => $page,
+				'post_type'      => 'sell_media_item',
+				'posts_per_page' => $posts_per_page,
+				's'              => $search,
+			) );
+
+			foreach ( $posts as $post ) {
+				$results[] = [
+					'id'    => $post->ID,
+					'title' => $post->post_title,
+					'link'  => get_permalink( $post->ID ),
+				];
+			}
 		}
+
+		if ( empty( $results ) ) {
+			return new WP_Error( 'sell_media_no_search_results', __( 'No results', 'sell_media' ) );
+		}
+
+		return rest_ensure_response( $results );
 	}
 
-	if ( empty( $results ) ) {
-		return new WP_Error( 'sell_media_no_search_results', __( 'No results', 'sell_media' ) );
+endif;
+
+/**
+ * Accepted $_GET parameters for custom search rest api.
+ * This is a pluggable function.
+ * /wp-json/sell-media/v2/search/?s=water&type=image&page=4
+ */
+
+if ( ! function_exists( 'sell_media_api_get_search_args' ) ) :
+
+	function sell_media_api_get_search_args() {
+		$args         = [];
+		$args['s']    = [
+			'description' => esc_html__( 'The search term.', 'sell_media' ),
+			'type'        => 'string',
+		];
+		$args['type'] = [
+			'description' => esc_html__( 'The product type.', 'sell_media' ),
+			'type'        => 'string',
+		];
+		$args['page'] = [
+			'description' => esc_html__( 'The current page of results.', 'sell_media' ),
+			'type'        => 'integer',
+		];
+
+		return $args;
 	}
 
-	return rest_ensure_response( $results );
-}
-
-function sell_media_api_get_search_args() {
-	$args         = [];
-	$args['s']    = [
-		'description' => esc_html__( 'The search term.', 'sell_media' ),
-		'type'        => 'string',
-	];
-	$args['page'] = [
-		'description' => esc_html__( 'The current page of results.', 'sell_media' ),
-		'type'        => 'integer',
-	];
-
-	return $args;
-}
+endif;
 
 /**
  * Template Redirect
