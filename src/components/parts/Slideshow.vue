@@ -13,6 +13,10 @@
 				:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]"
 			/>
 		</div>
+
+<!-- 			<div v-for="attachment in attachments" :key="attachment.id" transition="fade">
+				<img :src="attachment.sizes.large[0]" :width="attachment.sizes.large[1]" :height="attachment.sizes.large[2]" :alt="attachment.alt" />
+			</div> -->
 	</div>
 
 </template>

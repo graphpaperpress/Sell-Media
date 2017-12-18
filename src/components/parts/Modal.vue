@@ -3,10 +3,10 @@
 		<div class="modal-background" @click="$emit('closeModal')"></div>
 		<div class="modal-content">
 
-			<div class="modal-nav">
+<!-- 			<div class="modal-nav">
 				<a @click="prev" class="modal-nav-prev">{{ prev_label }}</a>
 				<a @click="next" class="modal-nav-next">{{ next_label }}</a>
-			</div>
+			</div> -->
 
 			<div class="modal-columns">
 				<div class="modal-column-main has-text-center">

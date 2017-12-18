@@ -1,5 +1,10 @@
 <template>
 	<div :id="name" :class="name">
+
+		<div class="search-wrapper">
+			<label>{{ search_label }}</label>
+			<input type="text" v-model="search" :placeholder="search_label" @keyup.enter="getSearchResults(search)">
+		</div>
 		
 		<template v-if="layout === 'sell-media-masonry' || layout === 'sell-media-horizontal-masonry'">
 			<masonry :posts="posts" class="has-text-centered"></masonry>
@@ -17,15 +22,16 @@
 			<button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
 		</nav>
 
-		<div id="child">
+<!-- 		<div id="child">
 			<child :message="name"></child>
-		</div>
+		</div> -->
 
 	</div>
 </template>
 
 <script>
 
+//import SearchForm from '../parts/SearchForm.vue';
 import Masonry from '../parts/Masonry.vue';
 
 	export default {
@@ -58,10 +64,13 @@ import Masonry from '../parts/Masonry.vue';
 				name: this.$options.name, // component name
 				layout: sell_media.thumbnail_layout,
 				className: '',
+				search: '',
+				search_label: sell_media.search_labels.search,
 			}
 		},
 
 		methods: {
+
 			getPosts: function( pageNumber = 1 ) {
 				const vm = this;
 				vm.loaded = false;
@@ -92,6 +101,39 @@ import Masonry from '../parts/Masonry.vue';
 					console.log( res )
 				} )
 			},
+
+			getSearchResults: function( search, pageNumber = 1 ) {
+				const vm = this;
+				vm.loaded = false;
+				vm.$http.get( '/wp-json/sell-media/v2/search', {
+					params: {
+						s: search,
+						per_page: vm.postPerPage,
+						page: pageNumber
+					}
+				} )
+				.then( ( res ) => {
+					vm.posts = res.data;
+					console.log(vm.posts);
+					vm.totalPages = res.headers[ 'x-wp-totalpages' ];
+
+					if ( pageNumber <= parseInt( vm.totalPages ) ) {
+						vm.currentPage = parseInt( pageNumber );
+					} else {
+						vm.$router.push( { 'name': 'archive' } );
+						vm.currentPage = 1;
+					}
+
+					vm.loaded = true;
+					vm.pageTitle = 'Search results for:' + search;
+					vm.$store.commit( 'smChangeTitle', vm.pageTitle );
+
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
+			},
+
 			showNextPage: function( event ) {
 				const vm = this;
 
@@ -101,6 +143,7 @@ import Masonry from '../parts/Masonry.vue';
 					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
 				}
 			},
+
 			showPrevPage: function( event ) {
 				const vm = this;
 
@@ -110,6 +153,7 @@ import Masonry from '../parts/Masonry.vue';
 					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
 				}
 			},
+			
 			columnLayout: function() {
 				const vm = this;
 
@@ -137,7 +181,15 @@ import Masonry from '../parts/Masonry.vue';
 		},
 
 		components: {
-			'masonry': Masonry
+			'masonry': Masonry,
+			//'searchform': SearchForm,
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+
+	.search-wrapper {
+		margin: 2rem auto;
+	}
+</style>

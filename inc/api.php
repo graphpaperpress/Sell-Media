@@ -27,7 +27,7 @@ function sell_media_extend_rest_post_response() {
 
 	register_rest_route( 'sell-media/v2', '/search', array(
 		'methods'  => WP_REST_Server::READABLE,
-		'callback' => 'sell_media_api_search_keywords',
+		'callback' => 'sell_media_api_search_response',
 		'args'     => sell_media_api_get_search_args(),
 	) );
 
@@ -35,7 +35,7 @@ function sell_media_extend_rest_post_response() {
 	register_rest_field( 'sell_media_item',
 		'sell_media_featured_image',
 		array(
-			'get_callback'    => 'sell_media_api_get_image_src',
+			'get_callback'    => 'sell_media_api_get_image',
 			'update_callback' => null,
 			'schema'          => null,
 		)
@@ -73,22 +73,17 @@ add_action( 'rest_api_init', 'sell_media_extend_rest_post_response' );
 
 /**
  * Images for rest api
- * @param  [type] $object     [description]
- * @param  [type] $field_name [description]
- * @param  [type] $request    [description]
- * @return [type]             [description]
  */
-function sell_media_api_get_image_src( $object, $field_name, $request ) {
-
-	// check feature media, then first attachment
-	$attachment_id = ( ! empty( $object['featured_media'] ) ) ? $object['featured_media'] : sell_media_get_attachment_id( $object['id'] );
+function sell_media_api_get_image( $object, $field_name = '', $request = '' ) {
+	$post_id       = $object['id'];
+	$attachment_id = ( has_post_thumbnail( $post_id ) ) ? get_post_thumbnail_id( $post_id ) : sell_media_get_attachment_id( $post_id );
 	if ( empty( $attachment_id ) ) {
 		return;
 	}
 
 	// set title and alt text
 	$img_array['title'] = get_the_title( $attachment_id );
-	$img_array['alt'] = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
+	$img_array['alt']   = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
 
 	// set sizes
 	$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset', 'sell_media_square' );
@@ -99,8 +94,12 @@ function sell_media_api_get_image_src( $object, $field_name, $request ) {
 	return ( is_array( $img_array ) ) ? $img_array : '';
 }
 
-function sell_media_api_get_attachments( $object, $field_name, $request ) {
-	$attachment_ids = get_post_meta( $object['id'], '_sell_media_attachment_id', true );
+/**
+ * Attachments for rest api
+ */
+function sell_media_api_get_attachments( $object, $field_name = '', $request = '' ) {
+	$post_id        = $object['id'];
+	$attachment_ids = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 	if ( empty( $attachment_ids ) ) {
 		return;
 	}
@@ -114,7 +113,7 @@ function sell_media_api_get_attachments( $object, $field_name, $request ) {
 		$attachment_array[ $key ]['type']     = get_post_mime_type( $value );
 		$attachment_array[ $key ]['keywords'] = wp_get_post_terms( $value, 'keywords', array( 'fields' => 'names' ) );
 		$attachment_array[ $key ]['file']     = wp_get_attachment_url( $value );
-		$attachment_array[ $key ]['embed']    = get_post_meta( $object['id'], 'sell_media_embed_link', true ); // we might want to consider setting this meta on attachment instead. Use case: Video galleries.
+		$attachment_array[ $key ]['embed']    = get_post_meta( $post_id, 'sell_media_embed_link', true ); // we might want to consider setting this meta on attachment instead. Use case: Video galleries.
 
 		// set sizes
 		$sizes = array( 'full', 'large', 'medium_large', 'medium', 'thumbnail', 'srcset', 'sell_media_square' );
@@ -125,11 +124,15 @@ function sell_media_api_get_attachments( $object, $field_name, $request ) {
 	return ( is_array( $attachment_array ) ) ? (array) $attachment_array : '';
 }
 
-function sell_media_api_get_pricing( $object, $field_name, $request ) {
-	$attachment_id        = sell_media_get_attachment_id( $object['id'] );
+/**
+ * Pricing for rest api
+ */
+function sell_media_api_get_pricing( $object, $field_name = '', $request = '' ) {
+	$post_id              = $object['id'];
+	$attachment_id        = sell_media_get_attachment_id( $post_id );
 	$products             = new SellMediaProducts();
-	$pricing['downloads'] = $products->get_prices( $object['id'], $attachment_id );
-	$pricing['prints']    = $products->get_prices( $object['id'], $attachment_id, 'reprints-price-group' );
+	$pricing['downloads'] = $products->get_prices( $post_id, $attachment_id );
+	$pricing['prints']    = $products->get_prices( $post_id, $attachment_id, 'reprints-price-group' );
 	// remove parent containing term
 	unset( $pricing['downloads'][1] );
 	unset( $pricing['prints'][1] );
@@ -137,9 +140,9 @@ function sell_media_api_get_pricing( $object, $field_name, $request ) {
 }
 
 /**
- * Add meta to rest api
+ * Meta to rest api
  */
-function sell_media_api_get_meta( $object, $field_name, $request ) {
+function sell_media_api_get_meta( $object, $field_name = '', $request = '' ) {
 	$meta['sell'] = array( 'Downloads' );
 	return apply_filters( 'sell_media_filter_api_get_meta', $meta, $object, $field_name, $request );
 }
@@ -149,36 +152,56 @@ function sell_media_api_get_meta( $object, $field_name, $request ) {
  * This is a pluggable function.
  * /wp-json/sell-media/v2/search/?s=water&type=image&page=4
  */
-if ( ! function_exists( 'sell_media_api_search_keywords' ) ) :
+if ( ! function_exists( 'sell_media_api_search_response' ) ) :
 
-	function sell_media_api_search_keywords( $request ) {
+	function sell_media_api_search_response( $request ) {
 
 		$results = array();
 		$posts   = array();
+		$page    = empty( $request->get_param( 'page' ) ) ? $request->get_param( 'page' ) : 1;
+		$page    = intval( $page );
+		$args    = array(
+			'paged'          => $page,
+			'post_type'      => 'sell_media_item',
+			'posts_per_page' => get_option( 'posts_per_page' ),
+		);
 
+		// Search Query
 		if ( isset( $request['s'] ) ) {
-			$page           = empty( $request->get_param( 'page' ) ) ? $request->get_param( 'page' ) : 1;
-			$page           = intval( $page );
-			$posts_per_page = get_option( 'posts_per_page' );
-			$search         = $request->get_param( 's' );
-			$search         = implode( ' ', explode( '+', $search ) );
-			$search         = urldecode( $search );
+			$search    = $request->get_param( 's' );
+			$search    = implode( ' ', explode( '+', $search ) );
+			$search    = urldecode( $search );
+			$args['s'] = $search;
+		}
 
-			$query = new WP_Query();
-			$posts = $query->query( array(
-				'paged'          => $page,
-				'post_type'      => 'sell_media_item',
-				'posts_per_page' => $posts_per_page,
-				's'              => $search,
-			) );
+		$query = new WP_Query();
+		$posts = $query->query( $args );
 
-			foreach ( $posts as $post ) {
-				$results[] = [
-					'id'    => $post->ID,
-					'title' => $post->post_title,
-					'link'  => get_permalink( $post->ID ),
-				];
-			}
+		// mirror formatting of normal rest api endpoint for sell_media_item
+		foreach ( $posts as $post ) {
+			$obj['id'] = $post->ID;
+
+			$img_array         = sell_media_api_get_image( $obj );
+			$attachments_array = sell_media_api_get_attachments( $obj );
+			$pricing           = sell_media_api_get_pricing( $obj );
+
+			$results[] = [
+				'id'                        => $post->ID,
+				'title'                     => [
+					'rendered' => $post->post_title,
+				],
+				'slug'                      => $post->post_name,
+				'link'                      => get_permalink( $post->ID ),
+				'content'                   => [
+					'rendered' => get_the_content(),
+				],
+				'sell_media_featured_image' => $img_array,
+				'sell_media_attachments'    => $attachments_array,
+				'sell_media_pricing'        => $pricing,
+				'sell_media_meta'           => [
+					'sell' => apply_filters( 'sell_media_filter_api_sell', array( __( 'Downloads', 'sell_media' ) ), $post->ID ),
+				],
+			];
 		}
 
 		if ( empty( $results ) ) {
