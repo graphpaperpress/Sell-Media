@@ -122,45 +122,26 @@ class SellMediaTaxMarkup {
 		$singular_name = isset( $taxonomy_details->labels->singular_name ) ? $taxonomy_details->labels->singular_name : $taxonomy_details->name;
 		$settings = sell_media_get_plugin_options(); ?>
 		<script>
+		function calc_price( markUp ){
+			var price = <?php echo $settings->default_price; ?>;
+			if ( markUp == undefined )
+				var markUp = <?php echo $initial_markup; ?>;
+
+			finalPrice = ( +price + ( +markUp * .01 ) * price );
+			finalPrice = finalPrice.toFixed(2);
+			return finalPrice;
+		}
 		jQuery(document).ready(function($){
-
-			if ( ! jQuery().slider )
-				return;
-
-			function calc_price( markUp ){
-
-				var price = <?php echo $settings->default_price; ?>;
-
-				if ( markUp == undefined )
-					var markUp = <?php echo $initial_markup; ?>;
-
-				finalPrice = ( +price + ( +markUp * .01 ) * price );
-				finalPrice = finalPrice.toFixed(2);
-
-				return finalPrice;
-			}
-
-			$( ".menu-cart-total" ).html( calc_price() );
-
-			$( "#markup_slider" ).slider({
-				range: "min",
-				value: <?php print $initial_markup; ?>,
-				min: 0,
-				step: .1,
-				max: 1000,
-				slide: function( event, ui ) {
-					var markUp = ui.value;
-					$( ".markup-target" ).val(  markUp + "%" );
-					$( ".markup-target" ).html(  markUp + "%" );
-
-					$( ".menu-cart-total" ).html( calc_price( markUp ) );
-				}
-			});
-			$( ".markup-target" ).val( $( "#markup_slider" ).slider( "value" ) + "%" );
+			document.querySelector( '.menu-cart-total').innerHTML = calc_price();
 		});
+		function updateSlider(slideAmount) {
+			document.querySelector( 'input.markup-target').value = slideAmount + '%';
+			document.querySelector( 'span.markup-target').innerHTML = slideAmount + '%';
+			document.querySelector( '.menu-cart-total').innerHTML = calc_price( slideAmount );
+    	}
 		</script>
 		<div class="sell_media-slider-container">
-			<div id="markup_slider"></div>
+			<input id="slide" type="range" min="-100" max="1000" step=".1" value="<?php print $initial_markup; ?>" oninput="updateSlider(this.value)">
 			<div class="sell_media-price-container">
 				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo get_term_meta( $term_id, 'markup', true ); ?>" size="40" />
 			</div>
@@ -300,7 +281,7 @@ class SellMediaTaxMarkup {
 	function item_detail_markup_fields() {
 		global $post;
 		$product_id = ( ! empty( $_POST['product_id'] ) ) ? $_POST['product_id'] : $post->ID;
-		$post_id = $product_id;		
+		$post_id = $product_id;
 		if ( wp_get_post_parent_id( $product_id ) > 0 ) {
 			$post_id = wp_get_post_parent_id( $product_id );
 		}
