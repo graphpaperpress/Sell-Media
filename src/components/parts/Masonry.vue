@@ -14,8 +14,8 @@
 		<!-- each component is wrapped by a waterfall slot -->
 		<waterfall-slot
 		v-for="(post, index) in posts"
-		:width="post.sell_media_featured_image.sizes.medium[1]"
-		:height="post.sell_media_featured_image.sizes.medium[2]"
+		:width="post.sell_media_featured_image.sizes[thumbnailCrop][1]"
+		:height="post.sell_media_featured_image.sizes[thumbnailCrop][2]"
 		:order="index"
 		:key="post.index"
 		move-class="post-move"
@@ -39,7 +39,8 @@ import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 			return {
 
 				line: '',
-				isBusy: false
+				isBusy: false,
+				thumbnailCrop: sell_media.thumbnail_crop,
 
 			}
 		},

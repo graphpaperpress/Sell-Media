@@ -95,8 +95,9 @@ import Slideshow from './Slideshow.vue';
 		background: $white;
 		padding: 1rem;
 		@media print, screen and (min-width: 769px) {
-			width: 90%;
-			height: calc(100vh - 20%);
+			width: 960px;
+    		max-width: 90%;
+    		max-height: calc(100vh - 20%);
 
 			.modal-columns {
 				float: left;
