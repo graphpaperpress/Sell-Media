@@ -1,7 +1,6 @@
 <template>
 
     <div>
-        <span>Checkout ({{ cartItems }})</span>
         <table class="table is-fullwidth">
           <thead>
             <tr>
@@ -13,12 +12,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="cartItem in cartItems">
-              <td>Three</td>
-              <td>Four</td>
-              <td>Three</td>
-              <td>Four</td>
-              <td>Four</td>
+            <tr v-for="cart in carts">
+              <td>Image</td>
+              <td>{{ cart.post_id }}</td>
+              <td>{{ cart.attachment_id }}</td>
+              <td>1</td>
+              <td>{{ cart.price_id }}</td>
             </tr>
           </tbody>
         </table>
@@ -32,19 +31,9 @@
 
         data: function(){
             return {
-                cartItems: this.$store.state.cart,
+                carts: this.$store.state.cart,
             }
-        },
-
-        computed: {
-            itemsInCart: function () {
-                this.cartItems = JSON.parse(localStorage.getItem('sell_media_cart'));
-                return this.cartItems;
-                console.log( this.cartItems );
-            }
-        },
-
-        components: {}
+        }
     }
 
 </script>

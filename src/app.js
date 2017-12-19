@@ -2,7 +2,6 @@ Vue.config.devtools = true
 import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 import VueRouter from 'vue-router'
-import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
@@ -11,7 +10,6 @@ import store from './store'
 // use vue plugins
 Vue.use( VueCookie )
 Vue.use( VueRouter )
-Vue.use( Vuex )
 Vue.use( VueAxios, axios )
 Vue.use( VeeValidate )
 
