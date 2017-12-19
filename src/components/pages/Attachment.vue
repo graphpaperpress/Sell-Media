@@ -67,7 +67,7 @@
 					vm.post = res.data[0];
 					vm.loaded = true;
 					vm.pageTitle = vm.post.title.rendered;
-					vm.$store.commit( 'smChangeTitle', vm.pageTitle );
+					vm.$store.commit( 'changeTitle', vm.pageTitle );
 
 					console.log(vm.post);
 

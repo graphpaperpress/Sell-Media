@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
+import store from './store'
 
 // use vue plugins
 Vue.use( VueCookie )
@@ -15,31 +16,31 @@ Vue.use( VueAxios, axios )
 Vue.use( VeeValidate )
 
 // import and register components
-import Main from '../components/Main.vue'
-import Archive from '../components/pages/Archive.vue'
+import Main from './components/Main.vue'
+import Archive from './components/pages/Archive.vue'
 Vue.component( 'archive', Archive )
-import Item from '../components/pages/Item.vue'
+import Item from './components/pages/Item.vue'
 Vue.component( 'item', Item )
-import Attachment from '../components/pages/Attachment.vue'
+import Attachment from './components/pages/Attachment.vue'
 Vue.component( 'attachment', Attachment )
-import Lightbox from '../components/pages/Lightbox.vue'
+import Lightbox from './components/pages/Lightbox.vue'
 Vue.component( 'lightbox', Lightbox )
-import Checkout from '../components/pages/Checkout.vue'
+import Checkout from './components/pages/Checkout.vue'
 Vue.component( 'checkout', Checkout )
-import Search from '../components/pages/Search.vue'
+import Search from './components/pages/Search.vue'
 Vue.component( 'search', Search )
-import NotFound from '../components/pages/NotFound.vue'
+import NotFound from './components/pages/NotFound.vue'
 Vue.component( 'not-found', NotFound )
 
-import Modal from '../components/parts/Modal.vue'
+import Modal from './components/parts/Modal.vue'
 Vue.component( 'modal', Modal )
-import Thumbnail from '../components/parts/Thumbnail.vue'
+import Thumbnail from './components/parts/Thumbnail.vue'
 Vue.component( 'thumbnail', Thumbnail )
-import CartForm from '../components/parts/CartForm.vue'
+import CartForm from './components/parts/CartForm.vue'
 Vue.component( 'cart-form', CartForm )
-// import Tabs from '../components/parts/Tabs.vue'
+// import Tabs from './components/parts/Tabs.vue'
 // Vue.component( 'tabs', Tabs )
-// import Tab from '../components/parts/Tab.vue'
+// import Tab from './components/parts/Tab.vue'
 // Vue.component( 'tab', Tab )
 
 // define routes
@@ -62,24 +63,13 @@ const router = new VueRouter( {
 	]
 } );
 
-// define vuex store
-const store = new Vuex.Store( {
-	state: {
-		title: ''
-	},
-	mutations: {
-		smChangeTitle( state, value ) {
-			// mutate state
-			state.title = value;
-			document.title = ( state.title ? state.title + ' - ' : '' ) + sell_media.site_name;
-		}
-	}
-} );
-
 // init Vue
 new Vue({
 	el: '#sell-media-app',
 	store,
 	router,
+	beforeCreate() {
+		this.$store.commit('initCart');
+	},
 	render: h => h(Main)
 })

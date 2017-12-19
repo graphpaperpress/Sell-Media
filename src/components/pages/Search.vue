@@ -78,7 +78,7 @@
 
                     vm.loaded = true;
                     vm.pageTitle = 'Search';
-                    vm.$store.commit( 'smChangeTitle', vm.pageTitle );
+                    vm.$store.commit( 'changeTitle', vm.pageTitle );
 
                 } )
                 .catch( ( res ) => {

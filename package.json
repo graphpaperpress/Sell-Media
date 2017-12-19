@@ -54,6 +54,8 @@
     "parsleyjs": "^2.8.0",
     "vee-validate": "^2.0.0-rc.25",
     "vue-axios": "^2.0.2",
-    "vue-waterfall": "^1.0.6"
+    "vue-waterfall": "^1.0.6",
+    "vuex-persistedstate": "^2.4.2",
+    "vuex-router-sync": "^5.0.0"
   }
 }

@@ -22,7 +22,7 @@
 
 				<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="activateButton"></cart-field-select>
 
-				<button class="button is-black" @click="addToCart(post.id,attachment_id)" :disabled="disabled">{{ add }}</button>
+				<button class="button is-black" @click="addToCart" :disabled="disabled">{{ add }}</button>
 
 			</div>
 
@@ -93,26 +93,15 @@
 				this.disabled = true; // disable add to cart button
 			},
 
-			addToCart: function(data) {
-				// get existing cart data
-				let cart = JSON.parse(this.$cookie.get('sell_media_cart')) || [];
-				// add new cart data
-				cart.push(
-					{
-						'post_id': this.post_id,
-						'attachment_id': this.attachment_id,
-						'price_id': this.price_id,
-					}
-				);
-				// cookies only allow strings, so convert object into string
-				this.$cookie.set(
-					'sell_media_cart',
-					JSON.stringify( cart ),
-					{
-						expires: 30,
-						domain: this.domain
-					}
-				);
+			addToCart: function() {
+				let cart = {
+					'post_id': this.post_id,
+					'attachment_id': this.attachment_id,
+					'price_id': this.price_id,
+				}
+				this.$store.commit( 'addToCart', cart );
+				console.log(cart);
+				
 				this.disabled = true; // disable add to cart button
 				this.added = true;
 			},

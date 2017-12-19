@@ -1,6 +1,7 @@
 <template>
 
     <div>
+        <span>Checkout ({{ cartItems }})</span>
         <table class="table is-fullwidth">
           <thead>
             <tr>
@@ -28,17 +29,19 @@
 <script>
 
     export default {
-        methods: {},
+
         data: function(){
             return {
-                cartItems: {},
+                cartItems: this.$store.state.cart,
             }
         },
 
-        created: function() {
-            let cart = this.$cookie.get('sell_media_cart');
-            this.cartItems = JSON.parse( cart );
-            console.log( this.cartItems );
+        computed: {
+            itemsInCart: function () {
+                this.cartItems = JSON.parse(localStorage.getItem('sell_media_cart'));
+                return this.cartItems;
+                console.log( this.cartItems );
+            }
         },
 
         components: {}
