@@ -1,7 +1,26 @@
 <template>
 
     <div>
-        {{ variable }}
+        <table class="table is-fullwidth">
+          <thead>
+            <tr>
+              <th></th>
+              <th>NAME</th>
+              <th>SIZE</th>
+              <th>QTY</th>
+              <th>PRICE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="cartItem in cartItems">
+              <td>Three</td>
+              <td>Four</td>
+              <td>Three</td>
+              <td>Four</td>
+              <td>Four</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
 
 </template>
@@ -12,9 +31,16 @@
         methods: {},
         data: function(){
             return {
-                variable: 'I am the checkout page'
+                cartItems: {},
             }
         },
+
+        created: function() {
+            let cart = this.$cookie.get('sell_media_cart');
+            this.cartItems = JSON.parse( cart );
+            console.log( this.cartItems );
+        },
+
         components: {}
     }
 

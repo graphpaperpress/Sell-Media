@@ -4,12 +4,21 @@
 
 		<h2 class="title">{{ post.title.rendered }}</h2>
 
-		<img
-			:src="post.media_details.sizes.large.source_url" 
-			:data-srcset="post.media_details.sizes.full.source_url"
-			:alt="post.alt_text"
-		/>
+		<div class="columns">
 
+			<div :class="contentContainer">
+				<img
+					:src="post.media_details.sizes.large.source_url" 
+					:data-srcset="post.media_details.sizes.large.source_url"
+					:alt="post.alt_text"
+				/>
+			</div>
+
+			<div :class="formContainer">
+				<cart-form :key="post.slug" :post="post"></cart-form>
+			</div>
+
+		</div>
 		<div class="post-content content" v-if="post.caption" v-html="post.caption.rendered" ></div>
 	</div>
 
@@ -28,8 +37,18 @@
 				base_path: sell_media.site_url,
 				post: {},
 				loaded: false,
-				pageTitle: ''
+				pageTitle: '',
+				layout: sell_media.layout,
+				contentContainer: '',
+				formContainer: '',
 			};
+		},
+
+		created: function() {
+			if ( this.layout === 'sell-media-single-two-col' ) {
+				this.contentContainer = 'column is-two-thirds';
+				this.formContainer = 'column is-one-third';
+			}
 		},
 
 		methods: {

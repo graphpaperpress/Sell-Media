@@ -22,7 +22,7 @@
 
 				<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="activateButton"></cart-field-select>
 
-				<button class="button is-black" @click="addToCart(post.id)" :disabled="disabled">{{ add }}</button>
+				<button class="button is-black" @click="addToCart(post.id,attachment_id)" :disabled="disabled">{{ add }}</button>
 
 			</div>
 
@@ -50,10 +50,12 @@
 		data: function() {
 			
 			return {
+				post_id: '',
+				attachment_id: '',
+				price_id: '',
 				fields: [],
 				active: '',
 				total: 0,
-				size: '',
 				currency_symbol: sell_media.currency_symbol,
 				add: sell_media.cart_labels.add_to_cart,
 				added: false,
@@ -71,6 +73,11 @@
 			vm.fields = vm.post.sell_media_meta.sell.reverse();
 			// set active tab to first field and show corresponding price group
 			vm.active = vm.fields[0];
+
+			// set post id
+			vm.post_id = vm.post.id;
+			// set attachment id
+			vm.attachment_id = vm.post.sell_media_attachments[0].id; // this is wrong. don't assume first attachment.
 		},
 
 		methods: {
@@ -87,8 +94,21 @@
 			},
 
 			addToCart: function(data) {
+				// get existing cart data
+				let cart = JSON.parse(this.$cookie.get('sell_media_cart')) || [];
+				// add new cart data
+				cart.push(
+					{
+						'post_id': this.post_id,
+						'attachment_id': this.attachment_id,
+						'price_id': this.price_id,
+					}
+				);
+				// cookies only allow strings, so convert object into string
 				this.$cookie.set(
-					'sell_media_cart', 'Random value', {
+					'sell_media_cart',
+					JSON.stringify( cart ),
+					{
 						expires: 30,
 						domain: this.domain
 					}
@@ -101,8 +121,9 @@
 
 			},
 
-			activateButton: function() {
+			activateButton: function(value) {
 				this.disabled = false;
+				this.price_id = value;
 			}
 		},
 

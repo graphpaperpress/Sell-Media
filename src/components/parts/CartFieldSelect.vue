@@ -8,7 +8,7 @@
 				<div class="select">
 					<select v-model="value" v-validate.initial="'required'" @change="change(value)">
 						<option disabled value="">{{ labels.choose }}</option>
-						<option v-for="price in getPricelist(post,field)" :value="price.price">{{ price.name }} ({{ price.description }})</option>
+						<option v-for="price in getPricelist(post,field)" :value="price.id">{{ price.name }} ({{ price.description }})</option>
 					</select>
 				</div>
 			</div>

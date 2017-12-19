@@ -9,11 +9,18 @@
 			<gallery v-bind:attachments="attachments" v-bind:prefix="post.slug" v-bind:key="post.slug"></gallery>
 		</template>
 		<template v-else>
-			<img
-				:src="post.sell_media_featured_image.sizes.large[0]" 
-				:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
-				:alt="post.sell_media_featured_image.alt" 
-			/>
+			<div class="columns">
+				<div :class="contentContainer">
+					<img
+						:src="post.sell_media_featured_image.sizes.large[0]" 
+						:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
+						:alt="post.sell_media_featured_image.alt" 
+					/>
+				</div>
+				<div :class="formContainer">
+					<cart-form :key="post.slug" :post="post"></cart-form>
+				</div>
+			</div>
 		</template>
 
 		<div class="post-content content" v-if="post.content" v-html="post.content.rendered" ></div>
@@ -38,8 +45,18 @@
 				post: {},
 				attachments: {},
 				loaded: false,
-				pageTitle: ''
-			};
+				pageTitle: '',
+				layout: sell_media.layout,
+				contentContainer: '',
+				formContainer: '',
+			}
+		},
+
+		created: function() {
+			if ( this.layout === 'sell-media-single-two-col' ) {
+				this.contentContainer = 'column is-two-thirds';
+				this.formContainer = 'column is-one-third';
+			}
 		},
 
 		methods: {
@@ -69,9 +86,7 @@
 					//console.log( `Something went wrong : ${res}` );
 
 				} );
-
 			}
-
 		},
 
 		components: {
