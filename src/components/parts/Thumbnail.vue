@@ -7,7 +7,8 @@
 			<div class="quick-view" v-if="showQuickView && quickViewVisible" @click="showModal = true">{{ quick_view_label }}</div>
 		</div>
 		<h2 v-if="showTitles">{{ post.title.rendered }}</h2>
-		<modal v-if="showModal" @closeModal="showModal = false" :post="post"></modal>
+		<!-- <modal v-if="showModal" @closeModal="showModal = false" :post="post"></modal> -->
+		<expander v-if="showModal" @closeModal="showModal = false" :post="post"></expander>
 	</div>
 </template>
 
@@ -34,8 +35,12 @@
 	$white-color: #fff;
 	$black-color: #000;
 
+	.item {
+		padding: 5px;
+	}
+
 	.item-link {
-		float: left;
+		// float: left;
 		position: relative;
 
 		img {

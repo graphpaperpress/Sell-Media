@@ -1,0 +1,116 @@
+<template>
+	<div :id="name" :class="name" class="expander">
+		<div class="expander-content">
+
+			<button class="delete has-text-right" aria-label="close" @click="$emit('closeModal')"></button>
+
+			<div class="columns">
+				<div class="column has-text-center">
+					<template v-if="multiple">
+						<slideshow :attachments="attachments"></slideshow>
+					</template>
+					<template v-else>
+						<figure class="image">
+							<img
+								:src="post.sell_media_featured_image.sizes.large[0]" 
+								:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
+								:alt="post.sell_media_featured_image.alt" 
+							/>
+						</figure>
+					</template>
+				</div>
+				<div class="column has-text-left">
+					<div class="cart-form">
+
+						<p class="title is-5">{{post.title.rendered}}</p>
+
+						<cart-form :key="post.slug" :post="post"></cart-form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+
+import Slideshow from './Slideshow.vue';
+
+	export default {
+
+		props: ['post'],
+
+		data: function () {
+			return {
+				attachments: {},
+				multiple: false,
+				currentModal: 0,
+				prev_label: sell_media.cart_labels.prev,
+				next_label: sell_media.cart_labels.next,
+			}
+		},
+
+		mounted: function() {
+			document.addEventListener("keydown", (e) => {
+				if (e.keyCode == 27) {
+					this.$emit('closeModal');
+				}
+			});
+		},
+
+		created: function() {
+			this.attachments = this.post.sell_media_attachments;
+			let count = Object.keys(this.attachments);
+			this.multiple = count.length > 1 ? true : false;
+		},
+
+		methods: {
+			next: function() {
+				this.post += 1
+			},
+			prev: function() {
+				this.post -= 1
+			}
+		},
+
+		components: {
+			'slideshow': Slideshow
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+
+	.expander {
+		background: #333;
+		padding: 1rem;
+		position: relative;
+		max-height: 500px;
+		transition: max-height .3s ease-in-out,
+              margin-bottom .1s .2s;
+		width: calc( 500% + 40px );
+		margin: .75rem 0 0;
+	}
+
+	.column:nth-of-type(5n+2) .expander {
+		margin-left: calc( -100% - 10px );
+	}
+
+	.column:nth-of-type(5n+3) .expander {
+		margin-left: calc( -200% - 20px );
+	}
+
+	.column:nth-of-type(5n+4) .expander {
+		margin-left: calc( -300% - 30px );
+	}
+
+	.column:nth-of-type(5n+5) .expander {
+		margin-left: calc( -400% - 40px );
+	}
+
+	.expander-content {
+		width: 100%;
+		height: auto;
+	}
+</style>

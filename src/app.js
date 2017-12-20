@@ -32,6 +32,8 @@ Vue.component( 'not-found', NotFound )
 
 import Modal from './components/parts/Modal.vue'
 Vue.component( 'modal', Modal )
+import Expander from './components/parts/Expander.vue'
+Vue.component( 'expander', Expander )
 import Thumbnail from './components/parts/Thumbnail.vue'
 Vue.component( 'thumbnail', Thumbnail )
 import CartForm from './components/parts/CartForm.vue'

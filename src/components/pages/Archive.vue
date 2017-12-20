@@ -10,7 +10,7 @@
 			<masonry :posts="posts" class="has-text-centered"></masonry>
 		</template>
 		<template v-else>
-			<div class="columns is-multiline has-text-centered" v-if="loaded === true">
+			<div class="columns is-gapless is-multiline has-text-centered" v-if="loaded === true">
 				<div v-for="post in posts" :class="className" class="column is-mobile">
 					<thumbnail :key="post.slug" :post="post"></thumbnail>
 				</div>
