@@ -1,8 +1,7 @@
 <template>
-	<div :id="name" :class="name" class="expander">
+	<div :id="id" :class="name" class="expander">
 		<div class="expander-content">
-
-			<button class="delete has-text-right" aria-label="close" @click="$emit('closeModal')"></button>
+			<button class="delete is-large" aria-label="close" @click="$emit('closeModal')"></button>
 
 			<div class="columns">
 				<div class="column has-text-center">
@@ -39,7 +38,7 @@ import Slideshow from './Slideshow.vue';
 
 	export default {
 
-		props: ['post'],
+		props: ['post', 'id'],
 
 		data: function () {
 			return {
@@ -80,7 +79,7 @@ import Slideshow from './Slideshow.vue';
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 	.expander {
 		background: #333;
@@ -96,6 +95,12 @@ import Slideshow from './Slideshow.vue';
 		.content,
 		.button.is-text {
 			color: #eee;
+		}
+
+		.delete {
+			position: absolute;
+			right: 0.5em;
+			top: 0.5em;
 		}
 
 		.button.is-text:disabled:hover {
