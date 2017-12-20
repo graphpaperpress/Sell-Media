@@ -13,11 +13,11 @@
           </thead>
           <tbody>
             <tr v-for="cart in carts">
-              <td>Image</td>
-              <td>{{ cart.post_id }}</td>
-              <td>{{ cart.attachment_id }}</td>
-              <td>1</td>
-              <td>{{ cart.price_id }}</td>
+              <td><a href=""><img v-bind:src="cart.featured_image"/></a></td>
+              <td>{{cart.title}}</td>
+              <td>{{cart.size}}</td>
+              <td>{{cart.qty}}</td>
+              <td>{{cart.currency_symbol}}{{cart.price }}</td>
             </tr>
           </tbody>
         </table>
@@ -30,6 +30,7 @@
     export default {
 
         data: function(){
+            console.log(this.$store.state.cart);
             return {
                 carts: this.$store.state.cart,
             }
