@@ -14,13 +14,6 @@ foreach ( $pages as $page ) {
 }
 
 /**
- * Make permalinks a relative path
- */
-function sell_media_get_relative_permalink( $id ) {
-	return str_replace( home_url(), '', get_permalink( $id ) );
-}
-
-/**
  * Extend rest response
  */
 function sell_media_extend_rest_post_response() {
