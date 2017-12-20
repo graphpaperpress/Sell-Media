@@ -24,11 +24,18 @@
 
 				<button class="button is-black" @click="addToCart" :disabled="disabled">{{ add }}</button>
 
+				<button class="button is-text" @click="addToLightbox" :disabled="disabled">{{ save_to_lightbox }}</button>
+
 			</div>
 
 			<div v-if="added" class="content">
 				{{ added_to_cart }}
 				<router-link :to="{ name: 'checkout' }">{{ view_cart }} &raquo;</router-link>
+			</div>
+
+			<div v-if="saved" class="content">
+				{{ saved_to_lightbox }}
+				<router-link :to="{ name: 'lightbox' }">{{ view_lightbox }} &raquo;</router-link>
 			</div>
 
 			</div>
@@ -57,10 +64,17 @@
 				active: '',
 				total: 0,
 				currency_symbol: sell_media.currency_symbol,
-				add: sell_media.cart_labels.add_to_cart,
+				
 				added: false,
+				add: sell_media.cart_labels.add_to_cart,
 				added_to_cart: sell_media.cart_labels.added_to_cart,
 				view_cart: sell_media.cart_labels.view_cart,
+
+				saved: false,
+				save_to_lightbox: sell_media.lightbox_labels.save,
+				saved_to_lightbox: sell_media.lightbox_labels.saved,
+				view_lightbox: sell_media.lightbox_labels.view,
+
 				disabled: true,
 				domain: window.location.hostname,
 			}
@@ -90,7 +104,7 @@
 
 			selectedTab: function(field) {
 				this.active = field;
-				this.disabled = true; // disable add to cart button
+				this.disabled = true;
 			},
 
 			addToCart: function() {
@@ -100,10 +114,18 @@
 					'price_id': this.price_id,
 				}
 				this.$store.commit( 'addToCart', cart );
-				console.log(cart);
-				
-				this.disabled = true; // disable add to cart button
+				this.disabled = true;
 				this.added = true;
+			},
+
+			addToLightbox: function() {
+				let item = {
+					'post_id': this.post_id,
+					'attachment_id': this.attachment_id,
+					'price_id': this.price_id,
+				}
+				this.$store.commit( 'addToLightbox', item );
+				this.saved = true;
 			},
 
 			validateForm() {
@@ -122,3 +144,14 @@
 
 	}
 </script>
+
+<style>
+
+	.shake {
+		animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+		transform: translate3d(0, 0, 0);
+		backface-visibility: hidden;
+		perspective: 1000px;
+	}
+
+</style>

@@ -80,7 +80,7 @@ import Slideshow from './Slideshow.vue';
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 	.expander {
 		background: #333;
@@ -88,24 +88,66 @@ import Slideshow from './Slideshow.vue';
 		position: relative;
 		max-height: 500px;
 		transition: max-height .3s ease-in-out,
-              margin-bottom .1s .2s;
-		width: calc( 500% + 40px );
+			margin-bottom .1s .2s;
 		margin: .75rem 0 0;
+
+		.title,
+		.label,
+		.content,
+		.button.is-text {
+			color: #eee;
+		}
+
+		.button.is-text:disabled:hover {
+			color: #fff;
+		}
 	}
 
-	.column:nth-of-type(5n+2) .expander {
-		margin-left: calc( -100% - 10px );
+	// two cols
+	.is-half .expander {
+		width: calc( 200% + 10px );
 	}
 
-	.column:nth-of-type(5n+3) .expander {
-		margin-left: calc( -200% - 20px );
+	// three cols
+	.is-one-third .expander {
+		width: calc( 300% + 20px );
 	}
 
-	.column:nth-of-type(5n+4) .expander {
-		margin-left: calc( -300% - 30px );
+	// four cols
+	.is-one-quarter .expander {
+		width: calc( 400% + 30px );
 	}
 
-	.column:nth-of-type(5n+5) .expander {
+	// 5 cols
+	.is-one-fifth .expander {
+		width: calc( 500% + 40px );
+	}
+
+	.is-half:nth-of-type(2n+2),
+	.is-one-third:nth-of-type(3n+2),
+	.is-one-quarter:nth-of-type(4n+2),
+	.is-one-fifth:nth-of-type(5n+2) {
+		.expander {
+			margin-left: calc( -100% - 10px );
+		}
+	}
+
+	.is-one-third:nth-of-type(3n+3),
+	.is-one-quarter:nth-of-type(4n+3),
+	.is-one-fifth:nth-of-type(5n+3) {
+		.expander {
+			margin-left: calc( -200% - 20px );
+		}
+	}
+
+	.is-one-quarter:nth-of-type(4n+4),
+	.is-one-fifth:nth-of-type(5n+4) {
+		.expander {
+			margin-left: calc( -300% - 30px );
+		}
+	}
+
+	.is-one-fifth:nth-of-type(5n+5) .expander {
 		margin-left: calc( -400% - 40px );
 	}
 

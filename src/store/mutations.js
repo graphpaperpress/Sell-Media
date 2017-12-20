@@ -1,7 +1,9 @@
-export const STORAGE_KEY = 'sell-media-cart'
+export const CART_KEY = 'sell-media-cart'
+export const LIGHTBOX_KEY = 'sell-media-lightbox'
 
 export const state = {
-  cart: JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '[]'),
+  cart: JSON.parse(window.localStorage.getItem(CART_KEY) || '[]'),
+  lightbox: JSON.parse(window.localStorage.getItem(LIGHTBOX_KEY) || '[]'),
   title: ''
 }
 
@@ -10,8 +12,24 @@ export const mutations = {
     state.cart.push(value)
   },
 
-  deleteCart (state, value) {
+  removeFromCart (state, value) {
     state.cart.splice(state.cart.indexOf(value), 1)
+  },
+
+  deleteCart (state, value) {
+    state.cart = '[]'
+  },
+
+  addToLightbox (state, value) {
+    state.lightbox.push(value)
+  },
+
+  removeFromLightbox (state, value) {
+    state.lightbox.splice(state.lightbox.indexOf(value), 1)
+  },
+
+  deleteLightbox (state, value) {
+    state.lightbox = '[]'
   },
 
   changeTitle( state, value ) {

@@ -1,6 +1,6 @@
 <template>
 	<div id="lightbox">
-		<p v-on:click="emptyLightbox" class="empty-lightbox" v-bind:title="title">{{ title }}</p>
+		<p @click="deleteLightbox" class="empty-lightbox" v-bind:title="title">{{ title }}</p>
 		<div>
 			<div class="columns is-multiline">
 				<media v-for="media in medias" v-bind:m="media"></media>
@@ -21,8 +21,10 @@
 
 		data: function() {
 			return {
+				lightbox: this.$store.state.lightbox,
 				medias: {},
 				media: '',
+				added: false,
 				title: sell_media.lightbox_labels.remove_all,
 				title_empty: sell_media.lightbox_labels.empty,
 			}
@@ -30,14 +32,15 @@
 
 		methods: {
 			getMedias: function() {
+
 				const vm = this;
-				let json = vm.$cookie.get('sell_media_lightbox')
-				if ( ! json ) {
+
+				if ( ! vm.lightbox ) {
 					vm.$set(vm, 'title', vm.title_empty)
 				} else {
-					let obj = JSON.parse(json)
+					console.log(vm.lightbox)
 					let attachment_ids = []
-					for ( let value of obj ) {
+					for ( let value of vm.lightbox ) {
 						attachment_ids.push(value.attachment_id)
 					}
 					vm.$http.get( '/wp-json/wp/v2/media', {
@@ -55,9 +58,10 @@
 					})
 				}
 			},
-			emptyLightbox: function() {
+
+			deleteLightbox: function() {
 				const vm = this;
-				vm.$cookie.delete('sell_media_lightbox')
+				vm.$store.commit( 'deleteLightbox', '[]' );
 				vm.title = vm.title_empty
 				vm.$set(vm, 'medias', {})
 			}
