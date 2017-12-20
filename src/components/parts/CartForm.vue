@@ -41,7 +41,7 @@
 			</div>
 
 		</form>
-	
+
 	</section>
 
 </template>
@@ -55,7 +55,7 @@
 		props: ['post'],
 
 		data: function() {
-			
+
 			return {
 				post_id: '',
 				attachment_id: '',
@@ -64,7 +64,7 @@
 				active: '',
 				total: 0,
 				currency_symbol: sell_media.currency_symbol,
-				
+
 				added: false,
 				add: sell_media.cart_labels.add_to_cart,
 				added_to_cart: sell_media.cart_labels.added_to_cart,
@@ -82,7 +82,7 @@
 
 		created: function() {
 			let vm = this;
-			
+
 			// set fields object, make prints first tab
 			vm.fields = vm.post.sell_media_meta.sell.reverse();
 			// set active tab to first field and show corresponding price group
@@ -112,6 +112,8 @@
 					'post_id': this.post_id,
 					'attachment_id': this.attachment_id,
 					'price_id': this.price_id,
+					'post': this.post,
+					'currency_symbol': sell_media.currency_symbol,
 				}
 				this.$store.commit( 'addToCart', cart );
 				this.disabled = true;
