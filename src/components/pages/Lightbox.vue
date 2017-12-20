@@ -35,10 +35,9 @@
 
 				const vm = this;
 
-				if ( ! vm.lightbox ) {
+				if ( Object.keys(vm.lightbox).length === 0 ) {
 					vm.$set(vm, 'title', vm.title_empty)
 				} else {
-					console.log(vm.lightbox)
 					let attachment_ids = []
 					for ( let value of vm.lightbox ) {
 						attachment_ids.push(value.attachment_id)
@@ -61,7 +60,7 @@
 
 			deleteLightbox: function() {
 				const vm = this;
-				vm.$store.commit( 'deleteLightbox', '[]' );
+				vm.$store.commit( 'deleteLightbox' );
 				vm.title = vm.title_empty
 				vm.$set(vm, 'medias', {})
 			}

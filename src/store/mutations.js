@@ -16,8 +16,8 @@ export const mutations = {
     state.cart.splice(state.cart.indexOf(value), 1)
   },
 
-  deleteCart (state, value) {
-    state.cart = '[]'
+  deleteCart (state) {
+    state.cart = JSON.parse('[]')
   },
 
   addToLightbox (state, value) {
@@ -28,8 +28,8 @@ export const mutations = {
     state.lightbox.splice(state.lightbox.indexOf(value), 1)
   },
 
-  deleteLightbox (state, value) {
-    state.lightbox = '[]'
+  deleteLightbox (state) {
+    state.lightbox = JSON.parse('[]')
   },
 
   changeTitle( state, value ) {
