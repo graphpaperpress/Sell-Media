@@ -34,7 +34,7 @@
 					</td>
 					<td>{{ currency_symbol }}{{ product.price }}</td>
 					<td>
-						{{ currency_symbol }}{{ product.price * product.qty }}
+						{{ currency_symbol }}{{ subsubtotal(product) }}
 						<button class="delete is-small" @click="removeProduct(product)"></button>
 					</td>
 				</tr>
@@ -44,10 +44,10 @@
 					<td colspan="5">{{ labels.sub_total }}: {{ currency_symbol }}{{ subtotal }}</td>
 				</tr>
 				<tr>
-					<td colspan="5">{{ labels.tax }}: {{ currency_symbol }}{{}}</td>
+					<td colspan="5">{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): {{ currency_symbol }}{{ tax }}</td>
 				</tr>
 				<tr>
-					<td colspan="5">{{ labels.shipping }}: {{ currency_symbol }}{{}}</td>
+					<td colspan="5">{{ labels.shipping }}: {{ currency_symbol }}{{ 0 }}</td>
 				</tr>
 				<tr>
 					<td colspan="5"><strong>{{ labels.total }}: {{ currency_symbol }}{{}}</strong></td>
@@ -67,11 +67,15 @@
 				products: this.$store.state.cart,
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
-				// subtotal: null,
+				tax_rate: sell_media.tax,
 			}
 		},
 
 		methods: {
+
+			subsubtotal: function(product){
+				return ( product.price * product.qty ).toFixed(2);
+			},
 
 			updateQuantity: function(product) {
 				this.$store.commit( 'updateQuantity', product );
@@ -87,7 +91,10 @@
 			subtotal: function(){
 				return this.products.reduce(function(subtotal, product){
 					return subtotal + Number(product.price) * product.qty
-				},0);
+				},0).toFixed(2);
+			},
+			tax: function(){
+				return ( this.subtotal * Number( this.tax_rate ) ).toFixed(2)
 			}
 		}
 
@@ -97,11 +104,6 @@
 </script>
 
 <style lang="scss" scoped>
-	
-	table thead,
-	table td {
-		font-size: .8rem;
-	}
 
 	table td img {
 		max-width: 75px;
@@ -115,11 +117,11 @@
 
 	table th,
 	table td {
-		width: 10%;
+		width: 12%;
 
 		&:nth-child(1),
 		&:nth-child(2) {
-			width: 35%;
+			width: 32%;
 		}
 	}
 

@@ -129,7 +129,7 @@
 			activateButton: function(value) {
 				this.disabled = false;
 				this.cart.price_id = value.id;
-				this.cart.price = value.price;
+				this.cart.price = value.price.toFixed(2);
 				this.cart.price_name = value.name;
 				this.cart.price_desc = value.description;
 				this.cart.type = value.type;
