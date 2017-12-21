@@ -62,6 +62,8 @@
 				attachment_id: '',
 				price_id: '',
 				price: '',
+				price_name: '',
+				price_desc: '',
 				img: '',
 
 				fields: [],
@@ -119,6 +121,8 @@
 					'attachment_id': this.attachment_id,
 					'price_id': this.price_id,
 					'price': this.price,
+					'price_name': this.price_name,
+					'price_desc': this.price_desc,
 					'img': this.img,
 					'qty': '1'
 				}
@@ -145,6 +149,8 @@
 				this.disabled = false;
 				this.price_id = value.id;
 				this.price = value.price;
+				this.price_name = value.name;
+				this.price_desc = value.description;
 			}
 		},
 

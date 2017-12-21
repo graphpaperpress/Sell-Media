@@ -17,7 +17,7 @@
 						<img :src="product.img" />
 						<p>{{ product.title }}</p>
 					</td>
-					<td>{{ product.price_id }}</td>
+					<td>{{ product.price_name }} - {{ product.price_desc }}</td>
 					<td>
 						<input
 						v-model.number="qty"
@@ -60,6 +60,11 @@
 
 		&:nth-child(1) {
 			width: 40%;
+		}
+
+		img {
+			max-width: 75px;
+			height: auto;
 		}
 	}
 
