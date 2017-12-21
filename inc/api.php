@@ -149,6 +149,7 @@ function sell_media_api_get_pricing( $object, $field_name = '', $request = '' ) 
 	// remove parent containing term
 	unset( $pricing['downloads'][1] );
 	unset( $pricing['prints'][1] );
+
 	return $pricing;
 }
 

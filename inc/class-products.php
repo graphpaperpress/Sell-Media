@@ -74,6 +74,7 @@ class SellMediaProducts {
 			$prices[ $i ]['price'] = $this->get_price( $post_id, $attachment_id, 'original' );
 			$prices[ $i ]['width'] = $original_size['original']['width'];
 			$prices[ $i ]['height'] = $original_size['original']['height'];
+			$prices[ $i ]['type'] = $taxonomy;
 		}
 
 		if ( $this->has_image_attachments( $post_id ) ) {
@@ -99,6 +100,7 @@ class SellMediaProducts {
 					$prices[ $i ]['price'] = $this->maybe_add_tax_per_item( get_term_meta( $term->term_id, 'price', true ) );
 					$prices[ $i ]['width'] = get_term_meta( $term->term_id, 'width', true );
 					$prices[ $i ]['height'] = get_term_meta( $term->term_id, 'height', true );
+					$prices[ $i ]['type'] = $taxonomy;
 				}
 			}
 		}

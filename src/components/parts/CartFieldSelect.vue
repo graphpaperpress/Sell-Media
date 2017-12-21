@@ -58,7 +58,6 @@
 			},
 
 			change: function(selected) {
-				console.log(selected.size)
 				this.$emit('selected', selected.size);
 			}
 		}

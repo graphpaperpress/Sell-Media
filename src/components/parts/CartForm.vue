@@ -57,15 +57,7 @@
 		data: function() {
 
 			return {
-				title: '',
-				post_id: '',
-				attachment_id: '',
-				price_id: '',
-				price: '',
-				price_name: '',
-				price_desc: '',
-				img: '',
-
+				cart: {},
 				fields: [],
 				active: '',
 				total: 0,
@@ -94,11 +86,11 @@
 			// set active tab to first field and show corresponding price group
 			vm.active = vm.fields[0];
 
-			vm.post_id = vm.post.id;
+			vm.cart.post_id = vm.post.id;
 			// WRONG! Don't assume first attachment. Get visible attachment id.
-			vm.title = vm.post.sell_media_attachments[0].title;
-			vm.attachment_id = vm.post.sell_media_attachments[0].id;
-			vm.img = vm.post.sell_media_featured_image.sizes.medium[0];
+			vm.cart.title = vm.post.sell_media_attachments[0].title;
+			vm.cart.attachment_id = vm.post.sell_media_attachments[0].id;
+			vm.cart.img = vm.post.sell_media_featured_image.sizes.medium[0];
 		},
 
 		methods: {
@@ -115,18 +107,7 @@
 			},
 
 			addToCart: function() {
-				let cart = {
-					'title': this.title,
-					'post_id': this.post_id,
-					'attachment_id': this.attachment_id,
-					'price_id': this.price_id,
-					'price': this.price,
-					'price_name': this.price_name,
-					'price_desc': this.price_desc,
-					'img': this.img,
-					'qty': '1'
-				}
-				this.$store.commit( 'addToCart', cart );
+				this.$store.commit( 'addToCart', this.cart );
 				this.disabled = true;
 				this.added = true;
 			},
@@ -147,10 +128,12 @@
 
 			activateButton: function(value) {
 				this.disabled = false;
-				this.price_id = value.id;
-				this.price = value.price;
-				this.price_name = value.name;
-				this.price_desc = value.description;
+				this.cart.price_id = value.id;
+				this.cart.price = value.price;
+				this.cart.price_name = value.name;
+				this.cart.price_desc = value.description;
+				this.cart.type = value.type;
+				this.cart.qty = 1;
 			}
 		},
 
