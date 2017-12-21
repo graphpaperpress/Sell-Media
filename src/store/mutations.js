@@ -9,11 +9,6 @@ export const state = {
 
 export const mutations = {
   addToCart (state, value) {
-    value.featured_image = value.post.sell_media_featured_image.sizes.medium[0];
-    value.title = value.post.title.rendered;
-    value.size = value.post.sell_media_pricing.downloads[value.price_id].name + " (" + value.post.sell_media_pricing.downloads[value.price_id].description + ")";
-    value.qty = 1;
-    value.price = value.post.sell_media_pricing.downloads[value.price_id].price;
     state.cart.push(value)
   },
 

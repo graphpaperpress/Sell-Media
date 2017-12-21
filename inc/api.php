@@ -61,6 +61,16 @@ function sell_media_extend_rest_post_response() {
 		)
 	);
 
+	// Add meta to price groups
+	register_rest_field( array( 'price-group', 'reprints-price-group' ),
+		'sell_media_meta',
+		array(
+			'get_callback'    => 'sell_media_api_get_price_group_meta',
+			'update_callback' => null,
+			'schema'          => null,
+		)
+	);
+
 }
 add_action( 'rest_api_init', 'sell_media_extend_rest_post_response' );
 
@@ -148,6 +158,17 @@ function sell_media_api_get_pricing( $object, $field_name = '', $request = '' ) 
 function sell_media_api_get_meta( $object, $field_name = '', $request = '' ) {
 	$meta['sell'] = array( 'Downloads' );
 	return apply_filters( 'sell_media_filter_api_get_meta', $meta, $object, $field_name, $request );
+}
+
+/**
+ * Add meta to price group api endpoint
+ */
+function sell_media_api_get_price_group_meta( $object, $field_name, $request ) {
+	$meta['price']  = get_term_meta( $object['id'], 'price', true );
+	$meta['width']  = get_term_meta( $object['id'], 'width', true );
+	$meta['height'] = get_term_meta( $object['id'], 'height', true );
+
+	return $meta;
 }
 
 /**

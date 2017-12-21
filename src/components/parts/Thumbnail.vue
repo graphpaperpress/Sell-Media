@@ -39,7 +39,7 @@
 
 				// let old_ele = document.querySelectorAll('.expander') || 0;
 				// if ( old_ele.length > 0 ) {
-				// 	console.log(old_ele )
+				// 	console.log(old_ele)
 				// 	old_ele.parentNode.removeChild( old_ele )
 				// }
 

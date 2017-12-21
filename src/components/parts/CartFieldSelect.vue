@@ -6,15 +6,15 @@
 			<label class="label">{{ field }} {{ labels.size }}</label>
 			<div class="control">
 				<div class="select">
-					<select v-model="value" v-validate.initial="'required'" @change="change(value)">
+					<select v-model="size" v-validate.initial="'required'" @change="change(size)">
 						<option disabled value="">{{ labels.choose }}</option>
-						<option v-for="price in getPricelist(post,field)" :value="price.id">{{ price.name }} ({{ price.description }})</option>
+						<option v-for="price in getPricelist(post,field)" :value="{ id: price.id, price: price.price }">{{ price.name }} ({{ price.description }})</option>
 					</select>
 				</div>
 			</div>
 		</div>
 	
-		<p class="total">{{ labels.price }}: {{ labels.currency_symbol }}{{ value || 0 }}</p>
+		<p class="total">{{ labels.price }}: {{ labels.currency_symbol }}{{ size.price }}</p>
 
 	</div>
 
@@ -28,7 +28,10 @@
 
 		data: function() {
 			return {
-				value: '',
+				size: {
+					id: null,
+					price: 0
+				},
 				labels: {
 					price: sell_media.cart_labels.price,
 					choose: sell_media.cart_labels.choose,
@@ -46,17 +49,16 @@
 			},
 
 			getPricelist: function(post,field) {
-				let list = field.toLowerCase();
-				if ( post['sell_media_pricing'][list] ) {
-					return post['sell_media_pricing'][list];
+				let taxonomy = field.toLowerCase()
+				if ( post['sell_media_pricing'][taxonomy] ) {
+					return post['sell_media_pricing'][taxonomy]
 				} else {
-					this.$emit('selected', true);
+					this.$emit('selected', true)
 				}
 			},
 
-			change: function(value) {
-				this.$emit('selected', value);
-				//console.log(value);
+			change: function(size) {
+				this.$emit('selected', size);
 			}
 		}
 	}
