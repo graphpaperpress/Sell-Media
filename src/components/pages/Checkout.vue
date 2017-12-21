@@ -4,7 +4,7 @@
 		<table class="table is-fullwidth">
 			<thead>
 				<tr>
-					<th class="has-text-left">PRODUCT</th>
+					<th>PRODUCT</th>
 					<th>SIZE</th>
 					<th>QTY</th>
 					<th>PRICE</th>
@@ -22,8 +22,7 @@
 						<input
 						v-model.number="qty"
 						class="input"
-						type="number"
-						:value="product.qty">
+						type="number">
 					</td>
 					<td>{{ currency_symbol }}{{ product.price }}</td>
 					<td>{{ currency_symbol }}{{ product.price * qty }}</td>
@@ -41,10 +40,27 @@
 		data: function() {
 			return {
 				cart: this.$store.state.cart,
-				counter: 1,
+				qty: 1,
 				currency_symbol: sell_media.currency_symbol
 			}
 		}
 	}
 
 </script>
+
+<style lang="scss" scoped>
+	
+	table thead {
+		font-size: .8rem;
+	}
+
+	table th,
+	table td {
+		width: 15%;
+
+		&:nth-child(1) {
+			width: 40%;
+		}
+	}
+
+</style>
