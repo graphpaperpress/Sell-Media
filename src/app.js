@@ -27,6 +27,8 @@ import Checkout from './components/pages/Checkout.vue'
 Vue.component( 'checkout', Checkout )
 import Search from './components/pages/Search.vue'
 Vue.component( 'search', Search )
+import Filters from './components/pages/Filters.vue'
+Vue.component( 'filters', Filters )
 import NotFound from './components/pages/NotFound.vue'
 Vue.component( 'not-found', NotFound )
 
@@ -54,6 +56,7 @@ const router = new VueRouter( {
 		{ path: '/' + sell_media.archive_path + '/:prefix/:slug', name: 'attachment', component: Attachment },
 		{ path: '/' + sell_media.checkout_path, name: 'checkout', component: Checkout },
 		{ path: '/' + sell_media.lightbox_path, name: 'lightbox', component: Lightbox },
+		{ path: '/filters', name: 'filters', component: Filters },
 		{ path: '*', component: NotFound },
 		// { path: sell_media.thanks_url, name: 'thanks', component: Thanks },
 		// { path: sell_media.dashboard_url, name: 'dashboard', component: Dashboard },

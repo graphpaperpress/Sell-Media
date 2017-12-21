@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="filters">
 		<h3>{{label_search}}</h3>
 		<input type="text" v-model="search" placeholder="Search title.."/>
 
@@ -24,18 +24,10 @@
 			</div>
 		</div>
 
-		<div class="filtered-content masonry">
-			<article v-for="post in filteredPosts" class="post masonry-brick">
-				<a v-bind:href="post.link" v-bind:title="post.title.rendered">
-					<img v-if="hasImage" v-bind:src="post._embedded['wp:featuredmedia'][0].media_details.sizes.large.source_url">
-					<div class="post-content">
-						<h2>{{ post.title.rendered }}</h2>
-						<small v-for="keyword in post.product_keywords">
-							{{ keyword }}
-						</small>
-					</div>
-				</a>
-			</article>
+		<div class="filtered-content columns">
+			<div v-for="post in filteredPosts" class="column is-one-third is-mobile">
+				<thumbnail :key="post.slug" :post="post"></thumbnail>
+			</div>
 		</div>
 
 		<div class="pagination">
@@ -55,7 +47,9 @@
 <script>
 
 	export default {
+
 		data: function() {
+
 			return {
 				posts: [],
 				post: '',
@@ -73,11 +67,13 @@
 				label_search_no_results: sell_media.search_labels.no_results,
 			}
 		},
+
 		mounted: function() {
 			const vm = this;
 			vm.getProducts(1);
 			vm.getCategories();
 		},
+
 		methods: {
 			getProducts: function(pageNumber){
 				const vm = this;
@@ -93,7 +89,7 @@
 				.then(function(response){
 					vm.$set(vm, 'posts', response.data);
 					vm.makePagination(response);
-				}
+				})
 				.catch(function(error){
 					console.log(error)
 				})
@@ -104,10 +100,10 @@
 				vm.$http.get('/wp-json/wp/v2/collection')
 				.then(function(response){
 					vm.$set(vm, 'categories', response.data);
-				}
+				})
 				.catch(function(error){
 					console.log(error);
-				}
+				})
 			},
 			makePagination: function(data){
 				const vm = this;
