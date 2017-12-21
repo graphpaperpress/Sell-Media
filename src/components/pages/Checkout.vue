@@ -47,10 +47,10 @@
 					<td colspan="5">{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): {{ currency_symbol }}{{ tax }}</td>
 				</tr>
 				<tr>
-					<td colspan="5">{{ labels.shipping }}: {{ currency_symbol }}{{ 0 }}</td>
+					<td colspan="5">{{ labels.shipping }}: {{ currency_symbol }}{{ shipping }}</td>
 				</tr>
 				<tr>
-					<td colspan="5"><strong>{{ labels.total }}: {{ currency_symbol }}{{}}</strong></td>
+					<td colspan="5"><strong>{{ labels.total }}: {{ currency_symbol }}{{ total }}</strong></td>
 				</tr>
 			</tfoot>
 		</table>
@@ -68,6 +68,7 @@
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
+				shipping_settings: sell_media_reprints
 			}
 		},
 
@@ -90,11 +91,25 @@
 		computed: {
 			subtotal: function(){
 				return this.products.reduce(function(subtotal, product){
-					return subtotal + Number(product.price) * product.qty
+					return Number(subtotal + product.price * product.qty)
 				},0).toFixed(2);
 			},
 			tax: function(){
-				return ( this.subtotal * Number( this.tax_rate ) ).toFixed(2)
+				return Number(this.subtotal * this.tax_rate ).toFixed(2)
+			},
+			shipping: function(){
+				if ( this.shipping_settings.reprints_shipping === 'shippingFlatRate' ) {
+					return Number(this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
+				}
+				if ( this.shipping_settings.reprints_shipping === 'shippingQuantityRate' ) {
+					return Number(this.products.length * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
+				}
+				if ( this.shipping_settings.reprints_shipping === 'shippingTotalRate' ) {
+					return Number(this.subtotal * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
+				}
+			},
+			total: function(){
+				return Number( Number(this.subtotal) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
 			}
 		}
 

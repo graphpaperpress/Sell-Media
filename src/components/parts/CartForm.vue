@@ -114,9 +114,9 @@
 
 			addToLightbox: function() {
 				let item = {
-					'post_id': this.post_id,
-					'attachment_id': this.attachment_id,
-					'price_id': this.price_id,
+					'post_id': Number(this.post_id),
+					'attachment_id': Number(this.attachment_id),
+					'price_id': Number(this.price_id),
 				}
 				this.$store.commit( 'addToLightbox', item );
 				this.saved = true;
@@ -128,8 +128,8 @@
 
 			activateButton: function(value) {
 				this.disabled = false;
-				this.cart.price_id = value.id;
-				this.cart.price = value.price.toFixed(2);
+				this.cart.price_id = Number(value.id);
+				this.cart.price = Number(value.price).toFixed(2);
 				this.cart.price_name = value.name;
 				this.cart.price_desc = value.description;
 				this.cart.type = value.type;
