@@ -50,7 +50,7 @@
 				<div class="column">{{ currency_symbol }}{{ product.price }}</div>
 				<div class="column has-text-right">
 					{{ currency_symbol }}{{ subsubtotal(product) }}
-					<button class="delete is-small" @click="removeProduct(product)"></button>
+					 <span class="dashicons dashicons-no-alt" @click="removeProduct(product)"></span>
 				</div>
 			</div>
 
@@ -160,6 +160,16 @@
 		input[type=number]::-webkit-outer-spin-button {
 			-webkit-appearance: none;
 			margin: 0;
+		}
+
+		.dashicons-no-alt {
+			color: #999;
+			transition: transform .5s;
+		}
+
+		.dashicons-no-alt:hover {
+			cursor: pointer;
+			transform: scale(1.2);
 		}
 	}
 
