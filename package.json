@@ -50,6 +50,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "bulma": "^0.6.1",
+    "bulma-steps-component": "^0.5.3",
     "macy": "^2.3.0",
     "parsleyjs": "^2.8.0",
     "vee-validate": "^2.0.0-rc.25",

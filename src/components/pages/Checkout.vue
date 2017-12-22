@@ -6,54 +6,70 @@
 			{{ labels.empty }}.
 			<router-link :to="{ name: 'archive' }">{{ labels.visit }} &raquo;</router-link>
 		</p>
-		<table v-else class="table is-fullwidth is-mobile">
-			<thead>
-				<tr>
-					<th>{{ labels.product }}</th>
-					<th>{{ labels.description }}</th>
-					<th>{{ labels.qty }}</th>
-					<th>{{ labels.price }}</th>
-					<th>{{ labels.sub_total }}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="(product, index) in products" :key="index">
-					<td>
-						<img :src="product.img" />
-						<p>{{ product.title }}</p>
-					</td>
-					<td>{{ product.price_name }} - {{ product.price_desc }}</td>
-					<td>
-						<input
-						v-model.number="product.qty"
-						class="input"
-						type="number"
-						step="1"
-						min="1"
-						@change="updateQuantity(product)">
-					</td>
-					<td>{{ currency_symbol }}{{ product.price }}</td>
-					<td>
-						{{ currency_symbol }}{{ subsubtotal(product) }}
-						<button class="delete is-small" @click="removeProduct(product)"></button>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="5">{{ labels.sub_total }}: {{ currency_symbol }}{{ subtotal }}</td>
-				</tr>
-				<tr>
-					<td colspan="5">{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): {{ currency_symbol }}{{ tax }}</td>
-				</tr>
-				<tr>
-					<td colspan="5">{{ labels.shipping }}: {{ currency_symbol }}{{ shipping }}</td>
-				</tr>
-				<tr>
-					<td colspan="5"><strong>{{ labels.total }}: {{ currency_symbol }}{{ total }}</strong></td>
-				</tr>
-			</tfoot>
-		</table>
+
+		<div class="cart" v-else>
+			
+			<!-- <cart-steps></cart-steps> -->
+
+			<!-- headings -->
+			<div class="columns is-mobile headings is-uppercase has-text-weight-bold">
+				<div class="column">{{ labels.product }}</div>
+				<div class="column is-4 is-hidden-mobile">{{ labels.description }}</div>
+				<div class="column">{{ labels.qty }}</div>
+				<div class="column">{{ labels.price }}</div>
+				<div class="column has-text-right">{{ labels.sub_total }}</div>
+			</div>
+
+			<!-- products -->
+			<div class="columns is-mobile is-vcentered products" v-for="(product, index) in products" :key="index">
+				<div class="column">
+					<img :src="product.img" />
+					<p class="is-hidden-mobile">{{ product.title }}</p>
+				</div>
+				<div class="column is-4 is-hidden-mobile">{{ product.price_name }} - {{ product.price_desc }}</div>
+				<div class="column">
+					<div class="field has-addons">
+						<p class="control">
+							<button :disabled="product.qty <= 0" class="button is-small" @click="product.qty -= 1">-</button>
+						</p>
+						<p class="control">
+							<input
+							v-model.number="product.qty"
+							class="input is-small"
+							type="number"
+							step="1"
+							min="1"
+							max="99"
+							@change="updateQuantity(product)">
+						</p>
+						<p class="control">
+							<button class="button is-small" @click="product.qty += 1">+</button>
+						</p>
+					</div>
+				</div>
+				<div class="column">{{ currency_symbol }}{{ product.price }}</div>
+				<div class="column has-text-right">
+					{{ currency_symbol }}{{ subsubtotal(product) }}
+					<button class="delete is-small" @click="removeProduct(product)"></button>
+				</div>
+			</div>
+
+			<!-- totals -->
+			<div class="totals has-text-right is-uppercase">
+				<div class="subtotal item">
+					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
+				</div>
+				<div class="tax item">
+					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
+				</div>
+				<div class="shipping item">
+					{{ labels.shipping }}: <span class="value">{{ currency_symbol }}{{ shipping }}</span>
+				</div>
+				<div class="total item has-text-weight-bold">
+					{{ labels.total }}: <span class="value">{{ currency_symbol }}{{ total }}</span>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </template>
@@ -120,24 +136,40 @@
 
 <style lang="scss" scoped>
 
-	table td img {
+	.cart img {
 		max-width: 75px;
 		height: auto;
 	}
 
-	table th:last-child,
-	table td:last-child {
-		text-align: right;
+	.headings {
+		border-bottom: 2px solid #ddd;
+		margin-bottom: 2rem;
+		padding-bottom: .75rem;
 	}
 
-	table th,
-	table td {
-		width: 12%;
+	.products {
+		border-bottom: 1px solid #ddd;
+		margin-bottom: 2rem;
+		padding: 1rem 0;
 
-		&:nth-child(1),
-		&:nth-child(2) {
-			width: 32%;
+		input[type=number] {
+			text-align: center;
 		}
+
+		input[type=number]::-webkit-inner-spin-button,
+		input[type=number]::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	}
+
+	.totals .item {
+		margin: 0 0 .75rem;
+	}
+
+	.totals .value {
+		display: inline-block;
+		width: 150px;
 	}
 
 </style>

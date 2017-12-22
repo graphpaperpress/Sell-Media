@@ -6,7 +6,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
 
   entry: {
-    sell_media: ['./src/app.js', './node_modules/macy/dist/macy.js', './src/sass/public.scss', './node_modules/bulma/bulma.sass'],
+    sell_media: ['./src/app.js', './node_modules/macy/dist/macy.js', './src/sass/public.sass'],
     sell_media_admin: ['./src/js/admin.js', './src/sass/admin.scss', './src/sass/admin-price-listings.scss'],
     sell_media_admin_price_listings: ['./node_modules/parsleyjs/dist/parsley.js', './src/js/admin-price-listings.js'],
     sell_media_admin_media_uploader: ['./src/js/admin-media-uploader.js'],
@@ -34,7 +34,7 @@ module.exports = {
               fallback: 'vue-style-loader'
             }),
             sass: ExtractTextPlugin.extract({
-              use: 'css-loader!sass-loader?indentedSyntax',
+              use: 'css-loader!sass-loader',
               fallback: 'vue-style-loader'
             })
           },
