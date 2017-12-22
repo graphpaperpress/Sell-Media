@@ -1,10 +1,10 @@
 <template>
-	<div class="modal" id="modal-ter" v-bind:class="{ 'is-active': showLicensePopup }">
+	<div id="modal-license" class="modal is-active">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
 		 <header class="modal-card-head">
 			<p class="modal-card-title">Additional Options</p>
-			<button class="delete" aria-label="close" v-on:click="this.$parent.toggleLicensePopup"></button>
+			<button class="delete" aria-label="close" @click="$emit('closeModal')"></button>
 		 </header>
 		 <section class="modal-card-body">
 			<select v-model="selected" @change="change(selected)">
@@ -22,7 +22,6 @@
 
 <script>
 export default {
-	props: ['showLicensePopup'],
 	data() {
 		return {
 		}

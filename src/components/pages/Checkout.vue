@@ -69,8 +69,8 @@
 					{{ labels.total }}: <span class="value">{{ currency_symbol }}{{ total }}</span>
 				</div>
 			</div>
-			<a class="button is-primary is-large modal-button" data-target="modal-ter" v-on:click="toggleLicensePopup">Continue</a>
-			<cart-markup-popup v-bind:showLicensePopup="showLicensePopup"  @selected="selected"></cart-markup-popup>
+			<button class="button is-primary is-large modal-button has-text-right" data-target="modal-ter" @click="showModal = true">{{ labels.continue }}</button>
+			<cart-modal-license v-if="showModal" @selected="selected" @closeModal="showModal = false"></cart-modal-license>
 		</div>
 	</div>
 
@@ -87,7 +87,7 @@
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
-				showLicensePopup: false
+				showModal: false
 			}
 		},
 
@@ -103,10 +103,6 @@
 
 			removeProduct: function(product) {
 				this.$store.commit( 'removeFromCart', product );
-			},
-
-			toggleLicensePopup: function() {
-				this.showLicensePopup = this.showLicensePopup?false:true;
 			}
 
 		},

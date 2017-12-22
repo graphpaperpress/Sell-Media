@@ -63,6 +63,7 @@ import Masonry from '../parts/Masonry.vue';
 				pageTitle: '',
 				name: this.$options.name, // component name
 				layout: sell_media.thumbnail_layout,
+				thumbnailCrop: sell_media.thumbnail_crop,
 				className: '',
 				search: '',
 				search_label: sell_media.search_labels.search,

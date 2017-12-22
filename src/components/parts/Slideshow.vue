@@ -10,7 +10,7 @@
 			 transition="fade"
 			 >
 			<img
-				:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]"
+				:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]" :alt="slide.alt"
 			/>
 		</div>
 

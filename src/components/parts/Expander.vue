@@ -10,11 +10,7 @@
 					</template>
 					<template v-else>
 						<figure class="image">
-							<img
-								:src="post.sell_media_featured_image.sizes.large[0]" 
-								:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
-								:alt="post.sell_media_featured_image.alt" 
-							/>
+							<featured-image :post="post" :size="image_size"></featured-image>
 						</figure>
 					</template>
 				</div>
@@ -42,6 +38,7 @@ import Slideshow from './Slideshow.vue';
 
 		data: function () {
 			return {
+				image_size: 'large',
 				attachments: {},
 				multiple: false,
 				currentModal: 0,
