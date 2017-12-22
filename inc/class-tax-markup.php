@@ -141,9 +141,9 @@ class SellMediaTaxMarkup {
     	}
 		</script>
 		<div class="sell_media-slider-container">
-			<input id="slide" type="range" min="-100" max="1000" step=".1" value="<?php print $initial_markup; ?>" oninput="updateSlider(this.value)">
+			<input id="slide" type="range" min="-100" max="1000" step="1" value="<?php print $initial_markup; ?>" oninput="updateSlider(this.value)">
 			<div class="sell_media-price-container">
-				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo get_term_meta( $term_id, 'markup', true ); ?>" size="40" />
+				<input name="meta_value[markup]" class="markup-target" type="hidden" value="<?php echo get_term_meta( $term_id, 'markup', true ); ?>" />
 			</div>
 			<p class="description">
 				<?php printf( __( 'Increase the price of a item if a buyer selects this %s by dragging the slider above.', 'sell_media' ), $singular_name ); ?>

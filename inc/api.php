@@ -71,6 +71,17 @@ function sell_media_extend_rest_post_response() {
 		)
 	);
 
+	// Add meta to markup taxonomies
+	$markups = new SellMediaTaxMarkup();
+	register_rest_field( $markups->markup_taxonomies(),
+		'sell_media_meta',
+		array(
+			'get_callback'    => 'sell_media_api_get_markup_meta',
+			'update_callback' => null,
+			'schema'          => null,
+		)
+	);
+
 }
 add_action( 'rest_api_init', 'sell_media_extend_rest_post_response' );
 
@@ -168,6 +179,16 @@ function sell_media_api_get_price_group_meta( $object, $field_name, $request ) {
 	$meta['price']  = get_term_meta( $object['id'], 'price', true );
 	$meta['width']  = get_term_meta( $object['id'], 'width', true );
 	$meta['height'] = get_term_meta( $object['id'], 'height', true );
+
+	return $meta;
+}
+
+/**
+ * Add meta to markup taxonomies api endpoint
+ */
+function sell_media_api_get_markup_meta( $object, $field_name, $request ) {
+	$meta['markup']  = get_term_meta( $object['id'], 'markup', true );
+	$meta['default'] = get_term_meta( $object['id'], 'default', true );
 
 	return $meta;
 }
