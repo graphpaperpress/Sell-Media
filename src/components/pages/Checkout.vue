@@ -84,7 +84,7 @@
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
-				shipping_settings: sell_media_reprints
+				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null
 			}
 		},
 
@@ -114,6 +114,9 @@
 				return Number(this.subtotal * this.tax_rate ).toFixed(2)
 			},
 			shipping: function(){
+				if ( ! this.shipping_settings ) {
+					return 0;
+				}
 				if ( this.shipping_settings.reprints_shipping === 'shippingFlatRate' ) {
 					return Number(this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
 				}
