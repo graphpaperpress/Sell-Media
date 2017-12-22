@@ -42,6 +42,8 @@ import CartForm from './components/parts/CartForm.vue'
 Vue.component( 'cart-form', CartForm )
 import CartSteps from './components/parts/CartSteps.vue'
 Vue.component( 'cart-steps', CartSteps )
+import CartMarkupPopup from './components/parts/CartMarkupPopup.vue'
+Vue.component( 'cart-markup-popup', CartMarkupPopup )
 // import Tabs from './components/parts/Tabs.vue'
 // Vue.component( 'tabs', Tabs )
 // import Tab from './components/parts/Tab.vue'
