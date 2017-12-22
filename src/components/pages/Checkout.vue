@@ -30,10 +30,11 @@
 				<div class="column">
 					<div class="field has-addons">
 						<p class="control">
-							<button :disabled="product.qty <= 0" class="button is-small" @click="product.qty -= 1">-</button>
+							<button :disabled="product.qty <= 0" class="button is-small" @click="decreaseQuantity(product)">-</button>
 						</p>
 						<p class="control">
 							<input
+							disabled
 							v-model.number="product.qty"
 							class="input is-small"
 							type="number"
@@ -43,7 +44,7 @@
 							@change="updateQuantity(product)">
 						</p>
 						<p class="control">
-							<button class="button is-small" @click="product.qty += 1">+</button>
+							<button class="button is-small" @click="increaseQuantity(product)">+</button>
 						</p>
 					</div>
 				</div>
@@ -109,6 +110,16 @@
 			},
 
 			updateQuantity: function(product) {
+				this.$store.commit( 'updateQuantity', product );
+			},
+
+			decreaseQuantity: function(product) {
+				product.qty -= 1
+				this.$store.commit( 'updateQuantity', product );
+			},
+
+			increaseQuantity: function(product) {
+				product.qty += 1
 				this.$store.commit( 'updateQuantity', product );
 			},
 
@@ -188,7 +199,11 @@
 
 		input[type=number] {
 			text-align: center;
-			width:30px;
+
+			&[disabled] {
+				opacity: 1;
+				border-color: #dbdbdb;
+			}
 		}
 
 		input[type=number]::-webkit-inner-spin-button,
