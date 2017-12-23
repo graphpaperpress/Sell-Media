@@ -60,8 +60,11 @@
 				<div class="subtotal item">
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
-				<div class="usage item" v-for="usage in usages" :key="usage">
-					{{ usage.term.taxonomy }} ({{ usage.term.name }}): <span class="value">{{ usage.term.markup }}</span>
+<!-- 				<div class="usage item" v-for="usage in usages" :key="usage">
+					{{ usage.term.taxonomy }} ({{ usage.term.name }}): <span class="value">{{ currency_symbol }}{{ usage.term.markup }}</span>
+				</div> -->
+				<div class="usage item" v-if="usage > 0">
+					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usage }}</span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
@@ -130,7 +133,6 @@
 			selectedUsage: function(value) {
 				this.showModal = false
 				this.usages = value
-				console.log(this.usages)
 			}
 
 		},
@@ -159,7 +161,21 @@
 				}
 			},
 			total: function(){
-				return Number( Number(this.subtotal) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
+				return Number( Number(this.subtotal) + Number(this.usage) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
+			},
+			usage: function(){
+				if ( ! this.usages ) {
+					return 0;
+				}
+
+				let usages = this.usages
+				let sum = 0
+				for ( let usage in usages ) {
+					let meta = usages[usage].term.markup || 0
+					let val = meta.replace('%', '')
+					sum += +Number(this.subtotal * val / 100)
+				}
+				return sum.toFixed(2)
 			},
 			hasDownloads: function(){
 				let status = false

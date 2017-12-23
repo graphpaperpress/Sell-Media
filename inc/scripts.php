@@ -97,7 +97,7 @@ function sell_media_scripts( $hook ) {
 			'price' => esc_html__( 'Price', 'sell_media' ),
 			'qty' => esc_html__( 'Qty', 'sell_media' ),
 			'sub_total' => esc_html__( 'Subtotal', 'sell_media' ),
-			'licensing_fee' => esc_html__( 'Licensing Fee', 'sell_media' ),
+			'usage_fee' => esc_html__( 'Usage Fee', 'sell_media' ),
 			'shipping' => esc_html__( 'Shipping', 'sell_media' ),
 			'tax' => esc_html__( 'Tax', 'sell_media' ),
 			'total' => esc_html__( 'Total', 'sell_media' ),
