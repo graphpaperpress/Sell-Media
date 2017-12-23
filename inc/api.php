@@ -401,7 +401,7 @@ if ( ! function_exists( 'sell_media_api_licensing_response' ) ) :
 					$results[$taxonomy]['terms'][$key]['name'] = $term->name;
 					$results[$taxonomy]['terms'][$key]['description'] = $term->description;
 					$results[$taxonomy]['terms'][$key]['markup'] = $markup;
-
+					$results[$taxonomy]['terms'][$key]['taxonomy'] = $tax_obj->labels->name;
 				}
 			}
 		}

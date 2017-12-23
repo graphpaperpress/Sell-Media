@@ -61,7 +61,7 @@
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
 				<div class="usage item" v-for="usage in usages" :key="usage">
-					{{ labels.licensing_fee }} ({{ usage.name }}): <span class="value">{{ usage.markup }}</span>
+					{{ usage.term.taxonomy }} ({{ usage.term.name }}): <span class="value">{{ usage.term.markup }}</span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
@@ -130,7 +130,7 @@
 			selectedUsage: function(value) {
 				this.showModal = false
 				this.usages = value
-				//console.log(value)
+				console.log(this.usages)
 			}
 
 		},

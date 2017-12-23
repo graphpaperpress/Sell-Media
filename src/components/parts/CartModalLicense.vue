@@ -17,7 +17,7 @@
 					<div class="column is-two-thirds">
 						<div class="select">
 							<select v-model="selectedUsage[index]">
-								<option disabled :value="{ description: '', id: '', markup: '', name: '' }">Select</option>
+								<option disabled :value="{}">Select</option>
 								<option v-for="term in taxonomy.terms" :key="term" :value="{ term }">{{ term.name }}</option>
 							</select>
 						</div>
@@ -42,32 +42,7 @@
 		data: function() {
 			return {
 				licenses: {},
-				selectedUsage: {
-					0: {
-						description: '',
-						id: '',
-						markup: '',
-						name: ''
-					},
-					1: {
-						description: '',
-						id: '',
-						markup: '',
-						name: ''
-					},
-					2: {
-						description: '',
-						id: '',
-						markup: '',
-						name: ''
-					},
-					3: {
-						description: '',
-						id: '',
-						markup: '',
-						name: ''
-					}
-				}
+				selectedUsage: {}
 			}
 		},
 
