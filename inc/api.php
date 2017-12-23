@@ -24,6 +24,11 @@ function sell_media_extend_rest_post_response() {
 		'args'     => sell_media_api_get_search_args(),
 	) );
 
+	register_rest_route( 'sell-media/v2', '/licensing', array(
+		'methods'  => WP_REST_Server::READABLE,
+		'callback' => 'sell_media_api_licensing_response',
+	) );
+
 	// Add featured image
 	register_rest_field( 'sell_media_item',
 		'sell_media_featured_image',
@@ -361,6 +366,51 @@ if ( ! function_exists( 'sell_media_api_get_search_args' ) ) :
 		];
 
 		return $args;
+	}
+
+endif;
+
+/**
+ * Licensing endpoint for rest api.
+ * This is a pluggable function.
+ * /wp-json/sell-media/v2/licensing/
+ */
+if ( ! function_exists( 'sell_media_api_licensing_response' ) ) :
+
+	function sell_media_api_licensing_response( $request ) {
+
+		$results = array();
+
+		$markups    = new SellMediaTaxMarkup();
+		$taxonomies = $markups->markup_taxonomies();
+
+		foreach ( $taxonomies as $taxonomy ) {
+
+			$tax_obj = get_taxonomy( $taxonomy );
+
+			$results[$taxonomy]['name'] = $tax_obj->labels->name;
+
+			$terms = get_terms( [
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+			] );
+			if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+				foreach ( $terms as $key => $term ) {
+					$markup = get_term_meta( $term->term_id, 'markup', true );
+					$results[$taxonomy]['terms'][$key]['id'] = $term->term_id;
+					$results[$taxonomy]['terms'][$key]['name'] = $term->name;
+					$results[$taxonomy]['terms'][$key]['description'] = $term->description;
+					$results[$taxonomy]['terms'][$key]['markup'] = $markup;
+
+				}
+			}
+		}
+
+		if ( empty( $results ) ) {
+			return new WP_Error( 'sell_media_no_search_results', __( 'No results', 'sell_media' ) );
+		}
+
+		return rest_ensure_response( $results );
 	}
 
 endif;

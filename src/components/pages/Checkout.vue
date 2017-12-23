@@ -60,9 +60,8 @@
 				<div class="subtotal item">
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
-				{{ licensing }}
 				<div class="usage item" v-for="usage in usages" :key="usage">
-					{{ labels.licensing_fee }} ({{ usage.term.name }}): <span class="value">{{ usage.term.sell_media_meta.markup }}</span>
+					{{ labels.licensing_fee }} ({{ usage.name }}): <span class="value">{{ usage.markup }}</span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
@@ -161,13 +160,6 @@
 			},
 			total: function(){
 				return Number( Number(this.subtotal) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
-			},
-			licensing: function(){
-				let usages = this.usages
-				//console.log(typeof usages)
-				for ( let usage in usages ) {
-					console.log(usages[usage].term.name)
-				}
 			},
 			hasDownloads: function(){
 				let status = false

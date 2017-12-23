@@ -7,22 +7,21 @@
 			<button class="delete" aria-label="close" @click="$emit('closeModal')"></button>
 		 </header>
 		 <section class="modal-card-body">
-		 	<div class="control-group" v-for="(taxonomy,index) in licenses" v-if="taxonomy.length > 0" :key="taxonomy">
-		 		
-		 		<div class="columns">
+		 	<div class="control-group" v-for="(taxonomy,index) in licenses" :key="taxonomy" v-if="taxonomy.terms">
 
+		 		<div class="columns">
 					<div class="column is-one-third">
-						<p>This is the title area</p>
+						<p>{{ taxonomy.name }}</p>
 					</div>
 
 					<div class="column is-two-thirds">
 						<div class="select">
-							<select v-model="selectedUsage[index]" @change="change(selectedUsage[index])">
-								<option disabled :value="{ term: { id: '', description: '', sell_media_meta: { markup: '' } } }">Select</option>
-								<option v-for="term in taxonomy" :key="term" :value="{ term }">{{ term.name }}</option>
+							<select v-model="selectedUsage[index]">
+								<option disabled :value="{ description: '', id: '', markup: '', name: '' }">Select</option>
+								<option v-for="term in taxonomy.terms" :key="term" :value="{ term }">{{ term.name }}</option>
 							</select>
 						</div>
-						<p>{{ selectedUsage[index].term.description }}</p>
+						<!-- <p>{{ selectedUsage[index].description }}</p> -->
 					</div>
 				</div>
 
@@ -42,35 +41,31 @@
 
 		data: function() {
 			return {
-				taxonomies: sell_media.licensing_markup_taxonomies,
 				licenses: {},
 				selectedUsage: {
 					0: {
-						term: {
-							id: '',
-							description: '',
-							sell_media_meta: {
-								markup: ''
-							}
-						}
+						description: '',
+						id: '',
+						markup: '',
+						name: ''
 					},
 					1: {
-						term: {
-							id: '',
-							description: '',
-							sell_media_meta: {
-								markup: ''
-							}
-						}
+						description: '',
+						id: '',
+						markup: '',
+						name: ''
 					},
 					2: {
-						term: {
-							id: '',
-							description: '',
-							sell_media_meta: {
-								markup: ''
-							}
-						}
+						description: '',
+						id: '',
+						markup: '',
+						name: ''
+					},
+					3: {
+						description: '',
+						id: '',
+						markup: '',
+						name: ''
 					}
 				}
 			}
@@ -84,26 +79,18 @@
 		methods: {
 			getLicenses: function(){
 				const vm = this
-				let obj = []
-				vm.taxonomies.forEach(function(taxonomy) {
-					vm.$http.get( '/wp-json/wp/v2/' + taxonomy, {
-						params: {
-							per_page: 100
-						}
-					} )
-					.then( ( res ) => {
-						obj.push(res.data)
-						
-					} )
-					.catch( ( res ) => {
-						console.log( res )
-					} )
+				vm.$http.get( '/wp-json/sell-media/v2/licensing', {
+					params: {
+						per_page: 100
+					}
 				} )
-				vm.licenses = obj
-			},
-
-			change: function(usage) {
-				//console.log(usage)
+				.then( ( res ) => {
+					vm.licenses = res.data
+					console.log(vm.licenses)
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
 			}
 		}
 	}
