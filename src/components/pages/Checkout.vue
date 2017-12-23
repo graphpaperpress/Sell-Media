@@ -70,9 +70,10 @@
 					{{ labels.total }}: <span class="value">{{ currency_symbol }}{{ total }}</span>
 				</div>
 			</div>
-			<template v-if="Object.keys(licenses).length !== 0">
+
+			<template v-if="licensing_enabled && hasDownloads">
 				<button class="button is-primary is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
-				<cart-modal-license v-if="showModal" :licenses="licenses" @selected="selected" @closeModal="showModal = false"></cart-modal-license>
+				<cart-modal-license v-if="showModal" @selectedUsage="selectedUsage"></cart-modal-license>
 			</template>
 			<template v-else>
 				<button class="button is-primary is-large">{{ labels.next }}</button>
@@ -94,13 +95,8 @@
 				tax_rate: sell_media.tax,
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
-				licenses: {},
+				licensing_enabled: sell_media.licensing_enabled,
 			}
-		},
-
-		mounted: function() {
-			const vm = this
-			vm.getLicenses()
 		},
 
 		methods: {
@@ -127,22 +123,10 @@
 				this.$store.commit( 'removeFromCart', product );
 			},
 
-			getLicenses: function() {
-				const vm = this;
-				vm.loaded = false;
-				vm.$http.get( '/wp-json/wp/v2/licenses', {
-					params: {
-						per_page: 100
-					}
-				} )
-				.then( ( res ) => {
-					vm.licenses = res.data
-					console.log(vm.licenses)
-				} )
-				.catch( ( res ) => {
-					console.log( res )
-				} )
-			},
+			selectedUsage: function(usage) {
+				this.showModal = false
+				console.log(usage)
+			}
 
 		},
 
@@ -171,6 +155,16 @@
 			},
 			total: function(){
 				return Number( Number(this.subtotal) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
+			},
+			hasDownloads: function(){
+				let status = false
+				let products = this.products
+				products.forEach(function(product) {
+					if (product.type === 'price-group') {
+						status = true
+					}
+				});
+				return status
 			}
 		}
 

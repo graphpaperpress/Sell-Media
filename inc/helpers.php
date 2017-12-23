@@ -1483,3 +1483,34 @@ function sell_media_ecommerce_enabled( $post_id ) {
 	}
 	return $status;
 }
+
+/**
+ * Check if licensing is enabled
+ * @return boolean true/false
+ */
+function sell_media_licensing_enabled() {
+
+	$markups    = new SellMediaTaxMarkup();
+	$taxonomies = $markups->markup_taxonomies();
+
+	foreach ( $taxonomies as $taxonomy ) {
+		$terms = get_terms( [
+			'taxonomy'   => $taxonomy,
+			'hide_empty' => false,
+		] );
+		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Return an array of taxonimies with markup
+ * @return array markup taxonomies
+ */
+function sell_media_get_license_markup_taxonomies() {
+	$markups = new SellMediaTaxMarkup();
+	return $markups->markup_taxonomies();
+}
