@@ -60,6 +60,10 @@
 				<div class="subtotal item">
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
+				{{ licensing }}
+				<div class="usage item" v-for="usage in usages" :key="usage">
+					{{ labels.licensing_fee }} ({{ usage.term.name }}): <span class="value">{{ usage.term.sell_media_meta.markup }}</span>
+				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
 				</div>
@@ -71,13 +75,13 @@
 				</div>
 			</div>
 
-			<template v-if="licensing_enabled && hasDownloads">
+			<div class="has-text-right" v-if="licensing_enabled && hasDownloads">
 				<button class="button is-primary is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
-				<cart-modal-license v-if="showModal" @selectedUsage="selectedUsage"></cart-modal-license>
-			</template>
-			<template v-else>
+				<cart-modal-license v-if="showModal" @selectedUsage="selectedUsage" @closeModal="showModal = false"></cart-modal-license>
+			</div>
+			<div class="has-text-right" v-else>
 				<button class="button is-primary is-large">{{ labels.next }}</button>
-			</template>
+			</div>
 		</div>
 	</div>
 
@@ -96,6 +100,7 @@
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
 				licensing_enabled: sell_media.licensing_enabled,
+				usages: {}
 			}
 		},
 
@@ -123,9 +128,10 @@
 				this.$store.commit( 'removeFromCart', product );
 			},
 
-			selectedUsage: function(usage) {
+			selectedUsage: function(value) {
 				this.showModal = false
-				console.log(usage)
+				this.usages = value
+				//console.log(value)
 			}
 
 		},
@@ -155,6 +161,13 @@
 			},
 			total: function(){
 				return Number( Number(this.subtotal) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
+			},
+			licensing: function(){
+				let usages = this.usages
+				//console.log(typeof usages)
+				for ( let usage in usages ) {
+					console.log(usages[usage].term.name)
+				}
 			},
 			hasDownloads: function(){
 				let status = false

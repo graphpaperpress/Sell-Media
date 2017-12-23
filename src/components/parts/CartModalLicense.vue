@@ -1,5 +1,5 @@
 <template>
-	<div id="modal-license" class="modal is-active">
+	<div id="modal-license" class="modal has-text-left is-active">
 	  <div class="modal-background"></div>
 	  <div class="modal-card">
 		 <header class="modal-card-head">
@@ -7,18 +7,30 @@
 			<button class="delete" aria-label="close" @click="$emit('closeModal')"></button>
 		 </header>
 		 <section class="modal-card-body">
-		 	<div class="control" v-for="(taxonomy,index) in licenses" v-if="taxonomy.length > 0" :key="taxonomy">
-				<div class="select">
-					<select v-model="selectedUsage[index]" @change="change(selectedUsage[index])">
-						<option disabled :value="{ term: { id: '', description: '', sell_media_meta: { markup: '' } } }">Select</option>
-						<option v-for="term in taxonomy" :key="term" :value="{ term }">{{ term.name }}</option>
-					</select>
+		 	<div class="control-group" v-for="(taxonomy,index) in licenses" v-if="taxonomy.length > 0" :key="taxonomy">
+		 		
+		 		<div class="columns">
+
+					<div class="column is-one-third">
+						<p>This is the title area</p>
+					</div>
+
+					<div class="column is-two-thirds">
+						<div class="select">
+							<select v-model="selectedUsage[index]" @change="change(selectedUsage[index])">
+								<option disabled :value="{ term: { id: '', description: '', sell_media_meta: { markup: '' } } }">Select</option>
+								<option v-for="term in taxonomy" :key="term" :value="{ term }">{{ term.name }}</option>
+							</select>
+						</div>
+						<p>{{ selectedUsage[index].term.description }}</p>
+					</div>
 				</div>
-				<p>{{ selectedUsage[index].term.description }}</p>
+
 			</div>
+
 		 </section>
 		 <footer class="modal-card-foot">
-			<button class="button is-success" @click="$emit('selectedUsage')">Apply</button>
+			<button class="button is-success" @click="$emit('selectedUsage', selectedUsage)">Apply</button>
 		 </footer>
 	  </div>
 	</div>
@@ -59,15 +71,6 @@
 								markup: ''
 							}
 						}
-					},
-					3: {
-						term: {
-							id: '',
-							description: '',
-							sell_media_meta: {
-								markup: ''
-							}
-						}
 					}
 				}
 			}
@@ -97,11 +100,10 @@
 					} )
 				} )
 				vm.licenses = obj
-				console.log(vm.licenses)
 			},
 
 			change: function(usage) {
-				console.log(usage)
+				//console.log(usage)
 			}
 		}
 	}
