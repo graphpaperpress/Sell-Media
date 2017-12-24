@@ -29,7 +29,7 @@
 
 		 </section>
 		 <footer class="modal-card-foot">
-			<button class="button is-success" @click="apply(values)">Apply</button>
+			<button class="button is-success" @click="apply(values)">{{ labels.apply }}</button>
 		 </footer>
 	  </div>
 	</div>
@@ -43,6 +43,9 @@
 			return {
 				licenses: {},
 				values: {},
+				labels: {
+					apply: sell_media.cart_labels.usage_apply
+				}
 			}
 		},
 

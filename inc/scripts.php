@@ -98,6 +98,7 @@ function sell_media_scripts( $hook ) {
 			'qty' => esc_html__( 'Qty', 'sell_media' ),
 			'sub_total' => esc_html__( 'Subtotal', 'sell_media' ),
 			'usage_fee' => esc_html__( 'Usage Fee', 'sell_media' ),
+			'usage_apply' => esc_html__( 'Apply', 'sell_media' ),
 			'shipping' => esc_html__( 'Shipping', 'sell_media' ),
 			'tax' => esc_html__( 'Tax', 'sell_media' ),
 			'total' => esc_html__( 'Total', 'sell_media' ),

@@ -20,6 +20,8 @@
 				<div class="column has-text-right">{{ labels.sub_total }}</div>
 			</div>
 
+			{{ downloadsSubtotal }}
+
 			<!-- products -->
 			<div class="columns is-mobile is-vcentered products" v-for="(product, index) in products" :key="index">
 				<div class="column">
@@ -141,6 +143,18 @@
 					return Number(subtotal + product.price * product.qty)
 				},0).toFixed(2);
 			},
+			downloadsSubtotal: function(){
+				let subtotal = 0
+				let products = this.products
+
+				for ( let product in products ) {
+					if ( products[product].type == 'price-group' ) {
+						subtotal += Number(products[product].price * products[product].qty)
+					}
+				}
+
+				return subtotal.toFixed(2)
+			},
 			tax: function(){
 				return Number(this.subtotal * this.tax_rate ).toFixed(2)
 			},
@@ -170,7 +184,8 @@
 				for ( let item in usage ) {
 					let meta = usage[item].term.markup || 0
 					let val = meta.replace('%', '')
-					sum += +Number(this.subtotal * val / 100)
+					// change this.downloadSubtotal to this.subtotal to add markup to all product types
+					sum += +Number(this.downloadsSubtotal * val / 100)
 				}
 				return sum.toFixed(2)
 			},
