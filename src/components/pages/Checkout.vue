@@ -60,10 +60,6 @@
 				<div class="subtotal item">
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
-<!-- 				<div class="usage item" v-for="usage in usages" :key="usage">
-					{{ usage.term.taxonomy }} ({{ usage.term.name }}): <span class="value">{{ currency_symbol }}{{ usage.term.markup }}</span>
-				</div> -->
-
 				<div class="usage item" v-if="usageFee > 0 && hasDownloads">
 					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }}</span> <span class="dashicons dashicons-no-alt" @click="deleteUsage"></span>
 				</div>
@@ -76,11 +72,14 @@
 				<div class="total item has-text-weight-bold">
 					{{ labels.total }}: <span class="value">{{ currency_symbol }}{{ total }}</span>
 				</div>
+<!-- 				<div class="usage-description is-capitalized is-small" v-if="usageFee > 0"><span class="usage-term" v-for="item in usage" :key="item">
+					{{ item.term.taxonomy }} ({{ item.term.name }})</span>
+				</div> -->
 			</div>
 
 			<div class="useage-button-wrap has-text-right" v-if="licensing_enabled && hasDownloads">
 				<button class="button is-primary is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
-				<cart-modal-license v-if="showModal" @setUsage="setUsage" @closeModal="showModal = false"></cart-modal-license>
+				<cart-modal-license v-if="showModal" @closeModal="showModal = false"></cart-modal-license>
 			</div>
 			<div class="checkout-button-wrap has-text-right" v-else>
 				<button class="button is-primary is-large">{{ labels.next }}</button>
@@ -97,7 +96,6 @@
 		data: function() {
 			return {
 				products: this.$store.state.cart,
-				usage: this.$store.state.usage,
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
@@ -129,10 +127,6 @@
 
 			removeProduct: function(product) {
 				this.$store.commit( 'removeFromCart', product );
-			},
-
-			setUsage: function(value) {
-				this.$store.commit( 'setUsage', value );
 			},
 
 			deleteUsage: function() {
@@ -167,16 +161,13 @@
 			total: function(){
 				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
 			},
+			usage: function(){
+				return this.$store.state.usage[0]
+			},
 			usageFee: function(){
-				if ( ! this.usage ) {
-					return 0;
-				}
-
-				// usage stored as array in first
-				let usage = this.usage[0]
+				let usage = this.usage
 				let sum = 0
 				for ( let item in usage ) {
-					//console.log(usage[item])
 					let meta = usage[item].term.markup || 0
 					let val = meta.replace('%', '')
 					sum += +Number(this.subtotal * val / 100)

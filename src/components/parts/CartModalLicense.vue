@@ -16,12 +16,12 @@
 
 					<div class="column is-two-thirds">
 						<div class="select">
-							<select v-model="selectedUsage[index]">
+							<select v-model="values[index]">
 								<option disabled :value="{}">Select</option>
 								<option v-for="term in taxonomy.terms" :key="term" :value="{ term }">{{ term.name }}</option>
 							</select>
 						</div>
-						<!-- <p>{{ selectedUsage[index].description }}</p> -->
+						<!-- <p>{{ values[index].description }}</p> -->
 					</div>
 				</div>
 
@@ -29,7 +29,7 @@
 
 		 </section>
 		 <footer class="modal-card-foot">
-			<button class="button is-success" @click="setUsage(selectedUsage)">Apply</button>
+			<button class="button is-success" @click="apply(values)">Apply</button>
 		 </footer>
 	  </div>
 	</div>
@@ -42,7 +42,7 @@
 		data: function() {
 			return {
 				licenses: {},
-				selectedUsage: {},
+				values: {},
 			}
 		},
 
@@ -61,16 +61,15 @@
 				} )
 				.then( ( res ) => {
 					vm.licenses = res.data
-					console.log(vm.licenses)
 				} )
 				.catch( ( res ) => {
 					console.log( res )
 				} )
 			},
 
-			setUsage: function(value) {
-				this.$emit('setUsage', value)
+			apply: function(values) {
 				this.$emit('closeModal')
+				this.$store.commit( 'setUsage', values )
 			}
 		}
 	}
