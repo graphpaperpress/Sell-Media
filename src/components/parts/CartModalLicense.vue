@@ -29,7 +29,7 @@
 
 		 </section>
 		 <footer class="modal-card-foot">
-			<button class="button is-success" @click="$emit('selectedUsage', selectedUsage)">Apply</button>
+			<button class="button is-success" @click="setUsage(selectedUsage)">Apply</button>
 		 </footer>
 	  </div>
 	</div>
@@ -42,7 +42,7 @@
 		data: function() {
 			return {
 				licenses: {},
-				selectedUsage: {}
+				selectedUsage: {},
 			}
 		},
 
@@ -66,6 +66,11 @@
 				.catch( ( res ) => {
 					console.log( res )
 				} )
+			},
+
+			setUsage: function(value) {
+				this.$emit('setUsage', value)
+				this.$emit('closeModal')
 			}
 		}
 	}

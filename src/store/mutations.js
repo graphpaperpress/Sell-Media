@@ -1,8 +1,10 @@
 export const CART_KEY = 'sell-media-cart'
+export const USAGE_KEY = 'sell-media-usage'
 export const LIGHTBOX_KEY = 'sell-media-lightbox'
 
 export const state = {
   cart: JSON.parse(window.localStorage.getItem(CART_KEY) || '[]'),
+  usage: JSON.parse(window.localStorage.getItem(USAGE_KEY) || '[]'),
   lightbox: JSON.parse(window.localStorage.getItem(LIGHTBOX_KEY) || '[]'),
   title: ''
 }
@@ -23,6 +25,14 @@ export const mutations = {
 
   deleteCart (state) {
     state.cart = JSON.parse('[]')
+  },
+
+  setUsage (state, value) {
+    state.usage = [value]
+  },
+
+  deleteUsage (state) {
+    state.usage = JSON.parse('[]')
   },
 
   addToLightbox (state, value) {

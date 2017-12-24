@@ -63,8 +63,9 @@
 <!-- 				<div class="usage item" v-for="usage in usages" :key="usage">
 					{{ usage.term.taxonomy }} ({{ usage.term.name }}): <span class="value">{{ currency_symbol }}{{ usage.term.markup }}</span>
 				</div> -->
-				<div class="usage item" v-if="usage > 0">
-					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usage }}</span>
+
+				<div class="usage item" v-if="usageFee > 0 && hasDownloads">
+					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }}</span> <span class="dashicons dashicons-no-alt" @click="deleteUsage"></span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
@@ -77,11 +78,11 @@
 				</div>
 			</div>
 
-			<div class="has-text-right" v-if="licensing_enabled && hasDownloads">
+			<div class="useage-button-wrap has-text-right" v-if="licensing_enabled && hasDownloads">
 				<button class="button is-primary is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
-				<cart-modal-license v-if="showModal" @selectedUsage="selectedUsage" @closeModal="showModal = false"></cart-modal-license>
+				<cart-modal-license v-if="showModal" @setUsage="setUsage" @closeModal="showModal = false"></cart-modal-license>
 			</div>
-			<div class="has-text-right" v-else>
+			<div class="checkout-button-wrap has-text-right" v-else>
 				<button class="button is-primary is-large">{{ labels.next }}</button>
 			</div>
 		</div>
@@ -96,13 +97,13 @@
 		data: function() {
 			return {
 				products: this.$store.state.cart,
+				usage: this.$store.state.usage,
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
-				licensing_enabled: sell_media.licensing_enabled,
-				usages: {}
+				licensing_enabled: sell_media.licensing_enabled
 			}
 		},
 
@@ -130,9 +131,12 @@
 				this.$store.commit( 'removeFromCart', product );
 			},
 
-			selectedUsage: function(value) {
-				this.showModal = false
-				this.usages = value
+			setUsage: function(value) {
+				this.$store.commit( 'setUsage', value );
+			},
+
+			deleteUsage: function() {
+				this.$store.commit( 'deleteUsage' );
 			}
 
 		},
@@ -161,17 +165,19 @@
 				}
 			},
 			total: function(){
-				return Number( Number(this.subtotal) + Number(this.usage) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
+				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
 			},
-			usage: function(){
-				if ( ! this.usages ) {
+			usageFee: function(){
+				if ( ! this.usage ) {
 					return 0;
 				}
 
-				let usages = this.usages
+				// usage stored as array in first
+				let usage = this.usage[0]
 				let sum = 0
-				for ( let usage in usages ) {
-					let meta = usages[usage].term.markup || 0
+				for ( let item in usage ) {
+					//console.log(usage[item])
+					let meta = usage[item].term.markup || 0
 					let val = meta.replace('%', '')
 					sum += +Number(this.subtotal * val / 100)
 				}
@@ -180,11 +186,11 @@
 			hasDownloads: function(){
 				let status = false
 				let products = this.products
-				products.forEach(function(product) {
-					if (product.type === 'price-group') {
+				for ( let product in products ) {
+					if (products[product].type === 'price-group') {
 						status = true
 					}
-				});
+				}
 				return status
 			}
 		}
