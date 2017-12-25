@@ -63,7 +63,7 @@
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
 				<div class="usage item" v-if="usageFee > 0 && hasDownloads">
-					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }}</span> <span class="dashicons dashicons-no-alt" @click="deleteUsage"></span>
+					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="dashicons dashicons-no-alt" @click="deleteUsage"></span></span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
