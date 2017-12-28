@@ -97,7 +97,7 @@
 
 		data: function() {
 			return {
-				products: this.$store.state.cart,
+				pageTitle: '',
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
@@ -105,6 +105,10 @@
 				showModal: false,
 				licensing_enabled: sell_media.licensing_enabled
 			}
+		},
+
+		mounted: function() {
+			this.pageTitle = 'Checkout'
 		},
 
 		methods: {
@@ -138,6 +142,9 @@
 		},
 
 		computed: {
+			products: function() {
+				return this.$store.state.cart
+			},
 			subtotal: function(){
 				return this.products.reduce(function(subtotal, product){
 					return Number(subtotal + product.price * product.qty)
@@ -182,8 +189,12 @@
 				let usage = this.usage
 				let sum = 0
 				for ( let item in usage ) {
-					let meta = usage[item].term.markup || 0
-					let val = meta.replace('%', '')
+					let meta = usage[item].term.markup
+					let val = 0
+					if ( meta !== '' ) {
+						val = meta.replace('%', '')
+					}
+					//let val = meta.replace('%', '')
 					// change this.downloadSubtotal to this.subtotal to add markup to all product types
 					sum += +Number(this.downloadsSubtotal * val / 100)
 				}
