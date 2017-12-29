@@ -20,8 +20,6 @@
 				<div class="column has-text-right">{{ labels.sub_total }}</div>
 			</div>
 
-			{{ downloadsSubtotal }}
-
 			<!-- products -->
 			<div class="columns is-mobile is-vcentered products" v-for="(product, index) in products" :key="index">
 				<div class="column">
@@ -38,7 +36,7 @@
 							<input
 							disabled
 							v-model.number="product.qty"
-							class="input is-small"
+							class="input is-small has-min-width"
 							type="number"
 							step="1"
 							min="1"
@@ -62,7 +60,7 @@
 				<div class="subtotal item">
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
-				<div class="usage item" v-if="usageFee > 0 && hasDownloads">
+				<div class="usage item" v-if="usageFee > 0">
 					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="dashicons dashicons-no-alt" @click="deleteUsage"></span></span>
 				</div>
 				<div class="tax item">
@@ -79,13 +77,17 @@
 				</div> -->
 			</div>
 
-			<div class="useage-button-wrap has-text-right" v-if="licensing_enabled && hasDownloads">
+			{{ usageNotSet }}
+
+			<div class="useage-button-wrap has-text-right" v-if="usageNotSet">
 				<button class="button is-primary is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
 				<cart-modal-license v-if="showModal" @closeModal="showModal = false"></cart-modal-license>
 			</div>
 			<div class="checkout-button-wrap has-text-right" v-else>
 				<button class="button is-primary is-large">{{ labels.next }}</button>
 			</div>
+			<div class="continue-shopping has-text-right">
+				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
 		</div>
 	</div>
 
@@ -103,7 +105,6 @@
 				tax_rate: sell_media.tax,
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
-				licensing_enabled: sell_media.licensing_enabled
 			}
 		},
 
@@ -200,14 +201,19 @@
 				}
 				return sum.toFixed(2)
 			},
-			hasDownloads: function(){
+			usageNotSet: function(){
 				let status = false
-				let products = this.products
-				for ( let product in products ) {
-					if (products[product].type === 'price-group') {
-						status = true
+
+				// licensing is enabled, but buyer hasn't selected usage
+				if ( sell_media.licensing_enabled && typeof this.usage === 'undefined' ) {
+					let products = this.products
+					for ( let product in products ) {
+						if ( products[product].type === 'price-group' ) {
+							status = true
+						}
 					}
 				}
+
 				return status
 			}
 		}
@@ -250,6 +256,10 @@
 			margin: 0;
 		}
 
+		.has-min-width {
+			min-width: 20px;
+		}
+
 		.dashicons-no-alt {
 			color: #999;
 			transition: transform .5s;
@@ -268,6 +278,10 @@
 	.totals .value {
 		display: inline-block;
 		width: 150px;
+	}
+
+	.continue-shopping {
+		margin: 2rem 0;
 	}
 
 </style>
