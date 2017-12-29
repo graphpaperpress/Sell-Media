@@ -77,8 +77,6 @@
 				</div> -->
 			</div>
 
-			{{ usageNotSet }}
-
 			<div class="useage-button-wrap has-text-right" v-if="usageNotSet">
 				<button class="button is-primary is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
 				<cart-modal-license v-if="showModal" @closeModal="showModal = false"></cart-modal-license>
@@ -99,18 +97,15 @@
 
 		data: function() {
 			return {
-				pageTitle: '',
+				products: this.$store.state.cart,
+				pageTitle: 'Checkout',
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
 			}
-		},
-
-		mounted: function() {
-			this.pageTitle = 'Checkout'
-		},
+		},		
 
 		methods: {
 
@@ -143,9 +138,6 @@
 		},
 
 		computed: {
-			products: function() {
-				return this.$store.state.cart
-			},
 			subtotal: function(){
 				return this.products.reduce(function(subtotal, product){
 					return Number(subtotal + product.price * product.qty)
