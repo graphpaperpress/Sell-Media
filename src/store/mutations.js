@@ -15,8 +15,7 @@ export const mutations = {
   },
 
   updateQuantity (state, value) {
-    let index = state.cart.indexOf(value)
-    state.cart[index].qty = value.qty
+    state.cart.splice(state.cart.indexOf(value), 1, value)
   },
 
   removeFromCart (state, value) {
