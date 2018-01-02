@@ -9,7 +9,7 @@
 						<slideshow :attachments="attachments"></slideshow>
 					</template>
 					<template v-else>
-						<figure class="image">
+						<figure>
 							<featured-image :post="post" :size="image_size"></featured-image>
 						</figure>
 					</template>
@@ -76,7 +76,7 @@ import Slideshow from './Slideshow.vue';
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 	.expander {
 		background: #333;
@@ -86,6 +86,10 @@ import Slideshow from './Slideshow.vue';
 		transition: max-height .3s ease-in-out,
 			margin-bottom .1s .2s;
 		margin: .75rem 0 0;
+
+		img {
+			max-height: calc(500px - 2rem);
+		}
 
 		.title,
 		.label,
