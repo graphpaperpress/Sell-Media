@@ -642,65 +642,6 @@ function sell_media_theme_setup() {
 }
 add_action( 'wp_head', 'sell_media_theme_setup', 999 );
 
-
-/**
- * Put the cart dialog markup in the footer
- *
- * @since 1.8.5
- */
-function sell_media_cart_dialog() {
-
-	global $post;
-
-	if ( empty( $post ) ) {
-		return;
-	}
-
-	$post_type = 'sell_media_item';
-	$settings = sell_media_get_plugin_options();
-
-	// Check if shortcode has been used
-	$shortcode = false;
-	if ( ! empty( $post->post_content ) ) {
-		$content = $post->post_content;
-		if ( has_shortcode( $content, 'sell_media_item' ) || has_shortcode( $content, 'sell_media_all_items' ) || has_shortcode( $content, 'sell_media_lightbox' ) || is_search() ) {
-			$shortcode = true;
-		}
-	}
-
-	// Check if on Sell Media taxonomy archive page
-	$sell_media_taxonomies = get_object_taxonomies( $post_type );
-
-	// Only inject markup on specific pages
-	// if ( is_singular( $post_type ) || is_post_type_archive( $post_type ) || is_tax( $sell_media_taxonomies ) || $shortcode || is_page( $settings->search_page ) ) {
-		$popup_restricted_pages = array( $settings->login_page, $settings->dashboard_page, $settings->checkout_page );
-
-		if ( ! in_array( $post->ID, $popup_restricted_pages ) ) : ?>
-			<div id="sell-media-dialog-box" class="sell-media-dialog-box">
-				<div id="sell-media-dialog-box-target">
-				<a href="javascript:void(0);" class="sell-media-dialog-box-prev sell-media-dialog-box-arrow"><span class="dashicons dashicons-arrow-left-alt2"></span></a>
-					<div class="sell-media-dialog-box-content">
-					</div>
-				<a href="javascript:void(0);" class="sell-media-dialog-box-next sell-media-dialog-box-arrow"><span class="dashicons dashicons-arrow-right-alt2"></span></a>
-				</div>
-				<span class="close">&times;</span>
-			</div>
-		<?php endif;
-	// }
-	if ( is_page( $settings->checkout_page ) && ! empty ( $settings->terms_and_conditions ) ) { ?>
-		<div id="sell-media-empty-dialog-box" class="sell-media-dialog-box sell-media-dialog-box-terms">
-			<div id="sell-media-dialog-box-target">
-				<span class="close">&times;</span>
-				<div class="content">
-					<p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions ) ); ?></p>
-				</div>
-			</div>
-		</div>
-	<?php
-	}
-}
-add_action( 'wp_footer', 'sell_media_cart_dialog' );
-
 /**
  * Check for Sell Media theme supprt
  * @return boolean

@@ -1,14 +1,14 @@
 <template>
-	<div class="item">
+	<div class="item" ref="itemContainer">
 		<div class="item-link" @mouseover="quickViewVisible = true" @mouseleave="quickViewVisible = false">
 			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
 				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
 			</router-link>
-			<div class="quick-view" v-if="showQuickView && quickViewVisible" @click="toggleModal">{{ quick_view_label }}</div>
+			<div class="quick-view" v-if="showQuickView && quickViewVisible" @click="visible = !visible">{{ quick_view_label }}</div>
 		</div>
 		<h2 v-if="showTitles">{{ post.title.rendered }}</h2>
-		<!-- <modal ref="preview" v-if="showModal" @closeModal="showModal = false" :post="post" :id="id"></modal> -->
-		<expander ref="preview" v-if="showModal" @closeModal="showModal = false" :post="post" :id="id"></expander>
+		<!-- <modal ref="preview" v-if="visible" @closeModal="visible = false" :post="post" :id="id"></modal> -->
+		<expander ref="preview" v-if="visible" @closeModal="visible = false" :post="post" :id="id"></expander>
 	</div>
 </template>
 
@@ -19,7 +19,7 @@
 
 		data: function () {
 			return {
-				showModal: false,
+				visible: false,
 				quick_view_label: sell_media.quick_view_label,
 				showTitles: sell_media.title == 1 ? true : false,
 				showQuickView: sell_media.quick_view == 1 ? true : false,
@@ -35,24 +35,26 @@
 
 		methods: {
 
-			toggleModal: function() {
-
-				// let old_ele = document.querySelectorAll('.expander') || 0;
-				// if ( old_ele.length > 0 ) {
-				// 	console.log(old_ele)
-				// 	old_ele.parentNode.removeChild( old_ele )
-				// }
-
-				this.showModal = true
-				// modals added after mounted, so wait until nextTick
+			documentClick(e){
+				let el = this.$refs.itemContainer
+				let target = e.target
+				if ( el !== target && !el.contains(target) ) {
+					this.visible = false
+				}
 				this.$nextTick(function() {
-			    	let ele = this.$refs.preview
-			    	let box = document.getElementById(ele.$el.id)
-					box.scrollIntoView({
+					el.scrollIntoView({
 						behavior: 'smooth'
 					})
-    			})
+				})
 			}
+		},
+
+		created () {
+			document.addEventListener('click', this.documentClick)
+		},
+		destroyed () {
+			// important to clean up!!
+			document.removeEventListener('click', this.documentClick)
 		}
     }
 </script>

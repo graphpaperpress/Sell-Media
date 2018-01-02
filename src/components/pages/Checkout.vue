@@ -251,15 +251,17 @@
 		.has-min-width {
 			min-width: 20px;
 		}
+	}
 
-		.dashicons-no-alt {
-			color: #999;
-			transition: transform .5s;
-		}
+	.dashicons-no-alt {
+		color: #999;
+		transition: all .25s;
+		transition-timing: ease-in-out;
 
-		.dashicons-no-alt:hover {
+		&:hover {
+			color: red;
 			cursor: pointer;
-			transform: scale(1.2);
+			transform: rotate(90deg);
 		}
 	}
 
