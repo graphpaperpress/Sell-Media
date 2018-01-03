@@ -41,7 +41,7 @@
 							step="1"
 							min="1"
 							max="99"
-							@change="updateQuantity(product)">
+							@change="updateProduct(product)">
 						</p>
 						<p class="control">
 							<button class="button is-small" @click="increaseQuantity(product)">+</button>
@@ -113,18 +113,18 @@
 				return ( product.price * product.qty ).toFixed(2);
 			},
 
-			updateQuantity: function(product) {
-				this.$store.commit( 'updateQuantity', product );
+			updateProduct: function(product) {
+				this.$store.commit( 'updateProduct', product );
 			},
 
 			decreaseQuantity: function(product) {
 				product.qty -= 1
-				this.$store.commit( 'updateQuantity', product );
+				this.$store.commit( 'updateProduct', product );
 			},
 
 			increaseQuantity: function(product) {
 				product.qty += 1
-				this.$store.commit( 'updateQuantity', product );
+				this.$store.commit( 'updateProduct', product );
 			},
 
 			removeProduct: function(product) {
@@ -155,7 +155,7 @@
 								return data.id === vm.products[i].post_id && data.sell_media_pricing.downloads[0].type===vm.products[i].type && data.sell_media_pricing.downloads[0].name===vm.products[i].price_name;
 							});
 							vm.products[i].price = sell_media_item[0].sell_media_pricing.downloads[0].price;
-							this.$store.commit( 'updateQuantity', vm.products[i] );
+							this.$store.commit( 'updateProduct', vm.products[i] );
 						}
 					}
 

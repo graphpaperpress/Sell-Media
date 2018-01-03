@@ -17,7 +17,7 @@ export const mutations = {
   // you cannot alter an object's properties directly, otherwise
   // the component will loose reactivity
   // https://vuejs.org/v2/guide/list.html#Caveats
-  updateQuantity (state, value) {
+  updateProduct (state, value) {
     state.cart.splice(state.cart.indexOf(value), 1, value)
   },
 
