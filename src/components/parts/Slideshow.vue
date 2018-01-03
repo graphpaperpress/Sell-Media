@@ -2,7 +2,7 @@
 
 	<div :class="slideshow">
 		<p>
-			<a @click="prev">{{ prev_label }}</a> | <a @click="next">{{ next_label }}</a>
+			<a @click.prevent="prev">{{ prev_label }}</a> | <a @click.prevent="next">{{ next_label }}</a>
 		</p>
 		
 		<div
@@ -13,10 +13,6 @@
 				:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]" :alt="slide.alt"
 			/>
 		</div>
-
-<!-- 			<div v-for="attachment in attachments" :key="attachment.id" transition="fade">
-				<img :src="attachment.sizes.large[0]" :width="attachment.sizes.large[1]" :height="attachment.sizes.large[2]" :alt="attachment.alt" />
-			</div> -->
 	</div>
 
 </template>
@@ -42,15 +38,19 @@
 
 		methods: {
 
-			next: function() {
+			next: function(event) {
 				this.currentSlide += 1
 				let attachment = this.attachments[this.currentSlide]
-				this.$emit('attachment', attachment)
+				if (attachment !== undefined)
+					this.$emit('attachment', attachment)
+				else
+					event.preventDefault()
 			},
-			prev: function() {
+			prev: function(event) {
 				this.currentSlide -= 1
 				let attachment = this.attachments[this.currentSlide]
-				this.$emit('attachment', attachment)
+				if (attachment !== undefined)
+					this.$emit('attachment', attachment)
 			}
 		}
 	}

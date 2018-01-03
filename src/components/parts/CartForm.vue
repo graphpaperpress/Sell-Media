@@ -99,6 +99,7 @@
 			},
 
 			setCart: function(value) {
+				console.log(value)
 				this.cart = {
 					'id': Number(this.post.id),
 					'title': this.attachment.title,
@@ -111,6 +112,7 @@
 					'type': value.type,
 					'qty': 1
 				}
+				console.log(this.cart)
 				this.disabled = false;
 			},
 

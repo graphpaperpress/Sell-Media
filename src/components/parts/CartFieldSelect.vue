@@ -6,7 +6,7 @@
 			<label class="label">{{ field }} {{ labels.size }}</label>
 			<div class="control">
 				<div class="select">
-					<select v-model="selected" v-validate.initial="'required'" @change="change(selected)">
+					<select v-model="selected" @change="change(selected)">
 						<option disabled :value="{}">{{ labels.choose }}</option>
 						<option v-for="size in getSizes(post,field)" :value="{ size }">{{ size.name }} ({{ size.description }})</option>
 					</select>
@@ -58,6 +58,7 @@
 			},
 
 			change: function(selected) {
+				//console.log(selected.size)
 				this.$emit('selected', selected.size);
 			}
 		}
