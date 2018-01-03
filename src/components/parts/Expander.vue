@@ -10,7 +10,7 @@
 					</template>
 					<template v-else>
 						<figure>
-							<featured-image :post="post" @attachment="setAttachment" :size="image_size" ></featured-image>
+							<featured-image :post="post" @attachment="setAttachment" :size="image_size"></featured-image>
 						</figure>
 					</template>
 				</div>

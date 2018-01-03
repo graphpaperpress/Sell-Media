@@ -2,24 +2,24 @@
 
 	<div v-if="loaded">
 
-		<h2 class="title">{{ post.title.rendered }}</h2>
+		<h2 class="title">{{ attachment.title.rendered }}</h2>
 
 		<div class="columns">
 
-			<div :class="contentContainer">
+			<div :class="pageLayout.content">
 				<img
-					:src="post.media_details.sizes.large.source_url" 
-					:data-srcset="post.media_details.sizes.large.source_url"
-					:alt="post.alt_text"
+					:src="attachment.media_details.sizes.large.source_url" 
+					:data-srcset="attachment.media_details.sizes.large.source_url"
+					:alt="attachment.alt_text"
 				/>
 			</div>
 
-			<div :class="formContainer">
-				<cart-form :key="post.slug" :post="post"></cart-form>
+			<div :class="pageLayout.sidebar">
+				<cart-form :key="attachment.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 			</div>
 
 		</div>
-		<div class="post-content content" v-if="post.caption" v-html="post.caption.rendered" ></div>
+		<div class="post-content content" v-if="attachment.caption" v-html="attachment.caption.rendered"></div>
 	</div>
 
 </template>
@@ -29,31 +29,23 @@
 	export default {
 
 		mounted: function() {
-			this.getPost();
+			this.getAttachment();
 		},
 
 		data: function() {
 			return {
 				base_path: sell_media.site_url,
 				post: {},
+				attachment: {},
 				loaded: false,
 				pageTitle: '',
-				layout: sell_media.layout,
-				contentContainer: '',
-				formContainer: '',
+				pageLayout: this.$store.getters.pageLayout
 			};
-		},
-
-		created: function() {
-			if ( this.layout === 'sell-media-single-two-col' ) {
-				this.contentContainer = 'column is-two-thirds';
-				this.formContainer = 'column is-one-third';
-			}
 		},
 
 		methods: {
 
-			getPost: function() {
+			getAttachment: function() {
 
 				const vm = this;
 
@@ -64,12 +56,12 @@
 				} )
 				.then( ( res ) => {
 
-					vm.post = res.data[0];
+					vm.attachment = res.data[0];
 					vm.loaded = true;
-					vm.pageTitle = vm.post.title.rendered;
+					vm.pageTitle = vm.attachment.title.rendered;
 					vm.$store.commit( 'changeTitle', vm.pageTitle );
 
-					console.log(vm.post);
+					console.log(vm.attachment);
 
 				} )
 				.catch( ( res ) => {

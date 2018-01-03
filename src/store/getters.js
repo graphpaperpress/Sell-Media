@@ -1,4 +1,4 @@
-export const layout = state => {
+export const gridLayout = state => {
 	
 	let setting = sell_media.thumbnail_layout
 	let layout = null
@@ -11,6 +11,21 @@ export const layout = state => {
 		layout = 'is-one-quarter'
 	if ( 'sell-media-five-col' === setting )
 		layout = 'is-one-fifth'
+
+	return layout
+}
+
+export const pageLayout = state => {
+
+	let setting = sell_media.layout
+	let layout = {}
+
+	if ( setting === 'sell-media-single-two-col' ) {
+		layout = {
+			'content': 'column is-two-thirds',
+			'sidebar': 'column is-one-third'
+		}
+	}
 
 	return layout
 }

@@ -11,7 +11,7 @@
 		</template>
 		<template v-else>
 			<div class="columns is-gapless is-multiline has-text-centered" v-if="loaded === true">
-				<div v-for="post in posts" :class="layout" class="column is-mobile">
+				<div v-for="post in posts" :class="gridLayout" class="column is-mobile">
 					<thumbnail :key="post.slug" :post="post"></thumbnail>
 				</div>
 			</div>
@@ -60,7 +60,7 @@ import Masonry from '../parts/Masonry.vue';
 				loaded: false,
 				pageTitle: '',
 				name: this.$options.name, // component name
-				layout: this.$store.getters.layout,
+				gridLayout: this.$store.getters.gridLayout,
 				search: '',
 				search_label: sell_media.search_labels.search,
 			}
