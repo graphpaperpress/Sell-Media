@@ -24,10 +24,10 @@
 			</div>
 		</div>
 
-		<div class="filtered-content columns">
-			<div v-for="post in filteredPosts" class="column is-one-third is-mobile">
-				<thumbnail :key="post.slug" :post="post"></thumbnail>
-			</div>
+		<div class="filtered-content columns is-gapless is-multiline has-text-centered">
+			<div v-for="post in filteredPosts" :class="layout" class="column is-mobile">
+					<thumbnail :key="post.slug" :post="post"></thumbnail>
+				</div>
 		</div>
 
 		<div class="pagination">
@@ -61,8 +61,8 @@
 				next_page: '',
 				currentPage: '',
 				postPerPage: '20',
+				layout: this.$store.getters.layout,
 				hasImage: true,
-				// string translations uses wp_localize_script in scripts.php
 				label_search: sell_media.search_labels.search,
 				label_search_no_results: sell_media.search_labels.no_results,
 			}

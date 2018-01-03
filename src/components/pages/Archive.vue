@@ -11,7 +11,7 @@
 		</template>
 		<template v-else>
 			<div class="columns is-gapless is-multiline has-text-centered" v-if="loaded === true">
-				<div v-for="post in posts" :class="className" class="column is-mobile">
+				<div v-for="post in posts" :class="layout" class="column is-mobile">
 					<thumbnail :key="post.slug" :post="post"></thumbnail>
 				</div>
 			</div>
@@ -44,8 +44,6 @@ import Masonry from '../parts/Masonry.vue';
 			} else {
 				vm.getPosts();
 			}
-
-			vm.columnLayout();
 		},
 
 		data: function() {
@@ -62,9 +60,7 @@ import Masonry from '../parts/Masonry.vue';
 				loaded: false,
 				pageTitle: '',
 				name: this.$options.name, // component name
-				layout: sell_media.thumbnail_layout,
-				thumbnailCrop: sell_media.thumbnail_crop,
-				className: '',
+				layout: this.$store.getters.layout,
 				search: '',
 				search_label: sell_media.search_labels.search,
 			}
@@ -152,23 +148,6 @@ import Masonry from '../parts/Masonry.vue';
 					showPrev: true;
 					vm.currentPage = vm.currentPage - 1;
 					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
-				}
-			},
-			
-			columnLayout: function() {
-				const vm = this;
-
-				if ( 'sell-media-two-col' === vm.layout ) {
-					vm.className = 'is-half';
-				}
-				if ( 'sell-media-three-col' === vm.layout ) {
-					vm.className = 'is-one-third';
-				}
-				if ( 'sell-media-four-col' === vm.layout ) {
-					vm.className = 'is-one-quarter';
-				}
-				if ( 'sell-media-five-col' === vm.layout ) {
-					vm.className = 'is-one-fifth';
 				}
 			}
 		},

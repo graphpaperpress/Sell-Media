@@ -1,5 +1,5 @@
 <template>
-	<div class="item" ref="itemContainer">
+	<div :class="{ active: visible }" class="item" ref="itemContainer">
 		<div class="item-link" @mouseover="quickViewVisible = true" @mouseleave="quickViewVisible = false">
 			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
 				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
@@ -36,11 +36,11 @@
 				if ( el !== target && !el.contains(target) ) {
 					this.visible = false
 				}
-				this.$nextTick(function() {
-					el.scrollIntoView({
-						behavior: 'smooth'
-					})
-				})
+				// this.$nextTick(function() {
+				// 	el.scrollIntoView({
+				// 		behavior: 'smooth'
+				// 	})
+				// })
 			}
 		},
 
@@ -61,6 +61,26 @@
 
 	.item {
 		padding: 5px;
+	
+		&.active {
+
+			.item-link {
+				position: relative;
+
+				&:after {
+					content: " ";
+					position: absolute;
+					bottom: -12px;
+					left: 50%;
+					right: 50%;
+					width: 0;
+					height: 0;
+					border-left: 12px solid transparent;
+					border-right: 12px solid transparent;
+					border-bottom: 12px solid #333;
+				}
+			}
+		}
 	}
 
 	.item-link {
