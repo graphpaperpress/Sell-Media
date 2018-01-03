@@ -82,7 +82,7 @@
 				<cart-modal-license v-if="showModal" @closeModal="showModal = false"></cart-modal-license>
 			</div>
 			<div class="checkout-button-wrap has-text-right" v-else>
-				<button class="button is-primary is-large">{{ labels.next }}</button>
+				<button class="button is-primary is-large" @click="checkout">{{ labels.next }}</button>
 			</div>
 			<div class="continue-shopping has-text-right">
 				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
@@ -92,7 +92,7 @@
 </template>
 
 <script>
-
+	import axios from 'axios';
 	export default {
 
 		data: function() {
@@ -105,7 +105,7 @@
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
 			}
-		},		
+		},
 
 		methods: {
 
@@ -133,6 +133,36 @@
 
 			deleteUsage: function() {
 				this.$store.commit( 'deleteUsage' );
+			},
+
+			checkout: function() {
+				const vm = this;
+				let media_ids = [];
+				for (var i = 0; i < vm.products.length; i++) {
+					media_ids.push(vm.products[i].post_id);
+				}
+				media_ids = media_ids.join();
+				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+					params: {
+						include: media_ids
+					}
+				} )
+				.then( ( res ) => {
+					if( res.data.length > 0 ){
+						var sell_media_item = {};
+						for (var i = 0; i < vm.products.length; i++) {
+							sell_media_item = res.data.filter(function(data){
+								return data.id === vm.products[i].post_id && data.sell_media_pricing.downloads[0].type===vm.products[i].type && data.sell_media_pricing.downloads[0].name===vm.products[i].price_name;
+							});
+							vm.products[i].price = sell_media_item[0].sell_media_pricing.downloads[0].price;
+							this.$store.commit( 'updateQuantity', vm.products[i] );
+						}
+					}
+
+				} )
+				.catch( ( res ) => {
+					// console.log( `Something went wrong : ${res}` );
+				} );
 			}
 
 		},
