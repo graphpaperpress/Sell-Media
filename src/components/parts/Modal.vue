@@ -11,15 +11,11 @@
 			<div class="modal-columns">
 				<div class="modal-column-main has-text-center">
 					<template v-if="multiple">
-						<slideshow :attachments="attachments"></slideshow>
+						<slideshow :attachments="attachments" @attachment="setAttachment"></slideshow>
 					</template>
 					<template v-else>
-						<figure class="image">
-							<img
-								:src="post.sell_media_featured_image.sizes.large[0]" 
-								:data-srcset="post.sell_media_featured_image.sizes.srcset[0]"
-								:alt="post.sell_media_featured_image.alt" 
-							/>
+						<figure>
+							<featured-image :post="post" @attachment="setAttachment" :size="image_size" ></featured-image>
 						</figure>
 					</template>
 				</div>
@@ -28,7 +24,7 @@
 
 						<p class="title is-5">{{post.title.rendered}}</p>
 
-						<cart-form :key="post.slug" :post="post"></cart-form>
+						<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 
 					</div>
 				</div>
@@ -48,7 +44,9 @@ import Slideshow from './Slideshow.vue';
 
 		data: function () {
 			return {
+				attachment: {},
 				attachments: {},
+				image_size: 'large',
 				multiple: false,
 				currentModal: 0,
 				prev_label: sell_media.cart_labels.prev,
@@ -77,6 +75,9 @@ import Slideshow from './Slideshow.vue';
 			},
 			prev: function() {
 				this.post -= 1
+			},
+			setAttachment: function(data) {
+				this.attachment = data
 			}
 		},
 
