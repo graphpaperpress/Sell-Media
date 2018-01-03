@@ -1,6 +1,6 @@
 <template>
 
-	<div :class="name">
+	<div :class="slideshow">
 		<p>
 			<a @click="prev">{{ prev_label }}</a> | <a @click="next">{{ next_label }}</a>
 		</p>
@@ -29,20 +29,28 @@
 
 		data: function() {
 			return {
-				name: 'slideshow',
 				currentSlide: 0,
 				prev_label: sell_media.cart_labels.prev,
 				next_label: sell_media.cart_labels.next,
 			}
 		},
 
+		mounted: function() {
+			let attachment = this.attachments[this.currentSlide]
+			this.$emit('attachment', attachment)
+		},
+
 		methods: {
 
 			next: function() {
 				this.currentSlide += 1
+				let attachment = this.attachments[this.currentSlide]
+				this.$emit('attachment', attachment)
 			},
 			prev: function() {
 				this.currentSlide -= 1
+				let attachment = this.attachments[this.currentSlide]
+				this.$emit('attachment', attachment)
 			}
 		}
 	}

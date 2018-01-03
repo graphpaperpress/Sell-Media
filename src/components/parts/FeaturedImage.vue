@@ -15,7 +15,12 @@
 
 	export default {
 
-		props: ['post', 'size']
+		props: ['post', 'size'],
+
+		mounted: function() {
+			let attachment = this.post.sell_media_attachments[0]
+			this.$emit('attachment', attachment)
+		}
 
 	}
 

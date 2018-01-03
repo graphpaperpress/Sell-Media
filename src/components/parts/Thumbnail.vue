@@ -7,8 +7,8 @@
 			<div class="quick-view" v-if="showQuickView && quickViewVisible" @click="visible = !visible">{{ quick_view_label }}</div>
 		</div>
 		<h2 v-if="showTitles">{{ post.title.rendered }}</h2>
-		<!-- <modal ref="preview" v-if="visible" @closeModal="visible = false" :post="post" :id="id"></modal> -->
-		<expander ref="preview" v-if="visible" @closeModal="visible = false" :post="post" :id="id"></expander>
+		<!-- <modal ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></modal> -->
+		<expander ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></expander>
 	</div>
 </template>
 
@@ -24,13 +24,8 @@
 				showTitles: sell_media.title == 1 ? true : false,
 				showQuickView: sell_media.quick_view == 1 ? true : false,
 				quickViewVisible: false,
-				thumbnailCrop: sell_media.thumbnail_crop,
-				id: null
+				thumbnailCrop: sell_media.thumbnail_crop
 			}
-		},
-
-		mounted () {
-			this.id = 'preview-' + this._uid
 		},
 
 		methods: {

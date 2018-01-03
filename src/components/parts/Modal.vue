@@ -1,5 +1,5 @@
 <template>
-	<div :id="id" :class="name" class="modal is-active">
+	<div :class="name" class="modal is-active">
 		<div class="modal-background" @click="$emit('closeModal')"></div>
 		<div class="modal-content">
 
@@ -44,7 +44,7 @@ import Slideshow from './Slideshow.vue';
 
 	export default {
 
-		props: ['post', 'id'],
+		props: ['post'],
 
 		data: function () {
 			return {

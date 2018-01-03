@@ -20,7 +20,7 @@
 
 			<div class="content">
 
-				<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="activateButton"></cart-field-select>
+				<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-select>
 
 				<button class="button is-black" @click="addToCart" :disabled="disabled">{{ add }}</button>
 
@@ -52,7 +52,7 @@
 
 	export default {
 
-		props: ['post'],
+		props: ['post', 'attachment', 'multiple'],
 
 		data: function() {
 
@@ -79,18 +79,10 @@
 		},
 
 		created: function() {
-			let vm = this;
-
 			// set fields object, make prints first tab
-			vm.fields = vm.post.sell_media_meta.sell.reverse();
+			this.fields = this.post.sell_media_meta.sell.reverse();
 			// set active tab to first field and show corresponding price group
-			vm.active = vm.fields[0];
-
-			vm.cart.post_id = vm.post.id;
-			// WRONG! Don't assume first attachment. Get visible attachment id.
-			vm.cart.title = vm.post.sell_media_attachments[0].title;
-			vm.cart.attachment_id = vm.post.sell_media_attachments[0].id;
-			vm.cart.img = vm.post.sell_media_featured_image.sizes.medium[0];
+			this.active = this.fields[0];
 		},
 
 		methods: {
@@ -104,6 +96,22 @@
 			selectedTab: function(field) {
 				this.active = field;
 				this.disabled = true;
+			},
+
+			setCart: function(value) {
+				this.cart = {
+					'id': Number(this.post.id),
+					'title': this.attachment.title,
+					'attachment_id': Number(this.attachment.id),
+					'img': this.multiple ? this.attachment.sizes.medium[0] : this.post.sell_media_featured_image.sizes.medium[0],
+					'price_id': value.id,
+					'price': Number(value.price).toFixed(2),
+					'price_name': value.name,
+					'price_desc': value.description,
+					'type': value.type,
+					'qty': 1
+				}
+				this.disabled = false;
 			},
 
 			addToCart: function() {
@@ -124,16 +132,6 @@
 
 			validateForm() {
 
-			},
-
-			activateButton: function(value) {
-				this.disabled = false;
-				this.cart.price_id = Number(value.id);
-				this.cart.price = Number(value.price).toFixed(2);
-				this.cart.price_name = value.name;
-				this.cart.price_desc = value.description;
-				this.cart.type = value.type;
-				this.cart.qty = 1;
 			}
 		},
 

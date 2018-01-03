@@ -1,16 +1,16 @@
 <template>
-	<div :id="id" :class="name" class="expander">
+	<div :class="name" class="expander">
 		<div class="expander-content">
 			<button class="delete is-large" aria-label="close" @click="$emit('closeModal')"></button>
 
 			<div class="columns">
 				<div class="column has-text-center">
 					<template v-if="multiple">
-						<slideshow :attachments="attachments"></slideshow>
+						<slideshow :attachments="attachments" @attachment="setAttachment"></slideshow>
 					</template>
 					<template v-else>
 						<figure>
-							<featured-image :post="post" :size="image_size"></featured-image>
+							<featured-image :post="post" @attachment="setAttachment" :size="image_size" ></featured-image>
 						</figure>
 					</template>
 				</div>
@@ -19,7 +19,7 @@
 
 						<p class="title is-5">{{post.title.rendered}}</p>
 
-						<cart-form :key="post.slug" :post="post"></cart-form>
+						<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 
 					</div>
 				</div>
@@ -34,7 +34,7 @@ import Slideshow from './Slideshow.vue';
 
 	export default {
 
-		props: ['post', 'id'],
+		props: ['post'],
 
 		data: function () {
 			return {
@@ -44,6 +44,7 @@ import Slideshow from './Slideshow.vue';
 				currentModal: 0,
 				prev_label: sell_media.cart_labels.prev,
 				next_label: sell_media.cart_labels.next,
+				attachment: {}
 			}
 		},
 
@@ -67,6 +68,9 @@ import Slideshow from './Slideshow.vue';
 			},
 			prev: function() {
 				this.post -= 1
+			},
+			setAttachment: function(data) {
+				this.attachment = data
 			}
 		},
 
