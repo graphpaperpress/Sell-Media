@@ -137,31 +137,56 @@
 
 			checkout: function() {
 				const vm = this;
-				let media_ids = [];
+				let item_ids = [];
 				for (var i = 0; i < vm.products.length; i++) {
-					media_ids.push(vm.products[i].post_id);
+					item_ids.push(vm.products[i].id);
 				}
-				media_ids = media_ids.join();
+				item_ids = item_ids.join();
+
+            // Get items data.
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
-						include: media_ids
+						include: item_ids
 					}
 				} )
 				.then( ( res ) => {
-					if( res.data.length > 0 ){
-						var sell_media_item = {};
+					var dataLength = res.data.length;
+					if( dataLength > 0 ){
 						for (var i = 0; i < vm.products.length; i++) {
-							sell_media_item = res.data.filter(function(data){
-								return data.id === vm.products[i].post_id && data.sell_media_pricing.downloads[0].type===vm.products[i].type && data.sell_media_pricing.downloads[0].name===vm.products[i].price_name;
+							var item = res.data.find(function(data){
+								return data.id === vm.products[i].id;
 							});
-							vm.products[i].price = sell_media_item[0].sell_media_pricing.downloads[0].price;
-							this.$store.commit( 'updateProduct', vm.products[i] );
+							if( 'undefined' !== typeof item ) {
+								var downloadsCounts = Object.keys( item.sell_media_pricing.downloads ).length;
+								// If type is price-group then its downloads.
+								if ( 'price-group' === vm.products[i].type &&  downloadsCounts > 0 ) {
+									var downloads = item.sell_media_pricing.downloads.find(function(download){
+										return download.id === vm.products[i].price_id;
+									});
+									if( 'undefined' !== typeof downloads ) {
+										// Update price based on api.
+										vm.products[i].price = downloads.price;
+										vm.$store.commit( 'updateProduct', vm.products[i] );
+									} else{
+                              // if no download tax is found remove item from cart.
+										vm.$store.commit( 'removeFromCart', vm.products[i] );
+									}
+								} else if( 'reprints-price-group' == vm.products[i].type ) {
+                           // [TODO] condition for reprint to be added.
+								} else {
+									// if no type is found remove item from cart.
+									vm.$store.commit( 'removeFromCart', vm.products[i] );
+								}
+							} else{
+								// if no item is found remove item from cart.
+								vm.$store.commit( 'removeFromCart', vm.products[i] );
+							}
 						}
 					}
 
 				} )
 				.catch( ( res ) => {
-					// console.log( `Something went wrong : ${res}` );
+					console.log( `Something went wrong : ${res}` );
 				} );
 			}
 
