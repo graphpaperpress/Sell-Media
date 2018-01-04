@@ -66,7 +66,7 @@ class SellMediaProducts {
 		$i = 0;
 		$custom_original_price = ( get_post_meta( $post_id, 'sell_media_price', true ) ) ? get_post_meta( $post_id, 'sell_media_price', true ) : false;
 
-		if ( 'yes' !== $this->settings->hide_original_price && $custom_original_price ) {
+		if ( 'yes' !== $this->settings->hide_original_price && $custom_original_price && 'reprints-price-group' !== $taxonomy ) {
 			$original_size = Sell_Media()->images->get_original_image_size( $post_id, $attachment_id );
 			$prices[ $i ]['id'] = 'original';
 			$prices[ $i ]['name'] = __( 'Original', 'sell_media' );

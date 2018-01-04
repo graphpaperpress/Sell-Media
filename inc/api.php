@@ -168,8 +168,6 @@ function sell_media_api_get_pricing( $object, $field_name = '', $request = '' ) 
 	$pricing['downloads'] = $products->get_prices( $post_id, $attachment_id );
 	$pricing['prints']    = $products->get_prices( $post_id, $attachment_id, 'reprints-price-group' );
 
-	unset( $pricing['prints'][0] ); // remove "original" from prints
-
 	return $pricing;
 }
 
