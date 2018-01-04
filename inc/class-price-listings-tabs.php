@@ -51,7 +51,7 @@ class Sell_Media_Price_Listings_Tabs {
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
 		add_action( 'admin_head', array( $this, 'js_template' ), 25 );
 		add_action( 'sell_media_price_listing_save', array( $this, 'save_data' ) );
-		add_action( 'sell_meida_load_pricelists_page', array( $this, 'delete_pricelist' ) );		
+		add_action( 'sell_meida_load_pricelists_page', array( $this, 'delete_pricelist' ) );
 	}
 
 	/**
@@ -252,18 +252,12 @@ class Sell_Media_Price_Listings_Tabs {
 				foreach ( $_POST['new_children'] as $term_id => $data ) {
 					if ( '' !== $data['name'] ) {
 
-						if ( term_exists( $data['name'], $this->taxonomy ) ) {
-							$term = get_term_by( 'name', $data['name'], $this->taxonomy );
-							$term_id = $term->term_id;
+						$term = wp_insert_term( $data['name'], $this->taxonomy, array(
+							'parent' => $parent_term_id,
+							'description' => $data['description'],
+						) );
+						$term_id = $term['term_id'];
 
-						} else {
-
-							$term = wp_insert_term( $data['name'], $this->taxonomy, array(
-								'parent' => $parent_term_id,
-								'description' => $data['description'],
-							) );
-							$term_id = $term['term_id'];
-						}
 						update_term_meta( $term_id, 'width', $data['width'] );
 						update_term_meta( $term_id, 'height', $data['height'] );
 						update_term_meta( $term_id, 'price', $data['price'] );
