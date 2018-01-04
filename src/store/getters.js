@@ -29,3 +29,7 @@ export const pageLayout = state => {
 
 	return layout
 }
+
+export const defaultSize = state => {
+	return {}
+}

@@ -105,8 +105,8 @@ function sell_media_get_default_terms(){
  * @return string
  * @since 0.1
  */
-function sell_media_license_description(){
-	echo __( 'When a buyer decides to purchase a item from your site, they must choose a license which most closely identifies their intended use of the item. We have included some default license types, grouped into two "parent" categories: Personal and Commercial. Each of these two categories have specific "child" licenses, such as "Print Advertising" (a child of Commercial) and "Website" (a child of Personal). You can create as many parent and child licenses as you want.', 'sell_media' );
+function sell_media_license_description() {
+	esc_html_e( 'Licenses allow you to charge usage fees for your downloads. For example, you could add a "Commercial" license with 50% markup over the base price. You could also add an "Educational" license with negative markup, which would effectively lower the base price. You can add as many licenses as you like. Add detailed descriptions to help your buyers make educated decisions for their purchase.', 'sell_media' );
 }
 add_action( 'licenses_pre_add_form', 'sell_media_license_description' );
 

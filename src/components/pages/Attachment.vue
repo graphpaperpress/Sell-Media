@@ -29,7 +29,7 @@
 	export default {
 
 		mounted: function() {
-			this.getAttachment();
+			this.getAttachment()
 		},
 
 		data: function() {
@@ -38,6 +38,7 @@
 				post: {},
 				attachment: {},
 				loaded: false,
+				multiple: false,
 				pageTitle: '',
 				pageLayout: this.$store.getters.pageLayout
 			};
@@ -56,12 +57,12 @@
 				} )
 				.then( ( res ) => {
 
-					vm.attachment = res.data[0];
-					vm.loaded = true;
-					vm.pageTitle = vm.attachment.title.rendered;
-					vm.$store.commit( 'changeTitle', vm.pageTitle );
+					vm.attachment = res.data[0]
+					vm.attachment.title = vm.attachment.title.rendered
+					vm.pageTitle = vm.attachment.title.rendered
+					vm.$store.commit( 'changeTitle', vm.pageTitle )
 
-					console.log(vm.attachment);
+					this.getPost()
 
 				} )
 				.catch( ( res ) => {
@@ -70,7 +71,25 @@
 
 				} );
 
-			}
+			},
+
+			getPost: function() {
+
+				const vm = this;
+
+				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+					params: {
+						include: vm.attachment.post
+					}
+				} )
+				.then( ( res ) => {
+					vm.post = res.data[0]
+					vm.loaded = true
+				} )
+				.catch( ( res ) => {
+					console.log( `Something went wrong : ${res}` )
+				} );
+			},
 
 		}
 

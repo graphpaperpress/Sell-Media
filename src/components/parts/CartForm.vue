@@ -74,28 +74,27 @@
 				view_lightbox: sell_media.lightbox_labels.view,
 
 				disabled: true,
-				domain: window.location.hostname,
 			}
 		},
 
 		created: function() {
 			// set fields object, make prints first tab
-			this.fields = this.post.sell_media_meta.sell.reverse();
+			this.fields = this.post.sell_media_meta.sell.reverse()
 			// set active tab to first field and show corresponding price group
-			this.active = this.fields[0];
+			this.active = this.fields[0]
 		},
 
 		methods: {
 
 			showTabs: function(post) {
 				if ( post.sell_media_meta.sell.length > 1 ) {
-					return true;
+					return true
 				}
 			},
 
 			selectedTab: function(field) {
-				this.active = field;
-				this.disabled = true;
+				this.active = field
+				this.disabled = true
 			},
 
 			setCart: function(value) {
@@ -111,19 +110,19 @@
 					'type': value.type,
 					'qty': 1
 				}
-				this.disabled = false;
+				this.disabled = false
 			},
 
 			addToCart: function() {
-				this.$store.commit( 'addToCart', this.cart );
-				this.disabled = true;
-				this.added = true;
+				this.$store.commit( 'addToCart', this.cart )
+				this.disabled = true
+				this.added = true
 			},
 
 			addToLightbox: function() {
 				let item = {
-					'post_id': Number(this.post_id),
-					'attachment_id': Number(this.attachment_id),
+					'post_id': Number(this.post.id),
+					'attachment_id': Number(this.attachment.id),
 					'price_id': Number(this.price_id),
 				}
 				this.$store.commit( 'addToLightbox', item );

@@ -29,7 +29,6 @@ function sell_media_extend_rest_post_response() {
 		'callback' => 'sell_media_api_licensing_response',
 	) );
 
-	// Add featured image
 	register_rest_field( 'sell_media_item',
 		'sell_media_featured_image',
 		array(

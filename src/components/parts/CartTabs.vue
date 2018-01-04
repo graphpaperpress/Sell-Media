@@ -1,11 +1,11 @@
 <template>
     
     <tabs>
-        <tab name="Prints" :selected="true">
+        <tab name="Prints" :selected="true" @click="reset">
             <cart-field-print-size :key="post.slug" :post="post"></cart-field-print-size>
         </tab>
 
-        <tab name="Downloads">
+        <tab name="Downloads" @click="reset">
             <cart-field-download-size :key="post.slug" :post="post"></cart-field-download-size>
         </tab>
     </tabs>
@@ -28,6 +28,12 @@
                     add: sell_media.cart_labels.add_to_cart,
                 }
 
+            }
+        },
+
+        methods: {
+            reset: function() {
+                document.getElementById('sizes').selectedIndex = '0';
             }
         },
 

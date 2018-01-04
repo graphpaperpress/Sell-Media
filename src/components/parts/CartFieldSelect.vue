@@ -6,16 +6,16 @@
 			<label class="label">{{ field }} {{ labels.size }}</label>
 			<div class="control">
 				<div class="select">
-					<select v-model="selected" @change="change(selected)">
+					<select id="sizes" v-model="selected" @change="$emit('selected', selected)">
 						<option disabled :value="{}">{{ labels.choose }}</option>
-						<option v-for="size in getSizes(post,field)" :value="{ size }">{{ size.name }} ({{ size.description }})</option>
+						<option v-for="size in getSizes(post,field)" :value="size">{{ size.name }} ({{ size.description }})</option>
 					</select>
 				</div>
 			</div>
 		</div>
 	
 		<p class="total">{{ labels.price }}: {{ labels.currency_symbol }}
-			<span v-if="selected.size">{{ selected.size.price }}</span>
+			<span v-if="selected.price">{{ selected.price }}</span>
 			<span v-else>0</span>
 		</p>
 
@@ -55,11 +55,6 @@
 				} else {
 					this.$emit('selected', true)
 				}
-			},
-
-			change: function(selected) {
-				//console.log(selected.size)
-				this.$emit('selected', selected.size);
 			}
 		}
 	}

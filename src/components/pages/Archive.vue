@@ -79,7 +79,6 @@ import Masonry from '../parts/Masonry.vue';
 				} )
 				.then( ( res ) => {
 					vm.posts = res.data;
-					console.log(vm.posts)
 					vm.totalPages = res.headers[ 'x-wp-totalpages' ];
 
 					if ( pageNumber <= parseInt( vm.totalPages ) ) {

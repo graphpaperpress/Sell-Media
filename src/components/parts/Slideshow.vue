@@ -2,7 +2,7 @@
 
 	<div :class="slideshow">
 		<p>
-			<a @click.prevent="prev">{{ prev_label }}</a> | <a @click.prevent="next">{{ next_label }}</a>
+			<button class="button is-text" @click="goPrev" :disabled="prev.disabled">{{ prev.label }}</button> {{ currentSlide + 1 }} of {{ attachments.length }} <button class="button is-text" @click="goNext" :disabled="next.disabled">{{ next.label }}</button>
 		</p>
 		
 		<div
@@ -10,7 +10,8 @@
 			 transition="fade"
 			 >
 			<img
-				:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]" :alt="slide.alt"
+				:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]"
+				:alt="slide.alt"
 			/>
 		</div>
 	</div>
@@ -26,8 +27,16 @@
 		data: function() {
 			return {
 				currentSlide: 0,
-				prev_label: sell_media.cart_labels.prev,
-				next_label: sell_media.cart_labels.next,
+
+				prev: {
+					label: sell_media.cart_labels.prev,
+					disabled: true
+				},
+
+				next: {
+					label: sell_media.cart_labels.next,
+					disabled: false
+				}
 			}
 		},
 
@@ -38,19 +47,27 @@
 
 		methods: {
 
-			next: function(event) {
+			goNext: function() {
 				this.currentSlide += 1
 				let attachment = this.attachments[this.currentSlide]
-				if (attachment !== undefined)
-					this.$emit('attachment', attachment)
-				else
-					event.preventDefault()
+				this.$emit('attachment', attachment)
+
+				if (this.currentSlide < this.attachments.length - 1){
+					this.prev.disabled = false
+				} else {
+					this.next.disabled = true
+				}
 			},
-			prev: function(event) {
+			goPrev: function() {
 				this.currentSlide -= 1
 				let attachment = this.attachments[this.currentSlide]
-				if (attachment !== undefined)
-					this.$emit('attachment', attachment)
+				this.$emit('attachment', attachment)
+
+				if (this.currentSlide > 0){
+					this.next.disabled = false
+				} else {
+					this.prev.disabled = true
+				}
 			}
 		}
 	}
