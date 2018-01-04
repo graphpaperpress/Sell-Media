@@ -82,7 +82,7 @@
 				<cart-modal-license v-if="showModal" @closeModal="showModal = false"></cart-modal-license>
 			</div>
 			<div class="checkout-button-wrap has-text-right" v-else>
-				<button class="button is-primary is-large" @click="checkout">{{ labels.next }}</button>
+				<button class="button is-primary is-large" @click="checkout" :disabled="notValid">{{ labels.next }}</button>
 			</div>
 			<div class="continue-shopping has-text-right">
 				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
@@ -104,6 +104,7 @@
 				tax_rate: sell_media.tax,
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
+				notValid: false
 			}
 		},
 
@@ -142,7 +143,7 @@
 					item_ids.push(vm.products[i].id);
 				}
 				item_ids = item_ids.join();
-
+				this.notValid = true;
             // Get items data.
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
@@ -183,10 +184,11 @@
 							}
 						}
 					}
-
+					this.notValid = false;
 				} )
 				.catch( ( res ) => {
 					console.log( `Something went wrong : ${res}` );
+					this.notValid = false;
 				} );
 			}
 
