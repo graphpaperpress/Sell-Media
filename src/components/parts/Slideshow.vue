@@ -28,7 +28,6 @@
 
 			</div>
 
-{{currentSlide}}
 			<div
 			class="slideshow-image"
 			v-for="slide in [currentSlide]"
@@ -43,7 +42,7 @@
 
 		<div class="slideshow-thumbnails">
 			<ul>
-				<li v-for="(attachment, index) in attachments" @click="goToSlide(index)">
+				<li v-for="(attachment, index) in attachments" @click="goToSlide(index)" :class="{ active: currentSlide === index }">
 					<img :src="attachment.sizes.thumbnail[0]" :alt="attachment.alt" />
 				</li>
 			</ul>
@@ -111,18 +110,42 @@
 
 	.slideshow-content {
 		position: relative;
+		overflow: hidden;
 	}
 
 	.slideshow-nav button {
 		top: calc(50% - 16px);
 		position: absolute;
 		display: block;
-		color: #fff;
-
+		background: transparent;
+		color: rgba(255,255,255,.8);
+		transition: all 0.25s ease-in-out;
+		padding: .5rem 1rem;
+		
 		&:hover {
-			background: rgba(0,0,0,.2);
+			background: rgba(0,0,0,.5);
+			color: #fff;
 		}
 
+		&:focus {
+			outline: none;
+		}
+
+		&.slideshow-nav-left {
+			left: -5rem;
+		}
+
+		&.slideshow-nav-right {
+			right: -5rem;
+		}
+
+		svg {
+			-webkit-filter: drop-shadow(0 0 3px rgba(0,0,0,.75));
+			filter: drop-shadow(0 0 3px rgba(0,0,0,.75));
+		}
+	}
+
+	.slideshow-content:hover .slideshow-nav button {
 		&.slideshow-nav-left {
 			left: .5rem;
 		}
@@ -144,11 +167,21 @@
 			li {
 				display: inline-block;
 				margin-right: .5rem;
-				width: 50px;
-				height: 50px;
+				width: 40px;
+				height: 40px;
+				border: 2px solid #555;
 
 				&:last-child {
 					margin-right: 0;
+				}
+
+				&.active {
+					border-color: #fff;
+					box-shadow: 0 3px 6px rgba(0,0,0,.5)
+				}
+
+				&:hover {
+					cursor: pointer;
 				}
 			}
 		}
