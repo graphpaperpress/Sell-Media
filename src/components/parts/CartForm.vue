@@ -98,11 +98,9 @@
 			},
 
 			setCart: function(value) {
+				// this feels wrong
+				// set product price, type and qty
 				this.cart = {
-					'id': Number(this.post.id),
-					'title': this.attachment.title,
-					'attachment_id': Number(this.attachment.id),
-					'img': this.multiple ? this.attachment.sizes.medium[0] : this.post.sell_media_featured_image.sizes.medium[0],
 					'price_id': value.id,
 					'price': Number(value.price).toFixed(2),
 					'price_name': value.name,
@@ -114,6 +112,21 @@
 			},
 
 			addToCart: function() {
+				// this feels wrong
+				// add currently visible post and attachment
+				this.cart = {
+					'id': Number(this.post.id),
+					'title': this.attachment.title,
+					'attachment_id': Number(this.attachment.id),
+					'img': this.multiple ? this.attachment.sizes.medium[0] : this.post.sell_media_featured_image.sizes.medium[0],
+					'price_id': this.cart.price_id,
+					'price': Number(this.cart.price).toFixed(2),
+					'price_name': this.cart.price_name,
+					'price_desc': this.cart.price_desc,
+					'type': this.cart.type,
+					'qty': this.cart.qty
+				}
+
 				this.$store.commit( 'addToCart', this.cart )
 				this.disabled = true
 				this.added = true
