@@ -1,19 +1,49 @@
 <template>
 
-	<div :class="slideshow">
-		<p>
-			<button class="button is-text" @click="goPrev" :disabled="prev.disabled">{{ prev.label }}</button> {{ currentSlide + 1 }} of {{ attachments.length }} <button class="button is-text" @click="goNext" :disabled="next.disabled">{{ next.label }}</button>
-		</p>
-		
-		<div
-			 v-for="slide in [currentSlide]"
-			 transition="fade"
-			 >
-			<img
-				:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]"
-				:alt="slide.alt"
-			/>
+	<div class="slideshow">
+
+		<div class="slideshow-content">
+
+			<div class="slideshow-nav">
+
+				<icon
+				class="slideshow-nav-left"
+				name="angle-left"
+				scale="2"
+				@click="goPrev"
+				:disabled="prev.disabled"></icon>
+
+				<icon
+				class="slideshow-nav-right"
+				name="angle-right"
+				scale="2"
+				@click="goPrev"
+				:disabled="prev.disabled"></icon>
+
+			</div>
+
+			<div
+			class="slideshow-image"
+			v-for="slide in [currentSlide]"
+			>
+				<img
+					:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]"
+					:alt="slide.alt"
+				/>
+			</div>
+
 		</div>
+
+		<div class="slideshow-thumbnails">
+			<ul>
+				<li v-for="(attachment, index) in attachments" @click="showSlide(index)">
+					<img :src="attachment.sizes.thumbnail[0]" :alt="attachment.alt" />
+				</li>
+			</ul>
+		</div>
+
+		 {{ currentSlide + 1 }} of {{ attachments.length }} 
+
 	</div>
 
 </template>
@@ -68,6 +98,9 @@
 				} else {
 					this.prev.disabled = true
 				}
+			},
+			showSlide: function(index) {
+				this.currentSlide = index
 			}
 		}
 	}
@@ -75,17 +108,49 @@
 
 <style lang="scss" scoped>
 
-	.fade {
-		transition: all 0.8s ease;
-		overflow: hidden;
-		visibility: visible;
-		opacity: 1;
-		position: absolute;
+	.slideshow-content {
+		position: relative;
 	}
-	.fade-enter,
-	.fade-leave {
-		opacity: 0;
-		visibility: hidden;
+
+	.slideshow-nav svg {
+		top: calc(50% - 16px);
+		position: absolute;
+		display: block;
+		color: #fff;
+
+		&:hover {
+			background: rgba(0,0,0,.2);
+		}
+
+		&.slideshow-nav-left {
+			left: .5rem;
+		}
+
+		&.slideshow-nav-right {
+			right: .5rem;
+		}
+	}
+
+	.slideshow-thumbnails {
+		margin: 1rem auto;
+		text-align: center;
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+
+			li {
+				display: inline-block;
+				margin-right: .5rem;
+				width: 50px;
+				height: 50px;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
 	}
 
 </style>

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
+import icons from './icons'
 
 // use vue plugins
 Vue.use( VueRouter )
@@ -42,6 +43,8 @@ import CartSteps from './components/parts/CartSteps.vue'
 Vue.component( 'cart-steps', CartSteps )
 import CartModalLicense from './components/parts/CartModalLicense.vue'
 Vue.component( 'cart-modal-license', CartModalLicense )
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('icon', Icon)
 // import Tabs from './components/parts/Tabs.vue'
 // Vue.component( 'tabs', Tabs )
 // import Tab from './components/parts/Tab.vue'

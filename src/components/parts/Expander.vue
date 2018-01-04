@@ -86,13 +86,13 @@ import Slideshow from './Slideshow.vue';
 		background: #333;
 		padding: 1rem;
 		position: relative;
-		max-height: 500px;
+		max-height: 600px;
 		transition: max-height .3s ease-in-out,
 			margin-bottom .1s .2s;
 		margin: .75rem 0 0;
 
 		img {
-			max-height: calc(500px - 2rem);
+			max-height: 450px;
 		}
 
 		.title,
