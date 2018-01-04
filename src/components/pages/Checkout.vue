@@ -51,7 +51,7 @@
 				<div class="column">{{ currency_symbol }}{{ product.price }}</div>
 				<div class="column has-text-right">
 					{{ currency_symbol }}{{ subsubtotal(product) }}
-					 <span class="dashicons dashicons-no-alt" @click="removeProduct(product)"></span>
+					<span class="icon-x" @click="removeProduct(product)">&#10005;</span>
 				</div>
 			</div>
 
@@ -61,7 +61,7 @@
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
 				<div class="usage item" v-if="usageFee > 0">
-					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="dashicons dashicons-no-alt" @click="deleteUsage"></span></span>
+					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="deleteUsage">&#10005;</span></span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
@@ -283,7 +283,7 @@
 		}
 	}
 
-	.dashicons-no-alt {
+	.icon-x {
 		color: #999;
 		transition: all .25s;
 		transition-timing: ease-in-out;

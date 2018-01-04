@@ -6,19 +6,25 @@
 
 			<div class="slideshow-nav">
 
+				<button
+				@click="goPrev"
+				:disabled="prev.disabled">
 				<icon
 				class="slideshow-nav-left"
 				name="angle-left"
 				scale="2"
-				@click="goPrev"
-				:disabled="prev.disabled"></icon>
+				></icon>
+				</button>
 
+				<button
+				@click="goPrev"
+				:disabled="prev.disabled">
 				<icon
 				class="slideshow-nav-right"
 				name="angle-right"
 				scale="2"
-				@click="goPrev"
-				:disabled="prev.disabled"></icon>
+				></icon>
+				</button>
 
 			</div>
 
