@@ -7,20 +7,20 @@
 			<div class="slideshow-nav">
 
 				<button
-				@click="goPrev"
-				:disabled="prev.disabled">
+				@click="goToSlide(currentSlide - 1)"
+				:disabled="prev.disabled"
+				class="slideshow-nav-left">
 				<icon
-				class="slideshow-nav-left"
 				name="angle-left"
 				scale="2"
 				></icon>
 				</button>
 
 				<button
-				@click="goPrev"
-				:disabled="prev.disabled">
+				@click="goToSlide(currentSlide + 1)"
+				:disabled="next.disabled"
+				class="slideshow-nav-right">
 				<icon
-				class="slideshow-nav-right"
 				name="angle-right"
 				scale="2"
 				></icon>
@@ -28,6 +28,7 @@
 
 			</div>
 
+{{currentSlide}}
 			<div
 			class="slideshow-image"
 			v-for="slide in [currentSlide]"
@@ -42,7 +43,7 @@
 
 		<div class="slideshow-thumbnails">
 			<ul>
-				<li v-for="(attachment, index) in attachments" @click="showSlide(index)">
+				<li v-for="(attachment, index) in attachments" @click="goToSlide(index)">
 					<img :src="attachment.sizes.thumbnail[0]" :alt="attachment.alt" />
 				</li>
 			</ul>
@@ -83,30 +84,24 @@
 
 		methods: {
 
-			goNext: function() {
-				this.currentSlide += 1
+			goToSlide: function(slide) {
+				this.currentSlide = slide
 				let attachment = this.attachments[this.currentSlide]
 				this.$emit('attachment', attachment)
-
-				if (this.currentSlide < this.attachments.length - 1){
-					this.prev.disabled = false
-				} else {
-					this.next.disabled = true
-				}
-			},
-			goPrev: function() {
-				this.currentSlide -= 1
-				let attachment = this.attachments[this.currentSlide]
-				this.$emit('attachment', attachment)
-
+				
+				// beginning of slides
 				if (this.currentSlide > 0){
-					this.next.disabled = false
+					this.prev.disabled = false
 				} else {
 					this.prev.disabled = true
 				}
-			},
-			showSlide: function(index) {
-				this.currentSlide = index
+
+				// end of slides
+				if (this.currentSlide < this.attachments.length - 1){
+					this.next.disabled = false
+				} else {
+					this.next.disabled = true
+				}
 			}
 		}
 	}
@@ -118,7 +113,7 @@
 		position: relative;
 	}
 
-	.slideshow-nav svg {
+	.slideshow-nav button {
 		top: calc(50% - 16px);
 		position: absolute;
 		display: block;
