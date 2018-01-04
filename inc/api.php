@@ -167,9 +167,6 @@ function sell_media_api_get_pricing( $object, $field_name = '', $request = '' ) 
 	$products             = new SellMediaProducts();
 	$pricing['downloads'] = $products->get_prices( $post_id, $attachment_id );
 	$pricing['prints']    = $products->get_prices( $post_id, $attachment_id, 'reprints-price-group' );
-	// remove parent containing term
-	unset( $pricing['downloads'][1] );
-	unset( $pricing['prints'][1] );
 
 	return $pricing;
 }

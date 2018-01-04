@@ -85,6 +85,10 @@ class SellMediaProducts {
 			// if no assigned price group, get default from settings
 			if ( empty( $term_parent ) || is_wp_error( $term_parent ) ) {
 				$default = $this->settings->default_price_group;
+				// no default price group, so bail and return original price
+				if ( empty( $default ) ) {
+					return $prices;
+				}
 				$terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $default, 'orderby' => 'id' ) );
 			} else {
 				$terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id, 'orderby' => 'id' ) );
