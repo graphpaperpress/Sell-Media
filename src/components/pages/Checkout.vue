@@ -63,6 +63,14 @@
 				<div class="usage item" v-if="usageFee > 0">
 					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="deleteUsage">&#10005;</span></span>
 				</div>
+				<div class="usage item" v-if="discount_code.active && !discount_code.code_added">
+					Discount Code: <span class="value"><input v-model="discount_code.code"/> <button @click="applyDiscountCode" :disabled="discount_code.validating">Apply</button>
+						<em>{{discount_code.error}}</em>
+					</span>
+				</div>
+				<div class="usage item" v-if="discount_code.active && discount_code.code_added">
+					Discount: <span class="value">{{ currency_symbol }}{{discount_code.amount}} <span class="dashicons dashicons-no-alt" @click="deleteDiscountCode"></span></span>
+				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
 				</div>
@@ -82,7 +90,7 @@
 				<cart-modal-license v-if="showModal" @closeModal="showModal = false"></cart-modal-license>
 			</div>
 			<div class="checkout-button-wrap has-text-right" v-else>
-				<button class="button is-primary is-large" @click="checkout">{{ labels.next }}</button>
+				<button class="button is-primary is-large" @click="checkout" :disabled="notValid">{{ labels.next }}</button>
 			</div>
 			<div class="continue-shopping has-text-right">
 				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
@@ -104,6 +112,8 @@
 				tax_rate: sell_media.tax,
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
+				notValid: false,
+				discount_code: sell_media.discount_code
 			}
 		},
 
@@ -137,32 +147,90 @@
 
 			checkout: function() {
 				const vm = this;
-				let media_ids = [];
+				let item_ids = [];
 				for (var i = 0; i < vm.products.length; i++) {
-					media_ids.push(vm.products[i].post_id);
+					item_ids.push(vm.products[i].id);
 				}
-				media_ids = media_ids.join();
+				item_ids = item_ids.join();
+				this.notValid = true;
+            // Get items data.
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
-						include: media_ids
+						include: item_ids
 					}
 				} )
 				.then( ( res ) => {
-					if( res.data.length > 0 ){
-						var sell_media_item = {};
+					var dataLength = res.data.length;
+					if( dataLength > 0 ){
 						for (var i = 0; i < vm.products.length; i++) {
-							sell_media_item = res.data.filter(function(data){
-								return data.id === vm.products[i].post_id && data.sell_media_pricing.downloads[0].type===vm.products[i].type && data.sell_media_pricing.downloads[0].name===vm.products[i].price_name;
+							var item = res.data.find(function(data){
+								return data.id === vm.products[i].id;
 							});
-							vm.products[i].price = sell_media_item[0].sell_media_pricing.downloads[0].price;
-							this.$store.commit( 'updateProduct', vm.products[i] );
+							if( 'undefined' !== typeof item ) {
+								var downloadsCounts = Object.keys( item.sell_media_pricing.downloads ).length;
+								// If type is price-group then its downloads.
+								if ( 'price-group' === vm.products[i].type &&  downloadsCounts > 0 ) {
+									var downloads = item.sell_media_pricing.downloads.find(function(download){
+										return download.id === vm.products[i].price_id;
+									});
+									if( 'undefined' !== typeof downloads ) {
+										// Update price based on api.
+										vm.products[i].price = downloads.price;
+										vm.$store.commit( 'updateProduct', vm.products[i] );
+									} else{
+                              // if no download tax is found remove item from cart.
+										vm.$store.commit( 'removeFromCart', vm.products[i] );
+									}
+								} else if( 'reprints-price-group' == vm.products[i].type ) {
+                           // [TODO] condition for reprint to be added.
+								} else {
+									// if no type is found remove item from cart.
+									vm.$store.commit( 'removeFromCart', vm.products[i] );
+								}
+							} else{
+								// if no item is found remove item from cart.
+								vm.$store.commit( 'removeFromCart', vm.products[i] );
+							}
 						}
 					}
-
+					this.notValid = false;
 				} )
 				.catch( ( res ) => {
-					// console.log( `Something went wrong : ${res}` );
+					console.log( `Something went wrong : ${res}` );
+					this.notValid = false;
 				} );
+			},
+
+			applyDiscountCode: function() {
+				this.discount_code.validating = true;
+
+            // Let server values be.
+				var discountCodeStatus = true;
+            var discountAmount = 10;
+
+				if('' === this.discount_code.code) {
+					this.deleteDiscountCode();
+					this.discount_code.error = this.discount_code.labels.error_no_code;
+					return false;
+				}
+
+				if( false === discountCodeStatus ){
+					this.deleteDiscountCode();
+					this.discount_code.error = this.discount_code.labels.error_invalid_code;
+					return false;
+				}
+
+				this.discount_code.amount = Number( discountAmount ).toFixed(2);
+				this.discount_code.code_added = true;
+				this.discount_code.validating = false;
+			},
+
+			deleteDiscountCode: function() {
+				this.discount_code.code_added = false;
+				this.discount_code.code = '';
+				this.discount_code.amount = 0;
+				this.discount_code.validating = false;
+				this.discount_code.error = ''
 			}
 
 		},
@@ -203,7 +271,7 @@
 				}
 			},
 			total: function(){
-				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) ).toFixed(2)
+				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping)  - Number( this.discount_code.amount ) ).toFixed(2)
 			},
 			usage: function(){
 				return this.$store.state.usage[0]

@@ -119,6 +119,12 @@ function sell_media_api_get_image( $object, $field_name = '', $request = '' ) {
 function sell_media_api_get_attachments( $object, $field_name = '', $request = '' ) {
 	$post_id        = $object['id'];
 	$attachment_ids = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+
+	// If ids are no in array.
+	if ( ! is_array( $attachment_ids ) && '' !== $attachment_ids ) {
+		$attachment_ids = explode( ',', $attachment_ids );
+	}
+
 	if ( empty( $attachment_ids ) ) {
 		return;
 	}
@@ -460,4 +466,3 @@ function sell_media_api_get_mimetype( $filetype ) {
 
 	return $mime;
 }
-

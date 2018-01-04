@@ -149,6 +149,18 @@ function sell_media_scripts( $hook ) {
 		//'currencies' => sell_media_currencies(),
 		'licensing_enabled' => sell_media_licensing_enabled(),
 		'licensing_markup_taxonomies' => sell_media_get_license_markup_taxonomies(),
+		'discount_code' => array(
+			'active' => is_plugin_active( 'sell-media-discount-codes/sell-media-discount-codes.php' ),
+			'code' => '',
+			'code_added' => false,
+			'amount' => 0,
+			'error' => '',
+			'validating' => false,
+			'labels' => array(
+				'error_no_code' => esc_html__( 'Enter discount code', 'sell_media' ),
+				'error_invalid_code' => esc_html__( 'Enter valid discount code', 'sell_media' ),
+			),
+		),
 	) );
 
 	do_action( 'sell_media_scripts_hook' );
