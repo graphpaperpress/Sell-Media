@@ -18,6 +18,11 @@ foreach ( $pages as $page ) {
  */
 function sell_media_extend_rest_post_response() {
 
+	register_rest_route( 'sell-media/v2', '/smapi', array(
+		'methods'  => WP_REST_Server::READABLE,
+		'callback' => 'sell_media_api_response',
+	) );
+
 	register_rest_route( 'sell-media/v2', '/search', array(
 		'methods'  => WP_REST_Server::READABLE,
 		'callback' => 'sell_media_api_search_response',
@@ -88,6 +93,19 @@ function sell_media_extend_rest_post_response() {
 
 }
 add_action( 'rest_api_init', 'sell_media_extend_rest_post_response' );
+
+
+function sell_media_api_response() {
+	if ( ! isset( $_GET['action'] ) || '' === $_GET['action'] ) {
+		$data = array(
+			'error' => __( 'No action found.', 'selll_media' ),
+		);
+		return $data;
+	}
+	$action = esc_html( $_GET['action'] );
+	$data = apply_filters( 'sell_media_api_response', array(), $action );
+	return $data;
+}
 
 /**
  * Images for rest api
