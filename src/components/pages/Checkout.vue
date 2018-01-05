@@ -64,12 +64,12 @@
 					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="deleteUsage">&#10005;</span></span>
 				</div>
 				<div class="usage item" v-if="discount_code.active && !discount_code_added">
-					{{discount_code.labels.discount_code}}: <span class="value"><input v-model="discount_code_value"/> <button @click="applyDiscountCode" :disabled="discount_code_validating">Apply</button>
+					{{discount_code.labels.discount_code}}: <span class="value"><input v-model="discount_code_value"/> <button @click="applyDiscountCode" :disabled="discount_code_validating">{{labels.usage_apply}}</button>
 						<em>{{discount_code_error}}</em>
 					</span>
 				</div>
 				<div class="usage item" v-if="discount_code.active && discount_code_added">
-					{{discount_code.labels.discount}}: <span class="value">{{ currency_symbol }}{{discount_code_amount}} <span class="dashicons dashicons-no-alt" @click="deleteDiscountCode"></span></span>
+					{{discount_code.labels.discount}}: <span class="value">{{ currency_symbol }}{{discount_code_amount}} <span class="icon-x" @click="deleteDiscountCode">&#10005;</span></span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
@@ -207,11 +207,8 @@
 			},
 
 			applyDiscountCode: function() {
+				const vm = this;
 				this.discount_code_validating = true;
-
-            // Let server values be.
-				var discountCodeStatus = true;
-            var discountAmount = 10;
 
 				if('' === this.discount_code_value) {
 					this.deleteDiscountCode();
@@ -219,15 +216,35 @@
 					return false;
 				}
 
-				if( false === discountCodeStatus ){
-					this.deleteDiscountCode();
-					this.discount_code_error = this.discount_code.labels.error_invalid_code;
-					return false;
-				}
+            // Get items data.
+				vm.$http.get( '/wp-json/sell-media/v2/smapi', {
+					params: {
+						action: 'validate_discount_code',
+						discount_code: this.discount_code_value
+					}
+				} )
+				.then( ( res ) => {
+					// Let server values be.
+					var discountCodeStatus = res.data.status;
 
-				this.discount_code_amount = Number( discountAmount ).toFixed(2);
-				this.discount_code_added = true;
-				this.discount_code_validating = false;
+					if( false === discountCodeStatus ){
+						this.deleteDiscountCode();
+						this.discount_code_error = res.data.message;
+						return false;
+					}
+					var amount = Number(res.data.amount).toFixed(2);
+					var type = res.data.type;
+					var discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal;
+
+					this.discount_code_amount = Number( discountAmount ).toFixed(2);
+					this.discount_code_added = true;
+					this.discount_code_validating = false;
+				} )
+				.catch( ( res ) => {
+					console.log( `Something went wrong : ${res}` );
+					this.discount_code_validating = false;
+				} );
+
 			},
 
 			deleteDiscountCode: function() {
