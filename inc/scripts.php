@@ -98,7 +98,7 @@ function sell_media_scripts( $hook ) {
 			'qty' => esc_html__( 'Qty', 'sell_media' ),
 			'sub_total' => esc_html__( 'Subtotal', 'sell_media' ),
 			'usage_fee' => esc_html__( 'Usage Fee', 'sell_media' ),
-			'usage_apply' => esc_html__( 'Apply', 'sell_media' ),
+			'apply' => esc_html__( 'Apply', 'sell_media' ),
 			'shipping' => esc_html__( 'Shipping', 'sell_media' ),
 			'tax' => esc_html__( 'Tax', 'sell_media' ),
 			'total' => esc_html__( 'Total', 'sell_media' ),
@@ -148,17 +148,7 @@ function sell_media_scripts( $hook ) {
 		'plugin_credit' => empty( $settings->plugin ) ? 0 : $settings->plugin_credit,
 		//'currencies' => sell_media_currencies(),
 		'licensing_enabled' => sell_media_licensing_enabled(),
-		'licensing_markup_taxonomies' => sell_media_get_license_markup_taxonomies(),
-		'discount_code' => array(
-			'active' => is_plugin_active( 'sell-media-discount-codes/sell-media-discount-codes.php' ),
-			'labels' => array(
-				'discount' => esc_html__( 'Dicount', 'sell_media' ),
-				'discount_code' => esc_html__( 'Dicount Code', 'sell_media' ),
-				'add_discount_code' => esc_html__( 'ADD DISCOUNT CODE', 'sell_media' ),
-				'error_no_code' => esc_html__( 'Enter discount code', 'sell_media' ),
-				'error_invalid_code' => esc_html__( 'Enter valid discount code', 'sell_media' ),
-			),
-		),
+		'licensing_markup_taxonomies' => sell_media_get_license_markup_taxonomies()
 	) );
 
 	do_action( 'sell_media_scripts_hook' );

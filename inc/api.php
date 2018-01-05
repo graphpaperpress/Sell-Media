@@ -18,7 +18,7 @@ foreach ( $pages as $page ) {
  */
 function sell_media_extend_rest_post_response() {
 
-	register_rest_route( 'sell-media/v2', '/smapi', array(
+	register_rest_route( 'sell-media/v2', '/api', array(
 		'methods'  => WP_REST_Server::READABLE,
 		'callback' => 'sell_media_api_response',
 	) );

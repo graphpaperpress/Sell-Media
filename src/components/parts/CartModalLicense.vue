@@ -43,9 +43,7 @@
 			return {
 				licenses: {},
 				values: {},
-				labels: {
-					apply: sell_media.cart_labels.usage_apply
-				}
+				labels: sell_media.cart_labels
 			}
 		},
 

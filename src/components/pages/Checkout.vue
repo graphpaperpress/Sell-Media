@@ -9,7 +9,7 @@
 
 		<div class="cart" v-else>
 
-			<cart-steps></cart-steps>
+			<!-- <cart-steps></cart-steps> -->
 
 			<!-- headings -->
 			<div class="columns is-mobile headings is-uppercase has-text-weight-bold">
@@ -57,35 +57,55 @@
 
 			<!-- totals -->
 			<div class="totals has-text-right is-uppercase">
+
 				<div class="subtotal item">
 					{{ labels.sub_total }}: <span class="value">{{ currency_symbol }}{{ subtotal }}</span>
 				</div>
+
 				<div class="usage item" v-if="usageFee > 0">
 					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="deleteUsage">&#10005;</span></span>
 				</div>
+
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
 				</div>
+
 				<div class="shipping item">
 					{{ labels.shipping }}: <span class="value">{{ currency_symbol }}{{ shipping }}</span>
 				</div>
+
+				<div class="discount item" v-if="discountTotal > 0">
+					{{ discount_code.labels.discount }}:
+					<span class="value">
+						- {{ currency_symbol }}{{ discountTotal }}
+					</span>
+				</div>
+
 				<div class="total item has-text-weight-bold">
 					{{ labels.total }}: <span class="value">{{ currency_symbol }}{{ total }}</span>
 				</div>
-<!-- 				<div class="usage-description is-capitalized is-small" v-if="usageFee > 0"><span class="usage-term" v-for="item in usage" :key="item">
-					{{ item.term.taxonomy }} ({{ item.term.name }})</span>
-				</div> -->
-				<div class="add-discount-input item" v-if="discount_code.active && !discount_code_added && !show_discount_form">
-					<span class="value" @click="show_discount_form=true">{{discount_code.labels.add_discount_code}}</span>
+
+				<div class="discount-control item" v-if="discount_code">
+
+					<div class="field has-addons has-addons-right">
+						<div class="control has-icons-right">
+							<input v-model="discount_code_value" class="input is-small" :class="{ 'is-invalid': !discountTotal }" type="text" :placeholder="discount_code.labels.discount_code" />
+							<span v-if="discountTotal > 0" class="icon is-small is-right">
+								<icon name="check" class="is-success"></icon>
+							</span>
+							<span v-if="!discountTotal" class="icon is-small is-right">
+								<icon name="ban" class="is-danger"></icon>
+							</span>
+						</div>
+						<div class="control">
+							<button class="button is-small is-dark" @click="applyDiscountCode">{{ labels.apply }}</button>
+						</div>
+					</div>
+
+					<p v-if="!discountTotal" class="help is-danger">{{ discount.message }}</p>
+
 				</div>
-				<div class="discount-input item" v-if="show_discount_form && !discount_code_added">
-					{{discount_code.labels.discount_code}}: <span class="value"><input v-model="discount_code_value" @blur="applyDiscountCode" /><span class="icon-x" @click="deleteDiscountCode">&#10005;</span>
-						<em>{{discount_code_error}}</em>
-					</span>
-				</div>
-				<div class="discount item" v-if="discount_code.active && discount_code_added">
-					{{discount_code.labels.discount}}: <span class="value">{{ currency_symbol }}{{discount_code_amount}} <span class="icon-x" @click="deleteDiscountCode">&#10005;</span></span>
-				</div>
+
 			</div>
 
 			<div class="useage-button-wrap has-text-right" v-if="usageNotSet">
@@ -116,12 +136,8 @@
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
 				notValid: false,
-				discount_code: sell_media.discount_code,
-				show_discount_form: false,
-				discount_code_added: false,
-				discount_code_value: '',
-				discount_code_amount: 0,
-				discount_code_error: '',
+				discount_code: sell_media_discount_codes,
+				discount: false
 			}
 		},
 
@@ -160,8 +176,8 @@
 					item_ids.push(vm.products[i].id);
 				}
 				item_ids = item_ids.join();
-				this.notValid = true;
-            // Get items data.
+				vm.notValid = true;
+
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						include: item_ids
@@ -169,57 +185,34 @@
 				} )
 				.then( ( res ) => {
 					vm.$store.commit( 'verifyProducts', res.data );
-					this.notValid = false;
+					vm.notValid = false;
 				} )
 				.catch( ( res ) => {
 					console.log( `Something went wrong : ${res}` );
-					this.notValid = false;
+					vm.notValid = false;
 				} );
 			},
 
 			applyDiscountCode: function() {
 				const vm = this;
 
-				if('' === this.discount_code_value) {
-					this.discount_code_error = this.discount_code.labels.error_no_code;
-					return false;
+				if ('' === vm.discount_code_value) {
+					return vm.discount = false
 				}
 
-            // Get items data.
-				vm.$http.get( '/wp-json/sell-media/v2/smapi', {
+				vm.$http.get( '/wp-json/sell-media/v2/api', {
 					params: {
 						action: 'validate_discount_code',
-						discount_code: this.discount_code_value
+						discount_code: vm.discount_code_value
 					}
 				} )
 				.then( ( res ) => {
-					// Let server values be.
-					var discountCodeStatus = res.data.status;
-
-					if( false === discountCodeStatus ){
-						this.discount_code_error = res.data.message;
-						return false;
-					}
-					var amount = Number(res.data.amount).toFixed(2);
-					var type = res.data.type;
-					var discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal;
-
-					this.discount_code_amount = Number( discountAmount ).toFixed(2);
-					this.discount_code_added = true;
-					this.discount_code_error = '';
+					return vm.discount = res.data
 				} )
 				.catch( ( res ) => {
 					console.log( `Something went wrong : ${res}` );
 				} );
 
-			},
-
-			deleteDiscountCode: function() {
-				this.discount_code_added = false;
-				this.discount_code_value = '';
-				this.discount_code_amount = 0;
-				this.discount_code_error = '';
-				this.show_discount_form = false;
 			}
 
 		},
@@ -260,7 +253,10 @@
 				}
 			},
 			total: function(){
-				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping)  - Number( this.discount_code_amount ) ).toFixed(2)
+				let discount = this.discount
+				let discount_mount = discount > 0 ? discount : 0
+
+				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( discount_mount ) ).toFixed(2)
 			},
 			usage: function(){
 				return this.$store.state.usage[0]
@@ -294,6 +290,18 @@
 				}
 
 				return status
+			},
+			discountTotal: function(){
+				
+				if ( false === this.discount.status ) {
+					return false
+				}
+
+				let amount = Number(this.discount.amount).toFixed(2);
+				let type = this.discount.type;
+				let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal;
+
+				return Number( discountAmount ).toFixed(2);
 			}
 		}
 
@@ -363,6 +371,39 @@
 
 	.continue-shopping {
 		margin: 2rem 0;
+	}
+
+	.is-danger.fa-icon {
+		color: #ff3860;
+	}
+
+	.is-success.fa-icon {
+		color: #23d160;
+	}
+
+	.is-invalid {
+		animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+		transform: translate3d(0, 0, 0);
+		backface-visibility: hidden;
+		perspective: 1000px;
+	}
+
+	@keyframes shake {
+		10%, 90% {
+			transform: translate3d(-1px, 0, 0);
+		}
+
+		20%, 80% {
+			transform: translate3d(2px, 0, 0);
+		}
+
+		30%, 50%, 70% {
+			transform: translate3d(-4px, 0, 0);
+		}
+
+		40%, 60% {
+			transform: translate3d(4px, 0, 0);
+		}
 	}
 
 </style>
