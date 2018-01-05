@@ -136,8 +136,8 @@
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
 				notValid: false,
-				discount_code: sell_media_discount_codes,
-				discount: false
+				discount: false,
+				discount_code: ( typeof sell_media_discount_codes != 'undefined' ) ? sell_media_discount_codes : null
 			}
 		},
 
