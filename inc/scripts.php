@@ -154,6 +154,7 @@ function sell_media_scripts( $hook ) {
 			'labels' => array(
 				'discount' => esc_html__( 'Dicount', 'sell_media' ),
 				'discount_code' => esc_html__( 'Dicount Code', 'sell_media' ),
+				'add_discount_code' => esc_html__( 'ADD DISCOUNT CODE', 'sell_media' ),
 				'error_no_code' => esc_html__( 'Enter discount code', 'sell_media' ),
 				'error_invalid_code' => esc_html__( 'Enter valid discount code', 'sell_media' ),
 			),
