@@ -9,7 +9,7 @@
 
 		<div class="cart" v-else>
 
-			<!-- <cart-steps></cart-steps> -->
+			<cart-steps></cart-steps>
 
 			<!-- headings -->
 			<div class="columns is-mobile headings is-uppercase has-text-weight-bold">
@@ -63,14 +63,6 @@
 				<div class="usage item" v-if="usageFee > 0">
 					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="deleteUsage">&#10005;</span></span>
 				</div>
-				<div class="usage item" v-if="discount_code.active && !discount_code_added">
-					{{discount_code.labels.discount_code}}: <span class="value"><input v-model="discount_code_value"/> <button @click="applyDiscountCode" :disabled="discount_code_validating">{{labels.usage_apply}}</button>
-						<em>{{discount_code_error}}</em>
-					</span>
-				</div>
-				<div class="usage item" v-if="discount_code.active && discount_code_added">
-					{{discount_code.labels.discount}}: <span class="value">{{ currency_symbol }}{{discount_code_amount}} <span class="icon-x" @click="deleteDiscountCode">&#10005;</span></span>
-				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
 				</div>
@@ -83,6 +75,17 @@
 <!-- 				<div class="usage-description is-capitalized is-small" v-if="usageFee > 0"><span class="usage-term" v-for="item in usage" :key="item">
 					{{ item.term.taxonomy }} ({{ item.term.name }})</span>
 				</div> -->
+				<div class="add-discount-input item" v-if="discount_code.active && !discount_code_added && !show_discount_form">
+					<span class="value" @click="show_discount_form=true">{{discount_code.labels.add_discount_code}}</span>
+				</div>
+				<div class="discount-input item" v-if="show_discount_form && !discount_code_added">
+					{{discount_code.labels.discount_code}}: <span class="value"><input v-model="discount_code_value" @blur="applyDiscountCode" /><span class="icon-x" @click="deleteDiscountCode">&#10005;</span>
+						<em>{{discount_code_error}}</em>
+					</span>
+				</div>
+				<div class="discount item" v-if="discount_code.active && discount_code_added">
+					{{discount_code.labels.discount}}: <span class="value">{{ currency_symbol }}{{discount_code_amount}} <span class="icon-x" @click="deleteDiscountCode">&#10005;</span></span>
+				</div>
 			</div>
 
 			<div class="useage-button-wrap has-text-right" v-if="usageNotSet">
@@ -114,11 +117,11 @@
 				showModal: false,
 				notValid: false,
 				discount_code: sell_media.discount_code,
+				show_discount_form: false,
 				discount_code_added: false,
 				discount_code_value: '',
 				discount_code_amount: 0,
 				discount_code_error: '',
-				discount_code_validating: false
 			}
 		},
 
@@ -165,10 +168,7 @@
 					}
 				} )
 				.then( ( res ) => {
-					var dataLength = res.data.length;
-					if( dataLength > 0 ){
-						this.validateCartItems(res.data);
-					}
+					vm.$store.commit( 'verifyProducts', res.data );
 					this.notValid = false;
 				} )
 				.catch( ( res ) => {
@@ -177,46 +177,10 @@
 				} );
 			},
 
-			validateCartItems: function( responseData ) {
-				const vm = this;
-				for (var i = 0; i < vm.products.length; i++) {
-					var item = responseData.find(function(data){
-						return data.id === vm.products[i].id;
-					});
-					if( 'undefined' !== typeof item ) {
-						var downloadsCounts = Object.keys( item.sell_media_pricing.downloads ).length;
-						// If type is price-group then its downloads.
-						if ( 'price-group' === vm.products[i].type &&  downloadsCounts > 0 ) {
-							var downloads = item.sell_media_pricing.downloads.find(function(download){
-								return download.id === vm.products[i].price_id;
-							});
-							if( 'undefined' !== typeof downloads ) {
-								// Update price based on api.
-								vm.products[i].price = downloads.price;
-								vm.$store.commit( 'updateProduct', vm.products[i] );
-							} else{
-								// if no download tax is found remove item from cart.
-								vm.$store.commit( 'removeFromCart', vm.products[i] );
-							}
-						} else if( 'reprints-price-group' == vm.products[i].type ) {
-							// [TODO] condition for reprint to be added.
-						} else {
-							// if no type is found remove item from cart.
-							vm.$store.commit( 'removeFromCart', vm.products[i] );
-						}
-					} else{
-						// if no item is found remove item from cart.
-						vm.$store.commit( 'removeFromCart', vm.products[i] );
-					}
-				}
-			},
-
 			applyDiscountCode: function() {
 				const vm = this;
-				this.discount_code_validating = true;
 
 				if('' === this.discount_code_value) {
-					this.deleteDiscountCode();
 					this.discount_code_error = this.discount_code.labels.error_no_code;
 					return false;
 				}
@@ -233,7 +197,6 @@
 					var discountCodeStatus = res.data.status;
 
 					if( false === discountCodeStatus ){
-						this.deleteDiscountCode();
 						this.discount_code_error = res.data.message;
 						return false;
 					}
@@ -243,11 +206,10 @@
 
 					this.discount_code_amount = Number( discountAmount ).toFixed(2);
 					this.discount_code_added = true;
-					this.discount_code_validating = false;
+					this.discount_code_error = '';
 				} )
 				.catch( ( res ) => {
 					console.log( `Something went wrong : ${res}` );
-					this.discount_code_validating = false;
 				} );
 
 			},
@@ -256,8 +218,8 @@
 				this.discount_code_added = false;
 				this.discount_code_value = '';
 				this.discount_code_amount = 0;
-				this.discount_code_validating = false;
-				this.discount_code_error = ''
+				this.discount_code_error = '';
+				this.show_discount_form = false;
 			}
 
 		},
