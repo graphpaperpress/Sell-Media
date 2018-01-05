@@ -165,50 +165,13 @@
 					}
 				} )
 				.then( ( res ) => {
-					var dataLength = res.data.length;
-					if( dataLength > 0 ){
-						this.validateCartItems(res.data);
-					}
+					vm.$store.commit( 'verifyProducts', res.data );
 					this.notValid = false;
 				} )
 				.catch( ( res ) => {
 					console.log( `Something went wrong : ${res}` );
 					this.notValid = false;
 				} );
-			},
-
-			validateCartItems: function( responseData ) {
-				const vm = this;
-				for (var i = 0; i < vm.products.length; i++) {
-					var item = responseData.find(function(data){
-						return data.id === vm.products[i].id;
-					});
-					if( 'undefined' !== typeof item ) {
-						var downloadsCounts = Object.keys( item.sell_media_pricing.downloads ).length;
-						// If type is price-group then its downloads.
-						if ( 'price-group' === vm.products[i].type &&  downloadsCounts > 0 ) {
-							var downloads = item.sell_media_pricing.downloads.find(function(download){
-								return download.id === vm.products[i].price_id;
-							});
-							if( 'undefined' !== typeof downloads ) {
-								// Update price based on api.
-								vm.products[i].price = downloads.price;
-								vm.$store.commit( 'updateProduct', vm.products[i] );
-							} else{
-								// if no download tax is found remove item from cart.
-								vm.$store.commit( 'removeFromCart', vm.products[i] );
-							}
-						} else if( 'reprints-price-group' == vm.products[i].type ) {
-							// [TODO] condition for reprint to be added.
-						} else {
-							// if no type is found remove item from cart.
-							vm.$store.commit( 'removeFromCart', vm.products[i] );
-						}
-					} else{
-						// if no item is found remove item from cart.
-						vm.$store.commit( 'removeFromCart', vm.products[i] );
-					}
-				}
 			},
 
 			applyDiscountCode: function() {
