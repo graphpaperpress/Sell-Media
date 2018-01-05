@@ -63,13 +63,13 @@
 				<div class="usage item" v-if="usageFee > 0">
 					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="deleteUsage">&#10005;</span></span>
 				</div>
-				<div class="usage item" v-if="discount_code.active && !discount_code.code_added">
-					Discount Code: <span class="value"><input v-model="discount_code.code"/> <button @click="applyDiscountCode" :disabled="discount_code.validating">Apply</button>
-						<em>{{discount_code.error}}</em>
+				<div class="usage item" v-if="discount_code.active && !discount_code_added">
+					{{discount_code.labels.discount_code}}: <span class="value"><input v-model="discount_code_value"/> <button @click="applyDiscountCode" :disabled="discount_code_validating">Apply</button>
+						<em>{{discount_code_error}}</em>
 					</span>
 				</div>
-				<div class="usage item" v-if="discount_code.active && discount_code.code_added">
-					Discount: <span class="value">{{ currency_symbol }}{{discount_code.amount}} <span class="dashicons dashicons-no-alt" @click="deleteDiscountCode"></span></span>
+				<div class="usage item" v-if="discount_code.active && discount_code_added">
+					{{discount_code.labels.discount}}: <span class="value">{{ currency_symbol }}{{discount_code_amount}} <span class="dashicons dashicons-no-alt" @click="deleteDiscountCode"></span></span>
 				</div>
 				<div class="tax item">
 					{{ labels.tax }} ({{ tax_rate * 100 + '&#37;' }}): <span class="value">{{ currency_symbol }}{{ tax }}</span>
@@ -113,7 +113,12 @@
 				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
 				showModal: false,
 				notValid: false,
-				discount_code: sell_media.discount_code
+				discount_code: sell_media.discount_code,
+				discount_code_added: false,
+				discount_code_value: '',
+				discount_code_amount: 0,
+				discount_code_error: '',
+				discount_code_validating: false
 			}
 		},
 
@@ -202,35 +207,35 @@
 			},
 
 			applyDiscountCode: function() {
-				this.discount_code.validating = true;
+				this.discount_code_validating = true;
 
             // Let server values be.
 				var discountCodeStatus = true;
             var discountAmount = 10;
 
-				if('' === this.discount_code.code) {
+				if('' === this.discount_code_value) {
 					this.deleteDiscountCode();
-					this.discount_code.error = this.discount_code.labels.error_no_code;
+					this.discount_code_error = this.discount_code.labels.error_no_code;
 					return false;
 				}
 
 				if( false === discountCodeStatus ){
 					this.deleteDiscountCode();
-					this.discount_code.error = this.discount_code.labels.error_invalid_code;
+					this.discount_code_error = this.discount_code.labels.error_invalid_code;
 					return false;
 				}
 
-				this.discount_code.amount = Number( discountAmount ).toFixed(2);
-				this.discount_code.code_added = true;
-				this.discount_code.validating = false;
+				this.discount_code_amount = Number( discountAmount ).toFixed(2);
+				this.discount_code_added = true;
+				this.discount_code_validating = false;
 			},
 
 			deleteDiscountCode: function() {
-				this.discount_code.code_added = false;
-				this.discount_code.code = '';
-				this.discount_code.amount = 0;
-				this.discount_code.validating = false;
-				this.discount_code.error = ''
+				this.discount_code_added = false;
+				this.discount_code_value = '';
+				this.discount_code_amount = 0;
+				this.discount_code_validating = false;
+				this.discount_code_error = ''
 			}
 
 		},
@@ -271,7 +276,7 @@
 				}
 			},
 			total: function(){
-				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping)  - Number( this.discount_code.amount ) ).toFixed(2)
+				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping)  - Number( this.discount_code_amount ) ).toFixed(2)
 			},
 			usage: function(){
 				return this.$store.state.usage[0]
