@@ -129,7 +129,10 @@ function sell_media_scripts( $hook ) {
 			'no_results' => esc_html__( 'No results', 'sell_media' ),
 			'all' => esc_html__( 'All', 'sell_media' ),
 			'open_filters' => esc_html__( 'Open Filters', 'sell_media' ),
+			'close_filters' => esc_html__( 'Close Filters', 'sell_media' ),
 			'colors' => esc_html__( 'Colors', 'sell_media' ),
+			'orientation' => esc_html__( 'Orientation', 'sell_media' ),
+			'collections' => esc_html__( 'Collections', 'sell_media' ),
 		),
 		'lightbox_labels' => array(
 			'remove_all' 	=> esc_html__( 'Remove all', 'sell_media' ),

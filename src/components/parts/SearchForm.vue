@@ -25,11 +25,19 @@
 				</div>
 			</div>
 			<div class="filters-button column is-one-third">
-				<button class="button is-light is-medium is-pulled-right" @click="showFilters = !showFilters">
-					<span class="icon is-large">
-						<icon name="angle-down"></icon>
-					</span>
-					 {{ labels.open_filters }}
+				<button class="button is-medium is-pulled-right" @click="showFilters = !showFilters">
+					<template v-if="!showFilters">
+						<span class="icon is-large">
+							<icon name="angle-down"></icon>
+						</span>
+					 	{{ labels.open_filters }}
+					 </template>
+					<template v-else>
+						<span class="icon is-large">
+							<icon name="angle-up"></icon>
+						</span>
+					 	{{ labels.close_filters }}
+					</template>
 				</button>
 			</div>
 
@@ -38,13 +46,13 @@
 		<div v-if="showFilters" class="filters-area">
 			<div class="columns">
 				<div class="column">
-					<h3>{{ labels.colors }}</h3>
+					<h6 class="has-text-grey is-uppercase">{{ labels.colors }}</h6>
 				</div>
 				<div class="column">
-					<h3>{{ labels.colors }}</h3>
+					<h6 class="has-text-grey is-uppercase">{{ labels.orientation }}</h6>
 				</div>
 				<div class="column">
-					<h3>{{ labels.colors }}</h3>
+					<h6 class="has-text-grey is-uppercase">{{ labels.collections }}</h6>
 				</div>
 			</div>
 		</div>
@@ -99,6 +107,8 @@
 
 .filters-button .fa-icon {
 	margin-right: 1rem;
+	width: auto;
+	height: 1em;
 }
 
 </style>
