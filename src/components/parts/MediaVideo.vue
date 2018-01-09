@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+	import videojs from 'video.js'
 	export default {
 		props: ['post'],
 
@@ -20,11 +20,14 @@
 				attachment: {},
 			}
 		},
-
-		mounted: function() {
+		beforeMount: function() {
 			this.attachment = this.post.sell_media_attachments[0]
 			this.attachment.featured_image = 'undefined' !== typeof this.post.sell_media_featured_image.sizes.large[0] ? this.post.sell_media_featured_image.sizes.large[0] : ''
 			this.$emit('attachment', this.attachment)
+		},
+		mounted: function() {
+			console.log('video-'+this.attachment.id);
+			videojs('video-'+this.attachment.id)
 		},
 	}
 </script>
