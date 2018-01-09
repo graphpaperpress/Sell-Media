@@ -11,7 +11,7 @@
 			<div class="modal-columns">
 				<div class="modal-column-main has-text-center">
 					<template v-if="multiple">
-						<slideshow :attachments="attachments" @attachment="setAttachment"></slideshow>
+						<media-slideshow :attachments="attachments" @attachment="setAttachment"></media-slideshow>
 					</template>
 					<template v-else>
 						<figure>
@@ -36,7 +36,7 @@
 
 <script>
 
-import Slideshow from './Slideshow.vue';
+import MediaSlideshow from './MediaSlideshow.vue';
 
 	export default {
 
@@ -82,7 +82,7 @@ import Slideshow from './Slideshow.vue';
 		},
 
 		components: {
-			'slideshow': Slideshow
+			'media-slideshow': MediaSlideshow
 		}
 	}
 </script>

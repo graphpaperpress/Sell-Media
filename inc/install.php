@@ -662,3 +662,72 @@ function sell_media_autocreate_pages() {
 	}
 
 }
+
+
+/**
+ * Default product types.
+ */
+function sell_media_product_types() {
+	$product_types = array(
+		array(
+			'name' => __( 'Image', 'sell_media' ),
+			'slug' => 'image',
+			'type' => 'image',
+		),
+		array(
+			'name' => __( 'Video', 'sell_media' ),
+			'slug' => 'video',
+			'type' => 'video',
+		),
+		array(
+			'name' => __( '360 Video', 'sell_media' ),
+			'slug' => '360-video',
+			'slug' => '360-video',
+		),
+		array(
+			'name' => __( 'Panorama', 'sell_media' ),
+			'slug' => 'panorama',
+			'slug' => 'panorama',
+		),
+		array(
+			'name' => __( 'Audio', 'sell_media' ),
+			'slug' => 'audio',
+			'slug' => 'audio',
+		),
+		array(
+			'name' => __( 'PDF', 'sell_media' ),
+			'slug' => 'pdf',
+			'slug' => 'pdf',
+		),
+		array(
+			'name' => __( 'ZIP', 'sell_media' ),
+			'slug' => 'zip',
+			'slug' => 'zip',
+		),
+		array(
+			'name' => __( 'Other', 'sell_media' ),
+			'slug' => 'other',
+			'slug' => 'other',
+		),
+	);
+
+	return apply_filters( 'sell_media_product_types', $product_types );
+}
+
+
+/**
+ * Programatically create product type terms.
+ */
+function sell_media_product_types_taxonomies_init() {
+
+	if ( taxonomy_exists( 'product_type' ) ) {
+		$product_terms = sell_media_product_types();
+		foreach ( $product_terms as $product_term ) {
+			if ( ! term_exists( $product_term['slug'], 'product_type' ) ) {
+				wp_insert_term( $product_term['name'], 'product_type', array( 'slug' => $product_term['slug'] ) );
+			}
+		}
+	}
+
+}
+add_action( 'init', 'sell_media_product_types_taxonomies_init', 100 );

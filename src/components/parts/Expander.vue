@@ -5,14 +5,7 @@
 
 			<div class="columns">
 				<div class="column has-text-center">
-					<template v-if="multiple">
-						<slideshow :attachments="attachments" @attachment="setAttachment"></slideshow>
-					</template>
-					<template v-else>
-						<figure>
-							<featured-image :post="post" @attachment="setAttachment" :size="image_size"></featured-image>
-						</figure>
-					</template>
+					<media :post="post" @attachment="setAttachment"></media>
 				</div>
 				<div class="column has-text-left">
 					<div class="cart-form">
@@ -30,21 +23,17 @@
 
 <script>
 
-import Slideshow from './Slideshow.vue';
-
 	export default {
 
 		props: ['post'],
 
 		data: function () {
 			return {
-				image_size: 'large',
+				attachment: {},
 				attachments: {},
 				multiple: false,
-				currentModal: 0,
 				prev_label: sell_media.cart_labels.prev,
 				next_label: sell_media.cart_labels.next,
-				attachment: {}
 			}
 		},
 
@@ -72,10 +61,6 @@ import Slideshow from './Slideshow.vue';
 			setAttachment: function(data) {
 				this.attachment = data
 			}
-		},
-
-		components: {
-			'slideshow': Slideshow
 		}
 	}
 </script>

@@ -33,6 +33,8 @@ import Modal from './components/parts/Modal.vue'
 Vue.component( 'modal', Modal )
 import Expander from './components/parts/Expander.vue'
 Vue.component( 'expander', Expander )
+import Media from './components/parts/Media.vue'
+Vue.component( 'media', Media )
 import FeaturedImage from './components/parts/FeaturedImage.vue'
 Vue.component( 'featured-image', FeaturedImage )
 import Thumbnail from './components/parts/Thumbnail.vue'

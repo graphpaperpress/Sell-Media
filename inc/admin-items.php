@@ -234,6 +234,7 @@ function sell_media_editor() {
 		return;
 	}
 	global $post;
+	do_action( 'sell_media_before_editor', $post );
 	wp_editor( $post->post_content, 'post_content', array( 'sell_media_editor' => 'post_content' ) );
 }
 add_action( 'edit_form_advanced', 'sell_media_editor' );
@@ -265,22 +266,29 @@ function sell_media_save_custom_meta( $post_id ) {
 
 		if ( isset( $_POST[ $field ] ) ) {
 
-			// price groups fields
-			if ( $field == 'sell_media_price_group' ) {
+			// product type
+			if ( 'sell_media_product_type' === $field ) {
+
+				if ( isset( $_POST['sell_media_product_type'] ) ) {
+					$term_id = intval( $_POST['sell_media_product_type'] );
+					wp_set_post_terms( $post_id, array( $term_id ), 'product_type' );
+				}
+			// price group
+			} elseif ( 'sell_media_price_group' === $field ) {
 
 				if ( isset( $_POST['sell_media_price_group'] ) ) {
 					wp_set_post_terms( $post_id, $_POST['sell_media_price_group'], 'price-group' );
 				}
 
 			// print price groups fields
-			} elseif ( $field == 'sell_media_print_price_group' ) {
+			} elseif ( 'sell_media_print_price_group' === $field ) {
 
 				if ( isset( $_POST['sell_media_print_price_group'] ) ) {
 					wp_set_post_terms( $post_id, $_POST['sell_media_print_price_group'], 'reprints-price-group' );
 				}
 
 			// marketplace post meta fields
-			} elseif ( $field == 'sell_media_marketplace' ) {
+			} elseif ( 'sell_media_marketplace' === $field ) {
 
 				if ( isset( $_POST['sell_media_marketplace'] ) && isset( $_POST['_sell_media_attachment_id'] ) ) {
 
@@ -650,9 +658,10 @@ function sell_media_meta_box_fields() {
 
 	$fields = array(
 		'_sell_media_attachment_id',
+		'sell_media_product_type',
 		'sell_media_price',
 		'sell_media_price_group',
-		'sell_media_marketplace'
+		'sell_media_marketplace',
 	);
 
 	return apply_filters( 'sell_media_meta_box_fields', $fields );

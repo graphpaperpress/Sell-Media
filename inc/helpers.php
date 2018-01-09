@@ -163,9 +163,9 @@ function sell_media_build_options( $taxonomy = null ) {
 
 	/** All Terms */
 	$args = array(
-		'orderby' => 'id',
+		'orderby'    => 'id',
 		'hide_empty' => false,
-		 );
+	);
 
 	$terms = null;
 
@@ -229,9 +229,9 @@ function sell_media_build_input( $taxonomy = null ) {
 
 	/** All Terms */
 	$args = array(
-		'orderby' => 'id',
+		'orderby'    => 'id',
 		'hide_empty' => false,
-		 );
+	);
 
 	$terms = null;
 
@@ -262,6 +262,35 @@ function sell_media_build_input( $taxonomy = null ) {
 		<?php do_action( 'sell_media_build_input_after' ); ?>
 	<?php endif; ?>
 <?php }
+
+/**
+ * Taxonomy Selector
+ * @param  object $post the wp post object
+ * @param  string $taxonomy taxonomy
+ * @return [type]           [description]
+ */
+function sell_media_taxonomy_selector( $post = null, $taxonomy = 'product_type' ) {
+
+	$terms   = wp_get_post_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
+	$term_id = ( isset( $terms ) && ! empty( $terms ) ) ? $terms[0] : '';
+
+	$args = array(
+		'taxonomy'   => $taxonomy,
+		'hide_empty' => 0,
+		'echo'       => 0,
+		'selected'   => $term_id,
+		'name'       => 'sell_media_product_type',
+	);
+
+	$html  = '
+	<div id="sell-media-product-type-field" class="sell-media-field">
+		<label for="sell-media-product-type">' . __( 'Product Type', 'sell_media' ) . '</label>';
+	$html .= wp_dropdown_categories( $args );
+	$html .= '</div>';
+
+	echo $html;
+}
+add_action( 'sell_media_before_uploader_meta_box', 'sell_media_taxonomy_selector', 10, 1 );
 
 
 /**

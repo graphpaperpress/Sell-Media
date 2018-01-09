@@ -1,14 +1,78 @@
 <template>
-	<div class="column is-mobile is-one-third">
-		<a v-bind:href="m.link" v-bind:title="m.title.rendered">
-			<img v-bind:src="m.media_details.sizes.medium_large.source_url">
-			<h2>{{ m.title.rendered }}</h2>
-		</a>
+	<div class="media" v-if="loaded">
+
+		<template v-if="type && type.slug === 'panorama'">
+			<media-panorama :post="post" @attachment="setAttachment"></media-panorama>
+		</template>
+		<template v-else-if="type && type.slug === 'video'">
+			<media-video :post="post" @attachment="setAttachment"></media-video>
+		</template>
+		<template v-else-if="type && type.slug === '360-video'">
+			<media-video-360 :post="post" @attachment="setAttachment"></media-video-360>
+		</template>
+		<template v-else-if="multiple">
+			<media-slideshow :attachments="attachments" @attachment="setAttachment"></media-slideshow>
+		</template>
+		<template v-else>
+			<featured-image :post="post" @attachment="setAttachment" size="large"></featured-image>
+		</template>
 	</div>
 </template>
 
 <script>
+
+	import MediaPanorama from './MediaPanorama.vue';
+	import MediaVideo from './MediaVideo.vue';
+	import MediaVideo360 from './MediaVideo360.vue';
+	import MediaSlideshow from './MediaSlideshow.vue';
+
 	export default {
-		props: ['m'],
+		props: ['post'],
+
+		data: function() {
+			return {
+				attachments: {},
+				type: {},
+				multiple: false,
+				loaded: false,
+			}
+		},
+
+		created: function() {
+			this.attachments = this.post.sell_media_attachments
+			let count = Object.keys(this.attachments)
+			this.multiple = count.length > 1 ? true : false
+		},
+
+		mounted: function() {
+			this.getProductType()
+		},
+
+		methods: {
+
+			getProductType: function() {
+				const vm = this;
+				vm.loaded = false;
+				vm.$http.get( '/wp-json/wp/v2/product_type', {
+					params: {
+						post: vm.post.id
+					}
+				} )
+				.then( ( res ) => {
+					vm.type = res.data[0];
+					vm.loaded = true;
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
+			},
+		},
+
+		components: {
+			'media-panorama': MediaPanorama,
+			'media-video': MediaVideo,
+			'media-video-360': MediaVideo360,
+			'media-slideshow': MediaSlideshow,
+		}
     }
 </script>

@@ -4,6 +4,8 @@
 
 		<h2 class="title">{{ post.title.rendered }}</h2>
 
+		<media :post="post" @attachment="setAttachment"></media>
+
 		<template v-if="multiple">
 			<p class="subtitle">This gallery contains <strong>{{ attachments.length }}</strong> images</p>
 			<gallery v-bind:attachments="attachments" v-bind:prefix="post.slug" v-bind:key="post.slug"></gallery>
