@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
 import icons from './icons'
+import VideoJs from 'video.js'
 
 // use vue plugins
 Vue.use( VueRouter )

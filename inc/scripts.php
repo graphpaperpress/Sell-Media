@@ -127,6 +127,9 @@ function sell_media_scripts( $hook ) {
 		'search_labels' => array(
 			'search' => esc_html__( 'Search', 'sell_media' ),
 			'no_results' => esc_html__( 'No results', 'sell_media' ),
+			'all' => esc_html__( 'All', 'sell_media' ),
+			'open_filters' => esc_html__( 'Open Filters', 'sell_media' ),
+			'colors' => esc_html__( 'Colors', 'sell_media' ),
 		),
 		'lightbox_labels' => array(
 			'remove_all' 	=> esc_html__( 'Remove all', 'sell_media' ),

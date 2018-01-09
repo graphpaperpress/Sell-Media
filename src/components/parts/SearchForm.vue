@@ -1,24 +1,54 @@
 <template>
 
-	<div class="search-wrapper">
-		<div class="field has-addons">
-			<p class="control">
-				<span class="select">
-					<select v-model="search_type">
-						<option value=""></option>
-						<option v-for="type in types" v-if="type.count > 0" :value="type.slug">{{ type.name }}</option>
-					</select>
-				</span>
-			</p>
-			<p class="control">
-				<input v-model="search" class="input" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', search)">
-			</p>
-			<p class="control">
-				<button class="button is-info" @click="$emit('search', search)">
-					{{ labels.search }}
+	<div class="search-container">
+
+		<div class="columns">
+
+			<div class="search-area column is-two-thirds">
+				<div class="field has-addons">
+					<p class="control">
+						<span class="select is-medium">
+							<select v-model="search_type">
+								<option value="">{{ labels.all }}</option>
+								<option v-for="type in types" v-if="type.count > 0" :value="type.slug">{{ type.name }}</option>
+							</select>
+						</span>
+					</p>
+					<p class="control is-expanded">
+						<input v-model="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', search)">
+					</p>
+					<p class="control">
+						<button class="button is-medium is-dark" @click="$emit('search', search)">
+							{{ labels.search }}
+						</button>
+					</p>
+				</div>
+			</div>
+			<div class="filters-button column is-one-third">
+				<button class="button is-light is-medium is-pulled-right" @click="showFilters = !showFilters">
+					<span class="icon is-large">
+						<icon name="angle-down"></icon>
+					</span>
+					 {{ labels.open_filters }}
 				</button>
-			</p>
+			</div>
+
 		</div>
+
+		<div v-if="showFilters" class="filters-area">
+			<div class="columns">
+				<div class="column">
+					<h3>{{ labels.colors }}</h3>
+				</div>
+				<div class="column">
+					<h3>{{ labels.colors }}</h3>
+				</div>
+				<div class="column">
+					<h3>{{ labels.colors }}</h3>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 </template>
@@ -34,7 +64,8 @@
 				types: {},
 				labels: sell_media.search_labels,
 				search_type: '',
-				search: ''
+				search: '',
+				showFilters: false,
 			}
 		},
 
@@ -54,8 +85,20 @@
 				.catch( ( res ) => {
 					console.log( res )
 				} )
-			},
+			}
 		}
 	}
 
 </script>
+
+<style lang="scss" scoped>
+
+.search-container {
+	margin-bottom: 2rem;
+}
+
+.filters-button .fa-icon {
+	margin-right: 1rem;
+}
+
+</style>
