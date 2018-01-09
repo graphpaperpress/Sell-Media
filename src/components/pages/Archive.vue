@@ -1,11 +1,8 @@
 <template>
 	<div :id="name" :class="name">
-
-		<div class="search-wrapper">
-			<label>{{ search_label }}</label>
-			<input type="text" v-model="search" :placeholder="search_label" @keyup.enter="getSearchResults(search)">
-		</div>
 		
+		<searchform @search="getSearchResults"></searchform>
+
 		<template v-if="layout === 'sell-media-masonry' || layout === 'sell-media-horizontal-masonry'">
 			<masonry :posts="posts" class="has-text-centered"></masonry>
 		</template>
@@ -31,7 +28,7 @@
 
 <script>
 
-//import SearchForm from '../parts/SearchForm.vue';
+import SearchForm from '../parts/SearchForm.vue';
 import Masonry from '../parts/Masonry.vue';
 
 	export default {
@@ -161,7 +158,7 @@ import Masonry from '../parts/Masonry.vue';
 
 		components: {
 			'masonry': Masonry,
-			//'searchform': SearchForm,
+			'searchform': SearchForm,
 		}
 	}
 </script>
