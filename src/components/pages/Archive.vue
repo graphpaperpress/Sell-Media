@@ -16,12 +16,12 @@
 		</template>
 		<template v-else>
 			<div class="columns is-gapless is-multiline has-text-centered" v-if="loaded === true">
-				<div v-for="post in posts" :class="gridLayout" class="column is-mobile">
+				<div v-for="post in posts" :class="gridLayout" class="column is-one-fifth">
 					<thumbnail :key="post.slug" :post="post"></thumbnail>
 				</div>
 			</div>
 		</template>
-		<nav class="pagination">
+		<nav v-if="totalPages > 1" class="pagination">
 			<button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
 			<span> {{ currentPage }} / {{ totalPages }} </span>
 			<button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
@@ -167,7 +167,6 @@ import Masonry from '../parts/Masonry.vue';
 				.then( ( res ) => {
 					vm.user = res.data.ID
 					vm.$store.commit( 'setUser', vm.user );
-					console.log(vm.user)
 				} )
 				.catch( ( res ) => {
 					console.log( res )

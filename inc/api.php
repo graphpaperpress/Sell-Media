@@ -219,6 +219,9 @@ function sell_media_api_get_attachments( $object, $field_name = '', $request = '
 		return;
 	}
 
+	// always start index at 0
+	$attachment_ids = array_values( $attachment_ids );
+
 	foreach ( $attachment_ids as $key => $value ) {
 		$attachment_array[ $key ]['id']       = absint( $value );
 		$attachment_array[ $key ]['title']    = get_the_title( $value );

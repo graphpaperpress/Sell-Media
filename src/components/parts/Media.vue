@@ -40,6 +40,7 @@
 
 		created: function() {
 			this.attachments = this.post.sell_media_attachments
+			console.log(this.attachments)
 			let count = Object.keys(this.attachments)
 			this.multiple = count.length > 1 ? true : false
 		},
