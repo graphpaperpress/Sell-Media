@@ -3,6 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import PortalVue from 'portal-vue'
 import store from './store'
 import icons from './icons'
 import VideoJs from 'video.js'
@@ -10,6 +11,7 @@ import VideoJs from 'video.js'
 // use vue plugins
 Vue.use( VueRouter )
 Vue.use( VueAxios, axios )
+Vue.use( PortalVue )
 
 // import and register components
 import Main from './components/Main.vue'
@@ -34,6 +36,8 @@ import Modal from './components/parts/Modal.vue'
 Vue.component( 'modal', Modal )
 import Expander from './components/parts/Expander.vue'
 Vue.component( 'expander', Expander )
+import ExpanderRelated from './components/parts/ExpanderRelated.vue'
+Vue.component( 'expander-related', ExpanderRelated )
 import Media from './components/parts/Media.vue'
 Vue.component( 'media', Media )
 import FeaturedImage from './components/parts/FeaturedImage.vue'

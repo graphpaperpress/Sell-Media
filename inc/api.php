@@ -108,6 +108,21 @@ function sell_media_api_response() {
 }
 
 /**
+ * Get current logged in user
+ * @param  array $array
+ * @param  string $action
+ * @return array         user data
+ */
+function sell_media_api_get_user( $array, $action ) {
+	$current_user = array();
+	if ( 'get_user' === $action ) {
+		$current_user = wp_get_current_user();
+	}
+	return $current_user;
+}
+add_filter( 'sell_media_api_response', 'sell_media_api_get_user', 10, 2 );
+
+/**
  * Images for rest api
  */
 function sell_media_api_get_image( $object, $field_name = '', $request = '' ) {

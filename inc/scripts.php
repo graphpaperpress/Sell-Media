@@ -132,7 +132,11 @@ function sell_media_scripts( $hook ) {
 			'close_filters' => esc_html__( 'Close Filters', 'sell_media' ),
 			'colors' => esc_html__( 'Colors', 'sell_media' ),
 			'orientation' => esc_html__( 'Orientation', 'sell_media' ),
+			'horizontal' => esc_html__( 'Horizontal', 'sell_media' ),
+			'vertical' => esc_html__( 'Vertical', 'sell_media' ),
+			'panoramic' => esc_html__( 'Panoramic', 'sell_media' ),
 			'collections' => esc_html__( 'Collections', 'sell_media' ),
+			'download' => esc_html__( 'Download', 'sell_media' ),
 		),
 		'lightbox_labels' => array(
 			'remove_all' 	=> esc_html__( 'Remove all', 'sell_media' ),

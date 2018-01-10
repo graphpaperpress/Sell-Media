@@ -40,13 +40,17 @@
 
 		</div>
 
-		<div class="slideshow-thumbnails">
-			<ul>
-				<li v-for="(attachment, index) in attachments" @click="goToSlide(index)" :class="{ active: currentSlide === index }">
-					<img :src="attachment.sizes.thumbnail[0]" :alt="attachment.alt" />
-				</li>
-			</ul>
-		</div>
+		<portal to="slideshow-thumbnails">
+			<div id="slideshow-thumbnails" class="slideshow-thumbnails">
+				<div class="columns is-multiline is-gapless">
+					<div v-for="(attachment, index) in attachments" @click="goToSlide(index)" :class="{ active: currentSlide === index }" class="column is-one-fifth">
+						<figure class="slideshow-thumbnail">
+							<img :src="attachment.sizes.medium[0]" :alt="attachment.alt" />
+						</figure>
+					</div>
+				</div>
+			</div>
+		</portal>
 
 		 {{ currentSlide + 1 }} of {{ attachments.length }} 
 
@@ -159,30 +163,20 @@
 		margin: 1rem auto;
 		text-align: center;
 
-		ul {
-			list-style: none;
-			padding: 0;
-			margin: 0;
+		.column {
 
-			li {
-				display: inline-block;
-				margin-right: .5rem;
-				width: 40px;
-				height: 40px;
-				border: 2px solid #555;
+			&:hover {
+				cursor: pointer;
+			}
 
-				&:last-child {
-					margin-right: 0;
-				}
+			.slideshow-thumbnail {
+				border: 1px solid transparent;
+				padding: 5px;
+			}
 
-				&.active {
-					border-color: #fff;
-					box-shadow: 0 3px 6px rgba(0,0,0,.5)
-				}
-
-				&:hover {
-					cursor: pointer;
-				}
+			&.active .slideshow-thumbnail {
+				border: 1px solid #000;
+				background: #444;
 			}
 		}
 	}

@@ -53,6 +53,7 @@
     "bulma-steps-component": "^0.5.3",
     "pannellum": "github:mpetroff/pannellum#master",
     "parsleyjs": "^2.8.0",
+    "portal-vue": "^1.2.2",
     "vue-awesome": "^2.3.4",
     "vue-axios": "^2.0.2",
     "vue-waterfall": "^1.0.6",

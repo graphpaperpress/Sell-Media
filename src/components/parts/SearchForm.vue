@@ -1,6 +1,6 @@
 <template>
 
-	<div class="search-container">
+	<div class="search-container" :class="{ active: showFilters }">
 
 		<div class="columns">
 
@@ -46,13 +46,31 @@
 		<div v-if="showFilters" class="filters-area">
 			<div class="columns">
 				<div class="column">
-					<h6 class="has-text-grey is-uppercase">{{ labels.colors }}</h6>
+					<h6 class="has-text-weight-bold is-uppercase">{{ labels.colors }}</h6>
 				</div>
 				<div class="column">
-					<h6 class="has-text-grey is-uppercase">{{ labels.orientation }}</h6>
+					<h6 class="has-text-weight-bold is-uppercase">{{ labels.orientation }}</h6>
+					<p class="horizontal">
+						<label class="checkbox">
+							<input type="checkbox">
+							{{ labels.horizontal }}
+						</label>
+					</p>
+					<p class="vertical">
+						<label class="checkbox">
+							<input type="checkbox">
+							{{ labels.vertical }}
+						</label>
+					</p>
+					<p class="panoramic">
+						<label class="checkbox">
+							<input type="checkbox">
+							{{ labels.panoramic }}
+						</label>
+					</p>
 				</div>
 				<div class="column">
-					<h6 class="has-text-grey is-uppercase">{{ labels.collections }}</h6>
+					<h6 class="has-text-weight-bold is-uppercase">{{ labels.collections }}</h6>
 				</div>
 			</div>
 		</div>
@@ -103,12 +121,21 @@
 
 .search-container {
 	margin-bottom: 2rem;
+
+	&.active {}
 }
 
 .filters-button .fa-icon {
 	margin-right: 1rem;
 	width: auto;
 	height: 1em;
+}
+
+.filters-area {
+	h6 {
+		padding-bottom: 1rem;
+		margin-bottom: 1rem;
+	}
 }
 
 </style>
