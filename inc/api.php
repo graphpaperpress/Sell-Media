@@ -154,9 +154,10 @@ function sell_media_api_download_file( $data, $action ) {
 	$width         = (int) get_term_meta( $size_id, 'width', true );
 	$height        = (int) get_term_meta( $size_id, 'height', true );
 	$file_path     = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+	$mime_type     = get_post_mime_type( $attachment_id );
 	$img           = wp_get_image_editor( $file_path );
 
-	if ( ! is_wp_error( $img ) ) {
+	if ( ! is_wp_error( $img ) && $img->supports_mime_type( $mime_type ) ) {
 
 		if ( $width || $height ) {
 			if ( $width >= $height ) {
@@ -182,6 +183,18 @@ function sell_media_api_download_file( $data, $action ) {
 		$filename = $img->generate_filename( null, $upload_dir['basedir'] . '/downloads/', null );
 		do_action( 'sell_media_record_file_download', $current_user->ID, $post_id, $attachment_id, $size_id );
 		return $img->save( $filename );
+
+	} elseif ( $mime_type ) {
+
+		header( 'Content-Disposition: attachment; filename=' . urlencode( basename( $file_path ) ) );
+		header( 'Content-Type: application/force-download' );
+		header( 'Content-Type: application/octet-stream' );
+		header( 'Content-Type: application/download' );
+		header( 'Content-Description: File Transfer' );
+		header( 'Content-Length: ' . filesize( $file_path ) );
+		
+		echo file_get_contents( $file_path );
+
 	}
 }
 add_filter( 'sell_media_api_response', 'sell_media_api_download_file', 10, 2 );

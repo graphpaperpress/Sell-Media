@@ -17,14 +17,14 @@
 						<div class="column">
 							<div v-if="multiple" class="multiple-selector buttons has-addons">
 								<div v-for="size in sizes" class="button-block" :data-size-id="size.id">
-									<div class="label">{{ size.name }}</div>
-									<a v-if="user" class="icon" @click="downloadFile(size)" :download="file">
+									<div class="label is-size-7">{{ size.name }}</div>
+									<a v-if="user" class="icon" @click="downloadFile(size)" :title="search_labels.download" :download="file">
 										<icon name="download"></icon>
 									</a>
 								</div>
 							</div>
 							<div v-else class="single-selector">
-								<button v-if="user" class="button is-outlined is-link" :title="search_labels.download" @click="downloadFile(null)">
+								<button v-if="user" class="button is-outlined is-link" :title="search_labels.download" @click="downloadFile({ 'id': 'original' })">
 									<span class="icon">
 										<icon name="download"></icon>
 									</span>
@@ -122,11 +122,12 @@
 						_wpnonce: sell_media.nonce,
 						post_id: this.$store.state.product.post_id,
 						attachment_id: this.$store.state.product.attachment_id,
-						size_id: size.id
+						size_id: size ? size.id : 'original'
 					}
 				} )
 				.then( ( res ) => {
 					let data = res.data;
+					console.log(res)
 					if( data.file ) {
 						window.open( '/wp-content/uploads/downloads/' + data.file, '_blank');
 						this.file = '/wp-content/uploads/downloads/' + data.file
@@ -196,25 +197,39 @@
 	.button-block {
 		text-align: center;
 		margin-right: .25rem;
-		width: 38px;
+		width: 32px;
 
 		.label,
 		.icon {
+			border: 1px solid #3273dc;
 			padding: .25rem;
 			width: 100%;
 		}
 
 		.label {
-			background-color: #3273dc;
 			margin: 0;
 			border-top-left-radius: 2px;
     		border-top-right-radius: 2px;
 		}
 
 		.icon {
-			background-color: lighten( #3273dc, 10% );
+			border-top: 0;
 			border-bottom-left-radius: 2px;
     		border-bottom-right-radius: 2px;
+    		transition: all .25s ease-in-out;
+
+    		svg {
+    			fill: #3273dc;
+    			transition: all .25s ease-in-out;
+    		}
+    		
+    		&:hover {
+    			background: #333;
+    			
+    			svg {
+					fill: #fff;
+    			}
+    		}
 		}
 	}
 
