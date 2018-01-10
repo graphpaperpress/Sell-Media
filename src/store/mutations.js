@@ -6,7 +6,8 @@ export const state = {
   cart: JSON.parse(window.localStorage.getItem(CART_KEY) || '[]'),
   usage: JSON.parse(window.localStorage.getItem(USAGE_KEY) || '[]'),
   lightbox: JSON.parse(window.localStorage.getItem(LIGHTBOX_KEY) || '[]'),
-  title: ''
+  title: null,
+  user: null
 }
 
 export const mutations = {
@@ -52,7 +53,7 @@ export const mutations = {
   changeTitle( state, value ) {
     state.title = value;
     document.title = ( state.title ? state.title + ' - ' : '' ) + sell_media.site_name;
-},
+  },
 
    verifyProducts( state, value ) {
       state.cart = state.cart.filter((product, index)=>{
@@ -72,5 +73,9 @@ export const mutations = {
          }
          return false;
       });
-   }
+   },
+
+   setUser( state, user ) {
+      state.user = user
+    }
 }

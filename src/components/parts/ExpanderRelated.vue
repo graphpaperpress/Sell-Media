@@ -18,13 +18,13 @@
 							<div v-if="multiple" class="multiple-selector buttons has-addons">
 								<div v-for="size in sizes" class="button-block">
 									<div class="label">{{ size.label }}</div>
-									<div class="icon">
+									<div v-if="user" class="icon">
 										<icon name="download"></icon>
 									</div>
 								</div>
 							</div>
 							<div v-else class="single-selector">
-								<button class="button is-outlined is-link" :title="labels.download">
+								<button v-if="user" class="button is-outlined is-link" :title="labels.download">
 									<span class="icon">
 										<icon name="download"></icon>
 									</span>
@@ -75,6 +75,7 @@
 
 		data: function () {
 			return {
+				user: this.$store.state.user,
 				attachment: {},
 				attachments: {},
 				multiple: false,

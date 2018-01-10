@@ -160,7 +160,8 @@ function sell_media_scripts( $hook ) {
 		'plugin_credit' => empty( $settings->plugin ) ? 0 : $settings->plugin_credit,
 		//'currencies' => sell_media_currencies(),
 		'licensing_enabled' => sell_media_licensing_enabled(),
-		'licensing_markup_taxonomies' => sell_media_get_license_markup_taxonomies()
+		'licensing_markup_taxonomies' => sell_media_get_license_markup_taxonomies(),
+		'nonce' => wp_create_nonce( 'wp_rest' ),
 	) );
 
 	do_action( 'sell_media_scripts_hook' );

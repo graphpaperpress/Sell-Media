@@ -45,10 +45,13 @@ import Masonry from '../parts/Masonry.vue';
 			} else {
 				vm.getPosts();
 			}
+
+			vm.getUser();
 		},
 
 		data: function() {
 			return {
+				user: {},
 				posts: {},
 				currentPage: '',
 				prevPage: '',
@@ -60,7 +63,7 @@ import Masonry from '../parts/Masonry.vue';
 				totalPages: '',
 				loaded: false,
 				pageTitle: '',
-				name: this.$options.name, // component name
+				name: this.$options.name,
 				gridLayout: this.$store.getters.gridLayout,
 				search: '',
 				search_labels: sell_media.search_labels,
@@ -151,6 +154,24 @@ import Masonry from '../parts/Masonry.vue';
 					vm.currentPage = vm.currentPage - 1;
 					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
 				}
+			},
+
+			getUser: function() {
+				const vm = this;
+				vm.$http.get( '/wp-json/sell-media/v2/api', {
+					params: {
+						action: 'get_user',
+						_wpnonce: sell_media.nonce
+					}
+				} )
+				.then( ( res ) => {
+					vm.user = res.data.ID
+					vm.$store.commit( 'setUser', vm.user );
+					console.log(vm.user)
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
 			}
 		},
 

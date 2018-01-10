@@ -98,7 +98,7 @@ add_action( 'rest_api_init', 'sell_media_extend_rest_post_response' );
 function sell_media_api_response() {
 	if ( ! isset( $_GET['action'] ) || '' === $_GET['action'] ) {
 		$data = array(
-			'error' => __( 'No action found.', 'selll_media' ),
+			'error' => __( 'No action found.', 'sell_media' ),
 		);
 		return $data;
 	}
@@ -113,11 +113,13 @@ function sell_media_api_response() {
  * @param  string $action
  * @return array containing user data
  */
-function sell_media_api_get_user( $array, $action ) {
-	$current_user = array();
-	if ( 'get_user' === $action ) {
-		$current_user = wp_get_current_user();
+function sell_media_api_get_user( $data, $action ) {
+
+	if ( 'get_user' !== $action ) {
+		return $data;
 	}
+
+	$current_user = wp_get_current_user();
 	return $current_user;
 }
 add_filter( 'sell_media_api_response', 'sell_media_api_get_user', 10, 2 );
