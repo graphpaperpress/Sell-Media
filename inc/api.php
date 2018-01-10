@@ -125,6 +125,51 @@ function sell_media_api_get_user( $data, $action ) {
 add_filter( 'sell_media_api_response', 'sell_media_api_get_user', 10, 2 );
 
 /**
+ * Verify downloads.
+ *
+ * @param  array $array
+ * @param  string $action
+ * @return array containing download data
+ */
+function sell_media_api_verify_donwload( $data, $action ) {
+	if ( 'validate_donwload' !== $action ) {
+		return $data;
+	}
+
+	$response['message'] = __( 'Invalid download request.', 'sell_media' );
+	$response['status'] = false;
+
+	if ( ! isset( $_GET['post_id'] ) || '' === $_GET['post_id'] ) {
+		return $response;
+	}
+	$post_id = (int) esc_html( $_GET['post_id'] );
+	$sizes = array(
+		'S' => 'thumbnail',
+		'M' => 'medium',
+		'L' => 'large',
+		'XL' => 'full',
+	);
+	$size = isset( $_GET['size'] ) &&  array_key_exists( $_GET['size'], $sizes ) ? $sizes[ $_GET['size'] ] : 'full';
+
+	$attachment_ids = sell_media_get_attachments( $post_id );
+	if ( empty( $attachment_ids ) ) {
+		return $response;
+	}
+
+   // Need to be changed.
+	$attachment_id = $attachment_ids[0];
+
+	$url = wp_get_attachment_image_src( $attachment_id, $size );
+
+	return array(
+		'post_id' => $post_id,
+		'size' => $size,
+		'url' => ! empty( $url ) ? $url : false,
+	);
+}
+add_filter( 'sell_media_api_response', 'sell_media_api_verify_donwload', 10, 2 );
+
+/**
  * Images for rest api
  */
 function sell_media_api_get_image( $object, $field_name = '', $request = '' ) {
@@ -346,6 +391,7 @@ if ( ! function_exists( 'sell_media_api_search_response' ) ) :
 		$args = apply_filters( 'sell_media_search_args', $args );
 		$search_query = new WP_Query();
 		$posts = $search_query->query( $args );
+		$posts = apply_filters( 'sell_media_api_search_result', $posts, $search_terms, $product_type, $paged );
 
 		// mirror formatting of normal rest api endpoint for sell_media_item
 		foreach ( $posts as $post ) {

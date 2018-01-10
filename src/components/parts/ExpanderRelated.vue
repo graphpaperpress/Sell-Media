@@ -16,7 +16,7 @@
 						</div>
 						<div class="column">
 							<div v-if="multiple" class="multiple-selector buttons has-addons">
-								<div v-for="size in sizes" class="button-block">
+								<div v-for="size in sizes" class="button-block" @click="downloadFile(post.id, size)">
 									<div class="label">{{ size.label }}</div>
 									<div v-if="user" class="icon">
 										<icon name="download"></icon>
@@ -24,7 +24,7 @@
 								</div>
 							</div>
 							<div v-else class="single-selector">
-								<button v-if="user" class="button is-outlined is-link" :title="labels.download">
+								<button v-if="user" class="button is-outlined is-link" :title="labels.download" @click="downloadFile(post.id)">
 									<span class="icon">
 										<icon name="download"></icon>
 									</span>
@@ -143,6 +143,28 @@
 			},
 			setAttachment: function(data) {
 				this.attachment = data
+			},
+			downloadFile: function(postID, size) {
+				const vm = this;
+				if( ! vm.user ) {
+					return false;
+				}
+				vm.$http.get( '/wp-json/sell-media/v2/api', {
+					params: {
+						action: 'validate_donwload',
+						post_id: postID,
+						size: 'undefined' !== typeof size ? size.label : '',
+					}
+				} )
+				.then( ( res ) => {
+					let data = res.data;
+					if( data.url ) {
+						window.open( data.url[0], '_blank');
+					}
+				} )
+				.catch( ( res ) => {
+					console.log( `Something went wrong : ${res}` );
+				} );
 			}
 		}
 	}
