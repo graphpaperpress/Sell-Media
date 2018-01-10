@@ -3,6 +3,14 @@
 		
 		<searchform @search="getSearchResults"></searchform>
 
+		<div v-if="searchResults" class="search-results-total" >
+			{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}."
+		</div>
+		<div v-if="searchResults === 0" class="search-results-total" >
+			{{ search_labels.no_results }} "{{ search }}."
+		</div>
+
+
 		<template v-if="layout === 'sell-media-masonry' || layout === 'sell-media-horizontal-masonry'">
 			<masonry :posts="posts" class="has-text-centered"></masonry>
 		</template>
@@ -18,10 +26,6 @@
 			<span> {{ currentPage }} / {{ totalPages }} </span>
 			<button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
 		</nav>
-
-<!-- 		<div id="child">
-			<child :message="name"></child>
-		</div> -->
 
 	</div>
 </template>
@@ -59,7 +63,8 @@ import Masonry from '../parts/Masonry.vue';
 				name: this.$options.name, // component name
 				gridLayout: this.$store.getters.gridLayout,
 				search: '',
-				search_label: sell_media.search_labels.search,
+				search_labels: sell_media.search_labels,
+				searchResults: false
 			}
 		},
 
@@ -106,8 +111,10 @@ import Masonry from '../parts/Masonry.vue';
 					}
 				} )
 				.then( ( res ) => {
-					vm.posts = res.data;
-					vm.totalPages = res.headers[ 'x-wp-totalpages' ];
+					vm.posts = res.data ? res.data : this.posts
+					vm.searchResults = res.data ? res.data.length : 0
+					vm.search = search
+					vm.totalPages = res.headers[ 'x-wp-totalpages' ]
 
 					if ( pageNumber <= parseInt( vm.totalPages ) ) {
 						vm.currentPage = parseInt( pageNumber );

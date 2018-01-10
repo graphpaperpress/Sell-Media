@@ -12,7 +12,7 @@
 					<div class="cart-container columns">
 						<div class="column is-one-fifth">
 							<p class="is-size-7">Image ID: <router-link :to="{ name: 'item', params: { slug:post.slug }}">{{ post.id }}</router-link></p>
-							<p class="is-size-7">Location ID: {{ post.product_type[0] }}</p>
+							<p class="is-size-7">Location ID: {{  }}</p>
 						</div>
 						<div class="column">
 							<div v-if="multiple" class="multiple-selector buttons has-addons">

@@ -126,7 +126,9 @@ function sell_media_scripts( $hook ) {
 		'quick_view_label' => esc_html__( 'Quick View', 'sell_media' ),
 		'search_labels' => array(
 			'search' => esc_html__( 'Search', 'sell_media' ),
-			'no_results' => esc_html__( 'No results', 'sell_media' ),
+			'no_results' => esc_html__( 'Sorry, no results for', 'sell_media' ),
+			'we_found' => esc_html__( 'We found', 'sell_media' ),
+			'results_for' => esc_html__( 'results for', 'sell_media' ),
 			'all' => esc_html__( 'All', 'sell_media' ),
 			'open_filters' => esc_html__( 'Open Filters', 'sell_media' ),
 			'close_filters' => esc_html__( 'Close Filters', 'sell_media' ),

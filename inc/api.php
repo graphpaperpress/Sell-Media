@@ -111,7 +111,7 @@ function sell_media_api_response() {
  * Get current logged in user
  * @param  array $array
  * @param  string $action
- * @return array         user data
+ * @return array containing user data
  */
 function sell_media_api_get_user( $array, $action ) {
 	$current_user = array();
@@ -150,7 +150,17 @@ function sell_media_api_get_image( $object, $field_name = '', $request = '' ) {
  * Attachments for rest api
  */
 function sell_media_api_get_attachments( $object, $field_name = '', $request = '' ) {
-	$post_id        = $object['id'];
+
+	/**
+	 * @todo Searches can return attachments.
+	 * In that case, the $post_id is the attachment id.
+	 * Thus, trying to query post meta for attachment ids will fail.
+	 */
+	$post_id = $object['id'];
+	if ( wp_get_post_parent_id( $post_id ) ) {
+		$post_id = wp_get_post_parent_id( $post_id );
+	}
+
 	$attachment_ids = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
 	// If ids are no in array.
@@ -368,11 +378,9 @@ if ( ! function_exists( 'sell_media_api_search_response' ) ) :
 			];
 		}
 
-		if ( empty( $results ) ) {
-			return new WP_Error( 'sell_media_no_search_results', __( 'No results', 'sell_media' ) );
+		if ( ! empty( $results ) ) {
+			return rest_ensure_response( $results );
 		}
-
-		return rest_ensure_response( $results );
 	}
 
 endif;
