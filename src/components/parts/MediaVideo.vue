@@ -24,7 +24,9 @@
 			window.HELP_IMPROVE_VIDEOJS = false;
 			this.attachment = this.post.sell_media_attachments[0]
 			this.attachment.featured_image = 'undefined' !== typeof this.post.sell_media_featured_image.sizes.large[0] ? this.post.sell_media_featured_image.sizes.large[0] : ''
-			this.$emit('attachment', this.attachment)
+		},
+		mounted: function() {
+			this.$store.commit( 'setProduct', { post_id: this.attachment.parent, attachment_id: this.attachment.id } )
 		}
 	}
 </script>

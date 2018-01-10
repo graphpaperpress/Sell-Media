@@ -5,26 +5,26 @@
 
 			<div class="columns">
 				<div class="column is-half has-text-center">
-					<media :post="post" @attachment="setAttachment"></media>
+					<media :post="post"></media>
 				</div>
 				<div class="column is-half has-text-left">
 
 					<div class="cart-container columns">
 						<div class="column is-one-fifth">
 							<p class="is-size-7">Image ID: <router-link :to="{ name: 'item', params: { slug:post.slug }}">{{ post.id }}</router-link></p>
-							<p class="is-size-7">Location ID: {{  }}</p>
+							<p class="is-size-7">Location ID: {{ }}</p>
 						</div>
 						<div class="column">
 							<div v-if="multiple" class="multiple-selector buttons has-addons">
-								<div v-for="size in sizes" class="button-block" @click="downloadFile(post.id, size)">
-									<div class="label">{{ size.label }}</div>
-									<div v-if="user" class="icon">
+								<div v-for="size in sizes" class="button-block" :data-size-id="size.id">
+									<div class="label">{{ size.name }}</div>
+									<a v-if="user" class="icon" @click="downloadFile(size)" :download="file">
 										<icon name="download"></icon>
-									</div>
+									</a>
 								</div>
 							</div>
 							<div v-else class="single-selector">
-								<button v-if="user" class="button is-outlined is-link" :title="labels.download" @click="downloadFile(post.id)">
+								<button v-if="user" class="button is-outlined is-link" :title="search_labels.download" @click="downloadFile(null)">
 									<span class="icon">
 										<icon name="download"></icon>
 									</span>
@@ -33,7 +33,7 @@
 						</div>
 						<div class="column">
 							<div class="buttons">
-								<button class="button is-link">Add To Cart</button>
+								<button class="button is-link">{{ cart_labels.add_to_cart }}</button>
 								<button class="button is-link">
 									<span class="icon">
 										<icon name="heart"></icon>
@@ -76,47 +76,16 @@
 		data: function () {
 			return {
 				user: this.$store.state.user,
-				attachment: {},
+				attachment_id: this.$store.state.product.attachment_id,
 				attachments: {},
 				multiple: false,
-				labels: sell_media.search_labels,
-				prev_label: sell_media.cart_labels.prev,
-				next_label: sell_media.cart_labels.next,
-				sizes: {
-					0: {
-						name: 'Small',
-						label: 'S',
-						description: '',
-						price: '200'
-					},
-					1: {
-						name: 'Medium',
-						label: 'M',
-						description: '',
-						price: '350'
-					},
-					2: {
-						name: 'Large',
-						label: 'L',
-						description: '',
-						price: '500'
-					},
-					3: {
-						name: 'Extra Large',
-						label: 'XL',
-						description: '',
-						price: '750'
-					},
-					4: {
-						name: 'TIF',
-						label: 'TIF',
-						description: '',
-						price: '1000'
-					}
-				},
+				search_labels: sell_media.search_labels,
+				cart_labels: sell_media.cart_labels,
+				sizes: this.post.sell_media_pricing.downloads,
 				imageSets: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], // get from rest api, image product types in same set as current
 				videoSets: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], // get from rest api, video product types in same set as current
-				otherSets: ['360°R Dome', 'HDR Dome', '360° Video', 'VR Environment', '3D Object'] // get from rest api, other product types in same set as current
+				otherSets: ['360°R Dome', 'HDR Dome', '360° Video', 'VR Environment', '3D Object'], // get from rest api, other product types in same set as current
+				file: ''
 			}
 		},
 
@@ -141,25 +110,26 @@
 			prev: function() {
 				this.post -= 1
 			},
-			setAttachment: function(data) {
-				this.attachment = data
-			},
-			downloadFile: function(postID, size) {
+			downloadFile: function(size) {
 				const vm = this;
 				if( ! vm.user ) {
 					return false;
 				}
+
 				vm.$http.get( '/wp-json/sell-media/v2/api', {
 					params: {
-						action: 'validate_donwload',
-						post_id: postID,
-						size: 'undefined' !== typeof size ? size.label : '',
+						action: 'download_file',
+						_wpnonce: sell_media.nonce,
+						post_id: this.$store.state.product.post_id,
+						attachment_id: this.$store.state.product.attachment_id,
+						size_id: size.id
 					}
 				} )
 				.then( ( res ) => {
 					let data = res.data;
-					if( data.url ) {
-						window.open( data.url[0], '_blank');
+					if( data.file ) {
+						window.open( '/wp-content/uploads/downloads/' + data.file, '_blank');
+						this.file = '/wp-content/uploads/downloads/' + data.file
 					}
 				} )
 				.catch( ( res ) => {

@@ -2,19 +2,19 @@
 	<div class="media" v-if="loaded">
 
 		<template v-if="type && type.slug === 'panorama'">
-			<media-panorama :post="post" @attachment="setAttachment"></media-panorama>
+			<media-panorama :post="post"></media-panorama>
 		</template>
 		<template v-else-if="type && type.slug === 'video'">
-			<media-video :post="post" @attachment="setAttachment"></media-video>
+			<media-video :post="post"></media-video>
 		</template>
 		<template v-else-if="type && type.slug === '360-video'">
-			<media-video-360 :post="post" @attachment="setAttachment"></media-video-360>
+			<media-video-360 :post="post"></media-video-360>
 		</template>
 		<template v-else-if="multiple">
-			<media-slideshow :attachments="attachments" @attachment="setAttachment"></media-slideshow>
+			<media-slideshow :attachments="attachments"></media-slideshow>
 		</template>
 		<template v-else>
-			<featured-image :post="post" @attachment="setAttachment" size="large"></featured-image>
+			<featured-image :post="post" size="large"></featured-image>
 		</template>
 	</div>
 </template>
@@ -40,7 +40,6 @@
 
 		created: function() {
 			this.attachments = this.post.sell_media_attachments
-			console.log(this.attachments)
 			let count = Object.keys(this.attachments)
 			this.multiple = count.length > 1 ? true : false
 		},
@@ -66,7 +65,7 @@
 				.catch( ( res ) => {
 					console.log( res )
 				} )
-			},
+			}
 		},
 
 		components: {

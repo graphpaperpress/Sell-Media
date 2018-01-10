@@ -22,7 +22,7 @@
 
 		mounted: function() {
 			this.attachment = this.post.sell_media_attachments[0]
-			this.$emit('attachment', this.attachment)
+			this.$store.commit( 'setProduct', { post_id: this.attachment.parent, attachment_id: this.attachment.id } )
 			
 			pannellum.viewer("panorama", {
 				"type": "equirectangular",

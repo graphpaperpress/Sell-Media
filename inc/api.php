@@ -125,49 +125,66 @@ function sell_media_api_get_user( $data, $action ) {
 add_filter( 'sell_media_api_response', 'sell_media_api_get_user', 10, 2 );
 
 /**
- * Verify downloads.
+ * Download a file.
  *
  * @param  array $array
  * @param  string $action
  * @return array containing download data
  */
-function sell_media_api_verify_donwload( $data, $action ) {
-	if ( 'validate_donwload' !== $action ) {
+function sell_media_api_download_file( $data, $action ) {
+	if ( 'download_file' !== $action ) {
 		return $data;
 	}
 
 	$response['message'] = __( 'Invalid download request.', 'sell_media' );
 	$response['status'] = false;
 
-	if ( ! isset( $_GET['post_id'] ) || '' === $_GET['post_id'] ) {
-		return $response;
-	}
-	$post_id = (int) esc_html( $_GET['post_id'] );
-	$sizes = array(
-		'S' => 'thumbnail',
-		'M' => 'medium',
-		'L' => 'large',
-		'XL' => 'full',
-	);
-	$size = isset( $_GET['size'] ) &&  array_key_exists( $_GET['size'], $sizes ) ? $sizes[ $_GET['size'] ] : 'full';
-
-	$attachment_ids = sell_media_get_attachments( $post_id );
-	if ( empty( $attachment_ids ) ) {
+	if ( ! isset( $_GET['post_id'] )
+		|| '' === $_GET['post_id']
+		|| ! isset( $_GET['attachment_id'] )
+		|| '' === $_GET['attachment_id']
+		|| ! isset( $_GET['size_id'] )
+		|| '' === $_GET['size_id'] ) {
 		return $response;
 	}
 
-   // Need to be changed.
-	$attachment_id = $attachment_ids[0];
+	$post_id       = (int) esc_html( $_GET['post_id'] );
+	$attachment_id = (int) esc_html( $_GET['attachment_id'] );
+	$size_id       = (int) esc_html( $_GET['size_id'] );
+	$width         = (int) get_term_meta( $size_id, 'width', true );
+	$height        = (int) get_term_meta( $size_id, 'height', true );
+	$file_path     = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+	$img           = wp_get_image_editor( $file_path );
 
-	$url = wp_get_attachment_image_src( $attachment_id, $size );
+	if ( ! is_wp_error( $img ) ) {
 
-	return array(
-		'post_id' => $post_id,
-		'size' => $size,
-		'url' => ! empty( $url ) ? $url : false,
-	);
+		if ( $width || $height ) {
+			if ( $width >= $height ) {
+				$max = $width;
+			} else {
+				$max = $height;
+			}
+			$img->resize( $max, $max, false );
+		}
+		$img->set_quality( 100 );
+
+		// make a folder for each user's downloads
+		$current_user = wp_get_current_user();
+		$upload_dir   = wp_upload_dir();
+
+		if ( isset( $current_user->user_login ) && ! empty( $upload_dir['basedir'] ) ) {
+			$user_dirname = $upload_dir['basedir'] . '/downloads/' . $current_user->user_login;
+			if ( ! file_exists( $user_dirname ) ) {
+				wp_mkdir_p( $user_dirname );
+			}
+		}
+
+		$filename = $img->generate_filename( null, $upload_dir['basedir'] . '/downloads/', null );
+		do_action( 'sell_media_record_file_download', $current_user->ID, $post_id, $attachment_id, $size_id );
+		return $img->save( $filename );
+	}
 }
-add_filter( 'sell_media_api_response', 'sell_media_api_verify_donwload', 10, 2 );
+add_filter( 'sell_media_api_response', 'sell_media_api_download_file', 10, 2 );
 
 /**
  * Images for rest api
@@ -224,6 +241,7 @@ function sell_media_api_get_attachments( $object, $field_name = '', $request = '
 
 	foreach ( $attachment_ids as $key => $value ) {
 		$attachment_array[ $key ]['id']       = absint( $value );
+		$attachment_array[ $key ]['parent']   = wp_get_post_parent_id( absint( $value ) );
 		$attachment_array[ $key ]['title']    = get_the_title( $value );
 		$attachment_array[ $key ]['alt']      = get_post_meta( $value, '_wp_attachment_image_alt', true );
 		$attachment_array[ $key ]['url']      = get_permalink( $value );

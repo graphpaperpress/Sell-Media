@@ -19,7 +19,7 @@
 
 		mounted: function() {
 			let attachment = this.post.sell_media_attachments[0]
-			this.$emit('attachment', attachment)
+			this.$store.commit( 'setProduct', { post_id: this.attachment.parent, attachment_id: this.attachment.id } )
 		}
 
 	}

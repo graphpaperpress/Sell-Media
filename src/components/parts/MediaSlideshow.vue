@@ -82,7 +82,7 @@
 
 		mounted: function() {
 			let attachment = this.attachments[this.currentSlide]
-			this.$emit('attachment', attachment)
+			this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 		},
 
 		methods: {
@@ -90,8 +90,8 @@
 			goToSlide: function(slide) {
 				this.currentSlide = slide
 				let attachment = this.attachments[this.currentSlide]
-				this.$emit('attachment', attachment)
-				
+				this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+
 				// beginning of slides
 				if (this.currentSlide > 0){
 					this.prev.disabled = false

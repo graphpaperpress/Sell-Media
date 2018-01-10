@@ -7,7 +7,8 @@ export const state = {
   usage: JSON.parse(window.localStorage.getItem(USAGE_KEY) || '[]'),
   lightbox: JSON.parse(window.localStorage.getItem(LIGHTBOX_KEY) || '[]'),
   title: null,
-  user: null
+  user: null,
+  product: {}
 }
 
 export const mutations = {
@@ -55,7 +56,7 @@ export const mutations = {
     document.title = ( state.title ? state.title + ' - ' : '' ) + sell_media.site_name;
   },
 
-   verifyProducts( state, value ) {
+  verifyProducts( state, value ) {
       state.cart = state.cart.filter((product, index)=>{
          let item = value.find( data => data.id === product.id );
          if( 'undefined' !== typeof item ){
@@ -73,9 +74,13 @@ export const mutations = {
          }
          return false;
       });
-   },
+  },
 
-   setUser( state, user ) {
-      state.user = user
-    }
+  setUser( state, user ) {
+    state.user = user
+  },
+
+  setProduct ( state, value ) {
+    state.product = value
+  },
 }
