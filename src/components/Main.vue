@@ -14,4 +14,8 @@ export default {
 <style lang="sass">
 	@import '~bulma/bulma.sass';
 	@import '~bulma-steps-component/bulma-steps.sass';
+
+	.sell-media {
+		box-sizing: border-box;
+	}
 </style>
