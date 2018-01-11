@@ -43,87 +43,91 @@
 
 		</div>
 
-		<div v-if="colors.hex !== '#2A94AE' || locations.length > 0 || sort" class="filters-active box">
+		<div class="filters box" v-if="showFilters || colors.hex !== '#2A94AE' || locations.length > 0 || sort">
 
-			<div class="field is-grouped is-grouped-multiline">
+			<div class="filters-active">
 
-				<p class="control">Active Search Filters:</p>
+				<div class="field is-grouped is-grouped-multiline">
 
-				<div v-if="colors.hex !== '#2A94AE'" class="control">
-					<div class="tags has-addons">
-						<a class="tag" style="color: #fff" :style="{ 'background-color': colors.hex }">{{ colors.hex }}</a>
-						<a class="tag is-delete" @click="remove('colors')"></a>
+					<p class="control" v-if="colors.hex !== '#2A94AE' || locations.length > 0 || sort">Active Search Filters:</p>
+
+					<div v-if="colors.hex !== '#2A94AE'" class="control">
+						<div class="tags has-addons">
+							<a class="tag" style="color: #fff" :style="{ 'background-color': colors.hex }">{{ colors.hex }}</a>
+							<a class="tag is-delete" @click="remove('colors')"></a>
+						</div>
 					</div>
-				</div>
 
-				<div v-for="(location,index) in locations" :key="index" class="control">
-					<div class="tags has-addons">
-						<span class="tag is-success">{{ location }}</span>
-						<a class="tag is-delete" @click="remove(location, locations)"></a>
+					<div v-for="(location,index) in locations" :key="index" class="control">
+						<div class="tags has-addons">
+							<span class="tag is-success">{{ location }}</span>
+							<a class="tag is-delete" @click="remove(location, locations)"></a>
+						</div>
 					</div>
-				</div>
 
-				<div v-if="sort" class="control">
-					<div class="tags has-addons">
-						<span class="tag is-info">{{ sort }}</span>
-						<a class="tag is-delete" @click="remove('sort')"></a>
+					<div v-if="sort" class="control">
+						<div class="tags has-addons">
+							<span class="tag is-info">{{ sort }}</span>
+							<a class="tag is-delete" @click="remove('sort')"></a>
+						</div>
 					</div>
+
 				</div>
 
 			</div>
 
-		</div>
+			<div v-if="showFilters" class="filters-area">
 
-		<div v-if="showFilters" class="filters-area">
+				<div class="columns">
 
-			<div class="columns">
+					<div class="column is-two-thirds">
 
-				<div class="column is-two-thirds">
+						<div class="columns">
 
-					<div class="columns">
-
-						<div class="column">
-							<h6 class="has-text-weight-bold is-uppercase">{{ labels.colors }}</h6>
-							<chrome-picker v-model="colors"></chrome-picker>
-						</div>
-
-						<div class="column">
-							<h6 class="has-text-weight-bold is-uppercase">Locations</h6>
-							<div class="control">
-								<p v-for="(field,index) in locationFields" :key="index" :class="field.slug">
-									<label class="checkbox" :for="field.slug">
-										<input type="checkbox" :id="field.slug" :value="field.slug" v-model="locations">
-										{{ field.name }}
-									</label>
-								</p>
+							<div class="column">
+								<h6 class="has-text-weight-bold is-uppercase">{{ labels.colors }}</h6>
+								<chrome-picker v-model="colors"></chrome-picker>
 							</div>
-						</div>
 
-						<div class="column">
-							<h6 class="has-text-weight-bold is-uppercase">{{ labels.sort }}</h6>
-							<div class="control">
-								<p v-for="(field,index) in sortFields" :key="index" :class="field.slug">
-									<label class="radio" :for="field.slug">
-										<input type="radio" :id="field.slug" :value="field.slug" v-model="sort">
-										{{ field.name }}
-									</label>
-								</p>
+							<div class="column">
+								<h6 class="has-text-weight-bold is-uppercase">Locations</h6>
+								<div class="control">
+									<p v-for="(field,index) in locationFields" :key="index" :class="field.slug">
+										<label class="checkbox" :for="field.slug">
+											<input type="checkbox" :id="field.slug" :value="field.slug" v-model="locations">
+											{{ field.name }}
+										</label>
+									</p>
+								</div>
 							</div>
+
+							<div class="column">
+								<h6 class="has-text-weight-bold is-uppercase">{{ labels.sort }}</h6>
+								<div class="control">
+									<p v-for="(field,index) in sortFields" :key="index" :class="field.slug">
+										<label class="radio" :for="field.slug">
+											<input type="radio" :id="field.slug" :value="field.slug" v-model="sort">
+											{{ field.name }}
+										</label>
+									</p>
+								</div>
+							</div>
+
 						</div>
 
 					</div>
 
-				</div>
+					<div class="column is-one-third">
 
-				<div class="column is-one-third">
-
-					<div class="box">
-						<div class="content">
-							<h6 class="has-text-weight-bold is-uppercase">{{ labels.search_tips }}</h6>
-							<ul>
-								<li v-for="(tip,index) in labels.tips">{{ tip }}</li>
-							</ul>
+						<div class="notification is-warning">
+							<div class="content">
+								<h6 class="has-text-weight-bold is-uppercase">{{ labels.search_tips }}</h6>
+								<ul class="is-size-7">
+									<li v-for="(tip,index) in labels.tips">{{ tip }}</li>
+								</ul>
+							</div>
 						</div>
+
 					</div>
 
 				</div>
