@@ -11,7 +11,7 @@
 
 					<div class="cart-container columns">
 						<div class="column is-one-fifth">
-							<p class="is-size-7">Image ID: <router-link :to="{ name: 'item', params: { slug:post.slug }}">{{ post.title.rendered }}</router-link></p>
+							<p class="is-size-7">Product ID: <router-link :to="{ name: 'item', params: { slug:post.slug }}">{{ post.title.rendered }}</router-link></p>
 							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: {{ post.sell_media_meta.set[0].name }}</p>
 						</div>
 						<div class="column">
@@ -42,19 +42,19 @@
 							</div>
 						</div>
 					</div>
-
+					
 					<div class="set-container">
 
 						<div v-if="imageSets.length > 0" class="buttons image-sets sets">
-							<button class="button is-dark is-small">Image Set No.</button>
-							<button v-for="(set,index) in imageSets" class="button is-dark is-small"><template v-if="index < 10">0</template>{{ index }}</button>
+							<button class="button is-dark is-small" :class="{ 'is-light': active }">Image Set No.</button>
+							<button v-for="(set,index) in imageSets" @click="getPost(set)" class="button is-dark is-small" :class="{ 'is-light': active }"><template v-if="index < 10">0</template>{{ index }}</button>
 						</div>
 						<div v-if="videoSets.length > 0" class="buttons video-sets sets">
 							<button class="button is-dark is-small">Video Set No.</button>
-							<button v-for="(set,index) in videoSets" class="button is-dark is-small"><template v-if="index < 10">0</template>{{ index }}</button>
+							<button v-for="(set,index) in videoSets" @click="getPost(set)" class="button is-dark is-small"><template v-if="index < 10">0</template>{{ index }}</button>
 						</div>
 						<div class="buttons other-sets sets">
-							<button v-for="(set,index) in otherSets" class="button is-dark is-small">{{ set.sell_media_meta.product_type[0].name }}</button>
+							<button v-for="(set,index) in otherSets" @click="getPost(set)" class="button is-dark is-small">{{ set.sell_media_meta.product_type[0].name }}</button>
 						</div>
 					</div>
 
@@ -86,7 +86,8 @@
 				imageSets: [],
 				videoSets: [],
 				otherSets: [],
-				file: ''
+				file: '',
+				active: false
 			}
 		},
 
@@ -111,6 +112,10 @@
 			},
 			prev: function() {
 				this.post -= 1
+			},
+			getPost: function(set) {
+				this.post = set
+				this.active = this.post.id === set.id ? true : false
 			},
 			downloadFile: function(size) {
 				const vm = this;
@@ -188,6 +193,10 @@
 		transition: max-height .3s ease-in-out,
 			margin-bottom .1s .2s;
 		margin: .75rem 0 0;
+
+		a:hover {
+			color: #fff;
+		}
 
 		img {
 			max-height: 450px;

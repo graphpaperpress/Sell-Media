@@ -33,7 +33,7 @@
 			v-for="slide in [currentSlide]"
 			>
 				<img
-					:src="attachments[Math.abs(currentSlide) % attachments.length].sizes.large[0]"
+					:src="post.sell_media_attachments[Math.abs(currentSlide) % post.sell_media_attachments.length].sizes.large[0]"
 					:alt="slide.alt"
 				/>
 			</div>
@@ -43,7 +43,7 @@
 		<portal to="slideshow-thumbnails">
 			<div id="slideshow-thumbnails" class="slideshow-thumbnails">
 				<div class="columns is-multiline is-gapless">
-					<div v-for="(attachment, index) in attachments" @click="goToSlide(index)" :class="{ active: currentSlide === index }" class="column is-one-fifth">
+					<div v-for="(attachment, index) in post.sell_media_attachments" @click="goToSlide(index)" :class="{ active: currentSlide === index }" class="column is-one-fifth">
 						<figure class="slideshow-thumbnail">
 							<img :src="attachment.sizes.medium[0]" :alt="attachment.alt" />
 						</figure>
@@ -62,7 +62,7 @@
 
 	export default {
 
-		props: ['attachments'],
+		props: ['post'],
 
 		data: function() {
 			return {
@@ -81,7 +81,7 @@
 		},
 
 		mounted: function() {
-			let attachment = this.attachments[this.currentSlide]
+			let attachment = this.post.sell_media_attachments[this.currentSlide]
 			this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 		},
 
@@ -89,7 +89,7 @@
 
 			goToSlide: function(slide) {
 				this.currentSlide = slide
-				let attachment = this.attachments[this.currentSlide]
+				let attachment = this.post.sell_media_attachments[this.currentSlide]
 				this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
 				// beginning of slides
@@ -100,7 +100,7 @@
 				}
 
 				// end of slides
-				if (this.currentSlide < this.attachments.length - 1){
+				if (this.currentSlide < this.post.sell_media_attachments.length - 1){
 					this.next.disabled = false
 				} else {
 					this.next.disabled = true

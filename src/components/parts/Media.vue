@@ -11,7 +11,7 @@
 			<media-video-360 :post="post"></media-video-360>
 		</template>
 		<template v-else-if="multiple">
-			<media-slideshow :attachments="attachments"></media-slideshow>
+			<media-slideshow :post="post"></media-slideshow>
 		</template>
 		<template v-else>
 			<featured-image :post="post" size="large"></featured-image>
@@ -31,16 +31,14 @@
 
 		data: function() {
 			return {
-				attachments: {},
 				type: {},
 				multiple: false,
-				loaded: false,
+				loaded: false
 			}
 		},
 
 		created: function() {
-			this.attachments = this.post.sell_media_attachments
-			let count = Object.keys(this.attachments)
+			let count = Object.keys(this.post.sell_media_attachments)
 			this.multiple = count.length > 1 ? true : false
 		},
 
