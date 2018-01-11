@@ -43,37 +43,93 @@
 
 		</div>
 
-		<div v-if="showFilters" class="filters-area">
-			<div class="columns">
-				<div class="column">
-					<h6 class="has-text-weight-bold is-uppercase">{{ labels.colors }}</h6>
-					<chrome-picker v-model="colors" />
+		<div v-if="colors.hex !== '#2A94AE' || locations.length > 0 || sort" class="filters-active box">
+
+			<div class="field is-grouped is-grouped-multiline">
+
+				<p class="control">Active Search Filters:</p>
+
+				<div v-if="colors.hex !== '#2A94AE'" class="control">
+					<div class="tags has-addons">
+						<a class="tag" style="color: #fff" :style="{ 'background-color': colors.hex }">{{ colors.hex }}</a>
+						<a class="tag is-delete" @click="remove('colors')"></a>
+					</div>
 				</div>
-				<div class="column">
-					<h6 class="has-text-weight-bold is-uppercase">{{ labels.orientation }}</h6>
-					<p class="horizontal">
-						<label class="checkbox">
-							<input type="checkbox">
-							{{ labels.horizontal }}
-						</label>
-					</p>
-					<p class="vertical">
-						<label class="checkbox">
-							<input type="checkbox">
-							{{ labels.vertical }}
-						</label>
-					</p>
-					<p class="panoramic">
-						<label class="checkbox">
-							<input type="checkbox">
-							{{ labels.panoramic }}
-						</label>
-					</p>
+
+				<div v-for="(location,index) in locations" :key="index" class="control">
+					<div class="tags has-addons">
+						<span class="tag is-success">{{ location }}</span>
+						<a class="tag is-delete" @click="remove(location, locations)"></a>
+					</div>
 				</div>
-				<div class="column">
-					<h6 class="has-text-weight-bold is-uppercase">{{ labels.collections }}</h6>
+
+				<div v-if="sort" class="control">
+					<div class="tags has-addons">
+						<span class="tag is-info">{{ sort }}</span>
+						<a class="tag is-delete" @click="remove('sort')"></a>
+					</div>
 				</div>
+
 			</div>
+
+		</div>
+
+		<div v-if="showFilters" class="filters-area">
+
+			<div class="columns">
+
+				<div class="column is-two-thirds">
+
+					<div class="columns">
+
+						<div class="column">
+							<h6 class="has-text-weight-bold is-uppercase">{{ labels.colors }}</h6>
+							<chrome-picker v-model="colors"></chrome-picker>
+						</div>
+
+						<div class="column">
+							<h6 class="has-text-weight-bold is-uppercase">Locations</h6>
+							<div class="control">
+								<p v-for="(field,index) in locationFields" :key="index" :class="field.slug">
+									<label class="checkbox" :for="field.slug">
+										<input type="checkbox" :id="field.slug" :value="field.slug" v-model="locations">
+										{{ field.name }}
+									</label>
+								</p>
+							</div>
+						</div>
+
+						<div class="column">
+							<h6 class="has-text-weight-bold is-uppercase">{{ labels.sort }}</h6>
+							<div class="control">
+								<p v-for="(field,index) in sortFields" :key="index" :class="field.slug">
+									<label class="radio" :for="field.slug">
+										<input type="radio" :id="field.slug" :value="field.slug" v-model="sort">
+										{{ field.name }}
+									</label>
+								</p>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="column is-one-third">
+
+					<div class="box">
+						<div class="content">
+							<h6 class="has-text-weight-bold is-uppercase">{{ labels.search_tips }}</h6>
+							<ul>
+								<li v-for="(tip,index) in labels.tips">{{ tip }}</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
 		</div>
 
 	</div>
@@ -84,27 +140,27 @@
 
 	import { Chrome } from 'vue-color'
 
-	let defaultProps = {
-	  hex: '#194d33',
-	  hsl: {
-	    h: 150,
-	    s: 0.5,
-	    l: 0.2,
-	    a: 1
-	  },
-	  hsv: {
-	    h: 150,
-	    s: 0.66,
-	    v: 0.30,
-	    a: 1
-	  },
-	  rgba: {
-	    r: 25,
-	    g: 77,
-	    b: 51,
-	    a: 1
-	  },
-	  a: 1
+	let defaultColors = {
+		hex: '#2A94AE',
+		hsl: {
+			h: 192,
+			s: 0.61,
+			l: 0.42,
+			a: 1
+		},
+		hsv: {
+			h: 150,
+			s: 0.66,
+			v: 0.30,
+			a: 1
+		},
+		rgba: {
+			r: 42,
+			g: 148,
+			b: 174,
+			a: 1
+		},
+		a: 1
 	}
 
 	export default {
@@ -118,7 +174,50 @@
 				search_type: '',
 				search: '',
 				showFilters: false,
-				colors: defaultProps
+				colors: defaultColors,
+				locations: [],
+				locationFields: {
+					0: {
+						name: 'Urban',
+						slug: 'urban'
+					},
+					1: {
+						name: 'Rural',
+						slug: 'rural'
+					},
+					2: {
+						name: 'Mountains',
+						slug: 'mountains'
+					},
+					3: {
+						name: 'Coastal',
+						slug: 'coastal'
+					},
+					4: {
+						name: 'Desert',
+						slug: 'desert'
+					},
+					5: {
+						name: 'Forest',
+						slug: 'forest'
+					}
+				},
+				sort: '',
+				sortFields: {
+					0: {
+						name: sell_media.search_labels.date,
+						slug: 'date'
+					},
+					1: {
+						name: sell_media.search_labels.name,
+						slug: 'name'
+					},
+					2: {
+						name: sell_media.search_labels.popular,
+						slug: 'popular'
+					}
+				},
+
 			}
 		},
 
@@ -138,6 +237,19 @@
 				.catch( ( res ) => {
 					console.log( res )
 				} )
+			},
+
+			remove: function(item, array) {
+				if ( array ) {
+					const index = array.indexOf(item);
+					array.splice(index, 1);
+				}
+				if ( item === 'colors' ) {
+					this.colors = defaultColors
+				}
+				if ( item === 'sort' ) {
+					this.sort = ''
+				}
 			}
 		},
 

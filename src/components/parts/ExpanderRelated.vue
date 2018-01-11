@@ -82,7 +82,6 @@
 				multiple: false,
 				search_labels: sell_media.search_labels,
 				cart_labels: sell_media.cart_labels,
-				sizes: this.post.sell_media_pricing.downloads,
 				imageSets: [],
 				videoSets: [],
 				otherSets: [],

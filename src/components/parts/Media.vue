@@ -1,16 +1,16 @@
 <template>
 	<div class="media" v-if="loaded">
 
-		<template v-if="type && type.slug === 'panorama'">
+		<template v-if="post.sell_media_meta.product_type[0] && post.sell_media_meta.product_type[0].slug === 'panorama'">
 			<media-panorama :post="post"></media-panorama>
 		</template>
-		<template v-else-if="type && type.slug === 'video'">
+		<template v-else-if="post.sell_media_meta.product_type[0] && post.sell_media_meta.product_type[0].slug === 'video'">
 			<media-video :post="post"></media-video>
 		</template>
-		<template v-else-if="type && type.slug === '360-video'">
+		<template v-else-if="post.sell_media_meta.product_type[0] && post.sell_media_meta.product_type[0].slug === '360-video'">
 			<media-video-360 :post="post"></media-video-360>
 		</template>
-		<template v-else-if="multiple">
+		<template v-else-if="Object.keys(this.post.sell_media_attachments).length > 1">
 			<media-slideshow :post="post"></media-slideshow>
 		</template>
 		<template v-else>
@@ -31,39 +31,13 @@
 
 		data: function() {
 			return {
-				type: {},
-				multiple: false,
 				loaded: false
 			}
 		},
 
-		created: function() {
-			let count = Object.keys(this.post.sell_media_attachments)
-			this.multiple = count.length > 1 ? true : false
-		},
-
 		mounted: function() {
-			this.getProductType()
-		},
-
-		methods: {
-
-			getProductType: function() {
-				const vm = this;
-				vm.loaded = false;
-				vm.$http.get( '/wp-json/wp/v2/product_type', {
-					params: {
-						post: vm.post.id
-					}
-				} )
-				.then( ( res ) => {
-					vm.type = res.data[0];
-					vm.loaded = true;
-				} )
-				.catch( ( res ) => {
-					console.log( res )
-				} )
-			}
+			this.loaded = true
+			console.log(this.post)
 		},
 
 		components: {
