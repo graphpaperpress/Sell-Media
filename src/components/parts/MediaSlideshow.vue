@@ -52,7 +52,7 @@
 			</div>
 		</portal>
 
-		 {{ currentSlide + 1 }} of {{ attachments.length }} 
+		<!-- {{ currentSlide + 1 }} of {{ attachments.length }}  -->
 
 	</div>
 

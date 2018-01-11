@@ -47,6 +47,7 @@
 			<div class="columns">
 				<div class="column">
 					<h6 class="has-text-weight-bold is-uppercase">{{ labels.colors }}</h6>
+					<chrome-picker v-model="colors" />
 				</div>
 				<div class="column">
 					<h6 class="has-text-weight-bold is-uppercase">{{ labels.orientation }}</h6>
@@ -80,6 +81,31 @@
 </template>
 
 <script>
+
+	import { Chrome } from 'vue-color'
+
+	let defaultProps = {
+	  hex: '#194d33',
+	  hsl: {
+	    h: 150,
+	    s: 0.5,
+	    l: 0.2,
+	    a: 1
+	  },
+	  hsv: {
+	    h: 150,
+	    s: 0.66,
+	    v: 0.30,
+	    a: 1
+	  },
+	  rgba: {
+	    r: 25,
+	    g: 77,
+	    b: 51,
+	    a: 1
+	  },
+	  a: 1
+	}
 	
 	export default {
 
@@ -92,6 +118,7 @@
 				search_type: '',
 				search: '',
 				showFilters: false,
+				colors: defaultProps
 			}
 		},
 
@@ -112,6 +139,10 @@
 					console.log( res )
 				} )
 			}
+		},
+
+		components: {
+			'chrome-picker': Chrome
 		}
 	}
 
@@ -120,7 +151,7 @@
 <style lang="scss" scoped>
 
 .search-container {
-	margin-bottom: 2rem;
+	margin: 2rem 0;
 
 	&.active {}
 }
@@ -136,6 +167,11 @@
 		padding-bottom: 1rem;
 		margin-bottom: 1rem;
 	}
+}
+
+input[type=text] {
+	border: 1px solid #dbdbdb;
+	box-shadow: inset 0 1px 2px hsla(0,0%,4%,.1);
 }
 
 </style>
