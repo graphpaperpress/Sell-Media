@@ -1,6 +1,6 @@
 <template>
 	<div :id="name" :class="name">
-		
+
 		<searchform @search="getSearchResults"></searchform>
 
 		<div v-if="searchResults" class="search-results-total" >
@@ -60,6 +60,7 @@ import Masonry from '../parts/Masonry.vue';
 				search: '',
 				search_labels: sell_media.search_labels,
 				searchResults: false,
+				search_type: '',
 				gridContainer: this.$store.getters.gridLayout + '-container'
 			}
 		},
@@ -69,11 +70,23 @@ import Masonry from '../parts/Masonry.vue';
 			getPosts: function( pageNumber = 1 ) {
 				const vm = this;
 				vm.loaded = false;
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
+				let path = '/wp-json/wp/v2/sell_media_item';
+				let params = {
+					per_page: vm.postPerPage,
+					page: pageNumber
+				}
+				if ( false !== this.searchResults ) {
+					path = '/wp-json/sell-media/v2/search';
+					params = {
+						s: this.search,
 						per_page: vm.postPerPage,
-						page: pageNumber
+						page: pageNumber,
+						type: this.search_type
 					}
+				}
+
+				vm.$http.get( path, {
+					params
 				} )
 				.then( ( res ) => {
 					vm.posts = res.data;
@@ -96,14 +109,16 @@ import Masonry from '../parts/Masonry.vue';
 				} )
 			},
 
-			getSearchResults: function( search, pageNumber = 1 ) {
+			getSearchResults: function( search, search_type, pageNumber = 1 ) {
 				const vm = this;
 				vm.loaded = false;
+				this.search_type = search_type;
 				vm.$http.get( '/wp-json/sell-media/v2/search', {
 					params: {
 						s: search,
 						per_page: vm.postPerPage,
-						page: pageNumber
+						page: pageNumber,
+						type: search_type
 					}
 				} )
 				.then( ( res ) => {

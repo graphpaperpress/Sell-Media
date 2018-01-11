@@ -15,10 +15,10 @@
 						</span>
 					</p>
 					<p class="control is-expanded">
-						<input v-model="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', search)">
+						<input v-model="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', search, search_type)">
 					</p>
 					<p class="control">
-						<button class="button is-medium is-dark" @click="$emit('search', search)">
+						<button class="button is-medium is-dark" @click="$emit('search', search, search_type)">
 							{{ labels.search }}
 						</button>
 					</p>
@@ -106,7 +106,7 @@
 	  },
 	  a: 1
 	}
-	
+
 	export default {
 
 		props: [],
