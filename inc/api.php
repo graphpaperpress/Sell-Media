@@ -192,7 +192,7 @@ function sell_media_api_download_file( $data, $action ) {
 		header( 'Content-Type: application/download' );
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Length: ' . filesize( $file_path ) );
-		
+
 		echo file_get_contents( $file_path );
 
 	}
@@ -463,7 +463,14 @@ if ( ! function_exists( 'sell_media_api_search_response' ) ) :
 		}
 
 		if ( ! empty( $results ) ) {
-			return rest_ensure_response( $results );
+			// Create the response object.
+			$response = new WP_REST_Response( $results );
+
+			// Add a custom header.
+			$response->header( 'x-wp-total', $search_query->found_posts );
+			$response->header( 'x-wp-totalpages', $search_query->max_num_pages );
+
+			return $response;
 		}
 	}
 

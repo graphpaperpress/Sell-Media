@@ -123,7 +123,7 @@ import Masonry from '../parts/Masonry.vue';
 				} )
 				.then( ( res ) => {
 					vm.posts = res.data ? res.data : this.posts
-					vm.searchResults = res.data ? res.data.length : 0
+					vm.searchResults = res.headers[ 'x-wp-total' ]? res.headers[ 'x-wp-total' ] : 0 //res.data ? res.data.length : 0
 					vm.search = search
 					vm.totalPages = res.headers[ 'x-wp-totalpages' ]
 
