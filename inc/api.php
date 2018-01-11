@@ -299,7 +299,9 @@ function sell_media_api_get_pricing( $object, $field_name = '', $request = '' ) 
  * Meta to rest api
  */
 function sell_media_api_get_meta( $object, $field_name = '', $request = '' ) {
-	$meta['sell'] = array( 'Downloads' );
+	$meta['sell']         = array( 'Downloads' );
+	$meta['product_type'] = wp_get_post_terms( $object['id'], 'product_type' );
+
 	return apply_filters( 'sell_media_filter_api_get_meta', $meta, $object, $field_name, $request );
 }
 

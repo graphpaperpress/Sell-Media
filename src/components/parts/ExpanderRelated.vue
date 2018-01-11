@@ -44,16 +44,17 @@
 					</div>
 
 					<div class="set-container">
+
 						<div class="buttons image-sets sets">
 							<button class="button is-dark is-small">Image Set No.</button>
-							<button v-for="(set,index) in imageSets" class="button is-dark is-small">{{ set }}</button>
+							<button v-for="(set,index) in imageSets" class="button is-dark is-small">{{ index }}</button>
 						</div>
 						<div class="buttons video-sets sets">
 							<button class="button is-dark is-small">Video Set No.</button>
-							<button v-for="(set,index) in videoSets" class="button is-dark is-small">{{ set }}</button>
+							<button v-for="(set,index) in videoSets" class="button is-dark is-small">{{ index }}</button>
 						</div>
 						<div class="buttons other-sets sets">
-							<button v-for="(set,index) in otherSets" class="button is-dark is-small">{{ set }}</button>
+							<button v-for="(set,index) in otherSets" class="button is-dark is-small">{{ set.sell_media_meta.product_type[0].name }}</button>
 						</div>
 					</div>
 
@@ -82,9 +83,10 @@
 				search_labels: sell_media.search_labels,
 				cart_labels: sell_media.cart_labels,
 				sizes: this.post.sell_media_pricing.downloads,
-				imageSets: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], // get from rest api, image product types in same set as current
-				videoSets: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], // get from rest api, video product types in same set as current
-				otherSets: ['360°R Dome', 'HDR Dome', '360° Video', 'VR Environment', '3D Object'], // get from rest api, other product types in same set as current
+				imageSets: [],
+				videoSets: [],
+				otherSets: [],
+				//otherSets: ['360°R Dome', 'HDR Dome', '360° Video', 'VR Environment', '3D Object'], // get from rest api, other product types in same set as current
 				file: ''
 			}
 		},
@@ -95,6 +97,7 @@
 					this.$emit('closeModal');
 				}
 			});
+			this.getSets()
 		},
 
 		created: function() {
@@ -136,7 +139,41 @@
 				.catch( ( res ) => {
 					console.log( `Something went wrong : ${res}` );
 				} );
-			}
+			},
+			getSets: function() {
+				const vm = this;
+				vm.loaded = false;
+				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+					params: {
+						per_page: 20,
+						set: vm.post.set ? vm.post.set[0] : null
+					}
+				} )
+				.then( ( res ) => {
+					let sets = res.data
+					let image_sets = []
+					let video_sets = []
+					let other_sets = []
+
+					for ( let set of sets ) {
+						if ( set.sell_media_meta.product_type[0].slug === 'image' ) {
+							image_sets.push(set)
+						} else if ( set.sell_media_meta.product_type[0].slug === 'video' ) {
+							video_sets.push(set)
+						} else {
+							other_sets.push(set)
+						}
+					}
+
+					vm.imageSets = image_sets
+					vm.videoSets = video_sets
+					vm.otherSets = other_sets
+
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
+			},
 		}
 	}
 </script>
