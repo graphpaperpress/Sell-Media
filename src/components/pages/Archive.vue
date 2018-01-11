@@ -26,7 +26,6 @@
 <script>
 
 import SearchForm from '../parts/SearchForm.vue';
-import Masonry from '../parts/Masonry.vue';
 
 	export default {
 
@@ -191,7 +190,6 @@ import Masonry from '../parts/Masonry.vue';
 		},
 
 		components: {
-			'masonry': Masonry,
 			'searchform': SearchForm,
 		}
 	}
