@@ -1,5 +1,5 @@
 <template>
-	<div :class="{ active: visible }" class="item" ref="itemContainer">
+	<div :class="[{ active: visible }, gridLayout]" class="column" ref="itemContainer">
 		<div class="item-link" @mouseover="quickViewVisible = true" @mouseleave="quickViewVisible = false">
 			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
 				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
@@ -25,7 +25,8 @@
 				showTitles: sell_media.title == 1 ? true : false,
 				showQuickView: sell_media.quick_view == 1 ? true : false,
 				quickViewVisible: false,
-				thumbnailCrop: sell_media.thumbnail_crop
+				thumbnailCrop: sell_media.thumbnail_crop,
+				gridLayout: this.$store.getters.gridLayout
 			}
 		},
 
@@ -60,8 +61,7 @@
 	$white-color: #fff;
 	$black-color: #000;
 
-	.item {
-		padding: 5px;
+	.column {
 	
 		&.active {
 

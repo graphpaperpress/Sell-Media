@@ -34,8 +34,8 @@ Vue.component( 'not-found', NotFound )
 
 import Modal from './components/parts/Modal.vue'
 Vue.component( 'modal', Modal )
-import Expander from './components/parts/Expander.vue'
-Vue.component( 'expander', Expander )
+// import Expander from './components/parts/Expander.vue'
+// Vue.component( 'expander', Expander )
 import ExpanderRelated from './components/parts/ExpanderRelated.vue'
 Vue.component( 'expander-related', ExpanderRelated )
 import Media from './components/parts/Media.vue'

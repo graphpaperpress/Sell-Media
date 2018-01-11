@@ -10,10 +10,8 @@
 			{{ search_labels.no_results }} "{{ search }}."
 		</div>
 
-		<div class="columns is-gapless is-multiline has-text-centered" v-if="loaded === true">
-			<div v-for="post in posts" :class="gridLayout" class="column">
-				<thumbnail :key="post.slug" :post="post"></thumbnail>
-			</div>
+		<div :class="gridContainer" class="columns is-multiline has-text-centered" v-if="loaded === true">
+			<thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
 		</div>
 
 		<nav v-if="totalPages > 1" class="pagination">
@@ -59,10 +57,10 @@ import Masonry from '../parts/Masonry.vue';
 				loaded: false,
 				pageTitle: '',
 				name: this.$options.name,
-				gridLayout: this.$store.getters.gridLayout,
 				search: '',
 				search_labels: sell_media.search_labels,
-				searchResults: false
+				searchResults: false,
+				gridContainer: this.$store.getters.gridLayout + '-container'
 			}
 		},
 

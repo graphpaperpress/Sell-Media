@@ -100,22 +100,22 @@
 
 	// two cols
 	.is-half .expander {
-		width: calc( 200% + 10px );
+		width: calc( 200% + 1.5rem );
 	}
 
 	// three cols
 	.is-one-third .expander {
-		width: calc( 300% + 20px );
+		width: calc( 300% + 3rem );
 	}
 
 	// four cols
 	.is-one-quarter .expander {
-		width: calc( 400% + 30px );
+		width: calc( 400% + 4.5rem );
 	}
 
 	// 5 cols
 	.is-one-fifth .expander {
-		width: calc( 500% + 40px );
+		width: calc( 500% + 6rem );
 	}
 
 	.is-half:nth-of-type(2n+2),
@@ -123,7 +123,7 @@
 	.is-one-quarter:nth-of-type(4n+2),
 	.is-one-fifth:nth-of-type(5n+2) {
 		.expander {
-			margin-left: calc( -100% - 10px );
+			margin-left: calc( -100% - 1.5rem );
 		}
 	}
 
@@ -131,19 +131,19 @@
 	.is-one-quarter:nth-of-type(4n+3),
 	.is-one-fifth:nth-of-type(5n+3) {
 		.expander {
-			margin-left: calc( -200% - 20px );
+			margin-left: calc( -200% - 3rem );
 		}
 	}
 
 	.is-one-quarter:nth-of-type(4n+4),
 	.is-one-fifth:nth-of-type(5n+4) {
 		.expander {
-			margin-left: calc( -300% - 30px );
+			margin-left: calc( -300% - 4.5rem );
 		}
 	}
 
 	.is-one-fifth:nth-of-type(5n+5) .expander {
-		margin-left: calc( -400% - 40px );
+		margin-left: calc( -400% - 6rem );
 	}
 
 	.expander-content {
