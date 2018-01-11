@@ -16,7 +16,7 @@
 						</div>
 						<div class="column">
 							<div v-if="multiple" class="multiple-selector buttons has-addons">
-								<div v-for="size in sizes" class="button-block" :data-size-id="size.id">
+								<div v-for="size in post.sell_media_pricing.downloads" class="button-block" :data-size-id="size.id">
 									<div class="label is-size-7">{{ size.name }}</div>
 									<a v-if="user" class="icon" @click="downloadFile(size)" :title="search_labels.download" :download="file">
 										<icon name="download"></icon>
