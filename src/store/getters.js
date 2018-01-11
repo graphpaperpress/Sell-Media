@@ -11,6 +11,10 @@ export const gridLayout = state => {
 		layout = 'is-one-quarter'
 	if ( 'sell-media-five-col' === setting )
 		layout = 'is-one-fifth'
+	if ( 'sell-media-masonry' === setting )
+		layout = 'is-masonry'
+	if ( 'sell-media-horizontal-masonry' === setting )
+		layout = 'is-horizontal-masonry'
 
 	return layout
 }

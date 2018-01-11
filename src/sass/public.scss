@@ -1,0 +1,32 @@
+.is-horizontal-masonry-container {
+	-ms-box-orient: horizontal;
+	box-orient: horizontal;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+
+	.brick {
+		margin-right: 10px;
+		margin-bottom: 10px;
+
+		@media only screen and (max-width: 767px) {
+			margin: 0 auto 10px;
+			text-align: center;
+		}
+
+		img {
+			height: 190px;
+			width: auto;
+
+			@media only screen and (max-width: 767px) {
+				height: auto;
+				width: 100%;
+			}
+		}
+	}
+}

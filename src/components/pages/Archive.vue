@@ -10,17 +10,12 @@
 			{{ search_labels.no_results }} "{{ search }}."
 		</div>
 
-
-		<template v-if="layout === 'sell-media-masonry' || layout === 'sell-media-horizontal-masonry'">
-			<masonry :posts="posts" class="has-text-centered"></masonry>
-		</template>
-		<template v-else>
-			<div class="columns is-gapless is-multiline has-text-centered" v-if="loaded === true">
-				<div v-for="post in posts" :class="gridLayout" class="column is-one-fifth">
-					<thumbnail :key="post.slug" :post="post"></thumbnail>
-				</div>
+		<div class="columns is-gapless is-multiline has-text-centered" v-if="loaded === true">
+			<div v-for="post in posts" :class="gridLayout" class="column">
+				<thumbnail :key="post.slug" :post="post"></thumbnail>
 			</div>
-		</template>
+		</div>
+
 		<nav v-if="totalPages > 1" class="pagination">
 			<button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
 			<span> {{ currentPage }} / {{ totalPages }} </span>

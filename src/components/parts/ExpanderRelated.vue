@@ -47,11 +47,11 @@
 
 						<div class="buttons image-sets sets">
 							<button class="button is-dark is-small">Image Set No.</button>
-							<button v-for="(set,index) in imageSets" class="button is-dark is-small">{{ index }}</button>
+							<button v-for="(set,index) in imageSets" class="button is-dark is-small"><template v-if="index < 10">0</template>{{ index }}</button>
 						</div>
 						<div class="buttons video-sets sets">
 							<button class="button is-dark is-small">Video Set No.</button>
-							<button v-for="(set,index) in videoSets" class="button is-dark is-small">{{ index }}</button>
+							<button v-for="(set,index) in videoSets" class="button is-dark is-small"><template v-if="index < 10">0</template>{{ index }}</button>
 						</div>
 						<div class="buttons other-sets sets">
 							<button v-for="(set,index) in otherSets" class="button is-dark is-small">{{ set.sell_media_meta.product_type[0].name }}</button>
@@ -86,7 +86,6 @@
 				imageSets: [],
 				videoSets: [],
 				otherSets: [],
-				//otherSets: ['360°R Dome', 'HDR Dome', '360° Video', 'VR Environment', '3D Object'], // get from rest api, other product types in same set as current
 				file: ''
 			}
 		},

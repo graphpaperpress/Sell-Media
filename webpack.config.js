@@ -6,7 +6,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
 
   entry: {
-    sell_media: ['./src/app.js', './src/sass/public.sass'],
+    sell_media: ['./src/app.js', './src/sass/public.scss'],
     sell_media_admin: ['./src/js/admin.js', './src/sass/admin.scss', './src/sass/admin-price-listings.scss'],
     sell_media_admin_price_listings: ['./node_modules/parsleyjs/dist/parsley.js', './src/js/admin-price-listings.js'],
     sell_media_admin_media_uploader: ['./src/js/admin-media-uploader.js'],
