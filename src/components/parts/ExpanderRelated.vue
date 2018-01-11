@@ -43,19 +43,61 @@
 						</div>
 					</div>
 					
-					<div class="set-container">
+					<div class="set-container" v-if="setsLoaded">
 
 						<div v-if="imageSets.length > 0" class="buttons image-sets sets">
-							<button class="button is-dark is-small" :class="{ 'is-light': active }">Image Set No.</button>
-							<button v-for="(set,index) in imageSets" @click="getPost(set)" class="button is-dark is-small" :class="{ 'is-light': active }"><template v-if="index < 10">0</template>{{ index }}</button>
+
+							<button
+							class="button is-small"
+							:class="[ activeType === 'image' ? 'is-light' : 'is-dark' ]">
+							Image Set No.
+							</button>
+							
+							<button
+							v-for="(set,index) in imageSets"
+							@click="getPost(set)"
+							class="button is-small"
+							:class="[ post.id === set.id ? 'is-light' : 'is-dark' ]">
+							<template v-if="index < 10">0</template>{{ index + 1 }}
+							</button>
+
 						</div>
+
 						<div v-if="videoSets.length > 0" class="buttons video-sets sets">
-							<button class="button is-dark is-small">Video Set No.</button>
-							<button v-for="(set,index) in videoSets" @click="getPost(set)" class="button is-dark is-small"><template v-if="index < 10">0</template>{{ index }}</button>
+
+							<button
+							class="button is-small"
+							:class="[ activeType === 'video' ? 'is-light' : 'is-dark' ]">
+							Video Set No.
+							</button>
+
+							<button
+							v-for="(set,index) in videoSets"
+							@click="getPost(set)"
+							class="button is-small"
+							:class="[ post.id === set.id ? 'is-light' : 'is-dark' ]">
+							<template v-if="index < 10">0</template>{{ index + 1 }}
+							</button>
+
 						</div>
+
 						<div class="buttons other-sets sets">
-							<button v-for="(set,index) in otherSets" @click="getPost(set)" class="button is-dark is-small">{{ set.sell_media_meta.product_type[0].name }}</button>
+
+							<button
+							v-for="(set,index) in otherSets"
+							@click="getPost(set)"
+							class="button is-small"
+							:class="[ post.id === set.id ? 'is-light' : 'is-dark' ]">
+							{{ set.sell_media_meta.product_type[0].name }}
+							</button>
+
 						</div>
+					
+					</div>
+
+					<div v-else class="loading">
+						<button class="button is-black is-loading">Loading...</button>
+						<div class="is-size-7">loading related sets...</div>
 					</div>
 
 					<portal-target name="slideshow-thumbnails"></portal-target>
@@ -85,8 +127,9 @@
 				imageSets: [],
 				videoSets: [],
 				otherSets: [],
+				setsLoaded: false,
 				file: '',
-				active: false
+				activeType: ''
 			}
 		},
 
@@ -114,7 +157,7 @@
 			},
 			getPost: function(set) {
 				this.post = set
-				this.active = this.post.id === set.id ? true : false
+				this.activeType = set.sell_media_meta.product_type[0].slug
 			},
 			downloadFile: function(size) {
 				const vm = this;
@@ -145,7 +188,6 @@
 			},
 			getSets: function() {
 				const vm = this;
-				vm.loaded = false;
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
@@ -171,6 +213,8 @@
 					vm.imageSets = image_sets
 					vm.videoSets = video_sets
 					vm.otherSets = other_sets
+					vm.activeType = this.post.sell_media_meta.product_type[0].slug
+					vm.setsLoaded = true
 
 				} )
 				.catch( ( res ) => {
@@ -184,7 +228,7 @@
 <style lang="scss">
 
 	.expander-related {
-		background: #222;
+		background: #000;
 		color: #eee;
 		padding: 1rem;
 		position: relative;

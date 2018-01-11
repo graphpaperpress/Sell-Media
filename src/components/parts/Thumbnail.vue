@@ -78,7 +78,7 @@
 					height: 0;
 					border-left: 12px solid transparent;
 					border-right: 12px solid transparent;
-					border-bottom: 12px solid #333;
+					border-bottom: 12px solid $black-color;
 				}
 			}
 		}

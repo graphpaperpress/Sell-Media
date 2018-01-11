@@ -3,15 +3,19 @@
 
 		<searchform @search="getSearchResults"></searchform>
 
-		<div v-if="searchResults" class="search-results-total" >
-			{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}."
-		</div>
-		<div v-if="searchResults === 0" class="search-results-total" >
-			{{ search_labels.no_results }} "{{ search }}."
+		<div v-if="searchResults" class="search-results-total content" >
+			<p>{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}."</p>
 		</div>
 
-		<div :class="gridContainer" class="columns is-multiline has-text-centered" v-if="loaded === true">
+		<div v-if="searchResults === 0" class="search-results-total content" >
+			<p>{{ search_labels.no_results }} "{{ search }}."</p>
+		</div>
+
+		<div v-if="loaded" :class="gridContainer" class="columns is-multiline has-text-centered">
 			<thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
+		</div>
+		<div v-else class="loading">
+			<button class="button is-white is-loading">Loading...</button>
 		</div>
 
 		<nav v-if="totalPages > 1" class="pagination">
@@ -121,7 +125,7 @@ import SearchForm from '../parts/SearchForm.vue';
 					}
 				} )
 				.then( ( res ) => {
-					vm.posts = res.data ? res.data : this.posts
+					vm.posts = res.data
 					vm.searchResults = res.headers[ 'x-wp-total' ]? res.headers[ 'x-wp-total' ] : 0 //res.data ? res.data.length : 0
 					vm.search = search
 					vm.totalPages = res.headers[ 'x-wp-totalpages' ]

@@ -51,23 +51,23 @@
 
 					<p class="control" v-if="colors.hex !== '#2A94AE' || locations.length > 0 || sort">Active Search Filters:</p>
 
-					<div v-if="colors.hex !== '#2A94AE'" class="control">
+					<div v-if="colors.hex !== '#2A94AE'" class="control is-lowercase">
 						<div class="tags has-addons">
-							<a class="tag" style="color: #fff" :style="{ 'background-color': colors.hex }">{{ colors.hex }}</a>
+							<a class="tag" style="color: #fff" :style="{ 'background-color': colors.hex }">Color: {{ colors.hex }}</a>
 							<a class="tag is-delete" @click="remove('colors')"></a>
 						</div>
 					</div>
 
-					<div v-for="(location,index) in locations" :key="index" class="control">
+					<div v-for="(location,index) in locations" :key="index" class="control is-lowercase">
 						<div class="tags has-addons">
-							<span class="tag is-success">{{ location }}</span>
+							<span class="tag is-success">Location: {{ location }}</span>
 							<a class="tag is-delete" @click="remove(location, locations)"></a>
 						</div>
 					</div>
 
-					<div v-if="sort" class="control">
+					<div v-if="sort" class="control is-lowercase">
 						<div class="tags has-addons">
-							<span class="tag is-info">{{ sort }}</span>
+							<span class="tag is-info">{{ labels.sort }}: {{ sort }}</span>
 							<a class="tag is-delete" @click="remove('sort')"></a>
 						</div>
 					</div>
@@ -118,16 +118,12 @@
 					</div>
 
 					<div class="column is-one-third">
-
-						<div class="notification is-warning">
-							<div class="content">
-								<h6 class="has-text-weight-bold is-uppercase">{{ labels.search_tips }}</h6>
-								<ul class="is-size-7">
-									<li v-for="(tip,index) in labels.tips">{{ tip }}</li>
-								</ul>
-							</div>
+						<div class="content">
+							<h6 class="has-text-weight-bold is-uppercase">{{ labels.search_tips }}</h6>
+							<ul class="is-size-7">
+								<li v-for="(tip,index) in labels.tips">{{ tip }}.</li>
+							</ul>
 						</div>
-
 					</div>
 
 				</div>
