@@ -124,10 +124,11 @@
 	label {
 		cursor: pointer;
 		display: block;
-		padding: 5px;
-		width: 32px;
-		height: 32px;
+		padding: 8px;
+		width: 34px;
+		height: 34px;
 		overflow: hidden;
+		font-size: .75rem;
 	}
 
 	input:hover + label,

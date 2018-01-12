@@ -37,7 +37,6 @@
 
 		mounted: function() {
 			this.loaded = true
-			console.log(this.type)
 		},
 
 		components: {

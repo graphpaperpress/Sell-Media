@@ -5,7 +5,7 @@
 
 			<div class="columns">
 				<div class="column is-half has-text-center">
-					<media :post="post" :type="type"></media>
+					<media :post="post" :type="productType"></media>
 				</div>
 				<div class="column is-half has-text-left">
 
@@ -25,15 +25,15 @@
 
 							<button
 							class="button is-small"
-							:class="[ type === 'image' ? 'is-light' : 'is-dark' ]">
+							:class="[ productType === 'image' ? 'is-light' : 'is-dark' ]">
 							Image Set No.
 							</button>
 							
 							<button
-							v-for="(set,index) in imageSets"
-							@click="getPost(set)"
+							v-for="(item,index) in imageSets"
+							@click="getPost(item)"
 							class="button is-small"
-							:class="[ post.id === set.id ? 'is-light' : 'is-dark' ]">
+							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
 							<template v-if="index < 10">0</template>{{ index + 1 }}
 							</button>
 
@@ -43,15 +43,15 @@
 
 							<button
 							class="button is-small"
-							:class="[ type === 'video' ? 'is-light' : 'is-dark' ]">
+							:class="[ productType === 'video' ? 'is-light' : 'is-dark' ]">
 							Video Set No.
 							</button>
 
 							<button
-							v-for="(set,index) in videoSets"
-							@click="getPost(set)"
+							v-for="(item,index) in videoSets"
+							@click="getPost(item)"
 							class="button is-small"
-							:class="[ post.id === set.id ? 'is-light' : 'is-dark' ]">
+							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
 							<template v-if="index < 10">0</template>{{ index + 1 }}
 							</button>
 
@@ -60,11 +60,11 @@
 						<div v-if="otherSets.length > 0" class="buttons other-sets sets">
 
 							<button
-							v-for="(set,index) in otherSets"
-							@click="getPost(set)"
+							v-for="(item,index) in otherSets"
+							@click="getPost(item)"
 							class="button is-small"
-							:class="[ post.id === set.id ? 'is-light' : 'is-dark' ]">
-							{{ }}
+							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
+							{{ item.sell_media_meta.product_type[0].name }}
 							</button>
 
 						</div>
@@ -103,8 +103,7 @@
 				imageSets: [],
 				videoSets: [],
 				otherSets: [],
-				setsLoaded: false,
-				type: ''
+				setsLoaded: false
 			}
 		},
 
@@ -115,7 +114,6 @@
 				}
 			});
 			this.getSets()
-			this.getType(this.post)
 		},
 
 		created: function() {
@@ -131,15 +129,8 @@
 			prev: function() {
 				this.post -= 1
 			},
-			getPost: function(set) {
-				this.post = set
-				this.type = this.getType(this.post)
-			},
-			getType: function() {
-				this.type = this.post.sell_media_meta.product_type[0] ? this.post.sell_media_meta.product_type[0].slug : null
-			},
-			getSetType: function(set) {
-				this.type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
+			getPost: function(item) {
+				this.post = item
 			},
 			getSets: function() {
 				const vm = this;
@@ -156,7 +147,7 @@
 					let other_sets = []
 
 					for ( let set of sets ) {
-						let type = vm.getSetType(set)
+						let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
 						if ( type === 'image' ) {
 							image_sets.push(set)
 						} else if ( type === 'video' ) {
@@ -175,7 +166,13 @@
 				.catch( ( res ) => {
 					console.log( res )
 				} )
-			},
+			}
+		},
+
+		computed: {
+			productType: function () {
+				return this.post.sell_media_meta.product_type[0] ? this.post.sell_media_meta.product_type[0].slug : null
+			}
 		}
 	}
 </script>
