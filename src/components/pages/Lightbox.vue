@@ -3,7 +3,7 @@
 		<p @click="deleteLightbox" class="empty-lightbox" v-bind:title="title">{{ title }}</p>
 		<div>
 			<div class="columns is-multiline">
-				<media v-for="media in medias" v-bind:m="media"></media>
+				<media v-for="media in medias" v-bind:m="media" :post="media"></media>
 			</div>
 		</div>
 	</div>
