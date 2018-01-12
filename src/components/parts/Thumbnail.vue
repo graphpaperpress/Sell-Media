@@ -7,7 +7,7 @@
 			<div class="quick-view" v-if="showQuickView && quickViewVisible" @click="visible = !visible">{{ quick_view_label }}</div>
 		</div>
 		<h2 v-if="showTitles">{{ post.title.rendered }}</h2>
-<!-- 		<modal ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></modal> -->
+		<!-- <modal ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></modal> -->
 		<!-- <expander ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></expander> -->
 		<expander-related ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></expander-related>
 	</div>

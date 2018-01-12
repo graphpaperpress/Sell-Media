@@ -14,8 +14,10 @@
 		<div v-if="loaded" :class="gridContainer" class="columns is-multiline has-text-centered">
 			<thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
 		</div>
+
 		<div v-else class="loading">
 			<button class="button is-white is-loading">Loading...</button>
+			<div class="is-size-7">loading media</div>
 		</div>
 
 		<nav v-if="totalPages > 1" class="pagination">

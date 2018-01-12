@@ -147,7 +147,7 @@ function sell_media_scripts( $hook ) {
 			'search_tips' => esc_html__( 'Search Tips', 'sell_media' ),
 			'tips' => array(
 				0 => esc_html__( 'Separate keywords with a comma', 'sell_media' ),
-				1 => esc_html__( 'Use fewer keywords to expand search results', 'sell_media' ),
+				1 => esc_html__( 'Use fewer keywords for more results', 'sell_media' ),
 				2 => esc_html__( 'Use negative keywords (like -cars) to exclude cars from search results', 'sell_media' ),
 			),
 		),

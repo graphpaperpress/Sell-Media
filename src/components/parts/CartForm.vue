@@ -20,11 +20,18 @@
 
 			<div class="content">
 
-				<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-select>
+				<cart-field-radio v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-radio>
+				
+				<div class="buttons">
+					<button class="button is-info" @click="addToCart" :disabled="disabled">{{ add }}</button>
 
-				<button class="button is-black" @click="addToCart" :disabled="disabled">{{ add }}</button>
+					<button class="button is-info" @click="addToLightbox" :disabled="disabled" :title="save_to_lightbox">
+						<span class="icon">
+							<icon name="heart"></icon>
+						</span>
+					</button>
 
-				<button class="button is-text" @click="addToLightbox" :disabled="disabled">{{ save_to_lightbox }}</button>
+				</div>
 
 			</div>
 
@@ -38,8 +45,6 @@
 				<router-link :to="{ name: 'lightbox' }">{{ view_lightbox }} &raquo;</router-link>
 			</div>
 
-			</div>
-
 		</form>
 
 	</section>
@@ -49,6 +54,7 @@
 <script>
 
 	import CartFieldSelect from './CartFieldSelect.vue'
+	import CartFieldRadio from './CartFieldRadio.vue'
 
 	export default {
 
@@ -148,7 +154,8 @@
 		},
 
 		components: {
-			'cart-field-select': CartFieldSelect
+			'cart-field-select': CartFieldSelect,
+			'cart-field-radio': CartFieldRadio
 		}
 
 	}

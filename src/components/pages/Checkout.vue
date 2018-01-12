@@ -26,7 +26,7 @@
 					<img :src="product.img" />
 					<p class="is-hidden-mobile">{{ product.title }}</p>
 				</div>
-				<div class="column is-4 is-hidden-mobile">{{ product.price_name }} - {{ product.price_desc }}</div>
+				<div class="column is-4 is-hidden-mobile">{{ product.price_name }} <span v-if="product.price_desc">-</span> {{ product.price_desc }}</div>
 				<div class="column">
 					<div class="field has-addons">
 						<p class="control">

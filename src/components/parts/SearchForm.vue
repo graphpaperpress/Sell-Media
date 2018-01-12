@@ -49,7 +49,7 @@
 
 				<div class="field is-grouped is-grouped-multiline">
 
-					<p class="control" v-if="colors.hex !== '#2A94AE' || locations.length > 0 || sort">Active Search Filters:</p>
+					<p class="control" v-if="colors.hex !== '#2A94AE' || locations.length > 0 || sort">Search Filters:</p>
 
 					<div v-if="colors.hex !== '#2A94AE'" class="control is-lowercase">
 						<div class="tags has-addons">
@@ -92,24 +92,20 @@
 							<div class="column">
 								<h6 class="has-text-weight-bold is-uppercase">Locations</h6>
 								<div class="control">
-									<p v-for="(field,index) in locationFields" :key="index" :class="field.slug">
-										<label class="checkbox" :for="field.slug">
-											<input type="checkbox" :id="field.slug" :value="field.slug" v-model="locations">
-											{{ field.name }}
-										</label>
-									</p>
+									<div v-for="(field,index) in locationFields" :key="index" :class="field.slug" class="field">
+										<input class="is-checkradio is-success" type="checkbox" :id="field.slug" :value="field.slug" v-model="locations">
+										<label class="checkbox" :for="field.slug">{{ field.name }}</label>
+									</div>
 								</div>
 							</div>
 
 							<div class="column">
 								<h6 class="has-text-weight-bold is-uppercase">{{ labels.sort }}</h6>
 								<div class="control">
-									<p v-for="(field,index) in sortFields" :key="index" :class="field.slug">
-										<label class="radio" :for="field.slug">
-											<input type="radio" :id="field.slug" :value="field.slug" v-model="sort">
-											{{ field.name }}
-										</label>
-									</p>
+									<div v-for="(field,index) in sortFields" :key="index" :class="field.slug" class="field">
+										<input class="is-checkradio is-info" type="radio" :id="field.slug" :value="field.slug" v-model="sort">
+										<label class="radio" :for="field.slug">{{ field.name }}</label>
+									</div>
 								</div>
 							</div>
 
@@ -120,7 +116,7 @@
 					<div class="column is-one-third">
 						<div class="content">
 							<h6 class="has-text-weight-bold is-uppercase">{{ labels.search_tips }}</h6>
-							<ul class="is-size-7">
+							<ul>
 								<li v-for="(tip,index) in labels.tips">{{ tip }}.</li>
 							</ul>
 						</div>

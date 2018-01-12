@@ -11,35 +11,11 @@
 
 					<div class="cart-container columns">
 						<div class="column is-one-fifth">
-							<p class="is-size-7">Product ID: <router-link :to="{ name: 'item', params: { slug:post.slug }}">{{ post.title.rendered }}</router-link></p>
+							<p class="is-size-7">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}">{{ post.title.rendered }}</router-link></p>
 							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: {{ post.sell_media_meta.set[0].name }}</p>
 						</div>
 						<div class="column">
-							<div v-if="multiple" class="multiple-selector buttons has-addons">
-								<div v-for="size in post.sell_media_pricing.downloads" class="button-block" :data-size-id="size.id">
-									<div class="label is-size-7">{{ size.name }}</div>
-									<a v-if="user" class="icon" @click="downloadFile(size)" :title="search_labels.download" :download="file">
-										<icon name="download"></icon>
-									</a>
-								</div>
-							</div>
-							<div v-else class="single-selector">
-								<button v-if="user" class="button is-outlined is-link" :title="search_labels.download" @click="downloadFile({ 'id': 'original' })">
-									<span class="icon">
-										<icon name="download"></icon>
-									</span>
-								</button>
-							</div>
-						</div>
-						<div class="column">
-							<div class="buttons">
-								<button class="button is-link">{{ cart_labels.add_to_cart }}</button>
-								<button class="button is-link">
-									<span class="icon">
-										<icon name="heart"></icon>
-									</span>
-								</button>
-							</div>
+							<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 						</div>
 					</div>
 					
@@ -81,7 +57,7 @@
 
 						</div>
 
-						<div class="buttons other-sets sets">
+						<div v-if="otherSets.length > 0" class="buttons other-sets sets">
 
 							<button
 							v-for="(set,index) in otherSets"
@@ -97,7 +73,7 @@
 
 					<div v-else class="loading">
 						<button class="button is-black is-loading">Loading...</button>
-						<div class="is-size-7">loading related sets...</div>
+						<div class="is-size-7">loading related media</div>
 					</div>
 
 					<portal-target name="slideshow-thumbnails"></portal-target>
@@ -119,7 +95,7 @@
 		data: function () {
 			return {
 				user: this.$store.state.user,
-				attachment_id: this.$store.state.product.attachment_id,
+				attachment: {},
 				attachments: {},
 				multiple: false,
 				search_labels: sell_media.search_labels,
@@ -128,7 +104,6 @@
 				videoSets: [],
 				otherSets: [],
 				setsLoaded: false,
-				file: '',
 				activeType: ''
 			}
 		},
@@ -157,34 +132,7 @@
 			},
 			getPost: function(set) {
 				this.post = set
-				this.activeType = set.sell_media_meta.product_type[0].slug
-			},
-			downloadFile: function(size) {
-				const vm = this;
-				if( ! vm.user ) {
-					return false;
-				}
-
-				vm.$http.get( '/wp-json/sell-media/v2/api', {
-					params: {
-						action: 'download_file',
-						_wpnonce: sell_media.nonce,
-						post_id: this.$store.state.product.post_id,
-						attachment_id: this.$store.state.product.attachment_id,
-						size_id: size ? size.id : 'original'
-					}
-				} )
-				.then( ( res ) => {
-					let data = res.data;
-					console.log(res)
-					if( data.file ) {
-						window.open( '/wp-content/uploads/downloads/' + data.file, '_blank');
-						this.file = '/wp-content/uploads/downloads/' + data.file
-					}
-				} )
-				.catch( ( res ) => {
-					console.log( `Something went wrong : ${res}` );
-				} );
+				this.activeType = set.sell_media_meta.product_type ? set.sell_media_meta.product_type[0].slug : null
 			},
 			getSets: function() {
 				const vm = this;
@@ -199,11 +147,13 @@
 					let image_sets = []
 					let video_sets = []
 					let other_sets = []
+					let type = null
 
 					for ( let set of sets ) {
-						if ( set.sell_media_meta.product_type[0].slug === 'image' ) {
+						type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : ''
+						if ( type === 'image' ) {
 							image_sets.push(set)
-						} else if ( set.sell_media_meta.product_type[0].slug === 'video' ) {
+						} else if ( type === 'video' ) {
 							video_sets.push(set)
 						} else {
 							other_sets.push(set)
@@ -213,7 +163,7 @@
 					vm.imageSets = image_sets
 					vm.videoSets = video_sets
 					vm.otherSets = other_sets
-					vm.activeType = this.post.sell_media_meta.product_type[0].slug
+					vm.activeType = type
 					vm.setsLoaded = true
 
 				} )
