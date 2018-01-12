@@ -125,6 +125,9 @@
 		cursor: pointer;
 		display: block;
 		padding: 5px;
+		width: 32px;
+		height: 32px;
+		overflow: hidden;
 	}
 
 	input:hover + label,

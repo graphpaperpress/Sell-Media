@@ -5,7 +5,7 @@
 
 			<div class="columns">
 				<div class="column is-half has-text-center">
-					<media :post="post"></media>
+					<media :post="post" :type="type"></media>
 				</div>
 				<div class="column is-half has-text-left">
 
@@ -25,7 +25,7 @@
 
 							<button
 							class="button is-small"
-							:class="[ activeType === 'image' ? 'is-light' : 'is-dark' ]">
+							:class="[ type === 'image' ? 'is-light' : 'is-dark' ]">
 							Image Set No.
 							</button>
 							
@@ -43,7 +43,7 @@
 
 							<button
 							class="button is-small"
-							:class="[ activeType === 'video' ? 'is-light' : 'is-dark' ]">
+							:class="[ type === 'video' ? 'is-light' : 'is-dark' ]">
 							Video Set No.
 							</button>
 
@@ -64,7 +64,7 @@
 							@click="getPost(set)"
 							class="button is-small"
 							:class="[ post.id === set.id ? 'is-light' : 'is-dark' ]">
-							{{ set.sell_media_meta.product_type[0].name }}
+							{{ }}
 							</button>
 
 						</div>
@@ -104,7 +104,7 @@
 				videoSets: [],
 				otherSets: [],
 				setsLoaded: false,
-				activeType: ''
+				type: ''
 			}
 		},
 
@@ -115,6 +115,7 @@
 				}
 			});
 			this.getSets()
+			this.getType(this.post)
 		},
 
 		created: function() {
@@ -132,7 +133,13 @@
 			},
 			getPost: function(set) {
 				this.post = set
-				this.activeType = set.sell_media_meta.product_type ? set.sell_media_meta.product_type[0].slug : null
+				this.type = this.getType(this.post)
+			},
+			getType: function() {
+				this.type = this.post.sell_media_meta.product_type[0] ? this.post.sell_media_meta.product_type[0].slug : null
+			},
+			getSetType: function(set) {
+				this.type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
 			},
 			getSets: function() {
 				const vm = this;
@@ -147,10 +154,9 @@
 					let image_sets = []
 					let video_sets = []
 					let other_sets = []
-					let type = null
 
 					for ( let set of sets ) {
-						type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : ''
+						let type = vm.getSetType(set)
 						if ( type === 'image' ) {
 							image_sets.push(set)
 						} else if ( type === 'video' ) {
@@ -163,7 +169,6 @@
 					vm.imageSets = image_sets
 					vm.videoSets = video_sets
 					vm.otherSets = other_sets
-					vm.activeType = type
 					vm.setsLoaded = true
 
 				} )

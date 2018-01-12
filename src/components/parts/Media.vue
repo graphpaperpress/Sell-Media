@@ -1,16 +1,16 @@
 <template>
 	<div class="media" v-if="loaded">
 
-		<template v-if="post.sell_media_meta.product_type[0] && post.sell_media_meta.product_type[0].slug === 'panorama'">
+		<template v-if="type === 'panorama'">
 			<media-panorama :post="post"></media-panorama>
 		</template>
-		<template v-else-if="post.sell_media_meta.product_type[0] && post.sell_media_meta.product_type[0].slug === 'video'">
+		<template v-else-if="type === 'video'">
 			<media-video :post="post"></media-video>
 		</template>
-		<template v-else-if="post.sell_media_meta.product_type[0] && post.sell_media_meta.product_type[0].slug === '360-video'">
+		<template v-else-if="type === '360-video'">
 			<media-video-360 :post="post"></media-video-360>
 		</template>
-		<template v-else-if="Object.keys(this.post.sell_media_attachments).length > 1">
+		<template v-else-if="Object.keys(post.sell_media_attachments).length > 1">
 			<media-slideshow :post="post"></media-slideshow>
 		</template>
 		<template v-else>
@@ -27,7 +27,7 @@
 	import MediaSlideshow from './MediaSlideshow.vue';
 
 	export default {
-		props: ['post'],
+		props: ['post', 'type'],
 
 		data: function() {
 			return {
@@ -37,7 +37,7 @@
 
 		mounted: function() {
 			this.loaded = true
-			console.log(this.post.sell_media_meta.product_type)
+			console.log(this.type)
 		},
 
 		components: {
