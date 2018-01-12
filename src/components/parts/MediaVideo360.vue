@@ -11,7 +11,8 @@
 </template>
 
 <script>
-
+	import VideoJs from 'video.js'
+	require('!style-loader!css-loader!video.js/dist/video-js.css')
 	export default {
 		props: ['post'],
 
@@ -19,9 +20,14 @@
 			window.HELP_IMPROVE_VIDEOJS = false;
 			let attachment = this.post.sell_media_attachments[0]
 			this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+			VideoJs('video-' + this.post.sell_media_attachments[0].id, {width: 200, height: 150});
 		}
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+.videocontent{
+	width: 640px;
+	height: 264px;
+}
 </style>
