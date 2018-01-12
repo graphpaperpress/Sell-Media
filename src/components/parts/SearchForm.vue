@@ -18,7 +18,7 @@
 						<input v-model="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', search, search_type)">
 					</p>
 					<p class="control">
-						<button class="button is-medium is-dark" @click="$emit('search', search, search_type)">
+						<button class="button is-medium is-dark" @click="$emit('search', search, search_type)" :class="{ 'is-loading': loading }">
 							{{ labels.search }}
 						</button>
 					</p>
@@ -161,7 +161,7 @@
 
 	export default {
 
-		props: [],
+		props: ['loading'],
 
 		data: function() {
 			return {
@@ -262,6 +262,12 @@
 	margin: 2rem 0;
 
 	&.active {}
+}
+
+.search-area {
+	.select {
+		width: 8rem;
+	}
 }
 
 .filters-button .fa-icon {

@@ -1,15 +1,14 @@
 <template>
 	<div :id="name" :class="name">
 
-		<searchform @search="getSearchResults"></searchform>
+		<searchform @search="getSearchResults" :loading="loading"></searchform>
 
 		<div v-if="searchResults" class="search-results-total content" >
 			<p>{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
-			<p class="reset"></p>
 		</div>
 
 		<div v-if="searchResults === 0" class="search-results-total content" >
-			<p>{{ search_labels.no_results }} "{{ search }}."</p>
+			<p>{{ search_labels.no_results }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
 		</div>
 
 		<div v-if="loaded" :class="gridContainer" class="columns is-multiline has-text-centered">
@@ -22,9 +21,9 @@
 		</div>
 
 		<nav v-if="totalPages > 1" class="pagination">
-			<button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
+			<button class="button" v-if="showPrev" @click.prevent="showPrevPage()" :class="{ 'is-loading': loading }">Previous</button>
 			<span> {{ currentPage }} / {{ totalPages }} </span>
-			<button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
+			<button class="button" v-if="showNext" @click.prevent="showNextPage()" :class="{ 'is-loading': loading }">Next</button>
 		</nav>
 
 	</div>
@@ -61,6 +60,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				postPerPage: sell_media.posts_per_page,
 				totalPages: '',
 				loaded: false,
+				loading: false,
 				pageTitle: '',
 				name: this.$options.name,
 				search: '',
@@ -75,7 +75,7 @@ import SearchForm from '../parts/SearchForm.vue';
 
 			getPosts: function( pageNumber = 1 ) {
 				const vm = this;
-				vm.loaded = false;
+				vm.loading = true;
 				let path = '/wp-json/wp/v2/sell_media_item';
 				let params = {
 					per_page: vm.postPerPage,
@@ -105,6 +105,7 @@ import SearchForm from '../parts/SearchForm.vue';
 						vm.currentPage = 1;
 					}
 
+					vm.loading = false;
 					vm.loaded = true;
 					vm.pageTitle = 'Archive';
 					vm.$store.commit( 'changeTitle', vm.pageTitle );
@@ -117,7 +118,7 @@ import SearchForm from '../parts/SearchForm.vue';
 
 			getSearchResults: function( search, search_type, pageNumber = 1 ) {
 				const vm = this;
-				vm.loaded = false;
+				vm.loading = true;
 				this.search_type = search_type;
 				vm.$http.get( '/wp-json/sell-media/v2/search', {
 					params: {
@@ -140,6 +141,7 @@ import SearchForm from '../parts/SearchForm.vue';
 						vm.currentPage = 1;
 					}
 
+					vm.loading = false;
 					vm.loaded = true;
 					vm.pageTitle = 'Search results for:' + search;
 					vm.$store.commit( 'changeTitle', vm.pageTitle );
@@ -213,6 +215,10 @@ import SearchForm from '../parts/SearchForm.vue';
 
 	.search-wrapper {
 		margin: 2rem auto;
+	}
+
+	.loading {
+		min-height: 600px;
 	}
 
 	.reset-search {

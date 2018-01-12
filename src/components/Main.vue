@@ -18,6 +18,6 @@ export default {
 
 	.sell-media {
 		box-sizing: border-box;
-		margin: 0 0 2rem;
+		margin: 3rem 0;
 	}
 </style>

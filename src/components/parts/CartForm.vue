@@ -35,9 +35,9 @@
 
 			</div>
 
-			<div v-if="added" class="content">
+			<div v-if="added" class="content is-size-7">
 				{{ added_to_cart }}
-				<router-link :to="{ name: 'checkout' }" class="view is-size-7">{{ view_cart }} &raquo;</router-link>
+				<router-link :to="{ name: 'checkout' }" class="view">{{ view_cart }} &raquo;</router-link>
 			</div>
 
 			<div v-if="saved" class="content">
@@ -163,5 +163,5 @@
 	.view {
 		color: #fff;
 	}
-	
+
 </style>
