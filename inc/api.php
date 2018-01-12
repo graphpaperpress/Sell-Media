@@ -436,6 +436,7 @@ if ( ! function_exists( 'sell_media_api_search_response' ) ) :
 			$img_array         = sell_media_api_get_image( $obj );
 			$attachments_array = sell_media_api_get_attachments( $obj );
 			$pricing           = sell_media_api_get_pricing( $obj );
+			$meta              = sell_media_api_get_meta( $obj );
 
 			// Get parent slug to build url
 			$post_data   = get_post( $post->post_parent );
@@ -456,9 +457,7 @@ if ( ! function_exists( 'sell_media_api_search_response' ) ) :
 				'sell_media_featured_image' => $img_array,
 				'sell_media_attachments'    => $attachments_array,
 				'sell_media_pricing'        => $pricing,
-				'sell_media_meta'           => [
-					'sell' => apply_filters( 'sell_media_filter_api_sell', array( __( 'Downloads', 'sell_media' ) ), $post->ID ),
-				],
+				'sell_media_meta'           => $meta,
 			];
 		}
 

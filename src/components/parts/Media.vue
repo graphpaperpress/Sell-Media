@@ -37,6 +37,7 @@
 
 		mounted: function() {
 			this.loaded = true
+			console.log(this.post.sell_media_meta.product_type)
 		},
 
 		components: {
