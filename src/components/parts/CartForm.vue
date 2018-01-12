@@ -23,9 +23,9 @@
 				<cart-field-radio v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-radio>
 				
 				<div class="buttons">
-					<button class="button is-info" @click="addToCart" :disabled="disabled">{{ add }}</button>
+					<button class="button is-info" @click="addTo('cart')" :disabled="disabled">{{ add }}</button>
 
-					<button class="button is-info" @click="addToLightbox" :disabled="disabled" :title="save_to_lightbox">
+					<button class="button is-info" @click="addTo('lightbox')" :disabled="disabled" :title="save_to_lightbox">
 						<span class="icon">
 							<icon name="heart"></icon>
 						</span>
@@ -37,12 +37,11 @@
 
 			<div v-if="added" class="content">
 				{{ added_to_cart }}
-				<router-link :to="{ name: 'checkout' }">{{ view_cart }} &raquo;</router-link>
+				<router-link :to="{ name: 'checkout' }" class="view is-size-7">{{ view_cart }} &raquo;</router-link>
 			</div>
 
 			<div v-if="saved" class="content">
-				{{ saved_to_lightbox }}
-				<router-link :to="{ name: 'lightbox' }">{{ view_lightbox }} &raquo;</router-link>
+				<router-link :to="{ name: 'lightbox' }" class="view is-size-7">{{ view_lightbox }} &raquo;</router-link>
 			</div>
 
 		</form>
@@ -117,7 +116,7 @@
 				this.disabled = false
 			},
 
-			addToCart: function() {
+			addTo: function($where) {
 				// this feels wrong
 				// add currently visible post and attachment
 				this.cart = {
@@ -133,19 +132,17 @@
 					'qty': this.cart.qty
 				}
 
-				this.$store.commit( 'addToCart', this.cart )
-				this.disabled = true
-				this.added = true
-			},
-
-			addToLightbox: function() {
-				let item = {
-					'post_id': Number(this.post.id),
-					'attachment_id': Number(this.attachment.id),
-					'price_id': Number(this.price_id),
+				if ( 'cart' === $where ) {
+					this.$store.commit( 'addToCart', this.cart )
+					this.added = true
 				}
-				this.$store.commit( 'addToLightbox', item );
-				this.saved = true;
+
+				if ( 'lightbox' === $where ) {
+					this.$store.commit( 'addToLightbox', this.cart )
+					this.saved = true
+				}
+
+				this.disabled = true
 			},
 
 			validateForm() {
@@ -160,3 +157,11 @@
 
 	}
 </script>
+
+<style lang="scss">
+	
+	.view {
+		color: #fff;
+	}
+	
+</style>

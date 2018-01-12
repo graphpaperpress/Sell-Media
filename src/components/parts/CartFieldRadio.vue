@@ -122,6 +122,7 @@
 	}
 
 	label {
+		color: $white;
 		cursor: pointer;
 		display: block;
 		padding: 8px;

@@ -4,7 +4,8 @@
 		<searchform @search="getSearchResults"></searchform>
 
 		<div v-if="searchResults" class="search-results-total content" >
-			<p>{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}."</p>
+			<p>{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
+			<p class="reset"></p>
 		</div>
 
 		<div v-if="searchResults === 0" class="search-results-total content" >
@@ -149,6 +150,13 @@ import SearchForm from '../parts/SearchForm.vue';
 				} )
 			},
 
+			resetSearch: function() {
+				this.searchResults = false
+				this.search = ''
+				this.search_type = ''
+				this.getPosts()
+			},
+
 			showNextPage: function( event ) {
 				const vm = this;
 
@@ -205,5 +213,10 @@ import SearchForm from '../parts/SearchForm.vue';
 
 	.search-wrapper {
 		margin: 2rem auto;
+	}
+
+	.reset-search {
+		color: #ff2b56;
+		cursor: pointer;
 	}
 </style>
