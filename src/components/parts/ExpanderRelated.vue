@@ -18,7 +18,7 @@
 							<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 						</div>
 					</div>
-					
+
 					<div class="set-container" v-if="setsLoaded">
 
 						<div v-if="imageSets.length > 0" class="buttons image-sets sets">
@@ -28,7 +28,7 @@
 							:class="[ type === 'image' ? 'is-light' : 'is-dark' ]">
 							Image Set No.
 							</button>
-							
+
 							<button
 							v-for="(set,index) in imageSets"
 							@click="getPost(set)"
@@ -68,7 +68,7 @@
 							</button>
 
 						</div>
-					
+
 					</div>
 
 					<div v-else class="loading">
@@ -122,6 +122,7 @@
 			this.attachments = this.post.sell_media_attachments;
 			let count = Object.keys(this.attachments);
 			this.multiple = count.length > 1 ? true : false;
+			this.attachment = count.length > 0 ? this.attachments[0]: null;
 		},
 
 		methods: {
@@ -265,10 +266,10 @@
     			fill: #3273dc;
     			transition: all .25s ease-in-out;
     		}
-    		
+
     		&:hover {
     			background: #333;
-    			
+
     			svg {
 					fill: #fff;
     			}

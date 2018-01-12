@@ -62,7 +62,7 @@
 	$black-color: #000;
 
 	.column {
-	
+
 		&.active {
 
 			.item-link {

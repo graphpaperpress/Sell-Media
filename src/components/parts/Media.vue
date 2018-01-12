@@ -10,7 +10,7 @@
 		<template v-else-if="type === '360-video'">
 			<media-video-360 :post="post"></media-video-360>
 		</template>
-		<template v-else-if="Object.keys(post.sell_media_attachments).length > 1">
+		<template v-else-if="'undefined' !== typeof post.sell_media_attachments && Object.keys(post.sell_media_attachments).length > 1">
 			<media-slideshow :post="post"></media-slideshow>
 		</template>
 		<template v-else>
