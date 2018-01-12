@@ -11,8 +11,11 @@
 </template>
 
 <script>
-	import VideoJs from 'video.js'
 	require('!style-loader!css-loader!video.js/dist/video-js.css')
+	require('!style-loader!css-loader!videojs-panorama/dist/videojs-panorama.min.css')
+	import VideoJs from 'video.js'
+	import panorama from 'videojs-panorama'
+
 	export default {
 		props: ['post'],
 
@@ -20,7 +23,10 @@
 			window.HELP_IMPROVE_VIDEOJS = false;
 			let attachment = this.post.sell_media_attachments[0]
 			this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
-			VideoJs('video-' + this.post.sell_media_attachments[0].id, {width: 200, height: 150});
+			var player = VideoJs('video-' + this.post.sell_media_attachments[0].id);
+			player.panorama({
+				clickAndDrag: true
+			});
 		}
 	}
 </script>
