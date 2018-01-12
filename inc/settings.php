@@ -383,6 +383,31 @@ function sell_media_init_settings() {
 					)
 			)
 		),
+		"quick_view_style" => array(
+			"tab" => "sell_media_general_settings",
+			"name" => "quick_view_style",
+			"title" => __("Quick View Style","sell_media"),
+			"description" => __( "Choose a style for the quick view image overlay on archives.", "sell_media" ),
+			"section" => "general_plugin_section_1",
+			"since" => "1.0",
+			"id" => "general_plugin_section_1",
+			"type" => "select",
+			"default" => 'modal',
+			"valid_options" => array(
+				0 => array(
+					"name" => 'modal',
+					"title" => __("Modal","sell_media")
+					),
+				1 => array(
+					"name" => 'expander',
+					"title" => __("Expander","sell_media"),
+					),
+				2 => array(
+					"name" => 'expander-related',
+					"title" => __("Expander Related","sell_media"),
+					),
+			)
+		),
 		"file_info" => array(
 			"tab" => "sell_media_general_settings",
 			"name" => "file_info",

@@ -19,9 +19,7 @@
 			</div>
 		</div>
 	
-		<p class="total">{{ labels.price }}: {{ labels.currency_symbol }}<span v-if="selected.price">{{ selected.price }}</span>
-			<span v-else>0</span>
-		</p>
+		<p class="total" v-if="selected.price">{{ labels.price }}: {{ labels.currency_symbol }}<span class="price">{{ selected.price }}</span></p>
 
 	</div>
 

@@ -1,15 +1,25 @@
 <template>
-	<div :class="[{ active: visible }, gridLayout]" class="column" ref="itemContainer">
+	<div :class="[{ active: visible }, gridLayout, 'has-' + quickViewStyle]" class="column" ref="itemContainer">
 		<div class="item-link" @mouseover="quickViewVisible = true" @mouseleave="quickViewVisible = false">
 			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
 				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
 			</router-link>
-			<div class="quick-view" v-if="showQuickView && quickViewVisible" @click="visible = !visible">{{ quick_view_label }}</div>
+			<!-- <div class="quick-view" v-if="showQuickView && quickViewVisible" @click="visible = !visible">{{ quick_view_label }}</div> -->
+			<div class="quick-view" @click="visible = !visible">{{ quick_view_label }}</div>
 		</div>
+		
 		<h2 v-if="showTitles">{{ post.title.rendered }}</h2>
-		<!-- <modal ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></modal> -->
-		<!-- <expander ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></expander> -->
-		<expander-related ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></expander-related>
+
+		<template v-if="quickViewStyle === 'expander-related'">
+			<expander-related ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></expander-related>
+		</template>
+		<template v-else-if="quickViewStyle === 'expander'">
+			<expander ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></expander>
+		</template>
+		<template v-else>
+			<modal ref="preview" v-if="visible" @closeModal="visible = false" :post="post"></modal>
+		</template>
+
 	</div>
 </template>
 
@@ -24,6 +34,7 @@
 				quick_view_label: sell_media.quick_view_label,
 				showTitles: sell_media.title == 1 ? true : false,
 				showQuickView: sell_media.quick_view == 1 ? true : false,
+				quickViewStyle: sell_media.quick_view_style ? sell_media.quick_view_style : 'modal',
 				quickViewVisible: false,
 				thumbnailCrop: sell_media.thumbnail_crop,
 				gridLayout: this.$store.getters.gridLayout

@@ -180,9 +180,14 @@
 
 <style lang="scss">
 
+	$black: #000;
+	$dark: #333;
+	$white: #fff;
+	$blue: #3273dc;
+
 	.expander-related {
-		background: #000;
-		color: #eee;
+		background: $black;
+		color: darken( $white, 5% );
 		padding: 1rem;
 		position: relative;
 		max-height: 600px;
@@ -191,7 +196,7 @@
 		margin: .75rem 0 0;
 
 		a:hover {
-			color: #fff;
+			color: $white;
 		}
 
 		img {
@@ -212,9 +217,30 @@
 		}
 
 		.button.is-text:disabled:hover {
-			color: #fff;
+			color: $white;
 		}
 
+	}
+
+	.has-expander-related {
+
+		.quick-view {
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: 10px;
+			background: transparent !important;
+			text-indent: -999rem;
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: $white;
+			z-index: 2;
+			text-transform: uppercase;
+			font-size: .8rem;
+			letter-spacing: 1px;
+			cursor: zoom-in;
+		}
 	}
 
 	.set-container {
@@ -242,7 +268,7 @@
 
 		.label,
 		.icon {
-			border: 1px solid #3273dc;
+			border: 1px solid $blue;
 			padding: .1rem;
 			width: 100%;
 		}
@@ -260,15 +286,15 @@
     		transition: all .25s ease-in-out;
 
     		svg {
-    			fill: #3273dc;
+    			fill: $blue;
     			transition: all .25s ease-in-out;
     		}
 
     		&:hover {
-    			background: #333;
+    			background: $dark;
 
     			svg {
-					fill: #fff;
+					fill: $white;
     			}
     		}
 		}
