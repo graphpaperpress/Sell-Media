@@ -86,7 +86,7 @@
 
 							<div class="column">
 								<h6 class="has-text-weight-bold is-uppercase">{{ labels.colors }}</h6>
-								<chrome-picker v-model="colors"></chrome-picker>
+								<compact-picker v-model="colors"></compact-picker>
 							</div>
 
 							<div class="column">
@@ -134,7 +134,7 @@
 
 <script>
 
-	import { Chrome } from 'vue-color'
+	import { Compact } from 'vue-color'
 
 	let defaultColors = {
 		hex: '#2A94AE',
@@ -250,7 +250,7 @@
 		},
 
 		components: {
-			'chrome-picker': Chrome
+			'compact-picker': Compact
 		}
 	}
 

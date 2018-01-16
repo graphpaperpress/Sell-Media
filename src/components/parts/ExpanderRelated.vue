@@ -194,6 +194,7 @@
 		transition: max-height .3s ease-in-out,
 			margin-bottom .1s .2s;
 		margin: .75rem 0 0;
+		z-index: 1;
 
 		a:hover {
 			color: $white;
