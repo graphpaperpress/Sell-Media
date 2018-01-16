@@ -19,8 +19,13 @@
 			</template>
 
 			<div class="content">
-
-				<cart-field-radio v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-radio>
+				
+				<template v-if="quickViewStyle === 'expander-related'">
+					<cart-field-radio v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-radio>
+				</template>
+				<template v-else>
+					<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-select>
+				</template>
 				
 				<div class="buttons">
 					<button class="button is-info" @click="addTo('cart')" :disabled="disabled">{{ add }}</button>
