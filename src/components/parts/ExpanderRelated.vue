@@ -1,5 +1,5 @@
 <template>
-	<div :class="name" class="expander expander-related">
+	<div class="expander expander-related">
 		<div class="expander-content">
 			<button class="delete is-large" aria-label="close" @click="$emit('closeModal')"></button>
 
@@ -9,9 +9,9 @@
 				</div>
 				<div class="column is-half has-text-left">
 
-					<div class="cart-container columns">
+					<div class="cart-container columns" v-if="attachment">
 						<div class="column is-one-fifth">
-							<p class="is-size-7">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}">{{ post.title.rendered }}</router-link></p>
+							<p class="is-size-7">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}">{{ attachment.title }}</router-link></p>
 							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: {{ post.sell_media_meta.set[0].name }}</p>
 						</div>
 						<div class="column">
@@ -95,7 +95,6 @@
 		data: function () {
 			return {
 				user: this.$store.state.user,
-				attachment: {},
 				attachments: {},
 				multiple: false,
 				search_labels: sell_media.search_labels,
@@ -103,7 +102,8 @@
 				imageSets: [],
 				videoSets: [],
 				otherSets: [],
-				setsLoaded: false
+				setsLoaded: false,
+				attachmentLoaded: false
 			}
 		},
 
@@ -120,7 +120,6 @@
 			this.attachments = this.post.sell_media_attachments;
 			let count = Object.keys(this.attachments);
 			this.multiple = count.length > 1 ? true : false;
-			this.attachment = count.length > 0 ? this.attachments[0]: null;
 		},
 
 		methods: {
@@ -173,6 +172,9 @@
 		computed: {
 			productType: function () {
 				return this.post.sell_media_meta.product_type[0] ? this.post.sell_media_meta.product_type[0].slug : null
+			},
+			attachment: function() {
+				return this.attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
 			}
 		}
 	}
