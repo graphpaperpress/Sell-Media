@@ -34,7 +34,7 @@
 	}
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 	#panorama {
 		width: 600px;
     	height: 400px;

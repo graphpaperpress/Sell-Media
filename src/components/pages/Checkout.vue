@@ -117,6 +117,7 @@
 			</div>
 			<div class="continue-shopping has-text-right">
 				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
+			</div>
 		</div>
 	</div>
 

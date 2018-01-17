@@ -92,6 +92,10 @@ import MediaSlideshow from './MediaSlideshow.vue';
 	// Varaibles
 	$white: #fff;
 
+	.modal {
+		z-index: 1000;
+	}
+
 	.modal-content {
 		background: $white;
 		padding: 1rem;

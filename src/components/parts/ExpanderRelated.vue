@@ -9,10 +9,10 @@
 				</div>
 				<div class="column is-half has-text-left">
 
-					<div class="cart-container columns" v-if="attachment">
+					<div class="cart-container columns">
 						<div class="column is-one-fifth">
-							<p class="is-size-7">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}">{{ attachment.title }}</router-link></p>
-							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: {{ post.sell_media_meta.set[0].name }}</p>
+							<p class="is-size-7" v-if="attachment">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}">{{ attachment.title }}</router-link></p>
+							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: <!-- {{ post.sell_media_meta.set[0].name }} --></p>
 						</div>
 						<div class="column">
 							<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
