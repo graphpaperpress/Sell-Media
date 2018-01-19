@@ -167,8 +167,8 @@
 			return {
 				types: {},
 				labels: sell_media.search_labels,
-				search_type: '',
-				search: '',
+				search_type: this.$route.query.type ? this.$route.query.type : '',
+				search: this.$route.query.search ? this.$route.query.search : '',
 				showFilters: false,
 				colors: defaultColors,
 				locations: [],
@@ -280,6 +280,10 @@
 	h6 {
 		padding-bottom: 1rem;
 		margin-bottom: 1rem;
+	}
+
+	ul {
+		margin: 0;
 	}
 }
 

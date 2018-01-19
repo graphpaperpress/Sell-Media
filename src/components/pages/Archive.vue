@@ -40,6 +40,8 @@ import SearchForm from '../parts/SearchForm.vue';
 
 			if ( vm.$route.params.page ) {
 				vm.getPosts( vm.$route.params.page );
+			} else if ( vm.$route.query.search ) {
+				vm.getSearchResults( vm.$route.query.search, vm.$route.query.type );
 			} else {
 				vm.getPosts();
 			}
@@ -81,13 +83,13 @@ import SearchForm from '../parts/SearchForm.vue';
 					per_page: vm.postPerPage,
 					page: pageNumber
 				}
-				if ( false !== this.searchResults ) {
+				if ( false !== vm.searchResults ) {
 					path = '/wp-json/sell-media/v2/search';
 					params = {
-						s: this.search,
+						s: vm.search,
 						per_page: vm.postPerPage,
 						page: pageNumber,
-						type: this.search_type
+						type: vm.search_type
 					}
 				}
 

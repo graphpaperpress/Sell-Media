@@ -10,20 +10,21 @@
 				<div class="column is-half has-text-left">
 
 					<div class="cart-container columns">
-						<div class="column is-one-fifth">
-							<p class="is-size-7" v-if="attachment">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}">{{ attachment.title }}</router-link></p>
-							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: <!-- {{ post.sell_media_meta.set[0].name }} --></p>
+						<div class="product-info column is-one-third">
+							<p class="is-size-7" v-if="attachment">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}"><span class="is-uppercase">{{ attachment.slug }}</span></router-link></p>
+							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: <span class="is-uppercase">{{ post.sell_media_meta.set[0].name }}</span></p>
 						</div>
 						<div class="column">
 							<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 						</div>
 					</div>
 
-					<div class="set-container" v-if="setsLoaded">
+					<div class="set-container" v-if="setsLoaded && otherSetsLoaded">
 
 						<div v-if="imageSets.length > 0" class="buttons image-sets sets">
 
 							<button
+							@click="getPost(imageSets[0])"
 							class="button is-small"
 							:class="[ productType === 'image' ? 'is-light' : 'is-dark' ]">
 							Image Set No.
@@ -31,6 +32,7 @@
 
 							<button
 							v-for="(item,index) in imageSets"
+							v-if="index < 9"
 							@click="getPost(item)"
 							class="button is-small"
 							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
@@ -42,6 +44,7 @@
 						<div v-if="videoSets.length > 0" class="buttons video-sets sets">
 
 							<button
+							@click="getPost(videoSets[0])"
 							class="button is-small"
 							:class="[ productType === 'video' ? 'is-light' : 'is-dark' ]">
 							Video Set No.
@@ -49,6 +52,7 @@
 
 							<button
 							v-for="(item,index) in videoSets"
+							v-if="index < 9"
 							@click="getPost(item)"
 							class="button is-small"
 							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
@@ -58,12 +62,13 @@
 						</div>
 
 						<div v-if="otherSets.length > 0" class="buttons other-sets sets">
-
+					
 							<button
 							v-for="(item,index) in otherSets"
-							@click="getPost(item)"
+							v-if="index === 0"
+							@click="getProductTypeSets(item)"
 							class="button is-small"
-							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
+							:class="[ post.product_type[0] === item.product_type[0] ? 'is-light' : 'is-dark' ]">
 							{{ item.sell_media_meta.product_type[0].name }}
 							</button>
 
@@ -76,7 +81,26 @@
 						<div class="is-size-7">loading related media</div>
 					</div>
 
-					<portal-target name="slideshow-thumbnails"></portal-target>
+					<div v-if="productTypeSetsLoading" class="loading">
+						<button class="button is-black is-loading">Loading...</button>
+						<div class="is-size-7">loading {{ post.sell_media_meta.product_type[0].name }}</div>
+					</div>
+
+					<div v-if="productTypeSetsLoaded && productType !== 'image'" id="slideshow-thumbnails" class="slideshow-thumbnails">
+						<div class="columns is-multiline is-gapless">
+							<div
+							v-for="(item, index) in productTypeSets"
+							@click="getPost(item)"
+							:class="{ active: post.id === item.id }"
+							class="column is-one-fifth">
+								<div class="slideshow-thumbnail">
+									<img :src="item.sell_media_featured_image.sizes.medium[0]" :alt="item.sell_media_featured_image.title" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<portal-target v-if="productType === 'image'" name="slideshow-thumbnails"></portal-target>
 
 				</div>
 
@@ -102,8 +126,11 @@
 				imageSets: [],
 				videoSets: [],
 				otherSets: [],
+				productTypeSets: [],
 				setsLoaded: false,
-				attachmentLoaded: false
+				otherSetsLoaded: false,
+				productTypeSetsLoaded: false,
+				productTypeSetsLoading: false
 			}
 		},
 
@@ -114,6 +141,7 @@
 				}
 			});
 			this.getSets()
+			this.getOtherSets()
 		},
 
 		created: function() {
@@ -137,30 +165,82 @@
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
-						set: vm.post.set ? vm.post.set[0] : null
+						set: vm.post.set ? vm.post.set[1] : null
 					}
 				} )
 				.then( ( res ) => {
 					let sets = res.data
 					let image_sets = []
 					let video_sets = []
-					let other_sets = []
 
 					for ( let set of sets ) {
 						let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
 						if ( type === 'image' ) {
 							image_sets.push(set)
-						} else if ( type === 'video' ) {
+						}
+						if ( type === 'video' ) {
 							video_sets.push(set)
-						} else {
-							other_sets.push(set)
 						}
 					}
 
 					vm.imageSets = image_sets
 					vm.videoSets = video_sets
-					vm.otherSets = other_sets
 					vm.setsLoaded = true
+
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
+			},
+			getOtherSets: function() {
+				const vm = this;
+				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+					params: {
+						per_page: 20,
+						set: vm.post.set ? vm.post.set[0] : null
+					}
+				} )
+				.then( ( res ) => {
+					let sets = res.data
+					let other_sets = []
+
+					for ( let set of sets ) {
+						let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
+						if ( type !== 'image' && type !== 'video' ) {
+							other_sets.push(set)
+						}
+					}
+
+					vm.otherSets = other_sets
+					vm.otherSetsLoaded = true
+
+				} )
+				.catch( ( res ) => {
+					console.log( res )
+				} )
+			},
+			getProductTypeSets: function(item) {
+				this.post = item
+				const vm = this
+				vm.productTypeSetsLoading = true
+				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+					params: {
+						per_page: 20,
+						set: item.set ? item.set[0] : null,
+						product_type: item.product_type ? item.product_type[0] : null
+					}
+				} )
+				.then( ( res ) => {
+					let sets = res.data
+					let product_type_sets = []
+
+					for ( let set of sets ) {
+						product_type_sets.push(set)
+					}
+
+					vm.productTypeSets = product_type_sets
+					vm.productTypeSetsLoading = false
+					vm.productTypeSetsLoaded = true
 
 				} )
 				.catch( ( res ) => {
@@ -244,6 +324,10 @@
 			letter-spacing: 1px;
 			cursor: zoom-in;
 		}
+	}
+
+	.product-info a {
+		color: $white;
 	}
 
 	.set-container {

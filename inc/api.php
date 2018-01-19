@@ -270,7 +270,10 @@ function sell_media_api_get_attachments( $object, $field_name = '', $request = '
 			$attachment_array[ $key ]['sizes'][ $size ] = wp_get_attachment_image_src( $value, $size, false );
 		}
 	}
-	return ( is_array( $attachment_array ) ) ? (array) $attachment_array : '';
+
+	$attachments = ( is_array( $attachment_array ) ) ? (array) $attachment_array : '';
+
+	return apply_filters( 'sell_media_filter_api_get_attachments', $attachments, $object, $field_name, $request );
 }
 
 /**

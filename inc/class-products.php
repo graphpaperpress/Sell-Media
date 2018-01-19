@@ -63,18 +63,20 @@ class SellMediaProducts {
 	 * @return $prices (array)
 	 */
 	public function get_prices( $post_id = null, $attachment_id = null, $taxonomy = 'price-group' ) {
-		$i = 0;
+
+		$prices                = array();
+		$i                     = 0;
 		$custom_original_price = ( get_post_meta( $post_id, 'sell_media_price', true ) ) ? get_post_meta( $post_id, 'sell_media_price', true ) : false;
 
 		if ( 'yes' !== $this->settings->hide_original_price && $custom_original_price && 'reprints-price-group' !== $taxonomy ) {
-			$original_size = Sell_Media()->images->get_original_image_size( $post_id, $attachment_id );
-			$prices[ $i ]['id'] = 'original';
-			$prices[ $i ]['name'] = __( 'Original', 'sell_media' );
+			$original_size               = Sell_Media()->images->get_original_image_size( $post_id, $attachment_id );
+			$prices[ $i ]['id']          = 'original';
+			$prices[ $i ]['name']        = __( 'Original', 'sell_media' );
 			$prices[ $i ]['description'] = __( 'The original high resolution source file', 'sell_media' );
-			$prices[ $i ]['price'] = $this->get_price( $post_id, $attachment_id, 'original' );
-			$prices[ $i ]['width'] = $original_size['original']['width'];
-			$prices[ $i ]['height'] = $original_size['original']['height'];
-			$prices[ $i ]['type'] = $taxonomy;
+			$prices[ $i ]['price']       = $this->get_price( $post_id, $attachment_id, 'original' );
+			$prices[ $i ]['width']       = $original_size['original']['width'];
+			$prices[ $i ]['height']      = $original_size['original']['height'];
+			$prices[ $i ]['type']        = $taxonomy;
 		}
 
 		if ( $this->has_image_attachments( $post_id ) ) {
@@ -89,22 +91,30 @@ class SellMediaProducts {
 				if ( empty( $default ) ) {
 					return $prices;
 				}
-				$terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $default, 'orderby' => 'id' ) );
+				$terms = get_terms( $taxonomy, array(
+					'hide_empty' => false,
+					'parent'     => $default,
+					'orderby'    => 'id',
+				) );
 			} else {
-				$terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'parent' => $term_parent[0]->term_id, 'orderby' => 'id' ) );
+				$terms = get_terms( $taxonomy, array(
+					'hide_empty' => false,
+					'parent'     => $term_parent[0]->term_id,
+					'orderby'    => 'id',
+				) );
 			}
 
 			// loop over child terms
 			foreach ( $terms as $term ) {
 				if ( ! empty( $term->term_id ) ) {
 					$i++;
-					$prices[ $i ]['id'] = $term->term_id;
-					$prices[ $i ]['name'] = $term->name;
+					$prices[ $i ]['id']          = $term->term_id;
+					$prices[ $i ]['name']        = $term->name;
 					$prices[ $i ]['description'] = $term->description;
-					$prices[ $i ]['price'] = $this->maybe_add_tax_per_item( get_term_meta( $term->term_id, 'price', true ) );
-					$prices[ $i ]['width'] = get_term_meta( $term->term_id, 'width', true );
-					$prices[ $i ]['height'] = get_term_meta( $term->term_id, 'height', true );
-					$prices[ $i ]['type'] = $taxonomy;
+					$prices[ $i ]['price']       = $this->maybe_add_tax_per_item( get_term_meta( $term->term_id, 'price', true ) );
+					$prices[ $i ]['width']       = get_term_meta( $term->term_id, 'width', true );
+					$prices[ $i ]['height']      = get_term_meta( $term->term_id, 'height', true );
+					$prices[ $i ]['type']        = $taxonomy;
 				}
 			}
 		}

@@ -72,6 +72,7 @@
 				active: '',
 				total: 0,
 				currency_symbol: sell_media.currency_symbol,
+				quickViewStyle: sell_media.quick_view_style ? sell_media.quick_view_style : 'modal',
 
 				added: false,
 				add: sell_media.cart_labels.add_to_cart,

@@ -43,10 +43,14 @@
 		<portal to="slideshow-thumbnails">
 			<div id="slideshow-thumbnails" class="slideshow-thumbnails">
 				<div class="columns is-multiline is-gapless">
-					<div v-for="(attachment, index) in post.sell_media_attachments" @click="goToSlide(index)" :class="{ active: currentSlide === index }" class="column is-one-fifth">
-						<figure class="slideshow-thumbnail">
+					<div
+					v-for="(attachment, index) in post.sell_media_attachments"
+					@click="goToSlide(index)"
+					:class="{ active: currentSlide === index }"
+					class="column is-one-fifth">
+						<div class="slideshow-thumbnail">
 							<img :src="attachment.sizes.medium[0]" :alt="attachment.alt" />
-						</figure>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -110,7 +114,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 	.slideshow-content {
 		position: relative;
