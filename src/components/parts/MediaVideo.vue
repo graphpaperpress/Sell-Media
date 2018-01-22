@@ -1,5 +1,5 @@
 <template>
-	<div class="videocontent" v-if="post.sell_media_attachments[0]">
+	<div class="videocontent" v-if="post.sell_media_attachments[0]" :id="'videocontent-' + post.id" :key="post.id">
 		<video :id="'video-' + post.sell_media_attachments[0].id" class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9" controls preload="auto" width="640" height="264" :poster="post.sell_media_featured_image.sizes.large[0]" data-setup="{}">
 			<source :src="post.sell_media_attachments[0].file" :type="post.sell_media_attachments[0].type">
 			<p class="vjs-no-js">
@@ -17,10 +17,23 @@
 		props: ['post'],
 
 		mounted: function() {
-			window.HELP_IMPROVE_VIDEOJS = false;
-			let attachment = this.post.sell_media_attachments[0]
-			this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
-			VideoJs('video-' + this.post.sell_media_attachments[0].id);
+			this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+
+			this.render()
+		},
+
+		updated: function() {
+			this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+
+			this.render()
+		},
+
+		methods: {
+
+			render: function() {
+				window.HELP_IMPROVE_VIDEOJS = false;
+				VideoJs('video-' + this.post.sell_media_attachments[0].id);
+			}
 		}
 	}
 </script>

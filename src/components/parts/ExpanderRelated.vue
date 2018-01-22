@@ -1,9 +1,7 @@
 <template>
-	<div class="expander expander-related">
+	<div class="expander expander-related" ref="detailsBox" :style="{ height: height + 'px' }">
 		<div class="expander-content">
 			<button class="delete is-large" aria-label="close" @click="$emit('closeModal')"></button>
-
-			{{ height }}
 
 			<div class="columns">
 				<div class="column is-half has-text-center">
@@ -238,15 +236,18 @@
 			}
 		},
 
+		updated: function () {
+			this.$nextTick(function () {
+				this.height = this.$refs.detailsBox.clientHeight
+			})
+		},
+
 		computed: {
 			productType: function () {
 				return this.post.sell_media_meta.product_type[0] ? this.post.sell_media_meta.product_type[0].slug : null
 			},
 			attachment: function() {
 				return this.post.sell_media_attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
-			},
-			height: function() {
-				return this.$el.clientHeight
 			}
 		}
 	}
@@ -267,10 +268,10 @@
 		position: absolute;
 		top: auto;
 		left: 0;
+		height: 600px;
 		margin: .75rem 0 0;
-		padding: 1rem 2.617924em;
+		padding: 2.617924em;
 		width: 100%;
-		height: 460px;
 		overflow: hidden;
 		z-index: 1;
 

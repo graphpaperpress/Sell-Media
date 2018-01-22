@@ -1,6 +1,8 @@
 <template>
 
-	<div id="panorama"></div>
+	<div :id="'panorama-' + post.id">
+		<div id="panorama"></div>
+	</div>
 
 </template>
 
@@ -14,23 +16,28 @@
 	export default {
 		props: ['post'],
 
-		data: function() {
-			return {
-				attachment: {},
-			}
+		mounted: function() {
+			this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+			
+			this.render()
 		},
 
-		mounted: function() {
-			this.attachment = this.post.sell_media_attachments[0]
-			this.$store.commit( 'setProduct', { post_id: this.attachment.parent, attachment_id: this.attachment.id } )
-			
-			pannellum.viewer("panorama", {
-				"type": "equirectangular",
-				"panorama": "" + this.attachment.sizes.full[0] + "",
-				"preview": "" + this.attachment.sizes.medium_large[0] + "",
-				"autoLoad": true
-			});
+		updated: function() {
+			this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+
+			this.render()
 		},
+
+		methods: {
+			render: function() {
+				pannellum.viewer("panorama", {
+					"type": "equirectangular",
+					"panorama": "" + this.post.sell_media_attachments[0].sizes.full[0] + "",
+					"preview": "" + this.post.sell_media_attachments[0].sizes.medium_large[0] + "",
+					"autoLoad": true
+				});
+			}
+		}
 	}
 </script>
 
