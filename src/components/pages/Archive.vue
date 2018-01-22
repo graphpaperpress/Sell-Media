@@ -11,13 +11,12 @@
 			<p>{{ search_labels.no_results }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
 		</div>
 
-		<div v-if="loaded" :class="gridContainer" class="columns is-multiline has-text-centered">
+		<div v-if="loaded" :class="gridContainer" class="is-multiline has-text-centered">
 			<thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
 		</div>
 
 		<div v-else class="loading">
-			<button class="button is-white is-loading">Loading...</button>
-			<div class="is-size-7">loading media</div>
+			<div class="is-size-7">loading media...</div>
 		</div>
 
 		<nav v-if="totalPages > 1" class="pagination">
@@ -36,17 +35,18 @@ import SearchForm from '../parts/SearchForm.vue';
 	export default {
 
 		mounted: function() {
-			const vm = this;
+			const vm = this
+			const search = vm.$route.query.search
+			const type = vm.$route.query.type
+			const page = vm.$route.params.page ? vm.$route.params.page : '1'
 
-			if ( vm.$route.params.page ) {
-				vm.getPosts( vm.$route.params.page );
-			} else if ( vm.$route.query.search ) {
-				vm.getSearchResults( vm.$route.query.search, vm.$route.query.type );
+			if ( search ) {
+				vm.getSearchResults( search, type, page )
 			} else {
-				vm.getPosts();
+				vm.getPosts( page )
 			}
 
-			vm.getUser();
+			vm.getUser()
 		},
 
 		data: function() {
@@ -66,51 +66,39 @@ import SearchForm from '../parts/SearchForm.vue';
 				pageTitle: '',
 				name: this.$options.name,
 				search: '',
+				search_type: '',
 				search_labels: sell_media.search_labels,
 				searchResults: false,
-				search_type: '',
-				gridContainer: this.$store.getters.gridLayout + '-container'
+				gridContainer: this.$store.getters.gridLayoutContainer
 			}
 		},
 
 		methods: {
 
 			getPosts: function( pageNumber = 1 ) {
-				const vm = this;
-				vm.loading = true;
-				let path = '/wp-json/wp/v2/sell_media_item';
-				let params = {
-					per_page: vm.postPerPage,
-					page: pageNumber
-				}
-				if ( false !== vm.searchResults ) {
-					path = '/wp-json/sell-media/v2/search';
-					params = {
-						s: vm.search,
+				const vm = this
+				vm.loading = true
+				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+					params: {
 						per_page: vm.postPerPage,
-						page: pageNumber,
-						type: vm.search_type
+						page: pageNumber
 					}
-				}
-
-				vm.$http.get( path, {
-					params
 				} )
 				.then( ( res ) => {
-					vm.posts = res.data;
-					vm.totalPages = res.headers[ 'x-wp-totalpages' ];
+					vm.posts = res.data
+					vm.totalPages = res.headers[ 'x-wp-totalpages' ]
 
 					if ( pageNumber <= parseInt( vm.totalPages ) ) {
-						vm.currentPage = parseInt( pageNumber );
+						vm.currentPage = parseInt( pageNumber )
 					} else {
-						vm.$router.push( { 'name': 'archive' } );
-						vm.currentPage = 1;
+						vm.$router.push( { 'name': 'archive' } )
+						vm.currentPage = 1
 					}
 
-					vm.loading = false;
-					vm.loaded = true;
-					vm.pageTitle = 'Archive';
-					vm.$store.commit( 'changeTitle', vm.pageTitle );
+					vm.loading = false
+					vm.loaded = true
+					vm.pageTitle = 'Archive'
+					vm.$store.commit( 'changeTitle', vm.pageTitle )
 
 				} )
 				.catch( ( res ) => {
@@ -119,34 +107,36 @@ import SearchForm from '../parts/SearchForm.vue';
 			},
 
 			getSearchResults: function( search, search_type, pageNumber = 1 ) {
-				const vm = this;
-				vm.loading = true;
-				this.search_type = search_type;
+				
+				const vm = this
+				vm.loading = true
+				vm.search = search
+				vm.search_type = search_type
+
 				vm.$http.get( '/wp-json/sell-media/v2/search', {
 					params: {
 						s: search,
+						type: search_type,
 						per_page: vm.postPerPage,
-						page: pageNumber,
-						type: search_type
+						page: pageNumber
 					}
 				} )
 				.then( ( res ) => {
 					vm.posts = res.data
 					vm.searchResults = res.headers[ 'x-wp-total' ]? res.headers[ 'x-wp-total' ] : 0 //res.data ? res.data.length : 0
-					vm.search = search
 					vm.totalPages = res.headers[ 'x-wp-totalpages' ]
 
 					if ( pageNumber <= parseInt( vm.totalPages ) ) {
 						vm.currentPage = parseInt( pageNumber );
 					} else {
-						vm.$router.push( { 'name': 'archive' } );
+						vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
 						vm.currentPage = 1;
 					}
 
-					vm.loading = false;
-					vm.loaded = true;
-					vm.pageTitle = 'Search results for:' + search;
-					vm.$store.commit( 'changeTitle', vm.pageTitle );
+					vm.loading = false
+					vm.loaded = true
+					vm.pageTitle = 'Search results for: ' + search
+					vm.$store.commit( 'changeTitle', vm.pageTitle )
 
 				} )
 				.catch( ( res ) => {
@@ -162,27 +152,27 @@ import SearchForm from '../parts/SearchForm.vue';
 			},
 
 			showNextPage: function( event ) {
-				const vm = this;
+				const vm = this
 
 				if ( vm.currentPage < vm.totalPages ) {
-					showNext: true;
-					vm.currentPage = vm.currentPage + 1;
-					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
+					showNext: true
+					vm.currentPage = vm.currentPage + 1
+					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } )
 				}
 			},
 
 			showPrevPage: function( event ) {
-				const vm = this;
+				const vm = this
 
 				if ( vm.currentPage != 1 ) {
-					showPrev: true;
-					vm.currentPage = vm.currentPage - 1;
-					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } );
+					showPrev: true
+					vm.currentPage = vm.currentPage - 1
+					vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } )
 				}
 			},
 
 			getUser: function() {
-				const vm = this;
+				const vm = this
 				vm.$http.get( '/wp-json/sell-media/v2/api', {
 					params: {
 						action: 'get_user',
@@ -191,7 +181,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				} )
 				.then( ( res ) => {
 					vm.user = res.data.ID
-					vm.$store.commit( 'setUser', vm.user );
+					vm.$store.commit( 'setUser', vm.user )
 				} )
 				.catch( ( res ) => {
 					console.log( res )
@@ -202,7 +192,7 @@ import SearchForm from '../parts/SearchForm.vue';
 		watch: {
 
 			'$route'( to, from ) {
-				this.getPosts( this.$route.params.page );
+				this.getPosts( this.$route.params.page )
 			}
 
 		},

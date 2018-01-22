@@ -1,10 +1,11 @@
 <template>
-	<div :class="[{ active: visible }, gridLayout, 'has-' + quickViewStyle]" class="column" ref="itemContainer">
+	<div
+	:class="[{ active: visible }, gridLayout, 'has-' + quickViewStyle]"
+	ref="itemContainer">
 		<div class="item-link" @mouseover="quickViewVisible = true" @mouseleave="quickViewVisible = false">
 			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
 				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
 			</router-link>
-			<!-- <div class="quick-view" v-if="showQuickView && quickViewVisible" @click="visible = !visible">{{ quick_view_label }}</div> -->
 			<div class="quick-view" @click="visible = !visible">{{ quick_view_label }}</div>
 		</div>
 		
@@ -67,14 +68,15 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 	$white-color: #fff;
 	$black-color: #000;
 
-	.column {
-
+	.is-horizontal-masonry {
+		
 		&.active {
+			height: 600px;
 
 			.item-link {
 				position: relative;

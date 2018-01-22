@@ -42,12 +42,13 @@
 
 		<portal to="slideshow-thumbnails">
 			<div id="slideshow-thumbnails" class="slideshow-thumbnails">
-				<div class="columns is-multiline is-gapless">
+				<div
+				:class="gridContainer"
+				class="is-multiline has-text-centered">
 					<div
 					v-for="(attachment, index) in post.sell_media_attachments"
 					@click="goToSlide(index)"
-					:class="{ active: currentSlide === index }"
-					class="column is-one-fifth">
+					:class="[{ active: currentSlide === index}, gridLayout]">
 						<div class="slideshow-thumbnail">
 							<img :src="attachment.sizes.medium[0]" :alt="attachment.alt" />
 						</div>
@@ -71,12 +72,12 @@
 		data: function() {
 			return {
 				currentSlide: 0,
-
+				gridLayout: this.$store.getters.gridLayout,
+				gridContainer: this.$store.getters.gridLayoutContainer,
 				prev: {
 					label: sell_media.cart_labels.prev,
 					disabled: true
 				},
-
 				next: {
 					label: sell_media.cart_labels.next,
 					disabled: false
@@ -167,7 +168,8 @@
 		margin: 1rem auto;
 		text-align: center;
 
-		.column {
+		.column,
+		.is-horizontal-masonry {
 
 			&:hover {
 				cursor: pointer;

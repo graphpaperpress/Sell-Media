@@ -2,7 +2,7 @@
 
 	<div class="search-container" :class="{ active: showFilters }">
 
-		<div class="columns">
+		<div class="columns is-clearfix">
 
 			<div class="search-area column is-two-thirds">
 				<div class="field has-addons">

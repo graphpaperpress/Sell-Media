@@ -37,6 +37,6 @@
 <style lang="scss" scoped>
 	#panorama {
 		width: 600px;
-    	height: 400px;
+    	height: 300px;
 	}
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<div class="media" v-if="loaded">
 
-		<template v-if="type === 'panorama'">
+		<template v-if="type === 'panorama' || type === 'dome' || type === 'hdr-dome'">
 			<media-panorama :post="post"></media-panorama>
 		</template>
 		<template v-else-if="type === 'video'">

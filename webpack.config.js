@@ -76,15 +76,19 @@ module.exports = {
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-  },
   performance: {
     hints: false
   },
   externals: {
     "jquery": "jQuery" // loaded external to webpack and vue
+  },
+  devServer: {
+    historyApiFallback: true,
+    noInfo: true,
+    overlay: true
+  },
+  performance: {
+    hints: false
   },
   devtool: '#eval-source-map'
 }
@@ -104,8 +108,6 @@ if (process.env.NODE_ENV === 'production') {
         warnings: false
       }
     }),
-    // Compress extracted CSS and remove duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })

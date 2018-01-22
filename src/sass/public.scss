@@ -19,14 +19,18 @@
 			text-align: center;
 		}
 
-		img {
-			height: 190px;
+		.item-link img {
+			height: 130px;
 			width: auto;
 
 			@media only screen and (max-width: 767px) {
 				height: auto;
 				width: 100%;
 			}
+		}
+
+		.slideshow-thumbnail img {
+			height: 50px;
 		}
 	}
 }

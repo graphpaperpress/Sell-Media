@@ -3,6 +3,8 @@
 		<div class="expander-content">
 			<button class="delete is-large" aria-label="close" @click="$emit('closeModal')"></button>
 
+			{{ height }}
+
 			<div class="columns">
 				<div class="column is-half has-text-center">
 					<media :post="post" :type="productType"></media>
@@ -19,80 +21,68 @@
 						</div>
 					</div>
 
-					<div class="set-container" v-if="setsLoaded && otherSetsLoaded">
+					<div v-if="imageSets.length > 0" class="buttons image-sets sets">
 
-						<div v-if="imageSets.length > 0" class="buttons image-sets sets">
+						<button
+						@click="getPost(imageSets[0])"
+						class="button is-small"
+						:class="[ productType === 'image' ? 'is-light' : 'is-dark' ]">
+						Image Set No.
+						</button>
 
-							<button
-							@click="getPost(imageSets[0])"
-							class="button is-small"
-							:class="[ productType === 'image' ? 'is-light' : 'is-dark' ]">
-							Image Set No.
-							</button>
+						<button
+						v-for="(item,index) in imageSets"
+						v-if="index < 10"
+						@click="getPost(item)"
+						class="button is-small"
+						:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]"
+						:data-slug="item.slug">
+						<template v-if="index < 9">0</template>{{ index + 1 }}
+						</button>
 
-							<button
-							v-for="(item,index) in imageSets"
-							v-if="index < 9"
-							@click="getPost(item)"
-							class="button is-small"
-							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
-							<template v-if="index < 10">0</template>{{ index + 1 }}
-							</button>
+					</div>
 
-						</div>
+					<div v-if="videoSets.length > 0" class="buttons video-sets sets">
 
-						<div v-if="videoSets.length > 0" class="buttons video-sets sets">
+						<button
+						@click="getPost(videoSets[0])"
+						class="button is-small"
+						:class="[ productType === 'video' ? 'is-light' : 'is-dark' ]">
+						Video Set No.
+						</button>
 
-							<button
-							@click="getPost(videoSets[0])"
-							class="button is-small"
-							:class="[ productType === 'video' ? 'is-light' : 'is-dark' ]">
-							Video Set No.
-							</button>
+						<button
+						v-for="(item,index) in videoSets"
+						v-if="index < 10"
+						@click="getPost(item)"
+						class="button is-small"
+						:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]"
+						:data-slug="item.slug">
+						<template v-if="index < 9">0</template>{{ index + 1 }}
+						</button>
 
-							<button
-							v-for="(item,index) in videoSets"
-							v-if="index < 9"
-							@click="getPost(item)"
-							class="button is-small"
-							:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]">
-							<template v-if="index < 10">0</template>{{ index + 1 }}
-							</button>
+					</div>
 
-						</div>
-
-						<div v-if="otherSets.length > 0" class="buttons other-sets sets">
+					<div v-if="otherSets.length > 0" class="buttons other-sets sets">
 					
-							<button
-							v-for="(item,index) in otherSets"
-							v-if="index === 0"
-							@click="getProductTypeSets(item)"
-							class="button is-small"
-							:class="[ post.product_type[0] === item.product_type[0] ? 'is-light' : 'is-dark' ]">
-							{{ item.sell_media_meta.product_type[0].name }}
-							</button>
-
-						</div>
+						<button
+						v-for="(item,index) in otherSets"
+						@click="getProductTypeSets(item)"
+						class="button is-small"
+						:class="[ post.sell_media_meta.product_type[0].name === item.sell_media_meta.product_type[0].name ? 'is-light' : 'is-dark' ]"
+						:data-slug="item.slug">
+						{{ item.sell_media_meta.product_type[0].name }}
+						</button>
 
 					</div>
 
-					<div v-else class="loading">
-						<button class="button is-black is-loading">Loading...</button>
-						<div class="is-size-7">loading related media</div>
-					</div>
-
-					<div v-if="productTypeSetsLoading" class="loading">
-						<button class="button is-black is-loading">Loading...</button>
-						<div class="is-size-7">loading {{ post.sell_media_meta.product_type[0].name }}</div>
-					</div>
-
-					<div v-if="productTypeSetsLoaded && productType !== 'image'" id="slideshow-thumbnails" class="slideshow-thumbnails">
-						<div class="columns is-multiline is-gapless">
+					<div v-if="productType !== 'image'" id="slideshow-thumbnails" class="slideshow-thumbnails">
+						<div
+						:class="gridContainer" class="is-multiline has-text-centered">
 							<div
 							v-for="(item, index) in productTypeSets"
 							@click="getPost(item)"
-							:class="{ active: post.id === item.id }"
-							class="column is-one-fifth">
+							:class="[{ active: post.id === item.id}, gridLayout]">
 								<div class="slideshow-thumbnail">
 									<img :src="item.sell_media_featured_image.sizes.medium[0]" :alt="item.sell_media_featured_image.title" />
 								</div>
@@ -127,10 +117,8 @@
 				videoSets: [],
 				otherSets: [],
 				productTypeSets: [],
-				setsLoaded: false,
-				otherSetsLoaded: false,
-				productTypeSetsLoaded: false,
-				productTypeSetsLoading: false
+				gridLayout: this.$store.getters.gridLayout,
+				gridContainer: this.$store.getters.gridLayoutContainer,
 			}
 		},
 
@@ -140,6 +128,7 @@
 					this.$emit('closeModal');
 				}
 			});
+
 			this.getSets()
 			this.getOtherSets()
 		},
@@ -151,21 +140,25 @@
 		},
 
 		methods: {
-			next: function() {
-				this.post += 1
-			},
-			prev: function() {
-				this.post -= 1
-			},
 			getPost: function(item) {
 				this.post = item
+				this.$store.commit( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id } )
 			},
 			getSets: function() {
-				const vm = this;
+				const vm = this
+				let type = ( vm.post.sell_media_meta.product_type && vm.post.sell_media_meta.product_type[0].slug ) ? vm.post.sell_media_meta.product_type[0].slug : null
+				// image and video product types should show child term, all others should show parent term.
+				let set_id = ( type === 'image' || type === 'video' ) ? vm.post.sell_media_meta.set[1].term_id : vm.post.sell_media_meta.set[0].term_id
+
+				if ( ! set_id ) {
+					vm.setsLoaded = true
+					return false
+				}
+
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
-						set: vm.post.set ? vm.post.set[1] : null
+						set: set_id
 					}
 				} )
 				.then( ( res ) => {
@@ -174,18 +167,16 @@
 					let video_sets = []
 
 					for ( let set of sets ) {
-						let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
-						if ( type === 'image' ) {
+						if ( set.sell_media_meta.product_type && set.sell_media_meta.product_type[0].slug === 'image' ) {
 							image_sets.push(set)
 						}
-						if ( type === 'video' ) {
+						if ( set.sell_media_meta.product_type && set.sell_media_meta.product_type[0].slug === 'video' ) {
 							video_sets.push(set)
 						}
 					}
 
 					vm.imageSets = image_sets
 					vm.videoSets = video_sets
-					vm.setsLoaded = true
 
 				} )
 				.catch( ( res ) => {
@@ -203,16 +194,18 @@
 				.then( ( res ) => {
 					let sets = res.data
 					let other_sets = []
+					let types = []
 
 					for ( let set of sets ) {
 						let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
-						if ( type !== 'image' && type !== 'video' ) {
+						let in_array = types.includes(type)
+						if ( ! in_array && type !== 'image' && type !== 'video' ) {
+							types.push(type)
 							other_sets.push(set)
 						}
 					}
 
 					vm.otherSets = other_sets
-					vm.otherSetsLoaded = true
 
 				} )
 				.catch( ( res ) => {
@@ -220,9 +213,8 @@
 				} )
 			},
 			getProductTypeSets: function(item) {
-				this.post = item
 				const vm = this
-				vm.productTypeSetsLoading = true
+				vm.post = item
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
@@ -239,9 +231,6 @@
 					}
 
 					vm.productTypeSets = product_type_sets
-					vm.productTypeSetsLoading = false
-					vm.productTypeSetsLoaded = true
-
 				} )
 				.catch( ( res ) => {
 					console.log( res )
@@ -254,7 +243,10 @@
 				return this.post.sell_media_meta.product_type[0] ? this.post.sell_media_meta.product_type[0].slug : null
 			},
 			attachment: function() {
-				return this.attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
+				return this.post.sell_media_attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
+			},
+			height: function() {
+				return this.$el.clientHeight
 			}
 		}
 	}
@@ -270,12 +262,16 @@
 	.expander-related {
 		background: $black;
 		color: darken( $white, 5% );
-		padding: 1rem;
-		position: relative;
-		max-height: 600px;
 		transition: max-height .3s ease-in-out,
 			margin-bottom .1s .2s;
+		position: absolute;
+		top: auto;
+		left: 0;
 		margin: .75rem 0 0;
+		padding: 1rem 2.617924em;
+		width: 100%;
+		height: 460px;
+		overflow: hidden;
 		z-index: 1;
 
 		a:hover {
@@ -283,7 +279,7 @@
 		}
 
 		img {
-			max-height: 450px;
+			max-height: 432px;
 		}
 
 		.title,
@@ -385,54 +381,6 @@
     			}
     		}
 		}
-	}
-
-	// two cols
-	.is-half .expander {
-		width: calc( 200% + 1.5rem );
-	}
-
-	// three cols
-	.is-one-third .expander {
-		width: calc( 300% + 3rem );
-	}
-
-	// four cols
-	.is-one-quarter .expander {
-		width: calc( 400% + 4.5rem );
-	}
-
-	// 5 cols
-	.is-one-fifth .expander {
-		width: calc( 500% + 6rem );
-	}
-
-	.is-half:nth-of-type(2n+2),
-	.is-one-third:nth-of-type(3n+2),
-	.is-one-quarter:nth-of-type(4n+2),
-	.is-one-fifth:nth-of-type(5n+2) {
-		.expander {
-			margin-left: calc( -100% - 1.5rem );
-		}
-	}
-
-	.is-one-third:nth-of-type(3n+3),
-	.is-one-quarter:nth-of-type(4n+3),
-	.is-one-fifth:nth-of-type(5n+3) {
-		.expander {
-			margin-left: calc( -200% - 3rem );
-		}
-	}
-
-	.is-one-quarter:nth-of-type(4n+4),
-	.is-one-fifth:nth-of-type(5n+4) {
-		.expander {
-			margin-left: calc( -300% - 4.5rem );
-		}
-	}
-
-	.is-one-fifth:nth-of-type(5n+5) .expander {
-		margin-left: calc( -400% - 6rem );
 	}
 
 	.expander-content {
