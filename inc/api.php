@@ -184,9 +184,9 @@ function sell_media_api_download_file( $data, $action ) {
 		do_action( 'sell_media_record_file_download', $current_user->ID, $post_id, $attachment_id, $size_id );
 		return $img->save( $filename );
 
-	} elseif ( $mime_type ) {
+	} else {
 
-		header( 'Content-Disposition: attachment; filename=' . urlencode( basename( $file_path ) ) );
+		header( 'Content-Disposition: attachment; filename=' . rawurlencode( basename( $file_path ) ) );
 		header( 'Content-Type: application/force-download' );
 		header( 'Content-Type: application/octet-stream' );
 		header( 'Content-Type: application/download' );
@@ -240,7 +240,7 @@ function sell_media_api_get_attachments( $object, $field_name = '', $request = '
 
 	$attachment_ids = get_post_meta( $post_id, '_sell_media_attachment_id', true );
 
-	// If ids are no in array.
+	// If ids are not an array.
 	if ( ! is_array( $attachment_ids ) && '' !== $attachment_ids ) {
 		$attachment_ids = explode( ',', $attachment_ids );
 	}

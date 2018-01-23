@@ -5,7 +5,7 @@
 		<div class="field" v-if="getSizes(post,field)">
 			<!-- <label class="label">{{ field }} {{ labels.size }}</label> -->
 			<div class="control">
-				<div v-for="size in getSizes(post,field)" class="radio">
+				<div v-for="size in getSizes(post,field)" class="radio" :class="{ wide: size.name === 'MOV' }">
 					
 					<input type="radio" :id="size.id" :value="size" v-model="selected" @change="$emit('selected', selected)" />
 					
@@ -105,8 +105,12 @@
 
 	.radio {
 		text-align: center;
-		width: 36px;
 		border: 1px solid $white;
+		width: 36px;
+
+		&.wide {
+			width: 50px;
+		}
 	}
 
 	input[type="radio"] {
@@ -124,7 +128,7 @@
 		cursor: pointer;
 		display: block;
 		padding: 8px;
-		width: 34px;
+		width: 100%;
 		height: 34px;
 		overflow: hidden;
 		font-size: .75rem;

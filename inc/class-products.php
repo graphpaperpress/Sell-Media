@@ -71,7 +71,7 @@ class SellMediaProducts {
 		if ( 'yes' !== $this->settings->hide_original_price && $custom_original_price && 'reprints-price-group' !== $taxonomy ) {
 			$original_size               = Sell_Media()->images->get_original_image_size( $post_id, $attachment_id );
 			$prices[ $i ]['id']          = 'original';
-			$prices[ $i ]['name']        = __( 'Original', 'sell_media' );
+			$prices[ $i ]['name']        = apply_filters( 'sell_media_original_price_name', __( 'Original', 'sell_media' ), $post_id, $attachment_id, $taxonomy );
 			$prices[ $i ]['description'] = __( 'The original high resolution source file', 'sell_media' );
 			$prices[ $i ]['price']       = $this->get_price( $post_id, $attachment_id, 'original' );
 			$prices[ $i ]['width']       = $original_size['original']['width'];
@@ -119,7 +119,7 @@ class SellMediaProducts {
 			}
 		}
 
-		return $prices;
+		return apply_filters( 'sell_media_filter_prices', $prices, $post_id, $attachment_id, $taxonomy );
 	}
 
 
