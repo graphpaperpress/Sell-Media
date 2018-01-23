@@ -1,7 +1,7 @@
 <template>
 
 	<div :id="'panorama-' + post.id">
-		<div id="panorama"></div>
+		<div id="panorama" ref="panoPlayer"></div>
 	</div>
 
 </template>
@@ -16,21 +16,19 @@
 	export default {
 		props: ['post'],
 
-		mounted: function() {
-			this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
-			
-			this.render()
+		mounted: function() {			
+			this.player
 		},
 
 		updated: function() {
-			this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
-
-			this.render()
+			this.player
 		},
 
-		methods: {
-			render: function() {
-				pannellum.viewer("panorama", {
+		computed: {
+			player: function() {
+				this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+
+				pannellum.viewer(this.$refs.panoPlayer.id, {
 					"type": "equirectangular",
 					"panorama": "" + this.post.sell_media_attachments[0].sizes.full[0] + "",
 					"preview": "" + this.post.sell_media_attachments[0].sizes.medium_large[0] + "",

@@ -300,6 +300,10 @@
 			color: $white;
 		}
 
+		.total {
+			display: none;
+		}
+
 	}
 
 	.has-expander-related {
