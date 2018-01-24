@@ -150,7 +150,7 @@ function sell_media_api_download_file( $data, $action ) {
 
 	$post_id       = (int) esc_html( $_GET['post_id'] );
 	$attachment_id = (int) esc_html( $_GET['attachment_id'] );
-	$size_id       = (int) esc_html( $_GET['size_id'] );
+	$size_id       = esc_html( $_GET['size_id'] );
 	$width         = (int) get_term_meta( $size_id, 'width', true );
 	$height        = (int) get_term_meta( $size_id, 'height', true );
 	$file_path     = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
@@ -202,7 +202,7 @@ function sell_media_api_download_file( $data, $action ) {
 
 	do_action( 'sell_media_record_file_download', $current_user->ID, $post_id, $attachment_id, $size_id );
 
-	return $response;
+	return apply_filters( 'sell_media_file_download_response', $response, $current_user->ID, $post_id, $attachment_id, $size_id );
 }
 add_filter( 'sell_media_api_response', 'sell_media_api_download_file', 10, 2 );
 
