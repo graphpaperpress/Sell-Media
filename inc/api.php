@@ -156,6 +156,18 @@ function sell_media_api_download_file( $data, $action ) {
 	$file_path     = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
 	$mime_type     = get_post_mime_type( $attachment_id );
 	$img           = wp_get_image_editor( $file_path );
+	$response      = array();
+
+	// make a folder for each user's downloads
+	$current_user = wp_get_current_user();
+	$upload_dir   = wp_upload_dir();
+
+	if ( isset( $current_user->user_login ) && ! empty( $upload_dir['basedir'] ) ) {
+		$user_dirname = $upload_dir['basedir'] . '/downloads/' . $current_user->user_login;
+		if ( ! file_exists( $user_dirname ) ) {
+			wp_mkdir_p( $user_dirname );
+		}
+	}
 
 	if ( ! is_wp_error( $img ) && $img->supports_mime_type( $mime_type ) ) {
 
@@ -168,34 +180,29 @@ function sell_media_api_download_file( $data, $action ) {
 			$img->resize( $max, $max, false );
 		}
 		$img->set_quality( 100 );
-
-		// make a folder for each user's downloads
-		$current_user = wp_get_current_user();
-		$upload_dir   = wp_upload_dir();
-
-		if ( isset( $current_user->user_login ) && ! empty( $upload_dir['basedir'] ) ) {
-			$user_dirname = $upload_dir['basedir'] . '/downloads/' . $current_user->user_login;
-			if ( ! file_exists( $user_dirname ) ) {
-				wp_mkdir_p( $user_dirname );
-			}
-		}
-
 		$filename = $img->generate_filename( null, $upload_dir['basedir'] . '/downloads/', null );
-		do_action( 'sell_media_record_file_download', $current_user->ID, $post_id, $attachment_id, $size_id );
-		return $img->save( $filename );
+		$response = $img->save( $filename );
+
+		if ( file_exists( $response['path'] ) ) {
+			$response['download'] = $upload_dir['baseurl'] . '/downloads/' . basename( $filename );
+		}
 
 	} else {
 
-		header( 'Content-Disposition: attachment; filename=' . rawurlencode( basename( $file_path ) ) );
-		header( 'Content-Type: application/force-download' );
-		header( 'Content-Type: application/octet-stream' );
-		header( 'Content-Type: application/download' );
-		header( 'Content-Description: File Transfer' );
-		header( 'Content-Length: ' . filesize( $file_path ) );
+		$filename      = basename( $file_path );
+		$new_file_path = $upload_dir['basedir'] . '/downloads/' . $filename;
 
-		echo file_get_contents( $file_path );
-
+		if ( copy( $file_path, $new_file_path ) ) {
+			$file_url              = $upload_dir['baseurl'] . '/downloads/' . $filename;
+			$response['file']      = $filename;
+			$response['mime-type'] = $mime_type;
+			$response['download']  = $file_url;
+		}
 	}
+
+	do_action( 'sell_media_record_file_download', $current_user->ID, $post_id, $attachment_id, $size_id );
+
+	return $response;
 }
 add_filter( 'sell_media_api_response', 'sell_media_api_download_file', 10, 2 );
 

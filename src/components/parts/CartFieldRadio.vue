@@ -11,7 +11,7 @@
 					
 					<label :for="size.id">{{ size.name }}<span v-if="size.description"> ({{ size.description }})</span></label>
 
-					<a v-if="user" @click="downloadFile(size)" :title="labels.download" :download="file" class="download">
+					<a v-if="user" @click="downloadFile(size)" :title="labels.download" class="download">
 						<icon name="download"></icon>
 					</a>
 
@@ -27,6 +27,8 @@
 
 <script>
 
+import download from 'downloadjs'
+
 	export default {
 
 		props: ['post', 'field', 'active'],
@@ -35,7 +37,6 @@
 			return {
 				user: this.$store.state.user,
 				selected: {},
-				file: '',
 				labels: {
 					price: sell_media.cart_labels.price,
 					choose: sell_media.cart_labels.choose,
@@ -79,11 +80,8 @@
 				} )
 				.then( ( res ) => {
 					let data = res.data;
-					console.log(res)
-					if( data.file ) {
-						window.open( '/wp-content/uploads/downloads/' + data.file, '_blank');
-						// not working, but this approach would be best
-						this.file = '/wp-content/uploads/downloads/' + data.file
+					if( data.download ) {
+						download(data.download);
 					}
 				} )
 				.catch( ( res ) => {
