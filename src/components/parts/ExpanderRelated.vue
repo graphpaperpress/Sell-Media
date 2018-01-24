@@ -183,6 +183,7 @@
 			},
 			getOtherSets: function() {
 				const vm = this;
+				console.log(vm.post)
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
