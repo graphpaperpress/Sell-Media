@@ -169,7 +169,8 @@ function sell_media_api_download_file( $data, $action ) {
 		}
 	}
 
-	if ( ! is_wp_error( $img ) && $img->supports_mime_type( $mime_type ) ) {
+	// crop images to requested size and send for download
+	if ( ! is_wp_error( $img ) && $img->supports_mime_type( $mime_type ) && 'original' !== $size_id ) {
 
 		if ( $width || $height ) {
 			if ( $width >= $height ) {
@@ -187,6 +188,7 @@ function sell_media_api_download_file( $data, $action ) {
 			$response['download'] = $upload_dir['baseurl'] . '/downloads/' . basename( $filename );
 		}
 
+	// download the original source file
 	} else {
 
 		$filename      = basename( $file_path );
