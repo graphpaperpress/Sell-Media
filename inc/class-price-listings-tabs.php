@@ -47,7 +47,7 @@ class Sell_Media_Price_Listings_Tabs {
 			$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
 			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first->term_id;
 			add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
-		}		
+		}
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
 		add_action( 'admin_head', array( $this, 'js_template' ), 25 );
 		add_action( 'sell_media_price_listing_save', array( $this, 'save_data' ) );
@@ -253,14 +253,16 @@ class Sell_Media_Price_Listings_Tabs {
 					if ( '' !== $data['name'] ) {
 
 						$term = wp_insert_term( $data['name'], $this->taxonomy, array(
-							'parent' => $parent_term_id,
+							'parent'      => $parent_term_id,
 							'description' => $data['description'],
 						) );
-						$term_id = $term['term_id'];
+						if ( ! is_wp_error( $term ) ) {
+							$term_id = $term['term_id'];
 
-						update_term_meta( $term_id, 'width', $data['width'] );
-						update_term_meta( $term_id, 'height', $data['height'] );
-						update_term_meta( $term_id, 'price', $data['price'] );
+							update_term_meta( $term_id, 'width', $data['width'] );
+							update_term_meta( $term_id, 'height', $data['height'] );
+							update_term_meta( $term_id, 'price', $data['price'] );
+						}
 					}
 				}
 			}
@@ -278,7 +280,7 @@ class Sell_Media_Price_Listings_Tabs {
 		}
 
 		$url_parameters['term_parent'] = $parent_term_id;
-		$redirect_url = add_query_arg( $url_parameters, $redirect_url );
+		$redirect_url                  = add_query_arg( $url_parameters, $redirect_url );
 		wp_redirect( $redirect_url );
 		exit();
 	}
