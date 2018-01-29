@@ -245,7 +245,7 @@ class SellMediaProducts {
 	 * @param (int) $attachment_id The attachment id
 	 * @return Returns the path to a protected image
 	 */
-	public function get_protected_file( $post_id = null, $attachment_id = null ) {
+	public function get_protected_file( $post_id = null, $attachment_id = null, $size_id = null ) {
 
 		/**
 		 * When we upload items into Sell Media, we move the original file
@@ -277,7 +277,7 @@ class SellMediaProducts {
 			$file = $unprotected_file;
 		}
 
-		return apply_filters( 'sell_media_get_original_protected_file', $file, $attachment_id );
+		return apply_filters( 'sell_media_get_original_protected_file', $file, $attachment_id, $size_id );
 	}
 
 	/**

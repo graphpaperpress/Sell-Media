@@ -151,9 +151,10 @@ function sell_media_api_download_file( $data, $action ) {
 	$post_id       = (int) esc_html( $_GET['post_id'] );
 	$attachment_id = (int) esc_html( $_GET['attachment_id'] );
 	$size_id       = esc_html( $_GET['size_id'] );
+	$size          = get_term( $size_id, 'price-group' );
 	$width         = (int) get_term_meta( $size_id, 'width', true );
 	$height        = (int) get_term_meta( $size_id, 'height', true );
-	$file_path     = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
+	$file_path     = Sell_Media()->products->get_protected_file( $post_id, $attachment_id, $size_id );
 	$mime_type     = get_post_mime_type( $attachment_id );
 	$img           = wp_get_image_editor( $file_path );
 	$response      = array();
@@ -181,21 +182,24 @@ function sell_media_api_download_file( $data, $action ) {
 			$img->resize( $max, $max, false );
 		}
 		$img->set_quality( 100 );
-		$filename = $img->generate_filename( null, $upload_dir['basedir'] . '/downloads/', null );
+		$filename = $img->generate_filename( strtoupper( $size->slug ), $upload_dir['basedir'] . '/downloads/', null );
+		// remove params from file url, prevents save error below
+		$filename = strtok( $filename, '?' );
 		$response = $img->save( $filename );
+		//die(print_r($response));
 
-		if ( file_exists( $response['path'] ) ) {
-			$response['download'] = $upload_dir['baseurl'] . '/downloads/' . basename( $filename );
+		if ( ! is_wp_error( $response ) && file_exists( $response['path'] ) ) {
+			$response['download'] = $upload_dir['baseurl'] . '/downloads/' . $response['file'];
 		}
 
 	// download the original source file
 	} else {
-
 		$filename      = basename( $file_path );
-		$new_file_path = $upload_dir['basedir'] . '/downloads/' . $filename;
+		$new_file_path = $upload_dir['basedir'] . '/downloads/' . $current_user->user_login . '/' . $filename;
 
 		if ( copy( $file_path, $new_file_path ) ) {
-			$file_url              = $upload_dir['baseurl'] . '/downloads/' . $filename;
+			$file_url              = $upload_dir['baseurl'] . '/downloads/' . $current_user->user_login . '/' . $filename;
+			$file_url              = strtok( $file_url, '?' );
 			$response['file']      = $filename;
 			$response['mime-type'] = $mime_type;
 			$response['download']  = $file_url;

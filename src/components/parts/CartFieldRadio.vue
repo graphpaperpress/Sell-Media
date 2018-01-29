@@ -11,8 +11,9 @@
 					
 					<label :for="size.id">{{ size.name }}<span v-if="size.description"> ({{ size.description }})</span></label>
 
-					<a v-if="user" @click="downloadFile(size)" :title="labels.download" class="download">
-						<icon name="download"></icon>
+					<a v-if="user && size.name === 'S'" @click="downloadFile(size)" :title="labels.download" class="download">
+						<icon v-if="downloading === size" name="circle-o-notch" spin></icon>
+						<icon v-else name="download"></icon>
 					</a>
 
 				</div>
@@ -37,6 +38,7 @@ import download from 'downloadjs'
 			return {
 				user: this.$store.state.user,
 				selected: {},
+				downloading: false,
 				labels: {
 					price: sell_media.cart_labels.price,
 					choose: sell_media.cart_labels.choose,
@@ -65,6 +67,7 @@ import download from 'downloadjs'
 
 			downloadFile: function(size) {
 				const vm = this;
+				vm.downloading = size
 				if( ! vm.user ) {
 					return false;
 				}

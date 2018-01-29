@@ -183,11 +183,14 @@
 			},
 			getOtherSets: function() {
 				const vm = this;
-				console.log(vm.post)
+				// Search API response includes set with parent_id, WP API returns array of indexed ids
+				// Need to make these consistent in the future
+				let post_set = vm.post.set.parent_id ? vm.post.set.parent_id : vm.post.set[0]
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
-						set: vm.post.set ? vm.post.set[0] : null
+						set: post_set,
+						product_type_exclude: [6,7], // CHANGE THIS! IT'S HARDCODED. Exclude image and video product_types (term_id 6 and 7)
 					}
 				} )
 				.then( ( res ) => {
@@ -198,7 +201,7 @@
 					for ( let set of sets ) {
 						let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
 						let in_array = types.includes(type)
-						if ( ! in_array && type !== 'image' && type !== 'video' ) {
+						if ( ! in_array ) {
 							types.push(type)
 							other_sets.push(set)
 						}

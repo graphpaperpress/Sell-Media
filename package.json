@@ -58,6 +58,7 @@
     "parsleyjs": "^2.8.0",
     "portal-vue": "^1.2.2",
     "videojs-panorama": "^0.1.7",
+    "videojs-vr": "^1.0.3",
     "vue-awesome": "^2.3.4",
     "vue-axios": "^2.0.2",
     "vue-color": "^2.4.3",

@@ -2,28 +2,26 @@
 	<div :id="name" :class="name">
 
 		<searchform @search="getSearchResults" :loading="loading"></searchform>
+		
+		<div class="search-results-wrapper" v-if="!loading">
+		
+			<div class="content">
+				<p v-if="search && searchResults">{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
 
-		<div v-if="searchResults" class="search-results-total content" >
-			<p>{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
+				<p v-if="search && !searchResults">{{ search_labels.no_results }} {{ search_labels.results_for }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
+			</div>
+
+			<div :class="gridContainer" class="is-multiline has-text-centered">
+				<thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
+			</div>
+
+			<nav v-if="totalPages > 1" class="pagination">
+				<button class="button" v-if="showPrev" @click.prevent="showPrevPage()" :class="{ 'is-loading': loading }">Previous</button>
+				<span> {{ currentPage }} / {{ totalPages }} </span>
+				<button class="button" v-if="showNext" @click.prevent="showNextPage()" :class="{ 'is-loading': loading }">Next</button>
+			</nav>
+
 		</div>
-
-		<div v-if="searchResults === 0" class="search-results-total content" >
-			<p>{{ search_labels.no_results }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
-		</div>
-
-		<div v-if="loaded" :class="gridContainer" class="is-multiline has-text-centered">
-			<thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
-		</div>
-
-		<div v-else class="loading">
-			<div class="is-size-7">loading media...</div>
-		</div>
-
-		<nav v-if="totalPages > 1" class="pagination">
-			<button class="button" v-if="showPrev" @click.prevent="showPrevPage()" :class="{ 'is-loading': loading }">Previous</button>
-			<span> {{ currentPage }} / {{ totalPages }} </span>
-			<button class="button" v-if="showNext" @click.prevent="showNextPage()" :class="{ 'is-loading': loading }">Next</button>
-		</nav>
 
 	</div>
 </template>
@@ -36,14 +34,14 @@ import SearchForm from '../parts/SearchForm.vue';
 
 		mounted: function() {
 			const vm = this
-			const search = vm.$route.query.search
-			const type = vm.$route.query.type
+			const search = vm.$route.query.search ? vm.$route.query.search : vm.search
+			const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
 			const page = vm.$route.params.page ? vm.$route.params.page : '1'
-
+			
 			if ( search ) {
 				vm.getSearchResults( search, type, page )
 			} else {
-				vm.getPosts( page )
+				vm.getPosts()
 			}
 
 			vm.getUser()
@@ -61,7 +59,6 @@ import SearchForm from '../parts/SearchForm.vue';
 				postCollection: '',
 				postPerPage: sell_media.posts_per_page,
 				totalPages: '',
-				loaded: false,
 				loading: false,
 				pageTitle: '',
 				name: this.$options.name,
@@ -95,10 +92,9 @@ import SearchForm from '../parts/SearchForm.vue';
 						vm.currentPage = 1
 					}
 
-					vm.loading = false
-					vm.loaded = true
 					vm.pageTitle = 'Archive'
 					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.loading = false
 
 				} )
 				.catch( ( res ) => {
@@ -113,6 +109,10 @@ import SearchForm from '../parts/SearchForm.vue';
 				vm.search = search
 				vm.search_type = search_type
 
+				if ( search ) {
+					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
+				}
+
 				vm.$http.get( '/wp-json/sell-media/v2/search', {
 					params: {
 						s: search,
@@ -123,20 +123,18 @@ import SearchForm from '../parts/SearchForm.vue';
 				} )
 				.then( ( res ) => {
 					vm.posts = res.data
-					vm.searchResults = res.headers[ 'x-wp-total' ]? res.headers[ 'x-wp-total' ] : 0 //res.data ? res.data.length : 0
-					vm.totalPages = res.headers[ 'x-wp-totalpages' ]
-
+					vm.searchResults = res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0
+					vm.totalPages = res.headers[ 'x-wp-totalpages' ] ? res.headers[ 'x-wp-totalpages' ] : 1
+					
 					if ( pageNumber <= parseInt( vm.totalPages ) ) {
-						vm.currentPage = parseInt( pageNumber );
+						vm.currentPage = parseInt( pageNumber )
 					} else {
-						vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
-						vm.currentPage = 1;
+						vm.currentPage = 1
 					}
 
-					vm.loading = false
-					vm.loaded = true
 					vm.pageTitle = 'Search results for: ' + search
 					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.loading = false
 
 				} )
 				.catch( ( res ) => {
@@ -148,6 +146,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				this.searchResults = false
 				this.search = ''
 				this.search_type = ''
+				this.$router.push( { name: 'archive' } );
 				this.getPosts()
 			},
 
@@ -192,7 +191,13 @@ import SearchForm from '../parts/SearchForm.vue';
 		watch: {
 
 			'$route'( to, from ) {
-				this.getPosts( this.$route.params.page )
+				const vm = this
+				if ( vm.search ) {
+					vm.getSearchResults( vm.search, vm.search_type, vm.$route.params.page )
+				} else {
+					vm.getPosts( vm.$route.params.page )
+				}
+				
 			}
 
 		},
@@ -209,12 +214,9 @@ import SearchForm from '../parts/SearchForm.vue';
 		margin: 2rem auto;
 	}
 
-	.loading {
-		min-height: 600px;
-	}
-
 	.reset-search {
 		color: #ff2b56;
 		cursor: pointer;
 	}
+	
 </style>

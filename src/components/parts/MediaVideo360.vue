@@ -31,12 +31,14 @@
 		computed: {
 			player: function() {
 				this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
-				
-				let player = VideoJs( this.$refs.videoPlayer.id, {}, function(){})
-				player.panorama({
-					clickAndDrag: true
-				})
-				return player
+				let videos = VideoJs.players
+				if (!videos.hasOwnProperty(this.$refs.videoPlayer)) {
+					let player = VideoJs( this.$refs.videoPlayer, {}, function(){})
+					player.panorama({
+						clickAndDrag: true
+					})
+					return player
+				}
 			}
 		},
 
