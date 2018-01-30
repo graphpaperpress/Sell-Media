@@ -146,7 +146,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				this.searchResults = false
 				this.search = ''
 				this.search_type = ''
-				this.$router.push( { name: 'archive' } );
+				this.$router.push( { name: 'archive', query: {} } );
 				this.getPosts()
 			},
 

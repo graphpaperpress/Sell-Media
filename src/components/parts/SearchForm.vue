@@ -167,7 +167,7 @@
 			return {
 				types: {},
 				labels: sell_media.search_labels,
-				search_type: this.$route.query.type ? this.$route.query.type : '',
+				search_type: this.$route.query.type ? this.$route.query.type : 'image',
 				search: this.$route.query.search ? this.$route.query.search : '',
 				showFilters: false,
 				colors: defaultColors,

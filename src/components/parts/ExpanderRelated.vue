@@ -5,17 +5,17 @@
 
 			<div class="columns">
 				<div class="column is-half has-text-center">
-					<media :post="post" :type="productType"></media>
+					<media :post="currentPost" :type="productType"></media>
 				</div>
 				<div class="column is-half has-text-left">
 
 					<div class="cart-container columns">
 						<div class="product-info column is-one-third">
-							<p class="is-size-7" v-if="attachment">Product ID: <router-link :to="{ name: 'item', params: { slug: post.slug }}"><span class="is-uppercase">{{ attachment.slug }}</span></router-link></p>
-							<p class="is-size-7" v-if="post.sell_media_meta.set && post.sell_media_meta.set[0]">Location ID: <span class="is-uppercase">{{ post.sell_media_meta.set[0].name }}</span></p>
+							<p class="is-size-7" v-if="attachment">Product ID: <router-link :to="{ name: 'item', params: { slug: currentPost.slug }}"><span class="is-uppercase">{{ attachment.slug }}</span></router-link></p>
+							<p class="is-size-7" v-if="currentPost.sell_media_meta.set && currentPost.sell_media_meta.set[0]">Location ID: <span class="is-uppercase"><router-link :to="{ name: 'archive', query: { search: currentPost.sell_media_meta.set[0].slug }}">{{ currentPost.sell_media_meta.set[0].name }}</router-link></span></p>
 						</div>
 						<div class="column">
-							<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
+							<cart-form :key="currentPost.slug" :post="currentPost" :attachment="attachment" :multiple="multiple"></cart-form>
 						</div>
 					</div>
 
@@ -33,7 +33,7 @@
 						v-if="index < 10"
 						@click="getPost(item)"
 						class="button is-small"
-						:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]"
+						:class="[ currentPost.id === item.id ? 'is-light' : 'is-dark' ]"
 						:data-slug="item.slug">
 						<template v-if="index < 9">0</template>{{ index + 1 }}
 						</button>
@@ -54,7 +54,7 @@
 						v-if="index < 10"
 						@click="getPost(item)"
 						class="button is-small"
-						:class="[ post.id === item.id ? 'is-light' : 'is-dark' ]"
+						:class="[ currentPost.id === item.id ? 'is-light' : 'is-dark' ]"
 						:data-slug="item.slug">
 						<template v-if="index < 9">0</template>{{ index + 1 }}
 						</button>
@@ -67,11 +67,25 @@
 						v-for="(item,index) in otherSets"
 						@click="getProductTypeSets(item)"
 						class="button is-small"
-						:class="[ post.sell_media_meta.product_type[0].name === item.sell_media_meta.product_type[0].name ? 'is-light' : 'is-dark' ]"
+						:class="[ currentPost.sell_media_meta.product_type[0].name === item.sell_media_meta.product_type[0].name ? 'is-light' : 'is-dark' ]"
 						:data-slug="item.slug">
 						{{ item.sell_media_meta.product_type[0].name }}
 						</button>
 
+					</div>
+
+					<div v-if="productType !== 'image'" id="slideshow-thumbnails" class="slideshow-thumbnails">
+						<div
+						:class="gridContainer" class="is-multiline has-text-centered">
+							<div
+							v-for="(item, index) in productTypeSets"
+							@click="getPost(item)"
+							:class="[{ active: currentPost.id === item.id}, gridLayout]">
+								<div class="slideshow-thumbnail">
+									<img :src="item.sell_media_featured_image.sizes.medium[0]" :alt="item.sell_media_featured_image.title" />
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<portal-target v-if="productType === 'image'" name="slideshow-thumbnails"></portal-target>
@@ -94,6 +108,7 @@
 		data: function () {
 			return {
 				user: this.$store.state.user,
+				currentPost: this.post,
 				attachments: {},
 				multiple: false,
 				search_labels: sell_media.search_labels,
@@ -119,21 +134,21 @@
 		},
 
 		created: function() {
-			this.attachments = this.post.sell_media_attachments;
+			this.attachments = this.currentPost.sell_media_attachments;
 			let count = Object.keys(this.attachments);
 			this.multiple = count.length > 1 ? true : false;
 		},
 
 		methods: {
 			getPost: function(item) {
-				this.post = item
+				this.currentPost = item
 				this.$store.commit( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id } )
 			},
 			getSets: function() {
 				const vm = this
-				let type = ( vm.post.sell_media_meta.product_type && vm.post.sell_media_meta.product_type[0].slug ) ? vm.post.sell_media_meta.product_type[0].slug : null
+				let type = ( vm.currentPost.sell_media_meta.product_type && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
 				// image and video product types should show child term, all others should show parent term.
-				let set_id = ( type === 'image' || type === 'video' ) ? vm.post.sell_media_meta.set[1].term_id : vm.post.sell_media_meta.set[0].term_id
+				let set_id = ( type === 'image' || type === 'video' ) ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
 
 				if ( ! set_id ) {
 					vm.setsLoaded = true
@@ -172,7 +187,7 @@
 				const vm = this;
 				// Search API response includes set with parent_id, WP API returns array of indexed ids
 				// Need to make these consistent in the future
-				let post_set = vm.post.set.parent_id ? vm.post.set.parent_id : vm.post.set[0]
+				let post_set = vm.currentPost.set.parent_id ? vm.currentPost.set.parent_id : vm.currentPost.set[0]
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
@@ -203,7 +218,7 @@
 			},
 			getProductTypeSets: function(item) {
 				const vm = this
-				vm.post = item
+				vm.currentPost = item
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
@@ -235,10 +250,10 @@
 
 		computed: {
 			productType: function () {
-				return this.post.sell_media_meta.product_type[0] ? this.post.sell_media_meta.product_type[0].slug : null
+				return this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
 			},
 			attachment: function() {
-				return this.post.sell_media_attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
+				return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
 			}
 		}
 	}

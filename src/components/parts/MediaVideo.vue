@@ -1,47 +1,86 @@
 <template>
-	<div class="videocontent" v-if="post.sell_media_attachments[0]" :id="'videocontent-' + post.id" :key="post.id">
-		<video
-		:id="'video-' + post.sell_media_attachments[0].id"
-		ref="videoPlayer"
-		class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9"
-		controls
-		preload="auto"
-		width="640"
-		height="264"
-		:poster="post.sell_media_featured_image.sizes.large[0]">
-			<source :src="post.sell_media_attachments[0].file" :type="post.sell_media_attachments[0].type">
-			<p class="vjs-no-js">
-				To view this video please enable JavaScript, and consider upgrading to a web browser that
-				<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-			</p>
-		</video>
+
+	<div class="videos">
+
+		<div class="videocontent">
+			<video
+			id="video"
+			ref="videoPlayer"
+			class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9"
+			controls
+			preload="auto"
+			width="640"
+			height="264"
+			:poster="poster">
+				<source :src="file" :type="type">
+			</video>
+		</div>
+
+		<portal to="video-thumbnails">
+			<div id="video-thumbnails" class="video-thumbnails">
+				<div
+				:class="gridContainer"
+				class="is-multiline has-text-centered">
+					<div
+					v-for="(video, index) in post.sell_media_attachments"
+					@click="getVideo(index)"
+					:class="[{ active: currentVideo === index}, gridLayout]">
+						<div class="video-thumbnail">
+							<img :src="video.file.slice(0, -4) + '.jpg'" :alt="video.title" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</portal>
+
 	</div>
+
 </template>
 
 <script>
+
 	import VideoJs from 'video.js'
 	require('!style-loader!css-loader!video.js/dist/video-js.css')
 	window.HELP_IMPROVE_VIDEOJS = false
 
 	export default {
+
 		props: ['post'],
 
-		mounted: function() {
-			this.player
+		data: function() {
+			return {
+				currentVideo: 0,
+				file: '',
+				type: '',
+				poster: '',
+				gridLayout: this.$store.getters.gridLayout,
+				gridContainer: this.$store.getters.gridLayoutContainer,
+			}
 		},
 
-		updated: function() {
-			this.player
+		mounted: function() {
+			const vm = this
+			vm.getVideo(0)
+		},
+
+		methods: {
+			getVideo: function(index) {
+				const vm = this
+				vm.currentVideo = index
+				vm.file = vm.post.sell_media_attachments[index].file
+				vm.type = vm.post.sell_media_attachments[index].type
+				vm.poster = vm.file.slice(0, -4) + '.jpg'
+
+				let attachment = vm.post.sell_media_attachments[index]
+				vm.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+
+				vm.player.src({src: vm.file, type: vm.type})
+			}
 		},
 
 		computed: {
 			player: function() {
-				this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
-				let videos = VideoJs.players
-				if (!videos.hasOwnProperty(this.$refs.videoPlayer)) {
-					return VideoJs( this.$refs.videoPlayer, {}, function(){})
-				}
-				
+				return VideoJs(this.$refs.videoPlayer, {}, function(){})
 			}
 		},
 
@@ -51,7 +90,8 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
 	.videocontent {
 		width: 100%;
 		position: relative;
@@ -65,4 +105,28 @@
 			left: 0;
 		}
 	}
+
+	.video-thumbnails {
+		margin: 1rem auto;
+		text-align: center;
+
+		.column,
+		.is-horizontal-masonry {
+
+			&:hover {
+				cursor: pointer;
+			}
+
+			.video-thumbnail {
+				border: 1px solid transparent;
+				padding: 5px;
+			}
+
+			&.active .video-thumbnail {
+				border: 1px solid #000;
+				background: #444;
+			}
+		}
+	}
+
 </style>

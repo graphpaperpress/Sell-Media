@@ -5,18 +5,12 @@
 			<media-panorama :post="post"></media-panorama>
 		</template>
 		<template v-else-if="type === 'video'">
-			<template v-if="multiple">
-				<media-video-gallery :post="post"></media-video-gallery>
-			</template>
-			<template v-else>
-				<media-video :post="post"></media-video>
-			</template>
+			<media-video :post="post"></media-video>
 		</template>
-		
 		<template v-else-if="type === '360-video'">
 			<media-video-360 :post="post"></media-video-360>
 		</template>
-		<template v-else-if="multiple">
+		<template v-else-if="'undefined' !== typeof post.sell_media_attachments && Object.keys(post.sell_media_attachments).length > 1">
 			<media-slideshow :post="post"></media-slideshow>
 		</template>
 		<template v-else>
@@ -28,7 +22,6 @@
 <script>
 
 	import MediaPanorama from './MediaPanorama.vue';
-	import MediaVideoGallery from './MediaVideoGallery.vue';
 	import MediaVideo from './MediaVideo.vue';
 	import MediaVideo360 from './MediaVideo360.vue';
 	import MediaSlideshow from './MediaSlideshow.vue';
@@ -38,8 +31,7 @@
 
 		data: function() {
 			return {
-				loaded: false,
-				multiple: 'undefined' !== typeof this.post.sell_media_attachments && Object.keys(this.post.sell_media_attachments).length > 1 ? true : false,
+				loaded: false
 			}
 		},
 
@@ -49,7 +41,6 @@
 
 		components: {
 			'media-panorama': MediaPanorama,
-			'media-video-gallery': MediaVideoGallery,
 			'media-video': MediaVideo,
 			'media-video-360': MediaVideo360,
 			'media-slideshow': MediaSlideshow,
