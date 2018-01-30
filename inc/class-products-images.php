@@ -253,6 +253,11 @@ class SellMediaImages extends SellMediaProducts {
 
 		$original_protected_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
 
+		// bail if the original image doesn't exist or if it's hosted at S3
+		if ( ! file_exists( $original_protected_file ) ) {
+			return;
+		}
+
 		// check if attachment is an image
 		if ( wp_attachment_is_image( $attachment_id ) && '' != $original_protected_file ) {
 			list( $width, $height, $type, $attr ) = getimagesize( $original_protected_file );

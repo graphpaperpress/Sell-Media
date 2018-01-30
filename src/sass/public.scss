@@ -29,8 +29,9 @@
 			}
 		}
 
-		.slideshow-thumbnail img {
-			height: 50px;
+		.slideshow-thumbnail img,
+		.video-thumbnail img {
+			height: 80px;
 		}
 	}
 }

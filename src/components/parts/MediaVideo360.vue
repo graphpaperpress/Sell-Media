@@ -49,8 +49,17 @@
 </script>
 
 <style lang="scss" scoped>
-.videocontent{
-	width: 640px;
-	height: 264px;
-}
+	.videocontent {
+		width: 100%;
+		position: relative;
+		padding-top: 56.25%;
+
+		.video-js {
+			height: 100% !important; 
+			width: 100% !important;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
 </style>

@@ -74,21 +74,8 @@
 
 					</div>
 
-					<div v-if="productType !== 'image'" id="slideshow-thumbnails" class="slideshow-thumbnails">
-						<div
-						:class="gridContainer" class="is-multiline has-text-centered">
-							<div
-							v-for="(item, index) in productTypeSets"
-							@click="getPost(item)"
-							:class="[{ active: post.id === item.id}, gridLayout]">
-								<div class="slideshow-thumbnail">
-									<img :src="item.sell_media_featured_image.sizes.medium[0]" :alt="item.sell_media_featured_image.title" />
-								</div>
-							</div>
-						</div>
-					</div>
-
 					<portal-target v-if="productType === 'image'" name="slideshow-thumbnails"></portal-target>
+					<portal-target v-if="productType === 'video'" name="video-thumbnails"></portal-target>
 
 				</div>
 

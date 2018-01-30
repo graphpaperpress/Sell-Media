@@ -182,14 +182,13 @@ function sell_media_api_download_file( $data, $action ) {
 			$img->resize( $max, $max, false );
 		}
 		$img->set_quality( 100 );
-		$filename = $img->generate_filename( strtoupper( $size->slug ), $upload_dir['basedir'] . '/downloads/', null );
+		$filename = $img->generate_filename( strtoupper( $size->slug ), $upload_dir['basedir'] . '/downloads/' . $current_user->user_login . '/', null );
 		// remove params from file url, prevents save error below
 		$filename = strtok( $filename, '?' );
 		$response = $img->save( $filename );
-		//die(print_r($response));
 
 		if ( ! is_wp_error( $response ) && file_exists( $response['path'] ) ) {
-			$response['download'] = $upload_dir['baseurl'] . '/downloads/' . $response['file'];
+			$response['download'] = $upload_dir['baseurl'] . '/downloads/' . $current_user->user_login . '/' . $response['file'];
 		}
 
 	// download the original source file

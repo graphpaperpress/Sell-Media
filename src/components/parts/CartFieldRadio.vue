@@ -11,7 +11,7 @@
 					
 					<label :for="size.id">{{ size.name }}<span v-if="size.description"> ({{ size.description }})</span></label>
 
-					<a v-if="user && size.name === 'S'" @click="downloadFile(size)" :title="labels.download" class="download">
+					<a v-if="user" @click="downloadFile(size)" :title="labels.download" class="download">
 						<icon v-if="downloading === size" name="circle-o-notch" spin></icon>
 						<icon v-else name="download"></icon>
 					</a>
@@ -108,6 +108,7 @@ import download from 'downloadjs'
 		text-align: center;
 		border: 1px solid $white;
 		width: 36px;
+		vertical-align: top;
 
 		&.wide {
 			width: 50px;

@@ -9,7 +9,7 @@
 		width="640"
 		height="264"
 		:poster="post.sell_media_featured_image.sizes.large[0]">
-			<source :src="post.sell_media_attachments[0].file" :type='post.sell_media_attachments[0].type'>
+			<source :src="post.sell_media_attachments[0].file" :type="post.sell_media_attachments[0].type">
 			<p class="vjs-no-js">
 				To view this video please enable JavaScript, and consider upgrading to a web browser that
 				<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -52,8 +52,17 @@
 </script>
 
 <style lang="scss" scoped>
-.videocontent {
-	width: 640px;
-	height: 264px;
-}
+	.videocontent {
+		width: 100%;
+		position: relative;
+		padding-top: 56.25%;
+
+		.video-js {
+			height: 100% !important; 
+			width: 100% !important;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
 </style>
