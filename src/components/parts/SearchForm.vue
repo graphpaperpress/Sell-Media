@@ -163,7 +163,7 @@
 
 		props: ['loading'],
 
-		data: function() {
+		data(){
 			return {
 				types: {},
 				labels: sell_media.search_labels,
@@ -217,13 +217,13 @@
 			}
 		},
 
-		mounted: function() {
+		mounted() {
 			this.getProductTypes();
 		},
 
 		methods: {
 
-			getProductTypes: function() {
+			getProductTypes(){
 				const vm = this;
 				vm.loaded = false;
 				vm.$http.get( '/wp-json/wp/v2/product_type' )
@@ -235,7 +235,7 @@
 				} )
 			},
 
-			remove: function(item, array) {
+			remove(item, array){
 				if ( array ) {
 					const index = array.indexOf(item);
 					array.splice(index, 1);
@@ -266,7 +266,11 @@
 
 .search-area {
 	.select {
-		width: 8rem;
+		width: inherit;
+
+		@media (max-width: 468px) {
+			width: 8rem;
+		}
 	}
 }
 
