@@ -173,7 +173,7 @@
 
 			checkout(){
 				const vm = this
-				// this.$checkout.close() 
+				// this.$checkout.close()
 				// is also available.
 				vm.$checkout.open({
 					currency: sell_media.currency,
@@ -182,24 +182,21 @@
 						// vm.submit(token);
 						vm.token = JSON.stringify(token, null, 2);
 
-						vm.$http.post( sell_media.ajaxurl, {
-							params: {
-								token: token,
-								args: args,
-								_wpnonce: sell_media.nonce,
-								action: 'charge',
-								type: 'stripe',
-								discount: vm.discount_code_value,
-								// encode these?
-								cart: localStorage.getItem('sell-media-cart'),
-								usage: localStorage.getItem('sell-media-usage'),
-							}
+						vm.$http.post( sell_media.ajaxurl + '?action=charge', {
+							token: token,
+							args: args,
+							_wpnonce: sell_media.nonce,
+							type: 'stripe',
+							discount: vm.discount_code_value,
+							// encode these?
+							cart: localStorage.getItem('sell-media-cart'),
+							usage: localStorage.getItem('sell-media-usage')
 						} )
 						.then( ( res ) => {
 							console.log(res)
 							this.$store.commit( 'deleteCart' )
 							this.$store.commit( 'deleteUsage' )
-                        	return window.location = res.url;
+                     return window.location = res.url;
 						} )
 						.catch( ( res ) => {
 							console.log( `Something went wrong : ${res}` );
@@ -304,7 +301,7 @@
 				return status
 			},
 			discountTotal(){
-				
+
 				if ( !this.discount || false === this.discount.status ) {
 					return 0
 				}
