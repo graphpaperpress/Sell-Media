@@ -75,7 +75,7 @@
 				</div>
 
 				<div class="discount item" v-if="discountTotal > 0">
-					{{ discount_code.labels.discount }}:
+					{{ discount_code_labels.discount_code }}:
 					<span class="value">
 						- {{ currency_symbol }}{{ discountTotal }}
 					</span>
@@ -85,7 +85,7 @@
 					{{ labels.total }}: <span class="value">{{ currency_symbol }}{{ total }}</span>
 				</div>
 
-				<div class="discount-control item" v-if="discount_code">
+				<div class="discount-control item" v-if="discount_code_labels">
 
 					<div class="field has-addons has-addons-right">
 						<div class="control has-icons-right">
