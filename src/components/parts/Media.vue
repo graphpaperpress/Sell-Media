@@ -10,8 +10,9 @@
 		<template v-else-if="type === '360-video'">
 			<media-video-360 :post="post"></media-video-360>
 		</template>
-		<template v-else-if="'undefined' !== typeof post.sell_media_attachments && Object.keys(post.sell_media_attachments).length > 1">
-			<media-slideshow :post="post"></media-slideshow>
+		<template v-else-if="'attachment' !== route && 'undefined' !== typeof post.sell_media_attachments && Object.keys(post.sell_media_attachments).length > 1">
+			<media-slideshow v-if="showSlideshow" :post="post"></media-slideshow>
+			<media-gallery v-else :post="post"></media-gallery>
 		</template>
 		<template v-else>
 			<featured-image :post="post" size="large"></featured-image>
@@ -25,17 +26,19 @@
 	import MediaVideo from './MediaVideo.vue';
 	import MediaVideo360 from './MediaVideo360.vue';
 	import MediaSlideshow from './MediaSlideshow.vue';
+	import MediaGallery from './MediaGallery.vue';
 
 	export default {
-		props: ['post', 'type'],
+		props: ['post', 'type', 'showSlideshow'],
 
-		data: function() {
+		data() {
 			return {
-				loaded: false
+				loaded: false,
+				route: this.$route.name
 			}
 		},
 
-		mounted: function() {
+		mounted() {
 			this.loaded = true
 		},
 
@@ -44,6 +47,7 @@
 			'media-video': MediaVideo,
 			'media-video-360': MediaVideo360,
 			'media-slideshow': MediaSlideshow,
+			'media-gallery': MediaGallery,
 		}
     }
 </script>

@@ -7,7 +7,7 @@
 			<button class="delete" aria-label="close" @click="$emit('closeModal')"></button>
 		 </header>
 		 <section class="modal-card-body">
-		 	<div class="control-group" v-for="(taxonomy,index) in licenses" :key="taxonomy" v-if="taxonomy.terms">
+		 	<div v-if="taxonomy.terms" class="control-group" v-for="(taxonomy,index) in licenses" :key="taxonomy">
 
 		 		<div class="columns">
 					<div class="column is-one-third">
@@ -29,7 +29,7 @@
 
 		 </section>
 		 <footer class="modal-card-foot">
-			<button class="button is-success" @click="apply(values)">{{ labels.apply }}</button>
+			<button class="button is-info" @click="apply(values)">{{ labels.apply }}</button>
 		 </footer>
 	  </div>
 	</div>

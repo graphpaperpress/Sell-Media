@@ -59,7 +59,7 @@ function sell_media_scripts( $hook ) {
 		);
 	}
 
-	wp_localize_script( 'sell_media', 'sell_media', array(
+	$localize_script_args = array(
 		'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
 		'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
 		'site_name' => esc_html( get_bloginfo( 'name' ) ),
@@ -177,7 +177,9 @@ function sell_media_scripts( $hook ) {
 		'licensing_enabled' => sell_media_licensing_enabled(),
 		'licensing_markup_taxonomies' => sell_media_get_license_markup_taxonomies(),
 		'nonce' => wp_create_nonce( 'wp_rest' ),
-	) );
+	);
+
+	wp_localize_script( 'sell_media', 'sell_media', apply_filters( 'sell_media_localize_script', $localize_script_args ) );
 
 	do_action( 'sell_media_scripts_hook' );
 }

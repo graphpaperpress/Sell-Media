@@ -61,7 +61,9 @@
     "videojs-vr": "^1.0.3",
     "vue-awesome": "^2.3.4",
     "vue-axios": "^2.0.2",
+    "vue-body-class": "^2.0.0-beta.2",
     "vue-color": "^2.4.3",
+    "vue-stripe-checkout": "0.0.4",
     "vue-waterfall": "^1.0.6",
     "vuex-persistedstate": "^2.4.2",
     "vuex-router-sync": "^5.0.0"

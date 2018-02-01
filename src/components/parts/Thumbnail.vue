@@ -76,7 +76,7 @@
 	.is-horizontal-masonry {
 		
 		&.active {
-			height: 600px;
+			height: 750px;
 
 			.item-link {
 				position: relative;

@@ -2,22 +2,13 @@
 	<div id="lightbox">
 
 		<div v-if="products.length > 0" class="content">
-			<nav class="buttons has-addons">
-				<button class="button" @click="addAll" :title="lightbox_labels.add_all">
-					<span class="icon">
-						<icon name="plus"></icon>
-	      			</span>
+			<nav class="buttons">
+				<button class="button is-small" @click="addAll" :title="lightbox_labels.add_all">
 	      			<span>{{ lightbox_labels.add_all }}</span>
 	      		</button>
-				<button class="button" @click="removeAll" :title="lightbox_labels.remove_all">
-					<span class="icon">
-						<icon name="minus"></icon>
-	      			</span>
+				<button class="button is-small" @click="removeAll" :title="lightbox_labels.remove_all">
 	      			<span>{{ lightbox_labels.remove_all }}</span>
 	      		</button>
-				<router-link :to="{ name: 'archive' }" class="button">
-	      			<span>{{ search_labels.back }} &raquo;</span>
-	      		</router-link>
 	      	</nav>
 
 	  		<p v-if="addedAllToCart">
@@ -30,11 +21,11 @@
 			{{ lightbox_labels.empty }}. <router-link :to="{ name: 'archive' }">{{ search_labels.back }} &raquo;</router-link>
 		</div>
 
-		<div v-if="loaded" :class="gridContainer" class="columns is-multiline has-text-centered">
-			<div v-for="(product, index) in products" :key="index" class="column" :class="gridLayout">
+		<div v-if="loaded" class="columns is-multiline is-size-7">
+			<div v-for="(product, index) in products" :key="index" class="column is-one-quarter lightbox-item">
+				<button class="delete" @click="remove(product)"></button>
 				<img :src="product.img" />
 				<p class="is-hidden-mobile">{{ product.title }}</p>
-				<p><span @click="remove(product)" :title="lightbox_labels.remove" class="remove">{{ lightbox_labels.remove }}</span></p>
 			</div>
 		</div>
 
@@ -49,7 +40,7 @@
 
 	export default {
 
-		data: function() {
+		data() {
 			return {
 				products: this.$store.state.lightbox,
 				loaded: false,
@@ -62,7 +53,7 @@
 			}
 		},
 
-		mounted: function() {
+		mounted() {
 			this.loaded = true
 		},
 
@@ -85,10 +76,18 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.lightbox-item {
+		position: relative;
+
+		.delete {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
 	.remove {
 		color: #ff2b56;
-		font-size: .75rem;
 		cursor: pointer;
 	}
 </style>

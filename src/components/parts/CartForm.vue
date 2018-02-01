@@ -27,26 +27,27 @@
 					<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-select>
 				</template>
 				
-				<div class="buttons">
-					<button class="button is-info" @click="addTo('cart')" :disabled="disabled">{{ add }}</button>
+				<div class="button-wrap">
+					<div class="buttons">
+						<button :class="buttonSize" class="button is-info" @click="addTo('cart')" :title="add">{{ add }}</button>
 
-					<button class="button is-info" @click="addTo('lightbox')" :disabled="disabled" :title="save_to_lightbox">
-						<span class="icon">
-							<icon name="heart"></icon>
-						</span>
-					</button>
+						<button :class="buttonSize" class="button is-info" @click="addTo('lightbox')" :title="save_to_lightbox">
+							<span class="icon">
+								<icon name="heart"></icon>
+							</span>
+						</button>
+					</div>
+					<div class="notifications">
+						<div v-if="added" class="content" :class="textSize">
+							{{ added_to_cart }}
+							<router-link :to="{ name: 'checkout' }" class="view">{{ view_cart }} &raquo;</router-link>
+						</div>
 
+						<div v-if="saved" class="content" :class="textSize">
+							<router-link :to="{ name: 'lightbox' }" class="view">{{ view_lightbox }} &raquo;</router-link>
+						</div>
+					</div>
 				</div>
-
-			</div>
-
-			<div v-if="added" class="content is-size-7">
-				{{ added_to_cart }}
-				<router-link :to="{ name: 'checkout' }" class="view">{{ view_cart }} &raquo;</router-link>
-			</div>
-
-			<div v-if="saved" class="content">
-				<router-link :to="{ name: 'lightbox' }" class="view is-size-7">{{ view_lightbox }} &raquo;</router-link>
 			</div>
 
 		</form>
@@ -64,7 +65,7 @@
 
 		props: ['post', 'attachment', 'multiple'],
 
-		data: function() {
+		data(){
 
 			return {
 				cart: {},
@@ -85,10 +86,12 @@
 				view_lightbox: sell_media.lightbox_labels.view,
 
 				disabled: true,
+				buttonSize: ('attachment' === this.$route.name || 'item' === this.$route.name) ? 'is-large' : '',
+				textSize: ('attachment' === this.$route.name || 'item' === this.$route.name) ? 'is-normal' : 'is-size-7',
 			}
 		},
 
-		created: function() {
+		created(){
 			// set fields object, make prints first tab
 			this.fields = this.post.sell_media_meta.sell.reverse()
 			// set active tab to first field and show corresponding price group
@@ -97,18 +100,18 @@
 
 		methods: {
 
-			showTabs: function(post) {
+			showTabs(post){
 				if ( post.sell_media_meta.sell.length > 1 ) {
 					return true
 				}
 			},
 
-			selectedTab: function(field) {
+			selectedTab(field){
 				this.active = field
 				this.disabled = true
 			},
 
-			setCart: function(value) {
+			setCart(value){
 				// this feels wrong
 				// set product price, type and qty
 				this.cart = {
@@ -122,14 +125,30 @@
 				this.disabled = false
 			},
 
-			addTo: function($where) {
+			addTo($where){
+				if (this.disabled) {
+					return alert('Please select a size first');
+				}
+				console.log(this.attachment)
+				// attachment object data differs depending on which json api endpoint is requested.
+				// so, we'll check for all the various locations in a logical order
+				let img = ''
+				if ( this.attachment.sizes && this.attachment.sizes.medium ) {
+					img = this.attachment.sizes.medium[0]
+				} else if ( this.attachment.source_url ) {
+					img = this.attachment.source_url
+				} else {
+					img = this.post.sell_media_featured_image.sizes.medium[0]
+				}
+
+
 				// this feels wrong
 				// add currently visible post and attachment
 				this.cart = {
 					'id': Number(this.post.id),
 					'title': this.attachment.title,
 					'attachment_id': Number(this.attachment.id),
-					'img': this.multiple ? this.attachment.sizes.medium[0] : this.post.sell_media_featured_image.sizes.medium[0],
+					'img': img,
 					'price_id': this.cart.price_id,
 					'price': Number(this.cart.price).toFixed(2),
 					'price_name': this.cart.price_name,
@@ -151,7 +170,7 @@
 				this.disabled = true
 			},
 
-			validateForm() {
+			validateForm(){
 
 			}
 		},
@@ -165,9 +184,26 @@
 </script>
 
 <style lang="scss">
+
+	.form {
+		display: inline-block;
+	}
 	
-	.view {
-		color: #fff;
+	.expander {
+		.view {
+			color: #fff;
+		}
+	}
+
+	.button-wrap {
+		position: relative;
+		float: left;
+
+		.notifications {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
 	}
 
 </style>

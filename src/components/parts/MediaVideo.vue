@@ -47,8 +47,9 @@
 
 		props: ['post'],
 
-		data: function() {
+		data(){
 			return {
+				player: '',
 				currentVideo: 0,
 				file: '',
 				type: '',
@@ -58,13 +59,13 @@
 			}
 		},
 
-		mounted: function() {
+		mounted(){
 			const vm = this
 			vm.getVideo(0)
 		},
 
 		methods: {
-			getVideo: function(index) {
+			getVideo(index){
 				const vm = this
 				vm.currentVideo = index
 				vm.file = vm.post.sell_media_attachments[index].file
@@ -74,17 +75,13 @@
 				let attachment = vm.post.sell_media_attachments[index]
 				vm.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
-				vm.player.src({src: vm.file, type: vm.type})
+				let player = VideoJs(this.$refs.videoPlayer, {}, function(){})
+				player.src({src: vm.file, type: vm.type})
+				vm.player = player
 			}
 		},
 
-		computed: {
-			player: function() {
-				return VideoJs(this.$refs.videoPlayer, {}, function(){})
-			}
-		},
-
-		beforeDestroy() { 
+		beforeDestroy(){ 
 			this.player.dispose()
 		}
 	}
@@ -117,14 +114,42 @@
 				cursor: pointer;
 			}
 
+			&.active {
+				height: auto; // override parent height: 600 applied to expander grid
+			}
+
 			.video-thumbnail {
 				border: 1px solid transparent;
 				padding: 5px;
+				position: relative;
+				display: inline-block;
+				cursor: pointer;
+
+				&:before {
+					position: absolute;
+					top: calc(50% - 10px);
+					left: 50%;
+					opacity: .8;
+					text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+
+					border-width: 10px 10px 10px 18px;
+					border-color: transparent transparent transparent rgba(255,255,255,0.5);
+					border-style: solid;
+					content: '';
+				}
+				
+				&:hover:before {
+					border-color: transparent transparent transparent rgba(255,255,255,1);
+				}
 			}
 
 			&.active .video-thumbnail {
 				border: 1px solid #000;
 				background: #444;
+
+				&:before {
+					border-color: transparent transparent transparent rgba(255,255,255,1);
+				}
 			}
 		}
 	}

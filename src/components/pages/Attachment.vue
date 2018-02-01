@@ -2,16 +2,23 @@
 
 	<div v-if="loaded">
 
-		<h2 class="title">{{ attachment.title.rendered }}</h2>
+		<h2 class="title">{{ attachment.title }}</h2>
 
 		<div class="columns">
 
 			<div :class="pageLayout.content">
-				<img
-					:src="attachment.media_details.sizes.large.source_url" 
-					:data-srcset="attachment.media_details.sizes.large.source_url"
-					:alt="attachment.alt_text"
-				/>
+				<template v-if="type === 'panorama' || type === 'dome'">
+					<media-panorama :post="post"></media-panorama>
+				</template>
+				<template v-else-if="type === 'video'">
+					<media-video :post="post"></media-video>
+				</template>
+				<template v-else-if="type === '360-video'">
+					<media-video-360 :post="post"></media-video-360>
+				</template>
+				<template v-else>
+					<img :src="attachment.media_details.sizes.large.source_url" :alt="attachment.alt"/>
+				</template>
 			</div>
 
 			<div :class="pageLayout.sidebar">
@@ -28,15 +35,11 @@
 
 	export default {
 
-		mounted: function() {
-			this.getAttachment()
-		},
-
-		data: function() {
+		data() {
 			return {
-				base_path: sell_media.site_url,
 				post: {},
 				attachment: {},
+				type: '',
 				loaded: false,
 				multiple: false,
 				pageTitle: '',
@@ -44,9 +47,13 @@
 			};
 		},
 
+		mounted() {
+			this.getAttachment()
+		},
+
 		methods: {
 
-			getAttachment: function() {
+			getAttachment(){
 
 				const vm = this;
 
@@ -58,11 +65,12 @@
 				.then( ( res ) => {
 
 					vm.attachment = res.data[0]
+					console.log(vm.attachment)
 					vm.attachment.title = vm.attachment.title.rendered
 					vm.pageTitle = vm.attachment.title.rendered
 					vm.$store.commit( 'changeTitle', vm.pageTitle )
 
-					this.getPost()
+					this.getPost(vm.attachment.post)
 
 				} )
 				.catch( ( res ) => {
@@ -73,17 +81,18 @@
 
 			},
 
-			getPost: function() {
+			getPost(id){
 
 				const vm = this;
 
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
-						include: vm.attachment.post
+						include: id
 					}
 				} )
 				.then( ( res ) => {
 					vm.post = res.data[0]
+					vm.type = vm.post.sell_media_meta.product_type[0].slug
 					vm.loaded = true
 				} )
 				.catch( ( res ) => {

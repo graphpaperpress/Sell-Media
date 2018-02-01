@@ -5,13 +5,13 @@
 
 			<div class="columns">
 				<div class="column is-half has-text-center">
-					<media :post="currentPost" :type="productType"></media>
+					<media :post="currentPost" :type="productType" :showSlideshow="showSlideshow"></media>
 				</div>
 				<div class="column is-half has-text-left">
 
 					<div class="cart-container columns">
 						<div class="product-info column is-one-third">
-							<p class="is-size-7" v-if="attachment">Product ID: <router-link :to="{ name: 'item', params: { slug: currentPost.slug }}"><span class="is-uppercase">{{ attachment.slug }}</span></router-link></p>
+							<p class="is-size-7" v-if="attachment">Product ID: <router-link :to="{ name: 'attachment', params: { prefix: currentPost.slug, slug: attachment.slug }}"><span class="is-uppercase">{{ attachment.slug }}</span></router-link></p>
 							<p class="is-size-7" v-if="currentPost.sell_media_meta.set && currentPost.sell_media_meta.set[0]">Location ID: <span class="is-uppercase"><router-link :to="{ name: 'archive', query: { search: currentPost.sell_media_meta.set[0].slug }}">{{ currentPost.sell_media_meta.set[0].name }}</router-link></span></p>
 						</div>
 						<div class="column">
@@ -74,14 +74,14 @@
 
 					</div>
 
-					<div v-if="productType !== 'image'" id="slideshow-thumbnails" class="slideshow-thumbnails">
+					<div v-if="productType !== 'image' && productType !== 'video'" :id="thumbnailStyle + '-thumbnails'" :class="thumbnailStyle + '-thumbnails'">
 						<div
 						:class="gridContainer" class="is-multiline has-text-centered">
 							<div
 							v-for="(item, index) in productTypeSets"
 							@click="getPost(item)"
 							:class="[{ active: currentPost.id === item.id}, gridLayout]">
-								<div class="slideshow-thumbnail">
+								<div :class="thumbnailStyle + '-thumbnail'">
 									<img :src="item.sell_media_featured_image.sizes.medium[0]" :alt="item.sell_media_featured_image.title" />
 								</div>
 							</div>
@@ -110,6 +110,7 @@
 				user: this.$store.state.user,
 				currentPost: this.post,
 				attachments: {},
+				showSlideshow: true,
 				multiple: false,
 				search_labels: sell_media.search_labels,
 				cart_labels: sell_media.cart_labels,
@@ -119,6 +120,7 @@
 				productTypeSets: [],
 				gridLayout: this.$store.getters.gridLayout,
 				gridContainer: this.$store.getters.gridLayoutContainer,
+				thumbnailStyle: 'slideshow',
 			}
 		},
 
@@ -250,7 +252,11 @@
 
 		computed: {
 			productType: function () {
-				return this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
+				let type = this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
+				if ( '360-video' === type || 'video' === type ) {
+					this.thumbnailStyle = 'video'
+				}
+				return type
 			},
 			attachment: function() {
 				return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
@@ -308,6 +314,7 @@
 
 		.total {
 			display: none;
+			margin-bottom: 0 !important;
 		}
 
 	}
@@ -334,7 +341,7 @@
 	}
 
 	.product-info a {
-		color: $white;
+		font-weight: 900;
 	}
 
 	.set-container {

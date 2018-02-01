@@ -90,6 +90,8 @@ import download from 'downloadjs'
 				.catch( ( res ) => {
 					console.log( `Something went wrong : ${res}` );
 				} );
+
+				vm.downloading = false
 			},
 		}
 	}
@@ -98,6 +100,7 @@ import download from 'downloadjs'
 <style lang="scss" scoped>
 
 	$white: #fff;
+	$light: #ddd;
 	$primary: #1496ed;
 
 	.total {
@@ -105,10 +108,15 @@ import download from 'downloadjs'
 	}
 
 	.radio {
+		border: 1px solid $light;
 		text-align: center;
-		border: 1px solid $white;
-		width: 36px;
+		width: 50px;
 		vertical-align: top;
+
+		.expander & {
+			border-color: $white;
+			width: 36px;
+		}
 
 		&.wide {
 			width: 50px;
@@ -126,14 +134,19 @@ import download from 'downloadjs'
 	}
 
 	label {
-		color: $white;
 		cursor: pointer;
 		display: block;
-		padding: 8px;
+		padding: 16px 0;
 		width: 100%;
-		height: 34px;
+		height: 50px;
 		overflow: hidden;
 		font-size: .75rem;
+
+		.expander & {
+			color: $white;
+			height: 34px;
+			padding: 8px;
+		}
 	}
 
 	input:hover + label,
@@ -143,10 +156,15 @@ import download from 'downloadjs'
 	}
 
 	.download {
-		border-top: 1px solid $white;
+		border-top: 1px solid $light;
 		display: block;
 		width: 100%;
-		padding: 5px 10px;
+		padding: 10px;
+
+		.expander & {
+			border-color: $white;
+			padding: 5px 10px;
+		}
 
 		&:hover {
 			color: $white;
@@ -155,8 +173,12 @@ import download from 'downloadjs'
 	}
 
 	.downloads-field {
-		float: left;
-		margin-right: .75rem;
+		margin-bottom: 2rem;
+
+		.expander & {
+			float: left;
+			margin: 0 .75rem 0 0;
+		}
 	}
 
 </style>

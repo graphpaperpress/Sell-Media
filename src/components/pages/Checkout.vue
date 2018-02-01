@@ -12,21 +12,21 @@
 			<!-- <cart-steps></cart-steps> -->
 
 			<!-- headings -->
-			<div class="columns is-mobile headings is-uppercase has-text-weight-bold">
+			<div class="columns is-mobile headings is-uppercase is-size-7-mobile has-text-weight-bold">
 				<div class="column">{{ labels.product }}</div>
-				<div class="column is-4 is-hidden-mobile">{{ labels.description }}</div>
+				<div class="column is-hidden-mobile">{{ labels.description }}</div>
 				<div class="column">{{ labels.qty }}</div>
 				<div class="column">{{ labels.price }}</div>
 				<div class="column has-text-right">{{ labels.sub_total }}</div>
 			</div>
 
 			<!-- products -->
-			<div class="columns is-mobile is-vcentered products" v-for="(product, index) in products" :key="index">
+			<div class="columns is-mobile is-size-7-mobile is-vcentered products" v-for="(product, index) in products" :key="index">
 				<div class="column">
 					<img :src="product.img" />
-					<p class="is-hidden-mobile">{{ product.title }}</p>
+					<p class="is-hidden-mobile is-size-7">{{ product.title }}</p>
 				</div>
-				<div class="column is-4 is-hidden-mobile">{{ product.price_name }} <span v-if="product.price_desc">-</span> {{ product.price_desc }}</div>
+				<div class="column is-hidden-mobile">{{ product.price_name }} <span v-if="product.price_desc">-</span> {{ product.price_desc }}</div>
 				<div class="column">
 					<div class="field has-addons">
 						<p class="control">
@@ -89,7 +89,7 @@
 
 					<div class="field has-addons has-addons-right">
 						<div class="control has-icons-right">
-							<input v-model="discount_code_value" class="input is-small" :class="{ 'is-invalid': !discountTotal }" type="text" :placeholder="discount_code.labels.discount_code" />
+							<input v-model="discount_code_value" class="input is-small" :class="{ 'is-invalid': !discountTotal }" type="text" :placeholder="discount_code_labels.discount_code" />
 							<span v-if="discountTotal > 0" class="icon is-small is-right">
 								<icon name="check" class="is-success"></icon>
 							</span>
@@ -108,12 +108,12 @@
 
 			</div>
 
-			<div class="useage-button-wrap has-text-right" v-if="usageNotSet">
-				<button class="button is-primary is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
+			<div v-if="usageNotSet" class="useage-button-wrap has-text-right">
+				<button class="button is-info is-large modal-button" @click="showModal = true">{{ labels.next }}</button>
 				<cart-modal-license v-if="showModal" @closeModal="showModal = false"></cart-modal-license>
 			</div>
-			<div class="checkout-button-wrap has-text-right" v-else>
-				<button class="button is-primary is-large" @click="checkout" :disabled="notValid">{{ labels.next }}</button>
+			<div v-else class="checkout-button-wrap has-text-right">
+				<button class="button is-info is-large" @click="checkout" :disabled="notValid">{{ labels.next }}</button>
 			</div>
 			<div class="continue-shopping has-text-right">
 				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
@@ -127,7 +127,7 @@
 
 	export default {
 
-		data: function() {
+		data() {
 			return {
 				products: this.$store.state.cart,
 				pageTitle: 'Checkout',
@@ -138,63 +138,67 @@
 				showModal: false,
 				notValid: false,
 				discount: false,
-				discount_code: ( typeof sell_media_discount_codes != 'undefined' ) ? sell_media_discount_codes : null
+				discount_code_labels: sell_media.discount_code_labels
 			}
 		},
 
 		methods: {
 
-			subsubtotal: function(product){
+			subsubtotal(product){
 				return ( product.price * product.qty ).toFixed(2);
 			},
 
-			updateProduct: function(product) {
+			updateProduct(product){
 				this.$store.commit( 'updateProduct', product );
 			},
 
-			decreaseQuantity: function(product) {
+			decreaseQuantity(product){
 				product.qty -= 1
 				this.$store.commit( 'updateProduct', product );
 			},
 
-			increaseQuantity: function(product) {
+			increaseQuantity(product){
 				product.qty += 1
 				this.$store.commit( 'updateProduct', product );
 			},
 
-			removeProduct: function(product) {
+			removeProduct(product){
 				this.$store.commit( 'removeFromCart', product );
 			},
 
-			deleteUsage: function() {
+			deleteUsage(){
 				this.$store.commit( 'deleteUsage' );
 			},
 
-			checkout: function() {
-				const vm = this;
-				let item_ids = [];
-				for (var i = 0; i < vm.products.length; i++) {
-					item_ids.push(vm.products[i].id);
-				}
-				item_ids = item_ids.join();
-				vm.notValid = true;
+			checkout(){
+				const vm = this
+				// this.$checkout.close() 
+				// is also available.
+				vm.$checkout.open({
+					currency: sell_media.currency,
+					amount: vm.total * 100,
+					token: (token) => {
+						vm.submit(token);
+						vm.token = JSON.stringify(token, null, 2);
 
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
-						include: item_ids
+						// pass along the discount code
+						// vm.discount_code_value
+						// 
+						// pass along the sell-media-cart localstorage
+						// localStorage.getItem('sell-media-cart')
+						// 
+						// pass along the sell-media-usage localstorage
+						// localStorage.getItem('sell-media-usage')
+						// 
+						// verify prices from cart post and price ids
+						// charge the user
+						// redirect to thanks page
+
 					}
-				} )
-				.then( ( res ) => {
-					vm.$store.commit( 'verifyProducts', res.data );
-					vm.notValid = false;
-				} )
-				.catch( ( res ) => {
-					console.log( `Something went wrong : ${res}` );
-					vm.notValid = false;
-				} );
+				});
 			},
 
-			applyDiscountCode: function() {
+			applyDiscountCode(){
 				const vm = this;
 
 				if ('' === vm.discount_code_value) {
@@ -219,12 +223,12 @@
 		},
 
 		computed: {
-			subtotal: function(){
+			subtotal(){
 				return this.products.reduce(function(subtotal, product){
 					return Number(subtotal + product.price * product.qty)
 				},0).toFixed(2);
 			},
-			downloadsSubtotal: function(){
+			downloadsSubtotal(){
 				let subtotal = 0
 				let products = this.products
 
@@ -236,10 +240,10 @@
 
 				return subtotal.toFixed(2)
 			},
-			tax: function(){
+			tax(){
 				return Number(this.subtotal * this.tax_rate ).toFixed(2)
 			},
-			shipping: function(){
+			shipping(){
 				if ( ! this.shipping_settings ) {
 					return 0;
 				}
@@ -253,16 +257,16 @@
 					return Number(this.subtotal * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
 				}
 			},
-			total: function(){
+			total(){
 				let discount = this.discount
 				let discount_mount = discount > 0 ? discount : 0
 
 				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( discount_mount ) ).toFixed(2)
 			},
-			usage: function(){
+			usage(){
 				return this.$store.state.usage[0]
 			},
-			usageFee: function(){
+			usageFee(){
 				let usage = this.usage
 				let sum = 0
 				for ( let item in usage ) {
@@ -277,7 +281,7 @@
 				}
 				return sum.toFixed(2)
 			},
-			usageNotSet: function(){
+			usageNotSet(){
 				let status = false
 
 				// licensing is enabled, but buyer hasn't selected usage
@@ -292,7 +296,7 @@
 
 				return status
 			},
-			discountTotal: function(){
+			discountTotal(){
 				
 				if ( false === this.discount.status ) {
 					return false

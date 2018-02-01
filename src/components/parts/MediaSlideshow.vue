@@ -175,6 +175,10 @@
 				cursor: pointer;
 			}
 
+			&.active {
+				height: auto; // override parent height: 600 applied to expander grid
+			}
+
 			.slideshow-thumbnail {
 				border: 1px solid transparent;
 				padding: 5px;

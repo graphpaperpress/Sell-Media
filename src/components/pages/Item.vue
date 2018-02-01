@@ -3,34 +3,22 @@
 	<div v-if="loaded">
 
 		<h2 class="title">{{ post.title.rendered }}</h2>
-
-		<media :post="post" @attachment="setAttachment"></media>
-
-		<template v-if="multiple">
-			<p class="subtitle">This gallery contains <strong>{{ attachments.length }}</strong> images</p>
-			<gallery v-bind:attachments="attachments" v-bind:prefix="post.slug" v-bind:key="post.slug"></gallery>
-		</template>
-		<template v-else>
-			<div class="columns">
-				<div :class="pageLayout.content">
-					<figure>
-						<featured-image :post="post" @attachment="setAttachment" :size="image_size" ></featured-image>
-					</figure>
-				</div>
-				<div :class="pageLayout.sidebar">
-					<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
-				</div>
+		
+		<div class="columns">
+			<div :class="pageLayout.content">
+				<media :post="post" :type="type" @attachment="setAttachment"></media>
+				<div class="post-content content" v-if="post.content" v-html="post.content.rendered"></div>
 			</div>
-		</template>
-
-		<div class="post-content content" v-if="post.content" v-html="post.content.rendered"></div>
+			<div :class="pageLayout.sidebar">
+				<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
+			</div>
+		</div>
+		
 	</div>
 
 </template>
 
 <script>
-
-	import Gallery from '../parts/Gallery.vue';
 
 	export default {
 
@@ -42,6 +30,7 @@
 				attachments: {},
 				multiple: false,
 				loaded: false,
+				type: '',
 				image_size: 'large',
 				pageTitle: '',
 				pageLayout: this.$store.getters.pageLayout
@@ -68,6 +57,7 @@
 					vm.post = res.data[0];
 					vm.attachments = vm.post.sell_media_attachments;
 					vm.multiple = vm.attachments.length > 1 ? true : false;
+					vm.type = vm.post.sell_media_meta.product_type[0];
 					vm.loaded = true;
 					vm.pageTitle = vm.post.title.rendered;
 					vm.$store.commit( 'changeTitle', vm.pageTitle );
@@ -85,10 +75,6 @@
 			setAttachment: function(data) {
 				this.attachment = data
 			}
-		},
-
-		components: {
-			'gallery': Gallery
 		}
 
 	};

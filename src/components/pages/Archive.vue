@@ -32,22 +32,7 @@ import SearchForm from '../parts/SearchForm.vue';
 
 	export default {
 
-		mounted: function() {
-			const vm = this
-			const search = vm.$route.query.search ? vm.$route.query.search : vm.search
-			const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
-			const page = vm.$route.params.page ? vm.$route.params.page : '1'
-			
-			if ( search ) {
-				vm.getSearchResults( search, type, page )
-			} else {
-				vm.getPosts()
-			}
-
-			vm.getUser()
-		},
-
-		data: function() {
+		data(){
 			return {
 				user: {},
 				posts: {},
@@ -63,16 +48,26 @@ import SearchForm from '../parts/SearchForm.vue';
 				pageTitle: '',
 				name: this.$options.name,
 				search: '',
-				search_type: '',
+				search_type: sell_media.default_search_type ? sell_media.default_search_type : '',
 				search_labels: sell_media.search_labels,
 				searchResults: false,
 				gridContainer: this.$store.getters.gridLayoutContainer
 			}
 		},
 
+		mounted(){
+			const vm = this
+			const search = vm.$route.query.search ? vm.$route.query.search : vm.search
+			const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
+			const page = vm.$route.params.page ? vm.$route.params.page : '1'
+			
+			vm.getSearchResults( search, type, page )
+			vm.getUser()
+		},
+
 		methods: {
 
-			getPosts: function( pageNumber = 1 ) {
+			getPosts(pageNumber = 1){
 				const vm = this
 				vm.loading = true
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
@@ -102,7 +97,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				} )
 			},
 
-			getSearchResults: function( search, search_type, pageNumber = 1 ) {
+			getSearchResults(search, search_type, pageNumber = 1){
 				
 				const vm = this
 				vm.loading = true
@@ -124,7 +119,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				.then( ( res ) => {
 					vm.posts = res.data
 					vm.searchResults = res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0
-					vm.totalPages = res.headers[ 'x-wp-totalpages' ] ? res.headers[ 'x-wp-totalpages' ] : 1
+					vm.totalPages = res.headers[ 'x-wp-totalpages' ]
 					
 					if ( pageNumber <= parseInt( vm.totalPages ) ) {
 						vm.currentPage = parseInt( pageNumber )
@@ -142,7 +137,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				} )
 			},
 
-			resetSearch: function() {
+			resetSearch(){
 				this.searchResults = false
 				this.search = ''
 				this.search_type = ''
@@ -150,7 +145,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				this.getPosts()
 			},
 
-			showNextPage: function( event ) {
+			showNextPage(event){
 				const vm = this
 
 				if ( vm.currentPage < vm.totalPages ) {
@@ -160,7 +155,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				}
 			},
 
-			showPrevPage: function( event ) {
+			showPrevPage(event){
 				const vm = this
 
 				if ( vm.currentPage != 1 ) {
@@ -170,7 +165,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				}
 			},
 
-			getUser: function() {
+			getUser(){
 				const vm = this
 				vm.$http.get( '/wp-json/sell-media/v2/api', {
 					params: {
@@ -192,9 +187,12 @@ import SearchForm from '../parts/SearchForm.vue';
 
 			'$route'( to, from ) {
 				const vm = this
-				if ( vm.search ) {
-					vm.getSearchResults( vm.search, vm.search_type, vm.$route.params.page )
-				} else {
+				if ( vm.search || vm.$route.query.search ) {
+					let search = vm.$route.query.search ? vm.$route.query.search : vm.search 
+					vm.getSearchResults( search, vm.search_type, vm.$route.params.page )
+				} else if ( ! vm.search && vm.search_type ) {
+					vm.getSearchResults( '', vm.search_type, vm.$route.params.page )
+			 	} else {
 					vm.getPosts( vm.$route.params.page )
 				}
 				

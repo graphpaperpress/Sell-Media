@@ -1,17 +1,28 @@
 Vue.config.devtools = true
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VBClass from 'vue-body-class'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import PortalVue from 'portal-vue'
 import store from './store'
 import icons from './icons'
 import VideoJs from 'video.js'
+import VueStripeCheckout from 'vue-stripe-checkout'
+
+const options = {
+	key: sell_media.stripe_public_key,
+	locale: 'auto',
+	currency: sell_media.currency,
+	billingAddress: true,
+	panelLabel: "Pay" + " {{amount}}",
+}
 
 // use vue plugins
 Vue.use( VueRouter )
 Vue.use( VueAxios, axios )
 Vue.use( PortalVue )
+Vue.use( VueStripeCheckout, options );
 
 // import and register components
 import Main from './components/Main.vue'
@@ -46,30 +57,24 @@ import Thumbnail from './components/parts/Thumbnail.vue'
 Vue.component( 'thumbnail', Thumbnail )
 import CartForm from './components/parts/CartForm.vue'
 Vue.component( 'cart-form', CartForm )
-import CartSteps from './components/parts/CartSteps.vue'
-Vue.component( 'cart-steps', CartSteps )
 import CartModalLicense from './components/parts/CartModalLicense.vue'
 Vue.component( 'cart-modal-license', CartModalLicense )
 import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
-// import Tabs from './components/parts/Tabs.vue'
-// Vue.component( 'tabs', Tabs )
-// import Tab from './components/parts/Tab.vue'
-// Vue.component( 'tab', Tab )
 
 // define routes
 const router = new VueRouter( {
 	mode: 'history',
 	routes: [
 
-		{ path: '/' + sell_media.archive_path + '/:page(\\d+)?', name: 'archive', component: Archive },
-		{ path: '/' + sell_media.search_path + '/:page(\\d+)?', name: 'search', component: Search },
-		{ path: '/' + sell_media.archive_path + '/:slug', name: 'item', component: Item },
-		{ path: '/' + sell_media.archive_path + '/:prefix/:slug', name: 'attachment', component: Attachment },
-		{ path: '/' + sell_media.checkout_path, name: 'checkout', component: Checkout },
-		{ path: '/' + sell_media.lightbox_path, name: 'lightbox', component: Lightbox },
+		{ path: '/' + sell_media.archive_path + '/:page(\\d+)?', name: 'archive', component: Archive, meta: { bodyClass: 'product-archive' } },
+		{ path: '/' + sell_media.search_path + '/:page(\\d+)?', name: 'search', component: Search, meta: { bodyClass: 'product-search' } },
+		{ path: '/' + sell_media.archive_path + '/:slug', name: 'item', component: Item, meta: { bodyClass: 'product-item' } },
+		{ path: '/' + sell_media.archive_path + '/:prefix/:slug', name: 'attachment', component: Attachment, meta: { bodyClass: 'product-attachment' } },
+		{ path: '/' + sell_media.checkout_path, name: 'checkout', component: Checkout, meta: { bodyClass: 'product-checkout' } },
+		{ path: '/' + sell_media.lightbox_path, name: 'lightbox', component: Lightbox, meta: { bodyClass: 'product-lightbox' } },
 		{ path: '/filters', name: 'filters', component: Filters },
-		{ path: '*', component: NotFound },
+		{ path: '*', component: NotFound, meta: { bodyClass: 'product-not-found' } },
 		// { path: sell_media.thanks_url, name: 'thanks', component: Thanks },
 		// { path: sell_media.dashboard_url, name: 'dashboard', component: Dashboard },
 		// { path: sell_media.login_url, name: 'login', component: Login },
@@ -77,6 +82,9 @@ const router = new VueRouter( {
 
 	]
 } );
+
+// Add router body classes
+Vue.use( VBClass, router )
 
 // init Vue
 new Vue({
