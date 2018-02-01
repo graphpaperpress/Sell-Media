@@ -78,7 +78,7 @@ function sell_media_scripts( $hook ) {
 		'error' => array(
 			'email_exists' => esc_html__( 'Sorry that email already exists or is invalid', 'sell_media' ),
 			),
-		'sandbox' => ( 1 === $test_mode ) ? true : false,
+		'sandbox' => ( '1' === $test_mode ) ? true : false,
 		'paypal_email' => empty( $settings->paypal_email ) ? null : $settings->paypal_email,
 		'thanks_page' => empty( $settings->thanks_page ) ? '' : esc_url( get_permalink( $settings->thanks_page ) ),
 		'listener_url' => esc_url( add_query_arg( 'sell_media-listener', 'IPN', home_url( 'index.php' ) ) ),
