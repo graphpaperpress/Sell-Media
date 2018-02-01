@@ -7,7 +7,7 @@
 			<div class="control">
 				<div class="select">
 					<select id="sizes" v-model="selected" @change="$emit('selected', selected)">
-						<option disabled :value="{}">{{ labels.choose }}</option>
+						<option disabled :value="{}">{{ labels.size }}</option>
 						<option v-for="size in getSizes(post,field)" :value="size">{{ size.name }} <template v-if="size.description">({{ size.description }})</template></option>
 					</select>
 				</div>

@@ -130,7 +130,6 @@
 		data() {
 			return {
 				products: this.$store.state.cart,
-				pageTitle: 'Checkout',
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
@@ -141,6 +140,10 @@
 				discount_code_labels: sell_media.discount_code_labels,
 				token: null,
 			}
+		},
+
+		mounted(){
+			this.$store.commit( 'changeTitle', sell_media.checkout_path )
 		},
 
 		methods: {

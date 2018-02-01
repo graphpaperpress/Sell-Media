@@ -199,6 +199,10 @@
 		position: relative;
 		float: left;
 
+		.buttons {
+			margin-bottom: 2rem;
+		}
+
 		.notifications {
 			position: absolute;
 			bottom: 0;
