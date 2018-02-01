@@ -138,7 +138,8 @@
 				showModal: false,
 				notValid: false,
 				discount: false,
-				discount_code_labels: sell_media.discount_code_labels
+				discount_code_labels: sell_media.discount_code_labels,
+				token: null,
 			}
 		},
 
@@ -177,23 +178,32 @@
 				vm.$checkout.open({
 					currency: sell_media.currency,
 					amount: vm.total * 100,
-					token: (token) => {
-						vm.submit(token);
+					token: (token, args) => {
+						// vm.submit(token);
 						vm.token = JSON.stringify(token, null, 2);
 
-						// pass along the discount code
-						// vm.discount_code_value
-						// 
-						// pass along the sell-media-cart localstorage
-						// localStorage.getItem('sell-media-cart')
-						// 
-						// pass along the sell-media-usage localstorage
-						// localStorage.getItem('sell-media-usage')
-						// 
-						// verify prices from cart post and price ids
-						// charge the user
-						// redirect to thanks page
-
+						vm.$http.post( sell_media.ajaxurl, {
+							params: {
+								token: token,
+								args: args,
+								_wpnonce: sell_media.nonce,
+								action: 'charge',
+								type: 'stripe',
+								discount: vm.discount_code_value,
+								// encode these?
+								cart: localStorage.getItem('sell-media-cart'),
+								usage: localStorage.getItem('sell-media-usage'),
+							}
+						} )
+						.then( ( res ) => {
+							console.log(res)
+							this.$store.commit( 'deleteCart' )
+							this.$store.commit( 'deleteUsage' )
+                        	return window.location = res.url;
+						} )
+						.catch( ( res ) => {
+							console.log( `Something went wrong : ${res}` );
+						} );
 					}
 				});
 			},
@@ -258,10 +268,9 @@
 				}
 			},
 			total(){
-				let discount = this.discount
-				let discount_mount = discount > 0 ? discount : 0
+				let discount_amount = this.discount > 0 ? this.discount : 0
 
-				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( discount_mount ) ).toFixed(2)
+				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( discount_amount ) ).toFixed(2)
 			},
 			usage(){
 				return this.$store.state.usage[0]
