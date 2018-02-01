@@ -89,11 +89,11 @@
 
 					<div class="field has-addons has-addons-right">
 						<div class="control has-icons-right">
-							<input v-model="discount_code_value" class="input is-small" :class="{ 'is-invalid': !discountTotal }" type="text" :placeholder="discount_code_labels.discount_code" />
+							<input v-model="discount_code_value" class="input is-small" :class="{ 'is-invalid': discount && !discount.status }" type="text" :placeholder="discount_code_labels.discount_code" />
 							<span v-if="discountTotal > 0" class="icon is-small is-right">
 								<icon name="check" class="is-success"></icon>
 							</span>
-							<span v-if="!discountTotal" class="icon is-small is-right">
+							<span v-if="discount && !discount.status" class="icon is-small is-right">
 								<icon name="ban" class="is-danger"></icon>
 							</span>
 						</div>
@@ -102,7 +102,7 @@
 						</div>
 					</div>
 
-					<p v-if="!discountTotal" class="help is-danger">{{ discount.message }}</p>
+					<p v-if="discount && !discount.status" class="help is-danger">{{ discount.message }}</p>
 
 				</div>
 
@@ -268,9 +268,7 @@
 				}
 			},
 			total(){
-				let discount_amount = this.discount > 0 ? this.discount : 0
-
-				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( discount_amount ) ).toFixed(2)
+				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( this.discountTotal ) ).toFixed(2)
 			},
 			usage(){
 				return this.$store.state.usage[0]
@@ -307,13 +305,14 @@
 			},
 			discountTotal(){
 				
-				if ( false === this.discount.status ) {
-					return false
+				if ( !this.discount || false === this.discount.status ) {
+					return 0
 				}
 
 				let amount = Number(this.discount.amount).toFixed(2);
 				let type = this.discount.type;
 				let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal;
+				console.log(Number( discountAmount ).toFixed(2))
 
 				return Number( discountAmount ).toFixed(2);
 			}
