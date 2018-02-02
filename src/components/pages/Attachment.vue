@@ -56,6 +56,7 @@
 			getAttachment(){
 
 				const vm = this;
+				console.log(vm.$route.params)
 
 				vm.$http.get( '/wp-json/wp/v2/media', {
 					params: {

@@ -61,7 +61,11 @@ import SearchForm from '../parts/SearchForm.vue';
 			const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
 			const page = vm.$route.params.page ? vm.$route.params.page : '1'
 			
-			vm.getSearchResults( search, type, page )
+			if ( search || type ) {
+				vm.getSearchResults( search, type, page )
+			} else {
+				vm.getPosts()
+			}
 			vm.getUser()
 		},
 

@@ -118,6 +118,9 @@
 			<div class="continue-shopping has-text-right">
 				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
 			</div>
+			<div v-if="processing">
+				<button class="button is-loading is-large">Processing your payment</button>
+			</div>
 		</div>
 	</div>
 
@@ -139,6 +142,7 @@
 				discount: false,
 				discount_code_labels: sell_media.discount_code_labels,
 				token: null,
+				processing: false,
 			}
 		},
 
@@ -184,6 +188,7 @@
 					token: (token, args) => {
 						// vm.submit(token);
 						vm.token = JSON.stringify(token, null, 2);
+						vm.processing = true
 
 						vm.$http.post( sell_media.ajaxurl + '?action=charge', {
 							token: token,
@@ -197,9 +202,10 @@
 						} )
 						.then( ( res ) => {
 							console.log(res)
+							vm.processing = false,
 							this.$store.commit( 'deleteCart' )
 							this.$store.commit( 'deleteUsage' )
-                     return window.location = res.url;
+							return window.location = res.url;
 						} )
 						.catch( ( res ) => {
 							console.log( `Something went wrong : ${res}` );
