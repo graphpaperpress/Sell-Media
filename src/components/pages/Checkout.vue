@@ -202,11 +202,11 @@
 							usage: localStorage.getItem('sell-media-usage')
 						} )
 						.then( ( res ) => {
-							console.log(res)
+							// console.dir(res.data)
 							vm.processing = false
 							this.$store.commit( 'deleteCart' )
 							this.$store.commit( 'deleteUsage' )
-							return window.location = res.url;
+							return window.location = res.data.url;
 						} )
 						.catch( ( res ) => {
 							console.log( `Something went wrong : ${res}` );
