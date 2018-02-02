@@ -203,7 +203,7 @@
 						} )
 						.then( ( res ) => {
 							console.log(res)
-							vm.processing = false,
+							vm.processing = false
 							this.$store.commit( 'deleteCart' )
 							this.$store.commit( 'deleteUsage' )
 							return window.location = res.url;
