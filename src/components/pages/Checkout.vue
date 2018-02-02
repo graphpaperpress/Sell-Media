@@ -191,6 +191,7 @@
 							_wpnonce: sell_media.nonce,
 							type: 'stripe',
 							discount: vm.discount_code_value,
+							discount_id: ( false !== vm.discount ) ? vm.discount.id : null,
 							// encode these?
 							cart: localStorage.getItem('sell-media-cart'),
 							usage: localStorage.getItem('sell-media-usage')
