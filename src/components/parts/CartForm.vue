@@ -19,14 +19,14 @@
 			</template>
 
 			<div class="content">
-				
+
 				<template v-if="quickViewStyle === 'expander-related'">
 					<cart-field-radio v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-radio>
 				</template>
 				<template v-else>
 					<cart-field-select v-for="field in fields" v-if="active == field || post.sell_media_meta" :key="field" :post="post" :field="field" :active="active" @selected="setCart"></cart-field-select>
 				</template>
-				
+
 				<div class="button-wrap">
 					<div class="buttons">
 						<button :class="buttonSize" class="button is-info" @click="addTo('cart')" :title="add">{{ add }}</button>
@@ -57,12 +57,12 @@
 </template>
 
 <script>
-
+  import mixinUser from '../../mixins/user'
 	import CartFieldSelect from './CartFieldSelect.vue'
 	import CartFieldRadio from './CartFieldRadio.vue'
 
 	export default {
-
+    mixins: [mixinUser],
 		props: ['post', 'attachment', 'multiple'],
 
 		data(){
@@ -163,7 +163,7 @@
 				}
 
 				if ( 'lightbox' === $where ) {
-					this.$store.commit( 'addToLightbox', this.cart )
+					this.$store.dispatch( 'addToLightbox', this.cart )
 					this.saved = true
 				}
 
@@ -188,7 +188,7 @@
 	.form {
 		display: inline-block;
 	}
-	
+
 	.expander {
 		.view {
 			color: #fff;

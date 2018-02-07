@@ -92,6 +92,7 @@ new Vue({
 	store,
 	router,
 	beforeCreate() {
+    // TODO: This doesn't have a corresponding mutation so I created a placeholder. @EvanAgee
 		this.$store.commit('initCart');
 	},
 	render: h => h(Main)

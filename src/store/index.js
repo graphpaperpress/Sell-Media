@@ -1,3 +1,4 @@
+Vue.config.devtools = true
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { state, mutations } from './mutations'
@@ -6,15 +7,13 @@ import plugins from './plugins'
 
 // Modules
 import User from './modules/user'
-import Lightbox from './modules/lightbox'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state,
   modules: {
-    User,
-    Lightbox
+    User
   },
   mutations,
   getters,

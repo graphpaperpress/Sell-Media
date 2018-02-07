@@ -39,9 +39,9 @@ export const mutations = {
     state.usage = JSON.parse('[]')
   },
 
-  addToLightbox (state, value) {
-    state.lightbox.push(value)
-  },
+  // addToLightbox (state, value) {
+  //   state.lightbox.push(value)
+  // },
 
   removeFromLightbox (state, value) {
     state.lightbox.splice(state.lightbox.indexOf(value), 1)
@@ -83,4 +83,9 @@ export const mutations = {
   setProduct ( state, value ) {
     state.product = value
   },
+
+  // TODO: This mutation was called from app.js but wasn't defined. @EvanAgee
+  initCart ( state, value ) {
+    return true
+  }
 }
