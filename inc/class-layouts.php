@@ -184,14 +184,14 @@ class SellMediaLayouts {
 	 * @return string css class
 	 */
 	public function grid_container_class() {
-		$class = 'sell-media-grid-item-container';
+		$class = 'sell-media-columns columns is-multiline';
 
 		if ( 'sell-media-masonry' === $this->settings->thumbnail_layout ) {
-			$class = 'sell-media-grid-item-masonry-container';
+			$class = 'is-masonry-container is-multiline';
 		}
 
 		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
-			$class = 'sell-media-grid-item-horizontal-masonry-container';
+			$class = 'is-horizontal-masonry-container is-multiline';
 		}
 
 		return $class;
@@ -206,11 +206,37 @@ class SellMediaLayouts {
 	 */
 	public function grid_class( $class = '', $post_id = '', $args = '' ) {
 		if ( isset( $args['context'] ) && 'widget' == $args['context'] ) {
-			return $class . ' sell-media-three-col';
+			return $class . ' column is-one-third';
+		}
+
+		$grid = '';
+
+		if ( 'sell-media-two-col' === $this->settings->thumbnail_layout ) {
+			$grid = 'column is-half';
+		}
+
+		if ( 'sell-media-three-col' === $this->settings->thumbnail_layout ) {
+			$grid = 'column is-one-third';
+		}
+
+		if ( 'sell-media-four-col' === $this->settings->thumbnail_layout ) {
+			$grid = 'column is-one-quarter';
+		}
+
+		if ( 'sell-media-five-col' === $this->settings->thumbnail_layout ) {
+			$grid = 'column is-one-fifth';
+		}
+
+		if ( 'sell-media-masonry' === $this->settings->thumbnail_layout ) {
+			$grid = 'is-masonry';
+		}
+
+		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
+			$grid = 'is-horizontal-masonry';
 		}
 
 		if ( ! empty( $this->settings->thumbnail_layout ) ) {
-			return $class . ' ' . $this->settings->thumbnail_layout;
+			return $class . ' ' . $grid;
 		}
 	}
 

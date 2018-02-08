@@ -6,7 +6,7 @@
 			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
 				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
 			</router-link>
-			<div class="quick-view" @click="visible = !visible">{{ quick_view_label }}</div>
+			<div class="quick-view" @click="handle($event, post.slug)">{{ quick_view_label }}</div>
 		</div>
 		
 		<h2 v-if="showTitles">{{ post.title.rendered }}</h2>
@@ -55,7 +55,19 @@
 				// 		behavior: 'smooth'
 				// 	})
 				// })
+			},
+
+			handle(event, slug){
+				if (event.metaKey) this.openInNewWindow(slug)
+  				else this.visible = !this.visible
+			},
+
+			openInNewWindow(slug){
+				let routeData = this.$router.resolve({name: 'item', params: { slug: slug }})
+				window.open(routeData.href, '_blank');
 			}
+
+
 		},
 
 		created () {

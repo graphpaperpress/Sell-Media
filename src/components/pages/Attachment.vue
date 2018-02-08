@@ -2,6 +2,8 @@
 
 	<div v-if="loaded">
 
+		<searchform @search="goToSearchResults"></searchform>
+
 		<h2 class="title">{{ attachment.title }}</h2>
 
 		<div class="columns">
@@ -32,6 +34,8 @@
 </template>
 
 <script>
+
+import SearchForm from '../parts/SearchForm.vue';
 
 	export default {
 
@@ -101,6 +105,18 @@
 				} );
 			},
 
+			goToSearchResults(search, search_type){
+				const vm = this
+
+				if ( search ) {
+					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
+				}
+			}
+
+		},
+
+		components: {
+			'searchform': SearchForm,
 		}
 
 	};

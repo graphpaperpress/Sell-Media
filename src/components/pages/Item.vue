@@ -2,14 +2,16 @@
 
 	<div v-if="loaded">
 
+		<searchform @search="goToSearchResults"></searchform>
+
 		<h2 class="title">{{ post.title.rendered }}</h2>
 		
 		<div class="columns">
-			<div :class="pageLayout.content">
+			<div :class="!multiple ? pageLayout.content : 'column'">
 				<media :post="post" :type="type" @attachment="setAttachment"></media>
 				<div class="post-content content" v-if="post.content" v-html="post.content.rendered"></div>
 			</div>
-			<div :class="pageLayout.sidebar">
+			<div v-if="!multiple" :class="pageLayout.sidebar">
 				<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 			</div>
 		</div>
@@ -19,6 +21,8 @@
 </template>
 
 <script>
+
+import SearchForm from '../parts/SearchForm.vue';
 
 	export default {
 
@@ -43,7 +47,7 @@
 
 		methods: {
 
-			getPost: function() {
+			getPost(){
 
 				const vm = this;
 
@@ -72,9 +76,21 @@
 				} );
 			},
 
-			setAttachment: function(data) {
+			setAttachment(data){
 				this.attachment = data
+			},
+
+			goToSearchResults(search, search_type){
+				const vm = this
+
+				if ( search ) {
+					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
+				}
 			}
+		},
+
+		components: {
+			'searchform': SearchForm,
 		}
 
 	};
