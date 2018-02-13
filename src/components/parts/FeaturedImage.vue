@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="featured-image">
 
 		<img
 			:src="post.sell_media_featured_image.sizes[size][0]" 

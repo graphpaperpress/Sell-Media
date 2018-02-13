@@ -1,5 +1,5 @@
 <template>
-	<div class="medias is-pulled-right" v-if="loaded">
+	<div class="medias" v-if="loaded">
 
 		<template v-if="type === 'panorama' || type === 'dome'">
 			<media-panorama :post="post"></media-panorama>

@@ -4,10 +4,10 @@
 			<button class="delete is-large" aria-label="close" @click="$emit('closeModal')"></button>
 
 			<div class="columns">
-				<div class="column is-half has-text-center">
+				<div class="column media-column is-half has-text-center">
 					<media :post="currentPost" :type="productType" :showSlideshow="showSlideshow"></media>
 				</div>
-				<div class="column is-half has-text-left">
+				<div class="column nav-column is-half has-text-left">
 
 					<div class="cart-container columns">
 						<div class="product-info column is-one-third">
@@ -293,6 +293,13 @@
 
 		img {
 			max-height: 432px;
+		}
+
+		.media-column {
+			.featured-image,
+			.slideshow {
+				float: right;
+			}
 		}
 
 		.title,

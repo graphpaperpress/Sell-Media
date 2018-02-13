@@ -1,7 +1,7 @@
 <template>
 	<div :id="name" :class="name">
 
-		<searchform @search="getSearchResults" :loading="loading"></searchform>
+		<searchform @search="getSearchResults" :loading="loading" :search="search"></searchform>
 		
 		<div class="search-results-wrapper" v-if="!loading">
 		
@@ -109,7 +109,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				vm.search_type = search_type
 
 				if ( search ) {
-					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
+					vm.$router.push( { name: 'archive', params: { page: pageNumber }, query: { search: search, type: search_type } } );
 				}
 
 				vm.$http.get( '/wp-json/sell-media/v2/search', {
@@ -144,7 +144,7 @@ import SearchForm from '../parts/SearchForm.vue';
 			resetSearch(){
 				this.searchResults = false
 				this.search = ''
-				this.search_type = ''
+				this.search_type = sell_media.default_search_type ? sell_media.default_search_type : ''
 				this.$router.push( { name: 'archive', query: {} } );
 				this.getPosts()
 			},

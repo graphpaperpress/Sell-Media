@@ -15,7 +15,7 @@
 						</span>
 					</p>
 					<p class="control is-expanded">
-						<input v-model="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', search, search_type)">
+						<input :value="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', $event.target.value, search_type)">
 					</p>
 					<p class="control">
 						<button class="button is-medium is-dark" @click="$emit('search', search, search_type)" :class="{ 'is-loading': loading }">
@@ -161,14 +161,13 @@
 
 	export default {
 
-		props: ['loading'],
+		props: ['loading', 'search'],
 
 		data(){
 			return {
 				types: {},
 				labels: sell_media.search_labels,
-				search_type: this.$route.query.type ? this.$route.query.type : 'image',
-				search: this.$route.query.search ? this.$route.query.search : '',
+				search_type: sell_media.default_search_type ? sell_media.default_search_type : '',
 				showFilters: false,
 				colors: defaultColors,
 				locations: [],
