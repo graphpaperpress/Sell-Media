@@ -2,9 +2,9 @@
 	<div :id="name" :class="name">
 
 		<searchform @search="getSearchResults" :loading="loading"></searchform>
-		
+
 		<div class="search-results-wrapper" v-if="!loading">
-		
+
 			<div class="content">
 				<p v-if="search && searchResults">{{ search_labels.we_found }} {{ searchResults }} {{ search_labels.results_for }} "{{ search }}." <span class="reset-search" @click="resetSearch">Reset</span></p>
 
@@ -27,11 +27,11 @@
 </template>
 
 <script>
-
+import mixinGlobal from '../../mixins/global'
 import SearchForm from '../parts/SearchForm.vue';
 
 	export default {
-
+    mixins: [mixinGlobal],
 		data(){
 			return {
 				user: {},
@@ -60,7 +60,7 @@ import SearchForm from '../parts/SearchForm.vue';
 			const search = vm.$route.query.search ? vm.$route.query.search : vm.search
 			const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
 			const page = vm.$route.params.page ? vm.$route.params.page : '1'
-			
+
 			if ( search || type ) {
 				vm.getSearchResults( search, type, page )
 			} else {
@@ -92,7 +92,7 @@ import SearchForm from '../parts/SearchForm.vue';
 					}
 
 					vm.pageTitle = 'Archive'
-					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.$store.dispatch( 'changeTitle', vm.pageTitle )
 					vm.loading = false
 
 				} )
@@ -102,7 +102,7 @@ import SearchForm from '../parts/SearchForm.vue';
 			},
 
 			getSearchResults(search, search_type, pageNumber = 1){
-				
+
 				const vm = this
 				vm.loading = true
 				vm.search = search
@@ -124,7 +124,7 @@ import SearchForm from '../parts/SearchForm.vue';
 					vm.posts = res.data
 					vm.searchResults = res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0
 					vm.totalPages = res.headers[ 'x-wp-totalpages' ]
-					
+
 					if ( pageNumber <= parseInt( vm.totalPages ) ) {
 						vm.currentPage = parseInt( pageNumber )
 					} else {
@@ -132,7 +132,7 @@ import SearchForm from '../parts/SearchForm.vue';
 					}
 
 					vm.pageTitle = 'Search results for: ' + search
-					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.$store.dispatch( 'changeTitle', vm.pageTitle )
 					vm.loading = false
 
 				} )
@@ -179,7 +179,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				} )
 				.then( ( res ) => {
 					vm.user = res.data.ID
-					vm.$store.commit( 'setUser', vm.user )
+					vm.$store.dispatch( 'setUser', vm.user )
 				} )
 				.catch( ( res ) => {
 					console.log( res )
@@ -192,14 +192,14 @@ import SearchForm from '../parts/SearchForm.vue';
 			'$route'( to, from ) {
 				const vm = this
 				if ( vm.search || vm.$route.query.search ) {
-					let search = vm.$route.query.search ? vm.$route.query.search : vm.search 
+					let search = vm.$route.query.search ? vm.$route.query.search : vm.search
 					vm.getSearchResults( search, vm.search_type, vm.$route.params.page )
 				} else if ( ! vm.search && vm.search_type ) {
 					vm.getSearchResults( '', vm.search_type, vm.$route.params.page )
 			 	} else {
 					vm.getPosts( vm.$route.params.page )
 				}
-				
+
 			}
 
 		},
@@ -220,5 +220,5 @@ import SearchForm from '../parts/SearchForm.vue';
 		color: #ff2b56;
 		cursor: pointer;
 	}
-	
+
 </style>

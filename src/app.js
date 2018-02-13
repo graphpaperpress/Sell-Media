@@ -22,7 +22,7 @@ const options = {
 Vue.use( VueRouter )
 Vue.use( VueAxios, axios )
 Vue.use( PortalVue )
-Vue.use( VueStripeCheckout, options );
+Vue.use( VueStripeCheckout, options )
 
 // import and register components
 import Main from './components/Main.vue'
@@ -92,7 +92,8 @@ new Vue({
 	store,
 	router,
 	beforeCreate() {
-		this.$store.commit('initCart');
+    // TODO: This doesn't have a corresponding mutation so I created a placeholder. @EvanAgee
+		this.$store.dispatch('initCart');
 	},
 	render: h => h(Main)
 })

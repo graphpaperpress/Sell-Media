@@ -36,8 +36,10 @@
 </template>
 
 <script>
+  import mixinUser from '../../mixins/user'
 
 	export default {
+    mixins: [mixinUser],
 
 		data: function() {
 			return {
@@ -70,7 +72,7 @@
 
 			apply: function(values) {
 				this.$emit('closeModal')
-				this.$store.commit( 'setUsage', values )
+				this.$store.dispatch( 'setUsage', values )
 			}
 		}
 	}

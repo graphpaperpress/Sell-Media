@@ -6,9 +6,9 @@
 			<!-- <label class="label">{{ field }} {{ labels.size }}</label> -->
 			<div class="control">
 				<div v-for="size in getSizes(post,field)" class="radio" :class="{ wide: size.name === 'MOV' }">
-					
+
 					<input type="radio" :id="size.id" :value="size" v-model="selected" @change="$emit('selected', selected)" />
-					
+
 					<label :for="size.id">{{ size.name }}<span v-if="size.description"> ({{ size.description }})</span></label>
 
 					<a v-if="user && size.name === 'S'" @click="downloadFile(size)" :title="labels.download" class="download">
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		</div>
-	
+
 		<p class="total" v-if="selected.price">{{ labels.price }}: {{ labels.currency_symbol }}<span class="price">{{ selected.price }}</span></p>
 
 	</div>
@@ -27,16 +27,17 @@
 </template>
 
 <script>
-
+import mixinUser from '../../mixins/user'
+import mixinProduct from '../../mixins/product'
 import download from 'downloadjs'
 
 	export default {
+    mixins: [mixinUser, mixinProduct],
 
 		props: ['post', 'field', 'active'],
 
 		data: function() {
 			return {
-				user: this.$store.state.user,
 				selected: {},
 				downloading: false,
 				labels: {
@@ -76,8 +77,8 @@ import download from 'downloadjs'
 					params: {
 						action: 'download_file',
 						_wpnonce: sell_media.nonce,
-						post_id: this.$store.state.product.post_id,
-						attachment_id: this.$store.state.product.attachment_id,
+						post_id: this.product.post_id,
+						attachment_id: this.product.attachment_id,
 						size_id: size ? size.id : 'original'
 					}
 				} )
