@@ -376,14 +376,16 @@ if ( ! function_exists( 'sell_media_api_search_response' ) ) :
 		$search_term_cleaned = preg_replace( '/\s*,\s*/', ',', $search_term );
 		$search_terms = str_getcsv( $search_term_cleaned, ',' );
 
-		// Exclude negative keywords in search query like "-cow"
+		// Find negative terms, like "-cow"
 		$negative_search_terms = '';
 		$negative_search_terms = preg_grep( '/\B-[^\B]+/', $search_terms );
-		$negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
 
-		// now remove negative search terms from search terms
+		// Remove negative terms from the terms to be searched
 		$search_terms = array_diff( $search_terms, $negative_search_terms );
 		$search_terms = array_filter( $search_terms );
+
+		// Remove negative sign (-) from negative search terms
+		$negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
 
 		// Get the file/mimetype
 		$mime_type = sell_media_api_get_mimetype( $product_type );

@@ -15,14 +15,6 @@
             <button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
         </nav>
 
-      <!--
-        TODO: This is causing an error because the `child` component isn't defined anywhere. @EvanAgee
-
-        <div id="child">
-            <child :message="name"></child>
-        </div>
-      -->
-
     </div>
 </template>
 

@@ -110,27 +110,6 @@ const actions = {
   initCart ({ state }) {
     return true
   },
-
-  // TODO: This isn't being referenced anywhere, please advise. @EvanAgee
-  verifyProducts( {state, commit}, value ) {
-    state.cart = state.cart.filter((product, index)=>{
-       let item = value.find( data => data.id === product.id );
-       if( 'undefined' !== typeof item ){
-          // If type is price-group then its downloads.
-          if ( 'price-group' === product.type ) {
-             let downloads = item.sell_media_pricing.downloads.find( download => download.id === product.price_id );
-             if( 'undefined' !== typeof downloads ) {
-                // Update price based on api.
-                product.price = downloads.price;
-                return true;
-             }
-          } else if( 'reprints-price-group' == product.type ) {
-             // [TODO] condition for reprint to be added.
-          }
-       }
-       return false;
-    })
-  },
 }
 
 // Mutations: Used to modify the state's properties
