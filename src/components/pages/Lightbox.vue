@@ -66,7 +66,7 @@
 			addAll: function() {
         // TODO: Use module action
 				for ( let product of this.products ) {
-					this.$store.commit( 'addToCart', product )
+					this.$store.dispatch( 'addToCart', product )
 				}
 				this.$store.dispatch( 'deleteLightbox' )
 				this.addedAllToCart = true

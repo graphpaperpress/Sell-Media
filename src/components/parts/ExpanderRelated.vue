@@ -62,7 +62,7 @@
 					</div>
 
 					<div v-if="otherSets.length > 0" class="buttons other-sets sets">
-					
+
 						<button
 						v-for="(item,index) in otherSets"
 						@click="getProductTypeSets(item)"
@@ -100,8 +100,9 @@
 </template>
 
 <script>
-
+  import mixinProduct from '../../mixins/product'
 	export default {
+    mixins: [mixinProduct],
 
 		props: ['post'],
 
@@ -144,7 +145,7 @@
 		methods: {
 			getPost: function(item) {
 				this.currentPost = item
-				this.$store.commit( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id } )
+				this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id } )
 			},
 			getSets: function() {
 				const vm = this

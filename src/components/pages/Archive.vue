@@ -27,11 +27,11 @@
 </template>
 
 <script>
-
+import mixinGlobal from '../../mixins/global'
 import SearchForm from '../parts/SearchForm.vue';
 
 	export default {
-
+    mixins: [mixinGlobal],
 		data(){
 			return {
 				user: {},
@@ -92,7 +92,7 @@ import SearchForm from '../parts/SearchForm.vue';
 					}
 
 					vm.pageTitle = 'Archive'
-					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.$store.dispatch( 'changeTitle', vm.pageTitle )
 					vm.loading = false
 
 				} )
@@ -132,7 +132,7 @@ import SearchForm from '../parts/SearchForm.vue';
 					}
 
 					vm.pageTitle = 'Search results for: ' + search
-					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.$store.dispatch( 'changeTitle', vm.pageTitle )
 					vm.loading = false
 
 				} )

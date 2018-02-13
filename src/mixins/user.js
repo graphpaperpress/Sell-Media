@@ -5,7 +5,8 @@ export default {
     ...mapGetters([
       "user",
       "cart",
-      "lightbox"
+      "lightbox",
+      "usage"
     ])
   },
 
@@ -14,7 +15,13 @@ export default {
       "setUser",
       "addToLightbox",
       "removeFromLightbox",
-      "deleteLightbox"
+      "deleteLightbox",
+      "addToCart",
+      "removeFromCart",
+      "updateCartProduct",
+      "deleteCart",
+      "setUsage",
+      "deleteUsage"
     ])
   }
 }

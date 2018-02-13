@@ -6,6 +6,7 @@ export const DELETE_CART = 'DELETE_CART'
 export const SET_USAGE = 'SET_USAGE'
 export const DELETE_USAGE = 'DELETE_USAGE'
 export const VERIFY_PRODUCTS = 'VERIFY_PRODUCTS'
+export const UPDATE_CART_PRODUCT = 'UPDATE_CART_PRODUCT'
 
 // Lightbox
 export const ADD_TO_LIGHTBOX = 'ADD_TO_LIGHTBOX'

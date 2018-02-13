@@ -38,12 +38,13 @@
 </template>
 
 <script>
-
+  import mixinProduct from '../../mixins/product'
 	import VideoJs from 'video.js'
 	require('!style-loader!css-loader!video.js/dist/video-js.css')
 	window.HELP_IMPROVE_VIDEOJS = false
 
 	export default {
+    mixins: [mixinProduct],
 
 		props: ['post'],
 
@@ -73,7 +74,7 @@
 				vm.poster = vm.file.slice(0, -4) + '.jpg'
 
 				let attachment = vm.post.sell_media_attachments[index]
-				vm.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+				vm.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
 				let player = VideoJs(this.$refs.videoPlayer, {}, function(){})
 				player.src({src: vm.file, type: vm.type})
@@ -81,7 +82,7 @@
 			}
 		},
 
-		beforeDestroy(){ 
+		beforeDestroy(){
 			this.player.dispose()
 		}
 	}
@@ -95,7 +96,7 @@
 		padding-top: 56.25%;
 
 		.video-js {
-			height: 100% !important; 
+			height: 100% !important;
 			width: 100% !important;
 			position: absolute;
 			top: 0;
@@ -137,7 +138,7 @@
 					border-style: solid;
 					content: '';
 				}
-				
+
 				&:hover:before {
 					border-color: transparent transparent transparent rgba(255,255,255,1);
 				}

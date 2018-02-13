@@ -9,7 +9,7 @@
 				</li>
 			</ul>
 		</div>
-		
+
 		<div class="tabs-details">
 			<slot></slot>
 		</div>
@@ -30,7 +30,7 @@
 
 		created() {
 			this.tabs = this.$children;
-			console.log(this.$children);
+			// console.log(this.$children);
 		},
 
 	    methods: {

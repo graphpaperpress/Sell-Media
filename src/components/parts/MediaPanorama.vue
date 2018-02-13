@@ -7,6 +7,7 @@
 </template>
 
 <script>
+  import mixinProduct from '../../mixins/product'
 
 	var libpannellumjs = require('../../../node_modules/pannellum/src/js/libpannellum.js')
 	var RequestAnimationFrame = require('../../../node_modules/pannellum/src/js/RequestAnimationFrame.js')
@@ -14,9 +15,11 @@
 	var pannellumcss = require('../../../node_modules/pannellum/src/css/pannellum.css')
 
 	export default {
+    mixins: [mixinProduct],
+
 		props: ['post'],
 
-		mounted: function() {			
+		mounted: function() {
 			this.player
 		},
 
@@ -26,7 +29,7 @@
 
 		computed: {
 			player: function() {
-				this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+				this.$store.dispatch( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
 
 				pannellum.viewer(this.$refs.panoPlayer.id, {
 					"type": "equirectangular",

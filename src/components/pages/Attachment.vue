@@ -32,8 +32,10 @@
 </template>
 
 <script>
+  import mixinGlobal from '../../mixins/global'
 
 	export default {
+    mixins: [mixinGlobal],
 
 		data() {
 			return {
@@ -56,7 +58,7 @@
 			getAttachment(){
 
 				const vm = this;
-				console.log(vm.$route.params)
+				// console.log(vm.$route.params)
 
 				vm.$http.get( '/wp-json/wp/v2/media', {
 					params: {
@@ -66,10 +68,10 @@
 				.then( ( res ) => {
 
 					vm.attachment = res.data[0]
-					console.log(vm.attachment)
+					// console.log(vm.attachment)
 					vm.attachment.title = vm.attachment.title.rendered
 					vm.pageTitle = vm.attachment.title.rendered
-					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.$store.dispatch( 'changeTitle', vm.pageTitle )
 
 					this.getPost(vm.attachment.post)
 

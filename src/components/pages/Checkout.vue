@@ -51,7 +51,7 @@
 				<div class="column">{{ currency_symbol }}{{ product.price }}</div>
 				<div class="column has-text-right">
 					{{ currency_symbol }}{{ subsubtotal(product) }}
-					<span class="icon-x" @click="removeProduct(product)">&#10005;</span>
+					<span class="icon-x" @click="removeFromCart(product)">&#10005;</span>
 				</div>
 			</div>
 
@@ -127,12 +127,14 @@
 </template>
 
 <script>
+  import mixinGlobal from '../../mixins/global'
+  import mixinUser from '../../mixins/user'
 
 	export default {
+    mixins: [mixinGlobal, mixinUser],
 
 		data() {
 			return {
-				products: this.$store.state.cart,
 				currency_symbol: sell_media.currency_symbol,
 				labels: sell_media.cart_labels,
 				tax_rate: sell_media.tax,
@@ -142,13 +144,14 @@
 				discount: false,
 				discount_code_labels: sell_media.discount_code_labels,
 				token: null,
-				processing: false,
+        processing: false,
+        discount_code_value: ''
 			}
 		},
 
 		mounted(){
-			this.$store.commit( 'changeTitle', sell_media.checkout_path )
-		},
+			this.$store.dispatch( 'changeTitle', sell_media.checkout_path )
+    },
 
 		methods: {
 
@@ -157,25 +160,21 @@
 			},
 
 			updateProduct(product){
-				this.$store.commit( 'updateProduct', product );
+				this.$store.dispatch( 'updateCartProduct', product );
 			},
 
 			decreaseQuantity(product){
 				product.qty -= 1
-				this.$store.commit( 'updateProduct', product );
+				this.$store.dispatch( 'updateCartProduct', product );
 			},
 
 			increaseQuantity(product){
 				product.qty += 1
-				this.$store.commit( 'updateProduct', product );
-			},
-
-			removeProduct(product){
-				this.$store.commit( 'removeFromCart', product );
+				this.$store.dispatch( 'updateCartProduct', product );
 			},
 
 			deleteUsage(){
-				this.$store.commit( 'deleteUsage' );
+				this.$store.dispatch( 'deleteUsage' );
 			},
 
 			checkout(){
@@ -204,8 +203,8 @@
 						.then( ( res ) => {
 							// console.dir(res.data)
 							vm.processing = false
-							this.$store.commit( 'deleteCart' )
-							this.$store.commit( 'deleteUsage' )
+							this.$store.dispatch( 'deleteCart' )
+							this.$store.dispatch( 'deleteUsage' )
 							return window.location = res.data.url;
 						} )
 						.catch( ( res ) => {
@@ -240,6 +239,9 @@
 		},
 
 		computed: {
+      products() {
+        return this.cart
+      },
 			subtotal(){
 				return this.products.reduce(function(subtotal, product){
 					return Number(subtotal + product.price * product.qty)
@@ -277,11 +279,8 @@
 			total(){
 				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( this.discountTotal ) ).toFixed(2)
 			},
-			usage(){
-				return this.$store.state.usage[0]
-			},
 			usageFee(){
-				let usage = this.usage
+				let usage = this.usage[0]
 				let sum = 0
 				for ( let item in usage ) {
 					let meta = usage[item].term.markup
@@ -299,7 +298,7 @@
 				let status = false
 
 				// licensing is enabled, but buyer hasn't selected usage
-				if ( sell_media.licensing_enabled && typeof this.usage === 'undefined' ) {
+				if ( sell_media.licensing_enabled && (typeof this.usage === 'undefined' || this.usage.length === 0) ) {
 					let products = this.products
 					for ( let product in products ) {
 						if ( products[product].type === 'price-group' ) {
@@ -319,7 +318,7 @@
 				let amount = Number(this.discount.amount).toFixed(2);
 				let type = this.discount.type;
 				let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal;
-				console.log(Number( discountAmount ).toFixed(2))
+				// console.log(Number( discountAmount ).toFixed(2))
 
 				return Number( discountAmount ).toFixed(2);
 			}

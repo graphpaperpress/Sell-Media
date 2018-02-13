@@ -63,12 +63,13 @@
 
 	export default {
     mixins: [mixinUser],
+
 		props: ['post', 'attachment', 'multiple'],
 
 		data(){
 
 			return {
-				cart: {},
+				product: {},
 				fields: [],
 				active: '',
 				total: 0,
@@ -114,7 +115,7 @@
 			setCart(value){
 				// this feels wrong
 				// set product price, type and qty
-				this.cart = {
+				this.product = {
 					'price_id': value.id,
 					'price': Number(value.price).toFixed(2),
 					'price_name': value.name,
@@ -129,7 +130,7 @@
 				if (this.disabled) {
 					return alert('Please select a size first');
 				}
-				console.log(this.attachment)
+				// console.log(this.attachment)
 				// attachment object data differs depending on which json api endpoint is requested.
 				// so, we'll check for all the various locations in a logical order
 				let img = ''
@@ -144,26 +145,26 @@
 
 				// this feels wrong
 				// add currently visible post and attachment
-				this.cart = {
+				this.product = {
 					'id': Number(this.post.id),
 					'title': this.attachment.title,
 					'attachment_id': Number(this.attachment.id),
 					'img': img,
-					'price_id': this.cart.price_id,
-					'price': Number(this.cart.price).toFixed(2),
-					'price_name': this.cart.price_name,
-					'price_desc': this.cart.price_desc,
-					'type': this.cart.type,
-					'qty': this.cart.qty
+					'price_id': this.product.price_id,
+					'price': Number(this.product.price).toFixed(2),
+					'price_name': this.product.price_name,
+					'price_desc': this.product.price_desc,
+					'type': this.product.type,
+					'qty': this.product.qty
 				}
 
 				if ( 'cart' === $where ) {
-					this.$store.commit( 'addToCart', this.cart )
+					this.$store.dispatch( 'addToCart', this.product )
 					this.added = true
 				}
 
 				if ( 'lightbox' === $where ) {
-					this.$store.dispatch( 'addToLightbox', this.cart )
+					this.$store.dispatch( 'addToLightbox', this.product )
 					this.saved = true
 				}
 
