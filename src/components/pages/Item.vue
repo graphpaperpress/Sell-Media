@@ -5,7 +5,7 @@
 		<searchform @search="goToSearchResults"></searchform>
 
 		<h2 class="title">{{ post.title.rendered }}</h2>
-		
+
 		<div class="columns">
 			<div :class="!multiple ? pageLayout.content : 'column'">
 				<media :post="post" :type="type" @attachment="setAttachment"></media>
@@ -15,16 +15,17 @@
 				<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 			</div>
 		</div>
-		
+
 	</div>
 
 </template>
 
 <script>
-
-import SearchForm from '../parts/SearchForm.vue';
+import SearchForm from '../parts/SearchForm.vue'
+import mixinGlobal from '../../mixins/global'
 
 	export default {
+    mixins: [mixinGlobal],
 
 		data: function() {
 			return {
@@ -64,10 +65,9 @@ import SearchForm from '../parts/SearchForm.vue';
 					vm.type = vm.post.sell_media_meta.product_type[0];
 					vm.loaded = true;
 					vm.pageTitle = vm.post.title.rendered;
-					vm.$store.commit( 'changeTitle', vm.pageTitle );
+					vm.$store.dispatch( 'changeTitle', vm.pageTitle );
 
-					console.log(vm.post);
-
+					// console.log(vm.post);
 				} )
 				.catch( ( res ) => {
 

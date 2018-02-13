@@ -1,14 +1,22 @@
+Vue.config.devtools = true
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { state, mutations } from './mutations'
 import * as getters from './getters'
 import plugins from './plugins'
+
+// Modules
+import Global from './modules/global'
+import User from './modules/user'
+import Product from './modules/product'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state,
-  mutations,
+  modules: {
+    Global,
+    User,
+    Product
+  },
   getters,
   plugins
 })

@@ -1,5 +1,5 @@
 export const gridLayout = state => {
-	
+
 	let setting = sell_media.thumbnail_layout
 	let layout = null
 
@@ -20,7 +20,7 @@ export const gridLayout = state => {
 }
 
 export const gridLayoutContainer = state => {
-	
+
 	let setting = sell_media.thumbnail_layout
 	let layout = null
 

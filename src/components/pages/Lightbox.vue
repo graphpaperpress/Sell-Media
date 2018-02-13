@@ -1,20 +1,18 @@
 <template>
 	<div id="lightbox">
+    <p v-if="addedAllToCart">
+      {{ cart_labels.added_to_cart }} <router-link :to="{ name: 'checkout' }">{{ cart_labels.view_cart }} &raquo;</router-link>
+    </p>
 
 		<div v-if="products.length > 0" class="content">
 			<nav class="buttons">
 				<button class="button is-small" @click="addAll" :title="lightbox_labels.add_all">
 	      			<span>{{ lightbox_labels.add_all }}</span>
 	      		</button>
-				<button class="button is-small" @click="removeAll" :title="lightbox_labels.remove_all">
+				<button class="button is-small" @click="deleteLightbox" :title="lightbox_labels.remove_all">
 	      			<span>{{ lightbox_labels.remove_all }}</span>
 	      		</button>
 	      	</nav>
-
-	  		<p v-if="addedAllToCart">
-				{{ cart_labels.added_to_cart }} <router-link :to="{ name: 'checkout' }">{{ cart_labels.view_cart }} &raquo;</router-link>
-			</p>
-
 		</div>
 
 		<div v-else class="content">
@@ -23,7 +21,7 @@
 
 		<div v-if="loaded" class="columns is-multiline is-size-7">
 			<div v-for="(product, index) in products" :key="index" class="column is-one-quarter lightbox-item">
-				<button class="delete" @click="remove(product)"></button>
+				<button class="delete" @click="removeFromLightbox(product)"></button>
 				<img :src="product.img" />
 				<p class="is-hidden-mobile">{{ product.title }}</p>
 			</div>
@@ -37,12 +35,13 @@
 </template>
 
 <script>
+  import mixinUser from '../../mixins/user'
 
 	export default {
+    mixins: [mixinUser],
 
 		data() {
 			return {
-				products: this.$store.state.lightbox,
 				loaded: false,
 				addedAllToCart: false,
 				lightbox_labels: sell_media.lightbox_labels,
@@ -55,21 +54,21 @@
 
 		mounted() {
 			this.loaded = true
-		},
+    },
+
+    computed: {
+      products: function() {
+        return this.lightbox
+      }
+    },
 
 		methods: {
-			remove: function(product) {
-				this.$store.commit( 'removeFromLightbox', product );
-			},
-			removeAll: function() {
-				this.$store.commit( 'deleteLightbox' );
-				this.products = {}
-			},
 			addAll: function() {
+        // TODO: Use module action
 				for ( let product of this.products ) {
-					this.$store.commit( 'addToCart', product )
+					this.$store.dispatch( 'addToCart', product )
 				}
-				this.$store.commit( 'deleteLightbox' )
+				this.$store.dispatch( 'deleteLightbox' )
 				this.addedAllToCart = true
 			}
 		}

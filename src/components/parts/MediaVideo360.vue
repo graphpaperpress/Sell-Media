@@ -11,6 +11,7 @@
 </template>
 
 <script>
+  import mixinProduct from '../../mixins/product'
 	require('!style-loader!css-loader!video.js/dist/video-js.css')
 	require('!style-loader!css-loader!videojs-panorama/dist/videojs-panorama.min.css')
 	import VideoJs from 'video.js'
@@ -18,6 +19,8 @@
 	window.HELP_IMPROVE_VIDEOJS = false
 
 	export default {
+    mixins: [mixinProduct],
+
 		props: ['post'],
 
 		mounted: function() {
@@ -30,7 +33,7 @@
 
 		computed: {
 			player: function() {
-				this.$store.commit( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+				this.$store.dispatch( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
 				let videos = VideoJs.players
 				if (!videos.hasOwnProperty(this.$refs.videoPlayer)) {
 					let player = VideoJs( this.$refs.videoPlayer, {}, function(){})
@@ -42,7 +45,7 @@
 			}
 		},
 
-		beforeDestroy() { 
+		beforeDestroy() {
 			this.player.dispose()
 		}
 	}
@@ -55,7 +58,7 @@
 		padding-top: 56.25%;
 
 		.video-js {
-			height: 100% !important; 
+			height: 100% !important;
 			width: 100% !important;
 			position: absolute;
 			top: 0;

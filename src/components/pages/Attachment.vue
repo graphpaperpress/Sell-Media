@@ -34,10 +34,12 @@
 </template>
 
 <script>
+  import mixinGlobal from '../../mixins/global'
 
 import SearchForm from '../parts/SearchForm.vue';
 
 	export default {
+    mixins: [mixinGlobal],
 
 		data() {
 			return {
@@ -60,7 +62,7 @@ import SearchForm from '../parts/SearchForm.vue';
 			getAttachment(){
 
 				const vm = this;
-				console.log(vm.$route.params)
+				// console.log(vm.$route.params)
 
 				vm.$http.get( '/wp-json/wp/v2/media', {
 					params: {
@@ -70,10 +72,10 @@ import SearchForm from '../parts/SearchForm.vue';
 				.then( ( res ) => {
 
 					vm.attachment = res.data[0]
-					console.log(vm.attachment)
+					// console.log(vm.attachment)
 					vm.attachment.title = vm.attachment.title.rendered
 					vm.pageTitle = vm.attachment.title.rendered
-					vm.$store.commit( 'changeTitle', vm.pageTitle )
+					vm.$store.dispatch( 'changeTitle', vm.pageTitle )
 
 					this.getPost(vm.attachment.post)
 

@@ -64,8 +64,9 @@
 </template>
 
 <script>
-
+  import mixinProduct from '../../mixins/product'
 	export default {
+    mixins: [mixinProduct],
 
 		props: ['post'],
 
@@ -87,7 +88,7 @@
 
 		mounted: function() {
 			let attachment = this.post.sell_media_attachments[this.currentSlide]
-			this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+			this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 		},
 
 		methods: {
@@ -95,7 +96,7 @@
 			goToSlide: function(slide) {
 				this.currentSlide = slide
 				let attachment = this.post.sell_media_attachments[this.currentSlide]
-				this.$store.commit( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+				this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
 				// beginning of slides
 				if (this.currentSlide > 0){
@@ -130,7 +131,7 @@
 		color: rgba(255,255,255,.8);
 		transition: all 0.25s ease-in-out;
 		padding: .5rem 1rem;
-		
+
 		&:hover {
 			background: rgba(0,0,0,.5);
 			color: #fff;
