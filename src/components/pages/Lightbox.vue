@@ -1,8 +1,5 @@
 <template>
 	<div id="lightbox">
-    <p v-if="addedAllToCart">
-      {{ cart_labels.added_to_cart }} <router-link :to="{ name: 'checkout' }">{{ cart_labels.view_cart }} &raquo;</router-link>
-    </p>
 
 		<div v-if="products.length > 0" class="content">
 			<nav class="buttons">
@@ -43,7 +40,6 @@
 		data() {
 			return {
 				loaded: false,
-				addedAllToCart: false,
 				lightbox_labels: sell_media.lightbox_labels,
 				cart_labels: sell_media.cart_labels,
 				search_labels: sell_media.search_labels,
@@ -64,12 +60,12 @@
 
 		methods: {
 			addAll: function() {
-        // TODO: Use module action
+        		// TODO: Use module action
 				for ( let product of this.products ) {
 					this.$store.dispatch( 'addToCart', product )
 				}
 				this.$store.dispatch( 'deleteLightbox' )
-				this.addedAllToCart = true
+				this.$router.push( { 'name': 'checkout' } )
 			}
 		}
 	}
