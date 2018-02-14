@@ -6,12 +6,12 @@
             <label>Search Title:</label>
         </div>
 
-        <div class="columns is-multiline has-text-centered" v-if="loaded === true">
-            <thumbnail v-for="post in posts" :key="post.slug" :post="post"></thumbnail>
+        <div class="columns is-multiline has-text-centered" v-if="searchResultsLoaded === true">
+            <thumbnail v-for="post in searchResults.results" :key="post.slug" :post="post"></thumbnail>
         </div>
         <nav class="pagination">
             <button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
-            <span> {{ currentPage }} / {{ totalPages }} </span>
+            <span> {{ currentPage }} / {{ searchResults.totalPages }} </span>
             <button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
         </nav>
 
@@ -20,94 +20,69 @@
 
 <script>
 import mixinGlobal from "../../mixins/global"
+import mixinProduct from "../../mixins/product"
 
 export default {
-  mixins: [mixinGlobal],
+  mixins: [mixinGlobal, mixinProduct],
 
   mounted: function() {
-    const vm = this;
+    const vm = this
+    this.$store.dispatch("changeTitle", "Search")
 
     if (vm.$route.params.page) {
-      vm.getPosts(vm.$route.params.page);
+      this.$store.dispatch('fetchProducts', vm.$route.params.page)
     } else {
-      vm.getPosts();
+      this.$store.dispatch('fetchProducts', 1)
     }
   },
 
   data: function() {
     return {
-      posts: {},
-      currentPage: "",
       prevPage: "",
       nextPage: "",
       showNext: true,
       showPrev: true,
       postCollection: "",
-      postPerPage: sell_media.posts_per_page,
-      totalPages: "",
-      loaded: false,
-      pageTitle: "",
+      currentPage: 1,
       keyword: "",
       name: this.$options.name // component name
-    };
+    }
   },
 
   methods: {
-    // TODO: Move this into a module
-    getPosts: function(pageNumber = 1) {
-      const vm = this;
-      vm.loaded = false;
-      vm.$http
-        .get("/wp-json/wp/v2/sell_media_item", {
-          params: {
-            per_page: vm.postPerPage,
-            page: pageNumber
-          }
-        })
-        .then(res => {
-          vm.posts = res.data;
-          // console.log(vm.posts);
-          vm.totalPages = res.headers["x-wp-totalpages"];
-
-          if (pageNumber <= parseInt(vm.totalPages)) {
-            vm.currentPage = parseInt(pageNumber);
-          } else {
-            vm.$router.push({ name: "search" });
-            vm.currentPage = 1;
-          }
-
-          vm.loaded = true;
-          vm.pageTitle = "Search";
-          vm.$store.dispatch("changeTitle", vm.pageTitle);
-        })
-        .catch(res => {
-          console.log(res);
-        });
-    },
     showNextPage: function(event) {
-      const vm = this;
+      const vm = this
 
-      if (vm.currentPage < vm.totalPages) {
-        showNext: true;
-        vm.currentPage = vm.currentPage + 1;
-        vm.$router.push({ name: "search", params: { page: vm.currentPage } });
+      if (vm.currentPage < vm.searchResults.totalPages) {
+        showNext: true
+        vm.currentPage = vm.currentPage + 1
+        vm.$router.push({ name: "search", params: { page: vm.currentPage } })
       }
     },
     showPrevPage: function(event) {
-      const vm = this;
+      const vm = this
 
       if (vm.currentPage != 1) {
-        showPrev: true;
-        vm.currentPage = vm.currentPage - 1;
-        vm.$router.push({ name: "search", params: { page: vm.currentPage } });
+        showPrev: true
+        vm.currentPage = vm.currentPage - 1
+        vm.$router.push({ name: "search", params: { page: vm.currentPage } })
       }
     }
   },
 
   watch: {
     $route(to, from) {
-      this.getPosts(this.$route.params.page);
+      this.$store.dispatch('fetchProducts', this.$route.params.page)
+    },
+
+    searchResults(val) {
+      if (val.pageNumber <= parseInt(val.totalPages)) {
+        this.currentPage = parseInt(val.pageNumber)
+      } else {
+        this.$router.push({ name: "search" })
+        this.currentPage = 1
+      }
     }
   }
-};
+}
 </script>

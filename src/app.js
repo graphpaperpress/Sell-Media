@@ -86,6 +86,8 @@ const router = new VueRouter( {
 // Add router body classes
 Vue.use( VBClass, router )
 
+window.Axios = axios
+
 // init Vue
 new Vue({
 	el: '#sell-media-app',

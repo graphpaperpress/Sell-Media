@@ -3,13 +3,16 @@ import { mapGetters, mapActions } from "vuex"
 export default {
   computed: {
     ...mapGetters([
-      "product"
+      "product",
+      "searchResults",
+      "searchResultsLoaded"
     ])
   },
 
   methods: {
     ...mapActions([
-      "setProduct"
+      "setProduct",
+      "fetchProducts"
     ])
   }
 }

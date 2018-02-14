@@ -19,6 +19,8 @@ export const SET_USER = 'SET_USER'
 
 // Product
 export const SET_PRODUCT = 'SET_PRODUCT'
+export const SET_SEARCH_RESULTS = 'SET_SEARCH_RESULTS'
+export const SET_SEARCH_RESULTS_LOADED = 'SET_SEARCH_RESULTS_LOADED'
 
 // MISC
 export const CHANGE_TITLE = 'CHANGE_TITLE'

@@ -47,3 +47,4 @@ vendor/
 ########
 *.map
 .sass-cache
+/.node-version
