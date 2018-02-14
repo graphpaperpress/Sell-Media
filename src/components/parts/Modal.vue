@@ -1,5 +1,5 @@
 <template>
-	<div :class="name" class="modal is-active">
+	<div class="modal is-active">
 		<div class="modal-background" @click="$emit('closeModal')"></div>
 		<div class="modal-content">
 
@@ -11,7 +11,7 @@
 			<div class="modal-columns">
 				<div class="modal-column-main has-text-center">
 					<template v-if="multiple">
-						<media-slideshow :attachments="attachments" @attachment="setAttachment"></media-slideshow>
+						<media-slideshow :post="post" :attachments="attachments" @attachment="setAttachment"></media-slideshow>
 					</template>
 					<template v-else>
 						<figure>

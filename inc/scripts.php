@@ -22,15 +22,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function sell_media_scripts( $hook ) {
 
+	if ( ! sell_media_page() ) {
+		return;
+	}
+
+	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION, true );
+	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
+
 	$settings = sell_media_get_plugin_options();
 	$checkout_page = empty( $settings->checkout_page ) ? '' : $settings->checkout_page;
 	$currency = empty( $settings->currency ) ? 'USD' : $settings->currency;
 	$test_mode = empty( $settings->test_mode ) ? false : $settings->test_mode;
 	$post_type_data = get_post_type_object( 'sell_media_item' );
 	$post_type_slug = $post_type_data->rewrite['slug'];
-
-	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION, true );
-	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
 
 	// Masonry
 	if ( is_customize_preview() || ( isset( $settings->thumbnail_layout ) && 'sell-media-masonry' === $settings->thumbnail_layout ) ) {

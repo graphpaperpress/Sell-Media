@@ -4,17 +4,7 @@
  */
 
 /**
- * Shortcodes
- */
-$pages = sell_media_get_pages_array();
-foreach ( $pages as $page ) {
-	add_shortcode( 'sell_media_' . $page, function() {
-		echo '<div id="sell-media-app"></div>';
-	} );
-}
-
-/**
- * Extend rest response
+ * Extend Rest API response
  */
 function sell_media_extend_rest_post_response() {
 

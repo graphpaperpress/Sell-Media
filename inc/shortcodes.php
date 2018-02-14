@@ -8,7 +8,23 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Shortcodes for all pages (except thanks), injects Vue app
+ */
+$pages = sell_media_get_pages_array();
+if ( ( $key = array_search( 'thanks', $pages ) ) !== false ) {
+	unset( $pages[ $key ] );
+}
+$pages = array_values( $pages );
+foreach ( $pages as $page ) {
+	add_shortcode( 'sell_media_' . $page, function() {
+		echo '<div id="sell-media-app"></div>';
+	} );
+}
 
 /**
  * Lists all downloads using sell_media_thanks shortcode.
@@ -161,162 +177,6 @@ function sell_media_all_items_shortcode( $atts ) {
 }
 add_shortcode( 'sell_media_all_items', 'sell_media_all_items_shortcode' );
 
-
-/**
- * The checkout page
- *
- * @since 2.0
- */
-function sell_media_checkout_shortcode() {
-	$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, null, null );
-	if ( ! $enable_ecommerce ) {
-		return false;
-	}
-	$settings = sell_media_get_plugin_options();
-	ob_start(); ?>
-	<?php do_action( 'sell_media_checkout_before_cart' ); ?>
-	<?php
-	global $sm_cart;
-	$cart_items = $sm_cart->getItems();
-	if ( ! empty( $cart_items ) ) :
-	?>
-	<div id="sell-media-checkout-cart">
-		<ul class="sell-media-cart-items">
-			<?php
-			$cart_index = 0;
-			foreach( $cart_items as $key => $item ): ?>
-				<li <?php do_action( 'sell_media_checkout_item_custom_attributes', $item ); ?> class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
-					<div class="item-image">
-						<?php
-						if ( ! empty( $item['item_attachment'] ) ) {
-							// $item['item_id'] is the featured image id
-							// $item['attachment'] is the source file id
-							$mime_type = get_post_mime_type( $item['item_attachment'] );
-							// if selling video or audio, show the post_id thumbnail
-							if ( SellMediaAudioVideo::is_video_item( $item['item_id'] ) || SellMediaAudioVideo::is_audio_item( $item['item_id'] ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-								echo sell_media_item_icon( $item['item_id'] );
-							} else {
-								echo sell_media_item_icon( $item['item_attachment'] );
-							}
-						}
-						?>
-					</div>
-					<div class="item-details">
-						<div class="item-name">
-						<?php if ( ! empty( $item['item_name'] ) ) : ?>
-							<?php echo esc_attr( $item['item_name'] ); ?>
-						<?php endif; ?>
-						</div>
-						<div class="item-size">
-						<?php if ( ! empty( $item['item_size'] ) ) : ?>
-							<?php echo $item['item_size']; ?>
-						<?php endif; ?>
-						</div>
-						<?php
-						$markups = Sell_Media()->tax_markup->markup_taxonomies();
-						if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
-							<?php foreach ( $markups as $markup ) : ?>
-								<?php if ( 'licenses' === $markup ) : ?>
-									<div class="item-license">
-										<?php if ( ! empty( $item['item_usage'] ) ) : ?>
-											<?php echo $item['item_usage']; ?>
-										<?php endif; ?>
-									</div>
-								<?php else : ?>
-									<div class="item-{$markup}">
-										<?php if ( ! empty( $item[ "item_markup_{$markup}" ] ) ) : ?>
-											<?php echo $item[ "item_markup_{$markup}" ]; ?>
-										<?php endif; ?>
-									</div>
-								<?php endif; ?>
-							<?php endforeach; ?>
-						<?php endif; ?>
-					</div>
-					<div class="item-qty-total">
-						<div class="item-decrement">
-							<span class="sell-media-cart-decrement dashicons dashicons-minus"></span>
-						</div>
-						<div class="item-quantity">
-							<span class="count">
-								<?php if ( ! empty( $item['qty'] ) ) : ?>
-									<?php echo $item['qty']; ?>
-								<?php endif; ?>
-							</span>
-						</div>
-						<div class="item-increment">
-							<span class="sell-media-cart-increment dashicons dashicons-plus"></span>
-						</div>
-						<div class="item-total">
-							<?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?>
-						</div>
-					</div>
-				</li>
-			<?php
-			$cart_index++;
-			endforeach; ?>
-		</ul>
-
-		<?php do_action( 'sell_media_checkout_after_cart' ); ?>
-
-		<div class="sell-media-totals group">
-			<div id="sell-media-totals-table" class="sell-media-totals-table cf">
-				<div class="subtotal cf">
-					<div class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</div>
-					<div class="sell-media-value"><span class="sell-media-cart-total"></span></div>
-				</div>
-				<?php do_action( 'sell_media_checkout_registration_fields' ); ?>
-				<div class="tax cf">
-					<div class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</div>
-					<div class="sell-media-value"><span class="sell-media-cart-tax"></span></div>
-				</div>
-				<div class="shipping cf">
-					<div class="sell-media-key"><?php _e( 'Shipping', 'sell_media' ); ?>:</div>
-					<div class="sell-media-value"><span class="sell-media-cart-shipping"></span></div>
-				</div>
-				<?php do_action( 'sell_media_checkout_before_grand_total' ); ?>
-				<div class="total cf">
-					<div class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</div>
-					<div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
-				</div>
-			</div>
-
-			<?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
-
-			<div class="sell-media-checkout-button group">
-				<?php do_action( 'sell_media_above_checkout_button' ); ?>
-				<p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
-				<p id="sell-media-continue-shopping">
-					<?php
-					$html  = __( 'or', 'sell_media' );
-					$html .= ' <a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">';
-					$html .= __( 'continue shopping &raquo;', 'sell_media' );
-					$html .= '</a>';
-					echo apply_filters( 'sell_media_or_continue_shopping', $html );
-					?>
-				</p>
-				<?php
-				$settings = sell_media_get_plugin_options();
-				if ( ! empty( $settings->terms_and_conditions ) ) : ?>
-					<p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
-				<?php endif; ?>
-			</div><!-- .sell-media-checkout-button -->
-
-		</div><!-- .sell-media-totals -->
-
-		<?php do_action( 'sell_media_below_registration_form' ); ?>
-
-	</div><!-- #sell-media-checkout-cart -->
-
-	<?php endif; ?>
-
-	<p id="sell-media-empty-cart-message" class="<?php echo ( !empty( $cart_items ) ) ? 'hide' : ''?>">
-		<?php echo apply_filters( 'sell_media_continue_shopping', sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">' . __( 'Continue shopping', 'sell_media' ) . ' &raquo;</a>' ) ); ?>
-	</p>
-
-	<?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
-	<?php return ob_get_clean();
-}
-add_shortcode( 'sell_media_checkout', 'sell_media_checkout_shortcode' );
 
 /**
  * Shows a list of everything user has downloaded.

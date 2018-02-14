@@ -137,7 +137,7 @@ jQuery( document ).ready(function( $ ){
      */
     $('.sell-media-upload-options').on('click', function( event ){
         event.preventDefault();
-        $(this).find('span').toggleClass('dashicons-arrow-up dashicons-arrow-down');
+        $(this).find('span').toggleClass('dashicons-arrow-down dashicons-arrow-right');
         $('#sell-media-upload-show-options').toggle();
     });
 
@@ -146,7 +146,7 @@ jQuery( document ).ready(function( $ ){
      */
     $( '.sell-media-toggler' ).on( 'click', function() {
         $( this ).toggleClass( 'active' );
-        $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up dashicons-arrow-down' );
+        $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down dashicons-arrow-right' );
         $( this ).next( '.toggle' ).toggle();
     } );
 

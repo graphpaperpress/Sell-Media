@@ -117,7 +117,7 @@ function sell_media_after_file_uploader( $post ) {
 	?>
 
 	<p class="description"><?php _e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
-	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
+	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-right"></span> <?php _e( 'Importing Options', 'sell_media' ); ?></a></p>
 
 	<div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
 		<h4><?php _e( 'Importing', 'sell_media' ); ?></h4>
@@ -193,15 +193,15 @@ function sell_media_marketplace_meta_box( $post ) { ?>
 	</div>
 
 	<div id="sell-media-marketplace-description" class="sell-media-field">
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'What is Marketplace?', 'sell_media' ); ?></h4>
+		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-right"></span> <?php _e( 'What is Marketplace?', 'sell_media' ); ?></h4>
 		<p class="toggle" style="display:none;"><?php _e( 'Marketplace is a new web platform that showcases photos from independent photographers around the world. You can submit 10 photos to the marketplace, which helps you get discovered and attract new customers to your website. You can view the marketplace at VisualSociety.com/marketplace.', 'sell_media' ); ?></p>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'How does it work?', 'sell_media' ); ?></h4>
+		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-right"></span> <?php _e( 'How does it work?', 'sell_media' ); ?></h4>
 		<p class="toggle" style="display:none;"><?php _e( 'Check the box above to add your photos to the marketplace. When you click "Save", all images in this specific gallery will be uploaded to the Marketplace as free downloads (like Unsplash, Pexels, etc). These photos will be submitted for review to the marketplace. If approved, your name, photos, and website link be displayed. The marketplace imports all of the keywords that you applied to the image before you uploaded it.', 'sell_media' ); ?></p>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Why was the Marketplace created?', 'sell_media' ); ?></h4>
+		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-right"></span> <?php _e( 'Why was the Marketplace created?', 'sell_media' ); ?></h4>
 		<p class="toggle" style="display:none;"><?php _e( 'The Marketplace was created to help independent photographers improve their marketing and sales. It connects thousands of independent photography websites to a single website, making it easy for people to find photos. There are plans to add your commercially licensed photos into the marketplace in the next year.', 'sell_media' ); ?></p>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Why are all Marketplace photos free to download?', 'sell_media' ); ?></h4>
+		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-right"></span> <?php _e( 'Why are all Marketplace photos free to download?', 'sell_media' ); ?></h4>
 		<p class="toggle" style="display:none;"><?php _e( 'Offering a small collection of free photos will help drive traffic to your website. Visitors come for the free photo downloads and eventually discover your other photos that aren\'t free.', 'sell_media' ); ?>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'How many photos can I add to the Marketplace?', 'sell_media' ); ?></h4>
+		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-right"></span> <?php _e( 'How many photos can I add to the Marketplace?', 'sell_media' ); ?></h4>
 		<p class="toggle" style="display:none;"><?php _e( 'You can add up to 10 photos. All contributions are curated for quality and accuracy. Once you become an official contributor, your contribution limit will be increased, increasing your visibility in the marketplace.', 'sell_media' ); ?></p>
 	</div>
 

@@ -108,13 +108,25 @@ function sell_media_get_pages_array() {
 function sell_media_page() {
 	global $post;
 
+	$page_ids = array();
+	$pages    = sell_media_get_pages_array();
+	$settings = sell_media_get_plugin_options();
+
+	foreach ( $pages as $page ) {
+		$setting = $page . '_page';
+		if ( isset( $settings->$setting ) ) {
+			$page_ids[] = $settings->$setting;
+		}
+	}
+
 	if ( $post
 	&& ( 'sell_media_item' === get_post_type( $post->ID )
-	or sell_media_attachment( $post->ID )
-	or is_tax( 'collection' )
-	or is_tax( 'keywords' )
-	or is_tax( 'creator' )
-	or ( isset( $settings->search_page ) && is_page( $settings->search_page ) ) ) ) {
+	|| is_post_type_archive( 'sell_media_item' )
+	|| sell_media_attachment( $post->ID )
+	|| is_tax( 'collection' )
+	|| is_tax( 'keywords' )
+	|| is_tax( 'creator' )
+	|| is_page( $page_ids ) ) ) {
 		return true;
 	}
 }
