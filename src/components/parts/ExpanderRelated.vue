@@ -122,6 +122,7 @@
 				gridLayout: this.$store.getters.gridLayout,
 				gridContainer: this.$store.getters.gridLayoutContainer,
 				thumbnailStyle: 'slideshow',
+				height: 600,
 			}
 		},
 
@@ -260,7 +261,7 @@
 				return type
 			},
 			attachment: function() {
-				return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.state.product.attachment_id)
+				return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.getters.product.attachment_id)
 			}
 		}
 	}
