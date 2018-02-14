@@ -15,10 +15,10 @@
 						</span>
 					</p>
 					<p class="control is-expanded">
-						<input :value="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', $event.target.value, search_type)">
+						<input v-model="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', { search: $event.target.value, search_type: search_type })">
 					</p>
 					<p class="control">
-						<button class="button is-medium is-dark" @click="$emit('search', search, search_type)" :class="{ 'is-loading': loading }">
+						<button class="button is-medium is-dark" @click="$emit('search', { search: search, search_type: search_type })" :class="{ 'is-loading': loading }">
 							{{ labels.search }}
 						</button>
 					</p>
@@ -165,6 +165,7 @@
 
 		data(){
 			return {
+        searchValue: '',
 				types: {},
 				labels: sell_media.search_labels,
 				search_type: sell_media.default_search_type ? sell_media.default_search_type : '',

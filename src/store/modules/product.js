@@ -23,7 +23,9 @@ const actions = {
     commit(types.SET_PRODUCT, product)
   },
 
-  fetchProducts ({ commit }, pageNumber) {
+  fetchProducts ({ commit }, pageNumber = 1) {
+    commit(types.SET_SEARCH_RESULTS_LOADED, false)
+
     Axios.get("/wp-json/wp/v2/sell_media_item", {
       params: {
         per_page: sell_media.posts_per_page,
@@ -43,6 +45,32 @@ const actions = {
     .catch(res => {
       console.log(res);
     });
+  },
+
+  searchProducts ({ commit }, { search, search_type, page_number = 1}) {
+    commit(types.SET_SEARCH_RESULTS_LOADED, false)
+    Axios.get( '/wp-json/sell-media/v2/search', {
+      params: {
+        s: search,
+        type: search_type,
+        per_page: sell_media.posts_per_page,
+        page: page_number
+      }
+    } )
+    .then(( res ) => {
+      let searchResults = {
+        results: res.data,
+        hasSearchResults: res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0,
+        totalPages: parseInt(res.headers["x-wp-totalpages"]),
+        pageNumber: page_number
+      }
+
+      commit(types.SET_SEARCH_RESULTS, searchResults)
+      commit(types.SET_SEARCH_RESULTS_LOADED, true)
+    })
+    .catch( ( res ) => {
+      console.log( res )
+    })
   }
 }
 

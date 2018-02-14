@@ -25,6 +25,20 @@ const getters = {
 
 // Actions: Used to trigger asyncronous tasks and commit mutations
 const actions = {
+  getUser({ commit }) {
+    Axios.get( '/wp-json/sell-media/v2/api', {
+      params: {
+        action: 'get_user',
+        _wpnonce: sell_media.nonce
+      }
+    } )
+    .then(( res ) => {
+      commit(types.SET_USER, res.data.ID)
+    })
+    .catch(( res ) => {
+      console.log( res )
+    })
+  },
   /**
    * Sets the user to the WP user object
    * @param { user } the user object
