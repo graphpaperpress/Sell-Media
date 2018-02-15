@@ -573,7 +573,11 @@ function sell_media_api_template_redirect( $original_template ) {
 		|| get_post_type() === $sell_media_post_type // Sell Media single
 		|| ( ! empty( $post ) && sell_media_attachment( $post->ID ) ) // Sell Media attachment
 	) {
-		$template = SELL_MEDIA_PLUGIN_DIR . '/themes/index.php';
+		if ( $overridden_template = locate_template( 'sell-media.php' ) ) {
+			$template = $overridden_template;
+		} else {
+			$template = SELL_MEDIA_PLUGIN_DIR . '/themes/index.php';
+		}
 	} else {
 		$template = $original_template;
 	}

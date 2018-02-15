@@ -13,7 +13,7 @@ export default {
 
 <style lang="sass">
 	@import '~bulma/bulma.sass';
-	@import '~bulma-steps-component/bulma-steps.sass';
+	// @import '~bulma-steps-component/bulma-steps.sass';
 	@import '~bulma-checkradio/checkradio.sass';
 
 	.sell-media {

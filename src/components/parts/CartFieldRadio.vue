@@ -138,15 +138,13 @@ import download from 'downloadjs'
 		cursor: pointer;
 		display: block;
 		padding: 16px 0;
-		width: 100%;
-		height: 50px;
+		margin: 0;
 		overflow: hidden;
 		font-size: .75rem;
 
 		.expander & {
 			color: $white;
-			height: 34px;
-			padding: 8px;
+			padding: 12px 8px;
 		}
 	}
 
@@ -159,7 +157,6 @@ import download from 'downloadjs'
 	.download {
 		border-top: 1px solid $light;
 		display: block;
-		width: 100%;
 		padding: 10px;
 
 		.expander & {

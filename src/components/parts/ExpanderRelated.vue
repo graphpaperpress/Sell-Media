@@ -294,6 +294,7 @@
 		}
 
 		img {
+			display: block;
 			max-height: 432px;
 		}
 

@@ -66,6 +66,7 @@
 				}
 				this.$store.dispatch( 'deleteLightbox' )
 				this.$router.push( { 'name': 'checkout' } )
+				this.pageTitle = this.$route.name
 			}
 		}
 	}
