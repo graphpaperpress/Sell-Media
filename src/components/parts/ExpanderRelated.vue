@@ -108,7 +108,7 @@
 
 		data: function () {
 			return {
-				user: this.$store.state.user,
+				user: this.$store.getters.user,
 				currentPost: this.post,
 				attachments: {},
 				showSlideshow: true,
