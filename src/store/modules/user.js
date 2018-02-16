@@ -118,12 +118,7 @@ const actions = {
    */
   deleteUsage ({ commit }) {
     commit(types.SET_USAGE, JSON.parse('[]'))
-  },
-
-  // TODO: This mutation was called from app.js but wasn't defined. @EvanAgee
-  initCart ({ state }) {
-    return true
-  },
+  }
 }
 
 // Mutations: Used to modify the state's properties

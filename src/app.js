@@ -93,9 +93,5 @@ new Vue({
 	el: '#sell-media-app',
 	store,
 	router,
-	beforeCreate() {
-    // TODO: This doesn't have a corresponding mutation so I created a placeholder. @EvanAgee
-		this.$store.dispatch('initCart');
-	},
 	render: h => h(Main)
 })
