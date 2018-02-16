@@ -8,25 +8,25 @@
 
 	export default {
 
-	props: {
+	  props: {
         name: { required: true },
         selected: { default: false }
     },
 
     data() {
-        return {
-            isActive: false
-        };
+      return {
+          isActive: false
+      }
     },
 
     computed: {
-        href() {
-            return '#' + this.name.toLowerCase().replace(/ /g, '-');
-        }
+      href() {
+          return '#' + this.name.toLowerCase().replace(/ /g, '-')
+      }
     },
 
     mounted() {
-        this.isActive = this.selected;
+      this.isActive = this.selected
     },
 
 }

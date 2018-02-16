@@ -18,9 +18,7 @@
 export default {
 
 	mounted: function() {
-
-		//console.log( wp.api.collections );
-		this.getMenu();
+		this.getMenu()
 	},
 	data() {
 		return {
@@ -29,33 +27,33 @@ export default {
 			site_name: sell_media.site_name,
 			isActive: false
 
-		};
+		}
 	},
 	methods: {
 
 		getMenu: function() {
 
-			const vm = this;
+			const vm = this
 
 			vm.$http.get( 'wp-api-menus/v2/menu-locations/primary-menu' )
 			.then(function(response){
-				vm.menus = response.data;
+				vm.menus = response.data
 			} )
 			.catch(function(response) {
-				console.log(response);
-			} );
+				console.log(response)
+			} )
 
 		},
 		getUrlName: function( url ) {
 
-			const array = url.split( '/' );
-			return array[ array.length - 2 ];
+			const array = url.split( '/' )
+			return array[ array.length - 2 ]
 		},
 		toggleMenu: function() {
-			//console.log("Clicked" + this.isActive);
-			this.isActive = ! this.isActive;
+			//console.log("Clicked" + this.isActive)
+			this.isActive = ! this.isActive
 		}
 
 	}
-};
+}
 </script>

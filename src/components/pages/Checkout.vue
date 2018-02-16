@@ -156,25 +156,25 @@
 		methods: {
 
 			subsubtotal(product){
-				return ( product.price * product.qty ).toFixed(2);
+				return ( product.price * product.qty ).toFixed(2)
 			},
 
 			updateProduct(product){
-				this.$store.dispatch( 'updateCartProduct', product );
+				this.$store.dispatch( 'updateCartProduct', product )
 			},
 
 			decreaseQuantity(product){
 				product.qty -= 1
-				this.$store.dispatch( 'updateCartProduct', product );
+				this.$store.dispatch( 'updateCartProduct', product )
 			},
 
 			increaseQuantity(product){
 				product.qty += 1
-				this.$store.dispatch( 'updateCartProduct', product );
+				this.$store.dispatch( 'updateCartProduct', product )
 			},
 
 			deleteUsage(){
-				this.$store.dispatch( 'deleteUsage' );
+				this.$store.dispatch( 'deleteUsage' )
 			},
 
 			checkout(){
@@ -185,8 +185,8 @@
 					currency: sell_media.currency,
 					amount: vm.total * 100,
 					token: (token, args) => {
-						// vm.submit(token);
-						vm.token = JSON.stringify(token, null, 2);
+						// vm.submit(token)
+						vm.token = JSON.stringify(token, null, 2)
 						vm.processing = true
 
 						vm.$http.post( sell_media.ajaxurl + '?action=charge', {
@@ -205,17 +205,17 @@
 							vm.processing = false
 							this.$store.dispatch( 'deleteCart' )
 							this.$store.dispatch( 'deleteUsage' )
-							return window.location = res.data.url;
+							return window.location = res.data.url
 						} )
 						.catch( ( res ) => {
-							console.log( `Something went wrong : ${res}` );
-						} );
+							console.log( `Something went wrong : ${res}` )
+						} )
 					}
-				});
+				})
 			},
 
 			applyDiscountCode(){
-				const vm = this;
+				const vm = this
 
 				if ('' === vm.discount_code_value) {
 					return vm.discount = false
@@ -231,8 +231,8 @@
 					return vm.discount = res.data
 				} )
 				.catch( ( res ) => {
-					console.log( `Something went wrong : ${res}` );
-				} );
+					console.log( `Something went wrong : ${res}` )
+				} )
 
 			}
 
@@ -245,7 +245,7 @@
 			subtotal(){
 				return this.products.reduce(function(subtotal, product){
 					return Number(subtotal + product.price * product.qty)
-				},0).toFixed(2);
+				},0).toFixed(2)
 			},
 			downloadsSubtotal(){
 				let subtotal = 0
@@ -264,16 +264,16 @@
 			},
 			shipping(){
 				if ( ! this.shipping_settings ) {
-					return 0;
+					return 0
 				}
 				if ( this.shipping_settings.reprints_shipping === 'shippingFlatRate' ) {
-					return Number(this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
+					return Number(this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
 				}
 				if ( this.shipping_settings.reprints_shipping === 'shippingQuantityRate' ) {
-					return Number(this.products.length * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
+					return Number(this.products.length * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
 				}
 				if ( this.shipping_settings.reprints_shipping === 'shippingTotalRate' ) {
-					return Number(this.subtotal * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2);
+					return Number(this.subtotal * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
 				}
 			},
 			total(){
@@ -315,11 +315,11 @@
 					return 0
 				}
 
-				let amount = Number(this.discount.amount).toFixed(2);
-				let type = this.discount.type;
-				let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal;
+				let amount = Number(this.discount.amount).toFixed(2)
+				let type = this.discount.type
+				let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal
 
-				return Number( discountAmount ).toFixed(2);
+				return Number( discountAmount ).toFixed(2)
 			}
 		}
 

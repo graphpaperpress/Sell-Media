@@ -36,7 +36,7 @@
 
 <script>
 
-import MediaSlideshow from './MediaSlideshow.vue';
+import MediaSlideshow from './MediaSlideshow.vue'
 
 	export default {
 
@@ -57,16 +57,16 @@ import MediaSlideshow from './MediaSlideshow.vue';
 		mounted: function() {
 			document.addEventListener("keydown", (e) => {
 				if (e.keyCode == 27) {
-					this.$emit('closeModal');
+					this.$emit('closeModal')
 				}
-			});
+			})
 
 		},
 
 		created: function() {
-			this.attachments = this.post.sell_media_attachments;
-			let count = Object.keys(this.attachments);
-			this.multiple = count.length > 1 ? true : false;
+			this.attachments = this.post.sell_media_attachments
+			let count = Object.keys(this.attachments)
+			this.multiple = count.length > 1 ? true : false
 		},
 
 		methods: {
@@ -88,7 +88,7 @@ import MediaSlideshow from './MediaSlideshow.vue';
 </script>
 
 <style lang="scss" scoped>
-	
+
 	// Varaibles
 	$white: #fff;
 

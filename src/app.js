@@ -63,7 +63,7 @@ import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
 
 // define routes
-const router = new VueRouter( {
+const router = new VueRouter({
 	mode: 'history',
 	routes: [
 
@@ -81,7 +81,7 @@ const router = new VueRouter( {
 		// { path: sell_media.search_url, name: 'search', component: Search },
 
 	]
-} );
+})
 
 // Add router body classes
 Vue.use( VBClass, router )

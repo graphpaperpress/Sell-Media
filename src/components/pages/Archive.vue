@@ -28,7 +28,7 @@
 <script>
 import mixinGlobal from '../../mixins/global'
 import mixinProduct from '../../mixins/product'
-import SearchForm from '../parts/SearchForm.vue';
+import SearchForm from '../parts/SearchForm.vue'
 
 	export default {
     mixins: [mixinGlobal, mixinProduct],
@@ -94,7 +94,7 @@ import SearchForm from '../parts/SearchForm.vue';
 				this.hasSearchResults = false
 				this.search = ''
 				this.search_type = sell_media.default_search_type ? sell_media.default_search_type : ''
-				this.$router.push( { name: 'archive', query: {} } );
+				this.$router.push( { name: 'archive', query: {} } )
         this.$store.dispatch('fetchProducts', 1)
 			},
 

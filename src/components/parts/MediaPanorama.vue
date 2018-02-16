@@ -39,7 +39,7 @@
 					"panorama": "" + this.post.sell_media_attachments[0].sizes.full[0] + "",
 					"preview": "" + this.post.sell_media_attachments[0].sizes.medium_large[0] + "",
 					"autoLoad": true
-				});
+				})
 			}
 		}
 	}

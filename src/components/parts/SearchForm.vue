@@ -223,8 +223,8 @@
 		methods: {
 			remove(item, array){
 				if ( array ) {
-					const index = array.indexOf(item);
-					array.splice(index, 1);
+					const index = array.indexOf(item)
+					array.splice(index, 1)
 				}
 				if ( item === 'colors' ) {
 					this.colors = defaultColors

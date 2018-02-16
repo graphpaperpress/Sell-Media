@@ -2,13 +2,15 @@
 
 import * as types from "../mutation-types"
 
+export const SEARCH_RESULTS_KEY = 'sell-media-search-results'
+
 const state = {
   product: {},
   productLoaded: false,
   post: {},
   postLoaded: false,
   searchResultsLoaded: false,
-  searchResults: {},
+  searchResults: JSON.parse(window.localStorage.getItem(SEARCH_RESULTS_KEY) || '{}'),
   productTypes: [],
   productTypesLoaded: false
 }
@@ -105,7 +107,6 @@ const actions = {
     commit(types.SET_PRODUCT_TYPES_LOADED, false)
     Axios.get( '/wp-json/wp/v2/product_type' )
     .then(( res ) => {
-      console.log(res)
       commit(types.SET_PRODUCT_TYPES, res.data)
       commit(types.SET_PRODUCT_TYPES_LOADED, true)
     })

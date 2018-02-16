@@ -1,5 +1,5 @@
 <template>
-    
+
     <tabs>
         <tab name="Prints" :selected="true" @click="reset">
             <cart-field-print-size :key="post.slug" :post="post"></cart-field-print-size>
@@ -33,7 +33,7 @@
 
         methods: {
             reset: function() {
-                document.getElementById('sizes').selectedIndex = '0';
+                document.getElementById('sizes').selectedIndex = '0'
             }
         },
 

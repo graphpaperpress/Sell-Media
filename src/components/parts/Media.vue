@@ -22,11 +22,11 @@
 
 <script>
 
-	import MediaPanorama from './MediaPanorama.vue';
-	import MediaVideo from './MediaVideo.vue';
-	import MediaVideo360 from './MediaVideo360.vue';
-	import MediaSlideshow from './MediaSlideshow.vue';
-	import MediaGallery from './MediaGallery.vue';
+	import MediaPanorama from './MediaPanorama.vue'
+	import MediaVideo from './MediaVideo.vue'
+	import MediaVideo360 from './MediaVideo360.vue'
+	import MediaSlideshow from './MediaSlideshow.vue'
+	import MediaGallery from './MediaGallery.vue'
 
 	export default {
 		props: ['post', 'type', 'showSlideshow'],
@@ -49,5 +49,5 @@
 			'media-slideshow': MediaSlideshow,
 			'media-gallery': MediaGallery,
 		}
-    }
+  }
 </script>
