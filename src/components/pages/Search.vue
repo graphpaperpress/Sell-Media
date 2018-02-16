@@ -6,7 +6,7 @@
             <label>Search Title:</label>
         </div>
 
-        <div class="columns is-multiline has-text-centered" v-if="searchResultsLoaded === true">
+        <div class="columns is-multiline has-text-centered" v-if="searchResultsLoaded">
             <thumbnail v-for="post in searchResults.results" :key="post.slug" :post="post"></thumbnail>
         </div>
         <nav class="pagination">

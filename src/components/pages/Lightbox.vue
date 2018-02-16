@@ -1,7 +1,7 @@
 <template>
 	<div id="lightbox">
 
-		<div v-if="products.length > 0" class="content">
+		<div v-if="lightbox.length > 0" class="content">
 			<nav class="buttons">
 				<button class="button is-small" @click="addAll" :title="lightbox_labels.add_all">
 	      			<span>{{ lightbox_labels.add_all }}</span>
@@ -16,8 +16,8 @@
 			{{ lightbox_labels.empty }}. <router-link :to="{ name: 'archive' }">{{ search_labels.back }} &raquo;</router-link>
 		</div>
 
-		<div v-if="loaded" class="columns is-multiline is-size-7">
-			<div v-for="(product, index) in products" :key="index" class="column is-one-quarter lightbox-item">
+		<div v-if="lightbox" class="columns is-multiline is-size-7">
+			<div v-for="(product, index) in lightbox" :key="index" class="column is-one-quarter lightbox-item">
 				<button class="delete" @click="removeFromLightbox(product)"></button>
 				<img :src="product.img" />
 				<p class="is-hidden-mobile">{{ product.title }}</p>
@@ -39,7 +39,7 @@
 
 		data() {
 			return {
-				loaded: false,
+				addedAllToCart: false,
 				lightbox_labels: sell_media.lightbox_labels,
 				cart_labels: sell_media.cart_labels,
 				search_labels: sell_media.search_labels,
@@ -48,20 +48,9 @@
 			}
 		},
 
-		mounted() {
-			this.loaded = true
-    },
-
-    computed: {
-      products: function() {
-        return this.lightbox
-      }
-    },
-
 		methods: {
 			addAll: function() {
-        		// TODO: Use module action
-				for ( let product of this.products ) {
+				for ( let product of this.lightbox ) {
 					this.$store.dispatch( 'addToCart', product )
 				}
 				this.$store.dispatch( 'deleteLightbox' )

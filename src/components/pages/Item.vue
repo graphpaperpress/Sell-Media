@@ -1,6 +1,6 @@
 <template>
 
-	<div v-if="loaded">
+	<div v-if="postLoaded">
 
 		<searchform @search="goToSearchResults"></searchform>
 
@@ -23,18 +23,17 @@
 <script>
 import SearchForm from '../parts/SearchForm.vue'
 import mixinGlobal from '../../mixins/global'
+import mixinProduct from '../../mixins/product'
 
 	export default {
-    mixins: [mixinGlobal],
+    mixins: [mixinGlobal, mixinProduct],
 
 		data: function() {
 			return {
 				base_path: sell_media.site_url,
-				post: {},
 				attachment: {},
 				attachments: {},
 				multiple: false,
-				loaded: false,
 				type: '',
 				image_size: 'large',
 				pageTitle: '',
@@ -42,39 +41,11 @@ import mixinGlobal from '../../mixins/global'
 			}
 		},
 
-		mounted: function() {
-			this.getPost();
+		beforeMount: function() {
+      this.$store.dispatch('fetchPost', { slug: this.$route.params.slug })
 		},
 
 		methods: {
-
-			getPost(){
-
-				const vm = this;
-
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
-						slug: vm.$route.params.slug
-					}
-				} )
-				.then( ( res ) => {
-
-					vm.post = res.data[0];
-					vm.attachments = vm.post.sell_media_attachments;
-					vm.multiple = vm.attachments.length > 1 ? true : false;
-					vm.type = vm.post.sell_media_meta.product_type[0];
-					vm.loaded = true;
-					vm.pageTitle = vm.post.title.rendered;
-					vm.$store.dispatch( 'changeTitle', vm.pageTitle );
-
-					// console.log(vm.post);
-				} )
-				.catch( ( res ) => {
-
-					//console.log( `Something went wrong : ${res}` );
-
-				} );
-			},
 
 			setAttachment(data){
 				this.attachment = data
@@ -84,14 +55,24 @@ import mixinGlobal from '../../mixins/global'
 				const vm = this
 
 				if ( search ) {
-					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
+					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
 				}
 			}
 		},
 
 		components: {
 			'searchform': SearchForm,
-		}
+    },
 
-	};
+    watch: {
+      post(val) {
+        if ( !val.id ) { return false }
+        this.attachments = this.post.sell_media_attachments
+        this.multiple = (this.attachments != null && this.attachments.length > 1) ? true : false
+        this.type = this.post.sell_media_meta != null ? this.post.sell_media_meta.product_type[0] : ''
+        this.$store.dispatch( 'changeTitle', this.post.title.rendered )
+      }
+    }
+
+	}
 </script>

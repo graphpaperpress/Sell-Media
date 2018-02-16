@@ -10,7 +10,7 @@
 						<span class="select is-medium">
 							<select v-model="search_type">
 								<option value="">{{ labels.all }}</option>
-								<option v-for="type in types" v-if="type.count > 0" :value="type.slug">{{ type.name }}</option>
+								<option v-for="type in productTypes" v-if="type.count > 0" :value="type.slug">{{ type.name }}</option>
 							</select>
 						</span>
 					</p>
@@ -133,7 +133,7 @@
 </template>
 
 <script>
-
+  import mixinProduct from '../../mixins/product'
 	import { Compact } from 'vue-color'
 
 	let defaultColors = {
@@ -160,13 +160,12 @@
 	}
 
 	export default {
-
+    mixins: [mixinProduct],
 		props: ['loading', 'search'],
 
 		data(){
 			return {
         searchValue: '',
-				types: {},
 				labels: sell_media.search_labels,
 				search_type: sell_media.default_search_type ? sell_media.default_search_type : '',
 				showFilters: false,
@@ -217,24 +216,11 @@
 			}
 		},
 
-		mounted() {
-			this.getProductTypes();
+		beforeMount() {
+      this.$store.dispatch('fetchProductTypes')
 		},
 
 		methods: {
-
-			getProductTypes(){
-				const vm = this;
-				vm.loaded = false;
-				vm.$http.get( '/wp-json/wp/v2/product_type' )
-				.then( ( res ) => {
-					vm.types = res.data;
-				} )
-				.catch( ( res ) => {
-					console.log( res )
-				} )
-			},
-
 			remove(item, array){
 				if ( array ) {
 					const index = array.indexOf(item);

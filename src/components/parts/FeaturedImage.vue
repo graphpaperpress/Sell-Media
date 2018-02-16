@@ -12,12 +12,14 @@
 </template>
 
 <script>
-  import mixinProduct from '../../mixins/product'
-
+  import { mapActions } from "vuex"
 	export default {
-    mixins: [mixinProduct],
 
-		props: ['post', 'size'],
+    props: ['post', 'size'],
+
+    methods: {
+      ...mapActions(["setProduct"])
+    },
 
 		mounted: function() {
 			let attachment = this.post.sell_media_attachments[0]

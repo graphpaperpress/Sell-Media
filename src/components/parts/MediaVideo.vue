@@ -38,14 +38,12 @@
 </template>
 
 <script>
-  import mixinProduct from '../../mixins/product'
+  import { mapActions } from "vuex"
 	import VideoJs from 'video.js'
 	require('!style-loader!css-loader!video.js/dist/video-js.css')
 	window.HELP_IMPROVE_VIDEOJS = false
 
 	export default {
-    mixins: [mixinProduct],
-
 		props: ['post'],
 
 		data(){
@@ -66,6 +64,8 @@
 		},
 
 		methods: {
+      ...mapActions(["setProduct"]),
+
 			getVideo(index){
 				const vm = this
 				vm.currentVideo = index

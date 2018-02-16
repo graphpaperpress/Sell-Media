@@ -4,15 +4,22 @@ export default {
   computed: {
     ...mapGetters([
       "product",
+      "productLoaded",
       "searchResults",
-      "searchResultsLoaded"
+      "searchResultsLoaded",
+      "post",
+      "postLoaded",
+      "productTypes",
+      "productTypesLoaded"
     ])
   },
 
   methods: {
     ...mapActions([
+      "fetchPost",
       "setProduct",
-      "fetchProducts"
+      "fetchProducts",
+      "fetchProductTypes"
     ])
   }
 }

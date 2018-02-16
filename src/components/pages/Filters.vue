@@ -31,11 +31,11 @@
 		</div>
 
 		<div class="pagination">
-			<button class="btn" v-on:click="getProducts(prev_page)" :disabled="!prev_page">
+			<button class="btn" v-on:click="fetchProducts(prev_page)" :disabled="!prev_page">
 			Previous
 			</button>
 			<span class="current-page">Page {{currentPage}} of {{allPages}}</span>
-			<button class="btn" v-on:click="getProducts(next_page)" :disabled="!next_page">
+			<button class="btn" v-on:click="fetchProducts(next_page)" :disabled="!next_page">
 			Next
 			</button>
 		</div>
@@ -51,7 +51,6 @@
 		data: function() {
 
 			return {
-				posts: [],
 				post: '',
 				search: '',
 				categoryFilter: '',
@@ -69,76 +68,64 @@
 		},
 
 		mounted: function() {
-			const vm = this;
-			vm.getProducts(1);
-			vm.getCategories();
+			const vm = this
+      vm.$store.dispatch('fetchProducts', 1)
+			vm.getCategories()
 		},
 
 		methods: {
 			getProducts: function(pageNumber){
-				const vm = this;
+        const vm = this
+        vm.currentPage = pageNumber
+        vm.$store.dispatch('fetchProducts', pageNumber)
+      },
 
-	            vm.currentPage = pageNumber;
+			getCategories: function(){
+				const vm = this
 
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
-						per_page: vm.postPerPage,
-						page: pageNumber,
-					}
-				})
+				vm.$http.get('/wp-json/wp/v2/collection')
 				.then(function(response){
-					vm.$set(vm, 'posts', response.data);
-					vm.makePagination(response);
+					vm.$set(vm, 'categories', response.data)
 				})
 				.catch(function(error){
 					console.log(error)
 				})
-			},
-			getCategories: function(){
-				const vm = this;
+      },
 
-				vm.$http.get('/wp-json/wp/v2/collection')
-				.then(function(response){
-					vm.$set(vm, 'categories', response.data);
-				})
-				.catch(function(error){
-					console.log(error);
-				})
-			},
 			makePagination: function(data){
-				const vm = this;
+				const vm = this
 
-				vm.$set(vm, 'allPages', data.headers.get('x-wp-totalpages'));
-				
+				vm.$set(vm, 'allPages', data.headers.get('x-wp-totalpages'))
+
 				//Setup prev page
 				if(vm.currentPage > 1){
-					vm.$set(vm, 'prev_page', vm.currentPage - 1);
+					vm.$set(vm, 'prev_page', vm.currentPage - 1)
 				} else {
-					vm.$set(vm, 'prev_page', null);
+					vm.$set(vm, 'prev_page', null)
 				}
 
 				// Setup next page
 				if(vm.currentPage == vm.allPages){
-					vm.$set(vm, 'next_page', null);
+					vm.$set(vm, 'next_page', null)
 				} else {
-					vm.$set(vm, 'next_page', vm.currentPage + 1);
+					vm.$set(vm, 'next_page', vm.currentPage + 1)
 				}
 			}
 		},
 		computed: {
 			filteredPosts: function(){
-				const vm = this;
+				const vm = this
 
-				return vm.posts.filter((post) => {
+				return vm.searchResults.results.filter((post) => {
 					return post.title.rendered.match(vm.search)
 				})
-				return vm.posts.filter((post) => {
+				return vm.searchResults.results.filter((post) => {
 					if ( vm.categoryFilter ) {
 						return post.product_type.indexOf(vm.categoryFilter) > -1
 					} else {
 						return post
 					}
-					
+
 				})
 			}
 		}

@@ -318,7 +318,6 @@
 				let amount = Number(this.discount.amount).toFixed(2);
 				let type = this.discount.type;
 				let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal;
-				// console.log(Number( discountAmount ).toFixed(2))
 
 				return Number( discountAmount ).toFixed(2);
 			}

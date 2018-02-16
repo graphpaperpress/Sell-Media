@@ -100,9 +100,8 @@
 </template>
 
 <script>
-  import mixinProduct from '../../mixins/product'
+  import { mapActions } from "vuex"
 	export default {
-    mixins: [mixinProduct],
 
 		props: ['post'],
 
@@ -144,6 +143,7 @@
 		},
 
 		methods: {
+      ...mapActions(["setProduct"]),
 			getPost: function(item) {
 				this.currentPost = item
 				this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id } )

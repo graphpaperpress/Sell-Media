@@ -57,15 +57,14 @@ import SearchForm from '../parts/SearchForm.vue';
 			const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
 			const page = vm.$route.params.page ? vm.$route.params.page : '1'
 
-      vm.$store.dispatch( 'changeTitle', 'Archive' )
+      vm.$store.dispatch('changeTitle', 'Archive')
+      vm.$store.dispatch('getUser')
 
 			if ( search || type ) {
-				vm.getSearchResults( { search: search, search_type: type, page_number: page } )
+				vm.getSearchResults({ search: search, search_type: type, page_number: page })
 			} else {
         this.$store.dispatch('fetchProducts', 1)
 			}
-
-      vm.$store.dispatch('getUser')
 		},
 
 		methods: {
@@ -82,7 +81,12 @@ import SearchForm from '../parts/SearchForm.vue';
           });
         }
 
-        vm.$store.dispatch( 'searchProducts', { search: search, search_type: search_type, page_number: pageNumber })
+        vm.$store.dispatch( 'searchProducts', {
+          search: search,
+          search_type: search_type,
+          page_number: pageNumber
+        })
+
         vm.$store.dispatch( 'changeTitle', 'Search results for: ' + search )
 			},
 

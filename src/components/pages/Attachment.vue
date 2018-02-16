@@ -10,13 +10,13 @@
 
 			<div :class="pageLayout.content">
 				<template v-if="type === 'panorama' || type === 'dome'">
-					<media-panorama :post="post"></media-panorama>
+					<media-panorama :post="product"></media-panorama>
 				</template>
 				<template v-else-if="type === 'video'">
-					<media-video :post="post"></media-video>
+					<media-video :post="product"></media-video>
 				</template>
 				<template v-else-if="type === '360-video'">
-					<media-video-360 :post="post"></media-video-360>
+					<media-video-360 :post="product"></media-video-360>
 				</template>
 				<template v-else>
 					<img :src="attachment.media_details.sizes.large.source_url" :alt="attachment.alt"/>
@@ -24,7 +24,7 @@
 			</div>
 
 			<div :class="pageLayout.sidebar">
-				<cart-form :key="attachment.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
+				<cart-form :key="attachment.slug" :post="product" :attachment="attachment" :multiple="multiple"></cart-form>
 			</div>
 
 		</div>
@@ -34,23 +34,22 @@
 </template>
 
 <script>
-  import mixinGlobal from '../../mixins/global'
-
-import SearchForm from '../parts/SearchForm.vue';
+import mixinGlobal from '../../mixins/global'
+import mixinProduct from '../../mixins/product'
+import SearchForm from '../parts/SearchForm.vue'
 
 	export default {
-    mixins: [mixinGlobal],
+    mixins: [mixinGlobal, mixinProduct],
 
 		data() {
 			return {
-				post: {},
 				attachment: {},
 				type: '',
 				loaded: false,
 				multiple: false,
 				pageTitle: '',
 				pageLayout: this.$store.getters.pageLayout
-			};
+			}
 		},
 
 		mounted() {
@@ -58,60 +57,31 @@ import SearchForm from '../parts/SearchForm.vue';
 		},
 
 		methods: {
-
 			getAttachment(){
-
-				const vm = this;
-				// console.log(vm.$route.params)
+				const vm = this
 
 				vm.$http.get( '/wp-json/wp/v2/media', {
 					params: {
 						slug: vm.$route.params.slug
 					}
 				} )
-				.then( ( res ) => {
-
+				.then(( res ) => {
 					vm.attachment = res.data[0]
-					// console.log(vm.attachment)
 					vm.attachment.title = vm.attachment.title.rendered
 					vm.pageTitle = vm.attachment.title.rendered
-					vm.$store.dispatch( 'changeTitle', vm.pageTitle )
-
-					this.getPost(vm.attachment.post)
-
-				} )
-				.catch( ( res ) => {
-
-					//console.log( `Something went wrong : ${res}` );
-
-				} );
-
-			},
-
-			getPost(id){
-
-				const vm = this;
-
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
-						include: id
-					}
-				} )
-				.then( ( res ) => {
-					vm.post = res.data[0]
-					vm.type = vm.post.sell_media_meta.product_type[0].slug
-					vm.loaded = true
-				} )
-				.catch( ( res ) => {
-					console.log( `Something went wrong : ${res}` )
-				} );
+					vm.$store.dispatch('changeTitle', vm.pageTitle)
+					vm.$store.dispatch('fetchPost', { include: vm.attachment.post })
+				})
+				.catch(( res ) => {
+					console.log(`Something went wrong : ${res}`)
+				})
 			},
 
 			goToSearchResults(search, search_type){
 				const vm = this
 
 				if ( search ) {
-					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } );
+					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
 				}
 			}
 
@@ -121,5 +91,5 @@ import SearchForm from '../parts/SearchForm.vue';
 			'searchform': SearchForm,
 		}
 
-	};
+	}
 </script>

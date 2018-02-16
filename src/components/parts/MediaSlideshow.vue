@@ -64,10 +64,8 @@
 </template>
 
 <script>
-  import mixinProduct from '../../mixins/product'
+  import { mapActions } from "vuex"
 	export default {
-    mixins: [mixinProduct],
-
 		props: ['post'],
 
 		data: function() {
@@ -92,7 +90,7 @@
 		},
 
 		methods: {
-
+      ...mapActions(["setProduct"]),
 			goToSlide: function(slide) {
 				this.currentSlide = slide
 				let attachment = this.post.sell_media_attachments[this.currentSlide]

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import mixinProduct from '../../mixins/product'
+  import { mapActions } from "vuex"
 	require('!style-loader!css-loader!video.js/dist/video-js.css')
 	require('!style-loader!css-loader!videojs-panorama/dist/videojs-panorama.min.css')
 	import VideoJs from 'video.js'
@@ -19,8 +19,6 @@
 	window.HELP_IMPROVE_VIDEOJS = false
 
 	export default {
-    mixins: [mixinProduct],
-
 		props: ['post'],
 
 		mounted: function() {
@@ -29,7 +27,11 @@
 
 		updated: function() {
 			this.player
-		},
+    },
+
+    methods: {
+      ...mapActions(["setProduct"])
+    },
 
 		computed: {
 			player: function() {

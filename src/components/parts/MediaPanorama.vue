@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import mixinProduct from '../../mixins/product'
+  import { mapActions } from "vuex"
 
 	var libpannellumjs = require('../../../node_modules/pannellum/src/js/libpannellum.js')
 	var RequestAnimationFrame = require('../../../node_modules/pannellum/src/js/RequestAnimationFrame.js')
@@ -15,7 +15,6 @@
 	var pannellumcss = require('../../../node_modules/pannellum/src/css/pannellum.css')
 
 	export default {
-    mixins: [mixinProduct],
 
 		props: ['post'],
 
@@ -25,7 +24,11 @@
 
 		updated: function() {
 			this.player
-		},
+    },
+
+    methods: {
+      ...mapActions(["setProduct"])
+    },
 
 		computed: {
 			player: function() {
