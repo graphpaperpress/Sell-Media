@@ -9,6 +9,7 @@ import store from './store'
 import icons from './icons'
 import VideoJs from 'video.js'
 import VueStripeCheckout from 'vue-stripe-checkout'
+import isNil from 'lodash/isnil'
 
 const options = {
 	key: sell_media.stripe_public_key,
@@ -87,6 +88,7 @@ const router = new VueRouter({
 Vue.use( VBClass, router )
 
 window.Axios = axios
+window.isNil = isNil
 
 // init Vue
 new Vue({

@@ -28,11 +28,10 @@
 
 <script>
 import mixinUser from '../../mixins/user'
-import mixinProduct from '../../mixins/product'
 import download from 'downloadjs'
 
 	export default {
-    mixins: [mixinUser, mixinProduct],
+    mixins: [mixinUser],
 
 		props: ['post', 'field', 'active'],
 
@@ -82,7 +81,7 @@ import download from 'downloadjs'
 						size_id: size ? size.id : 'original'
 					}
 				} )
-				.then( ( res ) => {
+				.then(( res ) => {
 					let data = res.data;
 					if( data.download ) {
 						download(data.download);

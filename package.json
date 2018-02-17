@@ -54,6 +54,7 @@
     "bulma-checkradio": "^0.1.4",
     "bulma-steps-component": "^0.5.3",
     "downloadjs": "^1.4.7",
+    "lodash.isnil": "^4.0.0",
     "pannellum": "github:mpetroff/pannellum#master",
     "parsleyjs": "^2.8.0",
     "portal-vue": "^1.2.2",

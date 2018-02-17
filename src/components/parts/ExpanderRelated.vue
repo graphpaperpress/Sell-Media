@@ -128,31 +128,35 @@
 		mounted: function() {
 			document.addEventListener("keydown", (e) => {
 				if (e.keyCode == 27) {
-					this.$emit('closeModal');
+					this.$emit('closeModal')
 				}
-			});
+			})
 
 			this.getSets()
 			this.getOtherSets()
 		},
 
 		created: function() {
-			this.attachments = this.currentPost.sell_media_attachments;
-			let count = Object.keys(this.attachments);
-			this.multiple = count.length > 1 ? true : false;
+			this.attachments = this.currentPost.sell_media_attachments
+			let count = Object.keys(this.attachments)
+			this.multiple = count.length > 1 ? true : false
 		},
 
 		methods: {
       ...mapActions(["setProduct"]),
 			getPost: function(item) {
 				this.currentPost = item
-				this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id } )
+				this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
 			},
 			getSets: function() {
-				const vm = this
-				let type = ( vm.currentPost.sell_media_meta.product_type && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
-				// image and video product types should show child term, all others should show parent term.
-				let set_id = ( type === 'image' || type === 'video' ) ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
+        const vm = this
+        let set_id = false
+				let type = ( !isNil(vm.currentPost.sell_media_meta.product_type) && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
+        // image and video product types should show child term, all others should show parent term.
+
+        if (!isNil(vm.currentPost.sell_media_meta.set)) {
+          set_id = ( type === 'image' || type === 'video' ) && typeof vm.currentPost.sell_media_meta.set[1] !== "undefined" ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
+        }
 
 				if ( ! set_id ) {
 					vm.setsLoaded = true
@@ -164,8 +168,8 @@
 						per_page: 20,
 						set: set_id
 					}
-				} )
-				.then( ( res ) => {
+				})
+				.then(( res ) => {
 					let sets = res.data
 					let image_sets = []
 					let video_sets = []
@@ -182,24 +186,29 @@
 					vm.imageSets = image_sets
 					vm.videoSets = video_sets
 
-				} )
-				.catch( ( res ) => {
+				})
+				.catch(( res ) => {
 					console.log( res )
-				} )
+				})
 			},
 			getOtherSets: function() {
-				const vm = this;
+        const vm = this
+        let post_set = false
 				// Search API response includes set with parent_id, WP API returns array of indexed ids
-				// Need to make these consistent in the future
-				let post_set = vm.currentPost.set.parent_id ? vm.currentPost.set.parent_id : vm.currentPost.set[0]
+        // Need to make these consistent in the future
+        if (!isNil(vm.currentPost) && !isNil(vm.currentPost.set)) {
+          post_set = !isNil(vm.currentPost.set.parent_id) ?
+                        vm.currentPost.set.parent_id : vm.currentPost.set[0]
+        }
+
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
 						per_page: 20,
 						set: post_set,
 						product_type_exclude: [6,7], // CHANGE THIS! IT'S HARDCODED. Exclude image and video product_types (term_id 6 and 7)
 					}
-				} )
-				.then( ( res ) => {
+				})
+				.then(( res ) => {
 					let sets = res.data
 					let other_sets = []
 					let types = []
@@ -215,10 +224,10 @@
 
 					vm.otherSets = other_sets
 
-				} )
-				.catch( ( res ) => {
+				})
+				.catch(( res ) => {
 					console.log( res )
-				} )
+				})
 			},
 			getProductTypeSets: function(item) {
 				const vm = this
@@ -229,8 +238,8 @@
 						set: item.set ? item.set[0] : null,
 						product_type: item.product_type ? item.product_type[0] : null
 					}
-				} )
-				.then( ( res ) => {
+				})
+				.then(( res ) => {
 					let sets = res.data
 					let product_type_sets = []
 
@@ -239,10 +248,10 @@
 					}
 
 					vm.productTypeSets = product_type_sets
-				} )
-				.catch( ( res ) => {
+				})
+				.catch(( res ) => {
 					console.log( res )
-				} )
+				})
 			}
 		},
 
