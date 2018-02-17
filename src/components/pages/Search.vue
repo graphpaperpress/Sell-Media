@@ -6,14 +6,19 @@
             <label>Search Title:</label>
         </div>
 
-        <div class="columns is-multiline has-text-centered" v-if="searchResultsLoaded">
-            <thumbnail v-for="post in searchResults.results" :key="post.slug" :post="post"></thumbnail>
-        </div>
-        <nav class="pagination">
-            <button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
-            <span> {{ currentPage }} / {{ searchResults.totalPages }} </span>
-            <button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
-        </nav>
+        <template v-if="searchResultsLoaded">
+          <div class="columns is-multiline has-text-centered">
+              <thumbnail v-for="post in searchResults.results" :key="post.slug" :post="post"></thumbnail>
+          </div>
+          <nav class="pagination">
+              <button class="button" v-if="showPrev" @click.prevent="showPrevPage()">Previous</button>
+              <span> {{ currentPage }} / {{ searchResults.totalPages }} </span>
+              <button class="button" v-if="showNext" @click.prevent="showNextPage()">Next</button>
+          </nav>
+        </template>
+        <template v-else>
+          Loading...
+        </template>
 
     </div>
 </template>
@@ -25,15 +30,17 @@ import mixinProduct from "../../mixins/product"
 export default {
   mixins: [mixinGlobal, mixinProduct],
 
-  mounted: function() {
-    const vm = this
-    this.$store.dispatch("changeTitle", "Search")
-
-    if (vm.$route.params.page) {
-      this.$store.dispatch('fetchProducts', vm.$route.params.page)
+  beforeMount: function() {
+    if (this.$route.params.page) {
+      this.$store.dispatch('fetchProducts', this.$route.params.page)
     } else {
       this.$store.dispatch('fetchProducts', 1)
     }
+  },
+
+  mounted: function() {
+    const vm = this
+    this.$store.dispatch("changeTitle", "Search")
   },
 
   data: function() {

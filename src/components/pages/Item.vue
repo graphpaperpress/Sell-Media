@@ -17,6 +17,9 @@
 		</div>
 
 	</div>
+  <div v-else>
+    Loading...
+  </div>
 
 </template>
 
