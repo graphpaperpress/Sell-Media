@@ -18,7 +18,7 @@
 
 	</div>
   <div v-else>
-    Loading...
+    <loader></loader>
   </div>
 
 </template>

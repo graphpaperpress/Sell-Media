@@ -17,7 +17,7 @@
           </nav>
         </template>
         <template v-else>
-          Loading...
+          <loader></loader>
         </template>
 
     </div>

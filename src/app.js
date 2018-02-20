@@ -62,6 +62,8 @@ import CartModalLicense from './components/parts/CartModalLicense.vue'
 Vue.component( 'cart-modal-license', CartModalLicense )
 import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
+import Loader from './components/parts/Loader.vue'
+Vue.component('loader', Loader)
 
 // define routes
 const router = new VueRouter({

@@ -12,7 +12,9 @@ const state = {
   searchResultsLoaded: false,
   searchResults: JSON.parse(window.localStorage.getItem(SEARCH_RESULTS_KEY) || '{}'),
   productTypes: [],
-  productTypesLoaded: false
+  productTypesLoaded: false,
+  attachment: {},
+  attachmentLoaded: false
 }
 
 const getters = {
@@ -23,7 +25,9 @@ const getters = {
   post: state => state.post,
   postLoaded: state => state.postLoaded,
   productTypes: state => state.productTypes,
-  productTypesLoaded: state => state.productTypesLoaded
+  productTypesLoaded: state => state.productTypesLoaded,
+  attachment: state => state.attachment,
+  attachmentLoaded: state => state.attachmentLoaded
 }
 
 const actions = {
@@ -113,6 +117,20 @@ const actions = {
     .catch(( res ) => {
       console.log( res )
     })
+  },
+
+  fetchAttachment({ commit }, params) {
+    commit(types.SET_ATTACHMENT_LOADED, false)
+    Axios.get( '/wp-json/wp/v2/media', {
+      params: params
+    })
+    .then(( res ) => {
+      commit(types.SET_ATTACHMENT, res.data[0])
+      commit(types.SET_ATTACHMENT_LOADED, true)
+    })
+    .catch(( res ) => {
+      console.log(`Something went wrong : ${res}`)
+    })
   }
 }
 
@@ -148,6 +166,14 @@ const mutations = {
   [types.SET_PRODUCT_TYPES_LOADED](state, loaded) {
     state.productTypesLoaded = loaded
   },
+
+  [types.SET_ATTACHMENT](state, attachment) {
+    state.attachment = attachment
+  },
+
+  [types.SET_ATTACHMENT_LOADED](state, loaded) {
+    state.attachmentLoaded = loaded
+  }
 }
 
 export default {

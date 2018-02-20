@@ -10,7 +10,9 @@ export default {
       "post",
       "postLoaded",
       "productTypes",
-      "productTypesLoaded"
+      "productTypesLoaded",
+      "attachment",
+      "attachmentLoaded"
     ])
   },
 
@@ -19,7 +21,8 @@ export default {
       "fetchPost",
       "setProduct",
       "fetchProducts",
-      "fetchProductTypes"
+      "fetchProductTypes",
+      "fetchAttachment"
     ])
   }
 }
