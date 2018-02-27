@@ -65,4 +65,8 @@
 		margin-bottom: 1rem;
 	}
 
+	select {
+		width: 100%;
+	}
+
 </style>

@@ -14,7 +14,7 @@ export default {
 <style lang="sass">
 	@import '~bulma/bulma.sass';
 	// @import '~bulma-steps-component/bulma-steps.sass';
-	@import '~bulma-checkradio/checkradio.sass';
+	@import '~bulma-checkradio/dist/bulma-checkradio.sass';
 
 	.sell-media {
 		box-sizing: border-box;
