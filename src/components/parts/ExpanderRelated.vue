@@ -143,20 +143,20 @@
 		},
 
 		methods: {
-      ...mapActions(["setProduct"]),
+	  ...mapActions(["setProduct"]),
 			getPost: function(item) {
 				this.currentPost = item
 				this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
 			},
 			getSets: function() {
-        const vm = this
-        let set_id = false
-				let type = ( !isNil(vm.currentPost.sell_media_meta.product_type) && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
-        // image and video product types should show child term, all others should show parent term.
-
-        if (!isNil(vm.currentPost.sell_media_meta.set)) {
-          set_id = ( type === 'image' || type === 'video' ) && typeof vm.currentPost.sell_media_meta.set[1] !== "undefined" ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
-        }
+				const vm = this
+				let set_id = false
+						let type = ( !isNil(vm.currentPost.sell_media_meta.product_type) && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
+		
+				// image and video product types should show child term, all others should show parent term.
+				if (!isNil(vm.currentPost.sell_media_meta.set)) {
+					set_id = ( type === 'image' || type === 'video' ) && typeof vm.currentPost.sell_media_meta.set[1] !== "undefined" ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
+				}
 
 				if ( ! set_id ) {
 					vm.setsLoaded = true
@@ -192,14 +192,14 @@
 				})
 			},
 			getOtherSets: function() {
-        const vm = this
-        let post_set = false
-				// Search API response includes set with parent_id, WP API returns array of indexed ids
-        // Need to make these consistent in the future
-        if (!isNil(vm.currentPost) && !isNil(vm.currentPost.set)) {
-          post_set = !isNil(vm.currentPost.set.parent_id) ?
-                        vm.currentPost.set.parent_id : vm.currentPost.set[0]
-        }
+				const vm = this
+				let post_set = false
+						// Search API response includes set with parent_id, WP API returns array of indexed ids
+				// Need to make these consistent in the future
+				if (!isNil(vm.currentPost) && !isNil(vm.currentPost.set)) {
+				  post_set = !isNil(vm.currentPost.set.parent_id) ?
+								vm.currentPost.set.parent_id : vm.currentPost.set[0]
+				}
 
 				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
 					params: {
@@ -396,27 +396,27 @@
 		.label {
 			margin: 0;
 			border-top-left-radius: 2px;
-    		border-top-right-radius: 2px;
+			border-top-right-radius: 2px;
 		}
 
 		.icon {
 			border-top: 0;
 			border-bottom-left-radius: 2px;
-    		border-bottom-right-radius: 2px;
-    		transition: all .25s ease-in-out;
+			border-bottom-right-radius: 2px;
+			transition: all .25s ease-in-out;
 
-    		svg {
-    			fill: $blue;
-    			transition: all .25s ease-in-out;
-    		}
+			svg {
+				fill: $blue;
+				transition: all .25s ease-in-out;
+			}
 
-    		&:hover {
-    			background: $dark;
+			&:hover {
+				background: $dark;
 
-    			svg {
+				svg {
 					fill: $white;
-    			}
-    		}
+				}
+			}
 		}
 	}
 

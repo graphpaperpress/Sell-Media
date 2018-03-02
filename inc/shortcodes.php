@@ -13,18 +13,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shortcodes for all pages (except thanks), injects Vue app
+ * Search
+ * Vue renders the ui
  */
-$pages = sell_media_get_pages_array();
-if ( ( $key = array_search( 'thanks', $pages ) ) !== false ) {
-	unset( $pages[ $key ] );
+function sell_media_search_shortcode( $atts ) {
+	return '<div id="sell-media-search"></div>';
 }
-$pages = array_values( $pages );
-foreach ( $pages as $page ) {
-	add_shortcode( 'sell_media_' . $page, function() {
-		echo '<div id="sell-media-app"></div>';
-	} );
+add_shortcode( 'sell_media_search', 'sell_media_search_shortcode' );
+
+/**
+ * Checkout
+ * Vue renders the ui
+ */
+function sell_media_checkout_shortcode( $atts ) {
+	return '<div id="sell-media-checkout"></div>';
 }
+add_shortcode( 'sell_media_checkout', 'sell_media_checkout_shortcode' );
+
+/**
+ * Lightbox
+ * Vue renders the ui
+ */
+function sell_media_lightbox_shortcode( $atts ) {
+	return '<div id="sell-media-lightbox"></div>';
+}
+add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
+
 
 /**
  * Lists all downloads using sell_media_thanks shortcode.

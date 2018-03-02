@@ -66,14 +66,14 @@ import SearchForm from '../parts/SearchForm.vue'
 				}
 			}
 
-    },
+    	},
 
-    watch: {
-      attachment(val) {
-        console.log(val)
-        this.$store.dispatch('changeTitle', val.title.rendered)
-      }
-    },
+		watch: {
+			attachment(val) {
+				//console.log(val)
+				this.$store.dispatch('changeTitle', val.title.rendered)
+			}
+		},
 
 		components: {
 			'searchform': SearchForm,

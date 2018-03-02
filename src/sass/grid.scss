@@ -1,0 +1,125 @@
+/*= Grids
+-------------------------------------------------------------- */
+.sell-media-row {
+	display: flex; /* equal height of the children */
+}
+
+.sell-media-col {
+	flex: 1; /* additionally, equal width */
+}
+
+.sell-media-two-col {
+	margin: 0 10% 10% 0;
+	width: 45%;
+	&:nth-child(2n) {
+		margin-right: 0;
+	}
+	&:nth-child(2n+1) {
+		clear: left;
+	}
+}
+
+.sell-media-three-col {
+	margin: 0 5% 5% 0;
+	width: 30%;
+	&:nth-child(3n) {
+		margin-right: 0;
+	}
+	&:nth-child(3n+1) {
+		clear: left;
+	}
+}
+
+.sell-media-four-col {
+	margin: 0 4% 4% 0;
+	width: 22%;
+	&:nth-child(4n) {
+		margin-right: 0;
+	}
+	&:nth-child(4n+1) {
+		clear: left;
+	}
+}
+
+.sell-media-five-col {
+	margin: 0 2% 2% 0;
+	width: 18%;
+	&:nth-child(5n) {
+		margin-right: 0;
+	}
+	&:nth-child(5n+1) {
+		clear: left;
+	}
+}
+
+.sell-media-main-col {
+	clear: left;
+	margin-right: 5%; // Legacy themes have conflicting margins. Let's make theme consistent.
+	width: 65%;  // Legacy themes have conflicting widths. Let's make theme consistent.
+}
+
+.sell-media-side-col {
+	width: 30%; // Legacy themes have conflicting widths. Let's make theme consistent.
+}
+
+.sell-media-two-col,
+.sell-media-three-col,
+.sell-media-four-col,
+.sell-media-five-col,
+.sell-media-main-col,
+.sell-media-side-col {
+	float: left;
+
+	@media only screen and (max-width: 767px) {
+		clear: both;
+		float: none;
+		margin: 0 0 $margin;
+		width: 100%;
+	}
+}
+
+.sell-media-grid-item h2 {
+	font-size: $font-size;
+}
+.sell-media-grid-item img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Vertical Masonry */
+.sell-media-masonry {
+	margin-bottom: 10px;
+}
+
+/* Horizontal Masonry */
+.sell-media-grid-item-horizontal-masonry-container {
+	-ms-box-orient: horizontal;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+
+	.sell-media-grid-item {
+		margin-right: 10px;
+		margin-bottom: 10px;
+
+		@media only screen and (max-width: 767px) {
+			margin: 0 auto 10px;
+			text-align: center;
+		}
+
+		img {
+			height: 190px;
+			width: auto;
+
+			@media only screen and (max-width: 767px) {
+				height: auto;
+				width: 100%;
+			}
+		}
+	}
+}

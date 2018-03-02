@@ -29,21 +29,21 @@
 
 				<div class="button-wrap">
 					<div class="buttons">
-						<button :class="buttonSize" class="button is-info" @click="addTo('cart')" :title="add">{{ add }}</button>
+						<button class="button is-info" @click="addTo('cart')" :title="add">{{ add }}</button>
 
-						<button :class="buttonSize" class="button is-info" @click="addTo('lightbox')" :title="save_to_lightbox">
+						<button class="button is-info" @click="addTo('lightbox')" :title="save_to_lightbox">
 							<span class="icon">
 								<icon name="heart"></icon>
 							</span>
 						</button>
 					</div>
 					<div class="notifications">
-						<div v-if="added" class="content" :class="textSize">
+						<div v-if="added" class="content">
 							{{ added_to_cart }}
 							<router-link :to="{ name: 'checkout' }" class="view">{{ view_cart }} &raquo;</router-link>
 						</div>
 
-						<div v-if="saved" class="content" :class="textSize">
+						<div v-if="saved" class="content">
 							<router-link :to="{ name: 'lightbox' }" class="view">{{ view_lightbox }} &raquo;</router-link>
 						</div>
 					</div>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-  import mixinUser from '../../mixins/user'
+	import mixinUser from '../../mixins/user'
 	import CartFieldSelect from './CartFieldSelect.vue'
 	import CartFieldRadio from './CartFieldRadio.vue'
 
@@ -87,12 +87,11 @@
 				view_lightbox: sell_media.lightbox_labels.view,
 
 				disabled: true,
-				buttonSize: ('attachment' === this.$route.name || 'item' === this.$route.name) ? 'is-large' : '',
-				textSize: ('attachment' === this.$route.name || 'item' === this.$route.name) ? 'is-normal' : 'is-size-7',
 			}
 		},
 
 		created(){
+			console.log(this.post)
 			// set fields object, make prints first tab
 			this.fields = this.post.sell_media_meta.sell.reverse()
 			// set active tab to first field and show corresponding price group

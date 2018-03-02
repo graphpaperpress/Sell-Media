@@ -1,0 +1,17 @@
+/*= Variables
+-------------------------------------------------------------- */
+$font-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-size: 16px;
+$font-size-small: 13px;
+$line-height: $font-size * 1.6;
+$margin: $font-size * 2;
+$default-color: gray;
+$dark-color: darken($default-color, 60%);
+$light-color: lighten($default-color, 20%);
+$white-color: #fff;
+$black-color: #000;
+$dark-opaque: rgba(black, .5);
+$light-opaque: rgba(white, .8);
+$border-color: #eee;
+$yellow-color: #FFFCDD;
+$green-color: #8fbc8f;

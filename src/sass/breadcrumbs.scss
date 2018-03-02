@@ -1,0 +1,30 @@
+/*= Breadcrumbs
+-------------------------------------------------------------- */
+.sell-media-breadcrumbs {
+	font-size: 13px;
+	text-transform: uppercase;
+	margin: 20px 0;
+	letter-spacing: 1px;
+	display: block;
+	line-height: 1;
+
+	@media only screen and (max-width: 767px) {
+		float: none;
+		text-align: center;
+	}
+
+	a {
+		display: inline-block;
+		margin-right: 10px;
+		text-decoration: none;
+
+		&:after {
+			padding-left: 10px;
+			content: '/';
+		}
+
+		&:last-child:after {
+			content: '';
+		}
+	}
+}

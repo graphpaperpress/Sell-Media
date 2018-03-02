@@ -3,9 +3,9 @@
 	:class="[{ active: visible }, gridLayout, 'has-' + quickViewStyle]"
 	ref="itemContainer">
 		<div class="item-link" @mouseover="quickViewVisible = true" @mouseleave="quickViewVisible = false">
-			<router-link :to="{ name: 'item', params: { slug:post.slug }}">
+			<a :href="'/' + post.slug">
 				<img v-if="post.sell_media_featured_image" :src="post.sell_media_featured_image.sizes[thumbnailCrop][0]" :alt="post.alt">
-			</router-link>
+			</a>
 			<div class="quick-view" @click="handle($event, post.slug)">{{ quick_view_label }}</div>
 		</div>
 		
@@ -38,7 +38,7 @@
 				quickViewStyle: sell_media.quick_view_style ? sell_media.quick_view_style : 'modal',
 				quickViewVisible: false,
 				thumbnailCrop: sell_media.thumbnail_crop,
-				gridLayout: this.$store.getters.gridLayout
+				gridLayout: this.$store.getters.gridLayout,
 			}
 		},
 

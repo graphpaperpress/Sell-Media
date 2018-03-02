@@ -3,9 +3,9 @@
 
 		<div v-if="lightbox.length > 0" class="content">
 			<nav class="buttons">
-				<button class="button is-small" @click="addAll" :title="lightbox_labels.add_all">
+				<a :href="checkout_url" class="button is-small" @click="addAll" :title="lightbox_labels.add_all">
 	      			<span>{{ lightbox_labels.add_all }}</span>
-	      		</button>
+	      		</a>
 				<button class="button is-small" @click="deleteLightbox" :title="lightbox_labels.remove_all">
 	      			<span>{{ lightbox_labels.remove_all }}</span>
 	      		</button>
@@ -13,7 +13,7 @@
 		</div>
 
 		<div v-else class="content">
-			{{ lightbox_labels.empty }}. <router-link :to="{ name: 'archive' }">{{ search_labels.back }} &raquo;</router-link>
+			{{ lightbox_labels.empty }}. <a :href="search_url">{{ search_labels.back }} &raquo;</a>
 		</div>
 
 		<div v-if="lightbox" class="columns is-multiline is-size-7">
@@ -45,6 +45,8 @@
 				search_labels: sell_media.search_labels,
 				gridContainer: this.$store.getters.gridLayout + '-container',
 				gridLayout: this.$store.getters.gridLayout,
+				search_url: sell_media.site_url + '/' + sell_media.search_path,
+				checkout_url: sell_media.site_url + '/' + sell_media.checkout_path,
 			}
 		},
 

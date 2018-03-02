@@ -46,7 +46,7 @@ const actions = {
   fetchProducts ({ commit }, pageNumber = 1) {
     commit(types.SET_SEARCH_RESULTS_LOADED, false)
 
-    Axios.get("/wp-json/wp/v2/sell_media_item", {
+    Axios.get( '/wp-json/wp/v2/sell_media_item', {
       params: {
         per_page: sell_media.posts_per_page,
         page: pageNumber

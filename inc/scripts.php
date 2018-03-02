@@ -22,9 +22,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function sell_media_scripts( $hook ) {
 
-	if ( ! sell_media_page() ) {
-		return;
-	}
+	global $post;
+
+	// if ( ! sell_media_page() ) {
+	// 	return;
+	// }
 
 	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/js/sell_media.js', array( 'jquery' ), SELL_MEDIA_VERSION, true );
 	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'dist/css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
@@ -180,6 +182,8 @@ function sell_media_scripts( $hook ) {
 		//'currencies' => sell_media_currencies(),
 		'licensing_enabled' => sell_media_licensing_enabled(),
 		'licensing_markup_taxonomies' => sell_media_get_license_markup_taxonomies(),
+		'post_id' => $post->ID,
+		'attachment_id' => '',
 		'nonce' => wp_create_nonce( 'wp_rest' ),
 	);
 

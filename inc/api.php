@@ -584,7 +584,7 @@ function sell_media_api_template_redirect( $original_template ) {
 
 	return $template;
 }
-add_filter( 'template_include', 'sell_media_api_template_redirect', 10 );
+//add_filter( 'template_include', 'sell_media_api_template_redirect', 10 );
 
 /**
  * Get the select value of the filetype field and conver it into a WP mimtype for WP_Query

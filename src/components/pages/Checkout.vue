@@ -4,7 +4,7 @@
 
 		<p v-if="!products.length">
 			{{ labels.empty }}.
-			<router-link :to="{ name: 'archive' }">{{ labels.visit }} &raquo;</router-link>
+			<a :href="search_url">{{ labels.visit }} &raquo;</a>
 		</p>
 
 		<div class="cart" v-else>
@@ -116,7 +116,7 @@
 				<button class="button is-info is-large" @click="checkout" :disabled="notValid">{{ labels.next }}</button>
 			</div>
 			<div class="continue-shopping has-text-right">
-				<router-link :to="{ name: 'archive' }">{{ labels.continue_shopping }} &raquo;</router-link>
+				<a :href="search_url">{{ labels.continue_shopping }} &raquo;</a>
 			</div>
 			<div v-if="processing">
 				<button class="button is-loading is-large">Processing your payment</button>
@@ -129,9 +129,10 @@
 <script>
   import mixinGlobal from '../../mixins/global'
   import mixinUser from '../../mixins/user'
+  import CartModalLicense from '../parts/CartModalLicense.vue'
 
 	export default {
-    mixins: [mixinGlobal, mixinUser],
+    	mixins: [mixinGlobal, mixinUser],
 
 		data() {
 			return {
@@ -144,14 +145,15 @@
 				discount: false,
 				discount_code_labels: sell_media.discount_code_labels,
 				token: null,
-        processing: false,
-        discount_code_value: ''
+				processing: false,
+				discount_code_value: '',
+				search_url: sell_media.site_url + '/' + sell_media.search_path,
 			}
 		},
 
 		mounted(){
 			this.$store.dispatch( 'changeTitle', sell_media.checkout_path )
-    },
+		},
 
 		methods: {
 
@@ -239,9 +241,9 @@
 		},
 
 		computed: {
-      products() {
-        return this.cart
-      },
+			products() {
+				return this.cart
+			},
 			subtotal(){
 				return this.products.reduce(function(subtotal, product){
 					return Number(subtotal + product.price * product.qty)
@@ -321,6 +323,10 @@
 
 				return Number( discountAmount ).toFixed(2)
 			}
+		},
+
+		components: {
+			'cart-modal-license': CartModalLicense,
 		}
 
 
