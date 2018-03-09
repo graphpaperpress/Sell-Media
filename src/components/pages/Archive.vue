@@ -57,13 +57,13 @@ import SearchForm from '../parts/SearchForm.vue'
 			const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
 			const page = vm.$route.params.page ? vm.$route.params.page : '1'
 
-      vm.$store.dispatch('changeTitle', 'Archive')
-      vm.$store.dispatch('getUser')
+			vm.$store.dispatch('changeTitle', 'Archive')
+			vm.$store.dispatch('getUser')
 
 			if ( search || type ) {
 				vm.getSearchResults({ search: search, search_type: type, page_number: page })
 			} else {
-        this.$store.dispatch('fetchProducts', 1)
+				this.$store.dispatch('fetchProducts', 1)
 			}
 		},
 
@@ -71,7 +71,7 @@ import SearchForm from '../parts/SearchForm.vue'
 			getSearchResults({ search, search_type, pageNumber = 1 }){
 				const vm = this
 				vm.search = search
-        vm.search_type = search_type ? search_type : ''
+				vm.search_type = search_type ? search_type : ''
 
 				if ( search ) {
 					vm.$router.push({
@@ -95,7 +95,7 @@ import SearchForm from '../parts/SearchForm.vue'
 				this.search = ''
 				this.search_type = sell_media.default_search_type ? sell_media.default_search_type : ''
 				this.$router.push( { name: 'archive', query: {} } )
-        this.$store.dispatch('fetchProducts', 1)
+        		this.$store.dispatch('fetchProducts', 1)
 			},
 
 			showNextPage(event){
@@ -129,7 +129,7 @@ import SearchForm from '../parts/SearchForm.vue'
 				} else if ( ! vm.search && vm.search_type ) {
 					vm.getSearchResults( { search: '', search_type: vm.search_type, page_number: vm.$route.params.page } )
 			 	} else {
-          this.$store.dispatch('fetchProducts', vm.$route.params.page)
+					this.$store.dispatch('fetchProducts', vm.$route.params.page)
 				}
 
       },

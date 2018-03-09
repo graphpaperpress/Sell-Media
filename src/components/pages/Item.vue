@@ -8,7 +8,7 @@
 
 		<div class="columns">
 			<div :class="!multiple ? pageLayout.content : 'column'">
-				<media :post="post" :type="type" @attachment="setAttachment"></media>
+				<media :post="post" :type="type"></media>
 				<div class="post-content content" v-if="post.content" v-html="post.content.rendered"></div>
 			</div>
 			<div v-if="!multiple" :class="pageLayout.sidebar">
@@ -34,7 +34,6 @@ import mixinProduct from '../../mixins/product'
 		data: function() {
 			return {
 				base_path: sell_media.site_url,
-				attachment: {},
 				attachments: {},
 				multiple: false,
 				type: '',
@@ -45,14 +44,10 @@ import mixinProduct from '../../mixins/product'
 		},
 
 		beforeMount: function() {
-      this.$store.dispatch('fetchPost', { slug: this.$route.params.slug })
+			this.$store.dispatch('fetchPost', { slug: this.$route.params.slug })
 		},
 
 		methods: {
-
-			setAttachment(data){
-				this.attachment = data
-			},
 
 			goToSearchResults(search, search_type){
 				const vm = this

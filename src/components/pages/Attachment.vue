@@ -23,6 +23,8 @@
 				</template>
 			</div>
 
+			{{ product }}
+
 			<div :class="pageLayout.sidebar">
 				<cart-form :key="attachment.slug" :post="product" :attachment="attachment" :multiple="multiple"></cart-form>
 			</div>
@@ -38,6 +40,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
 import mixinGlobal from '../../mixins/global'
 import mixinProduct from '../../mixins/product'
 import SearchForm from '../parts/SearchForm.vue'
@@ -54,10 +57,11 @@ import SearchForm from '../parts/SearchForm.vue'
 		},
 
 		beforeMount() {
-      this.$store.dispatch('fetchAttachment', { slug: this.$route.params.slug })
+			this.$store.dispatch('fetchAttachment', { slug: this.$route.params.slug })
 		},
 
 		methods: {
+			...mapActions(["setProduct"]),
 			goToSearchResults(search, search_type){
 				const vm = this
 
@@ -66,14 +70,21 @@ import SearchForm from '../parts/SearchForm.vue'
 				}
 			}
 
-    },
+    	},
 
-    watch: {
-      attachment(val) {
-        console.log(val)
-        this.$store.dispatch('changeTitle', val.title.rendered)
-      }
-    },
+    	computed: {
+    		product() {
+    			return this.$store.state.product
+    		}
+    	},
+
+		watch: {
+			attachment(val) {
+				console.log(val)
+				this.$store.dispatch('changeTitle', val.title.rendered)
+				this.$store.dispatch( 'setProduct', { post_id: val.post, attachment_id: val.id } )
+			}
+		},
 
 		components: {
 			'searchform': SearchForm,

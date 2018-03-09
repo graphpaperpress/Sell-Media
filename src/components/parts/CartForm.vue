@@ -93,6 +93,7 @@
 		},
 
 		created(){
+			console.log(this.post)
 			// set fields object, make prints first tab
 			this.fields = this.post.sell_media_meta.sell.reverse()
 			// set active tab to first field and show corresponding price group
