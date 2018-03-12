@@ -7,6 +7,7 @@ module.exports = {
     rules: {
       // override/add rules settings here, such as:
       // 'vue/no-unused-vars': 'error'
-      "indent": ["error", 2]
+      "indent": ["error", 2],
+      "eol-last": ["error", "always"],
     }
   }
