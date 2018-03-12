@@ -22,32 +22,32 @@
 
 <script>
 
-	import MediaPanorama from './MediaPanorama.vue'
-	import MediaVideo from './MediaVideo.vue'
-	import MediaVideo360 from './MediaVideo360.vue'
-	import MediaSlideshow from './MediaSlideshow.vue'
-	import MediaGallery from './MediaGallery.vue'
+import MediaPanorama from './MediaPanorama.vue'
+import MediaVideo from './MediaVideo.vue'
+import MediaVideo360 from './MediaVideo360.vue'
+import MediaSlideshow from './MediaSlideshow.vue'
+import MediaGallery from './MediaGallery.vue'
 
-	export default {
-		props: ['post', 'type', 'showSlideshow'],
+export default {
+  props: ['post', 'type', 'showSlideshow'],
 
-		data() {
-			return {
-				loaded: false,
-				route: this.$route.name
-			}
-		},
+  data() {
+    return {
+      loaded: false,
+      route: this.$route.name
+    }
+  },
 
-		mounted() {
-			this.loaded = true
-		},
+  mounted() {
+    this.loaded = true
+  },
 
-		components: {
-			'media-panorama': MediaPanorama,
-			'media-video': MediaVideo,
-			'media-video-360': MediaVideo360,
-			'media-slideshow': MediaSlideshow,
-			'media-gallery': MediaGallery,
-		}
+  components: {
+    'media-panorama': MediaPanorama,
+    'media-video': MediaVideo,
+    'media-video-360': MediaVideo360,
+    'media-slideshow': MediaSlideshow,
+    'media-gallery': MediaGallery,
   }
+}
 </script>

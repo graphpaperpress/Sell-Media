@@ -45,30 +45,30 @@ import mixinGlobal from '../../mixins/global'
 import mixinProduct from '../../mixins/product'
 import SearchForm from '../parts/SearchForm.vue'
 
-	export default {
-    mixins: [mixinGlobal, mixinProduct],
+export default {
+  mixins: [mixinGlobal, mixinProduct],
 
-		data() {
-			return {
-				type: '',
-				multiple: false,
-				pageLayout: this.$store.getters.pageLayout
-			}
-		},
+  data() {
+    return {
+      type: '',
+      multiple: false,
+      pageLayout: this.$store.getters.pageLayout
+    }
+  },
 
-		beforeMount() {
-			this.$store.dispatch('fetchAttachment', { slug: this.$route.params.slug })
-		},
+  beforeMount() {
+    this.$store.dispatch('fetchAttachment', { slug: this.$route.params.slug })
+  },
 
-		methods: {
-			...mapActions(["setProduct"]),
-			goToSearchResults(search, search_type){
-				const vm = this
+  methods: {
+    ...mapActions(["setProduct"]),
+    goToSearchResults(search, search_type){
+      const vm = this
 
-				if ( search ) {
-					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
-				}
-			}
+      if ( search ) {
+        vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
+      }
+    }
 
     	},
 
@@ -78,17 +78,17 @@ import SearchForm from '../parts/SearchForm.vue'
     		}
     	},
 
-		watch: {
-			attachment(val) {
-				console.log(val)
-				this.$store.dispatch('changeTitle', val.title.rendered)
-				this.$store.dispatch( 'setProduct', { post_id: val.post, attachment_id: val.id } )
-			}
-		},
+  watch: {
+    attachment(val) {
+      console.log(val)
+      this.$store.dispatch('changeTitle', val.title.rendered)
+      this.$store.dispatch( 'setProduct', { post_id: val.post, attachment_id: val.id } )
+    }
+  },
 
-		components: {
-			'searchform': SearchForm,
-		}
+  components: {
+    'searchform': SearchForm,
+  }
 
-	}
+}
 </script>

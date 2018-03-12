@@ -4,7 +4,7 @@
 
 		<ul>
 			<router-link :to="{ name: 'home'}" class="site-name"> {{ site_name }} </router-link>
-			<li v-for="menu in menus" v-if="menu.type != 'custom'">
+			<li v-for="(menu, index) in menus" :key="index" v-if="menu.type != 'custom'">
 				 <router-link :to="{ name: 'page', params: { name: getUrlName( menu.url ) }}"> {{ menu.title }} </router-link>
 			</li>
 
@@ -17,43 +17,43 @@
 <script>
 export default {
 
-	mounted: function() {
-		this.getMenu()
-	},
-	data() {
-		return {
+  mounted: function() {
+    this.getMenu()
+  },
+  data() {
+    return {
 
-			menus: [],
-			site_name: sell_media.site_name,
-			isActive: false
+      menus: [],
+      site_name: sell_media.site_name,
+      isActive: false
 
-		}
-	},
-	methods: {
+    }
+  },
+  methods: {
 
-		getMenu: function() {
+    getMenu: function() {
 
-			const vm = this
+      const vm = this
 
-			vm.$http.get( 'wp-api-menus/v2/menu-locations/primary-menu' )
-			.then(function(response){
-				vm.menus = response.data
-			} )
-			.catch(function(response) {
-				console.log(response)
-			} )
+      vm.$http.get( 'wp-api-menus/v2/menu-locations/primary-menu' )
+        .then(function(response){
+          vm.menus = response.data
+        } )
+        .catch(function(response) {
+          console.log(response)
+        } )
 
-		},
-		getUrlName: function( url ) {
+    },
+    getUrlName: function( url ) {
 
-			const array = url.split( '/' )
-			return array[ array.length - 2 ]
-		},
-		toggleMenu: function() {
-			//console.log("Clicked" + this.isActive)
-			this.isActive = ! this.isActive
-		}
+      const array = url.split( '/' )
+      return array[ array.length - 2 ]
+    },
+    toggleMenu: function() {
+      //console.log("Clicked" + this.isActive)
+      this.isActive = ! this.isActive
+    }
 
-	}
+  }
 }
 </script>

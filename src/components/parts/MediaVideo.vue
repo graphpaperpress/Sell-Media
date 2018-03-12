@@ -23,6 +23,7 @@
 				class="is-multiline has-text-centered">
 					<div
 					v-for="(video, index) in post.sell_media_attachments"
+					:key="index"
 					@click="getVideo(index)"
 					:class="[{ active: currentVideo === index}, gridLayout]">
 						<div class="video-thumbnail">
@@ -38,54 +39,54 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex"
-	import VideoJs from 'video.js'
-	require('!style-loader!css-loader!video.js/dist/video-js.css')
-	window.HELP_IMPROVE_VIDEOJS = false
+import { mapActions } from "vuex"
+import VideoJs from 'video.js'
+require('!style-loader!css-loader!video.js/dist/video-js.css')
+window.HELP_IMPROVE_VIDEOJS = false
 
-	export default {
-		props: ['post'],
+export default {
+  props: ['post'],
 
-		data(){
-			return {
-				player: '',
-				currentVideo: 0,
-				file: '',
-				type: '',
-				poster: '',
-				gridLayout: this.$store.getters.gridLayout,
-				gridContainer: this.$store.getters.gridLayoutContainer,
-			}
-		},
+  data(){
+    return {
+      player: '',
+      currentVideo: 0,
+      file: '',
+      type: '',
+      poster: '',
+      gridLayout: this.$store.getters.gridLayout,
+      gridContainer: this.$store.getters.gridLayoutContainer,
+    }
+  },
 
-		mounted(){
-			const vm = this
-			vm.getVideo(0)
-		},
+  mounted(){
+    const vm = this
+    vm.getVideo(0)
+  },
 
-		methods: {
-      ...mapActions(["setProduct"]),
+  methods: {
+    ...mapActions(["setProduct"]),
 
-			getVideo(index){
-				const vm = this
-				vm.currentVideo = index
-				vm.file = vm.post.sell_media_attachments[index].file
-				vm.type = vm.post.sell_media_attachments[index].type
-				vm.poster = vm.file.slice(0, -4) + '.jpg'
+    getVideo(index){
+      const vm = this
+      vm.currentVideo = index
+      vm.file = vm.post.sell_media_attachments[index].file
+      vm.type = vm.post.sell_media_attachments[index].type
+      vm.poster = vm.file.slice(0, -4) + '.jpg'
 
-				let attachment = vm.post.sell_media_attachments[index]
-				vm.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+      let attachment = vm.post.sell_media_attachments[index]
+      vm.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
-				let player = VideoJs(this.$refs.videoPlayer, {}, function(){})
-				player.src({src: vm.file, type: vm.type})
-				vm.player = player
-			}
-		},
+      let player = VideoJs(this.$refs.videoPlayer, {}, function(){})
+      player.src({src: vm.file, type: vm.type})
+      vm.player = player
+    }
+  },
 
-		beforeDestroy(){
-			this.player.dispose()
-		}
-	}
+  beforeDestroy(){
+    this.player.dispose()
+  }
+}
 </script>
 
 <style lang="scss">

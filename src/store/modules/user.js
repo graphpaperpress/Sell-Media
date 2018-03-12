@@ -32,12 +32,12 @@ const actions = {
         _wpnonce: sell_media.nonce
       }
     } )
-    .then(( res ) => {
-      commit(types.SET_USER, res.data.ID)
-    })
-    .catch(( res ) => {
-      console.log( res )
-    })
+      .then(( res ) => {
+        commit(types.SET_USER, res.data.ID)
+      })
+      .catch(( res ) => {
+        console.log( res )
+      })
   },
   /**
    * Sets the user to the WP user object

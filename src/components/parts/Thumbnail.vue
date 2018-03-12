@@ -25,59 +25,59 @@
 </template>
 
 <script>
-	export default {
+export default {
 
-		props: ['post'],
+  props: ['post'],
 
-		data: function () {
-			return {
-				visible: false,
-				quick_view_label: sell_media.quick_view_label,
-				showTitles: sell_media.title == 1 ? true : false,
-				showQuickView: sell_media.quick_view == 1 ? true : false,
-				quickViewStyle: sell_media.quick_view_style ? sell_media.quick_view_style : 'modal',
-				quickViewVisible: false,
-				thumbnailCrop: sell_media.thumbnail_crop,
-				gridLayout: this.$store.getters.gridLayout
-			}
-		},
-
-		methods: {
-
-			documentClick(e){
-				let el = this.$refs.itemContainer
-				let target = e.target
-				if ( el !== target && !el.contains(target) ) {
-					this.visible = false
-				}
-				// this.$nextTick(function() {
-				// 	el.scrollIntoView({
-				// 		behavior: 'smooth'
-				// 	})
-				// })
-			},
-
-			handle(event, slug){
-				if (event.metaKey) this.openInNewWindow(slug)
-  				else this.visible = !this.visible
-			},
-
-			openInNewWindow(slug){
-				let routeData = this.$router.resolve({name: 'item', params: { slug: slug }})
-				window.open(routeData.href, '_blank');
-			}
-
-
-		},
-
-		created () {
-			document.addEventListener('click', this.documentClick)
-		},
-		destroyed () {
-			// important to clean up!!
-			document.removeEventListener('click', this.documentClick)
-		}
+  data: function () {
+    return {
+      visible: false,
+      quick_view_label: sell_media.quick_view_label,
+      showTitles: sell_media.title == 1 ? true : false,
+      showQuickView: sell_media.quick_view == 1 ? true : false,
+      quickViewStyle: sell_media.quick_view_style ? sell_media.quick_view_style : 'modal',
+      quickViewVisible: false,
+      thumbnailCrop: sell_media.thumbnail_crop,
+      gridLayout: this.$store.getters.gridLayout
     }
+  },
+
+  methods: {
+
+    documentClick(e){
+      let el = this.$refs.itemContainer
+      let target = e.target
+      if ( el !== target && !el.contains(target) ) {
+        this.visible = false
+      }
+      // this.$nextTick(function() {
+      // 	el.scrollIntoView({
+      // 		behavior: 'smooth'
+      // 	})
+      // })
+    },
+
+    handle(event, slug){
+      if (event.metaKey) this.openInNewWindow(slug)
+  				else this.visible = !this.visible
+    },
+
+    openInNewWindow(slug){
+      let routeData = this.$router.resolve({name: 'item', params: { slug: slug }})
+      window.open(routeData.href, '_blank');
+    }
+
+
+  },
+
+  created () {
+    document.addEventListener('click', this.documentClick)
+  },
+  destroyed () {
+    // important to clean up!!
+    document.removeEventListener('click', this.documentClick)
+  }
+}
 </script>
 
 <style lang="scss">

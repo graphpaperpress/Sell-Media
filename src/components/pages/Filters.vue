@@ -14,7 +14,7 @@
 				<label for="all">All</label>
 			</div>
 
-			<div class="filtered-tab" v-for="category in categories">
+			<div class="filtered-tab" v-for="category in categories" :key="category.id">
 				<input
 				type="radio"
 				v-bind:id="category.slug"
@@ -25,7 +25,7 @@
 		</div>
 
 		<div class="filtered-content columns is-gapless is-multiline has-text-centered">
-			<div v-for="post in filteredPosts" :class="gridLayout" class="column is-mobile">
+			<div v-for="(post, index) in filteredPosts" :key="index" :class="gridLayout" class="column is-mobile">
 					<thumbnail :key="post.slug" :post="post"></thumbnail>
 				</div>
 		</div>
@@ -46,90 +46,90 @@
 
 <script>
 
-	export default {
+export default {
 
-		data: function() {
+  data: function() {
 
-			return {
-				post: '',
-				search: '',
-				categoryFilter: '',
-				categories: [],
-				allPages: '',
-				prev_page: '',
-				next_page: '',
-				currentPage: '',
-				postPerPage: '20',
-				gridLayout: this.$store.getters.gridLayout,
-				hasImage: true,
-				label_search: sell_media.search_labels.search,
-				label_search_no_results: sell_media.search_labels.no_results,
-			}
-		},
+    return {
+      post: '',
+      search: '',
+      categoryFilter: '',
+      categories: [],
+      allPages: '',
+      prev_page: '',
+      next_page: '',
+      currentPage: '',
+      postPerPage: '20',
+      gridLayout: this.$store.getters.gridLayout,
+      hasImage: true,
+      label_search: sell_media.search_labels.search,
+      label_search_no_results: sell_media.search_labels.no_results,
+    }
+  },
 
-		mounted: function() {
-			const vm = this
-      vm.$store.dispatch('fetchProducts', 1)
-			vm.getCategories()
-		},
+  mounted: function() {
+    const vm = this
+    vm.$store.dispatch('fetchProducts', 1)
+    vm.getCategories()
+  },
 
-		methods: {
-			getProducts: function(pageNumber){
-        const vm = this
-        vm.currentPage = pageNumber
-        vm.$store.dispatch('fetchProducts', pageNumber)
-      },
+  methods: {
+    getProducts: function(pageNumber){
+      const vm = this
+      vm.currentPage = pageNumber
+      vm.$store.dispatch('fetchProducts', pageNumber)
+    },
 
-			getCategories: function(){
-				const vm = this
+    getCategories: function(){
+      const vm = this
 
-				vm.$http.get('/wp-json/wp/v2/collection')
-				.then(function(response){
-					vm.$set(vm, 'categories', response.data)
-				})
-				.catch(function(error){
-					console.log(error)
-				})
-      },
+      vm.$http.get('/wp-json/wp/v2/collection')
+        .then(function(response){
+          vm.$set(vm, 'categories', response.data)
+        })
+        .catch(function(error){
+          console.log(error)
+        })
+    },
 
-			makePagination: function(data){
-				const vm = this
+    makePagination: function(data){
+      const vm = this
 
-				vm.$set(vm, 'allPages', data.headers.get('x-wp-totalpages'))
+      vm.$set(vm, 'allPages', data.headers.get('x-wp-totalpages'))
 
-				//Setup prev page
-				if(vm.currentPage > 1){
-					vm.$set(vm, 'prev_page', vm.currentPage - 1)
-				} else {
-					vm.$set(vm, 'prev_page', null)
-				}
+      //Setup prev page
+      if(vm.currentPage > 1){
+        vm.$set(vm, 'prev_page', vm.currentPage - 1)
+      } else {
+        vm.$set(vm, 'prev_page', null)
+      }
 
-				// Setup next page
-				if(vm.currentPage == vm.allPages){
-					vm.$set(vm, 'next_page', null)
-				} else {
-					vm.$set(vm, 'next_page', vm.currentPage + 1)
-				}
-			}
-		},
-		computed: {
-			filteredPosts: function(){
-				const vm = this
+      // Setup next page
+      if(vm.currentPage == vm.allPages){
+        vm.$set(vm, 'next_page', null)
+      } else {
+        vm.$set(vm, 'next_page', vm.currentPage + 1)
+      }
+    }
+  },
+  computed: {
+    filteredPosts: function(){
+      const vm = this
 
-				return vm.searchResults.results.filter((post) => {
-					return post.title.rendered.match(vm.search)
-				})
-				return vm.searchResults.results.filter((post) => {
-					if ( vm.categoryFilter ) {
-						return post.product_type.indexOf(vm.categoryFilter) > -1
-					} else {
-						return post
-					}
+      return vm.searchResults.results.filter((post) => {
+        return post.title.rendered.match(vm.search)
+      })
+      return vm.searchResults.results.filter((post) => {
+        if ( vm.categoryFilter ) {
+          return post.product_type.indexOf(vm.categoryFilter) > -1
+        } else {
+          return post
+        }
 
-				})
-			}
-		}
-	}
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

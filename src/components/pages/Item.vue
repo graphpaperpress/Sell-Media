@@ -28,49 +28,49 @@ import SearchForm from '../parts/SearchForm.vue'
 import mixinGlobal from '../../mixins/global'
 import mixinProduct from '../../mixins/product'
 
-	export default {
-    mixins: [mixinGlobal, mixinProduct],
+export default {
+  mixins: [mixinGlobal, mixinProduct],
 
-		data: function() {
-			return {
-				base_path: sell_media.site_url,
-				attachments: {},
-				multiple: false,
-				type: '',
-				image_size: 'large',
-				pageTitle: '',
-				pageLayout: this.$store.getters.pageLayout
-			}
-		},
+  data: function() {
+    return {
+      base_path: sell_media.site_url,
+      attachments: {},
+      multiple: false,
+      type: '',
+      image_size: 'large',
+      pageTitle: '',
+      pageLayout: this.$store.getters.pageLayout
+    }
+  },
 
-		beforeMount: function() {
-			this.$store.dispatch('fetchPost', { slug: this.$route.params.slug })
-		},
+  beforeMount: function() {
+    this.$store.dispatch('fetchPost', { slug: this.$route.params.slug })
+  },
 
-		methods: {
+  methods: {
 
-			goToSearchResults(search, search_type){
-				const vm = this
+    goToSearchResults(search, search_type){
+      const vm = this
 
-				if ( search ) {
-					vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
-				}
-			}
-		},
-
-		components: {
-			'searchform': SearchForm,
-    },
-
-    watch: {
-      post(val) {
-        if ( !val.id ) { return false }
-        this.attachments = this.post.sell_media_attachments
-        this.multiple = (this.attachments != null && this.attachments.length > 1) ? true : false
-        this.type = this.post.sell_media_meta != null ? this.post.sell_media_meta.product_type[0] : ''
-        this.$store.dispatch( 'changeTitle', this.post.title.rendered )
+      if ( search ) {
+        vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
       }
     }
+  },
 
-	}
+  components: {
+    'searchform': SearchForm,
+  },
+
+  watch: {
+    post(val) {
+      if ( !val.id ) { return false }
+      this.attachments = this.post.sell_media_attachments
+      this.multiple = (this.attachments != null && this.attachments.length > 1) ? true : false
+      this.type = this.post.sell_media_meta != null ? this.post.sell_media_meta.product_type[0] : ''
+      this.$store.dispatch( 'changeTitle', this.post.title.rendered )
+    }
+  }
+
+}
 </script>

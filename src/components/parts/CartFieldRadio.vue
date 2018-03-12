@@ -5,7 +5,7 @@
 		<div class="field" v-if="getSizes(post,field)">
 			<!-- <label class="label">{{ field }} {{ labels.size }}</label> -->
 			<div class="control">
-				<div v-for="size in getSizes(post,field)" class="radio" :class="{ wide: size.name === 'MOV' }">
+				<div v-for="size in getSizes(post,field)" :key="size.id" class="radio" :class="{ wide: size.name === 'MOV' }">
 
 					<input type="radio" :id="size.id" :value="size" v-model="selected" @change="$emit('selected', selected)" />
 
@@ -30,71 +30,71 @@
 import mixinUser from '../../mixins/user'
 import download from 'downloadjs'
 
-	export default {
-    mixins: [mixinUser],
+export default {
+  mixins: [mixinUser],
 
-		props: ['post', 'field', 'active'],
+  props: ['post', 'field', 'active'],
 
-		data: function() {
-			return {
-				selected: {},
-				downloading: false,
-				labels: {
-					price: sell_media.cart_labels.price,
-					choose: sell_media.cart_labels.choose,
-					size: sell_media.cart_labels.size,
-					required: 'Please make a selection',
-					currency_symbol: sell_media.currency_symbol,
-					download: sell_media.search_labels.download
-				}
-			}
-		},
+  data: function() {
+    return {
+      selected: {},
+      downloading: false,
+      labels: {
+        price: sell_media.cart_labels.price,
+        choose: sell_media.cart_labels.choose,
+        size: sell_media.cart_labels.size,
+        required: 'Please make a selection',
+        currency_symbol: sell_media.currency_symbol,
+        download: sell_media.search_labels.download
+      }
+    }
+  },
 
-		methods: {
+  methods: {
 
-			className: function(field) {
-				return field.toLowerCase().replace(/ /g, '-') + '-field';
-			},
+    className: function(field) {
+      return field.toLowerCase().replace(/ /g, '-') + '-field';
+    },
 
-			getSizes: function(post,field) {
-				let taxonomy = field.toLowerCase()
-				if ( post['sell_media_pricing'][taxonomy] ) {
-					return post['sell_media_pricing'][taxonomy]
-				} else {
-					this.$emit('selected', true)
-				}
-			},
+    getSizes: function(post,field) {
+      let taxonomy = field.toLowerCase()
+      if ( post['sell_media_pricing'][taxonomy] ) {
+        return post['sell_media_pricing'][taxonomy]
+      } else {
+        this.$emit('selected', true)
+      }
+    },
 
-			downloadFile: function(size) {
-				const vm = this;
-				vm.downloading = size
-				if( ! vm.user ) {
-					return false;
-				}
+    downloadFile: function(size) {
+      const vm = this;
+      vm.downloading = size
+      if( ! vm.user ) {
+        return false;
+      }
 
-				vm.$http.get( '/wp-json/sell-media/v2/api', {
-					params: {
-						action: 'download_file',
-						_wpnonce: sell_media.nonce,
-						post_id: this.product.post_id,
-						attachment_id: this.product.attachment_id,
-						size_id: size ? size.id : 'original'
-					}
-				} )
-				.then(( res ) => {
-					let data = res.data;
-					if( data.download ) {
-						download(data.download);
-					}
-				} )
-				.catch( ( res ) => {
-					console.log( `Something went wrong : ${res}` );
-				} );
+      vm.$http.get( '/wp-json/sell-media/v2/api', {
+        params: {
+          action: 'download_file',
+          _wpnonce: sell_media.nonce,
+          post_id: this.product.post_id,
+          attachment_id: this.product.attachment_id,
+          size_id: size ? size.id : 'original'
+        }
+      } )
+        .then(( res ) => {
+          let data = res.data;
+          if( data.download ) {
+            download(data.download);
+          }
+        } )
+        .catch( ( res ) => {
+          console.log( `Something went wrong : ${res}` );
+        } );
 
-				vm.downloading = false
-			},
-		}
-	}
+      vm.downloading = false
+    },
+  }
+}
 </script>
 
 <style lang="scss" scoped>

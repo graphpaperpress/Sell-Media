@@ -36,45 +36,45 @@
 </template>
 
 <script>
-  import mixinUser from '../../mixins/user'
+import mixinUser from '../../mixins/user'
 
-	export default {
-    mixins: [mixinUser],
+export default {
+  mixins: [mixinUser],
 
-		data: function() {
-			return {
-				licenses: {},
-				values: {},
-				labels: sell_media.cart_labels
-			}
-		},
+  data: function() {
+    return {
+      licenses: {},
+      values: {},
+      labels: sell_media.cart_labels
+    }
+  },
 
-		mounted: function() {
-			const vm = this
-			vm.getLicenses()
-		},
+  mounted: function() {
+    const vm = this
+    vm.getLicenses()
+  },
 
-		methods: {
-			getLicenses: function(){
-				const vm = this
-				vm.$http.get( '/wp-json/sell-media/v2/licensing', {
-					params: {
-						per_page: 100
-					}
-				} )
-				.then( ( res ) => {
-					vm.licenses = res.data
-				} )
-				.catch( ( res ) => {
-					console.log( res )
-				} )
-			},
+  methods: {
+    getLicenses: function(){
+      const vm = this
+      vm.$http.get( '/wp-json/sell-media/v2/licensing', {
+        params: {
+          per_page: 100
+        }
+      } )
+        .then( ( res ) => {
+          vm.licenses = res.data
+        } )
+        .catch( ( res ) => {
+          console.log( res )
+        } )
+    },
 
-			apply: function(values) {
-				this.$emit('closeModal')
-				this.$store.dispatch( 'setUsage', values )
-			}
-		}
-	}
+    apply: function(values) {
+      this.$emit('closeModal')
+      this.$store.dispatch( 'setUsage', values )
+    }
+  }
+}
 
 </script>

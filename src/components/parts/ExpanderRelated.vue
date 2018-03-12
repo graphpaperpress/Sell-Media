@@ -30,6 +30,7 @@
 
 						<button
 						v-for="(item,index) in imageSets"
+						:key="index"
 						v-if="index < 10"
 						@click="getPost(item)"
 						class="button is-small"
@@ -51,6 +52,7 @@
 
 						<button
 						v-for="(item,index) in videoSets"
+						:key="index"
 						v-if="index < 10"
 						@click="getPost(item)"
 						class="button is-small"
@@ -65,6 +67,7 @@
 
 						<button
 						v-for="(item,index) in otherSets"
+						:key="index"
 						@click="getProductTypeSets(item)"
 						class="button is-small"
 						:class="[ currentPost.sell_media_meta.product_type[0].name === item.sell_media_meta.product_type[0].name ? 'is-light' : 'is-dark' ]"
@@ -79,6 +82,7 @@
 						:class="gridContainer" class="is-multiline has-text-centered">
 							<div
 							v-for="(item, index) in productTypeSets"
+							:key="index"
 							@click="getPost(item)"
 							:class="[{ active: currentPost.id === item.id}, gridLayout]">
 								<div :class="thumbnailStyle + '-thumbnail'">
@@ -100,180 +104,180 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex"
-	export default {
+import { mapActions } from "vuex"
+export default {
 
-		props: ['post'],
+  props: ['post'],
 
-		data: function () {
-			return {
-				user: this.$store.getters.user,
-				currentPost: this.post,
-				attachments: {},
-				showSlideshow: true,
-				multiple: false,
-				search_labels: sell_media.search_labels,
-				cart_labels: sell_media.cart_labels,
-				imageSets: [],
-				videoSets: [],
-				otherSets: [],
-				productTypeSets: [],
-				gridLayout: this.$store.getters.gridLayout,
-				gridContainer: this.$store.getters.gridLayoutContainer,
-				thumbnailStyle: 'slideshow',
-				height: 600,
-			}
-		},
+  data: function () {
+    return {
+      user: this.$store.getters.user,
+      currentPost: this.post,
+      attachments: {},
+      showSlideshow: true,
+      multiple: false,
+      search_labels: sell_media.search_labels,
+      cart_labels: sell_media.cart_labels,
+      imageSets: [],
+      videoSets: [],
+      otherSets: [],
+      productTypeSets: [],
+      gridLayout: this.$store.getters.gridLayout,
+      gridContainer: this.$store.getters.gridLayoutContainer,
+      thumbnailStyle: 'slideshow',
+      height: 600,
+    }
+  },
 
-		mounted: function() {
-			document.addEventListener("keydown", (e) => {
-				if (e.keyCode == 27) {
-					this.$emit('closeModal')
-				}
-			})
+  mounted: function() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 27) {
+        this.$emit('closeModal')
+      }
+    })
 
-			this.getSets()
-			this.getOtherSets()
-		},
+    this.getSets()
+    this.getOtherSets()
+  },
 
-		created: function() {
-			this.attachments = this.currentPost.sell_media_attachments
-			let count = Object.keys(this.attachments)
-			this.multiple = count.length > 1 ? true : false
-		},
+  created: function() {
+    this.attachments = this.currentPost.sell_media_attachments
+    let count = Object.keys(this.attachments)
+    this.multiple = count.length > 1 ? true : false
+  },
 
-		methods: {
-      ...mapActions(["setProduct"]),
-			getPost: function(item) {
-				this.currentPost = item
-				this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
-			},
-			getSets: function() {
-        const vm = this
-        let set_id = false
-				let type = ( !isNil(vm.currentPost.sell_media_meta.product_type) && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
-        // image and video product types should show child term, all others should show parent term.
+  methods: {
+    ...mapActions(["setProduct"]),
+    getPost: function(item) {
+      this.currentPost = item
+      this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
+    },
+    getSets: function() {
+      const vm = this
+      let set_id = false
+      let type = ( !isNil(vm.currentPost.sell_media_meta.product_type) && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
+      // image and video product types should show child term, all others should show parent term.
 
-        if (!isNil(vm.currentPost.sell_media_meta.set)) {
-          set_id = ( type === 'image' || type === 'video' ) && typeof vm.currentPost.sell_media_meta.set[1] !== "undefined" ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
+      if (!isNil(vm.currentPost.sell_media_meta.set)) {
+        set_id = ( type === 'image' || type === 'video' ) && typeof vm.currentPost.sell_media_meta.set[1] !== "undefined" ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
+      }
+
+      if ( ! set_id ) {
+        vm.setsLoaded = true
+        return false
+      }
+
+      vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+        params: {
+          per_page: 20,
+          set: set_id
         }
+      })
+        .then(( res ) => {
+          let sets = res.data
+          let image_sets = []
+          let video_sets = []
 
-				if ( ! set_id ) {
-					vm.setsLoaded = true
-					return false
-				}
+          for ( let set of sets ) {
+            if ( set.sell_media_meta.product_type && set.sell_media_meta.product_type[0].slug === 'image' ) {
+              image_sets.push(set)
+            }
+            if ( set.sell_media_meta.product_type && set.sell_media_meta.product_type[0].slug === 'video' ) {
+              video_sets.push(set)
+            }
+          }
 
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
-						per_page: 20,
-						set: set_id
-					}
-				})
-				.then(( res ) => {
-					let sets = res.data
-					let image_sets = []
-					let video_sets = []
+          vm.imageSets = image_sets
+          vm.videoSets = video_sets
 
-					for ( let set of sets ) {
-						if ( set.sell_media_meta.product_type && set.sell_media_meta.product_type[0].slug === 'image' ) {
-							image_sets.push(set)
-						}
-						if ( set.sell_media_meta.product_type && set.sell_media_meta.product_type[0].slug === 'video' ) {
-							video_sets.push(set)
-						}
-					}
+        })
+        .catch(( res ) => {
+          console.log( res )
+        })
+    },
+    getOtherSets: function() {
+      const vm = this
+      let post_set = false
+      // Search API response includes set with parent_id, WP API returns array of indexed ids
+      // Need to make these consistent in the future
+      if (!isNil(vm.currentPost) && !isNil(vm.currentPost.set)) {
+        post_set = !isNil(vm.currentPost.set.parent_id) ?
+          vm.currentPost.set.parent_id : vm.currentPost.set[0]
+      }
 
-					vm.imageSets = image_sets
-					vm.videoSets = video_sets
-
-				})
-				.catch(( res ) => {
-					console.log( res )
-				})
-			},
-			getOtherSets: function() {
-        const vm = this
-        let post_set = false
-				// Search API response includes set with parent_id, WP API returns array of indexed ids
-        // Need to make these consistent in the future
-        if (!isNil(vm.currentPost) && !isNil(vm.currentPost.set)) {
-          post_set = !isNil(vm.currentPost.set.parent_id) ?
-                        vm.currentPost.set.parent_id : vm.currentPost.set[0]
+      vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+        params: {
+          per_page: 20,
+          set: post_set,
+          product_type_exclude: [6,7], // CHANGE THIS! IT'S HARDCODED. Exclude image and video product_types (term_id 6 and 7)
         }
+      })
+        .then(( res ) => {
+          let sets = res.data
+          let other_sets = []
+          let types = []
 
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
-						per_page: 20,
-						set: post_set,
-						product_type_exclude: [6,7], // CHANGE THIS! IT'S HARDCODED. Exclude image and video product_types (term_id 6 and 7)
-					}
-				})
-				.then(( res ) => {
-					let sets = res.data
-					let other_sets = []
-					let types = []
+          for ( let set of sets ) {
+            let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
+            let in_array = types.includes(type)
+            if ( ! in_array ) {
+              types.push(type)
+              other_sets.push(set)
+            }
+          }
 
-					for ( let set of sets ) {
-						let type = set.sell_media_meta.product_type[0] ? set.sell_media_meta.product_type[0].slug : null
-						let in_array = types.includes(type)
-						if ( ! in_array ) {
-							types.push(type)
-							other_sets.push(set)
-						}
-					}
+          vm.otherSets = other_sets
 
-					vm.otherSets = other_sets
+        })
+        .catch(( res ) => {
+          console.log( res )
+        })
+    },
+    getProductTypeSets: function(item) {
+      const vm = this
+      vm.currentPost = item
+      vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+        params: {
+          per_page: 20,
+          set: item.set ? item.set[0] : null,
+          product_type: item.product_type ? item.product_type[0] : null
+        }
+      })
+        .then(( res ) => {
+          let sets = res.data
+          let product_type_sets = []
 
-				})
-				.catch(( res ) => {
-					console.log( res )
-				})
-			},
-			getProductTypeSets: function(item) {
-				const vm = this
-				vm.currentPost = item
-				vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
-					params: {
-						per_page: 20,
-						set: item.set ? item.set[0] : null,
-						product_type: item.product_type ? item.product_type[0] : null
-					}
-				})
-				.then(( res ) => {
-					let sets = res.data
-					let product_type_sets = []
+          for ( let set of sets ) {
+            product_type_sets.push(set)
+          }
 
-					for ( let set of sets ) {
-						product_type_sets.push(set)
-					}
+          vm.productTypeSets = product_type_sets
+        })
+        .catch(( res ) => {
+          console.log( res )
+        })
+    }
+  },
 
-					vm.productTypeSets = product_type_sets
-				})
-				.catch(( res ) => {
-					console.log( res )
-				})
-			}
-		},
+  updated: function () {
+    this.$nextTick(function () {
+      this.height = this.$refs.detailsBox.clientHeight
+    })
+  },
 
-		updated: function () {
-			this.$nextTick(function () {
-				this.height = this.$refs.detailsBox.clientHeight
-			})
-		},
-
-		computed: {
-			productType: function () {
-				let type = this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
-				if ( '360-video' === type || 'video' === type ) {
-					this.thumbnailStyle = 'video'
-				}
-				return type
-			},
-			attachment: function() {
-				return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.getters.product.attachment_id)
-			}
-		}
-	}
+  computed: {
+    productType: function () {
+      let type = this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
+      if ( '360-video' === type || 'video' === type ) {
+        this.thumbnailStyle = 'video'
+      }
+      return type
+    },
+    attachment: function() {
+      return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.getters.product.attachment_id)
+    }
+  }
+}
 </script>
 
 <style lang="scss">

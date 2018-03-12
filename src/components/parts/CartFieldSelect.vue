@@ -8,7 +8,7 @@
 				<div class="select">
 					<select id="sizes" v-model="selected" @change="$emit('selected', selected)">
 						<option disabled :value="{}">{{ labels.size }}</option>
-						<option v-for="size in getSizes(post,field)" :value="size">{{ size.name }} <template v-if="size.description">({{ size.description }})</template></option>
+						<option v-for="size in getSizes(post,field)" :key="size.name" :value="size">{{ size.name }} <template v-if="size.description">({{ size.description }})</template></option>
 					</select>
 				</div>
 			</div>
@@ -24,39 +24,39 @@
 
 <script>
 
-	export default {
+export default {
 
-		props: ['post', 'field', 'active'],
+  props: ['post', 'field', 'active'],
 
-		data: function() {
-			return {
-				selected: {},
-				labels: {
-					price: sell_media.cart_labels.price,
-					choose: sell_media.cart_labels.choose,
-					size: sell_media.cart_labels.size,
-					required: 'Please make a selection',
-					currency_symbol: sell_media.currency_symbol,
-				}
-			}
-		},
+  data: function() {
+    return {
+      selected: {},
+      labels: {
+        price: sell_media.cart_labels.price,
+        choose: sell_media.cart_labels.choose,
+        size: sell_media.cart_labels.size,
+        required: 'Please make a selection',
+        currency_symbol: sell_media.currency_symbol,
+      }
+    }
+  },
 
-		methods: {
+  methods: {
 
-			className: function(field) {
-				return field.toLowerCase().replace(/ /g, '-') + '-field';
-			},
+    className: function(field) {
+      return field.toLowerCase().replace(/ /g, '-') + '-field';
+    },
 
-			getSizes: function(post,field) {
-				let taxonomy = field.toLowerCase()
-				if ( post['sell_media_pricing'][taxonomy] ) {
-					return post['sell_media_pricing'][taxonomy]
-				} else {
-					this.$emit('selected', true)
-				}
-			}
-		}
-	}
+    getSizes: function(post,field) {
+      let taxonomy = field.toLowerCase()
+      if ( post['sell_media_pricing'][taxonomy] ) {
+        return post['sell_media_pricing'][taxonomy]
+      } else {
+        this.$emit('selected', true)
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
