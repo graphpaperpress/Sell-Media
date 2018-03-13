@@ -50,14 +50,14 @@
 
 <script>
 
-	export default {
+export default {
 
-		data: function() {
-			return {
+  data: function() {
+    return {
 
-			}
-		}
-	}
+    }
+  }
+}
 
 </script>
 

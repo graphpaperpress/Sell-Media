@@ -31,41 +31,41 @@
 import Waterfall from 'vue-waterfall/lib/waterfall'
 import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 
-	export default {
+export default {
 
-		props: ['posts'],
+  props: ['posts'],
 
-		data: function() {
-			return {
+  data: function() {
+    return {
 
-				line: '',
-				isBusy: false,
-				thumbnailCrop: sell_media.thumbnail_crop,
+      line: '',
+      isBusy: false,
+      thumbnailCrop: sell_media.thumbnail_crop,
 
-			}
-		},
+    }
+  },
 
-		created: function() {
-			let layout = sell_media.thumbnail_layout;
-			if ( layout === 'sell-media-horizontal-masonry' ) {
-				this.line = 'h';
-			} else {
-				this.line = 'v';
-			}
-		},
+  created: function() {
+    let layout = sell_media.thumbnail_layout;
+    if ( layout === 'sell-media-horizontal-masonry' ) {
+      this.line = 'h';
+    } else {
+      this.line = 'v';
+    }
+  },
 
-		methods: {
-			reflowed: function() {
-				this.isBusy = false
-			}
+  methods: {
+    reflowed: function() {
+      this.isBusy = false
+    }
 
-		},
+  },
 
-		components: {
-			Waterfall,
-			WaterfallSlot
-		}
-	}
+  components: {
+    Waterfall,
+    WaterfallSlot
+  }
+}
 
 </script>
 

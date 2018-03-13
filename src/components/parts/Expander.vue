@@ -23,46 +23,46 @@
 
 <script>
 
-	export default {
+export default {
 
-		props: ['post'],
+  props: ['post'],
 
-		data: function () {
-			return {
-				attachment: {},
-				attachments: {},
-				multiple: false,
-				prev_label: sell_media.cart_labels.prev,
-				next_label: sell_media.cart_labels.next,
-			}
-		},
+  data: function () {
+    return {
+      attachment: {},
+      attachments: {},
+      multiple: false,
+      prev_label: sell_media.cart_labels.prev,
+      next_label: sell_media.cart_labels.next,
+    }
+  },
 
-		mounted: function() {
-			document.addEventListener("keydown", (e) => {
-				if (e.keyCode == 27) {
-					this.$emit('closeModal');
-				}
-			});
-		},
+  mounted: function() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 27) {
+        this.$emit('closeModal');
+      }
+    });
+  },
 
-		created: function() {
-			this.attachments = this.post.sell_media_attachments;
-			let count = Object.keys(this.attachments);
-			this.multiple = count.length > 1 ? true : false;
-		},
+  created: function() {
+    this.attachments = this.post.sell_media_attachments;
+    let count = Object.keys(this.attachments);
+    this.multiple = count.length > 1 ? true : false;
+  },
 
-		methods: {
-			next: function() {
-				this.post += 1
-			},
-			prev: function() {
-				this.post -= 1
-			},
-			setAttachment: function(data) {
-				this.attachment = data
-			}
-		}
-	}
+  methods: {
+    next: function() {
+      this.post += 1
+    },
+    prev: function() {
+      this.post -= 1
+    },
+    setAttachment: function(data) {
+      this.attachment = data
+    }
+  }
+}
 </script>
 
 <style lang="scss">

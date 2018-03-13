@@ -11,46 +11,46 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex"
-	require('!style-loader!css-loader!video.js/dist/video-js.css')
-	require('!style-loader!css-loader!videojs-panorama/dist/videojs-panorama.min.css')
-	import VideoJs from 'video.js'
-	import panorama from 'videojs-panorama'
-	window.HELP_IMPROVE_VIDEOJS = false
+import { mapActions } from "vuex"
+require('!style-loader!css-loader!video.js/dist/video-js.css')
+require('!style-loader!css-loader!videojs-panorama/dist/videojs-panorama.min.css')
+import VideoJs from 'video.js'
+import panorama from 'videojs-panorama'
+window.HELP_IMPROVE_VIDEOJS = false
 
-	export default {
-		props: ['post'],
+export default {
+  props: ['post'],
 
-		mounted: function() {
-			this.player
-		},
+  mounted: function() {
+    this.player
+  },
 
-		updated: function() {
-			this.player
-    },
+  updated: function() {
+    this.player
+  },
 
-    methods: {
-      ...mapActions(["setProduct"])
-    },
+  methods: {
+    ...mapActions(["setProduct"])
+  },
 
-		computed: {
-			player: function() {
-				this.$store.dispatch( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
-				let videos = VideoJs.players
-				if (!videos.hasOwnProperty(this.$refs.videoPlayer)) {
-					let player = VideoJs( this.$refs.videoPlayer, {}, function(){})
-					player.panorama({
-						clickAndDrag: true
-					})
-					return player
-				}
-			}
-		},
+  computed: {
+    player: function() {
+      this.$store.dispatch( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
+      let videos = VideoJs.players
+      if (!videos.hasOwnProperty(this.$refs.videoPlayer)) {
+        let player = VideoJs( this.$refs.videoPlayer, {}, function(){})
+        player.panorama({
+          clickAndDrag: true
+        })
+        return player
+      }
+    }
+  },
 
-		beforeDestroy() {
-			this.player.dispose()
-		}
-	}
+  beforeDestroy() {
+    this.player.dispose()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

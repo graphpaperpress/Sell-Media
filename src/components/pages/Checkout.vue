@@ -127,204 +127,204 @@
 </template>
 
 <script>
-  import mixinGlobal from '../../mixins/global'
-  import mixinUser from '../../mixins/user'
+import mixinGlobal from '../../mixins/global'
+import mixinUser from '../../mixins/user'
 
-	export default {
-    mixins: [mixinGlobal, mixinUser],
+export default {
+  mixins: [mixinGlobal, mixinUser],
 
-		data() {
-			return {
-				currency_symbol: sell_media.currency_symbol,
-				labels: sell_media.cart_labels,
-				tax_rate: sell_media.tax,
-				shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
-				showModal: false,
-				notValid: false,
-				discount: false,
-				discount_code_labels: sell_media.discount_code_labels,
-				token: null,
-        processing: false,
-        discount_code_value: ''
-			}
-		},
+  data() {
+    return {
+      currency_symbol: sell_media.currency_symbol,
+      labels: sell_media.cart_labels,
+      tax_rate: sell_media.tax,
+      shipping_settings: ( typeof sell_media_reprints != 'undefined' ) ? sell_media_reprints : null,
+      showModal: false,
+      notValid: false,
+      discount: false,
+      discount_code_labels: sell_media.discount_code_labels,
+      token: null,
+      processing: false,
+      discount_code_value: ''
+    }
+  },
 
-		mounted(){
-			this.$store.dispatch( 'changeTitle', sell_media.checkout_path )
+  mounted(){
+    this.$store.dispatch( 'changeTitle', sell_media.checkout_path )
+  },
+
+  methods: {
+
+    subsubtotal(product){
+      return ( product.price * product.qty ).toFixed(2)
     },
 
-		methods: {
+    updateProduct(product){
+      this.$store.dispatch( 'updateCartProduct', product )
+    },
 
-			subsubtotal(product){
-				return ( product.price * product.qty ).toFixed(2)
-			},
+    decreaseQuantity(product){
+      product.qty -= 1
+      this.$store.dispatch( 'updateCartProduct', product )
+    },
 
-			updateProduct(product){
-				this.$store.dispatch( 'updateCartProduct', product )
-			},
+    increaseQuantity(product){
+      product.qty += 1
+      this.$store.dispatch( 'updateCartProduct', product )
+    },
 
-			decreaseQuantity(product){
-				product.qty -= 1
-				this.$store.dispatch( 'updateCartProduct', product )
-			},
+    deleteUsage(){
+      this.$store.dispatch( 'deleteUsage' )
+    },
 
-			increaseQuantity(product){
-				product.qty += 1
-				this.$store.dispatch( 'updateCartProduct', product )
-			},
+    checkout(){
+      const vm = this
+      // this.$checkout.close()
+      // is also available.
+      vm.$checkout.open({
+        currency: sell_media.currency,
+        amount: vm.total * 100,
+        token: (token, args) => {
+          // vm.submit(token)
+          vm.token = JSON.stringify(token, null, 2)
+          vm.processing = true
 
-			deleteUsage(){
-				this.$store.dispatch( 'deleteUsage' )
-			},
+          vm.$http.post( sell_media.ajaxurl + '?action=charge', {
+            token: token,
+            args: args,
+            _wpnonce: sell_media.nonce,
+            type: 'stripe',
+            discount: vm.discount_code_value,
+            discount_id: ( false !== vm.discount ) ? vm.discount.id : null,
+            // encode these?
+            cart: localStorage.getItem('sell-media-cart'),
+            usage: localStorage.getItem('sell-media-usage')
+          } )
+            .then( ( res ) => {
+              // console.dir(res.data)
+              vm.processing = false
+              this.$store.dispatch( 'deleteCart' )
+              this.$store.dispatch( 'deleteUsage' )
+              return window.location = res.data.url
+            } )
+            .catch( ( res ) => {
+              console.log( `Something went wrong : ${res}` )
+            } )
+        }
+      })
+    },
 
-			checkout(){
-				const vm = this
-				// this.$checkout.close()
-				// is also available.
-				vm.$checkout.open({
-					currency: sell_media.currency,
-					amount: vm.total * 100,
-					token: (token, args) => {
-						// vm.submit(token)
-						vm.token = JSON.stringify(token, null, 2)
-						vm.processing = true
+    applyDiscountCode(){
+      const vm = this
 
-						vm.$http.post( sell_media.ajaxurl + '?action=charge', {
-							token: token,
-							args: args,
-							_wpnonce: sell_media.nonce,
-							type: 'stripe',
-							discount: vm.discount_code_value,
-							discount_id: ( false !== vm.discount ) ? vm.discount.id : null,
-							// encode these?
-							cart: localStorage.getItem('sell-media-cart'),
-							usage: localStorage.getItem('sell-media-usage')
-						} )
-						.then( ( res ) => {
-							// console.dir(res.data)
-							vm.processing = false
-							this.$store.dispatch( 'deleteCart' )
-							this.$store.dispatch( 'deleteUsage' )
-							return window.location = res.data.url
-						} )
-						.catch( ( res ) => {
-							console.log( `Something went wrong : ${res}` )
-						} )
-					}
-				})
-			},
+      if ('' === vm.discount_code_value) {
+        return vm.discount = false
+      }
 
-			applyDiscountCode(){
-				const vm = this
+      vm.$http.get( '/wp-json/sell-media/v2/api', {
+        params: {
+          action: 'validate_discount_code',
+          discount_code: vm.discount_code_value
+        }
+      } )
+        .then( ( res ) => {
+          return vm.discount = res.data
+        } )
+        .catch( ( res ) => {
+          console.log( `Something went wrong : ${res}` )
+        } )
 
-				if ('' === vm.discount_code_value) {
-					return vm.discount = false
-				}
+    }
 
-				vm.$http.get( '/wp-json/sell-media/v2/api', {
-					params: {
-						action: 'validate_discount_code',
-						discount_code: vm.discount_code_value
-					}
-				} )
-				.then( ( res ) => {
-					return vm.discount = res.data
-				} )
-				.catch( ( res ) => {
-					console.log( `Something went wrong : ${res}` )
-				} )
+  },
 
-			}
+  computed: {
+    products() {
+      return this.cart
+    },
+    subtotal(){
+      return this.products.reduce(function(subtotal, product){
+        return Number(subtotal + product.price * product.qty)
+      },0).toFixed(2)
+    },
+    downloadsSubtotal(){
+      let subtotal = 0
+      let products = this.products
 
-		},
+      for ( let product in products ) {
+        if ( products[product].type == 'price-group' ) {
+          subtotal += Number(products[product].price * products[product].qty)
+        }
+      }
 
-		computed: {
-      products() {
-        return this.cart
-      },
-			subtotal(){
-				return this.products.reduce(function(subtotal, product){
-					return Number(subtotal + product.price * product.qty)
-				},0).toFixed(2)
-			},
-			downloadsSubtotal(){
-				let subtotal = 0
-				let products = this.products
+      return subtotal.toFixed(2)
+    },
+    tax(){
+      return Number(this.subtotal * this.tax_rate ).toFixed(2)
+    },
+    shipping(){
+      if ( ! this.shipping_settings ) {
+        return 0
+      }
+      if ( this.shipping_settings.reprints_shipping === 'shippingFlatRate' ) {
+        return Number(this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
+      }
+      if ( this.shipping_settings.reprints_shipping === 'shippingQuantityRate' ) {
+        return Number(this.products.length * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
+      }
+      if ( this.shipping_settings.reprints_shipping === 'shippingTotalRate' ) {
+        return Number(this.subtotal * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
+      }
+    },
+    total(){
+      return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( this.discountTotal ) ).toFixed(2)
+    },
+    usageFee(){
+      let usage = this.usage[0]
+      let sum = 0
+      for ( let item in usage ) {
+        let meta = usage[item].term.markup
+        let val = 0
+        if ( meta !== '' ) {
+          val = meta.replace('%', '')
+        }
+        //let val = meta.replace('%', '')
+        // change this.downloadSubtotal to this.subtotal to add markup to all product types
+        sum += +Number(this.downloadsSubtotal * val / 100)
+      }
+      return sum.toFixed(2)
+    },
+    usageNotSet(){
+      let status = false
 
-				for ( let product in products ) {
-					if ( products[product].type == 'price-group' ) {
-						subtotal += Number(products[product].price * products[product].qty)
-					}
-				}
+      // licensing is enabled, but buyer hasn't selected usage
+      if ( sell_media.licensing_enabled && (typeof this.usage === 'undefined' || this.usage.length === 0) ) {
+        let products = this.products
+        for ( let product in products ) {
+          if ( products[product].type === 'price-group' ) {
+            status = true
+          }
+        }
+      }
 
-				return subtotal.toFixed(2)
-			},
-			tax(){
-				return Number(this.subtotal * this.tax_rate ).toFixed(2)
-			},
-			shipping(){
-				if ( ! this.shipping_settings ) {
-					return 0
-				}
-				if ( this.shipping_settings.reprints_shipping === 'shippingFlatRate' ) {
-					return Number(this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
-				}
-				if ( this.shipping_settings.reprints_shipping === 'shippingQuantityRate' ) {
-					return Number(this.products.length * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
-				}
-				if ( this.shipping_settings.reprints_shipping === 'shippingTotalRate' ) {
-					return Number(this.subtotal * this.shipping_settings.reprints_shipping_flat_rate).toFixed(2)
-				}
-			},
-			total(){
-				return Number( Number(this.subtotal) + Number(this.usageFee) + Number(this.tax) + Number(this.shipping) - Number( this.discountTotal ) ).toFixed(2)
-			},
-			usageFee(){
-				let usage = this.usage[0]
-				let sum = 0
-				for ( let item in usage ) {
-					let meta = usage[item].term.markup
-					let val = 0
-					if ( meta !== '' ) {
-						val = meta.replace('%', '')
-					}
-					//let val = meta.replace('%', '')
-					// change this.downloadSubtotal to this.subtotal to add markup to all product types
-					sum += +Number(this.downloadsSubtotal * val / 100)
-				}
-				return sum.toFixed(2)
-			},
-			usageNotSet(){
-				let status = false
+      return status
+    },
+    discountTotal(){
 
-				// licensing is enabled, but buyer hasn't selected usage
-				if ( sell_media.licensing_enabled && (typeof this.usage === 'undefined' || this.usage.length === 0) ) {
-					let products = this.products
-					for ( let product in products ) {
-						if ( products[product].type === 'price-group' ) {
-							status = true
-						}
-					}
-				}
+      if ( !this.discount || false === this.discount.status ) {
+        return 0
+      }
 
-				return status
-			},
-			discountTotal(){
+      let amount = Number(this.discount.amount).toFixed(2)
+      let type = this.discount.type
+      let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal
 
-				if ( !this.discount || false === this.discount.status ) {
-					return 0
-				}
-
-				let amount = Number(this.discount.amount).toFixed(2)
-				let type = this.discount.type
-				let discountAmount = 'flat' === type ? amount : amount * 0.01 * this.subtotal
-
-				return Number( discountAmount ).toFixed(2)
-			}
-		}
+      return Number( discountAmount ).toFixed(2)
+    }
+  }
 
 
-	}
+}
 
 </script>
 

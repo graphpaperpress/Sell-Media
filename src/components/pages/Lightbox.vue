@@ -32,33 +32,33 @@
 </template>
 
 <script>
-  import mixinUser from '../../mixins/user'
+import mixinUser from '../../mixins/user'
 
-	export default {
-    mixins: [mixinUser],
+export default {
+  mixins: [mixinUser],
 
-		data() {
-			return {
-				addedAllToCart: false,
-				lightbox_labels: sell_media.lightbox_labels,
-				cart_labels: sell_media.cart_labels,
-				search_labels: sell_media.search_labels,
-				gridContainer: this.$store.getters.gridLayout + '-container',
-				gridLayout: this.$store.getters.gridLayout,
-			}
-		},
+  data() {
+    return {
+      addedAllToCart: false,
+      lightbox_labels: sell_media.lightbox_labels,
+      cart_labels: sell_media.cart_labels,
+      search_labels: sell_media.search_labels,
+      gridContainer: this.$store.getters.gridLayout + '-container',
+      gridLayout: this.$store.getters.gridLayout,
+    }
+  },
 
-		methods: {
-			addAll: function() {
-				for ( let product of this.lightbox ) {
-					this.$store.dispatch( 'addToCart', product )
-				}
-				this.$store.dispatch( 'deleteLightbox' )
-				this.$router.push( { 'name': 'checkout' } )
-				this.pageTitle = this.$route.name
-			}
-		}
-	}
+  methods: {
+    addAll: function() {
+      for ( let product of this.lightbox ) {
+        this.$store.dispatch( 'addToCart', product )
+      }
+      this.$store.dispatch( 'deleteLightbox' )
+      this.$router.push( { 'name': 'checkout' } )
+      this.pageTitle = this.$route.name
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

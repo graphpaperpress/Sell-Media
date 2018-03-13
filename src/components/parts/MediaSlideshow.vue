@@ -30,7 +30,8 @@
 
 			<div
 			class="slideshow-image"
-			v-for="slide in [currentSlide]"
+			v-for="(slide, index) in [currentSlide]"
+			:key="index"
 			>
 				<img
 					:src="post.sell_media_attachments[Math.abs(currentSlide) % post.sell_media_attachments.length].sizes.large[0]"
@@ -47,6 +48,7 @@
 				class="is-multiline has-text-centered">
 					<div
 					v-for="(attachment, index) in post.sell_media_attachments"
+					:key="index"
 					@click="goToSlide(index)"
 					:class="[{ active: currentSlide === index}, gridLayout]">
 						<div class="slideshow-thumbnail">
@@ -64,54 +66,54 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex"
-	export default {
-		props: ['post'],
+import { mapActions } from "vuex"
+export default {
+  props: ['post'],
 
-		data: function() {
-			return {
-				currentSlide: 0,
-				gridLayout: this.$store.getters.gridLayout,
-				gridContainer: this.$store.getters.gridLayoutContainer,
-				prev: {
-					label: sell_media.cart_labels.prev,
-					disabled: true
-				},
-				next: {
-					label: sell_media.cart_labels.next,
-					disabled: false
-				}
-			}
-		},
+  data: function() {
+    return {
+      currentSlide: 0,
+      gridLayout: this.$store.getters.gridLayout,
+      gridContainer: this.$store.getters.gridLayoutContainer,
+      prev: {
+        label: sell_media.cart_labels.prev,
+        disabled: true
+      },
+      next: {
+        label: sell_media.cart_labels.next,
+        disabled: false
+      }
+    }
+  },
 
-		mounted: function() {
-			let attachment = this.post.sell_media_attachments[this.currentSlide]
-			this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
-		},
+  mounted: function() {
+    let attachment = this.post.sell_media_attachments[this.currentSlide]
+    this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+  },
 
-		methods: {
-      ...mapActions(["setProduct"]),
-			goToSlide: function(slide) {
-				this.currentSlide = slide
-				let attachment = this.post.sell_media_attachments[this.currentSlide]
-				this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+  methods: {
+    ...mapActions(["setProduct"]),
+    goToSlide: function(slide) {
+      this.currentSlide = slide
+      let attachment = this.post.sell_media_attachments[this.currentSlide]
+      this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
-				// beginning of slides
-				if (this.currentSlide > 0){
-					this.prev.disabled = false
-				} else {
-					this.prev.disabled = true
-				}
+      // beginning of slides
+      if (this.currentSlide > 0){
+        this.prev.disabled = false
+      } else {
+        this.prev.disabled = true
+      }
 
-				// end of slides
-				if (this.currentSlide < this.post.sell_media_attachments.length - 1){
-					this.next.disabled = false
-				} else {
-					this.next.disabled = true
-				}
-			}
-		}
-	}
+      // end of slides
+      if (this.currentSlide < this.post.sell_media_attachments.length - 1){
+        this.next.disabled = false
+      } else {
+        this.next.disabled = true
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss">

@@ -12,20 +12,20 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex"
-	export default {
+import { mapActions } from "vuex"
+export default {
 
-    props: ['post', 'size'],
+  props: ['post', 'size'],
 
-    methods: {
-      ...mapActions(["setProduct"])
-    },
+  methods: {
+    ...mapActions(["setProduct"])
+  },
 
-		mounted: function() {
-			let attachment = this.post.sell_media_attachments[0]
-			this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
-		}
+  mounted: function() {
+    let attachment = this.post.sell_media_attachments[0]
+    this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+  }
 
-	}
+}
 
 </script>

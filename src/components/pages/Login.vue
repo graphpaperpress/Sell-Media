@@ -8,14 +8,14 @@
 
 <script>
 
-    export default {
-        methods: {},
-        data: function(){
-            return {
-                variable: 'I am the login page'
-            }
-        },
-        components: {}
+export default {
+  methods: {},
+  data: function(){
+    return {
+      variable: 'I am the login page'
     }
+  },
+  components: {}
+}
 
 </script>

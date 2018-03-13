@@ -52,19 +52,19 @@ const actions = {
         page: pageNumber
       }
     })
-    .then(res => {
-      let searchResults = {
-        results: res.data,
-        totalPages: parseInt(res.headers["x-wp-totalpages"]),
-        pageNumber: pageNumber
-      }
+      .then(res => {
+        let searchResults = {
+          results: res.data,
+          totalPages: parseInt(res.headers["x-wp-totalpages"]),
+          pageNumber: pageNumber
+        }
 
-      commit(types.SET_SEARCH_RESULTS, searchResults)
-      commit(types.SET_SEARCH_RESULTS_LOADED, true)
-    })
-    .catch(res => {
-      console.log(res)
-    })
+        commit(types.SET_SEARCH_RESULTS, searchResults)
+        commit(types.SET_SEARCH_RESULTS_LOADED, true)
+      })
+      .catch(res => {
+        console.log(res)
+      })
   },
 
   searchProducts ({ commit }, { search, search_type, page_number = 1}) {
@@ -77,20 +77,20 @@ const actions = {
         page: page_number
       }
     } )
-    .then(( res ) => {
-      let searchResults = {
-        results: res.data,
-        hasSearchResults: res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0,
-        totalPages: parseInt(res.headers["x-wp-totalpages"]),
-        pageNumber: page_number
-      }
+      .then(( res ) => {
+        let searchResults = {
+          results: res.data,
+          hasSearchResults: res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0,
+          totalPages: parseInt(res.headers["x-wp-totalpages"]),
+          pageNumber: page_number
+        }
 
-      commit(types.SET_SEARCH_RESULTS, searchResults)
-      commit(types.SET_SEARCH_RESULTS_LOADED, true)
-    })
-    .catch( ( res ) => {
-      console.log( res )
-    })
+        commit(types.SET_SEARCH_RESULTS, searchResults)
+        commit(types.SET_SEARCH_RESULTS_LOADED, true)
+      })
+      .catch( ( res ) => {
+        console.log( res )
+      })
   },
 
   fetchPost({ commit }, params) {
@@ -98,25 +98,25 @@ const actions = {
     Axios.get( '/wp-json/wp/v2/sell_media_item', {
       params: params
     })
-    .then(( res ) => {
-      commit(types.SET_POST, res.data[0])
-      commit(types.SET_POST_LOADED, true)
-    })
-    .catch(( res ) => {
-      console.log( `Something went wrong : ${res}` )
-    })
+      .then(( res ) => {
+        commit(types.SET_POST, res.data[0])
+        commit(types.SET_POST_LOADED, true)
+      })
+      .catch(( res ) => {
+        console.log( `Something went wrong : ${res}` )
+      })
   },
 
   fetchProductTypes({ commit }) {
     commit(types.SET_PRODUCT_TYPES_LOADED, false)
     Axios.get( '/wp-json/wp/v2/product_type' )
-    .then(( res ) => {
-      commit(types.SET_PRODUCT_TYPES, res.data)
-      commit(types.SET_PRODUCT_TYPES_LOADED, true)
-    })
-    .catch(( res ) => {
-      console.log( res )
-    })
+      .then(( res ) => {
+        commit(types.SET_PRODUCT_TYPES, res.data)
+        commit(types.SET_PRODUCT_TYPES_LOADED, true)
+      })
+      .catch(( res ) => {
+        console.log( res )
+      })
   },
 
   fetchAttachment({ commit }, params) {
@@ -124,13 +124,13 @@ const actions = {
     Axios.get( '/wp-json/wp/v2/media', {
       params: params
     })
-    .then(( res ) => {
-      commit(types.SET_ATTACHMENT, res.data[0])
-      commit(types.SET_ATTACHMENT_LOADED, true)
-    })
-    .catch(( res ) => {
-      console.log(`Something went wrong : ${res}`)
-    })
+      .then(( res ) => {
+        commit(types.SET_ATTACHMENT, res.data[0])
+        commit(types.SET_ATTACHMENT_LOADED, true)
+      })
+      .catch(( res ) => {
+        console.log(`Something went wrong : ${res}`)
+      })
   }
 }
 

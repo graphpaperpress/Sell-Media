@@ -10,7 +10,7 @@
 						<span class="select is-medium">
 							<select v-model="search_type">
 								<option value="">{{ labels.all }}</option>
-								<option v-for="type in productTypes" v-if="type.count > 0" :value="type.slug">{{ type.name }}</option>
+								<option v-for="(type, index) in productTypes" :key="index" v-if="type.count > 0" :value="type.slug">{{ type.name }}</option>
 							</select>
 						</span>
 					</p>
@@ -117,7 +117,7 @@
 						<div class="content">
 							<h6 class="has-text-weight-bold is-uppercase">{{ labels.search_tips }}</h6>
 							<ul>
-								<li v-for="(tip,index) in labels.tips">{{ tip }}.</li>
+								<li v-for="(tip,index) in labels.tips" :key="index">{{ tip }}.</li>
 							</ul>
 						</div>
 					</div>
@@ -133,112 +133,112 @@
 </template>
 
 <script>
-  import mixinProduct from '../../mixins/product'
-	import { Compact } from 'vue-color'
+import mixinProduct from '../../mixins/product'
+import { Compact } from 'vue-color'
 
-	let defaultColors = {
-		hex: '#2A94AE',
-		hsl: {
-			h: 192,
-			s: 0.61,
-			l: 0.42,
-			a: 1
-		},
-		hsv: {
-			h: 150,
-			s: 0.66,
-			v: 0.30,
-			a: 1
-		},
-		rgba: {
-			r: 42,
-			g: 148,
-			b: 174,
-			a: 1
-		},
-		a: 1
-	}
+let defaultColors = {
+  hex: '#2A94AE',
+  hsl: {
+    h: 192,
+    s: 0.61,
+    l: 0.42,
+    a: 1
+  },
+  hsv: {
+    h: 150,
+    s: 0.66,
+    v: 0.30,
+    a: 1
+  },
+  rgba: {
+    r: 42,
+    g: 148,
+    b: 174,
+    a: 1
+  },
+  a: 1
+}
 
-	export default {
-    mixins: [mixinProduct],
-		props: ['loading', 'search'],
+export default {
+  mixins: [mixinProduct],
+  props: ['loading', 'search'],
 
-		data(){
-			return {
-        searchValue: '',
-				labels: sell_media.search_labels,
-				search_type: sell_media.default_search_type ? sell_media.default_search_type : '',
-				showFilters: false,
-				colors: defaultColors,
-				locations: [],
-				locationFields: {
-					0: {
-						name: 'Urban',
-						slug: 'urban'
-					},
-					1: {
-						name: 'Rural',
-						slug: 'rural'
-					},
-					2: {
-						name: 'Mountains',
-						slug: 'mountains'
-					},
-					3: {
-						name: 'Coastal',
-						slug: 'coastal'
-					},
-					4: {
-						name: 'Desert',
-						slug: 'desert'
-					},
-					5: {
-						name: 'Forest',
-						slug: 'forest'
-					}
-				},
-				sort: '',
-				sortFields: {
-					0: {
-						name: sell_media.search_labels.date,
-						slug: 'date'
-					},
-					1: {
-						name: sell_media.search_labels.name,
-						slug: 'name'
-					},
-					2: {
-						name: sell_media.search_labels.popular,
-						slug: 'popular'
-					}
-				},
+  data(){
+    return {
+      searchValue: '',
+      labels: sell_media.search_labels,
+      search_type: sell_media.default_search_type ? sell_media.default_search_type : '',
+      showFilters: false,
+      colors: defaultColors,
+      locations: [],
+      locationFields: {
+        0: {
+          name: 'Urban',
+          slug: 'urban'
+        },
+        1: {
+          name: 'Rural',
+          slug: 'rural'
+        },
+        2: {
+          name: 'Mountains',
+          slug: 'mountains'
+        },
+        3: {
+          name: 'Coastal',
+          slug: 'coastal'
+        },
+        4: {
+          name: 'Desert',
+          slug: 'desert'
+        },
+        5: {
+          name: 'Forest',
+          slug: 'forest'
+        }
+      },
+      sort: '',
+      sortFields: {
+        0: {
+          name: sell_media.search_labels.date,
+          slug: 'date'
+        },
+        1: {
+          name: sell_media.search_labels.name,
+          slug: 'name'
+        },
+        2: {
+          name: sell_media.search_labels.popular,
+          slug: 'popular'
+        }
+      },
 
-			}
-		},
+    }
+  },
 
-		beforeMount() {
-      this.$store.dispatch('fetchProductTypes')
-		},
+  beforeMount() {
+    this.$store.dispatch('fetchProductTypes')
+  },
 
-		methods: {
-			remove(item, array){
-				if ( array ) {
-					const index = array.indexOf(item)
-					array.splice(index, 1)
-				}
-				if ( item === 'colors' ) {
-					this.colors = defaultColors
-				}
-				if ( item === 'sort' ) {
-					this.sort = ''
-				}
-			}
-		},
+  methods: {
+    remove(item, array){
+      if ( array ) {
+        const index = array.indexOf(item)
+        array.splice(index, 1)
+      }
+      if ( item === 'colors' ) {
+        this.colors = defaultColors
+      }
+      if ( item === 'sort' ) {
+        this.sort = ''
+      }
+    }
+  },
 
-		components: {
-			'compact-picker': Compact
-		}
-	}
+  components: {
+    'compact-picker': Compact
+  }
+}
 
 </script>
 

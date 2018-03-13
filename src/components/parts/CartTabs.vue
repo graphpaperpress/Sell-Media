@@ -14,33 +14,33 @@
 
 <script>
 
-    import CartFieldPrintSize from './CartFieldPrintSize.vue'
-    import CartFieldDownloadSize from './CartFieldDownloadSize.vue'
+import CartFieldPrintSize from './CartFieldPrintSize.vue'
+import CartFieldDownloadSize from './CartFieldDownloadSize.vue'
 
-    export default {
+export default {
 
-        props: ['post'],
+  props: ['post'],
 
-        data: function() {
-            return {
+  data: function() {
+    return {
 
-                labels: {
-                    add: sell_media.cart_labels.add_to_cart,
-                }
+      labels: {
+        add: sell_media.cart_labels.add_to_cart,
+      }
 
-            }
-        },
-
-        methods: {
-            reset: function() {
-                document.getElementById('sizes').selectedIndex = '0'
-            }
-        },
-
-        components: {
-            'cart-field-print-size': CartFieldPrintSize,
-            'cart-field-download-size': CartFieldDownloadSize
-        }
     }
+  },
+
+  methods: {
+    reset: function() {
+      document.getElementById('sizes').selectedIndex = '0'
+    }
+  },
+
+  components: {
+    'cart-field-print-size': CartFieldPrintSize,
+    'cart-field-download-size': CartFieldDownloadSize
+  }
+}
 
 </script>

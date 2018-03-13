@@ -8,14 +8,14 @@
 
 <script>
 
-    export default {
-        methods: {},
-        data: function(){
-            return {
-                variable: 'Not found'
-            }
-        },
-        components: {}
+export default {
+  methods: {},
+  data: function(){
+    return {
+      variable: 'Not found'
     }
+  },
+  components: {}
+}
 
 </script>
