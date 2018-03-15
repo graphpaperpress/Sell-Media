@@ -10,13 +10,13 @@
 
 			<div :class="pageLayout.content">
 				<template v-if="type === 'panorama' || type === 'dome'">
-					<media-panorama :post="product"></media-panorama>
+					<media-panorama :post="post"></media-panorama>
 				</template>
 				<template v-else-if="type === 'video'">
-					<media-video :post="product"></media-video>
+					<media-video :post="post"></media-video>
 				</template>
 				<template v-else-if="type === '360-video'">
-					<media-video-360 :post="product"></media-video-360>
+					<media-video-360 :post="post"></media-video-360>
 				</template>
 				<template v->
 					<img :src="attachment.media_details.sizes.large.source_url" :alt="attachment.alt"/>
@@ -26,7 +26,7 @@
 			{{ product }}
 
 			<div :class="pageLayout.sidebar">
-				<cart-form :key="attachment.slug" :post="product" :attachment="attachment" :multiple="multiple"></cart-form>
+				<cart-form :key="attachment.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
 			</div>
 
 		</div>
@@ -63,26 +63,23 @@ export default {
   methods: {
     ...mapActions(["setProduct"]),
     goToSearchResults(search, search_type){
-      const vm = this
-
       if ( search ) {
-        vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
+        this.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
       }
     }
 
-    	},
+  },
 
-    	computed: {
-    		product() {
-    			return this.$store.state.product
-    		}
-    	},
+  computed: {
+    product() {
+      return this.$store.state.product
+    }
+  },
 
   watch: {
     attachment(val) {
-      console.log(val)
-      this.$store.dispatch('changeTitle', val.title.rendered)
-      this.$store.dispatch( 'setProduct', { post_id: val.post, attachment_id: val.id } )
+      this.$store.dispatch( 'changeTitle', val.title.rendered )
+      this.$store.dispatch( 'fetchPost', { include: val.post } )
     }
   },
 

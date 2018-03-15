@@ -30,7 +30,6 @@ export default {
 
   created() {
     this.tabs = this.$children
-    // console.log(this.$children)
   },
 
 	    methods: {

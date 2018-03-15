@@ -18,7 +18,7 @@
 						<div class="select">
 							<select v-model="values[index]">
 								<option disabled :value="{}">Select</option>
-								<option v-for="term in taxonomy.terms" :key="term" :value="{ term }">{{ term.name }}</option>
+								<option v-for="term in taxonomy.terms" :key="term.id" :value="{ term }">{{ term.name }}</option>
 							</select>
 						</div>
 						<!-- <p>{{ values[index].description }}</p> -->

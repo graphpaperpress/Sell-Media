@@ -12,7 +12,7 @@
 				<div class="post-content content" v-if="post.content" v-html="post.content.rendered"></div>
 			</div>
 			<div v-if="!multiple" :class="pageLayout.sidebar">
-				<cart-form :key="post.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>
+				<cart-form :key="post.slug" :post="post" :attachment="attachments" :multiple="multiple"></cart-form>
 			</div>
 		</div>
 
