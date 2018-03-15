@@ -92,10 +92,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setProduct"]),
+    ...mapActions(["setProduct", "setAttachment"]),
     goToSlide: function(slide) {
       this.currentSlide = slide
       let attachment = this.post.sell_media_attachments[this.currentSlide]
+      this.$store.dispatch( 'setAttachment', attachment)
+      this.$emit('attachment', attachment)
       this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
       // beginning of slides

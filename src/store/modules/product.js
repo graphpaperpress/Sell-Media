@@ -40,6 +40,14 @@ const actions = {
   },
 
   /**
+   * Sets the current attachment
+   * @param {*} attachment
+   */
+  setAttachment ({ commit }, attachment ) {
+    commit(types.SET_ATTACHMENT, attachment)
+  },
+
+  /**
    * Queries for a set of posts (products) starting at a given page number.
    * @param {pageNumber} The page you want to start at
    */
