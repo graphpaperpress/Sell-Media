@@ -127,8 +127,8 @@
 </template>
 
 <script>
-import mixinGlobal from '../../mixins/global'
-import mixinUser from '../../mixins/user'
+import mixinGlobal from '@/mixins/global'
+import mixinUser from '@/mixins/user'
 
 export default {
   mixins: [mixinGlobal, mixinUser],

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import mixinUser from '../../mixins/user'
+import mixinUser from '@/mixins/user'
 import download from 'downloadjs'
 
 export default {

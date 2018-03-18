@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import mixinUser from '../../mixins/user'
+import mixinUser from '@/mixins/user'
 import CartFieldSelect from './CartFieldSelect.vue'
 import CartFieldRadio from './CartFieldRadio.vue'
 

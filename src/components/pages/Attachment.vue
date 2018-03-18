@@ -41,8 +41,8 @@
 
 <script>
 import { mapActions } from "vuex"
-import mixinGlobal from '../../mixins/global'
-import mixinProduct from '../../mixins/product'
+import mixinGlobal from '@/mixins/global'
+import mixinProduct from '@/mixins/product'
 import SearchForm from '../parts/SearchForm.vue'
 
 export default {

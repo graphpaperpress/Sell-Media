@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import mixinGlobal from "../../mixins/global"
-import mixinProduct from "../../mixins/product"
+import mixinGlobal from "@/mixins/global"
+import mixinProduct from "@/mixins/product"
 
 export default {
   mixins: [mixinGlobal, mixinProduct],

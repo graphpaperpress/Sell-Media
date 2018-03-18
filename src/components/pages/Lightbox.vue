@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import mixinUser from '../../mixins/user'
+import mixinUser from '@/mixins/user'
 
 export default {
   mixins: [mixinUser],

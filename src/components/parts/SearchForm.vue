@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import mixinProduct from '../../mixins/product'
+import mixinProduct from '@/mixins/product'
 import { Compact } from 'vue-color'
 
 let defaultColors = {
