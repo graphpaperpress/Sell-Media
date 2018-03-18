@@ -3,6 +3,10 @@ let webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 
+function resolve (dir) {
+  return path.join(__dirname, '.', dir)
+}
+
 module.exports = {
 
   entry: {
@@ -72,7 +76,10 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      'pannellum': 'pannellum/src',
+      '@': resolve('src'),
+      'components': resolve('src/components'),
     },
     extensions: ['*', '.js', '.vue', '.json']
   },

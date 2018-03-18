@@ -9,10 +9,10 @@
 <script>
 import { mapActions } from "vuex"
 
-var libpannellumjs = require('../../../node_modules/pannellum/src/js/libpannellum.js')
-var RequestAnimationFrame = require('../../../node_modules/pannellum/src/js/RequestAnimationFrame.js')
-var pannellumjs = require('../../../node_modules/pannellum/src/js/pannellum.js')
-var pannellumcss = require('../../../node_modules/pannellum/src/css/pannellum.css')
+import 'pannellum/js/libpannellum.js'
+import 'pannellum/js/RequestAnimationFrame.js'
+import 'pannellum/js/pannellum.js'
+import 'pannellum/css/pannellum.css'
 
 export default {
 
