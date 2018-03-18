@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import SearchForm from '../parts/SearchForm.vue'
+import SearchForm from 'components/parts/SearchForm.vue'
 import mixinGlobal from '@/mixins/global'
 import mixinProduct from '@/mixins/product'
 

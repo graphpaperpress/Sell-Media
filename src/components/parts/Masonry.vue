@@ -28,8 +28,7 @@
 
 <script>
 
-import Waterfall from 'vue-waterfall/lib/waterfall'
-import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
+import { Waterfall, WaterfallSlot } from 'vue-waterfall'
 
 export default {
 

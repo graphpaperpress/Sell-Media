@@ -11,12 +11,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+window.HELP_IMPROVE_VIDEOJS = false // npm releases of video.js do not include Google Analytics tracking at all
+
 require('!style-loader!css-loader!video.js/dist/video-js.css')
 require('!style-loader!css-loader!videojs-panorama/dist/videojs-panorama.min.css')
+
 import VideoJs from 'video.js'
 import panorama from 'videojs-panorama'
-window.HELP_IMPROVE_VIDEOJS = false
+
+import { mapActions } from "vuex"
 
 export default {
   props: ['post'],

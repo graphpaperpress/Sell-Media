@@ -43,7 +43,7 @@
 import { mapActions } from "vuex"
 import mixinGlobal from '@/mixins/global'
 import mixinProduct from '@/mixins/product'
-import SearchForm from '../parts/SearchForm.vue'
+import SearchForm from 'components/parts/SearchForm.vue'
 
 export default {
   mixins: [mixinGlobal, mixinProduct],
