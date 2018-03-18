@@ -1,4 +1,5 @@
 // Used for user-specific state properties
+import axios from 'axios'
 
 import api from "../api"
 import * as types from "../mutation-types"
@@ -26,7 +27,7 @@ const getters = {
 // Actions: Used to trigger asyncronous tasks and commit mutations
 const actions = {
   getUser({ commit }) {
-    Axios.get( '/wp-json/sell-media/v2/api', {
+    axios.get( '/wp-json/sell-media/v2/api', {
       params: {
         action: 'get_user',
         _wpnonce: sell_media.nonce
