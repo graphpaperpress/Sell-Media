@@ -105,6 +105,8 @@
 
 <script>
 import { mapActions } from "vuex"
+import isNil from 'lodash.isnil'
+
 export default {
 
   props: ['post'],
