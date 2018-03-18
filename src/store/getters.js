@@ -1,56 +1,29 @@
-export const gridLayout = state => {
-
-  let setting = sell_media.thumbnail_layout
-  let layout = null
-
-  if ( 'sell-media-two-col' === setting )
-    layout = 'column is-half'
-  if ( 'sell-media-three-col' === setting )
-    layout = 'column is-one-third'
-  if ( 'sell-media-four-col' === setting )
-    layout = 'column is-one-quarter'
-  if ( 'sell-media-five-col' === setting )
-    layout = 'column is-one-fifth'
-  if ( 'sell-media-masonry' === setting )
-    layout = 'is-masonry'
-  if ( 'sell-media-horizontal-masonry' === setting )
-    layout = 'is-horizontal-masonry'
-
-  return layout
+const gridLayoutMappings = {
+  'sell-media-two-col': 'column is-half',
+  'sell-media-three-col': 'column is-one-third',
+  'sell-media-four-col': 'column is-one-quarter',
+  'sell-media-five-col': 'column is-one-fifth',
+  'sell-media-masonry': 'is-masonry',
+  'sell-media-horizontal-masonry': 'is-horizontal-masonry',
+}
+const gridLayoutContainerMappings = {
+  'sell-media-two-col': 'columns is-half-container',
+  'sell-media-three-col': 'columns is-one-third-container',
+  'sell-media-four-col': 'columns is-one-quarter-container',
+  'sell-media-five-col': 'columns is-one-fifth-container',
+  'sell-media-masonry': 'is-masonry-container',
+  'sell-media-horizontal-masonry': 'is-horizontal-masonry-container',
 }
 
-export const gridLayoutContainer = state => {
-
-  let setting = sell_media.thumbnail_layout
-  let layout = null
-
-  if ( 'sell-media-two-col' === setting )
-    layout = 'columns is-half-container'
-  if ( 'sell-media-three-col' === setting )
-    layout = 'columns is-one-third-container'
-  if ( 'sell-media-four-col' === setting )
-    layout = 'columns is-one-quarter-container'
-  if ( 'sell-media-five-col' === setting )
-    layout = 'columns is-one-fifth-container'
-  if ( 'sell-media-masonry' === setting )
-    layout = 'is-masonry-container'
-  if ( 'sell-media-horizontal-masonry' === setting )
-    layout = 'is-horizontal-masonry-container'
-
-  return layout
-}
-
-export const pageLayout = state => {
-
-  let setting = sell_media.layout
-  let layout = {}
-
-  if ( setting === 'sell-media-single-two-col' ) {
-    layout = {
-      'content': 'column is-two-thirds',
-      'sidebar': 'column is-one-third'
-    }
+const pageLayoutMappings = {
+  'sell-media-single-two-col': {
+    'content': 'column is-two-thirds',
+    'sidebar': 'column is-one-third',
   }
-
-  return layout
 }
+
+export const gridLayout = () => gridLayoutMappings[sell_media.thumbnail_layout] || null;
+
+export const gridLayoutContainer = () => gridLayoutMappings[sell_media.thumbnail_layout] || null;
+
+export const pageLayout = () => pageLayoutMappings[sell_media.layout] || {};

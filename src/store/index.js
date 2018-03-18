@@ -1,4 +1,3 @@
-Vue.config.devtools = true
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as getters from './getters'
@@ -12,6 +11,7 @@ import Product from './modules/product'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  strict: process.env.NODE_ENV !== 'production',
   modules: {
     Global,
     User,

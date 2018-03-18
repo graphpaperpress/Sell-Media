@@ -1,14 +1,19 @@
-Vue.config.devtools = true
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VBClass from 'vue-body-class'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import PortalVue from 'portal-vue'
-import store from './store'
-import icons from './icons'
 import VideoJs from 'video.js'
 import VueStripeCheckout from 'vue-stripe-checkout'
+
+import store from './store'
+import icons from './icons'
+
+// this options will be disabled in production automatically by Vue
+Vue.config.productionTip = false;
+Vue.config.devtools = true;
+Vue.config.performance = true;
 
 const options = {
   key: sell_media.stripe_public_key,
