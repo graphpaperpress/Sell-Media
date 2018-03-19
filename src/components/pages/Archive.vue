@@ -95,7 +95,7 @@ export default {
 
     showNextPage(event){
       if ( this.currentPage < this.searchResults.totalPages ) {
-        showNext: true
+        this.showNext = true
         this.currentPage += 1
         this.$router.push( { 'name': 'archive', params: { 'page': this.currentPage } } )
       }
@@ -103,7 +103,7 @@ export default {
 
     showPrevPage(event){
       if ( this.currentPage != 1 ) {
-        showPrev: true
+        this.showPrev = true
         this.currentPage -= 1
         this.$router.push( { 'name': 'archive', params: { 'page': this.currentPage } } )
       }

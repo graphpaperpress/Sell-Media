@@ -223,14 +223,14 @@ export default {
   },
 
   beforeMount() {
-		this.fetchProductTypes()
+    this.fetchProductTypes()
   },
 
   methods: {
-		onSearch() {
-			const { searchValue: search, search_type} = this;
-			this.$emit('search', { search, search_type })
-		},
+    onSearch() {
+      const { searchValue: search, search_type} = this;
+      this.$emit('search', { search, search_type })
+    },
     remove(item, array){
       if ( array ) {
         const index = array.indexOf(item)

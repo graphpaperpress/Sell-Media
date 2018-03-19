@@ -271,7 +271,7 @@ export default {
     productType: function () {
       let type = this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
       if ( '360-video' === type || 'video' === type ) {
-        this.thumbnailStyle = 'video'
+        this.thumbnailStyle = 'video' // TODO SIDE-EFFECT IN COMPUTED PROPERTY! REFACTOR THIS!
       }
       return type
     },
