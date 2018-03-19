@@ -94,7 +94,7 @@ export default {
 
   created(){
     // set fields object, make prints first tab
-    this.fields = this.post.sell_media_meta.sell.reverse()
+    this.fields = [...this.post.sell_media_meta.sell].reverse();
     // set active tab to first field and show corresponding price group
     this.active = this.fields[0]
   },
