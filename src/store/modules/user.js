@@ -2,7 +2,25 @@
 import axios from 'axios'
 
 import api from "../api"
-import * as types from "../mutation-types"
+import {
+  addToArrayImmutable,
+  updateArrayImmutable,
+  removeFromArrayImmutable
+} from '../../utils';
+
+import {
+  SET_USER,
+  SET_LIGHTBOX,
+  ADD_TO_LIGHTBOX,
+  RESET_LIGHTBOX,
+  REMOVE_FROM_LIGHTBOX,
+  SET_USAGE,
+  DELETE_USAGE,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_CART_PRODUCT,
+  DELETE_CART,
+} from "../mutation-types"
 
 export const CART_KEY = 'sell-media-cart'
 export const LIGHTBOX_KEY = 'sell-media-lightbox'
@@ -34,7 +52,7 @@ const actions = {
       }
     } )
       .then(( res ) => {
-        commit(types.SET_USER, res.data.ID)
+        commit(SET_USER, res.data.ID)
       })
       .catch(( res ) => {
         console.log( res )
@@ -44,35 +62,31 @@ const actions = {
    * Sets the user to the WP user object
    * @param { user } the user object
    */
-  setUser({ commit, state }, user) {
-    commit(types.SET_USER, user)
+  setUser({ commit }, user) {
+    commit(SET_USER, user)
   },
 
   /**
    * Adds a given product to the users lightbox.
    * @param { product } the product to be added
    */
-  addToLightbox ({ commit, state, getters }, product) {
-    let newLightbox = state.lightbox
-    newLightbox.push(product)
-    commit(types.SET_LIGHTBOX, newLightbox)
+  addToLightbox ({ commit }, product) {
+    commit(ADD_TO_LIGHTBOX, product)
   },
 
   /**
    * Removes a given product from the users lightbox.
    * @param { product } the product to be removed
    */
-  removeFromLightbox ({ commit, state, getters }, product) {
-    let newLightbox = state.lightbox
-    newLightbox.splice(newLightbox.indexOf(product), 1)
-    commit(types.SET_LIGHTBOX, newLightbox)
+  removeFromLightbox ({ commit }, product) {
+    commit(REMOVE_FROM_LIGHTBOX, product)
   },
 
   /**
    * Resets the lightbox
    */
   deleteLightbox ({ commit }) {
-    commit(types.SET_LIGHTBOX, JSON.parse('[]'))
+    commit(RESET_LIGHTBOX)
   },
 
   /**
@@ -80,7 +94,7 @@ const actions = {
    * @param { product } the product to be added
    */
   addToCart ({ commit }, product) {
-    commit(types.ADD_TO_CART, product)
+    commit(ADD_TO_CART, product)
   },
 
   /**
@@ -88,22 +102,22 @@ const actions = {
    * @param { product } the product to be removed
    */
   removeFromCart ({ commit }, product) {
-    commit(types.REMOVE_FROM_CART, product)
+    commit(REMOVE_FROM_CART, product)
   },
 
   /**
    * Replaces an existing product object with an updated version
    * @param { product } the product to be updated
    */
-  updateCartProduct ({ commit }, product) {
-    commit(types.UPDATE_CART_PRODUCT, product)
+  updateCartProduct ({ commit, state }, product) {
+    state.cart.indexOf(product) !== -1 ? commit(UPDATE_CART_PRODUCT, { index, product }) : void 0;
   },
 
   /**
    * Resets the cart state
    */
   deleteCart ({ commit }) {
-    commit(types.DELETE_CART)
+    commit(DELETE_CART)
   },
 
   /**
@@ -111,52 +125,49 @@ const actions = {
    * @param { value } the usage value
    */
   setUsage ({ commit }, value) {
-    commit(types.SET_USAGE, value)
+    commit(SET_USAGE, value)
   },
 
   /**
    * Resets the usage for the user
    */
   deleteUsage ({ commit }) {
-    commit(types.SET_USAGE, JSON.parse('[]'))
+    commit(DELETE_USAGE);
   }
 }
 
 // Mutations: Used to modify the state's properties
 const mutations = {
-  [types.SET_USER](state, user) {
+  [SET_USER](state, user) {
     state.user = user
   },
-
-  [types.SET_LIGHTBOX](state, lightbox) {
-    state.lightbox = lightbox
+  [ADD_TO_LIGHTBOX](state, item) {
+    state.lightbox = addToArrayImmutable(state.lightbox, item)
   },
-
-  [types.ADD_TO_CART](state, product) {
-    state.cart.push(product)
+  [REMOVE_FROM_LIGHTBOX](state, item) {
+    state.lightbox = removeFromArrayImmutable(state.lightbox, item)
   },
-
-  // you cannot alter an object's properties directly, otherwise
-  // the component will loose reactivity
-  // https://vuejs.org/v2/guide/list.html#Caveats
-  [types.REMOVE_FROM_CART](state, product) {
-    state.cart.splice(state.cart.indexOf(product), 1)
+  [RESET_LIGHTBOX](state) {
+    state.lightbox = []
   },
-
-  // you cannot alter an object's properties directly, otherwise
-  // the component will loose reactivity
-  // https://vuejs.org/v2/guide/list.html#Caveats
-  [types.UPDATE_CART_PRODUCT](state, product) {
-    state.cart.splice(state.cart.indexOf(product), 1, product)
+  [ADD_TO_CART](state, product) {
+    state.cart = addToArrayImmutable(state.cart, product)
   },
-
-  [types.DELETE_CART](state) {
-    state.cart = JSON.parse('[]')
+  [REMOVE_FROM_CART](state, product) {
+    state.cart = removeFromArrayImmutable(state.cart, product)
   },
-
-  [types.SET_USAGE](state, value) {
+  [UPDATE_CART_PRODUCT](state, { index, product }) {
+    state.cart = updateArrayImmutable(state.cart, index, product);
+  },
+  [DELETE_CART](state) {
+    state.cart = []
+  },
+  [SET_USAGE](state, value) {
     state.usage = [value]
-  }
+  },
+  [DELETE_USAGE](state) {
+    state.usage = []
+  },
 }
 
 export default {
