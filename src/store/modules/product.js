@@ -76,14 +76,14 @@ const actions = {
       })
   },
 
-  searchProducts ({ commit }, { search, search_type, page_number = 1}) {
+  searchProducts ({ commit }, { search, type, page = 1}) {
     commit(types.SET_SEARCH_RESULTS_LOADED, false)
     axios.get( '/wp-json/sell-media/v2/search', {
       params: {
         s: search,
-        type: search_type,
+        type,
         per_page: sell_media.posts_per_page,
-        page: page_number
+        page
       }
     } )
       .then(( res ) => {
@@ -91,7 +91,7 @@ const actions = {
           results: res.data,
           hasSearchResults: res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0,
           totalPages: parseInt(res.headers["x-wp-totalpages"]),
-          pageNumber: page_number
+          pageNumber: page
         }
 
         commit(types.SET_SEARCH_RESULTS, searchResults)

@@ -28,10 +28,12 @@
 <script>
 import mixinGlobal from '@/mixins/global'
 import mixinProduct from '@/mixins/product'
+import mixinUser from '@/mixins/user'
+
 import SearchForm from 'components/parts/SearchForm.vue'
 
 export default {
-  mixins: [mixinGlobal, mixinProduct],
+  mixins: [mixinGlobal, mixinProduct, mixinUser],
 
   data(){
     return {
@@ -52,42 +54,35 @@ export default {
   },
 
   mounted(){
-    const vm = this
-    const search = vm.$route.query.search ? vm.$route.query.search : vm.search
-    const type = vm.$route.query.type ? vm.$route.query.type : vm.search_type
-    const page = vm.$route.params.page ? vm.$route.params.page : '1'
+    const search = this.$route.query.search || this.search
+    const type = this.$route.query.type || this.search_type
+    const page = this.$route.params.page || 1
 
-    vm.$store.dispatch('changeTitle', 'Archive')
-    vm.$store.dispatch('getUser')
+    this.changeTitle('Archive')
+    this.getUser()
 
-    if ( search || type ) {
-      vm.getSearchResults({ search: search, search_type: type, page_number: page })
+    if (search || type) {
+      this.getSearchResults({ search, type, page })
     } else {
-      this.$store.dispatch('fetchProducts', 1)
+      this.fetchProducts(1)
     }
   },
 
   methods: {
-    getSearchResults({ search, search_type, pageNumber = 1 }){
-      const vm = this
-      vm.search = search
-      vm.search_type = search_type ? search_type : ''
+    getSearchResults({ search, type, page = 1 }) {
+      this.search = search
+      this.search_type = type || ''
 
-      if ( search ) {
-        vm.$router.push({
+      if (search) {
+        this.$router.push({
           name: 'archive',
-          params: { page: pageNumber },
-          query: { search: search, type: search_type }
+          params: { page },
+          query: { search, type }
         });
       }
 
-      vm.$store.dispatch( 'searchProducts', {
-        search: search,
-        search_type: search_type,
-        page_number: pageNumber
-      })
-
-      vm.$store.dispatch( 'changeTitle', 'Search results for: ' + search )
+      this.searchProducts({ search, type, page })
+      this.changeTitle(`Search results for: ${search}`)
     },
 
     resetSearch(){
@@ -95,43 +90,38 @@ export default {
       this.search = ''
       this.search_type = sell_media.default_search_type ? sell_media.default_search_type : ''
       this.$router.push( { name: 'archive', query: {} } )
-        		this.$store.dispatch('fetchProducts', 1)
+      this.fetchProducts(1)
     },
 
     showNextPage(event){
-      const vm = this
-
-      if ( vm.currentPage < vm.searchResults.totalPages ) {
+      if ( this.currentPage < this.searchResults.totalPages ) {
         showNext: true
-        vm.currentPage = vm.currentPage + 1
-        vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } )
+        this.currentPage = this.currentPage + 1
+        this.$router.push( { 'name': 'archive', params: { 'page': this.currentPage } } )
       }
     },
 
     showPrevPage(event){
-      const vm = this
-
-      if ( vm.currentPage != 1 ) {
+      if ( this.currentPage != 1 ) {
         showPrev: true
-        vm.currentPage = vm.currentPage - 1
-        vm.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } )
+        this.currentPage = this.currentPage - 1
+        this.$router.push( { 'name': 'archive', params: { 'page': vm.currentPage } } )
       }
     }
   },
 
   watch: {
-
     '$route'( to, from ) {
-      const vm = this
-      if ( vm.search || vm.$route.query.search ) {
-        let search = vm.$route.query.search ? vm.$route.query.search : vm.search
-        vm.getSearchResults( { search: search, search_type: vm.search_type, page_number: vm.$route.params.page } )
-      } else if ( ! vm.search && vm.search_type ) {
-        vm.getSearchResults( { search: '', search_type: vm.search_type, page_number: vm.$route.params.page } )
-			 	} else {
-        this.$store.dispatch('fetchProducts', vm.$route.params.page)
-      }
+      const page_number = this.$route.params.page;
 
+      if ( this.search || this.$route.query.search ) {
+        const search = this.$route.query.search || this.search
+        this.getSearchResults( { search, search_type: this.search_type, page_number } )
+      } else if ( ! this.search && this.search_type ) {
+        this.getSearchResults( { search: '', search_type: this.search_type, page_number } )
+      } else {
+        this.fetchProducts(page_number )
+      }
     },
 
     searchResults(val) {

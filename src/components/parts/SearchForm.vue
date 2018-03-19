@@ -1,26 +1,33 @@
 <template>
-
 	<div class="search-container" :class="{ active: showFilters }">
-
 		<div class="columns is-clearfix">
-
 			<div class="search-area column is-two-thirds">
 				<div class="field has-addons">
 					<p class="control">
 						<span class="select is-medium">
 							<select v-model="search_type">
 								<option value="">{{ labels.all }}</option>
-								<option v-for="(type, index) in productTypes" :key="index" v-if="type.count > 0" :value="type.slug">{{ type.name }}</option>
+								<option
+									v-for="(type, index) in productTypes"
+									v-if="type.count"
+									:key="index"
+									:value="type.slug">{{ type.name }}</option>
 							</select>
 						</span>
 					</p>
 					<p class="control is-expanded">
-						<input v-model="search" class="input is-medium" type="text" :placeholder="labels.search" @keyup.enter="$emit('search', { search: $event.target.value, search_type: search_type })">
+						<input
+							v-model="searchValue"
+							:placeholder="labels.search"
+							@keyup.enter="onSearch()"
+							class="input is-medium"
+							type="text">
 					</p>
 					<p class="control">
-						<button class="button is-medium is-dark" @click="$emit('search', { search: search, search_type: search_type })" :class="{ 'is-loading': loading }">
-							{{ labels.search }}
-						</button>
+						<button
+							@click="onSearch()"
+							:class="{ 'is-loading': loading }"
+							class="button is-medium is-dark">{{ labels.search }}</button>
 					</p>
 				</div>
 			</div>
@@ -40,9 +47,7 @@
 					</template>
 				</button>
 			</div>
-
 		</div>
-
 		<div class="filters box" v-if="showFilters || colors.hex !== '#2A94AE' || locations.length > 0 || sort">
 
 			<div class="filters-active">
@@ -168,7 +173,7 @@ export default {
     return {
       searchValue: '',
       labels: sell_media.search_labels,
-      search_type: sell_media.default_search_type ? sell_media.default_search_type : '',
+      search_type: sell_media.default_search_type || '',
       showFilters: false,
       colors: defaultColors,
       locations: [],
@@ -218,10 +223,14 @@ export default {
   },
 
   beforeMount() {
-    this.$store.dispatch('fetchProductTypes')
+		this.fetchProductTypes()
   },
 
   methods: {
+		onSearch() {
+			const { searchValue: search, search_type} = this;
+			this.$emit('search', { search, search_type })
+		},
     remove(item, array){
       if ( array ) {
         const index = array.indexOf(item)
