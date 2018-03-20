@@ -58,12 +58,18 @@
     "lint-fix": "npm run-script lint -- --fix",
     "postinstall": "npm run build"
   },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run lint && npm run build"
+    }
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "bulma": "^0.6.1",
     "bulma-checkradio": "^0.1.4",
     "bulma-steps-component": "^0.5.3",
     "downloadjs": "^1.4.7",
+    "ghooks": "^2.0.2",
     "lodash.isnil": "^4.0.0",
     "pannellum": "github:mpetroff/pannellum#master",
     "parsleyjs": "^2.8.0",
