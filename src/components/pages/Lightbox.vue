@@ -51,9 +51,9 @@ export default {
   methods: {
     addAll: function() {
       for ( let product of this.lightbox ) {
-				this.addToCart(product)
-			}
-			this.deleteLightbox()
+        this.addToCart(product)
+      }
+      this.deleteLightbox()
       this.$router.push( { 'name': 'checkout' } )
       this.pageTitle = this.$route.name
     }

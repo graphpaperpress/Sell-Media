@@ -151,8 +151,8 @@ export default {
   methods: {
     ...mapActions(["setProduct"]),
     getPost: function(item) {
-			this.currentPost = item
-			this.setProduct({ post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
+      this.currentPost = item
+      this.setProduct({ post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
     },
     getSets: function() {
       let set_id = false

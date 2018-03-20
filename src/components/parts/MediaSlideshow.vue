@@ -88,32 +88,32 @@ export default {
   },
 
   mounted: function() {
-		const attachment = this.post.sell_media_attachments[this.currentSlide]
-		this.setProduct({ post_id: attachment.parent, attachment_id: attachment.id })
-	},
+    const attachment = this.post.sell_media_attachments[this.currentSlide]
+    this.setProduct({ post_id: attachment.parent, attachment_id: attachment.id })
+  },
 	
   methods: {
     ...mapActions([
-			'setProduct',
-			'setAttachment'
-		]),
+      'setProduct',
+      'setAttachment'
+    ]),
     goToSlide: function(slideIndex) {
       this.currentSlide = slideIndex
-			let attachment = this.post.sell_media_attachments[this.currentSlide]
-			this.setAttachment(attachment)
-			this.$emit('attachment', attachment)
-			this.setProduct({ post_id: attachment.parent, attachment_id: attachment.id })
+      let attachment = this.post.sell_media_attachments[this.currentSlide]
+      this.setAttachment(attachment)
+      this.$emit('attachment', attachment)
+      this.setProduct({ post_id: attachment.parent, attachment_id: attachment.id })
     }
-	},
+  },
 
-	watch: {
-		currentSlide(newValue, oldValue) {
-			// beginning of slides
-			this.prev.disabled = newValue === 0
-			// end of slides
-			this.next.disabled = newValue === this.post.sell_media_attachments.length - 1
-		}
-	}
+  watch: {
+    currentSlide(newValue, oldValue) {
+      // beginning of slides
+      this.prev.disabled = newValue === 0
+      // end of slides
+      this.next.disabled = newValue === this.post.sell_media_attachments.length - 1
+    }
+  }
 }
 </script>
 

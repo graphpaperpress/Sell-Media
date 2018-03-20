@@ -150,7 +150,7 @@ export default {
   },
 
   mounted(){
-		this.changeTitle(sell_media.checkout_path)
+    this.changeTitle(sell_media.checkout_path)
   },
 
   methods: {
@@ -160,21 +160,21 @@ export default {
     },
 
     updateProduct(product){
-			this.updateCartProduct(product)
+      this.updateCartProduct(product)
     },
 
     decreaseQuantity(product){
-			product.qty -= 1
-			this.updateCartProduct(product)
+      product.qty -= 1
+      this.updateCartProduct(product)
     },
 
     increaseQuantity(product){
-			product.qty += 1
-			this.updateCartProduct(product)
+      product.qty += 1
+      this.updateCartProduct(product)
     },
 
     deleteUsage(){
-			this.deleteUsage()
+      this.deleteUsage()
     },
 
     checkout(){
@@ -201,9 +201,9 @@ export default {
           } )
             .then( ( res ) => {
               // console.dir(res.data)
-							this.processing = false
-							this.deleteCart()
-							this.deleteUsage()
+              this.processing = false
+              this.deleteCart()
+              this.deleteUsage()
               return window.location = res.data.url
             } )
             .catch( ( res ) => {
