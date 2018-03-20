@@ -32,12 +32,9 @@ export default {
   methods: {
 
     getMenu: function() {
-
-      const vm = this
-
-      vm.$http.get( 'wp-api-menus/v2/menu-locations/primary-menu' )
+      this.$http.get( 'wp-api-menus/v2/menu-locations/primary-menu' )
         .then(function(response){
-          vm.menus = response.data
+          this.menus = response.data
         } )
         .catch(function(response) {
           console.log(response)

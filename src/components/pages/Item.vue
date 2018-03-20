@@ -50,10 +50,8 @@ export default {
   methods: {
 
     goToSearchResults(search, search_type){
-      const vm = this
-
       if ( search ) {
-        vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
+        this.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
       }
     }
   },

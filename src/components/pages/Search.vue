@@ -39,7 +39,6 @@ export default {
   },
 
   mounted: function() {
-    const vm = this
     this.$store.dispatch("changeTitle", "Search")
   },
 
@@ -58,21 +57,17 @@ export default {
 
   methods: {
     showNextPage: function(event) {
-      const vm = this
-
-      if (vm.currentPage < vm.searchResults.totalPages) {
+      if (this.currentPage < this.searchResults.totalPages) {
         showNext: true
-        vm.currentPage = vm.currentPage + 1
-        vm.$router.push({ name: "search", params: { page: vm.currentPage } })
+        this.currentPage = this.currentPage + 1
+        this.$router.push({ name: "search", params: { page: this.currentPage } })
       }
     },
     showPrevPage: function(event) {
-      const vm = this
-
-      if (vm.currentPage != 1) {
+      if (this.currentPage != 1) {
         showPrev: true
-        vm.currentPage = vm.currentPage - 1
-        vm.$router.push({ name: "search", params: { page: vm.currentPage } })
+        this.currentPage = this.currentPage - 1
+        this.$router.push({ name: "search", params: { page: this.currentPage } })
       }
     }
   },

@@ -62,26 +62,24 @@ export default {
   },
 
   mounted(){
-    const vm = this
-    vm.getVideo(0)
+    this.getVideo()
   },
 
   methods: {
     ...mapActions(["setProduct"]),
 
-    getVideo(index){
-      const vm = this
-      vm.currentVideo = index
-      vm.file = vm.post.sell_media_attachments[index].file
-      vm.type = vm.post.sell_media_attachments[index].type
-      vm.poster = vm.file.slice(0, -4) + '.jpg'
+    getVideo(index = 0){
+      this.currentVideo = index
+      this.file = this.post.sell_media_attachments[index].file
+      this.type = this.post.sell_media_attachments[index].type
+      this.poster = this.file.slice(0, -4) + '.jpg'
 
-      let attachment = vm.post.sell_media_attachments[index]
-      vm.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+      let attachment = this.post.sell_media_attachments[index]
+      this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
 
       let player = VideoJs(this.$refs.videoPlayer, {}, function(){})
-      player.src({src: vm.file, type: vm.type})
-      vm.player = player
+      player.src({src: this.file, type: this.type})
+      this.player = player
     }
   },
 
