@@ -258,22 +258,26 @@ export default {
     }
   },
 
-  updated: function () {
+  updated() {
     this.$nextTick(function () {
       this.height = this.$refs.detailsBox.clientHeight
     })
   },
 
   computed: {
-    productType: function () {
-      let type = this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
-      if ( '360-video' === type || 'video' === type ) {
-        this.thumbnailStyle = 'video' // TODO SIDE-EFFECT IN COMPUTED PROPERTY! REFACTOR THIS!
-      }
-      return type
+    productType() {
+      return this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
     },
-    attachment: function() {
+    attachment() {
       return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.getters.product.attachment_id)
+    }
+  },
+
+  watch: {
+    productType(newValue, oldValue) {
+      if ( newValue === '360-video' || newValue === 'video' ) {
+        this.thumbnailStyle = 'video'
+      }
     }
   }
 }
