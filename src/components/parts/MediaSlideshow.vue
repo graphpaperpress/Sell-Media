@@ -88,34 +88,32 @@ export default {
   },
 
   mounted: function() {
-    let attachment = this.post.sell_media_attachments[this.currentSlide]
-    this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
-  },
-
+		const attachment = this.post.sell_media_attachments[this.currentSlide]
+		this.setProduct({ post_id: attachment.parent, attachment_id: attachment.id })
+	},
+	
   methods: {
-    ...mapActions(["setProduct", "setAttachment"]),
-    goToSlide: function(slide) {
-      this.currentSlide = slide
-      let attachment = this.post.sell_media_attachments[this.currentSlide]
-      this.$store.dispatch( 'setAttachment', attachment)
-      this.$emit('attachment', attachment)
-      this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
-
-      // beginning of slides
-      if (this.currentSlide > 0){
-        this.prev.disabled = false
-      } else {
-        this.prev.disabled = true
-      }
-
-      // end of slides
-      if (this.currentSlide < this.post.sell_media_attachments.length - 1){
-        this.next.disabled = false
-      } else {
-        this.next.disabled = true
-      }
+    ...mapActions([
+			'setProduct',
+			'setAttachment'
+		]),
+    goToSlide: function(slideIndex) {
+      this.currentSlide = slideIndex
+			let attachment = this.post.sell_media_attachments[this.currentSlide]
+			this.setAttachment(attachment)
+			this.$emit('attachment', attachment)
+			this.setProduct({ post_id: attachment.parent, attachment_id: attachment.id })
     }
-  }
+	},
+
+	watch: {
+		currentSlide(newValue, oldValue) {
+			// beginning of slides
+			this.prev.disabled = newValue === 0
+			// end of slides
+			this.next.disabled = newValue === this.post.sell_media_attachments.length - 1
+		}
+	}
 }
 </script>
 

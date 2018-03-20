@@ -74,10 +74,10 @@ export default {
       this.type = this.post.sell_media_attachments[index].type
       this.poster = this.file.slice(0, -4) + '.jpg'
 
-      let attachment = this.post.sell_media_attachments[index]
-      this.$store.dispatch( 'setProduct', { post_id: attachment.parent, attachment_id: attachment.id } )
+			const attachment = this.post.sell_media_attachments[index]
+			this.setProduct({ post_id: attachment.parent, attachment_id: attachment.id })
 
-      let player = VideoJs(this.$refs.videoPlayer, {}, function(){})
+      const player = VideoJs(this.$refs.videoPlayer, {}, function(){})
       player.src({src: this.file, type: this.type})
       this.player = player
     }

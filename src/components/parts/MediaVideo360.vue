@@ -38,10 +38,10 @@ export default {
 
   computed: {
     player: function() {
-      this.$store.dispatch( 'setProduct', { post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id } )
-      let videos = VideoJs.players
+      this.setProduct({ post_id: this.post.sell_media_attachments[0].parent, attachment_id: this.post.sell_media_attachments[0].id })
+      const videos = VideoJs.players
       if (!videos.hasOwnProperty(this.$refs.videoPlayer)) {
-        let player = VideoJs( this.$refs.videoPlayer, {}, function(){})
+        const player = VideoJs( this.$refs.videoPlayer, {}, function(){})
         player.panorama({
           clickAndDrag: true
         })

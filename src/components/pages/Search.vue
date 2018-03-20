@@ -27,19 +27,18 @@
 import mixinGlobal from "@/mixins/global"
 import mixinProduct from "@/mixins/product"
 
+const PAGE_TITLE = 'Search'
+
 export default {
   mixins: [mixinGlobal, mixinProduct],
 
   beforeMount: function() {
-    if (this.$route.params.page) {
-      this.$store.dispatch('fetchProducts', this.$route.params.page)
-    } else {
-      this.$store.dispatch('fetchProducts', 1)
-    }
+    const { page } = this.$route.params
+    this.fetchProducts(page || 1)
   },
 
   mounted: function() {
-    this.$store.dispatch("changeTitle", "Search")
+    this.changeTitle(PAGE_TITLE)
   },
 
   data: function() {
@@ -74,7 +73,7 @@ export default {
 
   watch: {
     $route(to, from) {
-      this.$store.dispatch('fetchProducts', this.$route.params.page)
+      this.fetchProducts(this.$route.params.page)
     },
 
     searchResults(val) {

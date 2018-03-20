@@ -159,12 +159,12 @@ export default {
       }
 
       if ( 'cart' === $where ) {
-        this.$store.dispatch( 'addToCart', this.product )
+        this.addToCart(this.product)
         this.added = true
       }
 
       if ( 'lightbox' === $where ) {
-        this.$store.dispatch( 'addToLightbox', this.product )
+        this.addToLightbox(this.product)
         this.saved = true
       }
 

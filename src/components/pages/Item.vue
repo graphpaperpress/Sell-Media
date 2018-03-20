@@ -44,7 +44,8 @@ export default {
   },
 
   beforeMount: function() {
-    this.$store.dispatch('fetchPost', { slug: this.$route.params.slug })
+    const { slug } = this.$route.params
+    this.fetchPost({ slug })
   },
 
   methods: {
@@ -66,7 +67,7 @@ export default {
       this.attachments = this.post.sell_media_attachments
       this.multiple = (this.attachments != null && this.attachments.length > 1) ? true : false
       this.type = this.post.sell_media_meta != null ? this.post.sell_media_meta.product_type[0] : ''
-      this.$store.dispatch( 'changeTitle', this.post.title.rendered )
+      this.changeTitle(this.post.title.rendered)
     }
   }
 

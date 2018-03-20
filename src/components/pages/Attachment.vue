@@ -57,11 +57,11 @@ export default {
   },
 
   beforeMount() {
-    this.$store.dispatch('fetchAttachment', { slug: this.$route.params.slug })
+    const { slug } = this.$route.params
+    this.fetchAttachment({ slug })
   },
 
   methods: {
-    ...mapActions(["setProduct"]),
     goToSearchResults(search, search_type){
       if ( search ) {
         this.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
@@ -77,9 +77,9 @@ export default {
   },
 
   watch: {
-    attachment(val) {
-      this.$store.dispatch( 'changeTitle', val.title.rendered )
-      this.$store.dispatch( 'fetchPost', { include: val.post } )
+    attachment({ title, post }) {
+      this.changeTitle(title.rendered)
+      this.fetchPost({ include: post })
     }
   },
 

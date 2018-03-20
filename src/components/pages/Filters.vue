@@ -68,14 +68,14 @@ export default {
   },
 
   mounted: function() {
-    this.$store.dispatch('fetchProducts', 1)
+    this.fetchProducts(1)
     this.getCategories()
   },
 
   methods: {
     getProducts: function(pageNumber){
       this.currentPage = pageNumber
-      this.$store.dispatch('fetchProducts', pageNumber)
+      this.fetchProducts(pageNumber)
     },
 
     getCategories: function(){
