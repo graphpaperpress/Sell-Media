@@ -252,7 +252,7 @@ class Sell_Media_Price_Listings_Tabs {
 				foreach ( $_POST['new_children'] as $term_id => $data ) {
 					if ( '' !== $data['name'] ) {
 
-						if ( term_exists( $data['name'], $this->taxonomy ) ) {
+						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
 							$term    = get_term_by( 'name', $data['name'], $this->taxonomy );
 							$term_id = ( false !== $term ) ? $term->term_id : false;
 
