@@ -82,8 +82,22 @@ class SellMediaLayouts {
 	public function body_class( $classes ) {
 		global $post;
 
+		// Theme
+		$theme     = wp_get_theme();
+		$classes[] = 'theme-' . sanitize_title_with_dashes( $theme->get( 'Name' ) );
+
+		// Layout
+		if ( isset( $this->settings->layout ) ) {
+			$classes[] = $this->settings->layout;
+		}
+
+		// Style
+		if ( isset( $this->settings->style ) ) {
+			$classes[] = 'sell-media-style-' . $this->settings->style;
+		}
+
 		if ( empty( $post ) ) {
-			return;
+			return $classes;
 		}
 
 		// Pages assigned with shortcode
@@ -109,24 +123,10 @@ class SellMediaLayouts {
 			$classes[] = 'sell-media-page';
 		}
 
-		// Layout
-		if ( isset( $this->settings->layout ) ) {
-			$classes[] = $this->settings->layout;
-		}
-
-		// Style
-		if ( isset( $this->settings->style ) ) {
-			$classes[] = 'sell-media-style-' . $this->settings->style;
-		}
-
 		// Gallery
 		if ( is_singular( 'sell_media_item' ) && sell_media_has_multiple_attachments( $post->ID ) ) {
 			$classes[] = 'sell-media-gallery-page';
 		}
-
-		// Theme
-		$theme     = wp_get_theme();
-		$classes[] = 'theme-' . sanitize_title_with_dashes( $theme->get( 'Name' ) );
 
 		return $classes;
 	}
