@@ -252,13 +252,20 @@ class Sell_Media_Price_Listings_Tabs {
 				foreach ( $_POST['new_children'] as $term_id => $data ) {
 					if ( '' !== $data['name'] ) {
 
-						$term = wp_insert_term( $data['name'], $this->taxonomy, array(
-							'parent'      => $parent_term_id,
-							'description' => $data['description'],
-						) );
-						if ( ! is_wp_error( $term ) ) {
-							$term_id = $term['term_id'];
+						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
+							$term    = get_term_by( 'name', $data['name'], $this->taxonomy );
+							$term_id = ( false !== $term ) ? $term->term_id : false;
 
+						} else {
+
+							$term    = wp_insert_term( $data['name'], $this->taxonomy, array(
+								'parent' => $parent_term_id,
+								'description' => $data['description'],
+							) );
+							$term_id = ! is_wp_error( $term ) ? $term['term_id'] : false;
+						}
+
+						if ( $term_id ) {
 							update_term_meta( $term_id, 'width', $data['width'] );
 							update_term_meta( $term_id, 'height', $data['height'] );
 							update_term_meta( $term_id, 'price', $data['price'] );

@@ -54,6 +54,7 @@ function sell_media_item_add_to_cart_button( $post_id = null, $attachment_id = n
 	}
 
 	$classes = implode( ' ', $classes );
+	$classes = apply_filters( 'sell_media_button_classes', $classes );
 
 	$html = '<button class="' . $classes . '" ' . $disable . '>' . $text . '</button>';
 	$html = apply_filters( 'sell_media_item_add_to_cart_button', $html, $post_id, $attachment_id, $button, $text, $echo, $type );

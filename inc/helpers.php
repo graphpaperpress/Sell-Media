@@ -81,8 +81,10 @@ function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
 		if ( in_array( 'sell_media_customer', $user->roles ) ) {
 			return site_url( 'dashboard' );
 		} else {
-			return admin_url();
+			return $redirect_to;
 		}
+	} else {
+		return $redirect_to;
 	}
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
