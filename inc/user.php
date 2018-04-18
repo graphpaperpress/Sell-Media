@@ -1,8 +1,11 @@
 <?php
 /**
- * Registration
+ * User
  */
 
+/**
+ * Additional User Fields
+ */
 function sell_media_extra_user_fields() {
 
 	$fields = array(
@@ -20,7 +23,7 @@ function sell_media_extra_user_fields() {
 		),
 		array(
 			'name'     => 'street',
-			'desc'     => 'Example: 100 Main, Apt. 2B',
+			'desc'     => __( 'Example: 100 Main, Apt. 2B', 'sell_media' ),
 			'type'     => 'text',
 			'required' => true
 		),
@@ -55,7 +58,7 @@ function sell_media_extra_user_fields() {
 }
 
 /**
- * Form
+ * Registration Form
  */
 function sell_media_register_form() {
 
@@ -89,7 +92,7 @@ function sell_media_register_form() {
 add_action( 'register_form', 'sell_media_register_form' );
 
 /**
- * Form validation
+ * Registration form validation
  */
 function sell_media_registration_errors( $errors, $sanitized_user_login, $user_email ) {
 
@@ -110,7 +113,7 @@ function sell_media_registration_errors( $errors, $sanitized_user_login, $user_e
 add_filter( 'registration_errors', 'sell_media_registration_errors', 10, 3 );
 
 /**
- * User registration
+ * User registration meta update
  */
 function sell_media_user_register( $user_id ) {
 
@@ -128,8 +131,6 @@ add_action( 'user_register', 'sell_media_user_register' );
 
 /**
  * Get Countries
- * 
- * @return array Countries as Country code => Country name
  */
 function sell_media_get_countries() {
 
