@@ -248,6 +248,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/paypal.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/mime-types.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/registration.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/scripts.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/shortcodes.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/template-tags.php';
