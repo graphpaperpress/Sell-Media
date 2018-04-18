@@ -252,6 +252,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/shortcodes.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/template-tags.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/term-meta.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/user.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/widgets.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings/settings.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
