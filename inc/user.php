@@ -1,7 +1,15 @@
 <?php
 /**
  * User
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Additional User Fields
@@ -435,7 +443,7 @@ add_action( 'login_enqueue_scripts', 'sell_media_login_css' );
  * Show extra profile fields in admin
  */
 function sell_media_show_extra_profile_fields( $user ) {
-	echo '<h3>' .__( 'Address', 'sell_media' ) . '</h3>';
+	echo '<h2>' .__( 'Address', 'sell_media' ) . '</h2>';
 
 	echo '<table class="form-table">';
 

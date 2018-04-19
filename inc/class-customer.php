@@ -55,6 +55,12 @@ class SellMediaCustomer {
 
 			// email the user with password request
 			if ( ! is_wp_error( $user_id ) ) {
+
+				// logout if currently logged in as a different user
+				if ( $user_id !== get_current_user_id() ) {
+					wp_logout();
+				}
+
 				$user_info = get_userdata( $user_id );
 				do_action( 'wp_signon', $user_info->user_login );
 				$secure_cookie = ( is_ssl() ) ? true : false;
