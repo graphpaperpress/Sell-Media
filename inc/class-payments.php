@@ -372,8 +372,7 @@ class SellMediaPayments {
 	 * @since 1.2
 	 * @return html
 	 */
-	public function get_payments_by_date( $day = null, $month_num, $year ) {
-
+	public function get_payments_by_date( $day = null, $month_num, $year ,$site_id=1) {
 		$args = array(
 			'post_type' => 'sell_media_payment',
 			'posts_per_page' => -1,
@@ -381,6 +380,22 @@ class SellMediaPayments {
 			'monthnum' => $month_num,
 			'post_status' => 'publish',
 		);
+		if ( 1 !== $site_id ) {
+			$args = array(
+				'post_type'      => 'sell_media_payment',
+				'posts_per_page' => - 1,
+				'year'           => $year,
+				'monthnum'       => $month_num,
+				'post_status'    => 'publish',
+				'meta_query'     => array(
+					array(
+						'key'   => '_vsme_site_id',
+						'value' => '"'.$site_id.'"',
+						'compare'=>'LIKE'
+					)
+				)
+			);
+		}
 		if ( ! empty( $day ) )
 			$args['day'] = $day;
 

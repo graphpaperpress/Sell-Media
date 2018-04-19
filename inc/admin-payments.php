@@ -339,8 +339,8 @@ function sell_media_total_revenue( $post_status=null ) {
  * @since 1.2
  * @return html
  */
-function sell_media_get_sales_by_date( $day = null, $month_num, $year ) {
-	return Sell_Media()->payments->get_payments_by_date( $day, $month_num, $year );
+function sell_media_get_sales_by_date( $day = null, $month_num, $year,$site_id=1 ) {
+	return Sell_Media()->payments->get_payments_by_date( $day, $month_num, $year,$site_id );
 }
 
 /**
