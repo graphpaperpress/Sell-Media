@@ -76,16 +76,15 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
  * @since 1.4.6
  */
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
-	global $user;
 	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+		// check for customers
 		if ( in_array( 'sell_media_customer', $user->roles ) ) {
-			return site_url( 'dashboard' );
-		} else {
-			return $redirect_to;
+			$settings = sell_media_get_plugin_options();
+			// redirect them to the dashboard
+			$redirect_to = get_permalink( $settings->dashboard_page );
 		}
-	} else {
-		return $redirect_to;
 	}
+	return $redirect_to;
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 
@@ -109,6 +108,7 @@ function sell_media_get_pages_array() {
  */
 function sell_media_page() {
 	global $post;
+	$settings = sell_media_get_plugin_options();
 
 	if ( $post
 	&& ( 'sell_media_item' === get_post_type( $post->ID )
