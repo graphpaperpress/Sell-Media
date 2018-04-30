@@ -289,7 +289,7 @@ function sell_media_checkout_shortcode() {
 				</div>
 				<?php do_action( 'sell_media_checkout_before_grand_total' ); ?>
 				<div class="total cf">
-					<div class="sell-media-key"><?php _e( 'Total (USD)', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
 				</div>
 			</div>
