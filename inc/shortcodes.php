@@ -181,15 +181,16 @@ function sell_media_checkout_shortcode() {
 	if ( ! empty( $cart_items ) ) :
 	?>
 	<div id="sell-media-checkout-cart">
-    <div class="left-sell-coulmn">
-		<ul class="sell-media-cart-items" style="width:100%; float:left">
-        <li class="this-sell-media"><div class="item-image"><?php esc_html_e( 'PRODUCT', 'sell_media' )?></div><div class="item-details"><?php esc_html_e( 'DESCRIPTION', 'sell_media' )?></div>
-        	<div class="item-quantity"><?php esc_html_e( 'QTY', 'sell_media' )?></div><div class="item-total"><?php esc_html_e( 'PRICE', 'sell_media' )?></div><div class="item-subtotal"><?php esc_html_e( 'SUBTOTAL', 'sell_media' )?></div></li>
+    <div class="sell-media-main-col">
+		<ul class="sell-media-cart-items" >
+        <li class="this-sell-media"><div class="sell-media-five-col"><?php esc_html_e( 'PRODUCT', 'sell_media' )?></div>
+        	<div class="sell-media-five-col"><?php esc_html_e( 'DESCRIPTION', 'sell_media' )?></div>
+        	<div class="sell-media-five-col"><?php esc_html_e( 'QTY', 'sell_media' )?></div><div class="sell-media-five-col"><?php esc_html_e( 'PRICE', 'sell_media' )?></div><div class="sell-media-five-col"><?php esc_html_e( 'SUBTOTAL', 'sell_media' )?></div></li>
 			<?php
 			$cart_index = 0;
 			foreach( $cart_items as $key => $item ): ?>
-				<li <?php do_action( 'sell_media_checkout_item_custom_attributes', $item ); ?> class="item noumna row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
-					<div class="item-image">
+				<li <?php do_action( 'sell_media_checkout_item_custom_attributes', $item ); ?> class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
+					<div class="sell-media-five-col">
 						<?php
 						if ( ! empty( $item['item_attachment'] ) ) {
 							// $item['item_id'] is the featured image id
@@ -204,7 +205,7 @@ function sell_media_checkout_shortcode() {
 						}
 						?>
 					</div>
-					<div class="item-details">
+					<div class="sell-media-five-col">
 						<div class="item-name">
 						<?php if ( ! empty( $item['item_name'] ) ) : ?>
 							<?php echo esc_attr( $item['item_name'] ); ?>
@@ -236,7 +237,7 @@ function sell_media_checkout_shortcode() {
 						<?php endif; ?>
 					</div>
 						
-						<div class="item-quantity">
+						<div class="sell-media-five-col">
 							<span class="count">
 								<?php if ( ! empty( $item['qty'] ) ) : ?>
 									<?php echo $item['qty']; ?>
@@ -244,10 +245,10 @@ function sell_media_checkout_shortcode() {
 							</span>
 						</div>
 						
-						<div class="item-total" style="margin-left:-6px;">
+						<div class="sell-media-five-col">
 						<?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?>
 						</div>
-						<div class="item-decrement remove-item">
+						<div class="sell-media-five-col">
 							<span class="hide-xs">
 							<?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * 
 							$item['qty'], 2 ); ?></span>
@@ -264,18 +265,10 @@ function sell_media_checkout_shortcode() {
 		<?php do_action( 'sell_media_checkout_after_cart' ); ?>
 	</div>
 
-<div class="right-sell-coulmn">
-		
-	
-		<?php do_action( 'sell_media_checkout_after_cart' ); ?>
+<div class="sell-media-side-col">
 		
 		<div class="sell-media-totals group">
-
-			<div class="promorcode-sell">
-				<input type="text" value="" placeholder="Enter Promo Code">
-				<input type="submit" value="APPLY">
-			</div>
-			<p>Total Savings: $0</p>
+			<?php do_action( 'sell_media_checkout_after_cart' ); ?>
 			<div id="sell-media-totals-table" class="sell-media-totals-table cf">
 				<div class="subtotal cf">
 					<div class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</div>
@@ -307,7 +300,7 @@ function sell_media_checkout_shortcode() {
 				<?php do_action( 'sell_media_above_checkout_button' ); ?>
 				<p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button "><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
 				<div class='wait-message' style="display:none;">
-					Please wait...
+					<?php _e('Please wait...','sell_media')?>
 				</div>
 				<?php
 				$settings = sell_media_get_plugin_options();
@@ -322,9 +315,9 @@ function sell_media_checkout_shortcode() {
 		<?php do_action( 'sell_media_below_registration_form' ); ?>
 		<p id="sell-media-continue-shopping">
 	<?php
-	$html  = __( '', 'sell_media' );
+	$html  = __( 'or', 'sell_media' );
 	$html .= ' <a href="' . get_post_type_archive_link( 'sell_media_item' ) . '">';
-	$html .= __( 'Keep shopping &#62;', 'sell_media' );
+	$html .= __( 'continue shopping &raquo;', 'sell_media' );
 	$html .= '</a>';
 	echo apply_filters( 'sell_media_or_continue_shopping', $html );
 	?>

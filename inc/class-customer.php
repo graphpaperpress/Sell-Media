@@ -37,7 +37,7 @@ class SellMediaCustomer {
 			
 			return;
 		}
-		if(username_exists( $email ) || email_exists( $email ))
+		if( username_exists( $email ) || email_exists( $email ) )
 		{
 			$user_id = email_exists( $email );
 			if ( $user_id !== get_current_user_id() ) {
@@ -45,7 +45,7 @@ class SellMediaCustomer {
 			}
 			$user_info = get_user_by( 'id', $user_id ); 
 			
-			clean_user_cache($user_id);
+			clean_user_cache( $user_id );
   			wp_clear_auth_cookie();
 			do_action( 'wp_signon', $user_info->user_login );
 			wp_set_current_user( $user_id );

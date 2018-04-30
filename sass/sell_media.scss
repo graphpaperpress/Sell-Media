@@ -15,7 +15,6 @@ $light-opaque: rgba(white, .8);
 $border-color: #eee;
 $yellow-color: #FFFCDD;
 $green-color: #8fbc8f;
-$pinkish-color:#ff6347;
 
 /*= Global
 -------------------------------------------------------------- */
@@ -165,7 +164,6 @@ a:focus {
 	li {
 		display: block;
 		margin: 1em 0;
-		position:relative;
 
 		&:after {
 			@extend .cf;
@@ -231,7 +229,7 @@ a:focus {
 
 	.item-name,
 	.item-total {
-		font-weight: 400;
+		font-weight: bold;
 	}
 
 	.item-total {
@@ -242,51 +240,54 @@ a:focus {
 
 .sell-media-totals {
 	margin: 25px 0;
+	&.group {
+		    background: $light-color;
+		    padding: $margin;
+		}
 
 	.sell-media-totals-table {
-		margin: 0 0;
+		margin: 50px 0;
 
 		.sell-media-key {
-			width: auto;
+			width: 80%;
 			float: left;
 			margin: 0 0 10px 0;
-			text-align: left;
+			text-align: right;
 
 			@media only screen and (max-width: 767px) {
-				
+				margin-right: 5%;
+				width: 45%;
 			}
 
 		}
 
 		.sell-media-value {
-			width: auto;
-			float: right;
+			width: 20%;
+			float: left;
 			text-align: right;
 
 			@media only screen and (max-width: 767px) {
-				
+				width: 50%;
+				text-align: left;
 			}
 		}
 
 		.total {
-			font-weight: 400;
+			font-weight: bold;
 		}
 
 	}
 
 	.sell-media-checkout-button {
-		margin:10px 0 0;
+		margin: 50px 0;
 		text-align: right;
-		p{
-	    		margin:0;
-	    	}
 
 		@media only screen and (max-width: 767px) {
 			text-align: center;
 
 			.sell-media-button {
 				display: block;
-				margin: 0;
+				margin: $margin 0;
 				padding: $margin;
 			}
 		}
@@ -311,7 +312,7 @@ input[type="submit"].sell-media-button,
 	background: $default-color;
 	box-shadow: none;
 	padding: $font-size !important;
-	display: block;
+	display: inline-block;
 	width: auto;
 	color: $white-color;
 	text-align: center;
@@ -320,13 +321,12 @@ input[type="submit"].sell-media-button,
 	text-shadow: none;
 	font-size: $font-size;
 	line-height: 1;
-	border-radius: 8px;
 
 	&:hover,
 	&:focus {
 		background: $dark-color;
 		box-shadow: none;
-		color: $white-color !important;
+		color: $white-color;
 		text-decoration: none;
 	}
 
@@ -349,6 +349,7 @@ input[type="submit"].sell-media-button,
 .sell-media-item-links {
 	font-size: 11px;
 }
+
 /*= Typography
 -------------------------------------------------------------- */
 .sell-media-title {
@@ -1148,9 +1149,8 @@ input[type="submit"].sell-media-button,
 }
 
 .subtotal {
-	font-weight: 400;
-	margin-bottom:0;
-	font-size:12px;
+	font-weight: bold;
+	margin-bottom: $line-height;
 }
 
 .cart {
@@ -1852,134 +1852,4 @@ input.sell-media-search-text[type=text] {
 			}
 		}
 	}
-}
-
-body .entry-content {
-
-    width: 100% !important;
-	.left-sell-coulmn {
-		 text-align: left;
-		@media only screen and (min-width:992px){
-		    width: 55%;
-		    float:left;
-		    padding-top: 50px;
-		}
-		@media only screen and (max-width:580px){
-			ul.sell-media-cart-items > li.this-sell-media,.hide-xs{
-				display:none;
-			}
-		}
-		ul.sell-media-cart-items > li > div {
-		    display: inline-block;
-		    margin: 0;
-		    text-align: center;
-		    font-size: 12px;
-		    width: 19.5% ;
-		    vertical-align: top;
-		    float: none;
-		    &.item-details,&.item-image{
-		    	text-align: left;
-		    }
-		   	img{
-		    	width: 60px;
-		    }
-			div {
-				 text-align: left;
-				}
-				@media only screen and (max-width:580px){
-					width:49%;
-					padding: 10px 0;
-					text-align:right;
-					&.item-image {
-						border-bottom: 1px solid #eee;
-						width:100%;
-						img{
-							width:100%;
-						}
-		    		}
-		    		&.item-total{
-		    			text-align:left;
-		    			margin:0 !important;
-		    		}
-				}
-		  }
-		ul.sell-media-cart-items > li.this-sell-media > div,.item-name {
-			 font-weight: 600;
-			 text-transform: uppercase;
-		}
-		ul.sell-media-cart-items > li .item-decrement.remove-item {
-		    position: absolute;
-		    .dashicons{
-		    	cursor:pointer;
-		    }
-		    @media only screen and (max-width:580px){position:relative;}
-		}
-		
-	}
-
-	.right-sell-coulmn {
-		@media only screen and (min-width:992px){
-		    width: 43%;
-		    float:right;
-		}
-		.sell-media-totals{
-		    float: right;
-			width: 100%;
-			background: #dddddd;
-			padding: 24px 15px;
-			border: 1px solid #222;
-			margin-top: 0;
-		}
-		p {
-	    	font-size: 12px;
-	    	
-
-	    }
-		.sell-media-totals .sell-media-checkout-button .sell-media-button {
-	    	padding: 20px;
-
-		}
-		
-	}
-}
-#sell-media-continue-shopping {
-    font-size: 14px;
-}
-.promorcode-sell {
-    width: 100%;
-    float: left;
-    clear: both;
-    height: 26px;
-    overflow: hidden;
-    border: 1px solid #000;
-    position:relative;
-    margin-bottom: 10px;
-	input {
-	    border: none;
-	    border-radius: 0;
-	    box-shadow: none;
-	    padding: 0 15px;
-	    color: #ddd;
-		font-size: 14px;
-		height: 26px;
-
-	}
-	input[type="submit"] {
-	    position: absolute;
-	    right: 0;
-	    top: 0;
-	    font-size: 12px;
-	    letter-spacing: 0.5px;
-	    font-weight: 500;
-	    padding: 0 15px;
-	    height: 26px;
-	    text-align: center;
-	    color: #fff;
-	    background: #222;
-	    border: none;
-	    box-shadow: none;
-
-	}
-	
-
 }
