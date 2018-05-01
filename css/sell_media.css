@@ -197,6 +197,9 @@ a:focus {
 
 .sell-media-totals {
   margin: 25px 0; }
+  .sell-media-totals.group {
+    background: #b3b3b3;
+    padding: 32px; }
   .sell-media-totals .sell-media-totals-table {
     margin: 50px 0; }
     .sell-media-totals .sell-media-totals-table .sell-media-key {

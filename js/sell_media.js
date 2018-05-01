@@ -711,6 +711,12 @@ jQuery(document).ready(function($) {
             $('.button-container #sell-media-add-to-cart').html(res);
         });
     });
+	
+	$( '.wait-message' ).appendTo( 'body' );
+	$( '.sell-media-button' ).click(function(event) {
+		$( '.wait-message' ).css( 'display', 'block' );
+	} );
+
 }); // End jQuery document ready.
 
 /**
@@ -731,7 +737,7 @@ function sm_calculate_shipping() {
     // Define vars.
     var total_shipping = 0,
         subtotal = 0,
-        items = jQuery("#sell-media-checkout-cart .item"),
+        items = jQuery('#sell-media-checkout-cart .item'),
         total_print_qty = 0;
 
     // Check if sell media reprints is active.

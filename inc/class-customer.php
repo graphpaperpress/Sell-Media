@@ -33,8 +33,25 @@ class SellMediaCustomer {
 
 		$email = sanitize_email( $email );
 
-		if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) || username_exists( $email ) || email_exists( $email ) ) {
+		if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {		
+			
 			return;
+		}
+		if( username_exists( $email ) || email_exists( $email ) )
+		{
+			$user_id = email_exists( $email );
+			if ( $user_id !== get_current_user_id() ) {
+				wp_logout();
+			}
+			$user_info = get_user_by( 'id', $user_id ); 
+			
+			clean_user_cache( $user_id );
+  			wp_clear_auth_cookie();
+			do_action( 'wp_signon', $user_info->user_login );
+			wp_set_current_user( $user_id );
+			$secure_cookie = ( is_ssl() ) ? true : false;
+			wp_set_auth_cookie( $user_id , true, $secure_cookie );		
+  			
 		}
 
 		if ( $email ) {
@@ -62,10 +79,12 @@ class SellMediaCustomer {
 				}
 
 				$user_info = get_userdata( $user_id );
+				wp_clear_auth_cookie();
 				do_action( 'wp_signon', $user_info->user_login );
+				wp_set_current_user( $user_id );
 				$secure_cookie = ( is_ssl() ) ? true : false;
 				wp_set_auth_cookie( $user_id , true, $secure_cookie );
-				wp_set_current_user( $user_id );
+				
 				wp_new_user_notification( $user_id, null, $notify = 'both' );
 
 				// hook for when new users are created

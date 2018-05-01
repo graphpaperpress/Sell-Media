@@ -493,3 +493,35 @@ function sell_media_save_extra_profile_fields( $user_id ) {
 }
 add_action( 'personal_options_update', 'sell_media_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'sell_media_save_extra_profile_fields' );
+
+
+/*
+* Add login and registration links on checkout and thank you pages
+*/
+function sell_media_add_login_register_links() {
+	$settings = sell_media_get_plugin_options();
+	if ( is_user_logged_in() ) : ?>
+		<p class="p-sell">
+			<a href="<?php echo get_permalink( $settings->dashboard_page ); ?>" title="">
+				<?php esc_html_e( 'Dashboard', 'sell_media' ); ?>
+			</a>
+			 or 
+			<a href="<?php echo wp_logout_url(); ?>" title="">
+				<?php esc_html_e( 'Logout', 'sell_media' ); ?>
+			</a>
+			 <?php esc_html_e( 'for faster checkout', 'sell_media' ); ?>.
+		</p>
+	<?php else : ?>
+		<p class="p-sell">
+			<a href="<?php echo wp_login_url( get_permalink() ); ?>" title="">
+				<?php esc_html_e( 'Login', 'sell_media' ); ?>
+			</a>
+			 or 
+			<a href="<?php echo wp_registration_url(); ?>" title="">
+				<?php esc_html_e( 'create an account', 'sell_media' ); ?>
+			</a>
+			<?php esc_html_e( 'for faster checkout', 'sell_media' ); ?>
+	<?php endif;
+}
+add_action( 'sell_media_checkout_after_cart', 'sell_media_add_login_register_links' );
+add_action( 'sell_media_thanks_hook', 'sell_media_add_login_register_links' );
