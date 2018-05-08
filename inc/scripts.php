@@ -34,27 +34,29 @@ function sell_media_scripts( $hook ) {
 	if ( is_customize_preview() || ( isset( $settings->thumbnail_layout ) && 'sell-media-masonry' === $settings->thumbnail_layout ) ) {
 		wp_enqueue_script( 'sell_media_masonry', SELL_MEDIA_PLUGIN_URL . 'js/macy.min.js', array( 'jquery' ), SELL_MEDIA_VERSION, true );
 		wp_add_inline_script( 'sell_media_masonry', '
+			setTimeout(function(){ 
+				var galleries = document.querySelectorAll(".sell-media-grid-item-masonry-container");
+				var macyInstances = [];
+				var macyOptions = {
+					trueOrder: false,
+					waitForImages: true,
+					margin: 10,
+					columns: 4,
+					breakAt: {
+						1200: 4,
+						940: 3,
+						520: 1
+					}
+				};
 
-			var galleries = document.querySelectorAll(".sell-media-grid-item-masonry-container");
-			var macyInstances = [];
-			var macyOptions = {
-				trueOrder: false,
-				waitForImages: true,
-				margin: 10,
-				columns: 4,
-				breakAt: {
-					1200: 4,
-					940: 3,
-					520: 1
+				for (var i = 0; i < galleries.length; i++) {
+					var newId = "sell-media-instance-" + i;
+					galleries[i].id = newId;
+					macyOptions.container = "#" + newId;
+					macyInstances.push(Macy(macyOptions));
 				}
-			};
-
-			for (var i = 0; i < galleries.length; i++) {
-				var newId = "sell-media-instance-" + i;
-				galleries[i].id = newId;
-				macyOptions.container = "#" + newId;
-				macyInstances.push(Macy(macyOptions));
-			}'
+				window.dispatchEvent(new Event("resize"));
+			}, 100)'
 		);
 	}
 
