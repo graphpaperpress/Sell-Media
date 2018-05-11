@@ -248,13 +248,24 @@ class Sell_Media_Price_Listings_Tabs {
 				}
 			}
 
+			if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
+				$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
+				if ( ! empty( $deleted_term_ids ) ) {
+					foreach ( $deleted_term_ids as $key => $term_id ) {
+						if ( 'new' !== $term_id ) {
+							wp_delete_term( (int) $term_id, $this->taxonomy );
+						}
+					}
+				}
+			}
+
 			if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
 				foreach ( $_POST['new_children'] as $term_id => $data ) {
 					if ( '' !== $data['name'] ) {
 
 						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
 							$term    = get_term_by( 'name', $data['name'], $this->taxonomy );
-							$term_id = ( false !== $term ) ? $term->term_id : false;
+							$term_id = ( isset( $term->term_id ) ) ? $term->term_id : false;
 
 						} else {
 
@@ -272,18 +283,7 @@ class Sell_Media_Price_Listings_Tabs {
 						}
 					}
 				}
-			}
-
-			if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
-				$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
-				if ( ! empty( $deleted_term_ids ) ) {
-					foreach ( $deleted_term_ids as $key => $term_id ) {
-						if ( 'new' !== $term_id ) {
-							wp_delete_term( (int) $term_id, $this->taxonomy );
-						}
-					}
-				}
-			}
+			}			
 		}
 
 		$url_parameters['term_parent'] = $parent_term_id;
