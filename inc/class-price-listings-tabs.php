@@ -45,7 +45,8 @@ class Sell_Media_Price_Listings_Tabs {
 
 			$array_values = array_values( $parent_terms );
 			$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
-			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first->term_id;
+			$first_term_id = isset( $first->term_id ) ? $first->term_id : 0;
+			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first_term_id;
 			add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
 		}
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
