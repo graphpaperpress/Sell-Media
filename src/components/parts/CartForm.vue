@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import mixinUser from '../../mixins/user'
+import mixinUser from '@/mixins/user'
 import CartFieldSelect from './CartFieldSelect.vue'
 import CartFieldRadio from './CartFieldRadio.vue'
 
@@ -94,7 +94,7 @@ export default {
 
   created(){
     // set fields object, make prints first tab
-    this.fields = this.post.sell_media_meta.sell.reverse()
+    this.fields = [...this.post.sell_media_meta.sell].reverse();
     // set active tab to first field and show corresponding price group
     this.active = this.fields[0]
   },
@@ -159,12 +159,12 @@ export default {
       }
 
       if ( 'cart' === $where ) {
-        this.$store.dispatch( 'addToCart', this.product )
+        this.addToCart(this.product)
         this.added = true
       }
 
       if ( 'lightbox' === $where ) {
-        this.$store.dispatch( 'addToLightbox', this.product )
+        this.addToLightbox(this.product)
         this.saved = true
       }
 

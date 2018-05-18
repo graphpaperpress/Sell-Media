@@ -68,24 +68,20 @@ export default {
   },
 
   mounted: function() {
-    const vm = this
-    vm.$store.dispatch('fetchProducts', 1)
-    vm.getCategories()
+    this.fetchProducts(1)
+    this.getCategories()
   },
 
   methods: {
     getProducts: function(pageNumber){
-      const vm = this
-      vm.currentPage = pageNumber
-      vm.$store.dispatch('fetchProducts', pageNumber)
+      this.currentPage = pageNumber
+      this.fetchProducts(pageNumber)
     },
 
     getCategories: function(){
-      const vm = this
-
-      vm.$http.get('/wp-json/wp/v2/collection')
+      this.$http.get('/wp-json/wp/v2/collection')
         .then(function(response){
-          vm.$set(vm, 'categories', response.data)
+          this.$set(this, 'categories', response.data)
         })
         .catch(function(error){
           console.log(error)
@@ -93,35 +89,31 @@ export default {
     },
 
     makePagination: function(data){
-      const vm = this
-
-      vm.$set(vm, 'allPages', data.headers.get('x-wp-totalpages'))
+      this.$set(this, 'allPages', data.headers.get('x-wp-totalpages'))
 
       //Setup prev page
-      if(vm.currentPage > 1){
-        vm.$set(vm, 'prev_page', vm.currentPage - 1)
+      if(this.currentPage > 1){
+        this.$set(this, 'prev_page', this.currentPage - 1)
       } else {
-        vm.$set(vm, 'prev_page', null)
+        this.$set(this, 'prev_page', null)
       }
 
       // Setup next page
-      if(vm.currentPage == vm.allPages){
-        vm.$set(vm, 'next_page', null)
+      if(this.currentPage == this.allPages){
+        this.$set(this, 'next_page', null)
       } else {
-        vm.$set(vm, 'next_page', vm.currentPage + 1)
+        this.$set(this, 'next_page', this.currentPage + 1)
       }
     }
   },
   computed: {
     filteredPosts: function(){
-      const vm = this
-
-      return vm.searchResults.results.filter((post) => {
-        return post.title.rendered.match(vm.search)
+      return this.searchResults.results.filter((post) => {
+        return post.title.rendered.match(this.search)
       })
-      return vm.searchResults.results.filter((post) => {
-        if ( vm.categoryFilter ) {
-          return post.product_type.indexOf(vm.categoryFilter) > -1
+      return this.searchResults.results.filter((post) => {
+        if ( this.categoryFilter ) {
+          return post.product_type.indexOf(this.categoryFilter) > -1
         } else {
           return post
         }

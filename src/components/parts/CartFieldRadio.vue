@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import mixinUser from '../../mixins/user'
+import mixinUser from '@/mixins/user'
 import download from 'downloadjs'
 
 export default {
@@ -66,13 +66,12 @@ export default {
     },
 
     downloadFile: function(size) {
-      const vm = this;
-      vm.downloading = size
-      if( ! vm.user ) {
+      this.downloading = size
+      if( ! this.user ) {
         return false;
       }
 
-      vm.$http.get( '/wp-json/sell-media/v2/api', {
+      this.$http.get( '/wp-json/sell-media/v2/api', {
         params: {
           action: 'download_file',
           _wpnonce: sell_media.nonce,
@@ -91,7 +90,7 @@ export default {
           console.log( `Something went wrong : ${res}` );
         } );
 
-      vm.downloading = false
+      this.downloading = false
     },
   }
 }

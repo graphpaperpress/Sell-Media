@@ -127,8 +127,8 @@
 </template>
 
 <script>
-import mixinGlobal from '../../mixins/global'
-import mixinUser from '../../mixins/user'
+import mixinGlobal from '@/mixins/global'
+import mixinUser from '@/mixins/user'
 
 export default {
   mixins: [mixinGlobal, mixinUser],
@@ -150,7 +150,7 @@ export default {
   },
 
   mounted(){
-    this.$store.dispatch( 'changeTitle', sell_media.checkout_path )
+    this.changeTitle(sell_media.checkout_path)
   },
 
   methods: {
@@ -160,51 +160,50 @@ export default {
     },
 
     updateProduct(product){
-      this.$store.dispatch( 'updateCartProduct', product )
+      this.updateCartProduct(product)
     },
 
     decreaseQuantity(product){
       product.qty -= 1
-      this.$store.dispatch( 'updateCartProduct', product )
+      this.updateCartProduct(product)
     },
 
     increaseQuantity(product){
       product.qty += 1
-      this.$store.dispatch( 'updateCartProduct', product )
+      this.updateCartProduct(product)
     },
 
     deleteUsage(){
-      this.$store.dispatch( 'deleteUsage' )
+      this.deleteUsage()
     },
 
     checkout(){
-      const vm = this
       // this.$checkout.close()
       // is also available.
-      vm.$checkout.open({
+      this.$checkout.open({
         currency: sell_media.currency,
-        amount: vm.total * 100,
+        amount: this.total * 100,
         token: (token, args) => {
-          // vm.submit(token)
-          vm.token = JSON.stringify(token, null, 2)
-          vm.processing = true
+          // this.submit(token)
+          this.token = JSON.stringify(token, null, 2)
+          this.processing = true
 
-          vm.$http.post( sell_media.ajaxurl + '?action=charge', {
+          this.$http.post( sell_media.ajaxurl + '?action=charge', {
             token: token,
             args: args,
             _wpnonce: sell_media.nonce,
             type: 'stripe',
-            discount: vm.discount_code_value,
-            discount_id: ( false !== vm.discount ) ? vm.discount.id : null,
+            discount: this.discount_code_value,
+            discount_id: ( false !== this.discount ) ? this.discount.id : null,
             // encode these?
             cart: localStorage.getItem('sell-media-cart'),
             usage: localStorage.getItem('sell-media-usage')
           } )
             .then( ( res ) => {
               // console.dir(res.data)
-              vm.processing = false
-              this.$store.dispatch( 'deleteCart' )
-              this.$store.dispatch( 'deleteUsage' )
+              this.processing = false
+              this.deleteCart()
+              this.deleteUsage()
               return window.location = res.data.url
             } )
             .catch( ( res ) => {
@@ -215,20 +214,18 @@ export default {
     },
 
     applyDiscountCode(){
-      const vm = this
-
-      if ('' === vm.discount_code_value) {
-        return vm.discount = false
+      if ('' === this.discount_code_value) {
+        return this.discount = false
       }
 
-      vm.$http.get( '/wp-json/sell-media/v2/api', {
+      this.$http.get( '/wp-json/sell-media/v2/api', {
         params: {
           action: 'validate_discount_code',
-          discount_code: vm.discount_code_value
+          discount_code: this.discount_code_value
         }
       } )
         .then( ( res ) => {
-          return vm.discount = res.data
+          return this.discount = res.data
         } )
         .catch( ( res ) => {
           console.log( `Something went wrong : ${res}` )

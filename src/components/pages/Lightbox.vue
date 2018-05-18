@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import mixinUser from '../../mixins/user'
+import mixinUser from '@/mixins/user'
 
 export default {
   mixins: [mixinUser],
@@ -51,9 +51,9 @@ export default {
   methods: {
     addAll: function() {
       for ( let product of this.lightbox ) {
-        this.$store.dispatch( 'addToCart', product )
+        this.addToCart(product)
       }
-      this.$store.dispatch( 'deleteLightbox' )
+      this.deleteLightbox()
       this.$router.push( { 'name': 'checkout' } )
       this.pageTitle = this.$route.name
     }

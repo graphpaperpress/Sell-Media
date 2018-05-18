@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import SearchForm from '../parts/SearchForm.vue'
-import mixinGlobal from '../../mixins/global'
-import mixinProduct from '../../mixins/product'
+import SearchForm from 'components/parts/SearchForm.vue'
+import mixinGlobal from '@/mixins/global'
+import mixinProduct from '@/mixins/product'
 
 export default {
   mixins: [mixinGlobal, mixinProduct],
@@ -44,16 +44,15 @@ export default {
   },
 
   beforeMount: function() {
-    this.$store.dispatch('fetchPost', { slug: this.$route.params.slug })
+    const { slug } = this.$route.params
+    this.fetchPost({ slug })
   },
 
   methods: {
 
     goToSearchResults(search, search_type){
-      const vm = this
-
       if ( search ) {
-        vm.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
+        this.$router.push( { name: 'archive', query: { search: search, type: search_type } } )
       }
     }
   },
@@ -68,7 +67,7 @@ export default {
       this.attachments = this.post.sell_media_attachments
       this.multiple = (this.attachments != null && this.attachments.length > 1) ? true : false
       this.type = this.post.sell_media_meta != null ? this.post.sell_media_meta.product_type[0] : ''
-      this.$store.dispatch( 'changeTitle', this.post.title.rendered )
+      this.changeTitle(this.post.title.rendered)
     }
   }
 

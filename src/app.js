@@ -1,15 +1,39 @@
-Vue.config.devtools = true
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VBClass from 'vue-body-class'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import PortalVue from 'portal-vue'
-import store from './store'
-import icons from './icons'
 import VideoJs from 'video.js'
 import VueStripeCheckout from 'vue-stripe-checkout'
-import isNil from 'lodash/isnil'
+import Icon from 'vue-awesome/components/Icon'
+
+import store from './store'
+import icons from './icons'
+
+import Main from 'components/Main.vue'
+import Archive from 'components/pages/Archive.vue'
+import Item from 'components/pages/Item.vue'
+import Attachment from 'components/pages/Attachment.vue'
+import Lightbox from 'components/pages/Lightbox.vue'
+import Checkout from 'components/pages/Checkout.vue'
+import Search from 'components/pages/Search.vue'
+import Filters from 'components/pages/Filters.vue'
+import NotFound from 'components/pages/NotFound.vue'
+import Modal from 'components/parts/Modal.vue'
+import Expander from 'components/parts/Expander.vue'
+import ExpanderRelated from 'components/parts/ExpanderRelated.vue'
+import Media from 'components/parts/Media.vue'
+import FeaturedImage from 'components/parts/FeaturedImage.vue'
+import Thumbnail from 'components/parts/Thumbnail.vue'
+import CartForm from 'components/parts/CartForm.vue'
+import CartModalLicense from 'components/parts/CartModalLicense.vue'
+import Loader from 'components/parts/Loader.vue'
+
+// this options will be disabled in production automatically by Vue
+Vue.config.productionTip = false;
+Vue.config.devtools = true;
+Vue.config.performance = true;
 
 const options = {
   key: sell_media.stripe_public_key,
@@ -20,56 +44,34 @@ const options = {
 }
 
 // use vue plugins
-Vue.use( VueRouter )
-Vue.use( VueAxios, axios )
-Vue.use( PortalVue )
-Vue.use( VueStripeCheckout, options )
+Vue.use(VueRouter)
+Vue.use(VueAxios, axios)
+Vue.use(PortalVue)
+Vue.use(VueStripeCheckout, options)
 
-// import and register components
-import Main from './components/Main.vue'
-import Archive from './components/pages/Archive.vue'
-Vue.component( 'archive', Archive )
-import Item from './components/pages/Item.vue'
-Vue.component( 'item', Item )
-import Attachment from './components/pages/Attachment.vue'
-Vue.component( 'attachment', Attachment )
-import Lightbox from './components/pages/Lightbox.vue'
-Vue.component( 'lightbox', Lightbox )
-import Checkout from './components/pages/Checkout.vue'
-Vue.component( 'checkout', Checkout )
-import Search from './components/pages/Search.vue'
-Vue.component( 'search', Search )
-import Filters from './components/pages/Filters.vue'
-Vue.component( 'filters', Filters )
-import NotFound from './components/pages/NotFound.vue'
-Vue.component( 'not-found', NotFound )
-
-import Modal from './components/parts/Modal.vue'
-Vue.component( 'modal', Modal )
-import Expander from './components/parts/Expander.vue'
-Vue.component( 'expander', Expander )
-import ExpanderRelated from './components/parts/ExpanderRelated.vue'
-Vue.component( 'expander-related', ExpanderRelated )
-import Media from './components/parts/Media.vue'
-Vue.component( 'media', Media )
-import FeaturedImage from './components/parts/FeaturedImage.vue'
-Vue.component( 'featured-image', FeaturedImage )
-import Thumbnail from './components/parts/Thumbnail.vue'
-Vue.component( 'thumbnail', Thumbnail )
-import CartForm from './components/parts/CartForm.vue'
-Vue.component( 'cart-form', CartForm )
-import CartModalLicense from './components/parts/CartModalLicense.vue'
-Vue.component( 'cart-modal-license', CartModalLicense )
-import Icon from 'vue-awesome/components/Icon'
+Vue.component('archive', Archive)
+Vue.component('item', Item)
+Vue.component('attachment', Attachment)
+Vue.component('lightbox', Lightbox)
+Vue.component('checkout', Checkout)
+Vue.component('search', Search)
+Vue.component('filters', Filters)
+Vue.component('not-found', NotFound)
+Vue.component('modal', Modal)
+Vue.component('expander', Expander)
+Vue.component('expander-related', ExpanderRelated)
+Vue.component('media', Media)
+Vue.component('featured-image', FeaturedImage)
+Vue.component('thumbnail', Thumbnail)
+Vue.component('cart-form', CartForm)
+Vue.component('cart-modal-license', CartModalLicense)
 Vue.component('icon', Icon)
-import Loader from './components/parts/Loader.vue'
 Vue.component('loader', Loader)
 
 // define routes
 const router = new VueRouter({
   mode: 'history',
   routes: [
-
     { path: '/' + sell_media.archive_path + '/:page(\\d+)?', name: 'archive', component: Archive, meta: { bodyClass: 'product-archive' } },
     { path: '/' + sell_media.search_path + '/:page(\\d+)?', name: 'search', component: Search, meta: { bodyClass: 'product-search' } },
     { path: '/' + sell_media.archive_path + '/:slug', name: 'item', component: Item, meta: { bodyClass: 'product-item' } },
@@ -82,15 +84,11 @@ const router = new VueRouter({
     // { path: sell_media.dashboard_url, name: 'dashboard', component: Dashboard },
     // { path: sell_media.login_url, name: 'login', component: Login },
     // { path: sell_media.search_url, name: 'search', component: Search },
-
   ]
 })
 
 // Add router body classes
-Vue.use( VBClass, router )
-
-window.Axios = axios
-window.isNil = isNil
+Vue.use(VBClass, router)
 
 // init Vue
 new Vue({

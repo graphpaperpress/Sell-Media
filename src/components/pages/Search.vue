@@ -24,23 +24,21 @@
 </template>
 
 <script>
-import mixinGlobal from "../../mixins/global"
-import mixinProduct from "../../mixins/product"
+import mixinGlobal from "@/mixins/global"
+import mixinProduct from "@/mixins/product"
+
+const PAGE_TITLE = 'Search'
 
 export default {
   mixins: [mixinGlobal, mixinProduct],
 
   beforeMount: function() {
-    if (this.$route.params.page) {
-      this.$store.dispatch('fetchProducts', this.$route.params.page)
-    } else {
-      this.$store.dispatch('fetchProducts', 1)
-    }
+    const { page } = this.$route.params
+    this.fetchProducts(page || 1)
   },
 
   mounted: function() {
-    const vm = this
-    this.$store.dispatch("changeTitle", "Search")
+    this.changeTitle(PAGE_TITLE)
   },
 
   data: function() {
@@ -58,28 +56,24 @@ export default {
 
   methods: {
     showNextPage: function(event) {
-      const vm = this
-
-      if (vm.currentPage < vm.searchResults.totalPages) {
+      if (this.currentPage < this.searchResults.totalPages) {
         showNext: true
-        vm.currentPage = vm.currentPage + 1
-        vm.$router.push({ name: "search", params: { page: vm.currentPage } })
+        this.currentPage = this.currentPage + 1
+        this.$router.push({ name: "search", params: { page: this.currentPage } })
       }
     },
     showPrevPage: function(event) {
-      const vm = this
-
-      if (vm.currentPage != 1) {
+      if (this.currentPage != 1) {
         showPrev: true
-        vm.currentPage = vm.currentPage - 1
-        vm.$router.push({ name: "search", params: { page: vm.currentPage } })
+        this.currentPage = this.currentPage - 1
+        this.$router.push({ name: "search", params: { page: this.currentPage } })
       }
     }
   },
 
   watch: {
     $route(to, from) {
-      this.$store.dispatch('fetchProducts', this.$route.params.page)
+      this.fetchProducts(this.$route.params.page)
     },
 
     searchResults(val) {

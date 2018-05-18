@@ -7,7 +7,7 @@
 			<button class="delete" aria-label="close" @click="$emit('closeModal')"></button>
 		 </header>
 		 <section class="modal-card-body">
-		 	<div v-if="taxonomy.terms" class="control-group" v-for="(taxonomy,index) in licenses" :key="taxonomy">
+		 	<div v-if="taxonomy.terms" class="control-group" v-for="(taxonomy,index) in licenses" :key="index">
 
 		 		<div class="columns">
 					<div class="column is-one-third">
@@ -36,13 +36,14 @@
 </template>
 
 <script>
-import mixinUser from '../../mixins/user'
+import mixinUser from '@/mixins/user'
 
 export default {
   mixins: [mixinUser],
 
   data: function() {
     return {
+      license_url: '/wp-json/sell-media/v2/licensing', // TODO grab this from store, store should get from Wordpress when initializing
       licenses: {},
       values: {},
       labels: sell_media.cart_labels
@@ -50,29 +51,22 @@ export default {
   },
 
   mounted: function() {
-    const vm = this
-    vm.getLicenses()
+    this.getLicenses()
   },
 
   methods: {
     getLicenses: function(){
-      const vm = this
-      vm.$http.get( '/wp-json/sell-media/v2/licensing', {
-        params: {
-          per_page: 100
-        }
-      } )
-        .then( ( res ) => {
-          vm.licenses = res.data
-        } )
-        .catch( ( res ) => {
-          console.log( res )
-        } )
+      const params = {
+        per_page: 100,
+      }
+      this.$http.get(this.license_url, { params })
+        .then(res => this.licenses = res.data)
+        .catch(res => console.log(res))
     },
 
     apply: function(values) {
+      this.setUsage(values)
       this.$emit('closeModal')
-      this.$store.dispatch( 'setUsage', values )
     }
   }
 }

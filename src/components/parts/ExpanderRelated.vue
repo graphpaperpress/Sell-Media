@@ -105,6 +105,8 @@
 
 <script>
 import { mapActions } from "vuex"
+import isNil from 'lodash.isnil'
+
 export default {
 
   props: ['post'],
@@ -150,24 +152,23 @@ export default {
     ...mapActions(["setProduct"]),
     getPost: function(item) {
       this.currentPost = item
-      this.$store.dispatch( 'setProduct', { post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
+      this.setProduct({ post_id: item.id, attachment_id: item.sell_media_attachments[0].id })
     },
     getSets: function() {
-      const vm = this
       let set_id = false
-      let type = ( !isNil(vm.currentPost.sell_media_meta.product_type) && vm.currentPost.sell_media_meta.product_type[0].slug ) ? vm.currentPost.sell_media_meta.product_type[0].slug : null
+      let type = ( !isNil(this.currentPost.sell_media_meta.product_type) && this.currentPost.sell_media_meta.product_type[0].slug ) ? this.currentPost.sell_media_meta.product_type[0].slug : null
       // image and video product types should show child term, all others should show parent term.
 
-      if (!isNil(vm.currentPost.sell_media_meta.set)) {
-        set_id = ( type === 'image' || type === 'video' ) && typeof vm.currentPost.sell_media_meta.set[1] !== "undefined" ? vm.currentPost.sell_media_meta.set[1].term_id : vm.currentPost.sell_media_meta.set[0].term_id
+      if (!isNil(this.currentPost.sell_media_meta.set)) {
+        set_id = ( type === 'image' || type === 'video' ) && typeof this.currentPost.sell_media_meta.set[1] !== "undefined" ? this.currentPost.sell_media_meta.set[1].term_id : this.currentPost.sell_media_meta.set[0].term_id
       }
 
       if ( ! set_id ) {
-        vm.setsLoaded = true
+        this.setsLoaded = true
         return false
       }
 
-      vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+      this.$http.get( '/wp-json/wp/v2/sell_media_item', {
         params: {
           per_page: 20,
           set: set_id
@@ -187,8 +188,8 @@ export default {
             }
           }
 
-          vm.imageSets = image_sets
-          vm.videoSets = video_sets
+          this.imageSets = image_sets
+          this.videoSets = video_sets
 
         })
         .catch(( res ) => {
@@ -196,16 +197,15 @@ export default {
         })
     },
     getOtherSets: function() {
-      const vm = this
       let post_set = false
       // Search API response includes set with parent_id, WP API returns array of indexed ids
       // Need to make these consistent in the future
-      if (!isNil(vm.currentPost) && !isNil(vm.currentPost.set)) {
-        post_set = !isNil(vm.currentPost.set.parent_id) ?
-          vm.currentPost.set.parent_id : vm.currentPost.set[0]
+      if (!isNil(this.currentPost) && !isNil(this.currentPost.set)) {
+        post_set = !isNil(this.currentPost.set.parent_id) ?
+          this.currentPost.set.parent_id : this.currentPost.set[0]
       }
 
-      vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+      this.$http.get( '/wp-json/wp/v2/sell_media_item', {
         params: {
           per_page: 20,
           set: post_set,
@@ -226,7 +226,7 @@ export default {
             }
           }
 
-          vm.otherSets = other_sets
+          this.otherSets = other_sets
 
         })
         .catch(( res ) => {
@@ -234,9 +234,8 @@ export default {
         })
     },
     getProductTypeSets: function(item) {
-      const vm = this
-      vm.currentPost = item
-      vm.$http.get( '/wp-json/wp/v2/sell_media_item', {
+      this.currentPost = item
+      this.$http.get( '/wp-json/wp/v2/sell_media_item', {
         params: {
           per_page: 20,
           set: item.set ? item.set[0] : null,
@@ -251,7 +250,7 @@ export default {
             product_type_sets.push(set)
           }
 
-          vm.productTypeSets = product_type_sets
+          this.productTypeSets = product_type_sets
         })
         .catch(( res ) => {
           console.log( res )
@@ -259,22 +258,26 @@ export default {
     }
   },
 
-  updated: function () {
+  updated() {
     this.$nextTick(function () {
       this.height = this.$refs.detailsBox.clientHeight
     })
   },
 
   computed: {
-    productType: function () {
-      let type = this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
-      if ( '360-video' === type || 'video' === type ) {
+    productType() {
+      return this.currentPost.sell_media_meta.product_type[0] ? this.currentPost.sell_media_meta.product_type[0].slug : null
+    },
+    attachment() {
+      return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.getters.product.attachment_id)
+    }
+  },
+
+  watch: {
+    productType(newValue, oldValue) {
+      if ( newValue === '360-video' || newValue === 'video' ) {
         this.thumbnailStyle = 'video'
       }
-      return type
-    },
-    attachment: function() {
-      return this.currentPost.sell_media_attachments.find(attachment => attachment.id === this.$store.getters.product.attachment_id)
     }
   }
 }

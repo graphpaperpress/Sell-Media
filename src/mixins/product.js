@@ -20,6 +20,7 @@ export default {
     ...mapActions([
       "fetchPost",
       "setProduct",
+      "searchProducts",
       "setAttachment",
       "fetchProducts",
       "fetchProductTypes",

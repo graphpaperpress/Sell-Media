@@ -1,4 +1,5 @@
 // Used for generic state props that aren't model-specific
+import axios from 'axios'
 
 import * as types from "../mutation-types"
 
@@ -54,7 +55,7 @@ const actions = {
   fetchProducts ({ commit }, pageNumber = 1) {
     commit(types.SET_SEARCH_RESULTS_LOADED, false)
 
-    Axios.get("/wp-json/wp/v2/sell_media_item", {
+    axios.get("/wp-json/wp/v2/sell_media_item", {
       params: {
         per_page: sell_media.posts_per_page,
         page: pageNumber
@@ -75,14 +76,14 @@ const actions = {
       })
   },
 
-  searchProducts ({ commit }, { search, search_type, page_number = 1}) {
+  searchProducts ({ commit }, { search, type, page = 1}) {
     commit(types.SET_SEARCH_RESULTS_LOADED, false)
-    Axios.get( '/wp-json/sell-media/v2/search', {
+    axios.get( '/wp-json/sell-media/v2/search', {
       params: {
         s: search,
-        type: search_type,
+        type,
         per_page: sell_media.posts_per_page,
-        page: page_number
+        page
       }
     } )
       .then(( res ) => {
@@ -90,7 +91,7 @@ const actions = {
           results: res.data,
           hasSearchResults: res.headers[ 'x-wp-total' ] ? res.headers[ 'x-wp-total' ] : 0,
           totalPages: parseInt(res.headers["x-wp-totalpages"]),
-          pageNumber: page_number
+          pageNumber: page
         }
 
         commit(types.SET_SEARCH_RESULTS, searchResults)
@@ -103,7 +104,7 @@ const actions = {
 
   fetchPost({ commit }, params) {
     commit(types.SET_POST_LOADED, false)
-    Axios.get( '/wp-json/wp/v2/sell_media_item', {
+    axios.get( '/wp-json/wp/v2/sell_media_item', {
       params: params
     })
       .then(( res ) => {
@@ -117,7 +118,7 @@ const actions = {
 
   fetchProductTypes({ commit }) {
     commit(types.SET_PRODUCT_TYPES_LOADED, false)
-    Axios.get( '/wp-json/wp/v2/product_type' )
+    axios.get( '/wp-json/wp/v2/product_type' )
       .then(( res ) => {
         commit(types.SET_PRODUCT_TYPES, res.data)
         commit(types.SET_PRODUCT_TYPES_LOADED, true)
@@ -129,7 +130,7 @@ const actions = {
 
   fetchAttachment({ commit }, params) {
     commit(types.SET_ATTACHMENT_LOADED, false)
-    Axios.get( '/wp-json/wp/v2/media', {
+    axios.get( '/wp-json/wp/v2/media', {
       params: params
     })
       .then(( res ) => {
