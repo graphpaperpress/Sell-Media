@@ -423,11 +423,11 @@ add_filter( 'login_headertitle', 'sell_media_login_logo_url_title' );
  * Custom CSS for login/registration page
  */
 function sell_media_login_css() { ?>
-    <style type="text/css">
-        .login-action-register #login h1 {
+	<style type="text/css">
+		.login-action-register #login h1 {
 			display: none;
-        }
-    </style>
+		}
+	</style>
 <?php }
 add_action( 'login_enqueue_scripts', 'sell_media_login_css' );
 
@@ -435,6 +435,23 @@ add_action( 'login_enqueue_scripts', 'sell_media_login_css' );
  * Show extra profile fields in admin
  */
 function sell_media_show_extra_profile_fields( $user ) {
+
+	if ( current_user_can( 'edit_users' ) ) {
+
+		echo '<h3>' . __( 'User Capabilities', 'sell_media' ) . '</h3>';
+
+		echo '<table class="form-table">';
+		echo '<tr>';
+			echo '<th><label for="address">' . __( 'Download Media', 'sell_media' ) . '</label></th>';
+			echo '<td>';
+				$checked = ( 'true' === get_the_author_meta( 'download_media', $user->ID ) ) ? 'checked="checked' : '';
+				echo '<input type="checkbox" name="download_media" ' . $checked . ' value="true" />' . __( 'User can download all media without paying.', 'sell_media' ) . '<br />';
+			echo '</td>';
+		echo '</tr>';
+		echo '</table>';
+
+	}
+
 	echo '<h3>' .__( 'Address', 'sell_media' ) . '</h3>';
 
 	echo '<table class="form-table">';
@@ -482,6 +499,9 @@ function sell_media_save_extra_profile_fields( $user_id ) {
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
 		update_usermeta( $user_id, $id, $_POST[$id] );
 	}
+
+	$download = ( ! empty( $_POST['download_media'] ) ) ? 'true' : 'false';
+	update_user_meta( $user_id, 'download_media', $download );
 }
 add_action( 'personal_options_update', 'sell_media_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'sell_media_save_extra_profile_fields' );

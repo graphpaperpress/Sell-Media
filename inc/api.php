@@ -98,19 +98,22 @@ function sell_media_api_response() {
 }
 
 /**
- * Get current logged in user
+ * Get current logged in user data
  * @param  array $array
  * @param  string $action
  * @return array containing user data
  */
 function sell_media_api_get_user( $data, $action ) {
 
-	if ( 'get_user' !== $action ) {
-		return $data;
+	if ( 'get_user' === $action ) {
+		$data = wp_get_current_user();
 	}
 
-	$current_user = wp_get_current_user();
-	return $current_user;
+	if ( 'get_user_download_access' === $action ) {
+		$data = get_user_meta( get_current_user_id(), 'download_media', true );
+	}
+
+	return $data;
 }
 add_filter( 'sell_media_api_response', 'sell_media_api_get_user', 10, 2 );
 
