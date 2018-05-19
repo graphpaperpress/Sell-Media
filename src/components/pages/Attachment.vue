@@ -18,12 +18,13 @@
 				<template v-else-if="type === '360-video'">
 					<media-video-360 :post="post"></media-video-360>
 				</template>
-				<template v->
-					<img :src="attachment.media_details.sizes.large.source_url" :alt="attachment.alt"/>
+				<template v-else-if="attachment.media_details.sizes.large">
+					<img :src="attachment.media_details.sizes.large.source_url" :alt="attachment.alt" />
 				</template>
+        <template v-else>
+          <img :src="attachment.media_details.sizes.full.source_url" :alt="attachment.alt" />
+        </template>
 			</div>
-
-			{{ product }}
 
 			<div :class="pageLayout.sidebar">
 				<cart-form :key="attachment.slug" :post="post" :attachment="attachment" :multiple="multiple"></cart-form>

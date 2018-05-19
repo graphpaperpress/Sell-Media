@@ -24,6 +24,6 @@ const pageLayoutMappings = {
 
 export const gridLayout = () => gridLayoutMappings[sell_media.thumbnail_layout] || null;
 
-export const gridLayoutContainer = () => gridLayoutMappings[sell_media.thumbnail_layout] || null;
+export const gridLayoutContainer = () => gridLayoutContainerMappings[sell_media.thumbnail_layout] || null;
 
 export const pageLayout = () => pageLayoutMappings[sell_media.layout] || {};

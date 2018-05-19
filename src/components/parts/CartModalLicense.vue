@@ -21,7 +21,6 @@
 								<option v-for="term in taxonomy.terms" :key="term.id" :value="{ term }">{{ term.name }}</option>
 							</select>
 						</div>
-						<!-- <p>{{ values[index].description }}</p> -->
 					</div>
 				</div>
 

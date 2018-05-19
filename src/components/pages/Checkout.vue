@@ -63,7 +63,11 @@
 				</div>
 
 				<div class="usage item" v-if="usageFee > 0">
-					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="deleteUsage">&#10005;</span></span>
+					{{ labels.usage_fee }}: <span class="value">{{ currency_symbol }}{{ usageFee }} <span class="icon-x" @click="clearUsage">&#10005;</span></span>
+
+					<div v-for="(use, index) in usage" :key="index" class="usage-itemization has-text-grey-light is-size-7">
+						({{ use['license-region'].term.name }}, {{ use['license-time'].term.name }}, {{ use['license-media'].term.name }})
+					</div>
 				</div>
 
 				<div class="tax item">
@@ -173,7 +177,7 @@ export default {
       this.updateCartProduct(product)
     },
 
-    deleteUsage(){
+    clearUsage(){
       this.deleteUsage()
     },
 

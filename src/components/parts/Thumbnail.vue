@@ -58,8 +58,11 @@ export default {
     },
 
     handle(event, slug){
-      if (event.metaKey) this.openInNewWindow(slug)
-  				else this.visible = !this.visible
+      if (event.metaKey){
+        this.openInNewWindow(slug)
+      } else {
+        this.visible = !this.visible
+      }
     },
 
     openInNewWindow(slug){
