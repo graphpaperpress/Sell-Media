@@ -60,6 +60,7 @@ export default {
 
     this.changeTitle('Archive')
     this.getUser()
+    this.getUserDownloadAccess()
 
     if (search || type) {
       this.getSearchResults({ search, type, page })
