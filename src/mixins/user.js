@@ -4,6 +4,7 @@ export default {
   computed: {
     ...mapGetters([
       "user",
+      "user_download_access",
       "cart",
       "lightbox",
       "usage"
@@ -14,6 +15,8 @@ export default {
     ...mapActions([
       "getUser",
       "setUser",
+      "getUserDownloadAccess",
+      "setUserDownloadAccess",
       "addToLightbox",
       "removeFromLightbox",
       "deleteLightbox",

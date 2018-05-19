@@ -10,6 +10,7 @@ import {
 
 import {
   SET_USER,
+  SET_USER_DOWNLOAD_ACCESS,
   SET_LIGHTBOX,
   ADD_TO_LIGHTBOX,
   RESET_LIGHTBOX,
@@ -29,6 +30,7 @@ export const USAGE_KEY = 'sell-media-usage'
 // State: the state properties for the module
 const state = {
   user: null,
+  user_download_access: null,
   cart: JSON.parse(window.localStorage.getItem(CART_KEY) || '[]'),
   lightbox: JSON.parse(window.localStorage.getItem(LIGHTBOX_KEY) || '[]'),
   usage: JSON.parse(window.localStorage.getItem(USAGE_KEY) || '[]')
@@ -37,6 +39,7 @@ const state = {
 // Getters: Used to retrieve state properties
 const getters = {
   user: state => state.user,
+  user_download_access: state => state.user_download_access,
   lightbox: state => state.lightbox,
   cart: state => state.cart,
   usage: state => state.usage
@@ -58,12 +61,40 @@ const actions = {
         console.log( res )
       })
   },
+
   /**
    * Sets the user to the WP user object
    * @param { user } the user object
    */
   setUser({ commit }, user) {
     commit(SET_USER, user)
+  },
+
+  /**
+   * Gets the logged in user download meta from user meta
+   * @param { user } the user object
+   */
+  getUserDownloadAccess({ commit }) {
+    axios.get( '/wp-json/sell-media/v2/api', {
+      params: {
+        action: 'get_user_download_access',
+        _wpnonce: sell_media.nonce
+      }
+    } )
+      .then(( res ) => {
+        commit(SET_USER_DOWNLOAD_ACCESS, res.data)
+      })
+      .catch(( res ) => {
+        console.log( res )
+      })
+  },
+
+  /**
+   * Sets the logged in user download meta from user meta
+   * @param { user } the user object
+   */
+  setUser({ commit }, user_download_access) {
+    commit(SET_USER_DOWNLOAD_ACCESS, user_download_access)
   },
 
   /**
@@ -140,6 +171,9 @@ const actions = {
 const mutations = {
   [SET_USER](state, user) {
     state.user = user
+  },
+  [SET_USER_DOWNLOAD_ACCESS](state, user_download_access) {
+    state.user_download_access = user_download_access
   },
   [ADD_TO_LIGHTBOX](state, item) {
     state.lightbox = addToArrayImmutable(state.lightbox, item)

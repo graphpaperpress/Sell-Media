@@ -16,6 +16,7 @@ export const SET_LIGHTBOX = 'SET_LIGHTBOX'
 
 // User
 export const SET_USER = 'SET_USER'
+export const SET_USER_DOWNLOAD_ACCESS = 'SET_USER_DOWNLOAD_ACCESS'
 
 // Product
 export const SET_PRODUCT = 'SET_PRODUCT'
