@@ -76,16 +76,15 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
  * @since 1.4.6
  */
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
-	global $user;
 	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+		// check for customers
 		if ( in_array( 'sell_media_customer', $user->roles ) ) {
-			return site_url( 'dashboard' );
-		} else {
-			return $redirect_to;
+			$settings = sell_media_get_plugin_options();
+			// redirect them to the dashboard
+			$redirect_to = get_permalink( $settings->dashboard_page );
 		}
-	} else {
-		return $redirect_to;
 	}
+	return $redirect_to;
 }
 add_filter( 'login_redirect', 'sell_media_redirect_login_dashboard', 10, 3 );
 
@@ -109,6 +108,7 @@ function sell_media_get_pages_array() {
  */
 function sell_media_page() {
 	global $post;
+	$settings = sell_media_get_plugin_options();
 
 	$page_ids = array();
 	$pages    = sell_media_get_pages_array();
@@ -599,11 +599,17 @@ function sell_media_test_mode() {
  * @return void
  */
 function sell_media_order_by( $orderby_statement ) {
-
+	
 	$settings = sell_media_get_plugin_options();
-
-	if ( ! empty( $settings->order_by ) && is_archive() ||
-		 ! empty( $settings->order_by ) && is_tax() ) {
+	if ( ! empty( $settings->order_by )
+		&& (
+			is_post_type_archive( 'sell_media_item' )
+			|| is_tax('collection')
+			|| is_tax('licenses')
+			|| is_tax('keywords')
+			|| is_tax('creator')
+			)
+	) {
 		global $wpdb;
 		switch ( $settings->order_by ) {
 			case 'title-asc' :

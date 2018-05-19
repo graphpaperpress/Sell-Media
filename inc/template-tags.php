@@ -259,7 +259,7 @@ function sell_media_gallery( $post_id ) {
 	$html = '';
 
 	$attachment_ids = sell_media_get_attachments( $post_id );
-	$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' );
+	$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container', $post_id );
 	$html .= '<div id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 		$attachment_attributes = wp_get_attachment_image_src( $attachment_id, 'large' );

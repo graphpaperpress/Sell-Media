@@ -45,7 +45,8 @@ class Sell_Media_Price_Listings_Tabs {
 
 			$array_values = array_values( $parent_terms );
 			$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
-			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first->term_id;
+			$first_term_id = isset( $first->term_id ) ? $first->term_id : 0;
+			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first_term_id;
 			add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
 		}
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
@@ -248,13 +249,24 @@ class Sell_Media_Price_Listings_Tabs {
 				}
 			}
 
+			if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
+				$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
+				if ( ! empty( $deleted_term_ids ) ) {
+					foreach ( $deleted_term_ids as $key => $term_id ) {
+						if ( 'new' !== $term_id ) {
+							wp_delete_term( (int) $term_id, $this->taxonomy );
+						}
+					}
+				}
+			}
+
 			if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
 				foreach ( $_POST['new_children'] as $term_id => $data ) {
 					if ( '' !== $data['name'] ) {
 
 						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
 							$term    = get_term_by( 'name', $data['name'], $this->taxonomy );
-							$term_id = ( false !== $term ) ? $term->term_id : false;
+							$term_id = ( isset( $term->term_id ) ) ? $term->term_id : false;
 
 						} else {
 
@@ -272,18 +284,7 @@ class Sell_Media_Price_Listings_Tabs {
 						}
 					}
 				}
-			}
-
-			if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
-				$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
-				if ( ! empty( $deleted_term_ids ) ) {
-					foreach ( $deleted_term_ids as $key => $term_id ) {
-						if ( 'new' !== $term_id ) {
-							wp_delete_term( (int) $term_id, $this->taxonomy );
-						}
-					}
-				}
-			}
+			}			
 		}
 
 		$url_parameters['term_parent'] = $parent_term_id;

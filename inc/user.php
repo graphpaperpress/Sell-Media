@@ -1,7 +1,15 @@
 <?php
 /**
  * User
+ *
+ * @package Sell Media
+ * @author Thad Allender <support@graphpaperpress.com>
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Additional User Fields

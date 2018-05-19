@@ -373,7 +373,6 @@ class SellMediaPayments {
 	 * @return html
 	 */
 	public function get_payments_by_date( $day = null, $month_num, $year ) {
-
 		$args = array(
 			'post_type' => 'sell_media_payment',
 			'posts_per_page' => -1,
@@ -381,10 +380,11 @@ class SellMediaPayments {
 			'monthnum' => $month_num,
 			'post_status' => 'publish',
 		);
+
 		if ( ! empty( $day ) )
 			$args['day'] = $day;
 
-		$payments = get_posts( $args );
+		$payments = get_posts( apply_filters( 'sell_media_get_item_sales_args_filter', $args ) );
 
 		$total = 0;
 		if ( $payments ) foreach ( $payments as $payment ) {
@@ -448,8 +448,7 @@ class SellMediaPayments {
 
 					$html .= '<tr class="sell-media-product sell-media-product-' . $product['id'] . '">';
 					$html .= '<td class="sell-media-product-id" style="' . $style . '">';
-					$filename = wp_get_attachment_image_src( $product['attachment'], 'full' );
-					$filename = array_shift(explode('?', basename($filename[0])));
+					$filename = basename( get_attached_file( $product['attachment'] ) );
 					if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
 						$html .= '<div class="sell-media-product-attr sell-media-product-attr-id">' .  $product['id'] . ' — ' . $product['name'] . ', File name: '. $filename . '</div>';
 						$html .= '<div class="sell-media-product-attr sell-media-product-attr-img" style="max-width: 100px; height: auto; overflow: hidden;"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a></div>';
