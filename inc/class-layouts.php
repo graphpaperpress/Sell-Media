@@ -226,7 +226,7 @@ class SellMediaLayouts {
 		$new_content = '';
 
 		// show on single sell media pages
-		if ( is_singular( 'sell_media_item' ) || sell_media_attachment( $post_id ) ) {
+		if ( is_singular( 'sell_media_item' ) || sell_media_attachment( $post_id ) || sell_media_is_search() ) {
 
 			// only wrap content if a single image/media is being viewed
 			if ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) {
