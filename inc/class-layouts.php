@@ -320,7 +320,9 @@ class SellMediaLayouts {
 	function content_loop( $post_id, $i, $args = array() ) {
 
 		$original_id = $post_id;
-
+		if ( post_password_required( $original_id ) && sell_media_is_search() ) {
+			return;
+		}
 		if ( 'attachment' === get_post_type( $post_id ) ) {
 			$attachment_id = $post_id; // always and attachment
 			$post_id = get_post_meta( $attachment_id, $key = '_sell_media_for_sale_product_id', true ); // always a sell_media_item
