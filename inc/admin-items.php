@@ -236,112 +236,8 @@ function sell_media_save_custom_meta( $post_id ) {
 					wp_set_post_terms( $post_id, $_POST['sell_media_print_price_group'], 'reprints-price-group' );
 				}
 
-			// marketplace post meta fields
-			} elseif ( $field == 'sell_media_marketplace' ) {
-
-				if ( isset( $_POST['sell_media_marketplace'] ) && isset( $_POST['_sell_media_attachment_id'] ) ) {
-
-					// Global site data to send.
-					$settings = sell_media_get_plugin_options();
-
-					$marketplace = array();
-					$marketplace['site_name'] = get_bloginfo( 'name' );
-					$marketplace['site_description'] = get_bloginfo( 'description' );
-					$marketplace['site_url'] = get_bloginfo( 'url' );
-					$marketplace['site_admin_email'] = get_bloginfo( 'admin_email' );
-					$user = get_user_by( 'email', get_bloginfo( 'admin_email' ) );
-					$marketplace['site_admin_name'] = $user->display_name;
-					$marketplace['site_key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
-					$marketplace['site_entries'] = ( ! empty( $settings->marketplace_site_entries ) ) ? $settings->marketplace_site_entries : '';
-					$marketplace['sell_media_id'] = $post_id;
-					$marketplace['marketplace_response'] = get_post_meta( $post_id, '_sell_media_marketplace_response', true );
-					$marketplace['media'] = array();
-
-					$attachment_ids = explode( ',', $_POST['_sell_media_attachment_id'] );
-					if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-
-						$attachment_metadata = wp_prepare_attachment_for_js( $attachment_id );
-						$attachment_keywords = get_the_terms( $attachment_id, 'keywords' );
-
-						$marketplace_post_id = get_post_meta( $attachment_id, '_sell_media_marketplace_post_id', true );
-						$marketplace_post_key = get_post_meta( $attachment_id, '_sell_media_marketplace_post_key', true );
-
-						$keywords = array();
-
-						if ( $attachment_keywords && ! is_wp_error( $attachment_keywords ) ) {
-							foreach ( $attachment_keywords as $attachment_keyword ) {
-								$keywords[] = $attachment_keyword->name;
-							}
-						}
-
-						$marketplace['media'][] = array(
-								'attachment_id' => $attachment_id,
-								'post_parent' => $post_id,
-								'caption' => $attachment_metadata['caption'],
-								'title' => $attachment_metadata['title'],
-								'url' => $attachment_metadata['url'],
-								'link' => $attachment_metadata['link'],
-								'author' => $attachment_metadata['authorName'],
-								'keywords' => $keywords,
-								'marketplace_post_id' => $marketplace_post_id,
-								'marketplace_post_key' => $marketplace_post_key,
-							);
-					}
-
-					$url = add_query_arg( array(
-							'webhook' => 'marketplace',
-						),
-						'https://visualsociety.com'
-					);
-
-					$response = wp_remote_post( $url, array(
-						'method' => 'POST',
-						'timeout' => 45,
-						'redirection' => 5,
-						'httpversion' => '1.0',
-						'blocking' => true,
-						'headers' => array(),
-						'body' => $marketplace,
-						'cookies' => array(),
-						)
-					);
-
-					if ( is_wp_error( $response ) ) {
-						$error_message = $response->get_error_message();
-						echo "Something went wrong: $error_message";
-					} else {
-						// store a unique hash as postmeta of the vs_marketplace $post_id entries
-						// this would make updating the posts easier in the future.
-						update_post_meta( $post_id, '_sell_media_marketplace_response', $response );
-						update_post_meta( $post_id, 'sell_media_marketplace', 'yes' );
-
-						$marketplace_response = json_decode( $response['body'] );
-
-						// bail if response isn't json
-						if ( ! is_array( $marketplace_response ) ) {
-							return;
-						}
-
-						$site_detail = $marketplace_response->site_detail;
-
-						if ( is_array( $site_detail ) && count( $site_detail ) > 0 ) {
-							foreach ( $site_detail as $attachment_post ) {
-								update_post_meta( $attachment_post->attachment_id, '_sell_media_marketplace_post_id', $attachment_post->marketplace_post_id );
-								update_post_meta( $attachment_post->attachment_id, '_sell_media_marketplace_post_key', $attachment_post->marketplace_post_key );
-							}
-						}
-					}
-
-					// update site key
-					// if ( '' == $marketplace['site_key'] ) {
-						$settings = get_option( 'sell_media_options' );
-						$settings['marketplace_api_key'] = $marketplace_response->site_key;
-						$settings['marketplace_site_entries'] = $marketplace_response->site_entries;
-						update_option( 'sell_media_options', $settings );
-					// }
-				}
-			} else {
-
+			
+			}  else {
 				$old = get_post_meta( $post_id, $field, true );
 				$new = $_POST[ $field ];
 
@@ -427,79 +323,8 @@ function sell_media_save_custom_meta( $post_id ) {
 
 			}
 		// Checkbox field isn't set, so delete the meta
-		} else {
-			if ( $field == 'sell_media_marketplace' ) {
-				// Delete post from market place if marketplace unchecked.
-				if ( isset( $_POST['_sell_media_attachment_id'] ) ) {
-
-					// Global site data to send.
-					$settings = sell_media_get_plugin_options();
-
-					$marketplace = array();
-					$marketplace['remove_marketplace'] = true;
-					$marketplace['site_url'] = get_bloginfo( 'url' );
-					$marketplace['site_key'] = ( ! empty( $settings->marketplace_api_key ) ) ? $settings->marketplace_api_key : '';
-					$marketplace['sell_media_id'] = $post_id;
-					$marketplace['marketplace_response'] = get_post_meta( $post_id, '_sell_media_marketplace_response', true );
-					$marketplace['media'] = array();
-
-					$attachment_ids = explode( ',', $_POST['_sell_media_attachment_id'] );
-					if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-
-						$marketplace_post_id = get_post_meta( $attachment_id, 'marketplace_post_id', true );
-						$marketplace_post_key = get_post_meta( $attachment_id, 'marketplace_post_key', true );
-
-						delete_post_meta( $attachment_id, 'marketplace_post_id' );
-						delete_post_meta( $attachment_id, 'marketplace_post_key' );
-
-						$marketplace['media'][] = array(
-								'attachment_id' => $attachment_id,
-								'marketplace_post_id' => $marketplace_post_id,
-								'marketplace_post_key' => $marketplace_post_key,
-							);
-					}
-
-					$url = add_query_arg( array(
-							'webhook' => 'marketplace',
-						),
-						'https://visualsociety.com'
-					);
-					$response = wp_remote_post( $url, array(
-						'method' => 'POST',
-						'timeout' => 45,
-						'redirection' => 5,
-						'httpversion' => '1.0',
-						'blocking' => true,
-						'headers' => array(),
-						'body' => $marketplace,
-						'cookies' => array(),
-						)
-					);
-
-					if ( is_wp_error( $response ) ) {
-					   $error_message = $response->get_error_message();
-					   echo "Something went wrong: $error_message";
-					} else {
-						// store a unique hash as postmeta of the vs_marketplace $post_id entries
-						// this would make updating the posts easier in the future.
-						delete_post_meta( $post_id, '_sell_media_marketplace_response' );
-						delete_post_meta( $post_id, 'sell_media_marketplace' );
-
-						$marketplace_response = json_decode( $response['body'] );
-					}
-
-					// Update site key.
-					$settings = get_option( 'sell_media_options' );
-					if ( isset( $marketplace_response->site_key ) && isset( $marketplace_response->site_entries ) ) {
-						$settings['marketplace_api_key'] = $marketplace_response->site_key;
-						$settings['marketplace_site_entries'] = $marketplace_response->site_entries;
-					}
-					update_option( 'sell_media_options', $settings );
-
-				}
-			}
+		} else {			
 			delete_post_meta( $post_id, $field );
-
 		}
 	} // end foreach
 
@@ -609,7 +434,6 @@ function sell_media_meta_box_fields() {
 		'_sell_media_attachment_id',
 		'sell_media_price',
 		'sell_media_price_group',
-		// 'sell_media_marketplace'
 	);
 
 	return apply_filters( 'sell_media_meta_box_fields', $fields );
