@@ -32,15 +32,7 @@ function sell_media_meta_boxes( $post_type ) {
 		'normal', // $context
 		'high' // $priority
 	);
-	// Marketplace
-	add_meta_box(
-		'marketplace_meta_box', // $id
-		'Marketplace', // $title
-		'sell_media_marketplace_meta_box', // $callback
-		'sell_media_item', // $page
-		'normal', // $context
-		'high' // $priority
-	);
+	
 	// Stats
 	add_meta_box(
 		'stats_meta_box', // $id
@@ -171,41 +163,6 @@ function sell_media_options_meta_box( $post ) {
 
 	<?php do_action( 'sell_media_after_options_meta_box', $post->ID );
 
-}
-
-/**
- * Marketplace meta box
- */
-function sell_media_marketplace_meta_box( $post ) { ?>
-
-	<?php
-	do_action( 'sell_media_before_marketplace_meta_box', $post->ID );
-	wp_nonce_field( '_sell_media_meta_box_nonce', 'sell_media_meta_box_nonce' );
-
-	$value = get_post_meta( $post->ID, 'sell_media_marketplace', true );
-	$checked = ( $value ) ? ' checked="checked"' : '';
-	?>
-
-	<div id="sell-media-marketplace-field" class="sell-media-field">
-		<label for="sell-media-marketplace"><?php _e( 'Add to Marketplace?', 'sell_media' ); ?></label>
-		<input type="checkbox" name="sell_media_marketplace" id="sell-media-marketplace" value="yes"<?php echo $checked; ?>>
-		<span class="desc"><?php _e( 'Yes, add as free photos to the marketplace.', 'sell_media' ); ?></span>
-	</div>
-
-	<div id="sell-media-marketplace-description" class="sell-media-field">
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'What is Marketplace?', 'sell_media' ); ?></h4>
-		<p class="toggle" style="display:none;"><?php _e( 'Marketplace is a new web platform that showcases photos from independent photographers around the world. You can submit 10 photos to the marketplace, which helps you get discovered and attract new customers to your website. You can view the marketplace at VisualSociety.com/marketplace.', 'sell_media' ); ?></p>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'How does it work?', 'sell_media' ); ?></h4>
-		<p class="toggle" style="display:none;"><?php _e( 'Check the box above to add your photos to the marketplace. When you click "Save", all images in this specific gallery will be uploaded to the Marketplace as free downloads (like Unsplash, Pexels, etc). These photos will be submitted for review to the marketplace. If approved, your name, photos, and website link be displayed. The marketplace imports all of the keywords that you applied to the image before you uploaded it.', 'sell_media' ); ?></p>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Why was the Marketplace created?', 'sell_media' ); ?></h4>
-		<p class="toggle" style="display:none;"><?php _e( 'The Marketplace was created to help independent photographers improve their marketing and sales. It connects thousands of independent photography websites to a single website, making it easy for people to find photos. There are plans to add your commercially licensed photos into the marketplace in the next year.', 'sell_media' ); ?></p>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'Why are all Marketplace photos free to download?', 'sell_media' ); ?></h4>
-		<p class="toggle" style="display:none;"><?php _e( 'Offering a small collection of free photos will help drive traffic to your website. Visitors come for the free photo downloads and eventually discover your other photos that aren\'t free.', 'sell_media' ); ?>
-		<h4 class="sell-media-toggler"><span class="dashicons dashicons-arrow-down"></span> <?php _e( 'How many photos can I add to the Marketplace?', 'sell_media' ); ?></h4>
-		<p class="toggle" style="display:none;"><?php _e( 'You can add up to 10 photos. All contributions are curated for quality and accuracy. Once you become an official contributor, your contribution limit will be increased, increasing your visibility in the marketplace.', 'sell_media' ); ?></p>
-	</div>
-
-	<?php do_action( 'sell_media_after_marketplace_meta_box', $post->ID );
 }
 
 /**

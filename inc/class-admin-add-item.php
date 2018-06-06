@@ -47,7 +47,6 @@ class SellMediaAdminAddItem {
 		add_meta_box( 'sell-media-main-container', __( 'Sell Media', 'sell_media' ), array( $this, 'main_container' ), 'sell_media_item', 'normal', 'high' );
 		remove_meta_box( 'files_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'stats_meta_box', 'sell_media_item', 'normal' );
-		remove_meta_box( 'marketplace_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'options_meta_box', 'sell_media_item', 'normal' );
 		remove_meta_box( 'licensesdiv', 'sell_media_item', 'side' );
 		remove_meta_box( 'collectiondiv', 'sell_media_item', 'side' );
@@ -91,13 +90,6 @@ class SellMediaAdminAddItem {
 			'content_title' => __( 'Price', 'sell_media' ),
 			'content_callback' => array( $this, 'price_callback' ),
 		);
-
-		$tabs['marketplace'] = array(
-			'tab_label' => __( 'Marketplace', 'sell_media' ),
-			'content_title' => __( 'Marketplace', 'sell_media' ),
-			'content_callback' => array( $this, 'marketplace_callback' ),
-		);
-
 		$tabs['stats'] = array(
 			'tab_label' => __( 'Stats', 'sell_media' ),
 			'content_title' => __( 'Stats', 'sell_media' ),
@@ -170,15 +162,6 @@ class SellMediaAdminAddItem {
 		sell_media_options_meta_box( $post );
 	}
 
-	/**
-	 * Marketplace tab content.
-	 *
-	 * @param  object $post Post object.
-	 * @return void
-	 */
-	function marketplace_callback( $post ) {
-		sell_media_marketplace_meta_box( $post );
-	}
 
 	/**
 	 * Stat tab content.
