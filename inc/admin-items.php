@@ -609,7 +609,7 @@ function sell_media_meta_box_fields() {
 		'_sell_media_attachment_id',
 		'sell_media_price',
 		'sell_media_price_group',
-		'sell_media_marketplace'
+		// 'sell_media_marketplace'
 	);
 
 	return apply_filters( 'sell_media_meta_box_fields', $fields );
@@ -645,9 +645,7 @@ function sell_media_item_header( $columns ){
 	if ( ! isset( $columns_local['sell_media_price'] ) )
 		$columns_local['sell_media_price'] = "Price";
 
-	if ( ! isset( $columns_local['sell_media_marketplace'] ) )
-		$columns_local['sell_media_marketplace'] = "Marketplace";
-
+	
 	return array_merge( $columns_local, $columns );
 }
 add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
@@ -660,7 +658,6 @@ add_filter( 'manage_edit-sell_media_item_columns', 'sell_media_item_header' );
  */
 function sell_media_sortable_column( $columns ) {
 	$columns['sell_media_price'] = 'sell_media_price';
-	$columns['sell_media_marketplace'] = 'sell_media_marketplace';
 	$columns['author'] = 'author';
 	return $columns;
 }
@@ -679,12 +676,7 @@ function sell_media_column_orderby( $vars ) {
 			'orderby' => 'meta_value_num'
 		) );
 	}
-	if ( isset( $vars['orderby'] ) && 'sell_media_marketplace' == $vars['orderby'] ) {
-		$vars = array_merge( $vars, array(
-			'meta_key' => 'sell_media_marketplace',
-			'orderby' => 'meta_value_num'
-		) );
-	}
+	
 	if ( isset( $vars['orderby'] ) && 'author' == $vars['orderby'] ) {
 		$vars = array_merge( $vars, array(
 			'orderby' => 'author'
@@ -723,14 +715,7 @@ function sell_media_item_content( $column, $post_id ){
 					echo __( 'No price set', 'sell_media' );
 				}
 			}
-			break;
-		case "sell_media_marketplace":
-			$marketplace_enabled = get_post_meta( $post_id, 'sell_media_marketplace', true );
-
-			if ( $marketplace_enabled ) {
-				echo '&#10004;';
-			}
-			break;
+			break;		
 		default:
 			break;
 	}
