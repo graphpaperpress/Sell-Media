@@ -217,19 +217,20 @@ class SellMediaLayouts {
 		global $post;
 		$post_id = $post->ID;
 
-		// Bail if we not viewing a sell media page
-		if ( ! sell_media_page() || post_password_required( $post ) || ( isset( $post->post_parent ) && post_password_required( $post->post_parent ) ) ) {
-			return $content;
-		}
-
-		$has_multiple_attachments = sell_media_has_multiple_attachments( $post_id );
-		$new_content = '';
-
 		// show on single sell media pages
 		if ( is_singular( 'sell_media_item' ) || sell_media_attachment( $post_id ) || sell_media_is_search() ) {
 
+			// bail if it's password protected item
+			if ( post_password_required( $post ) || ( isset( $post->post_parent ) && post_password_required( $post->post_parent ) ) ) {
+				return $content;
+			}
+
+			$has_multiple_attachments = sell_media_has_multiple_attachments( $post_id );
+			$wrap = ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) ? true : false;
+			$new_content = '';
+
 			// only wrap content if a single image/media is being viewed
-			if ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) {
+			if ( $wrap ) {
 				$new_content .= '<div class="sell-media-content">';
 			}
 
@@ -238,15 +239,17 @@ class SellMediaLayouts {
 			$new_content .= $content;
 
 			// only wrap content if a single image/media is being viewed
-			if ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) {
+			if ( $wrap ) {
 				$new_content .= '</div>';
 			}
+
+			$content = $new_content;
 
 			// set the post views, used for popular query
 			sell_media_set_post_views( $post_id );
 		}
 
-		return apply_filters( 'sell_media_content', $new_content );
+		return apply_filters( 'sell_media_content', $content );
 
 	}
 
