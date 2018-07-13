@@ -402,11 +402,10 @@ function sell_media_get_attachment_id( $post_id = null ) {
 function sell_media_has_multiple_attachments( $post_id ) {
 
 	$attachments = sell_media_get_attachments( $post_id );
-	$count = count( $attachments );
-
-	if ( $count > 1 ) {
+	if ( is_array( $attachments ) && count( $attachments ) > 0 ) {
 		return true;
 	}
+	return false;
 }
 
 /**

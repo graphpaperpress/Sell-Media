@@ -793,6 +793,12 @@ class SellMediaPayments {
 			'size_id' => $size_id,
 		) );
 
+		$gateway = $this->get_meta_key( $payment_id, 'gateway' );
+
+		if ( 'manual' === $gateway ) {
+			$link = add_query_arg( 'download', $gateway, $link );
+		}
+
 		return $link;
 	}
 

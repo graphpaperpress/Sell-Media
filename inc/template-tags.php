@@ -661,7 +661,7 @@ add_action( 'after_setup_theme', 'sell_media_theme_support', 999 );
 function sell_media_is_search() {
 
 	$settings = sell_media_get_plugin_options();
-	if ( isset( $settings->search_page ) && is_page( $settings->search_page ) ) {
+	if ( ! empty( $settings->search_page ) && is_page( $settings->search_page ) ) {
 		return true;
 	}
 }
