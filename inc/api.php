@@ -559,6 +559,46 @@ if ( ! function_exists( 'sell_media_api_licensing_response' ) ) :
 endif;
 
 /**
+ * Price Group endpoint for rest api.
+ * This is a pluggable function.
+ * /wp-json/sell-media/v2/price-group/
+ */
+if ( ! function_exists( 'sell_media_api_price_group_response' ) ) :
+
+	function sell_media_api_price_group_response( $request ) {
+
+		$results = array();
+		$options = get_option( 'sell_media_options' );
+		$price_group_id = $options['default_price_group'];
+		$terms = get_terms( 'price-group', array( 'parent' => $price_group_id, 'orderby' => 'term_id', 'hide_empty' => false ) );
+
+		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $key => $term ) {
+				$price = get_term_meta( $term->term_id, 'price', true );
+				$width = get_term_meta( $term->term_id, 'width', true );
+				$height = get_term_meta( $term->term_id, 'height', true );
+				$results[$key]['id'] = $term->term_id;
+				$results[$key]['name'] = $term->name;
+				$results[$key]['description'] = $term->description;
+				$results[$key]['price'] = $price;
+				$results[$key]['width'] = $width;
+				$results[$key]['height'] = $height;
+				$results[$key]['taxonomy'] = 'price-group';
+			}
+		}
+
+		if ( empty( $results ) ) {
+			return new WP_Error( 'sell_media_no_price_group_results', __( 'No results', 'sell_media' ) );
+		}
+
+
+
+		return rest_ensure_response( $results );
+	}
+
+endif;
+
+/**
  * Template Redirect
  * @since 1.0.4
  */
