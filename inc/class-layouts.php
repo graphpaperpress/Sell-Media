@@ -186,7 +186,8 @@ class SellMediaLayouts {
 		}
 
 		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
-			$class = 'sell-media-grid-item-horizontal-masonry-container';
+			$class = 'horizontal-masonry-columns';
+			// $class = 'sell-media-grid-item-horizontal-masonry-container';
 		}
 
 		return $class;
@@ -337,11 +338,25 @@ class SellMediaLayouts {
 		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
 			$class .= ' sell-media-grid-single-item';
 		}
+		$custom_style = '';
+		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
+			$class = 'horizontal-masonry-column overlay-container ';
+						
+			$image_data     = wp_get_attachment_image_src( $attachment_id, 'medium' );
+			$image_width    = $image_data[1];
+			$image_height   = $image_data[2];
+			$width          = $image_width * 250 / $image_height;
+			$padding_bottom = $image_height / $image_width * 100;
+			error_log( 'img width ' . $image_width );
+			error_log( 'img height ' . $image_height );
 
-		$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '">';
+		}
+		$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
 
 		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
-
+		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
+			$html .= '<i style="padding-bottom:' . $padding_bottom . '%;" ></i>';
+		}
 		// Show titles?
 		if ( isset( $this->settings->titles ) && 0 != $this->settings->titles && is_main_query() ) {
 			$html .= '<h2 class="sell-media-entry-title">' . get_the_title( $original_id ) . '</h2>';

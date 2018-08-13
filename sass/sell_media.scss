@@ -153,6 +153,35 @@ a:focus {
 		}
 	}
 }
+.horizontal-masonry-columns {
+	display: flex;
+	flex-wrap: wrap;
+	margin: -.5rem;
+
+	&::after {
+		content: '';
+		flex-grow: 999999999;
+	}
+}
+
+.horizontal-masonry-column {
+	margin: .5rem;
+	position: relative;
+	
+	i {
+		display: block;
+	}
+	
+	img {
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		vertical-align: bottom;
+	}
+}
 
 /*= Checkout Page
 -------------------------------------------------------------- */
