@@ -5,6 +5,8 @@ $delete-button-color: #f00;
 		h2.tab-title{
 			padding: 8px 0;
 			position: relative;
+			margin-bottom: 10px;
+			font-size: 16px;
 
 			span{
 				padding: 4px 0px;
@@ -28,7 +30,7 @@ $delete-button-color: #f00;
 		.tab-price-lists {
 			margin: 15px 0;
 		}
-
+		
 		.deletion {
 			color: $delete-button-color;
 			margin: 0 10px;
@@ -75,7 +77,7 @@ $delete-button-color: #f00;
 		.sell-media-pricelisting-form-buttons{
 			width: 90%;
 			#sell-media-add-button{
-				float: right;
+				// float: right;
 			}
 		}
 		.parsley-error{
@@ -84,6 +86,28 @@ $delete-button-color: #f00;
 
 		ul.parsley-errors-list{
 			display: none;
+		}
+		.form-group{
+			margin-bottom: 24px;
+		}
+		label{
+			display: block;
+			font-size: 14px;
+			margin-bottom: 10px;
+		}
+		select{
+			min-width: 215px;
+		}
+		.sell-media-pricing{
+			padding-bottom: 30px;
+			border-bottom: 1px solid #ccc;
+		}
+		.sell-media-pricing-settings{
+			border-top: 1px solid #fff;
+			padding-top: 30px; 
+		}
+		.sell-media-priclist-submit{
+			float:right;
 		}
 	}
 }

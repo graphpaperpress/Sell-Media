@@ -83,17 +83,17 @@ class Sell_Media_Price_Listings_Tabs {
 	 */
 	function add_pricelist_form( $current_tab, $url ) {
 		?>
+		<h2 class="tab-title">
+			<span><?php echo sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' ) ); ?></span>						
+		</h2>
 		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
 			<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
-			<h2 class="tab-title">
-				<span><?php echo __( 'Pricelists for ', 'sell_media' ) . ' ' . $this->tab['tab_title']; ?></span>
-				<a class="page-title-action tab-create-new-list" href="javascript:void(0);"><?php _e( 'Add New Pricelist', 'sell_media' ); ?> </a>
-				<div class="sell-media-add-new-pricelist-popup">
-					<input type="text" name="new_term_name" required />
-					<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add', 'sell_media' ); ?>" />
-					<input type="hidden" name="sell-media-price-list-submit" value="true" />
-				</div>
-			</h2>
+			<div class="form-group">
+				<label><?php esc_html_e( 'Add New Pricelist', 'sell_media' ); ?></label>
+				<input type="text" name="new_term_name" required />
+				<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add New Pricelist', 'sell_media' ); ?>" />
+				<input type="hidden" name="sell-media-price-list-submit" value="true" />
+			</div>			
 		</form>
 		<?php
 	}
@@ -287,6 +287,14 @@ class Sell_Media_Price_Listings_Tabs {
 			}			
 		}
 
+		// Saving settings.
+		if ( isset( $_POST['settings'] ) ){
+			$settings = ( array ) sell_media_get_plugin_options();			
+			$settings = array_merge( $settings, $_POST['settings'] );
+			$options_name = sell_media_get_current_plugin_id() . '_options';
+			update_option( $options_name, $settings );			
+		}
+
 		$url_parameters['term_parent'] = $parent_term_id;
 		$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 		wp_redirect( $redirect_url );
@@ -326,10 +334,6 @@ class Sell_Media_Price_Listings_Tabs {
  * @return void
  */
 function sell_media_init_price_listings_tabs() {
-	$download_price_group = new Sell_Media_Price_Listings_Tabs( 'price-group', array(
-		'tab_title' => __( 'Downloads', 'sell_media' ),
-	) );
-
 	if ( ! function_exists( 'is_plugin_active' ) ) {
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	}
@@ -339,6 +343,10 @@ function sell_media_init_price_listings_tabs() {
 			'tab_title' => __( 'Prints', 'sell_media' ),
 		) );
 	}
+	$download_price_group = new Sell_Media_Price_Listings_Tabs( 'price-group', array(
+		'tab_title' => __( 'Downloads', 'sell_media' ),
+	) );
+
 }
 
 add_action( 'init', 'sell_media_init_price_listings_tabs', 9 );

@@ -1,57 +1,97 @@
 .sell-media-price-listings-wrap #poststuff h2.tab-title {
   padding: 8px 0;
-  position: relative; }
-  .sell-media-price-listings-wrap #poststuff h2.tab-title span {
-    padding: 4px 0px;
-    position: relative;
-    top: -3px; }
-  .sell-media-price-listings-wrap #poststuff h2.tab-title .sell-media-add-new-pricelist-popup {
-    border: 1px solid #ccc;
-    background: #fff;
-    width: 235px;
-    padding: 20px;
-    position: absolute;
-    top: 29px;
-    left: 174px;
-    border-radius: 3px;
-    display: none; }
+  position: relative;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.sell-media-price-listings-wrap #poststuff h2.tab-title span {
+  padding: 4px 0px;
+  position: relative;
+  top: -3px;
+}
+.sell-media-price-listings-wrap #poststuff h2.tab-title .sell-media-add-new-pricelist-popup {
+  border: 1px solid #ccc;
+  background: #fff;
+  width: 235px;
+  padding: 20px;
+  position: absolute;
+  top: 29px;
+  left: 174px;
+  border-radius: 3px;
+  display: none;
+}
 .sell-media-price-listings-wrap #poststuff .tab-price-lists {
-  margin: 15px 0; }
+  margin: 15px 0;
+}
 .sell-media-price-listings-wrap #poststuff .deletion {
   color: #f00;
-  margin: 0 10px; }
+  margin: 0 10px;
+}
 .sell-media-price-listings-wrap #poststuff .tab-price-list-edit-title {
-  padding: 8px 0; }
+  padding: 8px 0;
+}
 .sell-media-price-listings-wrap #poststuff #sell-media-price-table {
-  width: 90%; }
-  .sell-media-price-listings-wrap #poststuff #sell-media-price-table td {
-    padding: 7px 0px; }
-    .sell-media-price-listings-wrap #poststuff #sell-media-price-table td input[type=text] {
-      width: 80%; }
-    .sell-media-price-listings-wrap #poststuff #sell-media-price-table td input.small-text {
-      width: 100px; }
+  width: 90%;
+}
+.sell-media-price-listings-wrap #poststuff #sell-media-price-table td {
+  padding: 7px 0px;
+}
+.sell-media-price-listings-wrap #poststuff #sell-media-price-table td input[type=text] {
+  width: 80%;
+}
+.sell-media-price-listings-wrap #poststuff #sell-media-price-table td input.small-text {
+  width: 100px;
+}
 .sell-media-price-listings-wrap #poststuff .price-group-term-information {
-  margin: 10px 0; }
+  margin: 10px 0;
+}
 .sell-media-price-listings-wrap #poststuff .sell-media-sub-tab {
   border: none !important;
-  margin: 10px 0 !important; }
+  margin: 10px 0 !important;
+}
 .sell-media-price-listings-wrap #poststuff .sell-media-sub-tab .nav-tab {
   border: none;
   border-bottom: 2px solid #f1f1f1;
-  background: none; }
+  background: none;
+}
 .sell-media-price-listings-wrap #poststuff .sell-media-sub-tab .nav-tab:hover {
   border-bottom: 2px solid #444444;
-  background: none; }
+  background: none;
+}
 .sell-media-price-listings-wrap #poststuff .sell-media-sub-tab .nav-tab-active {
   border-bottom: 2px solid #444444;
-  background: none; }
+  background: none;
+}
 .sell-media-price-listings-wrap #poststuff .sell-media-pricelisting-form-buttons {
-  width: 90%; }
-  .sell-media-price-listings-wrap #poststuff .sell-media-pricelisting-form-buttons #sell-media-add-button {
-    float: right; }
+  width: 90%;
+}
 .sell-media-price-listings-wrap #poststuff .parsley-error {
-  border: 1px solid red; }
+  border: 1px solid red;
+}
 .sell-media-price-listings-wrap #poststuff ul.parsley-errors-list {
-  display: none; }
+  display: none;
+}
+.sell-media-price-listings-wrap #poststuff .form-group {
+  margin-bottom: 24px;
+}
+.sell-media-price-listings-wrap #poststuff label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.sell-media-price-listings-wrap #poststuff select {
+  min-width: 215px;
+}
+.sell-media-price-listings-wrap #poststuff .sell-media-pricing {
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ccc;
+}
+.sell-media-price-listings-wrap #poststuff .sell-media-pricing-settings {
+  border-top: 1px solid #fff;
+  padding-top: 30px;
+}
+.sell-media-price-listings-wrap #poststuff .sell-media-priclist-submit {
+  float: right;
+}
 
 /*# sourceMappingURL=sell_media_price_listings.css.map */

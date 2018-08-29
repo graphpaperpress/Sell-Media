@@ -63,7 +63,7 @@ class Sell_Media_Price_Listings {
 	function add_submenu() {
 		global $pricelists_page;
 
-		$pricelists_page = add_submenu_page( $this->parent_slug, __( 'Pricelists', 'sell_media' ), __( 'Pricelists', 'sell_media' ), 'manage_options', $this->menu_slug, array( $this, 'pricelists_page' ) );
+		$pricelists_page = add_submenu_page( $this->parent_slug, __( 'Pricing', 'sell_media' ), __( 'Pricing', 'sell_media' ), 'manage_options', $this->menu_slug, array( $this, 'pricelists_page' ) );
 		add_action( "load-{$pricelists_page}", array( $this, 'load_pricelists_page' ) );
 	}
 
@@ -94,7 +94,7 @@ class Sell_Media_Price_Listings {
 		?>
 
 		<div class="wrap sell-media-price-listings-wrap">
-			<h2><?php _e( 'Pricelists', 'sell_media' ); ?></h2>
+			<h2><?php _e( 'Pricing', 'sell_media' ); ?></h2>
 			<?php
 			$tabs = $this->get_tabs();
 			if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
