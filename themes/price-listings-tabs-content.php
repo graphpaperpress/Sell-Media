@@ -14,11 +14,15 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 	<div class="tab-price-lists">
 		<label><?php esc_html_e( 'Select a pricelilst to edit' ) ?></label>
 		<select>
-			<option value=""><?php esc_html_e( 'Select' ) ?></option>
+			<?php
+			$url = admin_url( 'edit.php?' . $_SERVER['QUERY_STRING'] );
+			$url = remove_query_arg( 'term_parent' );
+			?>
+			<option value="<?php echo esc_attr( $url ) ?>"><?php esc_html_e( 'Select' ) ?></option>
 			<?php
 			$current_pricelist = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : '';
 			foreach ( $download_parents as $slug => $term ) {
-				$url = add_query_arg( array( 'term_parent' => $term->term_id ), admin_url( 'edit.php?' . $_SERVER['QUERY_STRING'] ) );
+				$url = add_query_arg( array( 'term_parent' => $term->term_id ), $url );
 				if ( $this->current_term === $term->term_id ) {
 					$current_url = $url;
 				}
@@ -32,8 +36,10 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 		<?php
 		$delete_url = add_query_arg( array( 'delete' => true ), $current_url );
 		$delete_url = wp_nonce_url( $delete_url, 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
-		$current_term_name = isset( $current_term->name ) ? $current_term->name : ''; ?>
-		<a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_html_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php esc_html_e( 'Delete', 'sell_media' ); ?></a>
+		$current_term_name = isset( $current_term->name ) ? $current_term->name : '';
+		if ( isset( $_GET['term_parent'] ) ) {
+			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_html_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php esc_html_e( 'Delete', 'sell_media' ); ?></a>
+		<?php } ?>
 	</div>
 	<?php
 	// if ( ! isset( $_GET['term_parent'] ) || 'new' !== $_GET['term_parent'] ) {
