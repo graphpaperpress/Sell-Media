@@ -326,7 +326,7 @@ function sell_media_get_attachments( $post_id ) {
 	if ( is_array( $meta ) ) {
 		return $meta;
 	}
-	return ( ! empty( $meta ) ) ? explode( ',', $meta ) : false;
+	return ( ! empty( $meta ) ) ? explode( ',', $meta ) : array();
 }
 
 
