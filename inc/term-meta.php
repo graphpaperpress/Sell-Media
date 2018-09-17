@@ -106,7 +106,7 @@ function sell_media_get_default_terms(){
  * @since 0.1
  */
 function sell_media_license_description(){
-	echo __( 'When a buyer decides to purchase a item from your site, they must choose a license which most closely identifies their intended use of the item. We have included some default license types, grouped into two "parent" categories: Personal and Commercial. Each of these two categories have specific "child" licenses, such as "Print Advertising" (a child of Commercial) and "Website" (a child of Personal). You can create as many parent and child licenses as you want.', 'sell_media' );
+	echo __( 'When a buyer decides to purchase a item from your site, they must choose a license which most closely identifies their intended use of the item.', 'sell_media' );
 }
 add_action( 'licenses_pre_add_form', 'sell_media_license_description' );
 
