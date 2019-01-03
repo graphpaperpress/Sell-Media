@@ -68,7 +68,7 @@ class SellMediaSearch {
 		}
 
 		// Get the search term(s)
-		$search_term = get_query_var( 'search_query' );
+		$search_term = htmlspecialchars(trim(stripslashes(strip_tags(get_query_var( 'search_query' )))));
 
 		// Get the file type
 		$search_file_type = get_query_var( 'search_file_type' );
@@ -206,7 +206,7 @@ class SellMediaSearch {
 				// hook for related keywords, etc.
 				$html .= sell_media_format_related_search_results( $search_terms );
 
-				$html .= $this->search_help();
+				//$html .= $this->search_help();
 
 				$html .= '<div id="sell-media-search-results" class="sell-media">';
 				$html .= '<div class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';

@@ -218,6 +218,7 @@ class SellMediaLayouts {
 		global $post;
 		$post_id = $post->ID;
 
+
 		// show on single sell media pages
 		if ( is_singular( 'sell_media_item' ) || sell_media_attachment( $post_id ) || sell_media_is_search() ) {
 
@@ -236,7 +237,9 @@ class SellMediaLayouts {
 			}
 
 			$new_content .= sell_media_breadcrumbs();
-			$new_content .= sell_media_get_media();
+			if ( ! sell_media_is_search() ) {
+				$new_content .= sell_media_get_media();
+			}
 			$new_content .= $content;
 
 			// only wrap content if a single image/media is being viewed
@@ -347,12 +350,13 @@ class SellMediaLayouts {
 			$image_height   = $image_data[2];
 			$width          = $image_width * 250 / $image_height;
 			$padding_bottom = $image_height / $image_width * 100;
-			error_log( 'img width ' . $image_width );
-			error_log( 'img height ' . $image_height );
 
+			$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
+		} else {
+		
+			$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '">';
 		}
-		$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
-
+		
 		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
 		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
 			$html .= '<i style="padding-bottom:' . $padding_bottom . '%;" ></i>';
