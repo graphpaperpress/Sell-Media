@@ -251,7 +251,8 @@ class SellMediaProducts {
 		$protected_file     = str_replace( $wp_upload_dir['basedir'], $protected_dir, $unprotected_file );
 
 		// S3 changes native WP paths, so use that path
-		if ( class_exists( 'SellMediaS3' ) ) {
+		$s3_file = get_post_meta( $attachment_id, '_sell_media_s3_file', true );
+		if ( class_exists( 'SellMediaS3' ) && '' !== $s3_file ) {
 			$file = wp_get_attachment_url( $attachment_id );
 		} elseif ( $this->is_package( $post_id ) ) {
 			$file = $this->get_package_file( $post_id );
