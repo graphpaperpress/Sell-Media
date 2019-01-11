@@ -248,12 +248,29 @@ function sell_media_gallery( $post_id ) {
 	$html .= '<div id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 		$attachment_attributes = wp_get_attachment_image_src( $attachment_id, 'large' );
-		$attr = array(
-			'class' => 'sell-media-image sell_media_image sell_media_watermark',
-		);
-		$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
-		$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item" data-src="' . esc_url( $attachment_attributes[0] ) . '">';
+
+
+		$settings = sell_media_get_plugin_options();
+		if ( 'sell-media-horizontal-masonry' === $settings->thumbnail_layout ) {
+ 			$class = 'sell-media-image sell_media_image sell_media_watermark horizontal-masonry-column overlay-container ';
+						
+			//$image_data     = wp_get_attachment_image_src( $attachment_id, 'medium' );
+			$image_width    = $attachment_attributes[1];
+			$image_height   = $attachment_attributes[2];
+			$width          = $image_width * 250 / $image_height;
+			$padding_bottom = $image_height / $image_width * 100;
+ 			$html  .= '<div id="sell-media-' . $attachment_id  . '" class="' . $class . ' sell-media-grid-single-item"  data-src="' . esc_url( $attachment_attributes[0] ) . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
+		} else {
+			$attr = array(
+				'class' => 'sell-media-image sell_media_image sell_media_watermark',
+			);
+			$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
+			$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item" data-src="' . esc_url( $attachment_attributes[0] ) . '">';
+		}
 		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
+		if ( 'sell-media-horizontal-masonry' === $settings->thumbnail_layout ) {
+			$html .= '<i style="padding-bottom:' . $padding_bottom . '%;" ></i>';
+		}
 		$mime_type = get_post_mime_type( $attachment_id );
 		
 		$html .= sell_media_item_icon( $attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ), false );

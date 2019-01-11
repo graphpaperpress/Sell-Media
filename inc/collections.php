@@ -30,7 +30,23 @@ function sell_media_collection_password_check( $query ) {
 		return $query;
 	}
 
-	if ( ! is_page( $settings->search_page ) && ! in_the_loop() ) {
+	// WP Bug: https://core.trac.wordpress.org/ticket/21790
+	// Applying a workaround to avoid massive notices in error log file
+
+	$front_page_id        = get_option( 'page_on_front' );
+    $current_page_id      = $query->get( 'page_id' );
+    $search_page          = $settings->search_page;
+    $is_static_front_page = 'page' == get_option( 'show_on_front' );
+
+    // Detect if it's a static front page and the current page is the front page, then use our work around
+    // Otherwise, just use is_shop since it works fine on other pages
+    if ( $is_static_front_page && $front_page_id == $current_page_id  ) {
+        $is_search_page = ( $current_page_id == $search_page ) ? true : false;
+    } else {
+        $is_search_page = $search_page;
+    }
+
+	if ( ! $is_search_page && ! in_the_loop() ) {
 		return;
 	}
 
