@@ -848,7 +848,7 @@ function sell_media_get_import_dir() {
  */
 function sell_media_get_directories( $dir = null ) {
 
-	$directories = '';
+	$directories = array();
 	$path = ( 'packages' === $dir ) ? sell_media_get_packages_upload_dir() : sell_media_get_import_dir();
 
 	foreach ( glob( $path . '/*', GLOB_ONLYDIR ) as $directory ) {
