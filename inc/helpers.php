@@ -77,11 +77,16 @@ add_action( 'wp_ajax_sell_media_load_template', 'sell_media_load_template' );
  */
 function sell_media_redirect_login_dashboard( $redirect_to, $request, $user ) {
 	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
-		// check for customers
+		// Check for customers.
 		if ( in_array( 'sell_media_customer', $user->roles ) ) {
 			$settings = sell_media_get_plugin_options();
-			// redirect them to the dashboard
-			$redirect_to = get_permalink( $settings->dashboard_page );
+			// Redirect them to the dashboard.
+			$recurring_subscription = get_user_meta( $user->ID, 'sm_subscription_recurring', true );
+			if ( class_exists( 'Sell_Media_Subscription' ) && 'yes' === $recurring_subscription ) {
+				$redirect_to = get_permalink( $settings->subscription_dashboard );
+			} else {
+				$redirect_to = get_permalink( $settings->dashboard_page );
+			}
 		}
 	}
 	return $redirect_to;
