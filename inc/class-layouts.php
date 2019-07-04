@@ -180,14 +180,15 @@ class SellMediaLayouts {
 	 */
 	public function grid_container_class() {
 		$class = 'sell-media-grid-item-container';
+		if ( isset( $this->settings->thumbnail_layout ) ) {
+			if ( 'sell-media-masonry' === $this->settings->thumbnail_layout ) {
+				$class = 'sell-media-grid-item-masonry-container';
+			}
 
-		if ( 'sell-media-masonry' === $this->settings->thumbnail_layout ) {
-			$class = 'sell-media-grid-item-masonry-container';
-		}
-
-		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
-			$class = 'horizontal-masonry-columns';
-			// $class = 'sell-media-grid-item-horizontal-masonry-container';
+			if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
+				$class = 'horizontal-masonry-columns';
+				// $class = 'sell-media-grid-item-horizontal-masonry-container';
+			}
 		}
 
 		return $class;
@@ -205,7 +206,7 @@ class SellMediaLayouts {
 			return $class . ' sell-media-three-col';
 		}
 
-		if ( ! empty( $this->settings->thumbnail_layout ) ) {
+		if ( isset( $this->settings->thumbnail_layout ) && ! empty( $this->settings->thumbnail_layout ) ) {
 			return $class . ' ' . $this->settings->thumbnail_layout;
 		}
 	}
@@ -342,7 +343,7 @@ class SellMediaLayouts {
 			$class .= ' sell-media-grid-single-item';
 		}
 		$custom_style = '';
-		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
+		if ( isset( $this->settings->thumbnail_layout ) && 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
 			$class = 'horizontal-masonry-column overlay-container ';
 						
 			$image_data     = wp_get_attachment_image_src( $attachment_id, 'medium' );
@@ -358,7 +359,7 @@ class SellMediaLayouts {
 		}
 		
 		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
-		if ( 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
+		if ( isset( $this->settings->thumbnail_layout ) && 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
 			$html .= '<i style="padding-bottom:' . $padding_bottom . '%;" ></i>';
 		}
 		// Show titles?
