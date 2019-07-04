@@ -29,7 +29,7 @@ class SellMediaProducts {
 		) {
 			$price = $price + ( $price * $this->settings->tax_rate );
 		}
-		return $price;
+		return sprintf( '%0.2f', (float) $price );
 	}
 
 	/**
