@@ -734,9 +734,11 @@ function sell_media_ajax_filter( $atts ){
 			$output .= '<div id="sell-media-archive" class="sell-media">';
 				$output .= '    <div id="sell-media-ajax-filter-content" role="main">';
 					$pram = array( 'tab' => $first_tab, 'term' => $first_term );
-					$response = sell_media_ajax_filter_search( $pram, false );
-					$output .= $response['content'];
-					$output .= $response['load_more'];
+					if (!is_admin() ) {
+                        $response = sell_media_ajax_filter_search( $pram, false );
+                        $output .= $response['content'];
+                        $output .= $response['load_more'];
+                    }
 				$output .= '</div>';
 			$output .= '</div>';
 		$output .= '</div>';
