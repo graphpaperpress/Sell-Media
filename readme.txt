@@ -23,6 +23,9 @@ Using Sell Media, you can:
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
 
+** Horizontal Masonry Layouts - New in version 2.4.2 **
+Horizontal masonry layouts for thumbnails can be enabled on Sell Media -> Settings -> Thumbnail Layout
+
 = Resources =
 
 * [Beginners's PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf)
@@ -230,9 +233,12 @@ Action hooks available:
 == Changelog ==
 
 = 2.4.2 =
-* Fix: PHP 7.2 Notices
+* New: Horizontal masonry image layouts
+* Fix: PHP 7.2 Notices/WP deprecated functions
 * Fix: Attachment url for keyword archives
-*
+* Fix: 3 decimal places price w/ tax inclusive setting
+* Fix: S3 downloads
+* Fix: Thumbnail icons audio/video
 
 = 2.4.1 =
 * Fix: Deleting marketplace items url fix
