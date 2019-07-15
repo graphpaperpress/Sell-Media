@@ -3,9 +3,9 @@
 Contributors: endortrails, racase
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
-Requires at least: 4.0
-Tested up to: 4.8
-Stable tag: 2.4.1
+Requires at least: 5.2.2
+Tested up to: 5.2.2
+Stable tag: 2.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,7 +55,7 @@ If you're having difficulties getting Sell Media set up, check out [VisualSociet
 
 = Server Requirements =
 
-1. PHP 5.6 or higher
+1. PHP 7.2 or higher
 2. CURL PHP extension
 3. GD PHP extension
 4. Original file uploads are protected automatically on Apache servers using .htaccess. If you are using an NGINX server, you'll need to add this to your sites configuration file:
@@ -231,6 +231,11 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.4.2 =
+* Fix: PHP 7.2 Notices
+* Fix: Attachment url for keyword archives
+* 
 
 = 2.4.1 =
 * Fix: Deleting marketplace items url fix
