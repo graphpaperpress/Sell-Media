@@ -23,9 +23,6 @@ Using Sell Media, you can:
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
 
-** Marketplace - New in version 2.4 **
-Version 2.4 of Sell Media allows you to contribute photos to a central searchable marketplace to help you promote your work and generate traffic to your website. To add photos to the marketplace, visit Sell Media -> Add New and click the Marketplace tab.
-
 = Resources =
 
 * [Beginners's PDF Guide](https://graphpaperpress-downloads.s3.amazonaws.com/free/Sell-Photos-Online.pdf)
@@ -235,7 +232,7 @@ Action hooks available:
 = 2.4.2 =
 * Fix: PHP 7.2 Notices
 * Fix: Attachment url for keyword archives
-* 
+*
 
 = 2.4.1 =
 * Fix: Deleting marketplace items url fix
