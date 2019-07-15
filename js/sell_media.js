@@ -566,7 +566,9 @@ jQuery(document).ready(function($) {
             $('#sell-media-ajax-filter-container .sell-media-ajax-filter-terms a').removeClass('stop-click');
             $('#sell-media-ajax-filter-content').removeClass('sell-media-ajax-loader ');
 
-            macy_init();
+            if (sell_media.thumbnail_layout && sell_media.thumbnail_layout === 'sell-media-masonry') {
+                macy_init();
+            }
 
         });
     }

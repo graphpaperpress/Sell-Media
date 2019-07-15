@@ -102,6 +102,7 @@ function sell_media_scripts( $hook ) {
 		'remove_text' => __( 'Remove from Lightbox', 'sell_media' ),
 		'save_text' => __( 'Save to Lightbox', 'sell_media' ),
 		'currencies' => sell_media_currencies(),
+        'thumbnail_layout' => $settings->thumbnail_layout
 	) );
 
 	do_action( 'sell_media_scripts_hook' );
