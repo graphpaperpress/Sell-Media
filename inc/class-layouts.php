@@ -342,6 +342,7 @@ class SellMediaLayouts {
 		if ( ! sell_media_has_multiple_attachments( $post_id ) ) {
 			$class .= ' sell-media-grid-single-item';
 		}
+
 		$custom_style = '';
 		if ( isset( $this->settings->thumbnail_layout ) && 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
 			$class = 'horizontal-masonry-column overlay-container ';
@@ -358,10 +359,11 @@ class SellMediaLayouts {
 			$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '">';
 		}
 		
-		$html .= '<a href="' . esc_url( get_permalink( $original_id ) ) . '" ' . sell_media_link_attributes( $original_id ) . ' class="sell-media-item">';
+		$html .= '<a href="' . esc_url( get_permalink( $post_id ) ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 		if ( isset( $this->settings->thumbnail_layout ) && 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
 			$html .= '<i style="padding-bottom:' . $padding_bottom . '%;" ></i>';
 		}
+
 		// Show titles?
 		if ( isset( $this->settings->titles ) && 0 != $this->settings->titles && is_main_query() ) {
 			$html .= '<h2 class="sell-media-entry-title">' . get_the_title( $original_id ) . '</h2>';
