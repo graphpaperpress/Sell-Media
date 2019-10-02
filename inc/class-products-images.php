@@ -185,31 +185,32 @@ class SellMediaImages extends SellMediaProducts {
 			 */
 			global $wp_version;
 			if ( version_compare( $wp_version, '3.5', '>=' ) ) {
-
 				/**
-				 * Resize the "original" to our largest size set in the Media Settings.
-				 *
-				 * This creates a file named filename-[width]x[height].jpg
-				 * From here the "original" file is still in our uploads dir, its needed to create
-				 * the additional image sizes. Once we're done making the additional sizes, we rename
-				 * the filename-[width]x[height].jpg to filename.jpg, thus having a resized "original"
-				 * file.
+				 * Run this block only if file does not exist
 				 */
-				$image_new_size = image_make_intermediate_size( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false );
-
-				/**
-				 * If for some reason the image resize fails we just fall back to the original image.
-				 * Example, the image the user is trying to sell is smaller than our "max width".
-				 */
-				if ( empty( $image_new_size ) ) {
-					$resized_image = $original_file;
-					$keep_original = true;
-				} else {
-					$keep_original = false;
-					$resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
-				}
-
 				if ( ! file_exists( $destination_file ) ) {
+					/**
+					 * Resize the "original" to our largest size set in the Media Settings.
+					 *
+					 * This creates a file named filename-[width]x[height].jpg
+					 * From here the "original" file is still in our uploads dir, its needed to create
+					 * the additional image sizes. Once we're done making the additional sizes, we rename
+					 * the filename-[width]x[height].jpg to filename.jpg, thus having a resized "original"
+					 * file.
+					 */
+					$image_new_size = image_make_intermediate_size( $original_file, get_option( 'large_size_w' ), get_option( 'large_size_h' ), false );
+
+					/**
+					 * If for some reason the image resize fails we just fall back to the original image.
+					 * Example, the image the user is trying to sell is smaller than our "max width".
+					 */
+					if ( empty( $image_new_size ) ) {
+						$resized_image = $original_file;
+						$keep_original = true;
+					} else {
+						$keep_original = false;
+						$resized_image = $wp_upload_dir['path'] . '/' . $image_new_size['file'];
+					}
 
 					/**
 					 * Move our originally upload file into the protected area
