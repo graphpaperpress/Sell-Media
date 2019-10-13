@@ -318,7 +318,7 @@ jQuery(document).ready(function($) {
         var price = $('#sell_media_item_size :selected').data('price');
         // if the price doesn't exist, set the price to the total shown
         // either the custom price of the item or the default price from settings
-        if (price == undefined || price == 0) {
+        if (price == undefined) { // remove price == 0 as users can set price to 0
             price = $('#sell_media_item_base_price').val();
         }
 

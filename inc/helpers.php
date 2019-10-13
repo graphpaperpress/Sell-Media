@@ -1029,7 +1029,10 @@ function sell_media_free_download_file( $post_id, $attachment_id ) {
 	} else {
 
 		$requested_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
-		$file_type = wp_check_filetype( $requested_file );
+		
+		// Added to avoid AWS keys appending to downloads
+        $file_array = explode("?", $requested_file);
+		$file_type = wp_check_filetype( $file_array[0] );
 
 		if ( ! ini_get( 'safe_mode' ) ) {
 			set_time_limit( 0 );
@@ -1046,7 +1049,7 @@ function sell_media_free_download_file( $post_id, $attachment_id ) {
 		header( 'Robots: none' );
 		header( 'Content-Type: ' . $file_type['type'] . '' );
 		header( 'Content-Description: File Transfer' );
-		header( 'Content-Disposition: attachment; filename="' . basename( $requested_file ) . '"' );
+		header( 'Content-Disposition: attachment; filename="' . basename( $file_array[0] ) . '"' );
 		header( 'Content-Transfer-Encoding: binary' );
 
 		// Deliver the download
