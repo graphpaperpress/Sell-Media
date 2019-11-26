@@ -721,3 +721,8 @@ function sell_media_save_bulk_edit() {
 }
 
 add_action( 'wp_ajax_sell_media_save_bulk_edit', 'sell_media_save_bulk_edit' );
+
+/**
+ * Enable large image uploads since WordPress 5.3 disabled it
+ */
+add_filter( 'big_image_size_threshold', '__return_false' );
