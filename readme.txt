@@ -3,9 +3,9 @@
 Contributors: endortrails, racase
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
-Requires at least: 5.2.2
-Tested up to: 5.2.2
-Stable tag: 2.4.2
+Requires at least: 5.3
+Tested up to: 5.3
+Stable tag: 2.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,14 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.4.3 =
+* Fix: Checkout page
+* Fix: Downloads
+* Fix: PayPal IPN
+* Fix: Email to buyer
+* Fix: Video previews
+* Fix: Notices
 
 = 2.4.2 =
 * New: Horizontal masonry image layouts
