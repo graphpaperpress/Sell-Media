@@ -148,6 +148,7 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 	}
 
 	// Post Thumbnail
+	// Uploaded Sell Media Item
 	if ( '' != get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
 
@@ -165,36 +166,42 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
 
 	} else {
-		$mime_type = get_post_mime_type( $attachment_id );
-		switch ( $mime_type ) {
-			case 'image/jpeg':
-			case 'image/png':
-			case 'image/gif':
-				$src = wp_mime_type_icon( 'image/jpeg' );
-				break;
-			case 'video/mpeg':
-			case 'video/mp4':
-			case 'video/quicktime':
-				$src = wp_mime_type_icon( 'video/mpeg' );
-				break;
-			case 'text/csv':
-			case 'text/pdf':
-			case 'text/plain':
-			case 'text/xml':
-			case 'application/pdf':
-				$src = wp_mime_type_icon( 'application/document' );
-				break;
-			case 'application/x-gzip':
-			case 'application/zip':
-				$src = wp_mime_type_icon( 'application/archive' );
-				break;
-			default:
-				$src = wp_mime_type_icon();
-				break;
-		}
+		global $post;
+		if ( '' != get_the_post_thumbnail( $post->ID ) ) {
+			$image = get_the_post_thumbnail( $post->ID, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
+		} else {
+			$mime_type = get_post_mime_type( $attachment_id );
+			switch ( $mime_type ) {
+				case 'image/jpeg':
+				case 'image/png':
+				case 'image/gif':
+					$src = wp_mime_type_icon( 'image/jpeg' );
+					break;
+				case 'video/mpeg':
+				case 'video/mp4':
+				case 'video/quicktime':
+					$src = wp_mime_type_icon( 'video/mpeg' );
+					break;
+				case 'text/csv':
+				case 'text/pdf':
+				case 'text/plain':
+				case 'text/xml':
+				case 'application/pdf':
+					$src = wp_mime_type_icon( 'application/document' );
+					break;
+				case 'application/x-gzip':
+				case 'application/zip':
+					$src = wp_mime_type_icon( 'application/archive' );
+					break;
+				default:
+					$src = wp_mime_type_icon();
+					break;
+			}
 
-		$src = apply_filters( 'sell_media_item_icon_src', $src, $attachment_id, $mime_type );
-		$image = '<img src="' . $src . '" class="' . apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . $src . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+			$src = apply_filters( 'sell_media_item_icon_src', $src, $attachment_id, $mime_type );
+			$image = '<img src="' . $src . '" class="' . apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . $src . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+		
+		}
 	}
 
 	if ( $echo ) {
@@ -220,8 +227,13 @@ if ( ! function_exists( 'sell_media_get_media' ) ) :
 		$post_id = ( $post_id ) ? $post_id : $post->ID;
 		$html = '';
 		$mime_type = get_post_mime_type( $post_id );
-		
-		if ( sell_media_has_multiple_attachments( $post_id ) ) {
+
+		if( 'video/mpeg' == $mime_type || 'video/mp4' == $mime_type || 'video/quicktime' == $mime_type ) {
+			$url = get_post_meta( wp_get_post_parent_id($post_id), 'sell_media_embed_link', true );
+            if ( '' != $url ) {
+                $html .= wp_oembed_get( esc_url( $url ), array( 'width' => 600 ) );
+            }
+		} else if ( sell_media_has_multiple_attachments( $post_id ) ) {
 			$html .= sell_media_gallery( $post_id );
 		} else {
 			$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_large_item_size', 'large' ), false );
@@ -247,19 +259,30 @@ function sell_media_gallery( $post_id ) {
 	$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container', $post_id );
 	$html .= '<div id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+		//$mime_type = get_post_mime_type( $attachment_id );
+		//echo $mime_type;
 		$attachment_attributes = wp_get_attachment_image_src( $attachment_id, 'large' );
+
+		if( has_post_thumbnail() && ! is_array( $attachment_attributes ) ) {
+			$attachment_attributes[0] = get_the_post_thumbnail_url($post_id, 'medium');
+			$image_size = getimagesize( $attachment_attributes[0] );
+			$attachment_attributes[1] = $image_size[0];
+			$attachment_attributes[2] = $image_size[1];
+		}
 
 
 		$settings = sell_media_get_plugin_options();
 		if ( 'sell-media-horizontal-masonry' === $settings->thumbnail_layout ) {
  			$class = 'sell-media-image sell_media_image sell_media_watermark horizontal-masonry-column overlay-container ';
 						
-			//$image_data     = wp_get_attachment_image_src( $attachment_id, 'medium' );
-			$image_width    = $attachment_attributes[1];
-			$image_height   = $attachment_attributes[2];
-			$width          = $image_width * 250 / $image_height;
-			$padding_bottom = $image_height / $image_width * 100;
- 			$html  .= '<div id="sell-media-' . $attachment_id  . '" class="' . $class . ' sell-media-grid-single-item"  data-src="' . esc_url( $attachment_attributes[0] ) . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
+			$image_data     = wp_get_attachment_image_src( $attachment_id, 'medium' );
+			if( $image_data ) {
+				$image_width    = $attachment_attributes[1];
+				$image_height   = $attachment_attributes[2];
+				$width          = $image_width * 250 / $image_height;
+				$padding_bottom = $image_height / $image_width * 100;
+	 			$html  .= '<div id="sell-media-' . $attachment_id  . '" class="' . $class . ' sell-media-grid-single-item"  data-src="' . esc_url( $attachment_attributes[0] ) . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
+	 		}
 		} else {
 			$attr = array(
 				'class' => 'sell-media-image sell_media_image sell_media_watermark',
@@ -269,7 +292,9 @@ function sell_media_gallery( $post_id ) {
 		}
 		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
 		if ( 'sell-media-horizontal-masonry' === $settings->thumbnail_layout ) {
-			$html .= '<i style="padding-bottom:' . $padding_bottom . '%;" ></i>';
+			if( $image_data ) {
+				$html .= '<i style="padding-bottom:' . $padding_bottom . '%;" ></i>';
+			}
 		}
 		$mime_type = get_post_mime_type( $attachment_id );
 		
@@ -533,11 +558,15 @@ function sell_media_show_file_info() {
 		return;
 	}
 
+
 	$media_dims = '';
 	$meta = wp_get_attachment_metadata( $attachment_id );
-	$filename = basename( get_attached_file( $attachment_id ) );
+	
+	$filename = explode( '?', basename( get_attached_file( $attachment_id ) ) )[0];
+	//$filename = basename( get_attached_file( $attachment_id ) );
 	$post_guid = get_the_guid( $attachment_id );
 	$image_size_info = getimagesize( Sell_Media()->products->get_protected_file( $post_obj->ID, $attachment_id ) );
+	$video_metadata = wp_get_attachment_metadata( $attachment_id );
 
 	echo '<h2 class="widget-title sell-media-item-details-title">' . __( 'Details', 'sell_media' ) . '</h2>';
 	echo '<ul class="sell-media-item-details">';
@@ -555,10 +584,13 @@ function sell_media_show_file_info() {
 	if ( wp_get_post_terms( $post_obj->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
 		echo '<li class="keywords"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>';
 	}
-
 	if ( preg_match( '#^(audio|video)/#', get_post_mime_type( $attachment_id ) ) ) {
-		echo '<li class="length"><span class="title">' . __( 'Length', 'sell_media' ) . ':</span> ' . $meta['length_formatted'] . '</li>';
-		echo '<li class="bitrate"><span class="title">' . __( 'Bitrate', 'sell_media' ) . ':</span> ' . round( $meta['bitrate'] / 1000 ) . 'kb/s</li>';
+		if( '' != $meta  && isset( $meta['length_formatted']) )  {
+			echo '<li class="length"><span class="title">' . __( 'Length', 'sell_media' ) . ':</span> ' . $meta['length_formatted'] . '</li>';
+		}
+		if( '' != $meta  && isset( $meta['bitrate']) )  {
+			echo '<li class="bitrate"><span class="title">' . __( 'Bitrate', 'sell_media' ) . ':</span> ' . round( $meta['bitrate'] / 1000 ) . 'kb/s</li>';
+		}
 	}
 	echo do_action( 'sell_media_additional_list_items', $post_obj->ID );
 	echo '</ul>';

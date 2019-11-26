@@ -68,8 +68,8 @@ class SellMediaAudioVideo extends SellMediaProducts {
      * Add meta fields.
      * @param int $post_id ID of post.
      */
-    function add_meta_fields( $post_id ){
-        $embed_url = get_post_meta( $post_id, 'sell_media_embed_link', true );
+    function add_meta_fields( $post ){
+        $embed_url = get_post_meta( $post->ID, 'sell_media_embed_link', true );
         ?>
         <div id="sell-media-embed-link-field" class="sell-media-field" style="display:none;">
             <label for="sell-media-embed-link"><?php _e( 'Preview URL', 'sell_media' ); ?></label>
