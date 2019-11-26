@@ -425,7 +425,7 @@ add_filter( 'login_headerurl', 'sell_media_login_logo_url' );
 function sell_media_login_logo_url_title() {
 	return get_bloginfo( 'name' );
 }
-add_filter( 'login_headertitle', 'sell_media_login_logo_url_title' );
+add_filter( 'login_headertext', 'sell_media_login_logo_url_title' );
 
 /**
  * Custom CSS for login/registration page
