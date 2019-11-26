@@ -326,7 +326,7 @@ class SellMediaLayouts {
 	 * @return string html
 	 */
 	function content_loop( $post_id, $i, $args = array() ) {
-
+		global $mime_type;
 		$original_id = $post_id;
 		if ( post_password_required( $original_id ) && sell_media_is_search() ) {
 			return;
