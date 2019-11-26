@@ -608,15 +608,19 @@ if ( ! is_admin() ) {
 function sell_media_get_filesize( $post_id = null, $attachment_id = null ) {
 
 	$file_path = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
-
-	if ( file_exists( $file_path ) ) {
-
+	//echo $file_path;
+	if ( file_exists( $file_path ) ) { // local server path
 		$bytes = filesize( $file_path );
-		$s = array( 'b', 'Kb', 'Mb', 'Gb' );
-		$e = floor( log( $bytes ) / log( 1024 ) );
-
-		return sprintf( '%.2f ' . $s[ $e ], ( $bytes / pow( 1024, floor( $e ) ) ) );
+	} else { // amazon s3 filesize https path
+		$heads = get_headers($file_path, 1);
+		$bytes = $heads['Content-Length'];	
 	}
+	
+	$s = array( 'b', 'Kb', 'Mb', 'Gb' );
+	$e = floor( log( $bytes ) / log( 1024 ) );
+
+	return sprintf( '%.2f ' . $s[ $e ], ( $bytes / pow( 1024, floor( $e ) ) ) );
+	
 }
 
 
@@ -1029,7 +1033,10 @@ function sell_media_free_download_file( $post_id, $attachment_id ) {
 	} else {
 
 		$requested_file = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
-		$file_type = wp_check_filetype( $requested_file );
+
+		// Added to avoid AWS keys appending to downloads		
+        $file_array = explode("?", $requested_file);		
+        $file_type = wp_check_filetype( $file_array[0] );
 
 		if ( ! ini_get( 'safe_mode' ) ) {
 			set_time_limit( 0 );
@@ -1046,7 +1053,7 @@ function sell_media_free_download_file( $post_id, $attachment_id ) {
 		header( 'Robots: none' );
 		header( 'Content-Type: ' . $file_type['type'] . '' );
 		header( 'Content-Description: File Transfer' );
-		header( 'Content-Disposition: attachment; filename="' . basename( $requested_file ) . '"' );
+		header( 'Content-Disposition: attachment; filename="' . basename( $file_array[0] ) . '"' );
 		header( 'Content-Transfer-Encoding: binary' );
 
 		// Deliver the download
@@ -1327,6 +1334,7 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 			}
 		}
 	}
+	//print_r($metadata);exit();
 
 	// Remove the blob of binary data from the array.
 	if ( $metadata ) {
@@ -1337,18 +1345,21 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 
 	// Sometimes the original source file is smaller than the large size
 	// this causes the copy to fail
-	if ( array_key_exists( 'large', $metadata['sizes'] ) ) {
 
-		$date_folder = dirname( $data['file'] );
-		$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
-		$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
+	if( array_key_exists( 'sizes', $metadata ) ) {
+		if ( array_key_exists( 'large', $metadata['sizes'] ) ) {
 
-		if ( file_exists( $large_file ) ){
-			$copy = copy( $large_file, $main_file );
-			if ( $copy ) {
+			$date_folder = dirname( $data['file'] );
+			$large_file = trailingslashit( $uploads['basedir'] ) .trailingslashit( $date_folder ) . $metadata['sizes']['large']['file'];
+			$main_file = trailingslashit( $uploads['basedir'] ) . $data['file'];
 
-				$metadata['width'] = $metadata['sizes']['large']['width'];
-				$metadata['height'] = $metadata['sizes']['large']['height'];
+			if ( file_exists( $large_file ) ){
+				$copy = copy( $large_file, $main_file );
+				if ( $copy ) {
+
+					$metadata['width'] = $metadata['sizes']['large']['width'];
+					$metadata['height'] = $metadata['sizes']['large']['height'];
+				}
 			}
 		}
 	}

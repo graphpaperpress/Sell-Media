@@ -126,9 +126,9 @@ class SM_Gateway_Paypal_Request {
             $args["on6_" . $index] = 'attachment';
 
             $agrs_index = 7;
-            if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
-                <?php foreach ( $markups as $markup ) : ?>
-                    <?php if ( 'licenses' === $markup )  {
+            if ( is_array( $markups ) && count( $markups ) > 0 ) :
+                foreach ( $markups as $markup ) :
+                    if ( 'licenses' === $markup )  {
                         continue;
                     }
                     $args["on{$agrs_index}_" . $index] = "item_markup_{$markup}";
@@ -138,8 +138,8 @@ class SM_Gateway_Paypal_Request {
                     $args["os{$agrs_index}_" . $index] = $item["item_markup_{$markup}_id"];
 
                     $agrs_index++;
-                    endforeach; ?>
-            <?php endif;
+                endforeach;
+            endif;
 
             $args['option_index_0' ] = $agrs_index;
 

@@ -326,7 +326,7 @@ class SellMediaLayouts {
 	 * @return string html
 	 */
 	function content_loop( $post_id, $i, $args = array() ) {
-
+		global $mime_type;
 		$original_id = $post_id;
 		if ( post_password_required( $original_id ) && sell_media_is_search() ) {
 			return;
@@ -346,13 +346,22 @@ class SellMediaLayouts {
 		$custom_style = '';
 		if ( isset( $this->settings->thumbnail_layout ) && 'sell-media-horizontal-masonry' === $this->settings->thumbnail_layout ) {
 			$class = 'horizontal-masonry-column overlay-container ';
+			// grab the thumbnail if its not photo
+			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
+				$image_data     = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
+				$image_size    = getimagesize($image_data);
+				$image_width   = $image_size[0];
+				$image_height   = $image_size[1];
+				$width          = $image_width * 250 / $image_height;
+				$padding_bottom = $image_height / $image_width * 100;
+			} else {						
+				$image_data     = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+				$image_width    = $image_data[1];
+				$image_height   = $image_data[2];
+				$width          = $image_width * 250 / $image_height;
+				$padding_bottom = $image_height / $image_width * 100;
+			}
 						
-			$image_data     = wp_get_attachment_image_src( $attachment_id, 'medium' );
-			$image_width    = $image_data[1];
-			$image_height   = $image_data[2];
-			$width          = $image_width * 250 / $image_height;
-			$padding_bottom = $image_height / $image_width * 100;
-
 			$html  = '<div id="sell-media-' . $original_id . '" class="' . $class . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
 		} else {
 		

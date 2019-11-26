@@ -177,6 +177,7 @@ function sell_media_checkout_shortcode() {
 	<?php do_action( 'sell_media_checkout_before_cart' ); ?>
 	<?php
 	global $sm_cart;
+	if( ! empty( $sm_cart ) ) :
 	$cart_items = $sm_cart->getItems();
 	if ( ! empty( $cart_items ) ) :
 	?>
@@ -307,6 +308,7 @@ function sell_media_checkout_shortcode() {
 
 	</div><!-- #sell-media-checkout-cart -->
 
+	<?php endif; ?>
 	<?php endif; ?>
 
 	<p id="sell-media-empty-cart-message" class="<?php echo ( !empty( $cart_items ) ) ? 'hide' : ''?>">
