@@ -1,14 +1,21 @@
-name: CI
-
-on: [push]
-
+name: Deploy to WordPress.org
+on:
+  push:
+    tags:
+    - "*"
 jobs:
-  build:
-
+  tag:
+    name: New tag
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
+    - name: Build
+      run: |
+        npm install
+        npm run build
     - name: WordPress Plugin Deploy
-      uses: 10up/action-wordpress-plugin-deploy@1.4.0
-
+      uses: 10up/action-wordpress-plugin-deploy@master
+      env:
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        SLUG: ${{ secrets.SLUG }}
