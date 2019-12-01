@@ -138,6 +138,11 @@ class SellMediaLayouts {
 			$classes[] = 'sell-media-gallery-page';
 		}
 
+		// Sell Media Item goes to attachment after version 2.4
+		if( is_attachment() && 'sell_media_item' == get_post_type($post->post_parent)) {
+			$classes[] = 'single-sell_media_item';
+		}
+		
 		// Theme
 		$theme = wp_get_theme();
 		$classes[] = 'theme-' . sanitize_title_with_dashes( $theme->get( 'Name' ) );
