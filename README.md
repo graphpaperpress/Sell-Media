@@ -1,11 +1,11 @@
 === Sell Media ===
 
-Contributors: endortrails, racase
+Contributors: endortrails, racase, nhuja
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
-Requires at least: 5.2.2
-Tested up to: 5.2.2
-Stable tag: 2.4.2
+Requires at least: 5.3
+Tested up to: 5.3
+Stable tag: 2.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,8 +23,8 @@ Using Sell Media, you can:
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
 
-** Marketplace - New in version 2.4 **
-Version 2.4 of Sell Media allows you to contribute photos to a central searchable marketplace to help you promote your work and generate traffic to your website. To add photos to the marketplace, visit Sell Media -> Add New and click the Marketplace tab.
+** Horizontal Masonry Layouts - New in version 2.4.2 **
+Horizontal masonry layouts for thumbnails can be enabled on Sell Media -> Settings -> Thumbnail Layout
 
 = Resources =
 
@@ -232,10 +232,24 @@ Action hooks available:
 
 == Changelog ==
 
+= 2.4.4 =
+* Fix: Magnifier extension support
+
+= 2.4.3 =
+* Fix: Checkout page
+* Fix: Downloads
+* Fix: PayPal IPN
+* Fix: Email to buyer
+* Fix: Video previews
+* Fix: Notices
+
 = 2.4.2 =
-* Fix: PHP 7.2 Notices
+* New: Horizontal masonry image layouts
+* Fix: PHP 7.2 Notices/WP deprecated functions
 * Fix: Attachment url for keyword archives
-* 
+* Fix: 3 decimal places price w/ tax inclusive setting
+* Fix: S3 downloads
+* Fix: Thumbnail icons audio/video
 
 = 2.4.1 =
 * Fix: Deleting marketplace items url fix
