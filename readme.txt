@@ -234,6 +234,7 @@ Action hooks available:
 
 = 2.4.4 =
 * Fix: Magnifier extension support
+* Fix: Parse json if cookie present
 
 = 2.4.3 =
 * Fix: Checkout page

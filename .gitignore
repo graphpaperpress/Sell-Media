@@ -52,3 +52,7 @@ Thumbs.db
 # Deployment #
 ##############
 deploy.sh
+
+# Editors #
+##############
+.idea
