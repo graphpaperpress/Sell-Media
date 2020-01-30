@@ -362,14 +362,19 @@ function sell_media_get_attachment_id( $post_id = null ) {
 
 /**
  * Check if item has multiple attachments
+ * Restoring single items to redirect to single attachments 
+ * lost from 2.4.2
  */
 function sell_media_has_multiple_attachments( $post_id ) {
 
 	$attachments = sell_media_get_attachments( $post_id );
 	if ( $attachments && is_array( $attachments ) ) {
-		return true;
+		if( count($attachments) > 1)
+			return true;
+	} else {
+		return false;
 	}
-	return false;
+	
 }
 
 /**
