@@ -5,7 +5,7 @@ Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 5.3
 Tested up to: 5.3
-Stable tag: 2.4.4
+Stable tag: 2.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,10 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.4.5 =
+* Fix: Paypal IPN
+* Fix: Revert single image page redirect
 
 = 2.4.4 =
 * Fix: Magnifier extension support
