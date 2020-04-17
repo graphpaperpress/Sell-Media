@@ -948,7 +948,7 @@ function sell_media_thumbnail_crop() {
 	}
 
 }
-add_filter( 'sell_media_thumbnail', 'sell_media_thumbnail_crop', 10, 1 );
+add_filter( 'sell_media_thumbnail', 'sell_media_thumbnail_crop', 100 );
 
 
 /**

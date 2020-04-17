@@ -190,13 +190,8 @@ a:focus {
   display: block;
 }
 .horizontal-masonry-column img {
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  vertical-align: bottom;
+  max-height: 150px;
+  width: auto;
 }
 
 /*= Checkout Page
