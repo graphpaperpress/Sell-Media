@@ -458,10 +458,10 @@ jQuery(document).ready(function($) {
 
     var currency_symbol = sell_media.currencies[sell_media.currency_symbol].symbol;
     // Checkout total menu
-    $('(<span class="sell-media-cart-total checkout-counter-wrap">' + currency_symbol + '<span class="checkout-price">0</span></span>)').appendTo('.checkout-total a');
+    $('<span class="sell-media-cart-total checkout-counter-wrap">' + currency_symbol + '<span class="checkout-price">0</span></span>').appendTo('.checkout-total a');
 
     // Checkout qty menu
-    $('(<span class="sell-media-cart-quantity checkout-counter">0</span>)').appendTo('.checkout-qty a:first');
+    $('<span class="sell-media-cart-quantity checkout-counter">0</span>').appendTo('.checkout-qty a:first');
 
     //console.log(sell_media);
     /**
