@@ -375,14 +375,14 @@ jQuery(document).ready(function($) {
                     $('.item_markup_' + taxonomy + '_id').attr({ 'value': item_markup_id });
                 }
             }
-            // // set the license description
-            // var license_desc = $('#sell_media_item_license :selected').attr('title');
-            // // must use .attr since .data types are cached by jQuery
-            // if (license_desc) {
-            //     $('#license_desc').attr('data-tooltip', license_desc).show();
-            // } else {
-            //     $('#license_desc').hide();
-            // }
+            // set the license description
+            var license_desc = $('#sell_media_item_licenses :selected').attr('title');
+            // must use .attr since .data types are cached by jQuery
+            if (license_desc) {
+                $('#licenses_desc').attr('data-tooltip', license_desc).show();
+            } else {
+                $('#licenses_desc').hide();
+            }
         });
 
         $('#total').text(total_sum);
