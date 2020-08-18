@@ -24,7 +24,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 2.4.5
+ * @version 2.4.6
  */
 
 // Exit if accessed directly.
@@ -181,7 +181,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			// Plugin version.
 			if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-				define( 'SELL_MEDIA_VERSION', '2.4.5' );
+				define( 'SELL_MEDIA_VERSION', '2.4.6' );
 			}
 
 			// Plugin Folder Path.
