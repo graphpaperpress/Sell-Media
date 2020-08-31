@@ -144,7 +144,7 @@ function sell_media_process_paypal_ipn() {
                 // Send email to buyer and admin
                 $email_status = $payments->email_receipt( $payment_id, $_POST['payer_email'] );
                 $admin_email_status = $payments->email_receipt( $payment_id, $settings->from_email );
-
+                
                 $message .= "{$email_status}\n";
                 $message .= "{$admin_email_status}\n";
 
@@ -195,3 +195,60 @@ function sell_media_process_paypal_ipn() {
     }
 }
 add_action( 'sell_media_verify_paypal_ipn', 'sell_media_process_paypal_ipn' );
+
+/**
+* Collect comission from from cart and devide with contributors
+*/
+add_action('sell_media_after_successful_payment', 'get_commissons_by_payment_id');
+function get_commissons_by_payment_id($payment_id) {
+
+    // Get order collection
+    $_order = get_post_meta($payment_id, '_sell_media_payment_meta', true);
+    if(isset($_order['products']) && !empty($_order['products'])) {
+        $_total_amount = array();
+        foreach($_order['products'] as $_item) {
+
+            // Cart product id
+            $_product_id = (isset($_item['id'])) ? $_item['id'] : 0;
+
+            // Product price
+            $_product_price = (isset($_item['size']['amount'])) ? $_item['size']['amount'] : 0;
+
+            // Cart row total
+            $_row_total = (isset($_item['total'])) ? $_item['total'] : 0;
+
+            
+            $_commissions_meta = get_post_meta( $_product_id, '_sell_media_commissions_meta', true );
+
+            // get contributor who assigned in product
+            $_holder = $_commissions_meta['holder'];
+
+            // Comission %
+            $_commissions = $_commissions_meta['percentage'];
+
+            // calculate row comission
+            $_finl_comission = $_row_total * $_commissions / 100;
+            $_total_amount[$_holder] = $_finl_comission + ((isset($_total_amount[$_holder])) ? $_total_amount[$_holder] : 0);
+        }
+        // Send mail to contributor
+        send_mail_to_contributor($payment_id, $_total_amount);  
+    }
+    return;
+}
+
+/**
+* Send mail to contributor
+*/
+function send_mail_to_contributor($payment_id, $_contributers_comission) {
+
+    if(!empty($_contributers_comission)) {
+        foreach($_contributers_comission as $_user_id => $comission) {
+
+            //Get contributor email id
+            $_user = get_user_by('ID', $_user_id);
+
+            // Triger mail
+            Sell_Media()->payments->email_receipt( $payment_id, $_user->user_email, $comission );
+        }
+    }
+}

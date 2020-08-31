@@ -809,7 +809,7 @@ class SellMediaPayments {
 	 *
 	 * @since 0.1
 	 */
-	public function email_receipt( $payment_id = null, $email = null ) {
+	public function email_receipt( $payment_id = null, $email = null, $_comission = null ) {
 
 		$settings = sell_media_get_plugin_options();
 		$products = $this->get_payment_products_formatted( $payment_id, $inline_css = true );
@@ -818,13 +818,16 @@ class SellMediaPayments {
 		$message['from_email'] = $settings->from_email;
 
 		// send admins and buyers different email subject and body
-		if ( $email == $message['from_email'] ) {
+		if ( $email == $message['from_email'] || $_comission != '') {
 
 			$message['subject'] = __( 'New sale notification', 'sell_media' );
 			$message['body']  = apply_filters( 'sell_media_email_admin_receipt_message_intro', '<p style="margin: 10px 0;">Congrats! You just made a sale!</p>' );
 			$message['body'] .= '<p style="margin: 10px 0;">' . __( 'Customer', 'sell_media' ) . ': ' . $this->get_buyer_name( $payment_id ) . '</p>';
 			$message['body'] .= '<p style="margin: 10px 0;">' . __( 'Address', 'sell_media' ) . ': ' . $this->get_buyer_address( $payment_id ) . '</p>';
 			$message['body'] .= '<p style="margin: 10px 0;">' . __( 'Email', 'sell_media' ) . ': ' . $this->get_meta_key( $payment_id, 'email' ) . '</p>';
+			if ($_comission) {
+				$message['body'] .= '<p style="margin: 10px 0;">' . __( 'Your Comission', 'sell_media' ) . ': $' . $_comission . '</p>';
+			}
 			$message['body'] .= apply_filters( 'sell_media_email_admin_receipt_message', '<p style="margin: 10px 0;">An email containing download links has just been sent to your customer, so no further action is required. Here are the details that the customer received:</p>' );
 			$message['body'] .= $products;
 
