@@ -199,8 +199,8 @@ add_action( 'sell_media_verify_paypal_ipn', 'sell_media_process_paypal_ipn' );
 /**
 * Collect comission from from cart and devide with contributors
 */
-add_action('sell_media_after_successful_payment', 'get_commissons_by_payment_id');
-function get_commissons_by_payment_id($payment_id) {
+add_action('sell_media_after_successful_payment', 'sell_media_get_commissons_by_payment_id');
+function sell_media_get_commissons_by_payment_id($payment_id) {
 
     // Get order collection
     $_order = get_post_meta($payment_id, '_sell_media_payment_meta', true);
@@ -227,11 +227,11 @@ function get_commissons_by_payment_id($payment_id) {
             $_commissions = $_commissions_meta['percentage'];
 
             // calculate row comission
-            $_finl_comission = $_row_total * $_commissions / 100;
-            $_total_amount[$_holder] = $_finl_comission + ((isset($_total_amount[$_holder])) ? $_total_amount[$_holder] : 0);
+            $_final_commission = $_row_total * $_commissions / 100;
+            $_total_amount[$_holder] = $_final_commission + ((isset($_total_amount[$_holder])) ? $_total_amount[$_holder] : 0);
         }
         // Send mail to contributor
-        send_mail_to_contributor($payment_id, $_total_amount);  
+        sell_media_send_mail_to_contributor($payment_id, $_total_amount);  
     }
     return;
 }
@@ -239,7 +239,7 @@ function get_commissons_by_payment_id($payment_id) {
 /**
 * Send mail to contributor
 */
-function send_mail_to_contributor($payment_id, $_contributers_comission) {
+function sell_media_send_mail_to_contributor($payment_id, $_contributers_comission) {
 
     if(!empty($_contributers_comission)) {
         foreach($_contributers_comission as $_user_id => $comission) {
