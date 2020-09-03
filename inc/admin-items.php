@@ -311,6 +311,14 @@ function sell_media_save_custom_meta( $post_id ) {
 								}
 							}
 							sell_media_move_file( $attachment_id );
+
+							// Check creator is assigned to item
+							if(isset($_POST['tax_input']['creator']) && !empty($_POST['tax_input']['creator'])){
+							    // List of creator ids
+                                $_creator_ids = $_POST['tax_input']['creator'];
+                                // Store creator to attachment.
+                                wp_set_post_terms( $attachment_id, $_creator_ids, 'creator' );
+                            }
 						}
 					}
 

@@ -322,6 +322,12 @@ jQuery(document).ready(function($) {
             price = $('#sell_media_item_base_price').val();
         }
 
+        // Hide or Show checkout and add to cart button
+        if ($(this).attr('id') == 'sell_media_item_size') {
+            $('.item_add').show();
+            $('.sell-media-checkout-btn').remove();
+        }
+
         sum = parseFloat(price);
         $('#sell_media_download_wrapper fieldset.sell-media-add-to-cart-fieldset').each(function() {
             // check for selected markup or single markup
@@ -491,12 +497,14 @@ jQuery(document).ready(function($) {
 
             $('.sell-media-added').remove();
             var res = jQuery.parseJSON(response);
+
             if (typeof res == 'object' && '0' == res.code) {
                 var message = res.message;
             }
 
             $('#sell-media-add-to-cart').after('<p class="sell-media-added">' + message + '</p>');
-
+            $button.hide();
+            $('#sell-media-add-to-cart').append('<a class="sell-media-button sell-media-checkout-btn" href="'+sell_media.checkout_url+'">'+sell_media.checkout_text+'</a>');
             sm_update_cart_menu();
         });
 
