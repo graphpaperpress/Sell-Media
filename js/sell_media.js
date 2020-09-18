@@ -525,9 +525,29 @@ jQuery(document).ready(function($) {
 
     // Submit to payment gateway
     $(document).on('click', '.sell-media-cart-checkout', function() {
+        var btn = $(this);
         var selected_payment = $('#sell_media_payment_gateway').find('input:checked');
-        if ('paypal' == selected_payment.val())
-            $("#sell_media_payment_gateway").submit();
+        if ('paypal' == selected_payment.val()) {
+            $.ajax({
+                type: "POST",
+                url: sell_media.ajaxurl,
+                data: {
+                    action: 'paypal_process',
+                    gateway: 'paypal',
+                    discount: $('#discount-id').val(),
+                    _nonce: sell_media_paypal_obj.paypal_nonce
+                },
+                success: function(response) {
+                    if (response.status) {
+                        window.location = response.redirect_uri;
+                    } else {
+                        btn.prop('disabled', false).text(sell_media.checkout_text);
+                    }
+                }, error: function (error) {
+                    btn.prop('disabled', false).text(sell_media.checkout_text);
+                }
+            });
+        }
     });
 
     /**

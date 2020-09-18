@@ -56,11 +56,18 @@ function sell_media_init_settings() {
 		"name" => "sell_media_payment_settings",
 		"title" => __("Payment","sell_media"),
 		"sections" => array(
-			"payment_section_1" => array(
-				"name" => "payment_section_1",
-				"title" => __("Payment","sell_media"),
-				"description" => ""
-				)
+                "payment_section_1" => array(
+                    "name" => "payment_section_1",
+                    "title" => __("Payment","sell_media"),
+                    "description" => ""
+                ),
+                "payment_section_paypal" => array(
+                    "name" => "payment_section_paypal",
+                    "title" => __("PayPal Settings","sell_media"),
+                    'description' => sprintf(
+                        __( 'You must add your <a href="https://developer.paypal.com/webapps/developer/docs/classic/api/apiCredentials/#create-an-api-signature" target="_blank">PayPal API Keys</a> to process transactions.', 'sell_media' )
+                    ),
+                )
 			)
 		);
 	sell_media_register_plugin_option_tab( apply_filters('sell_media_payment_tab', $payment_tab) );
@@ -526,40 +533,40 @@ function sell_media_init_settings() {
 		),
 	);
 
-		$options['default_price'] = array(
-			"tab" => "sell_media_size_settings",
-			"name" => "default_price",
-			"title" => __("Original Price","sell_media"),
-			"description" => __( "The original price of new items and bulk uploads. You can set unique prices by editing each individual item.", "sell_media" ),
-			"section" => "size_price_plugin_section_1",
-			"since" => "1.0",
-			"id" => "size_price_plugin_section_1",
-			"default" => "1",
-			"sanitize" => "html",
-			"type" => "text"
-		);
+    $options['default_price'] = array(
+        "tab" => "sell_media_size_settings",
+        "name" => "default_price",
+        "title" => __("Original Price","sell_media"),
+        "description" => __( "The original price of new items and bulk uploads. You can set unique prices by editing each individual item.", "sell_media" ),
+        "section" => "size_price_plugin_section_1",
+        "since" => "1.0",
+        "id" => "size_price_plugin_section_1",
+        "default" => "1",
+        "sanitize" => "html",
+        "type" => "text"
+    );
 
-		$options['hide_original_price'] = array(
-			"tab" => "sell_media_size_settings",
-			"name" => "hide_original_price",
-			"title" => __("Hide Original Price","sell_media"),
-			"description" => __( "Select 'Yes' to hide the original price above and rely solely on Price Groups (See below. Price Groups can only be used when selling images). Select 'No' if you're selling single file downloads or if you want to list the original price for each product. You can override this setting on a per-item basis.", "sell_media" ),
-			"section" => "size_price_plugin_section_1",
-			"since" => "1.0",
-			"id" => "size_price_plugin_section_1",
-			"type" => "select",
-			"default" => "no",
-			"valid_options" => array(
-				"no" => array(
-					"name" => "no",
-					"title" => __("No","sell_media")
-					),
-				"yes" => array(
-					"name" => "yes",
-					"title" => __("Yes","sell_media"),
-					)
-			)
-		);
+    $options['hide_original_price'] = array(
+        "tab" => "sell_media_size_settings",
+        "name" => "hide_original_price",
+        "title" => __("Hide Original Price","sell_media"),
+        "description" => __( "Select 'Yes' to hide the original price above and rely solely on Price Groups (See below. Price Groups can only be used when selling images). Select 'No' if you're selling single file downloads or if you want to list the original price for each product. You can override this setting on a per-item basis.", "sell_media" ),
+        "section" => "size_price_plugin_section_1",
+        "since" => "1.0",
+        "id" => "size_price_plugin_section_1",
+        "type" => "select",
+        "default" => "no",
+        "valid_options" => array(
+            "no" => array(
+                "name" => "no",
+                "title" => __("No","sell_media")
+                ),
+            "yes" => array(
+                "name" => "yes",
+                "title" => __("Yes","sell_media"),
+                )
+        )
+    );
 
 	$other_options = array(
 		"default_price_group" => array(
@@ -574,27 +581,27 @@ function sell_media_init_settings() {
 			"valid_options" => sell_media_settings_price_group('price-group')
 			),
 		// Payment Tab
-		"paypal_email" => array(
+		/*"paypal_email" => array(
 			"tab" => "sell_media_payment_settings",
 			"name" => "paypal_email",
 			"title" => __("PayPal Email Address", "sell_media"),
 			'description' => __( 'Add the email address associated with your PayPal account above.', 'sell_media' ),
 			"default" => "",
-			"section" => "payment_section_1",
+			"section" => "payment_section_paypal",
 			"since" => "1.0",
 			"default" => "",
-			"id" => "payment_section_1",
+			"id" => "payment_section_paypal",
 			"type" => "text",
 			"sanitize" => "html"
-			),
+			),*/
 		"currency" => array(
 			"tab" => "sell_media_payment_settings",
 			"name" => "currency",
 			"title" => __("Currency","sell_media"),
 			"description" => __("The currency in which you accept payment.", "sell_media"),
-			"section" => "payment_section_1",
+			"section" => "payment_section_paypal",
 			"since" => "1.0.",
-			"id" => "payment_section_1",
+			"id" => "payment_section_paypal",
 			"type" => "select",
 			"default" => "USD",
 			"valid_options" => sell_media_currencies()
@@ -605,12 +612,60 @@ function sell_media_init_settings() {
 			"title" => __("PayPal Additional Test Emails","sell_media"),
 			"description" => __("This is useful when debugging PayPal. Enter a comma separated list of emails, and when a purchase is made the same email that is sent to the buyer will be sent to the recipients in the above list.","sell_media"),
 			"default" => "",
-			"section" => "payment_section_1",
+			"section" => "payment_section_paypal",
 			"since" => "1.0.",
-			"id" => "payment_section_1",
+			"id" => "payment_section_paypal",
 			"type" => "text",
 			"sanitize" => "html"
 		),
+        "paypal_test_client_id" => array(
+            "tab" => "sell_media_payment_settings",
+            "name" => "paypal_test_client_id",
+            "title" => __("PayPal Test Client ID","sell_media"),
+            "description" => "",
+            "default" => "",
+            "section" => "payment_section_paypal",
+            "since" => "1.0.",
+            "id" => "payment_section_paypal",
+            "type" => "password",
+            "sanitize" => "html"
+        ),
+        "paypal_test_client_secret_key" => array(
+            "tab" => "sell_media_payment_settings",
+            "name" => "paypal_test_client_secret_key",
+            "title" => __("PayPal Test Client Secret Key","sell_media"),
+            "description" => "",
+            "default" => "",
+            "section" => "payment_section_paypal",
+            "since" => "1.0.",
+            "id" => "payment_section_paypal",
+            "type" => "password",
+            "sanitize" => "html"
+        ),
+        "paypal_live_client_id" => array(
+            "tab" => "sell_media_payment_settings",
+            "name" => "paypal_live_client_id",
+            "title" => __("PayPal Live Client ID","sell_media"),
+            "description" => "",
+            "default" => "",
+            "section" => "payment_section_paypal",
+            "since" => "1.0.",
+            "id" => "payment_section_paypal",
+            "type" => "password",
+            "sanitize" => "html"
+        ),
+        "paypal_live_client_secret_key" => array(
+            "tab" => "sell_media_payment_settings",
+            "name" => "paypal_live_client_secret_key",
+            "title" => __("PayPal Live Client Secret Key","sell_media"),
+            "description" => "",
+            "default" => "",
+            "section" => "payment_section_paypal",
+            "since" => "1.0.",
+            "id" => "payment_section_paypal",
+            "type" => "password",
+            "sanitize" => "html"
+        ),
 		"tax" => array(
 			"tab" => "sell_media_payment_settings",
 			"name" => "tax",

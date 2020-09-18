@@ -245,8 +245,6 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/deprecated.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/fields.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/helpers.php';
-			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/paypal.php';
-			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/mime-types.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/scripts.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/shortcodes.php';
@@ -260,6 +258,8 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-meta-migrate.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-updater.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-markup.php';
+            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/paypal.php';
+            require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';
 
 			// Load files if is front end.
 			if ( self::$instance->is_request( 'frontend' ) ) {
@@ -282,7 +282,6 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-price-listings.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-price-listings-tabs.php';
 				require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-admin-add-item.php';
-
 			}
 
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-upgrades.php';
