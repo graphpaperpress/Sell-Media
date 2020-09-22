@@ -741,12 +741,12 @@ add_filter( 'big_image_size_threshold', '__return_false' );
 add_filter( 'pre_get_posts', 'sell_media_show_loggedin_user_items' );
 function sell_media_show_loggedin_user_items($query) {
 
-	// get loggedin user data object
+	// get logged in user data object
 	$_current_user_obj = wp_get_current_user();
 
 	if (is_admin() && in_array('contributor', $_current_user_obj->roles)) {
 
-		//Assing uset to media query
+		//Assign user to media query
 		$query->set( 'author', $_current_user_obj->ID );
 	}
 	return $query;
