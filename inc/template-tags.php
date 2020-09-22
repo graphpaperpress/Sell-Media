@@ -226,6 +226,9 @@ if ( ! function_exists( 'sell_media_get_media' ) ) :
 		$width = get_option( 'medium_size_w', $content_width );
 		$post_id = ( $post_id ) ? $post_id : $post->ID;
 		$html = '';
+        if (!$post_id) {
+            return $html;
+        }
 		$mime_type = get_post_mime_type( $post_id );
 
 		if( 'video/mpeg' == $mime_type || 'video/mp4' == $mime_type || 'video/quicktime' == $mime_type ) {
