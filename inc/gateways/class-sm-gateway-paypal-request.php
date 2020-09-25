@@ -161,20 +161,12 @@ class SM_Gateway_PayPal_Request {
         $_return_url = apply_filters('sell_media_paypal_return_url', empty( $this->settings->thanks_page ) ? site_url() : esc_url( add_query_arg( array( '_nonce' => wp_create_nonce( 'sell_media_paypal_order_complete_nonce' ) ), get_permalink( $this->settings->thanks_page ) ) ));
         $_cancel_url = apply_filters('sell_media_paypal_return_cancel', empty( $this->settings->checkout_page ) ? site_url() : esc_url( get_permalink( $this->settings->checkout_page ) ));
 
-        $products = $sm_cart->getItems();
-        $subTotalPrice = 0;
-        if ( ! empty( $products ) && is_array( $products ) ) {
-            foreach ( $products as $key => $value ) {
-                $price = $this->get_product_amount_after_discount( $value, $_discount_id );
-                $subTotalPrice += ($price * $value['qty']);
-            }
-        }
-
-        $_sub_total = apply_filters( 'sell_media_paypal_subtotal', $subTotalPrice );
+        $_sub_total = apply_filters( 'sell_media_paypal_subtotal', $sm_cart->getSubtotal( false ) );
         $tax_shipping_array = $this->get_shipping_tax_from_cart( $_discount_id );
         $taxAmount = (isset($tax_shipping_array['tax_amount']) && $tax_shipping_array['tax_amount'] > 0) ? $tax_shipping_array['tax_amount'] : 0;
         $shippingAmount = (isset($tax_shipping_array['shipping_amount']) && $tax_shipping_array['shipping_amount'] > 0) ? $tax_shipping_array['shipping_amount'] : 0;
-        $total = ($_sub_total + $shippingAmount + $taxAmount);
+        $discount = (function_exists('sell_media_get_cart_discount')) ? sell_media_get_cart_discount($_discount_id) : 0;
+        $total = ($_sub_total - $discount) + ($shippingAmount + $taxAmount);
         $totalPrice = number_format( (float) $total, 2, '.', '' );
 
         /*
@@ -196,7 +188,7 @@ class SM_Gateway_PayPal_Request {
                                                 'breakdown' => array(
                                                         'item_total' => array(
                                                                 'currency_code' => sanitize_text_field( $this->settings->currency ),
-                                                                'value' => $this->number_format($_sub_total),
+                                                                'value' => $this->number_format($sm_cart->getSubtotal( false )),
                                                             ),
                                                         'shipping' => array(
                                                                 'currency_code' => sanitize_text_field( $this->settings->currency ),
@@ -210,9 +202,9 @@ class SM_Gateway_PayPal_Request {
                                                                 'currency_code' => sanitize_text_field( $this->settings->currency ),
                                                                 'value' => apply_filters('sell_media_cart_tax', $this->number_format($taxAmount)),
                                                             ),
-                                                        'shipping_discount' => array(
+                                                        'discount' => array(
                                                                 'currency_code' => sanitize_text_field( $this->settings->currency ),
-                                                                'value' => 0,
+                                                                'value' => $discount,
                                                             ),
                                                 ),
                                         ),
@@ -585,6 +577,9 @@ class SM_Gateway_PayPal_Request {
             }
             $_billing_details = $_paypal_get_order->result->payer;
             $_shipping = $_paypal_get_order->result->purchase_units[0]->shipping;
+            $_shipping_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->shipping->value;
+            $_tax_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->tax_total->value;
+            $_discount_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value;
             $_payer_name = $_billing_details->name->given_name .' '. $_billing_details->name->surname;
             $payment_id = wp_insert_post(
                 array(
@@ -633,8 +628,17 @@ class SM_Gateway_PayPal_Request {
                     'order_status'         => $_paypal_get_order->result->status,
                     'number_products'      => $total_qty,
                     'gateway'              => 'paypal',
-                    'total'                => $this->number_format( $amount )
+                    'total'                => $this->number_format( $amount ),
                 );
+                if($_shipping_total) {
+                    $tmp['shipping'] = $_shipping_total;
+                }
+                if($_tax_total) {
+                    $tmp['tax'] = $_tax_total;
+                }
+                if($_shipping_total) {
+                    $tmp['discount'] = $_discount_total;
+                }
             }
             update_post_meta( $payment_id, '_paypal_args', $tmp );
             update_post_meta( $payment_id, '_sell_media_payment_meta', $tmp );
@@ -759,6 +763,8 @@ class SM_Gateway_PayPal_Request {
         $markups = Sell_Media()->tax_markup->markup_taxonomies();
         if ( empty( $payment_details_array ) ) {
             $payment_details_array = get_post_meta( $payment_id, '_sell_media_payment_meta', true );
+        } else {
+            $payment_details_array = array();
         }
         $p = new SellMediaProducts();
         foreach ( $products as $product ) {
@@ -808,8 +814,8 @@ class SM_Gateway_PayPal_Request {
                 $tmp_products['shipping'] = $product['shipping_amount'];
             }
             $payment_details_array['products'][] = $tmp_products;
-            update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_details_array );
         }
+        update_post_meta( $payment_id, '_sell_media_payment_meta', $payment_details_array );
     }
 
     /**

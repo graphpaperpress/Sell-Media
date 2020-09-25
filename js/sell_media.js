@@ -864,7 +864,9 @@ function sm_update_cart_totals() {
 
     // Show Grand total.
     jQuery('.sell-media-totals .sell-media-cart-grand-total').html(currency_symbol + grand_total.formatMoney(2, '.', ','));
-
+    if(typeof sell_media_calculate_discount !== "undefined") {
+        sell_media_calculate_discount();
+    }
 }
 
 /**
@@ -901,7 +903,12 @@ function sm_update_cart_item(el, type) {
             jQuery("#sell-media-empty-cart-message").fadeIn('slow');
         }
     }
-
+    if (typeof sell_media_apply_discount_code !== "undefined" && jQuery(document).find('#discount-code').first().val()) {
+        jQuery('#sell-media-discount-amount').addClass('ajax-loader');
+        setTimeout(function(){
+            sell_media_apply_discount_code();
+        },1000);
+    }
     // Update cart total.
     sm_update_cart_totals();
 

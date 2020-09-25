@@ -519,7 +519,7 @@ class SellMediaPayments {
 			<?php endif;
 			$html .= '<td class="sell-media-products-grandtotal" style="padding: 0.5rem; text-align: right;">';
 			if ( $discount ) {
-				$html .= '<p>' . __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $this->get_discount_total( $post_id ) . '</p>';
+				$html .= '<p>' . __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $discount . '</p>';
 			}
 			if ( $tax ) {
 				$html .= '<p>' . __( 'TAX', 'sell_media' ) . ': ' . sell_media_get_currency_symbol() . number_format( $tax, 2, '.', ',' ) . '</p>';

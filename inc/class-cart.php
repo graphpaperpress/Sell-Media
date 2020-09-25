@@ -187,7 +187,7 @@ class SellMediaCart {
 	 * @param string  $value Value of the attribute.
 	 * @return boolean Result as true/false
 	 */
-	public function setAttribute( $id, $key = '', $value = '' ) {
+	public function setAttribute( $id , $key = '', $value = '' ) {
 		if ( ! isset( $this->items[ $id ] ) ) {
 			$this->errors[] = 'Cart::setAttribute($id, $key, $value): Item #' . $id . ' does not exist.';
 			return false;
@@ -318,6 +318,7 @@ class SellMediaCart {
 	public function clear() {
 		$this->items = array();
 		$this->attributes = array();
+		do_action('sell_media_before_cart_clear', $this);
 		$this->write();
 	}
 
@@ -401,6 +402,8 @@ class SellMediaCart {
 
 		$sell_media_cart_info['qty'] = $total_cart_qty;
 		$sell_media_cart_info['subtotal'] = $this->getSubtotal();
+
+		do_action('sell_media_cart_after_write', $this->cart_id, $cart_items);
 
 		// Cookie data to enable data info in js.
 		setcookie( 'sell_media_cart_info', wp_json_encode( $sell_media_cart_info ), time() + 604800, '/' );
