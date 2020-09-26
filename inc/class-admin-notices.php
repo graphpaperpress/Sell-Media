@@ -53,12 +53,12 @@ Class SellMediaAdminNotices {
             /**
              * PayPal email
              */
-            if ( empty( $this->settings->paypal_email ) ){
+            /*if ( empty( $this->settings->paypal_email ) ){
                 $notices[] = array(
                     'slug' => 'paypal-email',
                     'message' => sprintf( __( 'Please set a PayPal email in your <a href="%1$s">payment settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) )
                 );
-            }
+            }*/
 
             /**
              * Updates availalble
@@ -73,7 +73,10 @@ Class SellMediaAdminNotices {
             $notices = apply_filters( 'sell_media_admin_notices', $notices );
 
             foreach( $notices as $notice ){
-                add_settings_error( 'sell-media-notices', 'sell-media-notice-' . $notice['slug'], $notice['message'], 'updated' );
+
+                // Check notice type is exist
+                $_notice_type = (isset($notice['type']) && !empty($notice['type'])) ? $notice['type'] : 'updated';
+                add_settings_error( 'sell-media-notices', 'sell-media-notice-' . $notice['slug'], $notice['message'], $_notice_type );
             }
 
             settings_errors( 'sell-media-notices' );

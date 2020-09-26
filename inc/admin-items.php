@@ -311,6 +311,14 @@ function sell_media_save_custom_meta( $post_id ) {
 								}
 							}
 							sell_media_move_file( $attachment_id );
+
+							// Check creator is assigned to item
+							if(isset($_POST['tax_input']['creator']) && !empty($_POST['tax_input']['creator'])){
+							    // List of creator ids
+                                $_creator_ids = $_POST['tax_input']['creator'];
+                                // Store creator to attachment.
+                                wp_set_post_terms( $attachment_id, $_creator_ids, 'creator' );
+                            }
 						}
 					}
 
@@ -726,3 +734,20 @@ add_action( 'wp_ajax_sell_media_save_bulk_edit', 'sell_media_save_bulk_edit' );
  * Enable large image uploads since WordPress 5.3 disabled it
  */
 add_filter( 'big_image_size_threshold', '__return_false' );
+
+/**
+* Filter media by user role in admin
+*/
+add_filter( 'pre_get_posts', 'sell_media_show_loggedin_user_items' );
+function sell_media_show_loggedin_user_items($query) {
+
+	// get logged in user data object
+	$_current_user_obj = wp_get_current_user();
+
+	if (is_admin() && in_array('contributor', $_current_user_obj->roles)) {
+
+		//Assign user to media query
+		$query->set( 'author', $_current_user_obj->ID );
+	}
+	return $query;
+}

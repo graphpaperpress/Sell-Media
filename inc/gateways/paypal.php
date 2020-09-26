@@ -1,197 +1,213 @@
 <?php
+require __DIR__ . '/php-paypal-sdk/vendor/autoload.php';
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Core\ProductionEnvironment;
+use PayPalCheckoutSdk\Payments\CapturesRefundRequest;
 
+// Creating an environment
 /**
- * Retrieve the correct PayPal Redirect based on http/s
- * and "live" or "test" mode, i.e., sandbox.
- *
- * @return PayPal URI
+ * Our PayPal Checkout class
  */
-function sell_media_get_paypal_redirect( $ssl_check=false ) {
-
-    if ( is_ssl() || ! $ssl_check ) {
-        $protocol = 'https://';
-    } else {
-        $protocol = 'http://';
-    }
-
-    if ( sell_media_test_mode() ) {
-        $paypal_uri = $protocol . 'www.sandbox.paypal.com/cgi-bin/webscr';
-    } else {
-        $paypal_uri = $protocol . 'www.paypal.com/cgi-bin/webscr';
-    }
-
-    return $paypal_uri;
-}
-
-
-/**
- * Listen for a $_GET request from our PayPal IPN.
- * This would also do the "set-up" for an "alternate purchase verification"
- */
-function sell_media_listen_for_paypal_ipn() {
-    if ( isset( $_GET['sell_media-listener'] )
-        && $_GET['sell_media-listener'] == 'IPN'
-        || isset( $_GET['test'] )
-        && $_GET['test'] == true ) {
-        do_action( 'sell_media_verify_paypal_ipn' );
-    }
-}
-add_action( 'init', 'sell_media_listen_for_paypal_ipn' );
-
-
-/**
- * When a payment is made PayPal will send us a response and this function is
- * called. From here we will confirm arguments that we sent to PayPal which
- * the ones PayPal is sending back to us.
- * This is the Pink Lilly of the whole operation.
- */
-function sell_media_process_paypal_ipn() {
+class SellMediaPayPal {
 
     /**
-     * Instantiate the IPNListener class
+     * Sell Media setting.
+     *
+     * @var object
      */
-    include( dirname( __FILE__ ) . '/php-paypal-ipn/IPNListener.php' );
-    $listener = new IPNListener();
+    private $settings;
 
-    /**
-     * Set to PayPal sandbox or live mode
-     */
-    $settings = sell_media_get_plugin_options();
-    $listener->use_sandbox = ( $settings->test_mode ) ? true : false;
+    public function __construct() {
 
-    /**
-     * Check if IPN was successfully processed
-     */
-    if ( $verified = $listener->processIpn( ) ) {
+        add_filter( 'sell_media_admin_notices', array( &$this, 'sell_media_admin_notices' ) );
+        add_action( 'sell_media_payment_after_gateway_details', array($this, 'sell_media_refund_payment_html') );
+        add_action( 'sell_media_admin_scripts_hook', array($this, 'sell_media_admin_scripts_hook'));
 
-        /**
-         * Log successful purchases
-         */
-        $transactionData = $listener->getPostData(); // POST data array
-        file_put_contents( 'ipn_success.log', print_r( $transactionData, true ) . PHP_EOL, LOCK_EX | FILE_APPEND );
+        // This action work only logged-in users only
+        add_action( 'wp_ajax_sell_media_paypal_order_refund', array($this, 'sell_media_paypal_refund_order'));
 
-        $message = null;
+    }
 
-        /**
-         * Verify seller PayPal email with PayPal email in settings
-         *
-         * Check if the seller email that was processed by the IPN matches what is saved as
-         * the seller email in our DB
-         */
-        $settings = sell_media_get_plugin_options();
-        if ( $_POST['receiver_email'] != $settings->paypal_email ){
-            $message .= "\nEmail seller email does not match email in settings\n";
+    /*
+     * Register scripts for PayPal payment gateway
+     * */
+    public function sell_media_admin_scripts_hook() {
+        $translation_array = array(
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'paypal_refund_nonce' => wp_create_nonce( 'sell-media-paypal-payment-refund' ),
+            'paypal_refund_label' => __('Order refund ID: ', 'sell_media')
+        );
+        wp_localize_script( 'sell_media-admin-items', 'sell_media_paypal', $translation_array );
+    }
+
+    /*
+     *  Register admin notice.
+     * */
+    public function sell_media_admin_notices($notices) {
+
+        global $current_screen;
+        if ( 'sell_media_item_page_sell_media_plugin_options' !== $current_screen->id ) {
+            return $notices;
+        }
+
+        // Check for curl
+        if ( ! function_exists( 'curl_version' ) ) {
+            $message = __( 'PayPal not supported, please enable <code>cURL</code>.', 'sell_media' );
         }
 
         /**
-         * Verify currency
-         *
-         * Check if the currency that was processed by the IPN matches what is saved as
-         * the currency setting
+         * Empty PayPal API Key
          */
-        $settings = sell_media_get_plugin_options();
-        if ( $_POST['mc_currency'] != $settings->currency ){
-            $message .= "\nCurrency does not match those assigned in settings\n";
-        }
-
-        /**
-         * Check if this payment was already processed
-         *
-         * PayPal transaction id (txn_id) is stored in the database, we check
-         * that against the txn_id returned.
-         */
-        $txn_id = get_post_meta( $_POST['custom'], 'txn_id', true );
-        if ( empty( $txn_id ) ){
-            update_post_meta( $_POST['custom'], 'txn_id', $_POST['txn_id'] );
-        } else {
-            $message .= "\nThis payment was already processed\n";
-        }
-
-        /**
-         * Verify the payment is set to "Completed".
-         *
-         * Create a new payment, send customer an email and empty the cart
-         */
-        if ( ! empty( $_POST['payment_status'] ) && $_POST['payment_status'] == 'Completed' ) {
-
-            // Return if this IPN doesn't contain a Sell Media item
-            if ( empty( $_POST['option_selection1_1'] ) && ( $_POST['option_selection1_1'] != 'print' || $_POST['option_selection1_1'] != 'download' ) )
-                return;
-
-            $data = array(
-                'post_title'    => $_POST['payer_email'],
-                'post_status'   => 'publish',
-                'post_type'     => 'sell_media_payment'
+        $secret_key = self::keys( 'secret_key' );
+        if ( empty( $secret_key ) ) {
+            $notices[] = array(
+                'slug' => 'paypal-api-key',
+                'message' => sprintf( __( 'Please update your Sell Media <a href="%1$s">payment settings</a> to contain your PayPal API keys.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) ),
+                'type' => 'error',
             );
+        }
 
-            $payment_id = wp_insert_post( $data );
-            $payments = Sell_Media()->payments;
+        return $notices;
+    }
 
-            if ( $payment_id ) {
+    /**
+     * Checks if the site is in test mode and returns the correct
+     * keys as needed
+     *
+     * @param $key (string) secret_key | client_id
+     * @return Returns either the test or live key based on the general setting "test_mode"
+     */
+    public static function keys( $key = null ) {
+        $settings = sell_media_get_plugin_options();
+        $keys = array(
+            'secret_key' => $settings->test_mode ? $settings->paypal_test_client_secret_key : $settings->paypal_live_client_secret_key,
+            'client_id'  => $settings->test_mode ? $settings->paypal_test_client_id : $settings->paypal_live_client_id
+        );
 
-                update_post_meta( $payment_id, '_paypal_args', $_POST );
+        return $keys[ $key ];
+    }
 
-                // record the PayPal payment details
-                $payments->paypal_copy_args( $payment_id );
+    /**
+     * Returns PayPal HTTP client instance with environment which has access
+     * credentials context. This can be used invoke PayPal API's provided the
+     * credentials have the access to do so.
+     */
+    public static function client() {
+        return new PayPalHttpClient(self::environment());
+    }
 
-                // create new user, auto log them in, email them registration
-                Sell_Media()->customer->insert( $_POST['payer_email'], $_POST['first_name'], $_POST['last_name'] );
+    /**
+     * Setting up and Returns PayPal SDK environment with PayPal Access credentials.
+     * For demo purpose, we are using SandboxEnvironment. In production this will be
+     * ProductionEnvironment.
+     */
+    public static function environment() {
 
-                $message .= "\nSuccess! Your purchase has been completed.\n";
-                $message .= "Your transaction number is: {$_POST['txn_id']}\n";
-                $message .= "To email: {$_POST['payer_email']}\n";
-
-                // Send email to buyer and admin
-                $email_status = $payments->email_receipt( $payment_id, $_POST['payer_email'] );
-                $admin_email_status = $payments->email_receipt( $payment_id, $settings->from_email );
-
-                $message .= "{$email_status}\n";
-                $message .= "{$admin_email_status}\n";
-
-                do_action( 'sell_media_after_successful_payment', $payment_id );
-
-            }
-
+        $clientId = self::keys('client_id');
+        $clientSecret = self::keys('secret_key');
+        $settings = sell_media_get_plugin_options();
+        if($settings->test_mode) {
+            return new SandboxEnvironment($clientId, $clientSecret);
         } else {
-
-            $message .= "\nPayment status not set to Completed\n";
-
+            return new ProductionEnvironment($clientId, $clientSecret);
         }
+    }
 
-        /**
-         * Check if this is the test mode
-         *
-         * If this is the test mode we email the IPN text report.
-         * note about and box http://stackoverflow.com/questions/4298117/paypal-ipn-always-return-payment-status-pending-on-sandbox
-         */
-        if ( $settings->test_mode == true ){
+    /*
+     * PayPal refund form
+     * */
+    public function sell_media_refund_payment_html( $_payment_obj ) {
 
-            $message .= "\nTest Mode\n";
-            $email = array(
-                'to' => $settings->from_email,
-                'subject' => 'Verified IPN',
-                'message' =>  $message . "\n" . $listener->getTextReport()
-                );
+        $payment_id = $_payment_obj->ID;
+        $_order_data        = get_post_meta( $payment_id, '_sell_media_payment_meta', true);
+        $_currency_code     = get_post_meta( $payment_id, 'payment_currency_code', true);
+        $_order_total_paid  = (isset($_order_data['total']) && !empty($_order_data['total'])) ? $_order_data['total'] : 0;
+        $_order_total_paid  = apply_filters('sell_media_paypal_order_total', $_order_total_paid, $payment_id);
+        $_order_refund_id   = get_post_meta($payment_id, 'sell_media_paypal_payment_refund_id', true);
 
-            wp_mail( $email['to'], $email['subject'], $email['message'] );
-
+        // check current order placed by PayPal Or not
+        if (isset($_order_data['gateway']) && $_order_data['gateway'] == 'paypal') {
+            $transaction_id = (isset($_order_data['transaction_id'])) ? $_order_data['transaction_id'] : '';
+            ?>
+            <ul class="paypal-image-refund-wrapper">
+                <?php do_action('sell_media_before_refund_form'); ?>
+                <?php if(!$_order_refund_id) { ?>
+                    <li>
+                        <label for="paypal-order-amount"><?php _e('Enter amount which you want to refund.'); ?></label>
+                        <input type="number" id="paypal-order-amount" class="paypal-order-amount" value="<?php echo $_order_total_paid; ?>" min="0" />
+                    </li>
+                    <li class="paypal-order-refund-action">
+                        <button type="button" id="paypal_payment_refund_btn" class="button button-primary button-large" data-transaction_id="<?php esc_html_e($transaction_id); ?>" ><?php _e('Refund Now', 'sell_media'); ?></button>
+                        <input type="hidden" id="paypal_payment_id" value="<?php echo $payment_id; ?>"/>
+                        <input type="hidden" id="paypal_payment_currency_code" value="<?php echo $_currency_code; ?>"/>
+                    </li>
+                <?php } else { ?>
+                    <li class="order-refund-msg">
+                        <strong><?php _e('Order refund ID: ', 'sell_media'); ?></strong> <?php echo $_order_refund_id; ?>
+                    </li>
+                <?php } ?>
+                <?php do_action('sell_media_after_refund_form'); ?>
+            </ul>
+            <?php
         }
+    }
 
-    } else {
+    /**
+     * This function can be used to preform refund on the captured order.
+     * @param $captureId (string) PayPal order captured ID
+     */
+    public function sell_media_paypal_refund_order($captureId) {
 
-        /**
-         * Log errors
-         */
-        $errors = $listener->getErrors();
-        file_put_contents( 'ipn_errors.log', print_r( $errors, true ) . PHP_EOL, LOCK_EX | FILE_APPEND );
+        $_result = array();
+        $_result['status'] = false;
+        $_result['message'] = apply_filters('sell_media_order_refund_fail_message', __('Order refund process fail, Please try again', 'sell_media'));
+        if(isset($_POST['transaction_id']) && !empty($_POST['transaction_id']) && isset($_POST['_nonce']) && wp_verify_nonce($_POST['_nonce'], 'sell-media-paypal-payment-refund')) {
 
-        /**
-         * An Invalid IPN *may* be caused by a fraudulent transaction attempt. It's
-         * a good idea to have a developer or sys admin manually investigate any
-         * invalid IPN.
-         */
-        wp_mail( $settings->from_email, 'Invalid IPN', $listener->getTextReport() );
+            $_payment_id        = (isset($_POST['payment_id']) && !empty($_POST['payment_id'])) ? $_POST['payment_id'] : 0;
+            $_payment_obj       = get_post_meta($_payment_id, '_sell_media_payment_meta', true);
+            $_refund_amount     = (isset($_POST['refund_amount']) && !empty($_POST['refund_amount'])) ? $_POST['refund_amount'] : $_payment_obj['total'];
+            $_currency_code     = get_post_meta($_payment_id, 'payment_currency_code', true);
+            $_capture_id        = get_post_meta($_payment_id, 'payment_capture_id', true);
 
+            $request = new CapturesRefundRequest($_capture_id);
+            $request->body = self::buildRequestBody($_refund_amount, $_currency_code);
+            $client = self::client();
+            $response = $client->execute($request);
+            if($response->result->status == 'COMPLETED') {
+                update_post_meta($_payment_id, 'sell_media_paypal_payment_refund_response', $response);
+                update_post_meta($_payment_id, 'sell_media_paypal_payment_refund_id', $response->result->id);
+                $_result['status'] = true;
+                $_result['refund_id'] = $response->result->id;
+                $_message = sprintf(
+                                __('Order success fully refunded. <strong>Refund ID: %s</strong>','sell_media'),
+                                $response->result->id
+                            );
+                $_result['message'] = apply_filters('sell_media_order_refund_success_message', $_message);
+            } else if ($response->statusCode < 200 || $response->statusCode > 300) {
+                $_result['message'] = $response->result->details[0]->description;
+            }
+        }
+        wp_send_json($_result);
+    }
+
+    /**
+     * Function to build a refund refund request body.
+     * @param $_amount (Float)
+     * @param $_currency_code (String)
+     * @return array
+     */
+    public static function buildRequestBody($_amount, $_currency_code) {
+
+        //parameters
+        return array(
+            'amount' =>
+                array(
+                    'value' => $_amount,
+                    'currency_code' => $_currency_code
+                )
+        );
     }
 }
-add_action( 'sell_media_verify_paypal_ipn', 'sell_media_process_paypal_ipn' );
+
+$paypal = new SellMediaPayPal();

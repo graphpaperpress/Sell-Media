@@ -300,6 +300,7 @@ function sell_media_checkout_shortcode() {
 				if ( ! empty( $settings->terms_and_conditions ) ) : ?>
 					<p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
 				<?php endif; ?>
+                <?php do_action( 'sell_media_below_checkout_button' ); ?>
 			</div><!-- .sell-media-checkout-button -->
 
 		</div><!-- .sell-media-totals -->

@@ -322,6 +322,12 @@ jQuery(document).ready(function($) {
             price = $('#sell_media_item_base_price').val();
         }
 
+        // Hide or Show checkout and add to cart button
+        if ($(this).attr('id') == 'sell_media_item_size') {
+            $('.item_add').show();
+            $('.sell-media-checkout-btn').remove();
+        }
+
         sum = parseFloat(price);
         $('#sell_media_download_wrapper fieldset.sell-media-add-to-cart-fieldset').each(function() {
             // check for selected markup or single markup
@@ -491,12 +497,14 @@ jQuery(document).ready(function($) {
 
             $('.sell-media-added').remove();
             var res = jQuery.parseJSON(response);
+
             if (typeof res == 'object' && '0' == res.code) {
                 var message = res.message;
             }
 
             $('#sell-media-add-to-cart').after('<p class="sell-media-added">' + message + '</p>');
-
+            $button.hide();
+            $('#sell-media-add-to-cart').append('<a class="sell-media-button sell-media-checkout-btn" href="'+sell_media.checkout_url+'">'+sell_media.checkout_text+'</a>');
             sm_update_cart_menu();
         });
 
@@ -517,9 +525,29 @@ jQuery(document).ready(function($) {
 
     // Submit to payment gateway
     $(document).on('click', '.sell-media-cart-checkout', function() {
+        var btn = $(this);
         var selected_payment = $('#sell_media_payment_gateway').find('input:checked');
-        if ('paypal' == selected_payment.val())
-            $("#sell_media_payment_gateway").submit();
+        if ('paypal' == selected_payment.val()) {
+            $.ajax({
+                type: "POST",
+                url: sell_media.ajaxurl,
+                data: {
+                    action: 'paypal_process',
+                    gateway: 'paypal',
+                    discount: $('#discount-id').val(),
+                    _nonce: sell_media_paypal_obj.paypal_nonce
+                },
+                success: function(response) {
+                    if (response.status) {
+                        window.location = response.redirect_uri;
+                    } else {
+                        btn.prop('disabled', false).text(sell_media.checkout_text);
+                    }
+                }, error: function (error) {
+                    btn.prop('disabled', false).text(sell_media.checkout_text);
+                }
+            });
+        }
     });
 
     /**
@@ -836,7 +864,9 @@ function sm_update_cart_totals() {
 
     // Show Grand total.
     jQuery('.sell-media-totals .sell-media-cart-grand-total').html(currency_symbol + grand_total.formatMoney(2, '.', ','));
-
+    if(typeof sell_media_calculate_discount !== "undefined") {
+        sell_media_calculate_discount();
+    }
 }
 
 /**
@@ -873,7 +903,12 @@ function sm_update_cart_item(el, type) {
             jQuery("#sell-media-empty-cart-message").fadeIn('slow');
         }
     }
-
+    if (typeof sell_media_apply_discount_code !== "undefined" && jQuery(document).find('#discount-code').first().val()) {
+        jQuery('#sell-media-discount-amount').addClass('ajax-loader');
+        setTimeout(function(){
+            sell_media_apply_discount_code();
+        },1000);
+    }
     // Update cart total.
     sm_update_cart_totals();
 
