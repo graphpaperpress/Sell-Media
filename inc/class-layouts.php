@@ -68,6 +68,11 @@ class SellMediaLayouts {
 		// Content loop
 		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 3 );
 
+		// Content loop add image license metadata
+		add_filter( 'sell_media_filter_content_loop',  array( $this, 'sell_media_add_license_meta_loop' ), 10, 3 );
+
+		// Collection loop, Media gallery add single image license metadata
+		add_filter( 'sell_media_after_media_item_content', array($this, 'sell_media_add_license_meta_gallery'), 10, 2);
 	}
 
 	/**
@@ -396,4 +401,65 @@ class SellMediaLayouts {
 		return apply_filters( 'sell_media_filter_content_loop', $html, $original_id, $i );
 	}
 
+	// Add image license metadata on archive page
+	function sell_media_add_license_meta_loop($html, $post_id, $i) {
+
+		global $mime_type;
+		
+		if ( post_password_required( $post_id ) && sell_media_is_search() ) {
+			return;
+		}
+		if ( 'attachment' === get_post_type( $post_id ) ) {
+			$attachment_id = $post_id; // always and attachment
+			$post_id = get_post_meta( $attachment_id, $key = '_sell_media_for_sale_product_id', true ); // always a sell_media_item
+		} else {
+			$attachment_id = sell_media_get_attachment_id( $post_id ); // always an attachment
+		}
+		if (!$attachment_id) {
+			return $html;
+		}
+		$_output = '<script type="application/ld+json">'.$this->sell_media_get_all_sizes_images($attachment_id).'</script>';
+		
+		return $html . $_output;
+	}
+
+	// Add image license metadata in media gallery page, single page and collection page
+	function sell_media_add_license_meta_gallery($html, $post_id) {
+
+		$_output = '<script type="application/ld+json">';
+		if (sell_media_has_multiple_attachments( $post_id )) {
+			$attachment_ids = sell_media_get_attachments( $post_id );	
+			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
+				$_output .= $this->sell_media_get_all_sizes_images($attachment_id);
+			}
+		} else {
+			$_output .= $this->sell_media_get_all_sizes_images($post_id);
+		}
+		$_output .= '</script>';
+		return $html . $_output;
+	}
+
+	/**
+	 * Get all images sizes from attachment id
+	 *
+	 * @param int $attachment_id
+	 * @return json licence content
+	 */
+	function sell_media_get_all_sizes_images( $attachment_id ) {
+
+		// get all sizes
+		$_sizes = get_intermediate_image_sizes();
+		$_arr_meta = array();
+		foreach ($_sizes as $_size) {
+			$image_data     = wp_get_attachment_image_src( $attachment_id, $_size );
+			$_arr_meta[] = array(
+								"@context" => "https://schema.org/",
+								"@type" => "ImageObject",
+								"contentUrl" => (isset($image_data[0])) ? $image_data[0] : '',
+			      				"license" => get_the_permalink($attachment_id),
+			      				"acquireLicensePage" => get_the_permalink($attachment_id)
+							);
+		}
+		return json_encode($_arr_meta);
+	}
 }

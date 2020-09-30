@@ -242,7 +242,7 @@ if ( ! function_exists( 'sell_media_get_media' ) ) :
 			$html .= sell_media_item_icon( $post_id, apply_filters( 'sell_media_large_item_size', 'large' ), false );
 			$html .= sell_media_caption( $post_id );
 		}
-
+		$html = apply_filters('sell_media_after_media_item_content', $html, $post_id); 
 		return $html;
 	}
 endif;
