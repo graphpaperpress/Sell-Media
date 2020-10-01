@@ -68,11 +68,8 @@ class SellMediaLayouts {
 		// Content loop
 		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 3 );
 
-		// Content loop add image license metadata
-		add_filter( 'sell_media_filter_content_loop',  array( $this, 'sell_media_add_license_meta_loop' ), 10, 3 );
-
 		// Collection loop, Media gallery add single image license metadata
-		add_filter( 'sell_media_after_media_item_content', array($this, 'sell_media_add_license_meta_gallery'), 10, 2);
+		add_filter( 'sell_media_item_icon_after', array($this, 'sell_media_add_license_meta_after_item_icon'), 10, 3);
 	}
 
 	/**
@@ -401,9 +398,11 @@ class SellMediaLayouts {
 		return apply_filters( 'sell_media_filter_content_loop', $html, $original_id, $i );
 	}
 
-	// Add image license metadata on archive page
-	function sell_media_add_license_meta_loop($html, $post_id, $i) {
+	function sell_media_add_license_meta_after_item_icon($image, $attachment_id, $size) {
 
+<<<<<<< HEAD
+		return $image . $this->sell_media_get_image_licence_content($attachment_id, $size);
+=======
 		global $mime_type;
 		
 		if ( post_password_required( $post_id ) && sell_media_is_search() ) {
@@ -418,48 +417,46 @@ class SellMediaLayouts {
 		if (!$attachment_id) {
 			return $html;
 		}
-		$_output = '<script type="application/ld+json">'.$this->sell_media_get_all_sizes_images($attachment_id).'</script>';
+		$_output = $this->sell_media_get_image_licence_content($attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ));
 		
 		return $html . $_output;
 	}
 
 	// Add image license metadata in media gallery page, single page and collection page
 	function sell_media_add_license_meta_gallery($html, $post_id) {
-
-		$_output = '<script type="application/ld+json">';
+		$_output = '';
 		if (sell_media_has_multiple_attachments( $post_id )) {
 			$attachment_ids = sell_media_get_attachments( $post_id );	
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				$_output .= $this->sell_media_get_all_sizes_images($attachment_id);
+				$_output .= $this->sell_media_get_image_licence_content($attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ));
 			}
 		} else {
-			$_output .= $this->sell_media_get_all_sizes_images($post_id);
+			$_output .= $this->sell_media_get_image_licence_content($post_id, apply_filters( 'sell_media_large_item_size', 'large' ));
 		}
-		$_output .= '</script>';
 		return $html . $_output;
+>>>>>>> 419cac3c3ab4c44264dd6755f6ae4c59556506d0
 	}
 
 	/**
-	 * Get all images sizes from attachment id
+	 * Prepare licence content
 	 *
 	 * @param int $attachment_id
+	 * @param string $_size
 	 * @return json licence content
 	 */
-	function sell_media_get_all_sizes_images( $attachment_id ) {
+	function sell_media_get_image_licence_content( $attachment_id, $_size = 'thumbnail') {
 
-		// get all sizes
-		$_sizes = get_intermediate_image_sizes();
-		$_arr_meta = array();
-		foreach ($_sizes as $_size) {
+		if ($attachment_id) {
 			$image_data     = wp_get_attachment_image_src( $attachment_id, $_size );
-			$_arr_meta[] = array(
+			$_arr_meta = array(
 								"@context" => "https://schema.org/",
 								"@type" => "ImageObject",
 								"contentUrl" => (isset($image_data[0])) ? $image_data[0] : '',
 			      				"license" => get_the_permalink($attachment_id),
 			      				"acquireLicensePage" => get_the_permalink($attachment_id)
 							);
+			return '<script type="application/ld+json">'.json_encode($_arr_meta).'</script>';
 		}
-		return json_encode($_arr_meta);
+		return;
 	}
 }
