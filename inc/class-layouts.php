@@ -418,48 +418,45 @@ class SellMediaLayouts {
 		if (!$attachment_id) {
 			return $html;
 		}
-		$_output = '<script type="application/ld+json">'.$this->sell_media_get_all_sizes_images($attachment_id).'</script>';
+		$_output = $this->sell_media_get_image_licence_content($attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ));
 		
 		return $html . $_output;
 	}
 
 	// Add image license metadata in media gallery page, single page and collection page
 	function sell_media_add_license_meta_gallery($html, $post_id) {
-
-		$_output = '<script type="application/ld+json">';
+		$_output = '';
 		if (sell_media_has_multiple_attachments( $post_id )) {
 			$attachment_ids = sell_media_get_attachments( $post_id );	
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				$_output .= $this->sell_media_get_all_sizes_images($attachment_id);
+				$_output .= $this->sell_media_get_image_licence_content($attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ));
 			}
 		} else {
-			$_output .= $this->sell_media_get_all_sizes_images($post_id);
+			$_output .= $this->sell_media_get_image_licence_content($post_id, apply_filters( 'sell_media_large_item_size', 'large' ));
 		}
-		$_output .= '</script>';
 		return $html . $_output;
 	}
 
 	/**
-	 * Get all images sizes from attachment id
+	 * Prepare licence content
 	 *
 	 * @param int $attachment_id
+	 * @param string $_size
 	 * @return json licence content
 	 */
-	function sell_media_get_all_sizes_images( $attachment_id ) {
+	function sell_media_get_image_licence_content( $attachment_id, $_size = 'thumbnail') {
 
-		// get all sizes
-		$_sizes = get_intermediate_image_sizes();
-		$_arr_meta = array();
-		foreach ($_sizes as $_size) {
+		if ($attachment_id) {
 			$image_data     = wp_get_attachment_image_src( $attachment_id, $_size );
-			$_arr_meta[] = array(
+			$_arr_meta = array(
 								"@context" => "https://schema.org/",
 								"@type" => "ImageObject",
 								"contentUrl" => (isset($image_data[0])) ? $image_data[0] : '',
 			      				"license" => get_the_permalink($attachment_id),
 			      				"acquireLicensePage" => get_the_permalink($attachment_id)
 							);
+			return '<script type="application/ld+json">'.json_encode($_arr_meta).'</script>';
 		}
-		return json_encode($_arr_meta);
+		return;
 	}
 }
