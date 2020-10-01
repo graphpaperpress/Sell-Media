@@ -400,41 +400,7 @@ class SellMediaLayouts {
 
 	function sell_media_add_license_meta_after_item_icon($image, $attachment_id, $size) {
 
-<<<<<<< HEAD
 		return $image . $this->sell_media_get_image_licence_content($attachment_id, $size);
-=======
-		global $mime_type;
-		
-		if ( post_password_required( $post_id ) && sell_media_is_search() ) {
-			return;
-		}
-		if ( 'attachment' === get_post_type( $post_id ) ) {
-			$attachment_id = $post_id; // always and attachment
-			$post_id = get_post_meta( $attachment_id, $key = '_sell_media_for_sale_product_id', true ); // always a sell_media_item
-		} else {
-			$attachment_id = sell_media_get_attachment_id( $post_id ); // always an attachment
-		}
-		if (!$attachment_id) {
-			return $html;
-		}
-		$_output = $this->sell_media_get_image_licence_content($attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ));
-		
-		return $html . $_output;
-	}
-
-	// Add image license metadata in media gallery page, single page and collection page
-	function sell_media_add_license_meta_gallery($html, $post_id) {
-		$_output = '';
-		if (sell_media_has_multiple_attachments( $post_id )) {
-			$attachment_ids = sell_media_get_attachments( $post_id );	
-			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				$_output .= $this->sell_media_get_image_licence_content($attachment_id, apply_filters( 'sell_media_thumbnail', 'medium' ));
-			}
-		} else {
-			$_output .= $this->sell_media_get_image_licence_content($post_id, apply_filters( 'sell_media_large_item_size', 'large' ));
-		}
-		return $html . $_output;
->>>>>>> 419cac3c3ab4c44264dd6755f6ae4c59556506d0
 	}
 
 	/**

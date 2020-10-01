@@ -151,25 +151,25 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 	// Uploaded Sell Media Item
 	if ( '' != get_the_post_thumbnail( $post_id ) ) {
 		$image = get_the_post_thumbnail( $post_id, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
-		$image = apply_filters('sell_media_item_icon_after', $image, $post_id, $size);
+		$image = apply_filters('sell_media_item_icon_after', $image, $post_id, $size );
 	// Attachment, so use attachment src
 	} elseif ( '' != wp_get_attachment_image_src( $attachment_id, $size ) ) {
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
-		$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size);
+		$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size );
 	// Item, so use first attachment image src
 	} elseif ( wp_attachment_is_image( sell_media_get_attachment_id( $post_id ) ) ) {
 		$attachment_id = sell_media_get_attachment_id( $post_id );
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
-		$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size);
+		$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size );
 	} else {
 		global $post;
 		if ( '' != get_the_post_thumbnail( $post->ID ) ) {
 			$image = get_the_post_thumbnail( $post->ID, $size, array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ) ) );
-			$image = apply_filters('sell_media_item_icon_after', $image, $post->ID, $size);
+			$image = apply_filters('sell_media_item_icon_after', $image, $post->ID, $size );
 		} else {
 			$mime_type = get_post_mime_type( $attachment_id );
 			switch ( $mime_type ) {
@@ -201,7 +201,7 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 
 			$src = apply_filters( 'sell_media_item_icon_src', $src, $attachment_id, $mime_type );
 			$image = '<img src="' . $src . '" class="' . apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . $src . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
-			$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size);
+			$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size );
 		
 		}
 	}
