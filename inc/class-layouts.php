@@ -68,6 +68,8 @@ class SellMediaLayouts {
 		// Content loop
 		add_filter( 'sell_media_content_loop',  array( $this, 'content_loop' ), 10, 3 );
 
+		// Collection loop, Media gallery add single image license metadata
+		add_filter( 'sell_media_item_icon_after', array($this, 'sell_media_add_license_meta_after_item_icon'), 10, 3);
 	}
 
 	/**
@@ -396,4 +398,31 @@ class SellMediaLayouts {
 		return apply_filters( 'sell_media_filter_content_loop', $html, $original_id, $i );
 	}
 
+	function sell_media_add_license_meta_after_item_icon($image, $attachment_id, $size) {
+
+		return $image . $this->sell_media_get_image_licence_content($attachment_id, $size);
+	}
+
+	/**
+	 * Prepare licence content
+	 *
+	 * @param int $attachment_id
+	 * @param string $_size
+	 * @return json licence content
+	 */
+	function sell_media_get_image_licence_content( $attachment_id, $_size = 'thumbnail') {
+
+		if ($attachment_id) {
+			$image_data     = wp_get_attachment_image_src( $attachment_id, $_size );
+			$_arr_meta = array(
+								"@context" => "https://schema.org/",
+								"@type" => "ImageObject",
+								"contentUrl" => (isset($image_data[0])) ? $image_data[0] : '',
+			      				"license" => get_the_permalink($attachment_id),
+			      				"acquireLicensePage" => get_the_permalink($attachment_id)
+							);
+			return '<script type="application/ld+json">'.json_encode($_arr_meta).'</script>';
+		}
+		return;
+	}
 }

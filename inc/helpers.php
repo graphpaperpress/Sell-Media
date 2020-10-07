@@ -22,7 +22,7 @@ function sell_media_template_redirect( $original_template ) {
 
 	$post_type = array( 'sell_media_item', 'attachment' );
 	$sell_media_taxonomies = get_object_taxonomies( $post_type );
-	$sm_archive_template = SELL_MEDIA_PLUGIN_DIR . '/themes/archive.php';
+	$sm_archive_template = SELL_MEDIA_PLUGIN_DIR . 'themes/archive.php';
 
 	/**
 	 * Archive -- Check if this is an archive page AND post type is sell media
@@ -36,11 +36,11 @@ function sell_media_template_redirect( $original_template ) {
 		} else {
 			$template = $original_template;
 		}
-	} elseif ( ! empty( $post ) && sell_media_attachment( $post->ID ) ) {
+	} elseif ( ! empty( $post ) && sell_media_attachment( $post->ID ) && locate_template( 'single.php' )) {
 		// sell media attachments should use single.php, not attachment.php
 		// not all attachment.php templates contain the_content
 		// which we modify heavily using filters.
-		$template = locate_template( 'single.php' );
+        $template = locate_template( 'single.php' );
 	} else {
 		$template = $original_template;
 	}

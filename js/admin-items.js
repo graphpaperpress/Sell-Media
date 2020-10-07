@@ -358,4 +358,40 @@ jQuery( document ).ready(function( $ ){
       var groupParentId = $(this).val();
       sellMediaDisplayPricelistTable( groupParentId );
     });
+
+    /*
+    * Ajax call for refund PayPal amount.
+    * */
+    $( document ).on('click', '#paypal_payment_refund_btn', function(e){
+        e.preventDefault();
+        if (!confirm("Are you sure you want to refund the order.")) {
+            return;
+        }
+
+        var btn = $(this);
+        btn.attr('disabled', true).addClass('loader');
+        $.ajax({
+            type: "POST",
+            url: sell_media_paypal.ajax_url,
+            data: {
+                action: 'sell_media_paypal_order_refund',
+                transaction_id: btn.attr('data-transaction_id'),
+                refund_amount: $('#paypal-order-amount').val(),
+                currency_code: $('#paypal_payment_currency_code').val(),
+                payment_id: $('#paypal_payment_id').val(),
+                _nonce: sell_media_paypal.paypal_refund_nonce
+            },
+            success: function( response ){
+                var refund_wrapper = $('.paypal-image-refund-wrapper');
+                console.log(response);
+                if(response.status) {
+                    refund_wrapper.empty().append('<li><strong>'+sell_media_paypal.paypal_refund_label+' </strong>'+response.refund_id+'</li>');
+                } else {
+                    var msg_box = '<div class="sell-media-msg-box error"><p>'+response.message+'</p></div>';
+                    refund_wrapper.before(msg_box);
+                }
+                btn.attr('disabled', false).removeClass('loader');
+            }
+        });
+    });
 });

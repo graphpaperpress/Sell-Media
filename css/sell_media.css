@@ -319,9 +319,6 @@ a:focus {
 
 /*= Buttons
 -------------------------------------------------------------- */
-.sell-media-dialog-box .sell-media-dialog-box-content a.sell-media-button {
-  color: #fff;
-}
 input[type=submit].sell-media-button,
 .sell-media-button,
 #sell-media-submit {

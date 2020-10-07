@@ -180,12 +180,17 @@ function sell_media_payment_gateway_details( $post ){
 		$arguments = $stripe_args;
 		$gateway = __( 'Stripe', 'sell_media' );
 	}
+
+    do_action('sell_media_payment_before_gateway_details', $post);
+
 	echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase.', 'sell_media' ) . '</p>';
 	echo '<ul>';
 	if ( $arguments ) foreach ( $arguments as $k => $v ) {
 		echo '<li><strong>' . $k . ':</strong> ' . ( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : $v ) . '</li>';
 	}
 	echo '</ul>';
+
+	do_action('sell_media_payment_after_gateway_details', $post);
 }
 
 

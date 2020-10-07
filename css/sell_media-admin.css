@@ -904,3 +904,19 @@ div#sell-media-main-container .main-container-tabs-contents {
 #sell-media-display-pricelists table.form-table tr th {
 	padding: 7px;
 }
+
+/* Start: Admin Payment refund section */
+.paypal-image-refund-wrapper {
+	background-color: #efefef;
+	padding: 15px;
+}
+.paypal-image-refund-wrapper label {
+	display: block;
+	margin-bottom: 7px;
+	font-weight: 600;
+}
+.paypal-order-refund-action {
+	margin: 0;
+	margin-top: 20px;
+}
+/* End: Admin Payment refund section */
