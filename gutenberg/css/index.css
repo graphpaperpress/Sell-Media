@@ -1,0 +1,13 @@
+.sell-media h2.sell-media-entry-title {
+	font-size: 16px;
+    color: #cd2653;
+}
+.sell-media-pagination-container {
+	font-size: 21px;	
+}
+.sell-media-pagination-container .page-numbers {
+	color: #cd2653;
+}
+.sell-media-pagination-container .page-numbers.current {
+	color: #000000;
+}

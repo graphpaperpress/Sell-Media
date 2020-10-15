@@ -286,6 +286,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-upgrades.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/install.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/gutenberg/sell-media-items.php';
 
 		}
 
