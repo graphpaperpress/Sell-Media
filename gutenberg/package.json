@@ -1,0 +1,19 @@
+{
+  "name": "sellmediaitems",
+  "version": "1.0.0",
+  "description": "Sell Media Items",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "wp-scripts start",
+    "build": "wp-scripts build"
+  },
+  "author": "Graph Paper Press",
+  "license": "GPL2",
+  "devDependencies": {    
+    "@wordpress/components": "8.5.0",
+    "@wordpress/editor": "9.22.0",
+    "@wordpress/i18n": "3.15.0",
+    "@wordpress/scripts": "12.3.0"
+  }
+}
