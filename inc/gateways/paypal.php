@@ -63,7 +63,7 @@ class SellMediaPayPal {
         if ( empty( $secret_key ) ) {
             $notices[] = array(
                 'slug' => 'paypal-api-key',
-                'message' => sprintf( __( 'Please update your Sell Media <a href="%1$s">payment settings</a> to contain your PayPal API keys.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) ),
+                'message' => sprintf( __( 'Please add valid <a href="%1$s">PayPal API keys</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) ),
                 'type' => 'error',
             );
         }
