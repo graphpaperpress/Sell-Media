@@ -490,13 +490,16 @@ jQuery(document).ready(function($) {
         var price = $("span#total").text();
         var qty = $(".checkout-qty").text();
         var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart&price=' + price;
-
+        $button.addClass('sell-media-spinner-light');
         // Add cart item in session.
         $.post(ajaxurl, data, function(response) {
             var message = sell_media.added_to_cart;
 
             $('.sell-media-added').remove();
             var res = jQuery.parseJSON(response);
+
+            window.location = sell_media.checkout_url;
+            return;
 
             if (typeof res == 'object' && '0' == res.code) {
                 var message = res.message;
@@ -506,6 +509,7 @@ jQuery(document).ready(function($) {
             $button.hide();
             $('#sell-media-add-to-cart').append('<a class="sell-media-button sell-media-checkout-btn" href="'+sell_media.checkout_url+'">'+sell_media.checkout_text+'</a>');
             sm_update_cart_menu();
+            $button.removeClass('sell-media-spinner-light');
         });
 
         // Disable add to cart button.

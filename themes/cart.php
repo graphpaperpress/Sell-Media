@@ -18,9 +18,9 @@ ob_start();
 			$mime_type = get_post_mime_type( $attachment_id );
 			// if selling video or audio, show the post_id thumbnail
 			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-				$image = sell_media_item_icon( $post_id, 'large', false );
+				$image = sell_media_item_icon( $post_id, 'full', false );
 			} else {
-				$image = sell_media_item_icon( $attachment_id, 'large', false );
+				$image = sell_media_item_icon( $attachment_id, 'full', false );
 			}
 		?>
 		<?php echo apply_filters( 'sell_media_quick_view_post_thumbnail', $image, $post_id ); ?>
