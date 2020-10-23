@@ -1172,12 +1172,15 @@ body {
 	opacity: 0;
 	visibility: hidden;
 
-	p,
-	a,
-	a:visited,
-	label,
 	a:not(.sell-media-button),
 	a:not(.sell-media-button):visited,
+	a,
+	a:visited {
+		font-family: $font-sans-serif;
+		text-decoration: none;
+	}
+	p,
+	label,
 	h2 {
 		color: $dark-color;
 		font-family: $font-sans-serif;
@@ -1218,7 +1221,6 @@ body {
 	.sell-media-quick-view-container {
 		@extend .cf;
 		background-color: $white-color;
-		padding: $margin;
 		display: flex;
 	    justify-content: center;
 	    align-items: center;
