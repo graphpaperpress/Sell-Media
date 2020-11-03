@@ -285,7 +285,7 @@ function sell_media_checkout_shortcode() {
 
 			<div class="sell-media-checkout-button group">
 				<?php do_action( 'sell_media_above_checkout_button' ); ?>
-				<p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
+				<p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button sell-media-button-red sell-media-button-medium"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
 				<p id="sell-media-continue-shopping">
 					<?php
 					$html  = __( 'or', 'sell_media' );
