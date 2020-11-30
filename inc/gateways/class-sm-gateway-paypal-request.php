@@ -730,7 +730,7 @@ class SM_Gateway_PayPal_Request {
                 global $sm_cart;
                 @$sm_cart->clear();
                 $html .= '</div>';
-                $html =  apply_filters( 'sell_media_thanks_filter_below', $html );
+                $html =  apply_filters( 'sell_media_thanks_filter_below', $html, $payment_id );
 
             } catch ( Exception $e ) {
                 error_log($e->getMessage());
