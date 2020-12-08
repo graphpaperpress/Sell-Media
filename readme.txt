@@ -1,11 +1,11 @@
 === Sell Media ===
 
-Contributors: endortrails, racase, nhuja
+Contributors: endortrails, nhuja
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 5.5
 Tested up to: 5.5
-Stable tag: 2.4.7
+Stable tag: 2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,8 +23,8 @@ Using Sell Media, you can:
 *   Protect file uploads.
 *   Accept payments via PayPal. Additional payment gateways are also available.
 
-** Horizontal Masonry Layouts - New in version 2.4.2 **
-Horizontal masonry layouts for thumbnails can be enabled on Sell Media -> Settings -> Thumbnail Layout
+**New in version 2.5: Gutenberg Blocks**
+Insert galleries in many different formats using Sell Media blocks for Gutenberg!
 
 = Resources =
 
@@ -49,7 +49,7 @@ Take Sell Media to the next level with these powerful extensions:
 
 = Instant Setup =
 
-If you're having difficulties getting Sell Media set up, check out [VisualSociety.com](https://visualsociety.com). Visual Society is our new fully-hosted e-commerce platform powered by Sell Media and WordPress. This new platform also includes automated print fulfillment worldwide!
+If you're having difficulties getting Sell Media set up, check out [VisualSociety.com](https://visualsociety.com). Visual Society is our new fully-hosted e-commerce platform for selling photos online. This new platform also includes automated print fulfillment worldwide!
 
 == Installation ==
 
@@ -231,6 +231,13 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.5 =
+* New: Gutenberg block support for galleries, filters and more.
+* New: Google Images "licensable label" support
+* Fix: Improve UI
+* Fix: New PayPal API
+
 
 = 2.4.7 =
 * Fix: MailChimp subscription flow
