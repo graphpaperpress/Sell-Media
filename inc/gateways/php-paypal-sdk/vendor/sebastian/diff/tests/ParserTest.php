@@ -81,8 +81,8 @@ index abcdefg..abcdefh 100644
 +++ b/Test.txt
 @@ -49,9 +49,8 @@
  A
--B
-A;
+        -B
+        A;
         $diffs = $this->parser->parse($content);
         $this->assertInternalType('array', $diffs);
         $this->assertContainsOnlyInstancesOf('SebastianBergmann\Diff\Diff', $diffs);
