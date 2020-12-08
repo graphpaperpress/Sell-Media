@@ -260,6 +260,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-markup.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/paypal.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';
+            require_once SELL_MEDIA_PLUGIN_DIR . '/themes/theme-support/class-sm-theme-support.php';
 
 			// Load files if is front end.
 			if ( self::$instance->is_request( 'frontend' ) ) {
