@@ -237,7 +237,7 @@ class SellMediaLayouts {
 
 			$has_multiple_attachments = sell_media_has_multiple_attachments( $post_id );
 			$wrap = ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) ? true : false;
-			$new_content = '<div class="sell-media-container">';
+			$new_content = '';
 
 				// only wrap content if a single image/media is being viewed
 				if ( $wrap ) {
@@ -254,7 +254,7 @@ class SellMediaLayouts {
 				if ( $wrap ) {
 					$new_content .= '</div>';
 				}
-			$new_content .= '</div>';
+			//$new_content .= '</div>';
 			$content = $new_content;
 
 			// set the post views, used for popular query
