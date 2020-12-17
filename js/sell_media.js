@@ -12,6 +12,8 @@ Number.prototype.formatMoney = function(c, d, t) {
 
 jQuery(document).ready(function($) {
 
+    var view_port_height = '';
+
     /**
      * Update cart totals on load
      */
@@ -52,6 +54,10 @@ jQuery(document).ready(function($) {
      * Ajax request.
      */
     function sell_media_popup_ajax_request(new_data) {
+        $('#sell-media-dialog-box-target').addClass('sell-media-spinner-large');
+
+        $('body').addClass('quick_view_modal_popup_open');
+
         var old_data = {
             "action": "sell_media_load_template",
             "location": "quick_view",
@@ -86,17 +92,56 @@ jQuery(document).ready(function($) {
             url: sell_media.ajaxurl,
             data: final_data,
             success: function(msg) {
+                view_port_height = parseFloat($(window).height())-parseFloat(50);
+                var css = '<style>.sell-media-dialog-box-content, .sell-media-quick-view-container, .sell-media-quick-view-image{height:'+view_port_height+'px !important;align-items: center;display: flex;width:100%;}</style>';
+                msg = msg+css;
                 var target = $('#sell-media-dialog-box-target .sell-media-dialog-box-content');
                 // if there's an image already, fade out, then fade in
                 if ($('#sell-media-dialog-box-target .sell-media-dialog-box-content img').length) {
                     $(target).fadeOut('fast', function() {
-                        $(target).html(msg).fadeIn('fast');
+
+                        $(target).html(msg).fadeIn('fast', function() {
+                            setTimeout(function(){
+                                $('#sell-media-dialog-box-target').removeClass('sell-media-spinner-large');
+
+                                $('.sell-media-dialog-box-content .sell-media-quick-view-image .sell_media_image').css({'object-fit': 'contain' });
+
+                                setTimeout(function(){                                    
+                                    $('#sell-media-dialog-box-target').removeClass('sell-media-spinner-large');
+                                    if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
+                                        $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
+                                    }
+
+                                }, 100);
+
+                            }, 100);
+
+                        });
                     });
                     // otherwise, this is the first load
                 } else {
+
                     $(target).html(msg);
+                    setTimeout(function(){
+
+                        $('.sell-media-dialog-box-content .sell-media-quick-view-image .sell_media_image').css({'object-fit': 'contain' });
+
+                        var fit_width_view_content = $('.sell-media-quick-view-container .sell-media-quick-view-content').width();
+
+                        setTimeout(function(){                            
+                            $('#sell-media-dialog-box-target').removeClass('sell-media-spinner-large');
+
+                            if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
+                                $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
+                            }
+
+                        }, 100);
+
+                    }, 100);
+
                 }
                 required_fields();
+
             }
         });
     }
@@ -168,6 +213,7 @@ jQuery(document).ready(function($) {
         if ($(event.target).is('.close') || $(event.target).is('.sell-media-dialog-box')) {
             event.preventDefault();
             $(this).removeClass('is-visible');
+            $('body').removeClass('quick_view_modal_popup_open');
             $('.sell-media-grid-item').removeClass('sell-media-active-popup-item');
             $('#sell-media-dialog-box-target').removeClass('loaded');
             if ('sell-media-empty-dialog-box' !== $(this).attr('id')) {
@@ -185,6 +231,7 @@ jQuery(document).ready(function($) {
         // Esc
         if (event.which == '27') {
             $('.sell-media-dialog-box').removeClass('is-visible');
+            $('body').removeClass('quick_view_modal_popup_open');
             $('.sell-media-grid-item').removeClass('sell-media-active-popup-item');
             $('#sell-media-dialog-box-target').removeClass('loaded');
             if ('sell-media-empty-dialog-box' !== $('.sell-media-dialog-box').attr('id')) {
@@ -745,6 +792,11 @@ jQuery(document).ready(function($) {
             $('.button-container #sell-media-add-to-cart').html(res);
         });
     });
+
+    if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
+        $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
+    }
+
 }); // End jQuery document ready.
 
 /**

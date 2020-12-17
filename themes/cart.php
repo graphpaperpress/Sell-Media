@@ -36,7 +36,7 @@ ob_start();
 		</div><!-- .sell-media-quick-view-content-inner -->
 	</div><!-- .sell-media-quick-view-content -->
 	<?php else : ?>
-		<p>
+		<p class="sell-media-item-password-protected">
 			<?php printf( __( 'This item is password protected. %s Click here to enter password. %s', 'sell_media' ), '<a href="' . esc_url( get_permalink( $post_id ) ) .'">', '</a>' ); ?>
 		</p>
 	<?php endif; ?>
