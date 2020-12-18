@@ -568,6 +568,7 @@ body {
 .sell-media-button {
   position: relative;
 }
+.sell-media-spinner-large,
 .sell-media-spinner-dark,
 .sell-media-spinner-light,
 .sell-media-spinner {
@@ -620,6 +621,23 @@ body {
 	  height: 1em;
 	  position: absolute;
 	  width: 1em;
+	  left: calc(50% - (1em / 2));
+	  top: calc(50% - (1em / 2));
+	}
+}
+.sell-media-spinner-large {
+	&:after {
+	  -webkit-animation: spin .5s infinite linear;
+	  animation: spin .5s infinite linear;
+	  border: 2px solid #ccc;
+	  border-radius: 290486px;
+	  border-right-color: transparent;
+	  border-top-color: transparent;
+	  content: "";
+	  display: block;
+	  height: 5em;
+	  position: absolute;
+	  width: 5em;
 	  left: calc(50% - (1em / 2));
 	  top: calc(50% - (1em / 2));
 	}
@@ -1197,10 +1215,8 @@ body {
 	}
 
 	img {
-		width: auto !important;
-		height: auto !important;
 		max-width: 100%;
-		max-height: 100vh;
+		max-height: 100%;
 		margin: 0 auto;
 	}
 
@@ -1212,9 +1228,7 @@ body {
 		background-color: $white-color;
 		position: relative;
 		max-width: 1000px;
-		max-width: 80vw;
-		width: 80%;
-		max-height: 80vh;
+		width: 100% !important;
 		margin: 4em auto;
 	}
 
@@ -1222,8 +1236,6 @@ body {
 		@extend .cf;
 		background-color: $white-color;
 		display: flex;
-	    justify-content: center;
-	    align-items: center;
 
 		@media only screen and (max-width : 768px) {
 			padding: 0;
@@ -1239,7 +1251,7 @@ body {
 
 	.sell-media-quick-view-content {
 		width: 35%;
-  		padding: 15px 32px;
+  		padding: 32px 32px;
 		margin-bottom: 0 !important; // override grid margins
 
 		@media only screen and (max-width : 768px) {
@@ -1351,6 +1363,58 @@ body {
 	@media only screen and (min-width: 1170px) {
 		#sell-media-dialog-box-target {
 			margin: 8em auto;
+		}
+	}
+}
+
+.sell-media-dialog-box-content {
+	.sell-media-quick-view-image {
+		.sell_media_image {
+			object-fit: contain;
+		}
+	}
+	min-height: 150px;
+	max-width: 100%;
+}
+.quick_view_modal_popup_open {
+	overflow: hidden;
+}
+div#sell-media-dialog-box {
+	position: fixed;
+	width: 100% !important;
+	height: 100% !important;
+	overflow: auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	div#sell-media-dialog-box-target {
+		top: 0 !important;
+		margin: 0 auto !important;
+		max-height: unset;
+	}
+}
+.sell-media-dialog-box {
+	.sell-media-quick-view-image {
+		margin-bottom: 0 !important;
+		height: 100vh;
+		background: #ececec;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		max-height: 100vh;
+	}
+}
+p.sell-media-item-password-protected {
+	text-align: center;
+	width: 100%;
+	font-weight: bold;
+	font-size: 16px;
+	letter-spacing: 0.5px;
+	a {
+		color: #808080 !important;
+		text-decoration: underline !important;
+		&:hover {
+			text-decoration: none !important;
 		}
 	}
 }
@@ -2251,6 +2315,42 @@ input.sell-media-search-text[type=text] {
 					background: $black-color;
 					color: $white-color;
 				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.sell-media-dialog-box {
+		.sell-media-quick-view-container {
+			padding: 0;
+		}
+	}
+	div#sell-media-dialog-box {
+		width: 100% !important;
+		div#sell-media-dialog-box-target {
+			width: 100%;
+			max-width: 80%;
+			.sell-media-dialog-box-content {
+				width: 100% !important;
+				min-width: 100%;
+				height: auto !important;
+				.sell-media-quick-view-container {
+					width: 100% !important;
+					height: auto !important;
+					.sell-media-quick-view-image {
+						width: 100% !important;
+						height: auto !important;
+					}
+				}
+			}
+		}
+	}
+	#sell-media-dialog-box {
+		.sell-media-quick-view-container {
+			.sell-media-quick-view-content {
+				max-height: inherit !important;
+				width: 100% !important;
 			}
 		}
 	}
