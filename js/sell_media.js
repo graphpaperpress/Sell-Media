@@ -379,15 +379,21 @@ jQuery(document).ready(function($) {
         $('#sell_media_download_wrapper fieldset.sell-media-add-to-cart-fieldset').each(function() {
             // check for selected markup or single markup
             var option = $('option:selected', $(this).children('select')).data('price');
-            if ($('option:selected', $(this).children('select')).data('name')) {
+            /*if ($('option:selected', $(this).children('select')).data('name')) {
                 var markup = $('option:selected', $(this).children('select')).data('price');
                 var markup_name = $('option:selected', $(this).children('select')).data('name');
                 var markup_id = $('option:selected', $(this).children('select')).val();
+            } */
+            if( $(this).find('select option:selected').data('name') ) {
+                var markup = $(this).find('select option:selected').data('price');
+                var markup_name = $(this).find('select option:selected').data('name');
+                var markup_id = $(this).find('select option:selected').val();
             } else {
                 var markup = '';
                 var markup_name = '';
                 var markup_id = '';
             }
+
             // selected tax doesn't have markup
             if (markup !== undefined && markup > 0) {
                 sum += parseFloat((markup / 100) * price);
