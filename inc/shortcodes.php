@@ -232,6 +232,7 @@ function sell_media_checkout_shortcode() {
 								<?php endif; ?>
 							<?php endforeach; ?>
 						<?php endif; ?>
+						<?php do_action( 'sell_media_checkout_custom_item_attributes', $item ); ?>						
 					</div>
 					<div class="item-qty-total">
 						<div class="item-decrement">

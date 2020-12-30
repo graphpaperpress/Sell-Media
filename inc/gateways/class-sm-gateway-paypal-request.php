@@ -769,7 +769,11 @@ class SM_Gateway_PayPal_Request {
         $p = new SellMediaProducts();
         foreach ( $products as $product ) {
 
-            if ( empty( $product['item_license'] ) || (int) $product['item_license'] < 1) {
+            if( $product['item_type'] == 'print_on_demand' ) {
+                $license_desc = null;
+                $license_name = null;
+                $amount = $product['price'];
+            } else if ( empty( $product['item_license'] ) || (int) $product['item_license'] < 1) {
                 $license_desc = null;
                 $license_name = null;
                 $amount = $p->verify_the_price( $product['item_id'], $product['item_pgroup'] );
@@ -812,6 +816,9 @@ class SM_Gateway_PayPal_Request {
             );
             if ( isset( $product['shipping_amount'] ) && !empty( $product['shipping_amount'] ) ) {
                 $tmp_products['shipping'] = $product['shipping_amount'];
+            }
+            if( $product['item_type'] == 'print_on_demand' && isset( $product['item_sku'] ) ) {
+                $tmp_products['sku'] = $product['item_sku'];
             }
             $payment_details_array['products'][] = $tmp_products;
         }
