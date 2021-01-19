@@ -43,8 +43,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 
 		<div id="sell_media_download_wrapper" class="sell-media-add-to-cart-download-fields">
 			<?php if ( ! $is_package && $has_price_group ) : ?>
-				<fieldset id="sell_media_download_size_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-download-fieldset">
-					<label for="sell_media_item_size"><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></label>
+				<fieldset id="sell_media_download_size_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-download-fieldset">					
 					<span class="sell-media-select-box sell-media-select-small">
 						<select id="sell_media_item_size" class="sum sell-media-select" required>
 							<option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0"><?php _e( 'Select a size', 'sell_media'); ?></option>
