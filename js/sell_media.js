@@ -108,22 +108,34 @@ jQuery(document).ready(function($) {
 
                                 setTimeout(function(){                                    
                                     $('#sell-media-dialog-box-target').removeClass('sell-media-spinner-large');
-
-                                    if($('.sell-media-quick-view-content-inner #sell_media_print_wrapper').is(':visible')){
-                                        
-                                        if($('#sell_media_print_wrapper #sell_media_print_size_fieldset #sell_media_print_size').length){
-                                            $($('#sell_media_print_size').children()[1]).attr('selected',true).trigger('change');
+                                    if( $('.sell-media-quick-view-content-inner #print_on_demand').length ) {                                        
+                                        $('input[name="type"][value="print_on_demand"]').prop('checked', true);
+                                        setTimeout(function() {
+                                            $('input[name="type"]').trigger('change');
+                                            $('.sell-media-quick-view-content-inner #sell_media_print_wrapper').addClass('is-hidden');     
+                                            $('.sell-media-quick-view-content-inner #sell_media_download_wrapper').addClass('is-hidden'); /* hidding other options */                            
+                                        },10);
+                                    } else {
+                                        if($('.sell-media-quick-view-content-inner #sell_media_print_wrapper').is(':visible')){
+                                            
+                                            if($('#sell_media_print_wrapper #sell_media_print_size_fieldset #sell_media_print_size').length){
+                                                $($('#sell_media_print_size').children()[1]).attr('selected',true).trigger('change');
+                                            }
                                         }
-                                    }
 
-                                    if($('.sell-media-quick-view-content-inner .sell-media-add-to-cart-download-fields').is(':visible')){
-                                        if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
-                                            $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
+                                        if($('.sell-media-quick-view-content-inner .sell-media-add-to-cart-download-fields').is(':visible')){
+                                            if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
+                                                $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
+                                            }
                                         }
                                     }
 
                                     var sellmedia_quick_view_image_height = $('.sell-media-quick-view-container .sell-media-quick-view-image').height();
-                                    $('.sell-media-quick-view-container .sell-media-quick-view-content').css({'max-height': sellmedia_quick_view_image_height+'px','overflow-y':'scroll' });
+                                    var sellmedia_quick_view_content_height = $('.sell-media-quick-view-container .sell-media-quick-view-content').height();
+                                    var overflow_y = 'unset';
+                                    if(sellmedia_quick_view_content_height > sellmedia_quick_view_image_height)
+                                        overflow_y = 'scroll';
+                                    $('.sell-media-quick-view-container .sell-media-quick-view-content').css({'max-height': sellmedia_quick_view_image_height+'px','overflow-y':overflow_y });
                                 }, 100);
 
                             }, 100);
@@ -131,8 +143,7 @@ jQuery(document).ready(function($) {
                         });
                     });
                     // otherwise, this is the first load
-                } else {
-
+                } else {                    
                     $(target).html(msg);
                     setTimeout(function(){
 
@@ -143,27 +154,39 @@ jQuery(document).ready(function($) {
                         setTimeout(function(){                            
                             $('#sell-media-dialog-box-target').removeClass('sell-media-spinner-large');
 
-                            if($('.sell-media-quick-view-content-inner #sell_media_print_wrapper').is(':visible')){
+                            if( $('.sell-media-quick-view-content-inner #print_on_demand').length ) {                               
+                                $('input[name="type"][value="print_on_demand"]').prop('checked', true);
+                                setTimeout(function() {
+                                    $('input[name="type"]').trigger('change');
+                                    $('.sell-media-quick-view-content-inner #sell_media_print_wrapper').addClass('is-hidden');     
+                                    $('.sell-media-quick-view-content-inner #sell_media_download_wrapper').addClass('is-hidden'); /* hidding other options */                            
+                                },10);
+                            } else {
+                                if($('.sell-media-quick-view-content-inner #sell_media_print_wrapper').is(':visible')){
+                                            
+                                    if($('#sell_media_print_wrapper #sell_media_print_size_fieldset #sell_media_print_size').length){
+                                        $($('#sell_media_print_size').children()[1]).attr('selected',true).trigger('change');
+                                    }
+                                }
                                         
-                                if($('#sell_media_print_wrapper #sell_media_print_size_fieldset #sell_media_print_size').length){
-                                    $($('#sell_media_print_size').children()[1]).attr('selected',true).trigger('change');
+                                if($('.sell-media-quick-view-content-inner .sell-media-add-to-cart-download-fields').is(':visible')){
+                                    if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
+                                        $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
+                                    }
                                 }
                             }
-                                    
-                            if($('.sell-media-quick-view-content-inner .sell-media-add-to-cart-download-fields').is(':visible')){
-                                if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
-                                    $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
-                                }
-                            }
-
                             var sellmedia_quick_view_image_height = $('.sell-media-quick-view-container .sell-media-quick-view-image').height();
-                            $('.sell-media-quick-view-container .sell-media-quick-view-content').css({'max-height': sellmedia_quick_view_image_height+'px','overflow-y':'scroll' });
+                            var sellmedia_quick_view_content_height = $('.sell-media-quick-view-container .sell-media-quick-view-content').height();
+                            var overflow_y = 'unset';
+                            if(sellmedia_quick_view_content_height > sellmedia_quick_view_image_height)
+                                overflow_y = 'scroll';
+                            $('.sell-media-quick-view-container .sell-media-quick-view-content').css({'max-height': sellmedia_quick_view_image_height+'px','overflow-y':overflow_y });
 
                         }, 100);
 
                     }, 100);
 
-                }
+                }                
                 required_fields();
 
             }
@@ -390,7 +413,7 @@ jQuery(document).ready(function($) {
         // if the price doesn't exist, set the price to the total shown
         // either the custom price of the item or the default price from settings
         if (price == undefined || price == 0) {
-            price = $('#sell_media_item_base_price').val();
+            price = $('#sell_media_item_base_price').length ? $('#sell_media_item_base_price').val() : 0;
         }
 
         // Hide or Show checkout and add to cart button
@@ -817,12 +840,14 @@ jQuery(document).ready(function($) {
         $.post(sell_media.ajaxurl, data, function(res) {
             $('.button-container #sell-media-add-to-cart').html(res);
         });
+            
+        $('#sell_media_product_type li').removeClass('selected-tab');
+        $('#sell_media_product_type input[name="type"]:checked').parent().addClass('selected-tab');
     });
 
     if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
         $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
     }
-
 }); // End jQuery document ready.
 
 /**
@@ -978,13 +1003,13 @@ function sm_update_cart_item(el, type) {
 
     // Update price.
     var updated_price = parseInt(updated_qty) * parseFloat(price);
+   
+     // Update qty.
+     parent.find('.item-quantity .count').text(updated_qty);
 
-    // Update qty.
-    parent.find('.item-quantity .count').text(updated_qty);
-
-    // Update item total.
-    parent.find('.item-total').html(currency_symbol + updated_price.formatMoney(2, '.', ','));
-
+     // Update item total.
+     parent.find('.item-total').html(currency_symbol + updated_price.formatMoney(2, '.', ','));     
+    
     // Hide if qty is less than 1.
     if (updated_qty < 1) {
         parent.fadeOut('slow').remove();
