@@ -310,8 +310,8 @@ class SM_Gateway_PayPal_Request {
         $response = array(
             'tax_amount' => $tax_amount,
             'shipping_amount' => $shipping_amount,
-        );
-        return $response;
+        );        
+        return apply_filters( 'sell_media_calculate_tax_shipping', $response );
     }
 
     /**
@@ -579,7 +579,7 @@ class SM_Gateway_PayPal_Request {
             $_shipping = $_paypal_get_order->result->purchase_units[0]->shipping;
             $_shipping_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->shipping->value;
             $_tax_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->tax_total->value;
-            $_discount_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value;
+            $_discount_total = isset( $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value ) ? $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value : 0;
             $_payer_name = $_billing_details->name->given_name .' '. $_billing_details->name->surname;
             $payment_id = wp_insert_post(
                 array(
@@ -799,7 +799,7 @@ class SM_Gateway_PayPal_Request {
                 'type'        => $product['item_type'],
                 'size'        =>
                     array(
-                        'name'        => $product['item_size'],
+                        'name'        => isset( $product['item_size'] ) ? $product['item_size'] : '',
                         'id'          => $product['item_pgroup'],
                         'amount'      => $amount,
                         'description' => null,
