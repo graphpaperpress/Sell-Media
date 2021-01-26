@@ -624,10 +624,9 @@ jQuery(document).ready(function($) {
     });
 
     // Submit to payment gateway
-    $(document).on('click', '.sell-media-cart-checkout', function() {
+    $(document).on('click', '#pay_via_paypal_purchase', function() {        
         var btn = $(this);
-        var selected_payment = $('#sell_media_payment_gateway').find('input:checked');
-        if ('paypal' == selected_payment.val()) {
+        btn.prop('disabled', true).css({ "cursor": "progress" }).text(sell_media.checkout_wait_text);            
             $.ajax({
                 type: "POST",
                 url: sell_media.ajaxurl,
@@ -646,8 +645,7 @@ jQuery(document).ready(function($) {
                 }, error: function (error) {
                     btn.prop('disabled', false).text(sell_media.checkout_text);
                 }
-            });
-        }
+        });        
     });
 
     /**

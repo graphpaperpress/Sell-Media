@@ -65,9 +65,11 @@ class SM_Gateway_PayPal_Request {
             $secret_key_exist = SellMediaPayPal::keys( 'secret_key' );
             if (!empty($secret_key_exist)) {
                 ?>
-                <label for="paypal"><input type="radio" name="gateway" id="paypal" value="paypal" checked><?php _e( 'PayPal', 'sell_media' ); ?></label>
+                <button class="sell-media-cart-checkout-button sell-media-button" id="pay_via_paypal_purchase"><?php _e( 'Pay Via PayPal', 'sell_media' ); ?></button>
                 <?php
-            } ?>
+            }
+            do_action( 'sell_media_payment_gateway_fields_after' );
+            ?>
         </form>
         <?php
     }
