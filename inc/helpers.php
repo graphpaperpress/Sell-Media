@@ -613,18 +613,18 @@ if ( ! is_admin() ) {
 function sell_media_get_filesize( $post_id = null, $attachment_id = null ) {
 
 	$file_path = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
-	//echo $file_path;
+	$bytes = 0;
 	if ( file_exists( $file_path ) ) { // local server path
 		$bytes = filesize( $file_path );
-	} else { // amazon s3 filesize https path
+	} else if( !empty( $file_path) ) { // amazon s3 filesize https path
 		$heads = get_headers($file_path, 1);
 		$bytes = $heads['Content-Length'];	
 	}
 	
 	$s = array( 'b', 'Kb', 'Mb', 'Gb' );
-	$e = floor( log( $bytes ) / log( 1024 ) );
+	$e = $bytes > 0 ? floor( log( $bytes ) / log( 1024 ) ) : '';
 
-	return sprintf( '%.2f ' . $s[ $e ], ( $bytes / pow( 1024, floor( $e ) ) ) );
+	return !empty( $e ) && !empty( $bytes ) ? sprintf( '%.2f ' . $s[ $e ], ( $bytes / pow( 1024, floor( $e ) ) ) ) : '';	
 	
 }
 

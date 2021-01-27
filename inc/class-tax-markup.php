@@ -299,7 +299,10 @@ class SellMediaTaxMarkup {
 					<?php
 					$sell_media_tooltip_text = 'Select a ' . esc_attr( $taxonomy->labels->singular_name ) . ' that most closely describes the intended use of this item. Additional ' . esc_attr( $taxonomy->labels->singular_name ) . ' details will be displayed here after selecting a ' . esc_attr( $taxonomy->labels->singular_name ) . '.';
 					$tooltip_text = apply_filters( "sell_media_{$tax}_tooltip_text", $sell_media_tooltip_text );
-					?>					
+					?>
+					<label class="sell_media_sr_only" for="sell_media_item_<?php echo esc_attr( $tax ) ?>">
+						<?php echo esc_html( apply_filters( 'sell_media_' . $tax . '_text', 'select a ' . strtolower($taxonomy->labels->singular_name ) ) ); ?>						
+					</label>					
 					<span class="sell-media-select-box sell-media-select-small">
 						<select data-markup-taxonomy="<?php echo esc_attr( $tax ) ?>" id="sell_media_item_<?php echo esc_attr( $tax ) ?>" class="sum sell-media-select" required>
 							<option selected="selected" value="" data-id="" data-price="0" title="<?php echo esc_html( $tooltip_text ); ?>"><?php echo esc_html( sprintf( __( 'Select a %s', 'sell_media' ), strtolower( $taxonomy->labels->singular_name ) ) ); ?></option>
