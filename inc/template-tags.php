@@ -572,8 +572,7 @@ function sell_media_show_file_info() {
 	$filename = explode( '?', basename( get_attached_file( $attachment_id ) ) )[0];
 	//$filename = basename( get_attached_file( $attachment_id ) );
 	$post_guid = get_the_guid( $attachment_id );
-	$getProtectedFile = Sell_Media()->products->get_protected_file( $post_obj->ID, $attachment_id );	
-	$image_size_info = !empty( $getProtectedFile ) ? getimagesize(  $getProtectedFile ) : '';
+	$image_size_info = getimagesize( Sell_Media()->products->get_protected_file( $post_obj->ID, $attachment_id ) );
 	$video_metadata = wp_get_attachment_metadata( $attachment_id );
 
 	echo '<h2 class="widget-title sell-media-item-details-title">' . __( 'Details', 'sell_media' ) . '</h2>';
@@ -581,8 +580,7 @@ function sell_media_show_file_info() {
 	echo '<li class="filename"><span class="title">' . __( 'File Name', 'sell_media' ) . ':</span> ' . $filename . '</li>';
 	echo '<li class="fileid"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>';
 	preg_match('/^.*?\.(\w+)$/',$filename,$ext);
-	$fileExtension = !empty( $ext[1] ) && isset( $ext[1] ) ? esc_html( strtoupper( $ext[1] ) ) : '';
-	echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . $fileExtension .' ('. get_post_mime_type( $attachment_id ) . ')</li>';
+	echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . esc_html( strtoupper( $ext[1] ) ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>';
 	echo '<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post_obj->ID, $attachment_id ) . '</li>';
 	if ( isset( $image_size_info[0], $image_size_info[1] ) ) {
 		echo '<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $image_size_info[0]. ' x '. $image_size_info[1] .'</li>';

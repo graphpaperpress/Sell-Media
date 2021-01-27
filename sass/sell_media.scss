@@ -338,13 +338,21 @@ body {
 body {
 	.sell-media-button,
 	.sell-media-button {
+		color: #363636;
 		cursor: pointer;
 		justify-content: center;
+		padding-bottom: calc(.8em - 1px);
+		padding-left: 1.5em;
+		padding-right: 1.5em;
+		padding-top: calc(.8em - 1px);
 		text-align: center;
 		white-space: nowrap;
 		border: 1px solid #dbdbdb;
 		border-radius: 3px;
+		background-color: #fff;
 		text-transform: capitalize;
+		font-weight: 600;
+		font-size: 1.3rem;
 		box-shadow: none;
 		text-decoration: none;
 	}
@@ -354,7 +362,9 @@ body {
 	.sell-media-button:focus,
 	#sell-media-submit:hover,
 	#sell-media-submit:focus {
+	  background-color: transparent;
 	  box-shadow: none;
+	  color: #363636;
 	  text-decoration: none;
 	  border-color: #b5b5b5;
 	}
@@ -372,6 +382,7 @@ body {
 
 	.sell-media-button:disabled,
 	#sell-media-submit:disabled {
+		background-color: #fff;
 		border-color: #dbdbdb;
 		box-shadow: none;
 		opacity: .5;
@@ -380,6 +391,7 @@ body {
 
 	input[type=submit] {
 		&.sell-media-button:disabled {
+			background-color: #fff;
 			border-color: #dbdbdb;
 			box-shadow: none;
 			opacity: .5;
@@ -413,6 +425,18 @@ body {
 			  border-color: #eee;
 			  color: rgba(0,0,0,.7);
 			}
+		}
+
+		&.sell-media-button-dark {
+		  background-color: #363636;
+		  border-color: transparent;
+		  color: #fff;
+		}
+
+		&.sell-media-button-black {
+		  background-color: #0a0a0a;
+		  border-color: transparent;
+		  color: #fff;
 		}
 
 		&.sell-media-button-info {
@@ -479,7 +503,15 @@ body {
 		&.sell-media-button-rounded {
 		    border-radius: 40px;
 		}
-		 
+		&.sell-media-button-small {
+		    font-size: 1rem;
+		}
+		&.sell-media-button-large {
+		    font-size: 2rem;
+		}
+		&.sell-media-button-medium {
+		    font-size: 1.5rem;
+		}
 		&.sell-media-button-fullwidth {
 		  width: 100%;
 		}
@@ -498,17 +530,30 @@ body {
 	    width: 100%;
 	    background-color: #fff;
 	    border-radius: 4px;
+	    color: #363636;
 	    border: 1px solid #dbdbdb;
 	    display: inline-flex;
+	    font-size: 1.4rem;
 	    justify-content: flex-start;
 	    line-height: 1.6;
+	    padding-bottom: calc(.5em - 1px);
+	    padding-left: calc(.8em - 1px);
+	    padding-right: calc(.8em - 1px);
+	    padding-top: calc(.5em - 1px);
 	}
 	.sell-media-input-text {
 		&.sell-media-input-small {
+		    font-size: 1.2rem;
+		    padding-bottom: calc(.4em - 1px);
+		    padding-left: calc(0.7em - 1px);
+		    padding-right: calc(.7em - 1px);
+		    padding-top: calc(.4em - 1px);
 		}
 		&.sell-media-input-medium {
+		    font-size: 1.6rem;
 		}
 		&.sell-media-input-large {
+		    font-size: 2rem;
 		}
 		&:focus {
 		  border-color: #3273dc;
@@ -1384,7 +1429,7 @@ body {
 	.sell-media-quick-view-container {
 		.sell-media-plan-btn {
 			&.sell-media-button {
-			    display: flex;
+			    display: block;
 			}
 		}
 	}
@@ -1419,16 +1464,6 @@ body {
 
 /*= Select Fields
 -------------------------------------------------------------- */
-.sell_media_sr_only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    border: 0;
-}
 .sell-media-select {
     cursor: pointer;
     font-size: 1.2em;
@@ -1437,6 +1472,7 @@ body {
     background-color: #fff;
     border: 1px solid #dbdbdb;
     border-radius: 4px;
+    color: #363636;
     height: auto;
     padding-bottom: calc(.5em - 1px);
     padding-left: calc(.90em - 1px);
@@ -1545,16 +1581,13 @@ body {
 		border: 0;
 		border-bottom: 1px solid $border-color;
 		background-color: transparent;
-		display: flex;
-   		align-items: center;
 	}
 
 	label {
 		display: inline-block;
 		font-weight: normal;
 		font-size: $font-size * .75;
-		width: 40%;
-   		margin-bottom: 0;
+		width: 125px;
 	}
 
 	input[type="radio"] {
@@ -1612,7 +1645,6 @@ body {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	display: flex;
 
 	&.active {
 		box-shadow: 0 0 10px rgba(0,0,0,.2);
@@ -2258,11 +2290,15 @@ input.sell-media-search-text[type=text] {
 			padding: 0;
 		}
 
+		h2,
+		p {
+			color: $black-color;
+		}
+
 		.load-more-button {
 			width: 100%;
 			text-align: center;
 			margin: 10px 0;
-			display: flex;
 
 			a {
 				background-image: none;
@@ -2272,214 +2308,17 @@ input.sell-media-search-text[type=text] {
 				display: inline-block;
 				padding: 10px 15px;
 				box-shadow: none;
+				background: darken( $default-color, 30% );
+				color: $light-color;
 
 				&:hover {
-					
+					background: $black-color;
+					color: $white-color;
 				}
 			}
 		}
 	}
 }
-
-.sell-media-quick-view-content-inner {
-	.sell-media-add-to-cart-fields {
-		fieldset {
-			.sell-media-select-box {
-				width: 100%;
-			}
-		}
-	}
-}
-.sell-media-add-to-cart-fields {
-	fieldset {
-		.sell-media-select-box {
-			margin: 0 auto;
-			width: 60%;
-			position: relative;
-			select {
-				padding-right: 25px;
-			}
-			&::after {
-				border-width: 3px !important;
-				border: 3px solid transparent;
-				border-radius: 2px;
-				border-right: 0;
-				border-top: 0;
-				content: " ";
-				display: block;
-				height: 9.46875px !important;
-				margin-top: -0.5375em !important;
-				pointer-events: none;
-				position: absolute;
-				top: 50%;
-				transform: rotate(-45deg);
-				transform-origin: center;
-				width: 9.46875px !important;
-				border-color: #3c3838;
-				right: 1.125em !important;
-				z-index: 4;
-			}
-		}
-	}
-	select {
-		width: 100%;
-		height: 33px;
-		padding: 0 5px;
-		border: 1px solid #dbdbdb;
-		border-radius: 4px;
-		appearance: none;
-		-webkit-appearance: none;
-	}
-}
-.sell-media-product-type-fields-container {
-	ul {
-		list-style: none;
-
-		li.selected-tab {
-			label {
-				font-weight: bold;
-			}
-		}
-	}
-}
-#sell_media_product_type {
-	border: 0;
-	ul {
-		margin: 15px 0 15px;
-		padding: 0;
-		display: flex;
-		border-bottom: 1px solid #eee;
-		align-items: center;
-		justify-content: center;
-		li {
-			line-height: normal;
-			width: auto;
-			position: relative;
-			display: inline-block;
-			list-style: none;
-			margin: 0 4px -1px;
-			input[type="radio"] {
-				position: absolute;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				opacity: 0;
-				cursor: pointer;
-				margin: 0;
-				&:checked {
-					~ {
-						label {
-							border-bottom: 1px solid transparent;
-						}
-					}
-				}
-			}
-			label {
-				width: auto;
-				padding: 6px 12px;
-				margin-bottom: 0;
-				border: 1px solid #eee;
-			}
-		}
-	}
-}
-.shipping_options {
-	input[type="radio"] {
-		margin-left: 0;
-	}
-	>label {
-		display: block;
-		font-weight: 400;
-	}
-}
-.sell-media-totals {
-	margin: 15px 0;
-	float: left;
-	width: 100%;
-	.sell-media-totals-table {
-		width: 100%;
-		float: right;
-		margin: 0 0 10px;
-	}
-}
-.sell-media-cart-items {
-	margin: 0;
-	float: left;
-	width: 100%;
-}
-.sell-media-key {
-	display: block;
-	font-weight: 400;
-}
-.sell-media-value {
-	.sell-media-cart-total {
-		display: block;
-		font-weight: 400;
-	}
-	p {
-		display: block;
-		font-weight: 400;
-	}
-	a#remove-discount-code {
-		display: block;
-		width: 100%;
-		font-weight: 400;
-		margin-bottom: 15px;
-	}
-}
-.sell-media-cart-grand-total {
-	display: block;
-	font-weight: 400;
-}
-.sell-media-cart-shipping {
-	display: block;
-	font-weight: 400;
-}
-.sell-media-checkout-button.group {
-	p#sell-media-continue-shopping {
-		display: block;
-		font-weight: 400;
-	}
-	float: right;
-	width: 100%;
-	margin: 0;
-	form#sell_media_payment_gateway {
-		margin-top: 0 !important;
-		display: inline-block;
-	}
-}
-.item-total {
-	display: block;
-	font-weight: 400;
-}
-.sell-media-checkout-button {
-	br {
-		display: none;
-	}
-}
-#sell-media-totals-table {
-	input#apply-discount-code {
-		margin: 15px 0 0;
-	}
-	p.message-target {
-		float: left;
-		width: 100%;
-	}
-}
-.sell-media-manual-purchase-meta {
-	.sell-media-manual-purchase-label {
-		text-align: left;
-	}
-}
-.sell-media-cart-checkout-button {
-	clear: both;
-	margin: 10px 0px;
-	display: inline-block;
-}
-.sell-media-cart-checkout-button.sell-media-button {
-	text-transform: none;
-}
-
 
 @media only screen and (max-width: 768px) {
 	.sell-media-dialog-box {
