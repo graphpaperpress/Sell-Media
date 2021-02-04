@@ -3,9 +3,9 @@
 Contributors: endortrails, nhuja
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
-Requires at least: 5.5
-Tested up to: 5.5
-Stable tag: 2.5
+Requires at least: 5.6
+Tested up to: 5.6
+Stable tag: 2.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Sell photos, prints, videos and pdf's online through WordPress in seconds. Every
 
 == Description ==
 
-[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is finely tailored e-commerce solution for selling photos, prints, and videos through your self-hosted WordPress site. Photographers love it for it's flexibly gallery layouts and powerful [extensions](https://graphpaperpress.com/extensions/sell-media/).
+[Sell Media](https://graphpaperpress.com/plugins/sell-media/) is finely tailored e-commerce solution for selling photos, prints, and videos through your self-hosted WordPress site. Photographers love it for it's flexibly gallery layouts and powerful [extensions](https://graphpaperpress.com/extensions/sell-media/).
 
 Using Sell Media, you can:
 
@@ -24,7 +24,7 @@ Using Sell Media, you can:
 *   Accept payments via PayPal. Additional payment gateways are also available.
 
 **New in version 2.5: Gutenberg Blocks**
-Insert galleries in many different formats using Sell Media blocks for Gutenberg!
+Insert galleries, sliders, filters, and search forms in many different styles using Sell Media blocks for Gutenberg!
 
 = Resources =
 
@@ -39,8 +39,9 @@ These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/
 
 Take Sell Media to the next level with these powerful extensions:
 
-* [Sell photo prints](http://graphpaperpress.com/plugins/sell-media-reprints)
-* [Sell Subscription Plans](https://graphpaperpress.com/plugins/sell-media-subscription/)
+* [Print On Demand](https://graphpaperpress.com/plugins/sell-media-print-on-demand)
+* [Sell Photo Prints](http://graphpaperpress.com/plugins/sell-media-reprints)
+* [Sell Photo Subscriptions](https://graphpaperpress.com/plugins/sell-media-subscription/)
 * [Cloud Backups](http://graphpaperpress.com/plugins/sell-media-s3)
 * [Watermark your images](http://graphpaperpress.com/plugins/sell-media-watermark)
 * [Newsletter integration with Mailchimp](http://graphpaperpress.com/plugins/sell-media-mailchimp)
