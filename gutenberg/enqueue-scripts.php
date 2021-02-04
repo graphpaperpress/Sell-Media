@@ -97,7 +97,7 @@ function sellmedia_editor_scripts() {
     // Scripts for slider layout
     wp_enqueue_script(
         'sell_media_recent_items_tiny_slider',
-         SELL_MEDIA_PLUGIN_URL . 'js/tiny-slider.js',
+         SELL_MEDIA_PLUGIN_URL . 'gutenberg/js/tiny-slider.js',
          array(),
         $asset_file['version']
     );           
@@ -105,7 +105,7 @@ function sellmedia_editor_scripts() {
     // Include style for slider
     wp_enqueue_style(
         'sell_media_recent_items_style',
-        SELL_MEDIA_PLUGIN_URL . 'css/tiny-slider.css',
+        SELL_MEDIA_PLUGIN_URL . 'gutenberg/css/tiny-slider.css',
         array(),
         $asset_file['version']
     );

@@ -161,8 +161,8 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
          */
         public function sell_media_items_slider_gutenberg_shortcode( $atts ) {
         
-            wp_enqueue_script('sell_media_recent_items_tiny_slider', SELL_MEDIA_PLUGIN_URL . 'js/tiny-slider.js', array('jquery') );
-            wp_enqueue_style('sell_media_recent_items_style', SELL_MEDIA_PLUGIN_URL . 'css/tiny-slider.css', array() );
+            wp_enqueue_script('sell_media_recent_items_tiny_slider', SELL_MEDIA_PLUGIN_URL . 'gutenberg/js/tiny-slider.js', array('jquery') );
+            wp_enqueue_style('sell_media_recent_items_style', SELL_MEDIA_PLUGIN_URL . 'gutenberg/css/tiny-slider.css', array() );
             wp_enqueue_style('sell_media_common_style', SELL_MEDIA_PLUGIN_URL . 'gutenberg/css/index.css', array() );
             $html   =   '';
             extract( shortcode_atts( array(		
@@ -216,6 +216,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                                 gutter:'.$atts['gutter'].',
                                 nav:'.$atts['slider_controls'].',
                                 autoplayButtonOutput:false,
+                                autoplay:true,
                             });
                             };</script>';
                 }
