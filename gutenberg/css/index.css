@@ -5,26 +5,19 @@
 }
 
 /* Sell Media Items listing */
-.sell-media h2.sell-media-entry-title {
-	font-size: 16px;
-    color: #cd2653;
-}
+
 .sell-media-pagination-container {
 	font-size: 21px;	
 }
-.sell-media-pagination-container .page-numbers {
-	color: #cd2653;
-}
+
 .sell-media-pagination-container .page-numbers.current {
 	color: #000000;
 }
 .sell-media-recent-item h2.sell-media-recent-item-title{
 	font-size: 16px;
-    color: #cd2653;
 }
 .sell-media-recent-item-wrap h1.sell-media-recent-items-title{
 	font-size: 40px;
-    color: #cd2653;
 }
 
 /* Search form block */
