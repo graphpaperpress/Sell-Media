@@ -33,6 +33,10 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 'bgImage' => array(
                     'type' => 'object',
                 ),
+                'align' => array(
+                    'type' => 'string',
+                    'default' => 'full'
+                ),
                 'bgImageId' => array(
                     'type' => 'integer',
                 ),
@@ -43,9 +47,6 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 
             );
             $this->self_closing     = true;
-
-            /* Enqueue Script for Editor */
-            add_action( 'wp_enqueue_scripts', array($this, 'sell_media_search_form_gutenberg_wp_enqueue_styles' ));
 
             /* Added shortcode for search form with different design options */
             add_shortcode( 'sell_media_search_form_gutenberg', array( $this, 'sell_media_search_form_gutenberg_shortcode' ) ); 
@@ -83,7 +84,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 $shortcode_out        = do_shortcode( $shortcode_params_str );
 
                 // This is mainly to protect against emty returns with the Gutenberg ServerSideRender function.
-                return $this->render_block_wrap( $shortcode_out );
+                return $this->render_block_wrap( $shortcode_out, true, $attributes );
         }
 
         /**
@@ -126,13 +127,13 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
          * @since 2.4.6
          *         
          */
-        public function render_block_wrap( $content = '', $with_inner = true ) {
+        public function render_block_wrap( $content = '', $with_inner = true, $attributes ) {
 
             $return_content  = '';
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner '.$attributes["align"].'">';
             }
 
             $return_content .= $content;
@@ -409,7 +410,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 $i = 0;
 
             } // end search results page check
-            wp_enqueue_style( 'sell_media_search_form_frontend' );
+
             return apply_filters( 'sell_media_search_results', $html );
         }
 
@@ -446,22 +447,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
             return $mime;
         }
-
-        public function sell_media_search_form_gutenberg_wp_enqueue_scripts() {
-            // Scripts for masonary layout
-            wp_register_script(
-                'sell_media_all_items_macy_frontend',
-                 SELL_MEDIA_PLUGIN_URL . 'js/macy.min.js',
-                array('jquery')
-            ); 
-        }
-
-        public function sell_media_search_form_gutenberg_wp_enqueue_styles() {
-            // Scripts for masonary layout
-            wp_register_style( 'sell_media_search_form_frontend', SELL_MEDIA_PLUGIN_URL . 'gutenberg/css/index.css', array() ); 
-        }
-
-        
+  
     }   
 }
 

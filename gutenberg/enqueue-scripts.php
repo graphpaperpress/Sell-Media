@@ -89,7 +89,7 @@ function sellmedia_editor_scripts() {
      // Include custom style for sell media items block
     wp_enqueue_style(
         'sell_media_items_block_style',
-        SELL_MEDIA_PLUGIN_URL . 'gutenberg/css/index.css',
+        SELL_MEDIA_PLUGIN_URL . 'gutenberg/css/editor-index.css',
         array(),
         $asset_file['version']
     );
@@ -113,3 +113,12 @@ function sellmedia_editor_scripts() {
 }
 // Hook scripts function into block editor hook.
 add_action( 'enqueue_block_editor_assets', 'sellmedia_editor_scripts' );
+
+
+function sell_media_frontend_styles() {
+    // Scripts for masonary layout
+    wp_enqueue_style( 'sell_media_search_form_frontend', SELL_MEDIA_PLUGIN_URL . 'gutenberg/css/frontend-index.css', array() ); 
+}
+
+/* Enqueue Script */
+add_action( 'wp_enqueue_scripts', 'sell_media_frontend_styles');
