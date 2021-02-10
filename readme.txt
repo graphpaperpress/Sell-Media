@@ -232,6 +232,9 @@ Action hooks available:
 
 == Changelog ==
 
+= 2.5.3 =
+* Fix: Alignment class conflict fix
+
 = 2.5.2 =
 * Fix: Add block alignment
 
