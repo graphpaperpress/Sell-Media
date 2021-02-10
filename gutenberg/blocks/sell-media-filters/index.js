@@ -41,7 +41,13 @@ registerBlockType( 'sellmedia/sell-media-filters', {
             type: 'boolean',
             default: 0
         },
-        
+        align: {
+            type: 'string',
+            default: 'full',
+        },
+    },
+    supports: {
+        align: true
     },
     edit( props ) {
         const { attributes: { all, newest, most_popular, collections, keywords },

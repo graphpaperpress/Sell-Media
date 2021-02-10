@@ -44,7 +44,14 @@ registerBlockType( 'sellmedia/sell-media-items-slider',{
         slider_controls:{
             type: 'boolean',
             default: 1
-        }
+        },
+        align: {
+            type: 'string',
+            default: 'full',
+        },
+    },
+    supports: {
+        align: true
     },
     edit( props ) {
         const { attributes: { total_items, show_title, slider_controls, gutter,item_title,total_visible_items  },

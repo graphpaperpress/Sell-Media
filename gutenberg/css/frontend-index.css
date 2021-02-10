@@ -1,0 +1,32 @@
+/*--------------------------------------------------------------
+# Alignments
+--------------------------------------------------------------*/
+.left {
+	display: flex;
+  	justify-content: flex-start;
+  	flex-wrap: wrap;
+}
+
+.right {
+	display: flex;
+  	justify-content: flex-end;
+  	flex-wrap: wrap;
+}
+
+.center {
+	display: flex;
+  	justify-content: center;
+  	flex-wrap: wrap;
+}
+
+.full {
+	max-width: 80%;
+	width: 80%;
+	display: block;
+	margin: 0 auto;
+}
+
+.wide {
+	width: 100%;
+	display: inline-block;
+}

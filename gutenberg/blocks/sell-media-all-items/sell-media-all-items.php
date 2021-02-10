@@ -33,6 +33,10 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 'thumbnail_layout' => array(
                     'type' => 'string',
                 ),
+                'align' => array(
+                    'type' => 'string',
+                    'default' => 'full'
+                ),
             );
             $this->self_closing     = true;
 
@@ -76,7 +80,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 $shortcode_out        = do_shortcode( $shortcode_params_str );
 
                 // This is mainly to protect against emty returns with the Gutenberg ServerSideRender function.
-                return $this->render_block_wrap( $shortcode_out );
+                return $this->render_block_wrap( $shortcode_out, true, $attributes );
         }
 
         /**
@@ -126,13 +130,13 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
          * @since 2.4.6
          *         
          */
-        public function render_block_wrap( $content = '', $with_inner = true ) {
+        public function render_block_wrap( $content = '', $with_inner = true, $attributes ) {
 
             $return_content  = '';
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner '.$attributes["align"].'">';
             }
 
             $return_content .= $content;
@@ -197,7 +201,8 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 'thumbnail_crop' => 'medium',
                 'thumbnail_layout' => 'sell-media-three-col',
                 'show_title' => true,
-                'quick_view' => true                
+                'quick_view' => true,
+                'align' => 'full',
                 ), $atts )
             );
 
@@ -325,11 +330,6 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 array('jquery')
             ); 
 
-            /*wp_add_inline_script( 'sell_media_all_items_macy_frontend', '
-                jQuery(function() {
-                    macy_init("sell-media-masonry");
-                });'
-            );*/
         }
     }   
 }

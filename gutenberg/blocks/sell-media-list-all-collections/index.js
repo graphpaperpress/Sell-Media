@@ -11,7 +11,16 @@ registerBlockType( 'sellmedia/sell-media-list-all-collections', {
     title: 'Sell Media Collection Items',
     description: __( 'Block showing a Sell Media Collection Items' ),
     icon: 'grid-view',
-    category: 'sellmedia-blocks',    
+    category: 'sellmedia-blocks',
+    attributes: {
+        align: {
+            type: 'string',
+            default: 'full',
+        },
+    },
+    supports: {
+        align: true
+    },  
     edit( props ) {
         function do_serverside_render() {
                 return <ServerSideRender
