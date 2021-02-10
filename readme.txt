@@ -5,7 +5,7 @@ Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 5.5
 Tested up to: 5.5
-Stable tag: 2.5
+Stable tag: 2.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -232,12 +232,17 @@ Action hooks available:
 
 == Changelog ==
 
+= 2.5.2 =
+* Fix: Add block alignment
+
+= 2.5.1 =
+* Fix: Style fixes
+
 = 2.5 =
 * New: Gutenberg block support for galleries, filters and more.
 * New: Google Images "licensable label" support
 * Fix: Improve UI
 * Fix: New PayPal API
-
 
 = 2.4.7 =
 * Fix: MailChimp subscription flow
