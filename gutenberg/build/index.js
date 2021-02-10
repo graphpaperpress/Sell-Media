@@ -144,7 +144,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('sel
     thumbnail_layout: {
       type: 'string',
       default: "sell-media-three-col"
+    },
+    align: {
+      type: 'string',
+      default: 'full'
     }
+  },
+  supports: {
+    align: true
   },
   edit: function edit(props) {
     var _props$attributes = props.attributes,
@@ -328,7 +335,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('sel
     keywords: {
       type: 'boolean',
       default: 0
+    },
+    align: {
+      type: 'string',
+      default: 'full'
     }
+  },
+  supports: {
+    align: true
   },
   edit: function edit(props) {
     var _props$attributes = props.attributes,
@@ -498,7 +512,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('sel
     slider_controls: {
       type: 'boolean',
       default: 1
+    },
+    align: {
+      type: 'string',
+      default: 'full'
     }
+  },
+  supports: {
+    align: true
   },
   edit: function edit(props) {
     var _props$attributes = props.attributes,
@@ -628,6 +649,15 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('sel
   description: __('Block showing a Sell Media Collection Items'),
   icon: 'grid-view',
   category: 'sellmedia-blocks',
+  attributes: {
+    align: {
+      type: 'string',
+      default: 'full'
+    }
+  },
+  supports: {
+    align: true
+  },
   edit: function edit(props) {
     function do_serverside_render() {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(ServerSideRender, {
@@ -718,7 +748,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('sel
     position_image: {
       type: 'string',
       default: 'wide'
+    },
+    align: {
+      type: 'string',
+      default: 'full'
     }
+  },
+  supports: {
+    align: true
   },
   edit: function edit(props) {
     var _props$attributes = props.attributes,

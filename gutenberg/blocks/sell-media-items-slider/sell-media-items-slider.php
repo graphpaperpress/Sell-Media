@@ -41,7 +41,11 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 'slider_controls' => array(
                     'type' => 'boolean',
                     'default' => 1,
-                )
+                ),
+                'align' => array(
+                    'type' => 'string',
+                    'default' => 'full',
+                ),
             );
             $this->self_closing     = true;
 
@@ -77,7 +81,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $shortcode_out        = do_shortcode( $shortcode_params_str );
 
             // This is mainly to protect against emty returns with the Gutenberg ServerSideRender function.
-            return $this->render_block_wrap( $shortcode_out );
+            return $this->render_block_wrap( $shortcode_out, true, $attributes );
         }
 
         /**
@@ -110,13 +114,13 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
          * @since 2.4.6
          *         
          */
-        public function render_block_wrap( $content = '', $with_inner = true ) {
+        public function render_block_wrap( $content = '', $with_inner = true, $attributes ) {
 
             $return_content  = '';
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner '.$attributes["align"].'">';
             }
 
             $return_content .= $content;

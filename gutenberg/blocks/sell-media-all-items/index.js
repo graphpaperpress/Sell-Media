@@ -41,6 +41,13 @@ registerBlockType( 'sellmedia/sell-media-all-items', {
             type: 'string',
             default: "sell-media-three-col"
         },
+        align: {
+            type: 'string',
+            default: 'full',
+        },
+    },
+    supports: {
+        align: true
     },
     edit( props ) {
         const { attributes: { per_page, show_title, quick_view, thumbnail_crop, thumbnail_layout },

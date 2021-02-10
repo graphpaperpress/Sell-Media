@@ -55,7 +55,14 @@ registerBlockType( 'sellmedia/sell-media-search-form', {
         position_image: {
             type: 'string',
             default: 'wide'
-        }
+        },
+        align: {
+            type: 'string',
+            default: 'full',
+        },
+    },
+    supports: {
+        align: true
     },
     edit( props ) {
         const { attributes: { custom_label, custom_description, custom_color, bgImage, bgImageId, position_image },
