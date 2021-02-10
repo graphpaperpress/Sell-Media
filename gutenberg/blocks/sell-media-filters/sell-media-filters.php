@@ -136,7 +136,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner '.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
             }
 
             $return_content .= $content;
