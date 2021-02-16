@@ -5,7 +5,7 @@ Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
 Requires at least: 5.5
 Tested up to: 5.5
-Stable tag: 2.5.2
+Stable tag: 2.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,12 +39,11 @@ These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/
 
 Take Sell Media to the next level with these powerful extensions:
 
-* [Sell photo prints](http://graphpaperpress.com/plugins/sell-media-reprints)
-* [Sell Subscription Plans](https://graphpaperpress.com/plugins/sell-media-subscription/)
-* [Cloud Backups](http://graphpaperpress.com/plugins/sell-media-s3)
-* [Watermark your images](http://graphpaperpress.com/plugins/sell-media-watermark)
-* [Newsletter integration with Mailchimp](http://graphpaperpress.com/plugins/sell-media-mailchimp)
-* [Sales Commissions](http://graphpaperpress.com/plugins/sell-media-commissions)
+* [Print On Demand](https://graphpaperpress.com/plugins/sell-media-print-on-demand)
+* [Subscriptions](https://graphpaperpress.com/plugins/sell-media-subscription/)
+* [Watermarks](https://graphpaperpress.com/plugins/sell-media-watermark)
+* [Mailchimp](https://graphpaperpress.com/plugins/sell-media-mailchimp)
+* [Sales Commissions](https://graphpaperpress.com/plugins/sell-media-commissions)
 * [And many more](https://graphpaperpress.com/extensions/sell-media/)
 
 = Instant Setup =
