@@ -277,13 +277,11 @@
    border-color: #dbdbdb;
    box-shadow: none;
    opacity: 0.5;
-   color: #363636;
 }
  body input[type=submit].sell-media-button:disabled {
    border-color: #dbdbdb;
    box-shadow: none;
    opacity: 0.5;
-   color: #363636;
 }
  body .sell-media-button.sell-media-button-white {
    background-color: #fff;
