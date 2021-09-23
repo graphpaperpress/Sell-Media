@@ -3,17 +3,17 @@
 Contributors: endortrails, nhuja
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
-Requires at least: 5.5
+Requires at least: 5.6
 Tested up to: 5.8.1
 Stable tag: 2.5.6
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Sell photos, prints, videos and pdf's online through WordPress in seconds. Everything you need to sell your photography online.
 
 == Description ==
 
-[Sell Media](http://graphpaperpress.com/plugins/sell-media/) is finely tailored e-commerce solution for selling photos, prints, and videos through your self-hosted WordPress site. Photographers love it for it's flexibly gallery layouts and powerful [extensions](https://graphpaperpress.com/extensions/sell-media/).
+[Sell Media](https://graphpaperpress.com/plugins/sell-media/) is finely tailored e-commerce solution for selling photos, prints, and videos through your self-hosted WordPress site. Photographers love it for it's flexibly gallery layouts and powerful [extensions](https://graphpaperpress.com/extensions/sell-media/).
 
 Using Sell Media, you can:
 
@@ -28,13 +28,13 @@ Insert galleries in many different formats using Sell Media blocks for Gutenberg
 
 = Resources =
 
-* [Documentation](http://graphpaperpress.com/docs/sell-media/)
-* [Official Plugin Page](http://graphpaperpress.com/plugins/sell-media/)
+* [Documentation](https://graphpaperpress.com/docs/sell-media/)
+* [Official Plugin Page](https://graphpaperpress.com/plugins/sell-media/)
 * [Github Code Repository](https://github.com/graphpaperpress/sell-media)
 
 = Theme Integration =
 
-These [WordPress themes](http://graphpaperpress.com/wordpress-themes/sell-media/) were designed to enhance the functionality of Sell Media. Sell Media also works with any properly coded WordPress theme, however, some minor styling tweaks might be required.
+These [WordPress themes](https://graphpaperpress.com/wordpress-themes/sell-media/) were designed to enhance the functionality of Sell Media. Sell Media also works with any properly coded WordPress theme, however, some minor styling tweaks might be required.
 
 Take Sell Media to the next level with these powerful extensions:
 
@@ -64,7 +64,7 @@ Take Sell Media to the next level with these powerful extensions:
 
 = Configuration =
 
-Visit the official plugin [Documentation](http://graphpaperpress.com/docs/sell-media/) to learn how to setup and customize Sell Media.
+Visit the official plugin [Documentation](https://graphpaperpress.com/docs/sell-media/) to learn how to setup and customize Sell Media.
 
 == Frequently Asked Questions ==
 
@@ -74,7 +74,7 @@ Yes, the [Reprints extension](https://graphpaperpress.com/plugins/sell-media-rep
 
 = I have 5k+ photos I would like to sell, can Sell Media handle this? =
 
-Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. That said, the number of images that can be bulk uploaded at once is largely related to server performance. If you are using a cheap, shared web host, then you will need to contact them and ask them to change [PHP settings] (http://php.net/manual/en/function.set-time-limit.php).
+Sell Media is a plugin for WordPress and WordPress can easily handle hundreds or thousands of files. That said, the number of images that can be bulk uploaded at once is largely related to server performance. If you are using a cheap, shared web host, then you will need to contact them and ask them to change [PHP settings] (https://php.net/manual/en/function.set-time-limit.php).
 
 = What are shortcodes and how do I use them? =
 
@@ -108,7 +108,7 @@ Create a Page called "Search Media" and add this shortcode to it: `[sell_media_s
 Yes and you have two options:
 
 1. Simply upload more than one image on the Sell Media -> Add New page. The price listed below is for each image in the gallery. In the near future, we will be releasing an extension for selling the entire gallery of images for one price.
-2. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: http://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
+2. Assign each item to a specific Collection and the items will be displayed on that specific collection's archive page. You can then link to the collection like this: https://example.com/collection/my-collection-name/. A list of collecitons also shows up on the Appearance -> Menus page so you can add them to any menu.
 
 = How do I password protect an item? =
 
