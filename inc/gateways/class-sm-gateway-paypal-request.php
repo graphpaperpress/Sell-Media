@@ -80,6 +80,9 @@ class SM_Gateway_PayPal_Request {
         // Before payment process action.
         do_action( 'sell_media_before_payment_process' );
 
+        // Validate request
+        check_ajax_referer('sell_media_paypal_nonce', '_nonce');
+        
         //check_ajax_referer( 'sell_media_paypal_nonce', 'nonce_security' );
         if (isset($_POST['_nonce']) && !wp_verify_nonce($_POST['_nonce'], 'sell_media_paypal_nonce')) {
             $_send_data['status'] = false;
@@ -153,6 +156,9 @@ class SM_Gateway_PayPal_Request {
      */
     private function buildRequestBody() {
 
+        // Validate request
+        check_ajax_referer('sell_media_paypal_nonce', '_nonce');
+        
         $_discount_id = 0;
         if ( isset( $_POST['discount'] ) ) {
             $_discount_id = $_POST['discount'];
