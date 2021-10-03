@@ -26,7 +26,7 @@ class SellMediaTaxMetaMigrate {
 	public function run() {
 		$version = sell_media_version();
 
-		if ( $version && $version > SELL_MEDIA_VERSION ) {
+		if ( isset($version) && $version > SELL_MEDIA_VERSION ) {
 			return;
 		}
 

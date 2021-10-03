@@ -798,7 +798,8 @@ class SellMediaPayments {
 		if ( 'manual' === $gateway ) {
 			$link = add_query_arg( 'download', $gateway, $link );
 		}
-
+		// generated nonce
+		$link = wp_nonce_url($link, 'download_media');
 		return $link;
 	}
 

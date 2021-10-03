@@ -20,14 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function sell_media_thanks_shortcode( $tx=null ) {
 
 	do_action( 'sell_media_thanks_hook' );
-	if ( ! empty( $_GET['tx'] ) ) {
+
+	if ( isset($_GET['tx']) && ! empty( $_GET['tx'] )) {
 		$tx = $_GET['tx'];
 		$gateway = 'PayPal';
 	} else if( isset( $_POST['txn_id'] ) && '' != $_POST['txn_id'] ){
-		$tx = $_POST['txn_id'];
+		$tx = (isset($_POST['txn_id'])) ? $_POST['txn_id'] : '';
 		$gateway = 'PayPal';
-	} elseif ( ! empty( $_POST['stripeToken'] ) ) {
-		$tx = $_POST['stripeToken'];
+	} elseif ( isset($_POST['stripeToken']) && !empty( $_POST['stripeToken'] ) ) {
+		$tx = (isset($_POST['stripeToken'])) ? $_POST['stripeToken'] : '';
 		$gateway = 'Stripe';
 	} else {
 		$tx = null;
@@ -41,7 +42,7 @@ function sell_media_thanks_shortcode( $tx=null ) {
 		} else {
 			$settings = sell_media_get_plugin_options();
 			$refresh_url = isset( $settings->thanks_page ) ? get_permalink( $settings->thanks_page ) : home_url( );
-			$html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg( array( 'tx' => $tx ), $refresh_url ) ) );
+			$html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( wp_nonce_url(add_query_arg( array( 'tx' => $tx ), $refresh_url ), 'sell_media_thank_you_page') ) );
 			// wp_mail( get_option( 'admin_email' ), __( 'Unable to retrieve transaction ID', 'sell_media' ), sprintf( __( 'We have some good news and bad news. First the good news: Somebody just purchased from your store! The bad news: Your website was unable to retrieve transaction ID from %1$s. This is typically easy to fix. Please see these tips for resolving this issue: %2$s' ), $gateway, 'https://github.com/graphpaperpress/Sell-Media/issues/670#issuecomment-89428248' ) );
 		}
 
@@ -189,7 +190,7 @@ function sell_media_checkout_shortcode() {
 				<li <?php do_action( 'sell_media_checkout_item_custom_attributes', $item ); ?> class="item row-<?php echo $cart_index; ?>" id="<?php echo $key; ?>" data-type="<?php echo $item['item_type']; ?>" data-price="<?php echo $item['price']; ?>">
 					<div class="item-image">
 						<?php
-						if ( ! empty( $item['item_attachment'] ) ) {
+						if ( isset($item['item_attachment']) && !empty( $item['item_attachment'] ) ) {
 							// $item['item_id'] is the featured image id
 							// $item['attachment'] is the source file id
 							$mime_type = get_post_mime_type( $item['item_attachment'] );
@@ -204,13 +205,13 @@ function sell_media_checkout_shortcode() {
 					</div>
 					<div class="item-details">
 						<div class="item-name">
-						<?php if ( ! empty( $item['item_name'] ) ) : ?>
+						<?php if ( isset($item['item_name']) && !empty( $item['item_name'] ) ) : ?>
 							<?php echo esc_attr( $item['item_name'] ); ?>
 						<?php endif; ?>
 						</div>
 						<div class="item-size">
-						<?php if ( ! empty( $item['item_size'] ) ) : ?>
-							<?php echo $item['item_size']; ?>
+						<?php if ( isset($item['item_size']) && !empty( $item['item_size'] ) ) : ?>
+							<?php echo esc_attr($item['item_size']); ?>
 						<?php endif; ?>
 						</div>
 						<?php
@@ -219,7 +220,7 @@ function sell_media_checkout_shortcode() {
 							<?php foreach ( $markups as $markup ) : ?>
 								<?php if ( 'licenses' === $markup ) : ?>
 									<div class="item-license">
-										<?php if ( ! empty( $item['item_usage'] ) ) : ?>
+										<?php if ( isset($item['item_usage']) && !empty( $item['item_usage'] ) ) : ?>
 											<?php echo $item['item_usage']; ?>
 										<?php endif; ?>
 									</div>
@@ -240,7 +241,7 @@ function sell_media_checkout_shortcode() {
 						<div class="item-quantity">
 							<span class="count">
 								<?php if ( ! empty( $item['qty'] ) ) : ?>
-									<?php echo $item['qty']; ?>
+									<?php echo esc_attr($item['qty']); ?>
 								<?php endif; ?>
 							</span>
 						</div>
@@ -378,7 +379,7 @@ function sell_media_price_group_shortcode(){
 			<?php $i=0; foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $parent->term_id, 'orderby' => 'id' ) ) as $term ): ?>
 				<tr class="sell-media-price-group-row-<?php echo ($i++%2==1) ? 'odd' : 'even'; ?> sell-media-price-group-child-<?php echo $term->name; ?>" id="sell-media-price-group-child-<?php echo $term->term_id; ?>">
 					<td>
-						<span class="sell-media-price-group-name"><?php echo $term->name; ?></span>
+						<span class="sell-media-price-group-name"><?php echo esc_attr($term->name); ?></span>
 					</td>
 					<td>
 						<span class="sell-media-price-group-width"><?php echo get_term_meta( $term->term_id, 'width', true ); ?></span>
@@ -527,7 +528,7 @@ function sell_media_list_all_collections_shortcode( $atts ) {
 							$html .= '</span>';
 							$html .= '</div>';
 							$html .= '</div>';
-							$html .= '<h3>' . $term->name . '</h3>';
+							$html .= '<h3>' . esc_attr($term->name) . '</h3>';
 						}
 						$html .= '</a>';
 						endforeach;
@@ -807,7 +808,7 @@ function sell_media_taxonomies_shortcode( $atts ) {
 							</a>
 							<h2 class="entry-title">
 								<a href="<?php echo get_term_link( $term->term_id, $atts['taxonomy'] ); ?>">
-									<?php echo $term->name; ?>
+									<?php echo esc_attr($term->name); ?>
 								</a>
 							</h2>
 						</article>

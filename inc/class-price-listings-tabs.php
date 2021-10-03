@@ -87,7 +87,8 @@ class Sell_Media_Price_Listings_Tabs {
 			<span><?php echo sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' ) ); ?></span>						
 		</h2>
 		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
-			<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
+	
+		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">
 				<label><?php esc_html_e( 'Add New Pricelist', 'sell_media' ); ?></label>
 				<input type="text" name="new_term_name" required />
@@ -215,6 +216,11 @@ class Sell_Media_Price_Listings_Tabs {
 	<?php }
 
 	function save_data( $redirect_url ) {
+
+		if(isset($_POST['_wpnonce']) &&  !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') )
+		{
+			wp_die( sprintf("Unauthorized Access"));
+		}
 		// Save new pricelist.
 		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
 			if ( ! term_exists( $_POST['new_term_name'], $this->taxonomy ) ) {
@@ -223,7 +229,8 @@ class Sell_Media_Price_Listings_Tabs {
 			} else {
 				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", $_POST['new_term_name'] ) );
 			}
-		} else {
+		} 
+		else {
 			// Update pricelists.
 			$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
 			if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
@@ -289,6 +296,8 @@ class Sell_Media_Price_Listings_Tabs {
 
 		// Saving settings.
 		if ( isset( $_POST['settings'] ) ){
+
+		
 			$settings = ( array ) sell_media_get_plugin_options();			
 			$settings = array_merge( $settings, $_POST['settings'] );
 			$options_name = sell_media_get_current_plugin_id() . '_options';
@@ -303,7 +312,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 	function delete_pricelist( $redirect_url ) {
 		// Check if request is for delete and parent term is set.
-		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] ) {
+		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] || !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') ) {
 			return;
 		}
 

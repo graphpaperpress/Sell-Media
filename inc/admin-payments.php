@@ -124,22 +124,22 @@ function sell_media_payment_additional_purchase_details( $post ){
 								<td>
 									<ul>
 										<?php if ( $value['name'] ) : ?>
-											<li><?php _e( 'Name', 'sell_media' ); ?>: <?php echo $value['name']; ?></li>
+											<li><?php _e( 'Name', 'sell_media' ); ?>: <?php echo esc_attr($value['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['id'] ) : ?>
-											<li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php echo admin_url(); ?>post.php?post=<?php echo $value['id']; ?>&amp;action=edit"><?php echo $value['id']; ?></a></li>
+											<li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php echo admin_url(); ?>post.php?post=<?php echo $value['id']; ?>&amp;action=edit"><?php echo esc_attr($value['id']); ?></a></li>
 										<?php endif; ?>
 										<?php if ( $value['type'] ) : ?>
-											<li><?php _e( 'Type', 'sell_media' ); ?>: <?php echo $value['type']; ?></li>
+											<li><?php _e( 'Type', 'sell_media' ); ?>: <?php echo esc_attr($value['type']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['size']['name'] ) : ?>
-											<li><?php _e( 'Size', 'sell_media' ); ?>: <?php echo $value['size']['name']; ?></li>
+											<li><?php _e( 'Size', 'sell_media' ); ?>: <?php echo esc_attr($value['size']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['license']['name'] ) : ?>
-											<li><?php _e( 'License', 'sell_media' ); ?>: <?php echo $value['license']['name']; ?></li>
+											<li><?php _e( 'License', 'sell_media' ); ?>: <?php echo esc_attr($value['license']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['qty'] ) : ?>
-											<li><?php _e( 'Qty', 'sell_media' ); ?>: <?php echo $value['qty']; ?></li>
+											<li><?php _e( 'Qty', 'sell_media' ); ?>: <?php echo esc_attr($value['qty']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['total'] ) : ?>
 											<li><?php _e( 'Subtotal', 'sell_media' ); ?>: <?php echo sell_media_get_currency_symbol(); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
@@ -380,16 +380,16 @@ function sell_media_payment_header( $columns ){
 	// Our next column header is the 'id', we use this,
 	// to ensure that our head has the class 'column-id'
 	if ( ! isset( $columns_local['id'] ) )
-		$columns_local['id'] = "Payment ID";
+		$columns_local['id'] = __("Payment ID", "sell_media");
 
 	if ( ! isset( $columns_local['products'] ) )
-		$columns_local['products'] = "Products";
+		$columns_local['products'] = __("Products", "sell_media");
 
 	if ( ! isset( $columns_local['customer'] ) )
-		$columns_local['customer'] = "Customer";
+		$columns_local['customer'] = __("Customer", "sell_media");
 
 	if ( ! isset( $columns_local['total'] ) )
-		$columns_local['total'] = "Total";
+		$columns_local['total'] = __("Total", "sell_media");
 
 	return array_merge( $columns_local, $columns );
 }

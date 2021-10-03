@@ -115,7 +115,7 @@
 				<?php
 				if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
 				 foreach ($productTerms as $term) : ?>
-					<option value="<?php echo $term->slug; ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo $term->name; ?></option>
+					<option value="<?php echo esc_attr($term->slug); ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo $term->name; ?></option>
 				<?php endforeach; ?>
 				<?php endif; ?>
 		</select>
