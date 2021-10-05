@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sell_media_add_to_cart() {
 	global $sm_cart;
 
-	if(!isset($_POST['_wpnonce']) || !isset($_POST['_wpnonce']) && !wp_verify_nonce($_POST['_wpnonce'], 'sell_media_add_cart_action')) {
+	if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) && !wp_verify_nonce($_POST['_wpnonce'], 'sell_media_add_cart_action')) {
 		echo 0;
 		exit;
 	}
