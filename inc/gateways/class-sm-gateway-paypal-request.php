@@ -81,7 +81,7 @@ class SM_Gateway_PayPal_Request {
         do_action( 'sell_media_before_payment_process' );
 
         //check_ajax_referer( 'sell_media_paypal_nonce', 'nonce_security' );
-        if (isset($_POST['_nonce']) && !wp_verify_nonce($_POST['_nonce'], 'sell_media_paypal_nonce')) {
+        if (!isset($_POST['_nonce']) || isset($_POST['_nonce']) && !wp_verify_nonce($_POST['_nonce'], 'sell_media_paypal_nonce')) {
             $_send_data['status'] = false;
             wp_send_json($_send_data);
             die();

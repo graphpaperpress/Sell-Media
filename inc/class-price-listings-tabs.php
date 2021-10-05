@@ -217,7 +217,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 	function save_data( $redirect_url ) {
 
-		if(isset($_POST['_wpnonce']) &&  !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') )
+		if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) &&  !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') )
 		{
 			wp_die( sprintf("Unauthorized Access"));
 		}
@@ -312,7 +312,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 	function delete_pricelist( $redirect_url ) {
 		// Check if request is for delete and parent term is set.
-		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] || !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') ) {
+		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] || !isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') ) {
 			return;
 		}
 

@@ -281,7 +281,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         if( isset( $_GET['sell_media_id'] ) &&  '' != $_GET['sell_media_id'] && is_user_logged_in() && isset( $_GET['sell_media_attachment_nonce'] ) && current_user_can( 'manage_options' ) ){
 
             // Verfiy nonce.
-            if ( !wp_verify_nonce($_GET['sell_media_attachment_nonce'], 'sell_media_attachment_nonce_action')) {
+            if (!isset($_GET['sell_media_attachment_nonce']) || !wp_verify_nonce($_GET['sell_media_attachment_nonce'], 'sell_media_attachment_nonce_action')) {
                 return;
             }
 
