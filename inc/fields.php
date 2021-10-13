@@ -43,37 +43,38 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 
 		<div id="sell_media_download_wrapper" class="sell-media-add-to-cart-download-fields">
 			<?php if ( ! $is_package && $has_price_group ) : ?>
-				<fieldset id="sell_media_download_size_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-download-fieldset">
-					<label for="sell_media_item_size"><?php echo apply_filters( 'sell_media_download_size_text', __( 'Size', 'sell_media' ) ); ?></label>
-					<select id="sell_media_item_size" class="sum" required>
-						<option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0"><?php _e( 'Select a size', 'sell_media'); ?></option>
-						<?php
-							$prices = Sell_Media()->products->get_prices( $post_id, $attachment_id );
-							if ( $prices ) foreach ( $prices as $k => $v ) {
-								if ( wp_attachment_is_image( $attachment_id ) ) {
+				<fieldset id="sell_media_download_size_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-download-fieldset">					
+					<span class="sell-media-select-box sell-media-select-small">
+						<select id="sell_media_item_size" class="sum sell-media-select" required>
+							<option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0"><?php _e( 'Select a size', 'sell_media'); ?></option>
+							<?php
+								$prices = Sell_Media()->products->get_prices( $post_id, $attachment_id );
+								if ( $prices ) foreach ( $prices as $k => $v ) {
+									if ( wp_attachment_is_image( $attachment_id ) ) {
 
-									if ( $v['width'] || $v['height'] ) {
-										if ( $v['width'] >= $v['height'] ) {
-											$max = $v['width'];
-										} else {
-											$max = $v['height'];
-										}
-									list( $new_w, $new_h ) = wp_constrain_dimensions( $original_image['original']['width'], $original_image['original']['height'], $max, $max );
-						            }
+										if ( $v['width'] || $v['height'] ) {
+											if ( $v['width'] >= $v['height'] ) {
+												$max = $v['width'];
+											} else {
+												$max = $v['height'];
+											}
+										list( $new_w, $new_h ) = wp_constrain_dimensions( $original_image['original']['width'], $original_image['original']['height'], $max, $max );
+							            }
 
-									$name = $v['name'] . ' (' . $new_w . ' x ' . $new_h . ')';
-									$dimensions = $new_w . ' x ' . $new_h;
-								} else {
-									$name = $v['name'];
-									$dimensions = 'Original';
+										$name = $v['name'] . ' (' . $new_w . ' x ' . $new_h . ')';
+										$dimensions = $new_w . ' x ' . $new_h;
+									} else {
+										$name = $v['name'];
+										$dimensions = 'Original';
+									}
+									$download_sizes = Sell_Media()->images->get_downloadable_size( $post_id, $attachment_id, null, true );
+									if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
+										echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+									}
 								}
-								$download_sizes = Sell_Media()->images->get_downloadable_size( $post_id, $attachment_id, null, true );
-								if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
-									echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
-								}
-							}
-						?>
-					</select>
+							?>
+						</select>
+					</span>
 				</fieldset>
 			<?php else : ?>
 				<input id="sell_media_item_base_price" type="hidden" value="<?php echo $price; ?>" data-price="<?php echo $price; ?>" data-id="original" data-size="original" />

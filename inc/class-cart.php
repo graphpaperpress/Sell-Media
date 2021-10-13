@@ -160,6 +160,8 @@ class SellMediaCart {
 		$cart_item_id = ( isset( $attrs['item_attachment'] ) && '' !== $attrs['item_attachment'] )? $id . '_' . $attrs['item_attachment'] : $id;
 		$cart_item_id = ( isset( $attrs['item_license'] ) && '' !== $attrs['item_license'] )? $cart_item_id . '_' . $attrs['item_license'] : $cart_item_id;
 		$cart_item_id = ( isset( $attrs['item_pgroup'] ) && '' !== $attrs['item_pgroup'] )? $cart_item_id . '_' . $attrs['item_pgroup'] : $cart_item_id;
+		
+		$cart_item_id = apply_filters( 'sell_media_cart_item_id', $cart_item_id, $attrs, $id );
 
 		// Add product id.
 		$this->items[ $cart_item_id ]['item_id'] = $id;

@@ -129,7 +129,7 @@ $settings = sell_media_get_plugin_options();
 					<?php endwhile; ?>
 				<?php else : ?>
 					<h2><?php _e( 'Nothing Found', 'sell_media' ); ?></h2>
-					<p><?php _e( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ); ?>
+					<p><?php _e( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ); ?></p>
 					<?php echo do_shortcode( '[sell_media_searchform]' ); ?>
 				<?php endif; $i = 0; ?>
 
