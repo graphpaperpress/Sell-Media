@@ -3,7 +3,7 @@
  * Plugin Name: Sell Media
  * Plugin URI: http://graphpaperpress.com/plugins/sell-media/
  * Description: A plugin for selling photos, prints and other downloads.
- * Version: 2.4.6
+ * Version: 2.5.6
  * Author: Graph Paper Press
  * Author URI: http://graphpaperpress.com
  * Author Email: support@graphpaperpress.com
@@ -24,7 +24,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 2.4.6
+ * @version 2.5.5
  */
 
 // Exit if accessed directly.
@@ -155,7 +155,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 		 */
 		public function __clone() {
 			// Cloning instances of the class is forbidden.
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'sell_media' ), '1.8.5' );
+			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'sell_media' ), '2.5.5' );
 		}
 
 		/**
@@ -167,7 +167,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 		 */
 		public function __wakeup() {
 			// Unserializing instances of the class is forbidden.
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'sell_media' ), '1.8.5' );
+			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'sell_media' ), '2.5.5' );
 		}
 
 		/**
@@ -181,7 +181,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			// Plugin version.
 			if ( ! defined( 'SELL_MEDIA_VERSION' ) ) {
-				define( 'SELL_MEDIA_VERSION', '2.4.6' );
+				define( 'SELL_MEDIA_VERSION', '2.5.5' );
 			}
 
 			// Plugin Folder Path.
@@ -260,6 +260,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-markup.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/paypal.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';
+            require_once SELL_MEDIA_PLUGIN_DIR . '/themes/theme-support/class-sm-theme-support.php';
 
 			// Load files if is front end.
 			if ( self::$instance->is_request( 'frontend' ) ) {
@@ -286,6 +287,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-upgrades.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/install.php';
+			require_once SELL_MEDIA_PLUGIN_DIR . '/gutenberg/sell-media-items.php';
 
 		}
 

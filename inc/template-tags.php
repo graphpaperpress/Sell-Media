@@ -49,6 +49,8 @@ function sell_media_item_add_to_cart_button( $post_id = null, $attachment_id = n
 
 	$classes[] = 'item_add';
 	$classes[] = 'sell-media-button';
+	$classes[] = 'sell-media-button-medium';
+	$classes[] = 'sell-media-button-dark';
 	if ( ! is_null( $button ) ) {
 		$classes[] = 'sell-media-' . $button;
 	}
