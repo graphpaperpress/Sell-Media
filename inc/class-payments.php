@@ -292,11 +292,15 @@ class SellMediaPayments {
 		$values = null;
 		$items = count( $keys );
 		$i = 0;
-
 		foreach ( $keys as $key ) {
 			$sep = null;
-			if ( ++$i != $items ) $sep = ', ';
-				$values .= $this->get_meta_key( $post_id, $key ) . $sep;
+			if ( ++$i != $items ) {
+				$_address_part = $this->get_meta_key( $post_id, $key );
+				if ($_address_part) {
+					$sep = ', ';
+					$values .= $this->get_meta_key( $post_id, $key ) . $sep;	
+				}
+			}
 		}
 
 		return $values;
@@ -659,6 +663,12 @@ class SellMediaPayments {
 	 * @return $html (string) An html table containing the item, size, price, qty, and other usefulness
 	 */
 	public function payment_table( $post_id = null ) {
+
+		$products = $this->get_products( $post_id );
+		
+		if ( empty($products) ) {
+			return;
+		}
 		$markup_class = new SellMediaTaxMarkup();
 		$markups = $markup_class->markup_taxonomies();
 
@@ -688,15 +698,14 @@ class SellMediaPayments {
 			</thead>';
 		$html .= '<tbody>';
 
-		$products = $this->get_products( $post_id );
-
 		if ( $products ) {
+
 			foreach ( $this->get_products( $post_id ) as $product ) {
 
 				$product['attachment']      = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : null;
 				$product['size']['name']    = ( ! empty( $product['size']['name'] ) ) ? $product['size']['name'] : null;
 				$product['size']['id']      = ( ! empty( $product['size']['id'] ) ) ? $product['size']['id'] : null;
-				$product['size']['amount']  = ( ! empty( $product['size']['amount'] ) ) ? $product['size']['amount'] : null;
+				$product['size']['amount']  = ( ! empty( $product['size']['amount'] ) ) ? $product['size']['amount'] : 0;
 				$product['license']['name'] = ( ! empty( $product['license']['name'] ) ) ? $product['license']['name'] : null;
 
 				$image_id = ( $product['attachment'] ) ? $product['attachment'] : $product['id'];

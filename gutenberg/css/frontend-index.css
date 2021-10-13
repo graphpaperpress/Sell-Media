@@ -1,0 +1,32 @@
+/*--------------------------------------------------------------
+# Alignments
+--------------------------------------------------------------*/
+.alignleft {
+	display: flex;
+  	justify-content: flex-start;
+  	flex-wrap: wrap;
+}
+
+.alignright {
+	display: flex;
+  	justify-content: flex-end;
+  	flex-wrap: wrap;
+}
+
+.aligncenter {
+	display: flex;
+  	justify-content: center;
+  	flex-wrap: wrap;
+}
+
+.alignfull {
+	max-width: 80%;
+	width: 80%;
+	display: block;
+	margin: 0 auto;
+}
+
+.alignwide {
+	width: 100%;
+	display: block;
+}

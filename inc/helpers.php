@@ -397,6 +397,8 @@ function sell_media_get_attachment_meta( $post_id = null, $field = 'id' ) {
 		$attachment_id = get_query_var( 'id' );
 	} else {
 		$attachments = sell_media_get_attachments( $post_id );
+		if(!$attachments)
+			return;
 		$attachment_id = $attachments[0];
 	}
 

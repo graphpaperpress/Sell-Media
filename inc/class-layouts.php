@@ -239,22 +239,22 @@ class SellMediaLayouts {
 			$wrap = ( ! $has_multiple_attachments || 'attachment' === get_post_type( $post_id ) ) ? true : false;
 			$new_content = '';
 
-			// only wrap content if a single image/media is being viewed
-			if ( $wrap ) {
-				$new_content .= '<div class="sell-media-content">';
-			}
+				// only wrap content if a single image/media is being viewed
+				if ( $wrap ) {
+					$new_content .= '<div class="sell-media-content">';
+				}
 
-			$new_content .= sell_media_breadcrumbs();
-			if ( ! sell_media_is_search() ) {
-				$new_content .= sell_media_get_media();
-			}
-			$new_content .= $content;
+				$new_content .= sell_media_breadcrumbs();
+				if ( ! sell_media_is_search() ) {
+					$new_content .= sell_media_get_media();
+				}
+				$new_content .= $content;
 
-			// only wrap content if a single image/media is being viewed
-			if ( $wrap ) {
-				$new_content .= '</div>';
-			}
-
+				// only wrap content if a single image/media is being viewed
+				if ( $wrap ) {
+					$new_content .= '</div>';
+				}
+			//$new_content .= '</div>';
 			$content = $new_content;
 
 			// set the post views, used for popular query

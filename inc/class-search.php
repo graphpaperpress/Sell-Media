@@ -103,7 +103,7 @@ class SellMediaSearch {
 			// File type field
 			$html .= '<div id="sell-media-search-file-type" class="sell-media-search-field sell-media-search-file-type">';
 			$html .= '<label for="search_file_type">' . esc_html__( 'File Type', 'sell_media' ) . '</label>';
-			$html .= '<select name="search_file_type">';
+			$html .= '<span class="sell-media-select-box"><select class="sell-media-select" name="search_file_type">';
 			$html .= '<option value="">' . esc_html__( 'All', 'sell_media' ) . '</option>';
 			$mimes = array( 'image', 'video', 'audio' );
 			foreach ( $mimes as $mime ) {
@@ -113,7 +113,7 @@ class SellMediaSearch {
 				$html .= '</option>';
 			}
 
-			$html .= '</select>';
+			$html .= '</select></span>';
 			$html .= '</div>';
 
 			// Hidden search options wrapper

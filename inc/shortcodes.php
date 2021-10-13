@@ -50,7 +50,7 @@ function sell_media_thanks_shortcode( $tx=null ) {
 		global $sm_cart;
 		@$sm_cart->clear();
 		$html .= '</p>';
-		$html =  apply_filters( 'sell_media_thanks_filter_below', $html );
+		$html =  apply_filters( 'sell_media_thanks_filter_below', $html, $post_id );
 	}
 
 	return apply_filters( 'sell_media_thanks', $html );
@@ -233,6 +233,7 @@ function sell_media_checkout_shortcode() {
 								<?php endif; ?>
 							<?php endforeach; ?>
 						<?php endif; ?>
+						<?php do_action( 'sell_media_checkout_custom_item_attributes', $item ); ?>						
 					</div>
 					<div class="item-qty-total">
 						<div class="item-decrement">
@@ -285,8 +286,7 @@ function sell_media_checkout_shortcode() {
 			<?php do_action( 'sell_media_checkout_after_registration_fields' ); ?>
 
 			<div class="sell-media-checkout-button group">
-				<?php do_action( 'sell_media_above_checkout_button' ); ?>
-				<p><a href="javascript:void(0)" class="sell-media-cart-checkout sell-media-button"><?php _e( 'Checkout Now', 'sell_media' ); ?></a></p>
+				<?php do_action( 'sell_media_above_checkout_button' ); ?>				
 				<p id="sell-media-continue-shopping">
 					<?php
 					$html  = __( 'or', 'sell_media' );

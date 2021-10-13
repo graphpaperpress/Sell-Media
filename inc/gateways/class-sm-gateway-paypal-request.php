@@ -56,7 +56,7 @@ class SM_Gateway_PayPal_Request {
      */
     function form(){
         ?>
-        <form id="sell_media_payment_gateway" style="margin: 20px 0;display:none;" method="post">
+        <form id="sell_media_payment_gateway" style="margin: 20px 0;" method="post">
             <?php
             do_action( 'sell_media_payment_gateway_fields' );
             /*
@@ -65,9 +65,11 @@ class SM_Gateway_PayPal_Request {
             $secret_key_exist = SellMediaPayPal::keys( 'secret_key' );
             if (!empty($secret_key_exist)) {
                 ?>
-                <label for="paypal"><input type="radio" name="gateway" id="paypal" value="paypal" checked><?php _e( 'PayPal', 'sell_media' ); ?></label>
+                <button type="button" class="sell-media-cart-checkout-button sell-media-button" id="pay_via_paypal_purchase"><?php _e( 'Pay via PayPal', 'sell_media' ); ?></button>
                 <?php
-            } ?>
+            }
+            do_action( 'sell_media_payment_gateway_fields_after' );
+            ?>
         </form>
         <?php
     }
@@ -310,8 +312,8 @@ class SM_Gateway_PayPal_Request {
         $response = array(
             'tax_amount' => $tax_amount,
             'shipping_amount' => $shipping_amount,
-        );
-        return $response;
+        );        
+        return apply_filters( 'sell_media_calculate_tax_shipping', $response );
     }
 
     /**
@@ -582,7 +584,7 @@ class SM_Gateway_PayPal_Request {
             $_shipping = $_paypal_get_order->result->purchase_units[0]->shipping;
             $_shipping_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->shipping->value;
             $_tax_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->tax_total->value;
-            $_discount_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value;
+            $_discount_total = isset( $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value ) ? $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value : 0;
             $_payer_name = $_billing_details->name->given_name .' '. $_billing_details->name->surname;
             $payment_id = wp_insert_post(
                 array(
@@ -733,7 +735,7 @@ class SM_Gateway_PayPal_Request {
                 global $sm_cart;
                 @$sm_cart->clear();
                 $html .= '</div>';
-                $html =  apply_filters( 'sell_media_thanks_filter_below', $html );
+                $html =  apply_filters( 'sell_media_thanks_filter_below', $html, $payment_id );
 
             } catch ( Exception $e ) {
                 error_log($e->getMessage());
@@ -772,7 +774,11 @@ class SM_Gateway_PayPal_Request {
         $p = new SellMediaProducts();
         foreach ( $products as $product ) {
 
-            if ( empty( $product['item_license'] ) || (int) $product['item_license'] < 1) {
+            if( $product['item_type'] == 'print_on_demand' ) {
+                $license_desc = null;
+                $license_name = null;
+                $amount = $product['price'];
+            } else if ( empty( $product['item_license'] ) || (int) $product['item_license'] < 1) {
                 $license_desc = null;
                 $license_name = null;
                 $amount = $p->verify_the_price( $product['item_id'], $product['item_pgroup'] );
@@ -798,7 +804,7 @@ class SM_Gateway_PayPal_Request {
                 'type'        => $product['item_type'],
                 'size'        =>
                     array(
-                        'name'        => $product['item_size'],
+                        'name'        => isset( $product['item_size'] ) ? $product['item_size'] : '',
                         'id'          => $product['item_pgroup'],
                         'amount'      => $amount,
                         'description' => null,
@@ -815,6 +821,9 @@ class SM_Gateway_PayPal_Request {
             );
             if ( isset( $product['shipping_amount'] ) && !empty( $product['shipping_amount'] ) ) {
                 $tmp_products['shipping'] = $product['shipping_amount'];
+            }
+            if( $product['item_type'] == 'print_on_demand' && isset( $product['item_sku'] ) ) {
+                $tmp_products['sku'] = $product['item_sku'];
             }
             $payment_details_array['products'][] = $tmp_products;
         }
