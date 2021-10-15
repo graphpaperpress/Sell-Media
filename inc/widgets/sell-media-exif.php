@@ -28,22 +28,22 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 					<ul class="exif-info">
 
 						<?php
-						if ( $imgdata['image_meta']['camera'] ) { ?>
+						if ( isset($imgdata['image_meta']['camera']) ) { ?>
 							<li class="camera"><div class="genericon genericon-small genericon-image"></div><span class="exif-title"><?php _e( 'Camera ', 'sell_media' ); ?></span><?php echo $imgdata['image_meta']['camera']; ?></li>
 						<?php } ?>
 
 						<?php
-						if ( $imgdata['image_meta']['aperture'] ) { ?>
+						if ( isset($imgdata['image_meta']['aperture']) ) { ?>
 							<li class="aperture"><div class="genericon genericon-small genericon-aside"></div><span class="exif-title"><?php _e( 'Aperture ', 'sell_media' ); ?></span><?php echo 'f/' .  $imgdata['image_meta']['aperture']; ?></li>
 						<?php } ?>
 
 						<?php
-						if ( $imgdata['image_meta']['focal_length'] ) { ?>
+						if ( isset($imgdata['image_meta']['focal_length']) ) { ?>
 							<li class="focal-length"><div class="genericon genericon-small genericon-share"></div><span class="exif-title"><?php _e( 'Focal Length ', 'sell_media' ); ?></span><?php echo $imgdata['image_meta']['focal_length']; ?></li>
 						<?php } ?>
 
 						<?php
-						if ( $imgdata['image_meta']['shutter_speed'] ) { ?>
+						if ( isset($imgdata['image_meta']['shutter_speed']) ) { ?>
 							<li class="shutter-speed"><div class="genericon genericon-small genericon-time"></div><span class="exif-title"><?php _e( 'Shutter Speed ', 'sell_media' ); ?></span>
 								<?php
 								if ((1 / $imgdata['image_meta']['shutter_speed']) > 1) {
@@ -61,21 +61,21 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 						<?php } ?>
 
 						<?php
-						if ( $imgdata['image_meta']['iso'] ) { ?>
+						if ( isset($imgdata['image_meta']['iso']) ) { ?>
 							<li class="iso"><div class="genericon genericon-small genericon-maximize"></div><span class="exif-title"><?php _e( 'ISO ', 'sell_media' ); ?></span><?php echo $imgdata['image_meta']['iso']; ?></li>
 						<?php } ?>
 						<?php
-						if ( $imgdata['image_meta']['credit'] ) { ?>
+						if ( isset($imgdata['image_meta']['credit']) ) { ?>
 							<li class="credit"><div class="genericon genericon-small genericon-user"></div><span class="exif-title"><?php _e( 'Credit ', 'sell_media' ); ?></span><?php echo $imgdata['image_meta']['credit']; ?></li>
 						<?php } ?>
 
 						<?php
-						if ( $imgdata['image_meta']['created_timestamp'] ) { ?>
+						if ( isset($imgdata['image_meta']['created_timestamp']) ) { ?>
 							<li class="timestamp"><div class="genericon genericon-small genericon-month"></div><span class="exif-title"><?php _e( 'Date ', 'sell_media' ); ?></span><?php echo date("M d, Y", $imgdata['image_meta']['created_timestamp']); ?></li>
 						<?php } ?>
 
 						<?php
-						if ( $imgdata['image_meta']['copyright'] ) { ?>
+						if ( isset($imgdata['image_meta']['copyright']) ) { ?>
 							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php echo $imgdata['image_meta']['copyright']; ?></li>
 						<?php } else { ?>
 							<li class="copyright"><div class="genericon genericon-small genericon-warning"></div><span class="exif-title"><?php _e( 'Copyright ', 'sell_media' ); ?></span><?php the_time('Y '); _e( 'by ', 'sell_media' ); $author = get_the_author(); echo $author." / "; bloginfo( 'name' ); ?><?php echo $imgdata['image_meta']['copyright']; ?></li>						<?php } ?>

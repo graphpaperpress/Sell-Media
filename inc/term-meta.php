@@ -216,6 +216,7 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
 		<td>
 			<input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
 			<span class="description"><label for="meta_value[default]"><?php echo $desc; ?></label></span>
+			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>
 <?php }
@@ -227,6 +228,10 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
  * @since 0.1
  */
 function sell_media_save_extra_taxonomy_fields( $term_id ) {
+	
+	if(!isset($_POST['taxonomy_wpnonce']) || isset($_POST['taxonomy_wpnonce']) && !wp_verify_nonce($_POST['taxonomy_wpnonce'], 'sell_media_taxonomy_admin_nonce')) {
+		return;
+	}
 
 	if ( ! isset( $_POST['meta_value']['default'] ) ) {
 		update_term_meta( $term_id, 'default', 'off');
@@ -303,7 +308,7 @@ function sell_media_collection_icon_field( $icon_id=null ){
 		$image .= '<br /><a href="javascript:void(0);" class="upload_image_remove">Remove</a>';
 	}
 	?>
-	<input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
+	<input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php echo sanitize_text_field($icon_id); ?>" />
 	<input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
 	<input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
 	<div class="upload_image_preview" style="display: block;">
@@ -348,7 +353,8 @@ function sell_media_add_collection_field( $tag ){
 		<input name="meta_value[collection_password]" type="text" id="meta_value[]" />
 		<p class="description"><?php _e( 'This will password protect all items in this collection.', 'sell_media' ); ?></p>
 	</div>
-<?php }
+	<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce');
+}
 add_action( 'collection_add_form_fields', 'sell_media_add_collection_field' );
 
 
@@ -392,8 +398,9 @@ function sell_media_edit_collection_password( $tag ){
 			<label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
 		</th>
 		<td>
-			<input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print $password ?>" <?php echo $html_extra; ?> />
+			<input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print sanitize_text_field($password) ?>" <?php echo $html_extra; ?> />
 			<p class="description"><?php echo $description; ?></p>
+			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>
 <?php }
@@ -465,7 +472,9 @@ function sell_media_add_related_keywords( ) { ?>
 		<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="" />
 			<p class="description"><?php _e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
 	</div>
-	<?php }
+	<?php 
+	wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce');
+}
 add_action( 'keywords_add_form_fields', 'sell_media_add_related_keywords' );
 
 /**
@@ -483,8 +492,9 @@ function sell_media_edit_related_keywords( $tag ) {
 			<label for="meta_value[related_keywords]"><?php _e( 'Related Keywords', 'sell_media' ); ?></label>
 		</th>
 		<td>
-			<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="<?php echo $terms; ?>" />
+			<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="<?php echo sanitize_text_field($terms); ?>" />
 			<p class="description"><?php _e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
+			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>
 <?php }

@@ -27,7 +27,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 					$current_url = $url;
 				}
 				// echo "<option value='$url' " . selected( (int) $this->current_term, $term->term_id, false ) . ">" . $term->name . '</option>';
-				echo "<option value='$url' " . selected( (int) $current_pricelist, $term->term_id, false ) . ">" . $term->name . '</option>';
+				echo "<option value='$url' " . selected( (int) $current_pricelist, $term->term_id, false ) . ">" . esc_attr($term->name) . '</option>';
 			}
 			?>
 		</select>

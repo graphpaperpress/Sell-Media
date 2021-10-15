@@ -66,7 +66,7 @@ function sell_media_plugin_options_validate( $input ) {
         $submitname = 'submit-' . $tab['name'];
         $resetname = 'reset-' . $tab['name'];
         if ( ! empty( $input[ $submitname ] ) || ! empty( $input[ $resetname ] ) ) {
-            $submittab = $tab['name'];
+            $submittab = esc_attr($tab['name']);
         }
     }
     // Get settings by tab
@@ -166,7 +166,7 @@ foreach ( $sell_media_plugin_tabs as $tab ) {
     $tabsections = $tab['sections'];
     foreach ( $tabsections as $section ) {
 
-        add_settings_section( 'sell_media_' . $section['name'] . '_section', $section['title'], 'sell_media_plugin_sections_callback', 'sell_media_' . $tabname . '_tab' );
+        add_settings_section( 'sell_media_' . $section['name'] . '_section', __($section['title'], 'sell_media'), 'sell_media_plugin_sections_callback', 'sell_media_' . $tabname . '_tab' );
 
     }
 }
@@ -184,7 +184,7 @@ function sell_media_plugin_sections_callback( $section_passed ) {
     foreach ( $sell_media_plugin_tabs as $tabname => $tab ) {
         $tabsections = $tab['sections'];
         foreach ( $tabsections as $sectionname => $section ) {
-            if ( 'sell_media_' . $sectionname . '_section' == $section_passed['id'] ) {
+            if ( 'sell_media_' . $sectionname . '_section' == $section_passed['id'] && !empty($section['description'])) {
                 ?>
                 <p><?php echo $section['description']; ?></p>
                 <?php
@@ -219,11 +219,11 @@ $option_parameters = sell_media_get_plugin_option_parameters();
  * @param   array       $args       Array of arguments to pass to the callback function
  */
 foreach ( $option_parameters as $option ) {
-    $optionname = $option['name'];
-    $optiontitle = $option['title'];
-    $optiontab = $option['tab'];
-    $optionsection = $option['section'];
-    $optiontype = $option['type'];
+    $optionname = (isset($option['name'])) ? $option['name'] : '';
+    $optiontitle = (isset($option['title'])) ? $option['title'] : '';
+    $optiontab = (isset($option['tab'])) ? $option['tab'] : '';
+    $optionsection = (isset($option['section'])) ? $option['section'] : '';
+    $optiontype = (isset($option['type'])) ? $option['type'] : '';
     add_settings_field(
         // $settingid
         'sell_media_setting_' . $optionname,
@@ -247,10 +247,10 @@ function sell_media_plugin_setting_callback( $option ) {
     $sell_media_options = (array) sell_media_get_plugin_options();
 
     $option_parameters = sell_media_get_plugin_option_parameters();
-    $optionname = $option['name'];
-    $optiontitle = $option['title'];
-    $optiondescription = $option['description'];
-    $fieldtype = $option['type'];
+    $optionname = (isset($option['name'])) ? $option['name'] : '';
+    $optiontitle = (isset($option['title'])) ? $option['title'] : '';
+    $optiondescription = (isset($option['description'])) ? $option['description'] : '';
+    $fieldtype = (isset($option['type'])) ?  $option['type'] : '';
     $fieldname = sell_media_get_current_plugin_id() . "_options[ { $optionname } ]";
 
     $attr = $option_parameters[ $option['name'] ];

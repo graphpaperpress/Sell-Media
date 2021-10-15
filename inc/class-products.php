@@ -72,8 +72,8 @@ class SellMediaProducts {
 			$prices[ $i ]['name'] = __( 'Original', 'sell_media' );
 			$prices[ $i ]['description'] = __( 'The original high resolution source file', 'sell_media' );
 			$prices[ $i ]['price'] = $this->get_price( $post_id, $attachment_id, 'original' );
-			$prices[ $i ]['width'] = $original_size['original']['width'];
-			$prices[ $i ]['height'] = $original_size['original']['height'];
+			$prices[ $i ]['width'] = (isset($original_size['original']['width'])) ? $original_size['original']['width'] : 100;
+			$prices[ $i ]['height'] = (isset($original_size['original']['height'])) ? $original_size['original']['height'] : 100;
 		}
 
 		if ( $this->has_image_attachments( $post_id ) ) {

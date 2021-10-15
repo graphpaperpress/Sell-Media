@@ -506,7 +506,8 @@ jQuery(document).ready(function($) {
         var data = {
             action: 'sell_media_update_lightbox',
             post_id: post_id,
-            attachment_id: attachment_id
+            attachment_id: attachment_id,
+            _nonce: sell_media._nonce
         };
 
         $.ajax({

@@ -168,6 +168,12 @@ function sell_media_lightbox_query() {
  */
 function sell_media_update_lightbox() {
 
+	$_send_data = array();
+	if (!isset($_POST['_nonce']) || isset($_POST['_nonce']) && !wp_verify_nonce($_POST['_nonce'], 'sell_media_ajax-nonce')) {
+		$_send_data['status'] = false;
+		wp_send_json($_send_data);
+		die();
+	}
 	// id is sent over in ajax request
 	if ( isset( $_POST['post_id'] ) && isset( $_POST['attachment_id'] ) ) {
 
