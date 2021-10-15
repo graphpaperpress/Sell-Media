@@ -22,8 +22,6 @@ Class SellMediaAdminNotices {
         $this->settings = sell_media_get_plugin_options();
 
         add_action( 'admin_notices', array( &$this, 'admin_notices' ) );
-        add_action( 'set_site_transient_update_plugins', array( &$this, 'delete_transients' ) );
-
     }
 
     /**
@@ -171,16 +169,5 @@ Class SellMediaAdminNotices {
 
         return $plugin_names;
 
-    }
-
-    /**
-     * Delete transients if plugins are updated
-     *
-     * @since 2.0.3
-     * @return void
-     */
-    public function delete_transients(){
-        delete_transient( 'sell_media_get_installed_plugins' );
-        delete_transient( 'sell_media_get_newest_plugins' );
     }
 }

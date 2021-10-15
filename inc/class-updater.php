@@ -67,9 +67,6 @@ class SellMediaUpdater {
 			// Add a nag text for reminding the user to save the license information.
 			add_action( 'network_admin_notices', array( $this, 'show_admin_notices' ) );
 
-			// Check for updates (for plugins).
-			add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'check_for_update' ) );
-
 			// Showing plugin information.
 			add_filter( 'plugins_api', array( $this, 'plugins_api_handler' ), 10, 3 );
 		}
@@ -83,9 +80,6 @@ class SellMediaUpdater {
 
 			// Add a nag text for reminding the user to save the license information.
 			add_action( 'admin_notices', array( $this, 'show_admin_notices' ) );
-
-			// Check for updates (for plugins).
-			add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'check_for_update' ) );
 
 			// Showing plugin information.
 			add_filter( 'plugins_api', array( $this, 'plugins_api_handler' ), 10, 3 );
@@ -450,76 +444,6 @@ class SellMediaUpdater {
 		<?php else :
 			return false;
 		endif;
-	}
-
-
-	//
-	// CHECKING FOR UPDATES.
-	//
-	/**
-	 * The filter that checks if there are updates to the plugin using the WP License Manager API.
-	 *
-	 * @param mixed $transient 	The transient used for WordPress plugin updates.
-	 *
-	 * @return mixed        	The transient with our (possible) additions.
-	 */
-	public function check_for_update( $transient ) {
-		if ( empty( $transient->checked ) ) {
-			return $transient;
-		}
-		if ( ! empty( $this->plugins ) ) {
-			foreach ($this->plugins as $key => $plugin) {
-				$info = $this->is_update_available( $plugin );
-				if ( false !== $info ) {
-					// Plugin update.
-					$plugin_slug = plugin_basename( $plugin['plugin_file'] );
-
-					$transient->response[ $plugin_slug ] = (object) array(
-						'new_version' => $info->version,
-						'package'     => $info->package_url,
-						'slug'        => $plugin['product_id'],
-					);
-				}			
-			}
-		}
-		return $transient;
-	}
-
-	/**
-	 * Checks the license manager to see if there is an update available for this theme.
-	 *
-	 * @return object|bool    If there is an update, returns the license information.
-	 *                      Otherwise returns false.
-	 */
-	public function is_update_available( $plugin ) {
-		$license_info = $this->get_license_info();
-
-		if ( $this->is_api_error( $license_info ) ) {
-			return false;
-		}
-
-		$transient_name = 'gpp_development_versions';
-		$endpoint = 'http://demo.graphpaperpress.com/wp-content/plugins/gpp-deployment/products.json';
-
-		if ( is_multisite() && FALSE === ( $versions = get_site_transient( $transient_name ) ) ) {
-			$versions = $this->call_api( '', array(), $endpoint );
-			set_site_transient( $transient_name, $versions, 3600 );
-		}
-		else if ( FALSE === ( $versions = get_transient( $transient_name ) ) ) {
-			$versions = $this->call_api( '', array(), $endpoint );
-			set_transient( $transient_name, $versions, 3600 );
-		}
-
-		$plugin_basename = plugin_basename( $plugin['plugin_file'] );
-		if ( ! isset( $versions[$plugin_basename] ) )
-			return false;
-
-		if ( version_compare( $versions[$plugin_basename], $this->get_local_version( $plugin ), '>' ) ) {
-			$license_info->{$plugin['product_id']}->version = $versions[$plugin_basename];
-			return $license_info->{$plugin['product_id']};
-		}
-
-		return false;
 	}
 
 	/**
