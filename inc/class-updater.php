@@ -746,8 +746,8 @@ class SellMediaUpdater {
 /**
  * Init Updater.
  */
-function sell_media_init_updater(){
-	$updater = new SellMediaUpdater();
-}
+// function sell_media_init_updater(){
+// 	$updater = new SellMediaUpdater();
+// }
 
-add_action( 'init', 'sell_media_init_updater' );
+//add_action( 'init', 'sell_media_init_updater' );
