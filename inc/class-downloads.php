@@ -48,11 +48,6 @@ Class SellMediaDownload {
 					$file_exists = $this->is_file_url_valid( $file );
 				}
 
-				// if ( ! $file_exists ) {
-				// 	wp_die( sprintf( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $file ) );
-				// 	exit();
-				// }
-
 				$file_type = wp_check_filetype( $file );
 
 				if ( ! ini_get( 'safe_mode' ) ){

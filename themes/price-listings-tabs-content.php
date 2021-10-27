@@ -26,7 +26,6 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 				if ( $this->current_term === $term->term_id ) {
 					$current_url = $url;
 				}
-				// echo "<option value='$url' " . selected( (int) $this->current_term, $term->term_id, false ) . ">" . $term->name . '</option>';
 				echo "<option value='$url' " . selected( (int) $current_pricelist, $term->term_id, false ) . ">" . $term->name . '</option>';
 			}
 			?>
@@ -42,7 +41,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 		<?php } ?>
 	</div>
 	<?php
-	// if ( ! isset( $_GET['term_parent'] ) || 'new' !== $_GET['term_parent'] ) {
+
 	if ( isset( $_GET['term_parent'] ) ) {
 	?><hr/>
 	<!-- Price table -->
@@ -65,7 +64,6 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 		<?php
 		$attributes = array( 'id' => 'sell-media-add-button' );
 		submit_button( __( '+ Add Option', 'sell_media' ), 'secondary', 'submit', false, $attributes  ) ?>
-		<!-- <a href="javascript:void(0);" id="sell-media-add-button" class="button-secondary"><?php _e( '+ Add Option', 'sell_media' ); ?></a> -->
 	</p>
 	<?php
 	} ?>

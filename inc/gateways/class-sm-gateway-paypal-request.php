@@ -82,7 +82,6 @@ class SM_Gateway_PayPal_Request {
         // Before payment process action.
         do_action( 'sell_media_before_payment_process' );
 
-        //check_ajax_referer( 'sell_media_paypal_nonce', 'nonce_security' );
         if ( ! isset($_POST['_nonce']) || ! wp_verify_nonce($_POST['_nonce'], 'sell_media_paypal_nonce')) {
             $_send_data['status'] = false;
             wp_send_json($_send_data);
@@ -369,20 +368,8 @@ class SM_Gateway_PayPal_Request {
                 $amount = $amount * $product['qty'];
             }
 
-            // If taxes are enabled, subtract taxes from item
-            // if ( $this->settings->tax ) {
-            // $tax_amount = ( $this->settings->tax_rate * $amount );
-            // $amount = $amount - $tax_amount;
-            // }
-
             // Apply discount
             $amount = apply_filters( 'sell_media_price_filter', $amount, $discount_id, $product['qty'] );
-
-            // If taxes are enabled, add taxes onto newly discounted amount
-            // if ( $this->settings->tax ) {
-            // $tax_amount = ( $this->settings->tax_rate * $amount );
-            // $amount = $amount + $tax_amount;
-            // }
 
             $total += $amount;
         }
@@ -534,9 +521,6 @@ class SM_Gateway_PayPal_Request {
 
             // Authorize order
             if ($_paypal_order_id) {
-
-                // Enable if your intent is "AUTHORIZE"
-                // $_authorize_order_response = $this->authorizeOrder($_paypal_order_id);
 
                 // Capture Approved order
                 $_paypal_order_capture_response = $this->captureOrder($_paypal_order_id);

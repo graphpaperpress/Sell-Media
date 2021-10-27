@@ -580,20 +580,7 @@ function sell_media_init_settings() {
 			"default" => "",
 			"valid_options" => sell_media_settings_price_group('price-group')
 			),
-		// Payment Tab
-		/*"paypal_email" => array(
-			"tab" => "sell_media_payment_settings",
-			"name" => "paypal_email",
-			"title" => __("PayPal Email Address", "sell_media"),
-			'description' => __( 'Add the email address associated with your PayPal account above.', 'sell_media' ),
-			"default" => "",
-			"section" => "payment_section_paypal",
-			"since" => "1.0",
-			"default" => "",
-			"id" => "payment_section_paypal",
-			"type" => "text",
-			"sanitize" => "html"
-			),*/
+
 		"currency" => array(
 			"tab" => "sell_media_payment_settings",
 			"name" => "currency",
