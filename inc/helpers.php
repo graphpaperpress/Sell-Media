@@ -1341,7 +1341,7 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 			}
 		}
 	}
-	//print_r($metadata);exit();
+
 
 	// Remove the blob of binary data from the array.
 	if ( $metadata ) {

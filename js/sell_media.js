@@ -465,7 +465,6 @@ jQuery(document).ready(function($) {
             } else {
                 if ($(this).attr('id') != 'sell_media_download_size_fieldset') {
                     var taxonomy = $(this).children('select').data('markup-taxonomy');
-                    // alert('tes');
                     item_markup = $('option:selected', $(this).children('select')).data('name');
                     item_markup_id = $(this).children('select').val();
                     if (!item_markup)

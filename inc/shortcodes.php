@@ -115,8 +115,7 @@ function sell_media_all_items_shortcode( $atts ) {
 		'show' => get_option( 'posts_per_page' )
 		), $atts )
 	);
-	//$class = ( $columns ) ? 'sell-media-grid-item sell-media-grid-item-' . $columns : 'sell-media-grid-item';
-
+	
 	$args = array(
 		'posts_per_page' => $show,
 		'post_type' => 'sell_media_item',

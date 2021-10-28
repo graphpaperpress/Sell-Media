@@ -59,7 +59,6 @@ jQuery( document ).ready(function( $ ){
                 security: $('#sell_media_meta_box_nonce').val()
             };
 
-            //$('.sell-media-upload-list').empty();
             $('.sell-media-ajax-loader').show();
 
             $.ajax({
@@ -192,7 +191,6 @@ jQuery( document ).ready(function( $ ){
                     $('.sell-media-upload-list').append( msg );
                     update_files();
                     $(selector).text($(selector).data('default-text'));
-                    //console.log(msg);
                 }
             });
 

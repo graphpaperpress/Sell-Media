@@ -570,7 +570,6 @@ function sell_media_show_file_info() {
 	$meta = wp_get_attachment_metadata( $attachment_id );
 	
 	$filename = explode( '?', basename( get_attached_file( $attachment_id ) ) )[0];
-	//$filename = basename( get_attached_file( $attachment_id ) );
 	$post_guid = get_the_guid( $attachment_id );
 	$image_size_info = getimagesize( Sell_Media()->products->get_protected_file( $post_obj->ID, $attachment_id ) );
 	$video_metadata = wp_get_attachment_metadata( $attachment_id );
