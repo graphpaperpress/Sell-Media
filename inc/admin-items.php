@@ -155,7 +155,7 @@ function sell_media_options_meta_box( $post ) {
 	<div id="sell-media-price-field" class="sell-media-field" style="<?php echo $style; ?>">
 		<label for="sell-media-price"><?php _e( 'Price', 'sell_media' ); ?></label>
 		<span class="sell-media-currency-field"><?php echo sell_media_get_currency_symbol(); ?>
-		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo $price; ?>" /></span>
+		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo sanitize_text_field($price); ?>" /></span>
 		<?php if ( sell_media_has_multiple_attachments( $post->ID ) ) { ?>
 			<span class="desc"><?php _e( 'The price of each original source file.', 'sell_media' ); ?></span>
 		<?php } ?>

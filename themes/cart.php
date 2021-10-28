@@ -4,8 +4,8 @@
  * Template for Cart dialog
  */
 
-$post_id        = $_POST['product_id'];
-$attachment_id  = $_POST['attachment_id'];
+$post_id        = (isset($_POST['product_id'])) ? $_POST['product_id'] : '';
+$attachment_id  = (isset($_POST['attachment_id'])) ? $_POST['attachment_id'] : '';
 $location       = isset( $_POST['location'] ) ? $_POST['location'] : '';
 $image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
 
@@ -15,7 +15,7 @@ ob_start();
 	<?php if ( ! post_password_required( $post_id ) ) : ?>
 	<div class="sell-media-quick-view-image">
 		<?php
-			$mime_type = get_post_mime_type( $attachment_id );
+			$mime_type = get_post_mime_type( $attachment_id );	
 			// if selling video or audio, show the post_id thumbnail
 			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
 				$image = sell_media_item_icon( $post_id, 'full', false );

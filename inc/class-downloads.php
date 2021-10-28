@@ -6,7 +6,7 @@
  * @package Sell Media
  * @author Thad Allender <support@graphpaperpress.com>
  */
-
+//die('+++++777');
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -23,12 +23,13 @@ Class SellMediaDownload {
 	 * @return void
 	 */
 	public function download(){
-
-		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) ) {
-
-			$transaction_id = urldecode( $_GET['download'] );
-			$payment_id     = urldecode( $_GET['payment_id'] );
-			$product_id     = urldecode( $_GET['product_id'] );
+		
+		// added check_ajax_referer('download_media', '_nonce') for security
+		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && check_ajax_referer('download_media', '_nonce')) {
+				
+			$transaction_id = (isset($_GET['download'])) ? urldecode( $_GET['download'] ) : '';
+			$payment_id     = (isset($_GET['payment_id'])) ? urldecode( $_GET['payment_id'] ) : '';
+			$product_id     = (isset($_GET['product_id'])) ? urldecode( $_GET['product_id'] ) : '';
 
 			// Old download links might not have attachment_id set.
 			// This means they were purchased before we added support
@@ -108,21 +109,20 @@ Class SellMediaDownload {
 	 * @param  string  $url URL of file.
 	 */
 	function is_file_url_valid( $url ) {
-		$is_valid = false;
-		$handle = curl_init($url);
-		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-
-		/* Get the HTML or whatever is linked in $url. */
-		$response = curl_exec($handle);
-		/* Check for 404 (file not found). */
-		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-		if($httpCode == 200 ) {
-			$is_valid = true;
+		
+		// Time out in seconds
+		$timeout = apply_filters("sell_media_media_download_timeout", 5);
+		
+		// Get media information
+		$media_info = wp_remote_get($url, $timeout);
+		
+		// check file is valid or not
+		if (is_wp_error($media_info) || empty($media_info['response']) || $media_info['response']['code'] != '200') {
+			return false;
+		} else {
+			return true;
 		}
-
-		curl_close($handle);
-
-		return $is_valid;
+		return false;
 	}
 
 	/**

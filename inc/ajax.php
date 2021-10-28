@@ -17,6 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sell_media_add_to_cart() {
 	global $sm_cart;
 
+	if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) && !wp_verify_nonce($_POST['_wpnonce'], 'sell_media_add_cart_action')) {
+		echo 0;
+		exit;
+	}
+	
 	// Check if item number is there.
 	if ( ! empty( $_POST ) && isset( $_POST['item_number'] ) ) {
 

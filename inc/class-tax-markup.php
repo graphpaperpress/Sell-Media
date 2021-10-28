@@ -97,7 +97,7 @@ class SellMediaTaxMarkup {
 		<div class="form-field">
 			<?php $this->the_default_checkbox( $term_id, $taxonomy_details ); ?>
 		</div>
-		<?php
+		<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); 
 	}
 
 	/**
@@ -170,7 +170,8 @@ class SellMediaTaxMarkup {
 				?>
 			</p>
 		</div>
-	<?php }
+		<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); 
+	}
 
 	/**
 	 * Prints the checkbox for the default license type.

@@ -88,13 +88,13 @@ function sell_media_plugin_get_page_tab_markup() {
     $i = 0;
     foreach( $tabs as $tab ) {
         if( isset( $tab['name'] ) )
-            $tabname = $tab['name'];
+            $tabname = esc_attr($tab['name']);
         if( isset( $tab['title'] ) )
-            $tabtitle = $tab['title'];
+            $tabtitle = esc_attr($tab['title']);
         if ( $tabname == $current ) {
-            $links[] = "<a class='nav-tab nav-tab-active' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>$tabtitle</a>";
+            $links[] = "<a class='nav-tab nav-tab-active' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>".esc_attr($tabtitle)."</a>";
         } else {
-            $links[] = "<a class='nav-tab' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>$tabtitle</a>";
+            $links[] = "<a class='nav-tab' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>".esc_attr($tabtitle)."</a>";
         }
         $i++;
     }

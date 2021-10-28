@@ -30,6 +30,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 			<input class="item_usage" name="item_usage" type="text" value="<?php _e( 'No license', 'sell_media' ); ?>" />
 			<input class="item_license" name="item_license" type="text" value="0" />
 			<input class="item_attachment" name="item_attachment" type="text" value="<?php echo $attachment_id; ?>" />
+			<?php wp_nonce_field('sell_media_add_cart_action'); ?>
 			<?php do_action( 'sell_media_cart_add_markup_inputs' ); ?>
 		</form>
 
@@ -77,7 +78,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 					</span>
 				</fieldset>
 			<?php else : ?>
-				<input id="sell_media_item_base_price" type="hidden" value="<?php echo $price; ?>" data-price="<?php echo $price; ?>" data-id="original" data-size="original" />
+				<input id="sell_media_item_base_price" type="hidden" value="<?php echo sanitize_text_field($price); ?>" data-price="<?php echo $price; ?>" data-id="original" data-size="original" />
 			<?php endif; ?>
 
 			<?php do_action( 'sell_media_cart_below_size' ); ?>
