@@ -108,7 +108,7 @@ class SellMediaTaxMarkup {
 	function the_markup_slider( $taxonomy_details ) {
 
 		if ( isset( $_GET['tag_ID'] ) ) {
-			$term_id = $_GET['tag_ID'];
+			$term_id = esc_html($_GET['tag_ID']);
 		} else {
 			$term_id = null;
 		}
@@ -281,7 +281,7 @@ class SellMediaTaxMarkup {
 	 */
 	function item_detail_markup_fields() {
 		global $post;
-		$product_id = ( ! empty( $_POST['product_id'] ) ) ? $_POST['product_id'] : $post->ID;
+		$product_id = ( ! empty( $_POST['product_id'] ) ) ? esc_html($_POST['product_id']) : $post->ID;
 		$post_id = $product_id;
 		if ( wp_get_post_parent_id( $product_id ) > 0 ) {
 			$post_id = wp_get_post_parent_id( $product_id );
