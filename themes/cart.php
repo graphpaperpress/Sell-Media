@@ -4,9 +4,9 @@
  * Template for Cart dialog
  */
 
-$post_id        = (isset($_POST['product_id'])) ? $_POST['product_id'] : '';
-$attachment_id  = (isset($_POST['attachment_id'])) ? $_POST['attachment_id'] : '';
-$location       = isset( $_POST['location'] ) ? $_POST['location'] : '';
+$post_id        = (isset($_POST['product_id'])) ? esc_html($_POST['product_id']) : '';
+$attachment_id  = (isset($_POST['attachment_id'])) ? esc_html($_POST['attachment_id']) : '';
+$location       = isset( $_POST['location'] ) ? esc_html($_POST['location']) : '';
 $image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
 
 ob_start();

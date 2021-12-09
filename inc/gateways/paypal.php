@@ -164,9 +164,9 @@ class SellMediaPayPal {
         $_result['message'] = apply_filters('sell_media_order_refund_fail_message', __('Order refund process fail, Please try again', 'sell_media'));
         if(isset($_POST['transaction_id']) && !empty($_POST['transaction_id']) && isset($_POST['_nonce']) && wp_verify_nonce($_POST['_nonce'], 'sell-media-paypal-payment-refund')) {
 
-            $_payment_id        = (isset($_POST['payment_id']) && !empty($_POST['payment_id'])) ? $_POST['payment_id'] : 0;
+            $_payment_id        = (isset($_POST['payment_id']) && !empty($_POST['payment_id'])) ? esc_html($_POST['payment_id']) : 0;
             $_payment_obj       = get_post_meta($_payment_id, '_sell_media_payment_meta', true);
-            $_refund_amount     = (isset($_POST['refund_amount']) && !empty($_POST['refund_amount'])) ? $_POST['refund_amount'] : $_payment_obj['total'];
+            $_refund_amount     = (isset($_POST['refund_amount']) && !empty($_POST['refund_amount'])) ? esc_html($_POST['refund_amount']) : $_payment_obj['total'];
             $_currency_code     = get_post_meta($_payment_id, 'payment_currency_code', true);
             $_capture_id        = get_post_meta($_payment_id, 'payment_capture_id', true);
 

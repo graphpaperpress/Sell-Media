@@ -46,7 +46,7 @@ class Sell_Media_Price_Listings_Tabs {
 			$array_values = array_values( $parent_terms );
 			$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
 			$first_term_id = isset( $first->term_id ) ? $first->term_id : 0;
-			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first_term_id;
+			$this->current_term = isset( $_GET['term_parent'] ) ? esc_html($_GET['term_parent']) : $first_term_id;
 			add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
 		}
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
@@ -224,19 +224,19 @@ class Sell_Media_Price_Listings_Tabs {
 		// Save new pricelist.
 		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
 			if ( ! term_exists( $_POST['new_term_name'], $this->taxonomy ) ) {
-				$term = wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
+				$term = wp_insert_term( esc_html($_POST['new_term_name']), $this->taxonomy );
 				$parent_term_id = $term['term_id'];
 			} else {
-				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", $_POST['new_term_name'] ) );
+				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", esc_html($_POST['new_term_name']) ) );
 			}
 		} 
 		else {
 			// Update pricelists.
-			$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
+			$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) esc_html($_POST['term_id']): 0;
 			if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
 				if ( 0 !== $parent_term_id ) {
 					wp_update_term( $parent_term_id, $this->taxonomy, array(
-						'name' => $_POST['term_name'],
+						'name' => esc_html($_POST['term_name']),
 					));
 				}
 			}
@@ -246,8 +246,8 @@ class Sell_Media_Price_Listings_Tabs {
 					$term_id = (int) $term_id;
 					if ( '' !== $data['name'] ) {
 						wp_update_term( $term_id, $this->taxonomy, array(
-							'name' => $data['name'],
-							'description' => $data['description'],
+							'name' => esc_html($data['name']),
+							'description' => esc_html($data['description']),
 						));
 						update_term_meta( $term_id, 'width', $data['width'] );
 						update_term_meta( $term_id, 'height', $data['height'] );
@@ -257,7 +257,7 @@ class Sell_Media_Price_Listings_Tabs {
 			}
 
 			if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
-				$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
+				$deleted_term_ids = explode( ',', esc_html($_POST['deleted_term_ids']) );
 				if ( ! empty( $deleted_term_ids ) ) {
 					foreach ( $deleted_term_ids as $key => $term_id ) {
 						if ( 'new' !== $term_id ) {
@@ -299,7 +299,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 		
 			$settings = ( array ) sell_media_get_plugin_options();			
-			$settings = array_merge( $settings, $_POST['settings'] );
+			$settings = array_merge( $settings, esc_html($_POST['settings']) );
 			$options_name = sell_media_get_current_plugin_id() . '_options';
 			update_option( $options_name, $settings );			
 		}
@@ -319,7 +319,7 @@ class Sell_Media_Price_Listings_Tabs {
 		// Check valid nonce.
 		check_admin_referer( 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 
-		$term_parent = absint( $_GET['term_parent'] );
+		$term_parent = absint( esc_html($_GET['term_parent']) );
 		$taxonomy = ( isset( $_GET['tab'] ) && '' !== $_GET['tab'] ) ? esc_attr( $_GET['tab'] ) : $this->taxonomy;
 		$child_terms = get_term_children( $term_parent, $taxonomy );
 		wp_delete_term( (int) $term_parent, $taxonomy );

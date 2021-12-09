@@ -115,7 +115,7 @@ function sell_media_admin_plugin_options_page() {
         <?php sell_media_plugin_get_page_tab_markup(); ?>
         <?php if ( isset( $_GET['settings-updated'] ) ) {
                 if( isset ( $_GET['i'] ) ) {
-                    $tabvalue = $_GET['i'];
+                    $tabvalue = esc_html($_GET['i']);
                 } else {
                     $tabvalue = 0;
                 }
@@ -614,8 +614,8 @@ function sell_media_plugin_field_html( $value, $attr ){
  * Image upload ajax callback
  */
 function sell_media_plugin_image_url_callback() {
-    $ids = (isset($_POST['ids'])) ? $_POST['ids'] : '';
-    $pid = (isset($_POST['pid'])) ? $_POST['pid'] : '';
+    $ids = (isset($_POST['ids'])) ? esc_html($_POST['ids']) : '';
+    $pid = (isset($_POST['pid'])) ? esc_html($_POST['pid']) : '';
     update_post_meta( $pid, 'upload_gallery_preview', $ids );
 
     $image_ids = explode( ',', $ids );
