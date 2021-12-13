@@ -349,7 +349,7 @@ class SM_Gateway_PayPal_Request {
 
         foreach ( $products as $product ) {
 
-            $product_id = $product['item_id'];
+            $product_id = intval($product['item_id']);
             $license_id = empty( $product['item_license'] ) ? null : $product['item_license'];
             $price_id = empty( $product['item_pgroup'] ) ? null : $product['item_pgroup'];
 
@@ -391,7 +391,7 @@ class SM_Gateway_PayPal_Request {
         if(empty($product)) {
             return 0;
         }
-        $product_id = $product['item_id'];
+        $product_id = intval($product['item_id']);
         $license_id = empty( $product['item_license'] ) ? null : $product['item_license'];
         $price_id   = empty( $product['item_pgroup'] ) ? null : $product['item_pgroup'];
 

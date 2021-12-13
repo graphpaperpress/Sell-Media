@@ -62,7 +62,7 @@ function sell_media_files_meta_box( $post ) {
 
 	<ul class="attachments sell-media-upload-list">
 		<?php
-			$attachment_ids = sell_media_get_attachments( $post->ID );
+			$attachment_ids = intval(sell_media_get_attachments( $post->ID ));
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 				_e(sell_media_list_uploads( $attachment_id ), 'sell_media');
 			}
@@ -90,7 +90,7 @@ function sell_media_uploader_meta_box( $post ) {
 
 	<ul class="attachments sell-media-upload-list">
 		<?php
-			$attachment_ids = sell_media_get_attachments( $post->ID );
+			$attachment_ids = intval(sell_media_get_attachments( $post->ID ));
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 				_e(sell_media_list_uploads( $attachment_id ),'sell_media');
 			}
@@ -274,7 +274,7 @@ function sell_media_save_custom_meta( $post_id ) {
 							foreach ( $childrens as $key => $child ) {
 								// If attachment still linked to post do not remove.
 								if ( ! in_array( $key, $attachment_ids ) ){
-									$post_data['ID'] = $key;
+									$post_data['ID'] = intval($key);
 									$post_data['post_parent'] = 0;
 									wp_update_post( $post_data );
 								}

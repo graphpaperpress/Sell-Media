@@ -57,7 +57,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
     function get_preview( $post_id ){
         if( self::is_video_item( $post_id ) || self::is_audio_item( $post_id ) ){
 
-            $url = get_post_meta( $post_id, 'sell_media_embed_link', true );
+            $url = esc_url(get_post_meta( $post_id, 'sell_media_embed_link', true ));
             if ( '' != $url ) {
                 return wp_oembed_get( esc_url( $url ), array( 'width' => 600 ) );
             }
@@ -73,7 +73,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
      */
     function add_meta_fields( $post ){
       
-        $embed_url = get_post_meta( $post->ID, 'sell_media_embed_link', true );
+        $embed_url = esc_url(get_post_meta( $post->ID, 'sell_media_embed_link', true ));
         ?>
         <div id="sell-media-embed-link-field" class="sell-media-field" style="display:none;">
 

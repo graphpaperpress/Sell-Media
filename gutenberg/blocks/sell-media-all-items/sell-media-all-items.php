@@ -264,7 +264,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                         $class = 'horizontal-masonry-column overlay-container ';
                         // grab the thumbnail if its not photo
                         if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-                            $image_data     = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
+                            $image_data     = esc_url(get_the_post_thumbnail_url( $post_id, 'thumbnail' ));
                             $image_size    = getimagesize($image_data);
                             $image_width   = $image_size[0];
                             $image_height   = $image_size[1];

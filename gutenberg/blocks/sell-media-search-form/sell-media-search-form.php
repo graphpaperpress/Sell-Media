@@ -104,7 +104,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 if ( 'bgImage' === $key ) {
 
                     if(isset($val['url']) && $val['url']){
-                        $val = $val['url'];
+                        $val = esc_url($val['url']);
                     }else{
                         $val = '';
                     }
@@ -366,8 +366,8 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                     while ( $search_query->have_posts() ) {
                         $search_query->the_post();
 
-                        $post_id = get_the_ID();
-                        $parent_id = get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true );
+                        $post_id = intval(get_the_ID());
+                        $parent_id = intval(get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true ));
 
                         $html .= '<div id="sell-media-' . intval($post_id) . '" class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', intval($parent_id) ) . ' sell-media-grid-single-item">';
                         $html .= '<a href="' . esc_url( get_permalink() ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';

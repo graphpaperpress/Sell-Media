@@ -243,7 +243,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 			if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
 				foreach ( $_POST['terms_children'] as $term_id => $data ) {
-					$term_id = (int) $term_id;
+					$term_id = (int) intval($term_id);
 					if ( '' !== $data['name'] ) {
 						wp_update_term( $term_id, $this->taxonomy, array(
 							'name' => esc_html($data['name']),
@@ -272,8 +272,8 @@ class Sell_Media_Price_Listings_Tabs {
 					if ( '' !== $data['name'] ) {
 
 						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
-							$term    = get_term_by( 'name', $data['name'], $this->taxonomy );
-							$term_id = ( isset( $term->term_id ) ) ? $term->term_id : false;
+							$term    = esc_html(get_term_by( 'name', $data['name'], $this->taxonomy ));
+							$term_id = ( isset( $term->term_id ) ) ? intval($term->term_id) : false;
 
 						} else {
 
@@ -281,7 +281,7 @@ class Sell_Media_Price_Listings_Tabs {
 								'parent' => $parent_term_id,
 								'description' => $data['description'],
 							) );
-							$term_id = ! is_wp_error( $term ) ? $term['term_id'] : false;
+							$term_id = ! is_wp_error( $term ) ? esc_html($term['term_id']) : false;
 						}
 
 						if ( $term_id ) {

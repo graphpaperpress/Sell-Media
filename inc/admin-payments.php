@@ -34,8 +34,8 @@ function sell_media_add_payment_meta_boxes(){
 
 	if ( $screen->id == 'sell_media_payment' ) {
 		global $post;
-		$paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
-		$stripe_args = get_post_meta( $post->ID, '_stripe_args', true );
+		$paypal_args = __(get_post_meta( $post->ID, '_paypal_args', true ));
+		$stripe_args = __(get_post_meta( $post->ID, '_stripe_args', true ));
 		if ( ! empty( $paypal_args ) || ! empty( $stripe_args ) ){
 			add_meta_box(
 				'meta_field_details',
@@ -171,8 +171,8 @@ function sell_media_payment_additional_purchase_details( $post ){
  */
 function sell_media_payment_gateway_details( $post ){
 
-	$paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
-	$stripe_args = get_post_meta( $post->ID, '_stripe_args', true );
+	$paypal_args = __(get_post_meta( $post->ID, '_paypal_args', true ));
+	$stripe_args = __(get_post_meta( $post->ID, '_stripe_args', true ));
 	if ( $paypal_args ) {
 		$arguments = $paypal_args;
 		$gateway = __( 'PayPal', 'sell_media' );

@@ -133,8 +133,8 @@ function sell_media_lightbox_query() {
 			// Old cookies were stored as simple array of ids
 			// New cookies are stored as a multidimensional array of ids
 			// so that we can support attachments (galleries)
-			$post_id        = ( ! empty( $item['post_id'] ) ) ? $item['post_id'] : $item;
-			$attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? $item['attachment_id'] : sell_media_get_attachment_id( $post_id );
+			$post_id        = ( ! empty( $item['post_id'] ) ) ? intval($item['post_id']) : intval($item);
+			$attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? intval($item['attachment_id']) : intval(sell_media_get_attachment_id( $post_id ));
 
 			$i++;
 			$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
