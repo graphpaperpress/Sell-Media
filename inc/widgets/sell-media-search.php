@@ -47,12 +47,12 @@ class Sell_Media_Search_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		echo $args['before_widget'];
+		_e($args['before_widget'],'sell_media');
 		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+			_e($args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'],'sell_media');
 		}
-		echo do_shortcode( '[sell_media_searchform]' );
-		echo $args['after_widget'];
+		_e(do_shortcode( '[sell_media_searchform]' ),'sell_media');
+		_e($args['after_widget'],'sell_media');
 	}
 	/**
 	 * Back-end widget form.
@@ -70,8 +70,8 @@ class Sell_Media_Search_Widget extends WP_Widget {
 		}
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'sell_media' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+			<label for="<?php _e($this->get_field_id( 'title' ),'sell_media'); ?>"><?php _e( 'Title:', 'sell_media' ); ?></label>
+			<input class="widefat" id="<?php _e($this->get_field_id( 'title' ),'sell_media'); ?>" name="<?php _e($this->get_field_name( 'title' )); ?>" type="text" value="<?php esc_attr_e( $title ); ?>">
 		</p>
 		<?php
 	}

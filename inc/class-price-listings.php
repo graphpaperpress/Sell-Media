@@ -98,9 +98,9 @@ class Sell_Media_Price_Listings {
 			<?php
 			$tabs = $this->get_tabs();
 			if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
-				echo '<div class="updated" ><p>';
+				esc_html_e('<div class="updated" ><p>');
 				_e( $tabs[ $this->current_tab ]['tab_title'] . ' pricelist updated.', 'sell_media' );
-				echo '</p></div>';
+				esc_html_e('</p></div>');
 			}
 
 			$this->display_tabs( $this->current_tab );
@@ -113,7 +113,7 @@ class Sell_Media_Price_Listings {
 			?>
 			<div id="poststuff">
 				<?php do_action( 'sell_media_pricelists_before_form', $this->current_tab, $url ); ?>
-				<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-pricelist-form">
+				<form method="post" action="<?php _e(esc_url( $url ),'sell_media'); ?>" id="sell-media-pricelist-form">
 					<?php
 					wp_nonce_field( 'sell-media-price-list-page' );
 					if ( isset( $current_screen->parent_file ) && $this->parent_slug === $current_screen->parent_file && $_GET['page'] === $this->menu_slug ) {
@@ -174,7 +174,7 @@ class Sell_Media_Price_Listings {
 			$output .= "<a class='nav-tab$class' href='$url'>" . $tab['tab_title'] . '</a>';
 		}
 		$output .= '</h2>';
-		echo wp_kses_post( $output );
+		_e(wp_kses_post( $output ),'sell_media');
 	}
 
 	/**

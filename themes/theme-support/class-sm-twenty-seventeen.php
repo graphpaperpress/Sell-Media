@@ -26,19 +26,19 @@ class SM_Twenty_Seventeen {
 	 * Open the Twenty Seventeen wrapper.
 	 */
 	public static function sm_output_content_wrapper() {
-		echo '<div class="wrap">';
-		echo '<div id="primary" class="content-area twentyseventeen">';
-		echo '<main id="main" class="site-main" role="main">';
+		_e('<div class="wrap">','sell_media');
+		_e('<div id="primary" class="content-area twentyseventeen">','sell_media');
+		_e('<main id="main" class="site-main" role="main">','sell_media');
 	}
 
 	/**
 	 * Close the Twenty Seventeen wrapper.
 	 */
 	public static function sm_output_content_wrapper_end() {
-		echo '</main>';
-		echo '</div>';
+		_e('</main>','sell_media');
+		_e('</div>','sell_media');
 		get_sidebar();
-		echo '</div>';
+		_e('</div>','sell_media');
 	}
 }
 

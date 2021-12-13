@@ -136,7 +136,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. esc_html($attributes["align"]).'">';
             }
 
             $return_content .= $content;
@@ -234,17 +234,17 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             if ( $wp_query_items->have_posts() ) :
 
                 $html = '<div class="sell-media">';
-                $html .= '<div class="' . $class . '">';
+                $html .= '<div class="' . esc_html($class) . '">';
                 
                 while ( $wp_query_items->have_posts() ) : $wp_query_items->the_post(); $i++;
                     $post_id = get_the_id();
                     global $mime_type;
-                    $original_id = $post_id;
+                    $original_id =intval($post_id);
                     if ( post_password_required( $original_id ) && sell_media_is_search() ) {
                         return;
                     }
                     if ( 'attachment' === get_post_type( $post_id ) ) {
-                        $attachment_id = $post_id; // always and attachment
+                        $attachment_id = intval( $post_id); // always and attachment
                         $post_id = get_post_meta( $attachment_id, $key = '_sell_media_for_sale_product_id', false ); // always a sell_media_item
                     } else {
                         $attachment_id = sell_media_get_attachment_id( $post_id ); // always an attachment
@@ -280,7 +280,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                                     
                     }
                     
-                    $html  .= '<div id="sell-media-' . $original_id . '" class="' . $class . '">';       
+                    $html  .= '<div id="sell-media-' . $original_id . '" class="' . esc_html($class) . '">';       
                     
                     $html .= '<a href="' . esc_url( get_permalink( $post_id ) ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 

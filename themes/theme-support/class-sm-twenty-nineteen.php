@@ -26,16 +26,16 @@ class SM_Twenty_Nineteen {
 	 * Open the Twenty Nineteen wrapper.
 	 */
 	public static function sm_output_content_wrapper() {
-		echo '<section id="primary" class="content-area">';
-		echo '<main id="main" class="site-main">';
+		_e('<section id="primary" class="content-area">','sell_media');
+		_e('<main id="main" class="site-main">','sell_media');
 	}
 
 	/**
 	 * Close the Twenty Nineteen wrapper.
 	 */
 	public static function sm_output_content_wrapper_end() {
-		echo '</main>';
-		echo '</section>';
+		_e('</main>','sell_media');
+		_e('</section>','sell_media');
 	}
 
 }

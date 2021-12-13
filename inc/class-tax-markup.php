@@ -123,9 +123,9 @@ class SellMediaTaxMarkup {
 		$settings = sell_media_get_plugin_options(); ?>
 		<script>
 		function calc_price( markUp ){
-			var price = <?php echo $settings->default_price; ?>;
+			var price = <?php esc_attr_e($settings->default_price); ?>;
 			if ( markUp == undefined )
-				var markUp = <?php echo $initial_markup; ?>;
+				var markUp = <?php esc_attr_e($initial_markup); ?>;
 
 			finalPrice = ( +price + ( +markUp * .01 ) * price );
 			finalPrice = finalPrice.toFixed(2);
@@ -143,7 +143,7 @@ class SellMediaTaxMarkup {
 		<div class="sell_media-slider-container">
 			<input id="slide" type="range" min="-100" max="1000" step=".1" value="<?php print $initial_markup; ?>" oninput="updateSlider(this.value)">
 			<div class="sell_media-price-container">
-				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo get_term_meta( $term_id, 'markup', true ); ?>" size="40" />
+				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php esc_attr_e(get_term_meta( $term_id, 'markup', true )); ?>" size="40" />
 			</div>
 			<p class="description">
 				<?php printf( __( 'Increase the price of a item if a buyer selects this %s by dragging the slider above.', 'sell_media' ), $singular_name ); ?>
@@ -188,11 +188,11 @@ class SellMediaTaxMarkup {
 		?>
 		<tr class="form-field sell_media-markup-container">
 			<th scope="row" valign="top">
-				<label for="markup"><?php echo esc_html( $title ); ?></label>
+				<label for="markup"><?php esc_html_e( $title ); ?></label>
 			</th>
 			<td>
 				<input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( get_term_meta( $term_id, 'default', true ), 'on' ); ?> size="40" />
-				<span class="description"><label for="meta_value[default]"><?php echo esc_html( $desc ); ?></label></span>
+				<span class="description"><label for="meta_value[default]"><?php esc_html_e( $desc ); ?></label></span>
 			</td>
 		</tr>
 		<?php
@@ -296,14 +296,14 @@ class SellMediaTaxMarkup {
 			$taxonomy = get_taxonomy( $tax );
 			if ( count( $m ) > 0 ) {
 			?>
-				<fieldset id="sell_media_download_<?php echo esc_attr( $tax ) ?>_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-<?php echo esc_attr( $tax ) ?>-fieldset">
+				<fieldset id="sell_media_download_<?php esc_attr_e( $tax ) ?>_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-<?php esc_attr_e( $tax ) ?>-fieldset">
 					<?php
 					$sell_media_tooltip_text = 'Select a ' . esc_attr( $taxonomy->labels->singular_name ) . ' that most closely describes the intended use of this item. Additional ' . esc_attr( $taxonomy->labels->singular_name ) . ' details will be displayed here after selecting a ' . esc_attr( $taxonomy->labels->singular_name ) . '.';
 					$tooltip_text = apply_filters( "sell_media_{$tax}_tooltip_text", $sell_media_tooltip_text );
 					?>					
 					<span class="sell-media-select-box sell-media-select-small">
-						<select data-markup-taxonomy="<?php echo esc_attr( $tax ) ?>" id="sell_media_item_<?php echo esc_attr( $tax ) ?>" class="sum sell-media-select" required>
-							<option selected="selected" value="" data-id="" data-price="0" title="<?php echo esc_html( $tooltip_text ); ?>"><?php echo esc_html( sprintf( __( 'Select a %s', 'sell_media' ), strtolower( $taxonomy->labels->singular_name ) ) ); ?></option>
+						<select data-markup-taxonomy="<?php esc_attr_e( $tax ) ?>" id="sell_media_item_<?php esc_attr_e( $tax ) ?>" class="sum sell-media-select" required>
+							<option selected="selected" value="" data-id="" data-price="0" title="<?php esc_attr_e( $tooltip_text ); ?>"><?php _e( sprintf( __( 'Select a %s', 'sell_media' ), strtolower( $taxonomy->labels->singular_name ) ) ); ?></option>
 						<?php sell_media_build_options( array( 'post_id' => $post_id, 'taxonomy' => $tax, 'type' => 'select' ) ); ?>
 						</select>
 					</span>
@@ -325,8 +325,8 @@ class SellMediaTaxMarkup {
 				if ( 'licenses' === $markup_field ) {
 					continue;
 				} ?>
-				<input class="item_markup_<?php echo esc_attr( $markup_field, 'sell-media' ) ?>" name="item_markup_<?php echo esc_attr( $markup_field, 'sell-media' ) ?>" type="text" value="<?php _e( 'No ' . $markup_field, 'sell_media' ); ?>" />
-				<input class="item_markup_<?php echo esc_attr( $markup_field, 'sell-media' ) ?>_id" name="item_markup_<?php echo esc_attr( $markup_field, 'sell-media' ) ?>_id" type="text" value="0" />
+				<input class="item_markup_<?php  esc_attr_e( $markup_field, 'sell-media' ) ?>" name="item_markup_<?php  esc_attr_e( $markup_field, 'sell-media' ) ?>" type="text" value="<?php _e( 'No ' . $markup_field, 'sell_media' ); ?>" />
+				<input class="item_markup_<?php  esc_attr_e( $markup_field, 'sell-media' ) ?>_id" name="item_markup_<?php  esc_attr_e( $markup_field, 'sell-media' ) ?>_id" type="text" value="0" />
 			<?php
 			}
 		}

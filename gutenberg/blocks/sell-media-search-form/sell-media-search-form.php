@@ -79,7 +79,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                  * @param string $content        Shortcode content.
                  */
                 $shortcode_params_str = $this->prepare_recent_items_list_atts_to_param( $attributes );
-                $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . $shortcode_params_str . ']';
+                $shortcode_params_str = '[' . $this->shortcode_slug . ' ' .  esc_attr($shortcode_params_str) . ']';
                 
                 $shortcode_out        = do_shortcode( $shortcode_params_str );
 
@@ -133,7 +133,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. esc_html($attributes["align"]).'">';
             }
 
             $return_content .= $content;
@@ -211,7 +211,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             if ( ! isset( $used ) ) {
                 $used = true;
 
-                $html .= '<div class="sell-media-search'.$custom_class.$custom_class_image_div.'" style="'.$custom_style.'">';
+                $html .= '<div class="sell-media-search'.esc_html($custom_class.$custom_class_image_div).'" style="'. esc_html($custom_style).'">';
 
                 /* Image section */
                 if($image_div_add && $position_image != 'wide'){
@@ -228,9 +228,9 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 $html .= '<div class="sell-media-search-inner cf">';
 
                     $html .= '<div class="sell-media-search-form-custom-div">';
-                        $html .= '<label class="sell-media-search-form-label cf">'.$custom_label.'</label>';
+                        $html .= '<label class="sell-media-search-form-label cf">'. esc_html($custom_label).'</label>';
 
-                        $html .= '<p class="sell-media-search-form-description cf">'.$custom_description.'</p>';
+                        $html .= '<p class="sell-media-search-form-description cf">'. esc_html($custom_description).'</p>';
                     $html .= '</div>';
 
                     // Visible search options wrapper
@@ -238,7 +238,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
                         // Input field
                         $html .= '<div id="sell-media-search-query" class="sell-media-search-field sell-media-search-query">';
-                            $html .= '<input type="text" value="' . $search_term . '" name="search_query" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s (comma separated)', 'sell_media' ), empty( $settings->post_type_slug ) ? 'keywords' : $settings->post_type_slug ) ) . '"/>';
+                            $html .= '<input type="text" value="' . esc_html($search_term) . '" name="search_query" id="sell-media-search-text" class="sell-media-search-text" placeholder="' . apply_filters( 'sell_media_search_placeholder', sprintf( __( 'Search for %1$s (comma separated)', 'sell_media' ), empty( $settings->post_type_slug ) ? 'keywords' : $settings->post_type_slug ) ) . '"/>';
                         $html .= '</div>';
 
                         // Submit button
@@ -369,11 +369,11 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                         $post_id = get_the_ID();
                         $parent_id = get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true );
 
-                        $html .= '<div id="sell-media-' . $post_id . '" class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $parent_id ) . ' sell-media-grid-single-item">';
+                        $html .= '<div id="sell-media-' . intval($post_id) . '" class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', intval($parent_id) ) . ' sell-media-grid-single-item">';
                         $html .= '<a href="' . esc_url( get_permalink() ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 
                         if ( ! empty( $settings->titles ) ) {
-                            $html .= '<h2 class="entry-title">' . get_the_title() . '</h2>';
+                            $html .= '<h2 class="entry-title">' . esc_html(get_the_title()) . '</h2>';
                         }
 
                         if ( wp_get_attachment_image( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ) ) ) {

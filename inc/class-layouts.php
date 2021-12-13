@@ -296,14 +296,14 @@ class SellMediaLayouts {
 			ob_start();
 			$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, $post_id, $attachment_id );
 			if ( $enable_ecommerce ) {
-				echo '<div class="sell-media-meta">';
+				_e('<div class="sell-media-meta">','sell_media');
 				do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
 				do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
 				do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
-				echo '</div>';
+				_e('</div>','sell_media');
 			}
 
-			echo do_action( 'sell_media_below_content', $post_id, $attachment_id );
+			_e(do_action( 'sell_media_below_content', $post_id, $attachment_id ),'sell_media');
 
 			$content .= ob_get_contents();
 			ob_end_clean();

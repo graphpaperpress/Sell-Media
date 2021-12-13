@@ -84,9 +84,9 @@ class Sell_Media_Price_Listings_Tabs {
 	function add_pricelist_form( $current_tab, $url ) {
 		?>
 		<h2 class="tab-title">
-			<span><?php echo sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' ) ); ?></span>						
+			<span><?php _e( sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' )),'sell_media' ); ?></span>						
 		</h2>
-		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
+		<form method="post" action="<?php _e(esc_url( $url ),'sell_media'); ?>" id="sell-media-new-pricelist-form">
 	
 		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">

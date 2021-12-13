@@ -213,7 +213,7 @@ Class SellMediaDownload {
 
 		while ( ! @feof( $handle ) ) {
 			$buffer = @fread( $handle, $chunksize );
-			echo $buffer;
+			esc_attr_e($buffer);
 
 			if ( $retbytes ) {
 				$cnt += strlen( $buffer );

@@ -78,12 +78,12 @@ function sell_media_register_form() {
 		if ( 'select' === $field['type'] ) {
 			?>
 			<p>
-				<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( ucwords( $field['name'] ) ); ?><br />
-					<select name="<?php echo esc_attr( $id ); ?>" class="input">
+				<label for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( ucwords( $field['name'] ) ); ?><br />
+					<select name="<?php esc_attr_e( $id ); ?>" class="input">
 						<?php
 						if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
 							$selected = ( $value === $key ) ? 'selected' : '';
-							echo '<option value="' . $key . '" ' . $selected . '>' . $v . '</option>';
+							_e('<option value="' . $key . '" ' . $selected . '>' . $v . '</option>','sell_media');
 						}
 						?>
 					</select>
@@ -91,8 +91,8 @@ function sell_media_register_form() {
 			</p>
 		<?php } else { ?>
 			<p>
-				<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( ucwords( $field['name'] ) ); ?><br />
-				<input type="text" name="<?php echo esc_attr( $id ); ?>" id="<?php echo esc_attr( $id ); ?>" class="input" value="<?php echo esc_attr( $value ); ?>" size="25" /></label>
+				<label for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( ucwords( $field['name'] ) ); ?><br />
+				<input type="text" name="<?php esc_attr_e( $id ); ?>" id="<?php esc_attr_e( $id ); ?>" class="input" value="<?php esc_attr_e( $value ); ?>" size="25" /></label>
 			</p>
 		<?php }
 	}
@@ -443,35 +443,35 @@ add_action( 'login_enqueue_scripts', 'sell_media_login_css' );
  * Show extra profile fields in admin
  */
 function sell_media_show_extra_profile_fields( $user ) {
-	echo '<h2>' .__( 'Address', 'sell_media' ) . '</h2>';
+	_e('<h2>' .__( 'Address', 'sell_media' ) . '</h2>','sell_media');
 
-	echo '<table class="form-table">';
+	_e('<table class="form-table">','sell_media');
 
 	$fields = sell_media_extra_user_fields();
 	foreach ( $fields as $field ) {
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
 		if ( 'first_name' !== $id && 'last_name' !== $id ) {
 			$value = get_the_author_meta( $id, $user->ID );
-			echo '<tr>';
-			echo '<th><label for="' . $id . '">' . ucwords( $field['name'] ) . '</label></th>';
-			echo '<td>';
+			_e('<tr>','sell_media');
+			_e('<th><label for="' . $id . '">' . ucwords( $field['name'] ) . '</label></th>','sell_media');
+			_e('<td>','sell_media');
 			if ( 'select' === $field['type'] ) {
-				echo '<select name="' . esc_attr( $id ) . '" class="input">';
+				_e('<select name="' . esc_attr( $id ) . '" class="input">','sell_media');
 					if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
 						$selected = ( $value === $key ) ? 'selected' : '';
-						echo '<option value="' . $key . '" ' . $selected . '>' . $v . '</option>';
+						_e('<option value="' . $key . '" ' . $selected . '>' . $v . '</option>','sell_media');
 					}
-				echo '</select>';
+				_e('</select>','sell_media');
 			} else {
-				echo '<input type="text" name="' . $id . '" id="' . $id . '" value="' . esc_attr( $value ) . '" class="regular-text" /><br />';
+				_e('<input type="text" name="' . $id . '" id="' . $id . '" value="' . esc_attr( $value ) . '" class="regular-text" /><br />','sell_media');
 			}
-			echo '<span class="description">' . $field['desc'] . '</span>';
-			echo '</td>';
-			echo '</tr>';
+			_e('<span class="description">' . $field['desc'] . '</span>','sell_media');
+			_e('</td>','sell_media');
+			_e('</tr>','sell_media');
 		}
 	}
 
-	echo '</table>';
+	_e('</table>','sell_media');
 }
 add_action( 'show_user_profile', 'sell_media_show_extra_profile_fields', 10, 1 );
 add_action( 'edit_user_profile', 'sell_media_show_extra_profile_fields', 10, 1 );

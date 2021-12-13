@@ -76,7 +76,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             */
                 
             $shortcode_params_str = $this->prepare_recent_items_list_atts_to_param( $attributes );
-            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . $shortcode_params_str . ']';
+            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . esc_attr($shortcode_params_str) . ']';
                 
             $shortcode_out        = do_shortcode( $shortcode_params_str );
 
@@ -120,7 +120,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. esc_html($attributes["align"]).'">';
             }
 
             $return_content .= $content;
@@ -186,7 +186,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $recent_items = new WP_Query( $args );
             if ( $recent_items->have_posts() ) :
                 $html = '<div class="sell-media-recent-item-wrap">';
-                $html .= !empty( $item_title ) ? '<h1 class="sell-media-recent-items-title">'.$item_title.'</h1>' : '';
+                $html .= !empty( $item_title ) ? '<h1 class="sell-media-recent-items-title">'. esc_attr($item_title) .'</h1>' : '';
                 $html .= '<div class="sell-media-recent-items" id="sell-media-recent-items">';		
                 while ( $recent_items->have_posts() ) : $recent_items->the_post();
                     global $mime_type;
