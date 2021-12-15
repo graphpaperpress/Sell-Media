@@ -26,14 +26,14 @@ class SM_Twenty_Sixteen {
 	 * Open wrappers.
 	 */
 	public static function sm_output_content_wrapper() {
-		echo '<div id="primary" class="content-area twentysixteen"><main id="main" class="site-main" role="main">';
+		_e('<div id="primary" class="content-area twentysixteen"><main id="main" class="site-main" role="main">','sell_media');
 	}
 
 	/**
 	 * Close wrappers.
 	 */
 	public static function sm_output_content_wrapper_end() {
-		echo '</main></div>';
+		_e('</main></div>','sell_media');
 	}
 }
 

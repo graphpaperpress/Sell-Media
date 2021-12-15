@@ -73,7 +73,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                  * @param string $content        Shortcode content.
                  */
                 $shortcode_params_str = $this->prepare_recent_items_list_atts_to_param( $attributes );
-                $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . $shortcode_params_str . ']';
+                $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . esc_attr($shortcode_params_str) . ']';
                 
                 $shortcode_out        = do_shortcode( $shortcode_params_str );
 
@@ -136,7 +136,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. esc_html($attributes["align"]).'">';
             }
 
             $return_content .= $content;

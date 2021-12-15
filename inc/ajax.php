@@ -18,7 +18,7 @@ function sell_media_add_to_cart() {
 	global $sm_cart;
 
 	if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) && !wp_verify_nonce($_POST['_wpnonce'], 'sell_media_add_cart_action')) {
-		echo 0;
+		_e(0);
 		exit;
 	}
 	
@@ -69,15 +69,15 @@ function sell_media_add_to_cart() {
 			do_action( 'sell_media_before_add_to_cart', $item_number, $price, $qty, $attrs );
 
 			// Add item to session.
-			echo $sm_cart->add( $item_number, $price, $qty, $attrs );
+			_e($sm_cart->add( $item_number, $price, $qty, $attrs ));
 		}
 		else{
-			echo '0';
+			_e('0');
 		}
 
 	}
 	else{
-		echo '0';
+		_e('0');
 	}
 	exit;
 }
@@ -101,15 +101,15 @@ function sell_media_update_cart(){
 		if( '' != $cart_item_id ){
 
 			// Update cart item.
-			echo $sm_cart->update( $cart_item_id, $qty );
+			_e($sm_cart->update( $cart_item_id, $qty ));
 		}
 		else{
-			echo '0';
+			_e('0');
 		}
 
 	}
 	else{
-		echo '0';
+		_e('0');
 	}
 	exit;
 }
@@ -245,7 +245,7 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 		return $response;
 	}
 
-	echo wp_send_json( $response );
+	_e(wp_send_json( $response ),'sell_media');
 }
 
 // Add ajax callback.

@@ -186,7 +186,7 @@ function sell_media_plugin_sections_callback( $section_passed ) {
         foreach ( $tabsections as $sectionname => $section ) {
             if ( 'sell_media_' . $sectionname . '_section' == $section_passed['id'] && !empty($section['description'])) {
                 ?>
-                <p><?php echo $section['description']; ?></p>
+                <p><?php esc_attr_e($section['description']); ?></p>
                 <?php
             }
         }
@@ -261,67 +261,67 @@ function sell_media_plugin_setting_callback( $option ) {
 
         //Render Text Input
         case 'text': sell_media_plugin_field_text( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render Number Input
         case 'number': sell_media_plugin_field_number( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render Range Input
         case 'range': sell_media_plugin_field_range( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render Password Input
         case 'password': sell_media_plugin_field_password( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render textarea options
         case 'textarea': sell_media_plugin_field_textarea( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render select dropdowns
         case 'select': sell_media_plugin_field_select( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render radio dropdowns
         case 'radio': sell_media_plugin_field_radio( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render radio image dropdowns
         case 'radio_image': sell_media_plugin_field_radio_image( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render checkboxes
         case 'checkbox': sell_media_plugin_field_checkbox( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render color picker
         case 'color': sell_media_plugin_field_color( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render uploaded image
         case 'image': sell_media_plugin_field_image( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render uploaded gallery
         case 'gallery': sell_media_plugin_field_gallery( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         //Render uploaded gallery
         case 'html': sell_media_plugin_field_html( $value, $attr );
-        echo '<span class="option-description">' . $option['description'] . '</span>';
+        _e('<span class="option-description">' . $option['description'] . '</span>','sell_media');
         break;
 
         default:

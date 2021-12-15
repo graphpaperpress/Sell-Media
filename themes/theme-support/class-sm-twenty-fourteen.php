@@ -27,14 +27,14 @@ class SM_Twenty_Fourteen {
 	 * Open wrappers.
 	 */
 	public static function sm_output_content_wrapper() {
-		echo '<div id="primary" class="content-area"><div id="content" role="main" class="site-content twentyfourteen">';
+		_e('<div id="primary" class="content-area"><div id="content" role="main" class="site-content twentyfourteen">','sell_media');
 	}
 
 	/**
 	 * Close wrappers.
 	 */
 	public static function sm_output_content_wrapper_end() {
-		echo '</div></div>';
+		_e('</div></div>','sell_media');
 		get_sidebar( 'content' );
 	}
 }

@@ -134,17 +134,20 @@ class SellMediaPayPal {
                 <?php do_action('sell_media_before_refund_form'); ?>
                 <?php if(!$_order_refund_id) { ?>
                     <li>
-                        <label for="paypal-order-amount"><?php _e('Enter amount which you want to refund.'); ?></label>
-                        <input type="number" id="paypal-order-amount" class="paypal-order-amount" value="<?php echo $_order_total_paid; ?>" min="0" />
+                        <label for="paypal-order-amount"><?php _e('Enter amount which you want to refund.','sell_media'); ?></label>
+                        <input type="number" id="paypal-order-amount" class="paypal-order-amount" value="<?php 
+                        _e($_order_total_paid,'sell_media'); ?>" min="0" />
                     </li>
                     <li class="paypal-order-refund-action">
-                        <button type="button" id="paypal_payment_refund_btn" class="button button-primary button-large" data-transaction_id="<?php esc_html_e($transaction_id); ?>" ><?php _e('Refund Now', 'sell_media'); ?></button>
-                        <input type="hidden" id="paypal_payment_id" value="<?php echo $payment_id; ?>"/>
-                        <input type="hidden" id="paypal_payment_currency_code" value="<?php echo $_currency_code; ?>"/>
+                        <button type="button" id="paypal_payment_refund_btn" class="button button-primary button-large" data-transaction_id="<?php esc_html_e($transaction_id); ?>" ><?php 
+                        _e('Refund Now', 'sell_media'); ?></button>
+                        <input type="hidden" id="paypal_payment_id" value="<?php _e($payment_id,'sell_media'); ?>"/>
+                        <input type="hidden" id="paypal_payment_currency_code" value="<?php 
+                        _e($_currency_code,'sell_media'); ?>"/>
                     </li>
                 <?php } else { ?>
                     <li class="order-refund-msg">
-                        <strong><?php _e('Order refund ID: ', 'sell_media'); ?></strong> <?php echo $_order_refund_id; ?>
+                        <strong><?php _e('Order refund ID: ', 'sell_media'); ?></strong> <?php _e($_order_refund_id); ?>
                     </li>
                 <?php } ?>
                 <?php do_action('sell_media_after_refund_form'); ?>

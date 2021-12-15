@@ -55,23 +55,23 @@ function sell_media_files_meta_box( $post ) {
 	do_action( 'sell_media_before_files_meta_box', $post ); ?>
 
 	<div id="sell-media-upload-field" class="sell-media-field">
-		<p><input type="button" class="sell-media-upload-button button" data-id="<?php echo $post->ID; ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" /></p>
+		<p><input type="button" class="sell-media-upload-button button" data-id="<?php esc_attr_e($post->ID); ?>" value="<?php _e( 'Upload', 'sell_media'); ?>" /></p>
 	</div>
 
 	<?php do_action( 'sell_media_after_file_uploader', $post ); ?>
 
 	<ul class="attachments sell-media-upload-list">
 		<?php
-			$attachment_ids = sell_media_get_attachments( $post->ID );
+			$attachment_ids = intval(sell_media_get_attachments( $post->ID ));
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				echo sell_media_list_uploads( $attachment_id );
+				_e(sell_media_list_uploads( $attachment_id ), 'sell_media');
 			}
 		?>
 	</ul>
 
 	<?php do_action( 'sell_media_after_files_meta_box', $post ); ?>
 	<!-- This hidden field holds all attached file ids -->
-	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php esc_attr_e(( ! empty( $attachment_ids ) )) ? implode( ',', $attachment_ids ) : ''; ?>"/>
 <?php }
 
 function sell_media_uploader_meta_box( $post ) {
@@ -83,23 +83,23 @@ function sell_media_uploader_meta_box( $post ) {
 		<?php media_upload_form(); ?>
 	</div>
 	<script type="text/javascript">
-			var post_id = <?php echo $post->ID; ?>, shortform = 3;
+			var post_id = <?php esc_attr_e($post->ID); ?>, shortform = 3;
 	</script>
 
 	<?php do_action( 'sell_media_after_file_uploader', $post ); ?>
 
 	<ul class="attachments sell-media-upload-list">
 		<?php
-			$attachment_ids = sell_media_get_attachments( $post->ID );
+			$attachment_ids = intval(sell_media_get_attachments( $post->ID ));
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				echo sell_media_list_uploads( $attachment_id );
+				_e(sell_media_list_uploads( $attachment_id ),'sell_media');
 			}
 		?>
 	</ul>
 
 	<?php do_action( 'sell_media_after_uploader_meta_box', $post ); ?>
 	<!-- This hidden field holds all attached file ids -->
-	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( ! empty( $attachment_ids ) ) ? implode( ',', $attachment_ids ) : ''; ?>"/>
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php esc_attr_e(( ! empty( $attachment_ids ) ))  ? implode( ',', $attachment_ids ) : ''; ?>"/>
 <?php }
 
 /**
@@ -114,13 +114,13 @@ function sell_media_after_file_uploader( $post ) {
 	<div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
 		<h4><?php _e( 'Importing', 'sell_media' ); ?></h4>
 		<p class="description"><?php printf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the server path listed below. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
-		<p class="description"><strong><?php _e( 'Server Path', 'sell_media' ); ?>:</strong> <?php echo sell_media_get_import_dir(); ?></p>
+		<p class="description"><strong><?php _e( 'Server Path', 'sell_media' ); ?>:</strong> <?php _e(sell_media_get_import_dir(),'sell_media'); ?></p>
 		<select id="sell-media-upload-bulk-selector" value="">
 			<option value=""><?php _e( 'Select a folder', 'sell_media' ); ?></option>
 			<?php
 			$directories = sell_media_get_directories();
 			if ( $directories ) foreach ( $directories as $directory ) : ?>
-				<option value="<?php echo basename( $directory ); ?>"><?php echo basename( $directory ); ?></option>
+				<option value="<?php _e(basename( $directory ),'sell_media'); ?>"><?php _e(basename( $directory ),'sell_media'); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php _e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php _e( 'Importing files...', 'sell_media' ); ?>" disabled><?php _e( 'Add files', 'sell_media' ); ?></button><br /><br />
@@ -131,7 +131,7 @@ function sell_media_after_file_uploader( $post ) {
 		<div id="sell-media-packages" class="sell-media-field">
 			<h4><?php _e( 'Packages', 'sell_media' ); ?></h4>
 			<p><?php _e( 'This feature was retired in version 2.0 because product galleries can now be created. Your old package file will still be available for sale and is listed below.', 'sell_media' ); ?></p>
-			<p><strong><?php echo get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?></strong></p>
+			<p><strong><?php _e( get_post_meta( $post->ID, '_sell_media_attached_file', true ),'sell_media'); ?></strong></p>
 		</div>
 	<?php endif; ?>
 	<?php
@@ -152,10 +152,10 @@ function sell_media_options_meta_box( $post ) {
 	}
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
-	<div id="sell-media-price-field" class="sell-media-field" style="<?php echo $style; ?>">
+	<div id="sell-media-price-field" class="sell-media-field" style="<?php esc_attr_e($style); ?>">
 		<label for="sell-media-price"><?php _e( 'Price', 'sell_media' ); ?></label>
-		<span class="sell-media-currency-field"><?php echo sell_media_get_currency_symbol(); ?>
-		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo $price; ?>" value="<?php echo sanitize_text_field($price); ?>" /></span>
+		<span class="sell-media-currency-field"><?php _e(sell_media_get_currency_symbol(),'sell_media'); ?>
+		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php _e(( $price),'sell_media'); ?>" value="<?php _e(sanitize_text_field($price),'sell_media'); ?>" /></span>
 		<?php if ( sell_media_has_multiple_attachments( $post->ID ) ) { ?>
 			<span class="desc"><?php _e( 'The price of each original source file.', 'sell_media' ); ?></span>
 		<?php } ?>
@@ -174,8 +174,8 @@ function sell_media_stats_meta_box( $post ) { ?>
 
 	<div id="sell-media-stats" class="sell-media-field">
 		<ul>
-			<li><strong><?php _e( 'Views', 'sell_media' ); ?>:</strong> <?php echo sell_media_get_post_views( $post->ID ); ?></li>
-			<li><strong><?php _e( 'Sales', 'sell_media' ); ?>:</strong> <?php echo Sell_Media()->payments->get_item_sales( $post->ID ); ?></li>
+			<li><strong><?php _e( 'Views', 'sell_media' ); ?>:</strong> <?php _e(sell_media_get_post_views( $post->ID ),'sell_media'); ?></li>
+			<li><strong><?php _e( 'Sales', 'sell_media' ); ?>:</strong> <?php _e(Sell_Media()->payments->get_item_sales( $post->ID ),'sell_media'); ?></li>
 		</ul>
 	</div>
 
@@ -274,7 +274,7 @@ function sell_media_save_custom_meta( $post_id ) {
 							foreach ( $childrens as $key => $child ) {
 								// If attachment still linked to post do not remove.
 								if ( ! in_array( $key, $attachment_ids ) ){
-									$post_data['ID'] = $key;
+									$post_data['ID'] = intval($key);
 									$post_data['post_parent'] = 0;
 									wp_update_post( $post_data );
 								}
@@ -291,7 +291,7 @@ function sell_media_save_custom_meta( $post_id ) {
 							wp_update_post( $attachment_update );
 
 							// Mark attachment as sell media item.
-							update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', $post_id );
+							update_post_meta( $attachment_id, '_sell_media_for_sale_product_id', intval($post_id) );
 							$post_views_count = get_post_meta( $attachment_id, '_sell_media_post_views_count', true );
 							if ( false === $post_views_count || '' === $post_views_count ) {
 								update_post_meta( $attachment_id, '_sell_media_post_views_count', '0' );
@@ -369,7 +369,7 @@ function sell_media_upload_callback() {
 	if ( $_POST['attachments'] ) foreach ( $_POST['attachments'] as $attachment ) {
 		$html .= sell_media_list_uploads( $attachment['id'] );
 	}
-	echo $html;
+	_e($html,'sell_media');
 	die();
 }
 add_action( 'wp_ajax_sell_media_upload_callback', 'sell_media_upload_callback' );
@@ -422,7 +422,7 @@ function sell_media_upload_bulk_callback(){
 
 			}
 
-			echo $html;
+			_e($html,'sell_media');
 		}
 
 	}
@@ -530,7 +530,7 @@ function sell_media_item_content( $column, $post_id ){
 			$html ='<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
 			$html .= sell_media_item_icon( $post_id, 'thumbnail', false );
 			$html .= '</a>';
-			echo $html;
+			_e($html,'sell_media');
 			break;
 		case "sell_media_price":
 			$ecommerce_enabled = sell_media_ecommerce_enabled( $post_id );
@@ -540,11 +540,11 @@ function sell_media_item_content( $column, $post_id ){
 				$price = get_post_meta( $post_id, 'sell_media_price', true );
 				$settings = sell_media_get_plugin_options();
 				if ( $price ) {
-					echo sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' );
+					_e(sell_media_get_currency_symbol() . number_format( $price, 2, '.', '' ),'sell_media');
 				} elseif ( isset( $settings->default_price ) && '' !== $settings->default_price ) {
-					echo sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' );
+					_e(sell_media_get_currency_symbol() . number_format( $settings->default_price, 2, '.', '' ),'sell_media');
 				} else {
-					echo __( 'No price set', 'sell_media' );
+					_e( 'No price set', 'sell_media' );
 				}
 			}
 			break;		
@@ -578,7 +578,7 @@ function sell_media_sales_stats(){
 				$last_class = null;
 			}
 			?>
-			<div class="misc-pub-section <?php echo $last_class; ?>"><?php echo $term_obj->name; ?> <?php echo $stats['count']; ?> <strong><?php echo sell_media_get_currency_symbol() . $stats['total']; ?></strong></div>
+			<div class="misc-pub-section <?php esc_attr_e($last_class,'sell_media'); ?>"><?php _e($term_obj->name,'sell_media'); ?> <?php _e($stats['count'],'sell_media'); ?> <strong><?php _e(sell_media_get_currency_symbol(),'sell_media') . $stats['total']; ?></strong></div>
 		<?php }
 	} else {
 		_e( 'No sales so far.', 'sell_media' );

@@ -82,17 +82,17 @@ function sell_media_get_lightbox_state( $item ) {
  */
 function sell_media_lightbox_shortcode() {
 	ob_start();
-	echo '<div id="sell-media-lightbox-content" class="sell-media">';
+	_e('<div id="sell-media-lightbox-content" class="sell-media">','sell_media');
 
 	do_action( 'sell_media_bofore_lightbox_item_container' );
 
-	echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
-	echo sell_media_lightbox_query();
-	echo '</div>';
+	_e('<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">','sell_media');
+	_e(sell_media_lightbox_query(),'sell_media');
+	_e('</div>','sell_media');
 
 	do_action( 'sell_media_after_lightbox_item_container' );
 
-	echo '</div>';
+	_e('</div>','sell_media');
 
 	$html = ob_get_contents();
 	ob_end_clean();
@@ -105,7 +105,7 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  */
 function sell_media_lightbox_remove_items() {
 	if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
-		 echo '<p class="empty-lightbox" title="' . __( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove All', 'sell_media' ) . '</p>';
+		 _e('<p class="empty-lightbox" title="' . __( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove All', 'sell_media' ) . '</p>','sell_media');
 	}
 }
 
@@ -133,8 +133,8 @@ function sell_media_lightbox_query() {
 			// Old cookies were stored as simple array of ids
 			// New cookies are stored as a multidimensional array of ids
 			// so that we can support attachments (galleries)
-			$post_id        = ( ! empty( $item['post_id'] ) ) ? $item['post_id'] : $item;
-			$attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? $item['attachment_id'] : sell_media_get_attachment_id( $post_id );
+			$post_id        = ( ! empty( $item['post_id'] ) ) ? intval($item['post_id']) : intval($item);
+			$attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? intval($item['attachment_id']) : intval(sell_media_get_attachment_id( $post_id ));
 
 			$i++;
 			$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
@@ -227,7 +227,7 @@ function sell_media_update_lightbox() {
 
 		// JSON header
 		header( 'Content-type: application/json' );
-		echo $response;
+		_e($response,'sell_media');
 		die();
 	}
 

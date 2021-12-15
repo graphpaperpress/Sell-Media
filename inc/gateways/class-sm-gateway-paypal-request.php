@@ -254,7 +254,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            _e(json_encode($response->result, JSON_PRETTY_PRINT), "\n",'sell_media');
         }
 
         return $response;
@@ -349,7 +349,7 @@ class SM_Gateway_PayPal_Request {
 
         foreach ( $products as $product ) {
 
-            $product_id = $product['item_id'];
+            $product_id = intval($product['item_id']);
             $license_id = empty( $product['item_license'] ) ? null : $product['item_license'];
             $price_id = empty( $product['item_pgroup'] ) ? null : $product['item_pgroup'];
 
@@ -391,7 +391,7 @@ class SM_Gateway_PayPal_Request {
         if(empty($product)) {
             return 0;
         }
-        $product_id = $product['item_id'];
+        $product_id = intval($product['item_id']);
         $license_id = empty( $product['item_license'] ) ? null : $product['item_license'];
         $price_id   = empty( $product['item_pgroup'] ) ? null : $product['item_pgroup'];
 
@@ -436,7 +436,7 @@ class SM_Gateway_PayPal_Request {
                 print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            _e(json_encode($response->result, JSON_PRETTY_PRINT), "\n",'sell_media');
         }
         return $response;
     }
@@ -471,7 +471,7 @@ class SM_Gateway_PayPal_Request {
                 }
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            _e(json_encode($response->result, JSON_PRETTY_PRINT), "\n",'sell_media');
         }
 
         return $response;
@@ -504,7 +504,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            _e(json_encode($response->result, JSON_PRETTY_PRINT), "\n",'sell_media');
         }
         return $response;
     }

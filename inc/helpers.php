@@ -188,17 +188,17 @@ function sell_media_build_options( $taxonomy = null ) {
 		<?php foreach ( $terms as $term ) : ?>
 			<?php $price = str_replace( '%', '', get_term_meta( $term->term_id, 'markup', true ) ); ?>
 			<option
-				value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
-				class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
-				data-value="<?php echo $term->slug; ?>"
-				data-taxonomy="<?php echo $taxonomy; ?>"
-				data-name="<?php echo $term->name; ?>"
-				data-price="<?php echo $price; ?>"
-				id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
-				title="<?php echo $term->description; ?>"
-				name="<?php echo $taxonomy; ?>"
+				value="<?php _e($prepend); ?><?php _e($term->$value); ?>"
+				class="taxonomy-<?php _e($taxonomy); ?> term-<?php _e($term->slug); ?> <?php _e($taxonomy); ?>-<?php _e($term->term_id); ?>"
+				data-value="<?php _e($term->slug); ?>"
+				data-taxonomy="<?php _e($taxonomy); ?>"
+				data-name="<?php _e($term->name); ?>"
+				data-price="<?php _e($price); ?>"
+				id="<?php _e($taxonomy); ?>-<?php _e($term->slug); ?>"
+				title="<?php _e($term->description); ?>"
+				name="<?php _e($taxonomy); ?>"
 				>
-			<?php echo $term->name; ?>
+			<?php _e($term->name); ?>
 		</option>
 		<?php endforeach; ?>
 		</optgroup>
@@ -254,17 +254,17 @@ function sell_media_build_input( $taxonomy = null ) {
 		<?php foreach ( $terms as $term ) : ?>
 			<?php $price = get_term_meta( $term->term_id, 'markup', true ); ?>
 			<input
-				value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
-				class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
-				data-value="<?php echo $term->slug; ?>"
-				data-taxonomy="<?php echo $taxonomy; ?>"
-				data-name="<?php echo $term->name; ?>"
-				data-price="<?php echo $price; ?>"
-				id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
-				name="<?php echo $taxonomy; ?>"
-				type="<?php echo $type; ?>"
+				value="<?php _e( $prepend); ?><?php _e( $term->$value); ?>"
+				class="taxonomy-<?php _e( $taxonomy); ?> term-<?php _e( $term->slug); ?> <?php _e( $taxonomy); ?>-<?php _e( $term->term_id); ?>"
+				data-value="<?php _e( $term->slug); ?>"
+				data-taxonomy="<?php _e( $taxonomy); ?>"
+				data-name="<?php _e( $term->name); ?>"
+				data-price="<?php _e( $price); ?>"
+				id="<?php _e( $taxonomy); ?>-<?php _e( $term->slug); ?>"
+				name="<?php _e( $taxonomy); ?>"
+				type="<?php _e( $type); ?>"
 				/>
-			<?php echo $term->name; ?> <?php if ( $price ) : ?>+<?php echo $price; ?>%<?php endif; ?><br />
+			<?php _e( $term->name); ?> <?php if ( $price ) : ?>+<?php _e( $price); ?>%<?php endif; ?><br />
 		<?php endforeach; ?>
 		<?php do_action( 'sell_media_build_input_after' ); ?>
 	<?php endif; ?>

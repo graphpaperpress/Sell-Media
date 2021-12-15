@@ -57,7 +57,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
     function get_preview( $post_id ){
         if( self::is_video_item( $post_id ) || self::is_audio_item( $post_id ) ){
 
-            $url = get_post_meta( $post_id, 'sell_media_embed_link', true );
+            $url = esc_url(get_post_meta( $post_id, 'sell_media_embed_link', true ));
             if ( '' != $url ) {
                 return wp_oembed_get( esc_url( $url ), array( 'width' => 600 ) );
             }
@@ -73,12 +73,12 @@ class SellMediaAudioVideo extends SellMediaProducts {
      */
     function add_meta_fields( $post ){
       
-        $embed_url = get_post_meta( $post->ID, 'sell_media_embed_link', true );
+        $embed_url = esc_url(get_post_meta( $post->ID, 'sell_media_embed_link', true ));
         ?>
         <div id="sell-media-embed-link-field" class="sell-media-field" style="display:none;">
 
         <label for="sell-media-embed-link"><?php _e( 'Preview URL', 'sell_media' ); ?></label>
-            <input name="sell_media_embed_link" id="sell-media-embed-link" class="" type="text" placeholder="" value="<?php echo esc_url( $embed_url ); ?>" />
+            <input name="sell_media_embed_link" id="sell-media-embed-link" class="" type="text" placeholder="" value="<?php _e(esc_url( $embed_url ),'sell_media'); ?>" />
         </div>
         <?php
     }
@@ -99,7 +99,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
      */
     function check_attachment_is_audio_video(){
         if( !is_admin() ){
-            echo 'false';
+            _e('false','sell_media');
             exit;
         }
 
@@ -109,11 +109,11 @@ class SellMediaAudioVideo extends SellMediaProducts {
         $is_video = self::is_attachment_video( $attachment_id );
 
         if( $is_video || $is_audio ){
-            echo 'true';
+            _e('true','sell_media');
             exit;
         }
 
-        echo "false";
+        _e("false",'sell_media');
         exit;
     }
     /**
@@ -333,9 +333,9 @@ class SellMediaAudioVideo extends SellMediaProducts {
     function before_content( $post_id ) {
         $preview_url = $this->get_preview( $post_id );
         if ( $preview_url ){
-            echo '<div class="sell-media-iframe-container">';
-            echo $preview_url;
-            echo '</div>';
+            esc_html_e('<div class="sell-media-iframe-container">','sell_media');
+            _e($preview_url,'sell_media');
+            _e('</div>','sell_media');
         }
     }
 }

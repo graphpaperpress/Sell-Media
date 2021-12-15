@@ -98,10 +98,10 @@ function sell_media_plugin_get_page_tab_markup() {
         }
         $i++;
     }
-    echo '<h2 class="nav-tab-wrapper">';
+    _e('<h2 class="nav-tab-wrapper">','sell_media');
     foreach ( $links as $link )
-        echo $link;
-    echo '</h2>';
+        _e($link,'sell_media');
+    _e('</h2>','sell_media');
 }
 
 

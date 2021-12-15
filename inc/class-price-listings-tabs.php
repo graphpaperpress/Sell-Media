@@ -84,9 +84,9 @@ class Sell_Media_Price_Listings_Tabs {
 	function add_pricelist_form( $current_tab, $url ) {
 		?>
 		<h2 class="tab-title">
-			<span><?php echo sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' ) ); ?></span>						
+			<span><?php _e( sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' )),'sell_media' ); ?></span>						
 		</h2>
-		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
+		<form method="post" action="<?php _e(esc_url( $url ),'sell_media'); ?>" id="sell-media-new-pricelist-form">
 	
 		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">
@@ -243,7 +243,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 			if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
 				foreach ( $_POST['terms_children'] as $term_id => $data ) {
-					$term_id = (int) $term_id;
+					$term_id = (int) intval($term_id);
 					if ( '' !== $data['name'] ) {
 						wp_update_term( $term_id, $this->taxonomy, array(
 							'name' => esc_html($data['name']),
@@ -272,8 +272,8 @@ class Sell_Media_Price_Listings_Tabs {
 					if ( '' !== $data['name'] ) {
 
 						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
-							$term    = get_term_by( 'name', $data['name'], $this->taxonomy );
-							$term_id = ( isset( $term->term_id ) ) ? $term->term_id : false;
+							$term    = esc_html(get_term_by( 'name', $data['name'], $this->taxonomy ));
+							$term_id = ( isset( $term->term_id ) ) ? intval($term->term_id) : false;
 
 						} else {
 
@@ -281,7 +281,7 @@ class Sell_Media_Price_Listings_Tabs {
 								'parent' => $parent_term_id,
 								'description' => $data['description'],
 							) );
-							$term_id = ! is_wp_error( $term ) ? $term['term_id'] : false;
+							$term_id = ! is_wp_error( $term ) ? esc_html($term['term_id']) : false;
 						}
 
 						if ( $term_id ) {

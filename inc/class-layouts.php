@@ -288,7 +288,7 @@ class SellMediaLayouts {
 
 			if ( is_singular( 'attachment' ) ) {
 				$attachment_id = $post_id;
-				$post_id = get_post_meta( $post_id, '_sell_media_for_sale_product_id', true );
+				$post_id = intval(get_post_meta( $post_id, '_sell_media_for_sale_product_id', true ));
 			} else {
 				$attachment_id = sell_media_get_attachment_id( $post_id );
 			}
@@ -296,14 +296,14 @@ class SellMediaLayouts {
 			ob_start();
 			$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, $post_id, $attachment_id );
 			if ( $enable_ecommerce ) {
-				echo '<div class="sell-media-meta">';
+				_e('<div class="sell-media-meta">','sell_media');
 				do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
 				do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
 				do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
-				echo '</div>';
+				_e('</div>','sell_media');
 			}
 
-			echo do_action( 'sell_media_below_content', $post_id, $attachment_id );
+			_e(do_action( 'sell_media_below_content', $post_id, $attachment_id ),'sell_media');
 
 			$content .= ob_get_contents();
 			ob_end_clean();
@@ -340,7 +340,7 @@ class SellMediaLayouts {
 		}
 		if ( 'attachment' === get_post_type( $post_id ) ) {
 			$attachment_id = $post_id; // always and attachment
-			$post_id = get_post_meta( $attachment_id, $key = '_sell_media_for_sale_product_id', true ); // always a sell_media_item
+			$post_id = intval(get_post_meta( $attachment_id, $key = '_sell_media_for_sale_product_id', true )); // always a sell_media_item
 		} else {
 			$attachment_id = sell_media_get_attachment_id( $post_id ); // always an attachment
 		}
@@ -355,7 +355,7 @@ class SellMediaLayouts {
 			$class = 'horizontal-masonry-column overlay-container ';
 			// grab the thumbnail if its not photo
 			if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-				$image_data     = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
+				$image_data     = esc_url(get_the_post_thumbnail_url( $post_id, 'thumbnail' ));
 				$image_size    = getimagesize($image_data);
 				$image_width   = $image_size[0];
 				$image_height   = $image_size[1];
