@@ -186,7 +186,7 @@ function sell_media_plugin_sections_callback( $section_passed ) {
         foreach ( $tabsections as $sectionname => $section ) {
             if ( 'sell_media_' . $sectionname . '_section' == $section_passed['id'] && !empty($section['description'])) {
                 ?>
-                <p><?php esc_attr_e($section['description']); ?></p>
+                <p><?php _e($section['description']); ?></p>
                 <?php
             }
         }

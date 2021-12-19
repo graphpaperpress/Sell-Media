@@ -45,7 +45,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 	if ( isset( $_GET['term_parent'] ) ) {
 	?><hr/>
 	<!-- Price table -->
-	<table class="form-table tax-<?php esc_attr_e( $this->taxonomy )); ?>" id="sell-media-price-table">
+	<table class="form-table tax-<?php esc_attr_e( $this->taxonomy ); ?>" id="sell-media-price-table">
 		<thead>
 			<tr>
 				<th style="width:15%"><?php _e( 'Name', 'sell_media' ); ?></th>

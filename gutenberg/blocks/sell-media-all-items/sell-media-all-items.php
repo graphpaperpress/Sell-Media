@@ -45,7 +45,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             add_shortcode( 'sell_media_items_gutenberg', array( $this, 'sell_media_items_gutenberg_shortcode' ) );
 
             // Register new category for Sell Media Items
-            add_filter( 'block_categories', array( $this, 'register_block_categories' ), 30, 2 ); 
+            add_filter( 'block_categories_all', array( $this, 'register_block_categories' ), 30, 2 ); 
 
             $this->init();
 
