@@ -134,12 +134,14 @@ class SellMediaSearch {
 
 			// Exclude negative keywords in search query like "-cow"
 			$negative_search_terms = '';
-			$negative_search_terms = preg_grep( '/\B-[^\B]+/', $search_terms );
-			$negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
-
+			$search_terms = array_filter($search_terms);
+			if(!empty($search_terms)) {
+				$negative_search_terms = preg_grep( '/\B-[^\B]+/', $search_terms );
+				$negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
+			}
 			// now remove negative search terms from search terms
-			$search_terms = array_diff( $search_terms, $negative_search_terms );
-			$search_terms = array_filter( $search_terms );
+			$search_terms = array_diff( (array)$search_terms, (array)$negative_search_terms );
+			$search_terms = array_filter( (array)$search_terms );
 
 			// Get the file/mimetype
 			$mime_type = $this->get_mimetype( $search_file_type );
