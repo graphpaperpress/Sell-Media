@@ -339,7 +339,7 @@ function sell_media_save_custom_meta( $post_id ) {
 	// Save the post content
 	global $post_type;
 	if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
-		$new_content = esc_html($_POST['sell_media_editor']);
+		$new_content = (isset($_POST['sell_media_editor'])) ? $_POST['sell_media_editor'] : '';
 		$old_content = get_post_field( 'post_content', $post_id );
 		if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ){
 			$args = array(

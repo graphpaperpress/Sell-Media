@@ -558,7 +558,7 @@ break;
  */
 function sell_media_test_mode() {
 	$settings = sell_media_get_plugin_options();
-	return $settings->test_mode;
+	return (isset($settings->test_mode) ? $settings->test_mode :'');
 }
 
 
