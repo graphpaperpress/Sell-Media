@@ -692,7 +692,7 @@ class SellMediaPayments {
 					continue;
 				}
 
-				$html .= '<th>' . esc_html( $markup, 'sell_media' ) . '</th>';
+				$html .= '<th>' . __( $markup, 'sell_media' ) . '</th>';
 				endforeach; ?>
 		<?php endif;
 		$html .= '<th>' . apply_filters( 'sell_media_download_link_label', 'Download Link' ) . '</th>

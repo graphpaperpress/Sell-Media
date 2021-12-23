@@ -52,7 +52,7 @@ class Sell_Media_Price_Listings {
 		// only load tabs on pricelists page and sell_media_item add/edit pages
 		if ( $screen->id === $pricelists_page || $screen->id === 'sell_media_item' ) {
 			$tabs = $this->get_tabs();
-			$this->current_tab = isset( $_GET['tab'] ) ? esc_html($_GET['tab']) : key( $tabs );
+			$this->current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : key( $tabs );
 			do_action( 'sell_media_price_listings_run', $this->current_tab );
 		}
 	}
@@ -106,7 +106,7 @@ class Sell_Media_Price_Listings {
 			$this->display_tabs( $this->current_tab );
 			$url_parameters['page'] = $this->menu_slug;
 			if ( isset( $_GET['tab'] ) ) {
-				$url_parameters['tab'] = esc_html($_GET['tab']);
+				$url_parameters['tab'] = $_GET['tab'];
 			}
 			$url = admin_url( $this->parent_slug );
 			$url = add_query_arg( $url_parameters, $url );
@@ -145,7 +145,7 @@ class Sell_Media_Price_Listings {
 			$url_parameters['page'] = $this->menu_slug;
 			$url_parameters['updated'] = 'true';
 			if ( isset( $_GET['tab'] ) ) {
-				$url_parameters['tab'] = esc_html($_GET['tab']);
+				$url_parameters['tab'] = $_GET['tab'];
 			}
 			$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 			do_action( 'sell_media_price_listing_save', $redirect_url );
