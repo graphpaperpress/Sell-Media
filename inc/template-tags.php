@@ -579,7 +579,7 @@ function sell_media_show_file_info() {
 	_e('<li class="filename"><span class="title">' . __( 'File Name', 'sell_media' ) . ':</span> ' . $filename . '</li>','sell_media');
 	_e('<li class="fileid"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>','sell_media');
 	preg_match('/^.*?\.(\w+)$/',$filename,$ext);
-	_e('<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . esc_html( strtoupper( $ext[1] ) ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>','sell_media');
+	_e('<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . strtoupper( $ext[1] ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>','sell_media');
 	_e('<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post_obj->ID, $attachment_id ) . '</li>','sell_media');
 	if ( isset( $image_size_info[0], $image_size_info[1] ) ) {
 		_e('<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $image_size_info[0]. ' x '. $image_size_info[1] .'</li>','sell_media');
