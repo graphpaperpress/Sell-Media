@@ -55,10 +55,6 @@ Class SellMediaDownload {
 					set_time_limit( 0 );
 				}
 
-				if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
-					set_magic_quotes_runtime(0);
-				}
-
 				if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
 				@ini_set( 'zlib.output_compression', 'Off' );
 				$file_url = strtok($file, '?');

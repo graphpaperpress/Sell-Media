@@ -1049,10 +1049,6 @@ function sell_media_free_download_file( $post_id, $attachment_id ) {
 			set_time_limit( 0 );
 		}
 
-		if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
-			set_magic_quotes_runtime( 0 );
-		}
-
 		if ( function_exists( 'apache_setenv' ) ) { @apache_setenv( 'no-gzip', 1 ); }
 		@ini_set( 'zlib.output_compression', 'Off' );
 
