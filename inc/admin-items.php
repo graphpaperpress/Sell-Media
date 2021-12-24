@@ -695,7 +695,7 @@ function sell_media_save_quick_edit_custom_meta( $post_id ) {
 
 	if ( wp_is_post_revision( $post_id ) ) return;
 	if ( isset( $_POST['sell_media_price_group'] ) ) {
-		wp_set_post_terms( $post_id, $_POST['sell_media_price_group']), 'price-group' );
+		wp_set_post_terms( $post_id, $_POST['sell_media_price_group'], 'price-group' );
 	}
 
 	if ( isset( $_POST['sell_media_price'] ) ) {
