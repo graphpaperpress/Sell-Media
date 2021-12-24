@@ -292,6 +292,9 @@ class SellMediaProducts {
 		} else {
 			$price = $this->verify_the_price( $post_id, $price_id );
 			$markup_percent = str_replace( '%', '', get_term_meta( $license_obj->term_id, 'markup', true ) );
+			if(!$markup_percent || $markup_percent == '') {
+				$markup_percent = 0;
+			}
 			$markup_amount = ( $markup_percent / 100 ) * $price;
 		}
 
