@@ -90,7 +90,7 @@ class Sell_Media_Price_Listings_Tabs {
 	
 		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">
-				<label><?php esc_html_e( 'Add New Pricelist', 'sell_media' ); ?></label>
+				<label><?php _e( 'Add New Pricelist', 'sell_media' ); ?></label>
 				<input type="text" name="new_term_name" required />
 				<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add New Pricelist', 'sell_media' ); ?>" />
 				<input type="hidden" name="sell-media-price-list-submit" value="true" />
@@ -224,10 +224,10 @@ class Sell_Media_Price_Listings_Tabs {
 		// Save new pricelist.
 		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
 			if ( ! term_exists( $_POST['new_term_name'], $this->taxonomy ) ) {
-				$term = wp_insert_term( esc_html($_POST['new_term_name']), $this->taxonomy );
+				$term = wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
 				$parent_term_id = $term['term_id'];
 			} else {
-				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", esc_html($_POST['new_term_name']) ) );
+				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", $_POST['new_term_name'] ) );
 			}
 		} 
 		else {
@@ -236,7 +236,7 @@ class Sell_Media_Price_Listings_Tabs {
 			if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
 				if ( 0 !== $parent_term_id ) {
 					wp_update_term( $parent_term_id, $this->taxonomy, array(
-						'name' => esc_html($_POST['term_name']),
+						'name' => $_POST['term_name'],
 					));
 				}
 			}
@@ -246,8 +246,8 @@ class Sell_Media_Price_Listings_Tabs {
 					$term_id = (int) intval($term_id);
 					if ( '' !== $data['name'] ) {
 						wp_update_term( $term_id, $this->taxonomy, array(
-							'name' => (isset($data['name'])) ? esc_html($data['name']) : '',
-							'description' => (isset($data['description'])) ? esc_html($data['description']) : '',
+							'name' => (isset($data['name'])) ? __($data['name']) : '',
+							'description' => (isset($data['description'])) ? $data['description'] : '',
 						));
 						update_term_meta( $term_id, 'width', $data['width'] );
 						update_term_meta( $term_id, 'height', $data['height'] );

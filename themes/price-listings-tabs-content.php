@@ -12,13 +12,13 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 ?>
 <div class="sell-media-pricing">	
 	<div class="tab-price-lists">
-		<label><?php esc_html_e( 'Select a pricelilst to edit' ) ?></label>
+		<label><?php _e( 'Select a pricelilst to edit' ) ?></label>
 		<select>
 			<?php
 			$url = admin_url( 'edit.php?' . $_SERVER['QUERY_STRING'] );
 			$url = remove_query_arg( 'term_parent' );
 			?>
-			<option value="<?php  esc_attr_e( $url ) ?>"><?php esc_html_e( 'Select' ) ?></option>
+			<option value="<?php  _e(esc_url($url) ) ?>"><?php _e( 'Select' ) ?></option>
 			<?php
 			$current_pricelist = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : '';
 			foreach ( $download_parents as $slug => $term ) {
@@ -37,7 +37,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 		$delete_url = wp_nonce_url( $delete_url, 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 		$current_term_name = isset( $current_term->name ) ? $current_term->name : '';
 		if ( isset( $_GET['term_parent'] ) ) {
-			?><a href="#" data-href="<?php _e(esc_url( $delete_url )); ?>" class="deletion" title="<?php esc_html_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php esc_html_e( 'Delete', 'sell_media' ); ?></a>
+			?><a href="#" data-href="<?php _e(esc_url( $delete_url )); ?>" class="deletion" title="<?php _e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php _e( 'Delete', 'sell_media' ); ?></a>
 		<?php } ?>
 	</div>
 	<?php
@@ -73,23 +73,23 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 if ( 'price-group' === $current_tab ) { ?>
 	<div class="sell-media-pricing-settings" >
 		<h2 class="tab-title">
-			<span><?php esc_html_e( 'Download settings', 'sell_media' ); ?></span>						
+			<span><?php _e( 'Download settings', 'sell_media' ); ?></span>						
 		</h2>
 		<div class="form-group">
-			<label><?php esc_html_e( 'High Resolution File Price', 'sell_media' ); ?></label>
-			<input type="text" name="settings[default_price]" value="<?php esc_attr_e( $default_price ) ?>">
-			<span class="option-description"><?php esc_html_e( 'The original price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ) ?></span>
+			<label><?php _e( 'High Resolution File Price', 'sell_media' ); ?></label>
+			<input type="text" name="settings[default_price]" value="<?php _e( $default_price ) ?>">
+			<span class="option-description"><?php _e( 'The original price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ) ?></span>
 		</div>
 		<div class="form-group">
-			<label><?php esc_html_e( 'High Resolution File Availability', 'sell_media' ); ?></label>
+			<label><?php _e( 'High Resolution File Availability', 'sell_media' ); ?></label>
 			<select name="settings[hide_original_price]">
-				<option value="<?php esc_attr_e( 'yes' ); ?>" <?php selected( 'yes', $hide_original_price ) ?>><?php esc_html_e( 'Can be purchased' ); ?></option>
-				<option value="<?php esc_attr_e( 'no' ); ?>" <?php selected( 'no', $hide_original_price ) ?>><?php esc_html_e( 'Cannot be purchased' ); ?></option>
+				<option value="<?php esc_attr_e( 'yes' ); ?>" <?php selected( 'yes', $hide_original_price ) ?>><?php _e( 'Can be purchased', 'sell_media' ); ?></option>
+				<option value="<?php esc_attr_e( 'no' ); ?>" <?php selected( 'no', $hide_original_price ) ?>><?php _e( 'Cannot be purchased', 'sell_media' ); ?></option>
 			</select>
-			<span class="option-description"><?php esc_html_e( 'Select "Can be purchased" if you want to allow buyers to purchase the original high resolution file. Select "Cannot be purchased" if you only want buyers to purchase lower resolution copies (determined by the sizes in your pricelists below).', 'sell_media' ) ?></span>
+			<span class="option-description"><?php _e( 'Select "Can be purchased" if you want to allow buyers to purchase the original high resolution file. Select "Cannot be purchased" if you only want buyers to purchase lower resolution copies (determined by the sizes in your pricelists below).', 'sell_media' ) ?></span>
 		</div>
 		<div class="form-group">
-			<label><?php esc_html_e( 'Default Pricelist', 'sell_media' ); ?></label>
+			<label><?php _e( 'Default Pricelist', 'sell_media' ); ?></label>
 			<select name="settings[default_price_group]">
 				<?php
 				$price_group = sell_media_settings_price_group('price-group');
@@ -99,7 +99,7 @@ if ( 'price-group' === $current_tab ) { ?>
 					<?php }
 				}?>								
 			</select>
-			<span class="option-description"><?php esc_html_e( 'This is the default pricelist that will be assigned to all newly uploaded images for sale. You can override this setting on a per-item basis.', 'sell_media' ) ?></span>
+			<span class="option-description"><?php _e( 'This is the default pricelist that will be assigned to all newly uploaded images for sale. You can override this setting on a per-item basis.', 'sell_media' ) ?></span>
 		</div>
 	</div>
 	<hr>

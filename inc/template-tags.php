@@ -487,7 +487,7 @@ function sell_media_breadcrumbs() {
 		}
 		if ( sell_media_attachment( $post->ID ) ) {
 			$product_id = get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id', true );
-			$html .= '<a href="' . esc_url( get_permalink( $product_id ) ) . '" title="' . esc_html__( 'Back to Gallery', 'sell_media' ) . '">' . esc_html__( 'Back to Gallery', 'sell_media' ) . '</a>';
+			$html .= '<a href="' . esc_url( get_permalink( $product_id ) ) . '" title="' . __( 'Back to Gallery', 'sell_media' ) . '">' . __( 'Back to Gallery', 'sell_media' ) . '</a>';
 		}
 		$html .= '</div>';
 
@@ -611,7 +611,7 @@ add_action( 'sell_media_below_buy_button', 'sell_media_show_file_info', 12 );
  * @return void
 */
 function sell_media_version_in_header() {
-	_e('<meta name="generator" content="Sell Media v' . esc_html( SELL_MEDIA_VERSION ) . '" />' . "\n",'sell_media');
+	_e('<meta name="generator" content="Sell Media v' . __( SELL_MEDIA_VERSION ) . '" />' . "\n",'sell_media');
 }
 add_action( 'wp_head', 'sell_media_version_in_header' );
 

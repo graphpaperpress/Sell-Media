@@ -136,7 +136,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. esc_html($attributes["align"]).'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. $attributes["align"] .'">';
             }
 
             $return_content .= $content;
@@ -166,7 +166,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
              $block_categories[] = array(
                 'slug'  => 'sellmedia-blocks',
-                'title' => esc_html__( 'Sell Media Blocks', 'sell_media' ),
+                'title' => __( 'Sell Media Blocks', 'sell_media' ),
                 'icon'  => false,
             );
 
@@ -234,7 +234,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             if ( $wp_query_items->have_posts() ) :
 
                 $html = '<div class="sell-media">';
-                $html .= '<div class="' . esc_html($class) . '">';
+                $html .= '<div class="' . __($class) . '">';
                 
                 while ( $wp_query_items->have_posts() ) : $wp_query_items->the_post(); $i++;
                     $post_id = get_the_id();
@@ -280,7 +280,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                                     
                     }
                     
-                    $html  .= '<div id="sell-media-' . $original_id . '" class="' . esc_html($class) . '">';       
+                    $html  .= '<div id="sell-media-' . $original_id . '" class="' . __($class) . '">';       
                     
                     $html .= '<a href="' . esc_url( get_permalink( $post_id ) ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 
@@ -296,9 +296,9 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                     // Show quick view?
                     if ( isset( $quick_view ) && 0 != $quick_view && is_main_query() ) {                      
                         if ( sell_media_has_multiple_attachments( $post_id ) ) {
-                            $html .= '<div class="sell-media-view-gallery">' . esc_html__( 'View Gallery', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-view-gallery">' . __( 'View Gallery', 'sell_media' ) . '</div>';
                         } elseif ( $enable_ecommerce ) {
-                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . esc_html__( 'Quick View', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . __( 'Quick View', 'sell_media' ) . '</div>';
                         }
                     }
                     $html .= '</a>';
