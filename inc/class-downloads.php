@@ -27,16 +27,16 @@ Class SellMediaDownload {
 		// added check_ajax_referer('download_media', '_nonce') for security
 		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && check_ajax_referer('download_media', '_nonce')) {
 				
-			$transaction_id = (isset($_GET['download'])) ? urldecode( esc_html($_GET['download']) ) : '';
-			$payment_id     = (isset($_GET['payment_id'])) ? urldecode( esc_html($_GET['payment_id']) ) : '';
-			$product_id     = (isset($_GET['product_id'])) ? urldecode( esc_html($_GET['product_id']) ) : '';
-
+			$transaction_id = (isset($_GET['download'])) ? urldecode( $_GET['download'] ) : '';
+			$payment_id     = (isset($_GET['payment_id'])) ? urldecode( $_GET['payment_id'] ) : '';
+			$product_id     = (isset($_GET['product_id'])) ? urldecode( $_GET['product_id'] ) : '';
+			
 			// Old download links might not have attachment_id set.
 			// This means they were purchased before we added support
 			// for multiple attachments. So, we just grab the first
 			// attachment_id saved in post meta.
-			$attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( esc_html($_GET['attachment_id']) ) : sell_media_get_attachment_id( $product_id );
-			$size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( esc_html($_GET['size_id']) ) : null;
+			$attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) : sell_media_get_attachment_id( $product_id );
+			$size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : null;
 
 			$verified = apply_filters( 'sell_media_verify_download', $this->verify( $transaction_id, $payment_id, $product_id, $attachment_id, $size_id ), $product_id );
 
@@ -92,7 +92,7 @@ Class SellMediaDownload {
 
 		// Rend purchase receipt?
 		if ( isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ){
-			$payment_id = esc_html($_GET['payment_id']);
+			$payment_id = $_GET['payment_id'];
 			$payment_email = get_meta_key( $payment_id, 'email' );
 
 			Sell_Media()->payments->email_receipt( $payment_id, $payment_email );

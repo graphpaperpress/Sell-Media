@@ -404,7 +404,7 @@ function sell_media_get_attachment_meta( $post_id = null, $field = 'id' ) {
 
 	$attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
 
-	return $attachment_meta[ $field ];
+	return (!empty($attachment_meta) && isset($attachment_meta[ $field ])) ? $attachment_meta[ $field ] : array();
 }
 
 
@@ -1010,6 +1010,7 @@ function sell_media_free_download_button_button( $html, $post_id, $attachment_id
 	$classes = implode( ' ', $classes );
 
 	$link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id );
+	$link = wp_nonce_url($link, 'download_media');
 	$html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="' . $classes . '">' . $text . '</a>';
 	return $html;
 }

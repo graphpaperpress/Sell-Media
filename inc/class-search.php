@@ -63,7 +63,7 @@ class SellMediaSearch {
 
 		// Show a message to admins if they don't have search page set in settings.
 		if ( current_user_can( 'administrator' ) && empty( $settings->search_page ) ) {
-			$html .= esc_html__( 'For search to work, you must assign your Search Page in Sell Media -> Settings.', 'sell_media' );
+			$html .= __( 'For search to work, you must assign your Search Page in Sell Media -> Settings.', 'sell_media' );
 			return $html;
 		}
 
@@ -102,9 +102,9 @@ class SellMediaSearch {
 
 			// File type field
 			$html .= '<div id="sell-media-search-file-type" class="sell-media-search-field sell-media-search-file-type">';
-			$html .= '<label for="search_file_type">' . esc_html__( 'File Type', 'sell_media' ) . '</label>';
+			$html .= '<label for="search_file_type">' . __( 'File Type', 'sell_media' ) . '</label>';
 			$html .= '<span class="sell-media-select-box"><select class="sell-media-select" name="search_file_type">';
-			$html .= '<option value="">' . esc_html__( 'All', 'sell_media' ) . '</option>';
+			$html .= '<option value="">' . __( 'All', 'sell_media' ) . '</option>';
 			$mimes = array( 'image', 'video', 'audio' );
 			foreach ( $mimes as $mime ) {
 				$selected = ( $search_file_type === $mime ) ? 'selected' : '';
@@ -136,8 +136,7 @@ class SellMediaSearch {
 			$negative_search_terms = '';
 			$search_terms = array_filter($search_terms);
 			if(!empty($search_terms)) {
-				$negative_search_terms = preg_grep( '/\B-[^\B]+/', $search_terms );
-				$negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
+				$negative_search_terms = preg_replace( '/[-]/', '', $search_terms );
 			}
 			// now remove negative search terms from search terms
 			$search_terms = array_diff( (array)$search_terms, (array)$negative_search_terms );
@@ -203,7 +202,7 @@ class SellMediaSearch {
 			// The Loop
 			if ( $search_query->have_posts() ) {
 
-				$html .= '<p class="sell-media-search-results-text">' . sprintf( esc_html__( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->found_posts, $search_term ) . '</p>';
+				$html .= '<p class="sell-media-search-results-text">' . sprintf( __( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->found_posts, $search_term ) . '</p>';
 
 				// hook for related keywords, etc.
 				$html .= sell_media_format_related_search_results( $search_terms );
@@ -239,7 +238,7 @@ class SellMediaSearch {
 				$html .= '</div>';
 				$html .= '</div>';
 				$html .= sell_media_pagination_filter( $search_query->max_num_pages );
-				$text = esc_html__( 'Explore more from our store', 'sell_media' );
+				$text = __( 'Explore more from our store', 'sell_media' );
 				$html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
 				$html .= do_shortcode( '[sell_media_filters]' );
 
@@ -267,11 +266,11 @@ class SellMediaSearch {
 	public function search_help() {
 
 		$html  = '<div class="sell-media-search-help">';
-		$html .= '<h6>' . esc_html__( 'Search Tips', 'sell_media' ) . '</h6>';
+		$html .= '<h6>' . __( 'Search Tips', 'sell_media' ) . '</h6>';
 		$html .= '<ul>';
-		$html .= '<li>' . esc_html__( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
-		$html .= '<li>' . esc_html__( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
-		$html .= '<li>' . esc_html__( 'Use negative keywords (like -dogs) to exclude dogs from search results.', 'sell_media' ) . '</li>';
+		$html .= '<li>' . __( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
+		$html .= '<li>' . __( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
+		$html .= '<li>' . __( 'Use negative keywords (like -dogs) to exclude dogs from search results.', 'sell_media' ) . '</li>';
 		$html .= '</ul>';
 		$html .= '</div>';
 

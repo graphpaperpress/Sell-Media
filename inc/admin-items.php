@@ -99,7 +99,7 @@ function sell_media_uploader_meta_box( $post ) {
 
 	<?php do_action( 'sell_media_after_uploader_meta_box', $post ); ?>
 	<!-- This hidden field holds all attached file ids -->
-	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php esc_attr_e(( ! empty( $attachment_ids ) ))  ? implode( ',', $attachment_ids ) : ''; ?>"/>
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php esc_attr_e( (! empty( $attachment_ids ))  ? implode( ',', $attachment_ids ) : ''); ?>"/>
 <?php }
 
 /**
@@ -578,7 +578,7 @@ function sell_media_sales_stats(){
 				$last_class = null;
 			}
 			?>
-			<div class="misc-pub-section <?php esc_attr_e($last_class,'sell_media'); ?>"><?php _e($term_obj->name,'sell_media'); ?> <?php _e($stats['count'],'sell_media'); ?> <strong><?php _e(sell_media_get_currency_symbol(),'sell_media') . $stats['total']; ?></strong></div>
+			<div class="misc-pub-section <?php esc_attr_e($last_class,'sell_media'); ?>"><?php _e($term_obj->name,'sell_media'); ?> <?php _e($stats['count'],'sell_media'); ?> <strong><?php _e(sell_media_get_currency_symbol() . $stats['total'],'sell_media'); ?></strong></div>
 		<?php }
 	} else {
 		_e( 'No sales so far.', 'sell_media' );
@@ -673,7 +673,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 		<div class="inline-edit-col">
 			<span class="title"><?php _e( 'Price', 'sell_media' ); ?></span>
 			<span class="input-text-wrap">
-				<input name="sell_media_price" id="sell-media-price" class="inline-edit-password-input" type="number" step="0.01" min="0" placeholder="<?php esc_html_e( '— No Change —', 'sell_media' ); ?>" />
+				<input name="sell_media_price" id="sell-media-price" class="inline-edit-password-input" type="number" step="0.01" min="0" placeholder="<?php _e( '— No Change —', 'sell_media' ); ?>" />
 			</span>
 		</div>
 	</fieldset>
