@@ -120,7 +120,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. esc_html($attributes["align"]).'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. __($attributes["align"]).'">';
             }
 
             $return_content .= $content;
@@ -149,7 +149,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
              $block_categories[] = array(
                 'slug'  => 'sellmedia-blocks',
-                'title' => esc_html__( 'Sell Media Blocks', 'sell_media' ),
+                'title' => __( 'Sell Media Blocks', 'sell_media' ),
                 'icon'  => false,
             );
 

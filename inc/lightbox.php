@@ -179,8 +179,8 @@ function sell_media_update_lightbox() {
 
 		// build lightbox item array
 		$item = array(
-			'post_id'       => esc_html($_POST['post_id']),
-			'attachment_id' => esc_html($_POST['attachment_id']),
+			'post_id'       => $_POST['post_id'],
+			'attachment_id' => $_POST['attachment_id'],
 		);
 
 		// check if cookie already exists

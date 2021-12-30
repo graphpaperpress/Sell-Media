@@ -122,12 +122,12 @@ class SellMediaAdminAddItem {
 				<div class="sell-media-upload-progress-bar-inner"></div>
 				<div class="sell-media-upload-progress-bar-status">
 					<span class="uploading">
-						<?php esc_html_e( 'Uploading Image', 'sell_media' ); ?>
+						<?php _e( 'Uploading Image', 'sell_media' ); ?>
 						<span class="current">1</span>
-						<?php esc_html_e( 'of', 'sell_media' ); ?>
+						<?php _e( 'of', 'sell_media' ); ?>
 						<span class="total">3</span>
 					</span>
-					<span class="done"><?php esc_html_e( 'All images uploaded.', 'sell_media' ); ?></span>
+					<span class="done"><?php _e( 'All images uploaded.', 'sell_media' ); ?></span>
 				</div>
 		</div>
 		<?php
@@ -137,7 +137,7 @@ class SellMediaAdminAddItem {
 		// Run a security check first.
 		check_ajax_referer( 'sell-media-drag-drop-nonce', 'nonce' );
 		// Prepare variables.
-		$id  = absint( esc_html($_POST['id']) );
+		$id  = absint( $_POST['id'] );
 		_e(sell_media_list_uploads( $id ),'sell_media');
 		exit;
 	}
@@ -188,35 +188,32 @@ class SellMediaAdminAddItem {
 		// do_action( 'sell_media_add_item_tab_before_content_callback', 'advanced', $post );
 		
 		if ( taxonomy_exists( 'collection' ) ) {
-
 			_e('<div id="sell-media-tax-collections" class="sell-media-tax-wrap">','sell_media');
-				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Collections', 'sell_media' ) );
-				printf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_html__( 'Assign this', 'sell_media' ), strtolower( $obj->labels->singular_name ), esc_html__( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) );
+				printf( '<h3 class="tax-title">%s</h3>', __( 'Collections', 'sell_media' ) );
+				printf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', __( 'Assign this', 'sell_media' ), strtolower( $obj->labels->singular_name ), __( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
-				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_html__( 'Edit All Collections', 'sell_media' ) );
+				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Collections', 'sell_media' ) );
 			_e('</div>','sell_media');
 
 		}
 
 		if ( taxonomy_exists( 'licenses' ) ) {
-
 			_e('<div id="sell-media-tax-licenses" class="sell-media-tax-wrap">','sell_media');
-				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Licenses', 'sell_media' ) );
-				printf( '<p class="tax-description description">%s.</p>', esc_html__( 'Select the available usage licenses that buyers can choose from when purchasing (optional). Licenses can be assigned "markup" which will increase the cost of the item being purchase. For example, you can might have a "Personal" usage license with no markup from your base pricelists and a "Commercial" usage license with 50% markup from your base pricelists', 'sell_media' ) );
+				printf( '<h3 class="tax-title">%s</h3>', __( 'Licenses', 'sell_media' ) );
+				printf( '<p class="tax-description description">%s.</p>', __( 'Select the available usage licenses that buyers can choose from when purchasing (optional). Licenses can be assigned "markup" which will increase the cost of the item being purchase. For example, you can might have a "Personal" usage license with no markup from your base pricelists and a "Commercial" usage license with 50% markup from your base pricelists', 'sell_media' ) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
-				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=licenses&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_html__( 'Edit All Licenses', 'sell_media' ) );
+				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=licenses&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Licenses', 'sell_media' ) );
 			_e('</div>','sell_media');
 
 		}
 
 		if ( taxonomy_exists( 'creator' ) ) {
-
 			_e('<div id="sell-media-tax-creators" class="sell-media-tax-wrap">','sell_media');
-				printf( '<h3 class="tax-title">%s</h3>', esc_html__( 'Creators', 'sell_media' ) );
-				printf( '<p class="tax-description description">%s.</p>', esc_html__( 'Assign a creator (optional). Creators are also automatically imported from the "Credit" IPCT metadata field in the files that you upload. Archive pages are then automatically created for each creator and can be accessed by adding /creator/name-of-creator/ to the end of your website url (replace "name-of-creator" with the url-friendly name)', 'sell_media' ) );
+				printf( '<h3 class="tax-title">%s</h3>', __( 'Creators', 'sell_media' ) );
+				printf( '<p class="tax-description description">%s.</p>', __( 'Assign a creator (optional). Creators are also automatically imported from the "Credit" IPCT metadata field in the files that you upload. Archive pages are then automatically created for each creator and can be accessed by adding /creator/name-of-creator/ to the end of your website url (replace "name-of-creator" with the url-friendly name)', 'sell_media' ) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
 				// post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
-				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_html__( 'Edit All Creators', 'sell_media' ) );
+				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Creators', 'sell_media' ) );
 			_e('</div>','sell_media');
 		}
 
@@ -229,7 +226,7 @@ class SellMediaAdminAddItem {
 	 * @return void
 	 */
 	function load_pricelists() {
-		$id = ( isset( $_POST['parent_id'] ) && '' !== $_POST['parent_id'] ) ? absint( esc_html($_POST['parent_id']) ) :  false;
+		$id = ( isset( $_POST['parent_id'] ) && '' !== $_POST['parent_id'] ) ? absint( $_POST['parent_id'] ) :  false;
 		if ( ! $id ) {
 			_e(0,'sell_media');
 			exit;

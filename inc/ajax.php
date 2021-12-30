@@ -64,7 +64,7 @@ function sell_media_add_to_cart() {
 		$attrs = apply_filters( 'sell_media_cart_item_attrs', $attrs );
 
 		if( '' != $item_number ){
-			$price = floatval( esc_html($_GET['price']) );
+			$price = floatval( $_GET['price'] );
 
 			do_action( 'sell_media_before_add_to_cart', $item_number, $price, $qty, $attrs );
 
@@ -94,7 +94,7 @@ function sell_media_update_cart(){
 	// Check if cart item id is there.
 	if( !empty( $_POST ) && isset( $_POST['cart_item_id'] ) ){
 
-		$qty = intval(esc_html($_POST['qty']));
+		$qty = intval($_POST['qty']);
 		$cart_item_id = sanitize_text_field( $_POST['cart_item_id'] );
 
 		// Check if cart item id is empty.
@@ -262,15 +262,15 @@ add_action( 'wp_ajax_nopriv_sell_media_ajax_filter', 'sell_media_ajax_filter_sea
 function sell_media_ajax_add_to_cart_button( $id = NULL, $attachment_id = NULL, $type = 'download' ){
 
 	if( isset( $_POST['id'] ) ){
-		$id = absint( esc_html($_POST['id']) );
+		$id = absint( $_POST['id'] );
 	}
 
 	if( isset( $_POST['id'] ) ){
-		$attachment_id = absint( esc_html($_POST['attachment_id']) );
+		$attachment_id = absint( $_POST['attachment_id'] );
 	}
 
 	if( isset( $_POST['type'] ) ){
-		$type = esc_html($_POST['type']);
+		$type = $_POST['type'];
 	}
 
 	sell_media_item_add_to_cart_button( $id, $attachment_id, null, null, true, $type );

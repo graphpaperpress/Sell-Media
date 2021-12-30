@@ -118,7 +118,7 @@ add_action( 'licenses_pre_add_form', 'sell_media_license_description' );
 function sell_media_the_markup_slider( $tag ){
 
 	if ( isset( $_GET['tag_ID'] ) )
-		$term_id = esc_html($_GET['tag_ID']);
+		$term_id = $_GET['tag_ID'];
 	else
 		$term_id = null;
 
@@ -243,18 +243,18 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 	}
 
 	if ( isset( $_POST['meta_value'] ) ) {
-		$cat_keys = array_keys( esc_html($_POST['meta_value']) );
+		$cat_keys = array_keys( $_POST['meta_value'] );
 
 		foreach ( $cat_keys as $key ) {
 			if ( ! empty( $_POST['meta_value'][$key] ) ) {
 				if ( 'related_keywords' === $key ) {
-					$related_keywords = trim( wp_filter_nohtml_kses( esc_html($_POST['meta_value'][$key]) ), ',' );
+					$related_keywords = trim( wp_filter_nohtml_kses( $_POST['meta_value'][$key] ), ',' );
 					$related_keywords = preg_replace( '/\s*,\s*/', ',', $related_keywords );
 					$related_keywords = explode( ',', $related_keywords );
 					$related_keywords = array_filter( $related_keywords );
 					update_term_meta( $term_id, $key, $related_keywords );
 				} elseif ( 'markup' === $key ) {
-					$markup = trim( wp_filter_nohtml_kses( esc_html($_POST['meta_value'][ $key ]) ) );
+					$markup = trim( wp_filter_nohtml_kses( $_POST['meta_value'][ $key ] ) );
 					$pos = strpos( $markup, '%' );
 					if ( false === $pos ) {
 						$markup .= '%';
@@ -262,7 +262,7 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 					update_term_meta( $term_id, $key, $markup );
 
 				} else {
-					$meta_value[$key] = esc_html($_POST['meta_value'][$key]);
+					$meta_value[$key] = $_POST['meta_value'][$key];
 					update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
 				}
 			} else {
@@ -531,7 +531,7 @@ function sell_media_format_related_search_results( $terms ) {
 
 	if ( $related_terms ) {
 		$html .= '<div class="sell-media-related-keywords">';
-		$html .= '<span class="sell-media-related-keywords-title">' . esc_html__( 'Related Keywords', 'sell_media' ) . ':</span>';
+		$html .= '<span class="sell-media-related-keywords-title">' . __( 'Related Keywords', 'sell_media' ) . ':</span>';
 		$html .= '<ul class="sell-media-related-keywords-list">';
 		foreach ( $related_terms as $term ) {
 

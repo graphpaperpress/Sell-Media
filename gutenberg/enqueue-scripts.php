@@ -40,7 +40,7 @@ function sellmedia_editor_scripts() {
     wp_localize_script( 'sell_media_main_js', 'sell_media', array(
         'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
         'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
-        'site_name' => esc_html( get_bloginfo( 'name' ) ),
+        'site_name' => __( get_bloginfo( 'name' ) ),
         'site_url' => esc_url( site_url() ),
         'checkout_url' => esc_url( get_permalink( $checkout_page ) ),
         'currency_symbol' => empty( $settings->currency ) ? 'USD' : $settings->currency,

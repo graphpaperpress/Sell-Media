@@ -23,6 +23,6 @@ class Author
 
     public function __construct($name)
     {
-        $this->name = esc_html($name);
+        $this->name = $name;
     }
 }

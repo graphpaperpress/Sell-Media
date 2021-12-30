@@ -78,7 +78,7 @@ function sell_media_register_form() {
 		if ( 'select' === $field['type'] ) {
 			?>
 			<p>
-				<label for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( ucwords( $field['name'] ) ); ?><br />
+				<label for="<?php esc_attr_e( $id ); ?>"><?php _e( ucwords( $field['name'] ) ); ?><br />
 					<select name="<?php esc_attr_e( $id ); ?>" class="input">
 						<?php
 						if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
@@ -91,7 +91,7 @@ function sell_media_register_form() {
 			</p>
 		<?php } else { ?>
 			<p>
-				<label for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( ucwords( $field['name'] ) ); ?><br />
+				<label for="<?php esc_attr_e( $id ); ?>"><?php _e( ucwords( $field['name'] ) ); ?><br />
 				<input type="text" name="<?php esc_attr_e( $id ); ?>" id="<?php esc_attr_e( $id ); ?>" class="input" value="<?php esc_attr_e( $value ); ?>" size="25" /></label>
 			</p>
 		<?php }
@@ -111,7 +111,7 @@ function sell_media_registration_errors( $errors, $sanitized_user_login, $user_e
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
 	
 		if ( empty( $_POST[$id] ) || ! empty( $_POST[$id] ) && trim( $_POST[$id] ) == '' ) {
-			$errors->add( $id . '_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'sell_media' ),__( 'You must include a ' . esc_html($field['name']) . '.', 'sell_media' ) ) );
+			$errors->add( $id . '_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'sell_media' ),__( 'You must include a ' . __($field['name']) . '.', 'sell_media' ) ) );
 
 		}
 	}
@@ -488,7 +488,7 @@ function sell_media_save_extra_profile_fields( $user_id ) {
 	$fields = sell_media_extra_user_fields();
 	foreach ( $fields as $field ) {
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
-		update_usermeta( $user_id, $id, esc_html($_POST[$id]) );
+		update_usermeta( $user_id, $id, $_POST[$id] );
 	}
 }
 add_action( 'personal_options_update', 'sell_media_save_extra_profile_fields' );

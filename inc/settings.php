@@ -457,7 +457,7 @@ function sell_media_init_settings() {
 			"tab" => "sell_media_general_settings",
 			"name" => "post_type_slug",
 			"title" => __("Post Type Slug","sell_media"),
-			'description' => sprintf( esc_html__( 'The post type slug creates the archive page that contains all of your products. You can change the slug here to whatever is most relevant to your store (for example &quot;photos&quot; or &quot;videos&quot;). By default, the slug is set to "items." Add this URL to your menu to create a link to your store. Currently, your products will appear at this url: %s', 'sell_media' ), '<a href="' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '" target="_blank">' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '</a>' ),
+			'description' => sprintf( __( 'The post type slug creates the archive page that contains all of your products. You can change the slug here to whatever is most relevant to your store (for example &quot;photos&quot; or &quot;videos&quot;). By default, the slug is set to "items." Add this URL to your menu to create a link to your store. Currently, your products will appear at this url: %s', 'sell_media' ), '<a href="' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '" target="_blank">' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '</a>' ),
 			"section" => "general_plugin_section_1",
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",

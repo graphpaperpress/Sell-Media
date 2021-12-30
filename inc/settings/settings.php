@@ -115,7 +115,7 @@ function sell_media_admin_plugin_options_page() {
         <?php sell_media_plugin_get_page_tab_markup(); ?>
         <?php if ( isset( $_GET['settings-updated'] ) ) {
                 if( isset ( $_GET['i'] ) ) {
-                    $tabvalue = esc_html($_GET['i']);
+                    $tabvalue = __($_GET['i']);
                 } else {
                     $tabvalue = 0;
                 }
@@ -342,29 +342,29 @@ function sell_media_plugin_field_range( $value, $attr ) {
     $max = isset( $attr['max_number'])?$attr['max_number']:"";
     $step = isset( $attr['step_number'])?$attr['step_number']:"1";
 ?>
-    <input type="range" min="<?php esc_html_e($min); ?>" max="<?php esc_html_e($max); ?>" value="<?php esc_attr_e( $value ); ?>" id="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php 
-    esc_attr_e($attr['name']); ?>]" step="<?php esc_html_e($step); ?>" oninput="outputUpdate(value)" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>]">
-    <output for="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>]" id="<?php esc_html_e($attr['name']); ?>-result"><?php  esc_attr_e( $value ); ?>%</output>
+    <input type="range" min="<?php _e($min); ?>" max="<?php _e($max); ?>" value="<?php esc_attr_e( $value ); ?>" id="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php 
+    esc_attr_e($attr['name']); ?>]" step="<?php _e($step); ?>" oninput="outputUpdate(value)" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>]">
+    <output for="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>]" id="<?php _e($attr['name']); ?>-result"><?php  esc_attr_e( $value ); ?>%</output>
     <script type="text/javascript">
         function outputUpdate(val) {
-            document.querySelector('#<?php esc_html_e($attr['name']); ?>-result').value = val + '%';
+            document.querySelector('#<?php _e($attr['name']); ?>-result').value = val + '%';
         }
     </script>
 <?php
 }
 
 function sell_media_plugin_field_password( $value, $attr ) { ?>
-    <input type="password" name="<?php esc_html_e(sell_media_get_current_plugin_id()); ?>_options[<?php esc_html_e($attr['name']); ?>]" value="<?php _e(sanitize_text_field( $value ),'sell_media'); ?>">
+    <input type="password" name="<?php _e(sell_media_get_current_plugin_id()); ?>_options[<?php _e($attr['name']); ?>]" value="<?php _e(sanitize_text_field( $value ),'sell_media'); ?>">
     <?php
 }
 
 function sell_media_plugin_field_textarea( $value, $attr ) { ?>
-    <textarea name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>]" cols="48" rows="8"><?php _e(stripslashes_deep( $value ),'sell_media'); ?></textarea>
+    <textarea name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>]" cols="48" rows="8"><?php _e(stripslashes_deep( $value ),'sell_media'); ?></textarea>
 <?php
 }
 
 function sell_media_plugin_field_select( $value, $attr ) { ?>
-<select name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name'],'sell_media'); ?>]">
+<select name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name'],'sell_media'); ?>]">
     <?php
     if ( isset( $attr['valid_options'] ) ) :
         $options = $attr['valid_options'];
@@ -375,7 +375,7 @@ function sell_media_plugin_field_select( $value, $attr ) { ?>
                 $opt = $option['name'];
             }
         ?>
-            <option value="<?php _e(sanitize_text_field($opt),'sell_media'); ?>" <?php selected( $opt, $value ); ?>><?php esc_html_e($option['title'],'sell_media'); ?></option>
+            <option value="<?php _e(sanitize_text_field($opt),'sell_media'); ?>" <?php selected( $opt, $value ); ?>><?php _e($option['title'],'sell_media'); ?></option>
             <?php
         endforeach;
     else:
@@ -393,7 +393,7 @@ function sell_media_plugin_field_radio_image( $value, $attr ) { ?>
         foreach( $options as $option ) :
         ?>
     <label class="radio_image">
-    <input type="radio" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>]" value="<?php _e(sanitize_text_field($option['name']),'sell_media'); ?>" <?php checked($option['name'], $value ); ?>>
+    <input type="radio" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>]" value="<?php _e(sanitize_text_field($option['name']),'sell_media'); ?>" <?php checked($option['name'], $value ); ?>>
       <?php if( $option['image'] ) _e('<img src="' . $option['image'] . '">','sell_media'); ?>
     </label>
             <?php
@@ -431,8 +431,8 @@ function sell_media_plugin_field_checkbox( $value, $attr ) {
         $options = $attr['valid_options'];
 
         foreach( $options as $option_key => $option_value ) : ?>
-            <input class="checkbox" id ="<?php esc_html_e($option_value['name']); ?>" type="checkbox" <?php if( isset( $value ) && '' != $value ) { checked( in_array( $option_value['name'], $value ) ); }  ?> name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>][]" value="<?php _e(sanitize_text_field( $option_key ),'sell_media'); ?>">
-            <label for="<?php esc_html_e($option_value['name']); ?>"><?php esc_html_e($option_value['title']);?></label><br>
+            <input class="checkbox" id ="<?php _e($option_value['name']); ?>" type="checkbox" <?php if( isset( $value ) && '' != $value ) { checked( in_array( $option_value['name'], $value ) ); }  ?> name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>][]" value="<?php _e(sanitize_text_field( $option_key ),'sell_media'); ?>">
+            <label for="<?php _e($option_value['name']); ?>"><?php _e($option_value['title']);?></label><br>
     <?php endforeach;
     endif;
 
@@ -441,7 +441,7 @@ function sell_media_plugin_field_checkbox( $value, $attr ) {
 function sell_media_plugin_field_color( $value, $attr ) { ?>
 
     <span class="colorPickerWrapper">
-        <input id="<?php esc_html_e($attr['name']); ?>" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>]" class="color-picker" type="text" value="<?php _e(sanitize_text_field($value),'sell_media'); ?>" />
+        <input id="<?php _e($attr['name']); ?>" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>]" class="color-picker" type="text" value="<?php _e(sanitize_text_field($value),'sell_media'); ?>" />
     </span>
 
     <?php
@@ -499,9 +499,9 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
     });
     </script>
 
-    <div id="<?php esc_html_e($attr['name']); ?>_container">
-        <input type="text" class="upload_image_field" id="<?php esc_html_e($attr['name']); ?>" name="<?php 
-        _e( sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>]" value="<?php _e(sanitize_text_field($value),'sell_media'); ?>">
+    <div id="<?php _e($attr['name']); ?>_container">
+        <input type="text" class="upload_image_field" id="<?php _e($attr['name']); ?>" name="<?php 
+        _e( sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>]" value="<?php _e(sanitize_text_field($value),'sell_media'); ?>">
         <input class="upload_image_button button" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media' ); ?>" />
         <div class="upload_image_preview"><img src="<?php _e($value,'sell_media'); ?>" /><br /><a href="javascript:void(0);" class="upload_image_remove"><?php _e( 'Remove', 'sell_media' ); ?></a></div>
     </div>
@@ -595,8 +595,8 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
     });
     </script>
 
-    <div id="<?php esc_html_e($attr['name']); ?>_container">
-        <input type="hidden" class="upload_gallery_field" id="<?php esc_html_e($attr['name']); ?>" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php esc_html_e($attr['name']); ?>]" value="<?php _e( sanitize_text_field($value),'sell_media'); ?>">
+    <div id="<?php _e($attr['name']); ?>_container">
+        <input type="hidden" class="upload_gallery_field" id="<?php _e($attr['name']); ?>" name="<?php _e(sell_media_get_current_plugin_id(),'sell_media'); ?>_options[<?php _e($attr['name']); ?>]" value="<?php _e( sanitize_text_field($value),'sell_media'); ?>">
         <input class="upload_gallery_button button" type="button" value="<?php _e( 'Upload or Select Images', 'sell_media' ); ?>" />
         <div class="upload_gallery_preview"><?php if( '' != $value ) { _e($imgarray,'sell_media'); ?><br /><a href="javascript:void(0);" class="upload_gallery_remove"><?php _e( 'Remove', 'sell_media' ); ?></a><?php } ?></div>
     </div>
@@ -617,8 +617,8 @@ function sell_media_plugin_field_html( $value, $attr ){
  * Image upload ajax callback
  */
 function sell_media_plugin_image_url_callback() {
-    $ids = (isset($_POST['ids'])) ? esc_html($_POST['ids']) : '';
-    $pid = (isset($_POST['pid'])) ? esc_html($_POST['pid']) : '';
+    $ids = (isset($_POST['ids'])) ? __($_POST['ids']) : '';
+    $pid = (isset($_POST['pid'])) ? __($_POST['pid']) : '';
     update_post_meta( $pid, 'upload_gallery_preview', $ids );
 
     $image_ids = explode( ',', $ids );

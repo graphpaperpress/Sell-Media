@@ -139,7 +139,7 @@ class SellMediaPayPal {
                         _e($_order_total_paid,'sell_media'); ?>" min="0" />
                     </li>
                     <li class="paypal-order-refund-action">
-                        <button type="button" id="paypal_payment_refund_btn" class="button button-primary button-large" data-transaction_id="<?php esc_html_e($transaction_id); ?>" ><?php 
+                        <button type="button" id="paypal_payment_refund_btn" class="button button-primary button-large" data-transaction_id="<?php _e($transaction_id); ?>" ><?php 
                         _e('Refund Now', 'sell_media'); ?></button>
                         <input type="hidden" id="paypal_payment_id" value="<?php _e($payment_id,'sell_media'); ?>"/>
                         <input type="hidden" id="paypal_payment_currency_code" value="<?php 
@@ -167,9 +167,9 @@ class SellMediaPayPal {
         $_result['message'] = apply_filters('sell_media_order_refund_fail_message', __('Order refund process fail, Please try again', 'sell_media'));
         if(isset($_POST['transaction_id']) && !empty($_POST['transaction_id']) && isset($_POST['_nonce']) && wp_verify_nonce($_POST['_nonce'], 'sell-media-paypal-payment-refund')) {
 
-            $_payment_id        = (isset($_POST['payment_id']) && !empty($_POST['payment_id'])) ? esc_html($_POST['payment_id']) : 0;
+            $_payment_id        = (isset($_POST['payment_id']) && !empty($_POST['payment_id'])) ? $_POST['payment_id'] : 0;
             $_payment_obj       = get_post_meta($_payment_id, '_sell_media_payment_meta', true);
-            $_refund_amount     = (isset($_POST['refund_amount']) && !empty($_POST['refund_amount'])) ? esc_html($_POST['refund_amount']) : $_payment_obj['total'];
+            $_refund_amount     = (isset($_POST['refund_amount']) && !empty($_POST['refund_amount'])) ? $_POST['refund_amount'] : $_payment_obj['total'];
             $_currency_code     = get_post_meta($_payment_id, 'payment_currency_code', true);
             $_capture_id        = get_post_meta($_payment_id, 'payment_capture_id', true);
 

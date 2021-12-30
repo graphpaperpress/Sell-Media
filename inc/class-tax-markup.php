@@ -82,16 +82,22 @@ class SellMediaTaxMarkup {
 	 */
 	function add_custom_term_form_fields( $tag ) {
 		$tax_name = $tag;
+
+		// echo $tax_name;
+		// die("++++");
+
 		if ( is_object( $tag ) ) {
+	
 			$term_id = $tag->term_id;
 			$tax_name = $tag->name;
 		} else {
+			
 			$term_id = null;
 		}
 		$taxonomy_details = get_taxonomy( $tax_name );
 		?>
 		<div class="form-field">
-			<label for="markup"><?php esc_html_e( 'Markup', 'sell_media' ); ?></label>
+			<label for="markup"><?php _e( 'Markup', 'sell_media' ); ?></label>
 			<?php $this->the_markup_slider( $taxonomy_details ); ?>
 		</div>
 		<div class="form-field">
@@ -108,7 +114,7 @@ class SellMediaTaxMarkup {
 	function the_markup_slider( $taxonomy_details ) {
 
 		if ( isset( $_GET['tag_ID'] ) ) {
-			$term_id = esc_html($_GET['tag_ID']);
+			$term_id = $_GET['tag_ID'];
 		} else {
 			$term_id = null;
 		}
@@ -123,12 +129,14 @@ class SellMediaTaxMarkup {
 		$settings = sell_media_get_plugin_options(); ?>
 		<script>
 		function calc_price( markUp ){
+			
 			var price = <?php esc_attr_e($settings->default_price); ?>;
 			if ( markUp == undefined )
 				var markUp = <?php esc_attr_e($initial_markup); ?>;
 
 			finalPrice = ( +price + ( +markUp * .01 ) * price );
 			finalPrice = finalPrice.toFixed(2);
+			
 			return finalPrice;
 		}
 		jQuery(document).ready(function($){
@@ -188,11 +196,11 @@ class SellMediaTaxMarkup {
 		?>
 		<tr class="form-field sell_media-markup-container">
 			<th scope="row" valign="top">
-				<label for="markup"><?php esc_html_e( $title ); ?></label>
+				<label for="markup"><?php _e( $title ); ?></label>
 			</th>
 			<td>
 				<input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( get_term_meta( $term_id, 'default', true ), 'on' ); ?> size="40" />
-				<span class="description"><label for="meta_value[default]"><?php esc_html_e( $desc ); ?></label></span>
+				<span class="description"><label for="meta_value[default]"><?php _e( $desc ); ?></label></span>
 			</td>
 		</tr>
 		<?php
@@ -214,7 +222,7 @@ class SellMediaTaxMarkup {
 		?>
 		<tr class="form-field sell_media-markup-container">
 			<th scope="row" valign="top">
-				<label for="markup"><?php esc_html_e( 'Markup', 'sell_media' ); ?></label>
+				<label for="markup"><?php _e( 'Markup', 'sell_media' ); ?></label>
 			</th>
 			<td>
 				<?php $this->the_markup_slider( $taxonomy_details ); ?>
@@ -264,7 +272,9 @@ class SellMediaTaxMarkup {
 	 *
 	 * @param  string $row_content Row Content.
 	 * @param  string $column_name Column Name.
-	 * @param  int    $term_id     Term ID.
+	 * @param  int    $term_id     Term 
+	 * 
+	 * ID.
 	 */
 	function custom_license_columns_content( $row_content, $column_name, $term_id ) {
 		switch ( $column_name ) {
@@ -281,7 +291,7 @@ class SellMediaTaxMarkup {
 	 */
 	function item_detail_markup_fields() {
 		global $post;
-		$product_id = ( ! empty( $_POST['product_id'] ) ) ? esc_html($_POST['product_id']) : $post->ID;
+		$product_id = ( ! empty( $_POST['product_id'] ) ) ? $_POST['product_id'] : $post->ID;
 		$post_id = $product_id;
 		if ( wp_get_post_parent_id( $product_id ) > 0 ) {
 			$post_id = wp_get_post_parent_id( $product_id );
