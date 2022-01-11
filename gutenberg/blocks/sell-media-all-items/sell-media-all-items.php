@@ -45,7 +45,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             add_shortcode( 'sell_media_items_gutenberg', array( $this, 'sell_media_items_gutenberg_shortcode' ) );
 
             // Register new category for Sell Media Items
-            add_filter( 'block_categories', array( $this, 'register_block_categories' ), 30, 2 ); 
+            add_filter( 'block_categories_all', array( $this, 'register_block_categories' ), 30, 2 ); 
 
             $this->init();
 
@@ -136,7 +136,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. $attributes["align"] .'">';
             }
 
             $return_content .= $content;
@@ -166,7 +166,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
              $block_categories[] = array(
                 'slug'  => 'sellmedia-blocks',
-                'title' => esc_html__( 'Sell Media Blocks', 'sell_media' ),
+                'title' => __( 'Sell Media Blocks', 'sell_media' ),
                 'icon'  => false,
             );
 
@@ -239,12 +239,12 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 while ( $wp_query_items->have_posts() ) : $wp_query_items->the_post(); $i++;
                     $post_id = get_the_id();
                     global $mime_type;
-                    $original_id = $post_id;
+                    $original_id =intval($post_id);
                     if ( post_password_required( $original_id ) && sell_media_is_search() ) {
                         return;
                     }
                     if ( 'attachment' === get_post_type( $post_id ) ) {
-                        $attachment_id = $post_id; // always and attachment
+                        $attachment_id = intval( $post_id); // always and attachment
                         $post_id = get_post_meta( $attachment_id, $key = '_sell_media_for_sale_product_id', false ); // always a sell_media_item
                     } else {
                         $attachment_id = sell_media_get_attachment_id( $post_id ); // always an attachment
@@ -264,16 +264,16 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                         $class = 'horizontal-masonry-column overlay-container ';
                         // grab the thumbnail if its not photo
                         if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-                            $image_data     = get_the_post_thumbnail_url( $post_id, 'thumbnail' );
+                            $image_data     = esc_url(get_the_post_thumbnail_url( $post_id, 'thumbnail' ));
                             $image_size    = getimagesize($image_data);
-                            $image_width   = $image_size[0];
-                            $image_height   = $image_size[1];
+                            $image_width   = (isset($image_size[0])) ? esc_attr($image_size[0]) : 100;
+                            $image_height   = (isset($image_size[1])) ? esc_attr($image_size[1]) : 100;
                             $width          = $image_width * 250 / $image_height;
                             $padding_bottom = $image_height / $image_width * 100;
                         } else {                        
                             $image_data     = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
-                            $image_width    = $image_data[1];
-                            $image_height   = $image_data[2];
+                            $image_width    = (isset($image_data[1])) ? $image_data[1] : 100;
+                            $image_height   = (isset($image_data[2])) ? $image_data[2] : 100;
                             $width          = $image_width * 250 / $image_height;
                             $padding_bottom = $image_height / $image_width * 100;
                         }
@@ -296,9 +296,9 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                     // Show quick view?
                     if ( isset( $quick_view ) && 0 != $quick_view && is_main_query() ) {                      
                         if ( sell_media_has_multiple_attachments( $post_id ) ) {
-                            $html .= '<div class="sell-media-view-gallery">' . esc_html__( 'View Gallery', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-view-gallery">' . __( 'View Gallery', 'sell_media' ) . '</div>';
                         } elseif ( $enable_ecommerce ) {
-                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . esc_html__( 'Quick View', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . __( 'Quick View', 'sell_media' ) . '</div>';
                         }
                     }
                     $html .= '</a>';

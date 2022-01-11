@@ -16,8 +16,8 @@ function sell_media_plugin_get_taxonomy_list( $taxonomy = 'category', $firstblan
         $terms['']['title'] = __( '-- Choose One --', 'sell_media' );
     }
     foreach ( $terms_obj as $tt ) {
-        $terms[ $tt->slug ]['name'] = $tt->slug;
-        $terms[ $tt->slug ]['title'] = $tt->name;
+        $terms[ $tt->slug ]['name'] = (isset($tt->slug)) ? $tt->slug : '';
+        $terms[ $tt->slug ]['title'] = (isset($tt->name)) ? $tt->name : '';
     }
 
     return $terms;
@@ -50,7 +50,7 @@ function sell_media_plugin_get_current_tab_title( $tabval ) {
 
     global $sell_media_plugin_tabs;
 
-    $current = $sell_media_plugin_tabs[ $tabval ]['title'];
+    $current = (isset($sell_media_plugin_tabs[ $tabval ]['title'])) ? $sell_media_plugin_tabs[ $tabval ]['title'] : '';
 
     return $current;
 }
@@ -88,13 +88,13 @@ function sell_media_plugin_get_page_tab_markup() {
     $i = 0;
     foreach( $tabs as $tab ) {
         if( isset( $tab['name'] ) )
-            $tabname = $tab['name'];
+            $tabname = esc_attr($tab['name']);
         if( isset( $tab['title'] ) )
-            $tabtitle = $tab['title'];
+            $tabtitle = esc_attr($tab['title']);
         if ( $tabname == $current ) {
-            $links[] = "<a class='nav-tab nav-tab-active' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>$tabtitle</a>";
+            $links[] = "<a class='nav-tab nav-tab-active' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>".esc_attr($tabtitle)."</a>";
         } else {
-            $links[] = "<a class='nav-tab' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>$tabtitle</a>";
+            $links[] = "<a class='nav-tab' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>".esc_attr($tabtitle)."</a>";
         }
         $i++;
     }

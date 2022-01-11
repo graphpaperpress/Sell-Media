@@ -6,7 +6,7 @@
  * @package Sell Media
  * @author Thad Allender <support@graphpaperpress.com>
  */
-
+//die('+++++777');
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -23,19 +23,20 @@ Class SellMediaDownload {
 	 * @return void
 	 */
 	public function download(){
-
-		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) ) {
-
-			$transaction_id = urldecode( $_GET['download'] );
-			$payment_id     = urldecode( $_GET['payment_id'] );
-			$product_id     = urldecode( $_GET['product_id'] );
-
+		
+		// added check_ajax_referer('download_media', '_nonce') for security
+		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && check_ajax_referer('download_media', '_nonce')) {
+			 
+			$transaction_id = (isset($_GET['download'])) ? esc_attr(urldecode( $_GET['download'] )) : '';
+			$payment_id     = (isset($_GET['payment_id'])) ? intval(urldecode( $_GET['payment_id'] )) : '';
+			$product_id     = (isset($_GET['product_id'])) ? intval(urldecode( $_GET['product_id'] )) : '';
+			
 			// Old download links might not have attachment_id set.
 			// This means they were purchased before we added support
 			// for multiple attachments. So, we just grab the first
 			// attachment_id saved in post meta.
-			$attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? urldecode( $_GET['attachment_id'] ) : sell_media_get_attachment_id( $product_id );
-			$size_id        = ( ! empty( $_GET['size_id'] ) ) ? urldecode( $_GET['size_id'] ) : null;
+			$attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? intval(urldecode( $_GET['attachment_id'] )) : sell_media_get_attachment_id( $product_id );
+			$size_id        = ( ! empty( $_GET['size_id'] ) ) ? esc_attr(urldecode( $_GET['size_id'] )) : null;
 
 			$verified = apply_filters( 'sell_media_verify_download', $this->verify( $transaction_id, $payment_id, $product_id, $attachment_id, $size_id ), $product_id );
 
@@ -48,19 +49,10 @@ Class SellMediaDownload {
 					$file_exists = $this->is_file_url_valid( $file );
 				}
 
-				// if ( ! $file_exists ) {
-				// 	wp_die( sprintf( __( 'The original high resolution file doesn\'t exist here: %1$s', 'sell_media' ), $file ) );
-				// 	exit();
-				// }
-
 				$file_type = wp_check_filetype( $file );
 
 				if ( ! ini_get( 'safe_mode' ) ){
 					set_time_limit( 0 );
-				}
-
-				if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
-					set_magic_quotes_runtime(0);
 				}
 
 				if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
@@ -100,7 +92,7 @@ Class SellMediaDownload {
 
 		// Rend purchase receipt?
 		if ( isset( $_GET['resend_email'] ) && isset( $_GET['payment_id'] ) ){
-			$payment_id = $_GET['payment_id'];
+			$payment_id = intval($_GET['payment_id']);
 			$payment_email = get_meta_key( $payment_id, 'email' );
 
 			Sell_Media()->payments->email_receipt( $payment_id, $payment_email );
@@ -113,21 +105,20 @@ Class SellMediaDownload {
 	 * @param  string  $url URL of file.
 	 */
 	function is_file_url_valid( $url ) {
-		$is_valid = false;
-		$handle = curl_init($url);
-		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-
-		/* Get the HTML or whatever is linked in $url. */
-		$response = curl_exec($handle);
-		/* Check for 404 (file not found). */
-		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-		if($httpCode == 200 ) {
-			$is_valid = true;
+		
+		// Time out in seconds
+		$timeout = apply_filters("sell_media_media_download_timeout", 5);
+		
+		// Get media information
+		$media_info = wp_remote_get($url, $timeout);
+		
+		// check file is valid or not
+		if (is_wp_error($media_info) || empty($media_info['response']) || $media_info['response']['code'] != '200') {
+			return false;
+		} else {
+			return true;
 		}
-
-		curl_close($handle);
-
-		return $is_valid;
+		return false;
 	}
 
 	/**
@@ -218,7 +209,7 @@ Class SellMediaDownload {
 
 		while ( ! @feof( $handle ) ) {
 			$buffer = @fread( $handle, $chunksize );
-			echo $buffer;
+			esc_attr_e($buffer);
 
 			if ( $retbytes ) {
 				$cnt += strlen( $buffer );

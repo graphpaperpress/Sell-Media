@@ -97,9 +97,10 @@ class Sell_Media_Price_Listings {
 			<h2><?php _e( 'Pricing', 'sell_media' ); ?></h2>
 			<?php
 			$tabs = $this->get_tabs();
+			
 			if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
 				echo '<div class="updated" ><p>';
-				_e( $tabs[ $this->current_tab ]['tab_title'] . ' pricelist updated.', 'sell_media' );
+				_e( esc_attr($tabs[ $this->current_tab ]['tab_title']) . ' pricelist updated.', 'sell_media' );
 				echo '</p></div>';
 			}
 
@@ -108,12 +109,14 @@ class Sell_Media_Price_Listings {
 			if ( isset( $_GET['tab'] ) ) {
 				$url_parameters['tab'] = $_GET['tab'];
 			}
+			$url_parameters = array_map( 'esc_attr', $url_parameters);
+		
 			$url = admin_url( $this->parent_slug );
 			$url = add_query_arg( $url_parameters, $url );
 			?>
 			<div id="poststuff">
 				<?php do_action( 'sell_media_pricelists_before_form', $this->current_tab, $url ); ?>
-				<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-pricelist-form">
+				<form method="post" action="<?php _e(esc_url( $url ),'sell_media'); ?>" id="sell-media-pricelist-form">
 					<?php
 					wp_nonce_field( 'sell-media-price-list-page' );
 					if ( isset( $current_screen->parent_file ) && $this->parent_slug === $current_screen->parent_file && $_GET['page'] === $this->menu_slug ) {
@@ -137,13 +140,18 @@ class Sell_Media_Price_Listings {
 	function load_pricelists_page() {
 		$redirect_url = admin_url( $this->parent_slug );
 		do_action( 'sell_meida_load_pricelists_page', $redirect_url );
-		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === $_POST["sell-media-price-list-submit"] ) {
+
+		// verify nonce and save price data 
+		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === $_POST["sell-media-price-list-submit"] && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page')) {
+
 			check_admin_referer( 'sell-media-price-list-page' );
 			$url_parameters['page'] = $this->menu_slug;
 			$url_parameters['updated'] = 'true';
 			if ( isset( $_GET['tab'] ) ) {
 				$url_parameters['tab'] = $_GET['tab'];
 			}
+			$url_parameters = array_map( 'esc_attr', $url_parameters);
+		
 			$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 			do_action( 'sell_media_price_listing_save', $redirect_url );
 			wp_redirect( $redirect_url );

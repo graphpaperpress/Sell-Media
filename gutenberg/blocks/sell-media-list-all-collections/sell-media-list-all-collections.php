@@ -49,7 +49,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             */
                 
             $shortcode_params_str = $this->prepare_recent_items_list_atts_to_param( $attributes );
-            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . $shortcode_params_str . ']';
+            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . esc_attr($shortcode_params_str) . ']';
                 
             $shortcode_out        = do_shortcode( $shortcode_params_str );
 
@@ -93,7 +93,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-collection-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-collection-inner" class="sell-media-block-inner align'. $attributes["align"].'">';
             }
 
             $return_content .= $content;
@@ -122,7 +122,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
              $block_categories[] = array(
                 'slug'  => 'sellmedia-blocks',
-                'title' => esc_html__( 'Sell Media Blocks', 'sell_media' ),
+                'title' => __( 'Sell Media Blocks', 'sell_media' ),
                 'icon'  => false,
             );
 
@@ -132,3 +132,5 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
     }
 }
 new Sell_Media_Gutenberg_Block_Collection_Item_List();
+
+

@@ -256,7 +256,6 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/settings.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/lightbox.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-meta-migrate.php';
-			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-updater.php';
 			require_once SELL_MEDIA_PLUGIN_DIR . '/inc/class-tax-markup.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/paypal.php';
             require_once SELL_MEDIA_PLUGIN_DIR . '/inc/gateways/class-sm-gateway-paypal-request.php';

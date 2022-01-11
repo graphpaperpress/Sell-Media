@@ -188,17 +188,17 @@ function sell_media_build_options( $taxonomy = null ) {
 		<?php foreach ( $terms as $term ) : ?>
 			<?php $price = str_replace( '%', '', get_term_meta( $term->term_id, 'markup', true ) ); ?>
 			<option
-				value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
-				class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
-				data-value="<?php echo $term->slug; ?>"
-				data-taxonomy="<?php echo $taxonomy; ?>"
-				data-name="<?php echo $term->name; ?>"
-				data-price="<?php echo $price; ?>"
-				id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
-				title="<?php echo $term->description; ?>"
-				name="<?php echo $taxonomy; ?>"
+				value="<?php echo esc_attr($prepend); ?><?php echo esc_attr($term->$value); ?>"
+				class="taxonomy-<?php echo esc_attr($taxonomy); ?> term-<?php echo esc_attr($term->slug); ?> <?php echo esc_attr($taxonomy); ?>-<?php echo esc_attr($term->term_id); ?>"
+				data-value="<?php echo esc_attr($term->slug); ?>"
+				data-taxonomy="<?php echo esc_attr($taxonomy); ?>"
+				data-name="<?php echo esc_attr($term->name); ?>"
+				data-price="<?php echo esc_attr($price); ?>"
+				id="<?php echo esc_attr($taxonomy); ?>-<?php echo esc_attr($term->slug); ?>"
+				title="<?php echo esc_attr($term->description); ?>"
+				name="<?php echo esc_attr($taxonomy); ?>"
 				>
-			<?php echo $term->name; ?>
+			<?php echo esc_attr($term->name); ?>
 		</option>
 		<?php endforeach; ?>
 		</optgroup>
@@ -254,17 +254,17 @@ function sell_media_build_input( $taxonomy = null ) {
 		<?php foreach ( $terms as $term ) : ?>
 			<?php $price = get_term_meta( $term->term_id, 'markup', true ); ?>
 			<input
-				value="<?php echo $prepend; ?><?php echo $term->$value; ?>"
-				class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>"
-				data-value="<?php echo $term->slug; ?>"
-				data-taxonomy="<?php echo $taxonomy; ?>"
-				data-name="<?php echo $term->name; ?>"
-				data-price="<?php echo $price; ?>"
-				id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>"
-				name="<?php echo $taxonomy; ?>"
-				type="<?php echo $type; ?>"
+				value="<?php echo esc_attr( $prepend); ?><?php echo esc_attr( $term->$value); ?>"
+				class="taxonomy-<?php echo esc_attr( $taxonomy); ?> term-<?php echo esc_attr( $term->slug); ?> <?php echo esc_attr( $taxonomy); ?>-<?php echo esc_attr( $term->term_id); ?>"
+				data-value="<?php echo esc_attr( $term->slug); ?>"
+				data-taxonomy="<?php echo esc_attr( $taxonomy); ?>"
+				data-name="<?php echo esc_attr( $term->name); ?>"
+				data-price="<?php echo esc_attr( $price); ?>"
+				id="<?php echo esc_attr( $taxonomy); ?>-<?php echo esc_attr( $term->slug); ?>"
+				name="<?php echo esc_attr( $taxonomy); ?>"
+				type="<?php echo esc_attr( $type); ?>"
 				/>
-			<?php echo $term->name; ?> <?php if ( $price ) : ?>+<?php echo $price; ?>%<?php endif; ?><br />
+			<?php echo esc_attr( $term->name); ?> <?php if ( $price ) : ?>+<?php _e( $price); ?>%<?php endif; ?><br />
 		<?php endforeach; ?>
 		<?php do_action( 'sell_media_build_input_after' ); ?>
 	<?php endif; ?>
@@ -404,7 +404,7 @@ function sell_media_get_attachment_meta( $post_id = null, $field = 'id' ) {
 
 	$attachment_meta = wp_prepare_attachment_for_js( $attachment_id );
 
-	return $attachment_meta[ $field ];
+	return (!empty($attachment_meta) && isset($attachment_meta[ $field ])) ? $attachment_meta[ $field ] : array();
 }
 
 
@@ -558,7 +558,7 @@ break;
  */
 function sell_media_test_mode() {
 	$settings = sell_media_get_plugin_options();
-	return $settings->test_mode;
+	return (isset($settings->test_mode) ? $settings->test_mode :'');
 }
 
 
@@ -1010,6 +1010,7 @@ function sell_media_free_download_button_button( $html, $post_id, $attachment_id
 	$classes = implode( ' ', $classes );
 
 	$link = sprintf( '%s?download=free&product_id=%d&attachment_id=%d&payment_id=free', home_url(), $post_id, $attachment_id );
+	$link = wp_nonce_url($link, 'download_media');
 	$html = '<a href="' . $link . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="' . $classes . '">' . $text . '</a>';
 	return $html;
 }
@@ -1047,10 +1048,6 @@ function sell_media_free_download_file( $post_id, $attachment_id ) {
 
 		if ( ! ini_get( 'safe_mode' ) ) {
 			set_time_limit( 0 );
-		}
-
-		if ( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
-			set_magic_quotes_runtime( 0 );
 		}
 
 		if ( function_exists( 'apache_setenv' ) ) { @apache_setenv( 'no-gzip', 1 ); }
@@ -1341,7 +1338,7 @@ function sell_media_generate_attachment_metadata( $data, $attachment_id ) {
 			}
 		}
 	}
-	//print_r($metadata);exit();
+
 
 	// Remove the blob of binary data from the array.
 	if ( $metadata ) {

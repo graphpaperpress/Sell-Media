@@ -20,11 +20,11 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $this->block_attributes = array(
                 'custom_label' => array(
                     'type' => 'string',
-                    'default' => esc_html__( 'Search Form' , 'sell_media' ),
+                    'default' => __( 'Search Form' , 'sell_media' ),
                 ),
                 'custom_description' => array(
                     'type' => 'string',
-                    'default' => esc_html__( 'You can search for the items based on keywords, different media files i.e images, videos, audios' , 'sell_media' ),
+                    'default' => __( 'You can search for the items based on keywords, different media files i.e images, videos, audios' , 'sell_media' ),
                 ),
                 'custom_color' => array(
                     'type' => 'string',
@@ -79,7 +79,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                  * @param string $content        Shortcode content.
                  */
                 $shortcode_params_str = $this->prepare_recent_items_list_atts_to_param( $attributes );
-                $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . $shortcode_params_str . ']';
+                $shortcode_params_str = '[' . $this->shortcode_slug . ' ' .  esc_attr($shortcode_params_str) . ']';
                 
                 $shortcode_out        = do_shortcode( $shortcode_params_str );
 
@@ -104,7 +104,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 if ( 'bgImage' === $key ) {
 
                     if(isset($val['url']) && $val['url']){
-                        $val = $val['url'];
+                        $val = esc_url($val['url']);
                     }else{
                         $val = '';
                     }
@@ -133,7 +133,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'.$attributes["align"].'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. $attributes["align"] .'">';
             }
 
             $return_content .= $content;
@@ -169,7 +169,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
             // Show a message to admins if they don't have search page set in settings.
             if ( current_user_can( 'administrator' ) && empty( $settings->search_page ) ) {
-                $html .= esc_html__( 'For search to work, you must assign your Search Page in Sell Media -> Settings.', 'sell_media' );
+                $html .= __( 'For search to work, you must assign your Search Page in Sell Media -> Settings.', 'sell_media' );
                 return $html;
             }
 
@@ -211,7 +211,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             if ( ! isset( $used ) ) {
                 $used = true;
 
-                $html .= '<div class="sell-media-search'.$custom_class.$custom_class_image_div.'" style="'.$custom_style.'">';
+                $html .= '<div class="sell-media-search'. $custom_class.$custom_class_image_div .'" style="'. $custom_style .'">';
 
                 /* Image section */
                 if($image_div_add && $position_image != 'wide'){
@@ -228,9 +228,9 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 $html .= '<div class="sell-media-search-inner cf">';
 
                     $html .= '<div class="sell-media-search-form-custom-div">';
-                        $html .= '<label class="sell-media-search-form-label cf">'.$custom_label.'</label>';
+                        $html .= '<label class="sell-media-search-form-label cf">'. $custom_label .'</label>';
 
-                        $html .= '<p class="sell-media-search-form-description cf">'.$custom_description.'</p>';
+                        $html .= '<p class="sell-media-search-form-description cf">'. $custom_description .'</p>';
                     $html .= '</div>';
 
                     // Visible search options wrapper
@@ -253,9 +253,9 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
                     // File type field
                     $html .= '<div id="sell-media-search-file-type" class="sell-media-search-field sell-media-search-file-type">';
-                    $html .= '<label for="search_file_type">' . esc_html__( 'File Type', 'sell_media' ) . '</label>';
+                    $html .= '<label for="search_file_type">' . __( 'File Type', 'sell_media' ) . '</label>';
                     $html .= '<select name="search_file_type">';
-                    $html .= '<option value="">' . esc_html__( 'All', 'sell_media' ) . '</option>';
+                    $html .= '<option value="">' . __( 'All', 'sell_media' ) . '</option>';
                     $mimes = array( 'image', 'video', 'audio' );
                     foreach ( $mimes as $mime ) {
                         $selected = ( $search_file_type === $mime ) ? 'selected' : '';
@@ -353,7 +353,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 // The Loop
                 if ( $search_query->have_posts() ) {
 
-                    $html .= '<p class="sell-media-search-results-text">' . sprintf( esc_html__( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->found_posts, $search_term ) . '</p>';
+                    $html .= '<p class="sell-media-search-results-text">' . sprintf( __( 'We found %1$s results for "%2$s."', 'sell_media' ), $search_query->found_posts, $search_term ) . '</p>';
 
                     // hook for related keywords, etc.
                     $html .= sell_media_format_related_search_results( $search_terms );
@@ -366,10 +366,10 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                     while ( $search_query->have_posts() ) {
                         $search_query->the_post();
 
-                        $post_id = get_the_ID();
-                        $parent_id = get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true );
+                        $post_id = intval(get_the_ID());
+                        $parent_id = intval(get_post_meta( $post_id, $key = '_sell_media_for_sale_product_id', true ));
 
-                        $html .= '<div id="sell-media-' . $post_id . '" class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $parent_id ) . ' sell-media-grid-single-item">';
+                        $html .= '<div id="sell-media-' . intval($post_id) . '" class="' . apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', intval($parent_id) ) . ' sell-media-grid-single-item">';
                         $html .= '<a href="' . esc_url( get_permalink() ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 
                         if ( ! empty( $settings->titles ) ) {
@@ -389,7 +389,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                     $html .= '</div>';
                     $html .= '</div>';
                     $html .= sell_media_pagination_filter( $search_query->max_num_pages );
-                    $text = esc_html__( 'Explore more from our store', 'sell_media' );
+                    $text = __( 'Explore more from our store', 'sell_media' );
                     $html .= '<p class="sell-media-search-results-text">' . $text . '</p>';
                     $html .= do_shortcode( '[sell_media_filters]' );
 
@@ -417,11 +417,11 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
         public function search_help() {
 
             $html  = '<div class="sell-media-search-help">';
-            $html .= '<h6>' . esc_html__( 'Search Tips', 'sell_media' ) . '</h6>';
+            $html .= '<h6>' . __( 'Search Tips', 'sell_media' ) . '</h6>';
             $html .= '<ul>';
-            $html .= '<li>' . esc_html__( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
-            $html .= '<li>' . esc_html__( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
-            $html .= '<li>' . esc_html__( 'Use negative keywords (like -dogs) to exclude dogs from search results.', 'sell_media' ) . '</li>';
+            $html .= '<li>' . __( 'Separate keywords with a comma.', 'sell_media' ) . '</li>';
+            $html .= '<li>' . __( 'Use fewer keywords to expand search results.', 'sell_media' ) . '</li>';
+            $html .= '<li>' . __( 'Use negative keywords (like -dogs) to exclude dogs from search results.', 'sell_media' ) . '</li>';
             $html .= '</ul>';
             $html .= '</div>';
 

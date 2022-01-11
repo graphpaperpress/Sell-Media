@@ -25,7 +25,7 @@
 			if ( !empty( $keywords ) ) {
 
 				foreach ( $keywords as $keyword ) {
-					echo '<a href="' . get_term_link( $keyword->slug, 'keywords' ) . '">' . $keyword->name . '</a> ';
+					echo '<a href="' . esc_url(get_term_link( $keyword->slug, 'keywords' )) . '">' . $keyword->name . '</a> ';
 				}
 			}
 			?>

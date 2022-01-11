@@ -84,12 +84,13 @@ class Sell_Media_Price_Listings_Tabs {
 	function add_pricelist_form( $current_tab, $url ) {
 		?>
 		<h2 class="tab-title">
-			<span><?php echo sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' ) ); ?></span>						
+			<span><?php echo sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' )); ?></span>						
 		</h2>
 		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
-			<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
+	
+		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">
-				<label><?php esc_html_e( 'Add New Pricelist', 'sell_media' ); ?></label>
+				<label><?php _e( 'Add New Pricelist', 'sell_media' ); ?></label>
 				<input type="text" name="new_term_name" required />
 				<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add New Pricelist', 'sell_media' ); ?>" />
 				<input type="hidden" name="sell-media-price-list-submit" value="true" />
@@ -215,36 +216,42 @@ class Sell_Media_Price_Listings_Tabs {
 	<?php }
 
 	function save_data( $redirect_url ) {
+
+		if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) &&  !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') )
+		{
+			wp_die( sprintf("Unauthorized Access"));
+		}
 		// Save new pricelist.
 		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
 			if ( ! term_exists( $_POST['new_term_name'], $this->taxonomy ) ) {
-				$term = wp_insert_term( $_POST['new_term_name'], $this->taxonomy );
+				$term = wp_insert_term( esc_attr($_POST['new_term_name']), $this->taxonomy );
 				$parent_term_id = $term['term_id'];
 			} else {
-				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", $_POST['new_term_name'] ) );
+				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", esc_attr($_POST['new_term_name']) ) );
 			}
-		} else {
+		} 
+		else {
 			// Update pricelists.
 			$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
 			if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
 				if ( 0 !== $parent_term_id ) {
 					wp_update_term( $parent_term_id, $this->taxonomy, array(
-						'name' => $_POST['term_name'],
+						'name' => esc_attr($_POST['term_name']),
 					));
 				}
 			}
 
 			if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
 				foreach ( $_POST['terms_children'] as $term_id => $data ) {
-					$term_id = (int) $term_id;
+					$term_id = (int) intval($term_id);
 					if ( '' !== $data['name'] ) {
 						wp_update_term( $term_id, $this->taxonomy, array(
-							'name' => $data['name'],
-							'description' => $data['description'],
+							'name' => (isset($data['name'])) ? __($data['name'], 'sell_media' ) : '',
+							'description' => (isset($data['description'])) ? __($data['description'], 'sell_media' ) : '',
 						));
-						update_term_meta( $term_id, 'width', $data['width'] );
-						update_term_meta( $term_id, 'height', $data['height'] );
-						update_term_meta( $term_id, 'price', $data['price'] );
+						update_term_meta( $term_id, 'width', esc_attr($data['width']) );
+						update_term_meta( $term_id, 'height', esc_attr($data['height']) );
+						update_term_meta( $term_id, 'price', esc_attr($data['price']) );
 					}
 				}
 			}
@@ -265,22 +272,22 @@ class Sell_Media_Price_Listings_Tabs {
 					if ( '' !== $data['name'] ) {
 
 						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
-							$term    = get_term_by( 'name', $data['name'], $this->taxonomy );
-							$term_id = ( isset( $term->term_id ) ) ? $term->term_id : false;
+							$term    = get_term_by( 'name', __($data['name'], 'sell_media' ), $this->taxonomy );
+							$term_id = ( isset( $term->term_id ) ) ? intval($term->term_id) : false;
 
 						} else {
 
 							$term    = wp_insert_term( $data['name'], $this->taxonomy, array(
 								'parent' => $parent_term_id,
-								'description' => $data['description'],
+								'description' => __($data['description'], 'sell_media' ),
 							) );
 							$term_id = ! is_wp_error( $term ) ? $term['term_id'] : false;
 						}
 
 						if ( $term_id ) {
-							update_term_meta( $term_id, 'width', $data['width'] );
-							update_term_meta( $term_id, 'height', $data['height'] );
-							update_term_meta( $term_id, 'price', $data['price'] );
+							update_term_meta( $term_id, 'width', esc_attr($data['width']) );
+							update_term_meta( $term_id, 'height', esc_attr($data['height']) );
+							update_term_meta( $term_id, 'price', esc_attr($data['price']) );
 						}
 					}
 				}
@@ -289,6 +296,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 		// Saving settings.
 		if ( isset( $_POST['settings'] ) ){
+
 			$settings = ( array ) sell_media_get_plugin_options();			
 			$settings = array_merge( $settings, $_POST['settings'] );
 			$options_name = sell_media_get_current_plugin_id() . '_options';
@@ -303,7 +311,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 	function delete_pricelist( $redirect_url ) {
 		// Check if request is for delete and parent term is set.
-		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] ) {
+		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] || !isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') ) {
 			return;
 		}
 

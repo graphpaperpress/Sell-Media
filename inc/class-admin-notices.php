@@ -22,8 +22,6 @@ Class SellMediaAdminNotices {
         $this->settings = sell_media_get_plugin_options();
 
         add_action( 'admin_notices', array( &$this, 'admin_notices' ) );
-        add_action( 'set_site_transient_update_plugins', array( &$this, 'delete_transients' ) );
-
     }
 
     /**
@@ -53,12 +51,7 @@ Class SellMediaAdminNotices {
             /**
              * PayPal email
              */
-            /*if ( empty( $this->settings->paypal_email ) ){
-                $notices[] = array(
-                    'slug' => 'paypal-email',
-                    'message' => sprintf( __( 'Please set a PayPal email in your <a href="%1$s">payment settings</a>.', 'sell_media' ), esc_url( admin_url( 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_payment_settings' ) ) )
-                );
-            }*/
+          
 
             /**
              * Updates availalble
@@ -171,16 +164,5 @@ Class SellMediaAdminNotices {
 
         return $plugin_names;
 
-    }
-
-    /**
-     * Delete transients if plugins are updated
-     *
-     * @since 2.0.3
-     * @return void
-     */
-    public function delete_transients(){
-        delete_transient( 'sell_media_get_installed_plugins' );
-        delete_transient( 'sell_media_get_newest_plugins' );
     }
 }

@@ -68,7 +68,7 @@ function sell_media_scripts( $hook ) {
 	wp_localize_script( 'sell_media', 'sell_media', array(
 		'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
 		'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
-		'site_name' => esc_html( get_bloginfo( 'name' ) ),
+		'site_name' => __( get_bloginfo( 'name' ) ),
 		'site_url' => esc_url( site_url() ),
 		'checkout_url' => esc_url( get_permalink( $checkout_page ) ),
 		'currency_symbol' => empty( $settings->currency ) ? 'USD' : $settings->currency,
@@ -102,7 +102,8 @@ function sell_media_scripts( $hook ) {
 		'remove_text' => __( 'Remove from Lightbox', 'sell_media' ),
 		'save_text' => __( 'Save to Lightbox', 'sell_media' ),
 		'currencies' => sell_media_currencies(),
-        'thumbnail_layout' => $settings->thumbnail_layout
+        'thumbnail_layout' => $settings->thumbnail_layout,
+		'_nonce' => wp_create_nonce('sell_media_ajax-nonce')
 	) );
 
 	do_action( 'sell_media_scripts_hook' );

@@ -457,7 +457,7 @@ function sell_media_init_settings() {
 			"tab" => "sell_media_general_settings",
 			"name" => "post_type_slug",
 			"title" => __("Post Type Slug","sell_media"),
-			'description' => sprintf( esc_html__( 'The post type slug creates the archive page that contains all of your products. You can change the slug here to whatever is most relevant to your store (for example &quot;photos&quot; or &quot;videos&quot;). By default, the slug is set to "items." Add this URL to your menu to create a link to your store. Currently, your products will appear at this url: %s', 'sell_media' ), '<a href="' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '" target="_blank">' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '</a>' ),
+			'description' => sprintf( __( 'The post type slug creates the archive page that contains all of your products. You can change the slug here to whatever is most relevant to your store (for example &quot;photos&quot; or &quot;videos&quot;). By default, the slug is set to "items." Add this URL to your menu to create a link to your store. Currently, your products will appear at this url: %s', 'sell_media' ), '<a href="' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '" target="_blank">' . esc_url( get_post_type_archive_link( 'sell_media_item' ) ) . '</a>' ),
 			"section" => "general_plugin_section_1",
 			"since" => "1.0",
 			"id" => "general_plugin_section_1",
@@ -580,20 +580,7 @@ function sell_media_init_settings() {
 			"default" => "",
 			"valid_options" => sell_media_settings_price_group('price-group')
 			),
-		// Payment Tab
-		/*"paypal_email" => array(
-			"tab" => "sell_media_payment_settings",
-			"name" => "paypal_email",
-			"title" => __("PayPal Email Address", "sell_media"),
-			'description' => __( 'Add the email address associated with your PayPal account above.', 'sell_media' ),
-			"default" => "",
-			"section" => "payment_section_paypal",
-			"since" => "1.0",
-			"default" => "",
-			"id" => "payment_section_paypal",
-			"type" => "text",
-			"sanitize" => "html"
-			),*/
+
 		"currency" => array(
 			"tab" => "sell_media_payment_settings",
 			"name" => "currency",

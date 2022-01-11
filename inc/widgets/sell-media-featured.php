@@ -13,8 +13,9 @@
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		$categoryNumber = empty($instance['categoryNumber']) ? '' : $instance['categoryNumber'];
 		extract($args);
+	
 		echo $before_widget;
-
+	
 		if ( $title )
 			echo $before_title . $title . $after_title;
 
@@ -109,13 +110,13 @@
 			}
 		endif;
 		?>
-		<p><label for="<?php echo $this->get_field_id('categoryNumber') ?>"><?php _e( ' Select Collection', 'sell_media'); ?>: </label>
-		<select id="<?php echo $this->get_field_id('categoryNumber'); ?>" name="<?php echo $this->get_field_name('categoryNumber'); ?>" value="<?php echo $categoryNumber; ?>">
-			<option value="" <?php if($categoryNumber == '') echo 'selected="selected"'; ?>><?php _e( 'All Collections', 'sell_media'); ?></option>
+		<p><label for="<?php _e($this->get_field_id('categoryNumber'),'sell_media') ?>"><?php _e( ' Select Collection', 'sell_media'); ?>: </label>
+		<select id="<?php _e($this->get_field_id('categoryNumber'),'sell_media'); ?>" name="<?php _e($this->get_field_name('categoryNumber'),'sell_media'); ?>" value="<?php _e($categoryNumber,'sell_media'); ?>">
+			<option value="" <?php if($categoryNumber == '') _e('selected="selected"','sell_media'); ?>><?php _e( 'All Collections', 'sell_media'); ?></option>
 				<?php
 				if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
 				 foreach ($productTerms as $term) : ?>
-					<option value="<?php echo $term->slug; ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo $term->name; ?></option>
+					<option value="<?php  esc_attr_e($term->slug); ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo esc_attr($term->name); ?></option>
 				<?php endforeach; ?>
 				<?php endif; ?>
 		</select>

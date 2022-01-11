@@ -27,6 +27,9 @@ class SellMediaAudioVideo extends SellMediaProducts {
         add_filter( 'wp_get_attachment_url', array( $this, 'change_attachment_url' ), 9, 2 );
         add_action( 'init', array( $this, 'read_protected_file' ) );
         add_action( 'sell_media_before_content', array( $this, 'before_content' ) );
+
+
+       
     }
 
     /**
@@ -54,7 +57,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
     function get_preview( $post_id ){
         if( self::is_video_item( $post_id ) || self::is_audio_item( $post_id ) ){
 
-            $url = get_post_meta( $post_id, 'sell_media_embed_link', true );
+            $url = esc_url(get_post_meta( $post_id, 'sell_media_embed_link', true ));
             if ( '' != $url ) {
                 return wp_oembed_get( esc_url( $url ), array( 'width' => 600 ) );
             }
@@ -69,10 +72,12 @@ class SellMediaAudioVideo extends SellMediaProducts {
      * @param int $post_id ID of post.
      */
     function add_meta_fields( $post ){
-        $embed_url = get_post_meta( $post->ID, 'sell_media_embed_link', true );
+      
+        $embed_url = esc_url(get_post_meta( $post->ID, 'sell_media_embed_link', true ));
         ?>
         <div id="sell-media-embed-link-field" class="sell-media-field" style="display:none;">
-            <label for="sell-media-embed-link"><?php _e( 'Preview URL', 'sell_media' ); ?></label>
+
+        <label for="sell-media-embed-link"><?php _e( 'Preview URL', 'sell_media' ); ?></label>
             <input name="sell_media_embed_link" id="sell-media-embed-link" class="" type="text" placeholder="" value="<?php echo esc_url( $embed_url ); ?>" />
         </div>
         <?php
@@ -84,7 +89,6 @@ class SellMediaAudioVideo extends SellMediaProducts {
      * @return void          
      */
     function save_meta_fields( $post_id ){
-
         if( isset( $_POST['sell_media_embed_link'] ) ){
             update_post_meta( $post_id, 'sell_media_embed_link', esc_url_raw( $_POST['sell_media_embed_link'] ) );
         } 
@@ -95,7 +99,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
      */
     function check_attachment_is_audio_video(){
         if( !is_admin() ){
-            echo 'false';
+            _e('false','sell_media');
             exit;
         }
 
@@ -105,11 +109,11 @@ class SellMediaAudioVideo extends SellMediaProducts {
         $is_video = self::is_attachment_video( $attachment_id );
 
         if( $is_video || $is_audio ){
-            echo 'true';
+            _e('true','sell_media');
             exit;
         }
 
-        echo "false";
+        _e("false",'sell_media');
         exit;
     }
     /**
@@ -140,7 +144,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         $attachment_ids = sell_media_get_attachments ( $post_id );
         if( !empty( $attachment_ids ) ){
             foreach ($attachment_ids as $key => $attachment_id) {
-                return self::is_attachment_video( $attachment_id );
+                return self::is_attachment_video( esc_attr($attachment_id) );
             }
         }
     }
@@ -181,7 +185,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         $attachment_ids = sell_media_get_attachments ( $post_id );
         if( !empty( $attachment_ids ) ){
             foreach ($attachment_ids as $key => $attachment_id) {
-                return self::is_attachment_audio( $attachment_id );
+                return self::is_attachment_audio( esc_attr($attachment_id) );
             }
         }
     }
@@ -277,7 +281,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         if( isset( $_GET['sell_media_id'] ) &&  '' != $_GET['sell_media_id'] && is_user_logged_in() && isset( $_GET['sell_media_attachment_nonce'] ) && current_user_can( 'manage_options' ) ){
 
             // Verfiy nonce.
-            if ( !wp_verify_nonce($_GET['sell_media_attachment_nonce'], 'sell_media_attachment_nonce_action')) {
+            if (!isset($_GET['sell_media_attachment_nonce']) || !wp_verify_nonce($_GET['sell_media_attachment_nonce'], 'sell_media_attachment_nonce_action')) {
                 return;
             }
 

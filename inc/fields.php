@@ -21,15 +21,16 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 	<div class="sell-media-add-to-cart-fields">
 
 		<form id="sell-media-cart-items" class="hide">
-			<input class="item_number" name="item_number" type="text" value="<?php echo absint( $post_id ); ?>" />
-			<input class="item_name" name="item_name" type="text" value="<?php the_title_attribute( 'post=' . $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) echo ', ' . $attachment_id; ?>" />
-			<input class="item_type" name="item_type" type="text" value="<?php echo esc_attr( $type ); ?>" />
-			<input class="item_image" name="item_image" type="text" value="<?php echo sell_media_item_image_src( $post_id, $attachment_id ); ?>" />
-			<input class="item_pgroup" name="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) echo 'original'; ?>" />
+			<input class="item_number" name="item_number" type="text" value="<?php echo esc_attr(absint( $post_id )); ?>" />
+			<input class="item_name" name="item_name" type="text" value="<?php the_title_attribute( 'post=' . $post_id ); ?><?php if ( sell_media_has_multiple_attachments( $post_id ) ) _e(', ' . $attachment_id,'sell_media'); ?>" />
+			<input class="item_type" name="item_type" type="text" value="<?php echo esc_attr($type); ?>" />
+			<input class="item_image" name="item_image" type="text" value="<?php echo esc_url(sell_media_item_image_src( $post_id, $attachment_id )); ?>" />
+			<input class="item_pgroup" name="item_pgroup" type="text" value="<?php if ( ! $has_price_group ) _e('original','sell_media'); ?>" />
 			<input class="item_size" name="item_size" type="text" value="<?php if ( ! $has_price_group ) _e( 'Original', 'sell_media' ); ?>" />
 			<input class="item_usage" name="item_usage" type="text" value="<?php _e( 'No license', 'sell_media' ); ?>" />
 			<input class="item_license" name="item_license" type="text" value="0" />
 			<input class="item_attachment" name="item_attachment" type="text" value="<?php echo $attachment_id; ?>" />
+			<?php wp_nonce_field('sell_media_add_cart_action'); ?>
 			<?php do_action( 'sell_media_cart_add_markup_inputs' ); ?>
 		</form>
 
@@ -38,7 +39,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 
 		<?php if ( $is_package ) : ?>
 			<p class="sell-media-package-excerpt"><?php echo sell_media_get_excerpt( $post_id ); ?></p>
-			<p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo get_permalink( $post_id ); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
+			<p class="sell-media-package-excerpt-link sell-media-aligncenter"><a href="<?php echo esc_url(get_permalink( $post_id )); ?>"><?php _e( 'Learn more', 'sell_media' ); ?></a></p>
 		<?php endif; ?>
 
 		<div id="sell_media_download_wrapper" class="sell-media-add-to-cart-download-fields">
@@ -69,7 +70,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 									}
 									$download_sizes = Sell_Media()->images->get_downloadable_size( $post_id, $attachment_id, null, true );
 									if ( array_key_exists( $v['id'], $download_sizes['available'] ) || "original" == $v['id'] ) {
-										echo '<option value="' . $name . '" data-id="' . $v['id'] . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . $dimensions . '">' . $name  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
+										echo '<option value="' . esc_attr($name) . '" data-id="' . esc_attr($v['id']) . '" data-price="' . number_format( $v['price'], 2, '.', '') . '" data-qty="1" data-size="' . esc_attr($dimensions) . '">' . esc_attr($name)  . ': ' . sell_media_get_currency_symbol() . sprintf( '%0.2f', $v['price'] ) . '</option>';
 									}
 								}
 							?>
@@ -77,7 +78,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 					</span>
 				</fieldset>
 			<?php else : ?>
-				<input id="sell_media_item_base_price" type="hidden" value="<?php echo $price; ?>" data-price="<?php echo $price; ?>" data-id="original" data-size="original" />
+				<input id="sell_media_item_base_price" type="hidden" value="<?php echo sanitize_text_field($price); ?>" data-price="<?php echo $price; ?>" data-id="original" data-size="original" />
 			<?php endif; ?>
 
 			<?php do_action( 'sell_media_cart_below_size' ); ?>
@@ -93,7 +94,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 
 		<div class="button-container cf">
 			<p id="sell-media-add-to-cart"><?php echo sell_media_item_add_to_cart_button( $post_id, $attachment_id, null, null, true, $type ); ?></p>
-			<p id="sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id ); ?></p>
+			<p id="sell-media-add-to-lightbox"><?php echo sell_media_lightbox_link( $post_id, $attachment_id); ?></p>
 		</div>
 
 	</div><!-- .sell-media-add-to-cart-fields -->

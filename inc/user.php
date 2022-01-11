@@ -78,12 +78,12 @@ function sell_media_register_form() {
 		if ( 'select' === $field['type'] ) {
 			?>
 			<p>
-				<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( ucwords( $field['name'] ) ); ?><br />
+				<label for="<?php echo  esc_attr( $id ); ?>"><?php echo ucwords( $field['name'] ); ?><br />
 					<select name="<?php echo esc_attr( $id ); ?>" class="input">
 						<?php
 						if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
 							$selected = ( $value === $key ) ? 'selected' : '';
-							echo '<option value="' . $key . '" ' . $selected . '>' . $v . '</option>';
+							echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_attr($v) . '</option>';
 						}
 						?>
 					</select>
@@ -91,7 +91,7 @@ function sell_media_register_form() {
 			</p>
 		<?php } else { ?>
 			<p>
-				<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( ucwords( $field['name'] ) ); ?><br />
+				<label for="<?php echo esc_attr( $id ); ?>"><?php echo ucwords( $field['name'] ); ?><br />
 				<input type="text" name="<?php echo esc_attr( $id ); ?>" id="<?php echo esc_attr( $id ); ?>" class="input" value="<?php echo esc_attr( $value ); ?>" size="25" /></label>
 			</p>
 		<?php }
@@ -109,9 +109,9 @@ function sell_media_registration_errors( $errors, $sanitized_user_login, $user_e
 	foreach ( $fields as $field ) {
 
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
-	
+
 		if ( empty( $_POST[$id] ) || ! empty( $_POST[$id] ) && trim( $_POST[$id] ) == '' ) {
-			$errors->add( $id . '_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'sell_media' ),__( 'You must include a ' . $field['name'] . '.', 'sell_media' ) ) );
+			$errors->add( $id . '_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'sell_media' ),__( 'You must include a ' . esc_attr($field['name']) . '.', 'sell_media' ) ) );
 
 		}
 	}
@@ -130,7 +130,7 @@ function sell_media_user_register( $user_id ) {
 	foreach ( $fields as $field ) {
 
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
-		if ( ! empty( $_POST[$id] ) ) {
+		if ( isset($_POST[$id]) && ! empty( $_POST[$id] ) ) {
 			update_user_meta( $user_id, $id, sanitize_text_field( $_POST[$id] ) );
 		}
 	}
@@ -459,13 +459,15 @@ function sell_media_show_extra_profile_fields( $user ) {
 				echo '<select name="' . esc_attr( $id ) . '" class="input">';
 					if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
 						$selected = ( $value === $key ) ? 'selected' : '';
-						echo '<option value="' . $key . '" ' . $selected . '>' . $v . '</option>';
+						echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_attr($v) . '</option>';
 					}
-				echo '</select>';
+					echo '</select>';
 			} else {
-				echo '<input type="text" name="' . $id . '" id="' . $id . '" value="' . esc_attr( $value ) . '" class="regular-text" /><br />';
+				echo '<input type="text" name="' . esc_attr($id) . '" id="' . esc_attr($id) . '" value="' . esc_attr( $value ) . '" class="regular-text" /><br />';
 			}
-			echo '<span class="description">' . $field['desc'] . '</span>';
+			if(isset($field['desc']) && !empty($field['desc'])) {
+				echo '<span class="description">' . __($field['desc'], 'sell_media') . '</span>';
+			}
 			echo '</td>';
 			echo '</tr>';
 		}

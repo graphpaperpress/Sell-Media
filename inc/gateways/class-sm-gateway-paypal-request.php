@@ -82,7 +82,6 @@ class SM_Gateway_PayPal_Request {
         // Before payment process action.
         do_action( 'sell_media_before_payment_process' );
 
-        //check_ajax_referer( 'sell_media_paypal_nonce', 'nonce_security' );
         if ( ! isset($_POST['_nonce']) || ! wp_verify_nonce($_POST['_nonce'], 'sell_media_paypal_nonce')) {
             $_send_data['status'] = false;
             wp_send_json($_send_data);
@@ -157,7 +156,7 @@ class SM_Gateway_PayPal_Request {
 
         $_discount_id = 0;
         if ( isset( $_POST['discount'] ) ) {
-            $_discount_id = $_POST['discount'];
+            $_discount_id = esc_attr($_POST['discount']);
         }
         global $sm_cart;
         $_return_url = apply_filters('sell_media_paypal_return_url', empty( $this->settings->thanks_page ) ? site_url() : esc_url( add_query_arg( array( '_nonce' => wp_create_nonce( 'sell_media_paypal_order_complete_nonce' ) ), get_permalink( $this->settings->thanks_page ) ) ));
@@ -255,7 +254,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            echo json_encode($response->result, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -282,8 +281,8 @@ class SM_Gateway_PayPal_Request {
             $cart[] = $c;
             if ( 'print' == $c['item_type'] ) {
                 $print_ship_flag = 1;
-                $total_print_qty += $c['qty'];
-                $total_print_amount += ($c['price'] * $c['qty']);
+                $total_print_qty += (isset($c['qty'])) ? intval($c['qty']) : 1;
+                $total_print_amount += ($c['price'] * intval($c['qty']));
             }
         }
 
@@ -350,7 +349,7 @@ class SM_Gateway_PayPal_Request {
 
         foreach ( $products as $product ) {
 
-            $product_id = $product['item_id'];
+            $product_id = intval($product['item_id']);
             $license_id = empty( $product['item_license'] ) ? null : $product['item_license'];
             $price_id = empty( $product['item_pgroup'] ) ? null : $product['item_pgroup'];
 
@@ -369,20 +368,8 @@ class SM_Gateway_PayPal_Request {
                 $amount = $amount * $product['qty'];
             }
 
-            // If taxes are enabled, subtract taxes from item
-            // if ( $this->settings->tax ) {
-            // $tax_amount = ( $this->settings->tax_rate * $amount );
-            // $amount = $amount - $tax_amount;
-            // }
-
             // Apply discount
             $amount = apply_filters( 'sell_media_price_filter', $amount, $discount_id, $product['qty'] );
-
-            // If taxes are enabled, add taxes onto newly discounted amount
-            // if ( $this->settings->tax ) {
-            // $tax_amount = ( $this->settings->tax_rate * $amount );
-            // $amount = $amount + $tax_amount;
-            // }
 
             $total += $amount;
         }
@@ -401,7 +388,10 @@ class SM_Gateway_PayPal_Request {
     public function get_product_amount_after_discount( $product, $discount_id ) {
 
         $p = new SellMediaProducts();
-        $product_id = $product['item_id'];
+        if(empty($product)) {
+            return 0;
+        }
+        $product_id = intval($product['item_id']);
         $license_id = empty( $product['item_license'] ) ? null : $product['item_license'];
         $price_id   = empty( $product['item_pgroup'] ) ? null : $product['item_pgroup'];
 
@@ -414,7 +404,7 @@ class SM_Gateway_PayPal_Request {
             // this is either a download without a license or a print, so just verify the price
             $amount = $p->verify_the_price( $product_id, $price_id );
         }
-        $amount = apply_filters( 'sell_media_price_filter', $amount, $discount_id, $product['qty'] );
+        $amount = apply_filters( 'sell_media_price_filter', $amount, $discount_id, intval($product['qty']) );
         return $amount;
     }
 
@@ -446,7 +436,7 @@ class SM_Gateway_PayPal_Request {
                 print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            echo json_encode($response->result, JSON_PRETTY_PRINT);
         }
         return $response;
     }
@@ -481,7 +471,7 @@ class SM_Gateway_PayPal_Request {
                 }
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            echo json_encode($response->result, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -514,7 +504,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT), "\n";
+            echo json_encode($response->result, JSON_PRETTY_PRINT);
         }
         return $response;
     }
@@ -534,9 +524,6 @@ class SM_Gateway_PayPal_Request {
 
             // Authorize order
             if ($_paypal_order_id) {
-
-                // Enable if your intent is "AUTHORIZE"
-                // $_authorize_order_response = $this->authorizeOrder($_paypal_order_id);
 
                 // Capture Approved order
                 $_paypal_order_capture_response = $this->captureOrder($_paypal_order_id);
@@ -577,15 +564,15 @@ class SM_Gateway_PayPal_Request {
                     $total_qty += $item->quantity;
                 }
             }
-            $_billing_details = $_paypal_get_order->result->payer;
-            $_shipping = $_paypal_get_order->result->purchase_units[0]->shipping;
-            $_shipping_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->shipping->value;
-            $_tax_total = $_paypal_get_order->result->purchase_units[0]->amount->breakdown->tax_total->value;
+            $_billing_details = (isset($_paypal_get_order->result->payer)) ? $_paypal_get_order->result->payer : '';
+            $_shipping = (isset($_paypal_get_order->result->purchase_units[0]->shipping)) ? $_paypal_get_order->result->purchase_units[0]->shipping : '';
+            $_shipping_total = (isset($_paypal_get_order->result->purchase_units[0]->amount->breakdown->shipping->value)) ? $_paypal_get_order->result->purchase_units[0]->amount->breakdown->shipping->value : '';
+            $_tax_total = (isset($_paypal_get_order->result->purchase_units[0]->amount->breakdown->tax_total->value)) ? $_paypal_get_order->result->purchase_units[0]->amount->breakdown->tax_total->value : 0;
             $_discount_total = isset( $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value ) ? $_paypal_get_order->result->purchase_units[0]->amount->breakdown->discount->value : 0;
-            $_payer_name = $_billing_details->name->given_name .' '. $_billing_details->name->surname;
+            $_payer_name = esc_attr($_billing_details->name->given_name) .' '. esc_attr($_billing_details->name->surname);
             $payment_id = wp_insert_post(
                 array(
-                    'post_title'  => $_billing_details->email_address,
+                    'post_title'  => sanitize_text_field($_billing_details->email_address),
                     'post_status' => 'publish',
                     'post_type'   => 'sell_media_payment',
                 )
@@ -601,19 +588,19 @@ class SM_Gateway_PayPal_Request {
                 // take address details from billing details if not exist then it will take from shipping details
                 if (isset($_billing_details->address->address_line_1)) {
 
-                    $_address_street = $_billing_details->address->address_line_1;
-                    $_city = $_billing_details->address->admin_area_2;
-                    $_state = $_billing_details->address->admin_area_1;
-                    $_postal_code = $_billing_details->address->postal_code;
-                    $_country_code = $_billing_details->address->country_code;
+                    $_address_street = sanitize_text_field($_billing_details->address->address_line_1);
+                    $_city = sanitize_text_field($_billing_details->address->admin_area_2);
+                    $_state = sanitize_text_field($_billing_details->address->admin_area_1);
+                    $_postal_code = sanitize_text_field($_billing_details->address->postal_code);
+                    $_country_code = sanitize_text_field($_billing_details->address->country_code);
 
                 } else if(isset($_paypal_get_order->result->purchase_units[0]->shipping)){
 
-                    $_address_street = $_shipping->address->address_line_1;
-                    $_city = $_shipping->address->admin_area_2;
-                    $_state = $_shipping->address->admin_area_1;
-                    $_postal_code = $_shipping->address->postal_code;
-                    $_country_code = $_shipping->address->country_code;
+                    $_address_street = sanitize_text_field($_shipping->address->address_line_1);
+                    $_city = sanitize_text_field($_shipping->address->admin_area_2);
+                    $_state = sanitize_text_field($_shipping->address->admin_area_1);
+                    $_postal_code = sanitize_text_field($_shipping->address->postal_code);
+                    $_country_code = sanitize_text_field($_shipping->address->country_code);
 
                 }
 
@@ -720,8 +707,8 @@ class SM_Gateway_PayPal_Request {
                     $refresh_url = isset( $this->settings->thanks_page ) ? get_permalink( $this->settings->thanks_page ) : home_url( );
                     $html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg(
                                 array(
-                                    'token' => $_GET['token'],
-                                    'PayerID' => $_GET['PayerID'],
+                                    'token' => (isset($_GET['token'])) ? esc_attr($_GET['token']) : '',
+                                    'PayerID' => (isset($_GET['PayerID'])) ? esc_attr($_GET['PayerID']) : '',
                                 ),
                                 $refresh_url
                             )
@@ -778,15 +765,15 @@ class SM_Gateway_PayPal_Request {
             } else if ( empty( $product['item_license'] ) || (int) $product['item_license'] < 1) {
                 $license_desc = null;
                 $license_name = null;
-                $amount = $p->verify_the_price( $product['item_id'], $product['item_pgroup'] );
+                $amount = $p->verify_the_price( esc_attr($product['item_id']), esc_attr($product['item_pgroup']) );
             } else {
                 $term_obj = get_term_by( 'id', $product['item_license'], 'licenses' );
                 $license_desc = empty( $term_obj ) ? null : $term_obj->description;
                 $license_name = empty( $term_obj ) ? null : $term_obj->name;
-                $amount = $p->verify_the_price( $product['item_id'], $product['item_pgroup'] ) + $p->markup_amount( $product['item_id'], $product['item_pgroup'], $product['item_license'] );
+                $amount = $p->verify_the_price( esc_attr($product['item_id']), esc_attr($product['item_pgroup']) ) + $p->markup_amount( esc_attr($product['item_id']), esc_attr($product['item_pgroup']), esc_attr($product['item_license']) );
             }
             if ( $product['qty'] > 1 ) {
-                $total = $amount * $product['qty'];
+                $total = $amount * intval($product['qty']);
             } else {
                 $total = $amount;
             }
@@ -796,13 +783,13 @@ class SM_Gateway_PayPal_Request {
 
             $tmp_products = array(
                 'name'        => get_the_title( $product['item_id'] ),
-                'id'          => $product['item_id'],
-                'attachment'  => $product['attachment'],
-                'type'        => $product['item_type'],
+                'id'          => intval($product['item_id']),
+                'attachment'  => (isset($product['attachment'])) ? $product['attachment'] : '',
+                'type'        => (isset($product['item_type'])) ? $product['item_type'] : '',
                 'size'        =>
                     array(
-                        'name'        => isset( $product['item_size'] ) ? $product['item_size'] : '',
-                        'id'          => $product['item_pgroup'],
+                        'name'        => isset( $product['item_size'] ) ? esc_attr($product['item_size']) : '',
+                        'id'          => (isset($product['item_pgroup'])) ? esc_attr($product['item_pgroup']) : '',
                         'amount'      => $amount,
                         'description' => null,
                     ),
@@ -813,7 +800,7 @@ class SM_Gateway_PayPal_Request {
                         'description' => $license_desc,
                         'markup'      => (isset($product['item_license']) && !empty( $product['item_license'] )) ? str_replace( '%', '', get_term_meta( $product['item_license'], 'markup', true ) ) : '',
                     ),
-                'qty'      => $product['qty'],
+                'qty'      => intval($product['qty']),
                 'total'    => $total,
             );
             if ( isset( $product['shipping_amount'] ) && !empty( $product['shipping_amount'] ) ) {

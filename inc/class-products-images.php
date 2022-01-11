@@ -416,7 +416,7 @@ class SellMediaImages extends SellMediaProducts {
 	 */
 	public function get_orientation( $post_id = null, $orientation = null ) {
 
-		$attachment_id = get_post_meta( $post_id, '_sell_media_attachment_id', true );
+		$attachment_id = intval(get_post_meta( $post_id, '_sell_media_attachment_id', true ));
 		$meta = wp_get_attachment_metadata( $attachment_id, true );
 
 		if ( ! empty( $meta ) ) {

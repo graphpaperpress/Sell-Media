@@ -17,43 +17,48 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sell_media_add_to_cart() {
 	global $sm_cart;
 
+	if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) && !wp_verify_nonce($_POST['_wpnonce'], 'sell_media_add_cart_action')) {
+		echo 0;
+		exit;
+	}
+	
 	// Check if item number is there.
 	if ( ! empty( $_POST ) && isset( $_POST['item_number'] ) ) {
-
+		
 		$qty = 1;
 		$attrs = array();
 		$item_number = absint( $_POST['item_number'] );
 
 		if( isset( $_POST['item_name'] ) && '' != $_POST['item_name'] ){
-			$attrs['item_name'] = sanitize_text_field( $_POST['item_name'] );
+			$attrs['item_name'] = esc_attr(sanitize_text_field( $_POST['item_name'] ));
 		}
 
 		if( isset( $_POST['item_type'] ) && '' != $_POST['item_type'] ){
-			$attrs['item_type'] = sanitize_text_field( $_POST['item_type'] );
+			$attrs['item_type'] = esc_attr(sanitize_text_field( $_POST['item_type'] ));
 		}
 
 		if( isset( $_POST['item_image'] ) && '' != $_POST['item_image'] ){
-			$attrs['item_image'] = sanitize_text_field( $_POST['item_image'] );
+			$attrs['item_image'] = esc_url(sanitize_text_field( $_POST['item_image'] ));
 		}
 
 		if( isset( $_POST['item_pgroup'] ) && '' != $_POST['item_pgroup'] ){
-			$attrs['item_pgroup'] = sanitize_text_field( $_POST['item_pgroup'] );
+			$attrs['item_pgroup'] = esc_attr(sanitize_text_field( $_POST['item_pgroup'] ));
 		}
 
 		if( isset( $_POST['item_size'] ) && '' != $_POST['item_size'] ){
-			$attrs['item_size'] = sanitize_text_field( $_POST['item_size'] );
+			$attrs['item_size'] = esc_attr(sanitize_text_field( $_POST['item_size'] ));
 		}
 
 		if( isset( $_POST['item_usage'] ) && '' != $_POST['item_usage'] ){
-			$attrs['item_usage'] = sanitize_text_field( $_POST['item_usage'] );
+			$attrs['item_usage'] = esc_attr(sanitize_text_field( $_POST['item_usage'] ));
 		}
 
 		if( isset( $_POST['item_license'] ) && '' != $_POST['item_license'] ){
-			$attrs['item_license'] = sanitize_text_field( $_POST['item_license'] );
+			$attrs['item_license'] = esc_attr(sanitize_text_field( $_POST['item_license'] ));
 		}
 
 		if( isset( $_POST['item_attachment'] ) && '' != $_POST['item_attachment'] ){
-			$attrs['item_attachment'] = absint( sanitize_text_field( $_POST['item_attachment'] ) );
+			$attrs['item_attachment'] = esc_attr(absint( sanitize_text_field( $_POST['item_attachment'] ) ));
 		}
 
 		$attrs = apply_filters( 'sell_media_cart_item_attrs', $attrs );
@@ -90,8 +95,7 @@ function sell_media_update_cart(){
 	if( !empty( $_POST ) && isset( $_POST['cart_item_id'] ) ){
 
 		$qty = intval($_POST['qty']);
-		$cart_item_id = sanitize_text_field( $_POST['cart_item_id'] );
-
+		$cart_item_id = esc_attr(sanitize_text_field( $_POST['cart_item_id'] ));
 		// Check if cart item id is empty.
 		if( '' != $cart_item_id ){
 
@@ -159,11 +163,6 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 	if( 'newest' == $param['tab'] ){
 		$args['order'] = 'DESC';
 		$args['orderby'] = 'date';
-	}
-	else if( 'most-popular' == $param['tab'] ){
-		$args['order'] = 'DESC';
-		$args['meta_key'] = '_sell_media_post_views_count';
-		$args['orderby'] = 'meta_value_num';
 	}
 	else if( 'most-popular' == $param['tab'] ){
 		$args['order'] = 'DESC';

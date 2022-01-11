@@ -121,10 +121,15 @@ function sell_media_lightbox_query() {
 	if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
 		$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
 	}
-
+	
 	// Check if items in lightbox
 	if ( isset( $items ) ) {
 
+		array_walk($items, function(&$value, &$key) {
+			$value['post_id'] = intval($value['post_id']);
+			$value['attachment_id'] = intval($value['attachment_id']);
+		});
+		
 		$i = 0;
 
 		// loop over items from 'sell_media_lightbox' cookie
@@ -133,8 +138,8 @@ function sell_media_lightbox_query() {
 			// Old cookies were stored as simple array of ids
 			// New cookies are stored as a multidimensional array of ids
 			// so that we can support attachments (galleries)
-			$post_id        = ( ! empty( $item['post_id'] ) ) ? $item['post_id'] : $item;
-			$attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? $item['attachment_id'] : sell_media_get_attachment_id( $post_id );
+			$post_id        = ( ! empty( $item['post_id'] ) ) ? intval($item['post_id']) : intval($item);
+			$attachment_id  = ( ! empty( $item['attachment_id'] ) ) ? intval($item['attachment_id']) : intval(sell_media_get_attachment_id( $post_id ));
 
 			$i++;
 			$class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
@@ -168,19 +173,30 @@ function sell_media_lightbox_query() {
  */
 function sell_media_update_lightbox() {
 
+	$_send_data = array();
+	if (!isset($_POST['_nonce']) || isset($_POST['_nonce']) && !wp_verify_nonce($_POST['_nonce'], 'sell_media_ajax-nonce')) {
+		$_send_data['status'] = false;
+		wp_send_json($_send_data);
+		die();
+	}
 	// id is sent over in ajax request
 	if ( isset( $_POST['post_id'] ) && isset( $_POST['attachment_id'] ) ) {
-
+		
 		// build lightbox item array
 		$item = array(
-			'post_id'       => $_POST['post_id'],
-			'attachment_id' => $_POST['attachment_id'],
+			'post_id'       => (isset($_POST['post_id']) && !empty($_POST['post_id'])) ? intval($_POST['post_id']) : 0,
+			'attachment_id' => (isset($_POST['attachment_id']) && !empty($_POST['attachment_id'])) ? intval($_POST['attachment_id']) : 0,
 		);
-
+		
 		// check if cookie already exists
 		if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
 			$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
-
+		
+			array_walk($items, function(&$value, &$key) {
+				$value['post_id'] = intval($value['post_id']);
+				$value['attachment_id'] = intval($value['attachment_id']);
+			});
+			
 			// if not in lightbox, add it and change to say remove
 			if ( ! in_array( $item, $items ) ) {
 

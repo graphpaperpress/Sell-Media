@@ -48,7 +48,8 @@ function sell_media_set_default_terms( $post_id, $post=null, $term_ids=null ){
 
 	$taxonomy = 'licenses';
 	$default_terms = array();
-
+	$term_ids = array_map( 'intval', $term_ids);
+	
 	foreach( $term_ids as $term_id ){
 		$tmp_term_id = get_term_by( 'id', $term_id, $taxonomy );
 
@@ -106,7 +107,7 @@ function sell_media_get_default_terms(){
  * @since 0.1
  */
 function sell_media_license_description(){
-	echo __( 'When a buyer decides to purchase a item from your site, they must choose a license which most closely identifies their intended use of the item.', 'sell_media' );
+	_e( 'When a buyer decides to purchase a item from your site, they must choose a license which most closely identifies their intended use of the item.', 'sell_media' );
 }
 add_action( 'licenses_pre_add_form', 'sell_media_license_description' );
 
@@ -170,7 +171,7 @@ function sell_media_the_markup_slider( $tag ){
 	<div class="sell_media-slider-container">
 		<div id="markup_slider"></div>
 		<div class="sell_media-price-container">
-			<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo get_term_meta($term_id, 'markup', true); ?>" size="40" />
+			<input name="meta_value[markup]" class="markup-target" type="text" value="<?php _e(get_term_meta($term_id, 'markup', true),'sell_media'); ?>" size="40" />
 		</div>
 		<p class="description">
 			<?php _e( 'Increase the price of a item if a buyer selects this license by dragging the slider above.', 'sell_media' ); ?>
@@ -188,10 +189,9 @@ function sell_media_the_markup_slider( $tag ){
 
 			printf(
 				__( ' The %1$s of %2$s with %3$s markup is %4$s', 'sell_media' ),
-				'<a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_general_settings
-				">default item price</a>',
+				'<a href="' . admin_url() . 'edit.php?post_type=sell_media_item&page=sell_media_plugin_options&tab=sell_media_general_settings">default item price</a>',
 				'<strong>' . $price . '</strong>',
-				'<strong><span class="markup-target">' . $default_markup . '</span></strong>',
+				'<strong><span class="markup-target">' . esc_attr($default_markup) . '</span></strong>',
 				'<strong>' . sell_media_get_currency_symbol() . '<span class="menu-cart-total"></span></strong>'
 				);
 			?>
@@ -216,6 +216,7 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
 		<td>
 			<input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
 			<span class="description"><label for="meta_value[default]"><?php echo $desc; ?></label></span>
+			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>
 <?php }
@@ -227,6 +228,10 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
  * @since 0.1
  */
 function sell_media_save_extra_taxonomy_fields( $term_id ) {
+	
+	if(!isset($_POST['taxonomy_wpnonce']) || isset($_POST['taxonomy_wpnonce']) && !wp_verify_nonce($_POST['taxonomy_wpnonce'], 'sell_media_taxonomy_admin_nonce')) {
+		return;
+	}
 
 	if ( ! isset( $_POST['meta_value']['default'] ) ) {
 		update_term_meta( $term_id, 'default', 'off');
@@ -239,7 +244,8 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 
 	if ( isset( $_POST['meta_value'] ) ) {
 		$cat_keys = array_keys( $_POST['meta_value'] );
-
+		$cat_keys = array_map( 'esc_attr', $cat_keys);
+	
 		foreach ( $cat_keys as $key ) {
 			if ( ! empty( $_POST['meta_value'][$key] ) ) {
 				if ( 'related_keywords' === $key ) {
@@ -303,7 +309,7 @@ function sell_media_collection_icon_field( $icon_id=null ){
 		$image .= '<br /><a href="javascript:void(0);" class="upload_image_remove">Remove</a>';
 	}
 	?>
-	<input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php print $icon_id; ?>" />
+	<input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php _e(sanitize_text_field($icon_id),'sell_media'); ?>" />
 	<input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
 	<input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media'); ?>" />
 	<div class="upload_image_preview" style="display: block;">
@@ -348,7 +354,8 @@ function sell_media_add_collection_field( $tag ){
 		<input name="meta_value[collection_password]" type="text" id="meta_value[]" />
 		<p class="description"><?php _e( 'This will password protect all items in this collection.', 'sell_media' ); ?></p>
 	</div>
-<?php }
+	<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce');
+}
 add_action( 'collection_add_form_fields', 'sell_media_add_collection_field' );
 
 
@@ -365,18 +372,10 @@ function sell_media_edit_collection_password( $tag ){
 
 	$child_term = get_term( $term_id, 'collection' );
 
-	//if ( $child_term->parent == 0 ){
 		$description = __( 'Password protect all items in this collection', 'sell_media' );
 		$html_extra = null;
 		$password = $password = get_term_meta( $term_id, 'collection_password', true );
 		$password = get_term_meta( $term_id, 'collection_password', true );
-   /* } else {
-		$parent = get_term( $child_term->parent, 'collection' );
-		$password = get_term_meta( $parent->term_id, 'collection_password', true );
-		$description = __('This colleciton inherits the password set in its parent collection: ', 'sell_media') . ' <a href="' . admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item') . '">' . $parent->name . '</a>. ';
-		$description .= __('To edit the password of this collection you must change the parent password.', 'sell_media');
-		$html_extra = 'class="disabled" disabled ';
-	}*/
 
 	?>
 	<tr class="form-field">
@@ -384,7 +383,7 @@ function sell_media_edit_collection_password( $tag ){
 		<div class="updated">
 			<p>
 				<?php _e( 'This collection will inherit the password of the parent collection:', 'sell_media' ); ?>
-				<a href="<?php echo admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item'); ?>"><?php echo $parent->name; ?></a>
+				<a href="<?php echo esc_url(admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item')); ?>"><?php echo esc_attr($parent->name); ?></a>
 			</p>
 		</div>
 		<?php endif; ?>
@@ -392,8 +391,9 @@ function sell_media_edit_collection_password( $tag ){
 			<label for="collection_password"><?php _e( 'Password', 'sell_media' ); ?></label>
 		</th>
 		<td>
-			<input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print $password ?>" <?php echo $html_extra; ?> />
-			<p class="description"><?php echo $description; ?></p>
+			<input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print sanitize_text_field($password) ?>" <?php echo $html_extra; ?> />
+			<p class="description"><?php echo esc_attr($description); ?></p>
+			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>
 <?php }
@@ -465,7 +465,9 @@ function sell_media_add_related_keywords( ) { ?>
 		<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="" />
 			<p class="description"><?php _e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
 	</div>
-	<?php }
+	<?php 
+	wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce');
+}
 add_action( 'keywords_add_form_fields', 'sell_media_add_related_keywords' );
 
 /**
@@ -483,8 +485,9 @@ function sell_media_edit_related_keywords( $tag ) {
 			<label for="meta_value[related_keywords]"><?php _e( 'Related Keywords', 'sell_media' ); ?></label>
 		</th>
 		<td>
-			<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="<?php echo $terms; ?>" />
+			<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="<?php _e(sanitize_text_field($terms),'sell_media'); ?>" />
 			<p class="description"><?php _e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
+			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>
 <?php }
@@ -529,7 +532,7 @@ function sell_media_format_related_search_results( $terms ) {
 
 	if ( $related_terms ) {
 		$html .= '<div class="sell-media-related-keywords">';
-		$html .= '<span class="sell-media-related-keywords-title">' . esc_html__( 'Related Keywords', 'sell_media' ) . ':</span>';
+		$html .= '<span class="sell-media-related-keywords-title">' . __( 'Related Keywords', 'sell_media' ) . ':</span>';
 		$html .= '<ul class="sell-media-related-keywords-list">';
 		foreach ( $related_terms as $term ) {
 

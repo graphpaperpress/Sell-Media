@@ -51,8 +51,8 @@ class ScalarComparator extends Comparator
         // always compare as strings to avoid strange behaviour
         // otherwise 0 == 'Foobar'
         if (is_string($expected) || is_string($actual)) {
-            $expectedToCompare = (string) $expectedToCompare;
-            $actualToCompare   = (string) $actualToCompare;
+            $expectedToCompare = (string) __($expectedToCompare);
+            $actualToCompare   = (string) __($actualToCompare);
 
             if ($ignoreCase) {
                 $expectedToCompare = strtolower($expectedToCompare);

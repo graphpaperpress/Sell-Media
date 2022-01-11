@@ -31,8 +31,7 @@ Class SellMediaMail {
 	 * @return string the new email address
 	 */
 	public function from_email() {
-		$email = ( $this->settings->from_email ) ? $this->settings->from_email : get_bloginfo( 'admin_email' );
-
+		$email = ( isset($this->settings->from_email) && $this->settings->from_email ) ? $this->settings->from_email : get_bloginfo( 'admin_email' );
 		return $email;
 	}
 
@@ -41,7 +40,7 @@ Class SellMediaMail {
 	 * @return string the new from name
 	 */
 	public function from_name() {
-		$name = ( $this->settings->from_name ) ? $this->settings->from_name : get_bloginfo( 'name' );
+		$name = ( isset($this->settings->from_name) && $this->settings->from_name ) ? $this->settings->from_name : get_bloginfo( 'name' );
 
     	return $name;
 	}

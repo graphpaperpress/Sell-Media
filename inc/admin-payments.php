@@ -34,8 +34,8 @@ function sell_media_add_payment_meta_boxes(){
 
 	if ( $screen->id == 'sell_media_payment' ) {
 		global $post;
-		$paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
-		$stripe_args = get_post_meta( $post->ID, '_stripe_args', true );
+		$paypal_args = __(get_post_meta( $post->ID, '_paypal_args', true ));
+		$stripe_args = __(get_post_meta( $post->ID, '_stripe_args', true ));
 		if ( ! empty( $paypal_args ) || ! empty( $stripe_args ) ){
 			add_meta_box(
 				'meta_field_details',
@@ -124,22 +124,22 @@ function sell_media_payment_additional_purchase_details( $post ){
 								<td>
 									<ul>
 										<?php if ( $value['name'] ) : ?>
-											<li><?php _e( 'Name', 'sell_media' ); ?>: <?php echo $value['name']; ?></li>
+											<li><?php _e( 'Name', 'sell_media' ); ?>: <?php echo esc_attr($value['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['id'] ) : ?>
-											<li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php echo admin_url(); ?>post.php?post=<?php echo $value['id']; ?>&amp;action=edit"><?php echo $value['id']; ?></a></li>
+											<li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php echo esc_url(admin_url()); ?>post.php?post=<?php echo $value['id']; ?>&amp;action=edit"><?php echo esc_attr($value['id']); ?></a></li>
 										<?php endif; ?>
 										<?php if ( $value['type'] ) : ?>
-											<li><?php _e( 'Type', 'sell_media' ); ?>: <?php echo $value['type']; ?></li>
+											<li><?php _e( 'Type', 'sell_media' ); ?>: <?php echo esc_attr($value['type']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['size']['name'] ) : ?>
-											<li><?php _e( 'Size', 'sell_media' ); ?>: <?php echo $value['size']['name']; ?></li>
+											<li><?php _e( 'Size', 'sell_media' ); ?>: <?php echo esc_attr($value['size']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['license']['name'] ) : ?>
-											<li><?php _e( 'License', 'sell_media' ); ?>: <?php echo $value['license']['name']; ?></li>
+											<li><?php _e( 'License', 'sell_media' ); ?>: <?php echo esc_attr($value['license']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['qty'] ) : ?>
-											<li><?php _e( 'Qty', 'sell_media' ); ?>: <?php echo $value['qty']; ?></li>
+											<li><?php _e( 'Qty', 'sell_media' ); ?>: <?php echo esc_attr($value['qty']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['total'] ) : ?>
 											<li><?php _e( 'Subtotal', 'sell_media' ); ?>: <?php echo sell_media_get_currency_symbol(); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
@@ -171,8 +171,8 @@ function sell_media_payment_additional_purchase_details( $post ){
  */
 function sell_media_payment_gateway_details( $post ){
 
-	$paypal_args = get_post_meta( $post->ID, '_paypal_args', true );
-	$stripe_args = get_post_meta( $post->ID, '_stripe_args', true );
+	$paypal_args = __(get_post_meta( $post->ID, '_paypal_args', true ));
+	$stripe_args = __(get_post_meta( $post->ID, '_stripe_args', true ));
 	if ( $paypal_args ) {
 		$arguments = $paypal_args;
 		$gateway = __( 'PayPal', 'sell_media' );
@@ -213,7 +213,6 @@ function sell_media_reports_callback_fn(){
 
 		<div class="clear"></div>
 
-		<?php ob_start(); ?>
 		<script type="text/javascript">
 			google.load("visualization", "1", {packages:["corechart"]});
 			// Sales Chart
@@ -227,7 +226,7 @@ function sell_media_reports_callback_fn(){
 					$num_of_days = apply_filters( 'sell_media_earnings_per_day_days', 30 ); // show payments for the last 30 days
 					$i = $num_of_days;
 					while( $i > 1 ) :
-						$day_time   = strtotime( '-' . $num_of_days - $i . ' days', time() );
+						$day_time   = strtotime( "-" . esc_attr($num_of_days - $i) . "days", time() );
 						$day        = date( 'd', $day_time ) + 1;
 						$month      = date( 'n', $day_time ) + 1;
 						$year       = date( 'Y', $day_time );
@@ -250,10 +249,8 @@ function sell_media_reports_callback_fn(){
 			}
 		</script>
 		<div id="daily_earnings_chart_div" class="earnings_chart"></div>
-		<?php echo ob_get_clean(); ?>
 
 
-		<?php ob_start(); ?>
 		<script type="text/javascript">
 			google.load("visualization", "1", {packages:["corechart"]});
 			// Sales Chart
@@ -283,10 +280,8 @@ function sell_media_reports_callback_fn(){
 			}
 		</script>
 		<div id="monthly_earnings_chart_div" class="earnings_chart"></div>
-		<?php echo ob_get_clean(); ?>
 
 
-		<?php ob_start(); ?>
 		<script type="text/javascript">
 			google.load("visualization", "1", {packages:["corechart"]});
 			// Sales Chart
@@ -319,7 +314,6 @@ function sell_media_reports_callback_fn(){
 			}
 		</script>
 		<div id="annual_earnings_chart_div" class="earnings_chart"></div>
-		<?php echo ob_get_clean(); ?>
 
 	</div>
 <?php }
@@ -380,16 +374,16 @@ function sell_media_payment_header( $columns ){
 	// Our next column header is the 'id', we use this,
 	// to ensure that our head has the class 'column-id'
 	if ( ! isset( $columns_local['id'] ) )
-		$columns_local['id'] = "Payment ID";
+		$columns_local['id'] = __("Payment ID", "sell_media");
 
 	if ( ! isset( $columns_local['products'] ) )
-		$columns_local['products'] = "Products";
+		$columns_local['products'] = __("Products", "sell_media");
 
 	if ( ! isset( $columns_local['customer'] ) )
-		$columns_local['customer'] = "Customer";
+		$columns_local['customer'] = __("Customer", "sell_media");
 
 	if ( ! isset( $columns_local['total'] ) )
-		$columns_local['total'] = "Total";
+		$columns_local['total'] = __("Total", "sell_media");
 
 	return array_merge( $columns_local, $columns );
 }
