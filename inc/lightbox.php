@@ -82,17 +82,17 @@ function sell_media_get_lightbox_state( $item ) {
  */
 function sell_media_lightbox_shortcode() {
 	ob_start();
-	_e('<div id="sell-media-lightbox-content" class="sell-media">','sell_media');
+	echo '<div id="sell-media-lightbox-content" class="sell-media">';
 
 	do_action( 'sell_media_bofore_lightbox_item_container' );
 
-	_e('<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">','sell_media');
-	_e(sell_media_lightbox_query(),'sell_media');
-	_e('</div>','sell_media');
+	echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
+	echo sell_media_lightbox_query();
+	echo '</div>';
 
 	do_action( 'sell_media_after_lightbox_item_container' );
 
-	_e('</div>','sell_media');
+	echo '</div>';
 
 	$html = ob_get_contents();
 	ob_end_clean();
@@ -105,7 +105,7 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  */
 function sell_media_lightbox_remove_items() {
 	if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
-		 _e('<p class="empty-lightbox" title="' . __( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove All', 'sell_media' ) . '</p>','sell_media');
+		 echo '<p class="empty-lightbox" title="' . __( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove All', 'sell_media' ) . '</p>';
 	}
 }
 
@@ -121,10 +121,15 @@ function sell_media_lightbox_query() {
 	if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
 		$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
 	}
-
+	
 	// Check if items in lightbox
 	if ( isset( $items ) ) {
 
+		array_walk($items, function(&$value, &$key) {
+			$value['post_id'] = intval($value['post_id']);
+			$value['attachment_id'] = intval($value['attachment_id']);
+		});
+		
 		$i = 0;
 
 		// loop over items from 'sell_media_lightbox' cookie
@@ -176,17 +181,22 @@ function sell_media_update_lightbox() {
 	}
 	// id is sent over in ajax request
 	if ( isset( $_POST['post_id'] ) && isset( $_POST['attachment_id'] ) ) {
-
+		
 		// build lightbox item array
 		$item = array(
-			'post_id'       => esc_html($_POST['post_id']),
-			'attachment_id' => esc_html($_POST['attachment_id']),
+			'post_id'       => (isset($_POST['post_id']) && !empty($_POST['post_id'])) ? intval($_POST['post_id']) : 0,
+			'attachment_id' => (isset($_POST['attachment_id']) && !empty($_POST['attachment_id'])) ? intval($_POST['attachment_id']) : 0,
 		);
-
+		
 		// check if cookie already exists
 		if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
 			$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
-
+		
+			array_walk($items, function(&$value, &$key) {
+				$value['post_id'] = intval($value['post_id']);
+				$value['attachment_id'] = intval($value['attachment_id']);
+			});
+			
 			// if not in lightbox, add it and change to say remove
 			if ( ! in_array( $item, $items ) ) {
 
@@ -227,7 +237,7 @@ function sell_media_update_lightbox() {
 
 		// JSON header
 		header( 'Content-type: application/json' );
-		_e($response,'sell_media');
+		echo $response;
 		die();
 	}
 

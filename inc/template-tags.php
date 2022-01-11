@@ -27,7 +27,7 @@ function sell_media_item_buy_button( $post_id = null, $attachment_id = null, $bu
 	$html = apply_filters( 'sell_media_item_buy_button', $html, $post_id, $attachment_id, $button, $text, $echo );
 
 	if ( $echo ) {
-	    _e($html,'sell_media');
+	    echo ($html);
 	} else {
 		return $html;
 	}
@@ -62,7 +62,7 @@ function sell_media_item_add_to_cart_button( $post_id = null, $attachment_id = n
 	$html = apply_filters( 'sell_media_item_add_to_cart_button', $html, $post_id, $attachment_id, $button, $text, $echo, $type );
 
 	if ( $echo ) {
-		_e($html,'sell_media');
+		echo $html;
 	} else {
 		return $html;
 	}
@@ -98,7 +98,8 @@ function sell_media_item_image_src( $post_id = null, $attachment_id = null ) {
 	} else {
 		$image_attributes = wp_get_attachment_image_src( $attachment_id, $size );
 	}
-
+	$image_attributes = array_map( 'esc_attr', $image_attributes);
+	
 	if ( $image_attributes ) {
 		$file_url = $image_attributes[0];
 	} else {
@@ -115,7 +116,7 @@ function sell_media_item_image_src( $post_id = null, $attachment_id = null ) {
  */
 function sell_media_get_filetype( $post_id = null ) {
 	$filetype = wp_check_filetype( get_post_meta( $post_id, '_sell_media_attached_file', true ) );
-	return $filetype['ext'];
+	return esc_attr($filetype['ext']);
 }
 
 /**
@@ -202,14 +203,14 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 			}
 
 			$src = apply_filters( 'sell_media_item_icon_src', $src, $attachment_id, $mime_type );
-			$image = '<img src="' . $src . '" class="' . apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . $src . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
+			$image = '<img src="' . esc_url($src) . '" class="' . apply_filters( 'sell_media_image_class', 'sell_media_image' ) . ' wp-post-image" title="' . get_the_title( $post_id ) . '" alt="' . get_the_title( $post_id ) . '" data-sell_media_medium_url="' . $src . '" data-sell_media_large_url="' . esc_url($src) . '" data-sell_media_item_id="' . $post_id . '" style="max-width:100%;height:auto;"/>';
 			$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size );
 		
 		}
 	}
 
 	if ( $echo ) {
-		_e($image,'sell_media');
+		echo $image;
 	} else {
 		return $image;
 	}
@@ -263,6 +264,7 @@ function sell_media_gallery( $post_id ) {
 	$html = '';
 
 	$attachment_ids = sell_media_get_attachments( $post_id );
+	$attachment_ids = array_map( 'intval', $attachment_ids);
 	$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container', $post_id );
 	$html .= '<div id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
@@ -454,12 +456,12 @@ function sell_media_taxonomy_breadcrumb() {
 		// For each parent, create a breadcrumb item
 		foreach ( $parents as $parent ) :
 			$item   = get_term_by( 'id', $parent, get_query_var( 'taxonomy' ) );
-			_e('<li><a href="' . esc_url( get_term_link( $item->term_id, get_query_var( 'taxonomy' ) ) ) . '">' . esc_attr( $item->name ) . '</a> <span class="raquo">&raquo;</span> </li>','sell_media');
+			echo '<li><a href="' . esc_url( get_term_link( $item->term_id, get_query_var( 'taxonomy' ) ) ) . '">' . esc_attr( $item->name ) . '</a> <span class="raquo">&raquo;</span> </li>';
 		endforeach;
 	endif;
 
 	// Display the current term in the breadcrumb
-	_e('<li><a href="' . esc_url( get_term_link( $term->term_id, get_query_var( 'taxonomy' ) ) ) . '">' . esc_attr( $term->name ) . '</a></li>','sell_media');
+	echo '<li><a href="' . esc_url( get_term_link( $term->term_id, get_query_var( 'taxonomy' ) ) ) . '">' . esc_attr( $term->name ) . '</a></li>';
 }
 
 /**
@@ -574,32 +576,32 @@ function sell_media_show_file_info() {
 	$image_size_info = getimagesize( Sell_Media()->products->get_protected_file( $post_obj->ID, $attachment_id ) );
 	$video_metadata = wp_get_attachment_metadata( $attachment_id );
 
-	_e('<h2 class="widget-title sell-media-item-details-title">' . __( 'Details', 'sell_media' ) . '</h2>','sell_media');
-	_e('<ul class="sell-media-item-details">','sell_media');
-	_e('<li class="filename"><span class="title">' . __( 'File Name', 'sell_media' ) . ':</span> ' . $filename . '</li>','sell_media');
-	_e('<li class="fileid"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>','sell_media');
+	echo '<h2 class="widget-title sell-media-item-details-title">' . __( 'Details', 'sell_media' ) . '</h2>';
+	echo '<ul class="sell-media-item-details">';
+	echo '<li class="filename"><span class="title">' . __( 'File Name', 'sell_media' ) . ':</span> ' . $filename . '</li>';
+	echo '<li class="fileid"><span class="title">' . __( 'File ID', 'sell_media' ) . ':</span> ' . $attachment_id . '</li>';
 	preg_match('/^.*?\.(\w+)$/',$filename,$ext);
-	_e('<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . strtoupper( $ext[1] ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>','sell_media');
-	_e('<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post_obj->ID, $attachment_id ) . '</li>','sell_media');
+	echo '<li class="filetype"><span class="title">' . __( 'File Type', 'sell_media' ) . ':</span> ' . strtoupper( $ext[1] ) .' ('. get_post_mime_type( $attachment_id ) . ')</li>';
+	echo '<li class="filesize"><span class="title">' . __( 'File Size', 'sell_media' ) . ':</span> ' . sell_media_get_filesize( $post_obj->ID, $attachment_id ) . '</li>';
 	if ( isset( $image_size_info[0], $image_size_info[1] ) ) {
-		_e('<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $image_size_info[0]. ' x '. $image_size_info[1] .'</li>','sell_media');
+		echo '<li class="filedims"><span class="title">' . __( 'Dimensions', 'sell_media' ) . ':</span> ' . $image_size_info[0]. ' x '. $image_size_info[1] .'</li>';
 	}
 	if ( wp_get_post_terms( $post_obj->ID, 'collection' ) ) {
-		_e('<li class="collections"><span class="title">' . __( 'Collections', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'collection' ) . '</li>','sell_media');
+		echo '<li class="collections"><span class="title">' . __( 'Collections', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'collection' ) . '</li>';
 	}
 	if ( wp_get_post_terms( $post_obj->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
-		_e('<li class="keywords"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>','sell_media');
+		echo '<li class="keywords"><span class="title">' . __( 'Keywords', 'sell_media' ) . ':</span> ' . sell_media_get_taxonomy_terms( 'keywords' ) . '</li>';
 	}
 	if ( preg_match( '#^(audio|video)/#', get_post_mime_type( $attachment_id ) ) ) {
 		if( '' != $meta  && isset( $meta['length_formatted']) )  {
-			_e('<li class="length"><span class="title">' . __( 'Length', 'sell_media' ) . ':</span> ' . $meta['length_formatted'] . '</li>','sell_media');
+			echo '<li class="length"><span class="title">' . __( 'Length', 'sell_media' ) . ':</span> ' . $meta['length_formatted'] . '</li>';
 		}
 		if( '' != $meta  && isset( $meta['bitrate']) )  {
-			_e('<li class="bitrate"><span class="title">' . __( 'Bitrate', 'sell_media' ) . ':</span> ' . round( $meta['bitrate'] / 1000 ) . 'kb/s</li>','sell_media');
+			echo '<li class="bitrate"><span class="title">' . __( 'Bitrate', 'sell_media' ) . ':</span> ' . round( $meta['bitrate'] / 1000 ) . 'kb/s</li>';
 		}
 	}
-	_e(do_action( 'sell_media_additional_list_items', $post_obj->ID ),'sell_media');
-	_e('</ul>','sell_media');
+	do_action( 'sell_media_additional_list_items', $post_obj->ID );
+	echo '</ul>';
 
 }
 add_action( 'sell_media_below_buy_button', 'sell_media_show_file_info', 12 );
@@ -611,7 +613,7 @@ add_action( 'sell_media_below_buy_button', 'sell_media_show_file_info', 12 );
  * @return void
 */
 function sell_media_version_in_header() {
-	_e('<meta name="generator" content="Sell Media v' . __( SELL_MEDIA_VERSION ) . '" />' . "\n",'sell_media');
+	echo '<meta name="generator" content="Sell Media v' . __( SELL_MEDIA_VERSION ) . '" />' . "\n";
 }
 add_action( 'wp_head', 'sell_media_version_in_header' );
 
@@ -727,7 +729,7 @@ function sell_media_cart_dialog() {
 			<div id="sell-media-dialog-box-target">
 				<span class="close">&times;</span>
 				<div class="content">
-					<p><?php _e(stripslashes_deep( nl2br( $settings->terms_and_conditions )),'sell_media'); ?></p>
+					<p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions )); ?></p>
 				</div>
 			</div>
 		</div>

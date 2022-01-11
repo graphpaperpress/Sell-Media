@@ -38,7 +38,7 @@ function sell_media_install() {
 	// Check compatible version.
 	if ( ! sell_media_compatible_version() ) {
 		deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
-		wp_die( esc_html__( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) );
+		wp_die( __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) );
 	}
 
 	// Add default settings if sell media options is not set.
@@ -119,7 +119,7 @@ add_action( 'admin_init', 'sell_media_check_version' );
  * @return string Disable notice.
  */
 function sell_media_disabled_notice() {
-	_e('<div class="update-nag">' . esc_html__( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) . '</div>','sell_media');
+	echo '<div class="update-nag">' . __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) . '</div>';
 }
 
 /**

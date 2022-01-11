@@ -234,7 +234,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             if ( $wp_query_items->have_posts() ) :
 
                 $html = '<div class="sell-media">';
-                $html .= '<div class="' . __($class) . '">';
+                $html .= '<div class="' . $class . '">';
                 
                 while ( $wp_query_items->have_posts() ) : $wp_query_items->the_post(); $i++;
                     $post_id = get_the_id();
@@ -266,21 +266,21 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                         if ( SellMediaAudioVideo::is_video_item( $post_id ) || SellMediaAudioVideo::is_audio_item( $post_id ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
                             $image_data     = esc_url(get_the_post_thumbnail_url( $post_id, 'thumbnail' ));
                             $image_size    = getimagesize($image_data);
-                            $image_width   = $image_size[0];
-                            $image_height   = $image_size[1];
+                            $image_width   = (isset($image_size[0])) ? esc_attr($image_size[0]) : 100;
+                            $image_height   = (isset($image_size[1])) ? esc_attr($image_size[1]) : 100;
                             $width          = $image_width * 250 / $image_height;
                             $padding_bottom = $image_height / $image_width * 100;
                         } else {                        
                             $image_data     = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
-                            $image_width    = $image_data[1];
-                            $image_height   = $image_data[2];
+                            $image_width    = (isset($image_data[1])) ? $image_data[1] : 100;
+                            $image_height   = (isset($image_data[2])) ? $image_data[2] : 100;
                             $width          = $image_width * 250 / $image_height;
                             $padding_bottom = $image_height / $image_width * 100;
                         }
                                     
                     }
                     
-                    $html  .= '<div id="sell-media-' . $original_id . '" class="' . __($class) . '">';       
+                    $html  .= '<div id="sell-media-' . $original_id . '" class="' . $class . '">';       
                     
                     $html .= '<a href="' . esc_url( get_permalink( $post_id ) ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 

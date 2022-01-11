@@ -28,7 +28,7 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 	<!doctype html>
 	<html lang="en">
 	<head>
-	<title><?php esc_html_e( get_bloginfo( 'name' ) ); ?></title>
+	<title><?php echo get_bloginfo( 'name' ); ?></title>
 	<meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type="text/css">
@@ -83,7 +83,7 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 				<table width="600" cellpadding="0" cellspacing="0" align="center">
 					<tr>
 					<td width="600" align="center" valign="top" style="font-family: Helvetica, Arial, sans-serif; color: #394240; padding: 40px 20px 40px 20px;">
-						<h2 style="font-size: 24px; font-weight: bold; text-transform: uppercase; margin: 0 0 24px;"><a href="<?php _e(esc_url( get_bloginfo( 'url' ) ),'sell_media'); ?>" style="color: #394240; border: 0; text-decoration: none;"><?php  esc_html_e( get_bloginfo( 'name' ) ); ?></a></h2>
+						<h2 style="font-size: 24px; font-weight: bold; text-transform: uppercase; margin: 0 0 24px;"><a href="<?php echo esc_url( get_bloginfo( 'url' ) ); ?>" style="color: #394240; border: 0; text-decoration: none;"><?php _e( get_bloginfo( 'name' ), 'sell_media' ); ?></a></h2>
 					</td>
 					</tr>
 				</table>
@@ -96,17 +96,17 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 								<td width="600" style="padding: 40px 40px 80px 40px;" valign="top" align="center">
 									<br />
 									<br />
-									<h2 style="font-size: 20px; line-height: 30px; color: #444444; margin: 0; padding: 0; font-weight: bold;"><?php esc_html_e( $subject ); ?></h2>
+									<h2 style="font-size: 20px; line-height: 30px; color: #444444; margin: 0; padding: 0; font-weight: bold;"><?php _e( $subject, 'sell_media' ); ?></h2>
 									<br />
 									<br />
 									<p style="color: #444444; font-size: 16px; line-height: 24px; margin: 0; text-align: left">
-										<?php esc_attr_e($message); ?>
+										<?php esc_attr_e($message, 'sell_media'); ?>
 									</p>
 									<?php if ( $button && $url ) : ?>
 										<br />
 										<br />
 										<br />
-										<a href="<?php _e(esc_url( $url ),'sell_media'); ?>" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 26px; background-color: #ec6d4d; padding: 14px 26px; border: 1px solid #ec6d4d; font-weight: bold; text-transform: uppercase;"><?php esc_html_e( $button ); ?></a>
+										<a href="<?php esc_url( $url ); ?>" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 26px; background-color: #ec6d4d; padding: 14px 26px; border: 1px solid #ec6d4d; font-weight: bold; text-transform: uppercase;"><?php _e( $button, 'sell_media' ); ?></a>
 										<br />
 									<?php endif; ?>
 								</td>
@@ -121,7 +121,7 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 					<tr>
 						<td width="600" valign="top" align="center" style="padding: 20px; font-family: Helvetica, Arial, sans-serif; color: #999999;">
 							<p style="font-size: 12px; line-height: 16px;">
-							&copy; <?php esc_html_e( date( 'Y' ) ); ?> <a href="<?php _e(esc_url( get_bloginfo( 'url' ) ),'sell_media'); ?>" target="_blank" style="color: #999999; text-decoration: none;"><?php esc_html_e( get_bloginfo( 'name' ) ); ?></a>
+							&copy; <?php echo date( 'Y' ); ?> <a href="<?php echo esc_url( get_bloginfo( 'url' ) ); ?>" target="_blank" style="color: #999999; text-decoration: none;"><?php _e( get_bloginfo( 'name' ), 'sell_media' ); ?></a>
 							</p>
 						</td>
 					</tr>

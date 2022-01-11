@@ -12,6 +12,10 @@ function sellmedia_editor_scripts() {
     $test_mode = empty( $settings->test_mode ) ? false : $settings->test_mode;
 
 	$asset_file = include( SELL_MEDIA_PLUGIN_DIR . 'gutenberg/build/index.asset.php');
+    
+    if(isset($asset_file['dependencies'][3])) {
+        unset($asset_file['dependencies'][3]);
+    }
 	wp_enqueue_script(
         'sell_media_all_items_script',
         SELL_MEDIA_PLUGIN_URL . 'gutenberg/build/index.js',
@@ -27,7 +31,7 @@ function sellmedia_editor_scripts() {
         $asset_file['version']
     ); 
 
-    wp_enqueue_script( 'sell_media_jquery_cookie', SELL_MEDIA_PLUGIN_URL . 'js/jquery.cookie.js', array( 'jquery' ), SELL_MEDIA_VERSION );          
+    wp_enqueue_script( 'sell_media_jquery_cookie', SELL_MEDIA_PLUGIN_URL . 'js/jquery.cookie.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 
     // Scripts for sell media js
     wp_enqueue_script(
@@ -40,7 +44,7 @@ function sellmedia_editor_scripts() {
     wp_localize_script( 'sell_media_main_js', 'sell_media', array(
         'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
         'pluginurl' => esc_url( SELL_MEDIA_PLUGIN_URL . 'sell-media.php' ),
-        'site_name' => esc_html( get_bloginfo( 'name' ) ),
+        'site_name' => __( get_bloginfo( 'name' ) ,'sell_media'),
         'site_url' => esc_url( site_url() ),
         'checkout_url' => esc_url( get_permalink( $checkout_page ) ),
         'currency_symbol' => empty( $settings->currency ) ? 'USD' : $settings->currency,

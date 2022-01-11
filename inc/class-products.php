@@ -128,7 +128,7 @@ class SellMediaProducts {
 			// Use price group price
 			foreach ( $this->get_prices( $product_id, $taxonomy ) as $price ) {
 				if ( $price_id == $price['id'] ) {
-					$final_price = $price['price'];
+					$final_price = (isset($price['price'])) ? $price['price'] : 0;
 				}
 			}
 		} else {

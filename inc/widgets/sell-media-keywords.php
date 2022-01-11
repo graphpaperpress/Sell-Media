@@ -12,10 +12,10 @@
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		extract($args);
-		_e($before_widget,'sell_media');
+		echo $before_widget;
 
 		if ( $title )
-			_e($before_title . $title . $after_title,'sell_media');
+			echo $before_title . $title . $after_title;
 ?>
 		<div class="sell-media-keywords-widget sell-media-keywords-widget">
 
@@ -25,7 +25,7 @@
 			if ( !empty( $keywords ) ) {
 
 				foreach ( $keywords as $keyword ) {
-					_e('<a href="' . get_term_link( $keyword->slug, 'keywords' ) . '">' . $keyword->name . '</a> ','sell_media');
+					echo '<a href="' . esc_url(get_term_link( $keyword->slug, 'keywords' )) . '">' . $keyword->name . '</a> ';
 				}
 			}
 			?>
@@ -33,7 +33,7 @@
 		</div><!-- .sell-media-keywords-widget -->
 
 <?php
-		_e($after_widget,'sell_media');
+		echo $after_widget;
 
 }
 	/*Saves the settings. */
@@ -51,7 +51,7 @@
 		$title = htmlspecialchars($instance['title']);
 
 		# Title
-		_e('<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>','sell_media');
+		echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
 
 	}
 

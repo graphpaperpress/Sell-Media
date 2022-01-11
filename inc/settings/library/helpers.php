@@ -16,8 +16,8 @@ function sell_media_plugin_get_taxonomy_list( $taxonomy = 'category', $firstblan
         $terms['']['title'] = __( '-- Choose One --', 'sell_media' );
     }
     foreach ( $terms_obj as $tt ) {
-        $terms[ $tt->slug ]['name'] = $tt->slug;
-        $terms[ $tt->slug ]['title'] = $tt->name;
+        $terms[ $tt->slug ]['name'] = (isset($tt->slug)) ? $tt->slug : '';
+        $terms[ $tt->slug ]['title'] = (isset($tt->name)) ? $tt->name : '';
     }
 
     return $terms;
@@ -50,7 +50,7 @@ function sell_media_plugin_get_current_tab_title( $tabval ) {
 
     global $sell_media_plugin_tabs;
 
-    $current = $sell_media_plugin_tabs[ $tabval ]['title'];
+    $current = (isset($sell_media_plugin_tabs[ $tabval ]['title'])) ? $sell_media_plugin_tabs[ $tabval ]['title'] : '';
 
     return $current;
 }
@@ -98,10 +98,10 @@ function sell_media_plugin_get_page_tab_markup() {
         }
         $i++;
     }
-    _e('<h2 class="nav-tab-wrapper">','sell_media');
+    echo '<h2 class="nav-tab-wrapper">';
     foreach ( $links as $link )
-        _e($link,'sell_media');
-    _e('</h2>','sell_media');
+        echo $link;
+    echo '</h2>';
 }
 
 
