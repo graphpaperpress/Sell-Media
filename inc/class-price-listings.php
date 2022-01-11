@@ -97,10 +97,11 @@ class Sell_Media_Price_Listings {
 			<h2><?php _e( 'Pricing', 'sell_media' ); ?></h2>
 			<?php
 			$tabs = $this->get_tabs();
+			
 			if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
-				_e('<div class="updated" ><p>');
-				_e( $tabs[ $this->current_tab ]['tab_title'] . ' pricelist updated.', 'sell_media' );
-				_e('</p></div>');
+				echo '<div class="updated" ><p>';
+				_e( esc_attr($tabs[ $this->current_tab ]['tab_title']) . ' pricelist updated.', 'sell_media' );
+				echo '</p></div>';
 			}
 
 			$this->display_tabs( $this->current_tab );
@@ -108,6 +109,8 @@ class Sell_Media_Price_Listings {
 			if ( isset( $_GET['tab'] ) ) {
 				$url_parameters['tab'] = $_GET['tab'];
 			}
+			$url_parameters = array_map( 'esc_attr', $url_parameters);
+		
 			$url = admin_url( $this->parent_slug );
 			$url = add_query_arg( $url_parameters, $url );
 			?>
@@ -147,6 +150,8 @@ class Sell_Media_Price_Listings {
 			if ( isset( $_GET['tab'] ) ) {
 				$url_parameters['tab'] = $_GET['tab'];
 			}
+			$url_parameters = array_map( 'esc_attr', $url_parameters);
+		
 			$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 			do_action( 'sell_media_price_listing_save', $redirect_url );
 			wp_redirect( $redirect_url );
@@ -174,7 +179,7 @@ class Sell_Media_Price_Listings {
 			$output .= "<a class='nav-tab$class' href='$url'>" . $tab['tab_title'] . '</a>';
 		}
 		$output .= '</h2>';
-		_e(wp_kses_post( $output ),'sell_media');
+		echo wp_kses_post( $output );
 	}
 
 	/**

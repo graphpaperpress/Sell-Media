@@ -78,7 +78,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         <div id="sell-media-embed-link-field" class="sell-media-field" style="display:none;">
 
         <label for="sell-media-embed-link"><?php _e( 'Preview URL', 'sell_media' ); ?></label>
-            <input name="sell_media_embed_link" id="sell-media-embed-link" class="" type="text" placeholder="" value="<?php _e(esc_url( $embed_url ),'sell_media'); ?>" />
+            <input name="sell_media_embed_link" id="sell-media-embed-link" class="" type="text" placeholder="" value="<?php echo esc_url( $embed_url ); ?>" />
         </div>
         <?php
     }
@@ -144,7 +144,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         $attachment_ids = sell_media_get_attachments ( $post_id );
         if( !empty( $attachment_ids ) ){
             foreach ($attachment_ids as $key => $attachment_id) {
-                return self::is_attachment_video( $attachment_id );
+                return self::is_attachment_video( esc_attr($attachment_id) );
             }
         }
     }
@@ -185,7 +185,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         $attachment_ids = sell_media_get_attachments ( $post_id );
         if( !empty( $attachment_ids ) ){
             foreach ($attachment_ids as $key => $attachment_id) {
-                return self::is_attachment_audio( $attachment_id );
+                return self::is_attachment_audio( esc_attr($attachment_id) );
             }
         }
     }
@@ -333,9 +333,9 @@ class SellMediaAudioVideo extends SellMediaProducts {
     function before_content( $post_id ) {
         $preview_url = $this->get_preview( $post_id );
         if ( $preview_url ){
-            _e('<div class="sell-media-iframe-container">','sell_media');
-            _e($preview_url,'sell_media');
-            _e('</div>','sell_media');
+            echo '<div class="sell-media-iframe-container">';
+            echo $preview_url;
+            echo '</div>';
         }
     }
 }

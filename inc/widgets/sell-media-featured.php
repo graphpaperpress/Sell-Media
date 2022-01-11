@@ -13,10 +13,11 @@
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		$categoryNumber = empty($instance['categoryNumber']) ? '' : $instance['categoryNumber'];
 		extract($args);
-		_e($before_widget,'sell_media');
-
+	
+		echo $before_widget;
+	
 		if ( $title )
-			_e($before_title . $title . $after_title,'sell_media');
+			echo $before_title . $title . $after_title;
 
 		global $post;
 
@@ -65,7 +66,7 @@
 				$loop_args['context'] = "widget";
 			?>
 
-				<?php _e(apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ),'sell_media'); ?>
+				<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ); ?>
 
 				<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
@@ -73,7 +74,7 @@
 
 <?php
 
-	_e($after_widget,'sell_media');
+	echo $after_widget;
 
 }
   /*Saves the settings. */
@@ -94,7 +95,7 @@
 
 
 		 # Title
-		_e('<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>','sell_media');
+		echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
 
 
 		# Collection
@@ -115,7 +116,7 @@
 				<?php
 				if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
 				 foreach ($productTerms as $term) : ?>
-					<option value="<?php  esc_attr_e($term->slug); ?>" <?php if($categoryNumber == $term->slug) _e('selected="selected"','sell_media'); ?>><?php _e($term->name,'sell_media'); ?></option>
+					<option value="<?php  esc_attr_e($term->slug); ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo esc_attr($term->name); ?></option>
 				<?php endforeach; ?>
 				<?php endif; ?>
 		</select>

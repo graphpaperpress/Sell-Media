@@ -69,8 +69,8 @@ function sell_media_payment_purchase_details( $post ){
 
 	$payments = Sell_Media()->payments;
 
-	_e('<div class="sell-media-admin-payments">','sell_media');
-	_e('<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />','sell_media');
+	echo '<div class="sell-media-admin-payments">';
+	echo '<input type="hidden" name="sell_media_custom_meta_box_nonce" value="' . wp_create_nonce( basename( __FILE__ ) ) . '" />';
 
 	printf(
 		'<ul>
@@ -85,11 +85,11 @@ function sell_media_payment_purchase_details( $post ){
 
 	do_action( 'sell_media_below_payment_contact_details', $post->ID );
 
-	_e($payments->payment_table( $post->ID ),'sell_media');
+	echo $payments->payment_table( $post->ID );
 
 	do_action( 'sell_media_additional_customer_meta', $post->ID );
 
-	_e('</div>','sell_media');
+	echo '</div>';
 
 }
 
@@ -113,36 +113,36 @@ function sell_media_payment_additional_purchase_details( $post ){
 			<?php if ( $args ) : foreach( $args as $k => $v ) : ?>
 				<?php if ( ! is_array( $v ) ) : ?>
 					<tr>
-						<td><?php _e(ucwords( str_replace('_', ' ', $k ) ),'sell_media'); ?></td><td><?php _e($v,'sell_media'); ?></td>
+						<td><?php echo ucwords( str_replace('_', ' ', $k ) ); ?></td><td><?php echo $v; ?></td>
 					</tr>
 				<?php else : ?>
 					<?php $i = 0; ?>
 					<?php foreach( $v as $name => $value ) : $i++ ?>
 						<?php if ( ! is_array( $name ) ) : ?>
 							<tr>
-								<td><?php _e( 'Product', 'sell_media' ); ?> <?php _e($i); ?></td>
+								<td><?php _e( 'Product', 'sell_media' ); ?> <?php echo $i; ?></td>
 								<td>
 									<ul>
 										<?php if ( $value['name'] ) : ?>
-											<li><?php _e( 'Name', 'sell_media' ); ?>: <?php esc_attr_e($value['name']); ?></li>
+											<li><?php _e( 'Name', 'sell_media' ); ?>: <?php echo esc_attr($value['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['id'] ) : ?>
-											<li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php _e(admin_url()); ?>post.php?post=<?php _e($value['id']); ?>&amp;action=edit"><?php esc_attr_e($value['id']); ?></a></li>
+											<li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php echo esc_url(admin_url()); ?>post.php?post=<?php echo $value['id']; ?>&amp;action=edit"><?php echo esc_attr($value['id']); ?></a></li>
 										<?php endif; ?>
 										<?php if ( $value['type'] ) : ?>
-											<li><?php _e( 'Type', 'sell_media' ); ?>: <?php esc_attr_e($value['type']); ?></li>
+											<li><?php _e( 'Type', 'sell_media' ); ?>: <?php echo esc_attr($value['type']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['size']['name'] ) : ?>
-											<li><?php _e( 'Size', 'sell_media' ); ?>: <?php esc_attr_e($value['size']['name']); ?></li>
+											<li><?php _e( 'Size', 'sell_media' ); ?>: <?php echo esc_attr($value['size']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['license']['name'] ) : ?>
-											<li><?php _e( 'License', 'sell_media' ); ?>: <?php esc_attr_e($value['license']['name']); ?></li>
+											<li><?php _e( 'License', 'sell_media' ); ?>: <?php echo esc_attr($value['license']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['qty'] ) : ?>
-											<li><?php _e( 'Qty', 'sell_media' ); ?>: <?php esc_attr_e($value['qty']); ?></li>
+											<li><?php _e( 'Qty', 'sell_media' ); ?>: <?php echo esc_attr($value['qty']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['total'] ) : ?>
-											<li><?php _e( 'Subtotal', 'sell_media' ); ?>: <?php _e(sell_media_get_currency_symbol()); ?><?php _e(number_format( $value['total'], 2, '.', ',' )); ?></li>
+											<li><?php _e( 'Subtotal', 'sell_media' ); ?>: <?php echo sell_media_get_currency_symbol(); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
 										<?php endif; ?>
 									</ul>
 								</td>
@@ -183,12 +183,12 @@ function sell_media_payment_gateway_details( $post ){
 
     do_action('sell_media_payment_before_gateway_details', $post);
 
-	_e('<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase.', 'sell_media' ) . '</p>');
-	_e('<ul>','sell_media');
+	echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase.', 'sell_media' ) . '</p>';
+	echo '<ul>';
 	if ( $arguments ) foreach ( $arguments as $k => $v ) {
-		_e('<li><strong>' . $k . ':</strong> ' . ( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : $v ) . '</li>');
+		echo '<li><strong>' . $k . ':</strong> ' . ( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : $v ) . '</li>';
 	}
-	_e('</ul>','sell_media');
+	echo '</ul>';
 
 	do_action('sell_media_payment_after_gateway_details', $post);
 }
@@ -213,7 +213,6 @@ function sell_media_reports_callback_fn(){
 
 		<div class="clear"></div>
 
-		<?php ob_start(); ?>
 		<script type="text/javascript">
 			google.load("visualization", "1", {packages:["corechart"]});
 			// Sales Chart
@@ -232,8 +231,8 @@ function sell_media_reports_callback_fn(){
 						$month      = date( 'n', $day_time ) + 1;
 						$year       = date( 'Y', $day_time );
 						?>
-						['<?php _e(date( "n/d", mktime( 0, 0, 0, $month, $day, $year ) ),'sell_media'); ?>',
-						<?php _e(sell_media_get_sales_by_date( $day, $month, $year ),'sell_media'); ?>,
+						['<?php echo date( "n/d", mktime( 0, 0, 0, $month, $day, $year ) ); ?>',
+						<?php echo sell_media_get_sales_by_date( $day, $month, $year ); ?>,
 						],
 						<?php $i--;
 					endwhile;
@@ -250,10 +249,8 @@ function sell_media_reports_callback_fn(){
 			}
 		</script>
 		<div id="daily_earnings_chart_div" class="earnings_chart"></div>
-		<?php _e(ob_get_clean(),'sell_media'); ?>
 
 
-		<?php ob_start(); ?>
 		<script type="text/javascript">
 			google.load("visualization", "1", {packages:["corechart"]});
 			// Sales Chart
@@ -266,7 +263,7 @@ function sell_media_reports_callback_fn(){
 					<?php
 					$i = 1;
 					while($i <= 12) : ?>
-						['<?php _e(sell_media_month_num_to_name($i) . ' ' . date("Y"),'sell_media'); ?>', <?php _e(sell_media_get_sales_by_date(null, $i, date('Y'),'sell_media') ); ?>,
+						['<?php echo sell_media_month_num_to_name($i) . ' ' . date("Y"); ?>', <?php echo sell_media_get_sales_by_date(null, $i, date('Y') ); ?>,
 						],
 					<?php
 					$i++;
@@ -283,10 +280,8 @@ function sell_media_reports_callback_fn(){
 			}
 		</script>
 		<div id="monthly_earnings_chart_div" class="earnings_chart"></div>
-		<?php _e(ob_get_clean(),'sell_media'); ?>
 
 
-		<?php ob_start(); ?>
 		<script type="text/javascript">
 			google.load("visualization", "1", {packages:["corechart"]});
 			// Sales Chart
@@ -300,8 +295,8 @@ function sell_media_reports_callback_fn(){
 					$current = date('Y');
 					$i = $current - 12;
 					while($current >= $i) : ?>
-						['<?php _e($i,'sell_media'); ?>',
-						<?php _e(sell_media_get_sales_by_date(null, null, $i ),'sell_media'); ?>,
+						['<?php echo $i; ?>',
+						<?php echo sell_media_get_sales_by_date(null, null, $i ); ?>,
 						],
 						<?php
 						$i++;
@@ -319,7 +314,6 @@ function sell_media_reports_callback_fn(){
 			}
 		</script>
 		<div id="annual_earnings_chart_div" class="earnings_chart"></div>
-		<?php _e(ob_get_clean(),'sell_media'); ?>
 
 	</div>
 <?php }
@@ -407,20 +401,20 @@ function sell_media_payment_content( $column, $post_id ){
 			$html = '<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
 			$html .= $post_id;
 			$html .= '</a>';
-			_e($html, 'sell_media');
+			echo $html;
 			break;
 		case "products":
 			$products = Sell_Media()->payments->get_products( $post_id );
 			if ( $products ) foreach ( $products as $product ) {
 				$type = ( ! empty( $product['type'] ) ) ? ' (' . $product['type'] . ') ' : '';
-				_e(apply_filters( 'sell_media_payment_products_column', $product['name'] . $type, $post_id ) . '<br />','sell_media');
+				echo apply_filters( 'sell_media_payment_products_column', $product['name'] . $type, $post_id ) . '<br />';
 			}
 			break;
 		case "customer":
-			_e(Sell_Media()->payments->get_buyer_name( $post_id ),'sell_media');
+			echo Sell_Media()->payments->get_buyer_name( $post_id );
 			break;
 		case "total":
-			_e(sell_media_get_currency_symbol() . number_format( Sell_Media()->payments->get_meta_key( $post_id, 'total' ), 2, '.', '' ),'sell_media');
+			echo sell_media_get_currency_symbol() . number_format( Sell_Media()->payments->get_meta_key( $post_id, 'total' ), 2, '.', '' );
 			break;
 		default:
 			break;

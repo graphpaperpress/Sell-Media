@@ -26,7 +26,7 @@ $settings = sell_media_get_plugin_options();
 						printf( __( 'Search results for: %1$s', 'sell_media' ), get_search_query() );
 					} elseif ( is_post_type_archive( 'sell_media_item' ) ) {
 						$obj = get_post_type_object( 'sell_media_item' );
-						esc_attr_e( ucfirst( $obj->rewrite['slug'] ) );
+						echo esc_attr( ucfirst( $obj->rewrite['slug'] ) );
 					} else {
 						the_archive_title();
 					}
@@ -35,15 +35,15 @@ $settings = sell_media_get_plugin_options();
 				<?php
 				$term_description = term_description();
 				if ( ! empty( $term_description ) ) {
-					_e('<h2 class="collection_description">' . $term_description . '</h2>','sell_media');
+					echo '<h2 class="collection_description">' . $term_description . '</h2>';
 				}
 				?>
-				<?php _e(do_shortcode( '[sell_media_searchform]' ),'sell_media'); ?>
+				<?php do_shortcode( '[sell_media_searchform]' ); ?>
 			</header>
 
 			<?php do_action( 'sell_media_below_archive_header_content' ); ?>
 
-			<div class="<?php _e(apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ),'sell_media'); ?>">
+			<div class="<?php echo apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ); ?>">
 
 			<?php
 			// check if this term has child terms, if so, show terms
@@ -81,15 +81,15 @@ $settings = sell_media_get_plugin_options();
 						if ( $post_count != 0 ) :
 							$i++; ?>
 
-							<div class="<?php _e(apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ),'sell_media'); ?>">
+							<div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ); ?>">
 								<div class="sell-media-item-wrap sell-media-collection">
-									<a href="<?php _e(get_term_link( $child ),'sell_media'); ?>" class="collection">
+									<a href="<?php echo esc_url(get_term_link( $child )); ?>" class="collection">
 
 										<div class="sell-media-item-details">
 											<div class="sell-media-collection-details">
-												<h3 class="collection-title"><?php _e($child->name,'sell_media'); ?></h3>
-												<span class="sell-media-collection-count"><span class="count"><?php _e($post_count,'sell_media'); ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php _e($child->name,'sell_media'); ?></span><?php _e(' collection', 'sell_media'); ?></span>
-												<span class="sell-media-collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price"><?php _e( sell_media_get_currency_symbol(),'sell_media'); ?><?php _e( $settings->default_price,'sell_media'); ?></span></span>
+												<h3 class="collection-title"><?php echo esc_attr($child->name); ?></h3>
+												<span class="sell-media-collection-count"><span class="count"><?php echo esc_attr($post_count); ?></span><?php _e( ' images in ', 'sell_media' ); ?><span class="collection"><?php echo esc_attr($child->name); ?></span><?php _e(' collection', 'sell_media'); ?></span>
+												<span class="sell-media-collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price"><?php echo  sell_media_get_currency_symbol(); ?><?php echo esc_attr($settings->default_price); ?></span></span>
 											</div>
 										</div>
 										<?php
@@ -106,7 +106,7 @@ $settings = sell_media_get_plugin_options();
 											<?php
 												$collection_attachment_id = get_term_meta( $child->term_id, 'collection_icon_id', true );
 												if ( ! empty ( $collection_attachment_id ) ) {
-													_e(wp_get_attachment_image( $collection_attachment_id, 'sell_media_item' ),'sell_media');
+													echo wp_get_attachment_image( $collection_attachment_id, 'sell_media_item' );
 												} else {
 													sell_media_item_icon( $post->ID, 'sell_media_item' );
 												}
@@ -125,12 +125,12 @@ $settings = sell_media_get_plugin_options();
 					<?php rewind_posts(); ?>
 					<?php $i = 0; ?>
 					<?php while ( have_posts() ) : the_post(); $i++; ?>
-						<?php _e(apply_filters( 'sell_media_content_loop', $post->ID, $i ),'sell_media'); ?>
+						<?php echo apply_filters( 'sell_media_content_loop', $post->ID, $i ); ?>
 					<?php endwhile; ?>
 				<?php else : ?>
 					<h2><?php _e( 'Nothing Found', 'sell_media' ); ?></h2>
 					<p><?php _e( 'Sorry, but we couldn\'t find anything that matches your search query.', 'sell_media' ); ?></p>
-					<?php _e(do_shortcode( '[sell_media_searchform]' ),'sell_media'); ?>
+					<?php do_shortcode( '[sell_media_searchform]' ); ?>
 				<?php endif; $i = 0; ?>
 
 			<?php endif; ?><!-- show child terms check -->
@@ -138,7 +138,7 @@ $settings = sell_media_get_plugin_options();
 			</div><!-- .sell-media-grid-item-container -->
 			<?php 
 			if ( ! $children ) {
-				_e(sell_media_pagination_filter( $wp_query->max_num_pages ),'sell_media');
+				echo sell_media_pagination_filter( $wp_query->max_num_pages );
 			}
 			?>
 		</div><!-- #content -->

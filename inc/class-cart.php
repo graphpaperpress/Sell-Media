@@ -164,7 +164,7 @@ class SellMediaCart {
 		$cart_item_id = apply_filters( 'sell_media_cart_item_id', $cart_item_id, $attrs, $id );
 
 		// Add product id.
-		$this->items[ $cart_item_id ]['item_id'] = $id;
+		$this->items[ $cart_item_id ]['item_id'] = intval($id);
 
 		// Add quantity.
 		$this->items[ $cart_item_id ]['qty'] = (isset( $this->items[ $cart_item_id ]['qty'] )) ? ($this->items[ $cart_item_id ]['qty'] + $qty) : $qty;

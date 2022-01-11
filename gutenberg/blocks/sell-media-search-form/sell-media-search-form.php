@@ -133,7 +133,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
 
             if ( true === $with_inner ) {
-                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. __($attributes["align"]).'">';
+                $return_content .= '<div className="sell-media-block-inner" class="sell-media-block-inner align'. $attributes["align"] .'">';
             }
 
             $return_content .= $content;
@@ -211,7 +211,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             if ( ! isset( $used ) ) {
                 $used = true;
 
-                $html .= '<div class="sell-media-search'.__($custom_class.$custom_class_image_div).'" style="'. $custom_style .'">';
+                $html .= '<div class="sell-media-search'. $custom_class.$custom_class_image_div .'" style="'. $custom_style .'">';
 
                 /* Image section */
                 if($image_div_add && $position_image != 'wide'){
@@ -228,9 +228,9 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 $html .= '<div class="sell-media-search-inner cf">';
 
                     $html .= '<div class="sell-media-search-form-custom-div">';
-                        $html .= '<label class="sell-media-search-form-label cf">'. __($custom_label).'</label>';
+                        $html .= '<label class="sell-media-search-form-label cf">'. $custom_label .'</label>';
 
-                        $html .= '<p class="sell-media-search-form-description cf">'. __($custom_description).'</p>';
+                        $html .= '<p class="sell-media-search-form-description cf">'. $custom_description .'</p>';
                     $html .= '</div>';
 
                     // Visible search options wrapper
@@ -373,7 +373,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                         $html .= '<a href="' . esc_url( get_permalink() ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 
                         if ( ! empty( $settings->titles ) ) {
-                            $html .= '<h2 class="entry-title">' . __(get_the_title()) . '</h2>';
+                            $html .= '<h2 class="entry-title">' . get_the_title() . '</h2>';
                         }
 
                         if ( wp_get_attachment_image( $post_id, apply_filters( 'sell_media_thumbnail', 'medium' ) ) ) {

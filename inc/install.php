@@ -119,7 +119,7 @@ add_action( 'admin_init', 'sell_media_check_version' );
  * @return string Disable notice.
  */
 function sell_media_disabled_notice() {
-	_e('<div class="update-nag">' . __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) . '</div>','sell_media');
+	echo '<div class="update-nag">' . __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) . '</div>';
 }
 
 /**

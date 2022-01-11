@@ -30,10 +30,10 @@ class SellMediaUpgrades {
 		// add new cron shedules
 		add_filter( 'cron_schedules', array( $this, 'cron_schedules' ) );
 
-	}
+	} 
 
 	/**
-	 * Check cron events
+	 * Check cron events 
 	 */
 	public function cron_check() {
 		if ( ! wp_next_scheduled( 'sell_media_upgrade_events' ) ) {
@@ -191,14 +191,14 @@ class SellMediaUpgrades {
 
 		// Query all sell_media_items
 		$the_query = new WP_Query( $args );
-
+        
 		update_option( $option_name, $offset + $display_count );
 		update_option( $pagination_option_name, $page + 1 );
 		// The Loop
 		if ( $the_query->have_posts() ) {
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
-
+                
 				// the keywords assigned to the single sell_media_item entry
 				$keyword_ids = wp_get_post_terms( get_the_ID(), 'keywords', array( 'fields' => 'ids' ) );
 
