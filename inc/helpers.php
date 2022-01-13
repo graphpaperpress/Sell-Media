@@ -1510,3 +1510,12 @@ function sell_media_ecommerce_enabled( $post_id ) {
 	}
 	return $status;
 }
+
+function sell_media_remove_filters(){
+    
+    //remove #main in sell-media product link
+    remove_filter('attachment_link', 'stock_photography_enhanced_image_navigation', 10, 2 );
+    remove_filter('attachment_link', 'albedo_enhanced_image_navigation', 10, 2);
+    remove_filter('attachment_link', 'generate_enhanced_image_navigation', 10, 2 );
+}
+add_action('init', 'sell_media_remove_filters');
