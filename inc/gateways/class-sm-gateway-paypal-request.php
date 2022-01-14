@@ -58,17 +58,27 @@ class SM_Gateway_PayPal_Request {
         ?>
         <form id="sell_media_payment_gateway" style="margin: 20px 0;" method="post">
             <?php
-            do_action( 'sell_media_payment_gateway_fields' );
-            /*
-             * Check PayPal key is exist
-             * */
-            $secret_key_exist = SellMediaPayPal::keys( 'secret_key' );
-            if (!empty($secret_key_exist)) {
-                ?>
-                <button type="button" class="sell-media-cart-checkout-button sell-media-button" id="pay_via_paypal_purchase"><?php _e( 'Pay via PayPal', 'sell_media' ); ?></button>
-                <?php
-            }
-            do_action( 'sell_media_payment_gateway_fields_after' );
+            
+                do_action( 'sell_media_payment_gateway_fields' );
+                /*
+                 * Check PayPal key is exist
+                 * */
+                $secret_key_exist = SellMediaPayPal::keys( 'secret_key' );
+
+                /*
+                 * Add classes so user can overwrite default button style of theme
+                 * */
+                $classes = "sell-media-cart-checkout-button sell-media-button";
+                $classes .= apply_filters( 'sell_media_checkout_button_classes', $classes );
+
+                if (!empty($secret_key_exist)) {
+                    ?>
+                    <button type="button" class="<?php echo $classes; ?>" id="pay_via_paypal_purchase"><?php _e( 'Pay via PayPal', 'sell_media' ); ?></button>
+                    <?php
+                }
+
+                
+                do_action( 'sell_media_payment_gateway_fields_after' );
             ?>
         </form>
         <?php
