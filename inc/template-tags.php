@@ -482,14 +482,14 @@ function sell_media_breadcrumbs() {
 		$obj = get_post_type_object( 'sell_media_item' );
 
 		$html = '<div class="sell-media-breadcrumbs">';
-		$html .= '<a href="' . esc_url( home_url() ) . '" title="' . __( 'Home', 'sell_media' ) . '">' . __( 'Home', 'sell_media' ) . '</a>';
-		$html .= '<a href="' . get_post_type_archive_link( 'sell_media_item' ) . '" title="' . $obj->rewrite['slug'] . '">' . $obj->rewrite['slug'] . '</a>';
+		$html .= '<div><a href="' . esc_url( home_url() ) . '" title="' . __( 'Home', 'sell_media' ) . '">' . __( 'Home', 'sell_media' ) . '</a></div>';
+		$html .= '<div><a href="' . get_post_type_archive_link( 'sell_media_item' ) . '" title="' . $obj->rewrite['slug'] . '">' . $obj->rewrite['slug'] . '</a></div>';
 		if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
 			$html .= sell_media_get_taxonomy_terms( 'collection' );
 		}
 		if ( sell_media_attachment( $post->ID ) ) {
 			$product_id = get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id', true );
-			$html .= '<a href="' . esc_url( get_permalink( $product_id ) ) . '" title="' . __( 'Back to Gallery', 'sell_media' ) . '">' . __( 'Back to Gallery', 'sell_media' ) . '</a>';
+			$html .= '<div><a href="' . esc_url( get_permalink( $product_id ) ) . '" title="' . __( 'Back to Gallery', 'sell_media' ) . '">' . __( 'Back to Gallery', 'sell_media' ) . '</a></div>';
 		}
 		$html .= '</div>';
 
