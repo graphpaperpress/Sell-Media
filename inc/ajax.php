@@ -219,7 +219,9 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 		$load_more = '';
 		// If result is at end hide load button.
 		if( $paged != $search_query->max_num_pages ){
-			$load_more = '<div class="load-more-button"><a href="javascript:void(0);" data-currentpage="' . $paged . '">' . __( 'Load more', 'sell_media' ) . '</a></div>';
+			$classes = "";
+            $classes .= apply_filters( 'sell_media_loadmore_button_classes', $classes );
+			$load_more = '<div class="load-more-button"><a href="javascript:void(0);" class="' . $classes . '" data-currentpage="' . $paged . '">' . __( 'Load more', 'sell_media' ) . '</a></div>';
 		}
 
 		wp_reset_postdata();
