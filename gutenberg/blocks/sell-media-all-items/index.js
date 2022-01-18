@@ -140,8 +140,7 @@ registerBlockType( 'sellmedia/sell-media-all-items', {
                 return <ServerSideRender
                 block="sellmedia/sell-media-all-items"
                 attributes={ attributes }
-                />
-                
+                />  
         }
 
         return [
