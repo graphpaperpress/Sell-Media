@@ -613,7 +613,10 @@ body .sell-media-input-text:focus {
 
 .sell-media-grid-item-container {
   margin: 25.6px 0;
-  position: relative; }
+  position: relative;
+  list-style: none; }
+  .sell-media-grid-item-container li {
+    list-style: none; }
 
 .sell-media-grid-single-video-item div.sell-media-quick-view:before,
 .sell-media-grid-single-audio-item div.sell-media-quick-view:before {

@@ -266,7 +266,7 @@ function sell_media_gallery( $post_id ) {
 	$attachment_ids = sell_media_get_attachments( $post_id );
 	$attachment_ids = array_map( 'intval', $attachment_ids);
 	$container_class = apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container', $post_id );
-	$html .= '<div id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
+	$html .= '<ul id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 		//$mime_type = get_post_mime_type( $attachment_id );
 		//echo $mime_type;
@@ -290,14 +290,14 @@ function sell_media_gallery( $post_id ) {
 				$image_height   = $attachment_attributes[2];
 				$width          = $image_width * 250 / $image_height;
 				$padding_bottom = $image_height / $image_width * 100;
-	 			$html  .= '<div id="sell-media-' . $attachment_id  . '" class="' . $class . ' sell-media-grid-single-item"  data-src="' . esc_url( $attachment_attributes[0] ) . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
+	 			$html  .= '<li id="sell-media-' . $attachment_id  . '" class="' . $class . ' sell-media-grid-single-item"  data-src="' . esc_url( $attachment_attributes[0] ) . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
 	 		}
 		} else {
 			$attr = array(
 				'class' => 'sell-media-image sell_media_image sell_media_watermark',
 			);
 			$item_class = apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', $post_id );
-			$html .= '<div id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item" data-src="' . esc_url( $attachment_attributes[0] ) . '">';
+			$html .= '<li id="sell-media-' . $attachment_id . '" class="' . $item_class . ' sell-media-grid-single-item" data-src="' . esc_url( $attachment_attributes[0] ) . '">';
 		}
 		$html .= '<a href="' . esc_url( get_permalink( $attachment_id ) ) . '" ' . sell_media_link_attributes( $attachment_id ) . ' class="sell-media-item">';
 		if ( 'sell-media-horizontal-masonry' === $settings->thumbnail_layout ) {
@@ -314,9 +314,9 @@ function sell_media_gallery( $post_id ) {
 			$html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . apply_filters( 'sell_media_quick_view_text', __( 'Quick View', 'sell_media' ), $post_id, $attachment_id ) . '</div>';
 		}
 		$html .= '</a>';
-		$html .= '</div>';
+		$html .= '</li>';
 	}
-	$html .= '</div>';
+	$html .= '</ul>';
 
 	return $html;
 }
