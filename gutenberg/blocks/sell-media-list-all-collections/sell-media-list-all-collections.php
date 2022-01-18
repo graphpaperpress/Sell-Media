@@ -49,7 +49,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             */
                 
             $shortcode_params_str = $this->prepare_recent_items_list_atts_to_param( $attributes );
-            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . esc_attr($shortcode_params_str) . ']';
+            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . ($shortcode_params_str) . ']';
                 
             $shortcode_out        = do_shortcode( $shortcode_params_str );
 

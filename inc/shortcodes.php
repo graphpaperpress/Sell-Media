@@ -623,7 +623,7 @@ function sell_media_ajax_filter( $atts ){
 		$choosen_tabs = array();
 		if( !empty( $choosen_tab_ids ) ){
 			foreach ($choosen_tab_ids as $key => $tab_id) {
-				$_tab_id = trim( $tab_id ) - 1;
+				$_tab_id = trim( (int) $tab_id ) - 1;
 				if( isset( $filter_tabs[$_tab_id] ) ){
 					$choosen_tabs[] =  $filter_tabs[$_tab_id];
 				}

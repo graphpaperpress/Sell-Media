@@ -1,7 +1,6 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { components } from '@wordpress/components';
 import { editor } from '@wordpress/editor';
-import { withState } from '@wordpress/compose';
 
 const { __, _x, sprintf } = wp.i18n;
 const {
