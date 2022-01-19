@@ -9,7 +9,7 @@ get_header(); ?>
 
 <div id="sell-media-collection-password" class="sell-media">
 	<div id="content" role="main">
-  	<form action="" method="POST">
+  	<form action="" method="post">
   	     <p><?php _e( 'This collection is password protected.', 'sell_media' ); ?>
   	     <input type="text" value="" name="collection_password" />
   	     <input type="submit" value="<?php _e( 'Submit', 'sell_media' ); ?>" name="submit" />

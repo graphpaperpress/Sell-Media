@@ -20,7 +20,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 			?>
 			<option value="<?php  echo esc_url($url); ?>"><?php _e( 'Select', 'sell_media' ) ?></option>
 			<?php
-			$current_pricelist = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : '';
+			$current_pricelist = isset( $_GET['term_parent'] ) ? sanitize_text_field( $_GET['term_parent'] ): '';
 			foreach ( $download_parents as $slug => $term ) {
 				$url = add_query_arg( array( 'term_parent' => $term->term_id ), $url );
 				if ( $this->current_term === $term->term_id ) {
