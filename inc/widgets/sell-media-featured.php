@@ -19,8 +19,6 @@
 		if ( $title )
 			echo $before_title. esc_attr( $title ) . $after_title;
 
-		global $post;
-
 		$taxonomy = 'collection';
 		$term_ids = array();
 		foreach( get_terms( $taxonomy ) as $term_obj ){
@@ -34,7 +32,7 @@
 			'field' => 'slug',
 			'orderby' => 'rand',
 			'has_password' => false,
-			'post__not_in' => array( $post->ID ),
+			'post__not_in' => array( get_the_ID() ),
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'collection',

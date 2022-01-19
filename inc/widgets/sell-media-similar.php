@@ -11,16 +11,15 @@
 	function widget( $args, $instance ){
 		extract( $args );
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
-		extract( $args );
+		//extract( $args );
 		echo $before_widget;
 
 		if ( $title ) {
 			echo $before_title . esc_attr( $title ) . $after_title;
 		}
 
-		global $post;
 		//Returns Array of Term Names for "collection"
-		$terms = wp_get_post_terms( $post->ID, 'collection', array( 'fields' => 'slugs' ) );
+		$terms = wp_get_post_terms( get_the_ID(), 'collection', array( 'fields' => 'slugs' ) );
 
 		if ( ! empty( $terms ) ) {
 
@@ -62,7 +61,7 @@
 			);
 		}
 
-		$args['post__not_in'] = array( $post->ID );
+		$args['post__not_in'] = array( get_the_ID() );
 		?>
 
 		<div class="sell-media-similar-widget sell-media-widget">

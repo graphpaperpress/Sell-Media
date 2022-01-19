@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 
 	class Sell_Media_Image_Exif_Widget extends WP_Widget {
@@ -14,12 +16,11 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 		/* Displays the Widget in the front-end */
 		function widget($args, $instance){
 			extract($args);
-			$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
-			extract($args);
+
+			$title = apply_filters( 'widget_title', !empty( $instance ) ? $instance['title'] : '' );
 			echo $before_widget;
 
-			global $post;
-			$img_ids = get_post_meta( $post->ID, '_sell_media_attachment_id', true );
+			$img_ids = get_post_meta( get_the_ID(), '_sell_media_attachment_id', true );
 			if(!empty($img_ids)) {
 				foreach($img_ids as $img_id){
 					$imgdata = wp_get_attachment_metadata( $img_id);

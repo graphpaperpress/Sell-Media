@@ -9,7 +9,6 @@
 
 	/* Displays the Widget in the front-end */
 	function widget($args, $instance){
-		global $post;
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		extract($args);
@@ -44,7 +43,7 @@
 				)
 			);
 		
-			$args['post__not_in'] = array( $post->ID );
+			$args['post__not_in'] = array( get_the_ID() );
 			$type_posts = new WP_Query ( $args );
 			$i = 0;
 			?>
