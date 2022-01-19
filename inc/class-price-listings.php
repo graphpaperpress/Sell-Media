@@ -52,7 +52,7 @@ class Sell_Media_Price_Listings {
 		// only load tabs on pricelists page and sell_media_item add/edit pages
 		if ( $screen->id === $pricelists_page || $screen->id === 'sell_media_item' ) {
 			$tabs = $this->get_tabs();
-			$this->current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : key( $tabs );
+			$this->current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : key( $tabs );
 			do_action( 'sell_media_price_listings_run', $this->current_tab );
 		}
 	}
@@ -107,7 +107,7 @@ class Sell_Media_Price_Listings {
 			$this->display_tabs( $this->current_tab );
 			$url_parameters['page'] = $this->menu_slug;
 			if ( isset( $_GET['tab'] ) ) {
-				$url_parameters['tab'] = $_GET['tab'];
+				$url_parameters['tab'] = sanitize_text_field( $_GET['tab'] );
 			}
 			$url_parameters = array_map( 'esc_attr', $url_parameters);
 		
@@ -148,7 +148,7 @@ class Sell_Media_Price_Listings {
 			$url_parameters['page'] = $this->menu_slug;
 			$url_parameters['updated'] = 'true';
 			if ( isset( $_GET['tab'] ) ) {
-				$url_parameters['tab'] = $_GET['tab'];
+				$url_parameters['tab'] = sanitize_text_field( $_GET['tab'] );
 			}
 			$url_parameters = array_map( 'esc_attr', $url_parameters);
 		

@@ -22,13 +22,13 @@ function sell_media_thanks_shortcode( $tx=null ) {
 	do_action( 'sell_media_thanks_hook' );
 
 	if ( isset($_GET['tx']) && ! empty( $_GET['tx'] )) {
-		$tx = esc_attr($_GET['tx']);
+		$tx = sanitize_key($_GET['tx']);
 		$gateway = 'PayPal';
 	} else if( isset( $_POST['txn_id'] ) && '' != $_POST['txn_id'] ){
-		$tx = (isset($_POST['txn_id'])) ? esc_attr($_POST['txn_id']) : '';
+		$tx = (isset($_POST['txn_id'])) ? sanitize_key($_POST['txn_id']) : '';
 		$gateway = 'PayPal';
 	} elseif ( isset($_POST['stripeToken']) && !empty( $_POST['stripeToken'] ) ) {
-		$tx = (isset($_POST['stripeToken'])) ? esc_attr($_POST['stripeToken']) : '';
+		$tx = (isset($_POST['stripeToken'])) ? sanitize_key($_POST['stripeToken']) : '';
 		$gateway = 'Stripe';
 	} else {
 		$tx = null;

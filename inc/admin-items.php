@@ -225,20 +225,20 @@ function sell_media_save_custom_meta( $post_id ) {
 			if ( $field == 'sell_media_price_group' ) {
 
 				if ( isset( $_POST['sell_media_price_group'] ) ) {
-					wp_set_post_terms( $post_id, esc_attr($_POST['sell_media_price_group']), 'price-group' );
+					wp_set_post_terms( $post_id, sanitize_text_field($_POST['sell_media_price_group']), 'price-group' );
 				}
 
 			// print price groups fields
 			} elseif ( $field == 'sell_media_print_price_group' ) {
 
 				if ( isset( $_POST['sell_media_print_price_group'] ) ) {
-					wp_set_post_terms( $post_id, esc_attr($_POST['sell_media_print_price_group']), 'reprints-price-group' );
+					wp_set_post_terms( $post_id, sanitize_text_field($_POST['sell_media_print_price_group']), 'reprints-price-group' );
 				}
 
 			
 			}  else {
 				$old = get_post_meta( $post_id, $field, true );
-				$new = esc_attr($_POST[ $field ]);
+				$new = sanitize_text_field($_POST[ $field ]);
 
 				if ( 0 <= $new && $new != $old ) {
 
@@ -314,7 +314,7 @@ function sell_media_save_custom_meta( $post_id ) {
 							// Check creator is assigned to item
 							if(isset($_POST['tax_input']['creator']) && !empty($_POST['tax_input']['creator'])){
 							    // List of creator ids
-                                $_creator_ids = (isset($_POST['tax_input']['creator'])) ? $_POST['tax_input']['creator'] : array();
+                                $_creator_ids = (isset($_POST['tax_input']['creator'])) ? sanitize_text_field( $_POST['tax_input']['creator'] ) : array();
                                 // Store creator to attachment.
                                 wp_set_post_terms( $attachment_id, $_creator_ids, 'creator' );
                             }
@@ -338,7 +338,7 @@ function sell_media_save_custom_meta( $post_id ) {
 	// Save the post content
 	global $post_type;
 	if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
-		$new_content = (isset($_POST['sell_media_editor'])) ? $_POST['sell_media_editor'] : '';
+		$new_content = (isset($_POST['sell_media_editor'])) ? sanitize_text_field( $_POST['sell_media_editor'] ) : '';
 		$old_content = get_post_field( 'post_content', $post_id );
 		if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ){
 			$args = array(
@@ -385,7 +385,7 @@ function sell_media_upload_bulk_callback(){
 
 	if ( isset( $_POST['dir'] ) ) {
 
-		$path = sell_media_get_import_dir() . '/' . esc_attr($_POST['dir']) . '/';
+		$path = sell_media_get_import_dir() . '/' . sanitize_text_field($_POST['dir']) . '/';
 
 		if ( file_exists( $path ) ) {
 
@@ -408,7 +408,7 @@ function sell_media_upload_bulk_callback(){
 					'tmp_name' => $tmp
 				);
 
-				$attachment_id = media_handle_sideload( $file_array, $_POST['id'] );
+				$attachment_id = media_handle_sideload( $file_array, sanitize_text_field( $_POST['id'] ) );
 
 				// remove temp file
 				@unlink( $file_array['tmp_name'] );
@@ -694,7 +694,7 @@ function sell_media_save_quick_edit_custom_meta( $post_id ) {
 
 	if ( wp_is_post_revision( $post_id ) ) return;
 	if ( isset( $_POST['sell_media_price_group'] ) ) {
-		wp_set_post_terms( $post_id, esc_attr($_POST['sell_media_price_group']), 'price-group' );
+		wp_set_post_terms( $post_id, sanitize_text_field($_POST['sell_media_price_group']), 'price-group' );
 	}
 
 	if ( isset( $_POST['sell_media_price'] ) ) {
@@ -710,9 +710,9 @@ add_action( 'save_post', 'sell_media_save_quick_edit_custom_meta' );
  */
 function sell_media_save_bulk_edit() {
 	if ( ! isset( $_POST['sell_media_quick_edit_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_quick_edit_nonce'], '_sell_media_quick_edit_nonce' ) ) return;
-	$post_ids = ( ! empty( $_POST[ 'post_ids' ] ) ) ? $_POST[ 'post_ids' ] : array();
-	$sell_media_price_group  = ( ! empty( $_POST[ 'sell_media_price_group' ] ) ) ? $_POST['sell_media_price_group'] : null;
-	$sell_media_price  = ( ! empty( $_POST[ 'sell_media_price' ] ) ) ? esc_attr($_POST[ 'sell_media_price' ]) : null;
+	$post_ids = ( ! empty( $_POST[ 'post_ids' ] ) ) ? sanitize_text_field( $_POST[ 'post_ids' ]) : array();
+	$sell_media_price_group  = ( ! empty( $_POST[ 'sell_media_price_group' ] ) ) ? sanitize_text_field( $_POST['sell_media_price_group'] ) : null;
+	$sell_media_price  = ( ! empty( $_POST[ 'sell_media_price' ] ) ) ? sanitize_text_field($_POST[ 'sell_media_price' ]) : null;
 
 	if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 		foreach( $post_ids as $post_id ) {

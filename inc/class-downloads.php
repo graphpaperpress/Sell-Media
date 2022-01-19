@@ -27,7 +27,7 @@ Class SellMediaDownload {
 		// added check_ajax_referer('download_media', '_nonce') for security
 		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && check_ajax_referer('download_media', '_nonce')) {
 			 
-			$transaction_id = (isset($_GET['download'])) ? esc_attr(urldecode( $_GET['download'] )) : '';
+			$transaction_id = (isset($_GET['download'])) ? sanitize_text_field(urldecode( $_GET['download'] )) : '';
 			$payment_id     = (isset($_GET['payment_id'])) ? intval(urldecode( $_GET['payment_id'] )) : '';
 			$product_id     = (isset($_GET['product_id'])) ? intval(urldecode( $_GET['product_id'] )) : '';
 			
@@ -36,7 +36,7 @@ Class SellMediaDownload {
 			// for multiple attachments. So, we just grab the first
 			// attachment_id saved in post meta.
 			$attachment_id  = ( ! empty( $_GET['attachment_id'] ) ) ? intval(urldecode( $_GET['attachment_id'] )) : sell_media_get_attachment_id( $product_id );
-			$size_id        = ( ! empty( $_GET['size_id'] ) ) ? esc_attr(urldecode( $_GET['size_id'] )) : null;
+			$size_id        = ( ! empty( $_GET['size_id'] ) ) ? sanitize_text_field(urldecode( $_GET['size_id'] )) : null;
 
 			$verified = apply_filters( 'sell_media_verify_download', $this->verify( $transaction_id, $payment_id, $product_id, $attachment_id, $size_id ), $product_id );
 

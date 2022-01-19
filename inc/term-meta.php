@@ -119,7 +119,7 @@ add_action( 'licenses_pre_add_form', 'sell_media_license_description' );
 function sell_media_the_markup_slider( $tag ){
 
 	if ( isset( $_GET['tag_ID'] ) )
-		$term_id = $_GET['tag_ID'];
+		$term_id = sanitize_key( $_GET['tag_ID'] );
 	else
 		$term_id = null;
 
@@ -244,7 +244,7 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 
 	if ( isset( $_POST['meta_value'] ) ) {
 		$cat_keys = array_keys( $_POST['meta_value'] );
-		$cat_keys = array_map( 'esc_attr', $cat_keys);
+		$cat_keys = array_map( 'sanitize_text_field', $cat_keys);
 	
 		foreach ( $cat_keys as $key ) {
 			if ( ! empty( $_POST['meta_value'][$key] ) ) {
@@ -263,8 +263,8 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 					update_term_meta( $term_id, $key, $markup );
 
 				} else {
-					$meta_value[$key] = $_POST['meta_value'][$key];
-					update_term_meta( $term_id, $key, wp_filter_nohtml_kses( $meta_value[$key]) );
+					$meta_value[$key] = wp_filter_nohtml_kses( $_POST['meta_value'][$key] );
+					update_term_meta( $term_id, $key, $meta_value[$key] );
 				}
 			} else {
 				delete_term_meta( $term_id, $key );

@@ -33,7 +33,7 @@ Class SellMediaAdminSearch {
     public function posts_where( $where ) {
 
         if ( is_admin() && is_search() ) {
-            $s = (isset($_GET['s'])) ? $_GET['s'] : '';
+            $s = (isset($_GET['s'])) ? sanitize_text_field( $_GET['s'] ) : '';
             if ( ! empty( $s ) ) {
                 global $wpdb;
                 if ( is_numeric( $s ) ) {
