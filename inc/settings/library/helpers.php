@@ -34,7 +34,7 @@ function sell_media_plugin_get_current_tab() {
     $first_tab = $sell_media_plugin_tabs[0]['name'];
 
     if ( isset( $_GET['tab'] ) ) {
-        $current = esc_attr( $_GET['tab'] );
+        $current = sanitize_text_field( $_GET['tab'] );
     } else {
         $current = $first_tab;
     }

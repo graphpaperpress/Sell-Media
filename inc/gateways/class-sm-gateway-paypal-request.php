@@ -166,7 +166,7 @@ class SM_Gateway_PayPal_Request {
 
         $_discount_id = 0;
         if ( isset( $_POST['discount'] ) ) {
-            $_discount_id = esc_attr($_POST['discount']);
+            $_discount_id = sanitize_text_field($_POST['discount']);
         }
         global $sm_cart;
         $_return_url = apply_filters('sell_media_paypal_return_url', empty( $this->settings->thanks_page ) ? site_url() : esc_url( add_query_arg( array( '_nonce' => wp_create_nonce( 'sell_media_paypal_order_complete_nonce' ) ), get_permalink( $this->settings->thanks_page ) ) ));
@@ -647,7 +647,7 @@ class SM_Gateway_PayPal_Request {
             update_post_meta( $payment_id, 'payment_currency_code',$_currency );
             update_post_meta( $payment_id, 'payment_billing_details', $_billing_details );
             update_post_meta( $payment_id, 'payment_shipping_details', $_shipping );
-            update_post_meta( $payment_id, 'paypal_order_token', (isset($_GET['token'])) ? $_GET['token'] : '' );
+            update_post_meta( $payment_id, 'paypal_order_token', (isset($_GET['token'])) ? sanitize_text_field( $_GET['token'] ) : '' );
 
             // Create new customer if not exist
             $this->create_customer( $_billing_details );
@@ -717,8 +717,8 @@ class SM_Gateway_PayPal_Request {
                     $refresh_url = isset( $this->settings->thanks_page ) ? get_permalink( $this->settings->thanks_page ) : home_url( );
                     $html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg(
                                 array(
-                                    'token' => (isset($_GET['token'])) ? esc_attr($_GET['token']) : '',
-                                    'PayerID' => (isset($_GET['PayerID'])) ? esc_attr($_GET['PayerID']) : '',
+                                    'token' => (isset($_GET['token'])) ? sanitize_text_field($_GET['token']) : '',
+                                    'PayerID' => (isset($_GET['PayerID'])) ? sanitize_text_field($_GET['PayerID']) : '',
                                 ),
                                 $refresh_url
                             )

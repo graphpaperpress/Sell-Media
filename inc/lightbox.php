@@ -119,7 +119,7 @@ function sell_media_lightbox_query() {
 
 	// Decode the lightbox array of IDs since they're encoded
 	if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
-		$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+		$items = json_decode( sanitize_key( $_COOKIE['sell_media_lightbox'] ), true );
 	}
 	
 	// Check if items in lightbox

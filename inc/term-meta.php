@@ -249,13 +249,13 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 		foreach ( $cat_keys as $key ) {
 			if ( ! empty( $_POST['meta_value'][$key] ) ) {
 				if ( 'related_keywords' === $key ) {
-					$related_keywords = trim( wp_filter_nohtml_kses( $_POST['meta_value'][$key] ), ',' );
+					$related_keywords = trim( sanitize_text_field( $_POST['meta_value'][$key] ), ',' );
 					$related_keywords = preg_replace( '/\s*,\s*/', ',', $related_keywords );
 					$related_keywords = explode( ',', $related_keywords );
 					$related_keywords = array_filter( $related_keywords );
 					update_term_meta( $term_id, $key, $related_keywords );
 				} elseif ( 'markup' === $key ) {
-					$markup = trim( wp_filter_nohtml_kses( $_POST['meta_value'][ $key ] ) );
+					$markup = trim( sanitize_text_field( $_POST['meta_value'][ $key ] ) );
 					$pos = strpos( $markup, '%' );
 					if ( false === $pos ) {
 						$markup .= '%';
@@ -263,7 +263,7 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 					update_term_meta( $term_id, $key, $markup );
 
 				} else {
-					$meta_value[$key] = wp_filter_nohtml_kses( $_POST['meta_value'][$key] );
+					$meta_value[$key] = sanitize_text_field( $_POST['meta_value'][$key] );
 					update_term_meta( $term_id, $key, $meta_value[$key] );
 				}
 			} else {

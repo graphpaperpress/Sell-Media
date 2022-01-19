@@ -54,7 +54,7 @@ Class SellMediaAdminNotices {
           
 
             /**
-             * Updates availalble
+             * Updates available
              */
             if ( $this->get_updates() ) {
                 $notices[] = array(

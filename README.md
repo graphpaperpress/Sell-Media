@@ -31,6 +31,7 @@ Insert galleries in many different formats using Sell Media blocks for Gutenberg
 * [Documentation](https://graphpaperpress.com/docs/sell-media/)
 * [Official Plugin Page](https://graphpaperpress.com/plugins/sell-media/)
 * [Github Code Repository](https://github.com/graphpaperpress/sell-media)
+* Sell Media is constantly updated and it also relies on its [extensions](https://graphpaperpress.com/plugins/sell-media/) for more features so if you have installed any extensions, it will check for updates and show you a notification on your admin screen. You can also view our [Terms and Conditions](https://graphpaperpress.com/terms-conditions/) and [Privacy Policy](https://graphpaperpress.com/privacy/).
 
 = Theme Integration =
 
@@ -220,9 +221,12 @@ Action hooks available:
 
 == Changelog ==
 
+= 2.5.7 =
+* Fix: sanitizations and security bugs
+* Fix: Gutenberg blocks not showing with new gutenberg plugin/WordPress 5.9
+
 = 2.5.6 =
 * Fix: nonce not set security bug fix
-* Updated readme file
 
 = 2.5.3 =
 * Fix: Alignment class conflict fix

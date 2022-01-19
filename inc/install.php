@@ -107,7 +107,7 @@ function sell_media_check_version() {
 			deactivate_plugins( plugin_basename( SELL_MEDIA_PLUGIN_FILE ) );
 			add_action( 'admin_notices', 'sell_media_disabled_notice' );
 			if ( isset( $_GET['activate'] ) ) {
-				unset( sanitize_text_field( $_GET['activate'] ) );
+				unset( $_GET['activate'] );
 			}
 		}
 	}

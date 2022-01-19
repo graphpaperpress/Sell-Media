@@ -115,7 +115,7 @@ function sell_media_admin_plugin_options_page() {
         <?php sell_media_plugin_get_page_tab_markup(); ?>
         <?php if ( isset( $_GET['settings-updated'] ) ) {
                 if( isset ( $_GET['i'] ) ) {
-                    $tabvalue = esc_attr($_GET['i']);
+                    $tabvalue = sanitize_text_field($_GET['i']);
                 } else {
                     $tabvalue = 0;
                 }
@@ -614,12 +614,12 @@ function sell_media_plugin_field_html( $value, $attr ){
  * Image upload ajax callback
  */
 function sell_media_plugin_image_url_callback() {
-    $ids = (isset($_POST['ids'])) ? esc_attr($_POST['ids']) : '';
-    $pid = (isset($_POST['pid'])) ? esc_attr($_POST['pid']) : '';
+    $ids = (isset($_POST['ids'])) ? sanitize_text_field($_POST['ids']) : '';
+    $pid = (isset($_POST['pid'])) ? sanitize_text_field($_POST['pid']) : '';
     update_post_meta( $pid, 'upload_gallery_preview', $ids );
 
     $image_ids = explode( ',', $ids );
-    $image_ids = array_map( 'esc_attr', $image_ids);
+    $image_ids = array_map( 'sanitize_text_field', $image_ids);
     $all_images = '';
     foreach( $image_ids as $image_id ) {
         $image_attributes = wp_get_attachment_image_src( $image_id, 'large' ); // returns an array
