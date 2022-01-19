@@ -107,7 +107,7 @@ function sell_media_payment_additional_purchase_details( $post ){
 
 	?>
 
-	<p><?php _e( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
+	<p><?php esc_attr_e( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
 	<table class="wp-list-table widefat" cellspacing="0">
 		<tbody>
 			<?php if ( $args ) : foreach( $args as $k => $v ) : ?>
@@ -120,29 +120,29 @@ function sell_media_payment_additional_purchase_details( $post ){
 					<?php foreach( $v as $name => $value ) : $i++ ?>
 						<?php if ( ! is_array( $name ) ) : ?>
 							<tr>
-								<td><?php _e( 'Product', 'sell_media' ); ?> <?php echo $i; ?></td>
+								<td><?php esc_attr_e( 'Product', 'sell_media' ); ?> <?php echo esc_attr( $i ); ?></td>
 								<td>
 									<ul>
 										<?php if ( $value['name'] ) : ?>
-											<li><?php _e( 'Name', 'sell_media' ); ?>: <?php echo esc_attr($value['name']); ?></li>
+											<li><?php esc_attr_e( 'Name', 'sell_media' ); ?>: <?php echo esc_attr($value['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['id'] ) : ?>
-											<li><?php _e( 'ID', 'sell_media' ); ?>: <a href="<?php echo esc_url(admin_url()); ?>post.php?post=<?php echo $value['id']; ?>&amp;action=edit"><?php echo esc_attr($value['id']); ?></a></li>
+											<li><?php esc_attr_e( 'ID', 'sell_media' ); ?>: <a href="<?php echo esc_url(admin_url()); ?>post.php?post=<?php echo esc_attr( $value['id'] ); ?>&amp;action=edit"><?php echo esc_attr($value['id']); ?></a></li>
 										<?php endif; ?>
 										<?php if ( $value['type'] ) : ?>
-											<li><?php _e( 'Type', 'sell_media' ); ?>: <?php echo esc_attr($value['type']); ?></li>
+											<li><?php esc_attr_e( 'Type', 'sell_media' ); ?>: <?php echo esc_attr($value['type']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['size']['name'] ) : ?>
-											<li><?php _e( 'Size', 'sell_media' ); ?>: <?php echo esc_attr($value['size']['name']); ?></li>
+											<li><?php esc_attr_e( 'Size', 'sell_media' ); ?>: <?php echo esc_attr($value['size']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['license']['name'] ) : ?>
-											<li><?php _e( 'License', 'sell_media' ); ?>: <?php echo esc_attr($value['license']['name']); ?></li>
+											<li><?php esc_attr_e( 'License', 'sell_media' ); ?>: <?php echo esc_attr($value['license']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['qty'] ) : ?>
-											<li><?php _e( 'Qty', 'sell_media' ); ?>: <?php echo esc_attr($value['qty']); ?></li>
+											<li><?php esc_attr_e( 'Qty', 'sell_media' ); ?>: <?php echo esc_attr($value['qty']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['total'] ) : ?>
-											<li><?php _e( 'Subtotal', 'sell_media' ); ?>: <?php echo sell_media_get_currency_symbol(); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
+											<li><?php esc_attr_e( 'Subtotal', 'sell_media' ); ?>: <?php echo sell_media_get_currency_symbol(); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
 										<?php endif; ?>
 									</ul>
 								</td>
@@ -152,7 +152,7 @@ function sell_media_payment_additional_purchase_details( $post ){
 				<?php endif; ?>
 			<?php endforeach; else : ?>
 				<tr>
-					<td><?php _e( 'This payment has no additional payment details', 'sell_media' ); ?></td>
+					<td><?php esc_attr_e( 'This payment has no additional payment details', 'sell_media' ); ?></td>
 				</tr>
 			<?php endif; ?>
 		</tbody>
@@ -183,7 +183,7 @@ function sell_media_payment_gateway_details( $post ){
 
     do_action('sell_media_payment_before_gateway_details', $post);
 
-	echo '<p>' . __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase.', 'sell_media' ) . '</p>';
+	echo '<p>' . esc_attr__( 'This is the data that was sent from ', 'sell_media' ) . $gateway . esc_attr__( ' at time of purchase.', 'sell_media' ) . '</p>';
 	echo '<ul>';
 	if ( $arguments ) foreach ( $arguments as $k => $v ) {
 		echo '<li><strong>' . $k . ':</strong> ' . ( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : $v ) . '</li>';
@@ -205,9 +205,9 @@ function sell_media_reports_callback_fn(){
 
 	$current_page = admin_url('edit.php?post_type=download&page=sell_media_reports');?>
 	<div class="wrap">
-		<h2><?php _e( 'Earnings Report', 'sell_media' ); ?></h2>
+		<h2><?php esc_attr_e( 'Earnings Report', 'sell_media' ); ?></h2>
 		<div class="tool-box total-revenue">
-			<h3 class="title"><?php _e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
+			<h3 class="title"><?php esc_attr_e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php print sell_media_get_currency_symbol(); ?><?php print sell_media_total_revenue( $post_status='publish' ); ?></strong></h3>
 			<?php do_action( 'sell_media_payments_below_total_earning' ); ?>
 		</div>
 
@@ -219,8 +219,8 @@ function sell_media_reports_callback_fn(){
 			google.setOnLoadCallback(drawChart);
 			function drawChart() {
 				var data = new google.visualization.DataTable();
-				data.addColumn('string', '<?php _e("Day", "sell_media"); ?>');
-				data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+				data.addColumn('string', '<?php esc_attr_e("Day", "sell_media"); ?>');
+				data.addColumn('number', '<?php esc_attr_e("Earnings", "sell_media"); ?>');
 				data.addRows([
 					<?php
 					$num_of_days = apply_filters( 'sell_media_earnings_per_day_days', 30 ); // show payments for the last 30 days
@@ -240,7 +240,7 @@ function sell_media_reports_callback_fn(){
 				]);
 
 				var options = {
-					title: "<?php _e('Earnings per day', 'sell_media'); ?>",
+					title: "<?php esc_attr_e('Earnings per day', 'sell_media'); ?>",
 					fontSize: "12"
 				};
 
@@ -257,8 +257,8 @@ function sell_media_reports_callback_fn(){
 			google.setOnLoadCallback(drawChart);
 			function drawChart() {
 				var data = new google.visualization.DataTable();
-				data.addColumn('string', '<?php _e("Month", "sell_media"); ?>');
-				data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+				data.addColumn('string', '<?php esc_attr_e("Month", "sell_media"); ?>');
+				data.addColumn('number', '<?php esc_attr_e("Earnings", "sell_media"); ?>');
 				data.addRows([
 					<?php
 					$i = 1;
@@ -271,7 +271,7 @@ function sell_media_reports_callback_fn(){
 					?>
 				]);
 				var options = {
-					title: "<?php _e('Earnings per month', 'sell_media'); ?>",
+					title: "<?php esc_attr_e('Earnings per month', 'sell_media'); ?>",
 					fontSize: "12"
 				};
 
@@ -288,14 +288,14 @@ function sell_media_reports_callback_fn(){
 			google.setOnLoadCallback(drawChart);
 			function drawChart() {
 				var data = new google.visualization.DataTable();
-				data.addColumn('string', '<?php _e("Year", "sell_media"); ?>');
-				data.addColumn('number', '<?php _e("Earnings", "sell_media"); ?>');
+				data.addColumn('string', '<?php esc_attr_e("Year", "sell_media"); ?>');
+				data.addColumn('number', '<?php esc_attr_e("Earnings", "sell_media"); ?>');
 				data.addRows([
 					<?php
 					$current = date('Y');
 					$i = $current - 12;
 					while($current >= $i) : ?>
-						['<?php echo $i; ?>',
+						['<?php echo esc_attr( $i ); ?>',
 						<?php echo sell_media_get_sales_by_date(null, null, $i ); ?>,
 						],
 						<?php
@@ -305,7 +305,7 @@ function sell_media_reports_callback_fn(){
 				]);
 
 				var options = {
-					title: "<?php _e('Earnings per year', 'sell_media'); ?>",
+					title: "<?php esc_attr_e('Earnings per year', 'sell_media'); ?>",
 					fontSize: "12"
 				};
 

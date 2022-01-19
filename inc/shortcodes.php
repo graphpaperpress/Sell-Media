@@ -263,21 +263,21 @@ function sell_media_checkout_shortcode() {
 		<div class="sell-media-totals group">
 			<div id="sell-media-totals-table" class="sell-media-totals-table cf">
 				<div class="subtotal cf">
-					<div class="sell-media-key"><?php _e( 'Subtotal', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_attr_e( 'Subtotal', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-total"></span></div>
 				</div>
 				<?php do_action( 'sell_media_checkout_registration_fields' ); ?>
 				<div class="tax cf">
-					<div class="sell-media-key"><?php _e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</div>
+					<div class="sell-media-key"><?php esc_attr_e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-tax"></span></div>
 				</div>
 				<div class="shipping cf">
-					<div class="sell-media-key"><?php _e( 'Shipping', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_attr_e( 'Shipping', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-shipping"></span></div>
 				</div>
 				<?php do_action( 'sell_media_checkout_before_grand_total' ); ?>
 				<div class="total cf">
-					<div class="sell-media-key"><?php _e( 'Total', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_attr_e( 'Total', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
 				</div>
 			</div>
@@ -367,13 +367,13 @@ function sell_media_price_group_shortcode(){
 		<tbody>
 		<?php foreach( get_terms('price-group', array( 'hide_empty' => false, 'parent' => 0 ) ) as $parent ) : ?>
 			<tr>
-				<th colspan="4"><?php _e($parent->name,'sell_media'); ?></th>
+				<th colspan="4"><?php esc_attr_e($parent->name,'sell_media'); ?></th>
 			</tr>
 			<tr class="sell-media-price-group-parent sell-media-price-group-parent-<?php echo esc_attr($parent->name); ?>" id="sell-media-price-group-parent-<?php intval($parent->term_id); ?>">
-				<th><?php _e('Description','sell_media'); ?></th>
-				<th><?php _e('width (px)','sell_media'); ?></th>
-				<th><?php _e('height (px)','sell_media'); ?></th>
-				<th><?php _e('price','sell_media'); ?>(<span class="currency-symbol"><?php echo sell_media_get_currency_symbol(); ?></span>)</th>
+				<th><?php esc_attr_e('Description','sell_media'); ?></th>
+				<th><?php esc_attr_e('width (px)','sell_media'); ?></th>
+				<th><?php esc_attr_e('height (px)','sell_media'); ?></th>
+				<th><?php esc_attr_e('price','sell_media'); ?>(<span class="currency-symbol"><?php echo sell_media_get_currency_symbol(); ?></span>)</th>
 			</tr>
 			<?php $i=0; foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $parent->term_id, 'orderby' => 'id' ) ) as $term ): ?>
 				<tr class="sell-media-price-group-row-<?php echo esc_attr(($i++%2==1) ? 'odd' : 'even'); ?> sell-media-price-group-child-<?php echo esc_attr($term->name); ?>" id="sell-media-price-group-child-<?php echo esc_attr($term->term_id); ?>">
@@ -562,7 +562,7 @@ function sell_media_login_form_shortcode(){
 
 	} else {
 		if ( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
-			echo '<span class="error">' . __( 'Login failed', 'sell_media' ) . '</span>';
+			echo '<span class="error">' . esc_attr__( 'Login failed', 'sell_media' ) . '</span>';
 		}
 
 		$args = array(
@@ -574,7 +574,7 @@ function sell_media_login_form_shortcode(){
 
 		wp_login_form( $args );
 
-		echo ('<a href="' .esc_url( wp_lostpassword_url( get_permalink() )) . '" title="' . __( 'Forgot Password', 'sell_media' ) . '">' . __( 'Forgot Password', 'sell_media' ) . '</a>');
+		echo ('<a href="' .esc_url( wp_lostpassword_url( get_permalink() )) . '" title="' . esc_attr__( 'Forgot Password', 'sell_media' ) . '">' . esc_attr__( 'Forgot Password', 'sell_media' ) . '</a>');
 
 	}
 

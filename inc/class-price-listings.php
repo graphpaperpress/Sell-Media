@@ -200,7 +200,7 @@ class Sell_Media_Price_Listings {
 		?>
 
 		<div id="sell-media-price-group-field" class="sell-media-field">
-			<label for="sell-media-price-group"><?php _e( 'Pricelist for downloads', 'sell_media' ); ?></label>
+			<label for="sell-media-price-group"><?php esc_attr_e( 'Pricelist for downloads', 'sell_media' ); ?></label>
 			<?php
 				$args = array(
 					'show_option_none' => __( 'None', 'sell_media' ),

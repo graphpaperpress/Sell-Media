@@ -46,7 +46,6 @@ function sell_media_submenu_order( $menu_ord ) {
 	global $submenu;
 
 	// Enable the next line to see all menu orders
-	// echo '<pre>' . print_r( $submenu, true ) . '</pre>';
 
 	$arr = array();
 	$required_order = array(

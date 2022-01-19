@@ -90,9 +90,9 @@ class Sell_Media_Price_Listings_Tabs {
 	
 		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">
-				<label><?php _e( 'Add New Pricelist', 'sell_media' ); ?></label>
+				<label><?php esc_attr_e( 'Add New Pricelist', 'sell_media' ); ?></label>
 				<input type="text" name="new_term_name" required />
-				<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add New Pricelist', 'sell_media' ); ?>" />
+				<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e( 'Add New Pricelist', 'sell_media' ); ?>" />
 				<input type="hidden" name="sell-media-price-list-submit" value="true" />
 			</div>			
 		</form>
@@ -166,7 +166,7 @@ class Sell_Media_Price_Listings_Tabs {
 						var price = typeof(value.meta.price)!== 'undefined' ?  value.meta.price : '';
 						var is_default = ( typeof(value.meta.default)!== 'undefined' && 1 == value.meta.default )  ?  true : false;
 					}
-					var alert_message = '' !== title ?  "<?php _e( 'Are you sure you want to delete the price: ', 'sell_media' ); ?>" + value.name + '?' : '<?php _e( 'Are you sure you want to delete this price? ', 'sell_media' ); ?>';
+					var alert_message = '' !== title ?  "<?php esc_attr_e( 'Are you sure you want to delete the price: ', 'sell_media' ); ?>" + value.name + '?' : '<?php esc_attr_e( 'Are you sure you want to delete this price? ', 'sell_media' ); ?>';
 				#>
 				<tr id="_row-data-{{value.index}}" data-index="{{value.index}}">
 					<td>
