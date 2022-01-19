@@ -58,17 +58,26 @@ class SM_Gateway_PayPal_Request {
         ?>
         <form id="sell_media_payment_gateway" style="margin: 20px 0;" method="post">
             <?php
-            do_action( 'sell_media_payment_gateway_fields' );
-            /*
-             * Check PayPal key is exist
-             * */
-            $secret_key_exist = SellMediaPayPal::keys( 'secret_key' );
-            if (!empty($secret_key_exist)) {
-                ?>
-                <button type="button" class="sell-media-cart-checkout-button sell-media-button" id="pay_via_paypal_purchase"><?php _e( 'Pay via PayPal', 'sell_media' ); ?></button>
-                <?php
-            }
-            do_action( 'sell_media_payment_gateway_fields_after' );
+            
+                do_action( 'sell_media_payment_gateway_fields' );
+                /*
+                 * Check PayPal key is exist
+                 * */
+                $secret_key_exist = SellMediaPayPal::keys( 'secret_key' );
+
+                /*
+                 * Add classes so user can overwrite default button style of theme
+                 * */
+                $classes = "sell-media-cart-checkout-button sell-media-button";
+                $classes .= apply_filters( 'sell_media_checkout_button_classes', $classes );
+
+                if (!empty($secret_key_exist)) {
+                    ?>
+                    <button type="button" class="<?php echo esc_attr( $classes ); ?>" id="pay_via_paypal_purchase"><?php esc_attr_e( 'Pay via PayPal', 'sell_media' ); ?></button>
+                    <?php
+                }
+                
+                do_action( 'sell_media_payment_gateway_fields_after' );
             ?>
         </form>
         <?php
@@ -156,7 +165,7 @@ class SM_Gateway_PayPal_Request {
 
         $_discount_id = 0;
         if ( isset( $_POST['discount'] ) ) {
-            $_discount_id = esc_attr($_POST['discount']);
+            $_discount_id = sanitize_text_field($_POST['discount']);
         }
         global $sm_cart;
         $_return_url = apply_filters('sell_media_paypal_return_url', empty( $this->settings->thanks_page ) ? site_url() : esc_url( add_query_arg( array( '_nonce' => wp_create_nonce( 'sell_media_paypal_order_complete_nonce' ) ), get_permalink( $this->settings->thanks_page ) ) ));
@@ -179,7 +188,7 @@ class SM_Gateway_PayPal_Request {
                             'return_url' => $_return_url,
                             'cancel_url' => $_cancel_url,
                             'brand_name' => get_bloginfo('name'),
-                            'user_action' => __('PAY_NOW', 'sell_media'),
+                            'user_action' => esc_attr__('PAY_NOW', 'sell_media'),
                     ),
                 );
         $_body['purchase_units'][] = array(
@@ -637,7 +646,7 @@ class SM_Gateway_PayPal_Request {
             update_post_meta( $payment_id, 'payment_currency_code',$_currency );
             update_post_meta( $payment_id, 'payment_billing_details', $_billing_details );
             update_post_meta( $payment_id, 'payment_shipping_details', $_shipping );
-            update_post_meta( $payment_id, 'paypal_order_token', (isset($_GET['token'])) ? $_GET['token'] : '' );
+            update_post_meta( $payment_id, 'paypal_order_token', (isset($_GET['token'])) ? sanitize_text_field( $_GET['token'] ) : '' );
 
             // Create new customer if not exist
             $this->create_customer( $_billing_details );
@@ -689,7 +698,7 @@ class SM_Gateway_PayPal_Request {
                 $html ='<div class="sell-media-thanks-message">';
 
                 if ( ! empty( $payment_id ) ) {
-                    $html .= '<p><strong>' . sprintf( __( 'Your order is complete.', 'sell_media' ), $payment_id ) . '</strong></p>';
+                    $html .= '<p><strong>' . sprintf( esc_attr__( 'Your order is complete.', 'sell_media' ), $payment_id ) . '</strong></p>';
                     $html .= Sell_Media()->payments->get_payment_products_formatted( $payment_id );
                     $meta = get_post_meta($payment_id, '_sell_media_payment_meta', true);
                     if ( $meta ) {
@@ -705,10 +714,10 @@ class SM_Gateway_PayPal_Request {
                     }
                 } else {
                     $refresh_url = isset( $this->settings->thanks_page ) ? get_permalink( $this->settings->thanks_page ) : home_url( );
-                    $html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg(
+                    $html .= sprintf( esc_attr__( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg(
                                 array(
-                                    'token' => (isset($_GET['token'])) ? esc_attr($_GET['token']) : '',
-                                    'PayerID' => (isset($_GET['PayerID'])) ? esc_attr($_GET['PayerID']) : '',
+                                    'token' => (isset($_GET['token'])) ? sanitize_text_field($_GET['token']) : '',
+                                    'PayerID' => (isset($_GET['PayerID'])) ? sanitize_text_field($_GET['PayerID']) : '',
                                 ),
                                 $refresh_url
                             )

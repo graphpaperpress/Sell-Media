@@ -1,7 +1,7 @@
 <?php
 $current_term = get_term( (int) $this->current_term, $current_tab );
 $download_parents = $this->get_terms();
-$url = add_query_arg( array( 'term_parent' => 'new' ), admin_url( 'edit.php?' . esc_attr($_SERVER['QUERY_STRING']) ) );
+$url = add_query_arg( array( 'term_parent' => 'new' ), admin_url( 'edit.php?' . sanitize_text_field($_SERVER['QUERY_STRING']) ) );
 $current_url = false;
 
 // Settings.
@@ -12,32 +12,32 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 ?>
 <div class="sell-media-pricing">	
 	<div class="tab-price-lists">
-		<label><?php _e( 'Select a pricelilst to edit','sell_media'); ?></label>
+		<label><?php esc_attr_e( 'Select a pricelilst to edit','sell_media'); ?></label>
 		<select>
 			<?php
-			$url = admin_url( 'edit.php?' . esc_attr($_SERVER['QUERY_STRING']) );
+			$url = admin_url( 'edit.php?' . sanitize_text_field($_SERVER['QUERY_STRING']) );
 			$url = remove_query_arg( 'term_parent' );
 			?>
-			<option value="<?php  echo esc_url($url); ?>"><?php _e( 'Select', 'sell_media' ) ?></option>
+			<option value="<?php  echo esc_url($url); ?>"><?php esc_attr_e( 'Select', 'sell_media' ) ?></option>
 			<?php
-			$current_pricelist = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : '';
+			$current_pricelist = isset( $_GET['term_parent'] ) ? sanitize_text_field( $_GET['term_parent'] ): '';
 			foreach ( $download_parents as $slug => $term ) {
 				$url = add_query_arg( array( 'term_parent' => $term->term_id ), $url );
 				if ( $this->current_term === $term->term_id ) {
 					$current_url = esc_url($url);
 				}
-				echo "<option value='$url' " . selected( (int) $current_pricelist, $term->term_id, false ) . ">" . $term->name . '</option>';
+				echo "<option value='$url' " . selected( (int) $current_pricelist, $term->term_id, false ) . ">" . esc_attr( $term->name ) . '</option>';
 			}
 			?>
 		</select>
-		<input type="hidden" value="<?php _e(!empty( $current_term ) && isset( $current_term->term_id ) ? $current_term->term_id: 'new'); ?>" name="term_id" />
+		<input type="hidden" value="<?php esc_attr_e(!empty( $current_term ) && isset( $current_term->term_id ) ? $current_term->term_id: 'new'); ?>" name="term_id" />
 		<input type="hidden" value="" name="deleted_term_ids" />
 		<?php
 		$delete_url = add_query_arg( array( 'delete' => true ), $current_url );
 		$delete_url = wp_nonce_url( $delete_url, 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 		$current_term_name = isset( $current_term->name ) ? $current_term->name : '';
 		if ( isset( $_GET['term_parent'] ) ) {
-			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php _e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php _e( 'Delete', 'sell_media' ); ?></a>
+			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_attr_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php esc_attr_e( 'Delete', 'sell_media' ); ?></a>
 		<?php } ?>
 	</div>
 	<?php
@@ -48,11 +48,11 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 	<table class="form-table tax-<?php esc_attr_e( $this->taxonomy ); ?>" id="sell-media-price-table">
 		<thead>
 			<tr>
-				<th style="width:15%"><?php _e( 'Name', 'sell_media' ); ?></th>
-				<th style="width:15%"><?php _e( 'Description', 'sell_media' ); ?></th>
-				<th style="width:10%"><?php _e( 'Width', 'sell_media' ); ?></th>
-				<th style="width:10%"><?php _e( 'Height', 'sell_media' ); ?></th>
-				<th style="width:10%"><?php _e( 'Price', 'sell_media' ); ?></th>
+				<th style="width:15%"><?php esc_attr_e( 'Name', 'sell_media' ); ?></th>
+				<th style="width:15%"><?php esc_attr_e( 'Description', 'sell_media' ); ?></th>
+				<th style="width:10%"><?php esc_attr_e( 'Width', 'sell_media' ); ?></th>
+				<th style="width:10%"><?php esc_attr_e( 'Height', 'sell_media' ); ?></th>
+				<th style="width:10%"><?php esc_attr_e( 'Price', 'sell_media' ); ?></th>
 				<th style="width:1%"></th>
 			</tr>
 		</thead>
@@ -73,23 +73,23 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 if ( 'price-group' === $current_tab ) { ?>
 	<div class="sell-media-pricing-settings" >
 		<h2 class="tab-title">
-			<span><?php _e( 'Download settings', 'sell_media' ); ?></span>						
+			<span><?php esc_attr_e( 'Download settings', 'sell_media' ); ?></span>						
 		</h2>
 		<div class="form-group">
-			<label><?php _e( 'High Resolution File Price', 'sell_media' ); ?></label>
-			<input type="text" name="settings[default_price]" value="<?php echo sanitize_text_field($default_price); ?>">
-			<span class="option-description"><?php _e( 'The original price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ) ?></span>
+			<label><?php esc_attr_e( 'High Resolution File Price', 'sell_media' ); ?></label>
+			<input type="text" name="settings[default_price]" value="<?php echo esc_attr($default_price); ?>">
+			<span class="option-description"><?php esc_attr_e( 'The original price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ) ?></span>
 		</div>
 		<div class="form-group">
-			<label><?php _e( 'High Resolution File Availability', 'sell_media' ); ?></label>
+			<label><?php esc_attr_e( 'High Resolution File Availability', 'sell_media' ); ?></label>
 			<select name="settings[hide_original_price]">
-				<option value="<?php _e( 'yes','sell_media' ); ?>" <?php selected( 'yes', $hide_original_price ) ?>><?php _e( 'Can be purchased', 'sell_media' ); ?></option>
-				<option value="<?php _e( 'no','sell_media' ); ?>" <?php selected( 'no', $hide_original_price ) ?>><?php _e( 'Cannot be purchased', 'sell_media' ); ?></option>
+				<option value="<?php esc_attr_e( 'yes','sell_media' ); ?>" <?php selected( 'yes', $hide_original_price ) ?>><?php esc_attr_e( 'Can be purchased', 'sell_media' ); ?></option>
+				<option value="<?php esc_attr_e( 'no','sell_media' ); ?>" <?php selected( 'no', $hide_original_price ) ?>><?php esc_attr_e( 'Cannot be purchased', 'sell_media' ); ?></option>
 			</select>
-			<span class="option-description"><?php _e( 'Select "Can be purchased" if you want to allow buyers to purchase the original high resolution file. Select "Cannot be purchased" if you only want buyers to purchase lower resolution copies (determined by the sizes in your pricelists below).', 'sell_media' ) ?></span>
+			<span class="option-description"><?php esc_attr_e( 'Select "Can be purchased" if you want to allow buyers to purchase the original high resolution file. Select "Cannot be purchased" if you only want buyers to purchase lower resolution copies (determined by the sizes in your pricelists below).', 'sell_media' ) ?></span>
 		</div>
 		<div class="form-group">
-			<label><?php _e( 'Default Pricelist', 'sell_media' ); ?></label>
+			<label><?php esc_attr_e( 'Default Pricelist', 'sell_media' ); ?></label>
 			<select name="settings[default_price_group]">
 				<?php
 				$price_group = sell_media_settings_price_group('price-group');
@@ -101,11 +101,11 @@ if ( 'price-group' === $current_tab ) { ?>
 					<?php }
 				}?>								
 			</select>
-			<span class="option-description"><?php _e( 'This is the default pricelist that will be assigned to all newly uploaded images for sale. You can override this setting on a per-item basis.', 'sell_media' ) ?></span>
+			<span class="option-description"><?php esc_attr_e( 'This is the default pricelist that will be assigned to all newly uploaded images for sale. You can override this setting on a per-item basis.', 'sell_media' ) ?></span>
 		</div>
 	</div>
 	<hr>
 <?php } ?>
 <p class="submit sell-media-priclist-submit">
-	<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php _e( 'Save Pricelist', 'sell_media' ); ?>" />
+	<input type="submit" name="Submit" id="sell-media-save-button"  class="button-primary" value="<?php esc_attr_e( 'Save Pricelist', 'sell_media' ); ?>" />
 </p>

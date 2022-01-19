@@ -29,11 +29,11 @@ class Sell_Media_Search_Widget extends WP_Widget {
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
-		$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
+		$plugin_name = apply_filters( 'sell_media_plugin_name', esc_attr__( 'Sell Media', 'sell_media' ), 10 );
 		parent::__construct(
 			'Sell_Media_Search_Widget', // Base ID
-			$plugin_name . ': ' . __( 'Search', 'sell_media' ), // Name
-			array( 'description' => __( 'Adds a search form for product search.', 'sell_media' ) ) // Args
+			$plugin_name . ': ' . esc_attr__( 'Search', 'sell_media' ), // Name
+			array( 'description' => esc_attr__( 'Adds a search form for product search.', 'sell_media' ) ) // Args
 		);
 	}
 
@@ -66,11 +66,11 @@ class Sell_Media_Search_Widget extends WP_Widget {
 			$title = $instance[ 'title' ];
 		}
 		else {
-			$title = __( 'Search', 'sell_media' );
+			$title = esc_attr__( 'Search', 'sell_media' );
 		}
 		?>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id( 'title' )); ?>"><?php _e( 'Title:', 'sell_media' ); ?></label>
+			<label for="<?php echo esc_attr($this->get_field_id( 'title' )); ?>"><?php esc_attr_e( 'Title:', 'sell_media' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'title' )); ?>" name="<?php echo esc_attr($this->get_field_name( 'title' )); ?>" type="text" value="<?php esc_attr_e( $title ,'sell_media'); ?>">
 		</p>
 		<?php

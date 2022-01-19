@@ -78,7 +78,7 @@ function sell_media_register_form() {
 		if ( 'select' === $field['type'] ) {
 			?>
 			<p>
-				<label for="<?php echo  esc_attr( $id ); ?>"><?php echo ucwords( $field['name'] ); ?><br />
+				<label for="<?php echo  esc_attr( $id ); ?>"><?php echo ucwords( esc_attr( $field['name'] ) ); ?><br />
 					<select name="<?php echo esc_attr( $id ); ?>" class="input">
 						<?php
 						if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
@@ -91,7 +91,7 @@ function sell_media_register_form() {
 			</p>
 		<?php } else { ?>
 			<p>
-				<label for="<?php echo esc_attr( $id ); ?>"><?php echo ucwords( $field['name'] ); ?><br />
+				<label for="<?php echo esc_attr( $id ); ?>"><?php echo ucwords( esc_attr( $field['name'] ) ); ?><br />
 				<input type="text" name="<?php echo esc_attr( $id ); ?>" id="<?php echo esc_attr( $id ); ?>" class="input" value="<?php echo esc_attr( $value ); ?>" size="25" /></label>
 			</p>
 		<?php }
@@ -443,7 +443,7 @@ add_action( 'login_enqueue_scripts', 'sell_media_login_css' );
  * Show extra profile fields in admin
  */
 function sell_media_show_extra_profile_fields( $user ) {
-	echo '<h2>' .__( 'Address', 'sell_media' ) . '</h2>';
+	echo '<h2>' . esc_attr__( 'Address', 'sell_media' ) . '</h2>';
 
 	echo '<table class="form-table">';
 
@@ -453,7 +453,7 @@ function sell_media_show_extra_profile_fields( $user ) {
 		if ( 'first_name' !== $id && 'last_name' !== $id ) {
 			$value = get_the_author_meta( $id, $user->ID );
 			echo '<tr>';
-			echo '<th><label for="' . $id . '">' . ucwords( $field['name'] ) . '</label></th>';
+			echo '<th><label for="' . $id . '">' . ucwords( esc_attr( $field['name'] ) ) . '</label></th>';
 			echo '<td>';
 			if ( 'select' === $field['type'] ) {
 				echo '<select name="' . esc_attr( $id ) . '" class="input">';
@@ -466,7 +466,7 @@ function sell_media_show_extra_profile_fields( $user ) {
 				echo '<input type="text" name="' . esc_attr($id) . '" id="' . esc_attr($id) . '" value="' . esc_attr( $value ) . '" class="regular-text" /><br />';
 			}
 			if(isset($field['desc']) && !empty($field['desc'])) {
-				echo '<span class="description">' . __($field['desc'], 'sell_media') . '</span>';
+				echo '<span class="description">' . esc_attr__($field['desc'], 'sell_media') . '</span>';
 			}
 			echo '</td>';
 			echo '</tr>';

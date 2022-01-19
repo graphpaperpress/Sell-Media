@@ -46,7 +46,7 @@ class Sell_Media_Price_Listings_Tabs {
 			$array_values = array_values( $parent_terms );
 			$first  = ( is_array( $array_values ) ) ? array_shift( $array_values ) : '';
 			$first_term_id = isset( $first->term_id ) ? $first->term_id : 0;
-			$this->current_term = isset( $_GET['term_parent'] ) ? $_GET['term_parent'] : $first_term_id;
+			$this->current_term = isset( $_GET['term_parent'] ) ? absint( $_GET['term_parent'] ) : $first_term_id;
 			add_action( 'sell_media_pricelists_before_form', array( $this, 'add_pricelist_form' ), 10, 2 );
 		}
 		add_filter( 'sell_media_price_listings_localize_data', array( $this, 'js_data' ) );
@@ -90,9 +90,9 @@ class Sell_Media_Price_Listings_Tabs {
 	
 		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">
-				<label><?php _e( 'Add New Pricelist', 'sell_media' ); ?></label>
+				<label><?php esc_attr_e( 'Add New Pricelist', 'sell_media' ); ?></label>
 				<input type="text" name="new_term_name" required />
-				<input type="submit" name="Submit" class="button-primary" value="<?php _e( 'Add New Pricelist', 'sell_media' ); ?>" />
+				<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e( 'Add New Pricelist', 'sell_media' ); ?>" />
 				<input type="hidden" name="sell-media-price-list-submit" value="true" />
 			</div>			
 		</form>
@@ -166,7 +166,7 @@ class Sell_Media_Price_Listings_Tabs {
 						var price = typeof(value.meta.price)!== 'undefined' ?  value.meta.price : '';
 						var is_default = ( typeof(value.meta.default)!== 'undefined' && 1 == value.meta.default )  ?  true : false;
 					}
-					var alert_message = '' !== title ?  "<?php _e( 'Are you sure you want to delete the price: ', 'sell_media' ); ?>" + value.name + '?' : '<?php _e( 'Are you sure you want to delete this price? ', 'sell_media' ); ?>';
+					var alert_message = '' !== title ?  "<?php esc_attr_e( 'Are you sure you want to delete the price: ', 'sell_media' ); ?>" + value.name + '?' : '<?php esc_attr_e( 'Are you sure you want to delete this price? ', 'sell_media' ); ?>';
 				#>
 				<tr id="_row-data-{{value.index}}" data-index="{{value.index}}">
 					<td>
@@ -224,7 +224,7 @@ class Sell_Media_Price_Listings_Tabs {
 		// Save new pricelist.
 		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
 			if ( ! term_exists( $_POST['new_term_name'], $this->taxonomy ) ) {
-				$term = wp_insert_term( esc_attr($_POST['new_term_name']), $this->taxonomy );
+				$term = wp_insert_term( sanitize_text_field($_POST['new_term_name']), $this->taxonomy );
 				$parent_term_id = $term['term_id'];
 			} else {
 				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", esc_attr($_POST['new_term_name']) ) );
@@ -236,7 +236,7 @@ class Sell_Media_Price_Listings_Tabs {
 			if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
 				if ( 0 !== $parent_term_id ) {
 					wp_update_term( $parent_term_id, $this->taxonomy, array(
-						'name' => esc_attr($_POST['term_name']),
+						'name' => sanitize_text_field($_POST['term_name']),
 					));
 				}
 			}
@@ -319,7 +319,7 @@ class Sell_Media_Price_Listings_Tabs {
 		check_admin_referer( 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 
 		$term_parent = absint( $_GET['term_parent'] );
-		$taxonomy = ( isset( $_GET['tab'] ) && '' !== $_GET['tab'] ) ? esc_attr( $_GET['tab'] ) : $this->taxonomy;
+		$taxonomy = ( isset( $_GET['tab'] ) && '' !== $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : $this->taxonomy;
 		$child_terms = get_term_children( $term_parent, $taxonomy );
 		wp_delete_term( (int) $term_parent, $taxonomy );
 

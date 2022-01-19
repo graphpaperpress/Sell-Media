@@ -193,7 +193,7 @@ function sell_media_collection_password_check( $query ) {
 				&& $_SESSION['sell_media']['collection_password'][$term_id] == $password ) {
 
 				if ( empty( $_SESSION['sell_media']['collection_password'][$term_id] ) )
-					$_SESSION['sell_media']['collection_password'][$term_id] = esc_attr($_POST['collection_password']);
+					$_SESSION['sell_media']['collection_password'][$term_id] = sanitize_text_field($_POST['collection_password']);
 
 				return $query;
 			} else {

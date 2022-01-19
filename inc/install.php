@@ -119,7 +119,7 @@ add_action( 'admin_init', 'sell_media_check_version' );
  * @return string Disable notice.
  */
 function sell_media_disabled_notice() {
-	echo '<div class="update-nag">' . __( 'Sell Media requires WordPress 4.4 or higher!', 'sell_media' ) . '</div>';
+	echo '<div class="update-nag">' . esc_attr__( 'Sell Media requires WordPress 5.8.3 or higher!', 'sell_media' ) . '</div>';
 }
 
 /**
@@ -127,7 +127,7 @@ function sell_media_disabled_notice() {
  * @return boolean
  */
 function sell_media_compatible_version() {
-	if ( version_compare( $GLOBALS['wp_version'], '4.4', '<' ) ) {
+	if ( version_compare( $GLOBALS['wp_version'], '5.8.3', '<' ) ) {
 		 return false;
 	}
 

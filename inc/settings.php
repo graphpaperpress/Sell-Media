@@ -65,7 +65,7 @@ function sell_media_init_settings() {
                     "name" => "payment_section_paypal",
                     "title" => __("PayPal Settings","sell_media"),
                     'description' => sprintf(
-                        __( 'You must add your <a href="https://developer.paypal.com/webapps/developer/docs/classic/api/apiCredentials/#create-an-api-signature" target="_blank">PayPal API Keys</a> to process transactions.', 'sell_media' )
+                        __( 'You must add your <a href="https://developer.paypal.com/developer/applications" target="_blank">PayPal API Keys</a> to process transactions.', 'sell_media' )
                     ),
                 )
 			)

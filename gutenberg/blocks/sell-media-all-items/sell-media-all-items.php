@@ -166,7 +166,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
              $block_categories[] = array(
                 'slug'  => 'sellmedia-blocks',
-                'title' => __( 'Sell Media Blocks', 'sell_media' ),
+                'title' => esc_attr__( 'Sell Media Blocks', 'sell_media' ),
                 'icon'  => false,
             );
 
@@ -231,10 +231,12 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 }
             }
 
+            $class = apply_filters( 'sell_media_grid_class', $class );
+
             if ( $wp_query_items->have_posts() ) :
 
                 $html = '<div class="sell-media">';
-                $html .= '<div class="' . $class . '">';
+                $html .= '<ul class="' . $class . '">';
                 
                 while ( $wp_query_items->have_posts() ) : $wp_query_items->the_post(); $i++;
                     $post_id = get_the_id();
@@ -280,7 +282,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                                     
                     }
                     
-                    $html  .= '<div id="sell-media-' . $original_id . '" class="' . $class . '">';       
+                    $html  .= '<li id="sell-media-' . $original_id . '" class="' . $class . '">';       
                     
                     $html .= '<a href="' . esc_url( get_permalink( $post_id ) ) . '" ' . sell_media_link_attributes( $post_id ) . ' class="sell-media-item">';
 
@@ -296,19 +298,19 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                     // Show quick view?
                     if ( isset( $quick_view ) && 0 != $quick_view && is_main_query() ) {                      
                         if ( sell_media_has_multiple_attachments( $post_id ) ) {
-                            $html .= '<div class="sell-media-view-gallery">' . __( 'View Gallery', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-view-gallery">' . esc_attr__( 'View Gallery', 'sell_media' ) . '</div>';
                         } elseif ( $enable_ecommerce ) {
-                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . __( 'Quick View', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . esc_attr__( 'Quick View', 'sell_media' ) . '</div>';
                         }
                     }
                     $html .= '</a>';
-                    $html .= '</div>';
+                    $html .= '</li>';
 
                 endwhile;
                 wp_reset_query();
                 $i = 0;
 
-                $html .= '</div><!-- .sell-media-grid-item-container -->';
+                $html .= '</ul><!-- .sell-media-grid-item-container -->';
                 if ( ! is_front_page() && is_main_query() )
                     $html .= sell_media_pagination_filter( $wp_query_items->max_num_pages );
                 $html .= '</div><!-- #sell-media-shortcode-all .sell_media -->';

@@ -711,6 +711,10 @@ body {
 	}
 
 	a {
+		text-decoration: none;
+	}
+
+	div {
 		display: inline-block;
 		margin-right: 10px;
 		text-decoration: none;
@@ -844,6 +848,11 @@ body {
 .sell-media-grid-item-container {
 	margin: $line-height 0;
 	position: relative;
+	list-style: none;
+
+	li {
+		list-style: none;
+	}
 }
 
 .sell-media-grid-single-video-item,

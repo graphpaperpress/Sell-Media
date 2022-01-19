@@ -20,7 +20,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $this->block_attributes = array(
                 'item_title' => array(
                     'type' => 'string',
-                    'default' => __('Recent Products', 'sell_media')
+                    'default' => esc_attr__('Recent Products', 'sell_media')
                 ),
                 'total_items' => array(
                     'type' => 'string',
@@ -76,7 +76,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             */
                 
             $shortcode_params_str = $this->prepare_recent_items_list_atts_to_param( $attributes );
-            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . esc_attr($shortcode_params_str) . ']';
+            $shortcode_params_str = '[' . $this->shortcode_slug . ' ' . ($shortcode_params_str) . ']';
                 
             $shortcode_out        = do_shortcode( $shortcode_params_str );
 
@@ -149,7 +149,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
              $block_categories[] = array(
                 'slug'  => 'sellmedia-blocks',
-                'title' => __( 'Sell Media Blocks', 'sell_media' ),
+                'title' => esc_attr__( 'Sell Media Blocks', 'sell_media' ),
                 'icon'  => false,
             );
 
@@ -171,7 +171,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             extract( shortcode_atts( array(		
                 'total_items' => 10,
                 'show_title' => "1",
-                'item_title'=>__('Recent Products', 'sell_media' ),
+                'item_title'=>esc_attr__('Recent Products', 'sell_media' ),
                 'slider_controls'=>"1",
                 ), $atts )
             );

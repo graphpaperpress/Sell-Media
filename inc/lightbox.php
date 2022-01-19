@@ -105,7 +105,7 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  */
 function sell_media_lightbox_remove_items() {
 	if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
-		 echo '<p class="empty-lightbox" title="' . __( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . __( 'Your lightbox is empty.', 'sell_media' ) . '">' . __( 'Remove All', 'sell_media' ) . '</p>';
+		 echo '<p class="empty-lightbox" title="' . esc_attr__( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . esc_attr__( 'Your lightbox is empty.', 'sell_media' ) . '">' . esc_attr__( 'Remove All', 'sell_media' ) . '</p>';
 	}
 }
 
@@ -119,7 +119,7 @@ function sell_media_lightbox_query() {
 
 	// Decode the lightbox array of IDs since they're encoded
 	if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
-		$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+		$items = json_decode( sanitize_key( $_COOKIE['sell_media_lightbox'] ), true );
 	}
 	
 	// Check if items in lightbox

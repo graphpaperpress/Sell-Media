@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sell_media_add_to_cart() {
 	global $sm_cart;
 
-	if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) && !wp_verify_nonce($_POST['_wpnonce'], 'sell_media_add_cart_action')) {
+	if( !isset( $_POST['_wpnonce'] ) || isset( $_POST['_wpnonce'] ) && !wp_verify_nonce( $_POST['_wpnonce'], 'sell_media_add_cart_action') ) {
 		echo 0;
 		exit;
 	}
@@ -30,35 +30,35 @@ function sell_media_add_to_cart() {
 		$item_number = absint( $_POST['item_number'] );
 
 		if( isset( $_POST['item_name'] ) && '' != $_POST['item_name'] ){
-			$attrs['item_name'] = esc_attr(sanitize_text_field( $_POST['item_name'] ));
+			$attrs['item_name'] = sanitize_text_field( $_POST['item_name'] );
 		}
 
 		if( isset( $_POST['item_type'] ) && '' != $_POST['item_type'] ){
-			$attrs['item_type'] = esc_attr(sanitize_text_field( $_POST['item_type'] ));
+			$attrs['item_type'] = sanitize_text_field( $_POST['item_type'] );
 		}
 
 		if( isset( $_POST['item_image'] ) && '' != $_POST['item_image'] ){
-			$attrs['item_image'] = esc_url(sanitize_text_field( $_POST['item_image'] ));
+			$attrs['item_image'] = sanitize_text_field( $_POST['item_image'] );
 		}
 
 		if( isset( $_POST['item_pgroup'] ) && '' != $_POST['item_pgroup'] ){
-			$attrs['item_pgroup'] = esc_attr(sanitize_text_field( $_POST['item_pgroup'] ));
+			$attrs['item_pgroup'] = sanitize_text_field( $_POST['item_pgroup'] );
 		}
 
 		if( isset( $_POST['item_size'] ) && '' != $_POST['item_size'] ){
-			$attrs['item_size'] = esc_attr(sanitize_text_field( $_POST['item_size'] ));
+			$attrs['item_size'] = sanitize_text_field( $_POST['item_size'] );
 		}
 
 		if( isset( $_POST['item_usage'] ) && '' != $_POST['item_usage'] ){
-			$attrs['item_usage'] = esc_attr(sanitize_text_field( $_POST['item_usage'] ));
+			$attrs['item_usage'] = sanitize_text_field( $_POST['item_usage'] );
 		}
 
 		if( isset( $_POST['item_license'] ) && '' != $_POST['item_license'] ){
-			$attrs['item_license'] = esc_attr(sanitize_text_field( $_POST['item_license'] ));
+			$attrs['item_license'] = sanitize_text_field( $_POST['item_license'] );
 		}
 
 		if( isset( $_POST['item_attachment'] ) && '' != $_POST['item_attachment'] ){
-			$attrs['item_attachment'] = esc_attr(absint( sanitize_text_field( $_POST['item_attachment'] ) ));
+			$attrs['item_attachment'] = absint( $_POST['item_attachment'] );
 		}
 
 		$attrs = apply_filters( 'sell_media_cart_item_attrs', $attrs );
@@ -95,7 +95,7 @@ function sell_media_update_cart(){
 	if( !empty( $_POST ) && isset( $_POST['cart_item_id'] ) ){
 
 		$qty = intval($_POST['qty']);
-		$cart_item_id = esc_attr(sanitize_text_field( $_POST['cart_item_id'] ));
+		$cart_item_id = sanitize_text_field( $_POST['cart_item_id'] );
 		// Check if cart item id is empty.
 		if( '' != $cart_item_id ){
 
@@ -137,10 +137,6 @@ add_action( 'wp_ajax_nopriv_sell_media_cart_menu', 'sell_media_cart_menu' );
  * @return array         Content and load button.
  */
 function sell_media_ajax_filter_search( $param = array(), $echo = true ){
-	// Check if post is empty.
-	if( !empty( $_POST ) ) {
-		$param = $_POST;
-	}
 
 	// Check if parameters are empty.
 	if( empty( $param ) ){
@@ -148,7 +144,7 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 	}
 
 	// Next pagination.
-	$paged = ( isset( $_POST['paged'] ) and 1 <= $param['paged'] ) ? absint( $param['paged'] )+1 : 1;
+	$paged = ( isset( $_POST['paged'] ) and 1 <= absint( $_POST['paged'] ) ) ? absint( $_POST['paged'] )+1 : 1;
 
 	// Arguments for query.
 	$args['post_type'] = "sell_media_item";
@@ -156,20 +152,20 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 	$args['paged'] = $paged;
 
 	// Check if tab is set.
-	if ( ! isset( $param['tab'] ) ) {
-		$param['tab'] = 'newest';
+	if ( ! isset( $_POST['tab'] ) ) {
+		$_POST['tab'] = 'newest';
 	}
 
-	if( 'newest' == $param['tab'] ){
+	if( 'newest' == $_POST['tab'] ){
 		$args['order'] = 'DESC';
 		$args['orderby'] = 'date';
 	}
-	else if( 'most-popular' == $param['tab'] ){
+	else if( 'most-popular' == $_POST['tab'] ){
 		$args['order'] = 'DESC';
 		$args['meta_key'] = '_sell_media_post_views_count';
 		$args['orderby'] = 'meta_value_num';
 	}
-	else if( 'keywords' == $param['tab'] ){
+	else if( 'keywords' == $_POST['tab'] ){
 		$args['post_type'] = 'attachment';
 		$args['post_status'] = array( 'publish', 'inherit' );
 		$args['post_parent__in'] = sell_media_ids();
@@ -177,16 +173,16 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 							array(
 								'taxonomy' => 'keywords',
 								'field'    => 'id',
-								'terms'    => absint( $param['term']),
+								'terms'    => absint( $_POST['term']),
 							),
 						);
 	}
-	else if( 'collections' == $param['tab'] ){
+	else if( 'collections' == $_POST['tab'] ){
 		$args['tax_query'] = array(
 							array(
 								'taxonomy' => 'collection',
 								'field'    => 'id',
-								'terms'    => absint( $param['term']),
+								'terms'    => absint( $_POST['term']),
 							),
 						);
 	}
@@ -219,7 +215,9 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 		$load_more = '';
 		// If result is at end hide load button.
 		if( $paged != $search_query->max_num_pages ){
-			$load_more = '<div class="load-more-button"><a href="javascript:void(0);" data-currentpage="' . $paged . '">' . __( 'Load more', 'sell_media' ) . '</a></div>';
+			$classes = "";
+            $classes .= apply_filters( 'sell_media_loadmore_button_classes', $classes );
+			$load_more = '<div class="load-more-button"><a href="javascript:void(0);" class="' . $classes . '" data-currentpage="' . $paged . '">' . __( 'Load more', 'sell_media' ) . '</a></div>';
 		}
 
 		wp_reset_postdata();
@@ -264,7 +262,7 @@ function sell_media_ajax_add_to_cart_button( $id = NULL, $attachment_id = NULL, 
 	}
 
 	if( isset( $_POST['type'] ) ){
-		$type = $_POST['type'];
+		$type = sanitize_text_field( $_POST['type'] );
 	}
 
 	sell_media_item_add_to_cart_button( $id, $attachment_id, null, null, true, $type );

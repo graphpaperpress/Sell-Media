@@ -34,7 +34,7 @@ function sell_media_plugin_get_current_tab() {
     $first_tab = $sell_media_plugin_tabs[0]['name'];
 
     if ( isset( $_GET['tab'] ) ) {
-        $current = esc_attr( $_GET['tab'] );
+        $current = sanitize_text_field( $_GET['tab'] );
     } else {
         $current = $first_tab;
     }
@@ -88,19 +88,25 @@ function sell_media_plugin_get_page_tab_markup() {
     $i = 0;
     foreach( $tabs as $tab ) {
         if( isset( $tab['name'] ) )
-            $tabname = esc_attr($tab['name']);
+            $tabname = esc_attr( $tab['name'] );
         if( isset( $tab['title'] ) )
             $tabtitle = esc_attr($tab['title']);
         if ( $tabname == $current ) {
-            $links[] = "<a class='nav-tab nav-tab-active' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>".esc_attr($tabtitle)."</a>";
+            $links[] = "<a class='nav-tab nav-tab-active' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>" . esc_attr( $tabtitle ) . "</a>";
         } else {
-            $links[] = "<a class='nav-tab' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>".esc_attr($tabtitle)."</a>";
+            $links[] = "<a class='nav-tab' href='?post_type=sell_media_item&page=$page&tab=$tabname&i=$i'>" . esc_attr( $tabtitle ) . "</a>";
         }
         $i++;
     }
+
+    $arr = array( 'a' => array(
+        'href' => array(),
+        'class' => array()
+    ));
+
     echo '<h2 class="nav-tab-wrapper">';
     foreach ( $links as $link )
-        echo $link;
+        echo wp_kses( $link , $arr );
     echo '</h2>';
 }
 
@@ -266,7 +272,7 @@ function sell_media_currencies(){
 /**
  * Returns a formatted array of price groups for the sell media settings
  */
-function sell_media_settings_price_group( $taxonomy=null ){
+function sell_media_settings_price_group( $taxonomy=null ) {
     $array[] = array(
         'name' => 0,
         'title' => __('None','sell_media')
@@ -289,7 +295,7 @@ function sell_media_settings_price_group( $taxonomy=null ){
 /**
  * Returns the payment gateways for the sell media settings
  */
-function sell_media_settings_payment_gateway(){
+function sell_media_settings_payment_gateway() {
     $gateways = array(
         array(
             'name' => 'PayPal',

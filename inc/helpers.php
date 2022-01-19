@@ -264,7 +264,7 @@ function sell_media_build_input( $taxonomy = null ) {
 				name="<?php echo esc_attr( $taxonomy); ?>"
 				type="<?php echo esc_attr( $type); ?>"
 				/>
-			<?php echo esc_attr( $term->name); ?> <?php if ( $price ) : ?>+<?php _e( $price); ?>%<?php endif; ?><br />
+			<?php echo esc_attr( $term->name); ?> <?php if ( $price ) : ?>+<?php esc_attr_e( $price); ?>%<?php endif; ?><br />
 		<?php endforeach; ?>
 		<?php do_action( 'sell_media_build_input_after' ); ?>
 	<?php endif; ?>
@@ -615,7 +615,7 @@ if ( ! is_admin() ) {
 function sell_media_get_filesize( $post_id = null, $attachment_id = null ) {
 
 	$file_path = Sell_Media()->products->get_protected_file( $post_id, $attachment_id );
-	//echo $file_path;
+
 	if ( file_exists( $file_path ) ) { // local server path
 		$bytes = filesize( $file_path );
 	} else { // amazon s3 filesize https path
@@ -1510,3 +1510,12 @@ function sell_media_ecommerce_enabled( $post_id ) {
 	}
 	return $status;
 }
+
+function sell_media_remove_filters(){
+    
+    //remove #main in sell-media product link
+    remove_filter('attachment_link', 'stock_photography_enhanced_image_navigation', 10, 2 );
+    remove_filter('attachment_link', 'albedo_enhanced_image_navigation', 10, 2);
+    remove_filter('attachment_link', 'generate_enhanced_image_navigation', 10, 2 );
+}
+add_action('init', 'sell_media_remove_filters');
