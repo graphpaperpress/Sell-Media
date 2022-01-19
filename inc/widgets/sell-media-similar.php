@@ -1,7 +1,7 @@
 <?php class Sell_Media_Similar_Widget extends WP_Widget
 {
 	function __construct(){
-		$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
+		$plugin_name = apply_filters( 'sell_media_plugin_name', esc_attr__( 'Sell Media', 'sell_media' ), 10 );
 		$widget_ops = array( 'description' => 'Displays similar products.' );
 		$control_ops = array( 'width' => 200, 'height' => 200 );
 		parent::__construct( false, $plugin_name . ': Similar Products', $widget_ops, $control_ops );
@@ -15,7 +15,7 @@
 		echo $before_widget;
 
 		if ( $title ) {
-			echo $before_title . $title . $after_title;
+			echo $before_title . esc_attr( $title ) . $after_title;
 		}
 
 		global $post;
@@ -109,7 +109,7 @@
 		$title = htmlspecialchars($instance['title']);
 
 		// Title
-		echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
+		echo '<p><label for="' . esc_attr( $this->get_field_id('title') ) . '">' . 'Title:' . '</label><input class="widefat" id="' . esc_attr( $this->get_field_id('title') ) . '" name="' . esc_attr( $this->get_field_name('title') ) . '" type="text" value="' . esc_attr( $title ) . '" /></p>';
 	}
 
 }
@@ -119,4 +119,3 @@ function Sell_Media_Similar_WidgetInit() {
 }
 
 add_action( 'widgets_init', 'Sell_Media_Similar_WidgetInit' );
-?>

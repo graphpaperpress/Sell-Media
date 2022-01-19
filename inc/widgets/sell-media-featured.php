@@ -1,7 +1,7 @@
 <?php class Sell_Media_Featured_Widget extends WP_Widget
 {
 	function __construct(){
-		$plugin_name = apply_filters( 'sell_media_plugin_name', __( 'Sell Media', 'sell_media' ), 10 );
+		$plugin_name = apply_filters( 'sell_media_plugin_name', esc_attr__( 'Sell Media', 'sell_media' ), 10 );
 		$widget_ops = array('description' => 'Displays featured products.');
 		$control_ops = array('width' => 200, 'height' => 200);
 		parent::__construct( false, $plugin_name . ': Featured Products', $widget_ops, $control_ops );
@@ -17,7 +17,7 @@
 		echo $before_widget;
 	
 		if ( $title )
-			echo $before_title . $title . $after_title;
+			echo $before_title. esc_attr( $title ) . $after_title;
 
 		global $post;
 
@@ -95,7 +95,7 @@
 
 
 		 # Title
-		echo '<p><label for="' . $this->get_field_id('title') . '">' . 'Title:' . '</label><input class="widefat" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></p>';
+		echo '<p><label for="' . esc_attr( $this->get_field_id('title') ) . '">' . 'Title:' . '</label><input class="widefat" id="' . esc_attr( $this->get_field_id('title') ) . '" name="' . esc_attr( $this->get_field_name('title') ) . '" type="text" value="' . esc_attr( $title ) . '" /></p>';
 
 
 		# Collection
@@ -110,9 +110,9 @@
 			}
 		endif;
 		?>
-		<p><label for="<?php _e($this->get_field_id('categoryNumber'),'sell_media') ?>"><?php _e( ' Select Collection', 'sell_media'); ?>: </label>
-		<select id="<?php _e($this->get_field_id('categoryNumber'),'sell_media'); ?>" name="<?php _e($this->get_field_name('categoryNumber'),'sell_media'); ?>" value="<?php _e($categoryNumber,'sell_media'); ?>">
-			<option value="" <?php if($categoryNumber == '') _e('selected="selected"','sell_media'); ?>><?php _e( 'All Collections', 'sell_media'); ?></option>
+		<p><label for="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media') ?>"><?php esc_attr_e( ' Select Collection', 'sell_media'); ?>: </label>
+		<select id="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media'); ?>" name="<?php esc_attr_e($this->get_field_name('categoryNumber'),'sell_media'); ?>" value="<?php esc_attr_e($categoryNumber,'sell_media'); ?>">
+			<option value="" <?php if($categoryNumber == '') esc_attr_e('selected="selected"','sell_media'); ?>><?php esc_attr_e( 'All Collections', 'sell_media'); ?></option>
 				<?php
 				if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
 				 foreach ($productTerms as $term) : ?>
@@ -132,4 +132,3 @@ function Sell_Media_Featured_WidgetInit() {
 }
 
 add_action('widgets_init', 'Sell_Media_Featured_WidgetInit');
-?>

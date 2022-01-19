@@ -36,7 +36,7 @@ class SellMediaPayPal {
         $translation_array = array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'paypal_refund_nonce' => wp_create_nonce( 'sell-media-paypal-payment-refund' ),
-            'paypal_refund_label' => __('Order refund ID: ', 'sell_media')
+            'paypal_refund_label' => esc_attr__('Order refund ID: ', 'sell_media')
         );
         wp_localize_script( 'sell_media-admin-items', 'sell_media_paypal', $translation_array );
     }
@@ -134,19 +134,19 @@ class SellMediaPayPal {
                 <?php do_action('sell_media_before_refund_form'); ?>
                 <?php if(!$_order_refund_id) { ?>
                     <li>
-                        <label for="paypal-order-amount"><?php _e('Enter amount which you want to refund.','sell_media'); ?></label>
+                        <label for="paypal-order-amount"><?php esc_attr_e('Enter amount which you want to refund.','sell_media'); ?></label>
                         <input type="number" id="paypal-order-amount" class="paypal-order-amount" value="<?php 
                         echo esc_attr($_order_total_paid); ?>" min="0" />
                     </li>
                     <li class="paypal-order-refund-action">
                         <button type="button" id="paypal_payment_refund_btn" class="button button-primary button-large" data-transaction_id="<?php echo esc_attr($transaction_id); ?>" ><?php 
-                        _e('Refund Now', 'sell_media'); ?></button>
+                        esc_attr_e('Refund Now', 'sell_media'); ?></button>
                         <input type="hidden" id="paypal_payment_id" value="<?php echo esc_attr($payment_id); ?>"/>
                         <input type="hidden" id="paypal_payment_currency_code" value="<?php echo esc_attr($_currency_code); ?>"/>
                     </li>
                 <?php } else { ?>
                     <li class="order-refund-msg">
-                        <strong><?php _e('Order refund ID: ', 'sell_media'); ?></strong> <?php
+                        <strong><?php esc_attr_e('Order refund ID: ', 'sell_media'); ?></strong> <?php
                          echo esc_attr($_order_refund_id); ?>
                     </li>
                 <?php } ?>
@@ -164,7 +164,7 @@ class SellMediaPayPal {
 
         $_result = array();
         $_result['status'] = false;
-        $_result['message'] = apply_filters('sell_media_order_refund_fail_message', __('Order refund process fail, Please try again', 'sell_media'));
+        $_result['message'] = apply_filters('sell_media_order_refund_fail_message', esc_attr__('Order refund process fail, Please try again', 'sell_media'));
         if(isset($_POST['transaction_id']) && !empty($_POST['transaction_id']) && isset($_POST['_nonce']) && wp_verify_nonce($_POST['_nonce'], 'sell-media-paypal-payment-refund')) {
 
             $_payment_id        = (isset($_POST['payment_id']) && !empty($_POST['payment_id'])) ? sanitize_text_field($_POST['payment_id']) : 0;

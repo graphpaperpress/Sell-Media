@@ -17,9 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sell_media_add_to_cart() {
 	global $sm_cart;
 
-	$wpnonce = $_POST['_wpnonce'];
-
-	if( !isset( $wpnonce ) || isset( $wpnonce ) && !wp_verify_nonce( $wpnonce, 'sell_media_add_cart_action') ) {
+	if( !isset( $_POST['_wpnonce'] ) || isset( $_POST['_wpnonce'] ) && !wp_verify_nonce( $_POST['_wpnonce'], 'sell_media_add_cart_action') ) {
 		echo 0;
 		exit;
 	}
@@ -40,7 +38,7 @@ function sell_media_add_to_cart() {
 		}
 
 		if( isset( $_POST['item_image'] ) && '' != $_POST['item_image'] ){
-			$attrs['item_image'] = sanitize_url( $_POST['item_image'] );
+			$attrs['item_image'] = sanitize_text_field( $_POST['item_image'] );
 		}
 
 		if( isset( $_POST['item_pgroup'] ) && '' != $_POST['item_pgroup'] ){
@@ -60,7 +58,7 @@ function sell_media_add_to_cart() {
 		}
 
 		if( isset( $_POST['item_attachment'] ) && '' != $_POST['item_attachment'] ){
-			$attrs['item_attachment'] = absint( sanitize_text_field( $_POST['item_attachment'] ) );
+			$attrs['item_attachment'] = absint( $_POST['item_attachment'] );
 		}
 
 		$attrs = apply_filters( 'sell_media_cart_item_attrs', $attrs );

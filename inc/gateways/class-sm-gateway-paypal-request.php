@@ -73,10 +73,9 @@ class SM_Gateway_PayPal_Request {
 
                 if (!empty($secret_key_exist)) {
                     ?>
-                    <button type="button" class="<?php echo $classes; ?>" id="pay_via_paypal_purchase"><?php _e( 'Pay via PayPal', 'sell_media' ); ?></button>
+                    <button type="button" class="<?php echo esc_attr( $classes ); ?>" id="pay_via_paypal_purchase"><?php esc_attr_e( 'Pay via PayPal', 'sell_media' ); ?></button>
                     <?php
                 }
-
                 
                 do_action( 'sell_media_payment_gateway_fields_after' );
             ?>
@@ -189,7 +188,7 @@ class SM_Gateway_PayPal_Request {
                             'return_url' => $_return_url,
                             'cancel_url' => $_cancel_url,
                             'brand_name' => get_bloginfo('name'),
-                            'user_action' => __('PAY_NOW', 'sell_media'),
+                            'user_action' => esc_attr__('PAY_NOW', 'sell_media'),
                     ),
                 );
         $_body['purchase_units'][] = array(
@@ -699,7 +698,7 @@ class SM_Gateway_PayPal_Request {
                 $html ='<div class="sell-media-thanks-message">';
 
                 if ( ! empty( $payment_id ) ) {
-                    $html .= '<p><strong>' . sprintf( __( 'Your order is complete.', 'sell_media' ), $payment_id ) . '</strong></p>';
+                    $html .= '<p><strong>' . sprintf( esc_attr__( 'Your order is complete.', 'sell_media' ), $payment_id ) . '</strong></p>';
                     $html .= Sell_Media()->payments->get_payment_products_formatted( $payment_id );
                     $meta = get_post_meta($payment_id, '_sell_media_payment_meta', true);
                     if ( $meta ) {
@@ -715,7 +714,7 @@ class SM_Gateway_PayPal_Request {
                     }
                 } else {
                     $refresh_url = isset( $this->settings->thanks_page ) ? get_permalink( $this->settings->thanks_page ) : home_url( );
-                    $html .= sprintf( __( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg(
+                    $html .= sprintf( esc_attr__( 'We\'ve received your payment and are processing your order. <a href="%s" class="reload">Refresh this page</a> to check your order status. If you continue to see this message, please contact us.', 'sell_media' ), esc_url( add_query_arg(
                                 array(
                                     'token' => (isset($_GET['token'])) ? sanitize_text_field($_GET['token']) : '',
                                     'PayerID' => (isset($_GET['PayerID'])) ? sanitize_text_field($_GET['PayerID']) : '',
