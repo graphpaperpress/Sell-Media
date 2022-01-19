@@ -20,11 +20,11 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
             $this->block_attributes = array(
                 'custom_label' => array(
                     'type' => 'string',
-                    'default' => __( 'Search Form' , 'sell_media' ),
+                    'default' => esc_attr__( 'Search Form' , 'sell_media' ),
                 ),
                 'custom_description' => array(
                     'type' => 'string',
-                    'default' => __( 'You can search for the items based on keywords, different media files i.e images, videos, audios' , 'sell_media' ),
+                    'default' => esc_attr__( 'You can search for the items based on keywords, different media files i.e images, videos, audios' , 'sell_media' ),
                 ),
                 'custom_color' => array(
                     'type' => 'string',

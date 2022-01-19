@@ -166,7 +166,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
              $block_categories[] = array(
                 'slug'  => 'sellmedia-blocks',
-                'title' => __( 'Sell Media Blocks', 'sell_media' ),
+                'title' => esc_attr__( 'Sell Media Blocks', 'sell_media' ),
                 'icon'  => false,
             );
 
@@ -298,9 +298,9 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                     // Show quick view?
                     if ( isset( $quick_view ) && 0 != $quick_view && is_main_query() ) {                      
                         if ( sell_media_has_multiple_attachments( $post_id ) ) {
-                            $html .= '<div class="sell-media-view-gallery">' . __( 'View Gallery', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-view-gallery">' . esc_attr__( 'View Gallery', 'sell_media' ) . '</div>';
                         } elseif ( $enable_ecommerce ) {
-                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . __( 'Quick View', 'sell_media' ) . '</div>';
+                            $html .= '<div class="sell-media-quick-view" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '">' . esc_attr__( 'Quick View', 'sell_media' ) . '</div>';
                         }
                     }
                     $html .= '</a>';
