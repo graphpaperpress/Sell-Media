@@ -181,12 +181,22 @@ foreach ( $sell_media_plugin_tabs as $tab ) {
  */
 function sell_media_plugin_sections_callback( $section_passed ) {
     global $sell_media_plugin_tabs;
+
+    $arr = array( 
+        'a' => array(
+            'href' => array(),
+            'class' => array(),
+            'target' => array()
+        ),
+        'code' => array()
+    );
+
     foreach ( $sell_media_plugin_tabs as $tabname => $tab ) {
         $tabsections = $tab['sections'];
         foreach ( $tabsections as $sectionname => $section ) {
             if ( 'sell_media_' . $sectionname . '_section' == $section_passed['id'] && !empty($section['description'])) {
                 ?>
-                <p><?php esc_attr_e($section['description'],'sell_media'); ?></p>
+                <p><?php wp_kses(_e($section['description'],'sell_media'), $arr); ?></p>
                 <?php
             }
         }
