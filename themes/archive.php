@@ -35,7 +35,7 @@ $settings = sell_media_get_plugin_options();
 				<?php
 				$term_description = term_description();
 				if ( ! empty( $term_description ) ) {
-					echo '<h2 class="collection_description">' . $term_description . '</h2>';
+					echo '<h2 class="collection_description">' . esc_attr( $term_description ) . '</h2>';
 				}
 				?>
 				<?php do_shortcode( '[sell_media_searchform]' ); ?>
@@ -138,7 +138,7 @@ $settings = sell_media_get_plugin_options();
 			</div><!-- .sell-media-grid-item-container -->
 			<?php 
 			if ( ! $children ) {
-				echo sell_media_pagination_filter( $wp_query->max_num_pages );
+				echo esc_attr( sell_media_pagination_filter( $wp_query->max_num_pages ) );
 			}
 			?>
 		</div><!-- #content -->

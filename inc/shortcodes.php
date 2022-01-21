@@ -195,9 +195,9 @@ function sell_media_checkout_shortcode() {
 							$mime_type = get_post_mime_type( $item['item_attachment'] );
 							// if selling video or audio, show the post_id thumbnail
 							if ( SellMediaAudioVideo::is_video_item( $item['item_id'] ) || SellMediaAudioVideo::is_audio_item( $item['item_id'] ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-								echo sell_media_item_icon( $item['item_id'] );
+								echo esc_attr( sell_media_item_icon( $item['item_id'] ) );
 							} else {
-								echo sell_media_item_icon( $item['item_attachment'] );
+								echo esc_attr( sell_media_item_icon( $item['item_attachment'] ) );
 							}
 						}
 						?>
@@ -297,8 +297,14 @@ function sell_media_checkout_shortcode() {
 				</p>
 				<?php
 				$settings = sell_media_get_plugin_options();
+				$arr = array(
+					'a' => array(
+						'href' => array(),
+						'class' => array()
+					),
+				);
 				if ( ! empty( $settings->terms_and_conditions ) ) : ?>
-					<p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
+					<p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', wp_kses( __( 'By clicking "Checkout Now", you are agreeing to our <a href="#" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ), $arr ) ); ?></p>
 				<?php endif; ?>
                 <?php do_action( 'sell_media_below_checkout_button' ); ?>
 			</div><!-- .sell-media-checkout-button -->
@@ -313,7 +319,7 @@ function sell_media_checkout_shortcode() {
 	<?php endif; ?>
 
 	<p id="sell-media-empty-cart-message" class="<?php echo (!empty( $cart_items )) ? 'hide' : ''; ?>">
-		<?php echo apply_filters( 'sell_media_continue_shopping', sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . esc_url(get_post_type_archive_link( 'sell_media_item' )) . '">' . __( 'Continue shopping', 'sell_media' ) . ' &raquo;</a>' ) ); ?>
+		<?php echo apply_filters( 'sell_media_continue_shopping', sprintf( esc_attr__( 'Your cart is empty. %s', 'sell_media'), '<a href="' . esc_url(get_post_type_archive_link( 'sell_media_item' )) . '">' . esc_attr__( 'Continue shopping', 'sell_media' ) . ' &raquo;</a>' ) ); ?>
 	</p>
 
 	<?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
@@ -373,10 +379,10 @@ function sell_media_price_group_shortcode(){
 				<th><?php esc_attr_e('Description','sell_media'); ?></th>
 				<th><?php esc_attr_e('width (px)','sell_media'); ?></th>
 				<th><?php esc_attr_e('height (px)','sell_media'); ?></th>
-				<th><?php esc_attr_e('price','sell_media'); ?>(<span class="currency-symbol"><?php echo sell_media_get_currency_symbol(); ?></span>)</th>
+				<th><?php esc_attr_e('price','sell_media'); ?>(<span class="currency-symbol"><?php echo esc_attr( sell_media_get_currency_symbol() ); ?></span>)</th>
 			</tr>
 			<?php $i=0; foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $parent->term_id, 'orderby' => 'id' ) ) as $term ): ?>
-				<tr class="sell-media-price-group-row-<?php echo esc_attr(($i++%2==1) ? 'odd' : 'even'); ?> sell-media-price-group-child-<?php echo esc_attr($term->name); ?>" id="sell-media-price-group-child-<?php echo esc_attr($term->term_id); ?>">
+				<tr class="sell-media-price-group-row-<?php echo (($i++%2==1) ? 'odd' : 'even'); ?> sell-media-price-group-child-<?php echo esc_attr($term->name); ?>" id="sell-media-price-group-child-<?php echo esc_attr($term->term_id); ?>">
 					<td>
 						<span class="sell-media-price-group-name"><?php echo esc_attr($term->name); ?></span>
 					</td>
@@ -574,7 +580,7 @@ function sell_media_login_form_shortcode(){
 
 		wp_login_form( $args );
 
-		echo ('<a href="' .esc_url( wp_lostpassword_url( get_permalink() )) . '" title="' . esc_attr__( 'Forgot Password', 'sell_media' ) . '">' . esc_attr__( 'Forgot Password', 'sell_media' ) . '</a>');
+		echo ('<a href="' . esc_url( wp_lostpassword_url( get_permalink() )) . '" title="' . esc_attr__( 'Forgot Password', 'sell_media' ) . '">' . esc_attr__( 'Forgot Password', 'sell_media' ) . '</a>');
 
 	}
 

@@ -190,7 +190,7 @@ class SellMediaAdminAddItem {
 		if ( taxonomy_exists( 'collection' ) ) {
 			echo '<div id="sell-media-tax-collections" class="sell-media-tax-wrap">';
 				printf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Collections', 'sell_media' ) );
-				printf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_attr__( 'Assign this', 'sell_media' ), strtolower( $obj->labels->singular_name ), esc_attr__( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) );
+				printf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_attr__( 'Assign this', 'sell_media' ), esc_attr( strtolower( $obj->labels->singular_name )), esc_attr__( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
 				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Collections', 'sell_media' ) );
 			echo '</div>';

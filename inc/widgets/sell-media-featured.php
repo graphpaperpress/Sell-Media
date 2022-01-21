@@ -14,10 +14,10 @@
 		$categoryNumber = empty($instance['categoryNumber']) ? '' : $instance['categoryNumber'];
 		extract($args);
 	
-		echo $before_widget;
+		echo wp_kses_post( $before_widget );
 	
 		if ( $title )
-			echo $before_title. esc_attr( $title ) . $after_title;
+			echo wp_kses_post( $before_title ) . esc_attr( $title ) . wp_kses_post( $after_title );
 
 		$taxonomy = 'collection';
 		$term_ids = array();
@@ -72,7 +72,7 @@
 
 <?php
 
-	echo $after_widget;
+	echo wp_kses_post( $after_widget );
 
 }
   /*Saves the settings. */

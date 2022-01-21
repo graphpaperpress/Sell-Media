@@ -421,7 +421,7 @@ class SellMediaLayouts {
 			      				"license" => get_the_permalink($attachment_id),
 			      				"acquireLicensePage" => get_the_permalink($attachment_id)
 							);
-			return '<script type="application/ld+json">'.json_encode($_arr_meta).'</script>';
+			return '<script type="application/ld+json">'.wp_json_encode($_arr_meta).'</script>';
 		}
 		return;
 	}

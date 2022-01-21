@@ -263,7 +263,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT);
+            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -445,7 +445,7 @@ class SM_Gateway_PayPal_Request {
                 print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT);
+            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
         }
         return $response;
     }
@@ -480,7 +480,7 @@ class SM_Gateway_PayPal_Request {
                 }
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT);
+            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -513,7 +513,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo json_encode($response->result, JSON_PRETTY_PRINT);
+            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
         }
         return $response;
     }

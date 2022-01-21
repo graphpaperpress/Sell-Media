@@ -26,8 +26,16 @@ function sell_media_item_buy_button( $post_id = null, $attachment_id = null, $bu
 	$html = '<a href="' . esc_url( get_permalink( $post_id ) ) . '" title="' . $text . '" data-product-id="' . esc_attr( $post_id ) . '" data-attachment-id="' . esc_attr( $attachment_id ) . '" class="sell-media-' . $button . '">' . $text . '</a>';
 	$html = apply_filters( 'sell_media_item_buy_button', $html, $post_id, $attachment_id, $button, $text, $echo );
 
+	$arr = array(
+	    'button' => array(
+	        'class' => array(),
+	        'disabled' => array(),
+	        'type' => array()
+	    ),
+	);
+
 	if ( $echo ) {
-	    echo ($html);
+	    echo wp_kses( $html, $arr );
 	} else {
 		return $html;
 	}
@@ -61,8 +69,16 @@ function sell_media_item_add_to_cart_button( $post_id = null, $attachment_id = n
 	$html = '<button class="' . $classes . '" ' . $disable . '>' . $text . '</button>';
 	$html = apply_filters( 'sell_media_item_add_to_cart_button', $html, $post_id, $attachment_id, $button, $text, $echo, $type );
 
+	$arr = array(
+	    'button' => array(
+	        'class' => array(),
+	        'disabled' => array(),
+	        'type' => array()
+	    ),
+	);
+
 	if ( $echo ) {
-		echo $html;
+	    echo wp_kses( $html, $arr );
 	} else {
 		return $html;
 	}
@@ -209,8 +225,21 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $echo = true, 
 		}
 	}
 
+	$arr = array(
+	    'img' => array(
+	        'src' => array(),
+	        'class' => array(),
+	        'title' => array(),
+	        'data' => array(),
+	        'alt' => array(),
+	        'style' => array(),
+	    ),
+	    'div' => array(),
+	    'script' => array()
+	);
+
 	if ( $echo ) {
-		echo $image;
+		echo wp_kses( $image, $arr );
 	} else {
 		return $image;
 	}
@@ -269,7 +298,6 @@ function sell_media_gallery( $post_id ) {
 	$html .= '<ul id="sell-media-gallery-' . esc_attr( $post_id ) . '" class="sell-media-gallery ' . esc_attr( $container_class ) . '">';
 	if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
 		//$mime_type = get_post_mime_type( $attachment_id );
-		//echo $mime_type;
 		$attachment_attributes = wp_get_attachment_image_src( $attachment_id, 'large' );
 
 		if( has_post_thumbnail() && ! is_array( $attachment_attributes ) ) {
@@ -729,7 +757,7 @@ function sell_media_cart_dialog() {
 			<div id="sell-media-dialog-box-target">
 				<span class="close">&times;</span>
 				<div class="content">
-					<p><?php echo stripslashes_deep( nl2br( $settings->terms_and_conditions )); ?></p>
+					<p><?php echo esc_attr( $settings->terms_and_conditions ); ?></p>
 				</div>
 			</div>
 		</div>

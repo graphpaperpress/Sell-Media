@@ -83,7 +83,7 @@ function sell_media_register_form() {
 						<?php
 						if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
 							$selected = ( $value === $key ) ? 'selected' : '';
-							echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_attr($v) . '</option>';
+							echo '<option value="' . esc_attr( $key ) . '" ' . $selected . '>' . esc_attr( $v ) . '</option>';
 						}
 						?>
 					</select>
@@ -453,17 +453,17 @@ function sell_media_show_extra_profile_fields( $user ) {
 		if ( 'first_name' !== $id && 'last_name' !== $id ) {
 			$value = get_the_author_meta( $id, $user->ID );
 			echo '<tr>';
-			echo '<th><label for="' . $id . '">' . ucwords( esc_attr( $field['name'] ) ) . '</label></th>';
+			echo '<th><label for="' . esc_attr( $id ) . '">' . ucwords( esc_attr( $field['name'] ) ) . '</label></th>';
 			echo '<td>';
 			if ( 'select' === $field['type'] ) {
 				echo '<select name="' . esc_attr( $id ) . '" class="input">';
 					if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
 						$selected = ( $value === $key ) ? 'selected' : '';
-						echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_attr($v) . '</option>';
+						echo '<option value="' . esc_attr( $key ) . '" ' . $selected . '>' . esc_attr( $v ) . '</option>';
 					}
 					echo '</select>';
 			} else {
-				echo '<input type="text" name="' . esc_attr($id) . '" id="' . esc_attr($id) . '" value="' . esc_attr( $value ) . '" class="regular-text" /><br />';
+				echo '<input type="text" name="' . esc_attr( $id ) . '" id="' . esc_attr( $id ) . '" value="' . esc_attr( $value ) . '" class="regular-text" /><br />';
 			}
 			if(isset($field['desc']) && !empty($field['desc'])) {
 				echo '<span class="description">' . esc_attr__($field['desc'], 'sell_media') . '</span>';

@@ -306,7 +306,7 @@ class SellMediaTaxMarkup {
 				<fieldset id="sell_media_download_<?php echo esc_attr( $tax ) ?>_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-<?php echo esc_attr( $tax ) ?>-fieldset">
 					<?php
 					$sell_media_tooltip_text = 'Select a ' . esc_attr( $taxonomy->labels->singular_name ) . ' that most closely describes the intended use of this item. Additional ' . esc_attr( $taxonomy->labels->singular_name ) . ' details will be displayed here after selecting a ' . esc_attr( $taxonomy->labels->singular_name ) . '.';
-					$tooltip_text = apply_filters( "sell_media_{$tax}_tooltip_text", __($sell_media_tooltip_text, 'sell_media') );
+					$tooltip_text = apply_filters( "sell_media_{$tax}_tooltip_text", esc_attr__($sell_media_tooltip_text, 'sell_media') );
 					?>					
 					<span class="sell-media-select-box sell-media-select-small">
 						<select data-markup-taxonomy="<?php echo esc_attr( $tax ) ?>" id="sell_media_item_<?php echo esc_attr( $tax ) ?>" class="sum sell-media-select" required>

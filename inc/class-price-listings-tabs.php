@@ -84,7 +84,7 @@ class Sell_Media_Price_Listings_Tabs {
 	function add_pricelist_form( $current_tab, $url ) {
 		?>
 		<h2 class="tab-title">
-			<span><?php echo sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' )); ?></span>						
+			<span><?php echo sprintf( esc_attr__( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' )); ?></span>						
 		</h2>
 		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
 	
@@ -279,15 +279,15 @@ class Sell_Media_Price_Listings_Tabs {
 
 							$term    = wp_insert_term( $data['name'], $this->taxonomy, array(
 								'parent' => $parent_term_id,
-								'description' => __($data['description'], 'sell_media' ),
+								'description' => __( $data['description'], 'sell_media' ),
 							) );
 							$term_id = ! is_wp_error( $term ) ? $term['term_id'] : false;
 						}
 
 						if ( $term_id ) {
-							update_term_meta( $term_id, 'width', esc_attr($data['width']) );
-							update_term_meta( $term_id, 'height', esc_attr($data['height']) );
-							update_term_meta( $term_id, 'price', esc_attr($data['price']) );
+							update_term_meta( $term_id, 'width', sanitize_text_field($data['width']) );
+							update_term_meta( $term_id, 'height', sanitize_text_field($data['height']) );
+							update_term_meta( $term_id, 'price', sanitize_text_field($data['price']) );
 						}
 					}
 				}
@@ -297,16 +297,41 @@ class Sell_Media_Price_Listings_Tabs {
 		// Saving settings.
 		if ( isset( $_POST['settings'] ) ){
 
-			$settings = ( array ) sell_media_get_plugin_options();			
-			$settings = array_merge( $settings, $_POST['settings'] );
+			$settings = ( array ) sell_media_get_plugin_options();
+			$settings = array_merge( $settings, sanitize_text_field( $_POST['settings'] ) );
 			$options_name = sell_media_get_current_plugin_id() . '_options';
-			update_option( $options_name, $settings );			
+			update_option( $options_name, $settings );
+
 		}
 
 		$url_parameters['term_parent'] = $parent_term_id;
 		$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 		wp_redirect( $redirect_url );
 		exit();
+	}
+
+	/**
+	 * Recursive sanitation for text or array
+	 * 
+	 * @param $array_or_string (array|string)
+	 * @since  0.1
+	 * @return mixed
+	 */
+	function sanitize_text_or_array_field( $array_or_string ) {
+	    if( is_string($array_or_string) ){
+	        $array_or_string = sanitize_text_field($array_or_string);
+	    }elseif( is_array($array_or_string) ){
+	        foreach ( $array_or_string as $key => &$value ) {
+	            if ( is_array( $value ) ) {
+	                $value = sanitize_text_or_array_field($value);
+	            }
+	            else {
+	                $value = sanitize_text_field( $value );
+	            }
+	        }
+	    }
+
+	    return $array_or_string;
 	}
 
 	function delete_pricelist( $redirect_url ) {

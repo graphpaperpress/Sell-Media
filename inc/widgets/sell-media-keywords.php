@@ -12,10 +12,10 @@
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		extract($args);
-		echo $before_widget;
+		echo wp_kses_post( $before_widget );
 
 		if ( $title )
-			echo $before_title . esc_attr( $title ) . $after_title;
+			echo wp_kses_post( $before_title ) . esc_attr( $title ) . wp_kses_post( $after_title );
 ?>
 		<div class="sell-media-keywords-widget sell-media-keywords-widget">
 
@@ -33,7 +33,7 @@
 		</div><!-- .sell-media-keywords-widget -->
 
 <?php
-		echo $after_widget;
+		echo wp_kses_post( $after_widget );
 
 }
 	/*Saves the settings. */

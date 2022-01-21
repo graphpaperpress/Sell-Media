@@ -15,19 +15,21 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 
 		/* Displays the Widget in the front-end */
 		function widget($args, $instance){
-			extract($args);
+			extract( $args );
 
 			$title = apply_filters( 'widget_title', !empty( $instance ) ? $instance['title'] : '' );
-			echo $before_widget;
+
+			echo wp_kses_post( $before_widget );
 
 			$img_ids = get_post_meta( get_the_ID(), '_sell_media_attachment_id', true );
-			if(!empty($img_ids)) {
-				foreach($img_ids as $img_id){
-					$imgdata = wp_get_attachment_metadata( $img_id);
-					if ( $imgdata) {
+
+			if( ! empty( $img_ids ) && is_array( $img_ids ) ) {
+				foreach( $img_ids as $img_id ) {
+					$imgdata = wp_get_attachment_metadata( $img_id );
+					if ( $imgdata ) {
 						
 						if ( $title )
-							echo $before_title . esc_attr( $title ) . $after_title;
+							echo wp_kses_post( $before_title ) . esc_attr( $title ) . wp_kses_post( $after_title );
 						?>
 						<div class="sell-media-exif-widget sell-media-widget">
 							<ul class="exif-info">
@@ -95,7 +97,7 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 					}
 				}
 			}
-			echo $after_widget;
+			echo wp_kses_post( $after_widget );
 		}
 
 		/* Saves the settings. */

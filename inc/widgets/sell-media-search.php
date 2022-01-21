@@ -47,12 +47,12 @@ class Sell_Media_Search_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		echo $args['before_widget'];
+		echo wp_kses_post( $args['before_widget'] );
 		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+			echo wp_kses_post( $args['before_title'] ) . apply_filters( 'widget_title', $instance['title'] ). wp_kses_post( $args['after_title'] );
 		}
 		echo do_shortcode( '[sell_media_searchform]' );
-		echo $args['after_widget'];
+		echo wp_kses_post( $args['after_widget'] );
 	}
 	/**
 	 * Back-end widget form.

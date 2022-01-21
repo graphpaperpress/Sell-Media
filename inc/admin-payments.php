@@ -85,7 +85,49 @@ function sell_media_payment_purchase_details( $post ){
 
 	do_action( 'sell_media_below_payment_contact_details', $post->ID );
 
-	echo $payments->payment_table( $post->ID );
+	$arr = array(
+		'table' => array(
+			'class' => array(),
+			'cellpadding' => array(),
+		),
+		'thead' => array(),
+		'tr' => array(
+			'class' => array(),
+			'valign' => array(),
+		),
+		'th' => array(
+			'scope' => array(),
+		),
+		'tbody' => array(),
+		'td' => array(
+			'class' => array(),
+		),
+		'script' => array(
+			'type' => array(),
+		),
+		'a' => array(
+			'href' => array(),
+		),
+		'img' => array(
+			'width' => array(),
+			'height' => array(),
+			'src' => array(),
+			'data' => array(),
+			'alt' => array(),
+			'srcset' => array(),
+			'loading' => array(),
+			'class' => array(),
+			'sizes' => array(),
+			'style' => array(),
+		),
+		'input' => array(
+			'type' => array(),
+			'value' => array(),
+		)
+		
+	);
+
+	echo wp_kses( $payments->payment_table( $post->ID ), $arr );
 
 	do_action( 'sell_media_additional_customer_meta', $post->ID );
 
@@ -113,7 +155,7 @@ function sell_media_payment_additional_purchase_details( $post ){
 			<?php if ( $args ) : foreach( $args as $k => $v ) : ?>
 				<?php if ( ! is_array( $v ) ) : ?>
 					<tr>
-						<td><?php echo ucwords( str_replace('_', ' ', $k ) ); ?></td><td><?php echo $v; ?></td>
+						<td><?php echo esc_attr( ucwords( str_replace('_', ' ', $k ) ) ); ?></td><td><?php echo esc_attr( $v ); ?></td>
 					</tr>
 				<?php else : ?>
 					<?php $i = 0; ?>
@@ -142,7 +184,7 @@ function sell_media_payment_additional_purchase_details( $post ){
 											<li><?php esc_attr_e( 'Qty', 'sell_media' ); ?>: <?php echo esc_attr($value['qty']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['total'] ) : ?>
-											<li><?php esc_attr_e( 'Subtotal', 'sell_media' ); ?>: <?php echo sell_media_get_currency_symbol(); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
+											<li><?php esc_attr_e( 'Subtotal', 'sell_media' ); ?>: <?php echo esc_attr( sell_media_get_currency_symbol() ); ?><?php echo number_format( $value['total'], 2, '.', ',' ); ?></li>
 										<?php endif; ?>
 									</ul>
 								</td>
@@ -183,10 +225,10 @@ function sell_media_payment_gateway_details( $post ){
 
     do_action('sell_media_payment_before_gateway_details', $post);
 
-	echo '<p>' . esc_attr__( 'This is the data that was sent from ', 'sell_media' ) . $gateway . esc_attr__( ' at time of purchase.', 'sell_media' ) . '</p>';
+	echo '<p>' . esc_attr__( 'This is the data that was sent from ', 'sell_media' ) . esc_attr( $gateway ) . esc_attr__( ' at time of purchase.', 'sell_media' ) . '</p>';
 	echo '<ul>';
 	if ( $arguments ) foreach ( $arguments as $k => $v ) {
-		echo '<li><strong>' . $k . ':</strong> ' . ( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : $v ) . '</li>';
+		echo '<li><strong>' . esc_attr( $k ) . ':</strong> ' . ( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : esc_attr( $v ) ) . '</li>';
 	}
 	echo '</ul>';
 
@@ -401,7 +443,13 @@ function sell_media_payment_content( $column, $post_id ){
 			$html = '<a href="' . site_url() . '/wp-admin/post.php?post=' . $post_id . '&action=edit">';
 			$html .= $post_id;
 			$html .= '</a>';
-			echo $html;
+			$arr = array(
+				'a' => array(
+					'href' => array(),
+				)
+			);
+
+			echo wp_kses( $html, $arr );
 			break;
 		case "products":
 			$products = Sell_Media()->payments->get_products( $post_id );
@@ -414,7 +462,7 @@ function sell_media_payment_content( $column, $post_id ){
 			echo Sell_Media()->payments->get_buyer_name( $post_id );
 			break;
 		case "total":
-			echo sell_media_get_currency_symbol() . number_format( Sell_Media()->payments->get_meta_key( $post_id, 'total' ), 2, '.', '' );
+			echo esc_attr( sell_media_get_currency_symbol() ) . number_format( Sell_Media()->payments->get_meta_key( $post_id, 'total' ), 2, '.', '' );
 			break;
 		default:
 			break;

@@ -100,7 +100,7 @@ function sell_media_update_cart(){
 		if( '' != $cart_item_id ){
 
 			// Update cart item.
-			echo $sm_cart->update( $cart_item_id, $qty );
+			echo esc_attr( $sm_cart->update( $cart_item_id, $qty ) );
 		}
 		else{
 			echo '0';

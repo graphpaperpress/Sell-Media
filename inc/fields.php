@@ -78,7 +78,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 					</span>
 				</fieldset>
 			<?php else : ?>
-				<input id="sell_media_item_base_price" type="hidden" value="<?php echo esc_attr($price); ?>" data-price="<?php echo esc_attr( $price ); ?>" data-id="original" data-size="original" />
+				<input id="sell_media_item_base_price" type="hidden" value="<?php echo esc_attr( $price ); ?>" data-price="<?php echo esc_attr( $price ); ?>" data-id="original" data-size="original" />
 			<?php endif; ?>
 
 			<?php do_action( 'sell_media_cart_below_size' ); ?>
@@ -89,7 +89,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 		<?php do_action( 'sell_media_cart_below_licenses' ); ?>
 
 		<div class="total-container cf">
-			<strong><?php esc_attr_e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo sell_media_get_currency_symbol(); ?><span id="total" class="item_price" data-price=<?php echo esc_attr( $price ); ?>><?php echo esc_attr( $price ); ?></span></span>
+			<strong><?php esc_attr_e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo esc_attr( sell_media_get_currency_symbol() ); ?><span id="total" class="item_price" data-price=<?php echo esc_attr( $price ); ?>><?php echo esc_attr( $price ); ?></span></span>
 		</div>
 
 		<div class="button-container cf">
