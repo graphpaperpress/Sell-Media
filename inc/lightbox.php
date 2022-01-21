@@ -65,7 +65,7 @@ function sell_media_get_lightbox_state( $item ) {
 
 	// check if cookie already exists
 	if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
-		$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+		$items = json_decode( stripslashes( sanitize_text_field( $_COOKIE['sell_media_lightbox'] ) ), true );
 		// if id is in lightbox, return true
 		if ( in_array( $item, $items ) ) {
 			$state = true;
@@ -190,7 +190,7 @@ function sell_media_update_lightbox() {
 		
 		// check if cookie already exists
 		if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
-			$items = json_decode( stripslashes( $_COOKIE['sell_media_lightbox'] ), true );
+			$items = json_decode( stripslashes( sanitize_text_field( $_COOKIE['sell_media_lightbox'] ) ), true );
 		
 			array_walk($items, function(&$value, &$key) {
 				$value['post_id'] = intval($value['post_id']);
