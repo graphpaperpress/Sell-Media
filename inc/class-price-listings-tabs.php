@@ -297,7 +297,7 @@ class Sell_Media_Price_Listings_Tabs {
 		// Saving settings.
 		if ( isset( $_POST['settings'] ) ){
 
-			$settings = ( array ) sell_media_get_plugin_options();
+			$settings = array_map( 'sanitize_text_field', ( array ) sell_media_get_plugin_options() );
 			$settings = array_merge( $settings, sanitize_text_field( $_POST['settings'] ) );
 			$options_name = sell_media_get_current_plugin_id() . '_options';
 			update_option( $options_name, $settings );
@@ -308,30 +308,6 @@ class Sell_Media_Price_Listings_Tabs {
 		$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 		wp_redirect( $redirect_url );
 		exit();
-	}
-
-	/**
-	 * Recursive sanitation for text or array
-	 * 
-	 * @param $array_or_string (array|string)
-	 * @since  0.1
-	 * @return mixed
-	 */
-	function sanitize_text_or_array_field( $array_or_string ) {
-	    if( is_string($array_or_string) ){
-	        $array_or_string = sanitize_text_field($array_or_string);
-	    }elseif( is_array($array_or_string) ){
-	        foreach ( $array_or_string as $key => &$value ) {
-	            if ( is_array( $value ) ) {
-	                $value = sanitize_text_or_array_field($value);
-	            }
-	            else {
-	                $value = sanitize_text_field( $value );
-	            }
-	        }
-	    }
-
-	    return $array_or_string;
 	}
 
 	function delete_pricelist( $redirect_url ) {
@@ -480,20 +456,20 @@ function sell_media_set_default_pricelist( $pricelists ) {
 					));
 					if ( ! empty( $value['childrens'] ) ) {
 						foreach ( $value['childrens'] as $children_key => $children ) {
-							$children_term_insert = wp_insert_term( $children['title'],  $value['taxonomy'], array(
+							$children_term_insert = wp_insert_term( sanitize_text_field( $children['title'] ),  sanitize_text_field( $value['taxonomy'] ), array(
 								'slug' => $children_key,
 								'description' => $children['description'],
 								'parent' => $term_insert['term_id'],
 							));
 							$data = $children['meta'];
-							update_term_meta( $children_term_insert['term_id'], 'width', $data['width'] );
-							update_term_meta( $children_term_insert['term_id'], 'height', $data['height'] );
-							update_term_meta( $children_term_insert['term_id'], 'price', $data['price'] );
+							update_term_meta( sanitize_text_field( $children_term_insert['term_id'] ), 'width', sanitize_text_field( $data['width'] ) );
+							update_term_meta( sanitize_text_field( $children_term_insert['term_id'] ), 'height', sanitize_text_field( $data['height'] ) );
+							update_term_meta( sanitize_text_field( $children_term_insert['term_id'] ), 'price', sanitize_text_field( $data['price'] ) );
 							update_term_meta( $children_term_insert['term_id'], 'default', true );
 						}
 					}
 				}
-				update_option( 'sell_media_default_pricelists_saved_' . $value['taxonomy'], true );
+				update_option( 'sell_media_default_pricelists_saved_' . sanitize_text_field( $value['taxonomy'] ), true );
 			}
 		}
 	}

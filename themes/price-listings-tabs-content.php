@@ -6,6 +6,7 @@ $current_url = false;
 
 // Settings.
 $settings = sell_media_get_plugin_options();
+
 $default_price = isset( $settings->default_price ) ? $settings->default_price : 1;
 $hide_original_price = isset( $settings->hide_original_price ) ? $settings->hide_original_price : 'no';
 $default_price_group = isset( $settings->default_price_group ) ? $settings->default_price_group : 0;
@@ -37,7 +38,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 		$delete_url = wp_nonce_url( $delete_url, 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 		$current_term_name = isset( $current_term->name ) ? $current_term->name : '';
 		if ( isset( $_GET['term_parent'] ) ) {
-			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_attr_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php esc_attr_e( 'Delete', 'sell_media' ); ?></a>
+			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_attr_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( esc_attr__( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php esc_attr_e( 'Delete', 'sell_media' ); ?></a>
 		<?php } ?>
 	</div>
 	<?php
@@ -70,6 +71,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 	<div style="clear:both"></div>
 </div>
 <?php
+
 if ( 'price-group' === $current_tab ) { ?>
 	<div class="sell-media-pricing-settings" >
 		<h2 class="tab-title">
@@ -77,7 +79,7 @@ if ( 'price-group' === $current_tab ) { ?>
 		</h2>
 		<div class="form-group">
 			<label><?php esc_attr_e( 'High Resolution File Price', 'sell_media' ); ?></label>
-			<input type="text" name="settings[default_price]" value="<?php echo esc_attr($default_price); ?>">
+			<input type="text" name="settings[default_price]" value="<?php echo esc_attr( $default_price) ; ?>">
 			<span class="option-description"><?php esc_attr_e( 'The original price of new items and bulk uploads. You can set unique prices by editing each individual item.', 'sell_media' ) ?></span>
 		</div>
 		<div class="form-group">
