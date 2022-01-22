@@ -119,4 +119,3 @@ $this->IPTC_MAPPING = array(
     '8#010' => 'SubFile',
     '9#010' => 'ConfirmedObjectSize',
 );
-?>
