@@ -86,7 +86,7 @@ function sell_media_collection_password_check( $query ) {
 		 * Apparently none of our globals are set and the post_id is not in $query
 		 * so we run this query to get our post_id
 		 */
-		$post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_name` LIKE '{$query->query['sell_media_item']}' AND post_type LIKE 'sell_media_item';");
+		$post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_name` LIKE '".esc_sql($query->query['sell_media_item'])."' AND post_type LIKE 'sell_media_item';");
 
 		/**
 		 * Determine if this post has the given term and the term has a password
