@@ -114,13 +114,13 @@
 			}
 		endif;
 		?>
-		<p><label for="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media') ?>"><?php esc_attr_e( ' Select Collection', 'sell_media'); ?>: </label>
+		<p><label for="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media') ?>"><?php esc_html_e( ' Select Collection', 'sell_media'); ?>: </label>
 		<select id="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media'); ?>" name="<?php esc_attr_e($this->get_field_name('categoryNumber'),'sell_media'); ?>" value="<?php esc_attr_e($categoryNumber,'sell_media'); ?>">
-			<option value="" <?php if($categoryNumber == '') esc_attr_e('selected="selected"','sell_media'); ?>><?php esc_attr_e( 'All Collections', 'sell_media'); ?></option>
+			<option value="" <?php if($categoryNumber == '') esc_attr_e('selected="selected"','sell_media'); ?>><?php esc_html_e( 'All Collections', 'sell_media'); ?></option>
 				<?php
 				if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
 				 foreach ($productTerms as $term) : ?>
-					<option value="<?php esc_attr_e($term->slug); ?>" <?php if($categoryNumber == $term->slug) { ?>selected="selected"<?php } ?>><?php echo esc_attr($term->name); ?></option>
+					<option value="<?php esc_attr_e($term->slug); ?>" <?php if($categoryNumber == $term->slug) { ?>selected="selected"<?php } ?>><?php echo esc_html($term->name); ?></option>
 				<?php endforeach; ?>
 				<?php endif; ?>
 		</select>

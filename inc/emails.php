@@ -96,17 +96,17 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 								<td width="600" style="padding: 40px 40px 80px 40px;" valign="top" align="center">
 									<br />
 									<br />
-									<h2 style="font-size: 20px; line-height: 30px; color: #444444; margin: 0; padding: 0; font-weight: bold;"><?php esc_attr_e( $subject, 'sell_media' ); ?></h2>
+									<h2 style="font-size: 20px; line-height: 30px; color: #444444; margin: 0; padding: 0; font-weight: bold;"><?php esc_html_e( $subject, 'sell_media' ); ?></h2>
 									<br />
 									<br />
 									<p style="color: #444444; font-size: 16px; line-height: 24px; margin: 0; text-align: left">
-										<?php esc_attr_e($message, 'sell_media'); ?>
+										<?php esc_html_e($message, 'sell_media'); ?>
 									</p>
 									<?php if ( $button && $url ) : ?>
 										<br />
 										<br />
 										<br />
-										<a href="<?php esc_url( $url ); ?>" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 26px; background-color: #ec6d4d; padding: 14px 26px; border: 1px solid #ec6d4d; font-weight: bold; text-transform: uppercase;"><?php esc_attr_e( $button, 'sell_media' ); ?></a>
+										<a href="<?php esc_url( $url ); ?>" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 26px; background-color: #ec6d4d; padding: 14px 26px; border: 1px solid #ec6d4d; font-weight: bold; text-transform: uppercase;"><?php esc_html_e( $button, 'sell_media' ); ?></a>
 										<br />
 									<?php endif; ?>
 								</td>

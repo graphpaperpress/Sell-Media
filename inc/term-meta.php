@@ -476,9 +476,9 @@ add_filter( 'manage_collection_custom_column', 'sell_media_custom_collection_col
  */
 function sell_media_add_related_keywords( ) { ?>
 	<div class="form-field sell-media-related-keywords-form-field">
-		<label for="meta_value[related_keywords]"><?php esc_attr_e( 'Related Keywords', 'sell_media' ); ?></label>
+		<label for="meta_value[related_keywords]"><?php esc_html_e( 'Related Keywords', 'sell_media' ); ?></label>
 		<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="" />
-			<p class="description"><?php esc_attr_e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
 	</div>
 	<?php 
 	wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce');
@@ -497,11 +497,11 @@ function sell_media_edit_related_keywords( $tag ) {
 	$terms = implode( ', ', $term_meta ); ?>
 	<tr class="form-field sell-media-related-keywords-form-field">
 		<th scope="row" valign="top">
-			<label for="meta_value[related_keywords]"><?php esc_attr_e( 'Related Keywords', 'sell_media' ); ?></label>
+			<label for="meta_value[related_keywords]"><?php esc_html_e( 'Related Keywords', 'sell_media' ); ?></label>
 		</th>
 		<td>
 			<input name="meta_value[related_keywords]" id="meta_value[related_keywords]" type="text" value="<?php esc_attr_e( $terms, 'sell_media' ); ?>" />
-			<p class="description"><?php esc_attr_e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Separate related keywords with a comma and ensure the keyword actually exists.', 'sell_media' ); ?></p>
 			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>

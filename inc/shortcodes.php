@@ -220,7 +220,7 @@ function sell_media_checkout_shortcode() {
 								<?php if ( 'licenses' === $markup ) : ?>
 									<div class="item-license">
 										<?php if ( isset($item['item_usage']) && !empty( $item['item_usage'] ) ) : ?>
-											<?php esc_attr_e($item['item_usage']); ?>
+											<?php esc_html_e($item['item_usage']); ?>
 										<?php endif; ?>
 									</div>
 								<?php else : ?>
@@ -263,21 +263,21 @@ function sell_media_checkout_shortcode() {
 		<div class="sell-media-totals group">
 			<div id="sell-media-totals-table" class="sell-media-totals-table cf">
 				<div class="subtotal cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Subtotal', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Subtotal', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-total"></span></div>
 				</div>
 				<?php do_action( 'sell_media_checkout_registration_fields' ); ?>
 				<div class="tax cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo esc_html( ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)' ); ?></span>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo esc_html( ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)' ); ?></span>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-tax"></span></div>
 				</div>
 				<div class="shipping cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Shipping', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Shipping', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-shipping"></span></div>
 				</div>
 				<?php do_action( 'sell_media_checkout_before_grand_total' ); ?>
 				<div class="total cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Total', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Total', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
 				</div>
 			</div>
@@ -388,7 +388,7 @@ function sell_media_price_group_shortcode(){
 		<tbody>
 		<?php foreach( get_terms('price-group', array( 'hide_empty' => false, 'parent' => 0 ) ) as $parent ) : ?>
 			<tr>
-				<th colspan="4"><?php esc_attr_e($parent->name,'sell_media'); ?></th>
+				<th colspan="4"><?php esc_html_e($parent->name,'sell_media'); ?></th>
 			</tr>
 			<tr class="sell-media-price-group-parent sell-media-price-group-parent-<?php echo esc_attr($parent->name); ?>" id="sell-media-price-group-parent-<?php echo esc_attr( (int) $parent->term_id ); ?>">
 				<th><?php esc_html_e('Description','sell_media'); ?></th>

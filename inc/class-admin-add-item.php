@@ -122,12 +122,12 @@ class SellMediaAdminAddItem {
 				<div class="sell-media-upload-progress-bar-inner"></div>
 				<div class="sell-media-upload-progress-bar-status">
 					<span class="uploading">
-						<?php esc_attr_e( 'Uploading Image', 'sell_media' ); ?>
+						<?php echo esc_html__( 'Uploading Image', 'sell_media' ); ?>
 						<span class="current">1</span>
-						<?php esc_attr_e( 'of', 'sell_media' ); ?>
+						<?php echo esc_html__( 'of', 'sell_media' ); ?>
 						<span class="total">3</span>
 					</span>
-					<span class="done"><?php esc_attr_e( 'All images uploaded.', 'sell_media' ); ?></span>
+					<span class="done"><?php echo esc_html__( 'All images uploaded.', 'sell_media' ); ?></span>
 				</div>
 		</div>
 		<?php

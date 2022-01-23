@@ -47,7 +47,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 				<fieldset id="sell_media_download_size_fieldset" class="sell-media-add-to-cart-fieldset sell-media-add-to-cart-download-fieldset">					
 					<span class="sell-media-select-box sell-media-select-small">
 						<select id="sell_media_item_size" class="sum sell-media-select" required>
-							<option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0"><?php esc_attr_e( 'Select a size', 'sell_media'); ?></option>
+							<option selected="selected" value="" data-id="" data-size="" data-price="0" data-qty="0"><?php esc_html_e( 'Select a size', 'sell_media'); ?></option>
 							<?php
 								$prices = Sell_Media()->products->get_prices( $post_id, $attachment_id );
 								if ( $prices ) foreach ( $prices as $k => $v ) {
@@ -96,7 +96,7 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 		<?php do_action( 'sell_media_cart_below_licenses' ); ?>
 
 		<div class="total-container cf">
-			<strong><?php esc_attr_e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo esc_html( sell_media_get_currency_symbol() ); ?><span id="total" class="item_price" data-price=<?php echo esc_attr( $price ); ?>><?php echo esc_html( $price ); ?></span></span>
+			<strong><?php esc_html_e( 'Total', 'sell_media' ); ?>:</strong> <span class="price-container"><?php echo esc_html( sell_media_get_currency_symbol() ); ?><span id="total" class="item_price" data-price=<?php echo esc_attr( $price ); ?>><?php echo esc_html( $price ); ?></span></span>
 		</div>
 
 		<div class="button-container cf">

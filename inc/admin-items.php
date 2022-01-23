@@ -112,29 +112,29 @@ function sell_media_uploader_meta_box( $post ) {
 function sell_media_after_file_uploader( $post ) {
 	?>
 
-	<p class="description"><?php esc_attr_e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
-	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php esc_attr_e( 'Importing Options', 'sell_media' ); ?></a></p>
+	<p class="description"><?php esc_html_e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
+	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php esc_html_e( 'Importing Options', 'sell_media' ); ?></a></p>
 
 	<div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
-		<h4><?php esc_attr_e( 'Importing', 'sell_media' ); ?></h4>
+		<h4><?php esc_html_e( 'Importing', 'sell_media' ); ?></h4>
 		<p class="description"><?php printf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the server path listed below. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
-		<p class="description"><strong><?php esc_attr_e( 'Server Path', 'sell_media' ); ?>:</strong> <?php echo esc_html( sell_media_get_import_dir() ); ?></p>
+		<p class="description"><strong><?php esc_html_e( 'Server Path', 'sell_media' ); ?>:</strong> <?php echo esc_html( sell_media_get_import_dir() ); ?></p>
 		<select id="sell-media-upload-bulk-selector" value="">
-			<option value=""><?php esc_attr_e( 'Select a folder', 'sell_media' ); ?></option>
+			<option value=""><?php esc_html_e( 'Select a folder', 'sell_media' ); ?></option>
 			<?php
 			$directories = sell_media_get_directories();
 			if ( $directories ) foreach ( $directories as $directory ) : ?>
 				<option value="<?php echo esc_attr(basename( $directory )); ?>"><?php echo esc_attr(basename( $directory )); ?></option>
 			<?php endforeach; ?>
 		</select>
-		<button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php esc_attr_e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php esc_attr_e( 'Importing files...', 'sell_media' ); ?>" disabled><?php esc_attr_e( 'Add files', 'sell_media' ); ?></button><br /><br />
+		<button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php esc_attr_e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php esc_attr_e( 'Importing files...', 'sell_media' ); ?>" disabled><?php esc_html_e( 'Add files', 'sell_media' ); ?></button><br /><br />
 		<?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
 	</div>
 
 	<?php if ( Sell_Media()->products->is_package( $post->ID ) ) : ?>
 		<div id="sell-media-packages" class="sell-media-field">
-			<h4><?php esc_attr_e( 'Packages', 'sell_media' ); ?></h4>
-			<p><?php esc_attr_e( 'This feature was retired in version 2.0 because product galleries can now be created. Your old package file will still be available for sale and is listed below.', 'sell_media' ); ?></p>
+			<h4><?php esc_html_e( 'Packages', 'sell_media' ); ?></h4>
+			<p><?php esc_html_e( 'This feature was retired in version 2.0 because product galleries can now be created. Your old package file will still be available for sale and is listed below.', 'sell_media' ); ?></p>
 			<p><strong><?php echo esc_html( get_post_meta( $post->ID, '_sell_media_attached_file', true ) ); ?></strong></p>
 		</div>
 	<?php endif; ?>
@@ -157,11 +157,11 @@ function sell_media_options_meta_box( $post ) {
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
 	<div id="sell-media-price-field" class="sell-media-field" style="<?php echo esc_attr($style,'sell_media'); ?>">
-		<label for="sell-media-price"><?php esc_attr_e( 'Price', 'sell_media' ); ?></label>
+		<label for="sell-media-price"><?php esc_html_e( 'Price', 'sell_media' ); ?></label>
 		<span class="sell-media-currency-field"><?php echo esc_html( sell_media_get_currency_symbol() ); ?>
 		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo esc_attr($price); ?>" value="<?php echo esc_attr($price); ?>" /></span>
 		<?php if ( sell_media_has_multiple_attachments( $post->ID ) ) { ?>
-			<span class="desc"><?php esc_attr_e( 'The price of each original source file.', 'sell_media' ); ?></span>
+			<span class="desc"><?php esc_html_e( 'The price of each original source file.', 'sell_media' ); ?></span>
 		<?php } ?>
 	</div>
 
@@ -178,8 +178,8 @@ function sell_media_stats_meta_box( $post ) { ?>
 
 	<div id="sell-media-stats" class="sell-media-field">
 		<ul>
-			<li><strong><?php esc_attr_e( 'Views', 'sell_media' ); ?>:</strong> <?php echo esc_html( sell_media_get_post_views( $post->ID ) ); ?></li>
-			<li><strong><?php esc_attr_e( 'Sales', 'sell_media' ); ?>:</strong> <?php echo esc_html( Sell_Media()->payments->get_item_sales( $post->ID ) ); ?></li>
+			<li><strong><?php esc_html_e( 'Views', 'sell_media' ); ?>:</strong> <?php echo esc_html( sell_media_get_post_views( $post->ID ) ); ?></li>
+			<li><strong><?php esc_html_e( 'Sales', 'sell_media' ); ?>:</strong> <?php echo esc_html( Sell_Media()->payments->get_item_sales( $post->ID ) ); ?></li>
 		</ul>
 	</div>
 
@@ -681,7 +681,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 	?>
 	<fieldset class="inline-edit-col-left">
 		<div class="inline-edit-col">
-			<span class="title"><?php esc_attr_e( 'Price Group', 'sell_media' ); ?></span>
+			<span class="title"><?php esc_html_e( 'Price Group', 'sell_media' ); ?></span>
 			<?php
 			$args = array(
 				'show_option_none' => __( 'None', 'sell_media' ),
@@ -699,7 +699,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 			?>
 		</div>
 		<div class="inline-edit-col">
-			<span class="title"><?php esc_attr_e( 'Price', 'sell_media' ); ?></span>
+			<span class="title"><?php esc_html_e( 'Price', 'sell_media' ); ?></span>
 			<span class="input-text-wrap">
 				<input name="sell_media_price" id="sell-media-price" class="inline-edit-password-input" type="number" step="0.01" min="0" placeholder="<?php esc_attr_e( '— No Change —', 'sell_media' ); ?>" />
 			</span>

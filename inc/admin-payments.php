@@ -147,7 +147,7 @@ function sell_media_payment_additional_purchase_details( $post ){
 
 	?>
 
-	<p><?php esc_attr_e( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
+	<p><?php echo esc_html__( 'This is the additional payment data stored with the purchase.', 'sell_media'); ?></p>
 	<table class="wp-list-table widefat" cellspacing="0">
 		<tbody>
 			<?php if ( $args ) : foreach( $args as $k => $v ) : ?>
@@ -160,29 +160,29 @@ function sell_media_payment_additional_purchase_details( $post ){
 					<?php foreach( $v as $name => $value ) : $i++ ?>
 						<?php if ( ! is_array( $name ) ) : ?>
 							<tr>
-								<td><?php esc_html_e( 'Product', 'sell_media' ); ?> <?php echo esc_html( $i ); ?></td>
+								<td><?php echo esc_html__( 'Product', 'sell_media' ); ?> <?php echo esc_html( $i ); ?></td>
 								<td>
 									<ul>
 										<?php if ( $value['name'] ) : ?>
-											<li><?php esc_html_e( 'Name', 'sell_media' ); ?>: <?php echo esc_html($value['name']); ?></li>
+											<li><?php echo esc_html__( 'Name', 'sell_media' ); ?>: <?php echo esc_html($value['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['id'] ) : ?>
-											<li><?php esc_html_e( 'ID', 'sell_media' ); ?>: <a href="<?php echo esc_url(admin_url()); ?>post.php?post=<?php echo esc_attr( $value['id'] ); ?>&amp;action=edit"><?php echo esc_html($value['id']); ?></a></li>
+											<li><?php echo esc_html__( 'ID', 'sell_media' ); ?>: <a href="<?php echo esc_url(admin_url()); ?>post.php?post=<?php echo esc_attr( $value['id'] ); ?>&amp;action=edit"><?php echo esc_html($value['id']); ?></a></li>
 										<?php endif; ?>
 										<?php if ( $value['type'] ) : ?>
-											<li><?php esc_html_e( 'Type', 'sell_media' ); ?>: <?php echo esc_html($value['type']); ?></li>
+											<li><?php echo esc_html__( 'Type', 'sell_media' ); ?>: <?php echo esc_html($value['type']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['size']['name'] ) : ?>
-											<li><?php esc_html_e( 'Size', 'sell_media' ); ?>: <?php echo esc_html($value['size']['name']); ?></li>
+											<li><?php echo esc_html__( 'Size', 'sell_media' ); ?>: <?php echo esc_html($value['size']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['license']['name'] ) : ?>
-											<li><?php esc_html_e( 'License', 'sell_media' ); ?>: <?php echo esc_html($value['license']['name']); ?></li>
+											<li><?php echo esc_html__( 'License', 'sell_media' ); ?>: <?php echo esc_html($value['license']['name']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['qty'] ) : ?>
-											<li><?php esc_html_e( 'Qty', 'sell_media' ); ?>: <?php echo esc_html($value['qty']); ?></li>
+											<li><?php echo esc_html__( 'Qty', 'sell_media' ); ?>: <?php echo esc_html($value['qty']); ?></li>
 										<?php endif; ?>
 										<?php if ( $value['total'] ) : ?>
-											<li><?php esc_html_e( 'Subtotal', 'sell_media' ); ?>: <?php echo esc_html( sell_media_get_currency_symbol() ); ?><?php echo esc_html( number_format( $value['total'], 2, '.', ',' ) ); ?></li>
+											<li><?php echo esc_html__( 'Subtotal', 'sell_media' ); ?>: <?php echo esc_html( sell_media_get_currency_symbol() ); ?><?php echo esc_html( number_format( $value['total'], 2, '.', ',' ) ); ?></li>
 										<?php endif; ?>
 									</ul>
 								</td>
@@ -192,7 +192,7 @@ function sell_media_payment_additional_purchase_details( $post ){
 				<?php endif; ?>
 			<?php endforeach; else : ?>
 				<tr>
-					<td><?php esc_html_e( 'This payment has no additional payment details', 'sell_media' ); ?></td>
+					<td><?php echo esc_html__( 'This payment has no additional payment details', 'sell_media' ); ?></td>
 				</tr>
 			<?php endif; ?>
 		</tbody>
@@ -253,9 +253,9 @@ function sell_media_reports_callback_fn(){
 
 	$current_page = admin_url('edit.php?post_type=download&page=sell_media_reports'); ?>
 	<div class="wrap">
-		<h2><?php esc_html_e( 'Earnings Report', 'sell_media' ); ?></h2>
+		<h2><?php echo esc_html__( 'Earnings Report', 'sell_media' ); ?></h2>
 		<div class="tool-box total-revenue">
-			<h3 class="title"><?php esc_html_e( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php echo esc_html ( sell_media_get_currency_symbol() ); ?><?php echo esc_html ( sell_media_total_revenue( $post_status='publish' ) ); ?></strong></h3>
+			<h3 class="title"><?php echo esc_html__( 'Total Earnings To Date:', 'sell_media' ); ?>&nbsp;<strong><?php echo esc_html ( sell_media_get_currency_symbol() ); ?><?php echo esc_html ( sell_media_total_revenue( $post_status='publish' ) ); ?></strong></h3>
 			<?php do_action( 'sell_media_payments_below_total_earning' ); ?>
 		</div>
 

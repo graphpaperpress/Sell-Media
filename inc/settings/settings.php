@@ -452,7 +452,7 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
     <script language="javascript">
     jQuery( document ).ready( function() {
 
-        $container = jQuery( "#<?php esc_attr_e($attr['name'],'sell_media'); ?>_container" );
+        $container = jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>_container" );
         $image_button = $container.find( '.upload_image_button' );
 
         $image_button.click( function() {
@@ -489,9 +489,9 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
 
         // remove image
         $container.on( 'click', '.upload_image_remove', function() {
-            jQuery( "#<?php esc_attr_e($attr['name'],'sell_media'); ?>" ).val('');
-            jQuery( "#<?php esc_attr_e($attr['name'],'sell_media'); ?>" ).parent().find( 'div.upload_image_preview img' ).attr( 'src', '' );
-            jQuery( "#<?php esc_attr_e($attr['name'],'sell_media'); ?>" ).parent().find( '.upload_image_preview' ).hide();
+            jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).val('');
+            jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).parent().find( 'div.upload_image_preview img' ).attr( 'src', '' );
+            jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).parent().find( '.upload_image_preview' ).hide();
         });
         if ( $container.find( '.upload_image_field' ).val().length > 0 ) {
             $container.find( '.upload_image_preview' ).show();
@@ -502,7 +502,7 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
     <div id="<?php echo esc_attr($attr['name']); ?>_container">
         <input type="text" class="upload_image_field" id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($value); ?>">
         <input class="upload_image_button button" type="button" value="<?php esc_attr_e( 'Upload or Select Image', 'sell_media' ); ?>" />
-        <div class="upload_image_preview"><img src="<?php echo esc_attr($value); ?>" /><br /><a href="javascript:void(0);" class="upload_image_remove"><?php esc_attr_e( 'Remove', 'sell_media' ); ?></a></div>
+        <div class="upload_image_preview"><img src="<?php echo esc_attr($value); ?>" /><br /><a href="javascript:void(0);" class="upload_image_remove"><?php esc_html_e( 'Remove', 'sell_media' ); ?></a></div>
     </div>
 
 <?php
@@ -597,7 +597,7 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
     <div id="<?php echo esc_attr($attr['name']); ?>_container">
         <input type="hidden" class="upload_gallery_field" id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($value); ?>">
         <input class="upload_gallery_button button" type="button" value="<?php esc_attr_e( 'Upload or Select Images', 'sell_media' ); ?>" />
-        <div class="upload_gallery_preview"><?php if( '' != $value ) { echo esc_attr($imgarray); ?><br /><a href="javascript:void(0);" class="upload_gallery_remove"><?php esc_attr_e( 'Remove', 'sell_media' ); ?></a><?php } ?></div>
+        <div class="upload_gallery_preview"><?php if( '' != $value ) { echo esc_attr($imgarray); ?><br /><a href="javascript:void(0);" class="upload_gallery_remove"><?php esc_html_e( 'Remove', 'sell_media' ); ?></a><?php } ?></div>
     </div>
 
 <?php
@@ -661,30 +661,30 @@ add_action( 'sell_media_above_settings', 'sell_media_above_settings_links' );
 function sell_media_settings_sidebar_callback() { ?>
 
     <div id="sell-media-upgrade-promo" class="sell-media-box">
-        <h3><?php esc_attr_e( 'Upgrades Available' , 'sell_media' ); ?></h3>
+        <h3><?php esc_html_e( 'Upgrades Available' , 'sell_media' ); ?></h3>
         <p><span class="dashicons dashicons-update sell-media-dashicon-big"></span></p>
-        <p><?php esc_attr_e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more with extensions for Sell Media.', 'sell_media' ); ?></p>
-        <p><a href="https://graphpaperpress.com/extensions/sell-media/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php esc_attr_e( 'Order Now', 'sell_media' ); ?></a></p>
+        <p><?php esc_html_e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more with extensions for Sell Media.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/extensions/sell-media/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php esc_html_e( 'Order Now', 'sell_media' ); ?></a></p>
     </div>
 
     <div id="sell-media-support-promo" class="sell-media-box">
-        <h3><?php esc_attr_e( 'Need Help?' , 'sell_media' ); ?></h3>
+        <h3><?php esc_html_e( 'Need Help?' , 'sell_media' ); ?></h3>
         <p><span class="dashicons dashicons-format-chat sell-media-dashicon-big"></span></p>
-        <p><?php esc_attr_e( 'Having trouble setting up Sell Media? Hire one of our affiliated developers.', 'sell_media' ); ?></p>
-        <p><a href="https://graphpaperpress.com/customization/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php esc_attr_e( 'Order Now', 'sell_media' ); ?></a></p>
+        <p><?php esc_html_e( 'Having trouble setting up Sell Media? Hire one of our affiliated developers.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/customization/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php esc_html_e( 'Order Now', 'sell_media' ); ?></a></p>
     </div>
 
     <div id="sell-media-review-promo" class="sell-media-box">
-        <h3><?php esc_attr_e( 'Reviews' , 'sell_media' ) ; ?></h3>
+        <h3><?php esc_html_e( 'Reviews' , 'sell_media' ) ; ?></h3>
         <hr />
-        <p><blockquote>"<?php esc_attr_e( 'Great plugin with great support. Includes tons of features.', 'sell_media' ); ?>"</blockquote></p>
+        <p><blockquote>"<?php esc_html_e( 'Great plugin with great support. Includes tons of features.', 'sell_media' ); ?>"</blockquote></p>
         <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
         <hr />
-        <p><blockquote>"<?php esc_attr_e( 'A young product with massive potential! You can expect great support from Graph Paper Press.', 'sell_media' ); ?>"</blockquote></p>
+        <p><blockquote>"<?php esc_html_e( 'A young product with massive potential! You can expect great support from Graph Paper Press.', 'sell_media' ); ?>"</blockquote></p>
         <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
         <hr />
-        <p><?php esc_attr_e( 'We\'d love for you to leave a review if you\'ve found this plugin useful.', 'sell_media' ); ?></p>
-        <p><a href="https://wordpress.org/support/view/plugin-reviews/sell-media?filter=5" class="button centered-block" target="_blank"><?php esc_attr_e( 'Leave a review', 'sell_media' ); ?></a></p>
+        <p><?php esc_html_e( 'We\'d love for you to leave a review if you\'ve found this plugin useful.', 'sell_media' ); ?></p>
+        <p><a href="https://wordpress.org/support/view/plugin-reviews/sell-media?filter=5" class="button centered-block" target="_blank"><?php esc_html_e( 'Leave a review', 'sell_media' ); ?></a></p>
     </div>
 <?php }
 add_action( 'sell_media_settings_sidebar', 'sell_media_settings_sidebar_callback' );
