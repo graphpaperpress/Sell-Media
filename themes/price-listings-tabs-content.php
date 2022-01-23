@@ -27,7 +27,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 				if ( $this->current_term === $term->term_id ) {
 					$current_url = esc_url($url);
 				}
-				?><option value="<?php echo esc_attr($url); ?>" <?php echo esc_attr(selected( (int) $current_pricelist, $term->term_id, false )); ?> ><?php echo esc_html( $term->name ); ?></option><?php
+				?><option value="<?php echo esc_attr($url); ?>" <?php echo esc_attr( selected( (int) $current_pricelist, $term->term_id, false ) ); ?> ><?php echo esc_html( $term->name ); ?></option><?php
 			}
 			?>
 		</select>
@@ -85,8 +85,8 @@ if ( 'price-group' === $current_tab ) { ?>
 		<div class="form-group">
 			<label><?php esc_attr_e( 'High Resolution File Availability', 'sell_media' ); ?></label>
 			<select name="settings[hide_original_price]">
-				<option value="<?php esc_attr_e( 'yes','sell_media' ); ?>" <?php selected( 'yes', $hide_original_price ) ?>><?php esc_attr_e( 'Can be purchased', 'sell_media' ); ?></option>
-				<option value="<?php esc_attr_e( 'no','sell_media' ); ?>" <?php selected( 'no', $hide_original_price ) ?>><?php esc_attr_e( 'Cannot be purchased', 'sell_media' ); ?></option>
+				<option value="<?php esc_attr_e( 'yes','sell_media' ); ?>" <?php echo esc_attr( selected( 'yes', $hide_original_price, false ) ) ?>><?php esc_attr_e( 'Can be purchased', 'sell_media' ); ?></option>
+				<option value="<?php esc_attr_e( 'no','sell_media' ); ?>" <?php echo esc_attr( selected( 'no', $hide_original_price, false ) ) ?>><?php esc_attr_e( 'Cannot be purchased', 'sell_media' ); ?></option>
 			</select>
 			<span class="option-description"><?php esc_attr_e( 'Select "Can be purchased" if you want to allow buyers to purchase the original high resolution file. Select "Cannot be purchased" if you only want buyers to purchase lower resolution copies (determined by the sizes in your pricelists below).', 'sell_media' ) ?></span>
 		</div>
@@ -99,7 +99,7 @@ if ( 'price-group' === $current_tab ) { ?>
 				
 				if ( is_array( $price_group ) && count( $price_group ) > 0 ) {
 					foreach( $price_group as $group ) {
-						?><option value="<?php esc_attr_e( $group['name'] ); ?>" <?php selected( $group['name'], $default_price_group ) ?>><?php esc_attr_e( $group['title'] ); ?></option>
+						?><option value="<?php esc_attr_e( $group['name'] ); ?>" <?php echo esc_attr( selected( $group['name'], $default_price_group, false ) ) ?>><?php esc_attr_e( $group['title'] ); ?></option>
 					<?php }
 				}?>								
 			</select>

@@ -373,7 +373,7 @@ function sell_media_plugin_field_select( $value, $attr ) { ?>
                 $opt = $option['name'];
             }
         ?>
-            <option value="<?php echo esc_attr($opt); ?>" <?php selected( $opt, $value ); ?>><?php echo esc_attr($option['title']); ?></option>
+            <option value="<?php echo esc_attr($opt); ?>" <?php echo esc_attr( selected( $opt, $value, false ) ); ?>><?php echo esc_attr($option['title']); ?></option>
             <?php
         endforeach;
     else:
