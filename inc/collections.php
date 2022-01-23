@@ -179,7 +179,7 @@ function sell_media_collection_password_check( $query ) {
 		 * "garbage collection", we end our session after 30 minutes.
 		 */
 		if ( isset( $_SESSION['sell_media']['recent_activity'] ) &&
-			( time() - $_SESSION['sell_media']['recent_activity'] > ( 30 * 60 ) ) ) {
+			( time() - (int) $_SESSION['sell_media']['recent_activity'] > ( 30 * 60 ) ) ) {
 			session_destroy();
 			session_unset();
 		}

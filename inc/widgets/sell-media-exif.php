@@ -56,12 +56,12 @@ if ( ! class_exists( 'Sell_Media_Image_Exif_Widget' ) ) {
 								if ( isset($imgdata['image_meta']['shutter_speed']) ) { ?>
 									<li class="shutter-speed"><div class="genericon genericon-small genericon-time"></div><span class="exif-title"><?php esc_html_e( 'Shutter Speed ', 'sell_media' ); ?></span>
 										<?php
-										if ($imgdata['image_meta']['shutter_speed'] && (1 / $imgdata['image_meta']['shutter_speed']) > 1) {
+										if ($imgdata['image_meta']['shutter_speed'] && (1 / max($imgdata['image_meta']['shutter_speed'], 1)) > 1) {
 											echo esc_html( "1/" );
-											if (number_format((1 / $imgdata['image_meta']['shutter_speed']), 1) == number_format((1 / $imgdata['image_meta']['shutter_speed']), 0)) {
-												echo esc_html(number_format((1 / $imgdata['image_meta']['shutter_speed']), 0, '.', '') . ' sec' );
+											if (number_format((1 / max($imgdata['image_meta']['shutter_speed'], 1)), 1) == number_format((1 / max($imgdata['image_meta']['shutter_speed'], 1)), 0)) {
+												echo esc_html(number_format((1 / max($imgdata['image_meta']['shutter_speed'], 1)), 0, '.', '') . ' sec' );
 											} else {
-												echo esc_html(number_format((1 / $imgdata['image_meta']['shutter_speed']), 1, '.', '') . ' sec' );
+												echo esc_html(number_format((1 / max($imgdata['image_meta']['shutter_speed'], 1)), 1, '.', '') . ' sec' );
 											}
 										} else {
 											echo esc_html( $imgdata['image_meta']['shutter_speed'] . ' sec' );

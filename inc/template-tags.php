@@ -317,8 +317,8 @@ function sell_media_gallery( $post_id ) {
 			if( $image_data ) {
 				$image_width    = $attachment_attributes[1];
 				$image_height   = $attachment_attributes[2];
-				$width          = $image_width * 250 / $image_height;
-				$padding_bottom = $image_height / $image_width * 100;
+				$width          = $image_width * 250 / max($image_height, 1);
+				$padding_bottom = $image_height / max($image_width, 1) * 100;
 	 			$html  .= '<li id="sell-media-' . $attachment_id  . '" class="' . $class . ' sell-media-grid-single-item"  data-src="' . esc_url( $attachment_attributes[0] ) . '" style="width:' . $width . 'px; flex-grow:' . $width . '; " >';
 	 		}
 		} else {
