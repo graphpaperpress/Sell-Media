@@ -141,7 +141,7 @@ function sell_media_the_markup_slider( $tag ){
 			var price = <?php echo (float) $settings->default_price; ?>;
 
 			if ( markUp == undefined )
-				var markUp = <?php print $initial_markup; ?>;
+				var markUp = <?php echo esc_js( $initial_markup ); ?>;
 
 			finalPrice = ( +price + ( +markUp * .01 ) * price );
 			finalPrice = finalPrice.toFixed(2);
@@ -153,7 +153,7 @@ function sell_media_the_markup_slider( $tag ){
 
 		$( "#markup_slider" ).slider({
 			range: "min",
-			value: <?php print $initial_markup; ?>,
+			value: <?php echo esc_js( $initial_markup ); ?>,
 			min: 0,
 			step: .1,
 			max: 1000,
@@ -310,10 +310,25 @@ function sell_media_collection_icon_field( $icon_id=null ){
 	}
 	?>
 	<input name="meta_value[collection_icon_id]" type="hidden" id="collection_icon_input_field" value="<?php esc_attr_e($icon_id,'sell_media'); ?>" />
-	<input name="" type="text" id="collection_icon_url" value="<?php print $url; ?>" />
+	<input name="" type="text" id="collection_icon_url" value="<?php echo esc_url( $url ); ?>" />
 	<input class="button sell-media-upload-trigger-collection-icon" type="button" value="<?php esc_attr_e( 'Upload or Select Image', 'sell_media'); ?>" />
 	<div class="upload_image_preview" style="display: block;">
-		<span id="collection_icon_target"><?php print $image; ?></span>
+		<span id="collection_icon_target"><?php echo wp_kses( $image, array(
+		        'a' => ['href' => true, 'class' => true],
+		        'br' => [],
+		        'img' => [
+			        'src'    => true,
+			        'srcset' => true,
+			        'sizes'  => true,
+			        'class'  => true,
+			        'id'     => true,
+			        'width'  => true,
+			        'height' => true,
+			        'alt'    => true,
+			        'align'  => true,
+			        'data-*' => true,
+		        ],
+            )) ?></span>
 	</div>
 	<p class="description"><?php esc_html_e( 'The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed', 'sell_media' ); ?></p>
 <?php }

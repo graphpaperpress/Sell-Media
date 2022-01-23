@@ -723,10 +723,10 @@ function sell_media_build_select( $items = array(), $args = array() ) {
 	if ( empty( $current ) ) {
 		$current = null; }
 	?>
-	<select id="<?php print $name; ?>" class="sell_media_form_control" name="<?php print $name; ?>" <?php print $required; ?>>
+	<select id="<?php echo esc_attr( $name ); ?>" class="sell_media_form_control" name="<?php echo esc_attr( $name ); ?>" <?php echo esc_attr( $required ); ?>>
 		<option></option>
 		<?php foreach ( $items as $key => $value ) : ?>
-			<option value="<?php print $key; ?>" <?php selected( $key, $current ); ?>><?php print $value; ?></option>
+			<option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( selected( $key, $current, false ) ); ?>><?php echo esc_html( $value ); ?></option>
 		<?php endforeach; ?>
 	</select>
 <?php }
@@ -764,7 +764,8 @@ function sell_media_get_price_groups( $post_id = null, $taxonomy = null ) {
 		$default_price_group_obj = get_term( $price_group_id, $taxonomy );
 
 		if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) ) {
-			return; }
+			return;
+		}
 
 		$parent_price_group = $default_price_group_obj->term_id;
 	}

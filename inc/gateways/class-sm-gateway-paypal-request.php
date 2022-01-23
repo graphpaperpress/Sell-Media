@@ -250,17 +250,17 @@ class SM_Gateway_PayPal_Request {
 
         if ($debug) {
 
-            print "Create order Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Intent: {$response->result->intent}\n";
-            print "Links:\n";
+            echo esc_html("Create order Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Intent: {$response->result->intent}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
 
-            print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
+            echo esc_html("Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n");
 
             // To toggle printing the whole response body comment/uncomment below line
             wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
@@ -430,19 +430,19 @@ class SM_Gateway_PayPal_Request {
         $response = $client->execute($request);
         if ($debug) {
 
-            print "Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Authorization ID: {$response->result->purchase_units[0]->payments->authorizations[0]->id}\n";
-            print "Links:\n";
+            echo esc_html("Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Authorization ID: {$response->result->purchase_units[0]->payments->authorizations[0]->id}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
-            print "Authorization Links:\n";
+            echo esc_html("Authorization Links:\n");
             foreach($response->result->purchase_units[0]->payments->authorizations[0]->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
             // To toggle printing the whole response body comment/uncomment below line
             wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
@@ -464,19 +464,19 @@ class SM_Gateway_PayPal_Request {
         $client = SellMediaPayPal::client();
         $response = $client->execute($request);
         if ($debug) {
-            print "Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Links:\n";
+            echo esc_html("Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
-            print "Capture Ids:\n";
+            echo esc_html("Capture Ids:\n");
             foreach($response->result->purchase_units as $purchase_unit) {
 
                 foreach($purchase_unit->payments->captures as $capture) {
-                    print "\t{$capture->id}";
+                    echo esc_html("\t{$capture->id}");
                 }
             }
             // To toggle printing the whole response body comment/uncomment below line
@@ -496,21 +496,20 @@ class SM_Gateway_PayPal_Request {
         $client = SellMediaPayPal::client();
         $response = $client->execute(new OrdersGetRequest($orderId));
         /**
-         * Enable below line to print complete response as JSON.
+         * Enable below line to show complete response as JSON.
          */
         if ($debug) {
-            //print json_encode($response->result);
-            print "Get Order Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Intent: {$response->result->intent}\n";
-            print "Links:\n";
+            echo esc_html("Get Order Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Intent: {$response->result->intent}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
 
-            print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
+            echo esc_html("Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n");
 
             // To toggle printing the whole response body comment/uncomment below line
             wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
