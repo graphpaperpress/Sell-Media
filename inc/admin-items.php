@@ -117,7 +117,7 @@ function sell_media_after_file_uploader( $post ) {
 
 	<div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
 		<h4><?php esc_html_e( 'Importing', 'sell_media' ); ?></h4>
-		<p class="description"><?php printf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the server path listed below. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
+		<p class="description"><?php echo wp_kses( sprintf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the server path listed below. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ), ['a' => ['href' => true, 'target' => true]] ); ?></p>
 		<p class="description"><strong><?php esc_html_e( 'Server Path', 'sell_media' ); ?>:</strong> <?php echo esc_html( sell_media_get_import_dir() ); ?></p>
 		<select id="sell-media-upload-bulk-selector" value="">
 			<option value=""><?php esc_html_e( 'Select a folder', 'sell_media' ); ?></option>

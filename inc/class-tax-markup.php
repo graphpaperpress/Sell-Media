@@ -151,7 +151,7 @@ class SellMediaTaxMarkup {
 				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo esc_attr(get_term_meta( $term_id, 'markup', true )); ?>" size="40" />
 			</div>
 			<p class="description">
-				<?php printf( __( 'Increase the price of a item if a buyer selects this %s by dragging the slider above.', 'sell_media' ), $singular_name ); ?>
+				<?php echo wp_kses( sprintf( __( 'Increase the price of a item if a buyer selects this %s by dragging the slider above.', 'sell_media' ), $singular_name ), ['a' => ['href' => true, 'target' => true]] ); ?>
 				<?php
 					if ( get_term_meta( $term_id, 'markup', true ) )
 						$default_markup = get_term_meta( $term_id, 'markup', true );

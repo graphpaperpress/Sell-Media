@@ -222,9 +222,9 @@ class Sell_Media_Price_Listings {
 			?>
 			<span class="desc">
 				<span id="sell-media-edit-pricelist-link-wrap">
-					<?php printf( __( '<a data-href="%1$s" id="">Edit</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists&term_parent=' ); ?> |
+					<?php echo wp_kses( sprintf( __( '<a data-href="%1$s" id="">Edit</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists&term_parent=' ), ['a' => ['href' => true, 'target' => true]] ); ?> |
 				</span>
-				<?php printf( __( '<a href="%1$s">Add New</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ); ?></span>
+				<?php echo wp_kses( sprintf( __( '<a href="%1$s">Add New</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ), ['a' => ['href' => true, 'target' => true]] ); ?></span>
 		</div>
 	<?php }
 }

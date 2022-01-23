@@ -43,7 +43,7 @@ ob_start();
 	</div><!-- .sell-media-quick-view-content -->
 	<?php else : ?>
 		<p class="sell-media-item-password-protected">
-			<?php printf( __( 'This item is password protected. %s Click here to enter password. %s', 'sell_media' ), '<a href="' . esc_url( get_permalink( $post_id ) ) .'">', '</a>' ); ?>
+			<?php echo wp_kses( sprintf( __( 'This item is password protected. %s Click here to enter password. %s', 'sell_media' ), '<a href="' . esc_url( get_permalink( $post_id ) ) .'">', '</a>' ), ['a' => ['href' => true, 'target' => true]] ); ?>
 		</p>
 	<?php endif; ?>
 	<?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id, $location ); ?>
