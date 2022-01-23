@@ -31,7 +31,7 @@ class Encoder
     {
         if (!array_key_exists('content-type', $request->headers)) {
             $message = "HttpRequest does not have Content-Type header set";
-            _e($message,'sell_media');
+            echo esc_html__($message,'sell_media');
             throw new \Exception($message);
         }
 
@@ -41,13 +41,13 @@ class Encoder
 
         if (is_null($serializer)) {
             $message = sprintf("Unable to serialize request with Content-Type: %s. Supported encodings are: %s", $contentType, implode(", ", $this->supportedEncodings()));
-            _e($message,'sell_media');
+	        echo esc_html__($message,'sell_media');
             throw new \Exception($message);
         }
 
         if (!(is_string($request->body) || is_array($request->body))) {
             $message = "Body must be either string or array";
-            _e($message,'sell_media');
+	        echo esc_html__($message,'sell_media');
             throw new \Exception($message);
         }
 
@@ -65,7 +65,7 @@ class Encoder
 
         if (!array_key_exists('content-type', $headers)) {
             $message = "HTTP response does not have Content-Type header set";
-            _e($message,'sell_media');
+	        echo esc_html__($message,'sell_media');
             throw new \Exception($message);
         }
 
@@ -94,7 +94,7 @@ class Encoder
                 }
             } catch (\Exception $ex) {
                 $message = sprintf("Error while checking content type of %s: %s", get_class($serializer), $ex->getMessage());
-                _e($message,'sell_media');
+	            echo esc_html__($message,'sell_media');
                 throw new \Exception($message, $ex->getCode(), $ex);
             }
         }

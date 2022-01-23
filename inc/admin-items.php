@@ -92,7 +92,7 @@ function sell_media_uploader_meta_box( $post ) {
 		<?php
 			$attachment_ids = sell_media_get_attachments( $post->ID );
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				wp_kses_post( _e(sell_media_list_uploads( $attachment_id ),'sell_media') );
+				wp_kses_post( __(sell_media_list_uploads( $attachment_id ),'sell_media') );
 			}
 		?>
 	</ul>

@@ -88,9 +88,9 @@ $settings = sell_media_get_plugin_options();
 										<div class="sell-media-item-details">
 											<div class="sell-media-collection-details">
 												<h3 class="collection-title"><?php echo esc_html($child->name); ?></h3>
-												<span class="sell-media-collection-count"><span class="count"><?php echo esc_html($post_count); ?></span><?php _e( ' images in ', 'sell_media' ); ?>
-                                                    <span class="collection"><?php echo esc_html($child->name); ?></span><?php _e(' collection', 'sell_media'); ?></span>
-												<span class="sell-media-collection-price"><?php _e( 'Starting at', 'sell_media' ); ?> <span class="price">
+												<span class="sell-media-collection-count"><span class="count"><?php echo esc_html($post_count); ?></span><?php echo esc_html__( ' images in ', 'sell_media' ); ?>
+                                                    <span class="collection"><?php echo esc_html($child->name); ?></span><?php echo esc_html__(' collection', 'sell_media'); ?></span>
+												<span class="sell-media-collection-price"><?php echo esc_html__( 'Starting at', 'sell_media' ); ?> <span class="price">
                                                         <?php echo esc_html( sell_media_get_currency_symbol() ); ?><?php echo esc_html($settings->default_price); ?></span></span>
 											</div>
 										</div>

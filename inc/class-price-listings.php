@@ -94,7 +94,7 @@ class Sell_Media_Price_Listings {
 		?>
 
 		<div class="wrap sell-media-price-listings-wrap">
-			<h2><?php _e( 'Pricing', 'sell_media' ); ?></h2>
+			<h2><?php esc_html__( 'Pricing', 'sell_media' ); ?></h2>
 			<?php
 			$tabs = $this->get_tabs();
 			
@@ -120,7 +120,7 @@ class Sell_Media_Price_Listings {
 			?>
 			<div id="poststuff">
 				<?php do_action( 'sell_media_pricelists_before_form', $this->current_tab, $url ); ?>
-				<form method="post" action="<?php _e(esc_url( $url ),'sell_media'); ?>" id="sell-media-pricelist-form">
+				<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-pricelist-form">
 					<?php
 					wp_nonce_field( 'sell-media-price-list-page' );
 					if ( isset( $current_screen->parent_file ) && $this->parent_slug === $current_screen->parent_file && $_GET['page'] === $this->menu_slug ) {
