@@ -135,8 +135,7 @@ class SellMediaPayPal {
                 <?php if(!$_order_refund_id) { ?>
                     <li>
                         <label for="paypal-order-amount"><?php esc_attr_e('Enter amount which you want to refund.','sell_media'); ?></label>
-                        <input type="number" id="paypal-order-amount" class="paypal-order-amount" value="<?php 
-                        echo esc_attr($_order_total_paid); ?>" min="0" />
+                        <input type="number" id="paypal-order-amount" class="paypal-order-amount" value="<?php echo esc_attr( $_order_total_paid ); ?>" min="0" />
                     </li>
                     <li class="paypal-order-refund-action">
                         <button type="button" id="paypal_payment_refund_btn" class="button button-primary button-large" data-transaction_id="<?php echo esc_attr( $transaction_id ); ?>" ><?php 
@@ -146,8 +145,7 @@ class SellMediaPayPal {
                     </li>
                 <?php } else { ?>
                     <li class="order-refund-msg">
-                        <strong><?php esc_attr_e('Order refund ID: ', 'sell_media'); ?></strong> <?php
-                         echo esc_attr( $_order_refund_id ); ?>
+                        <strong><?php esc_html_e('Order refund ID: ', 'sell_media'); ?></strong> <?php echo esc_html( $_order_refund_id ); ?>
                     </li>
                 <?php } ?>
                 <?php do_action('sell_media_after_refund_form'); ?>

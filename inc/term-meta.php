@@ -138,7 +138,7 @@ function sell_media_the_markup_slider( $tag ){
 
 		function calc_price( markUp ){
 
-			var price = <?php echo esc_attr( $settings->default_price ); ?>;
+			var price = <?php echo (float) $settings->default_price; ?>;
 
 			if ( markUp == undefined )
 				var markUp = <?php print $initial_markup; ?>;
@@ -174,7 +174,7 @@ function sell_media_the_markup_slider( $tag ){
 			<input name="meta_value[markup]" class="markup-target" type="text" value="<?php esc_attr_e(get_term_meta($term_id, 'markup', true),'sell_media'); ?>" size="40" />
 		</div>
 		<p class="description">
-			<?php esc_attr_e( 'Increase the price of a item if a buyer selects this license by dragging the slider above.', 'sell_media' ); ?>
+			<?php esc_html_e( 'Increase the price of a item if a buyer selects this license by dragging the slider above.', 'sell_media' ); ?>
 			<?php
 				if ( get_term_meta( $term_id, 'markup', true ) )
 					$default_markup = get_term_meta( $term_id, 'markup', true );
@@ -211,11 +211,11 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
 	?>
 	<tr class="form-field sell_media-markup-container">
 		<th scope="row" valign="top">
-			<label for="markup"><?php esc_attr_e( 'Add as default license?', 'sell_media' ); ?></label>
+			<label for="markup"><?php esc_html_e( 'Add as default license?', 'sell_media' ); ?></label>
 		</th>
 		<td>
 			<input name="meta_value[default]" style="width: auto;" id="meta_value[default]" type="checkbox" <?php checked( get_term_meta($term_id, 'default', true), "on" ); ?> size="40" />
-			<span class="description"><label for="meta_value[default]"><?php echo esc_attr( $desc ); ?></label></span>
+			<span class="description"><label for="meta_value[default]"><?php echo esc_html( $desc ); ?></label></span>
 			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>
@@ -287,7 +287,7 @@ add_action( 'create_keywords', 'sell_media_save_extra_taxonomy_fields' );
  */
 function sell_media_add_collection_icon( ){ ?>
 	<div class="form-field collection-icon">
-		<label for="collection_icon"><?php esc_attr_e( 'Icon', 'sell_media' ); ?></label>
+		<label for="collection_icon"><?php esc_html_e( 'Icon', 'sell_media' ); ?></label>
 	<?php sell_media_collection_icon_field(); ?>
 	</div>
 	<?php }
@@ -315,7 +315,7 @@ function sell_media_collection_icon_field( $icon_id=null ){
 	<div class="upload_image_preview" style="display: block;">
 		<span id="collection_icon_target"><?php print $image; ?></span>
 	</div>
-	<p class="description"><?php esc_attr_e( 'The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed', 'sell_media' ); ?></p>
+	<p class="description"><?php esc_html_e( 'The icon is not prominent by default; however, some themes may show it. If no icon is used the featured image to the most recent post will be displayed', 'sell_media' ); ?></p>
 <?php }
 
 
@@ -328,7 +328,7 @@ function sell_media_edit_collection_icon( $tag ){
 	$term_id = is_object( $tag ) ? $tag->term_id : null; ?>
 	<tr class="form-field sell-media-collection-form-field">
 		<th scope="row" valign="top">
-			<label for="collection_icon"><?php esc_attr_e( 'Icon', 'sell_media' ); ?></label>
+			<label for="collection_icon"><?php esc_html_e( 'Icon', 'sell_media' ); ?></label>
 		</th>
 		<td>
 			<?php sell_media_collection_icon_field( get_term_meta( $term_id, 'collection_icon_id', true ) ); ?>
@@ -350,9 +350,9 @@ function sell_media_add_collection_field( $tag ){
 		$term_id = null;
 	?>
 	<div class="form-field">
-		<label for="collection_password"><?php esc_attr_e( 'Password', 'sell_media' ); ?></label>
+		<label for="collection_password"><?php esc_html_e( 'Password', 'sell_media' ); ?></label>
 		<input name="meta_value[collection_password]" type="text" id="meta_value[]" />
-		<p class="description"><?php esc_attr_e( 'This will password protect all items in this collection.', 'sell_media' ); ?></p>
+		<p class="description"><?php esc_html_e( 'This will password protect all items in this collection.', 'sell_media' ); ?></p>
 	</div>
 	<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce');
 }
@@ -382,17 +382,17 @@ function sell_media_edit_collection_password( $tag ){
 		<?php if ( ! empty( $parent ) && ! empty( $password ) ) : ?>
 		<div class="updated">
 			<p>
-				<?php esc_attr_e( 'This collection will inherit the password of the parent collection:', 'sell_media' ); ?>
-				<a href="<?php echo esc_url(admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item')); ?>"><?php echo esc_attr($parent->name); ?></a>
+				<?php esc_html_e( 'This collection will inherit the password of the parent collection:', 'sell_media' ); ?>
+				<a href="<?php echo esc_url(admin_url('edit-tags.php?action=edit&taxonomy=collection&tag_ID='.$parent->term_id.'&post_type=sell_media_item')); ?>"><?php echo esc_html($parent->name); ?></a>
 			</p>
 		</div>
 		<?php endif; ?>
 		<th scope="row" valign="top">
-			<label for="collection_password"><?php esc_attr_e( 'Password', 'sell_media' ); ?></label>
+			<label for="collection_password"><?php esc_html_e( 'Password', 'sell_media' ); ?></label>
 		</th>
 		<td>
-			<input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php print sanitize_text_field($password) ?>" <?php echo esc_attr( $html_extra ); ?> />
-			<p class="description"><?php echo esc_attr($description); ?></p>
+			<input name="meta_value[collection_password]" id="meta_value[collection_password]" type="text" value="<?php echo esc_attr( $password ); ?>" <?php echo esc_html( $html_extra ); ?> />
+			<p class="description"><?php echo esc_html($description); ?></p>
 			<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce'); ?>
 		</td>
 	</tr>

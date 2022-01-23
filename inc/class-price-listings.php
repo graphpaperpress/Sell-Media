@@ -99,9 +99,13 @@ class Sell_Media_Price_Listings {
 			$tabs = $this->get_tabs();
 			
 			if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
-				echo '<div class="updated" ><p>';
-				_e( esc_attr($tabs[ $this->current_tab ]['tab_title']) . ' pricelist updated.', 'sell_media' );
-				echo '</p></div>';
+				?>
+				<div class="updated"><p>
+				<?php
+				    echo esc_html__( $tabs[ $this->current_tab ]['tab_title'] . ' pricelist updated.', 'sell_media' );
+				?>
+                </p></div>
+                <?php
 			}
 
 			$this->display_tabs( $this->current_tab );

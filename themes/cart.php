@@ -23,14 +23,19 @@ ob_start();
 				$image = sell_media_item_icon( $attachment_id, 'full', false );
 			}
 		?>
-		<?php echo apply_filters( 'sell_media_quick_view_post_thumbnail', $image, $post_id ); ?>
+		<?php echo wp_kses(apply_filters( 'sell_media_quick_view_post_thumbnail', $image, $post_id ), array(
+		        'div' => array('class' => true, 'id' => true, 'data-*' => true),
+		        'span' => array('class' => true, 'id' => true, 'data-*' => true),
+		        'a' => array('class' => true, 'id' => true, 'data-*' => true, 'href' => true, 'target' => true),
+		        'img' => array('class' => true, 'id' => true, 'data-*' => true, 'src' => true, 'height' => true, 'width' => true),
+        ) ); ?>
 	</div>
 	
 	<div class="sell-media-quick-view-content">
 		<div class="sell-media-quick-view-content-inner">
 
 			<h6><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" <?php 
-			_e(sell_media_link_attributes( $post_id ),'sell_media'); ?>><?php echo esc_attr( get_the_title( $post_id ) ); ?><?php if ( sell_media_has_multiple_attachments( esc_attr( $post_id ) ) ) _e(', ' . esc_attr( $attachment_id ),'sell_media'); ?></a></h6>
+			_e(sell_media_link_attributes( $post_id ),'sell_media'); ?>><?php echo esc_html( get_the_title( $post_id ) ); ?><?php if ( sell_media_has_multiple_attachments( esc_attr( $post_id ) ) ) { esc_html_e(', ' . esc_attr( $attachment_id ),'sell_media'); } ?></a></h6>
 			<?php do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id ); ?>
 			<?php sell_media_plugin_credit(); ?>
 
@@ -48,4 +53,9 @@ ob_start();
 $cart_markup = ob_get_contents();
 ob_end_clean();
 
-echo apply_filters( 'sell_media_cart_output', $cart_markup, $post_id, $attachment_id, $location );
+echo wp_kses( apply_filters( 'sell_media_cart_output', $cart_markup, $post_id, $attachment_id, $location ), array(
+	'div' => array('class' => true, 'id' => true, 'data-*' => true),
+	'span' => array('class' => true, 'id' => true, 'data-*' => true),
+	'a' => array('class' => true, 'id' => true, 'data-*' => true, 'href' => true, 'target' => true),
+	'img' => array('class' => true, 'id' => true, 'data-*' => true, 'src' => true, 'height' => true, 'width' => true),
+) );

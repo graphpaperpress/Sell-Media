@@ -28,7 +28,7 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 	<!doctype html>
 	<html lang="en">
 	<head>
-	<title><?php echo esc_attr( get_bloginfo( 'name' ) ); ?></title>
+	<title><?php echo esc_html( get_bloginfo( 'name' ) ); ?></title>
 	<meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type="text/css">
@@ -83,7 +83,7 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 				<table width="600" cellpadding="0" cellspacing="0" align="center">
 					<tr>
 					<td width="600" align="center" valign="top" style="font-family: Helvetica, Arial, sans-serif; color: #394240; padding: 40px 20px 40px 20px;">
-						<h2 style="font-size: 24px; font-weight: bold; text-transform: uppercase; margin: 0 0 24px;"><a href="<?php echo esc_url( get_bloginfo( 'url' ) ); ?>" style="color: #394240; border: 0; text-decoration: none;"><?php esc_attr_e( get_bloginfo( 'name' ), 'sell_media' ); ?></a></h2>
+						<h2 style="font-size: 24px; font-weight: bold; text-transform: uppercase; margin: 0 0 24px;"><a href="<?php echo esc_url( get_bloginfo( 'url' ) ); ?>" style="color: #394240; border: 0; text-decoration: none;"><?php esc_html_e( get_bloginfo( 'name' ), 'sell_media' ); ?></a></h2>
 					</td>
 					</tr>
 				</table>
@@ -121,7 +121,7 @@ function sell_media_html_email( $subject = '', $message = '', $url = '', $button
 					<tr>
 						<td width="600" valign="top" align="center" style="padding: 20px; font-family: Helvetica, Arial, sans-serif; color: #999999;">
 							<p style="font-size: 12px; line-height: 16px;">
-							&copy; <?php echo date( 'Y' ); ?> <a href="<?php echo esc_url( get_bloginfo( 'url' ) ); ?>" target="_blank" style="color: #999999; text-decoration: none;"><?php esc_attr_e( get_bloginfo( 'name' ), 'sell_media' ); ?></a>
+							&copy; <?php echo (int) date( 'Y' ); ?> <a href="<?php echo esc_url( get_bloginfo( 'url' ) ); ?>" target="_blank" style="color: #999999; text-decoration: none;"><?php esc_html_e( get_bloginfo( 'name' ), 'sell_media' ); ?></a>
 							</p>
 						</td>
 					</tr>

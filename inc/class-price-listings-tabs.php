@@ -84,13 +84,13 @@ class Sell_Media_Price_Listings_Tabs {
 	function add_pricelist_form( $current_tab, $url ) {
 		?>
 		<h2 class="tab-title">
-			<span><?php echo sprintf( esc_attr__( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' )); ?></span>						
+            <span><?php echo esc_html( sprintf( __( '%s Pricelists', 'sell_media' ), rtrim( $this->tab['tab_title'], 's' )) ); ?></span>
 		</h2>
 		<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-new-pricelist-form">
 	
 		<?php wp_nonce_field( 'sell-media-price-list-page' ); ?>
 			<div class="form-group">
-				<label><?php esc_attr_e( 'Add New Pricelist', 'sell_media' ); ?></label>
+				<label><?php esc_html_e( 'Add New Pricelist', 'sell_media' ); ?></label>
 				<input type="text" name="new_term_name" required />
 				<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e( 'Add New Pricelist', 'sell_media' ); ?>" />
 				<input type="hidden" name="sell-media-price-list-submit" value="true" />
@@ -166,7 +166,7 @@ class Sell_Media_Price_Listings_Tabs {
 						var price = typeof(value.meta.price)!== 'undefined' ?  value.meta.price : '';
 						var is_default = ( typeof(value.meta.default)!== 'undefined' && 1 == value.meta.default )  ?  true : false;
 					}
-					var alert_message = '' !== title ?  "<?php esc_attr_e( 'Are you sure you want to delete the price: ', 'sell_media' ); ?>" + value.name + '?' : '<?php esc_attr_e( 'Are you sure you want to delete this price? ', 'sell_media' ); ?>';
+					var alert_message = '' !== title ?  "<?php echo esc_js( 'Are you sure you want to delete the price: ', 'sell_media' ); ?>" + value.name + '?' : '<?php echo esc_js( 'Are you sure you want to delete this price? ', 'sell_media' ); ?>';
 				#>
 				<tr id="_row-data-{{value.index}}" data-index="{{value.index}}">
 					<td>
@@ -227,7 +227,8 @@ class Sell_Media_Price_Listings_Tabs {
 				$term = wp_insert_term( sanitize_text_field($_POST['new_term_name']), $this->taxonomy );
 				$parent_term_id = $term['term_id'];
 			} else {
-				wp_die( sprintf( "Pricelist <strong>'%s'</strong> already exists!", esc_attr($_POST['new_term_name']) ) );
+			    $gpp_tmp = sanitize_text_field( $_POST['new_term_name'] );
+				wp_die( wp_kses( "Pricelist <strong>{$gpp_tmp}</strong> already exists!", array( 'strong' => array() ) ) );
 			}
 		} 
 		else {
@@ -352,6 +353,8 @@ function sell_media_init_price_listings_tabs() {
 			'tab_title' => __( 'Prints', 'sell_media' ),
 		) );
 	}
+
+	// TODO: remove this unused variable
 	$download_price_group = new Sell_Media_Price_Listings_Tabs( 'price-group', array(
 		'tab_title' => __( 'Downloads', 'sell_media' ),
 	) );

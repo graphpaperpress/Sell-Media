@@ -18,7 +18,7 @@ function sell_media_add_to_cart() {
 	global $sm_cart;
 
 	if( !isset( $_POST['_wpnonce'] ) || isset( $_POST['_wpnonce'] ) && !wp_verify_nonce( $_POST['_wpnonce'], 'sell_media_add_cart_action') ) {
-		echo 0;
+		echo esc_html( '0' );
 		exit;
 	}
 	
@@ -69,15 +69,15 @@ function sell_media_add_to_cart() {
 			do_action( 'sell_media_before_add_to_cart', $item_number, $price, $qty, $attrs );
 
 			// Add item to session.
-			echo $sm_cart->add( $item_number, $price, $qty, $attrs );
+			echo esc_html( $sm_cart->add( $item_number, $price, $qty, $attrs ) );
 		}
 		else{
-			echo '0';
+			echo esc_html( '0' );
 		}
 
 	}
 	else{
-		echo '0';
+		echo esc_html( '0' );
 	}
 	exit;
 }
@@ -100,15 +100,15 @@ function sell_media_update_cart(){
 		if( '' != $cart_item_id ){
 
 			// Update cart item.
-			echo esc_attr( $sm_cart->update( $cart_item_id, $qty ) );
+			echo esc_html( $sm_cart->update( $cart_item_id, $qty ) );
 		}
 		else{
-			echo '0';
+			echo esc_html( '0' );
 		}
 
 	}
 	else{
-		echo '0';
+		echo esc_html( '0' );
 	}
 	exit;
 }
@@ -132,11 +132,13 @@ add_action( 'wp_ajax_nopriv_sell_media_cart_menu', 'sell_media_cart_menu' );
 
 /**
  * Ajax filter search function.
+ *
  * @param  array   $param Parameters.
- * @param  boolean $echo  Echo the value or return.
+ * @param  boolean $output_the_value_or_return Output the value or return.
+ *
  * @return array         Content and load button.
  */
-function sell_media_ajax_filter_search( $param = array(), $echo = true ){
+function sell_media_ajax_filter_search( $param = array(), $output_the_value_or_return = true ){
 
 	// Check if parameters are empty.
 	if( empty( $param ) ){
@@ -233,11 +235,11 @@ function sell_media_ajax_filter_search( $param = array(), $echo = true ){
 	// Final response.
 	$response = array( 'content' => $content, 'load_more' => $load_more );
 
-	if( !$echo ){
+	if ( ! $output_the_value_or_return ){
 		return $response;
 	}
 
-	echo wp_send_json( $response );
+	wp_send_json( $response );
 }
 
 // Add ajax callback.

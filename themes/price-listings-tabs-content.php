@@ -19,7 +19,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 			$url = admin_url( 'edit.php?' . sanitize_text_field($_SERVER['QUERY_STRING']) );
 			$url = remove_query_arg( 'term_parent' );
 			?>
-			<option value="<?php  echo esc_url($url); ?>"><?php esc_attr_e( 'Select', 'sell_media' ) ?></option>
+			<option value="<?php echo esc_url($url); ?>"><?php esc_html_e( 'Select', 'sell_media' ) ?></option>
 			<?php
 			$current_pricelist = isset( $_GET['term_parent'] ) ? sanitize_text_field( $_GET['term_parent'] ): '';
 			foreach ( $download_parents as $slug => $term ) {
@@ -27,7 +27,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 				if ( $this->current_term === $term->term_id ) {
 					$current_url = esc_url($url);
 				}
-				echo "<option value='$url' " . selected( (int) $current_pricelist, $term->term_id, false ) . ">" . esc_attr( $term->name ) . '</option>';
+				?><option value="<?php echo esc_attr($url); ?>" <?php echo esc_attr(selected( (int) $current_pricelist, $term->term_id, false )); ?> ><?php echo esc_html( $term->name ); ?></option><?php
 			}
 			?>
 		</select>
@@ -38,7 +38,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 		$delete_url = wp_nonce_url( $delete_url, 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 		$current_term_name = isset( $current_term->name ) ? $current_term->name : '';
 		if ( isset( $_GET['term_parent'] ) ) {
-			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_attr_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php printf( esc_attr__( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ); ?>"><?php esc_attr_e( 'Delete', 'sell_media' ); ?></a>
+			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_attr_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php esc_attr( sprintf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ) ); ?>"><?php esc_html_e( 'Delete', 'sell_media' ); ?></a>
 		<?php } ?>
 	</div>
 	<?php
@@ -49,11 +49,11 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 	<table class="form-table tax-<?php esc_attr_e( $this->taxonomy ); ?>" id="sell-media-price-table">
 		<thead>
 			<tr>
-				<th style="width:15%"><?php esc_attr_e( 'Name', 'sell_media' ); ?></th>
-				<th style="width:15%"><?php esc_attr_e( 'Description', 'sell_media' ); ?></th>
-				<th style="width:10%"><?php esc_attr_e( 'Width', 'sell_media' ); ?></th>
-				<th style="width:10%"><?php esc_attr_e( 'Height', 'sell_media' ); ?></th>
-				<th style="width:10%"><?php esc_attr_e( 'Price', 'sell_media' ); ?></th>
+				<th style="width:15%"><?php echo esc_html__( 'Name', 'sell_media' ); ?></th>
+				<th style="width:15%"><?php echo esc_html__( 'Description', 'sell_media' ); ?></th>
+				<th style="width:10%"><?php echo esc_html__( 'Width', 'sell_media' ); ?></th>
+				<th style="width:10%"><?php echo esc_html__( 'Height', 'sell_media' ); ?></th>
+				<th style="width:10%"><?php echo esc_html__( 'Price', 'sell_media' ); ?></th>
 				<th style="width:1%"></th>
 			</tr>
 		</thead>

@@ -82,17 +82,28 @@ function sell_media_get_lightbox_state( $item ) {
  */
 function sell_media_lightbox_shortcode() {
 	ob_start();
-	echo '<div id="sell-media-lightbox-content" class="sell-media">';
+	?>
+	<div id="sell-media-lightbox-content" class="sell-media">
+	<?php
 
 	do_action( 'sell_media_bofore_lightbox_item_container' );
 
-	echo '<div id="sell-media-grid-item-container" class="' . apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) . '">';
-	echo sell_media_lightbox_query();
-	echo '</div>';
+	?>
+		<div id="sell-media-grid-item-container" class="<?php echo esc_attr( apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) ); ?>">
+		<?php
+			echo wp_kses( sell_media_lightbox_query(), array(
+				'a' => array('href', 'title', 'id', 'class', 'data-*'),
+				'div' => array('class', 'id', 'class', 'data-*'),
+			));
+		?>
+		</div>
+	<?php
 
 	do_action( 'sell_media_after_lightbox_item_container' );
 
-	echo '</div>';
+	?>
+	</div>
+	<?php
 
 	$html = ob_get_contents();
 	ob_end_clean();
@@ -105,8 +116,11 @@ add_shortcode( 'sell_media_lightbox', 'sell_media_lightbox_shortcode' );
  */
 function sell_media_lightbox_remove_items() {
 	if ( ! empty( $_COOKIE['sell_media_lightbox'] ) ) {
-		 echo '<p class="empty-lightbox" title="' . esc_attr__( 'Remove all from lightbox', 'sell_media' ) . '" data-empty-text="' . esc_attr__( 'Your lightbox is empty.', 'sell_media' ) . '">' . esc_attr__( 'Remove All', 'sell_media' ) . '</p>';
-	}
+	    ?>
+        <p class="empty-lightbox" title="<?php echo esc_attr__( 'Remove all from lightbox', 'sell_media' ); ?>"
+            data-empty-text="<?php echo esc_attr__( 'Your lightbox is empty.', 'sell_media' ); ?>"><?php echo esc_html__( 'Remove All', 'sell_media' ); ?></p>
+	    <?php
+    }
 }
 
 add_action( 'sell_media_bofore_lightbox_item_container', 'sell_media_lightbox_remove_items' );
@@ -226,19 +240,14 @@ function sell_media_update_lightbox() {
 		}
 
 		// generate the response
-		$response = wp_json_encode(
-			array(
-				'post_ids' => $cookie,
-				'post_id' => $item['post_id'],
-				'count' => count( $cookie ),
-				'text' => $text,
-			)
-		);
+		$response = array(
+                        'post_ids' => $cookie,
+                        'post_id' => $item['post_id'],
+                        'count' => count( $cookie ),
+                        'text' => $text,
+                    );
 
-		// JSON header
-		header( 'Content-type: application/json' );
-		echo $response;
-		die();
+		wp_send_json($response, 200);
 	}
 
 }

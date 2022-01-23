@@ -146,7 +146,7 @@ class SellMediaTaxMarkup {
     	}
 		</script>
 		<div class="sell_media-slider-container">
-			<input id="slide" type="range" min="-100" max="1000" step=".1" value="<?php print $initial_markup; ?>" oninput="updateSlider(this.value)">
+			<input id="slide" type="range" min="-100" max="1000" step=".1" value="<?php echo esc_attr( $initial_markup ); ?>" oninput="updateSlider(this.value)">
 			<div class="sell_media-price-container">
 				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo esc_attr(get_term_meta( $term_id, 'markup', true )); ?>" size="40" />
 			</div>

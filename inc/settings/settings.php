@@ -120,9 +120,9 @@ function sell_media_admin_plugin_options_page() {
                     $tabvalue = 0;
                 }
                 $current_tab_title = sell_media_plugin_get_current_tab_title( $tabvalue );
-                echo '<div class="updated"><p>';
-                echo '<strong>' . esc_attr( $current_tab_title ) . esc_html__( ' settings updated successfully.', 'sell_media' ) . '</strong>';
-                echo '</p></div>';
+                ?><div class="updated"><p><?php
+                ?><strong><?php echo esc_html( $current_tab_title . __( ' settings updated successfully.', 'sell_media' ) ); ?></strong><?php
+                ?></p></div><?php
         } ?>
         <div class="sell-media-settings-wrap">
             <div class="sell-media-settings-content">
@@ -332,7 +332,7 @@ function sell_media_plugin_field_number( $value, $attr ) {
     $min = isset( $attr['min_number'])?$attr['min_number']:"";
     $max = isset( $attr['max_number'])?$attr['max_number']:"";
 ?>
-    <input type="number" name="<?php echo esc_attr(sell_media_get_current_plugin_id()); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr( $value ); ?>" min="<?php echo intval($min); ?>" max="<?php echo intval($max); ?>">
+    <input type="number" name="<?php echo esc_attr(sell_media_get_current_plugin_id()); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr( $value ); ?>" min="<?php echo esc_attr( intval($min) ); ?>" max="<?php echo esc_attr( intval($max) ); ?>">
 <?php
 }
 
@@ -341,11 +341,11 @@ function sell_media_plugin_field_range( $value, $attr ) {
     $max = isset( $attr['max_number'])?$attr['max_number']:"";
     $step = isset( $attr['step_number'])?$attr['step_number']:"1";
 ?>
-    <input type="range" min="<?php echo intval($min); ?>" max="<?php echo intval($max); ?>" value="<?php esc_attr_e( $value ,'sell_media'); ?>" id="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" step="<?php echo esc_attr($step); ?>" oninput="outputUpdate(value)" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]">
-    <output for="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" id="<?php echo esc_attr($attr['name']); ?>-result"><?php  echo esc_attr( $value ); ?>%</output>
+    <input type="range" min="<?php echo esc_attr( intval($min) ); ?>" max="<?php echo esc_attr( intval($max) ); ?>" value="<?php esc_attr_e( $value ,'sell_media'); ?>" id="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" step="<?php echo esc_attr($step); ?>" oninput="outputUpdate(value)" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]">
+    <output for="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" id="<?php echo esc_attr($attr['name']); ?>-result"><?php echo esc_attr( $value ); ?>%</output>
     <script type="text/javascript">
         function outputUpdate(val) {
-            document.querySelector('#<?php echo esc_attr($attr['name']); ?>-result').value = val + '%';
+            document.querySelector('#<?php echo esc_js($attr['name']); ?>-result').value = val + '%';
         }
     </script>
 <?php
@@ -392,7 +392,9 @@ function sell_media_plugin_field_radio_image( $value, $attr ) { ?>
         ?>
     <label class="radio_image">
     <input type="radio" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($option['name']); ?>" <?php checked($option['name'], $value ); ?>>
-      <?php if( $option['image'] ) echo '<img src="' . esc_url( $option['image'] ) . '">'; ?>
+      <?php if( $option['image'] ) { ?>
+          <img src="<?php echo esc_url( $option['image'] ); ?>" />
+      <?php } ?>
     </label>
             <?php
         endforeach;
@@ -606,7 +608,7 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
  * Any html
  */
 function sell_media_plugin_field_html( $value, $attr ){
-    echo esc_attr($attr['valid_options']);
+    echo esc_html($attr['valid_options']);
 }
 
 
@@ -623,9 +625,10 @@ function sell_media_plugin_image_url_callback() {
     $all_images = '';
     foreach( $image_ids as $image_id ) {
         $image_attributes = wp_get_attachment_image_src( $image_id, 'large' ); // returns an array
-        $all_images .= "<img style=\"cursor:pointer;height:60px;width:auto;margin:5px 5px 0 0;\" class=\"eachthumbs\" src=\"" . $image_attributes[0] . "\"/>";
+        ?>
+        <img style="cursor:pointer;height:60px;width:auto;margin:5px 5px 0 0;" class="eachthumbs" src="<?php echo esc_url( $image_attributes[0] ); ?>" />
+        <?php
     }
-    echo esc_html( $all_images );
     die();
 }
 

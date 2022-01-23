@@ -73,7 +73,7 @@ class SM_Gateway_PayPal_Request {
 
                 if (!empty($secret_key_exist)) {
                     ?>
-                    <button type="button" class="<?php echo esc_attr( $classes ); ?>" id="pay_via_paypal_purchase"><?php esc_attr_e( 'Pay via PayPal', 'sell_media' ); ?></button>
+                    <button type="button" class="<?php echo esc_attr( $classes ); ?>" id="pay_via_paypal_purchase"><?php esc_html_e( 'Pay via PayPal', 'sell_media' ); ?></button>
                     <?php
                 }
                 
@@ -263,7 +263,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -445,7 +445,7 @@ class SM_Gateway_PayPal_Request {
                 print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
         return $response;
     }
@@ -480,7 +480,7 @@ class SM_Gateway_PayPal_Request {
                 }
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -513,7 +513,7 @@ class SM_Gateway_PayPal_Request {
             print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
         return $response;
     }

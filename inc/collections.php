@@ -128,7 +128,6 @@ function sell_media_collection_password_check( $query ) {
 		}
 
 		if ( ! empty( $exclude_term_ids ) ) {
-			// echo 'exclude these ids: ';
 			$tax_query = array(
 					 'relation' => 'AND',
 					 array(
