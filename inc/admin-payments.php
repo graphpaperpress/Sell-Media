@@ -446,7 +446,7 @@ add_filter( 'manage_edit-sell_media_payment_columns', 'sell_media_payment_header
 function sell_media_payment_content( $column, $post_id ){
 	$arr = array(
 		'a' => array(
-			'href' => array(),
+			'href' => true,
 		),
         'br' => array(),
 	);

@@ -102,9 +102,9 @@ function sell_media_add_to_cart_fields( $post_id = null, $attachment_id = null )
 		<div class="button-container cf">
 			<p id="sell-media-add-to-cart"><?php sell_media_item_add_to_cart_button( $post_id, $attachment_id, null, null, true, $type ); ?></p>
 			<p id="sell-media-add-to-lightbox"><?php echo wp_kses(sell_media_lightbox_link( $post_id, $attachment_id), array(
-			        'a' => array('href', 'title', 'id', 'class', 'data-*'),
-			        'div' => array('class'),
-			        'p' => array('class'),
+			        'a' => array('href' => true, 'title' => true, 'id' => true, 'class' => true, 'data-*' => true),
+			        'div' => array('class' => true),
+			        'p' => array('class' => true),
                 )); ?></p>
 		</div>
 

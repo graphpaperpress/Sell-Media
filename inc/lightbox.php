@@ -92,8 +92,8 @@ function sell_media_lightbox_shortcode() {
 		<div id="sell-media-grid-item-container" class="<?php echo esc_attr( apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) ); ?>">
 		<?php
 			echo wp_kses( sell_media_lightbox_query(), array(
-				'a' => array('href', 'title', 'id', 'class', 'data-*'),
-				'div' => array('class', 'id', 'class', 'data-*'),
+				'a' => array('href' => true, 'title' => true, 'id' => true, 'class' => true, 'data-*' => true),
+				'div' => array('class' => true, 'id' => true, 'class' => true, 'data-*' => true),
 			));
 		?>
 		</div>

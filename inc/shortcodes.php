@@ -293,7 +293,7 @@ function sell_media_checkout_shortcode() {
 					$html .= __( 'continue shopping &raquo;', 'sell_media' );
 					$html .= '</a>';
 					echo wp_kses(apply_filters( 'sell_media_or_continue_shopping', $html ), array(
-					        'a' => array('href' => 'true')
+					        'a' => array('href' => true)
                     ) );
 					?>
 				</p>
