@@ -288,7 +288,7 @@ class SellMediaTaxMarkup {
 	 */
 	function item_detail_markup_fields() {
 		global $post;
-		$product_id = ( ! empty( $_POST['product_id'] ) ) ? absint( $_POST['product_id'] ) : $post->ID;
+		$product_id = isset( $_POST['product_id'] ) ? absint( $_POST['product_id'] ) : $post->ID;
 		$post_id = $product_id;
 		if ( wp_get_post_parent_id( $product_id ) > 0 ) {
 			$post_id = wp_get_post_parent_id( $product_id );
@@ -357,11 +357,11 @@ class SellMediaTaxMarkup {
 				}
 				$markup_name = "item_markup_{$markup_field}";
 				$markup_id   = "item_markup_{$markup_field}_id";
-				if ( isset( $_POST[ $markup_name ] ) && '' != $_POST[ $markup_name ] ) {
+				if ( isset( $_POST[ $markup_name ] ) && '' != sanitize_text_field( $_POST[ $markup_name ] ) ) {
 					$attrs[ $markup_name ] = sanitize_text_field( $_POST[ $markup_name ] );
 				}
 
-				if ( isset( $_POST[ $markup_id ] ) && '' != $_POST[ $markup_id ] ) {
+				if ( isset( $_POST[ $markup_id ] ) && '' != sanitize_text_field( $_POST[ $markup_id ] ) ) {
 					$attrs[ $markup_id ] = sanitize_text_field( $_POST[ $markup_id ] );
 				}
 			}

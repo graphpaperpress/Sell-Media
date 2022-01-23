@@ -146,7 +146,8 @@ class Sell_Media_Price_Listings {
 		do_action( 'sell_meida_load_pricelists_page', $redirect_url );
 
 		// verify nonce and save price data 
-		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === $_POST["sell-media-price-list-submit"] && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page')) {
+		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === sanitize_text_field( $_POST["sell-media-price-list-submit"] )
+             && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page')) {
 
 			check_admin_referer( 'sell-media-price-list-page' );
 			$url_parameters['page'] = $this->menu_slug;

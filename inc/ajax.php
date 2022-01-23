@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sell_media_add_to_cart() {
 	global $sm_cart;
 
-	if( !isset( $_POST['_wpnonce'] ) || isset( $_POST['_wpnonce'] ) && !wp_verify_nonce( $_POST['_wpnonce'], 'sell_media_add_cart_action') ) {
+	if( !isset( $_POST['_wpnonce'] ) || !wp_verify_nonce( $_POST['_wpnonce'], 'sell_media_add_cart_action') ) {
 		echo esc_html( '0' );
 		exit;
 	}
@@ -29,35 +29,35 @@ function sell_media_add_to_cart() {
 		$attrs = array();
 		$item_number = absint( $_POST['item_number'] );
 
-		if( isset( $_POST['item_name'] ) && '' != $_POST['item_name'] ){
+		if( isset( $_POST['item_name'] ) && '' != sanitize_text_field( $_POST['item_name'] ) ){
 			$attrs['item_name'] = sanitize_text_field( $_POST['item_name'] );
 		}
 
-		if( isset( $_POST['item_type'] ) && '' != $_POST['item_type'] ){
+		if( isset( $_POST['item_type'] ) && '' != sanitize_text_field( $_POST['item_type'] ) ){
 			$attrs['item_type'] = sanitize_text_field( $_POST['item_type'] );
 		}
 
-		if( isset( $_POST['item_image'] ) && '' != $_POST['item_image'] ){
+		if( isset( $_POST['item_image'] ) && '' != sanitize_text_field( $_POST['item_image'] ) ){
 			$attrs['item_image'] = sanitize_text_field( $_POST['item_image'] );
 		}
 
-		if( isset( $_POST['item_pgroup'] ) && '' != $_POST['item_pgroup'] ){
+		if( isset( $_POST['item_pgroup'] ) && '' != sanitize_text_field( $_POST['item_pgroup'] ) ){
 			$attrs['item_pgroup'] = sanitize_text_field( $_POST['item_pgroup'] );
 		}
 
-		if( isset( $_POST['item_size'] ) && '' != $_POST['item_size'] ){
+		if( isset( $_POST['item_size'] ) && '' != sanitize_text_field( $_POST['item_size'] ) ){
 			$attrs['item_size'] = sanitize_text_field( $_POST['item_size'] );
 		}
 
-		if( isset( $_POST['item_usage'] ) && '' != $_POST['item_usage'] ){
+		if( isset( $_POST['item_usage'] ) && '' != sanitize_text_field( $_POST['item_usage'] ) ){
 			$attrs['item_usage'] = sanitize_text_field( $_POST['item_usage'] );
 		}
 
-		if( isset( $_POST['item_license'] ) && '' != $_POST['item_license'] ){
+		if( isset( $_POST['item_license'] ) && '' != sanitize_text_field( $_POST['item_license'] ) ){
 			$attrs['item_license'] = sanitize_text_field( $_POST['item_license'] );
 		}
 
-		if( isset( $_POST['item_attachment'] ) && '' != $_POST['item_attachment'] ){
+		if( isset( $_POST['item_attachment'] ) && '' != sanitize_text_field( $_POST['item_attachment'] ) ){
 			$attrs['item_attachment'] = absint( $_POST['item_attachment'] );
 		}
 
@@ -94,7 +94,10 @@ function sell_media_update_cart(){
 	// Check if cart item id is there.
 	if( !empty( $_POST ) && isset( $_POST['cart_item_id'] ) ){
 
-		$qty = intval($_POST['qty']);
+		$qty = 0;
+		if( isset($_POST['qty']) ) {
+			$qty = absint( $_POST['qty'] );
+		}
 		$cart_item_id = sanitize_text_field( $_POST['cart_item_id'] );
 		// Check if cart item id is empty.
 		if( '' != $cart_item_id ){
@@ -153,21 +156,22 @@ function sell_media_ajax_filter_search( $param = array(), $output_the_value_or_r
 	$args['post_status'] = "publish";
 	$args['paged'] = $paged;
 
+	$tab = 'newest';
 	// Check if tab is set.
-	if ( ! isset( $_POST['tab'] ) ) {
-		$_POST['tab'] = 'newest';
+	if ( isset( $_POST['tab'] ) && '' != sanitize_text_field($_POST['tab']) ) {
+		$tab = sanitize_text_field($_POST['tab']);
 	}
 
-	if( 'newest' == $_POST['tab'] ){
+	if( 'newest' == $tab ){
 		$args['order'] = 'DESC';
 		$args['orderby'] = 'date';
 	}
-	else if( 'most-popular' == $_POST['tab'] ){
+	else if( 'most-popular' == $tab ){
 		$args['order'] = 'DESC';
 		$args['meta_key'] = '_sell_media_post_views_count';
 		$args['orderby'] = 'meta_value_num';
 	}
-	else if( 'keywords' == $_POST['tab'] ){
+	else if( 'keywords' == $tab ){
 		$args['post_type'] = 'attachment';
 		$args['post_status'] = array( 'publish', 'inherit' );
 		$args['post_parent__in'] = sell_media_ids();
@@ -175,16 +179,16 @@ function sell_media_ajax_filter_search( $param = array(), $output_the_value_or_r
 							array(
 								'taxonomy' => 'keywords',
 								'field'    => 'id',
-								'terms'    => absint( $_POST['term']),
+								'terms'    => isset($_POST['term']) ? absint( $_POST['term'] ) : 0,
 							),
 						);
 	}
-	else if( 'collections' == $_POST['tab'] ){
+	else if( 'collections' == $tab ){
 		$args['tax_query'] = array(
 							array(
 								'taxonomy' => 'collection',
 								'field'    => 'id',
-								'terms'    => absint( $_POST['term']),
+								'terms'    => isset($_POST['term']) ? absint( $_POST['term'] ) : 0,
 							),
 						);
 	}
@@ -259,7 +263,7 @@ function sell_media_ajax_add_to_cart_button( $id = NULL, $attachment_id = NULL, 
 		$id = absint( $_POST['id'] );
 	}
 
-	if( isset( $_POST['id'] ) ){
+	if( isset( $_POST['attachment_id'] ) ){
 		$attachment_id = absint( $_POST['attachment_id'] );
 	}
 

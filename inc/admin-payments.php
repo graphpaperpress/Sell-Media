@@ -82,45 +82,45 @@ function sell_media_payment_purchase_details( $post ){
 
 	do_action( 'sell_media_below_payment_contact_details', $post->ID );
 
-	$arr = array(
-		'table' => array(
-			'class' => array(),
-			'cellpadding' => array(),
-		),
-		'thead' => array(),
-		'tr' => array(
-			'class' => array(),
-			'valign' => array(),
-		),
-		'th' => array(
-			'scope' => array(),
-		),
-		'tbody' => array(),
-		'td' => array(
-			'class' => array(),
-		),
-		'script' => array(
-			'type' => array(),
-		),
-		'a' => array(
-			'href' => array(),
-		),
-		'img' => array(
-			'width' => array(),
-			'height' => array(),
-			'src' => array(),
-			'data' => array(),
-			'alt' => array(),
-			'srcset' => array(),
-			'loading' => array(),
-			'class' => array(),
-			'sizes' => array(),
-			'style' => array(),
-		),
-		'input' => array(
-			'type' => array(),
-			'value' => array(),
-		)
+    $arr = array(
+	    'table'  => array(
+		    'class'       => true,
+		    'cellpadding' => true,
+	    ),
+	    'thead'  => array(),
+	    'tr'     => array(
+		    'class'  => true,
+		    'valign' => true,
+	    ),
+	    'th'     => array(
+		    'scope' => true,
+	    ),
+	    'tbody'  => array(),
+	    'td'     => array(
+		    'class' => true,
+	    ),
+	    'script' => array(
+		    'type' => true,
+	    ),
+	    'a'      => array(
+		    'href' => true,
+	    ),
+	    'img'    => array(
+		    'width'   => true,
+		    'height'  => true,
+		    'src'     => true,
+		    'data-*'  => true,
+		    'alt'     => true,
+		    'srcset'  => true,
+		    'loading' => true,
+		    'class'   => true,
+		    'sizes'   => true,
+		    'style'   => true,
+	    ),
+	    'input'  => array(
+		    'type'  => true,
+		    'value' => true,
+	    )
 		
 	);
 

@@ -188,7 +188,7 @@ function sell_media_lightbox_query() {
 function sell_media_update_lightbox() {
 
 	$_send_data = array();
-	if (!isset($_POST['_nonce']) || isset($_POST['_nonce']) && !wp_verify_nonce($_POST['_nonce'], 'sell_media_ajax-nonce')) {
+	if (!isset($_POST['_nonce']) || !wp_verify_nonce($_POST['_nonce'], 'sell_media_ajax-nonce')) {
 		$_send_data['status'] = false;
 		wp_send_json($_send_data);
 		die();
@@ -198,8 +198,8 @@ function sell_media_update_lightbox() {
 		
 		// build lightbox item array
 		$item = array(
-			'post_id'       => (isset($_POST['post_id']) && !empty($_POST['post_id'])) ? intval($_POST['post_id']) : 0,
-			'attachment_id' => (isset($_POST['attachment_id']) && !empty($_POST['attachment_id'])) ? intval($_POST['attachment_id']) : 0,
+			'post_id'       => (isset($_POST['post_id']) && '' != sanitize_text_field($_POST['post_id'])) ? intval($_POST['post_id']) : 0,
+			'attachment_id' => (isset($_POST['attachment_id']) && '' != sanitize_text_field($_POST['attachment_id'])) ? intval($_POST['attachment_id']) : 0,
 		);
 		
 		// check if cookie already exists

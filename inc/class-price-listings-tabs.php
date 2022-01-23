@@ -217,13 +217,12 @@ class Sell_Media_Price_Listings_Tabs {
 
 	function save_data( $redirect_url ) {
 
-		if(!isset($_POST['_wpnonce']) || isset($_POST['_wpnonce']) &&  !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') )
-		{
-			wp_die( sprintf("Unauthorized Access"));
+		if( !isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') ) {
+			wp_die( esc_html("Unauthorized Access"));
 		}
 		// Save new pricelist.
-		if ( isset( $_POST['new_term_name'] ) && '' !== $_POST['new_term_name'] ) {
-			if ( ! term_exists( $_POST['new_term_name'], $this->taxonomy ) ) {
+		if ( isset( $_POST['new_term_name'] ) && '' !== sanitize_text_field( $_POST['new_term_name'] ) ) {
+			if ( ! term_exists( sanitize_text_field($_POST['new_term_name']), $this->taxonomy ) ) {
 				$term = wp_insert_term( sanitize_text_field($_POST['new_term_name']), $this->taxonomy );
 				$parent_term_id = $term['term_id'];
 			} else {
@@ -233,8 +232,8 @@ class Sell_Media_Price_Listings_Tabs {
 		} 
 		else {
 			// Update pricelists.
-			$parent_term_id = ( isset( $_POST['term_id'] ) && ! empty( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
-			if ( isset( $_POST['term_name'] ) && '' !== $_POST['term_name'] ) {
+			$parent_term_id = ( isset( $_POST['term_id'] ) && '' != sanitize_text_field( $_POST['term_id'] ) ) ? (int) $_POST['term_id']: 0;
+			if ( isset( $_POST['term_name'] ) && '' !== sanitize_text_field( $_POST['term_name'] ) ) {
 				if ( 0 !== $parent_term_id ) {
 					wp_update_term( $parent_term_id, $this->taxonomy, array(
 						'name' => sanitize_text_field($_POST['term_name']),
@@ -242,23 +241,29 @@ class Sell_Media_Price_Listings_Tabs {
 				}
 			}
 
-			if ( isset( $_POST['terms_children'] ) && ! empty( $_POST['terms_children'] ) ) {
-				foreach ( $_POST['terms_children'] as $term_id => $data ) {
-					$term_id = (int) intval($term_id);
-					if ( '' !== $data['name'] ) {
+			if ( isset( $_POST['terms_children'] ) && is_array( $_POST['terms_children'] ) && count( $_POST['terms_children'] ) ) {
+				foreach ( (array) $_POST['terms_children'] as $term_id => $data ) {
+					$term_id = (int) $term_id;
+					if ( isset($data['name']) && '' !== sanitize_text_field($data['name']) ) {
 						wp_update_term( $term_id, $this->taxonomy, array(
-							'name' => (isset($data['name'])) ? __($data['name'], 'sell_media' ) : '',
-							'description' => (isset($data['description'])) ? __($data['description'], 'sell_media' ) : '',
+							'name' => __(sanitize_text_field($data['name']), 'sell_media' ),
+							'description' => isset($data['description']) ? __(sanitize_text_field($data['description']), 'sell_media' ) : '',
 						));
-						update_term_meta( $term_id, 'width', esc_attr($data['width']) );
-						update_term_meta( $term_id, 'height', esc_attr($data['height']) );
-						update_term_meta( $term_id, 'price', esc_attr($data['price']) );
+						if(isset($data['width'])) {
+							update_term_meta( $term_id, 'width', sanitize_text_field( $data['width'] ) );
+						}
+						if(isset($data['height'])) {
+							update_term_meta( $term_id, 'height', sanitize_text_field( $data['height'] ) );
+						}
+						if(isset($data['price'])) {
+							update_term_meta( $term_id, 'price', sanitize_text_field( $data['price'] ) );
+						}
 					}
 				}
 			}
 
-			if ( isset( $_POST['deleted_term_ids'] ) && '' !== $_POST['deleted_term_ids'] ) {
-				$deleted_term_ids = explode( ',', $_POST['deleted_term_ids'] );
+			if ( isset( $_POST['deleted_term_ids'] ) && '' !== sanitize_text_field( $_POST['deleted_term_ids'] ) ) {
+				$deleted_term_ids = explode( ',', sanitize_text_field($_POST['deleted_term_ids']) );
 				if ( ! empty( $deleted_term_ids ) ) {
 					foreach ( $deleted_term_ids as $key => $term_id ) {
 						if ( 'new' !== $term_id ) {
@@ -268,27 +273,33 @@ class Sell_Media_Price_Listings_Tabs {
 				}
 			}
 
-			if ( isset( $_POST['new_children'] ) && ! empty( $_POST['new_children'] ) ) {
-				foreach ( $_POST['new_children'] as $term_id => $data ) {
-					if ( '' !== $data['name'] ) {
+			if ( isset( $_POST['new_children'] ) && is_array( $_POST['new_children'] ) && count( $_POST['new_children'] ) ) {
+				foreach ( (array) $_POST['new_children'] as $term_id => $data ) {
+					if ( '' !== sanitize_text_field($data['name']) ) {
 
-						if ( term_exists( $data['name'], $this->taxonomy, $parent_term_id ) ) {
-							$term    = get_term_by( 'name', __($data['name'], 'sell_media' ), $this->taxonomy );
+						if ( term_exists( sanitize_text_field($data['name']), $this->taxonomy, $parent_term_id ) ) {
+							$term    = get_term_by( 'name', __(sanitize_text_field($data['name']), 'sell_media' ), $this->taxonomy );
 							$term_id = ( isset( $term->term_id ) ) ? intval($term->term_id) : false;
 
 						} else {
 
-							$term    = wp_insert_term( $data['name'], $this->taxonomy, array(
-								'parent' => $parent_term_id,
-								'description' => __( $data['description'], 'sell_media' ),
+							$term    = wp_insert_term( sanitize_text_field($data['name']), $this->taxonomy, array(
+								'parent' => (int) $parent_term_id,
+								'description' => __( sanitize_text_field($data['description']), 'sell_media' ),
 							) );
 							$term_id = ! is_wp_error( $term ) ? $term['term_id'] : false;
 						}
 
 						if ( $term_id ) {
-							update_term_meta( $term_id, 'width', sanitize_text_field($data['width']) );
-							update_term_meta( $term_id, 'height', sanitize_text_field($data['height']) );
-							update_term_meta( $term_id, 'price', sanitize_text_field($data['price']) );
+							if(isset($data['width'])) {
+								update_term_meta( $term_id, 'width', sanitize_text_field( $data['width'] ) );
+							}
+							if(isset($data['height'])) {
+								update_term_meta( $term_id, 'height', sanitize_text_field( $data['height'] ) );
+							}
+							if(isset($data['price'])) {
+								update_term_meta( $term_id, 'price', sanitize_text_field( $data['price'] ) );
+							}
 						}
 					}
 				}
@@ -296,13 +307,37 @@ class Sell_Media_Price_Listings_Tabs {
 		}
 
 		// Saving settings.
-		if ( isset( $_POST['settings'] ) ){
+		if ( isset( $_POST['settings'] ) && is_array($_POST['settings']) && count($_POST['settings']) ){
 
 			$settings = array_map( 'sanitize_text_field', ( array ) sell_media_get_plugin_options() );
-			$settings = array_merge( $settings, sanitize_text_field( $_POST['settings'] ) );
+
+			$sanitized_settings_from_post = [];
+			$gpp_allowed_keys = [
+			        'admin_columns',
+			        'watermark_attachment_url',
+			        'watermark_attachment_id',
+			        'watermark_all',
+			        'free_downloads_api_key',
+			        'free_downloads_list',
+			        'mailchimp_api_key',
+			        'mailchimp_list',
+			        'reprints_hide_download_tabs',
+			        'reprints_base_region',
+			        'reprints_unit_measurement',
+			        'default_price',
+			        'hide_original_price',
+			        'default_price_group',
+            ];
+			// Process only safe keys from $_POST
+			foreach ( $_POST['settings'] as $tmp_key => $tmp_val ) {
+                if( in_array($tmp_key, $gpp_allowed_keys)){
+	                $sanitized_settings_from_post[$tmp_key] = sanitize_text_field($tmp_val);
+                }
+			}
+
+			$settings = array_merge( $settings, $sanitized_settings_from_post );
 			$options_name = sell_media_get_current_plugin_id() . '_options';
 			update_option( $options_name, $settings );
-
 		}
 
 		$url_parameters['term_parent'] = $parent_term_id;

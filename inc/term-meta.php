@@ -229,7 +229,7 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
  */
 function sell_media_save_extra_taxonomy_fields( $term_id ) {
 	
-	if(!isset($_POST['taxonomy_wpnonce']) || isset($_POST['taxonomy_wpnonce']) && !wp_verify_nonce($_POST['taxonomy_wpnonce'], 'sell_media_taxonomy_admin_nonce')) {
+	if(!isset($_POST['taxonomy_wpnonce']) && !wp_verify_nonce($_POST['taxonomy_wpnonce'], 'sell_media_taxonomy_admin_nonce')) {
 		return;
 	}
 
@@ -238,16 +238,17 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 	}
 
 	if ( ! isset( $_POST['meta_value']['collection_hidden'] ) ) {
-		if ( ! empty(  $_SESSION['sell_media']['collection_password'] ) )
+		if ( isset( $_SESSION['sell_media']['collection_password'] ) )
 			unset( $_SESSION['sell_media']['collection_password'] );
 	}
 
-	if ( isset( $_POST['meta_value'] ) ) {
-		$cat_keys = array_keys( $_POST['meta_value'] );
-		$cat_keys = array_map( 'sanitize_text_field', $cat_keys);
-	
-		foreach ( $cat_keys as $key ) {
-			if ( ! empty( $_POST['meta_value'][$key] ) ) {
+	if ( isset( $_POST['meta_value'] ) && is_array( $_POST['meta_value'] ) ) {
+
+	    // Process only safe keys
+		$allowed_post_keys = [ 'related_keywords', 'markup', 'default', 'collection_icon_id', 'collection_password' ];
+
+		foreach ( $allowed_post_keys as $key ) {
+			if ( isset( $_POST['meta_value'][$key] ) ) {
 				if ( 'related_keywords' === $key ) {
 					$related_keywords = trim( sanitize_text_field( $_POST['meta_value'][$key] ), ',' );
 					$related_keywords = preg_replace( '/\s*,\s*/', ',', $related_keywords );
@@ -261,7 +262,6 @@ function sell_media_save_extra_taxonomy_fields( $term_id ) {
 						$markup .= '%';
 					}
 					update_term_meta( $term_id, $key, $markup );
-
 				} else {
 					$meta_value[$key] = sanitize_text_field( $_POST['meta_value'][$key] );
 					update_term_meta( $term_id, $key, $meta_value[$key] );

@@ -4,10 +4,10 @@
  * Template for Cart dialog
  */
 
-$post_id        = (isset($_POST['product_id'])) ? absint( $_POST['product_id'] ) : '';
-$attachment_id  = (isset($_POST['attachment_id'])) ? absint( $_POST['attachment_id'] ) : '';
+$post_id        = isset($_POST['product_id']) ? absint( $_POST['product_id'] ) : '';
+$attachment_id  = isset($_POST['attachment_id']) ? absint( $_POST['attachment_id'] ) : '';
 $location       = isset( $_POST['location'] ) ? sanitize_text_field( $_POST['location'] ) : '';
-$image_id       = ( sell_media_has_multiple_attachments( $post_id ) ) ? $attachment_id : $post_id;
+$image_id       = sell_media_has_multiple_attachments( $post_id ) ? $attachment_id : $post_id;
 
 ob_start();
 ?>

@@ -74,7 +74,7 @@ function sell_media_register_form() {
 
 	foreach ( $fields as $field ) {
 		$id    = str_replace( ' ', '_', strtolower( $field['name'] ) );
-		$value = ( ! empty( $_POST[$id] ) ) ? sanitize_text_field( $_POST[$id] ) : '';
+		$value = isset( $_POST[$id] ) ? sanitize_text_field( $_POST[$id] ) : '';
 		if ( 'select' === $field['type'] ) {
 			?>
 			<p>
@@ -109,12 +109,9 @@ function sell_media_registration_errors( $errors, $sanitized_user_login, $user_e
 	$fields = sell_media_extra_user_fields();
 
 	foreach ( $fields as $field ) {
-
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
-
-		if ( empty( $_POST[$id] ) || ! empty( $_POST[$id] ) && trim( $_POST[$id] ) == '' ) {
-			$errors->add( $id . '_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'sell_media' ),__( 'You must include a ' . esc_attr($field['name']) . '.', 'sell_media' ) ) );
-
+		if ( !isset( $_POST[$id] ) || sanitize_text_field( $_POST[$id] ) == '' ) {
+			$errors->add( $id . '_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'sell_media' ), __( 'You must include a ' . $field['name'] . '.', 'sell_media' ) ) );
 		}
 	}
 
@@ -491,7 +488,7 @@ function sell_media_save_extra_profile_fields( $user_id ) {
 	$fields = sell_media_extra_user_fields();
 	foreach ( $fields as $field ) {
 		$id = str_replace( ' ', '_', strtolower( $field['name'] ) );
-		update_usermeta( $user_id, $id, $_POST[$id] );
+		update_user_meta( $user_id, $id, sanitize_text_field( $_POST[$id] ) );
 	}
 }
 add_action( 'personal_options_update', 'sell_media_save_extra_profile_fields' );

@@ -163,11 +163,11 @@ class SellMediaPayPal {
         $_result = array();
         $_result['status'] = false;
         $_result['message'] = apply_filters('sell_media_order_refund_fail_message', esc_attr__('Order refund process fail, Please try again', 'sell_media'));
-        if(isset($_POST['transaction_id']) && !empty($_POST['transaction_id']) && isset($_POST['_nonce']) && wp_verify_nonce($_POST['_nonce'], 'sell-media-paypal-payment-refund')) {
+        if(isset($_POST['transaction_id']) && '' != sanitize_text_field($_POST['transaction_id']) && isset($_POST['_nonce']) && wp_verify_nonce($_POST['_nonce'], 'sell-media-paypal-payment-refund')) {
 
-            $_payment_id        = (isset($_POST['payment_id']) && !empty($_POST['payment_id'])) ? sanitize_text_field($_POST['payment_id']) : 0;
+            $_payment_id        = (isset($_POST['payment_id']) && '' != sanitize_text_field($_POST['payment_id'])) ? sanitize_text_field($_POST['payment_id']) : 0;
             $_payment_obj       = get_post_meta($_payment_id, '_sell_media_payment_meta', true);
-            $_refund_amount     = (isset($_POST['refund_amount']) && !empty($_POST['refund_amount'])) ? sanitize_text_field($_POST['refund_amount']) : sanitize_text_field($_payment_obj['total']);
+            $_refund_amount     = (isset($_POST['refund_amount']) && '' != sanitize_text_field($_POST['refund_amount'])) ? sanitize_text_field($_POST['refund_amount']) : sanitize_text_field($_payment_obj['total']);
             $_currency_code     = get_post_meta($_payment_id, 'payment_currency_code', true);
             $_capture_id        = get_post_meta($_payment_id, 'payment_capture_id', true);
 

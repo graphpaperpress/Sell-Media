@@ -98,7 +98,7 @@ class SM_Gateway_PayPal_Request {
         }
 
         // Check if PayPal is selected.
-        if( !isset( $_POST['gateway'] ) || 'paypal' !== $_POST['gateway'] ){
+        if( !isset( $_POST['gateway'] ) || 'paypal' !== sanitize_text_field( $_POST['gateway'] ) ){
             $_send_data['status'] = false;
             wp_send_json($_send_data);
             die();
@@ -591,7 +591,7 @@ class SM_Gateway_PayPal_Request {
                 $message = $payment_id->get_error_message();
             } else {
 
-                $_address_street = $_city = $_state = $_postal_code = $_country_code = '';
+                $_address_street = $_city = $_state = $_gpp_postal_code = $_country_code = '';
 
                 // take address details from billing details if not exist then it will take from shipping details
                 if (isset($_billing_details->address->address_line_1)) {
@@ -599,7 +599,7 @@ class SM_Gateway_PayPal_Request {
                     $_address_street = sanitize_text_field($_billing_details->address->address_line_1);
                     $_city = sanitize_text_field($_billing_details->address->admin_area_2);
                     $_state = sanitize_text_field($_billing_details->address->admin_area_1);
-                    $_postal_code = sanitize_text_field($_billing_details->address->postal_code);
+                    $_gpp_postal_code = sanitize_text_field($_billing_details->address->postal_code);
                     $_country_code = sanitize_text_field($_billing_details->address->country_code);
 
                 } else if(isset($_paypal_get_order->result->purchase_units[0]->shipping)){
@@ -607,7 +607,7 @@ class SM_Gateway_PayPal_Request {
                     $_address_street = sanitize_text_field($_shipping->address->address_line_1);
                     $_city = sanitize_text_field($_shipping->address->admin_area_2);
                     $_state = sanitize_text_field($_shipping->address->admin_area_1);
-                    $_postal_code = sanitize_text_field($_shipping->address->postal_code);
+                    $_gpp_postal_code = sanitize_text_field($_shipping->address->postal_code);
                     $_country_code = sanitize_text_field($_shipping->address->country_code);
 
                 }
@@ -619,7 +619,7 @@ class SM_Gateway_PayPal_Request {
                     'address_city'         => $_city,
                     'address_state'        => $_state,
                     'address_country_code' => $_country_code,
-                    'address_zip'          => $_postal_code,
+                    'address_zip'          => $_gpp_postal_code,
                     'transaction_id'       => $_paypal_order_id,
                     'payer_id'             => $_billing_details->payer_id,
                     'order_status'         => $_paypal_get_order->result->status,

@@ -137,7 +137,10 @@ class SellMediaAdminAddItem {
 		// Run a security check first.
 		check_ajax_referer( 'sell-media-drag-drop-nonce', 'nonce' );
 		// Prepare variables.
-		$id  = absint( $_POST['id'] );
+        $id = 0;
+        if( isset($_POST['id']) ) {
+	        $id = absint( $_POST['id'] );
+        }
 		echo wp_kses( sell_media_list_uploads( $id ), array('a' => array('href' => true, 'class' => true, 'data-*' => true, 'target' => true), 'li' => array('class' => true, 'data-*' => true), 'span' => array('class' => true, 'data-*' => true), 'img' => array('src'  => true, 'class' => true, 'width' => true, 'height' => true)) );
 		exit;
 	}
@@ -239,7 +242,7 @@ class SellMediaAdminAddItem {
 	 * @return void
 	 */
 	function load_pricelists() {
-		$id = ( isset( $_POST['parent_id'] ) && '' !== $_POST['parent_id'] ) ? absint( $_POST['parent_id'] ) :  false;
+		$id = ( isset( $_POST['parent_id'] ) && '' !== sanitize_text_field( $_POST['parent_id'] ) ) ? absint( $_POST['parent_id'] ) :  false;
 		if ( ! $id ) {
 			echo esc_html( '0' );
 			exit;

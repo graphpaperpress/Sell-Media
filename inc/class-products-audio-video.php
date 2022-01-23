@@ -103,7 +103,9 @@ class SellMediaAudioVideo extends SellMediaProducts {
             exit;
         }
 
-        $attachment_id = absint( $_POST['attachment_id'] );
+        if( isset($_POST['attachment_id']) ) {
+	        $attachment_id = absint( $_POST['attachment_id'] );
+        }
 
         $is_audio = self::is_attachment_audio( $attachment_id );
         $is_video = self::is_attachment_video( $attachment_id );
