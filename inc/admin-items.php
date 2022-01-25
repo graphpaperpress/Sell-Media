@@ -368,7 +368,7 @@ add_action( 'save_post', 'sell_media_save_custom_meta' );
  */
 function sell_media_upload_callback() {
 	$html = '';
-	check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
+	check_ajax_referer( '_sell_media_meta_box_nonce', 'security', true );
 
 	// Display thumbnails after upload/selection
 	if ( isset( $_POST['attachments'] ) && is_array( $_POST['attachments'] ) ) {
@@ -409,7 +409,7 @@ add_action( 'wp_ajax_sell_media_upload_callback', 'sell_media_upload_callback' )
  */
 function sell_media_upload_bulk_callback(){
 
-	check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
+	check_ajax_referer( '_sell_media_meta_box_nonce', 'security', true );
 
 	@ini_set( 'max_execution_time', '300' );
 

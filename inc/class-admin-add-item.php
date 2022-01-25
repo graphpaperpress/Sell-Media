@@ -135,7 +135,7 @@ class SellMediaAdminAddItem {
 
 	function gallery_load_image() {
 		// Run a security check first.
-		check_ajax_referer( 'sell-media-drag-drop-nonce', 'nonce' );
+		check_ajax_referer( 'sell-media-drag-drop-nonce', 'nonce', true );
 		// Prepare variables.
         $id = 0;
         if( isset($_POST['id']) ) {
