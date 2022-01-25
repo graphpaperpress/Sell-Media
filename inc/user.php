@@ -84,7 +84,7 @@ function sell_media_register_form() {
 						if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
 							$selected = ( $value === $key ) ? 'selected' : '';
 							?>
-                            <option value="<?php echo esc_attr( $key ); ?>" selected="<?php echo esc_attr( $selected );?>"><?php echo esc_html( $v ); ?></option>
+                            <option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( $selected );?>><?php echo esc_html( $v ); ?></option>
                             <?php
 						}
 						?>
@@ -456,13 +456,13 @@ function sell_media_show_extra_profile_fields( $user ) {
 			if ( 'select' === $field['type'] ) {
 				?><select name="<?php echo esc_attr( $id ); ?>" class="input"><?php
 					if ( $field['options'] ) foreach ( $field['options'] as $key => $v ) {
-						$selected = ( $value === $key ) ? 'selected' : '';
-						?><option value="<?php echo esc_attr( $key ); ?>" selected="<?php echo esc_attr( $selected ); ?>"><?php echo esc_html( $v ); ?></option><?php
+						$selected = (( $value === $key ) ? 'selected' : '');
+						?><option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( $selected ); ?>><?php echo esc_html( $v ); ?></option><?php
 					}
 					?></select><?php
 			} else {
 				?><input type="text" name="<?php echo esc_attr( $id ); ?>" id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $value ); ?>" class="regular-text" /><br />
-			}
+			<?php }
 			if(isset($field['desc']) && !empty($field['desc'])) {
 				?><span class="description"><?php echo esc_html__($field['desc'], 'sell_media'); ?></span><?php
 			}
