@@ -184,7 +184,7 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $is_output = t
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
-		$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size );
+		$image = apply_filters('ell_media_item_icon_after', $image, $attachment_id, $size );
 	} else {
 		global $post;
 		if ( '' != get_the_post_thumbnail( $post->ID ) ) {
@@ -235,8 +235,16 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $is_output = t
 	        'alt' => true,
 	        'style' => true,
 	    ),
-	    'div' => array(),
-	    'script' => array()
+	    'script' => array('type' => true),
+	    'ul' => ['data-*' => true, 'class' => true],
+	    'li' => ['data-*' => true, 'class' => true],
+	    'a' => ['data-*' => true, 'target' => true, 'href' => true, 'class' => true, 'id' => true],
+        'div' => array('class' => true, 'data-*' => true, 'id' => true, 'style' => true),
+	    'span' => array('class' => true, 'data-*' => true, 'id' => true, 'style' => true),
+	    'strong' => array('class' => true, 'data-*' => true, 'id' => true, 'style' => true),
+	    'i' => array('class' => true, 'data-*' => true, 'id' => true, 'style' => true),
+	    'u' => array('class' => true, 'data-*' => true, 'id' => true, 'style' => true),
+	    'p' => array('class' => true, 'data-*' => true, 'id' => true, 'style' => true),
 	);
 
 	if ( $is_output ) {
