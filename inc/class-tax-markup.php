@@ -127,11 +127,11 @@ class SellMediaTaxMarkup {
 		<script>
 		function calc_price( markUp ){
 			
-			var price = <?php esc_js($settings->default_price); ?>;
+			var price = <?php echo (float) esc_js($settings->default_price); ?>;
 			if ( markUp == undefined )
-				var markUp = <?php esc_js($initial_markup); ?>;
+				var markUp = <?php echo (float) esc_js($initial_markup); ?>;
 
-			finalPrice = ( +price + ( +markUp * .01 ) * price );
+			finalPrice = ( price + ( markUp * 0.01 ) * price );
 			finalPrice = finalPrice.toFixed(2);
 			
 			return finalPrice;
