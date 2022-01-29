@@ -10,6 +10,24 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+const GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS = [
+	'li' => ['data-*' => true, 'class' => true],
+	'a' => ['data-*' => true, 'target' => true, 'href' => true, 'class' => true],
+	'span' => ['data-*' => true, 'class' => true],
+	'img' => [
+		'src'      => true,
+		'srcset'   => true,
+		'sizes'    => true,
+		'class'    => true,
+		'id'       => true,
+		'width'    => true,
+		'height'   => true,
+		'alt'      => true,
+		'align'    => true,
+		'data-*' => true,
+	],
+];
+
 /**
  * Checks if the attached file is an image
  * and runs functions that resizes and moves

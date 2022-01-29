@@ -64,7 +64,7 @@ function sell_media_files_meta_box( $post ) {
 		<?php
 			$attachment_ids = sell_media_get_attachments( $post->ID );
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				echo wp_kses( sell_media_list_uploads( $attachment_id ), array('a' => array(), 'li' => array(), 'span' => array()) );
+				echo wp_kses( sell_media_list_uploads( $attachment_id ), GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS );
 			}
 		?>
 	</ul>
@@ -92,7 +92,7 @@ function sell_media_uploader_meta_box( $post ) {
 		<?php
 			$attachment_ids = sell_media_get_attachments( $post->ID );
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				wp_kses_post( __(sell_media_list_uploads( $attachment_id ),'sell_media') );
+				echo wp_kses( sell_media_list_uploads( $attachment_id), GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS );
 			}
 		?>
 	</ul>

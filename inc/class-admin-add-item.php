@@ -141,7 +141,7 @@ class SellMediaAdminAddItem {
         if( isset($_POST['id']) ) {
 	        $id = absint( $_POST['id'] );
         }
-		echo wp_kses( sell_media_list_uploads( $id ), array('a' => array('href' => true, 'class' => true, 'data-*' => true, 'target' => true), 'li' => array('class' => true, 'data-*' => true), 'span' => array('class' => true, 'data-*' => true), 'img' => array('src'  => true, 'class' => true, 'width' => true, 'height' => true)) );
+		echo wp_kses( sell_media_list_uploads( $id ), GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS );
 		exit;
 	}
 
