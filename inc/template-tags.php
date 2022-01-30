@@ -184,7 +184,7 @@ function sell_media_item_icon( $post_id = null, $size = 'medium', $is_output = t
 		$image_attr = wp_get_attachment_image_src( $attachment_id, $size );
 		$src = $image_attr[0];
 		$image = wp_get_attachment_image( $attachment_id, $size, '', array( 'class' => apply_filters( 'sell_media_image_class', 'sell-media-image sell_media_image' ), 'data-sell_media_medium_url' => $src, 'data-sell_media_large_url' => $src, 'data-sell_media_item_id' => $post_id ) );
-		$image = apply_filters('ell_media_item_icon_after', $image, $attachment_id, $size );
+		$image = apply_filters('sell_media_item_icon_after', $image, $attachment_id, $size );
 	} else {
 		global $post;
 		if ( '' != get_the_post_thumbnail( $post->ID ) ) {
