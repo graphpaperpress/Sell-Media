@@ -986,7 +986,7 @@ add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text
  * @param  int     $attachment_id    ID of attachment
  * @param  string  $button           Button type.
  * @param  string  $text             Button Text.
- * @param  boolean $is_output Echo output or return.
+ * @param  boolean $is_output        Output or return.
  *
  * @return string                    Html output of button.
  *@since 2.0.7

@@ -93,7 +93,7 @@ function sell_media_lightbox_shortcode() {
 		<?php
 			echo wp_kses( sell_media_lightbox_query(), array(
 				'a' => array('href' => true, 'title' => true, 'id' => true, 'class' => true, 'data-*' => true),
-				'div' => array('class' => true, 'id' => true, 'class' => true, 'data-*' => true),
+				'div' => array('class' => true, 'id' => true, 'data-*' => true),
 			));
 		?>
 		</div>

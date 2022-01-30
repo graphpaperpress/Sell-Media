@@ -95,7 +95,6 @@ if ( 'price-group' === $current_tab ) { ?>
 			<select name="settings[default_price_group]">
 				<?php
 				$price_group = sell_media_settings_price_group('price-group');
-				print_r($price_group);
 				
 				if ( is_array( $price_group ) && count( $price_group ) > 0 ) {
 					foreach( $price_group as $group ) {
