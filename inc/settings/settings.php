@@ -357,7 +357,7 @@ function sell_media_plugin_field_password( $value, $attr ) { ?>
 }
 
 function sell_media_plugin_field_textarea( $value, $attr ) { ?>
-    <textarea name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" cols="48" rows="8"><?php echo esc_attr( $value ); ?></textarea>
+    <textarea name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" cols="48" rows="8"><?php echo esc_textarea( $value ); ?></textarea>
 <?php
 }
 

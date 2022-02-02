@@ -121,7 +121,7 @@ function sell_media_plugin_options_validate( $input ) {
                 // Validate HTML content
                 if ( 'html' == $optiondetails['sanitize'] ) {
                     // Pass input data through the wp_filter_kses filter
-                    $valid_input[ $setting ] = addslashes( $input[ $setting ] );
+                    $valid_input[ $setting ] = sanitize_textarea_field( $input[ $setting ] );
                 }
                 // Validate Slug
                 if ( 'slug' == $optiondetails['sanitize'] ) {
