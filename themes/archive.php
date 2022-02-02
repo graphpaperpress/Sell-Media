@@ -175,9 +175,27 @@ $settings = sell_media_get_plugin_options();
 			<?php endif; ?><!-- show child terms check -->
 
 			</div><!-- .sell-media-grid-item-container -->
-			<?php 
+			<?php
 			if ( ! $children ) {
-				echo esc_html( sell_media_pagination_filter( $wp_query->max_num_pages ) );
+				echo wp_kses( sell_media_pagination_filter( $wp_query->max_num_pages ), [
+					'div' => [
+						'id' => true,
+						'class' => true,
+						'data-*' => true,
+					],
+					'span' => [
+						'id' => true,
+						'class' => true,
+						'aria-*' => true,
+					],
+					'a' => [
+						'href' => true,
+						'id' => true,
+						'target' => true,
+						'class' => true,
+						'data-*' => true,
+					],
+				]);
 			}
 			?>
 		</div><!-- #content -->
