@@ -116,7 +116,7 @@ class SellMediaTaxMarkup {
 			$term_id = null;
 		}
 
-		if ( get_term_meta( $term_id, 'markup', true ) ) {
+		if ( get_term_meta( $term_id, 'markup', true ) !== false ) {
 			$initial_markup = str_replace( '%', '', get_term_meta( $term_id, 'markup', true ) );
 		} else {
 			$initial_markup = 0;
@@ -148,7 +148,7 @@ class SellMediaTaxMarkup {
 		<div class="sell_media-slider-container">
 			<input id="slide" type="range" min="-100" max="1000" step=".1" value="<?php echo esc_attr( $initial_markup ); ?>" oninput="updateSlider(this.value)">
 			<div class="sell_media-price-container">
-				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo esc_attr(get_term_meta( $term_id, 'markup', true )); ?>" size="40" />
+				<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo esc_attr( $initial_markup ); ?>" size="40" />
 			</div>
 			<p class="description">
 				<?php echo wp_kses( sprintf( __( 'Increase the price of a item if a buyer selects this %s by dragging the slider above.', 'sell_media' ), $singular_name ), ['a' => ['href' => true, 'target' => true]] ); ?>
