@@ -164,6 +164,7 @@ $settings = sell_media_get_plugin_options();
                                 'class' => true,
                                 'data-*' => true,
                             ],
+							'script' => [ 'type' => true ]
 						] ); ?>
 					<?php endwhile; ?>
 				<?php else : ?>
@@ -195,6 +196,7 @@ $settings = sell_media_get_plugin_options();
 						'class' => true,
 						'data-*' => true,
 					],
+					'script' => [ 'type' => true ]
 				]);
 			}
 			?>
