@@ -4,6 +4,10 @@ $download_parents = $this->get_terms();
 $url = add_query_arg( array( 'term_parent' => 'new' ), admin_url( 'edit.php?' . sanitize_text_field($_SERVER['QUERY_STRING']) ) );
 $current_url = false;
 
+if($_POST){
+	do_action( 'sell_media_price_listing_save', home_url( $wp->request ) );
+}
+
 // Settings.
 $settings = sell_media_get_plugin_options();
 

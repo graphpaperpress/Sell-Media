@@ -312,22 +312,62 @@ class Sell_Media_Price_Listings_Tabs {
 			$settings = array_map( 'sanitize_text_field', ( array ) sell_media_get_plugin_options() );
 
 			$sanitized_settings_from_post = [];
+			// TODO: move to helpers file
 			$gpp_allowed_keys = [
-			        'admin_columns',
-			        'watermark_attachment_url',
-			        'watermark_attachment_id',
-			        'watermark_all',
-			        'free_downloads_api_key',
-			        'free_downloads_list',
-			        'mailchimp_api_key',
-			        'mailchimp_list',
-			        'reprints_hide_download_tabs',
-			        'reprints_base_region',
-			        'reprints_unit_measurement',
-			        'default_price',
-			        'hide_original_price',
-			        'default_price_group',
-            ];
+				'admin_columns',
+				'watermark_attachment_url',
+				'watermark_attachment_id',
+				'watermark_all',
+				'free_downloads_api_key',
+				'free_downloads_list',
+				'mailchimp_api_key',
+				'mailchimp_list',
+				'reprints_hide_download_tabs',
+				'reprints_base_region',
+				'reprints_unit_measurement',
+				'default_price',
+				'hide_original_price',
+				'default_price_group',
+				'test_mode',
+				'checkout_page',
+				'thanks_page',
+				'dashboard_page',
+				'login_page',
+				'search_page',
+				'lightbox_page',
+				'customer_notification',
+				'style',
+				'layout',
+				'thumbnail_crop',
+				'thumbnail_layout',
+				'titles',
+				'breadcrumbs',
+				'quick_view',
+				'file_info',
+				'search_relation',
+				'plugin_credit',
+				'post_type_slug',
+				'order_by',
+				'terms_and_conditions',
+				'admin_columns',
+				'default_price',
+				'hide_original_price',
+				'default_price_group',
+				'currency',
+				'paypal_additional_test_email',
+				'paypal_test_client_id',
+				'paypal_test_client_secret_key',
+				'paypal_live_client_id',
+				'paypal_live_client_secret_key',
+				'tax',
+				'tax_display',
+				'tax_rate',
+				'from_name',
+				'from_email',
+				'success_email_subject',
+				'success_email_body',
+				'misc'
+			];
 			// Process only safe keys from $_POST
 			foreach ( $_POST['settings'] as $tmp_key => $tmp_val ) {
                 if( in_array($tmp_key, $gpp_allowed_keys)){
@@ -343,7 +383,7 @@ class Sell_Media_Price_Listings_Tabs {
 		$url_parameters['term_parent'] = $parent_term_id;
 		$redirect_url = add_query_arg( $url_parameters, $redirect_url );
 		wp_redirect( $redirect_url );
-		exit();
+		//exit(); // TODO: look, this will break the form layout
 	}
 
 	function delete_pricelist( $redirect_url ) {
