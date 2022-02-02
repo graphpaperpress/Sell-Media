@@ -10,6 +10,15 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Protocols for wp_kses()
+ */
+add_filter( 'kses_allowed_protocols', function ( $protocols ) {
+	$protocols[] = 'javascript';
+
+	return $protocols;
+} );
+
 const GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS = [
 	'li' => ['data-*' => true, 'class' => true],
 	'a' => ['data-*' => true, 'target' => true, 'href' => true, 'class' => true],

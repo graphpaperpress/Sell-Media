@@ -225,8 +225,11 @@ jQuery( document ).ready(function( $ ){
             var attachment = file_frame.state().get('selection').first().toJSON();
             $('#collection_icon_input_field').val( attachment.id );
             $('#collection_icon_url').val( attachment.url );
-            $('#collection_icon_target').html( '<img src="'+attachment.sizes.thumbnail.url+'" /><br><a href="javascript:void(0);" class="upload_image_remove">Remove</a>' );
-
+            if( undefined !== attachment.sizes.thumbnail ) {
+                $('#collection_icon_target').html('<img src="' + attachment.sizes.thumbnail.url + '" /><br><a href="javascript:void(0);" class="upload_image_remove">Remove</a>');
+            } else {
+                $('#collection_icon_target').html('<img src="' + attachment.sizes.full.url + '" /><br><a href="javascript:void(0);" class="upload_image_remove">Remove</a>');
+            }
         });
 
         // Finally, open the modal
