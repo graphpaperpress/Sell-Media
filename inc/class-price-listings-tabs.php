@@ -381,9 +381,11 @@ class Sell_Media_Price_Listings_Tabs {
 		}
 
 		$url_parameters['term_parent'] = $parent_term_id;
-		$redirect_url = add_query_arg( $url_parameters, $redirect_url );
-		wp_redirect( $redirect_url );
-		//exit(); // TODO: look, this will break the form layout
+		$redirect_url_new = add_query_arg( $url_parameters, $redirect_url );
+		if( $redirect_url ) {
+			wp_redirect( $redirect_url_new );
+			//exit(); // TODO: look, this will break the form layout
+		}
 	}
 
 	function delete_pricelist( $redirect_url ) {
