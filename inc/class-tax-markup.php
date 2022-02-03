@@ -144,6 +144,11 @@ class SellMediaTaxMarkup {
                 document.querySelector('span.markup-target').innerHTML = slideAmount + '%';
                 document.querySelector('.menu-cart-total').innerHTML = calc_price(slideAmount);
             }
+
+            jQuery(document).ajaxComplete(function( event, xhr, settings ){
+                // TODO: change this
+                jQuery('body.post-type-sell_media_item [name="meta_value[markup]"]').val(0);
+            });
         </script>
         <div class="sell_media-slider-container">
             <input id="slide" type="range" min="-100" max="1000" step=".1" value="<?php echo esc_attr( $initial_markup ); ?>" oninput="updateSlider(this.value)">

@@ -252,7 +252,7 @@ jQuery( document ).ready(function( $ ){
         /**
          * We should somehow intercept the correct event among lots of them fired by WordPress
          */
-        //$('#collection_icon_target img').remove();
+        $('body.post-type-sell_media_item #collection_icon_target img').remove();
     });
 
     // We create a copy of the WP inline edit post function.
