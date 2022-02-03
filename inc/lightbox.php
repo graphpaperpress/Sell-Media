@@ -91,10 +91,7 @@ function sell_media_lightbox_shortcode() {
 	?>
 		<div id="sell-media-grid-item-container" class="<?php echo esc_attr( apply_filters( 'sell_media_grid_item_container_class', 'sell-media-grid-item-container' ) ); ?>">
 		<?php
-			echo wp_kses( sell_media_lightbox_query(), array(
-				'a' => array('href' => true, 'title' => true, 'id' => true, 'class' => true, 'data-*' => true),
-				'div' => array('class' => true, 'id' => true, 'data-*' => true),
-			));
+			echo wp_kses( sell_media_lightbox_query(), GPP_WP_KSES_EXTENDED_LIST );
 		?>
 		</div>
 	<?php
@@ -133,7 +130,7 @@ function sell_media_lightbox_query() {
 
 	// Decode the lightbox array of IDs since they're encoded
 	if ( isset( $_COOKIE['sell_media_lightbox'] ) ) {
-		$items = json_decode( sanitize_key( $_COOKIE['sell_media_lightbox'] ), true );
+		$items = json_decode( stripslashes( sanitize_text_field( $_COOKIE['sell_media_lightbox'] ) ), true );
 	}
 	
 	// Check if items in lightbox
