@@ -23,12 +23,7 @@ ob_start();
 				$image = sell_media_item_icon( $attachment_id, 'full', false );
 			}
 		?>
-		<?php echo wp_kses(apply_filters( 'sell_media_quick_view_post_thumbnail', $image, $post_id ), array(
-		        'div' => array('class' => true, 'id' => true, 'data-*' => true),
-		        'span' => array('class' => true, 'id' => true, 'data-*' => true),
-		        'a' => array('class' => true, 'id' => true, 'data-*' => true, 'href' => true, 'target' => true),
-		        'img' => array('class' => true, 'id' => true, 'data-*' => true, 'src' => true, 'height' => true, 'width' => true),
-        ) ); ?>
+		<?php echo wp_kses(apply_filters( 'sell_media_quick_view_post_thumbnail', $image, $post_id ), GPP_WP_KSES_EXTENDED_LIST ); ?>
 	</div>
 	
 	<div class="sell-media-quick-view-content">
@@ -43,7 +38,7 @@ ob_start();
 	</div><!-- .sell-media-quick-view-content -->
 	<?php else : ?>
 		<p class="sell-media-item-password-protected">
-			<?php echo wp_kses( sprintf( __( 'This item is password protected. %s Click here to enter password. %s', 'sell_media' ), '<a href="' . esc_url( get_permalink( $post_id ) ) .'">', '</a>' ), ['a' => ['href' => true, 'target' => true]] ); ?>
+			<?php echo wp_kses( sprintf( __( 'This item is password protected. %s Click here to enter password. %s', 'sell_media' ), '<a href="' . esc_url( get_permalink( $post_id ) ) .'">', '</a>' ), GPP_WP_KSES_EXTENDED_LIST ); ?>
 		</p>
 	<?php endif; ?>
 	<?php do_action( 'sell_media_after_cart_content', $post_id, $attachment_id, $location ); ?>
@@ -53,9 +48,4 @@ ob_start();
 $cart_markup = ob_get_contents();
 ob_end_clean();
 
-echo wp_kses( apply_filters( 'sell_media_cart_output', $cart_markup, $post_id, $attachment_id, $location ), array(
-	'div' => array('class' => true, 'id' => true, 'data-*' => true),
-	'span' => array('class' => true, 'id' => true, 'data-*' => true),
-	'a' => array('class' => true, 'id' => true, 'data-*' => true, 'href' => true, 'target' => true),
-	'img' => array('class' => true, 'id' => true, 'data-*' => true, 'src' => true, 'height' => true, 'width' => true),
-) );
+echo wp_kses( apply_filters( 'sell_media_cart_output', $cart_markup, $post_id, $attachment_id, $location ), GPP_WP_KSES_EXTENDED_LIST );

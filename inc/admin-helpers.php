@@ -20,7 +20,8 @@ add_filter( 'kses_allowed_protocols', function ( $protocols ) {
 } );
 
 const GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS = [
-	'li' => ['data-*' => true, 'class' => true],
+	'ul' => ['data-*' => true, 'class' => true, 'id' => true],
+	'li' => ['data-*' => true, 'class' => true, 'value' => true],
 	'a' => ['data-*' => true, 'target' => true, 'href' => true, 'class' => true],
 	'span' => ['data-*' => true, 'class' => true],
 	'img' => [
@@ -35,6 +36,36 @@ const GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS = [
 		'align'    => true,
 		'data-*' => true,
 	],
+];
+
+const GPP_WP_KSES_EXTENDED_LIST = [
+	'ul' => ['data-*' => true, 'class' => true, 'id' => true],
+	'li' => ['data-*' => true, 'class' => true, 'value' => true],
+	'a' => ['data-*' => true, 'target' => true, 'href' => true, 'class' => true],
+	'div' => array('class' => true, 'id' => true, 'data-*' => true),
+	'span' => array('class' => true, 'id' => true, 'data-*' => true, 'required' => true),
+	'img' => [
+		'src'      => true,
+		'srcset'   => true,
+		'sizes'    => true,
+		'class'    => true,
+		'id'       => true,
+		'width'    => true,
+		'height'   => true,
+		'alt'      => true,
+		'align'    => true,
+		'data-*' => true,
+	],
+	'script' => array('type'=>true),
+	'h6' => array('class' => true, 'id' => true),
+	'form' => array('class' => true, 'id' => true, 'action' => 'true', 'method' => true),
+	'input' => array('class' => true, 'id' => true, 'type' => true, 'value' => true, 'name' => true),
+	'fieldset' => array('class' => true, 'id' => true, 'data-*' => true),
+	'select' => array('class' => true, 'id' => true, 'data-*' => true, 'required' => true ),
+	'option' => array('class' => true, 'id' => true, 'data-*' => true, 'selected' => true, 'title' => true, 'value' => true, 'name' => true),
+	'button' => array('class' => true, 'id' => true, 'data-*' => true, 'disabled' => true, 'enabled' => true),
+	'strong' => array('class' => true, 'id' => true, 'data-*' => true),
+	'p' => array('class' => true, 'id' => true, 'data-*' => true),
 ];
 
 /**
