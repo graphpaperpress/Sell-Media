@@ -90,8 +90,8 @@ if ( 'price-group' === $current_tab ) { ?>
 		<div class="form-group">
 			<label><?php esc_html_e( 'High Resolution File Availability', 'sell_media' ); ?></label>
 			<select name="settings[hide_original_price]">
-				<option value="<?php esc_attr_e( 'yes','sell_media' ); ?>" <?php echo esc_attr( selected( 'yes', $hide_original_price, false ) ) ?>><?php esc_html_e( 'Can be purchased', 'sell_media' ); ?></option>
-				<option value="<?php esc_attr_e( 'no','sell_media' ); ?>" <?php echo esc_attr( selected( 'no', $hide_original_price, false ) ) ?>><?php esc_html_e( 'Cannot be purchased', 'sell_media' ); ?></option>
+				<option value="<?php esc_attr_e( 'no','sell_media' ); ?>" <?php echo esc_attr( selected( 'no', $hide_original_price, false ) ) ?>><?php esc_html_e( 'Can be purchased', 'sell_media' ); ?></option>
+				<option value="<?php esc_attr_e( 'yes','sell_media' ); ?>" <?php echo esc_attr( selected( 'yes', $hide_original_price, false ) ) ?>><?php esc_html_e( 'Cannot be purchased', 'sell_media' ); ?></option>
 			</select>
 			<span class="option-description"><?php esc_html_e( 'Select "Can be purchased" if you want to allow buyers to purchase the original high resolution file. Select "Cannot be purchased" if you only want buyers to purchase lower resolution copies (determined by the sizes in your pricelists below).', 'sell_media' ) ?></span>
 		</div>
