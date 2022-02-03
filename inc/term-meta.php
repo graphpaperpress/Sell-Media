@@ -171,7 +171,7 @@ function sell_media_the_markup_slider( $tag ){
 	<div class="sell_media-slider-container">
 		<div id="markup_slider"></div>
 		<div class="sell_media-price-container">
-			<input name="meta_value[markup]" class="markup-target" type="text" value="<?php esc_attr_e(get_term_meta($term_id, 'markup', true),'sell_media'); ?>" size="40" />
+			<input name="meta_value[markup]" class="markup-target" type="text" value="<?php echo (float) get_term_meta($term_id, 'markup', true); ?>" size="40" />
 		</div>
 		<p class="description">
 			<?php esc_html_e( 'Increase the price of a item if a buyer selects this license by dragging the slider above.', 'sell_media' ); ?>
