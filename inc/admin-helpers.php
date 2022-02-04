@@ -11,6 +11,15 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Protocols for wp_kses()
+ */
+add_filter( 'kses_allowed_protocols', function ( $protocols ) {
+	$protocols[] = 'javascript';
+
+	return $protocols;
+} );
+
+/**
  * Checks if the attached file is an image
  * and runs functions that resizes and moves
  * high resolution files into protected dir.

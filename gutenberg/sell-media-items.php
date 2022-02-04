@@ -11,4 +11,3 @@ require plugin_dir_path( __FILE__ ) . 'blocks/sell-media-filters/sell-media-filt
 require plugin_dir_path( __FILE__ ) . 'blocks/sell-media-items-slider/sell-media-items-slider.php';
 require plugin_dir_path( __FILE__ ) . 'blocks/sell-media-list-all-collections/sell-media-list-all-collections.php';
 require plugin_dir_path( __FILE__ ) . 'blocks/sell-media-search-form/sell-media-search-form.php';
-?>

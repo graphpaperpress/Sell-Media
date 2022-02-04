@@ -49,7 +49,7 @@ class Sell_Media_Search_Widget extends WP_Widget {
 
 		echo wp_kses_post( $args['before_widget'] );
 		if ( ! empty( $instance['title'] ) ) {
-			echo wp_kses_post( $args['before_title'] ) . apply_filters( 'widget_title', $instance['title'] ). wp_kses_post( $args['after_title'] );
+			echo wp_kses_post( $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'] );
 		}
 		echo do_shortcode( '[sell_media_searchform]' );
 		echo wp_kses_post( $args['after_widget'] );
@@ -70,7 +70,7 @@ class Sell_Media_Search_Widget extends WP_Widget {
 		}
 		?>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id( 'title' )); ?>"><?php esc_attr_e( 'Title:', 'sell_media' ); ?></label>
+			<label for="<?php echo esc_attr($this->get_field_id( 'title' )); ?>"><?php esc_html_e( 'Title:', 'sell_media' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'title' )); ?>" name="<?php echo esc_attr($this->get_field_name( 'title' )); ?>" type="text" value="<?php esc_attr_e( $title ,'sell_media'); ?>">
 		</p>
 		<?php

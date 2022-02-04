@@ -120,7 +120,13 @@ add_action( 'admin_init', 'sell_media_check_version' );
  * @return string Disable notice.
  */
 function sell_media_disabled_notice() {
-	echo '<div class="update-nag">' . esc_attr__( 'Sell Media requires WordPress 5.8.3 or higher!', 'sell_media' ) . '</div>';
+	?>
+
+	<div class="update-nag">
+		<?php echo esc_html( __( 'Sell Media requires WordPress 5.8.3 or higher!', 'sell_media' ) ); ?>
+	</div>
+
+	<?php
 }
 
 /**

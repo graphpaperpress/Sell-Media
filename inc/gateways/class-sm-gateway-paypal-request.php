@@ -73,7 +73,7 @@ class SM_Gateway_PayPal_Request {
 
                 if (!empty($secret_key_exist)) {
                     ?>
-                    <button type="button" class="<?php echo esc_attr( $classes ); ?>" id="pay_via_paypal_purchase"><?php esc_attr_e( 'Pay via PayPal', 'sell_media' ); ?></button>
+                    <button type="button" class="<?php echo esc_attr( $classes ); ?>" id="pay_via_paypal_purchase"><?php esc_html_e( 'Pay via PayPal', 'sell_media' ); ?></button>
                     <?php
                 }
                 
@@ -98,7 +98,7 @@ class SM_Gateway_PayPal_Request {
         }
 
         // Check if PayPal is selected.
-        if( !isset( $_POST['gateway'] ) || 'paypal' !== $_POST['gateway'] ){
+        if( !isset( $_POST['gateway'] ) || 'paypal' !== sanitize_text_field( $_POST['gateway'] ) ){
             $_send_data['status'] = false;
             wp_send_json($_send_data);
             die();
@@ -250,20 +250,20 @@ class SM_Gateway_PayPal_Request {
 
         if ($debug) {
 
-            print "Create order Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Intent: {$response->result->intent}\n";
-            print "Links:\n";
+            echo esc_html("Create order Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Intent: {$response->result->intent}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
 
-            print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
+            echo esc_html("Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n");
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -430,22 +430,22 @@ class SM_Gateway_PayPal_Request {
         $response = $client->execute($request);
         if ($debug) {
 
-            print "Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Authorization ID: {$response->result->purchase_units[0]->payments->authorizations[0]->id}\n";
-            print "Links:\n";
+            echo esc_html("Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Authorization ID: {$response->result->purchase_units[0]->payments->authorizations[0]->id}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
-            print "Authorization Links:\n";
+            echo esc_html("Authorization Links:\n");
             foreach($response->result->purchase_units[0]->payments->authorizations[0]->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
         return $response;
     }
@@ -464,23 +464,23 @@ class SM_Gateway_PayPal_Request {
         $client = SellMediaPayPal::client();
         $response = $client->execute($request);
         if ($debug) {
-            print "Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Links:\n";
+            echo esc_html("Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
-            print "Capture Ids:\n";
+            echo esc_html("Capture Ids:\n");
             foreach($response->result->purchase_units as $purchase_unit) {
 
                 foreach($purchase_unit->payments->captures as $capture) {
-                    print "\t{$capture->id}";
+                    echo esc_html("\t{$capture->id}");
                 }
             }
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
 
         return $response;
@@ -496,24 +496,23 @@ class SM_Gateway_PayPal_Request {
         $client = SellMediaPayPal::client();
         $response = $client->execute(new OrdersGetRequest($orderId));
         /**
-         * Enable below line to print complete response as JSON.
+         * Enable below line to show complete response as JSON.
          */
         if ($debug) {
-            //print json_encode($response->result);
-            print "Get Order Status Code: {$response->statusCode}\n";
-            print "Status: {$response->result->status}\n";
-            print "Order ID: {$response->result->id}\n";
-            print "Intent: {$response->result->intent}\n";
-            print "Links:\n";
+            echo esc_html("Get Order Status Code: {$response->statusCode}\n");
+            echo esc_html("Status: {$response->result->status}\n");
+            echo esc_html("Order ID: {$response->result->id}\n");
+            echo esc_html("Intent: {$response->result->intent}\n");
+            echo esc_html("Links:\n");
             foreach($response->result->links as $link)
             {
-                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
+                echo esc_html("\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n");
             }
 
-            print "Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n";
+            echo esc_html("Gross Amount: {$response->result->purchase_units[0]->amount->currency_code} {$response->result->purchase_units[0]->amount->value}\n");
 
             // To toggle printing the whole response body comment/uncomment below line
-            echo wp_json_encode($response->result, JSON_PRETTY_PRINT);
+            wp_send_json($response->result, 200, JSON_PRETTY_PRINT);
         }
         return $response;
     }
@@ -592,7 +591,7 @@ class SM_Gateway_PayPal_Request {
                 $message = $payment_id->get_error_message();
             } else {
 
-                $_address_street = $_city = $_state = $_postal_code = $_country_code = '';
+                $_address_street = $_city = $_state = $_gpp_postal_code = $_country_code = '';
 
                 // take address details from billing details if not exist then it will take from shipping details
                 if (isset($_billing_details->address->address_line_1)) {
@@ -600,7 +599,7 @@ class SM_Gateway_PayPal_Request {
                     $_address_street = sanitize_text_field($_billing_details->address->address_line_1);
                     $_city = sanitize_text_field($_billing_details->address->admin_area_2);
                     $_state = sanitize_text_field($_billing_details->address->admin_area_1);
-                    $_postal_code = sanitize_text_field($_billing_details->address->postal_code);
+                    $_gpp_postal_code = sanitize_text_field($_billing_details->address->postal_code);
                     $_country_code = sanitize_text_field($_billing_details->address->country_code);
 
                 } else if(isset($_paypal_get_order->result->purchase_units[0]->shipping)){
@@ -608,7 +607,7 @@ class SM_Gateway_PayPal_Request {
                     $_address_street = sanitize_text_field($_shipping->address->address_line_1);
                     $_city = sanitize_text_field($_shipping->address->admin_area_2);
                     $_state = sanitize_text_field($_shipping->address->admin_area_1);
-                    $_postal_code = sanitize_text_field($_shipping->address->postal_code);
+                    $_gpp_postal_code = sanitize_text_field($_shipping->address->postal_code);
                     $_country_code = sanitize_text_field($_shipping->address->country_code);
 
                 }
@@ -620,7 +619,7 @@ class SM_Gateway_PayPal_Request {
                     'address_city'         => $_city,
                     'address_state'        => $_state,
                     'address_country_code' => $_country_code,
-                    'address_zip'          => $_postal_code,
+                    'address_zip'          => $_gpp_postal_code,
                     'transaction_id'       => $_paypal_order_id,
                     'payer_id'             => $_billing_details->payer_id,
                     'order_status'         => $_paypal_get_order->result->status,

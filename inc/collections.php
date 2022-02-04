@@ -86,7 +86,7 @@ function sell_media_collection_password_check( $query ) {
 		 * Apparently none of our globals are set and the post_id is not in $query
 		 * so we run this query to get our post_id
 		 */
-		$post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_name` LIKE '{$query->query['sell_media_item']}' AND post_type LIKE 'sell_media_item';");
+		$post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE `post_name` LIKE '".esc_sql($query->query['sell_media_item'])."' AND post_type LIKE 'sell_media_item';");
 
 		/**
 		 * Determine if this post has the given term and the term has a password
@@ -128,7 +128,6 @@ function sell_media_collection_password_check( $query ) {
 		}
 
 		if ( ! empty( $exclude_term_ids ) ) {
-			// echo 'exclude these ids: ';
 			$tax_query = array(
 					 'relation' => 'AND',
 					 array(
@@ -180,17 +179,17 @@ function sell_media_collection_password_check( $query ) {
 		 * "garbage collection", we end our session after 30 minutes.
 		 */
 		if ( isset( $_SESSION['sell_media']['recent_activity'] ) &&
-			( time() - $_SESSION['sell_media']['recent_activity'] > ( 30 * 60 ) ) ) {
+			( time() - (int) $_SESSION['sell_media']['recent_activity'] > ( 30 * 60 ) ) ) {
 			session_destroy();
 			session_unset();
 		}
 		$_SESSION['sell_media']['recent_activity'] = time(); // the start of the session.
 
 		if ( ! empty( $password ) ) {
-			if ( ! empty( $_POST['collection_password'] ) && $_POST['collection_password'] == $password
+			if ( isset( $_POST['collection_password'] ) && sanitize_text_field( $_POST['collection_password'] ) == $password
 				|| ! empty( $_SESSION['sell_media']['collection_password'][$term_id] )
 				|| ! empty( $_SESSION['sell_media']['collection_password'][$term_id] )
-				&& $_SESSION['sell_media']['collection_password'][$term_id] == $password ) {
+				&& sanitize_text_field( $_SESSION['sell_media']['collection_password'][$term_id] ) == $password ) {
 
 				if ( empty( $_SESSION['sell_media']['collection_password'][$term_id] ) )
 					$_SESSION['sell_media']['collection_password'][$term_id] = sanitize_text_field($_POST['collection_password']);

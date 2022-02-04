@@ -64,7 +64,7 @@ function sell_media_files_meta_box( $post ) {
 		<?php
 			$attachment_ids = sell_media_get_attachments( $post->ID );
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				echo sell_media_list_uploads( $attachment_id );
+				echo wp_kses( sell_media_list_uploads( $attachment_id ), GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS );
 			}
 		?>
 	</ul>
@@ -83,7 +83,7 @@ function sell_media_uploader_meta_box( $post ) {
 		<?php media_upload_form(); ?>
 	</div>
 	<script type="text/javascript">
-		var post_id = <?php echo esc_attr($post->ID); ?>, shortform = 3;
+		var post_id = <?php echo (int) $post->ID; ?>, shortform = 3;
 	</script>
 
 	<?php do_action( 'sell_media_after_file_uploader', $post ); ?>
@@ -92,14 +92,18 @@ function sell_media_uploader_meta_box( $post ) {
 		<?php
 			$attachment_ids = sell_media_get_attachments( $post->ID );
 			if ( $attachment_ids ) foreach ( $attachment_ids as $attachment_id ) {
-				wp_kses_post( _e(sell_media_list_uploads( $attachment_id ),'sell_media') );
+				echo wp_kses( sell_media_list_uploads( $attachment_id), GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS );
 			}
 		?>
 	</ul>
 
 	<?php do_action( 'sell_media_after_uploader_meta_box', $post ); ?>
 	<!-- This hidden field holds all attached file ids -->
-	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo ( (! empty( $attachment_ids ))  ? esc_attr(implode( ',', $attachment_ids )) : ''); ?>"/>
+    <?php
+        // Moved from bottom line
+        $gpp_tmp_val = (! empty( $attachment_ids ))  ? implode( ',', $attachment_ids ) : '';
+    ?>
+	<input type="hidden" name="_sell_media_attachment_id" id="sell-media-attachment-id" class="sell-media-attachment-id" value="<?php echo esc_attr( $gpp_tmp_val ); ?>"/>
 <?php }
 
 /**
@@ -108,30 +112,30 @@ function sell_media_uploader_meta_box( $post ) {
 function sell_media_after_file_uploader( $post ) {
 	?>
 
-	<p class="description"><?php esc_attr_e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
-	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php esc_attr_e( 'Importing Options', 'sell_media' ); ?></a></p>
+	<p class="description"><?php esc_html_e( 'Upload one file to create a single product or many files to create a gallery.', 'sell_media' ); ?></p>
+	<p class="description"><a href="#" class="sell-media-upload-options"><span class="dashicons dashicons-arrow-down"></span> <?php esc_html_e( 'Importing Options', 'sell_media' ); ?></a></p>
 
 	<div id="sell-media-upload-show-options" class="sell-media-upload-show-options" style="display:none;">
-		<h4><?php esc_attr_e( 'Importing', 'sell_media' ); ?></h4>
-		<p class="description"><?php printf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the server path listed below. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ); ?></p>
-		<p class="description"><strong><?php esc_attr_e( 'Server Path', 'sell_media' ); ?>:</strong> <?php echo sell_media_get_import_dir(); ?></p>
+		<h4><?php esc_html_e( 'Importing', 'sell_media' ); ?></h4>
+		<p class="description"><?php echo wp_kses( sprintf( __( 'Quickly import folders of images using this option. Use FTP or <a href="%1$s" target="_blank">export directly from Lightroom</a> and place new folders into the server path listed below. Then, select the folder below to import into WordPress.', 'sell_media' ), 'http://graphpaperpress.com/docs/sell-media/#add-bulk' ), ['a' => ['href' => true, 'target' => true]] ); ?></p>
+		<p class="description"><strong><?php esc_html_e( 'Server Path', 'sell_media' ); ?>:</strong> <?php echo esc_html( sell_media_get_import_dir() ); ?></p>
 		<select id="sell-media-upload-bulk-selector" value="">
-			<option value=""><?php esc_attr_e( 'Select a folder', 'sell_media' ); ?></option>
+			<option value=""><?php esc_html_e( 'Select a folder', 'sell_media' ); ?></option>
 			<?php
 			$directories = sell_media_get_directories();
 			if ( $directories ) foreach ( $directories as $directory ) : ?>
 				<option value="<?php echo esc_attr(basename( $directory )); ?>"><?php echo esc_attr(basename( $directory )); ?></option>
 			<?php endforeach; ?>
 		</select>
-		<button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php esc_attr_e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php esc_attr_e( 'Importing files...', 'sell_media' ); ?>" disabled><?php esc_attr_e( 'Add files', 'sell_media' ); ?></button><br /><br />
+		<button id="sell-media-upload-bulk-processor" type="button" class="button button-large" data-default-text="<?php esc_attr_e( 'Add more files', 'sell_media' ); ?>" data-uploading-text="<?php esc_attr_e( 'Importing files...', 'sell_media' ); ?>" disabled><?php esc_html_e( 'Add files', 'sell_media' ); ?></button><br /><br />
 		<?php do_action( 'sell_media_after_files_show_options_meta_box', $post ); ?>
 	</div>
 
 	<?php if ( Sell_Media()->products->is_package( $post->ID ) ) : ?>
 		<div id="sell-media-packages" class="sell-media-field">
-			<h4><?php esc_attr_e( 'Packages', 'sell_media' ); ?></h4>
-			<p><?php esc_attr_e( 'This feature was retired in version 2.0 because product galleries can now be created. Your old package file will still be available for sale and is listed below.', 'sell_media' ); ?></p>
-			<p><strong><?php echo get_post_meta( $post->ID, '_sell_media_attached_file', true ); ?></strong></p>
+			<h4><?php esc_html_e( 'Packages', 'sell_media' ); ?></h4>
+			<p><?php esc_html_e( 'This feature was retired in version 2.0 because product galleries can now be created. Your old package file will still be available for sale and is listed below.', 'sell_media' ); ?></p>
+			<p><strong><?php echo esc_html( get_post_meta( $post->ID, '_sell_media_attached_file', true ) ); ?></strong></p>
 		</div>
 	<?php endif; ?>
 	<?php
@@ -153,11 +157,11 @@ function sell_media_options_meta_box( $post ) {
 	do_action( 'sell_media_before_options_meta_box', $post ); ?>
 
 	<div id="sell-media-price-field" class="sell-media-field" style="<?php echo esc_attr($style,'sell_media'); ?>">
-		<label for="sell-media-price"><?php esc_attr_e( 'Price', 'sell_media' ); ?></label>
-		<span class="sell-media-currency-field"><?php echo esc_attr( sell_media_get_currency_symbol() ); ?>
+		<label for="sell-media-price"><?php esc_html_e( 'Price', 'sell_media' ); ?></label>
+		<span class="sell-media-currency-field"><?php echo esc_html( sell_media_get_currency_symbol() ); ?>
 		<input name="sell_media_price" id="sell-media-price" class="small-text" type="number" step="0.01" min="0" placeholder="<?php echo esc_attr($price); ?>" value="<?php echo esc_attr($price); ?>" /></span>
 		<?php if ( sell_media_has_multiple_attachments( $post->ID ) ) { ?>
-			<span class="desc"><?php esc_attr_e( 'The price of each original source file.', 'sell_media' ); ?></span>
+			<span class="desc"><?php esc_html_e( 'The price of each original source file.', 'sell_media' ); ?></span>
 		<?php } ?>
 	</div>
 
@@ -174,8 +178,8 @@ function sell_media_stats_meta_box( $post ) { ?>
 
 	<div id="sell-media-stats" class="sell-media-field">
 		<ul>
-			<li><strong><?php esc_attr_e( 'Views', 'sell_media' ); ?>:</strong> <?php echo sell_media_get_post_views( $post->ID ); ?></li>
-			<li><strong><?php esc_attr_e( 'Sales', 'sell_media' ); ?>:</strong> <?php echo Sell_Media()->payments->get_item_sales( $post->ID ); ?></li>
+			<li><strong><?php esc_html_e( 'Views', 'sell_media' ); ?>:</strong> <?php echo esc_html( sell_media_get_post_views( $post->ID ) ); ?></li>
+			<li><strong><?php esc_html_e( 'Sales', 'sell_media' ); ?>:</strong> <?php echo esc_html( Sell_Media()->payments->get_item_sales( $post->ID ) ); ?></li>
 		</ul>
 	</div>
 
@@ -238,8 +242,10 @@ function sell_media_save_custom_meta( $post_id ) {
 			
 			}  else {
 				$old = get_post_meta( $post_id, $field, true );
-				$new = sanitize_text_field($_POST[ $field ]);
-
+				$new = 0;
+				if( isset( $_POST[$field] ) ) {
+					$new = sanitize_text_field( $_POST[$field] );
+				}
 				if ( 0 <= $new && $new != $old ) {
 
 					// Sanitize price
@@ -256,7 +262,7 @@ function sell_media_save_custom_meta( $post_id ) {
 						// Remove attachment marked as sell media item.
 						$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sell_media_for_sale_product_id', 'meta_value' => $post_id ), array( '%s', '%d' ) );
 
-						$attachment_ids = explode( ',', $_POST[ $field ] );
+						$attachment_ids = explode( ',', sanitize_text_field( $_POST[ $field ] ) );
 						update_post_meta( $post_id, $field, $attachment_ids );
 						// Arguments to get attachment linked to post.
 						$args = array(
@@ -312,7 +318,7 @@ function sell_media_save_custom_meta( $post_id ) {
 							sell_media_move_file( $attachment_id );
 
 							// Check creator is assigned to item
-							if(isset($_POST['tax_input']['creator']) && !empty($_POST['tax_input']['creator'])){
+							if(isset($_POST['tax_input']['creator']) && '' != sanitize_text_field($_POST['tax_input']['creator'])){
 							    // List of creator ids
                                 $_creator_ids = (isset($_POST['tax_input']['creator'])) ? sanitize_text_field( $_POST['tax_input']['creator'] ) : array();
                                 // Store creator to attachment.
@@ -337,8 +343,8 @@ function sell_media_save_custom_meta( $post_id ) {
 
 	// Save the post content
 	global $post_type;
-	if ( ! empty( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
-		$new_content = (isset($_POST['sell_media_editor'])) ? sanitize_text_field( $_POST['sell_media_editor'] ) : '';
+	if ( isset( $_POST['sell_media_editor'] ) && $post_type == 'sell_media_item' ){
+		$new_content = isset($_POST['sell_media_editor']) ? sanitize_text_field( $_POST['sell_media_editor'] ) : '';
 		$old_content = get_post_field( 'post_content', $post_id );
 		if ( ! wp_is_post_revision( $post_id ) && $old_content != $new_content ){
 			$args = array(
@@ -362,13 +368,37 @@ add_action( 'save_post', 'sell_media_save_custom_meta' );
  */
 function sell_media_upload_callback() {
 	$html = '';
-	check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
+	check_ajax_referer( '_sell_media_meta_box_nonce', 'security', true );
 
 	// Display thumbnails after upload/selection
-	if ( $_POST['attachments'] ) foreach ( $_POST['attachments'] as $attachment ) {
-		$html .= sell_media_list_uploads( $attachment['id'] );
+	if ( isset( $_POST['attachments'] ) && is_array( $_POST['attachments'] ) ) {
+	    $gpp_tmp_attachements = (array) $_POST['attachments'];
+	    if( $gpp_tmp_attachements ) {
+		    foreach ( $gpp_tmp_attachements as $attachment ) {
+		        if( isset( $attachment['id'] ) ){
+		            $gpp_tmp_att_id = (int) $attachment['id'];
+			        $html .= sell_media_list_uploads( $gpp_tmp_att_id );
+                }
+		    }
+	    }
 	}
-	echo esc_html( $html );
+	echo wp_kses( $html, [
+	        'li' => ['class' => true, 'data-*' => true],
+	        'span' => ['class' => true, 'data-*' => true],
+	        'a' => ['class' => true, 'data-*' => true, 'href' => true, 'target' => true],
+	        'img' => [
+		        'width' => true,
+		        'height' => true,
+		        'src' => true,
+		        'data-*' => true,
+		        'alt' => true,
+		        'srcset' => true,
+		        'loading' => true,
+		        'class' => true,
+		        'sizes' => true,
+		        'style' => true,
+	        ],
+    ] );
 	die();
 }
 add_action( 'wp_ajax_sell_media_upload_callback', 'sell_media_upload_callback' );
@@ -379,13 +409,13 @@ add_action( 'wp_ajax_sell_media_upload_callback', 'sell_media_upload_callback' )
  */
 function sell_media_upload_bulk_callback(){
 
-	check_ajax_referer( '_sell_media_meta_box_nonce', 'security' );
+	check_ajax_referer( '_sell_media_meta_box_nonce', 'security', true );
 
 	@ini_set( 'max_execution_time', '300' );
 
 	if ( isset( $_POST['dir'] ) ) {
 
-		$path = sell_media_get_import_dir() . '/' . sanitize_text_field($_POST['dir']) . '/';
+		$path = wp_normalize_path( sell_media_get_import_dir() . '/' . sanitize_file_name($_POST['dir']) . '/' );
 
 		if ( file_exists( $path ) ) {
 
@@ -408,12 +438,17 @@ function sell_media_upload_bulk_callback(){
 					'tmp_name' => $tmp
 				);
 
-				$attachment_id = media_handle_sideload( $file_array, sanitize_text_field( $_POST['id'] ) );
+				$attachment_id = null;
+				if( isset($_POST['id']) ) {
+					$attachment_id = media_handle_sideload( $file_array, sanitize_text_field( $_POST['id'] ) );
+				}
 
 				// remove temp file
-				@unlink( $file_array['tmp_name'] );
+                if( file_exists($file_array['tmp_name']) ) {
+	                unlink( $file_array['tmp_name'] );
+                }
 
-				if ( is_wp_error( $attachment_id ) ) {
+				if ( is_null($attachment_id) || is_wp_error( $attachment_id ) ) {
 					$html .= '<li class="attachment">' . sprintf( esc_attr__( 'Sorry, %1$s could\'t be added.', 'sell_media' ), basename( $file ) ) . '</li>';
 				} else {
 					$html .= sell_media_list_uploads( $attachment_id );
@@ -531,24 +566,26 @@ function sell_media_item_content( $column, $post_id ){
 			$html .= '</a>';
 
 			$arr = array(
-				'a' => array(
-					'href' => array(),
+				'a'      => array(
+					'href' => true,
 				),
-				'img' => array(
-					'width' => array(),
-					'height' => array(),
-					'src' => array(),
-					'data' => array(),
-					'alt' => array(),
-					'srcset' => array(),
-					'loading' => array(),
-					'class' => array(),
+				'img'    => array(
+					'width'   => true,
+					'height'  => true,
+					'src'     => true,
+					'data-*'  => true,
+					'alt'     => true,
+					'srcset'  => true,
+					'loading' => true,
+					'class'   => true,
+					'sizes'   => true,
+					'style'   => true,
 				),
-				'div' => array(
-					'class' => array(),
+				'div'    => array(
+					'class' => true,
 				),
 				'script' => array(
-					'type' => array(),
+					'type' => true,
 				),
 			);
 
@@ -563,9 +600,9 @@ function sell_media_item_content( $column, $post_id ){
 				$price = get_post_meta( $post_id, 'sell_media_price', true );
 				$settings = sell_media_get_plugin_options();
 				if ( $price ) {
-					echo esc_attr( sell_media_get_currency_symbol() ) . number_format( $price, 2, '.', '' );
+					echo esc_html( sell_media_get_currency_symbol() ) . number_format( $price, 2, '.', '' );
 				} elseif ( isset( $settings->default_price ) && '' !== $settings->default_price ) {
-					echo esc_attr( sell_media_get_currency_symbol() ) . number_format( $settings->default_price, 2, '.', '' );
+					echo esc_html( sell_media_get_currency_symbol() ) . number_format( $settings->default_price, 2, '.', '' );
 				} else {
 					esc_attr_e( 'No price set', 'sell_media' );
 				}
@@ -601,7 +638,7 @@ function sell_media_sales_stats(){
 				$last_class = null;
 			}
 			?>
-			<div class="misc-pub-section <?php echo esc_attr($last_class); ?>"><?php echo esc_attr( $term_obj->name ); ?> <?php echo esc_attr( $stats['count'] ); ?> <strong><?php echo esc_attr( sell_media_get_currency_symbol() ) . esc_attr( $stats['total'] ); ?></strong></div>
+			<div class="misc-pub-section <?php echo esc_attr($last_class); ?>"><?php echo esc_html( $term_obj->name ); ?> <?php echo esc_html( $stats['count'] ); ?> <strong><?php echo esc_html( sell_media_get_currency_symbol() ) . esc_html( $stats['total'] ); ?></strong></div>
 		<?php }
 	} else {
 		esc_attr_e( 'No sales so far.', 'sell_media' );
@@ -676,7 +713,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 	?>
 	<fieldset class="inline-edit-col-left">
 		<div class="inline-edit-col">
-			<span class="title"><?php esc_attr_e( 'Price Group', 'sell_media' ); ?></span>
+			<span class="title"><?php esc_html_e( 'Price Group', 'sell_media' ); ?></span>
 			<?php
 			$args = array(
 				'show_option_none' => __( 'None', 'sell_media' ),
@@ -694,7 +731,7 @@ function sell_media_add_quick_edit( $column_name, $post_type ) {
 			?>
 		</div>
 		<div class="inline-edit-col">
-			<span class="title"><?php esc_attr_e( 'Price', 'sell_media' ); ?></span>
+			<span class="title"><?php esc_html_e( 'Price', 'sell_media' ); ?></span>
 			<span class="input-text-wrap">
 				<input name="sell_media_price" id="sell-media-price" class="inline-edit-password-input" type="number" step="0.01" min="0" placeholder="<?php esc_attr_e( '— No Change —', 'sell_media' ); ?>" />
 			</span>
@@ -722,7 +759,7 @@ function sell_media_save_quick_edit_custom_meta( $post_id ) {
 	}
 
 	if ( isset( $_POST['sell_media_price'] ) ) {
-		$sell_media_price = sprintf( '%0.2f', ( float ) $_POST['sell_media_price'] );
+		$sell_media_price = sprintf( '%0.2f', (float) $_POST['sell_media_price'] );
 		update_post_meta( $post_id, 'sell_media_price', $sell_media_price );
 	}
 }
@@ -734,14 +771,14 @@ add_action( 'save_post', 'sell_media_save_quick_edit_custom_meta' );
  */
 function sell_media_save_bulk_edit() {
 	if ( ! isset( $_POST['sell_media_quick_edit_nonce'] ) || ! wp_verify_nonce( $_POST['sell_media_quick_edit_nonce'], '_sell_media_quick_edit_nonce' ) ) return;
-	$post_ids = ( ! empty( $_POST[ 'post_ids' ] ) ) ? sanitize_text_field( $_POST[ 'post_ids' ]) : array();
-	$sell_media_price_group  = ( ! empty( $_POST[ 'sell_media_price_group' ] ) ) ? sanitize_text_field( $_POST['sell_media_price_group'] ) : null;
-	$sell_media_price  = ( ! empty( $_POST[ 'sell_media_price' ] ) ) ? sanitize_text_field($_POST[ 'sell_media_price' ]) : null;
+	$post_ids = isset( $_POST[ 'post_ids' ] ) ? sanitize_text_field( $_POST[ 'post_ids' ]) : array();
+	$sell_media_price_group  = isset( $_POST[ 'sell_media_price_group' ] ) ? sanitize_text_field( $_POST['sell_media_price_group'] ) : null;
+	$sell_media_price  = isset( $_POST[ 'sell_media_price' ] ) ? sanitize_text_field($_POST[ 'sell_media_price' ]) : null;
 
 	if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 		foreach( $post_ids as $post_id ) {
 			wp_set_post_terms( $post_id, $sell_media_price_group, 'price-group' );
-			if ( isset( $sell_media_price ) ) {
+			if ( !is_null( $sell_media_price ) ) {
 				$sell_media_price = sprintf( '%0.2f', ( float ) $sell_media_price );
 				update_post_meta( $post_id, 'sell_media_price', $sell_media_price );
 			}

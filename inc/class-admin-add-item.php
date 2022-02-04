@@ -122,12 +122,12 @@ class SellMediaAdminAddItem {
 				<div class="sell-media-upload-progress-bar-inner"></div>
 				<div class="sell-media-upload-progress-bar-status">
 					<span class="uploading">
-						<?php esc_attr_e( 'Uploading Image', 'sell_media' ); ?>
+						<?php echo esc_html__( 'Uploading Image', 'sell_media' ); ?>
 						<span class="current">1</span>
-						<?php esc_attr_e( 'of', 'sell_media' ); ?>
+						<?php echo esc_html__( 'of', 'sell_media' ); ?>
 						<span class="total">3</span>
 					</span>
-					<span class="done"><?php esc_attr_e( 'All images uploaded.', 'sell_media' ); ?></span>
+					<span class="done"><?php echo esc_html__( 'All images uploaded.', 'sell_media' ); ?></span>
 				</div>
 		</div>
 		<?php
@@ -135,10 +135,13 @@ class SellMediaAdminAddItem {
 
 	function gallery_load_image() {
 		// Run a security check first.
-		check_ajax_referer( 'sell-media-drag-drop-nonce', 'nonce' );
+		check_ajax_referer( 'sell-media-drag-drop-nonce', 'nonce', true );
 		// Prepare variables.
-		$id  = absint( $_POST['id'] );
-		echo sell_media_list_uploads( $id );
+        $id = 0;
+        if( isset($_POST['id']) ) {
+	        $id = absint( $_POST['id'] );
+        }
+		echo wp_kses( sell_media_list_uploads( $id ), GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS );
 		exit;
 	}
 
@@ -183,41 +186,54 @@ class SellMediaAdminAddItem {
 
 		$obj = get_post_type_object( 'sell_media_item' );
 
-		echo '<div id="sell-media-advanced-options-container">';
-
-		// do_action( 'sell_media_add_item_tab_before_content_callback', 'advanced', $post );
+		?>
+        <div id="sell-media-advanced-options-container">
+        <?php
 		
 		if ( taxonomy_exists( 'collection' ) ) {
-			echo '<div id="sell-media-tax-collections" class="sell-media-tax-wrap">';
-				printf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Collections', 'sell_media' ) );
-				printf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_attr__( 'Assign this', 'sell_media' ), esc_attr( strtolower( $obj->labels->singular_name )), esc_attr__( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) );
+			?>
+            <div id="sell-media-tax-collections" class="sell-media-tax-wrap">
+            <h3 class="tax-title"><?php echo esc_html__( 'Collections', 'sell_media' ); ?></h3>
+            <?php
+				echo wp_kses( sprintf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_attr__( 'Assign this', 'sell_media' ), esc_attr( strtolower( $obj->labels->singular_name )), esc_attr__( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) ), array('p' => array('class' => true)) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
-				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Collections', 'sell_media' ) );
-			echo '</div>';
+				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Collections', 'sell_media' ) ), array('p' => array('class' => true)) );
+			?>
+			</div>
+            <?php
 
 		}
 
 		if ( taxonomy_exists( 'licenses' ) ) {
-			echo '<div id="sell-media-tax-licenses" class="sell-media-tax-wrap">';
-				printf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Licenses', 'sell_media' ) );
-				printf( '<p class="tax-description description">%s.</p>', esc_attr__( 'Select the available usage licenses that buyers can choose from when purchasing (optional). Licenses can be assigned "markup" which will increase the cost of the item being purchase. For example, you can might have a "Personal" usage license with no markup from your base pricelists and a "Commercial" usage license with 50% markup from your base pricelists', 'sell_media' ) );
+			?>
+            <div id="sell-media-tax-licenses" class="sell-media-tax-wrap">
+            <?php
+				echo wp_kses( sprintf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Licenses', 'sell_media' ) ), array('h3' => array('class'), 'p' => array('class' => true)) );
+				echo wp_kses( sprintf( '<p class="tax-description description">%s.</p>', esc_attr__( 'Select the available usage licenses that buyers can choose from when purchasing (optional). Licenses can be assigned "markup" which will increase the cost of the item being purchase. For example, you can might have a "Personal" usage license with no markup from your base pricelists and a "Commercial" usage license with 50% markup from your base pricelists', 'sell_media' ) ), array('h3' => array('class' => true), 'p' => array('class' => true)) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
-				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=licenses&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Licenses', 'sell_media' ) );
-			echo '</div>';
+				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=licenses&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Licenses', 'sell_media' ) ), array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
+			?>
+            </div>
+            <?php
 
 		}
 
 		if ( taxonomy_exists( 'creator' ) ) {
-			echo '<div id="sell-media-tax-creators" class="sell-media-tax-wrap">';
-				printf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Creators', 'sell_media' ) );
-				printf( '<p class="tax-description description">%s.</p>', esc_attr__( 'Assign a creator (optional). Creators are also automatically imported from the "Credit" IPCT metadata field in the files that you upload. Archive pages are then automatically created for each creator and can be accessed by adding /creator/name-of-creator/ to the end of your website url (replace "name-of-creator" with the url-friendly name)', 'sell_media' ) );
+			?>
+			<div id="sell-media-tax-creators" class="sell-media-tax-wrap">
+			<?php
+				echo wp_kses( sprintf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Creators', 'sell_media' ) ),  array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
+				echo wp_kses( sprintf( '<p class="tax-description description">%s.</p>', esc_attr__( 'Assign a creator (optional). Creators are also automatically imported from the "Credit" IPCT metadata field in the files that you upload. Archive pages are then automatically created for each creator and can be accessed by adding /creator/name-of-creator/ to the end of your website url (replace "name-of-creator" with the url-friendly name)', 'sell_media' ) ),  array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
-				// post_tags_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
-				printf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Creators', 'sell_media' ) );
-			echo '</div>';
+				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Creators', 'sell_media' ) ), array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
+			?>
+            </div>
+            <?php
 		}
 
-		echo '</div>';
+		?>
+        </div>
+        <?php
 	}
 
 	/**
@@ -226,46 +242,59 @@ class SellMediaAdminAddItem {
 	 * @return void
 	 */
 	function load_pricelists() {
-		$id = ( isset( $_POST['parent_id'] ) && '' !== $_POST['parent_id'] ) ? absint( $_POST['parent_id'] ) :  false;
+		$id = ( isset( $_POST['parent_id'] ) && '' !== sanitize_text_field( $_POST['parent_id'] ) ) ? absint( $_POST['parent_id'] ) :  false;
 		if ( ! $id ) {
-			echo '0';
+			echo esc_html( '0' );
 			exit;
 		}
 
 		$terms = get_terms( 'price-group', array( 'hide_empty' => false, 'parent' => $id ) );
-		echo '<div id="sell-media-display-pricelists">';
+		?>
+        <div id="sell-media-display-pricelists">
+        <?php
+        $gpp_tmp_html = '';
 		if ( $terms ) {
 			$parent_term = get_term( $id );
-			echo '<table class="form-table">';
-			echo '<tr>';
-			echo '<th>' . esc_attr__( 'Name', 'sell_media' ) . '</th>';
-			echo '<th>' . esc_attr__( 'Width', 'sell_media' ) . '</th>';
-			echo '<th>' . esc_attr__( 'Height', 'sell_media' ) . '</th>';
-			echo '<th>' . esc_attr__( 'Price', 'sell_media' ) . '</th>';
-			echo '</tr>';
+			$gpp_tmp_html .= '<table class="form-table">';
+			$gpp_tmp_html .= '<tr>';
+			$gpp_tmp_html .= '<th>' . __( 'Name', 'sell_media' ) . '</th>';
+			$gpp_tmp_html .= '<th>' . __( 'Width', 'sell_media' ) . '</th>';
+			$gpp_tmp_html .= '<th>' . __( 'Height', 'sell_media' ) . '</th>';
+			$gpp_tmp_html .= '<th>' . __( 'Price', 'sell_media' ) . '</th>';
+			$gpp_tmp_html .= '</tr>';
 			foreach ( $terms as $key => $term ) {
 				$term_meta = get_term_meta( $term->term_id );
-				echo '<tr>';
-				echo '<td>';
-				echo esc_attr($term->name);
-				echo '</td>';
-				echo '<td>';
-				echo ( isset( $term_meta['width'][0] ) ? esc_attr($term_meta['width'][0]) : ''  );
-				echo '</td>';
-				echo '<td>';
-				echo ( isset( $term_meta['height'][0] ) ? esc_attr($term_meta['height'][0]) : ''  );
-				echo '</td>';
-				echo '<td>';
-				echo ( isset( $term_meta['price'][0] ) ? sell_media_get_currency_symbol() . esc_attr($term_meta['price'][0]) : ''  );
-				echo '</td>';
-				echo '</tr>';
+				$gpp_tmp_html .= '<tr>';
+				$gpp_tmp_html .= '<td>';
+				$gpp_tmp_html .= esc_attr($term->name);
+				$gpp_tmp_html .= '</td>';
+				$gpp_tmp_html .= '<td>';
+				$gpp_tmp_html .= ( isset( $term_meta['width'][0] ) ? $term_meta['width'][0] : ''  );
+				$gpp_tmp_html .= '</td>';
+				$gpp_tmp_html .= '<td>';
+				$gpp_tmp_html .= ( isset( $term_meta['height'][0] ) ? $term_meta['height'][0] : ''  );
+				$gpp_tmp_html .= '</td>';
+				$gpp_tmp_html .= '<td>';
+				$gpp_tmp_html .= ( isset( $term_meta['price'][0] ) ? sell_media_get_currency_symbol() . $term_meta['price'][0] : ''  );
+				$gpp_tmp_html .= '</td>';
+				$gpp_tmp_html .= '</tr>';
 			}
-			echo '</table>';
+			$gpp_tmp_html .= '</table>';
+		} else {
+			$gpp_tmp_html .= '<span class="desc">' . __( 'No Pricelist found.', 'sell_media' ) . '</span>';
 		}
-		else{
-			echo '<span class="desc">' . esc_attr__( 'No Pricelist found.', 'sell_media' ) . '</span>';
-		}
-		echo '</div>';
+
+		echo wp_kses($gpp_tmp_html, array(
+		        'table' => array('class' => true),
+		        'tr' => array('class' => true),
+		        'th' => array('class' => true),
+		        'td' => array('class' => true),
+		        'span' => array('class' => true),
+        ));
+
+		?>
+        </div>
+        <?php
 		exit;
 	}
 }

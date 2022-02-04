@@ -100,14 +100,14 @@ function sell_media_plugin_get_page_tab_markup() {
     }
 
     $arr = array( 'a' => array(
-        'href' => array(),
-        'class' => array()
+        'href' => true,
+        'class' => true
     ));
 
-    echo '<h2 class="nav-tab-wrapper">';
+    ?><h2 class="nav-tab-wrapper"><?php
     foreach ( $links as $link )
         echo wp_kses( $link , $arr );
-    echo '</h2>';
+    ?></h2><?php
 }
 
 

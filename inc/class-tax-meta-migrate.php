@@ -32,7 +32,7 @@ class SellMediaTaxMetaMigrate {
 
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'taxonomymeta';
-		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '".esc_sql($table_name)."'" ) != $table_name ) {
 			return;
 		}
 
@@ -92,7 +92,7 @@ class SellMediaTaxMetaMigrate {
 	 */
 	private function get_all_meta( $table_prefix ) {
 		global $wpdb;
-		$sql = 'SELECT * FROM `' . $table_prefix . 'taxonomymeta`';
+		$sql = 'SELECT * FROM `' . esc_sql($table_prefix) . 'taxonomymeta`';
 		$metas = $wpdb->get_results( $sql );
 		return $metas;
 	}
@@ -103,7 +103,7 @@ class SellMediaTaxMetaMigrate {
 	 */
 	private function delete_meta_table( $table_prefix ) {
 		global $wpdb;
-		$sql = 'DROP TABLE `' . $table_prefix . 'taxonomymeta`';
+		$sql = 'DROP TABLE `' . esc_sql($table_prefix) . 'taxonomymeta`';
 		return $wpdb->query( $sql );
 	}
 
