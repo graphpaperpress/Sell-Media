@@ -452,7 +452,7 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
     <script language="javascript">
     jQuery( document ).ready( function() {
 
-        $container = jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>_container" );
+        $container = jQuery( "#<?php echo esc_js(__($attr['name'],'sell_media')); ?>_container" );
         $image_button = $container.find( '.upload_image_button' );
 
         $image_button.click( function() {
@@ -493,6 +493,8 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
             jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).parent().find( 'div.upload_image_preview img' ).attr( 'src', '' );
             jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).parent().find( '.upload_image_preview' ).hide();
         });
+
+        console.log($container);
         if ( $container.find( '.upload_image_field' ).val().length > 0 ) {
             $container.find( '.upload_image_preview' ).show();
         }
