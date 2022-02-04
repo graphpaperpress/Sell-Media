@@ -77,7 +77,7 @@ class SellMediaAudioVideo extends SellMediaProducts {
         ?>
         <div id="sell-media-embed-link-field" class="sell-media-field" style="display:none;">
 
-        <label for="sell-media-embed-link"><?php esc_attr_e( 'Preview URL', 'sell_media' ); ?></label>
+        <label for="sell-media-embed-link"><?php esc_html_e( 'Preview URL', 'sell_media' ); ?></label>
             <input name="sell_media_embed_link" id="sell-media-embed-link" class="" type="text" placeholder="" value="<?php echo esc_url( $embed_url ); ?>" />
         </div>
         <?php
@@ -103,7 +103,9 @@ class SellMediaAudioVideo extends SellMediaProducts {
             exit;
         }
 
-        $attachment_id = absint( $_POST['attachment_id'] );
+        if( isset($_POST['attachment_id']) ) {
+	        $attachment_id = absint( $_POST['attachment_id'] );
+        }
 
         $is_audio = self::is_attachment_audio( $attachment_id );
         $is_video = self::is_attachment_video( $attachment_id );
@@ -333,9 +335,11 @@ class SellMediaAudioVideo extends SellMediaProducts {
     function before_content( $post_id ) {
         $preview_url = $this->get_preview( $post_id );
         if ( $preview_url ){
-            echo '<div class="sell-media-iframe-container">';
-            echo esc_url( $preview_url );
-            echo '</div>';
+            ?>
+            <div class="sell-media-iframe-container">
+                <?php echo esc_url( $preview_url ); ?>
+            </div>
+            <?php
         }
     }
 }

@@ -23,9 +23,7 @@ Class SellMediaDownload {
 	 * @return void
 	 */
 	public function download(){
-		
-		// added check_ajax_referer('download_media', '_nonce') for security
-		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && check_ajax_referer('download_media', '_nonce')) {
+		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && wp_verify_nonce($_GET['_wpnonce'], 'download_media')) {
 			 
 			$transaction_id = (isset($_GET['download'])) ? sanitize_text_field(urldecode( $_GET['download'] )) : '';
 			$payment_id     = (isset($_GET['payment_id'])) ? intval(urldecode( $_GET['payment_id'] )) : '';
@@ -55,6 +53,9 @@ Class SellMediaDownload {
 					set_time_limit( 0 );
 				}
 
+				/**
+				 * File Download
+				 */
 				if ( function_exists( 'apache_setenv' ) ) @apache_setenv('no-gzip', 1);
 				@ini_set( 'zlib.output_compression', 'Off' );
 				$file_url = strtok($file, '?');
@@ -185,45 +186,16 @@ Class SellMediaDownload {
 
 	/**
 	 * Download helper for large files without changing PHP.INI
-	 * See https://github.com/EllisLab/CodeIgniter/wiki/Download-helper-for-large-files
-	 *
-	 * @access   public
-	 * @param    string  $file      The file
-	 * @param    boolean $retbytes  Return the bytes of file
-	 * @return   bool|string        If string, $status || $cnt
 	 */
-	public function download_file( $file=null, $retbytes=true ) {
+	public function download_file( $file ) {
 
-		$chunksize = 1024 * 1024;
-		$buffer    = '';
-		$cnt       = 0;
-		$handle    = @fopen( $file, 'r' );
+		$stream_out = @fopen( 'php://output', 'w' );
+		$stream_in = @fopen( $file, 'r' );
+		stream_copy_to_stream($stream_in, $stream_out);
+		fclose($stream_in);
+		fclose($stream_out);
 
-		if ( $size = @filesize( $file ) ) {
-			header("Content-Length: " . $size );
-		}
-
-		if ( false === $handle ) {
-			return false;
-		}
-
-		while ( ! @feof( $handle ) ) {
-			$buffer = @fread( $handle, $chunksize );
-			esc_attr_e($buffer);
-
-			if ( $retbytes ) {
-				$cnt += strlen( $buffer );
-			}
-		}
-
-		$status = @fclose( $handle );
-
-		if ( $retbytes && $status ) {
-			return $cnt;
-		}
-
-		return $status;
-
+		exit;
 	}
 
 }

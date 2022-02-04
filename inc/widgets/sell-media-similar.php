@@ -9,13 +9,16 @@
 
 	/* Displays the Widget in the front-end */
 	function widget( $args, $instance ){
-		extract( $args );
+		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : null;
+		$after_widget  = isset( $args['after_widget'] ) ? $args['after_widget'] : null;
+		$before_title  = isset( $args['before_title'] ) ? $args['before_title'] : null;
+		$after_title   = isset( $args['after_title'] ) ? $args['after_title'] : null;
+
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
-		//extract( $args );
-		echo $before_widget;
+		echo wp_kses_post( $before_widget );
 
 		if ( $title ) {
-			echo $before_title . esc_attr( $title ) . $after_title;
+			echo wp_kses_post( $before_title . $title . $after_title );
 		}
 
 		//Returns Array of Term Names for "collection"
@@ -81,7 +84,32 @@
 			$loop_args['context'] = "widget";
 			?>
 
-			<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ); ?>
+			<?php echo wp_kses( apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ), [
+					'img' => [
+						'src'      => true,
+						'srcset'   => true,
+						'sizes'    => true,
+						'class'    => true,
+						'id'       => true,
+						'width'    => true,
+						'height'   => true,
+						'alt'      => true,
+						'align'    => true,
+						'data-*' => true,
+					],
+					'div' => [
+						'id' => true,
+						'class' => true,
+						'data-*' => true,
+					],
+					'a' => [
+						'href' => true,
+						'id' => true,
+						'target' => true,
+						'class' => true,
+						'data-*' => true,
+					],
+				] ); ?>
 
 	<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
@@ -90,7 +118,7 @@
 
 <?php
 
-	echo $after_widget;
+	echo wp_kses_post( $after_widget );
 
 }
 	/* Saves the settings. */
@@ -108,7 +136,8 @@
 		$title = htmlspecialchars($instance['title']);
 
 		// Title
-		echo '<p><label for="' . esc_attr( $this->get_field_id('title') ) . '">' . 'Title:' . '</label><input class="widefat" id="' . esc_attr( $this->get_field_id('title') ) . '" name="' . esc_attr( $this->get_field_name('title') ) . '" type="text" value="' . esc_attr( $title ) . '" /></p>';
+		?><p><label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>"><?php echo esc_html__( 'Title', 'sell_media' ) ?>:</label><input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>"
+                                                                                                                                                   name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p><?php
 	}
 
 }

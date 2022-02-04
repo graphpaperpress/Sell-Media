@@ -296,11 +296,15 @@ class SellMediaLayouts {
 			ob_start();
 			$enable_ecommerce = apply_filters( 'sell_media_enable_ecommerce', true, $post_id, $attachment_id );
 			if ( $enable_ecommerce ) {
-				echo '<div class="sell-media-meta">';
-				do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
-				do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
-				do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
-				echo '</div>';
+				?>
+				<div class="sell-media-meta">
+				<?php
+					do_action( 'sell_media_above_buy_button', $post_id, $attachment_id );
+					do_action( 'sell_media_add_to_cart_fields', $post_id, $attachment_id );
+					do_action( 'sell_media_below_buy_button', $post_id, $attachment_id );
+				?>
+				</div>
+				<?php
 			}
 
 			do_action( 'sell_media_below_content', $post_id, $attachment_id );
@@ -359,14 +363,14 @@ class SellMediaLayouts {
 				$image_size    = getimagesize($image_data);
 				$image_width   = $image_size[0];
 				$image_height   = $image_size[1];
-				$width          = $image_width * 250 / $image_height;
-				$padding_bottom = $image_height / $image_width * 100;
+				$width          = $image_width * 250 / max($image_height, 1);
+				$padding_bottom = $image_height / max($image_width, 1) * 100;
 			} else {						
 				$image_data     = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
 				$image_width    = $image_data[1];
 				$image_height   = $image_data[2];
-				$width          = $image_width * 250 / $image_height;
-				$padding_bottom = $image_height / $image_width * 100;
+				$width          = $image_width * 250 / max($image_height, 1);
+				$padding_bottom = $image_height / max($image_width, 1) * 100;
 			}
 						
 		}
@@ -421,7 +425,7 @@ class SellMediaLayouts {
 			      				"license" => get_the_permalink($attachment_id),
 			      				"acquireLicensePage" => get_the_permalink($attachment_id)
 							);
-			return '<script type="application/ld+json">'.json_encode($_arr_meta).'</script>';
+			return '<script type="application/ld+json">'.wp_json_encode($_arr_meta).'</script>';
 		}
 		return;
 	}

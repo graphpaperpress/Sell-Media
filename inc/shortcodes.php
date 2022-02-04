@@ -24,10 +24,10 @@ function sell_media_thanks_shortcode( $tx=null ) {
 	if ( isset($_GET['tx']) && ! empty( $_GET['tx'] )) {
 		$tx = sanitize_key($_GET['tx']);
 		$gateway = 'PayPal';
-	} else if( isset( $_POST['txn_id'] ) && '' != $_POST['txn_id'] ){
+	} else if( isset( $_POST['txn_id'] ) && '' != sanitize_key( $_POST['txn_id'] ) ){
 		$tx = (isset($_POST['txn_id'])) ? sanitize_key($_POST['txn_id']) : '';
 		$gateway = 'PayPal';
-	} elseif ( isset($_POST['stripeToken']) && !empty( $_POST['stripeToken'] ) ) {
+	} elseif ( isset($_POST['stripeToken']) && '' != sanitize_key( $_POST['stripeToken'] ) ) {
 		$tx = (isset($_POST['stripeToken'])) ? sanitize_key($_POST['stripeToken']) : '';
 		$gateway = 'Stripe';
 	} else {
@@ -195,9 +195,9 @@ function sell_media_checkout_shortcode() {
 							$mime_type = get_post_mime_type( $item['item_attachment'] );
 							// if selling video or audio, show the post_id thumbnail
 							if ( SellMediaAudioVideo::is_video_item( $item['item_id'] ) || SellMediaAudioVideo::is_audio_item( $item['item_id'] ) || 'application/pdf' === $mime_type || 'application/zip' === $mime_type ) {
-								echo sell_media_item_icon( $item['item_id'] );
+								echo esc_html( sell_media_item_icon( $item['item_id'] ) );
 							} else {
-								echo sell_media_item_icon( $item['item_attachment'] );
+								echo esc_html( sell_media_item_icon( $item['item_attachment'] ) );
 							}
 						}
 						?>
@@ -205,12 +205,12 @@ function sell_media_checkout_shortcode() {
 					<div class="item-details">
 						<div class="item-name">
 						<?php if ( isset($item['item_name']) && !empty( $item['item_name'] ) ) : ?>
-							<?php echo esc_attr( $item['item_name'] ); ?>
+							<?php echo esc_html( $item['item_name'] ); ?>
 						<?php endif; ?>
 						</div>
 						<div class="item-size">
 						<?php if ( isset($item['item_size']) && !empty( $item['item_size'] ) ) : ?>
-							<?php echo esc_attr($item['item_size']); ?>
+							<?php echo esc_html($item['item_size']); ?>
 						<?php endif; ?>
 						</div>
 						<?php
@@ -220,13 +220,13 @@ function sell_media_checkout_shortcode() {
 								<?php if ( 'licenses' === $markup ) : ?>
 									<div class="item-license">
 										<?php if ( isset($item['item_usage']) && !empty( $item['item_usage'] ) ) : ?>
-											<?php esc_attr_e($item['item_usage']); ?>
+											<?php esc_html_e($item['item_usage']); ?>
 										<?php endif; ?>
 									</div>
 								<?php else : ?>
 									<div class="item-{$markup}">
 										<?php if ( ! empty( $item[ "item_markup_{$markup}" ] ) ) : ?>
-											<?php echo esc_attr($item[ "item_markup_{$markup}" ]); ?>
+											<?php echo esc_html($item[ "item_markup_{$markup}" ]); ?>
 										<?php endif; ?>
 									</div>
 								<?php endif; ?>
@@ -241,7 +241,7 @@ function sell_media_checkout_shortcode() {
 						<div class="item-quantity">
 							<span class="count">
 								<?php if ( ! empty( $item['qty'] ) ) : ?>
-									<?php echo esc_attr($item['qty']); ?>
+									<?php echo esc_html($item['qty']); ?>
 								<?php endif; ?>
 							</span>
 						</div>
@@ -249,7 +249,7 @@ function sell_media_checkout_shortcode() {
 							<span class="sell-media-cart-increment dashicons dashicons-plus"></span>
 						</div>
 						<div class="item-total">
-							<?php echo sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ); ?>
+							<?php echo esc_html( sell_media_get_currency_symbol( $settings->currency ) . number_format( $item['price'] * $item['qty'], 2 ) ); ?>
 						</div>
 					</div>
 				</li>
@@ -263,21 +263,21 @@ function sell_media_checkout_shortcode() {
 		<div class="sell-media-totals group">
 			<div id="sell-media-totals-table" class="sell-media-totals-table cf">
 				<div class="subtotal cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Subtotal', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Subtotal', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-total"></span></div>
 				</div>
 				<?php do_action( 'sell_media_checkout_registration_fields' ); ?>
 				<div class="tax cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)'; ?></span>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo esc_html( ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)' ); ?></span>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-tax"></span></div>
 				</div>
 				<div class="shipping cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Shipping', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Shipping', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-shipping"></span></div>
 				</div>
 				<?php do_action( 'sell_media_checkout_before_grand_total' ); ?>
 				<div class="total cf">
-					<div class="sell-media-key"><?php esc_attr_e( 'Total', 'sell_media' ); ?>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Total', 'sell_media' ); ?>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
 				</div>
 			</div>
@@ -292,13 +292,21 @@ function sell_media_checkout_shortcode() {
 					$html .= ' <a href="' . esc_url(get_post_type_archive_link( 'sell_media_item' )) . '">';
 					$html .= __( 'continue shopping &raquo;', 'sell_media' );
 					$html .= '</a>';
-					echo apply_filters( 'sell_media_or_continue_shopping', $html );
+					echo wp_kses(apply_filters( 'sell_media_or_continue_shopping', $html ), array(
+					        'a' => array('href' => true)
+                    ) );
 					?>
 				</p>
 				<?php
 				$settings = sell_media_get_plugin_options();
+				$arr = array(
+					'a' => array(
+						'href' => true,
+						'class' => true
+					),
+				);
 				if ( ! empty( $settings->terms_and_conditions ) ) : ?>
-					<p id="sell-media-tos" class="text-center small quiet"><?php echo apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="javascript:void(0);" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ); ?></p>
+					<p id="sell-media-tos" class="text-center small quiet"><?php echo wp_kses( apply_filters( 'sell_media_tos_label', __( 'By clicking "Checkout Now", you are agreeing to our <a href="#" class="sell-media-empty-dialog-trigger">terms of service</a>.', 'sell_media' ) ), $arr ); ?></p>
 				<?php endif; ?>
                 <?php do_action( 'sell_media_below_checkout_button' ); ?>
 			</div><!-- .sell-media-checkout-button -->
@@ -311,9 +319,22 @@ function sell_media_checkout_shortcode() {
 
 	<?php endif; ?>
 	<?php endif; ?>
+    <?php $gpp_tmp = (!empty( $cart_items )) ? 'hide' : ''; ?>
+	<p id="sell-media-empty-cart-message" class="<?php echo esc_attr( $gpp_tmp ); ?>">
+        <?php $gpp_tmp = sprintf(
+                __( 'Your cart is empty. %s', 'sell_media'),
+                '<a href="' . esc_url(get_post_type_archive_link( 'sell_media_item' )) . '">'
+                . __( 'Continue shopping', 'sell_media' ) . ' &raquo;</a>'
+            );
 
-	<p id="sell-media-empty-cart-message" class="<?php echo (!empty( $cart_items )) ? 'hide' : ''; ?>">
-		<?php echo apply_filters( 'sell_media_continue_shopping', sprintf( __( 'Your cart is empty. %s', 'sell_media'), '<a href="' . esc_url(get_post_type_archive_link( 'sell_media_item' )) . '">' . __( 'Continue shopping', 'sell_media' ) . ' &raquo;</a>' ) ); ?>
+            $arr = array(
+                'a' => array(
+                    'href' => true,
+                    'class' => true
+                ),
+            );
+        ?>
+		<?php echo wp_kses( apply_filters( 'sell_media_continue_shopping',  $gpp_tmp), $arr ); ?>
 	</p>
 
 	<?php wp_nonce_field( 'validate_cart', 'cart_nonce_security' ); ?>
@@ -367,29 +388,29 @@ function sell_media_price_group_shortcode(){
 		<tbody>
 		<?php foreach( get_terms('price-group', array( 'hide_empty' => false, 'parent' => 0 ) ) as $parent ) : ?>
 			<tr>
-				<th colspan="4"><?php esc_attr_e($parent->name,'sell_media'); ?></th>
+				<th colspan="4"><?php esc_html_e($parent->name,'sell_media'); ?></th>
 			</tr>
-			<tr class="sell-media-price-group-parent sell-media-price-group-parent-<?php echo esc_attr($parent->name); ?>" id="sell-media-price-group-parent-<?php intval($parent->term_id); ?>">
-				<th><?php esc_attr_e('Description','sell_media'); ?></th>
-				<th><?php esc_attr_e('width (px)','sell_media'); ?></th>
-				<th><?php esc_attr_e('height (px)','sell_media'); ?></th>
-				<th><?php esc_attr_e('price','sell_media'); ?>(<span class="currency-symbol"><?php echo sell_media_get_currency_symbol(); ?></span>)</th>
+			<tr class="sell-media-price-group-parent sell-media-price-group-parent-<?php echo esc_attr($parent->name); ?>" id="sell-media-price-group-parent-<?php echo esc_attr( (int) $parent->term_id ); ?>">
+				<th><?php esc_html_e('Description','sell_media'); ?></th>
+				<th><?php esc_html_e('width (px)','sell_media'); ?></th>
+				<th><?php esc_html_e('height (px)','sell_media'); ?></th>
+				<th><?php esc_html_e('price','sell_media'); ?>(<span class="currency-symbol"><?php echo esc_html( sell_media_get_currency_symbol() ); ?></span>)</th>
 			</tr>
-			<?php $i=0; foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $parent->term_id, 'orderby' => 'id' ) ) as $term ): ?>
-				<tr class="sell-media-price-group-row-<?php echo esc_attr(($i++%2==1) ? 'odd' : 'even'); ?> sell-media-price-group-child-<?php echo esc_attr($term->name); ?>" id="sell-media-price-group-child-<?php echo esc_attr($term->term_id); ?>">
+			<?php $i = 0; foreach( get_terms( 'price-group', array( 'hide_empty' => false, 'child_of' => $parent->term_id, 'orderby' => 'id' ) ) as $term ): ?>
+				<tr class="sell-media-price-group-row-<?php echo esc_attr( (($i++%2==1) ? 'odd' : 'even') ); ?> sell-media-price-group-child-<?php echo esc_attr($term->name); ?>" id="sell-media-price-group-child-<?php echo esc_attr( (int) $term->term_id ); ?>">
 					<td>
-						<span class="sell-media-price-group-name"><?php echo esc_attr($term->name); ?></span>
+						<span class="sell-media-price-group-name"><?php echo esc_html($term->name); ?></span>
 					</td>
 					<td>
-						<span class="sell-media-price-group-width"><?php echo (get_term_meta( $term->term_id, 'width', true )); ?></span>
+						<span class="sell-media-price-group-width"><?php echo esc_html(get_term_meta( $term->term_id, 'width', true )); ?></span>
 					</td>
 					<td>
-						<span class="sell-media-price-group-height"><?php echo (get_term_meta( $term->term_id, 'height', true )); ?></span>
+						<span class="sell-media-price-group-height"><?php echo esc_html(get_term_meta( $term->term_id, 'height', true )); ?></span>
 					</td>
 					<td>
 						<span class="sell-media-price-group-height">
-							<span class="currency-symbol"><?php echo (sell_media_get_currency_symbol()); ?></span>
-							<?php echo (sprintf( '%0.2f', get_term_meta( $term->term_id, 'price', true ))); ?>
+							<span class="currency-symbol"><?php echo esc_html(sell_media_get_currency_symbol()); ?></span>
+							<?php echo esc_html(sprintf( '%0.2f', get_term_meta( $term->term_id, 'price', true ))); ?>
 						</span>
 					</td>
 				</tr>
@@ -562,7 +583,7 @@ function sell_media_login_form_shortcode(){
 
 	} else {
 		if ( isset( $_GET['login'] ) && "failed" == $_GET['login'] ) {
-			echo '<span class="error">' . esc_attr__( 'Login failed', 'sell_media' ) . '</span>';
+			?><span class="error"><?php echo esc_html__( 'Login failed', 'sell_media' ); ?></span><?php
 		}
 
 		$args = array(
@@ -574,7 +595,7 @@ function sell_media_login_form_shortcode(){
 
 		wp_login_form( $args );
 
-		echo ('<a href="' .esc_url( wp_lostpassword_url( get_permalink() )) . '" title="' . esc_attr__( 'Forgot Password', 'sell_media' ) . '">' . esc_attr__( 'Forgot Password', 'sell_media' ) . '</a>');
+		?><a href="<?php echo esc_url( wp_lostpassword_url( get_permalink() )); ?>" title="<?php echo esc_attr__( 'Forgot Password', 'sell_media' ); ?>"><?php echo esc_html__( 'Forgot Password', 'sell_media' ); ?></a><?php
 
 	}
 
@@ -799,7 +820,7 @@ function sell_media_taxonomies_shortcode( $atts ) {
 
 			if ( $query->have_posts() ) { ?>
 
-				<div class="<?php echo apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ); ?> <?php echo esc_attr( $term->slug ); ?>">
+				<div class="<?php echo esc_attr( apply_filters( 'sell_media_grid_item_class', 'sell-media-grid-item', NULL ) ); ?> <?php echo esc_attr( $term->slug ); ?>">
 
 					<?php while ( $query->have_posts() ) {
 
@@ -809,11 +830,11 @@ function sell_media_taxonomies_shortcode( $atts ) {
 
 						<article id="post-<?php the_ID(); ?>" <?php post_class( $term->slug . '-listing' ); ?>>
 							<a href="<?php echo esc_url(get_term_link( $term->term_id, $atts['taxonomy'] )); ?>">
-								<?php echo (sell_media_item_icon( get_the_ID(), 'sell_media_item' )); ?>
+								<?php echo esc_html(sell_media_item_icon( get_the_ID(), 'sell_media_item' )); ?>
 							</a>
 							<h2 class="entry-title">
 								<a href="<?php echo esc_url(get_term_link( $term->term_id, $atts['taxonomy'] )); ?>">
-									<?php echo esc_attr($term->name); ?>
+									<?php echo esc_html($term->name); ?>
 								</a>
 							</h2>
 						</article>

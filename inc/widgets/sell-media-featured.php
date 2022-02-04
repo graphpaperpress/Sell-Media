@@ -9,15 +9,19 @@
 
 	/* Displays the Widget in the front-end */
 	function widget($args, $instance){
-		extract($args);
+		$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : null;
+		$after_widget  = isset( $args['after_widget'] ) ? $args['after_widget'] : null;
+		$before_title  = isset( $args['before_title'] ) ? $args['before_title'] : null;
+		$after_title   = isset( $args['after_title'] ) ? $args['after_title'] : null;
+
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
 		$categoryNumber = empty($instance['categoryNumber']) ? '' : $instance['categoryNumber'];
 		extract($args);
 	
-		echo $before_widget;
+		echo wp_kses_post( $before_widget );
 	
 		if ( $title )
-			echo $before_title. esc_attr( $title ) . $after_title;
+			echo wp_kses_post( $before_title ) . esc_attr( $title ) . wp_kses_post( $after_title );
 
 		$taxonomy = 'collection';
 		$term_ids = array();
@@ -64,7 +68,7 @@
 				$loop_args['context'] = "widget";
 			?>
 
-				<?php echo apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ); ?>
+				<?php echo esc_html(apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args )); ?>
 
 				<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
@@ -72,7 +76,7 @@
 
 <?php
 
-	echo $after_widget;
+	echo wp_kses_post( $after_widget );
 
 }
   /*Saves the settings. */
@@ -93,7 +97,9 @@
 
 
 		 # Title
-		echo '<p><label for="' . esc_attr( $this->get_field_id('title') ) . '">' . 'Title:' . '</label><input class="widefat" id="' . esc_attr( $this->get_field_id('title') ) . '" name="' . esc_attr( $this->get_field_name('title') ) . '" type="text" value="' . esc_attr( $title ) . '" /></p>';
+		?><p><label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>"><?php echo esc_html__('Title', 'sell_media'); ?>:</label>
+        <input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>"
+               name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p><?php
 
 
 		# Collection
@@ -108,13 +114,13 @@
 			}
 		endif;
 		?>
-		<p><label for="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media') ?>"><?php esc_attr_e( ' Select Collection', 'sell_media'); ?>: </label>
+		<p><label for="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media') ?>"><?php esc_html_e( ' Select Collection', 'sell_media'); ?>: </label>
 		<select id="<?php esc_attr_e($this->get_field_id('categoryNumber'),'sell_media'); ?>" name="<?php esc_attr_e($this->get_field_name('categoryNumber'),'sell_media'); ?>" value="<?php esc_attr_e($categoryNumber,'sell_media'); ?>">
-			<option value="" <?php if($categoryNumber == '') esc_attr_e('selected="selected"','sell_media'); ?>><?php esc_attr_e( 'All Collections', 'sell_media'); ?></option>
+			<option value="" <?php if($categoryNumber == '') esc_attr_e('selected="selected"','sell_media'); ?>><?php esc_html_e( 'All Collections', 'sell_media'); ?></option>
 				<?php
 				if ( ! is_wp_error( $productTerms ) && ! empty( $productTerms ) ) :
 				 foreach ($productTerms as $term) : ?>
-					<option value="<?php  esc_attr_e($term->slug); ?>" <?php if($categoryNumber == $term->slug) echo 'selected="selected"'; ?>><?php echo esc_attr($term->name); ?></option>
+					<option value="<?php esc_attr_e($term->slug); ?>" <?php if($categoryNumber == $term->slug) { ?>selected="selected"<?php } ?>><?php echo esc_html($term->name); ?></option>
 				<?php endforeach; ?>
 				<?php endif; ?>
 		</select>

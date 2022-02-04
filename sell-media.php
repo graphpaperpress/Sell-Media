@@ -3,7 +3,7 @@
  * Plugin Name: Sell Media
  * Plugin URI: http://graphpaperpress.com/plugins/sell-media/
  * Description: A plugin for selling photos, prints and other downloads.
- * Version: 2.5.7.2
+ * Version: 2.5.7.3
  * Author: Graph Paper Press
  * Author URI: http://graphpaperpress.com
  * Author Email: support@graphpaperpress.com
@@ -24,7 +24,7 @@
  * @package SellMedia
  * @category Core
  * @author Thad Allender
- * @version 2.5.7.2
+ * @version 2.5.7.3
  */
 
 // Exit if accessed directly.
@@ -197,6 +197,59 @@ if ( ! class_exists( 'SellMedia' ) ) :
 			// Plugin Root File.
 			if ( ! defined( 'SELL_MEDIA_PLUGIN_FILE' ) ) {
 				define( 'SELL_MEDIA_PLUGIN_FILE', __FILE__ );
+			}
+
+			if ( ! defined( 'GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS' ) ) {
+				define( 'GPP_WP_KSES_SELL_MEDIA_LIST_UPLOADS', [
+					'ul'   => [ 'data-*' => true, 'class' => true, 'id' => true ],
+					'li'   => [ 'data-*' => true, 'class' => true, 'value' => true ],
+					'a'    => [ 'data-*' => true, 'target' => true, 'href' => true, 'class' => true ],
+					'span' => [ 'data-*' => true, 'class' => true ],
+					'img'  => [
+						'src'    => true,
+						'srcset' => true,
+						'sizes'  => true,
+						'class'  => true,
+						'id'     => true,
+						'width'  => true,
+						'height' => true,
+						'alt'    => true,
+						'align'  => true,
+						'data-*' => true,
+					],
+				]);
+			}
+
+			if ( ! defined( 'GPP_WP_KSES_EXTENDED_LIST' ) ) {
+				define( 'GPP_WP_KSES_EXTENDED_LIST', [
+					'ul'       => [ 'data-*' => true, 'class' => true, 'id' => true ],
+					'li'       => [ 'data-*' => true, 'class' => true, 'value' => true ],
+					'a'        => [ 'data-*' => true, 'target' => true, 'href' => true, 'class' => true ],
+					'div'      => array( 'class' => true, 'id' => true, 'data-*' => true ),
+					'span'     => array( 'class' => true, 'id' => true, 'data-*' => true, 'required' => true ),
+					'img'      => [
+						'src'    => true,
+						'srcset' => true,
+						'sizes'  => true,
+						'class'  => true,
+						'id'     => true,
+						'width'  => true,
+						'height' => true,
+						'alt'    => true,
+						'align'  => true,
+						'data-*' => true,
+					],
+					'script'   => array( 'type' => true ),
+					'h6'       => array( 'class' => true, 'id' => true ),
+					'form'     => array( 'class' => true, 'id' => true, 'action' => 'true', 'method' => true ),
+					'input'    => array( 'class' => true, 'id' => true, 'type' => true, 'value' => true, 'name' => true ),
+					'fieldset' => array( 'class' => true, 'id' => true, 'data-*' => true ),
+					'select'   => array( 'class' => true, 'id' => true, 'data-*' => true, 'required' => true ),
+					'option'   => array( 'class' => true, 'id' => true, 'data-*' => true, 'selected' => true, 'title' => true, 'value' => true, 'name' => true ),
+					'button'   => array( 'class' => true, 'id' => true, 'data-*' => true, 'disabled' => true, 'enabled' => true ),
+					'strong'   => array( 'class' => true, 'id' => true, 'data-*' => true ),
+					'p'        => array( 'class' => true, 'id' => true, 'data-*' => true ),
+				] );
 			}
 
 		}

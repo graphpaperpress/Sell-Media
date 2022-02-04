@@ -70,7 +70,7 @@ final class WP_Session extends Recursive_ArrayAccess {
 	 */
 	protected function __construct() {
 		if ( isset( $_COOKIE[WP_SESSION_COOKIE] ) ) {
-			$cookie = stripslashes( $_COOKIE[WP_SESSION_COOKIE] );
+			$cookie = stripslashes( sanitize_text_field( $_COOKIE[WP_SESSION_COOKIE] ) );
 			$cookie_crumbs = explode( '||', $cookie );
 
 			$this->session_id = $cookie_crumbs[0];

@@ -94,14 +94,18 @@ class Sell_Media_Price_Listings {
 		?>
 
 		<div class="wrap sell-media-price-listings-wrap">
-			<h2><?php _e( 'Pricing', 'sell_media' ); ?></h2>
+			<h2><?php esc_html__( 'Pricing', 'sell_media' ); ?></h2>
 			<?php
 			$tabs = $this->get_tabs();
 			
 			if ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] ) {
-				echo '<div class="updated" ><p>';
-				_e( esc_attr($tabs[ $this->current_tab ]['tab_title']) . ' pricelist updated.', 'sell_media' );
-				echo '</p></div>';
+				?>
+				<div class="updated"><p>
+				<?php
+				    echo esc_html__( $tabs[ $this->current_tab ]['tab_title'] . ' pricelist updated.', 'sell_media' );
+				?>
+                </p></div>
+                <?php
 			}
 
 			$this->display_tabs( $this->current_tab );
@@ -116,7 +120,7 @@ class Sell_Media_Price_Listings {
 			?>
 			<div id="poststuff">
 				<?php do_action( 'sell_media_pricelists_before_form', $this->current_tab, $url ); ?>
-				<form method="post" action="<?php _e(esc_url( $url ),'sell_media'); ?>" id="sell-media-pricelist-form">
+				<form method="post" action="<?php echo esc_url( $url ); ?>" id="sell-media-pricelist-form">
 					<?php
 					wp_nonce_field( 'sell-media-price-list-page' );
 					if ( isset( $current_screen->parent_file ) && $this->parent_slug === $current_screen->parent_file && $_GET['page'] === $this->menu_slug ) {
@@ -142,7 +146,8 @@ class Sell_Media_Price_Listings {
 		do_action( 'sell_meida_load_pricelists_page', $redirect_url );
 
 		// verify nonce and save price data 
-		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === $_POST["sell-media-price-list-submit"] && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page')) {
+		if ( isset( $_POST["sell-media-price-list-submit"] ) && 'true' === sanitize_text_field( $_POST["sell-media-price-list-submit"] )
+             && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page')) {
 
 			check_admin_referer( 'sell-media-price-list-page' );
 			$url_parameters['page'] = $this->menu_slug;
@@ -200,7 +205,7 @@ class Sell_Media_Price_Listings {
 		?>
 
 		<div id="sell-media-price-group-field" class="sell-media-field">
-			<label for="sell-media-price-group"><?php esc_attr_e( 'Pricelist for downloads', 'sell_media' ); ?></label>
+			<label for="sell-media-price-group"><?php esc_html_e( 'Pricelist for downloads', 'sell_media' ); ?></label>
 			<?php
 				$args = array(
 					'show_option_none' => __( 'None', 'sell_media' ),
@@ -218,9 +223,9 @@ class Sell_Media_Price_Listings {
 			?>
 			<span class="desc">
 				<span id="sell-media-edit-pricelist-link-wrap">
-					<?php printf( __( '<a data-href="%1$s" id="">Edit</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists&term_parent=' ); ?> |
+					<?php echo wp_kses( sprintf( __( '<a data-href="%1$s" id="">Edit</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists&term_parent=' ), ['a' => ['href' => true, 'target' => true]] ); ?> |
 				</span>
-				<?php printf( __( '<a href="%1$s">Add New</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ); ?></span>
+				<?php echo wp_kses( sprintf( __( '<a href="%1$s">Add New</a>', 'sell_media' ), admin_url() . 'edit.php?post_type=sell_media_item&page=pricelists' ), ['a' => ['href' => true, 'target' => true]] ); ?></span>
 		</div>
 	<?php }
 }

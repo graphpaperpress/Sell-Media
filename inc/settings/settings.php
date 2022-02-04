@@ -120,9 +120,9 @@ function sell_media_admin_plugin_options_page() {
                     $tabvalue = 0;
                 }
                 $current_tab_title = sell_media_plugin_get_current_tab_title( $tabvalue );
-                echo '<div class="updated"><p>';
-                echo '<strong>' . $current_tab_title . esc_html__( ' settings updated successfully.', 'sell_media' ) . '</strong>';
-                echo '</p></div>';
+                ?><div class="updated"><p><?php
+                ?><strong><?php echo esc_html( $current_tab_title . __( ' settings updated successfully.', 'sell_media' ) ); ?></strong><?php
+                ?></p></div><?php
         } ?>
         <div class="sell-media-settings-wrap">
             <div class="sell-media-settings-content">
@@ -324,7 +324,7 @@ add_action( 'load-sell_media_item_page_sell_media_plugin_options', 'sell_media_a
  * Fields
  */
 function sell_media_plugin_field_text( $value, $attr ) { ?>
-    <input type="text" name="<?php echo esc_attr(sell_media_get_current_plugin_id()); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo sanitize_text_field( $value ); ?>">
+    <input type="text" name="<?php echo esc_attr(sell_media_get_current_plugin_id()); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr( $value ); ?>">
 <?php
 }
 
@@ -332,7 +332,7 @@ function sell_media_plugin_field_number( $value, $attr ) {
     $min = isset( $attr['min_number'])?$attr['min_number']:"";
     $max = isset( $attr['max_number'])?$attr['max_number']:"";
 ?>
-    <input type="number" name="<?php echo esc_attr(sell_media_get_current_plugin_id()); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo sanitize_text_field( $value ); ?>" min="<?php echo intval($min); ?>" max="<?php echo intval($max); ?>">
+    <input type="number" name="<?php echo esc_attr(sell_media_get_current_plugin_id()); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr( $value ); ?>" min="<?php echo esc_attr( intval($min) ); ?>" max="<?php echo esc_attr( intval($max) ); ?>">
 <?php
 }
 
@@ -341,28 +341,28 @@ function sell_media_plugin_field_range( $value, $attr ) {
     $max = isset( $attr['max_number'])?$attr['max_number']:"";
     $step = isset( $attr['step_number'])?$attr['step_number']:"1";
 ?>
-    <input type="range" min="<?php echo intval($min); ?>" max="<?php echo intval($max); ?>" value="<?php esc_attr_e( $value ,'sell_media'); ?>" id="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" step="<?php echo esc_attr($step); ?>" oninput="outputUpdate(value)" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]">
-    <output for="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" id="<?php echo esc_attr($attr['name']); ?>-result"><?php  echo esc_attr( $value ); ?>%</output>
+    <input type="range" min="<?php echo esc_attr( intval($min) ); ?>" max="<?php echo esc_attr( intval($max) ); ?>" value="<?php esc_attr_e( $value ,'sell_media'); ?>" id="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" step="<?php echo esc_attr($step); ?>" oninput="outputUpdate(value)" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]">
+    <output for="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" id="<?php echo esc_attr($attr['name']); ?>-result"><?php echo esc_attr( $value ); ?>%</output>
     <script type="text/javascript">
         function outputUpdate(val) {
-            document.querySelector('#<?php echo esc_attr($attr['name']); ?>-result').value = val + '%';
+            document.querySelector('#<?php echo esc_js($attr['name']); ?>-result').value = val + '%';
         }
     </script>
 <?php
 }
 
 function sell_media_plugin_field_password( $value, $attr ) { ?>
-    <input type="password" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr( $value ); ?>">
+    <input type="password" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr( $value ); ?>">
     <?php
 }
 
 function sell_media_plugin_field_textarea( $value, $attr ) { ?>
-    <textarea name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" cols="48" rows="8"><?php echo esc_attr( $value ); ?></textarea>
+    <textarea name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" cols="48" rows="8"><?php echo esc_textarea( $value ); ?></textarea>
 <?php
 }
 
 function sell_media_plugin_field_select( $value, $attr ) { ?>
-<select name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]">
+<select name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]">
     <?php
     if ( isset( $attr['valid_options'] ) ) :
         $options = $attr['valid_options'];
@@ -373,11 +373,11 @@ function sell_media_plugin_field_select( $value, $attr ) { ?>
                 $opt = $option['name'];
             }
         ?>
-            <option value="<?php echo esc_attr($opt); ?>" <?php selected( $opt, $value ); ?>><?php echo esc_attr($option['title']); ?></option>
+            <option value="<?php echo esc_attr($opt); ?>" <?php echo esc_attr( selected( $opt, $value, false ) ); ?>><?php echo esc_attr($option['title']); ?></option>
             <?php
         endforeach;
     else:
-        _e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
+        esc_attr_e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
     endif;
     ?>
 </select>
@@ -391,13 +391,15 @@ function sell_media_plugin_field_radio_image( $value, $attr ) { ?>
         foreach( $options as $option ) :
         ?>
     <label class="radio_image">
-    <input type="radio" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($option['name']); ?>" <?php checked($option['name'], $value ); ?>>
-      <?php if( $option['image'] ) _e('<img src="' . $option['image'] . '">','sell_media'); ?>
+    <input type="radio" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($option['name']); ?>" <?php checked($option['name'], $value ); ?>>
+      <?php if( $option['image'] ) { ?>
+          <img src="<?php echo esc_url( $option['image'] ); ?>" />
+      <?php } ?>
     </label>
             <?php
         endforeach;
     else:
-        _e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
+        esc_attr_e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
     endif;
     ?>
 </select>
@@ -411,12 +413,12 @@ function sell_media_plugin_field_radio( $value, $attr ) { ?>
         foreach( $options as $option ) :
         ?>
     <label class="radio">
-      <input type="radio" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($option['name']); ?>" <?php checked( sanitize_text_field($option['name']), $value ); ?>> <?php echo esc_attr($option['title']); ?>
+      <input type="radio" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($option['name']); ?>" <?php checked( esc_attr($option['name']), $value ); ?>> <?php echo esc_attr($option['title']); ?>
     </label>
             <?php
         endforeach;
     else:
-        _e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
+        esc_attr_e( "This option has no valid options. Please create valid options as an array inside the settings.", "sell_media" );
     endif;
     ?>
 </select>
@@ -429,7 +431,7 @@ function sell_media_plugin_field_checkbox( $value, $attr ) {
         $options = $attr['valid_options'];
 
         foreach( $options as $option_key => $option_value ) : ?>
-            <input class="checkbox" id ="<?php echo esc_attr($option_value['name']); ?>" type="checkbox" <?php if( isset( $value ) && '' != $value ) { checked( in_array( $option_value['name'], $value ) ); }  ?> name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>][]" value="<?php echo esc_attr( $option_key ); ?>">
+            <input class="checkbox" id ="<?php echo esc_attr($option_value['name']); ?>" type="checkbox" <?php if( isset( $value ) && '' != $value ) { checked( in_array( $option_value['name'], $value ) ); }  ?> name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>][]" value="<?php echo esc_attr( $option_key ); ?>">
             <label for="<?php echo esc_attr($option_value['name']); ?>"><?php echo esc_attr($option_value['title']);?></label><br>
     <?php endforeach;
     endif;
@@ -439,7 +441,7 @@ function sell_media_plugin_field_checkbox( $value, $attr ) {
 function sell_media_plugin_field_color( $value, $attr ) { ?>
 
     <span class="colorPickerWrapper">
-        <input id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" class="color-picker" type="text" value="<?php echo sanitize_text_field($value); ?>" />
+        <input id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" class="color-picker" type="text" value="<?php echo esc_attr($value); ?>" />
     </span>
 
     <?php
@@ -450,7 +452,7 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
     <script language="javascript">
     jQuery( document ).ready( function() {
 
-        $container = jQuery( "#<?php _e($attr['name'],'sell_media'); ?>_container" );
+        $container = jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>_container" );
         $image_button = $container.find( '.upload_image_button' );
 
         $image_button.click( function() {
@@ -487,9 +489,9 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
 
         // remove image
         $container.on( 'click', '.upload_image_remove', function() {
-            jQuery( "#<?php _e($attr['name'],'sell_media'); ?>" ).val('');
-            jQuery( "#<?php _e($attr['name'],'sell_media'); ?>" ).parent().find( 'div.upload_image_preview img' ).attr( 'src', '' );
-            jQuery( "#<?php _e($attr['name'],'sell_media'); ?>" ).parent().find( '.upload_image_preview' ).hide();
+            jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).val('');
+            jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).parent().find( 'div.upload_image_preview img' ).attr( 'src', '' );
+            jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>" ).parent().find( '.upload_image_preview' ).hide();
         });
         if ( $container.find( '.upload_image_field' ).val().length > 0 ) {
             $container.find( '.upload_image_preview' ).show();
@@ -498,9 +500,9 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
     </script>
 
     <div id="<?php echo esc_attr($attr['name']); ?>_container">
-        <input type="text" class="upload_image_field" id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($value); ?>">
-        <input class="upload_image_button button" type="button" value="<?php _e( 'Upload or Select Image', 'sell_media' ); ?>" />
-        <div class="upload_image_preview"><img src="<?php echo esc_attr($value); ?>" /><br /><a href="javascript:void(0);" class="upload_image_remove"><?php _e( 'Remove', 'sell_media' ); ?></a></div>
+        <input type="text" class="upload_image_field" id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($value); ?>">
+        <input class="upload_image_button button" type="button" value="<?php esc_attr_e( 'Upload or Select Image', 'sell_media' ); ?>" />
+        <div class="upload_image_preview"><img src="<?php echo esc_attr($value); ?>" /><br /><a href="javascript:void(0);" class="upload_image_remove"><?php esc_html_e( 'Remove', 'sell_media' ); ?></a></div>
     </div>
 
 <?php
@@ -593,9 +595,9 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
     </script>
 
     <div id="<?php echo esc_attr($attr['name']); ?>_container">
-        <input type="hidden" class="upload_gallery_field" id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo sell_media_get_current_plugin_id(); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($value); ?>">
-        <input class="upload_gallery_button button" type="button" value="<?php _e( 'Upload or Select Images', 'sell_media' ); ?>" />
-        <div class="upload_gallery_preview"><?php if( '' != $value ) { echo esc_attr($imgarray); ?><br /><a href="javascript:void(0);" class="upload_gallery_remove"><?php _e( 'Remove', 'sell_media' ); ?></a><?php } ?></div>
+        <input type="hidden" class="upload_gallery_field" id="<?php echo esc_attr($attr['name']); ?>" name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>]" value="<?php echo esc_attr($value); ?>">
+        <input class="upload_gallery_button button" type="button" value="<?php esc_attr_e( 'Upload or Select Images', 'sell_media' ); ?>" />
+        <div class="upload_gallery_preview"><?php if( '' != $value ) { echo esc_attr($imgarray); ?><br /><a href="javascript:void(0);" class="upload_gallery_remove"><?php esc_html_e( 'Remove', 'sell_media' ); ?></a><?php } ?></div>
     </div>
 
 <?php
@@ -606,7 +608,7 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
  * Any html
  */
 function sell_media_plugin_field_html( $value, $attr ){
-    echo esc_attr($attr['valid_options']);
+    echo esc_html($attr['valid_options']);
 }
 
 
@@ -623,9 +625,10 @@ function sell_media_plugin_image_url_callback() {
     $all_images = '';
     foreach( $image_ids as $image_id ) {
         $image_attributes = wp_get_attachment_image_src( $image_id, 'large' ); // returns an array
-        $all_images .= "<img style=\"cursor:pointer;height:60px;width:auto;margin:5px 5px 0 0;\" class=\"eachthumbs\" src=\"" . $image_attributes[0] . "\"/>";
+        ?>
+        <img style="cursor:pointer;height:60px;width:auto;margin:5px 5px 0 0;" class="eachthumbs" src="<?php echo esc_url( $image_attributes[0] ); ?>" />
+        <?php
     }
-    echo esc_html( $all_images );
     die();
 }
 
@@ -658,30 +661,30 @@ add_action( 'sell_media_above_settings', 'sell_media_above_settings_links' );
 function sell_media_settings_sidebar_callback() { ?>
 
     <div id="sell-media-upgrade-promo" class="sell-media-box">
-        <h3><?php _e( 'Upgrades Available' , 'sell_media' ); ?></h3>
+        <h3><?php esc_html_e( 'Upgrades Available' , 'sell_media' ); ?></h3>
         <p><span class="dashicons dashicons-update sell-media-dashicon-big"></span></p>
-        <p><?php _e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more with extensions for Sell Media.', 'sell_media' ); ?></p>
-        <p><a href="https://graphpaperpress.com/extensions/sell-media/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+        <p><?php esc_html_e( 'Sell prints, create discount codes, watermark images, accept credit cards and much more with extensions for Sell Media.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/extensions/sell-media/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php esc_html_e( 'Order Now', 'sell_media' ); ?></a></p>
     </div>
 
     <div id="sell-media-support-promo" class="sell-media-box">
-        <h3><?php _e( 'Need Help?' , 'sell_media' ); ?></h3>
+        <h3><?php esc_html_e( 'Need Help?' , 'sell_media' ); ?></h3>
         <p><span class="dashicons dashicons-format-chat sell-media-dashicon-big"></span></p>
-        <p><?php _e( 'Having trouble setting up Sell Media? Hire one of our affiliated developers.', 'sell_media' ); ?></p>
-        <p><a href="https://graphpaperpress.com/customization/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php _e( 'Order Now', 'sell_media' ); ?></a></p>
+        <p><?php esc_html_e( 'Having trouble setting up Sell Media? Hire one of our affiliated developers.', 'sell_media' ); ?></p>
+        <p><a href="https://graphpaperpress.com/customization/?utm_source=wp-admin&utm_medium=banner&utm_campaign=sell-media-settings-banner" class="button centered-block" target="_blank"><?php esc_html_e( 'Order Now', 'sell_media' ); ?></a></p>
     </div>
 
     <div id="sell-media-review-promo" class="sell-media-box">
-        <h3><?php _e( 'Reviews' , 'sell_media' ) ; ?></h3>
+        <h3><?php esc_html_e( 'Reviews' , 'sell_media' ) ; ?></h3>
         <hr />
-        <p><blockquote>"<?php _e( 'Great plugin with great support. Includes tons of features.', 'sell_media' ); ?>"</blockquote></p>
+        <p><blockquote>"<?php esc_html_e( 'Great plugin with great support. Includes tons of features.', 'sell_media' ); ?>"</blockquote></p>
         <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
         <hr />
-        <p><blockquote>"<?php _e( 'A young product with massive potential! You can expect great support from Graph Paper Press.', 'sell_media' ); ?>"</blockquote></p>
+        <p><blockquote>"<?php esc_html_e( 'A young product with massive potential! You can expect great support from Graph Paper Press.', 'sell_media' ); ?>"</blockquote></p>
         <p class="text-center"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></p>
         <hr />
-        <p><?php _e( 'We\'d love for you to leave a review if you\'ve found this plugin useful.', 'sell_media' ); ?></p>
-        <p><a href="https://wordpress.org/support/view/plugin-reviews/sell-media?filter=5" class="button centered-block" target="_blank"><?php _e( 'Leave a review', 'sell_media' ); ?></a></p>
+        <p><?php esc_html_e( 'We\'d love for you to leave a review if you\'ve found this plugin useful.', 'sell_media' ); ?></p>
+        <p><a href="https://wordpress.org/support/view/plugin-reviews/sell-media?filter=5" class="button centered-block" target="_blank"><?php esc_html_e( 'Leave a review', 'sell_media' ); ?></a></p>
     </div>
 <?php }
 add_action( 'sell_media_settings_sidebar', 'sell_media_settings_sidebar_callback' );
