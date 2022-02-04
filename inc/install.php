@@ -73,7 +73,8 @@ function sell_media_install() {
 
 	// This is a new install so add the defaults to the options table
 	if ( empty( $version ) ) {
-		$defaults = sell_media_get_plugin_option_defaults();
+		//$defaults = sell_media_get_plugin_option_defaults();
+		$defaults = array_map( 'sanitize_text_field', ( array ) sell_media_get_plugin_option_defaults() );
 		update_option( 'sell_media_options', $defaults );
 		// A version number exists, so run upgrades.
 	} else {
@@ -119,7 +120,13 @@ add_action( 'admin_init', 'sell_media_check_version' );
  * @return string Disable notice.
  */
 function sell_media_disabled_notice() {
-	echo '<div class="update-nag">' . esc_attr__( 'Sell Media requires WordPress 5.8.3 or higher!', 'sell_media' ) . '</div>';
+	?>
+
+	<div class="update-nag">
+		<?php echo esc_html( __( 'Sell Media requires WordPress 5.8.3 or higher!', 'sell_media' ) ); ?>
+	</div>
+
+	<?php
 }
 
 /**
@@ -592,10 +599,10 @@ function sell_media_autocreate_pages() {
 
 	// update the option if it already exists
 	if ( get_option( 'sell_media_options' ) !== false ) {
-		update_option( 'sell_media_options', $settings );
+		update_option( 'sell_media_options', array_map( 'sanitize_text_field', $settings ) );
 		// otherwise, we need to create the option
 	} else {
-		add_option( 'sell_media_options', $settings );
+		add_option( 'sell_media_options', array_map( 'sanitize_text_field', $settings ) );
 	}
 
 }

@@ -270,14 +270,14 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                             $image_size    = getimagesize($image_data);
                             $image_width   = (isset($image_size[0])) ? esc_attr($image_size[0]) : 100;
                             $image_height   = (isset($image_size[1])) ? esc_attr($image_size[1]) : 100;
-                            $width          = $image_width * 250 / $image_height;
-                            $padding_bottom = $image_height / $image_width * 100;
+                            $width          = $image_width * 250 / max($image_height, 1);
+                            $padding_bottom = $image_height / max($image_width, 1) * 100;
                         } else {                        
                             $image_data     = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
                             $image_width    = (isset($image_data[1])) ? $image_data[1] : 100;
                             $image_height   = (isset($image_data[2])) ? $image_data[2] : 100;
-                            $width          = $image_width * 250 / $image_height;
-                            $padding_bottom = $image_height / $image_width * 100;
+                            $width          = $image_width * 250 / max($image_height, 1);
+                            $padding_bottom = $image_height / max($image_width, 1) * 100;
                         }
                                     
                     }

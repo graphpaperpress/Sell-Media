@@ -121,7 +121,7 @@ function sell_media_plugin_options_validate( $input ) {
                 // Validate HTML content
                 if ( 'html' == $optiondetails['sanitize'] ) {
                     // Pass input data through the wp_filter_kses filter
-                    $valid_input[ $setting ] = addslashes( $input[ $setting ] );
+                    $valid_input[ $setting ] = sanitize_textarea_field( $input[ $setting ] );
                 }
                 // Validate Slug
                 if ( 'slug' == $optiondetails['sanitize'] ) {
@@ -184,9 +184,12 @@ function sell_media_plugin_sections_callback( $section_passed ) {
 
     $arr = array( 
         'a' => array(
-            'href' => array(),
-            'class' => array(),
-            'target' => array()
+            'href' => true,
+            'class' => true,
+            'target' => true
+        ),
+        'span' => array(
+            'class' => true,
         ),
         'code' => array()
     );
@@ -268,8 +271,11 @@ function sell_media_plugin_setting_callback( $option ) {
 
     $arr = array( 
         'a' => array(
-            'href' => array(),
-            'class' => array()
+            'href' => true,
+            'class' => true
+        ),
+        'span' => array(
+            'class' => true
         ),
         'code' => array()
     );
@@ -279,67 +285,67 @@ function sell_media_plugin_setting_callback( $option ) {
 
         //Render Text Input
         case 'text': sell_media_plugin_field_text( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render Number Input
         case 'number': sell_media_plugin_field_number( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render Range Input
         case 'range': sell_media_plugin_field_range( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render Password Input
         case 'password': sell_media_plugin_field_password( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render textarea options
         case 'textarea': sell_media_plugin_field_textarea( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render select dropdowns
         case 'select': sell_media_plugin_field_select( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render radio dropdowns
         case 'radio': sell_media_plugin_field_radio( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render radio image dropdowns
         case 'radio_image': sell_media_plugin_field_radio_image( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render checkboxes
         case 'checkbox': sell_media_plugin_field_checkbox( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render color picker
         case 'color': sell_media_plugin_field_color( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render uploaded image
         case 'image': sell_media_plugin_field_image( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render uploaded gallery
         case 'gallery': sell_media_plugin_field_gallery( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         //Render uploaded gallery
         case 'html': sell_media_plugin_field_html( $value, $attr );
-            echo '<span class="option-description">' . wp_kses( $option['description'] , $arr ) . '</span>';
+            echo wp_kses( '<span class="option-description">' . $option['description'] . '</span>', $arr );
         break;
 
         default:

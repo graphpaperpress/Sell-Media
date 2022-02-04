@@ -583,6 +583,7 @@ jQuery(document).ready(function($) {
     $(document).on('click', 'button.item_add', function() {
         var $button = $(this);
         var data = $("form#sell-media-cart-items").serializeArray();
+        // TODO: add .first() here - I see and issue on the page where couple of blocks present: "price: 1.001.001.00"
         var price = $("span#total").text();
         var qty = $(".checkout-qty").text();
         var ajaxurl = sell_media.ajaxurl + '?action=sm_add_to_cart&price=' + price;

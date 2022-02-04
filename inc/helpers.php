@@ -264,7 +264,7 @@ function sell_media_build_input( $taxonomy = null ) {
 				name="<?php echo esc_attr( $taxonomy); ?>"
 				type="<?php echo esc_attr( $type); ?>"
 				/>
-			<?php echo esc_attr( $term->name); ?> <?php if ( $price ) : ?>+<?php esc_attr_e( $price); ?>%<?php endif; ?><br />
+			<?php echo esc_html( $term->name); ?> <?php if ( $price ) : ?>+<?php esc_html_e( $price); ?>%<?php endif; ?><br />
 		<?php endforeach; ?>
 		<?php do_action( 'sell_media_build_input_after' ); ?>
 	<?php endif; ?>
@@ -723,10 +723,10 @@ function sell_media_build_select( $items = array(), $args = array() ) {
 	if ( empty( $current ) ) {
 		$current = null; }
 	?>
-	<select id="<?php print $name; ?>" class="sell_media_form_control" name="<?php print $name; ?>" <?php print $required; ?>>
+	<select id="<?php echo esc_attr( $name ); ?>" class="sell_media_form_control" name="<?php echo esc_attr( $name ); ?>" <?php echo esc_attr( $required ); ?>>
 		<option></option>
 		<?php foreach ( $items as $key => $value ) : ?>
-			<option value="<?php print $key; ?>" <?php selected( $key, $current ); ?>><?php print $value; ?></option>
+			<option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( selected( $key, $current, false ) ); ?>><?php echo esc_html( $value ); ?></option>
 		<?php endforeach; ?>
 	</select>
 <?php }
@@ -764,7 +764,8 @@ function sell_media_get_price_groups( $post_id = null, $taxonomy = null ) {
 		$default_price_group_obj = get_term( $price_group_id, $taxonomy );
 
 		if ( is_null( $default_price_group_obj ) || is_wp_error( $default_price_group_obj ) ) {
-			return; }
+			return;
+		}
 
 		$parent_price_group = $default_price_group_obj->term_id;
 	}
@@ -980,17 +981,18 @@ add_filter( 'sell_media_add_to_cart_text', 'sell_media_free_download_button_text
 /**
  * Change button html.
  *
- * @since 2.0.7
- *
  * @param  string  $html             Html output of button.
  * @param  int     $post_id          ID of post.
  * @param  int     $attachment_id    ID of attachment
  * @param  string  $button           Button type.
  * @param  string  $text             Button Text.
- * @param  boolean $echo             Echo output or return.
+ * @param  boolean $is_output        Output or return.
+ *
  * @return string                    Html output of button.
+ *@since 2.0.7
+ *
  */
-function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $echo, $type = 'download' ) {
+function sell_media_free_download_button_button( $html, $post_id, $attachment_id, $button, $text, $is_output, $type = 'download' ) {
 
 	if ( 'download' != $type ) {
 		return $html;

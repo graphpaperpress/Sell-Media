@@ -37,9 +37,9 @@ Class SellMediaAdminSearch {
             if ( ! empty( $s ) ) {
                 global $wpdb;
                 if ( is_numeric( $s ) ) {
-                    $where = str_replace( '(' . $wpdb->posts . '.post_title LIKE', '(' . $wpdb->posts . '.ID = ' . $s . ') OR (' . $wpdb->posts . '.post_title LIKE', $where );
+                    $where = str_replace( '(' . $wpdb->posts . '.post_title LIKE', '(' . $wpdb->posts . '.ID = ' . (int) $s . ') OR (' . $wpdb->posts . '.post_title LIKE', $where );
                 } elseif( preg_match( "/^(\d+)(,\s*\d+)*\$/", $s ) ) { // a string of post ids
-                    $where = str_replace( '(' . $wpdb->posts . '.post_title LIKE', '(' . $wpdb->posts . '.ID in (' . $s . ')) OR (' . $wpdb->posts . '.post_title LIKE', $where );
+                    $where = str_replace( '(' . $wpdb->posts . '.post_title LIKE', '(' . $wpdb->posts . '.ID in (' . (int) $s . ')) OR (' . $wpdb->posts . '.post_title LIKE', $where );
                 }
             }
         }
