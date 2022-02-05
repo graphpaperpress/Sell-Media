@@ -6,7 +6,7 @@
  * @package Sell Media
  * @author Thad Allender <support@graphpaperpress.com>
  */
-//die('+++++777');
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -23,8 +23,8 @@ Class SellMediaDownload {
 	 * @return void
 	 */
 	public function download(){
-		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && wp_verify_nonce($_GET['_wpnonce'], 'download_media')) {
-			 
+		if ( isset( $_GET['download'] ) && isset( $_GET['payment_id'] ) && ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce($_GET['_wpnonce'], 'download_media') ) ) {
+
 			$transaction_id = (isset($_GET['download'])) ? sanitize_text_field(urldecode( $_GET['download'] )) : '';
 			$payment_id     = (isset($_GET['payment_id'])) ? intval(urldecode( $_GET['payment_id'] )) : '';
 			$product_id     = (isset($_GET['product_id'])) ? intval(urldecode( $_GET['product_id'] )) : '';
@@ -41,11 +41,8 @@ Class SellMediaDownload {
 			if ( $verified ) {
 
 				$file = Sell_Media()->products->get_protected_file( $product_id, $attachment_id );
-				$file_exists = file_exists( $file );
-				$has_s3_url = get_post_meta( $attachment_id, '_sell_media_s3_file', true );
-				if ( '' !== $has_s3_url ) {
-					$file_exists = $this->is_file_url_valid( $file );
-				}
+				$file_exists = file_exists( $file );				
+				$file_exists = $this->is_file_url_valid( $file );
 
 				$file_type = wp_check_filetype( $file );
 
