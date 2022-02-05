@@ -610,7 +610,7 @@ function sell_media_plugin_field_gallery( $value, $attr ) {
  * Any html
  */
 function sell_media_plugin_field_html( $value, $attr ){
-    echo esc_html($attr['valid_options']);
+    echo wp_kses( $attr['valid_options'], GPP_WP_KSES_EXTENDED_LIST );
 }
 
 
