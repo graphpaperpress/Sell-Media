@@ -108,6 +108,9 @@ a:focus {
   height: auto; }
 
 /* Vertical Masonry */
+sell-media-grid-item-masonry-container {
+  list-style: none; }
+
 .sell-media-masonry {
   margin-bottom: 10px; }
 
@@ -121,7 +124,8 @@ a:focus {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-wrap: wrap;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  list-style: none; }
   .sell-media-grid-item-horizontal-masonry-container .sell-media-grid-item {
     margin-right: 10px;
     margin-bottom: 10px; }
