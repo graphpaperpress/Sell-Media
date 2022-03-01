@@ -253,6 +253,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 					'tr'        => [ 'class' => true, 'id' => true, 'data-*' => true ],
 					'td'        => [ 'class' => true, 'id' => true, 'data-*' => true ],
 					'th'        => [ 'class' => true, 'id' => true, 'data-*' => true ],
+					'style'		=> true
 				] );
 			}
 
