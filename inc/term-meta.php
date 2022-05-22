@@ -229,7 +229,7 @@ function sell_media_the_default_checkbox( $term_id=null, $desc=null ){
  */
 function sell_media_save_extra_taxonomy_fields( $term_id ) {
 	
-	if(!isset($_POST['taxonomy_wpnonce']) && !wp_verify_nonce($_POST['taxonomy_wpnonce'], 'sell_media_taxonomy_admin_nonce')) {
+	if( ! isset($_POST['taxonomy_wpnonce'] ) || ! wp_verify_nonce($_POST['taxonomy_wpnonce'], 'sell_media_taxonomy_admin_nonce' ) ) {
 		return;
 	}
 

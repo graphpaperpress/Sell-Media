@@ -68,7 +68,35 @@
 				$loop_args['context'] = "widget";
 			?>
 
-				<?php echo esc_html(apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args )); ?>
+				<?php echo wp_kses( apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ), [
+					'img' => [
+						'src'      => true,
+						'srcset'   => true,
+						'sizes'    => true,
+						'class'    => true,
+						'id'       => true,
+						'width'    => true,
+						'height'   => true,
+						'alt'      => true,
+						'align'    => true,
+						'data-*' => true,
+					],
+					'div' => [
+						'id' => true,
+						'class' => true,
+						'data-*' => true,
+					],
+					'a' => [
+						'href' => true,
+						'id' => true,
+						'target' => true,
+						'class' => true,
+						'data-*' => true,
+					],
+					'script' => [
+						'type' => true
+					]
+				] ); ?>
 
 				<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 

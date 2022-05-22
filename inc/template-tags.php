@@ -447,10 +447,10 @@ function sell_media_get_excerpt( $post_id, $excerpt_length = 140, $trailing_char
  *
  * @since 0.1
  */
-function sell_media_get_taxonomy_terms( $taxonomy ) {
+function sell_media_get_taxonomy_terms( $id, $taxonomy ) {
 	global $post;
-
-	$terms = wp_get_post_terms( $post->ID, $taxonomy );
+	
+	$terms = wp_get_post_terms( $id, $taxonomy );
 
 	if ( empty( $terms ) || is_wp_error( $terms ) ) {
 		return;
@@ -523,7 +523,7 @@ function sell_media_breadcrumbs() {
 		$html .= '<div><a href="' . esc_url( home_url() ) . '" title="' . __( 'Home', 'sell_media' ) . '">' . __( 'Home', 'sell_media' ) . '</a></div>';
 		$html .= '<div><a href="' . get_post_type_archive_link( 'sell_media_item' ) . '" title="' . $obj->rewrite['slug'] . '">' . $obj->rewrite['slug'] . '</a></div>';
 		if ( wp_get_post_terms( $post->ID, 'collection' ) ) {
-			$html .= sell_media_get_taxonomy_terms( 'collection' );
+			$html .= sell_media_get_taxonomy_terms( $post->ID, 'collection' );
 		}
 		if ( sell_media_attachment( $post->ID ) ) {
 			$product_id = get_post_meta( $post->ID, $key = '_sell_media_for_sale_product_id', true );
@@ -598,9 +598,18 @@ function sell_media_show_file_info() {
 	if ( empty( $settings->file_info ) ) {
 		return;
 	}
-
+	
+	
+	$parent_id = '';
 	$post_obj = get_post();
 	$attachment_id = sell_media_get_attachment_id( $post_obj->ID );
+	
+	if( 0 != wp_get_post_parent_id( $post_obj->ID ) ) {
+		$parent_id = wp_get_post_parent_id( $post_obj->ID );
+	} else {
+		$parent_id = $post_obj->ID;
+	}
+	
 	if ( '' == $attachment_id ) {
 		return;
 	}
@@ -624,11 +633,11 @@ function sell_media_show_file_info() {
 	if ( isset( $image_size_info[0], $image_size_info[1] ) ) {
 		?><li class="filedims"><span class="title"><?php echo esc_html__( 'Dimensions', 'sell_media' ); ?>:</span> <?php echo esc_html( $image_size_info[0]. ' x '. $image_size_info[1] ); ?></li><?php
 	}
-	if ( wp_get_post_terms( $post_obj->ID, 'collection' ) ) {
-		?><li class="collections"><span class="title"><?php echo esc_html__( 'Collections', 'sell_media' ); ?>:</span> <?php echo esc_html( sell_media_get_taxonomy_terms( 'collection' ) ); ?></li><?php
+	if ( wp_get_post_terms( $parent_id, 'collection' ) ) {
+		?><li class="collections"><span class="title"><?php echo esc_html__( 'Collections', 'sell_media' ); ?>:</span> <?php echo wp_kses( sell_media_get_taxonomy_terms( $parent_id, 'collection' ), array( 'a' => array('href' => true, 'title' => true ) ) ); ?></li><?php
 	}
-	if ( wp_get_post_terms( $post_obj->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
-		?><li class="keywords"><span class="title"><?php echo esc_html__( 'Keywords', 'sell_media' );?>:</span> <?php echo esc_html( sell_media_get_taxonomy_terms( 'keywords' ) ); ?></li><?php
+	if ( wp_get_post_terms( $attachment_id, 'keywords' ) ) {
+		?><li class="keywords"><span class="title"><?php echo esc_html__( 'Keywords', 'sell_media' );?>:</span> <?php echo wp_kses( sell_media_get_taxonomy_terms( $attachment_id, 'keywords' ), array( 'a' => array('href' => true, 'title' => true ) ) ); ?></li><?php
 	}
 	if ( preg_match( '#^(audio|video)/#', get_post_mime_type( $attachment_id ) ) ) {
 		if( '' != $meta  && isset( $meta['length_formatted']) )  {
