@@ -296,7 +296,7 @@ class SM_Gateway_PayPal_Request {
         }
 
         // Verify total
-        $total = $this->verify_total( $cart, $discount_id );
+        $total = $this->verify_total( $discount_id, $cart );
         $tax_amount = $this->get_the_tax_from_cart( $total );
         if ( 1 == $print_ship_flag ) {
             switch ( $this->settings->reprints_shipping ) {
@@ -351,7 +351,7 @@ class SM_Gateway_PayPal_Request {
      * @param  $products
      * @return $total
      */
-    public function verify_total( $products = null, $discount_id ) {
+    public function verify_total( $discount_id, $products = null ) {
 
         $total = 0;
         $p = new SellMediaProducts();

@@ -3,9 +3,9 @@
 Contributors: endortrails, nhuja
 Donate link: https://graphpaperpress.com/plugins/sell-media/
 Tags: photography, photos, sell media, sell photos, sell videos, sell downloads, download, downloads, e-commerce, paypal, stock photos, photo gallery, photo cart
-Requires at least: 5.9
-Tested up to: 5.9
-Stable tag: 2.5.7.3
+Requires at least: 5.9.3
+Tested up to: 5.9.3
+Stable tag: 2.5.7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,6 +220,11 @@ Action hooks available:
 
 
 == Changelog ==
+
+= 2.5.7.1 to 2.5.7.4 =
+* Fix: sanitizations and security bugs
+* Fix: PHP 8.0 notices
+* Fix: sanitization errors and notices
 
 = 2.5.7 =
 * Fix: sanitizations and security bugs

@@ -97,7 +97,7 @@ class SellMediaTaxMarkup {
 			<?php $this->the_markup_slider( $taxonomy_details ); ?>
         </div>
         <div class="form-field">
-			<?php $this->the_default_checkbox( $term_id, $taxonomy_details ); ?>
+			<?php $this->the_default_checkbox( $taxonomy_details, $term_id ); ?>
         </div>
 		<?php wp_nonce_field( 'sell_media_taxonomy_admin_nonce', 'taxonomy_wpnonce' );
 	}
@@ -183,7 +183,7 @@ class SellMediaTaxMarkup {
 	 * @param int $term_id Term ID.
 	 * @param object $taxonomy_details Taxonomy Details.
 	 */
-	function the_default_checkbox( $term_id = null, $taxonomy_details ) {
+	function the_default_checkbox( $taxonomy_details, $term_id = null ) {
 		$singular_name = isset( $taxonomy_details->labels->singular_name ) ? $taxonomy_details->labels->singular_name : $taxonomy_details->name;
 
 		$title = sprintf( __( 'Add as default %s?', 'sell_media' ), $singular_name );
@@ -224,7 +224,7 @@ class SellMediaTaxMarkup {
             </td>
         </tr>
         <tr class="form-field sell_media-markup-container">
-            <td><?php $this->the_default_checkbox( $term_id, $taxonomy_details ); ?></td>
+            <td><?php $this->the_default_checkbox( $taxonomy_details, $term_id ); ?></td>
         </tr>
 		<?php
 	}
