@@ -130,7 +130,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
          * @since 2.4.6
          *         
          */
-        public function render_block_wrap( $content = '', $with_inner = true, $attributes ) {
+        public function render_block_wrap( $attributes, $content = '', $with_inner = true ) {
 
             $return_content  = '';
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';

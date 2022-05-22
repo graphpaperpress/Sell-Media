@@ -376,7 +376,7 @@ class SellMediaPayments {
 	 * @since 1.2
 	 * @return html
 	 */
-	public function get_payments_by_date( $day = null, $month_num, $year ) {
+	public function get_payments_by_date( $month_num, $year, $day = null ) {
 		$args = array(
 			'post_type' => 'sell_media_payment',
 			'posts_per_page' => -1,

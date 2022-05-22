@@ -84,32 +84,7 @@
 			$loop_args['context'] = "widget";
 			?>
 
-			<?php echo wp_kses( apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ), [
-					'img' => [
-						'src'      => true,
-						'srcset'   => true,
-						'sizes'    => true,
-						'class'    => true,
-						'id'       => true,
-						'width'    => true,
-						'height'   => true,
-						'alt'      => true,
-						'align'    => true,
-						'data-*' => true,
-					],
-					'div' => [
-						'id' => true,
-						'class' => true,
-						'data-*' => true,
-					],
-					'a' => [
-						'href' => true,
-						'id' => true,
-						'target' => true,
-						'class' => true,
-						'data-*' => true,
-					],
-				] ); ?>
+			<?php echo wp_kses( apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ), GPP_WP_KSES_EXTENDED_LIST ); ?>
 
 	<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
@@ -136,8 +111,7 @@
 		$title = htmlspecialchars($instance['title']);
 
 		// Title
-		?><p><label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>"><?php echo esc_html__( 'Title', 'sell_media' ) ?>:</label><input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>"
-                                                                                                                                                   name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p><?php
+		?><p><label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>"><?php echo esc_html__( 'Title', 'sell_media' ) ?>:</label><input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p><?php
 	}
 
 }

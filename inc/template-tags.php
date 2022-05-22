@@ -625,10 +625,10 @@ function sell_media_show_file_info() {
 		?><li class="filedims"><span class="title"><?php echo esc_html__( 'Dimensions', 'sell_media' ); ?>:</span> <?php echo esc_html( $image_size_info[0]. ' x '. $image_size_info[1] ); ?></li><?php
 	}
 	if ( wp_get_post_terms( $post_obj->ID, 'collection' ) ) {
-		?><li class="collections"><span class="title"><?php echo esc_html__( 'Collections', 'sell_media' ); ?>:</span> <?php echo esc_html( sell_media_get_taxonomy_terms( 'collection' ) ); ?></li><?php
+		?><li class="collections"><span class="title"><?php echo esc_html__( 'Collections', 'sell_media' ); ?>:</span> <?php echo wp_kses( sell_media_get_taxonomy_terms( 'collection' ), GPP_WP_KSES_EXTENDED_LIST ); ?></li><?php
 	}
 	if ( wp_get_post_terms( $post_obj->ID, 'keywords' ) && ! get_query_var( 'id' ) ) {
-		?><li class="keywords"><span class="title"><?php echo esc_html__( 'Keywords', 'sell_media' );?>:</span> <?php echo esc_html( sell_media_get_taxonomy_terms( 'keywords' ) ); ?></li><?php
+		?><li class="keywords"><span class="title"><?php echo esc_html__( 'Keywords', 'sell_media' );?>:</span> <?php echo wp_kses( sell_media_get_taxonomy_terms( 'keywords' ), GPP_WP_KSES_EXTENDED_LIST ); ?></li><?php
 	}
 	if ( preg_match( '#^(audio|video)/#', get_post_mime_type( $attachment_id ) ) ) {
 		if( '' != $meta  && isset( $meta['length_formatted']) )  {

@@ -351,7 +351,7 @@ class SM_Gateway_PayPal_Request {
      * @param  $products
      * @return $total
      */
-    public function verify_total( $products = null, $discount_id ) {
+    public function verify_total( $discount_id, $products = null ) {
 
         $total = 0;
         $p = new SellMediaProducts();

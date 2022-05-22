@@ -183,7 +183,7 @@ class SellMediaTaxMarkup {
 	 * @param int $term_id Term ID.
 	 * @param object $taxonomy_details Taxonomy Details.
 	 */
-	function the_default_checkbox( $term_id = null, $taxonomy_details ) {
+	function the_default_checkbox( $taxonomy_details, $term_id = null ) {
 		$singular_name = isset( $taxonomy_details->labels->singular_name ) ? $taxonomy_details->labels->singular_name : $taxonomy_details->name;
 
 		$title = sprintf( __( 'Add as default %s?', 'sell_media' ), $singular_name );

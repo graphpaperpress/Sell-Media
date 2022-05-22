@@ -452,7 +452,7 @@ function sell_media_plugin_field_image( $value, $attr ) { ?>
     <script language="javascript">
     jQuery( document ).ready( function() {
 
-        $container = jQuery( "#<?php esc_js(__($attr['name'],'sell_media')); ?>_container" );
+        $container = jQuery( "#<?php echo esc_js(__($attr['name'],'sell_media')); ?>_container" );
         $image_button = $container.find( '.upload_image_button' );
 
         $image_button.click( function() {

@@ -68,7 +68,7 @@
 				$loop_args['context'] = "widget";
 			?>
 
-				<?php echo esc_html(apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args )); ?>
+				<?php echo wp_kses(apply_filters( 'sell_media_content_loop', get_the_ID(), $i, $loop_args ), GPP_WP_KSES_EXTENDED_LIST ); ?>
 
 				<?php endwhile; wp_reset_postdata(); $i = 0; ?>
 
