@@ -280,7 +280,7 @@ function sell_media_reports_callback_fn(){
 						$year       = date( 'Y', $day_time );
 						?>
 						['<?php echo esc_js( date( "n/d", mktime( 0, 0, 0, $month, $day, $year ) ) ); ?>',
-						<?php echo esc_js( sell_media_get_sales_by_date( $day, $month, $year ) ); ?>,
+						<?php echo esc_js( sell_media_get_sales_by_date( $month, $year, $day ) ); ?>,
 						],
 						<?php $i--;
 					endwhile;
@@ -311,7 +311,7 @@ function sell_media_reports_callback_fn(){
 					<?php
 					$i = 1;
 					while($i <= 12) : ?>
-						['<?php echo esc_js( sell_media_month_num_to_name($i) . ' ' . date("Y") ); ?>', <?php echo esc_js( sell_media_get_sales_by_date(null, $i, date('Y') ) ); ?>,
+						['<?php echo esc_js( sell_media_month_num_to_name($i) . ' ' . date("Y") ); ?>', <?php echo esc_js( sell_media_get_sales_by_date( $i, date('Y'), null ) ); ?>,
 						],
 					<?php
 					$i++;
@@ -344,7 +344,7 @@ function sell_media_reports_callback_fn(){
 					$i = $current - 12;
 					while($current >= $i) : ?>
 						['<?php echo esc_js( $i ); ?>',
-						<?php echo esc_js( sell_media_get_sales_by_date(null, null, $i ) ); ?>,
+						<?php echo esc_js( sell_media_get_sales_by_date(null, $i, null ) ); ?>,
 						],
 						<?php
 						$i++;
@@ -385,8 +385,8 @@ function sell_media_total_revenue( $post_status=null ) {
  * @since 1.2
  * @return html
  */
-function sell_media_get_sales_by_date( $day = null, $month_num, $year ) {
-	return Sell_Media()->payments->get_payments_by_date( $day, $month_num, $year );
+function sell_media_get_sales_by_date( $month_num, $year, $day = null ) {
+	return Sell_Media()->payments->get_payments_by_date( $month_num, $year, $day );
 }
 
 /**

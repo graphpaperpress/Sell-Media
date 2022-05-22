@@ -78,7 +78,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
                 $shortcode_out        = do_shortcode( $shortcode_params_str );
 
                 // This is mainly to protect against emty returns with the Gutenberg ServerSideRender function.
-                return $this->render_block_wrap( $shortcode_out, true, $attributes );
+                return $this->render_block_wrap( $attributes, $shortcode_out, true );
         }
 
         /**
@@ -130,7 +130,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
          * @since 2.4.6
          *         
          */
-        public function render_block_wrap( $content = '', $with_inner = true, $attributes ) {
+        public function render_block_wrap( $attributes, $content = '', $with_inner = true ) {
 
             $return_content  = '';
             $return_content .= '<!-- ' . $this->block_slug . ' sell media item block begin -->';
