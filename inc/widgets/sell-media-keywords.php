@@ -30,7 +30,7 @@
 			if ( !empty( $keywords ) ) {
 
 				foreach ( $keywords as $keyword ) {
-					?><a href="<?php echo esc_url(get_term_link( $keyword->slug, 'keywords' )); ?>"><?php echo esc_html( $keyword->name ); ?></a><?php
+					?><a href="<?php echo esc_url(get_term_link( $keyword->slug, 'keywords' )); ?>"><?php echo esc_html( $keyword->name ); ?></a> <?php
 				}
 			}
 			?>
