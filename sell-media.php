@@ -224,7 +224,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 				define( 'GPP_WP_KSES_EXTENDED_LIST', [
 					'ul'       => [ 'data-*' => true, 'class' => true, 'id' => true ],
 					'li'       => [ 'data-*' => true, 'class' => true, 'value' => true ],
-					'a'        => [ 'data-*' => true, 'target' => true, 'href' => true, 'class' => true ],
+					'a'        => [ 'data-*' => true, 'target' => true, 'href' => true, 'class' => true, 'id' => true ],
 					'div'      => [ 'class' => true, 'id' => true, 'data-*' => true ],
 					'span'     => [ 'class' => true, 'id' => true, 'data-*' => true, 'required' => true ],
 					'img'      => [
