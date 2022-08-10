@@ -146,8 +146,7 @@ class SellMediaTaxMarkup {
             }
 
             jQuery(document).ajaxComplete(function( event, xhr, settings ){
-                // TODO: change this
-                jQuery('body.post-type-sell_media_item [name="meta_value[markup]"]').val(0);
+                jQuery('body.post-type-sell_media_item [name="meta_value[markup]"]').val( '<?php echo esc_js( $initial_markup ); ?>%' );
             });
         </script>
         <div class="sell_media-slider-container">
