@@ -146,7 +146,11 @@ class SellMediaTaxMarkup {
             }
 
             jQuery(document).ajaxComplete(function( event, xhr, settings ){
-                jQuery('body.post-type-sell_media_item [name="meta_value[markup]"]').val( '<?php echo esc_js( $initial_markup ); ?>%' );
+				if( ~settings.data.indexOf('action=add-tag') ) {
+					jQuery('body.post-type-sell_media_item [name="meta_value[default]"]').prop('checked', false);
+					jQuery('#slide').val( 0 );
+					updateSlider( 0 );
+				}
             });
         </script>
         <div class="sell_media-slider-container">
