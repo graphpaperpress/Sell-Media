@@ -920,3 +920,78 @@ div#sell-media-main-container .main-container-tabs-contents {
 	margin-top: 20px;
 }
 /* End: Admin Payment refund section */
+
+/* Start: Admin Payment Prodigi section */
+.sell-media-status-table {
+	width: 100%;
+	text-align: left;
+	margin-bottom: 30px;
+	border: 1px solid #eeeeef;
+}
+
+.sell-media-status-table.wpm-stats-table {
+	margin-bottom: 10px !important;
+}
+
+.sell-media-status-table.no-margin {
+	margin: 0;
+}
+
+.sell-media-status-table:nth-last-of-type(1) {
+	margin-bottom: 0;
+}
+
+.sell-media-status-table thead {
+	background: #2b2a29;
+	color: #fff;
+}
+
+.sell-media-status-table.collections thead {
+	background: #404040;
+}
+
+.sell-media-status-table.collections thead th {
+	padding: 20px 20px;
+}
+
+.sell-media-status-table thead th {
+	padding: 17px 20px;
+	font-size: 16px;
+}
+
+.sell-media-status-table.five-column thead th {
+	width: 20%;
+}
+
+.sell-media-status-table.two-column thead th {
+	width: 50%;
+}
+
+.sell-media-status-table tbody tr {
+	background: #eeeeef;
+	padding: 10px;
+}
+
+.sell-media-status-table tbody tr:nth-child(even) {
+	background: white;
+}
+
+.sell-media-status-table tbody td {
+	padding: 10px 20px;
+	width: 50%;
+	overflow-wrap: anywhere;
+}
+
+.sell-media-status-table.two-column tbody td {
+	width: 50%;
+}
+
+.sell-media-status-table.five-column tbody td {
+	width: 20%;
+}
+
+.sell-media-status-table.collections tbody td {
+	width: 33%;
+	padding: 10px 20px;
+}
+/* End: Admin Payment Prodigi section */

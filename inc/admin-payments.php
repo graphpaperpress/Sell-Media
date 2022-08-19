@@ -223,20 +223,29 @@ function sell_media_payment_gateway_details( $post ){
 
     do_action('sell_media_payment_before_gateway_details', $post);
     ?>
-    <p>
-	<?php
-	    echo esc_html( __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase.', 'sell_media' ) );
-	?>
-    </p>
-    <ul>
-        <?php
-        if ( $arguments ) foreach ( $arguments as $k => $v ) {
-            ?>
-            <li><strong><?php echo esc_html( $k ); ?>: </strong><?php echo esc_html( ( is_array( $v) || is_object( $v ) ) ? serialize( $v ) : esc_attr( $v ) ); ?></li>
-            <?php
-        }
-        ?>
-    </ul>
+
+	<table class="sell-media-status-table" cellpadding="0" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2">
+				<?php
+	    		echo esc_html( __( 'This is the data that was sent from ', 'sell_media' ) . $gateway . __( ' at time of purchase.', 'sell_media' ) );
+				?>
+				</th>
+			</tr>
+		</thead>
+		<?php if ( $arguments ):  ?>
+		<tbody>
+			<?php foreach ( $arguments as $key => $value ): ?>
+			<tr>
+				<td><?php echo esc_html( $key ) ?></td>
+				<td><?php echo esc_html( $value ); ?></td>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
+		<?php endif; ?>
+	</table>
+
     <?php
 	do_action('sell_media_payment_after_gateway_details', $post);
 }
