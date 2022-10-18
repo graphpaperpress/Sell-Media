@@ -30,7 +30,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 			foreach ( $download_parents as $slug => $term ) {
 				$url = add_query_arg( array( 'term_parent' => $term->term_id ), $url );
 				if ( $this->current_term === $term->term_id ) {
-					$current_url = esc_url($url);
+					$current_url = $url;
 				}
 				?><option value="<?php echo esc_attr($url); ?>" <?php echo esc_attr( selected( (int) $current_pricelist, $term->term_id, false ) ); ?> ><?php echo esc_html( $term->name ); ?></option><?php
 			}

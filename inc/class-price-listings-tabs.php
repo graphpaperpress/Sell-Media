@@ -384,13 +384,13 @@ class Sell_Media_Price_Listings_Tabs {
 		$redirect_url_new = add_query_arg( $url_parameters, $redirect_url );
 		if( $redirect_url ) {
 			wp_redirect( $redirect_url_new );
-			//exit(); // TODO: look, this will break the form layout
+			exit(); // TODO: look, this will break the form layout
 		}
 	}
 
 	function delete_pricelist( $redirect_url ) {
 		// Check if request is for delete and parent term is set.
-		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] || !isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') ) {
+		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] || ! isset($_GET['delete_pricelist_nonce_name']) || ! wp_verify_nonce( $_GET['delete_pricelist_nonce_name'], 'delete_pricelist_nonce_action' ) ) {
 			return;
 		}
 
