@@ -268,7 +268,7 @@ function sell_media_checkout_shortcode() {
 				</div>
 				<?php do_action( 'sell_media_checkout_registration_fields' ); ?>
 				<div class="tax cf">
-					<div class="sell-media-key"><?php esc_html_e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo esc_html( ' (' . round( ( float ) $settings->tax_rate * 100 ) . '&#37)' ); ?></span>:</div>
+					<div class="sell-media-key"><?php esc_html_e( 'Tax', 'sell_media' ); ?><span class="quiet"><?php if ( ! empty( $settings->tax ) ) echo esc_html( ' (' . round( ( float ) $settings->tax_rate * 100 ) . '%)' ); ?></span>:</div>
 					<div class="sell-media-value"><span class="sell-media-cart-tax"></span></div>
 				</div>
 				<div class="shipping cf">
@@ -662,7 +662,7 @@ function sell_media_ajax_filter( $atts ){
 		$have_collections = false;
 		$first_tab = false;
 		$first_term = false;
-		array_walk($choosen_tabs, function(&$value, &$key) {
+		array_walk($choosen_tabs, function($value, $key) {
 			$value['title'] = esc_attr($value['title']);
 			$value['slug'] = sanitize_text_field($value['slug']);
 			$value['icon'] = sanitize_text_field($value['icon']);

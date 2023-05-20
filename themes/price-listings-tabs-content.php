@@ -30,9 +30,9 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 			foreach ( $download_parents as $slug => $term ) {
 				$url = add_query_arg( array( 'term_parent' => $term->term_id ), $url );
 				if ( $this->current_term === $term->term_id ) {
-					$current_url = esc_url($url);
+					$current_url = esc_url_raw($url);
 				}
-				?><option value="<?php echo esc_attr($url); ?>" <?php echo esc_attr( selected( (int) $current_pricelist, $term->term_id, false ) ); ?> ><?php echo esc_html( $term->name ); ?></option><?php
+				?><option value="<?php echo esc_url($url); ?>" <?php echo esc_attr( selected( (int) $current_pricelist, $term->term_id, false ) ); ?> ><?php echo esc_html( $term->name ); ?></option><?php
 			}
 			?>
 		</select>
@@ -43,7 +43,7 @@ $default_price_group = isset( $settings->default_price_group ) ? $settings->defa
 		$delete_url = wp_nonce_url( $delete_url, 'delete_pricelist_nonce_action', 'delete_pricelist_nonce_name' );
 		$current_term_name = isset( $current_term->name ) ? $current_term->name : '';
 		if ( isset( $_GET['term_parent'] ) ) {
-			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_attr_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php esc_attr( sprintf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ) ); ?>"><?php esc_html_e( 'Delete', 'sell_media' ); ?></a>
+			?><a href="#" data-href="<?php echo esc_url( $delete_url ); ?>" class="deletion" title="<?php esc_attr_e( 'Delete pricelist.', 'sell_media' ); ?>" data-message="<?php echo esc_attr( sprintf( __( 'Are you sure you want to delete the pricelist: %s', 'sell_media' ), $current_term_name ) ); ?>"><?php esc_html_e( 'Delete', 'sell_media' ); ?></a>
 		<?php } ?>
 	</div>
 	<?php

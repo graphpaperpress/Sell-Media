@@ -168,7 +168,7 @@ class SM_Gateway_PayPal_Request {
             $_discount_id = sanitize_text_field($_POST['discount']);
         }
         global $sm_cart;
-        $_return_url = apply_filters('sell_media_paypal_return_url', empty( $this->settings->thanks_page ) ? site_url() : esc_url( add_query_arg( array( '_nonce' => wp_create_nonce( 'sell_media_paypal_order_complete_nonce' ) ), get_permalink( $this->settings->thanks_page ) ) ));
+        $_return_url = apply_filters('sell_media_paypal_return_url', empty( $this->settings->thanks_page ) ? site_url() : esc_url_raw( add_query_arg( array( '_nonce' => wp_create_nonce( 'sell_media_paypal_order_complete_nonce' ) ), get_permalink( $this->settings->thanks_page ) ) ));
         $_cancel_url = apply_filters('sell_media_paypal_return_cancel', empty( $this->settings->checkout_page ) ? site_url() : esc_url( get_permalink( $this->settings->checkout_page ) ));
 
         $_sub_total = apply_filters( 'sell_media_paypal_subtotal', $sm_cart->getSubtotal( false ) );

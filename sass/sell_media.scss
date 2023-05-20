@@ -84,7 +84,7 @@ a:focus {
 
 .sell-media-main-col {
 	clear: left;
-	margin-right: 5%; // Legacy themes have conflicting margins. Let's make theme consistent.
+	margin-right: 5% !important; // Legacy themes have conflicting margins. Let's make theme consistent.
 	width: 65%;  // Legacy themes have conflicting widths. Let's make theme consistent.
 }
 
@@ -201,7 +201,6 @@ body {
 
 	li {
 		display: block;
-		margin: 1em 0;
 
 		&:after {
 			@extend .cf;
@@ -239,6 +238,7 @@ body {
 				background: $border-color;
 				cursor: pointer;
 				vertical-align: middle;
+				border-radius: 5px;
 
 				&:hover {
 					border-color: darken($border-color, 20%);
@@ -340,7 +340,6 @@ body {
 /*= Buttons
 -------------------------------------------------------------- */
 body {
-	.sell-media-button,
 	.sell-media-button {
 		cursor: pointer;
 		justify-content: center;
@@ -351,6 +350,7 @@ body {
 		text-transform: capitalize;
 		box-shadow: none;
 		text-decoration: none;
+		padding: 10px 15px;
 	}
 
 	input[type=submit].sell-media-button:focus,
@@ -640,7 +640,8 @@ body {
 	}
 
 	tr {
-		border: 0;
+		border-top-width: 1px;
+		border-top-style: solid;
 	}
 
 	th,
@@ -736,7 +737,9 @@ body {
 
 /*= Single Layouts
 -------------------------------------------------------------- */
-.sell-media-content {
+
+
+main .sell-media-content {
 	@extend .sell-media-main-col;
 	position: relative;
 
@@ -749,10 +752,11 @@ body {
 		height: auto;
 	}
 
+
 	.sell-media-single-one-col & {
 		@extend .cf;
 		float: none;
-		margin: 0 0 1.5em 0;
+		margin: auto !important;
 		width: 100%;
 	}
 }
@@ -1501,6 +1505,10 @@ body {
 		  border-top-color: transparent;
 		}
 	}
+}
+
+.sell-media-search-inner {
+	width: 100%;	
 }
 
 .sell-media-search-field {
@@ -2414,6 +2422,19 @@ input.sell-media-search-text[type=text] {
 	margin: 0;
 	float: left;
 	width: 100%;
+	
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+
+	li {
+		border-top: 1px solid;
+		padding-top: 20px;
+		padding-bottom: 20px;
+
+		.item-image {
+			margin-bottom: 0;
+		}
+	}
 }
 .sell-media-key {
 	display: block;

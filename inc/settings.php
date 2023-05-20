@@ -29,7 +29,6 @@ function sell_media_init_settings() {
 			"general_plugin_section_1" => array(
 				"name" => "general_plugin_section_1",
 				"title" => __( "General", "sell_media" ),
-				"description" => ""
 			)
 		)
 	);
@@ -44,7 +43,6 @@ function sell_media_init_settings() {
 			"size_price_plugin_section_1" => array(
 				"name" => "size_price_plugin_section_1",
 				"title" => __( "Pricing", "sell_media" ),
-				"description" => ""
 			)
 		)
 	);
@@ -59,16 +57,14 @@ function sell_media_init_settings() {
                 "payment_section_1" => array(
                     "name" => "payment_section_1",
                     "title" => __("Payment","sell_media"),
-                    "description" => ""
                 ),
                 "payment_section_paypal" => array(
                     "name" => "payment_section_paypal",
                     "title" => __("PayPal Settings","sell_media"),
-                    'description' => sprintf(
-                        __( 'You must add your <a href="https://developer.paypal.com/developer/applications" target="_blank">PayPal API Keys</a> to process transactions.', 'sell_media' )
-                    ),
+                    
                 )
 			)
+
 		);
 	sell_media_register_plugin_option_tab( apply_filters('sell_media_payment_tab', $payment_tab) );
 
@@ -81,7 +77,6 @@ function sell_media_init_settings() {
 			"email_section_1" => array(
 				"name" => "email_section_1",
 				"title" => __("Email Settings","sell_media"),
-				"description" => ""
 				)
 			)
 		);
@@ -96,7 +91,6 @@ function sell_media_init_settings() {
 			"misc_section_1" => array(
 				"name" => "misc_section_1",
 				"title" => __("Misc","sell_media"),
-				"description" => ""
 				)
 			)
 		);
@@ -609,7 +603,8 @@ function sell_media_init_settings() {
             "tab" => "sell_media_payment_settings",
             "name" => "paypal_test_client_id",
             "title" => __("PayPal Test Client ID","sell_media"),
-            "description" => "",
+            "description" => __( 'You must add your <a href="https://developer.paypal.com/dashboard/applications/sandbox" target="_blank">PayPal API Keys</a> to process transactions.', 'sell_media' ),
+                    
             "default" => "",
             "section" => "payment_section_paypal",
             "since" => "1.0.",

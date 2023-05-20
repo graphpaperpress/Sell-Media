@@ -8,7 +8,7 @@
 /**
  * Price listing tabs class.
  */
-class Sell_Media_Price_Listings_Tabs {
+class Sell_Media_Price_Listings_Tabs  extends \stdClass {
 	/**
 	 * Taxonomy name.
 	 *
@@ -309,7 +309,7 @@ class Sell_Media_Price_Listings_Tabs {
 		// Saving settings.
 		if ( isset( $_POST['settings'] ) && is_array($_POST['settings']) && count($_POST['settings']) ){
 
-			$settings = array_map( 'sanitize_text_field', ( array ) sell_media_get_plugin_options() );
+			$settings = ( array ) sell_media_get_plugin_options();
 
 			$sanitized_settings_from_post = [];
 			// TODO: move to helpers file
@@ -368,6 +368,8 @@ class Sell_Media_Price_Listings_Tabs {
 				'success_email_body',
 				'misc'
 			];
+
+
 			// Process only safe keys from $_POST
 			foreach ( $_POST['settings'] as $tmp_key => $tmp_val ) {
                 if( in_array($tmp_key, $gpp_allowed_keys)){
@@ -376,6 +378,7 @@ class Sell_Media_Price_Listings_Tabs {
 			}
 
 			$settings = array_merge( $settings, $sanitized_settings_from_post );
+
 			$options_name = sell_media_get_current_plugin_id() . '_options';
 			update_option( $options_name, $settings );
 		}
@@ -390,7 +393,7 @@ class Sell_Media_Price_Listings_Tabs {
 
 	function delete_pricelist( $redirect_url ) {
 		// Check if request is for delete and parent term is set.
-		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] || !isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'],'sell-media-price-list-page') ) {
+		if ( ! isset( $_GET['delete'] ) || '1' !== $_GET['delete'] || ! isset( $_GET['term_parent'] ) || '' === $_GET['term_parent'] ) {
 			return;
 		}
 
