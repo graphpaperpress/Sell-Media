@@ -240,6 +240,7 @@ class Sell_Media_Price_Listings_Tabs  extends \stdClass {
 					));
 				}
 			}
+			
 
 			if ( isset( $_POST['terms_children'] ) && is_array( $_POST['terms_children'] ) && count( $_POST['terms_children'] ) ) {
 				foreach ( (array) $_POST['terms_children'] as $term_id => $data ) {
@@ -305,6 +306,8 @@ class Sell_Media_Price_Listings_Tabs  extends \stdClass {
 				}
 			}			
 		}
+		
+
 
 		// Saving settings.
 		if ( isset( $_POST['settings'] ) && is_array($_POST['settings']) && count($_POST['settings']) ){
@@ -382,13 +385,15 @@ class Sell_Media_Price_Listings_Tabs  extends \stdClass {
 			$options_name = sell_media_get_current_plugin_id() . '_options';
 			update_option( $options_name, $settings );
 		}
-
 		$url_parameters['term_parent'] = $parent_term_id;
-		$redirect_url_new = add_query_arg( $url_parameters, $redirect_url );
-		if( $redirect_url ) {
+		
+		
+		if($redirect_url) {
+			$redirect_url_new = add_query_arg( $url_parameters, $redirect_url );
 			wp_redirect( $redirect_url_new );
-			//exit(); // TODO: look, this will break the form layout
+
 		}
+
 	}
 
 	function delete_pricelist( $redirect_url ) {
