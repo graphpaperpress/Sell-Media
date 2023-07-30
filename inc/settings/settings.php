@@ -430,7 +430,7 @@ function sell_media_plugin_field_checkbox( $value, $attr ) {
     if ( isset( $attr['valid_options'] ) ) :
         $options = $attr['valid_options'];
 
-        foreach( $options as $option_key => $option_value ) : ?>
+        foreach( $options as $option_key => $option_value ) : if(!$value) $value = []; ?>
             <input class="checkbox" id ="<?php echo esc_attr($option_value['name']); ?>" type="checkbox" <?php if( isset( $value ) && '' != $value ) { checked( in_array( $option_value['name'], $value ) ); }  ?> name="<?php echo esc_attr( sell_media_get_current_plugin_id() ); ?>_options[<?php echo esc_attr($attr['name']); ?>][]" value="<?php echo esc_attr( $option_key ); ?>">
             <label for="<?php echo esc_attr($option_value['name']); ?>"><?php echo esc_attr($option_value['title']);?></label><br>
     <?php endforeach;

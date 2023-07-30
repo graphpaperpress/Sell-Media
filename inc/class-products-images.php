@@ -14,6 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class SellMediaImages extends SellMediaProducts {
 
+	public $IPTC_MAPPING;
+	public $metadata;
+
 	/**
 	 * Constructor
 	 */

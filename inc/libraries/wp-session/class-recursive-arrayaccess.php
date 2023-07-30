@@ -81,7 +81,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return boolean true on success or false on failure.
 	 */
-	public function offsetExists( $offset ) {
+	public function offsetExists( mixed $offset ): bool {
 		return isset( $this->container[ $offset ]) ;
 	}
 
@@ -94,7 +94,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return mixed Can return all value types.
 	 */
-	public function offsetGet( $offset ) {
+	public function offsetGet( mixed $offset ): mixed {
 		return isset( $this->container[ $offset ] ) ? $this->container[ $offset ] : null;
 	}
 
@@ -108,7 +108,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return void
 	 */
-	public function offsetSet( $offset, $data ) {
+	public function offsetSet( mixed $offset, $data ): void {
 		if ( is_array( $data ) ) {
 			$data = new self( $data );
 		}
@@ -130,7 +130,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) {
+	public function offsetUnset( mixed $offset ): void {
 		unset( $this->container[ $offset ] );
 
 		$this->dirty = true;
@@ -148,7 +148,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return mixed
 	 */
-	public function current() {
+	public function current(): mixed {
 		return current( $this->container );
 	}
 
@@ -159,7 +159,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return mixed
 	 */
-	public function key() {
+	public function key(): mixed {
 		return key( $this->container );
 	}
 
@@ -170,7 +170,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return void
 	 */
-	public function next() {
+	public function next(): void {
 		next( $this->container );
 	}
 
@@ -181,7 +181,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return void
 	 */
-	public function rewind() {
+	public function rewind(): void {
 		reset( $this->container );
 	}
 
@@ -192,7 +192,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return bool
 	 */
-	public function valid() {
+	public function valid(): bool {
 		return $this->offsetExists( $this->key() );
 	}
 
@@ -207,7 +207,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable {
 	 *
 	 * @return int
 	 */
-	public function count() {
+	public function count(): int {
 		return count( $this->container );
 	}
 }

@@ -577,7 +577,29 @@ function sell_media_autocreate_pages() {
 		$title = 'Sell Media ' . ucfirst( $page );
 
 		// Check if this page already exists, with shortcode
-		$existing_page = get_page_by_title( $title );
+
+		$query = new WP_Query(
+		    array(
+		        'post_type'              => 'page',
+		        'title'                  => 'Sample Page',
+		        'post_status'            => 'all',
+		        'posts_per_page'         => 1,
+		        'no_found_rows'          => true,
+		        'ignore_sticky_posts'    => true,
+		        'update_post_term_cache' => false,
+		        'update_post_meta_cache' => false,
+		        'orderby'                => 'post_date ID',
+		        'order'                  => 'ASC',
+		    )
+		);
+		 
+		if ( ! empty( $query->post ) ) {
+		    $page_got_by_title = $query->post;
+		} else {
+		    $page_got_by_title = null;
+		}
+		$existing_page = $page_got_by_title;
+		
 		if ( ! empty( $existing_page ) && 'page' === $existing_page->post_type && has_shortcode( $existing_page->post_content, 'sell_media_' . $page ) ) {
 			$settings[ $setting ] = $existing_page->ID;
 		} else {
