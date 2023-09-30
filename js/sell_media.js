@@ -565,7 +565,6 @@ jQuery(document).ready(function($) {
     // Checkout qty menu
     $('<span class="sell-media-cart-quantity checkout-counter">0</span>').appendTo('.checkout-qty a:first');
 
-    //console.log(sell_media);
     /**
      * Update menu cart qty and subtotal on load
      */
@@ -638,6 +637,7 @@ jQuery(document).ready(function($) {
                     _nonce: sell_media_paypal_obj.paypal_nonce
                 },
                 success: function(response) {
+
                     if (response.status) {
                         window.location = response.redirect_uri;
                     } else {
