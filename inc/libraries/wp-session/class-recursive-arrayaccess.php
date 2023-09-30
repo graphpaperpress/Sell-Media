@@ -86,7 +86,7 @@ class Recursive_ArrayAccess implements ArrayAccess, Iterator, Countable
 	 *
 	 * @return boolean true on success or false on failure.
 	 */
-	public function offsetExists(mixed $offset): bool
+	public function offsetExists(mixed $offset): mixed
 	{
 		return isset($this->container[$offset]);
 	}
