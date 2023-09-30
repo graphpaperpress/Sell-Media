@@ -31,8 +31,10 @@ class SellMediaSession {
 			define( 'WP_SESSION_COOKIE', 'sell_media_session' );
 		}
 
-		if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
-			include sprintf( '%s/inc/libraries/wp-session/class-recursive-arrayaccess.php', plugin_dir_path( dirname( __FILE__ ) ) );
+		if ( ! class_exists( 'Recursive_ArrayAccess' ) && phpversion() < 8) {
+			include sprintf( '%s/inc/libraries/wp-session/class-recursive-arrayaccess-7.php', plugin_dir_path( dirname( __FILE__ ) ) );
+		} elseif ( ! class_exists( 'Recursive_ArrayAccess' ) && phpversion() > 8) {
+			include sprintf( '%s/inc/libraries/wp-session/class-recursive-arrayaccess-7.php', plugin_dir_path( dirname( __FILE__ ) ) );
 		}
 
 		if ( ! class_exists( 'WP_Session_Utils' ) ) {
