@@ -155,7 +155,7 @@ if ( ! class_exists( 'SellMedia' ) ) :
 		 */
 		public function __clone() {
 			// Cloning instances of the class is forbidden.
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'sell_media' ), '2.5.8' );
+			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'sell_media' ), '2.5.8.1' );
 		}
 
 		/**

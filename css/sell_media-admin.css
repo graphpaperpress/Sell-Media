@@ -409,10 +409,33 @@
 
 /* Item meta section
 -------------------------------------------------------------- */
+/* .sell-media-upload-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+}*/
+.sell-media-upload-list li {
+	width: calc(25% - 20px)!important;
+	min-height: 100px;
+	padding: 0!important;
+	float: left;
+	margin-left: 20px !important;
+	margin-bottom: 20px !important;
+	padding: 10px;
+	display: flex;
+	flex-wrap: wrap;;
+	text-align: center;
+	align-items: center;
+	position: relative;
+} 
+.sell-media-upload-list li > div {
+	width: 100%;
+}
 .sell-media-upload-list:after {
 	content: "";
 	display: table;
 	clear: both;
+
 }
 
 .sell-media-field {
@@ -454,25 +477,25 @@
 	vertical-align: baseline;
 }
 
-.sell-media-attachment:nth-child(4n+1) {
+.sell-media-upload-list li:nth-child(4n+1) {
 	clear: left;
+	margin-left: 0 !important;
 }
 
-.sell-media-attachment img {
+.sell-media-upload-list li img {
 	opacity: 1;
 	-webkit-transition: opacity 0.25s ease;
 	-moz-transition: opacity 0.25s ease;
 	-o-transition: opacity 0.25s ease;
 	transition: opacity 0.25s ease;	/* prevents flickering */
-	-webkit-backface-visibility: hidden;
 }
 
-.sell-media-attachment:hover img {
+.sell-media-upload-list li:hover img {
 	opacity: 0.75;
 }
 
-.sell-media-attachment .sell-media-edit,
-.sell-media-attachment .sell-media-delete {
+.sell-media-upload-list li .sell-media-edit,
+.sell-media-upload-list li .sell-media-delete {
 	display: none;
 	position: absolute;
 	text-decoration: none;
@@ -487,25 +510,25 @@
 	color: rgba(255, 255, 255, .5);
 }
 
-.sell-media-attachment .sell-media-edit {
+.sell-media-upload-list li .sell-media-edit {
 	bottom: 20px;
 	left: 14px;
 }
 
-.sell-media-attachment .sell-media-delete {
+.sell-media-upload-list li .sell-media-delete {
 	bottom: 20px;
 	left: 44px;
 }
 
-.sell-media-attachment .sell-media-edit:hover,
-.sell-media-attachment .sell-media-delete:hover,
+.sell-media-upload-list li .sell-media-edit:hover,
+.sell-media-upload-list li .sell-media-delete:hover,
 #sell-media-main-container .ui-state-active a.sell-media-edit:hover {
 	color: #fff;
 	background: #000;
 }
 
-.sell-media-attachment:hover .sell-media-edit,
-.sell-media-attachment:hover .sell-media-delete {
+.sell-media-upload-list li:hover .sell-media-edit,
+.sell-media-upload-list li:hover .sell-media-delete {
 	display: inline-block;
 }
 
@@ -658,6 +681,7 @@ div#sell-media-main-container ul.main-container-tabs-nav {
 	border-radius: 0;
 	background: none;
 	border: none;
+	float: left;
 }
 
 div#sell-media-main-container ul.main-container-tabs-nav li {
@@ -920,3 +944,29 @@ div#sell-media-main-container .main-container-tabs-contents {
 	margin-top: 20px;
 }
 /* End: Admin Payment refund section */
+
+/* sell-media-loading-icon */
+.sell-media-upload-list li > div.sell-media-loading-icon {
+	width: auto;
+}
+.sell-media-loading-icon {
+    left: 50%;
+    margin-left: -8px;
+    top: 50%;
+    margin-top: -14px;
+    position: absolute;
+    z-index: 19 !important;
+    animation: loading-bar-spinner 1500ms linear infinite;
+}
+.sell-media-loading-icon .spinner-icon {
+    width: 16px;
+    height: 16px;
+    border:  solid 3px transparent;
+    border-top-color:  #888 !important;
+    border-left-color: #888 !important;
+    border-radius: 50%;
+}
+@keyframes loading-bar-spinner {
+  0%   { transform: rotate(0deg);   transform: rotate(0deg); }
+  100% { transform: rotate(360deg); transform: rotate(360deg); }
+}
