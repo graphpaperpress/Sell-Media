@@ -28,7 +28,8 @@ function sell_media_scripts( $hook ) {
 
 	wp_enqueue_script( 'sell_media_jquery_cookie', SELL_MEDIA_PLUGIN_URL . 'js/jquery.cookie.js', array( 'jquery' ), SELL_MEDIA_VERSION );
 	wp_enqueue_script( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'js/sell_media.js', array( 'jquery', 'sell_media_jquery_cookie' ), SELL_MEDIA_VERSION );
-	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
+	wp_enqueue_style( 'sell_media', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-base.css', array( 'dashicons' ), SELL_MEDIA_VERSION );
+	
 
 	// Masonry
 	if ( is_customize_preview() || ( isset( $settings->thumbnail_layout ) && 'sell-media-masonry' === $settings->thumbnail_layout ) ) {
@@ -59,10 +60,8 @@ function sell_media_scripts( $hook ) {
 		);
 	}
 
-	if ( isset( $settings->style ) && '' !== $settings->style ) {
+	if ( isset( $settings->style ) && 'none' !== $settings->style ) {
 		wp_enqueue_style( 'sell_media_style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-' . $settings->style . '.css', array( 'sell_media' ), SELL_MEDIA_VERSION );
-	} else {
-		wp_enqueue_style( 'sell_media_style', SELL_MEDIA_PLUGIN_URL . 'css/sell_media-light.css', array( 'sell_media' ), SELL_MEDIA_VERSION );
 	}
 
 	wp_localize_script( 'sell_media', 'sell_media', array(

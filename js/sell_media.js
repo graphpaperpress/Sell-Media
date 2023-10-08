@@ -330,7 +330,7 @@ jQuery(document).ready(function($) {
             $(required).each(function() {
                 if ($(this).val() != '') flag++;
             });
-            // number of nonempty (nonchecked) fields == nubmer of required fields
+            // number of nonempty (nonchecked) fields == number of required fields
             if (flag == $(required).length)
                 $('.item_add').prop('disabled', false);
             else
@@ -419,7 +419,7 @@ jQuery(document).ready(function($) {
         // Hide or Show checkout and add to cart button
         if ($(this).attr('id') == 'sell_media_item_size') {
             $('.item_add').show();
-            $('.sell-media-checkout-btn').remove();
+            //$('.sell-media-checkout-btn').remove();
         }
 
         sum = parseFloat(price);
@@ -835,7 +835,7 @@ jQuery(document).ready(function($) {
             'action': 'sell_media_ajax_add_to_cart_button',
         };
 
-        $('.button-container #sell-media-add-to-cart').html('');
+        //$('.button-container #sell-media-add-to-cart').html('');
         $.post(sell_media.ajaxurl, data, function(res) {
             $('.button-container #sell-media-add-to-cart').html(res);
         });
@@ -844,9 +844,9 @@ jQuery(document).ready(function($) {
         $('#sell_media_product_type input[name="type"]:checked').parent().addClass('selected-tab');
     });
 
-    if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
-        $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
-    }
+    // if($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').length){
+    //    $($('#sell_media_download_wrapper .sell-media-add-to-cart-fieldset select').children()[1]).attr('selected',true).trigger('change');
+    // }
 }); // End jQuery document ready.
 
 /**

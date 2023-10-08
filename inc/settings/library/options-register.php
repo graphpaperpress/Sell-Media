@@ -199,7 +199,7 @@ function sell_media_plugin_sections_callback( $section_passed ) {
         foreach ( $tabsections as $sectionname => $section ) {
             if ( 'sell_media_' . $sectionname . '_section' == $section_passed['id'] && !empty($section['description'])) {
                 ?>
-                <p><?php wp_kses(_e($section['description'],'sell_media'), $arr); ?></p>
+                <p><?php echo wp_kses($section['description'], $arr); ?></p>
                 <?php
             }
         }

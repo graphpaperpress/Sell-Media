@@ -68,7 +68,7 @@ class SM_Gateway_PayPal_Request {
                 /*
                  * Add classes so user can overwrite default button style of theme
                  * */
-                $classes = "sell-media-cart-checkout-button sell-media-button";
+                $classes = "sell-media-cart-checkout-button sell-media-button wp-block-button__link wp-element-button";
                 $classes .= apply_filters( 'sell_media_checkout_button_classes', $classes );
 
                 if (!empty($secret_key_exist)) {
@@ -705,9 +705,23 @@ class SM_Gateway_PayPal_Request {
                         $html .= '<p><strong>Your details</strong></p>';
                         $html .= '<small class="order_id">Order ID: ' . $payment_id . '</small><br/>';
                         foreach ( $meta as $key => $value ) {
-                            if ('products' !== $key) {
+
+                            if( 'product_dimensions' == $key) {
+                                foreach ( $value as $k => $v ) {
+                                    $html .= '<small class="'. $k .'">' . ucwords( str_replace( '_', ' ', $k ) ) . ': ' . $v . '</small><br/>';
+                                }
+                            } elseif( 'product_attributes' == $key ) {
+                                foreach ( $value as $k => $v ) {
+                                    $html .= '<small class="'. $k .'">' . ucwords( str_replace( '_', ' ', $k ) ) . ': ' . $v . '</small><br/>';
+                                }
+                            } elseif ('products' == $key) {
+                                //
+                            } else {
                                 $html .= '<small class="'. $key .'">' . ucwords( str_replace( '_', ' ', $key ) ) . ': ' . $value . '</small><br/>';
                             }
+                            
+
+
                         }
                         $html .= '</div>';
                     }

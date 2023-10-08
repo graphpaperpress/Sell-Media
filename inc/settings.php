@@ -228,6 +228,10 @@ function sell_media_init_settings() {
 			"type" => "select",
 			"default" => "light",
 			"valid_options" => array(
+				"none" => array(
+					"name" => "none",
+					"title" => __("None","sell_media")
+					),
 				"dark" => array(
 					"name" => "dark",
 					"title" => __("Dark","sell_media")

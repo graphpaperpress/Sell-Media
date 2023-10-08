@@ -187,7 +187,7 @@ function sell_media_checkout_shortcode() {
 			$cart_index = 0;
 			foreach( $cart_items as $key => $item ): ?>
 				<li <?php do_action( 'sell_media_checkout_item_custom_attributes', $item ); ?> class="item row-<?php echo esc_attr($cart_index); ?>" id="<?php echo esc_attr($key); ?>" data-type="<?php echo esc_attr($item['item_type']); ?>" data-price="<?php echo esc_attr($item['price']); ?>">
-					<div class="item-image">
+					<div class="<?php echo apply_filters('sell_media_checkout_image_class', 'item-image'); ?>">
 						<?php
 						if ( isset($item['item_attachment']) && !empty( $item['item_attachment'] ) ) {
 							// $item['item_id'] is the featured image id
@@ -276,9 +276,9 @@ function sell_media_checkout_shortcode() {
 					<div class="sell-media-value"><span class="sell-media-cart-shipping"></span></div>
 				</div>
 				<?php do_action( 'sell_media_checkout_before_grand_total' ); ?>
-				<div class="total cf">
-					<div class="sell-media-key"><?php esc_html_e( 'Total', 'sell_media' ); ?>:</div>
-					<div class="sell-media-value"><span class="sell-media-cart-grand-total"></span></div>
+				<div class="total cf border-top pt-1 flex items-right">
+					<div class="font-bold mr-1"><?php esc_html_e( 'Total', 'sell_media' ); ?>:</div>
+					<div class="font-bold"><span class="sell-media-cart-grand-total"></span></div>
 				</div>
 			</div>
 

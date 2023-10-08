@@ -415,13 +415,13 @@ class SellMediaPayments {
 		$total = $this->get_meta_key( $post_id, $key = 'total' );
 		$css = ( $inline_css ) ? 'border-bottom: 1px solid #ccc; padding: 0.5rem; text-align: left;' : '';
 		$style = apply_filters( 'sell_media_products_table_style', $css );
-
+		
 		if ( $products ) {
 			$markup_class = new SellMediaTaxMarkup();
 			$markups = $markup_class->markup_taxonomies();
 
 			$html = null;
-			$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" width="100%" style="border-collapse:collapse;font-size: 10px;">';
+			$html .= '<table class="sell-media-products sell-media-products-payment-' . $post_id . '" border="0" width="100%" style="border-collapse:collapse;">';
 			$html .= '<thead>';
 			$html .= '<tr>';
 			$html .= '<th style="' . $style . '  font-weight: bold;">' . __( 'Product', 'sell_media' ) . '</th>';
@@ -440,13 +440,15 @@ class SellMediaPayments {
 			$html .= '</thead>';
 			$html .= '<tbody>';
 
+			
+
 			foreach ( $products as $product ) {
 
-			// Old purchase links didn't have attachment_id set
-			// So we derive the attachment_id from the product's post_meta
-			$product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
-			// If license description exists, show it.
-			$product['license']['desc'] = ( isset($product['license']['id']) && term_description( $product['license']['id'], 'licenses' ) ) ? '<p><span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span></p>' : '';
+				// Old purchase links didn't have attachment_id set
+				// So we derive the attachment_id from the product's post_meta
+				$product['attachment'] = ( ! empty( $product['attachment'] ) ) ? $product['attachment'] : sell_media_get_attachment_id( $product['id'] );
+				// If license description exists, show it.
+				$product['license']['desc'] = ( isset($product['license']['id']) && term_description( $product['license']['id'], 'licenses' ) ) ? '<p><span class="license_desc">' . term_description( $product['license']['id'], 'licenses' ) . '</span></p>' : '';
 
 				if ( ! empty( $product['id'] ) ) {
 
@@ -455,17 +457,25 @@ class SellMediaPayments {
 					$filename = basename( get_attached_file( $product['attachment'] ) );
 					if ( isset ( $product['id'] ) && ! is_array( $product['id'] ) ) {
 						$html .= '<div class="sell-media-product-attr sell-media-product-attr-id">' .  $product['id'] . ' — ' . $product['name'] . ', File name: '. $filename . '</div>';
+
+						$html .= apply_filters( 'sell_media_after_product_details', $post_id );
+
 						if(isset($product['size']['id'])) {
-							$html .= '<div class="sell-media-product-attr sell-media-product-attr-img" style="max-width: 100px; height: auto; overflow: hidden;"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a></div>';
-						}
+
+							$html .= '<div class="' . apply_filters("sell_media_thanks_product_preview", "sell-media-product-attr sell-media-product-attr-img") . '"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '">' . sell_media_item_icon( $product['attachment'], 'thumbnail', false ) . '</a></div>';
+						}						
+
 						if ( 'download' == $product['type'] && isset($product['size']['id'])) {
 							$html .= '<div class="sell-media-product-attr sell-media-product-attr-download"><a href="' . $this->get_download_link( $post_id, $product['id'], $product['attachment'], $product['size']['id'] ) . '" class="text-center" style="color: #444444; text-decoration: none; font-weight: bold;">' . __( 'Download', 'sell_media' ) . '</a></div>';
 						} elseif ( 'print' == $product['type'] ) {
-							$html .= apply_filters( 'sell_media_product_delivery_text', 'Your print will be mailed to you shortly.' );
+							$html .= apply_filters( 'sell_media_product_delivery_text', '<div>Your print will be mailed to you shortly.</div>' );
+						} else {
+							$html .= apply_filters( 'sell_media_product_delivery_text', '<div>Your print will be mailed to you shortly.</div>' );
 						}
 					}
 					$html .= '</td>';
 					$html .= '<td class="sell-media-product-size" style="' . $style . '">';
+
 					if ( isset( $product['size']['name'] ) && ! is_array( $product['size']['name'] ) ) {
 						$html .= '<div class="sell-media-product-attr sell-media-product-attr-size-name">' . __( 'Size ID', 'sell_media' ) . ': ' . $product['size']['name'] . '</div>';
 						$product_width = (isset($product['size']['id'])) ? get_term_meta( (int) $product['size']['id'], 'width', true ) : '';
@@ -476,6 +486,8 @@ class SellMediaPayments {
 						if ( $product_height ) {
 							$html .= '<div class="sell-media-product-attr sell-media-product-attr-height">' . __( 'Max Height', 'sell_media' ) . ': ' . $product_height . 'px</div>';
 						}
+
+						$html .= apply_filters( 'sell_media_after_size', $product );
 					}
 					$html .= '</td>';
 					$html .= '<td class="sell-media-product-license" style="' . $style . '">';
@@ -510,10 +522,6 @@ class SellMediaPayments {
 			$html .= '</tbody>';
 			$html .= '<tfoot>';
 			$html .= '<tr>';
-			$html .= '<td>&nbsp;</td>';
-			$html .= '<td>&nbsp;</td>';
-			$html .= '<td>&nbsp;</td>';
-			$html .= '<td>&nbsp;</td>';
 			if ( is_array( $markups ) && count( $markups ) > 0 ) : ?>
 				<?php foreach ( $markups as $markup ) : ?>
 					<?php
@@ -523,7 +531,7 @@ class SellMediaPayments {
 					$html .= '<td>&nbsp;</td>';
 					endforeach; ?>
 			<?php endif;
-			$html .= '<td class="sell-media-products-grandtotal" style="padding: 0.5rem; text-align: right;">';
+			$html .= '<td class="sell-media-products-grandtotal" colspan="5" style="padding: 0.5rem; text-align: right;">';
 			if ( $discount ) {
 				$html .= '<p>' . __( 'DISCOUNT', 'sell_media' ) . ': -' . sell_media_get_currency_symbol() . $discount . '</p>';
 			}

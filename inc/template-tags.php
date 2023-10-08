@@ -56,9 +56,8 @@ function sell_media_item_add_to_cart_button( $post_id = null, $attachment_id = n
 	$disable = ( ! $is_package && $has_price_group ) ? 'disabled' : '';
 
 	$classes[] = 'item_add';
-	$classes[] = 'sell-media-button';
-	$classes[] = 'sell-media-button-medium';
-	$classes[] = 'sell-media-button-dark';
+	$classes[] = 'sell-media-button wp-block-button__link wp-element-button';
+
 	if ( ! is_null( $button ) ) {
 		$classes[] = 'sell-media-' . $button;
 	}
@@ -114,7 +113,10 @@ function sell_media_item_image_src( $post_id = null, $attachment_id = null ) {
 	} else {
 		$image_attributes = wp_get_attachment_image_src( $attachment_id, $size );
 	}
-	$image_attributes = array_map( 'esc_attr', $image_attributes);
+	
+	if(is_array($image_attributes)) {
+		$image_attributes = array_map( 'esc_attr', $image_attributes);
+	}
 	
 	if ( $image_attributes ) {
 		$file_url = $image_attributes[0];
