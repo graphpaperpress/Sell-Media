@@ -143,6 +143,11 @@ add_action( 'wp_ajax_nopriv_sell_media_cart_menu', 'sell_media_cart_menu' );
  */
 function sell_media_ajax_filter_search( $param = array(), $output_the_value_or_return = true ){
 
+	// Check if post is empty.
+	if( !empty( $_POST ) ) {
+		$param = $_POST;
+	}
+	
 	// Check if parameters are empty.
 	if( empty( $param ) ){
 		return false;
