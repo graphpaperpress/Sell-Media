@@ -197,7 +197,7 @@ class SellMediaAdminAddItem {
             <?php
 				echo wp_kses( sprintf( '<p class="tax-description description">%1$s %2$s %3$s.</p>', esc_attr__( 'Assign this', 'sell_media' ), esc_attr( strtolower( $obj->labels->singular_name )), esc_attr__( 'to a collection (optional). Archive pages are automatically created for each collection and can be accessed by adding /collection/name-of-collection/ to the end of your website url (replace "name-of-collection" with the url-friendly collection name)', 'sell_media' ) ), array('p' => array('class' => true)) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'collection' ) ) );
-				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Collections', 'sell_media' ) ), array('p' => array('class' => true)) );
+				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=collection&post_type=sell_media_item' ) ) . '">%s</a></div>', __( 'Edit All Collections', 'sell_media' ) ), GPP_WP_KSES_EXTENDED_LIST );
 			?>
 			</div>
             <?php
@@ -211,7 +211,7 @@ class SellMediaAdminAddItem {
 				echo wp_kses( sprintf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Licenses', 'sell_media' ) ), array('h3' => array('class'), 'p' => array('class' => true)) );
 				echo wp_kses( sprintf( '<p class="tax-description description">%s.</p>', esc_attr__( 'Select the available usage licenses that buyers can choose from when purchasing (optional). Licenses can be assigned "markup" which will increase the cost of the item being purchase. For example, you can might have a "Personal" usage license with no markup from your base pricelists and a "Commercial" usage license with 50% markup from your base pricelists', 'sell_media' ) ), array('h3' => array('class' => true), 'p' => array('class' => true)) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'licenses' ) ) );
-				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=licenses&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Licenses', 'sell_media' ) ), array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
+				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=licenses&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Licenses', 'sell_media' ) ), GPP_WP_KSES_EXTENDED_LIST );
 			?>
             </div>
             <?php
@@ -225,7 +225,7 @@ class SellMediaAdminAddItem {
 				echo wp_kses( sprintf( '<h3 class="tax-title">%s</h3>', esc_attr__( 'Creators', 'sell_media' ) ),  array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
 				echo wp_kses( sprintf( '<p class="tax-description description">%s.</p>', esc_attr__( 'Assign a creator (optional). Creators are also automatically imported from the "Credit" IPCT metadata field in the files that you upload. Archive pages are then automatically created for each creator and can be accessed by adding /creator/name-of-creator/ to the end of your website url (replace "name-of-creator" with the url-friendly name)', 'sell_media' ) ),  array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
 				post_categories_meta_box( $post, array( 'args' => array( 'taxonomy' => 'creator' ) ) );
-				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Creators', 'sell_media' ) ), array('h3' => array('class' => true), 'p' => array('class' => true), 'div' => array('class' => true)) );
+				echo wp_kses( sprintf( '<div class="tax-edit"><a href="' . esc_url( admin_url( 'edit-tags.php?taxonomy=creator&post_type=sell_media_item' ) ) . '">%s</a></div>', esc_attr__( 'Edit All Creators', 'sell_media' ) ), GPP_WP_KSES_EXTENDED_LIST );
 			?>
             </div>
             <?php

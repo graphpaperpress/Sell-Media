@@ -35,7 +35,7 @@ $settings = sell_media_get_plugin_options();
 				<?php
 				$term_description = term_description();
 				if ( ! empty( $term_description ) ) {
-					?><h2 class="collection_description"><?php echo esc_html( $term_description ); ?></h2><?php
+					?><h2 class="collection_description"><?php echo wp_kses( $term_description, GPP_WP_KSES_EXTENDED_LIST ); ?></h2><?php
 				}
 				?>
 				<?php do_shortcode( '[sell_media_searchform]' ); ?>
