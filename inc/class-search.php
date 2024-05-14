@@ -129,21 +129,20 @@ class SellMediaSearch {
 		if ( is_page( $settings->search_page ) && in_the_loop() ) {
 
 			// Find comma-separated search terms and format into an array
-			$search_term_cleaned = preg_replace( '/\s*,\s*/', ',', $search_term );
-			$search_terms = str_getcsv( $search_term_cleaned, ',' );
+            $search_term_cleaned = preg_replace( '/\s*,\s*/', ',', $search_term );
+            $search_terms = str_getcsv( $search_term_cleaned, ',' );
 
-			// Exclude negative keywords in search query like "-cow"
-			$negative_search_terms = '';
-			$search_terms = array_filter($search_terms);
-			if(!empty($search_terms)) {
-				$negative_search_terms = preg_replace( '/[-]/', '', $search_terms );
-			}
-			// now remove negative search terms from search terms
-			$search_terms = array_diff( (array)$search_terms, (array)$negative_search_terms );
-			$search_terms = array_filter( (array)$search_terms );
+            // Exclude negative keywords in search query like "-cow"
+            $negative_search_terms = '';
+            $negative_search_terms = preg_grep( '/(?:^|[^\-\d])(\d+)/', $search_terms );
+            $negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
 
-			// Get the file/mimetype
-			$mime_type = $this->get_mimetype( $search_file_type );
+            // now remove negative search terms from search terms
+            $search_terms = array_diff( $search_terms, $negative_search_terms );
+            $search_terms = array_filter( $search_terms );
+
+            // Get the file/mimetype
+            $mime_type = $this->get_mimetype( $search_file_type );
 
 			// Current pagination
 			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;

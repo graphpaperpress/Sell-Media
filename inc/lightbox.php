@@ -136,7 +136,7 @@ function sell_media_lightbox_query() {
 	// Check if items in lightbox
 	if ( isset( $items ) ) {
 
-		array_walk($items, function(&$value, &$key) {
+		array_walk($items, function($value, $key) {
 			$value['post_id'] = intval($value['post_id']);
 			$value['attachment_id'] = intval($value['attachment_id']);
 		});

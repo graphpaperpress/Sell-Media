@@ -286,7 +286,7 @@ if ( ( class_exists( 'SellMedia_Gutenberg_Block' ) ) && ( ! class_exists( 'Sell_
 
                 // Exclude negative keywords in search query like "-cow"
                 $negative_search_terms = '';
-                $negative_search_terms = preg_grep( '/\B-[^\B]+/', $search_terms );
+                $negative_search_terms = preg_grep( '/(?:^|[^\-\d])(\d+)/', $search_terms );
                 $negative_search_terms = preg_replace( '/[-]/', '', $negative_search_terms );
 
                 // now remove negative search terms from search terms
